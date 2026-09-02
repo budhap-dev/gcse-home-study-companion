@@ -9,6 +9,10 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 | [docs/prd.md](docs/prd.md) | Product requirements document, Draft 4 (2 September 2026). Scope, users, content and progress models, motivation design, non-functional requirements, delivery phases, technical approach, open decisions. |
 | [docs/prd.html](docs/prd.html) | The same PRD as a formatted page. Open in a browser. |
 | [docs/stories.md](docs/stories.md) | The full user story backlog: 44 stories across 9 epics with MoSCoW priorities and acceptance criteria. |
+| [docs/plan.md](docs/plan.md) | Delivery plan for Phase 1: gating decisions, ten workstreams, seven milestones, content track, data model outline, risks, five build approaches, first two weeks. |
+| [docs/plan.html](docs/plan.html) | The same plan as a formatted page. Open in a browser. |
+| [docs/tech-spec.md](docs/tech-spec.md) | Technical specification: hosting, environments, build, deployment pipeline, scheduled jobs, backup, security, cost. |
+| [docs/tech-spec.html](docs/tech-spec.html) | The same specification as a formatted page. Open in a browser. |
 
 ## Decisions so far
 
@@ -22,12 +26,27 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 
 See the last section of the PRD. The two that block content work are the Music exam board and who writes and illustrates the content.
 
-## Repository layout (planned)
+## Repository layout
 
 ```
-apps/web         React + TypeScript student, parent and tutor app
-apps/admin       Content authoring and review tool
-packages/shared  Types, content schema, validation
-supabase/        Migrations, policies, seed sample content
-docs/            Requirements and decisions (this folder)
+apps/web         React + TypeScript student, parent and tutor app (placeholder screens and menu)
+apps/admin       Content authoring and review tool (placeholder screens)
+packages/shared  Subjects, topic statuses, thresholds, story IDs; Zod content schema to follow
+supabase/        Migrations, policies, seed sample content (empty until a project exists)
+docs/            Requirements, plan, tech spec, and decisions
 ```
+
+## Running it
+
+Node 22 or later. pnpm is pinned in `package.json`; enable it once with corepack, which ships with Node:
+
+```
+corepack enable
+pnpm install
+pnpm dev          # student, parent and tutor app on http://localhost:8000
+pnpm dev:admin    # authoring tool on http://localhost:8001
+pnpm typecheck
+pnpm build
+```
+
+Every screen is a placeholder that names the stories from docs/stories.md it will deliver and the blocks it will contain. The menu, routes, and subject theming are real; nothing talks to a database yet.

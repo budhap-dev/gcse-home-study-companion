@@ -1,0 +1,520 @@
+<title>Study Companion Delivery Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F8F9F6; --ink:#1E2536; --ink-2:#4A5266; --ink-3:#7B8394;
+  --rule:#D9DDD6; --panel:#EEF1EC; --panel-2:#E4E9E2;
+  --accent:#1D6F8A; --accent-ink:#155A70; --accent-soft:#DCEBF0;
+  --mark:#B5451B; --mark-soft:#F6E3DA;
+  --hi:#F2C94C; --hi-soft:#FBF0C9;
+  --ok:#2F7D4F; --ok-soft:#DCEFE2;
+  --code-bg:#EAEDE7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#151920; --ink:#E7EAF0; --ink-2:#B4BAC8; --ink-3:#7F8798;
+    --rule:#2B313D; --panel:#1D222B; --panel-2:#252B36;
+    --accent:#5FB3CC; --accent-ink:#8ACBDD; --accent-soft:#1B3A45;
+    --mark:#E38A63; --mark-soft:#3E271D;
+    --hi:#E5C24F; --hi-soft:#3E3517;
+    --ok:#6FC08D; --ok-soft:#1B3526;
+    --code-bg:#20262F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151920; --ink:#E7EAF0; --ink-2:#B4BAC8; --ink-3:#7F8798;
+  --rule:#2B313D; --panel:#1D222B; --panel-2:#252B36;
+  --accent:#5FB3CC; --accent-ink:#8ACBDD; --accent-soft:#1B3A45;
+  --mark:#E38A63; --mark-soft:#3E271D;
+  --hi:#E5C24F; --hi-soft:#3E3517;
+  --ok:#6FC08D; --ok-soft:#1B3526;
+  --code-bg:#20262F;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;margin:0}
+a{color:var(--accent-ink)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{display:grid;grid-template-columns:220px minmax(0,72ch);gap:56px;max-width:1120px;margin:0 auto;padding:48px 32px 96px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 20px 72px}.toc{position:static}}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2.6rem;font-weight:700;letter-spacing:-0.01em}
+h2{font-size:1.5rem;font-weight:700;margin-top:64px;padding-top:20px;border-top:2px solid var(--ink)}
+h3{font-size:1.15rem;font-weight:700;margin-top:32px}
+h4{font-size:1rem;font-weight:700;margin-top:20px}
+p{margin:12px 0}
+ul,ol{margin:10px 0;padding-left:1.4em}
+li{margin:5px 0}
+li::marker{color:var(--ink-3)}
+.eyebrow{font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px}
+.lede{font-size:1.2rem;color:var(--ink-2);margin-top:16px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px 24px;margin-top:28px;padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.meta div{font-size:.9rem;color:var(--ink-2)}
+.meta b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:.95rem;color:var(--ink);font-weight:700}
+.toc{position:sticky;top:24px;align-self:start;font-family:"Bricolage Grotesque",sans-serif;font-size:.86rem}
+.toc .eyebrow{margin-bottom:8px}
+.toc ol{list-style:none;padding:0;margin:0;border-left:1px solid var(--rule)}
+.toc li{margin:0}
+.toc a{display:block;padding:5px 12px;color:var(--ink-2);text-decoration:none;border-left:2px solid transparent;margin-left:-1px}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .num{display:inline-block;width:1.6em;color:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:.75rem}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.04em;padding:2px 7px;border-radius:3px;white-space:nowrap;vertical-align:middle}
+.tag.must{background:var(--mark-soft);color:var(--mark)}
+.tag.should{background:var(--accent-soft);color:var(--accent-ink)}
+.tag.could{background:var(--panel-2);color:var(--ink-2)}
+.tag.nfr{background:var(--hi-soft);color:var(--ink)}
+.tag.rec{background:var(--ok-soft);color:var(--ok)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.callout{background:var(--panel);border-left:3px solid var(--hi);padding:14px 18px;margin:20px 0;font-size:.95rem}
+.callout p{margin:6px 0}
+.callout .eyebrow{color:var(--ink-2);margin-bottom:4px}
+.tablewrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-align:left;font-size:.82rem;letter-spacing:.02em;color:var(--ink-2);border-bottom:2px solid var(--ink);padding:8px 10px 8px 0;vertical-align:bottom}
+td{border-bottom:1px solid var(--rule);padding:9px 10px 9px 0;vertical-align:top}
+td:last-child,th:last-child{padding-right:0}
+td.n{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-3);white-space:nowrap}
+code,.mono{font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.84em;background:var(--code-bg);padding:1px 5px;border-radius:3px}
+.ws{margin:26px 0 0;padding:16px 0 4px;border-top:1px solid var(--rule)}
+.ws:first-of-type{border-top:0}
+.ws-head{display:flex;gap:12px;align-items:baseline}
+.ws-letter{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-3);width:1.4em;flex:0 0 auto}
+.ws h3{margin-top:0}
+.ws ul{font-size:.95rem;color:var(--ink-2);margin-top:6px}
+.ws-body{padding-left:calc(1.4em + 12px)}
+@media (max-width:640px){.ws-body{padding-left:0}}
+.ms{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--rule)}
+.ms:last-of-type{border-bottom:1px solid var(--rule)}
+.ms-when{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--ink-3);line-height:1.5;padding-top:4px}
+.ms-when b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem;color:var(--ink);font-weight:700;margin-bottom:4px}
+.ms h3{margin-top:0;font-size:1.1rem}
+.ms p{margin:6px 0;font-size:.95rem}
+.ms ul{margin:6px 0;font-size:.93rem;color:var(--ink-2)}
+.done{margin-top:10px;padding:8px 12px;background:var(--ok-soft);border-left:3px solid var(--ok);font-size:.9rem}
+.done b{font-family:"Bricolage Grotesque",sans-serif;color:var(--ok)}
+@media (max-width:640px){.ms{grid-template-columns:1fr;gap:6px}}
+.approach{margin:22px 0 0;padding:16px 0 6px;border-top:1px solid var(--rule)}
+.approach:first-of-type{border-top:0}
+.approach-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.approach-rank{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.6rem;color:var(--ink-3);width:1.2em;flex:0 0 auto;line-height:1}
+.approach h3{margin-top:0}
+.approach p{font-size:.97rem;margin:8px 0}
+.approach dl{margin:8px 0 0;display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:.93rem}
+.approach dt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);padding-top:2px}
+.approach dd{margin:0;color:var(--ink-2)}
+@media (max-width:640px){.approach dl{grid-template-columns:1fr;gap:2px 0}.approach dd{margin-bottom:8px}}
+.steps{counter-reset:step;list-style:none;padding:0;margin:14px 0}
+.steps li{counter-increment:step;display:grid;grid-template-columns:2.2em 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);margin:0}
+.steps li::before{content:counter(step);font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-3);padding-top:4px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <div class="eyebrow">Contents</div>
+  <ol>
+    <li><a href="#s1"><span class="num">1</span>Where things stand</a></li>
+    <li><a href="#s2"><span class="num">2</span>Decisions that gate the plan</a></li>
+    <li><a href="#s3"><span class="num">3</span>Workstreams</a></li>
+    <li><a href="#s4"><span class="num">4</span>Milestones</a></li>
+    <li><a href="#s5"><span class="num">5</span>Content track</a></li>
+    <li><a href="#s6"><span class="num">6</span>Data model outline</a></li>
+    <li><a href="#s7"><span class="num">7</span>Risks</a></li>
+    <li><a href="#s8"><span class="num">8</span>Document fixes</a></li>
+    <li><a href="#s9"><span class="num">9</span>Five ways to approach the build</a></li>
+    <li><a href="#s10"><span class="num">10</span>First two weeks</a></li>
+  </ol>
+</nav>
+
+<main>
+<div class="eyebrow">Delivery plan · Phase 1</div>
+<h1>GCSE Home Study Companion</h1>
+<p class="lede">How to get from the PRD and the 46-story backlog to a working first release: Maths and Physics, all 21 Must stories, one real family using it for four weeks.</p>
+<div class="meta">
+  <div><b>Source</b>PRD Draft 4, story backlog</div>
+  <div><b>Date</b>2 September 2026</div>
+  <div><b>Status</b>Draft for review</div>
+  <div><b>Covers</b>Phase 1 in detail, Phases 2 to 4 in outline</div>
+</div>
+
+<h2 id="s1">1. Where things stand</h2>
+<p>The repository holds requirements only: no code, no schema, no content. The PRD fixes the stack, the content model, the progress rules, and the phase cuts. The backlog gives stable story IDs and acceptance criteria. What is missing is the order of work, the vertical slices to build first, the content pipeline, and the decisions that gate each of those.</p>
+<p>Three facts shape everything below.</p>
+<ul>
+  <li><strong>Content is the critical path.</strong> Phase 1 needs roughly 50 to 80 topics and 1,000 to 1,600 questions before a family can use it properly. Writing starts as soon as the content schema is stable, not when the app is finished.</li>
+  <li><strong>The rules live in the database.</strong> Topic status, decay, and recommendations are Postgres functions so the student app, the parent view, and the email digest never disagree.</li>
+  <li><strong>Build one thin slice end to end first.</strong> A parent signs up, adds a student, the student finishes one lesson and one quiz, the topic changes colour, and the parent sees it. Every later milestone widens that slice.</li>
+</ul>
+
+<h2 id="s2">2. Decisions that gate the plan</h2>
+<p>These are the PRD section 13 items, with a working default so work is not blocked. Each default is overturned by one line in this document.</p>
+<div class="tablewrap"><table>
+<tr><th>#</th><th>Decision</th><th>Blocks</th><th>Working default until decided</th></tr>
+<tr><td class="n">1</td><td>Who writes and reviews content</td><td>Content track start, size of the admin tool in Phase 1</td><td>Decided 2 September 2026: the authoring tool drafts every topic with AI (ADM-6) and the owner reviews and corrects. The review state on each version is Phase 1; the two-person approval flow (ADM-3) stays in Phase 2.</td></tr>
+<tr><td class="n">7</td><td>Is the first family your own</td><td>Which units to author first</td><td>Yes. Author the units the pilot student is studying this term first, then fill the rest of the specification.</td></tr>
+<tr><td class="n">3</td><td>Grade 9 question sourcing</td><td>Advanced worksheets and the Grade 9 ready status</td><td>Write from past-paper patterns, tagged by discriminator type. Commission a specialist only if the pilot shows the bank is weak.</td></tr>
+<tr><td class="n">5</td><td>Illustration and diagrams</td><td>Lesson authoring rate</td><td>Shared SVG component library for graphs, circuits, and geometry, plus commissioned artwork for subject theming only.</td></tr>
+<tr><td class="n">4</td><td>"Further" Maths definition</td><td>Phase 2 only</td><td>AQA Level 2 (8365) as written.</td></tr>
+<tr><td class="n">2</td><td>Music exam board</td><td>Phase 3 only</td><td>No action in Phase 1.</td></tr>
+<tr><td class="n">6</td><td>Pricing and trial</td><td>Paywall boundary before public launch</td><td>Ship the pilot without a paywall. Add a subscription flag on the family record so the boundary exists in the data model from day one.</td></tr>
+</table></div>
+
+<h2 id="s3">3. Workstreams</h2>
+<p>Each workstream lists the stories it delivers, the pieces it produces, and the design calls that need making inside it. Workstreams run in parallel where the milestones in section 4 allow.</p>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">A</span><h3>Repository and platform</h3></div>
+  <div class="ws-body">
+  <p>No stories directly. Everything depends on it.</p>
+  <ul>
+    <li>pnpm workspace with <code>apps/web</code>, <code>apps/admin</code>, <code>packages/shared</code>, <code>supabase/</code>, matching the README layout.</li>
+    <li>Supabase project in London, local development via the Supabase CLI, migrations in git.</li>
+    <li>Cloudflare Pages for the web app and admin tool, preview deployment per pull request.</li>
+    <li>Cloudflare R2 bucket for media, with uploads only through a signed function.</li>
+    <li>GitHub Actions: type check, Vitest, Playwright on the critical flows; cron jobs for the daily Supabase keep-alive ping and the weekly database dump to R2.</li>
+    <li>Resend account and a single transactional template for verification and password reset.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">B</span><h3>Content schema and sample pack</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">ADM-1</span><span class="tag must">ADM-2</span></div>
+  <ul>
+    <li>Zod schemas in <code>packages/shared</code> for subject, unit, topic, lesson step, question, worksheet, quiz, and exam technique note. The same schemas validate authoring input, the importer, and the API responses.</li>
+    <li>Postgres tables for content, with a versioned topic record. Publishing creates a new immutable version. Attempts reference the version they were taken against.</li>
+    <li>The publish checks from ADM-1 as a single validation function: all parts present, every question has answer, solution, and marks, a grade 9 step exists, at least 40% of questions tagged grade 8 to 9, no text-only step.</li>
+    <li>A sample content pack in the repository: two complete topics, one Maths and one Physics, used by local development, tests, and the walking skeleton.</li>
+    <li>A JSON importer that loads a topic pack into the database. This is the first authoring path and later becomes ADM-5.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">C</span><h3>Accounts and family</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">FAM-1</span><span class="tag must">FAM-2</span></div>
+  <ul>
+    <li>Supabase Auth for parents with email plus password, Google, and Apple.</li>
+    <li>Student accounts as Supabase users with a generated internal email and a username. Sign-in maps username to that email through a small function. A flag forces a password change on first sign-in.</li>
+    <li>Tables: families, family members with role, students, student subjects with board and target grade. Row-level security from the first migration: a parent reads everything in their family, a student reads only their own rows, nobody writes attempts for someone else.</li>
+    <li>Family cap of five students enforced in the database.</li>
+    <li>Data export and deletion for the family owner. Small in code and required by section 9 of the PRD, so it belongs in Phase 1.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">D</span><h3>Lessons and exam technique</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">LRN-1</span><span class="tag must">LRN-2</span><span class="tag must">LRN-5</span><span class="tag must">LRN-7</span></div>
+  <ul>
+    <li>Subject page grouped by unit in specification order, with status colour and the done state of lesson, worksheets, and quiz.</li>
+    <li>Step player: one step per screen, progress indicator, check question gate that explains and then allows progress, position saved per student and topic version so a lesson resumes on another device.</li>
+    <li>Renderers: KaTeX for maths, images from R2, audio with transcript, code blocks. Reduced-motion aware.</li>
+    <li>Interactive step types for Phase 1: slider-driven graph or diagram, drag-and-drop ordering and matching, labelling, and equation entry with a maths keypad. Code trace waits for Computer Science in Phase 3. Every interactive type has a static fallback that shows the finished state and its explanation.</li>
+    <li>Subject exam technique guide and topic technique note, both authored content rendered by the same step renderer.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">E</span><h3>Questions, quizzes, and worksheets</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">QZ-1</span><span class="tag must">QZ-2</span><span class="tag must">WKS-1</span><span class="tag must">WKS-3</span><span class="tag must">WKS-7</span></div>
+  <ul>
+    <li>One question component per type: multiple choice, numeric with tolerance and units, short text with accepted variants, ordering, labelling, extended response. Quizzes and worksheets share these components, which is what makes WKS-7 auto-marking possible.</li>
+    <li>Marking functions in <code>packages/shared</code> so the client marks instantly and the database can re-mark from stored answers if a question is corrected.</li>
+    <li>Answers saved per question as they are given. A refresh or dropped connection loses nothing.</li>
+    <li>Quiz sampler that draws a different subset from the bank on retake when the bank is large enough.</li>
+    <li>Extended response flow: text area, suggested time, then mark scheme and model answer with a mark per criterion, stored as self-marked.</li>
+    <li>Worksheet at three levels with question count, marks, and suggested time. Advanced becomes the default level once a topic is Secure.</li>
+    <li>Scratch canvas per question. Strokes stored as compressed vector data, not images, so the free tier holds. Side by side on desktop and tablet, stacked on a phone. Worksheet, canvas, and solution switch without losing state.</li>
+    <li>Quiz summary linking each missed question to its lesson step.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">F</span><h3>Progress, status, and recommendations</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">PRG-1</span><span class="tag must">LRN-3</span><span class="tag must">LRN-6</span><span class="tag must">MOT-5</span></div>
+  <ul>
+    <li>Postgres function that computes topic status from the latest quiz and worksheet evidence using the PRD section 6 thresholds, called after every attempt and stored in a per-student per-topic status table.</li>
+    <li>Thresholds held in a per-subject configuration table so they are adjustable and so a lower target grade rescales them. A parent notification fires when a student lowers a target.</li>
+    <li>Six-week decay as a scheduled job that steps Grade 9 ready down to Secure and Secure down to Developing.</li>
+    <li>Recommendation function returning three tasks with reasons in the LRN-3 order: unfinished lesson, topic due for recap, weakest topic in the subject with the soonest exam, Secure topic to push through its Advanced worksheet. Exam dates (LRN-4) are a Should, so the third rule uses subject order until dates exist.</li>
+    <li>Topic map with a tap-through evidence panel.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">G</span><h3>Parent views</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">PAR-1</span><span class="tag must">PAR-2</span></div>
+  <ul>
+    <li>Weekly summary view per child computed in SQL by ISO week: minutes, topics touched, quizzes taken, average score, each with the previous week beside it. Per-subject counts of Grade 9 ready, Secure, and below with the change. Five weakest topics with the recommended task for each. Auto-marked and self-marked shown separately.</li>
+    <li>Read-only topic map reusing the student component with editing disabled.</li>
+    <li>Parent home listing every child in the family.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">H</span><h3>Motivation</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">MOT-1</span><span class="tag must">MOT-3</span></div>
+  <ul>
+    <li>Points ledger written by the same function that records an attempt or a step, weighted by grade band. Never deducted.</li>
+    <li>Subject levels from cumulative points with per-subject level names in configuration.</li>
+    <li>Weekly goal in minutes set by the student, visible to the parent. Home screen ring driven by session minutes this week.</li>
+    <li>Days off and a basic streak count. The full activity feed (PRG-2) waits for Phase 2.</li>
+    <li>Session tracking: start, end, subjects touched. This feeds the goal ring, the streak, and the parent summary, so it lands early.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">I</span><h3>Authoring tool</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag must">ADM-1</span><span class="tag must">ADM-2</span><span class="tag must">ADM-6</span><span class="tag should">ADM-7</span></div>
+  <ul>
+    <li>AI drafting is the primary way a topic starts. The editor gives the title, specification points, and grade band; a server function asks the model for all five parts as structured output validated against the content schema, and saves the result as an unpublished version marked AI-drafted. The publish rules from ADM-1 run on the draft immediately so the editor sees what needs fixing.</li>
+    <li>Every content version records who drafted it (model and prompt version, or a person) and who reviewed it. Publish is refused on an AI-drafted version with no reviewer.</li>
+    <li>Question batch generation into the bank (ADM-7) reuses the same function with a smaller schema; generated questions are unreviewed until an editor accepts them.</li>
+    <li>Separate Vite app in <code>apps/admin</code>, same Supabase project, editor role checked by RLS.</li>
+    <li>Topic editor with all parts on one screen, live validation against the ADM-1 rules, and a preview using the real step and question components.</li>
+    <li>Question bank with search and tag filters; questions attached to worksheets and quizzes by reference.</li>
+    <li>Media upload to R2 through a signed function.</li>
+    <li>Publish action that creates a version. Unpublish is not supported; a fix is a new version.</li>
+  </ul>
+  </div>
+</div>
+
+<div class="ws">
+  <div class="ws-head"><span class="ws-letter">J</span><h3>Hardening</h3></div>
+  <div class="ws-body">
+  <div class="tags"><span class="tag nfr">PRD §9 non-functional</span></div>
+  <ul>
+    <li>PWA manifest and service worker: app shell precached, opened lessons and quizzes cached for offline, queued attempt writes replayed when online.</li>
+    <li>Accessibility pass against WCAG 2.2 AA: keyboard operation of every interactive step and question type, screen-reader text for maths, transcripts for audio, dyslexia-friendly font toggle, 44px targets, contrast on every subject palette.</li>
+    <li>Performance budget: step and question under one second on a mid-range phone on 4G, checked in CI with Lighthouse.</li>
+    <li>Playwright flows: sign in, add student, lesson step, quiz attempt, worksheet self-mark, parent summary.</li>
+  </ul>
+  </div>
+</div>
+
+<h2 id="s4">4. Milestones</h2>
+<p>Durations assume one to two developers working full time alongside a content author. Milestones overlap; the content track in section 5 runs throughout.</p>
+
+<div class="ms">
+  <div class="ms-when"><b>M0</b>weeks 1 to 2<br>A · B</div>
+  <div>
+    <h3>Decisions and scaffold</h3>
+    <ul>
+      <li>Settle decisions 1 and 7 from section 2. The others take their defaults.</li>
+      <li>Repository scaffold, Supabase project, Cloudflare Pages, CI running on an empty app.</li>
+      <li>Content schema v1 with the sample pack and importer.</li>
+      <li>Authoring guide: one page describing a topic pack so writing can start.</li>
+    </ul>
+    <div class="done"><b>Done when</b> the sample pack imports cleanly and a preview deployment exists for every pull request.</div>
+  </div>
+</div>
+
+<div class="ms">
+  <div class="ms-when"><b>M1</b>weeks 3 to 5<br>C · D · E · F · G</div>
+  <div>
+    <h3>Walking skeleton</h3>
+    <ul>
+      <li>Parent signs up and adds a student with subjects.</li>
+      <li>Student opens the sample Physics topic, completes the stepped lesson with check questions, takes the quiz, and sees the topic status change.</li>
+      <li>Parent sees the read-only topic map.</li>
+      <li>RLS policies tested with a second family that must see nothing.</li>
+    </ul>
+    <div class="done"><b>Done when</b> the flow runs on a phone against the deployed app.</div>
+  </div>
+</div>
+
+<div class="ms">
+  <div class="ms-when"><b>M2</b>weeks 4 to 7<br>I</div>
+  <div>
+    <h3>Content pipeline</h3>
+    <p>Runs alongside M1.</p>
+    <ul>
+      <li>Drafting function with the content schema as its output format, then the topic editor, question bank, media upload, and publish with validation.</li>
+      <li>The author moves from JSON packs to drafting in the editor. The importer stays for batches.</li>
+      <li>First five real topics per subject drafted, reviewed, and published through the tool. Time the review per topic; that number sets the content track.</li>
+    </ul>
+    <div class="done"><b>Done when</b> a topic can go from blank to published without a developer.</div>
+  </div>
+</div>
+
+<div class="ms">
+  <div class="ms-when"><b>M3</b>weeks 6 to 10<br>D · E · F</div>
+  <div>
+    <h3>Full learning loop</h3>
+    <ul>
+      <li>Three-level worksheets, self-marking, scratch canvas, extended responses.</li>
+      <li>Four interactive step types with fallbacks.</li>
+      <li>Exam technique guide and topic notes.</li>
+      <li>Recommendation with three choices, target grade per subject, decay job.</li>
+    </ul>
+    <div class="done"><b>Done when</b> every Must story in Epics B, C, D, and E passes its acceptance criteria on phone, tablet, and desktop.</div>
+  </div>
+</div>
+
+<div class="ms">
+  <div class="ms-when"><b>M4</b>weeks 10 to 12<br>G · H</div>
+  <div>
+    <h3>Parent and motivation</h3>
+    <ul>
+      <li>Weekly summary with week-on-week comparison and weakest five.</li>
+      <li>Points, levels, goal ring, days off.</li>
+      <li>Session tracking wired through everything.</li>
+    </ul>
+    <div class="done"><b>Done when</b> a parent can answer the three questions from PRD section 1 from one screen.</div>
+  </div>
+</div>
+
+<div class="ms">
+  <div class="ms-when"><b>M5</b>weeks 12 to 14<br>J</div>
+  <div>
+    <h3>Hardening</h3>
+    <ul>
+      <li>Offline, accessibility, performance, end-to-end tests, backups verified by a restore.</li>
+      <li>Data export and deletion.</li>
+    </ul>
+    <div class="done"><b>Done when</b> the Playwright suite is green in CI and a Lighthouse run on a throttled phone meets the budget.</div>
+  </div>
+</div>
+
+<div class="ms">
+  <div class="ms-when"><b>M6</b>four weeks<br>pilot</div>
+  <div>
+    <h3>Pilot</h3>
+    <ul>
+      <li>One real family uses the app with the content available.</li>
+      <li>Weekly check: can the parent answer the three questions unaided, and can they say how many topics per subject are Grade 9 ready.</li>
+      <li>Content reports collected by hand (ADM-4 is Phase 2); fixes shipped as new content versions.</li>
+    </ul>
+    <div class="done"><b>Done when</b> the PRD Phase 1 exit test passes. Phase 2 starts with the Should stories in the order the pilot family asks for them.</div>
+  </div>
+</div>
+
+<h2 id="s5">5. Content track</h2>
+<p>The content track starts in M0 and never stops. Its shape for Phase 1:</p>
+<div class="tablewrap"><table>
+<tr><th>Item</th><th>Maths (Higher and Advanced)</th><th>Physics</th><th>Notes</th></tr>
+<tr><td>Topics</td><td>30 to 40</td><td>25 to 35</td><td>Specification order, board-specific topics tagged</td></tr>
+<tr><td>Questions</td><td>600 to 900</td><td>500 to 700</td><td>At least 40% grade 8 to 9 per topic</td></tr>
+<tr><td>Lesson steps</td><td>8 to 15 per topic</td><td>8 to 15 per topic</td><td>Each step carries a visual; each lesson ends with a grade 9 step</td></tr>
+<tr><td>Exam technique</td><td>1 subject guide plus 1 note per topic</td><td>Same</td><td>Includes what a grade 9 answer looks like per question type</td></tr>
+</table></div>
+<p>Order of authoring: the units the pilot student is on this term, then the units with the soonest exam paper, then the rest. Author complete topics rather than all lessons first, so the pilot always has something usable.</p>
+<div class="callout">
+  <div class="eyebrow">Rate check</div>
+  <p>With AI drafting, the author-day is spent reviewing rather than writing. Assume two to three reviewed topics per author-day, so the two subjects take five to seven author-weeks. Grade 9 questions and diagrams are where review time goes. If one person is both reviewer and developer, the pilot should still start with the current-term units only and grow during M6.</p>
+</div>
+
+<h2 id="s6">6. Data model outline</h2>
+<p>Tables grouped by concern. Names are indicative.</p>
+<ul>
+  <li><strong>Identity.</strong> <code>families</code>, <code>family_members</code> (profile, role, joined), <code>students</code> (family, first name, year group, username, must change password), <code>student_subjects</code> (board, target grade), <code>tutor_links</code> (Phase 2).</li>
+  <li><strong>Content.</strong> <code>subjects</code>, <code>units</code>, <code>topics</code>, <code>topic_versions</code> (lesson steps, technique note, published at), <code>questions</code>, <code>question_versions</code>, <code>worksheets</code> (topic version, level, ordered questions), <code>quizzes</code> (topic version, question pool, sample size). Subject configuration holds thresholds, level names, palette.</li>
+  <li><strong>Activity.</strong> <code>sessions</code>, <code>lesson_progress</code> (student, topic version, step, check results), <code>attempts</code> (student, kind, level, content version, total marks, marked how), <code>attempt_answers</code> (one row per question, saved on answer), <code>canvases</code> (attempt answer, stroke data or R2 key).</li>
+  <li><strong>Progress.</strong> <code>topic_status</code> (student, topic, status, computed at, evidence), <code>points_ledger</code>, <code>weekly_goals</code>, <code>days_off</code>.</li>
+  <li><strong>Admin.</strong> <code>editors</code>, <code>content_reports</code> (Phase 2), <code>review_requests</code> (Phase 2).</li>
+</ul>
+<p>Functions: <code>record_attempt</code>, <code>compute_topic_status</code>, <code>apply_decay</code>, <code>next_tasks</code>, <code>weekly_summary</code>, <code>publish_topic_version</code>, <code>validate_topic</code>.</p>
+
+<h2 id="s7">7. Risks</h2>
+<div class="tablewrap"><table>
+<tr><th>Risk</th><th>Effect</th><th>Mitigation</th></tr>
+<tr><td>Content volume outruns authoring capacity</td><td>Pilot starts with too little to use</td><td>Author current-term units first; make the importer good enough that AI-drafted packs load in batches; keep the ADM-1 checks strict so nothing incomplete ships</td></tr>
+<tr><td>Five interactive step types are each a small product</td><td>M3 slips</td><td>Ship four, with code trace deferred to Phase 3; build each on the same drag, slider, and keypad primitives; static fallback first, interaction second</td></tr>
+<tr><td>Canvas data grows past the free tier</td><td>Storage or cost surprise</td><td>Vector strokes with simplification, size cap per canvas, oldest canvases moved to R2</td></tr>
+<tr><td>Username login on Supabase Auth is unusual</td><td>Sign-in bugs for children</td><td>One small function owns the mapping; covered by a Playwright test from M1</td></tr>
+<tr><td>Status rules drift between client and database</td><td>Student and parent see different colours</td><td>Rules live only in Postgres; the client reads <code>topic_status</code> and never recomputes</td></tr>
+<tr><td>Free-tier Supabase pauses after seven days idle</td><td>App down for the pilot</td><td>Daily keep-alive cron from M0; budget the Pro upgrade before M6</td></tr>
+<tr><td>Offline write replay creates duplicate attempts</td><td>Corrupt progress</td><td>Client-generated attempt IDs; inserts are idempotent</td></tr>
+<tr><td>Illustration becomes the slowest part of every lesson</td><td>Lessons ship text-only and fail ADM-1</td><td>SVG component library for the common diagrams in Maths and Physics before content starts in earnest; the drafting prompt asks for diagrams as instances of those components, not free-form images</td></tr>
+<tr><td>AI drafts contain errors that read as confident</td><td>Wrong answers reach students</td><td>No publish without a human reviewer on the version; schema and publish rules run on every draft; every question carries a worked solution the reviewer checks; ADM-4 reports link to the exact version</td></tr>
+</table></div>
+
+<h2 id="s8">8. Document fixes noted while reading</h2>
+<p>Small inconsistencies between the PRD and the backlog. None change the plan, but they should be tidied so the backlog can be imported cleanly.</p>
+<ul>
+  <li>The backlog header cites PRD Draft 3; the PRD is Draft 4.</li>
+  <li>PRD goals say every topic has "the same four things"; ADM-1 requires five parts. Align the wording.</li>
+  <li>PRD Phase 4 lists "parent-pinned tasks" as a Could, but PAR-4 is a Should in Phase 2.</li>
+  <li>The progress model table records worksheets as self-recorded only; WKS-7 adds auto-marked worksheet questions, so worksheet attempts carry both kinds.</li>
+  <li>MOT-3 refers to streaks, which are defined in PRG-2 (Should). Phase 1 needs at least the streak counter and days off.</li>
+  <li>LRN-7 is listed before LRN-6 in both documents. Harmless, but it looks like a numbering slip.</li>
+</ul>
+
+<h2 id="s9">9. Five ways to approach the build</h2>
+<p>Five architectural approaches that fit this PRD, ranked. The milestones in section 4 combine the first, third, and fifth. The others are kept because a different team shape or a changed decision in section 2 could make one of them the better lead.</p>
+
+<div class="approach">
+  <div class="approach-head"><span class="approach-rank">1</span><h3>Walking skeleton first</h3><span class="tag rec">Recommended lead</span></div>
+  <p>Build the thinnest complete path through every layer before widening any of it: sign up, add a student, one lesson, one quiz, one status change, one parent view. Every later milestone widens the slice rather than adding a new layer.</p>
+  <dl>
+    <dt>Why it fits</dt><dd>The product's success test is a loop between student and parent, and the loop is only proven when both ends are connected. It also surfaces the risky integrations (child login, row-level security, status function) in week three instead of week twelve.</dd>
+    <dt>Risk</dt><dd>Early screens look thin, and it is tempting to polish before widening.</dd>
+    <dt>Choose it when</dt><dd>One or two developers are building and the first user is a known family.</dd>
+  </dl>
+</div>
+
+<div class="approach">
+  <div class="approach-head"><span class="approach-rank">2</span><h3>Content pipeline first</h3></div>
+  <p>Build the content schema, validation, importer, and authoring tool before any student screen, and start writing immediately. Consider a hosted headless CMS in place of <code>apps/admin</code> if the editorial team is external.</p>
+  <dl>
+    <dt>Why it fits</dt><dd>Content is the stated critical path and the largest cost. Fifty to eighty topics do not appear in a sprint. An early, strict pipeline means the app launches with something to teach.</dd>
+    <dt>Risk</dt><dd>Authoring in the dark. Without the step and question renderers, authors cannot see what a step looks like on a phone, and the schema changes once they can. A headless CMS also makes the ADM-1 publish rules harder to enforce.</dd>
+    <dt>Choose it when</dt><dd>Decision 1 lands on an external editorial team and their start date is fixed.</dd>
+  </dl>
+</div>
+
+<div class="approach">
+  <div class="approach-head"><span class="approach-rank">3</span><h3>Postgres as the rules engine</h3><span class="tag rec">Always, as companion</span></div>
+  <p>Every rule that has to agree across student, parent, tutor, and email lives in the database: topic status, decay, recommendations, weekly summary, points. Clients read views and call functions. Row-level security is the only access model.</p>
+  <dl>
+    <dt>Why it fits</dt><dd>The PRD says it in section 12. It also makes the free-tier stack sufficient, because there is no separate API server to host, and it removes the whole class of "student and parent see different colours" bugs.</dd>
+    <dt>Risk</dt><dd>SQL functions are harder to unit test than TypeScript. Mitigate with pgTAP tests in the migrations folder and a small TypeScript mirror of the status rules used only by tests.</dd>
+    <dt>Choose it when</dt><dd>Always, alongside whichever approach leads.</dd>
+  </dl>
+</div>
+
+<div class="approach">
+  <div class="approach-head"><span class="approach-rank">4</span><h3>Component library first</h3></div>
+  <p>Build the step renderer, the six question types, the four interactive step types, and the canvas as a standalone library with Storybook and the sample pack, then compose screens from it.</p>
+  <dl>
+    <dt>Why it fits</dt><dd>Quizzes, worksheets, lessons, the admin preview, and print all use the same components. Touch, keyboard, screen reader, and reduced motion are cheaper to get right once, in isolation, than five times across screens.</dd>
+    <dt>Risk</dt><dd>A library without screens invites over-generalising. Time goes into props nobody uses.</dd>
+    <dt>Choose it when</dt><dd>A front-end specialist joins and can run in parallel with the skeleton.</dd>
+  </dl>
+</div>
+
+<div class="approach">
+  <div class="approach-head"><span class="approach-rank">5</span><h3>Static content bundles, local-first attempts</h3><span class="tag rec">From M3</span></div>
+  <p>On publish, each topic version is compiled to an immutable JSON bundle with a content hash and served from Cloudflare R2 or Pages. The service worker caches bundles, so opened lessons and quizzes work offline. Attempts and answers are written to a local store first and synced to Postgres with client-generated IDs.</p>
+  <dl>
+    <dt>Why it fits</dt><dd>It meets the one-second load budget and the offline requirement directly, keeps the database small on the free tier, and gives the exact-version reference every attempt needs for free, because the bundle hash is the version.</dd>
+    <dt>Risk</dt><dd>Two storage paths and a sync layer to test. Idempotent inserts and conflict rules are required from day one.</dd>
+    <dt>Choose it when</dt><dd>For the content read path from M3 onwards, once the schema has stopped moving. Do not start with it.</dd>
+  </dl>
+</div>
+
+<h2 id="s10">10. First two weeks</h2>
+<ol class="steps">
+  <li>Confirm decisions 1 and 7 in section 2, or accept the defaults.</li>
+  <li>Scaffold the workspace, Supabase project, Cloudflare Pages, and CI.</li>
+  <li>Write the content schema in <code>packages/shared</code> and the first migration.</li>
+  <li>Build the sample pack: one Maths topic and one Physics topic, complete with all parts.</li>
+  <li>Write the importer and the one-page authoring guide.</li>
+  <li>Start authoring the pilot student's current-term units.</li>
+</ol>
+</main>
+</div>
