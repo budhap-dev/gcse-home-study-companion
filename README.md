@@ -13,6 +13,7 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 | [docs/plan.html](docs/plan.html) | The same plan as a formatted page. Open in a browser. |
 | [docs/tech-spec.md](docs/tech-spec.md) | Technical specification: hosting, environments, build, deployment pipeline, scheduled jobs, backup, security, cost. |
 | [docs/tech-spec.html](docs/tech-spec.html) | The same specification as a formatted page. Open in a browser. |
+| [docs/content-order.md](docs/content-order.md) | Authoring queue: which topics are written first, following the pilot student's school order. |
 
 ## Decisions so far
 
