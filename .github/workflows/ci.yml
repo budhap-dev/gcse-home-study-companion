@@ -34,3 +34,21 @@ jobs:
           name: admin-dist
           path: apps/admin/dist
           retention-days: 7
+
+  database:
+    name: Migrations and policies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start Postgres and apply migrations and seed
+        run: supabase start -x studio,imgproxy,logflare,vector
+      - name: Lint migrations
+        run: supabase db lint --level error
+      - name: Run policy and status tests
+        run: supabase test db
+      - name: Stop
+        if: always()
+        run: supabase stop --no-backup
