@@ -17,9 +17,6 @@ export const STATUS_COLOUR: Record<TopicStatus, string> = {
   'grade-9-ready': '#1F3A93',
 }
 
-export type WorksheetLevel = 'core' | 'higher' | 'advanced'
-export const WORKSHEET_LEVELS: WorksheetLevel[] = ['core', 'higher', 'advanced']
-
 /**
  * Default thresholds per PRD section 6. These are configurable per subject in the
  * database; this copy exists for tests and for rendering explanations in the UI.

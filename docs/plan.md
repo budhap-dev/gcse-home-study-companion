@@ -19,7 +19,7 @@ These are the PRD section 13 items, with a working default so work is not blocke
 | # | Decision | Blocks | Working default until decided |
 |---|---|---|---|
 | 1 | Who writes and reviews content | Content track start, size of the admin tool in Phase 1 | Decided 2 September 2026: the authoring tool drafts every topic with AI (ADM-6) and the owner reviews and corrects. The review state on each version is Phase 1; the two-person approval flow (ADM-3) stays in Phase 2. |
-| 7 | Is the first family your own | Which units to author first | Yes. Author the units the pilot student is studying this term first, then fill the rest of the specification. |
+| 7 | Is the first family your own | Which units to author first | Decided 2 September 2026: yes, with a Year 10 student starting GCSE this term. Author the Year 10 autumn units first (Maths Number and Algebra, Physics Energy and Electricity), then fill the rest of the specification. |
 | 3 | Grade 9 question sourcing | Advanced worksheets and the Grade 9 ready status | Write from past-paper patterns, tagged by discriminator type. Commission a specialist only if the pilot shows the bank is weak. |
 | 5 | Illustration and diagrams | Lesson authoring rate | Shared SVG component library for graphs, circuits, and geometry, plus commissioned artwork for subject theming only. |
 | 4 | "Further" Maths definition | Phase 2 only | AQA Level 2 (8365) as written. |

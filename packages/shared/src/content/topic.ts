@@ -1,0 +1,48 @@
+import { z } from 'zod'
+import { Provenance, Slug } from './common.ts'
+import { ExamTechniqueNote, Lesson, Quiz, Worksheet } from './lesson.ts'
+import { Question } from './questions.ts'
+
+/**
+ * The unit of authoring and of progress. Everything a student sees for one topic
+ * lives here: lesson, three worksheets, exam technique note, quiz, and the question
+ * bank they draw from. Publishing freezes a version; attempts reference that version.
+ */
+export const Topic = z.object({
+  id: Slug,
+  subjectId: Slug,
+  unitId: Slug,
+  title: z.string().min(1),
+  /** Specification references this topic covers, in the board's numbering. */
+  specPoints: z.array(z.string().min(1)).min(1),
+  /** Shown or hidden by the student's chosen board when a topic is board-specific. */
+  boards: z.array(z.string().min(1)).optional(),
+  lesson: Lesson,
+  questions: z.array(Question).min(1),
+  worksheets: z.object({ core: Worksheet, higher: Worksheet, advanced: Worksheet }),
+  examTechnique: ExamTechniqueNote,
+  quiz: Quiz,
+  provenance: Provenance,
+})
+export type Topic = z.infer<typeof Topic>
+
+/** Subject-level exam technique guide: papers, timing, command words, and what a grade 9 answer looks like. */
+export const SubjectGuide = z.object({
+  subjectId: Slug,
+  papers: z
+    .array(
+      z.object({
+        name: z.string().min(1),
+        marks: z.number().int().positive(),
+        minutes: z.number().int().positive(),
+        calculator: z.boolean(),
+        covers: z.string().min(1),
+      }),
+    )
+    .min(1),
+  commandWords: z.array(z.object({ word: z.string().min(1), meaning: z.string().min(1) })).min(1),
+  assessmentObjectives: z.array(z.object({ code: z.string().min(1), weight: z.number().min(0).max(100), meaning: z.string().min(1) })).min(1),
+  grade9ByQuestionType: z.array(z.object({ questionType: z.string().min(1), looksLike: z.string().min(1) })).min(1),
+  provenance: Provenance,
+})
+export type SubjectGuide = z.infer<typeof SubjectGuide>
