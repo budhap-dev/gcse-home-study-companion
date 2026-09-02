@@ -219,7 +219,7 @@ The content track starts in M0 and never stops. Its shape for Phase 1:
 | Lesson steps | 8 to 15 per topic | 8 to 15 per topic | Each step carries a visual; each lesson ends with a grade 9 step |
 | Exam technique | 1 subject guide plus 1 note per topic | Same | Includes what a grade 9 answer looks like per question type |
 
-Order of authoring: the units the pilot student is on this term, then the units with the soonest exam paper, then the rest. Author complete topics rather than all lessons first, so the pilot always has something usable.
+Order of authoring: the units the pilot student is on this term, then the units with the soonest exam paper, then the rest. The queue is kept in docs/content-order.md, built from the school's Year 10 overview. Author complete topics rather than all lessons first, so the pilot always has something usable.
 
 Rate check: with AI drafting, the author-day is spent reviewing rather than writing. Assume two to three reviewed topics per author-day, so the two subjects take five to seven author-weeks. Grade 9 questions and diagrams are where review time goes. If one person is both reviewer and developer, the pilot should still start with the current-term units only and grow during M6.
 
