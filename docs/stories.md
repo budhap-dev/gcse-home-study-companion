@@ -1,7 +1,7 @@
 # GCSE Home Study Companion · User stories
 
 Source: PRD Draft 3, 2 September 2026. Priorities use MoSCoW (Must = release one, Should = soon after, Could = backlog). IDs are stable for import into Jira or Linear.
-Total: 44 stories · Must 21 · Should 20 · Could 3
+Total: 46 stories · Must 22 · Should 21 · Could 3
 
 
 ## Epic A · Accounts and family
@@ -459,3 +459,30 @@ As a student or parent, I want to flag a question or answer I think is wrong so 
 **Priority:** Should
 
 As an editor, I want to import questions from a spreadsheet or JSON so that drafted content can be loaded in batches.
+
+### ADM-6 · Draft a topic with AI
+
+**Priority:** Must
+
+As an editor, I want to give a topic title, specification points, and grade band and have the tool draft all five parts so that I spend my time reviewing and correcting rather than writing from blank.
+
+**Acceptance criteria**
+
+- Input is the subject, unit, topic title, the specification points it covers, and any notes on emphasis or common misconceptions.
+- Output is a complete draft topic that passes the schema: lesson steps with a visual on every step and a grade 9 step, three worksheets, an exam technique note, and a quiz, with every question carrying an answer, worked solution, marks, and tags.
+- The draft is saved as an unpublished version marked as AI-drafted, with the model and prompt version recorded. It can never be published without a human marking it reviewed.
+- The editor can regenerate any single part or question without losing edits to the others.
+- Drafting streams progress so the editor sees parts arriving rather than waiting on a blank screen.
+
+### ADM-7 · Generate questions into the bank
+
+**Priority:** Should
+
+As an editor, I want to ask for a batch of questions for a topic, skill, and grade band so that the bank grows where it is thin.
+
+**Acceptance criteria**
+
+- Input is topic, skill tag, grade band, question type, count, and optionally an example question to match in style.
+- Generated questions land in the bank as unreviewed and are excluded from worksheets, quizzes, and recap until reviewed.
+- Grade 8 to 9 requests must use at least one discriminator pattern: combining topics, unfamiliar context, show that or proof, or evaluation with a justified conclusion.
+- Batches can run through the Batch API overnight for whole units.

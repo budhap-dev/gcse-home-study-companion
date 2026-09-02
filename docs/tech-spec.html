@@ -1,0 +1,207 @@
+<title>Study Companion Tech Spec</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F8F9F6; --ink:#1E2536; --ink-2:#4A5266; --ink-3:#7B8394;
+  --rule:#D9DDD6; --panel:#EEF1EC; --panel-2:#E4E9E2;
+  --accent:#1D6F8A; --accent-ink:#155A70; --accent-soft:#DCEBF0;
+  --mark:#B5451B; --mark-soft:#F6E3DA;
+  --hi:#F2C94C; --hi-soft:#FBF0C9;
+  --ok:#2F7D4F; --ok-soft:#DCEFE2;
+  --code-bg:#EAEDE7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#151920; --ink:#E7EAF0; --ink-2:#B4BAC8; --ink-3:#7F8798;
+    --rule:#2B313D; --panel:#1D222B; --panel-2:#252B36;
+    --accent:#5FB3CC; --accent-ink:#8ACBDD; --accent-soft:#1B3A45;
+    --mark:#E38A63; --mark-soft:#3E271D;
+    --hi:#E5C24F; --hi-soft:#3E3517;
+    --ok:#6FC08D; --ok-soft:#1B3526;
+    --code-bg:#20262F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151920; --ink:#E7EAF0; --ink-2:#B4BAC8; --ink-3:#7F8798;
+  --rule:#2B313D; --panel:#1D222B; --panel-2:#252B36;
+  --accent:#5FB3CC; --accent-ink:#8ACBDD; --accent-soft:#1B3A45;
+  --mark:#E38A63; --mark-soft:#3E271D;
+  --hi:#E5C24F; --hi-soft:#3E3517;
+  --ok:#6FC08D; --ok-soft:#1B3526;
+  --code-bg:#20262F;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;margin:0}
+a{color:var(--accent-ink)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{display:grid;grid-template-columns:220px minmax(0,72ch);gap:56px;max-width:1120px;margin:0 auto;padding:48px 32px 96px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 20px 72px}.toc{position:static}}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2.6rem;font-weight:700;letter-spacing:-0.01em}
+h2{font-size:1.5rem;font-weight:700;margin-top:64px;padding-top:20px;border-top:2px solid var(--ink)}
+h3{font-size:1.15rem;font-weight:700;margin-top:32px}
+h4{font-size:1rem;font-weight:700;margin-top:20px}
+p{margin:12px 0}
+ul,ol{margin:10px 0;padding-left:1.4em}
+li{margin:5px 0}
+li::marker{color:var(--ink-3)}
+.eyebrow{font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px}
+.lede{font-size:1.2rem;color:var(--ink-2);margin-top:16px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px 24px;margin-top:28px;padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.meta div{font-size:.9rem;color:var(--ink-2)}
+.meta b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:.95rem;color:var(--ink);font-weight:700}
+.toc{position:sticky;top:24px;align-self:start;font-family:"Bricolage Grotesque",sans-serif;font-size:.86rem}
+.toc .eyebrow{margin-bottom:8px}
+.toc ol{list-style:none;padding:0;margin:0;border-left:1px solid var(--rule)}
+.toc li{margin:0}
+.toc a{display:block;padding:5px 12px;color:var(--ink-2);text-decoration:none;border-left:2px solid transparent;margin-left:-1px}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .num{display:inline-block;width:1.6em;color:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:.75rem}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.04em;padding:2px 7px;border-radius:3px;white-space:nowrap;vertical-align:middle}
+.tag.must{background:var(--mark-soft);color:var(--mark)}
+.tag.should{background:var(--accent-soft);color:var(--accent-ink)}
+.tag.could{background:var(--panel-2);color:var(--ink-2)}
+.tag.nfr{background:var(--hi-soft);color:var(--ink)}
+.tag.rec{background:var(--ok-soft);color:var(--ok)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.callout{background:var(--panel);border-left:3px solid var(--hi);padding:14px 18px;margin:20px 0;font-size:.95rem}
+.callout p{margin:6px 0}
+.callout .eyebrow{color:var(--ink-2);margin-bottom:4px}
+.tablewrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-align:left;font-size:.82rem;letter-spacing:.02em;color:var(--ink-2);border-bottom:2px solid var(--ink);padding:8px 10px 8px 0;vertical-align:bottom}
+td{border-bottom:1px solid var(--rule);padding:9px 10px 9px 0;vertical-align:top}
+td:last-child,th:last-child{padding-right:0}
+td.n{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-3);white-space:nowrap}
+code,.mono{font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.84em;background:var(--code-bg);padding:1px 5px;border-radius:3px}
+.ws{margin:26px 0 0;padding:16px 0 4px;border-top:1px solid var(--rule)}
+.ws:first-of-type{border-top:0}
+.ws-head{display:flex;gap:12px;align-items:baseline}
+.ws-letter{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-3);width:1.4em;flex:0 0 auto}
+.ws h3{margin-top:0}
+.ws ul{font-size:.95rem;color:var(--ink-2);margin-top:6px}
+.ws-body{padding-left:calc(1.4em + 12px)}
+@media (max-width:640px){.ws-body{padding-left:0}}
+.ms{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--rule)}
+.ms:last-of-type{border-bottom:1px solid var(--rule)}
+.ms-when{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--ink-3);line-height:1.5;padding-top:4px}
+.ms-when b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.05rem;color:var(--ink);font-weight:700;margin-bottom:4px}
+.ms h3{margin-top:0;font-size:1.1rem}
+.ms p{margin:6px 0;font-size:.95rem}
+.ms ul{margin:6px 0;font-size:.93rem;color:var(--ink-2)}
+.done{margin-top:10px;padding:8px 12px;background:var(--ok-soft);border-left:3px solid var(--ok);font-size:.9rem}
+.done b{font-family:"Bricolage Grotesque",sans-serif;color:var(--ok)}
+@media (max-width:640px){.ms{grid-template-columns:1fr;gap:6px}}
+.approach{margin:22px 0 0;padding:16px 0 6px;border-top:1px solid var(--rule)}
+.approach:first-of-type{border-top:0}
+.approach-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.approach-rank{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.6rem;color:var(--ink-3);width:1.2em;flex:0 0 auto;line-height:1}
+.approach h3{margin-top:0}
+.approach p{font-size:.97rem;margin:8px 0}
+.approach dl{margin:8px 0 0;display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;font-size:.93rem}
+.approach dt{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);padding-top:2px}
+.approach dd{margin:0;color:var(--ink-2)}
+@media (max-width:640px){.approach dl{grid-template-columns:1fr;gap:2px 0}.approach dd{margin-bottom:8px}}
+.steps{counter-reset:step;list-style:none;padding:0;margin:14px 0}
+.steps li{counter-increment:step;display:grid;grid-template-columns:2.2em 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);margin:0}
+.steps li::before{content:counter(step);font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink-3);padding-top:4px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <div class="eyebrow">Contents</div>
+  <ol><li><a href="#s1"><span class="num">1</span>System overview</a></li><li><a href="#s2"><span class="num">2</span>Repository and tooling</a></li><li><a href="#s3"><span class="num">3</span>Environments</a></li><li><a href="#s4"><span class="num">4</span>Hosting</a></li><li><a href="#s5"><span class="num">5</span>Build</a></li><li><a href="#s6"><span class="num">6</span>Deployment pipeline</a></li><li><a href="#s7"><span class="num">7</span>Scheduled jobs</a></li><li><a href="#s8"><span class="num">8</span>Backup and recovery</a></li><li><a href="#s9"><span class="num">9</span>Security and privacy</a></li><li><a href="#s10"><span class="num">10</span>Observability</a></li><li><a href="#s11"><span class="num">11</span>Cost and the first upgrade</a></li><li><a href="#s12"><span class="num">12</span>Runbooks to write</a></li><li><a href="#s13"><span class="num">13</span>Open questions</a></li></ol>
+</nav>
+
+<main>
+<div class="eyebrow">Technical specification · Draft 2</div>
+<h1>GCSE Home Study Companion</h1>
+<p class="lede">This document says where each part of the system runs, how it is built, and how a change gets from a pull request to a family's phone. It does not repeat the product requirements or the data model; those are in the PRD and the plan.</p>
+<div class="meta">
+  <div><b>Covers</b>Hosting, build, deployment, AI drafting</div>
+  <div><b>Date</b>2 September 2026</div>
+  <div><b>Status</b>Draft for review</div>
+  <div><b>Source</b>PRD section 12, delivery plan</div>
+</div>
+<h2 id="s1">1. System overview</h2>
+<p>Five hosted services and one repository. Nothing runs on a server the team maintains.</p>
+<div class="tablewrap"><table><tr><th>Part</th><th>Runs on</th><th>Holds</th></tr><tr><td>Student, parent, and tutor app</td><td>Cloudflare Pages, <code>apps/web</code></td><td>Static build of a React progressive web app</td></tr><tr><td>Authoring tool</td><td>Cloudflare Pages, <code>apps/admin</code></td><td>Static build, separate project and hostname</td></tr><tr><td>Secret-holding endpoints</td><td>Cloudflare Pages Functions, inside each app</td><td>Signed R2 uploads, email sending, username sign-in</td></tr><tr><td>Database, auth, rules</td><td>Supabase, London</td><td>Postgres with row-level security, Auth, Postgres functions</td></tr><tr><td>Media</td><td>Cloudflare R2</td><td>Diagrams, images, audio, published content bundles, backups</td></tr><tr><td>Email</td><td>Resend</td><td>Verification, password reset, invites, weekly digest</td></tr><tr><td>Scheduled jobs</td><td>GitHub Actions cron</td><td>Keep-alive, decay, digest trigger, backup</td></tr></table></div>
+<p>Request path for a student: browser loads the app shell from Pages, signs in against Supabase Auth, reads content and progress from Postgres over the Supabase client with the anon key and row-level security, and fetches media from R2 through a custom hostname. Nothing secret reaches the browser.</p>
+<h2 id="s2">2. Repository and tooling</h2>
+<p>One repository with pnpm workspaces.</p>
+<div class="tree">apps/web            React + TypeScript + Vite, the PWA
+apps/admin          React + TypeScript + Vite, the authoring tool
+packages/shared     Zod schemas, marking functions, types generated from the database
+supabase/           config.toml, migrations/, functions/, tests/, seed/
+.github/workflows/  ci.yml, deploy.yml, jobs.yml
+docs/               Requirements, plan, this document</div>
+<ul><li><strong>Runtime versions.</strong> Node current LTS pinned in <code>.nvmrc</code> and the <code>packageManager</code> field; pnpm pinned the same way so CI and laptops match.</li><li><strong>Language and lint.</strong> TypeScript strict. ESLint with the React and TypeScript presets. Prettier for formatting. Both run in CI and as a pre-commit hook through the repository's own script, not a global install.</li><li><strong>Frontend libraries.</strong> React, React Router, TanStack Query, Tailwind with a per-subject theme file, KaTeX, Zod. The shared package is consumed from source through the workspace; Vite resolves it, so there is no separate build step for it.</li><li><strong>Tests.</strong> Vitest for the shared package and component logic. pgTAP for database functions and row-level security policies. Playwright for the critical flows: sign in, add student, lesson step, quiz attempt, worksheet self-mark, parent summary.</li><li><strong>Database types.</strong> <code>supabase gen types typescript</code> writes <code>packages/shared/src/database.types.ts</code>. CI regenerates it and fails if the checked-in file is stale.</li></ul>
+<h2 id="s3">3. Environments</h2>
+<div class="tablewrap"><table><tr><th>Environment</th><th>Frontend</th><th>Database</th><th>Purpose</th></tr><tr><td>Local</td><td><code>vite dev</code> on the laptop</td><td>Supabase CLI in Docker, seeded with the sample pack</td><td>Development and pgTAP</td></tr><tr><td>Preview</td><td>Cloudflare Pages preview per pull request</td><td>Staging Supabase project</td><td>Review a change on a real phone before merge</td></tr><tr><td>Staging</td><td>Cloudflare Pages branch <code>main</code></td><td>Staging Supabase project</td><td>Where migrations land first; used by the content author</td></tr><tr><td>Production</td><td>Cloudflare Pages production deployment</td><td>Production Supabase project</td><td>Real families</td></tr></table></div>
+<p>Two Supabase projects, staging and production, both within the free allowance. The staging project holds real content because the author works there; it is copied forward to production at each content release rather than the other way round. Both projects receive the daily keep-alive ping.</p>
+<p>Local development needs Docker for the Supabase CLI. A developer without Docker can point <code>vite dev</code> at the staging project with the staging anon key; this is the documented fallback, not the default.</p>
+<h3>Environment variables</h3>
+<div class="tablewrap"><table><tr><th>Name</th><th>Where set</th><th>Public</th></tr><tr><td><code>VITE_SUPABASE_URL</code>, <code>VITE_SUPABASE_ANON_KEY</code></td><td>Pages build settings per environment</td><td>Yes, baked into the bundle</td></tr><tr><td><code>VITE_MEDIA_BASE_URL</code></td><td>Pages build settings</td><td>Yes</td></tr><tr><td><code>SUPABASE_SERVICE_ROLE_KEY</code></td><td>GitHub Actions secrets, Pages Functions bindings</td><td>Never</td></tr><tr><td><code>RESEND_API_KEY</code></td><td>Pages Functions bindings, Supabase function secrets</td><td>Never</td></tr><tr><td><code>ANTHROPIC_API_KEY</code></td><td>Pages Functions bindings for the admin app, GitHub Actions secrets for batch jobs</td><td>Never</td></tr><tr><td><code>R2_ACCESS_KEY_ID</code>, <code>R2_SECRET_ACCESS_KEY</code></td><td>Pages Functions bindings, GitHub Actions secrets</td><td>Never</td></tr><tr><td><code>SUPABASE_ACCESS_TOKEN</code>, <code>SUPABASE_DB_PASSWORD</code></td><td>GitHub Actions secrets</td><td>Never</td></tr></table></div>
+<p>The anon key is safe to expose because every table is behind row-level security. The service role key bypasses it and is therefore never in a browser bundle, a Pages build variable, or a <code>.env</code> file committed to git. A <code>.env.example</code> lists the public names with empty values.</p>
+<h2 id="s4">4. Hosting</h2>
+<h3>Cloudflare Pages</h3>
+<p>Two Pages projects connected to the GitHub repository.</p>
+<ul><li><code>apps/web</code> builds with <code>pnpm --filter web build</code>, root directory set to the repository root so the workspace resolves, output <code>apps/web/dist</code>.</li><li><code>apps/admin</code> builds the same way from <code>apps/admin</code>.</li><li>Production branch is <code>main</code>. Every other branch and pull request gets a preview URL.</li><li>Custom hostnames: <code>app.[YOUR DOMAIN]</code> and <code>admin.[YOUR DOMAIN]</code>. Cloudflare manages DNS and TLS.</li><li>Headers set in <code>apps/web/public/_headers</code>: a content security policy that allows scripts only from self, connections only to the Supabase project and the media hostname, frames from nowhere; <code>Strict-Transport-Security</code>; <code>X-Content-Type-Options: nosniff</code>; <code>Referrer-Policy: strict-origin-when-cross-origin</code>. The admin app gets the same set.</li><li>SPA routing through <code>apps/web/public/_redirects</code> sending unknown paths to <code>index.html</code>.</li></ul>
+<h3>Pages Functions</h3>
+<p>A small <code>functions/</code> directory inside each app. Each function holds a secret and does one thing.</p>
+<div class="tablewrap"><table><tr><th>Function</th><th>App</th><th>Purpose</th></tr><tr><td><code>POST /api/sign-in</code></td><td>web</td><td>Maps a child username to the generated internal email and forwards to Supabase Auth, so the mapping is not visible in the client</td></tr><tr><td><code>POST /api/media/upload-url</code></td><td>admin</td><td>Checks the caller is an editor, returns a signed R2 PUT URL valid for ten minutes</td></tr><tr><td><code>POST /api/email/send</code></td><td>web, admin</td><td>Sends a template through Resend after checking the caller and the template name</td></tr><tr><td><code>POST /api/draft</code></td><td>admin</td><td>Checks the caller is an editor, calls the model with the content schema as the output format, streams parts back, and saves the result as an unpublished AI-drafted version. Detailed in section 4.7</td></tr></table></div>
+<p>Anything that needs only the caller's own permissions goes straight to Supabase from the browser. Functions are the exception, not the API layer.</p>
+<h3>Supabase</h3>
+<ul><li>One project per environment in the London region.</li><li><strong>Auth.</strong> Email plus password, Google, Apple for parents and tutors. Email confirmation required. Child accounts are created by a Postgres function called from the parent's session that inserts an auth user with the generated email <code>&lt;username&gt;@students.[YOUR DOMAIN]</code> and a <code>must_change_password</code> flag on the student row.</li><li><strong>Database.</strong> All rules that must agree across clients are Postgres functions: <code>record_attempt</code>, <code>compute_topic_status</code>, <code>apply_decay</code>, <code>next_tasks</code>, <code>weekly_summary</code>, <code>validate_topic</code>, <code>publish_topic_version</code>. Clients call them through RPC.</li><li><strong>Row-level security</strong> on every table from the first migration. Policies are tested with pgTAP against three fixtures: a family, a second family, and a tutor linked to one student.</li><li><strong>Edge Functions.</strong> Only where a database function cannot do the job and a Pages Function would need a Supabase-side trigger: the weekly digest renderer in Phase 2. Everything else is Postgres or Pages Functions.</li><li><strong>Free tier limits that matter.</strong> 500 MB database, 1 GB file storage (unused; media is on R2), pause after seven days without a request, no automated backups. The keep-alive job and the weekly dump cover the last two.</li></ul>
+<h3>Cloudflare R2</h3>
+<ul><li>One bucket per environment: <code>study-media-staging</code>, <code>study-media-production</code>. A third, <code>study-backups</code>, holds database dumps.</li><li>Media buckets are served through a custom hostname <code>media.[YOUR DOMAIN]</code> with public read. Objects are keyed by content hash, so cache headers can be <code>immutable</code> with a one-year max age.</li><li>From milestone M3, published topic versions are also written here as JSON bundles keyed by hash, under <code>content/&lt;topic&gt;/&lt;hash&gt;.json</code>. The app fetches these instead of reading lesson steps from Postgres.</li><li>Writes only through the signed URL function or GitHub Actions. No R2 credentials in a browser.</li></ul>
+<h3>Resend</h3>
+<ul><li>Verified sending domain <code>[YOUR DOMAIN]</code> with SPF and DKIM records in Cloudflare DNS.</li><li>Templates live in the repository under <code>packages/shared/src/email/</code> as functions that return HTML, so they are versioned and testable.</li><li>Free allowance is 3,000 emails a month; a family of five with a weekly digest uses about 30.</li></ul>
+<h3>Domain and DNS</h3>
+<p>The domain is not chosen yet. Every hostname above uses <code>[YOUR DOMAIN]</code> until it is. DNS sits in Cloudflare so Pages, R2 hostnames, and Resend records are managed in one place.</p>
+<h3>AI drafting service</h3>
+<p>The authoring tool drafts content with Claude; a human reviews every version before it can publish. The service is one Pages Function inside the admin app, so the API key never leaves the server.</p>
+<ul><li><strong>SDK and model.</strong> The official TypeScript SDK, <code>@anthropic-ai/sdk</code>, calling <code>claude-opus-5</code> with adaptive thinking. Thinking is on by default on that model; effort is set to <code>high</code> for topic drafts and <code>medium</code> for question batches.</li><li><strong>Output shape.</strong> The request sets the content schema as a structured output format, generated from the same Zod schema in <code>packages/shared</code> that validates authored content. The response is therefore already a valid topic or question set, and the ADM-1 publish rules run on it straight away. Anything the model returns that still fails the schema is rejected and retried once with the validation errors in the prompt.</li><li><strong>Prompt.</strong> A stable system prompt per subject: the specification's topic list and command words, the house style for lesson steps and visuals, the mark scheme conventions of the board, and the grade 9 discriminator patterns. That prefix is cached with prompt caching, so repeated drafts in a session pay for the topic-specific part only. Volatile content, the topic brief, comes last.</li><li><strong>Streaming.</strong> Topic drafts are long, so the function streams and forwards progress to the editor as each part completes. The editor sees the lesson arrive, then each worksheet, then the quiz.</li><li><strong>Provenance.</strong> Every content version stores <code>drafted_by</code> (model id and prompt version, or a person), <code>reviewed_by</code>, and <code>reviewed_at</code>. <code>publish_topic_version</code> refuses a version whose <code>drafted_by</code> is a model and whose <code>reviewed_by</code> is null. This is a database rule, not a UI rule.</li><li><strong>Batch mode.</strong> Whole-unit question generation (ADM-7) runs through the Message Batches API from a GitHub Actions job on manual dispatch, at half the per-token price, and lands questions in the bank as unreviewed.</li><li><strong>Refusals and errors.</strong> The function checks the stop reason before reading content and surfaces a refusal or a rate limit to the editor as a message rather than an empty draft. Retries are the SDK's defaults.</li><li><strong>Cost.</strong> A full topic draft is roughly 15,000 input tokens, mostly cached, and 25,000 output tokens. At Opus 5 rates that is under one dollar per topic, so the 50 to 80 topics of Phase 1 cost tens of dollars, with regenerations on top. Batch question generation is cheaper again. The key sits on a workspace with a monthly spend limit set in the Anthropic console.</li><li><strong>What the model does not do.</strong> It does not mark student work, and it is never called from the student app. Section 11 of the PRD keeps free-text marking out of scope; this service is authoring only.</li></ul>
+<h2 id="s5">5. Build</h2>
+<h3>Frontend build</h3>
+<ul><li><code>vite build</code> per app with content-hashed filenames, so every deploy is cache-safe.</li><li>Route-level code splitting: home, lesson, quiz, worksheet, parent, and settings are separate chunks. KaTeX and its fonts are a chunk loaded on the first lesson or question that needs maths, and are self-hosted, not pulled from a CDN.</li><li>Tailwind purges by the source tree; subject themes are CSS custom properties switched on the subject root element, so one stylesheet serves all subjects.</li><li>Bundle budget checked in CI: the initial chunk for the student app under 200 KB compressed. Lighthouse CI runs against the preview deployment with a throttled mobile profile and fails below the performance budget.</li></ul>
+<h3>Progressive web app</h3>
+<ul><li><code>vite-plugin-pwa</code> generates the manifest and a Workbox service worker.</li><li>Precache: the app shell and route chunks.</li><li>Runtime cache: content bundles and media are cache-first because their names carry a hash; Supabase RPC responses are network-first with a short fallback to the persisted TanStack Query cache in IndexedDB.</li><li>Writes while offline are queued in IndexedDB with client-generated attempt and answer IDs and replayed when the connection returns. Inserts are idempotent on those IDs.</li><li>Update strategy: the new service worker waits, the app shows an "Update available" prompt, and never reloads mid-quiz.</li></ul>
+<h3>Database build</h3>
+<ul><li>Migrations are timestamped SQL files under <code>supabase/migrations/</code>, written by hand or captured with <code>supabase db diff</code> from a local change.</li><li>Every migration is reversible by a forward migration, not by a down script. A bad migration is fixed by the next one.</li><li><code>supabase/seed/</code> holds the sample content pack and the three test families. <code>supabase db reset</code> rebuilds a local database from migrations plus seed in under a minute.</li><li>pgTAP tests under <code>supabase/tests/</code> run with <code>supabase test db</code>.</li></ul>
+<h2 id="s6">6. Deployment pipeline</h2>
+<h3>On every pull request</h3>
+<p><code>ci.yml</code>, about eight minutes.</p>
+<ol class="steps"><li>Install with a pnpm cache.</li><li>Type check all workspaces.</li><li>Lint and format check.</li><li>Vitest.</li><li>Start the Supabase CLI stack in the runner, apply migrations and seed, run pgTAP, regenerate database types and diff against the checked-in file.</li><li>Cloudflare Pages builds the preview in parallel from its GitHub integration.</li><li>Playwright runs against the preview URL once Pages reports it ready, using a throwaway family created through the staging project and deleted afterwards.</li><li>Lighthouse CI against the preview URL.</li></ol>
+<p>A pull request cannot merge until all of these pass. Reviews are required for <code>supabase/migrations/</code> and <code>packages/shared/src/marking/</code>.</p>
+<h3>On merge to main</h3>
+<p><code>deploy.yml</code>.</p>
+<ol class="steps"><li>Pages deploys <code>main</code> as the production build of both apps automatically.</li><li>A job applies migrations to the staging project with <code>supabase db push</code>, then deploys Edge Functions if any changed.</li><li>A second job, gated by a GitHub environment named <code>production</code> that requires one approval, applies the same migrations to the production project.</li></ol>
+<p>Frontend and database therefore deploy in the same run, but the production database step waits for a human click. Until Phase 1 ships to a family outside the household, the approval is the owner's; the gate is still there so that the habit exists.</p>
+<p>Compatibility rule: a frontend on <code>main</code> must work against the previous migration set, because Pages deploys before the production database is approved. Add columns before using them; remove them a release after the last reader is gone.</p>
+<h3>Content releases</h3>
+<p>Content is not in git. The author publishes to staging through the admin tool. A content release copies published topic versions from staging to production with a script in <code>supabase/scripts/promote-content.ts</code>, run from GitHub Actions on manual dispatch. The script copies only published versions and never touches attempts or families.</p>
+<h3>Rollback</h3>
+<ul><li><strong>Frontend.</strong> Cloudflare Pages keeps every deployment. Rollback is selecting a previous one in the dashboard, under a minute.</li><li><strong>Database.</strong> No automatic rollback. Write a forward migration. If data is damaged, restore from the latest weekly dump into a fresh project and promote it, which is the recovery drill in section 8.</li><li><strong>Content.</strong> Every version is immutable; a bad version is followed by a corrected one. Attempts stay attached to the version they were taken against.</li></ul>
+<h2 id="s7">7. Scheduled jobs</h2>
+<p><code>jobs.yml</code>, one workflow with several cron triggers, each calling a Postgres function with the service role key over the Supabase REST endpoint.</p>
+<div class="tablewrap"><table><tr><th>Job</th><th>Schedule</th><th>What it does</th></tr><tr><td>Keep-alive</td><td>Daily 06:00 UTC</td><td>One cheap select on each project so neither pauses; a failure fails the workflow and emails the owner, which doubles as uptime monitoring</td></tr><tr><td>Decay</td><td>Daily 02:00 UTC</td><td>Calls <code>apply_decay</code>; steps statuses down for topics not revisited in six weeks</td></tr><tr><td>Weekly digest</td><td>Sunday 07:00 UTC, Phase 2</td><td>Calls the digest function for every parent who has it on; it renders and sends through Resend</td></tr><tr><td>Backup</td><td>Sunday 03:00 UTC</td><td><code>pg_dump</code> of the production project through the Supabase CLI, compressed, uploaded to <code>study-backups</code> with the date in the key</td></tr><tr><td>Backup prune</td><td>Sunday 04:00 UTC</td><td>Keeps the last twelve weekly dumps</td></tr></table></div>
+<p>GitHub Actions cron can drift by several minutes and skips if the repository is inactive for sixty days; a monthly no-op commit from the workflow itself prevents that.</p>
+<h2 id="s8">8. Backup and recovery</h2>
+<ul><li>Weekly logical dump to R2 as above. Recovery point objective is one week on the free tier; upgrading Supabase to Pro brings daily point-in-time backups and drops it to a day.</li><li>Media on R2 is mirrored weekly to a second bucket in the same job, since R2 has no versioning.</li><li>Recovery drill in milestone M5: restore the latest dump into a fresh Supabase project, point a preview deployment at it, sign in as the test family, and confirm attempts and status match. Written up as a runbook in <code>docs/runbooks/restore.md</code>.</li><li>The family owner's data export, required by the PRD, is a Postgres function that returns the family's rows as JSON, served through a Pages Function that streams it as a download.</li></ul>
+<h2 id="s9">9. Security and privacy</h2>
+<ul><li>Row-level security is the access model. There is no application server that could bypass it by mistake.</li><li>The service role key lives only in GitHub Actions secrets and Pages Function bindings.</li><li>Content security policy as in section 4.1. No third-party scripts on student screens. Analytics, if any, is Cloudflare Web Analytics, which is cookieless and can be limited to the marketing page.</li><li>Child accounts have no email of their own; the generated address is never displayed or mailed. Password reset for a child goes through the parent.</li><li>Supabase Auth rate limits stay on. The sign-in Pages Function adds its own limit per IP.</li><li>Dependencies are updated by Dependabot weekly; CI must pass for the update to merge.</li></ul>
+<h2 id="s10">10. Observability</h2>
+<ul><li><strong>Errors.</strong> Sentry free tier in both apps, with the student's user ID as the only identifier, no session replay, and no capture on student screens beyond the error itself.</li><li><strong>Logs.</strong> Supabase project logs for auth and database, Cloudflare logs for Pages Functions. Both are retained on the free tier for a short window, which is enough for the pilot.</li><li><strong>Uptime.</strong> The keep-alive job. If it fails twice in a row, the owner has an email.</li><li><strong>Usage.</strong> A weekly query in the backup workflow prints database size, row counts for attempts, and R2 bucket size into the workflow summary so the free-tier ceilings are visible before they are hit.</li></ul>
+<h2 id="s11">11. Cost and the first upgrade</h2>
+<div class="tablewrap"><table><tr><th>Service</th><th>Free allowance used in Phase 1</th><th>First paid step</th></tr><tr><td>Cloudflare Pages</td><td>Unlimited bandwidth, 500 builds a month</td><td>None expected</td></tr><tr><td>Cloudflare R2</td><td>10 GB storage, 10 million reads a month</td><td>Pay per GB beyond, cents</td></tr><tr><td>Supabase</td><td>500 MB, two projects, pauses when idle</td><td>Pro at 25 dollars a month for production: no pausing, daily backups, 8 GB</td></tr><tr><td>Resend</td><td>3,000 emails a month</td><td>20 dollars a month at 50,000</td></tr><tr><td>GitHub Actions</td><td>2,000 minutes a month on a private repository</td><td>2,000 minutes covers about 250 CI runs; the repository can be public to remove the cap</td></tr><tr><td>Sentry</td><td>5,000 errors a month</td><td>Team plan when exceeded</td></tr><tr><td>Anthropic API</td><td>Pay as you go; under one dollar per drafted topic</td><td>Spend limit on the workspace; nothing to upgrade</td></tr></table></div>
+<p>The only planned upgrade before pricing is decided is Supabase Pro for the production project when the pilot starts, so that the pilot family never meets a paused database.</p>
+<h2 id="s12">12. Runbooks to write</h2>
+<p>Short, in <code>docs/runbooks/</code>, each written when the step is first done for real.</p>
+<ul><li>Set up a laptop: clone, <code>pnpm install</code>, <code>supabase start</code>, <code>pnpm dev</code>.</li><li>Create a new environment: Supabase project, Pages project, R2 bucket, secrets.</li><li>Deploy and approve a production migration.</li><li>Promote a content release.</li><li>Restore from backup.</li><li>Rotate the service role key and R2 keys.</li><li>Rotate the Anthropic API key and update the drafting prompt version.</li></ul>
+<h2 id="s13">13. Open questions</h2>
+<ol class="steps"><li>Domain name. Every hostname in this document waits on it.</li><li>Whether the admin tool needs its own Pages project or can live under <code>app.[YOUR DOMAIN]/admin</code> behind the editor role. Separate is cleaner for the content security policy and is the default here.</li><li>Whether to make the repository public to lift the GitHub Actions minute cap. Nothing secret is in git, so the only cost is visibility.</li><li>Sentry versus no error tracking in the pilot. The default is to include it, since a pilot with no error visibility wastes the pilot.</li></ol>
+</main>
+</div>
