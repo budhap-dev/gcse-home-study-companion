@@ -1,0 +1,508 @@
+<title>GCSE Home Study Companion</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F8F9F6; --ink:#1E2536; --ink-2:#4A5266; --ink-3:#7B8394;
+  --rule:#D9DDD6; --panel:#EEF1EC; --panel-2:#E4E9E2;
+  --accent:#1D6F8A; --accent-ink:#155A70; --accent-soft:#DCEBF0;
+  --mark:#B5451B; --mark-soft:#F6E3DA;
+  --hi:#F2C94C; --hi-soft:#FBF0C9;
+  --ok:#2F7D4F; --ok-soft:#DCEFE2;
+  --code-bg:#EAEDE7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#151920; --ink:#E7EAF0; --ink-2:#B4BAC8; --ink-3:#7F8798;
+    --rule:#2B313D; --panel:#1D222B; --panel-2:#252B36;
+    --accent:#5FB3CC; --accent-ink:#8ACBDD; --accent-soft:#1B3A45;
+    --mark:#E38A63; --mark-soft:#3E271D;
+    --hi:#E5C24F; --hi-soft:#3E3517;
+    --ok:#6FC08D; --ok-soft:#1B3526;
+    --code-bg:#20262F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151920; --ink:#E7EAF0; --ink-2:#B4BAC8; --ink-3:#7F8798;
+  --rule:#2B313D; --panel:#1D222B; --panel-2:#252B36;
+  --accent:#5FB3CC; --accent-ink:#8ACBDD; --accent-soft:#1B3A45;
+  --mark:#E38A63; --mark-soft:#3E271D;
+  --hi:#E5C24F; --hi-soft:#3E3517;
+  --ok:#6FC08D; --ok-soft:#1B3526;
+  --code-bg:#20262F;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:17px;line-height:1.55;margin:0}
+a{color:var(--accent-ink)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{display:grid;grid-template-columns:220px minmax(0,72ch);gap:56px;max-width:1120px;margin:0 auto;padding:48px 32px 96px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 20px 72px}.toc{position:static}}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2.6rem;font-weight:700;letter-spacing:-0.01em}
+h2{font-size:1.5rem;font-weight:700;margin-top:64px;padding-top:20px;border-top:2px solid var(--ink)}
+h3{font-size:1.15rem;font-weight:700;margin-top:32px}
+h4{font-size:1rem;font-weight:700;margin-top:20px}
+p{margin:12px 0}
+ul,ol{margin:10px 0;padding-left:1.4em}
+li{margin:5px 0}
+li::marker{color:var(--ink-3)}
+.eyebrow{font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px}
+.lede{font-size:1.2rem;color:var(--ink-2);margin-top:16px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px 24px;margin-top:28px;padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.meta div{font-size:.9rem;color:var(--ink-2)}
+.meta b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:.95rem;color:var(--ink);font-weight:700}
+.toc{position:sticky;top:24px;align-self:start;font-family:"Bricolage Grotesque",sans-serif;font-size:.86rem}
+.toc .eyebrow{margin-bottom:8px}
+.toc ol{list-style:none;padding:0;margin:0;border-left:1px solid var(--rule)}
+.toc li{margin:0}
+.toc a{display:block;padding:5px 12px;color:var(--ink-2);text-decoration:none;border-left:2px solid transparent;margin-left:-1px}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .num{display:inline-block;width:1.6em;color:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:.75rem}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.04em;padding:2px 7px;border-radius:3px;white-space:nowrap;vertical-align:middle}
+.tag.must{background:var(--mark-soft);color:var(--mark)}
+.tag.should{background:var(--accent-soft);color:var(--accent-ink)}
+.tag.could{background:var(--panel-2);color:var(--ink-2)}
+.tag.assume{background:var(--hi-soft);color:var(--ink)}
+.tag.open{background:var(--mark-soft);color:var(--mark)}
+.callout{background:var(--panel);border-left:3px solid var(--hi);padding:14px 18px;margin:20px 0;font-size:.95rem}
+.callout p{margin:6px 0}
+.callout .eyebrow{color:var(--ink-2);margin-bottom:4px}
+.tablewrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;text-align:left;font-size:.82rem;letter-spacing:.02em;color:var(--ink-2);border-bottom:2px solid var(--ink);padding:8px 10px 8px 0;vertical-align:bottom}
+td{border-bottom:1px solid var(--rule);padding:9px 10px 9px 0;vertical-align:top}
+td:last-child,th:last-child{padding-right:0}
+code,.mono{font-family:"IBM Plex Mono",Menlo,Consolas,monospace;font-size:.84em;background:var(--code-bg);padding:1px 5px;border-radius:3px}
+.tree{font-family:"IBM Plex Mono",Menlo,monospace;font-size:.84rem;line-height:1.6;background:var(--panel);padding:16px 20px;overflow-x:auto;margin:18px 0;white-space:pre}
+.tree b{color:var(--accent-ink);font-weight:500}
+.story{margin:18px 0 0;padding:14px 0 16px;border-top:1px solid var(--rule)}
+.story:first-of-type{border-top:0}
+.story-head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.story-id{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--ink-3)}
+.story-title{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1rem}
+.story p{margin:8px 0 4px;font-size:.97rem}
+.story ul{margin:4px 0 0;font-size:.92rem;color:var(--ink-2)}
+.story ul li{margin:3px 0}
+.ac{font-family:"Bricolage Grotesque",sans-serif;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:8px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:18px 0}
+@media (max-width:640px){.twocol{grid-template-columns:1fr}}
+.persona{background:var(--panel);padding:16px 18px}
+.persona h4{margin-top:0}
+.persona p{font-size:.93rem;margin:8px 0}
+.persona ul{font-size:.9rem;color:var(--ink-2)}
+.phase{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--rule)}
+.phase:last-child{border-bottom:1px solid var(--rule)}
+.phase b{font-family:"Bricolage Grotesque",sans-serif}
+.phase small{display:block;color:var(--ink-3);font-size:.8rem;font-family:"IBM Plex Mono",monospace}
+.phase p{margin:0 0 4px;font-size:.95rem}
+.rag{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:6px}
+.rag.r{background:var(--mark)}.rag.a{background:var(--hi)}.rag.g{background:var(--ok)}.rag.b{background:var(--accent)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.85rem;color:var(--ink-2);margin:10px 0 0}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Contents">
+  <div class="eyebrow">Contents</div>
+  <ol>
+    <li><a href="#s1"><span class="num">1</span>Summary</a></li>
+    <li><a href="#s2"><span class="num">2</span>Assumptions and open questions</a></li>
+    <li><a href="#s3"><span class="num">3</span>Users, family model, and tutors</a></li>
+    <li><a href="#s4"><span class="num">4</span>Subject scope</a></li>
+    <li><a href="#s5"><span class="num">5</span>Content model</a></li>
+    <li><a href="#s6"><span class="num">6</span>Progress model</a></li>
+    <li><a href="#s6b"><span class="num">7</span>Motivation and engagement</a></li>
+    <li><a href="#s7"><span class="num">8</span>Epics and user stories</a></li>
+    <li><a href="#s8"><span class="num">9</span>Non-functional requirements</a></li>
+    <li><a href="#s9"><span class="num">10</span>Delivery phases</a></li>
+    <li><a href="#s10"><span class="num">11</span>Out of scope</a></li>
+    <li><a href="#s12"><span class="num">12</span>Technical approach</a></li>
+    <li><a href="#s11"><span class="num">13</span>Decisions needed</a></li>
+  </ol>
+</nav>
+
+<main>
+<div class="eyebrow">Product requirements · Draft 4</div>
+<h1>GCSE Home Study Companion</h1>
+<p class="lede">A web app where a student self-studies eight GCSE subjects to Higher tier and beyond, with step-by-step lessons, graded worksheets, exam technique, and recap quizzes, all pitched at a grade 9 target, while their parent, and optionally a tutor, follows progress from a linked account.</p>
+<div class="meta">
+  <div><b>Author</b>Drafted with Claude for Vipin</div>
+  <div><b>Date</b>2 September 2026</div>
+  <div><b>Status</b>Draft for review</div>
+  <div><b>Audience</b>Product owner, future dev team</div>
+</div>
+
+<h2 id="s1">1. Summary</h2>
+<p>Parents of GCSE students want to support revision at home without becoming the teacher. The app is interactive and works fully on phone, tablet, and desktop, so a student can complete a lesson on the bus and a worksheet on a tablet with a stylus. Existing tools are either exam-board revision sites aimed at the student alone, or school-facing platforms a family cannot buy. This product sits in the gap: a student works through a structured path from first principles to Higher-tier and extension-level worksheets, and the parent sees a truthful picture of what has been covered, what is secure, and where help is needed.</p>
+<p>The product succeeds when a parent can answer three questions in under a minute: <em>What did my child work on this week? Which topics are weak? What should they do next?</em> And when a student can open the app and always be given a sensible next step without deciding it themselves.</p>
+<h3>Goals</h3>
+<ul>
+  <li>Cover the full Higher-tier specification for eight subjects, with Maths extended to the Further Maths level.</li>
+  <li>Pitch everything at grade 9. Lessons go to the depth a grade 9 answer needs, the top worksheet level is built from grade 9 discriminator questions, and progress reports "grade 9 ready" per topic rather than just "done".</li>
+  <li>Every topic has the same four things: a stepped lesson, worksheets at three levels, an exam technique note, and a recap quiz with full answers and mark schemes.</li>
+  <li>Progress is per topic and per skill, not just "lessons viewed", and is visible to both student and parent.</li>
+  <li>A parent can link to one or more children and each child can have more than one parent. A tutor can be linked to a student with the parent's consent and sees the same progress.</li>
+  <li>Lessons are colourful, visual, and example-led. Every step carries a diagram, image, or worked example, and a student who is 14 should want to come back tomorrow.</li>
+</ul>
+<h3>Non-goals for the first release</h3>
+<ul>
+  <li>Live tutoring, chat, or marking by humans.</li>
+  <li>Foundation-tier content. Higher tier is the target; Foundation may be added later as a subset.</li>
+  <li>School or classroom accounts. Individual tutors are in scope; institutions are not.</li>
+</ul>
+
+<h2 id="s2">2. Assumptions and open questions</h2>
+<p>These are working assumptions so the design can proceed. Each is tagged so it is easy to find and overturn.</p>
+<div class="tablewrap"><table>
+<tr><th>Area</th><th>Working assumption</th><th>Status</th></tr>
+<tr><td>Exam boards</td><td>Confirmed: Maths Edexcel (1MA1), Further Maths AQA Level 2 (8365), Biology Edexcel (1BI0), Physics AQA (8463), Chemistry AQA (8462), Computer Science AQA (8525), Business Edexcel (1BS0), French Edexcel (1FR1, the specification first examined in 2026). Content is written to the named specification, in its topic order and using its command words, equation sheets, and pseudocode conventions. Music is still open and is drafted board-neutral with board notes until decided.</td><td><span class="tag assume">Confirmed (Music open)</span></td></tr>
+<tr><td>"Advanced" and "Further" Maths</td><td>"Advanced" means the top end of GCSE Higher (grade 8 and 9 material). "Further" means AQA Level 2 Certificate in Further Mathematics, which is the common bridge to A-level and is taken alongside Edexcel GCSE Maths by many schools.</td><td><span class="tag assume">Assumed</span></td></tr>
+<tr><td>Sciences</td><td>Separate sciences (Triple Award), Higher tier. Combined Science is a subset and can be derived later.</td><td><span class="tag assume">Assumed</span></td></tr>
+<tr><td>Content authoring</td><td>Content is written by a small editorial team, with AI-assisted drafting and mandatory human review before publishing. The app needs an authoring workflow, not just a content dump.</td><td><span class="tag open">Open</span></td></tr>
+<tr><td>Pricing</td><td>Family subscription with a free trial. Pricing does not affect the first release beyond needing a paywall boundary.</td><td><span class="tag open">Open</span></td></tr>
+<tr><td>Target grade</td><td>Grade 9 in every subject. The Core worksheet level exists only to secure prerequisites quickly; the weight of content and questions sits at Higher and Advanced. Students can lower the target per subject, but the default is 9.</td><td><span class="tag assume">Confirmed</span></td></tr>
+<tr><td>Age of students</td><td>Students are 14 to 16. Under UK GDPR a child under 13 cannot consent to data processing, so the parent creates the child's account and is the account owner in all cases.</td><td><span class="tag assume">Assumed</span></td></tr>
+<tr><td>Platform</td><td>One responsive, installable web app used fully on phone, tablet, and desktop. Every activity, including worksheets, can be completed on-screen with touch; tablets get a scratch canvas for written working. Printing to A4 remains available for those who prefer paper.</td><td><span class="tag assume">Confirmed</span></td></tr>
+<tr><td>Marking</td><td>Quizzes auto-mark. Worksheets are self-marked by the student against a worked solution, and the student records their own score. There is no free-text AI marking in release one.</td><td><span class="tag assume">Assumed</span></td></tr>
+</table></div>
+
+<h2 id="s3">3. Users, the family model, and tutors</h2>
+<div class="twocol">
+  <div class="persona">
+    <h4>Student</h4>
+    <p>Year 10 or 11, revising at home in 30 to 60 minute sessions, often on a laptop with a phone nearby. Wants to be told what to do next and to see evidence of getting better.</p>
+    <ul>
+      <li>Needs a single "next step" on every screen.</li>
+      <li>Wants instant answers and worked solutions, not just a score.</li>
+      <li>Is discouraged by long lists of red.</li>
+    </ul>
+  </div>
+  <div class="persona">
+    <h4>Parent</h4>
+    <p>Wants to help but may not know the subject. Checks in weekly, sometimes daily near exams. Does not want to nag from ignorance.</p>
+    <ul>
+      <li>Needs a weekly summary they can read in one minute.</li>
+      <li>Wants to know which topics are weak and what a good next task would be.</li>
+      <li>May have two or more children on the platform.</li>
+    </ul>
+  </div>
+  <div class="persona">
+    <h4>Tutor</h4>
+    <p>A private tutor with a handful of GCSE students across different families. Sees each student for an hour a week and wants to know what they did in between, set work for the gap, and walk in already knowing the weak topics.</p>
+    <ul>
+      <li>Needs one dashboard across all their students.</li>
+      <li>Wants to assign a specific worksheet or quiz for the week.</li>
+      <li>Must not see children they have not been linked to.</li>
+    </ul>
+  </div>
+  <div class="persona">
+    <h4>Younger sibling in Year 9</h4>
+    <p>Starting GCSE content early. Less self-directed, more responsive to points, badges, and visible progress. The engagement design in section 7 is written with this student in mind.</p>
+    <ul>
+      <li>Needs sessions that feel short and finished.</li>
+      <li>Responds to colour, characters, and immediate feedback.</li>
+    </ul>
+  </div>
+</div>
+<h3>The family relationship</h3>
+<p>Accounts belong to a <strong>family</strong>. A family has one or more parents and one or more students. A parent creates the family, adds a student profile, and the student signs in with their own credentials. A second parent joins through an invite code. Every relationship is explicit and visible to the student, so a child always knows who can see their progress.</p>
+<ul>
+  <li>A parent can see all progress for every student in their family, but cannot answer quizzes or edit results on the student's behalf.</li>
+  <li>A student sees their own progress only.</li>
+  <li>A student can belong to one family. A parent can belong to one family. Separated households are handled by inviting the second parent, not by a second family.</li>
+  <li>Removing a parent or student from a family revokes their access immediately but keeps the student's history intact.</li>
+</ul>
+<h3>Tutors</h3>
+<p>A tutor has their own account type and is linked to individual students, not to families. The link is created by the parent, who sends the tutor an invite for a named child, so a tutor never sees a child without a parent's explicit consent. A tutor can be linked to many students across many families and sees them all on one dashboard.</p>
+<ul>
+  <li>A tutor sees the linked student's topic map, attempts, and weekly summary, exactly as the parent does.</li>
+  <li>A tutor can assign a task (a lesson, worksheet, or quiz) with a due date. It appears on the student's home screen, and the parent can see that it was assigned.</li>
+  <li>A tutor cannot answer or edit attempts on the student's behalf, and cannot see the student's other tutors.</li>
+  <li>Either the parent or the tutor can end the link at any time.</li>
+</ul>
+
+<h2 id="s4">4. Subject scope</h2>
+<p>Eight subjects at Higher tier. The table gives the top-level structure the content will follow and the extra levels each subject needs. Paper structure is listed because exam technique and quizzes are organised around it.</p>
+<div class="tablewrap"><table>
+<tr><th>Subject</th><th>Board</th><th>Levels covered</th><th>Content spine</th><th>Subject-specific needs</th></tr>
+<tr><td>Mathematics</td><td>Edexcel 1MA1<br>AQA L2 Further</td><td>Higher, Advanced (grades 8 to 9), Further Maths (Level 2)</td><td>Number · Algebra · Ratio, proportion and rates of change · Geometry and measures · Probability · Statistics · Further: number and algebra, coordinate geometry, calculus, matrices, geometry and trigonometry</td><td>Three papers: Paper 1 non-calculator, Papers 2 and 3 calculator, 80 marks each. Rendered maths notation. Method and accuracy marks (M, A, B) in the Edexcel style.</td></tr>
+<tr><td>Business</td><td>Edexcel 1BS0</td><td>Untiered</td><td>Theme 1, Investigating small business: enterprise and entrepreneurship · spotting a business opportunity · putting a business idea into practice · making the business effective · external influences. Theme 2, Building a business: growing the business · making marketing decisions · making operational decisions · making financial decisions · making human resource decisions</td><td>Two papers, 90 marks each, one per theme. Case-study and data-response questions. Calculations: break-even, cash flow, profit margins, ARR. Six, nine and twelve-mark evaluate and justify questions marked by level.</td></tr>
+<tr><td>Computer Science</td><td>AQA 8525</td><td>Untiered</td><td>Fundamentals of algorithms · Programming · Data representation · Computer systems · Networks · Cyber security · Relational databases and SQL · Ethical, legal and environmental impacts</td><td>Two papers, 90 marks each: Paper 1 computational thinking and programming, Paper 2 written assessment. Code shown in AQA pseudocode, with Python and C# variants. Trace tables. Binary, hex, and two's complement. SQL questions. In-browser code runner (later phase).</td></tr>
+<tr><td>Physics</td><td>AQA 8463</td><td>Higher, Triple</td><td>Energy · Electricity · Particle model of matter · Atomic structure · Forces · Waves · Magnetism and electromagnetism · Space physics</td><td>Two papers, 100 marks each: Paper 1 topics 1 to 4, Paper 2 topics 5 to 8. AQA equation sheet and the equations to memorise. Ten required practicals. Units and significant figures in marking.</td></tr>
+<tr><td>Chemistry</td><td>AQA 8462</td><td>Higher, Triple</td><td>Atomic structure and the periodic table · Bonding, structure and properties · Quantitative chemistry · Chemical changes · Energy changes · Rate and extent of change · Organic chemistry · Chemical analysis · Chemistry of the atmosphere · Using resources</td><td>Two papers, 100 marks each: Paper 1 topics 1 to 5, Paper 2 topics 6 to 10. AQA periodic table. Mole and titration calculations. Eight required practicals.</td></tr>
+<tr><td>Biology</td><td>Edexcel 1BI0</td><td>Higher, Triple</td><td>Key concepts · Cells and control · Genetics · Natural selection and genetic modification · Health, disease and medicine · Plant structures · Animal coordination and homeostasis · Exchange and transport · Ecosystems and material cycles</td><td>Two papers, 100 marks each: Paper 1 topics 1 to 5, Paper 2 topics 1 and 6 to 9. Eight core practicals. Diagram labelling. Six-mark extended responses marked by level.</td></tr>
+<tr><td>Music</td><td><span class="tag open">Open</span></td><td>Untiered</td><td>Musical elements · Set works or areas of study · Listening and appraising · Composition · Performance</td><td>Audio excerpts for listening questions. Score extracts. Composition and performance are coursework, so the app covers the written listening paper only.</td></tr>
+<tr><td>French</td><td>Edexcel 1FR1</td><td>Higher tier</td><td>Thematic contexts: my personal world · lifestyle and wellbeing · my neighbourhood · media and technology · studying and my future · travel and tourism, across listening, speaking, reading, writing</td><td>Four papers, 25% each. Listening includes dictation; reading includes translation into English; writing includes translation into French. Vocabulary is drawn from the published Edexcel defined vocabulary list, so the app teaches that list. Audio for listening. Grammar reference. Speaking practice is guided self-recording only.</td></tr>
+</table></div>
+<div class="callout">
+  <div class="eyebrow">Scale</div>
+  <p>At roughly 25 to 40 topics per subject, each with a lesson, three worksheets, an exam technique note, and a quiz of 10 to 20 questions, the full catalogue is in the region of 250 topics and 4,000 to 6,000 questions. Content production is the critical path of the whole project and should start before the app does.</p>
+</div>
+
+<h2 id="s5">5. Content model</h2>
+<p>Every subject follows the same tree so the app, the progress model, and the authoring tools can be built once.</p>
+<div class="tree"><b>Subject</b> (Physics)
+└─ <b>Unit</b> (Forces)
+   └─ <b>Topic</b> (Newton's second law)         ← progress is tracked here
+      ├─ <b>Lesson</b>                            ordered steps; each step has one idea,
+      │   ├─ Step 1: Explain                     an example, and a check question
+      │   ├─ Step 2: Worked example
+      │   ├─ Step 3: Your turn (checked)
+      │   └─ Step n: Summary
+      ├─ <b>Worksheet · Core</b>                  prerequisites only; short, done once
+      ├─ <b>Worksheet · Higher</b>                grade 6 to 8 exam-style questions
+      ├─ <b>Worksheet · Advanced</b>              grade 9: multi-step, unfamiliar contexts,
+      │                                          proof, explain and evaluate questions
+      ├─ <b>Exam technique</b>                    command words, mark allocation, timing,
+      │                                          examiner-reported errors, and what
+      │                                          separates a grade 9 answer from a grade 7
+      └─ <b>Quiz</b>                              10 to 20 auto-marked questions</div>
+<h3>Questions</h3>
+<p>A question is the atomic unit and is shared between worksheets and quizzes. Every question carries:</p>
+<ul>
+  <li>The question text, with rendered maths, images, audio, or code as required.</li>
+  <li>The marks available and the type: multiple choice, numeric with tolerance, short text, ordering, labelling, or extended response.</li>
+  <li>The answer, a full worked solution, and the mark scheme in the same style as the board (method marks, accuracy marks, quality of written communication where relevant).</li>
+  <li>Tags: topic, grade band (4 to 5, 6 to 7, 8 to 9), skill (for example "rearranging formulae"), calculator or non-calculator, and exam board notes.</li>
+  <li>At least 40% of every topic's question bank is tagged grade 8 to 9. Grade 9 questions are written to the discriminator patterns boards actually use: combining two or more topics in one question, unfamiliar contexts, "show that" and proof, and evaluation with a justified conclusion.</li>
+</ul>
+<p>Extended response questions cannot be auto-marked. In a quiz they show the mark scheme and ask the student to self-assess against it. That self-assessed score is stored and flagged as self-marked so the parent view can tell the difference.</p>
+<h3>Lessons</h3>
+<p>Lessons are example-led and visual. Every step opens with a concrete example, a diagram, an image, or a short animation before any definition, and the visual is the thing that carries the idea, not decoration beside the text. Each subject has its own colour and illustration style so that switching from Chemistry to French feels like changing rooms. Text per step is kept short enough that the diagram is what the student remembers.</p>
+<p>Lessons teach to the depth a grade 9 answer needs, not the minimum to pass. Each lesson ends with a "grade 9 step": the extension idea, common trap, or link to another topic that examiners use to separate the top grade.</p>
+<p>Lessons are steps, not pages. A step is short enough to fit on a phone screen without scrolling more than once, ends with a check question where the concept allows it, and is locked to a linear order the first time through. On revisits, all steps are open.</p>
+<h3>Exam technique</h3>
+<p>Two layers. A subject-level guide covering paper structure, timing, command words, and how the assessment objectives are weighted. Then a short topic-level note covering the mistakes examiners actually report for that topic. Both are content, authored like anything else.</p>
+
+<h2 id="s6">6. Progress model</h2>
+<p>Progress is measured per topic and is derived, not self-declared. A topic's status is calculated from the most recent evidence, so it can go down as well as up.</p>
+<div class="tablewrap"><table>
+<tr><th>Signal</th><th>What is recorded</th><th>Feeds</th></tr>
+<tr><td>Lesson step completed</td><td>Step, timestamp, check-question result</td><td>Coverage</td></tr>
+<tr><td>Quiz attempt</td><td>Every answer, marks, time taken, attempt number</td><td>Mastery, weak skills</td></tr>
+<tr><td>Worksheet attempt</td><td>Level, self-recorded score out of total, timestamp</td><td>Mastery (weighted lower than quizzes)</td></tr>
+<tr><td>Session</td><td>Start, end, subjects touched</td><td>Activity, streak, weekly summary</td></tr>
+</table></div>
+<h4>Topic status</h4>
+<div class="legend">
+  <span><span class="rag r"></span>Not secure: no attempt, or last quiz under 50%</span>
+  <span><span class="rag a"></span>Developing: last quiz 50 to 79%, or lesson done with no quiz</span>
+  <span><span class="rag g"></span>Secure: last quiz 80% or more and the Higher worksheet scored 70% or more</span>
+  <span><span class="rag b"></span>Grade 9 ready: last quiz 90% or more, including the grade 8 to 9 questions, and the Advanced worksheet scored 75% or more</span>
+</div>
+<p style="margin-top:14px">Because the target is grade 9, Secure is not the finish line. The app treats a Secure topic as unfinished and keeps recommending its Advanced worksheet until it is Grade 9 ready. Thresholds are configurable per subject. Grade 9 ready decays to Secure, and Secure to Developing, if a topic has not been revisited for six weeks, which is the mechanism that drives spaced recap.</p>
+<h4>What each user sees</h4>
+<ul>
+  <li><strong>Student:</strong> a per-subject map of topics coloured by status, a count of topics Grade 9 ready out of the total, a "next up" recommendation, recent quiz results with the questions they got wrong, and their streak.</li>
+  <li><strong>Parent:</strong> a weekly summary per child (time, topics touched, quizzes taken, average score), a per-subject "distance from grade 9" line showing how many topics are Grade 9 ready, Secure, or below, the same topic map in read-only form, the weakest five topics per subject with a suggested task, and a trend over the last eight weeks.</li>
+</ul>
+
+<h2 id="s6b">7. Motivation and engagement</h2>
+<p>The app has to compete with a phone for a teenager's attention. Engagement is designed in from the start, but it is tied to real learning: rewards come from evidence of progress, never from time on screen.</p>
+<div class="tablewrap"><table>
+<tr><th>Mechanic</th><th>How it works</th><th>Why it is safe</th></tr>
+<tr><td>Points</td><td>Earned per completed lesson step, quiz question, and worksheet question, weighted by grade band so a grade 9 question is worth more.</td><td>Points come only from attempts, so they track effort and difficulty, not time.</td></tr>
+<tr><td>Levels per subject</td><td>Points accumulate into subject levels with a visible bar. Level names are drawn from the subject (Physics uses SI prefixes, French uses CEFR-style stages, Music uses dynamics).</td><td>Cosmetic, per subject, and never compared between siblings.</td></tr>
+<tr><td>Badges</td><td>Awarded for finishing a unit, taking a topic to Grade 9 ready, a clean-sweep quiz, a first Advanced worksheet, and returning to a decayed topic.</td><td>Each badge names a learning event a parent would recognise.</td></tr>
+<tr><td>Streaks and weekly goal</td><td>A study streak counts days with at least one completed activity. The student sets a weekly minutes goal with the parent; the home screen shows the ring filling.</td><td>Streaks freeze on days the student marks as off, so a holiday does not punish them.</td></tr>
+<tr><td>Celebrations</td><td>A short animation and a shareable card when a topic goes Grade 9 ready or a unit is finished. The parent gets the same moment in their summary.</td><td>Reduced-motion setting turns animations into a static card.</td></tr>
+<tr><td>Session shape</td><td>Every activity is sized to finish in 5 to 15 minutes and ends on a clear "done" screen with the next suggestion.</td><td>Short, finished sessions are what younger students need to come back.</td></tr>
+<tr><td>Choice</td><td>The student can always choose between the recommended task and two alternatives, including a "quick quiz" option.</td><td>Autonomy is a stronger motivator than any reward.</td></tr>
+</table></div>
+<p><strong>Not included on purpose:</strong> leaderboards across families, penalties for missed days, rewards for logging in without working, and any purchasable boosts. Comparison is available only within a family, and only if the parent turns it on.</p>
+
+<h2 id="s7">8. Epics and user stories</h2>
+<p>Priorities use MoSCoW. <span class="tag must">Must</span> is release one. <span class="tag should">Should</span> is expected shortly after. <span class="tag could">Could</span> is backlog. Story IDs are stable so they survive an export to Jira or Linear.</p>
+
+<h3>Epic A · Accounts and family</h3>
+<div class="story"><div class="story-head"><span class="story-id">FAM-1</span><span class="story-title">Parent creates a family</span><span class="tag must">Must</span></div>
+<p>As a parent, I want to create an account and a family so that I can add my children.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Sign up with email and password, or Google or Apple sign-in.</li><li>Creating the account creates a family with the parent as owner.</li><li>Email is verified before any child profile can be created.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">FAM-2</span><span class="story-title">Parent adds a student</span><span class="tag must">Must</span></div>
+<p>As a parent, I want to add my child with their own login so that they can study independently.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Parent enters child's first name, year group, and a username. No child email is required.</li><li>Parent sets an initial password; the child is prompted to change it on first sign-in.</li><li>Parent selects the child's subjects and, where known, the exam board per subject.</li><li>A family can hold up to five students.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">FAM-3</span><span class="story-title">Second parent joins by invite</span><span class="tag should">Should</span></div>
+<p>As a parent, I want to invite another parent or guardian so that they can also follow progress.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Owner generates an invite link that expires after seven days.</li><li>Invited parent gets the same read access to every student in the family.</li><li>Students can see the list of parents linked to them.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">FAM-4</span><span class="story-title">Remove a family member</span><span class="tag should">Should</span></div>
+<p>As the family owner, I want to remove a parent or student so that access reflects my household.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Removal takes effect immediately on the next request.</li><li>Removed student's data is retained for 90 days and then deleted, with an email warning at 30 days.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">FAM-5</span><span class="story-title">Student changes their own settings</span><span class="tag could">Could</span></div>
+<p>As a student, I want to change my password and display name without asking my parent.</p></div>
+
+<h3>Epic B · Learning path</h3>
+<div class="story"><div class="story-head"><span class="story-id">LRN-1</span><span class="story-title">Browse a subject by unit and topic</span><span class="tag must">Must</span></div>
+<p>As a student, I want to see every topic in a subject with its status so that I know what is covered and what is not.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Topics are grouped by unit in specification order.</li><li>Each topic shows its status colour and which of lesson, worksheets, and quiz are done.</li><li>Board-specific topics are shown or hidden according to the student's chosen board.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">LRN-2</span><span class="story-title">Work through a stepped lesson</span><span class="tag must">Must</span></div>
+<p>As a student, I want to go through a lesson one step at a time so that each idea is checked before the next.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Steps are shown one at a time with a progress indicator.</li><li>A check question must be answered before continuing, but a wrong answer shows the explanation and still allows progress.</li><li>Position is saved so the student can resume mid-lesson on another device.</li><li>Maths notation, images, code, and audio render correctly on mobile.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">LRN-3</span><span class="story-title">Always have a next step</span><span class="tag must">Must</span></div>
+<p>As a student, I want the app to suggest what to do next so that I do not waste time choosing.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Home screen shows one recommended task with the reason (for example, "Quiz on Moles: last scored 55%").</li><li>Recommendation prefers, in order: unfinished lesson, topic due for recap, weakest topic in the subject with the soonest exam, then a Secure topic to push to Grade 9 ready via its Advanced worksheet.</li><li>Student can skip the suggestion and pick their own.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">LRN-4</span><span class="story-title">Set exam dates</span><span class="tag should">Should</span></div>
+<p>As a student or parent, I want to enter exam dates so that recommendations and the parent summary are time-aware.</p></div>
+<div class="story"><div class="story-head"><span class="story-id">LRN-5</span><span class="story-title">Read the subject exam technique guide</span><span class="tag must">Must</span></div>
+<p>As a student, I want a guide to the papers, timing, and command words for each subject so that I know how the exam works before I practise for it. The guide includes a section on what a grade 9 answer looks like for each question type.</p></div>
+<div class="story"><div class="story-head"><span class="story-id">LRN-7</span><span class="story-title">Interactive lesson steps</span><span class="tag must">Must</span></div>
+<p>As a student, I want lesson steps I can manipulate, such as dragging a graph, adjusting a variable, or building an equation, so that I understand the idea by doing it rather than reading it.</p>
+<div class="ac">Acceptance criteria</div><ul><li>The authoring tool supports a set of interactive step types: slider-driven graph or diagram, drag-and-drop ordering and matching, equation entry with a maths keypad, labelling, and code trace.</li><li>Every interactive step works with touch on a phone and tablet, and with mouse and keyboard.</li><li>Every interactive step has a non-interactive fallback so screen readers and older devices still get the content.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">LRN-6</span><span class="story-title">Target grade per subject</span><span class="tag must">Must</span></div>
+<p>As a student or parent, I want a target grade per subject, defaulting to 9, so that the thresholds, recommendations, and parent summary are measured against it.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Default is 9 for every subject. It can be lowered per subject to 7 or 8; the parent is notified if the student lowers it.</li><li>The Grade 9 ready status and its thresholds are relabelled and rescaled if a lower target is set.</li><li>Changing the target does not alter stored attempts.</li></ul></div>
+
+<h3>Epic C · Worksheets</h3>
+<div class="story"><div class="story-head"><span class="story-id">WKS-1</span><span class="story-title">Open a worksheet at a chosen level</span><span class="tag must">Must</span></div>
+<p>As a student, I want to choose Core, Higher, or Advanced for a topic so that I practise at the right difficulty.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Each level shows the number of questions, total marks, and suggested time.</li><li>Advanced is available regardless of status; the app recommends but never blocks.</li><li>Once a topic is Secure, the Advanced worksheet is the default level opened for it.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">WKS-2</span><span class="story-title">Print a worksheet and its answers</span><span class="tag should">Should</span></div>
+<p>As a student, I want to print the worksheet on A4 with the answers on a separate sheet so that I can work on paper when I prefer to.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Print layout has working space under each question proportional to its marks.</li><li>Answers and mark scheme print as a separate document.</li><li>Maths notation and diagrams print at full resolution.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">WKS-3</span><span class="story-title">Self-mark and record a score</span><span class="tag must">Must</span></div>
+<p>As a student, I want to reveal the worked solution per question and record my marks so that my worksheet work counts towards progress.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Solutions are hidden until the student reveals them, one question at a time.</li><li>Questions with a typed final answer are auto-marked; for extended responses the student enters marks per question, capped at the marks available.</li><li>Self-marked scores are stored and shown as such to the parent, separately from auto-marked ones.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">WKS-7</span><span class="story-title">Work a worksheet on-screen with a scratch canvas</span><span class="tag must">Must</span></div>
+<p>As a student on a tablet, I want to write my working with a stylus or finger next to each question and enter my final answer on-screen so that I do not need paper.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Each question has a resizable canvas for handwritten working that is saved with the attempt.</li><li>Final answers are typed or picked using the same input types as quizzes, so numeric and multiple-choice worksheet questions can be auto-marked; only extended responses are self-marked.</li><li>The student can flip between worksheet, canvas, and worked solution without losing their work.</li><li>On a phone, the canvas is available but the layout stacks vertically; on desktop, the canvas sits beside the question.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">WKS-4</span><span class="story-title">Mixed-topic worksheet</span><span class="tag should">Should</span></div>
+<p>As a student, I want a worksheet built from several topics in a unit so that I practise choosing the method, not just applying it.</p></div>
+<div class="story"><div class="story-head"><span class="story-id">WKS-6</span><span class="story-title">Grade 9 problem set per unit</span><span class="tag should">Should</span></div>
+<p>As a student, I want a set built only from grade 8 to 9 questions across a whole unit so that I rehearse the hardest questions the way they appear on the paper, mixed and unsignposted.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Draws only questions tagged grade 8 to 9 and prefers those that span two or more topics.</li><li>Unlocked as a recommendation once every topic in the unit is at least Secure, but never blocked.</li><li>Results feed the Grade 9 ready status of each topic involved.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">WKS-5</span><span class="story-title">Timed paper mode</span><span class="tag could">Could</span></div>
+<p>As a student, I want a full-length paper assembled from the question bank with a timer so that I can rehearse exam conditions.</p></div>
+
+<h3>Epic D · Quizzes</h3>
+<div class="story"><div class="story-head"><span class="story-id">QZ-1</span><span class="story-title">Take an auto-marked topic quiz</span><span class="tag must">Must</span></div>
+<p>As a student, I want to take a quiz on a topic and get marked instantly so that I know if I have understood it.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Question types: multiple choice, numeric with tolerance and units, short text with accepted variants, ordering, labelling.</li><li>Each question is marked on submit with the correct answer and a worked solution.</li><li>A summary shows score, time, and the questions missed, each linking back to the relevant lesson step.</li><li>Every attempt is stored; retaking draws a different sample from the bank where the bank is large enough.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">QZ-2</span><span class="story-title">Self-assess an extended response</span><span class="tag must">Must</span></div>
+<p>As a student, I want to write a six-mark answer and mark it against the scheme so that longer questions still count.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Text area with a suggested time.</li><li>On submit, the mark scheme and a model answer are shown and the student selects a mark per criterion.</li><li>The result is stored as self-marked.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">QZ-3</span><span class="story-title">Spaced recap quiz</span><span class="tag should">Should</span></div>
+<p>As a student, I want a short daily recap drawn from topics I have not seen recently so that secure topics stay secure.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Five to ten questions across subjects, prioritised by time since last attempt and lowest last score.</li><li>Available from the home screen in one tap.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">QZ-4</span><span class="story-title">Wrong-answer bank</span><span class="tag should">Should</span></div>
+<p>As a student, I want to retry everything I have got wrong in the last month so that I close gaps deliberately.</p></div>
+
+<h3>Epic E · Student progress</h3>
+<div class="story"><div class="story-head"><span class="story-id">PRG-1</span><span class="story-title">Topic map with status</span><span class="tag must">Must</span></div>
+<p>As a student, I want to see my subjects as a map of coloured topics so that I can see gaps at a glance.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Status is computed by the rules in section 6 and updated on every attempt.</li><li>Tapping a topic shows the evidence behind its status.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">PRG-2</span><span class="story-title">Recent activity and streak</span><span class="tag should">Should</span></div>
+<p>As a student, I want to see what I did this week and my study streak so that I feel momentum.</p></div>
+
+<h3>Epic F · Parent progress</h3>
+<div class="story"><div class="story-head"><span class="story-id">PAR-1</span><span class="story-title">Weekly summary per child</span><span class="tag must">Must</span></div>
+<p>As a parent, I want a one-screen weekly summary for each child so that I can check in without digging.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Shows minutes studied, topics touched, quizzes taken and average score, all compared to the previous week.</li><li>Shows per subject how many topics are Grade 9 ready, Secure, and below, and the change since last week.</li><li>Lists the five weakest topics across subjects with a suggested next task for each.</li><li>Distinguishes auto-marked from self-marked scores.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">PAR-2</span><span class="story-title">Read-only view of the child's topic map</span><span class="tag must">Must</span></div>
+<p>As a parent, I want to see the same topic map my child sees so that we are looking at the same picture when we talk.</p></div>
+<div class="story"><div class="story-head"><span class="story-id">PAR-3</span><span class="story-title">Weekly email digest</span><span class="tag should">Should</span></div>
+<p>As a parent, I want the weekly summary emailed to me so that I see it without logging in.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Sent on a day the parent chooses.</li><li>One email covers all children.</li><li>Can be turned off.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">PAR-4</span><span class="story-title">Suggest a task to my child</span><span class="tag should">Should</span></div>
+<p>As a parent, I want to assign a task that appears on my child's home screen so that I can nudge without nagging. Shares the mechanism in TUT-3.</p></div>
+<div class="story"><div class="story-head"><span class="story-id">PAR-5</span><span class="story-title">Eight-week trend</span><span class="tag should">Should</span></div>
+<p>As a parent, I want to see time and average score over the last eight weeks per subject so that I can see whether things are improving.</p></div>
+
+<h3>Epic G · Tutors</h3>
+<div class="story"><div class="story-head"><span class="story-id">TUT-1</span><span class="story-title">Parent links a tutor to a child</span><span class="tag should">Should</span></div>
+<p>As a parent, I want to invite my child's tutor to see their progress so that lessons build on what was done at home.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Parent sends an invite for one named child; the tutor accepts with a tutor account.</li><li>The child sees the tutor listed alongside their parents.</li><li>Parent or tutor can end the link; access ends immediately.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">TUT-2</span><span class="story-title">Tutor dashboard across students</span><span class="tag should">Should</span></div>
+<p>As a tutor, I want one screen showing every linked student with their weakest topics and last activity so that I can prepare a session in a minute.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Lists students with subject, days since last activity, weekly minutes, and the three weakest topics.</li><li>Opens into the same read-only topic map and attempt history the parent sees.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">TUT-3</span><span class="story-title">Assign a task with a due date</span><span class="tag should">Should</span></div>
+<p>As a tutor or parent, I want to assign a lesson, worksheet, or quiz with a due date so that the student knows exactly what to do before we next meet.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Assigned tasks show at the top of the student's home screen with who set them and when they are due.</li><li>The assigner sees done, overdue, or not started, and the score once done.</li><li>Parents can see tasks set by tutors; tutors cannot see tasks set by other tutors.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">TUT-4</span><span class="story-title">Tutor notes on a student</span><span class="tag could">Could</span></div>
+<p>As a tutor, I want to keep private notes per student so that my session prep lives with their progress.</p></div>
+
+<h3>Epic H · Motivation</h3>
+<div class="story"><div class="story-head"><span class="story-id">MOT-1</span><span class="story-title">Points and subject levels</span><span class="tag must">Must</span></div>
+<p>As a student, I want to earn points for every question and step I complete and see my level rise in each subject so that effort is visible immediately.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Points are awarded on completion of a step or question, weighted by grade band.</li><li>Each subject has a level bar with subject-themed level names.</li><li>Points are never deducted.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">MOT-2</span><span class="story-title">Badges for learning events</span><span class="tag should">Should</span></div>
+<p>As a student, I want badges for finishing units, reaching Grade 9 ready, and clean-sweep quizzes so that milestones feel like achievements.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Badge set defined per subject with artwork in that subject's style.</li><li>Badges appear on the student's profile and in the parent's weekly summary.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">MOT-3</span><span class="story-title">Weekly goal ring</span><span class="tag must">Must</span></div>
+<p>As a student, I want to set a weekly study goal and watch a ring fill so that I can see how close I am.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Goal is minutes per week, set by the student and visible to the parent.</li><li>Ring is on the home screen and updates live.</li><li>Days marked as off do not break the streak.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">MOT-4</span><span class="story-title">Celebrate a milestone</span><span class="tag should">Should</span></div>
+<p>As a student, I want a celebration when a topic becomes Grade 9 ready or a unit is finished so that the big moments feel big.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Short animation with a card the student can save or share to the family.</li><li>Respects reduced-motion settings.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">MOT-5</span><span class="story-title">Choose from three tasks</span><span class="tag must">Must</span></div>
+<p>As a student, I want to pick from the recommended task and two alternatives so that I have a say in what I do next.</p></div>
+
+<h3>Epic I · Content authoring and admin</h3>
+<div class="story"><div class="story-head"><span class="story-id">ADM-1</span><span class="story-title">Author a topic with all five parts</span><span class="tag must">Must</span></div>
+<p>As an editor, I want to create a topic with its lesson steps, three worksheets, exam technique note, and quiz in one place so that no topic ships incomplete.</p>
+<div class="ac">Acceptance criteria</div><ul><li>Topic cannot be published until all five parts exist and every question has an answer, solution, and marks.</li><li>Topic cannot be published unless the lesson has a grade 9 step and at least 40% of its questions are tagged grade 8 to 9.</li><li>Every lesson step must contain at least one visual element: diagram, image, animation, interactive, or worked example block. The editor warns on any text-only step.</li><li>Supports maths (LaTeX), images, audio, and code blocks.</li><li>Content is versioned; publishing a new version does not alter stored attempts.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">ADM-2</span><span class="story-title">Question bank with tags</span><span class="tag must">Must</span></div>
+<p>As an editor, I want a searchable question bank so that questions can be reused across worksheets, quizzes, and recap.</p></div>
+<div class="story"><div class="story-head"><span class="story-id">ADM-3</span><span class="story-title">Review before publish</span><span class="tag should">Should</span></div>
+<p>As an editor, I want a second person to approve content before it goes live so that errors do not reach students.</p></div>
+<div class="story"><div class="story-head"><span class="story-id">ADM-4</span><span class="story-title">Report a mistake in content</span><span class="tag should">Should</span></div>
+<p>As a student or parent, I want to flag a question or answer I think is wrong so that it gets fixed.</p>
+<div class="ac">Acceptance criteria</div><ul><li>One tap from any question, with an optional comment.</li><li>Reports queue for an editor with a link to the exact content version.</li></ul></div>
+<div class="story"><div class="story-head"><span class="story-id">ADM-5</span><span class="story-title">Bulk import questions</span><span class="tag should">Should</span></div>
+<p>As an editor, I want to import questions from a spreadsheet or JSON so that drafted content can be loaded in batches.</p></div>
+
+<h2 id="s8">9. Non-functional requirements</h2>
+<ul>
+  <li><strong>Child data.</strong> The parent is the data controller's contact for every student. No child email, no third-party tracking on student screens, no advertising. Data export and deletion available to the family owner.</li>
+  <li><strong>Accessibility.</strong> WCAG 2.2 AA. Keyboard operable throughout, screen-reader labels on maths notation, captions or transcripts for every audio clip, dyslexia-friendly font toggle.</li>
+  <li><strong>Devices.</strong> Full functionality on a 360px phone through to desktop, with tablet as the primary device for worksheets. Touch targets at least 44px, no hover-only interactions, and layouts that work in both portrait and landscape. Installable as a progressive web app with lessons and quizzes cached for offline use once opened.</li>
+  <li><strong>Visual design.</strong> Colourful and illustrated, with a distinct palette and illustration style per subject, but legible: body text meets contrast requirements on every coloured surface, and colour is never the only carrier of meaning. Diagrams are authored as vector images so they scale to any screen and print cleanly.</li>
+  <li><strong>Interactivity.</strong> Lessons and questions are worked, not read. Drag-and-drop, sliders, graph plotting, equation entry, diagram labelling, and audio controls all work with touch, mouse, and keyboard.</li>
+  <li><strong>Performance.</strong> Lesson steps and quiz questions load in under one second on a mid-range phone on 4G. Maths rendering happens client-side and is cached.</li>
+  <li><strong>Reliability.</strong> A quiz in progress survives a page refresh or a dropped connection. Answers are saved per question, not per quiz.</li>
+  <li><strong>Content integrity.</strong> Every stored attempt references the exact content version it was taken against.</li>
+</ul>
+
+<h2 id="s9">10. Delivery phases</h2>
+<p>Content is the critical path, so the phases are cut by subject coverage, not by feature. Features are complete for the subjects that exist in each phase.</p>
+<div class="phase"><div><b>Phase 1</b><small>Foundation</small></div><div><p><strong>Two subjects, all Must stories.</strong> Maths (Higher and Advanced) and Physics. Family accounts, visual stepped lessons, three-level worksheets with on-screen working, auto-marked quizzes, topic map, parent weekly summary, points, levels, and the weekly goal ring.</p><p>Exit test: a real family uses it for four weeks, the parent can answer the three questions in section 1 unaided, and the parent can say how many topics per subject are Grade 9 ready.</p></div></div>
+<div class="phase"><div><b>Phase 2</b><small>Sciences and Further Maths</small></div><div><p>Chemistry, Biology, Further Maths. Should stories: second parent, tutor accounts and assigned tasks, spaced recap, wrong-answer bank, badges and celebrations, email digest, trend view, editor review flow.</p></div></div>
+<div class="phase"><div><b>Phase 3</b><small>Humanities and languages</small></div><div><p>Business and Computer Science, then Music and French. These need audio, code, and case-study question types, so they are last on purpose.</p></div></div>
+<div class="phase"><div><b>Phase 4</b><small>Depth</small></div><div><p>Could stories: timed papers, parent-pinned tasks, in-browser code runner, Foundation tier as a subset.</p></div></div>
+
+<h2 id="s10">11. Out of scope</h2>
+<ul>
+  <li>Human or AI marking of free-text answers.</li>
+  <li>Messaging between parent and child inside the app.</li>
+  <li>School, tutor, or classroom accounts and any teacher-facing reporting.</li>
+  <li>Coursework components: Music composition and performance, French speaking assessment, Computer Science programming project.</li>
+  <li>Native mobile apps. The installable web app is the mobile and tablet experience for release one. Native apps are considered only if a capability the web cannot deliver becomes essential.</li>
+</ul>
+
+<h2 id="s12">12. Technical approach</h2>
+<p>Decided 2 September 2026. The stack is chosen to run on free tiers until the app has paying families, with no rewrite needed when it moves to paid plans.</p>
+<div class="tablewrap"><table>
+<tr><th>Layer</th><th>Choice</th><th>Notes</th></tr>
+<tr><td>Frontend</td><td>React with TypeScript, built with Vite as a single-page progressive web app</td><td>React Router for navigation, TanStack Query for data fetching and caching, Tailwind for styling with a per-subject theme, KaTeX for maths rendering, Zod for validating content and form data.</td></tr>
+<tr><td>Hosting</td><td>Cloudflare Pages</td><td>Free tier with no bandwidth cap and commercial use allowed. Preview deployment per pull request.</td></tr>
+<tr><td>Database, auth, access control</td><td>Supabase (Postgres) in the London region</td><td>Row-level security enforces the family and tutor model in the database. Child accounts use a generated internal email address and a username login. Free tier: 500 MB database, paused after seven days idle, so a daily ping is scheduled.</td></tr>
+<tr><td>Media</td><td>Cloudflare R2</td><td>Diagrams, images, and audio. 10 GB free with no egress charges. Referenced by URL from content records.</td></tr>
+<tr><td>Server-side logic</td><td>Postgres functions and Supabase Edge Functions; Cloudflare Pages Functions where a request needs a secret</td><td>Progress status calculation lives in the database so every client sees the same rules. Email sending and any signed R2 uploads go through a function, never the browser.</td></tr>
+<tr><td>Email</td><td>Resend</td><td>Weekly parent digest, invites, password resets. 3,000 emails a month free.</td></tr>
+<tr><td>Scheduled jobs</td><td>GitHub Actions cron</td><td>Six-week status decay, weekly digest trigger, daily Supabase keep-alive ping, weekly database dump to R2 as the backup.</td></tr>
+<tr><td>Repository</td><td>One repository, pnpm workspaces</td><td>Packages: web app, authoring tool, shared types and content schema, database migrations. One CI pipeline with type check, unit tests (Vitest), and end-to-end tests (Playwright) on the critical flows: sign in, lesson step, quiz attempt, parent summary.</td></tr>
+<tr><td>Content</td><td>Lives in Postgres, authored through the admin tool</td><td>Content is not stored in git. A small sample content pack is kept in the repository for local development and tests.</td></tr>
+</table></div>
+<p><strong>First paid upgrade when needed:</strong> Supabase Pro at 25 dollars a month, which removes pausing, adds daily backups, and raises the database limit to 8 GB. Nothing else in the stack needs to change.</p>
+
+<h2 id="s11">13. Decisions needed</h2>
+<p>Each of these changes the plan materially. They are listed in the order they block work.</p>
+<ol>
+  <li><strong>Content authoring.</strong> Who writes the content, and what is the review process? This sets the timeline for every phase and decides how much of Epic I is needed early.</li>
+  <li><strong>Music exam board.</strong> The only board still to confirm. It matters because the set works and areas of study differ completely between AQA, Edexcel, OCR, and Eduqas.</li>
+  <li><strong>Grade 9 question sourcing.</strong> Grade 9 discriminator questions are the hardest content to write well. Decide whether to write them from scratch, adapt from past-paper patterns, or commission subject specialists. This mostly affects Maths and the sciences.</li>
+  <li><strong>"Further" Maths definition.</strong> Confirm AQA Level 2 Further Maths as the target, or specify another qualification.</li>
+  <li><strong>Illustration and diagrams.</strong> Visual lessons need an illustrator or an illustration system alongside the subject writers. Decide whether diagrams are commissioned, built from a shared component library, or generated and reviewed.</li>
+  <li><strong>Pricing and trial.</strong> Tutors add a second pricing question: whether tutor accounts are free when linked by a paying family. Only needed to place the paywall boundary before Phase 1 launches.</li>
+  <li><strong>First family.</strong> Is the first user your own family? If so, Phase 1 subjects should be the ones your children are studying now.</li>
+</ol>
+</main>
+</div>
