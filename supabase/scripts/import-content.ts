@@ -32,6 +32,15 @@ function jsonFiles(dir: string): string[] {
   })
 }
 
+/** JSON with keys sorted at every level, so a value that went through jsonb compares equal. */
+function canonical(value: unknown): string {
+  return JSON.stringify(value, (_key, v) =>
+    v && typeof v === 'object' && !Array.isArray(v)
+      ? Object.fromEntries(Object.keys(v).sort().map((k) => [k, (v as Record<string, unknown>)[k]]))
+      : v,
+  )
+}
+
 interface Loaded {
   file: string
   topic: Topic
@@ -104,7 +113,7 @@ async function main() {
       .limit(1)
       .maybeSingle()
     let versionId = latest?.id as string | undefined
-    if (latest && JSON.stringify(latest.content) === JSON.stringify(topic)) {
+    if (latest && canonical(latest.content) === canonical(topic)) {
       unchanged++
     } else {
       const { data: row, error } = await db
