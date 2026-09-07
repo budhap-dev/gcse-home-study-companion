@@ -20,4 +20,17 @@ pnpm exec supabase test db    # pgTAP
 pnpm exec supabase stop
 ```
 
+## Loading content
+
+The importer validates every file in `seed/content` against the shared schema and the publish rules, upserts the topic row, and stores a new version whenever the content changed. It never publishes an unreviewed AI draft.
+
+```
+pnpm content:import -- --check        # validate only
+eval "$(pnpm exec supabase status -o env)"
+SUPABASE_URL="$API_URL" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" pnpm content:import
+SUPABASE_URL="$API_URL" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY" pnpm content:import -- --publish
+```
+
+Against a hosted project, use the project URL and the service role key from Project Settings, API. The service role key bypasses row-level security, so it belongs in a shell variable or a GitHub secret, never in a file that is committed.
+
 CI runs the same three commands on every pull request, so the database can be developed without Docker on the laptop.

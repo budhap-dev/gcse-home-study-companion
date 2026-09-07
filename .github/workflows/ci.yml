@@ -49,6 +49,20 @@ jobs:
         run: supabase db lint --level error
       - name: Run policy and status tests
         run: supabase test db
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Import the sample content pack
+        run: |
+          eval "$(supabase status -o env)"
+          export SUPABASE_URL="$API_URL" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_ROLE_KEY"
+          node supabase/scripts/import-content.ts | tee import.log
+          grep -q "2 new version(s)" import.log
+          node supabase/scripts/import-content.ts | tee import-again.log
+          grep -q "0 new version(s), 2 unchanged" import-again.log
       - name: Stop
         if: always()
         run: supabase stop --no-backup

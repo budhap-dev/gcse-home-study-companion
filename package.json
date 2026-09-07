@@ -1,6 +1,7 @@
 {
   "name": "gcse-home-study-companion",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@10.15.0",
   "engines": {
     "node": ">=22"
@@ -11,10 +12,13 @@
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
-    "test": "pnpm -r --if-present test"
+    "test": "pnpm -r --if-present test",
+    "content:import": "node supabase/scripts/import-content.ts"
   },
   "devDependencies": {
+    "@supabase/supabase-js": "^2.114.0",
     "supabase": "^2.116.0",
-    "wrangler": "^4.128.0"
+    "wrangler": "^4.128.0",
+    "@study/shared": "workspace:*"
   }
 }
