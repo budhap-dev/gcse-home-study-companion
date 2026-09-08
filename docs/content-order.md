@@ -6,7 +6,7 @@ Content is authored just ahead of what the pilot student meets in class. This is
 
 | When | Topics, in teaching order | Status |
 |---|---|---|
-| Autumn 1 | Laws of indices · Powers and roots · Surds · Equations of straight lines · Parallel and perpendicular lines · Constructing triangles · Congruency | Laws of indices drafted (sample pack) |
+| Autumn 1 | Laws of indices · Powers and roots · Surds · Equations of straight lines · Parallel and perpendicular lines · Constructing triangles · Congruency | Laws of indices and Surds drafted |
 | Autumn 2 | Circle theorems · Expanding and factorising quadratics · Identities and equivalence · Rearranging formulae · Solving quadratic equations | |
 | Spring 1 | Combined events and tree diagrams · Sample space diagrams · Venn diagrams · Choices and outcomes · Sets and set notation · Histograms · Linear, quadratic and geometric sequences · Iteration | |
 | Spring 2 | Ratio and proportion · Similarity and linear scale factors · Exact trigonometric values · Sine rule, cosine rule and area of a triangle · Scale drawings and bearings | |
