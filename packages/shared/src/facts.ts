@@ -1,37 +1,68 @@
 import type { SubjectId } from './subjects.ts'
 
-/** One fun fact a day per subject, shown on the home screen. Short, true, and checkable. */
+/**
+ * One fun fact a day per subject, shown on the home screen. Each fact must
+ * stand on its own: say what the reader might already think or need to know,
+ * then the surprising part, then why it is true or what it connects to.
+ * Short, true, and checkable.
+ */
 export const FUN_FACTS: Record<SubjectId, string[]> = {
   maths: [
-    'There are more ways to shuffle a deck of 52 cards than there are atoms on Earth: 52 factorial is about 8 followed by 67 zeros.',
-    'The equals sign was invented in 1557 by a Welsh mathematician, Robert Recorde, because he was tired of writing "is equal to".',
-    'A pizza with radius z and height a has volume pi × z × z × a.',
-    'Every even number tested so far is the sum of two primes, but nobody has proved it always works. That is the Goldbach conjecture.',
-    'In any group of 23 people, there is a better than even chance that two share a birthday.',
-    'Zero was treated as a number in India around 1,500 years ago. Roman numerals never had one.',
-    'If you fold a sheet of paper 42 times, the stack would reach the Moon. You cannot, but the maths says so.',
-    'The square root of 2 cannot be written as a fraction. The Greeks who found this out are said to have kept it secret.',
-    '111,111,111 × 111,111,111 = 12,345,678,987,654,321.',
-    'A googol is 1 followed by 100 zeros. The search engine misspelled it.',
+    'Shuffle a deck of 52 cards properly and the order you get has almost certainly never existed before. The number of possible orders is 52 factorial, 52 × 51 × 50 × … × 1, which is about 8 followed by 67 zeros. That is more than the number of atoms on Earth.',
+    'The equals sign is younger than you might think. A Welsh mathematician, Robert Recorde, invented it in 1557 because he was tired of writing "is equal to" over and over. He chose two parallel lines because, he said, no two things can be more equal.',
+    'The formula for the volume of a cylinder is pi × radius² × height. So a pizza with radius z and height a has a volume of pi × z × z × a. Say it out loud.',
+    'Pick any even number bigger than 2 and you can write it as two primes added together: 10 = 3 + 7, 100 = 47 + 53. Computers have checked this for every even number up to 4 million million million, but no one has ever proved it always works. It is called the Goldbach conjecture, and it has been open since 1742.',
+    'How many people do you need in a room before it is more likely than not that two share a birthday? Most people guess around 180. The answer is 23. It feels wrong because you are not comparing one person with the rest, you are comparing every possible pair, and 23 people make 253 pairs.',
+    'Roman numerals have no zero: there is no symbol for "nothing", which is one reason long division in Roman numerals is close to impossible. Zero as a number in its own right, with rules like 0 + n = n, was written down in India by Brahmagupta around 628 AD. Our whole place-value system depends on it.',
+    'Fold a sheet of paper in half and it is twice as thick. Fold it again, four times. Each fold doubles the thickness, so after 42 folds the stack would be 2⁴² × 0.1 mm, about 440,000 km, further than the Moon. In practice nobody has managed more than 12 folds, but the powers of 2 are real.',
+    'The square root of 2, the length of the diagonal of a 1 by 1 square, cannot be written as any fraction of whole numbers. The Greek followers of Pythagoras believed every number was a ratio, so this discovery around 500 BC shook them. Legend says the person who leaked it was drowned at sea. Numbers like this are called irrational, and surds are how we write them exactly.',
+    'Try this on a calculator: 111,111,111 × 111,111,111. The answer is 12,345,678,987,654,321, counting up to 9 and back down. It works because each digit of the answer is the number of ways the ones can line up in long multiplication.',
+    'A googol is the number 1 followed by 100 zeros. It was named in 1920 by a nine-year-old, Milton Sirotta, when his mathematician uncle asked him what to call it. The founders of Google meant to use the word but spelled it wrong when they registered the name, and the mistake stuck.',
   ],
   physics: [
-    'Light from the Sun takes about eight minutes to reach you. You are always seeing the Sun as it was.',
-    'A teaspoon of neutron star would weigh about a billion tonnes.',
-    'Hot water can freeze faster than cold water in some conditions. Nobody fully agrees why. It is called the Mpemba effect.',
-    'There is no sound in space: sound needs particles to travel through, and space has almost none.',
-    'The Eiffel Tower is about 15 centimetres taller in summer because the iron expands in the heat.',
-    'If the Sun were the size of a football, the nearest star would be about 6,000 kilometres away.',
-    'A bolt of lightning is about five times hotter than the surface of the Sun.',
-    'Your phone uses Einstein: GPS satellites have to correct for time running faster in weaker gravity, or maps would drift by kilometres a day.',
-    'The spring in a car suspension obeys the same law as the one in a retractable pen.',
-    'On the Moon you would weigh about a sixth of what you weigh here, but your mass would be exactly the same.',
+    'Light is fast but not instant: it travels at about 300,000 km every second, and the Sun is about 150 million km away. So sunlight takes just over eight minutes to reach you. If the Sun vanished, you would keep seeing it for eight minutes.',
+    'A neutron star is what is left when a big star collapses: the whole mass of a star squashed into a ball about 20 km across. Its density is so high that a teaspoon of it would have a mass of about a billion tonnes. Density is mass divided by volume, and here the volume is tiny.',
+    'Put a cup of hot water and a cup of cold water in a freezer, and in some conditions the hot one freezes first. This is the Mpemba effect, named after a Tanzanian student who noticed it while making ice cream in 1963. Physicists still argue about exactly why it happens.',
+    'Films show explosions in space with a boom, but you would hear nothing. Sound is a vibration passed from particle to particle, and space is almost empty, so there is nothing to carry it. Light, which does not need particles, gets through fine.',
+    'Most materials expand when heated because their particles vibrate more and take up more room. The Eiffel Tower is made of iron, and on a hot summer day it stands about 15 cm taller than in winter. Bridges have expansion joints for the same reason.',
+    'Space is mostly empty. If the Sun were shrunk to the size of a football, the Earth would be a grain of sand about 25 m away, and the nearest other star, Proxima Centauri, would be another football about 6,000 km away, roughly London to New York.',
+    'The surface of the Sun is about 5,500 °C. A bolt of lightning heats the air around it to about 30,000 °C, five times hotter, for a few thousandths of a second. That sudden heating makes the air expand violently, and the expansion is the thunder you hear.',
+    'Einstein showed that clocks run slightly faster where gravity is weaker. GPS satellites orbit 20,000 km up, where gravity is weaker, so their clocks gain about 38 millionths of a second a day. Your phone corrects for this. If it did not, map positions would drift by about 10 km every day.',
+    'Hooke\'s law says the extension of a spring is proportional to the force on it, as long as you do not stretch it too far. The tiny spring in a clicky pen and the coil springs holding up a car obey exactly the same rule. The only difference is the spring constant.',
+    'Mass is how much matter is in you; weight is the force of gravity pulling on that mass. On the Moon gravity is about a sixth of Earth\'s, so your weight would be a sixth of what it is here, but your mass would be exactly the same. The bathroom scales would read low, but you would not be any thinner.',
   ],
-  chemistry: ['Every atom in your body apart from hydrogen was made inside a star.', 'Glass is not a slow-flowing liquid. Old windows are thicker at the bottom because of how they were made.', 'Helium is the only element discovered in space before it was found on Earth.'],
-  biology: ['You share about half your genes with a banana.', 'There are more bacterial cells in and on you than human cells.', 'Your body replaces its red blood cells every four months.'],
-  'computer-science': ['The first computer bug was a real moth, found in a relay in 1947.', 'A modern phone has more computing power than all of NASA had for the Moon landings.', 'The word "byte" was chosen in 1956 and deliberately misspelled from "bite" so it would not be confused with "bit".'],
-  business: ['Nintendo started in 1889 making playing cards.', 'Amazon was almost called Cadabra.', 'The first product barcode was scanned on a packet of chewing gum in 1974.'],
-  french: ['About 300 million people speak French, on five continents.', 'Around a third of English words come from French, thanks to 1066.', 'The French Academy has decided what counts as correct French since 1635.'],
-  music: ['The loudest sound ever recorded was the eruption of Krakatoa in 1883, heard 5,000 kilometres away.', 'Mozart wrote his first symphony at eight years old.', 'A piano has about 230 strings under a combined tension of around 20 tonnes.'],
+  chemistry: [
+    'Hydrogen was made in the Big Bang, but every heavier element in your body, the carbon, oxygen, nitrogen, calcium and iron, was made by nuclear fusion inside stars and scattered when those stars died. The atoms in you are recycled from stars older than the Sun.',
+    'You may have heard that glass is really a very slow-flowing liquid, and that old church windows are thicker at the bottom because the glass has crept down over the centuries. It is a myth. Glass at room temperature is a rigid solid. Old panes are uneven because they were made by spinning molten glass into a disc, and glaziers usually set the thick edge at the bottom.',
+    'Helium was discovered on the Sun before it was found on Earth. In 1868 astronomers saw a yellow line in the spectrum of sunlight that matched no known element, and named it after helios, the Greek word for Sun. It was not found on Earth until 1895, in a uranium mineral.',
+    'Diamond and the graphite in a pencil are both pure carbon. The only difference is how the atoms are joined: in diamond every carbon is bonded to four others in a rigid 3D lattice; in graphite each carbon bonds to three, in flat layers that slide over each other. That is why one cuts glass and the other leaves marks on paper.',
+    'Sodium is a soft metal that explodes in water. Chlorine is a poisonous green gas. Bond them together with ionic bonds and you get sodium chloride, table salt, which you sprinkle on chips. Compounds do not keep the properties of their elements.',
+  ],
+  biology: [
+    'About half of the genes in a banana have a recognisable match in human DNA. That is not because you are half banana: it is because the basic machinery of a living cell, such as copying DNA and releasing energy from sugar, evolved once and has been inherited by every living thing since.',
+    'Your body is made of around 30 trillion human cells. Living in and on it, mostly in your gut, are around 38 trillion bacterial cells. By cell count you are slightly more bacteria than human, though the bacteria are much smaller, so they weigh only about 200 g in total.',
+    'Red blood cells have no nucleus, so they cannot repair themselves and last only about 120 days. Your bone marrow makes about 2 million new ones every second to keep up. Over four months, your entire supply is replaced.',
+  ],
+  'computer-science': [
+    'In 1947 engineers working on the Harvard Mark II computer found it giving wrong answers. The cause was a moth trapped in one of the relays. They taped it into the logbook with the note "first actual case of bug being found". The word bug for a fault was already in use, but this is the most famous one.',
+    'The Apollo Guidance Computer that took astronauts to the Moon in 1969 had about 4 KB of memory and ran at around 1 MHz. A modern phone has millions of times more memory and thousands of times more processing speed. The Apollo software still had to land a spacecraft, though, so it was written very carefully.',
+    'A bit is a single 0 or 1. When engineers at IBM needed a word for a group of bits in 1956, they chose "byte", a deliberate misspelling of "bite", so that a typo could never turn it into "bit". Eight bits to a byte became the standard later.',
+  ],
+  business: [
+    'Nintendo was founded in Kyoto in 1889 to make hanafuda playing cards. It tried taxis, instant rice, and love hotels before moving into toys in the 1960s and video games in the 1970s. Businesses that survive for a century usually do so by changing what they sell.',
+    'Jeff Bezos originally registered his online bookshop as Cadabra, as in abracadabra. His lawyer misheard it as "cadaver", so he changed it to Amazon, partly because names starting with A appeared first in alphabetical listings. A name is part of a product\'s branding.',
+    'The first product ever scanned with a barcode was a packet of Wrigley\'s chewing gum, in a supermarket in Ohio in June 1974. Barcodes cut the time and errors of typing prices at the till and let shops track stock automatically, which changed how retail businesses manage inventory.',
+  ],
+  french: [
+    'French is an official language in 29 countries across Europe, Africa, the Caribbean, and the Pacific. About 300 million people speak it, and more than half of them live in Africa, so most French speakers are not in France.',
+    'When William of Normandy conquered England in 1066, French became the language of the court and the law for about 300 years. That is why English has pairs like cow and beef, or house and mansion: the plain word is Old English, the fancier one is French. Around a third of English words come from French.',
+    'The Académie française was set up in 1635 to decide what counts as correct French. Its 40 members, known as "the immortals", still meet to rule on new words. They resisted "le weekend" and "le email" and proposed "courriel" for email instead. Most French people use both.',
+  ],
+  music: [
+    'The loudest sound in recorded history was the eruption of the volcano Krakatoa, in Indonesia, in 1883. It was heard clearly 5,000 km away, and the pressure wave went round the world several times. Sound is a pressure wave, and this one was big enough to burst the eardrums of sailors 60 km away.',
+    'Mozart wrote his first symphony at eight years old, in 1764, while staying in London. His father was ill and had asked for quiet, so the boy wrote music instead of playing it. He had already been performing for royalty for two years.',
+    'A modern piano has around 230 strings, not 88, because most notes use two or three strings struck together. Each string is pulled to a tension of about 70 to 90 kg, so the total pull on the iron frame is around 20 tonnes. That is why pianos are so heavy.',
+  ],
 }
 
 export function factOfTheDay(subjectIds: SubjectId[], date = new Date()): { subjectId: SubjectId; text: string } | null {

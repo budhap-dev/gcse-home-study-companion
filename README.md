@@ -54,4 +54,10 @@ The app is deployed by Vercel from `main` at https://gcse-home-study-companion.v
 
 ## Versioning
 
-The app version is the `version` field in `apps/web/package.json`, shown in the menu footer with the short commit hash. Bump the minor number when a new subject block or feature lands, the patch number for fixes.
+The app version is the `version` field in `apps/web/package.json`, shown in the menu footer with the short commit hash. The number follows semantic versioning and must move with every release:
+
+- **Patch** (0.2.0 → 0.2.1): fixes to content or code with no new topics or features.
+- **Minor** (0.2.0 → 0.3.0): a new subject block (for example a half-term of Chemistry), a new feature, or a new diagram or interactive kind.
+- **Major** (0.x → 1.0.0, then 2.0.0): a milestone the family will notice. 1.0.0 is planned for when every subject has its Autumn 1 content and the app is in daily use; the next major is Google sign-in with progress sync.
+
+Bump the version in the same PR as the change, so the footer always says which release is deployed.
