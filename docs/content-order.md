@@ -31,3 +31,12 @@ Source: the school's Year 10 Physics overview, shared 2 September 2026. The scho
 School assessments the content should be ready before: milestone tests on Hooke's law, balancing forces and moments in Autumn 1; on pressure, gases and light in Autumn 2; a final exam covering Year 9 and Year 10 Physics in the summer. Year 9 material (Energy, including kinetic and gravitational potential energy) reappears in the synoptic tests, so the sample-pack topic stays useful as recap.
 
 Next Physics topic to author: Hooke's law, since it is first in Autumn 1 and shares the elastic potential energy equation with the Energy unit.
+
+## Chemistry, AQA 8462 Higher, Triple
+
+| When | Topics, in the school's order | Status |
+|---|---|---|
+| Autumn 1 and 2 | C2 Structures and bonding: ionic bonding · covalent bonding and simple molecules · giant covalent structures and polymers · metallic bonding and alloys · carbon structures and nanoparticles | Ionic bonding drafted |
+| Autumn 2 | C4 Chemical changes continued: electrolysis of melts and solutions · half equations | |
+| Spring | C5 Energy changes · C7 Organic chemistry: crude oil, alkanes, cracking | |
+| Summer | C7 continued: alkenes, alcohols, carboxylic acids, esters · polymers and biological molecules | |

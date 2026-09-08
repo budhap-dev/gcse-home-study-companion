@@ -8,6 +8,8 @@ import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
 import { SpringLoad } from './SpringLoad.tsx'
 import { BeamMoments } from './BeamMoments.tsx'
+import { DotAndCross } from './DotAndCross.tsx'
+import { Lattice } from './Lattice.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -24,6 +26,8 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'triangle-pair': TrianglePair,
   'spring-load': SpringLoad,
   'beam-moments': BeamMoments,
+  'dot-and-cross': DotAndCross,
+  'lattice': Lattice,
 }
 
 export const INK = '#1e2330'
