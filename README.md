@@ -23,7 +23,7 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 - Exam boards: Maths Edexcel 1MA1 with AQA Level 2 Further Maths, Biology Edexcel 1BI0, Physics AQA 8463, Chemistry AQA 8462, Computer Science AQA 8525, Business Edexcel 1BS0, French Edexcel 1FR1. Music board still open.
 - Users: students, parents, and tutors. Parents own the family; tutors are linked per child by parent invite.
 - Fully interactive on phone, tablet, and desktop, installable as a progressive web app.
-- Stack: React with TypeScript on Vite, Cloudflare Pages, Supabase (London) with row-level security, Cloudflare R2 for media, Resend for email, GitHub Actions for scheduled jobs. Single repository with pnpm workspaces. Content lives in Postgres, not in git.
+- Stack: React with TypeScript on Vite, hosted on Vercel (switched from Cloudflare Pages on 8 September 2026), Supabase (London) with row-level security for the later progress sync, GitHub Actions for CI. Single repository with pnpm workspaces. Content lives in Postgres, not in git.
 
 ## Still to decide
 
@@ -50,4 +50,4 @@ pnpm typecheck
 pnpm build
 ```
 
-Subjects, topic maps, and topic pages read real content bundled from `supabase/seed/content`. Lesson, quiz, and worksheet screens are placeholders that name the stories they will deliver. Progress is stored in the browser. Nothing talks to a database.
+The app is deployed by Vercel from `main` at https://gcse-home-study-companion.vercel.app. Subjects, topic maps, and topic pages read real content bundled from `supabase/seed/content`. Lesson, quiz, and worksheet screens are placeholders that name the stories they will deliver. Progress is stored in the browser. Nothing talks to a database.
