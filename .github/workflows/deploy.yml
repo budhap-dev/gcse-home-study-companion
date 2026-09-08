@@ -1,6 +1,6 @@
 name: Deploy
 
-# Deploys both apps to Cloudflare Pages: a preview per pull request, production on main.
+# Deploys the web app to Cloudflare Pages: a preview per pull request, production on main.
 # Skips itself until the two Cloudflare secrets exist, so forks and early PRs stay green.
 
 on:
@@ -37,17 +37,13 @@ jobs:
           fi
 
   deploy:
-    name: Deploy ${{ matrix.app }}
+    name: Deploy web
     needs: preflight
     if: needs.preflight.outputs.ready == 'true'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - app: web
-            project: study-companion-web
-          - app: admin
-            project: study-companion-admin
+    env:
+      APP: web
+      PROJECT: study-companion-web
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -56,7 +52,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @study/${{ matrix.app }} build
+      - run: pnpm --filter @study/${{ env.APP }} build
         env:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
@@ -69,7 +65,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: "4.128.0"
           packageManager: pnpm
-          command: pages project create ${{ matrix.project }} --production-branch=main
+          command: pages project create ${{ env.PROJECT }} --production-branch=main
         continue-on-error: true
 
       - name: Deploy to Cloudflare Pages
@@ -81,8 +77,8 @@ jobs:
           wranglerVersion: "4.128.0"
           packageManager: pnpm
           command: >-
-            pages deploy apps/${{ matrix.app }}/dist
-            --project-name=${{ matrix.project }}
+            pages deploy apps/${{ env.APP }}/dist
+            --project-name=${{ env.PROJECT }}
             --branch=${{ github.head_ref || github.ref_name }}
             --commit-hash=${{ github.event.pull_request.head.sha || github.sha }}
 
@@ -91,7 +87,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const app = '${{ matrix.app }}';
+            const app = '${{ env.APP }}';
             const url = '${{ steps.deploy.outputs.deployment-url }}';
             const marker = `<!-- preview:${app} -->`;
             const body = `${marker}Preview for **${app}**: ${url}`;
