@@ -14,9 +14,9 @@ import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
-  core: 'Prerequisites only. Short, done once.',
-  higher: 'Grade 6 to 8 exam-style questions. 70% here, with a quiz at 80%, makes the topic Secure.',
-  advanced: 'Grade 9 questions: multi-step, unfamiliar contexts, show that, explain. 75% here, with a quiz at 90%, makes the topic Grade 9 ready.',
+  core: 'The basics, done once, so the rest makes sense.',
+  higher: 'Exam-style questions. Where the idea gets used properly.',
+  advanced: 'Multi-step problems, unfamiliar contexts, show that, explain. Where you find out how well you really understand it.',
 }
 
 interface Answered {
@@ -122,7 +122,7 @@ export function Worksheet() {
           <div className="flex flex-col gap-0.5 rounded-xl bg-panel px-3 py-3"><span className="text-[11px] text-ink-2">Marks</span><span className="text-xl font-bold tabular-nums">{totalScored} / {marksAvailable}</span></div>
         </section>
         <p className="text-ink-2">
-          {threshold === undefined ? 'Core done. The Higher worksheet is where the exam-style questions start.' : pct >= threshold ? `Above the ${threshold}% this level needs. Recorded as self-marked.` : `Below the ${threshold}% this level needs. Look at the questions you dropped marks on and try again.`}
+          {threshold === undefined ? 'Core done: the basics are in place. The Higher worksheet is where you start using them.' : pct >= threshold ? 'You can do this level. The method marks you gave yourself show you understand the working, not just the answers.' : 'Some of this is still settling. The questions where you dropped marks are the ones to go back over with the worked solutions.'}
         </p>
         <ul className="flex flex-col gap-2">
           {questions.map((q, i) => (

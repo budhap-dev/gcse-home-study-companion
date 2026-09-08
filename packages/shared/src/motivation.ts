@@ -80,11 +80,11 @@ export const BADGES: Badge[] = [
 
 /** Short messages by outcome, so feedback never reads as a form letter. */
 export const MESSAGES = {
-  perfect: ['Clean sweep. Nothing to fix.', 'Every single one. That is what Grade 9 looks like.', 'Perfect. Push on to the Advanced worksheet.'],
-  great: ['Great effort. Almost there.', 'Strong score. One more go for the top mark.', 'That is Secure territory. Keep it up.'],
-  good: ['Solid. Look at the ones you missed and go again.', 'Good progress. The next one will be better.', 'On the way. A second attempt usually jumps.'],
-  low: ["Let's try another question.", 'Tough one. The lesson is a good place to go back to.', 'Every wrong answer here is one less in the exam.'],
-  improved: ['Up from last time. That is the whole point.', 'Better than before. Momentum.', 'Improvement locked in.'],
+  perfect: ['You understand this. Could you explain it to someone else?', 'Every one right. This idea is yours now.', 'Clean sweep. Try the harder questions to see how far the idea stretches.'],
+  great: ['Great effort. You have most of this.', 'Almost there. The one you missed is the one to learn from.', 'You clearly get the main idea. Look at the slip and it is complete.'],
+  good: ['Good progress. Mistakes are where the learning happens.', 'You are getting there. Read the solutions for the ones you missed.', 'Half way to understanding this. Another go will show what has clicked.'],
+  low: ["Let's try another question. Every wrong answer shows you something.", 'Tough one. Go back to the lesson and take it one step at a time.', 'This has not clicked yet, and that is normal. It will.'],
+  improved: ['You learned something since last time. That is what counts.', 'Better than before. You can see yourself improving.', 'Up on last time. Whatever you did in between worked.'],
   levelUp: ['Level up.', 'New level unlocked.', 'You just moved up a level.'],
 } as const
 

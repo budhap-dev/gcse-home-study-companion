@@ -42,7 +42,7 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
 
   // 1. unfinished lessons, most recently touched first
   for (const t of topics.filter((t) => state.lessons[t.id] && !state.lessons[t.id]!.completedAt).sort((a, b) => (state.lessons[b.id]!.updatedAt).localeCompare(state.lessons[a.id]!.updatedAt))) {
-    ranked.push(task(t, 'lesson', `You are on step ${state.lessons[t.id]!.stepIndex + 1} of ${t.lesson.steps.length}.`))
+    ranked.push(task(t, 'lesson', `You stopped at step ${state.lessons[t.id]!.stepIndex + 1} of ${t.lesson.steps.length}. Pick it back up.`))
   }
   // 2. due for recap: Secure or better and untouched for the decay period
   const decayMs = DEFAULT_THRESHOLDS.decayAfterWeeks * 7 * 86400000
@@ -50,7 +50,7 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
     const e = ev.get(t.id)!
     const last = lastActivity(t)
     if ((e.status === 'secure' || e.status === 'grade-9-ready') && last && now.getTime() - last.getTime() > decayMs) {
-      ranked.push(task(t, 'quiz', `Last seen ${Math.round((now.getTime() - last.getTime()) / 86400000 / 7)} weeks ago. A quick quiz keeps it ${e.status === 'secure' ? 'Secure' : 'Grade 9 ready'}.`))
+      ranked.push(task(t, 'quiz', `Last seen ${Math.round((now.getTime() - last.getTime()) / 86400000 / 7)} weeks ago. A quick quiz keeps it fresh.`))
     }
   }
   // 3. weakest attempted topic, lowest quiz score first
@@ -59,27 +59,27 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
     if (e.status === 'secure') continue
     const pct = Math.round(e.quizPct!)
     if (e.quizPct! >= DEFAULT_THRESHOLDS.secureQuizMin && e.higherPct === undefined) {
-      ranked.push(task(t, 'worksheet', `Quiz at ${pct}%. The Higher worksheet is what makes this Secure.`, 'higher'))
+      ranked.push(task(t, 'worksheet', `You understood the quiz. The Higher worksheet is where you use it.`, 'higher'))
     } else if (e.quizPct! >= DEFAULT_THRESHOLDS.secureQuizMin && e.higherPct !== undefined) {
-      ranked.push(task(t, 'worksheet', `Higher sheet at ${Math.round(e.higherPct)}%. Try it again for 70%.`, 'higher'))
+      ranked.push(task(t, 'worksheet', `Last Higher sheet ${Math.round(e.higherPct)}%. Go back over the working and try again.`, 'higher'))
     } else {
-      ranked.push(task(t, 'quiz', `You scored ${pct}% last time. ${DEFAULT_THRESHOLDS.secureQuizMin}% takes it towards Secure.`))
+      ranked.push(task(t, 'quiz', `Last time ${pct}%. The questions you missed are the ones to learn from.`))
     }
   }
   // 4. Secure topics: push through the Advanced worksheet
   for (const t of topics.filter((t) => ev.get(t.id)!.status === 'secure')) {
     const e = ev.get(t.id)!
-    if (e.advancedPct === undefined) ranked.push(task(t, 'worksheet', 'Secure. The Advanced worksheet is the step to Grade 9 ready.', 'advanced'))
-    else if (e.quizPct! < DEFAULT_THRESHOLDS.grade9QuizMin) ranked.push(task(t, 'quiz', `Advanced sheet done. A quiz at ${DEFAULT_THRESHOLDS.grade9QuizMin}% finishes Grade 9 ready.`))
-    else ranked.push(task(t, 'worksheet', `Advanced sheet at ${Math.round(e.advancedPct)}%. 75% finishes Grade 9 ready.`, 'advanced'))
+    if (e.advancedPct === undefined) ranked.push(task(t, 'worksheet', 'You have the idea. The Advanced worksheet stretches it.', 'advanced'))
+    else if (e.quizPct! < DEFAULT_THRESHOLDS.grade9QuizMin) ranked.push(task(t, 'quiz', 'Advanced sheet done. A quiz will show how much has stuck.'))
+    else ranked.push(task(t, 'worksheet', `Advanced sheet ${Math.round(e.advancedPct)}%. Another go with the solutions beside you.`, 'advanced'))
   }
   // 5. not started, in content order
   for (const t of topics.filter((t) => !state.lessons[t.id] && ev.get(t.id)!.quizPct === undefined)) {
-    ranked.push(task(t, 'lesson', 'Not started yet. One idea per step.'))
+    ranked.push(task(t, 'lesson', 'New idea. One step at a time.'))
   }
   // 6. lesson done but no quiz
   for (const t of topics.filter((t) => state.lessons[t.id]?.completedAt && ev.get(t.id)!.quizPct === undefined)) {
-    ranked.push(task(t, 'quiz', 'Lesson done. The quiz is what counts towards status.'))
+    ranked.push(task(t, 'quiz', 'Lesson done. The quiz shows what has stuck.'))
   }
 
   const seen = new Set<string>()
