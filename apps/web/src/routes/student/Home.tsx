@@ -1,4 +1,5 @@
-import { SUBJECTS } from '@study/shared'
+import { BADGES, SUBJECTS, type SubjectId } from '@study/shared'
+import { levelBySubject, totalXp } from '../../progress/xp.ts'
 import { Link } from 'react-router'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { recommend, type Task } from '../../progress/recommend.ts'
@@ -14,6 +15,8 @@ export function Home() {
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Morning' : hour < 18 ? 'Afternoon' : 'Evening'
   const offToday = progress.daysOff.includes(isoDate())
+  const levels = levelBySubject(progress)
+  const badgeCount = Object.keys(progress.badges).length
 
   return (
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
@@ -22,9 +25,15 @@ export function Home() {
           <p className="text-sm text-ink-2">{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
           <h1 className="text-3xl font-bold leading-tight">{greeting}</h1>
         </div>
+        <span className="flex items-center gap-2">
+        <Link to="/progress" className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1.5 text-sm font-bold" title="XP and badges">
+          <span className="text-ink-2">XP</span>{totalXp(progress)}
+          <span className="ml-1 text-ink-2">·</span>{badgeCount}/{BADGES.length}
+        </Link>
         <span className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1.5 text-sm font-bold" title="Days in a row with something finished">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A21B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 1-3-1-6 1-9z" /></svg>
           {streak} day{streak === 1 ? '' : 's'}
+        </span>
         </span>
       </header>
 
@@ -63,10 +72,15 @@ export function Home() {
         {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
           const topics = topicsForSubject(s.id)
           const ready = topics.filter((t) => evidenceFor(t.id, progress).status === 'grade-9-ready').length
+          const level = levels[s.id as SubjectId]
           return (
-            <Link key={s.id} to={`/subjects/${s.id}`} className="flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3">
-              <span className="h-3 w-3 rounded-sm" style={{ background: s.colour }} aria-hidden />
-              <span className="flex flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} Grade 9 ready</span></span>
+            <Link key={s.id} to={`/subjects/${s.id}`} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3" style={{ '--subject': s.colour } as React.CSSProperties}>
+              <span className="flex items-center gap-3">
+                <span className="h-3 w-3 rounded-sm" style={{ background: s.colour }} aria-hidden />
+                <span className="flex flex-grow flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} Grade 9 ready</span></span>
+                <span className="text-right text-xs"><span className="block font-bold" style={{ color: s.colour }}>{level ? level.name : 'Level 1'}</span><span className="text-ink-2">{level ? `${level.into} / ${level.span} XP` : 'no XP yet'}</span></span>
+              </span>
+              <span className="h-1.5 overflow-hidden rounded-full bg-panel"><span className="block h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></span>
             </Link>
           )
         })}

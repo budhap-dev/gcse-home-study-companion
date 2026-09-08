@@ -5,6 +5,15 @@ import { DEFAULT_THRESHOLDS, type TopicStatus, type WorksheetLevel } from '@stud
  * database tables so a later sync is a straight upload. The status rules here are a
  * TypeScript mirror of compute_topic_status() in the database and must stay in step.
  */
+export interface QuestionResult {
+  id: string
+  skill: string
+  gradeBand: '4-5' | '6-7' | '8-9'
+  marksScored: number
+  marksAvailable: number
+  correct: boolean
+}
+
 export interface AttemptRecord {
   id: string
   topicId: string
@@ -17,6 +26,10 @@ export interface AttemptRecord {
   grade89Available?: number
   markedHow: 'auto' | 'self' | 'mixed'
   completedAt: string
+  /** XP earned by this attempt, computed when it was recorded. */
+  xp?: number
+  /** Per-question results, for strengths and weaknesses by skill. */
+  questions?: QuestionResult[]
 }
 
 export interface LessonRecord {
@@ -35,12 +48,14 @@ export interface ProgressState {
   goalMinutes: number
   /** ISO dates marked as days off; they do not break the streak. */
   daysOff: string[]
+  /** Badge id to the ISO time it was earned. */
+  badges: Record<string, string>
 }
 
 export const DEFAULT_GOAL_MINUTES = 180
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, minutes: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [] }
+  return { attempts: [], lessons: {}, minutes: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {} }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -90,6 +105,16 @@ export function saveLessonPosition(topicId: string, stepIndex: number, completed
     updatedAt: new Date().toISOString(),
   }
   write(state)
+}
+
+export function awardBadges(ids: string[]): string[] {
+  const state = read()
+  const fresh = ids.filter((id) => !state.badges[id])
+  if (fresh.length === 0) return []
+  const now = new Date().toISOString()
+  for (const id of fresh) state.badges[id] = now
+  write(state)
+  return fresh
 }
 
 export function clearProgress() {

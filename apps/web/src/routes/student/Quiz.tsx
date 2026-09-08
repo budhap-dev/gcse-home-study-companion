@@ -1,4 +1,7 @@
-import { getSubject, mark, sampleQuestions, type MarkResult, type Question } from '@study/shared'
+import { getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
+import { Celebration } from '../../components/Celebration.tsx'
+import { settle, type Settlement } from '../../progress/settle.ts'
+import { xpForQuestions } from '../../progress/xp.ts'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -6,7 +9,7 @@ import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic } from '../../content/index.ts'
-import { recordAttempt } from '../../progress/store.ts'
+import { getState, recordAttempt } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 interface Answered {
@@ -21,6 +24,8 @@ interface QuizState {
   answers: Record<string, Answered>
   startedAt: string
   finishedAt?: string
+  /** Set when the attempt is recorded, so the summary can show what it earned. */
+  earned?: { xp: number; previousPct?: number; badges: string[]; levelUp?: string }
 }
 
 const key = (topicId: string) => `study-companion.quiz.${topicId}`
@@ -57,6 +62,7 @@ export function Quiz() {
   const subject = subjectId ? getSubject(subjectId) : undefined
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const [state, setState] = useState<QuizState | null>(() => (topic ? load(topic.id) : null))
+  const [celebration, setCelebration] = useState<Settlement | null>(null)
   useActivityTimer(Boolean(state && !state.finishedAt))
 
   useEffect(() => {
@@ -78,7 +84,18 @@ export function Quiz() {
 
   const questions = state.questionIds.map((id) => byId.get(id)).filter((q): q is Question => Boolean(q))
   if (state.finishedAt) {
-    return <Summary topicTitle={topic.title} questions={questions} state={state} backTo={backTo} onRetake={start} />
+    return (
+      <>
+        {celebration && (
+          <Celebration
+            title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
+            detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}
+            onDone={() => setCelebration(null)}
+          />
+        )}
+        <Summary topicTitle={topic.title} questions={questions} state={state} backTo={backTo} onRetake={start} />
+      </>
+    )
   }
 
   const question = questions[state.index]!
@@ -98,6 +115,11 @@ export function Quiz() {
     const finishedAt = new Date().toISOString()
     const results = questions.map((q) => ({ q, r: state.answers[q.id]?.result ?? { correct: false, marksScored: 0, marksAvailable: q.marks } }))
     const extended = questions.filter((q) => q.type === 'extended').length
+    const before = getState()
+    const previous = before.attempts.filter((a) => a.topicId === topic.id && a.kind === 'quiz').sort((a, b) => b.completedAt.localeCompare(a.completedAt))[0]
+    const previousPct = previous ? Math.round((100 * previous.marksScored) / previous.marksAvailable) : undefined
+    const questionResults = results.map(({ q, r }) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct }))
+    const xp = xpForQuestions(questionResults)
     recordAttempt({
       id: state.attemptId,
       topicId: topic.id,
@@ -108,8 +130,12 @@ export function Quiz() {
       grade89Available: results.filter((x) => x.q.gradeBand === '8-9').reduce((s, x) => s + x.r.marksAvailable, 0),
       markedHow: extended === 0 ? 'auto' : extended === questions.length ? 'self' : 'mixed',
       completedAt: finishedAt,
+      xp,
+      questions: questionResults,
     })
-    setState({ ...state, finishedAt })
+    const outcome = settle(before)
+    if (outcome.newBadges.length || outcome.levelUp) setCelebration(outcome)
+    setState({ ...state, finishedAt, earned: { xp, previousPct, badges: outcome.newBadges.map((b) => b.name), levelUp: outcome.levelUp ? `${outcome.levelUp.level.name}` : undefined } })
   }
 
   return (
@@ -179,6 +205,10 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
   const seconds = Math.max(0, Math.round((new Date(state.finishedAt!).getTime() - new Date(state.startedAt).getTime()) / 1000))
   const missed = questions.filter((q) => !state.answers[q.id]?.result.correct)
   const tone = pct >= 90 ? 'var(--color-status-grade-9)' : pct >= 80 ? 'var(--color-status-secure)' : pct >= 50 ? 'var(--color-status-developing)' : 'var(--color-status-not-secure)'
+  const earned = state.earned
+  const previous = earned?.previousPct
+  const delta = previous === undefined ? undefined : pct - previous
+  const message = messageForScore(pct, previous, state.attemptId.charCodeAt(0) + state.attemptId.charCodeAt(1))
   return (
     <article className="mx-auto flex w-full max-w-2xl flex-col gap-6">
       <header className="flex flex-col gap-2">
@@ -189,6 +219,17 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
         <Stat label="Score" value={`${pct}%`} colour={tone} />
         <Stat label="Marks" value={`${scored} / ${available}`} />
         <Stat label="Time" value={`${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`} />
+      </section>
+      <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
+        <p className="text-lg font-bold">{message}</p>
+        <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-ink-2">
+          {previous !== undefined && <span>Previous score: <strong className="text-ink">{previous}%</strong></span>}
+          <span>{previous !== undefined ? 'Current' : 'Score'}: <strong className="text-ink">{pct}%</strong></span>
+          {delta !== undefined && <span>Improvement: <strong style={{ color: delta >= 0 ? 'var(--color-status-secure)' : 'var(--color-status-not-secure)' }}>{delta >= 0 ? '+' : ''}{delta}%</strong></span>}
+          {earned && <span>XP earned: <strong className="text-ink">+{earned.xp}</strong></span>}
+        </div>
+        {earned && earned.badges.length > 0 && <p className="text-sm">New badge{earned.badges.length > 1 ? 's' : ''}: <strong>{earned.badges.join(', ')}</strong></p>}
+        {earned?.levelUp && <p className="text-sm">Level up: <strong>{earned.levelUp}</strong></p>}
       </section>
       <p className="text-ink-2">
         {pct >= 90 ? 'That is the quiz score Grade 9 ready needs. The Advanced worksheet is the other half.' : pct >= 80 ? 'That makes this topic Secure once the Higher worksheet is at 70%.' : pct >= 50 ? 'Developing. Go back over the missed questions and try again.' : 'Not secure yet. The lesson is a good place to go back to.'}
