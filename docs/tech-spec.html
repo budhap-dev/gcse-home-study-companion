@@ -116,16 +116,17 @@ html{scroll-behavior:smooth}
 </nav>
 
 <main>
-<div class="eyebrow">Technical specification · Draft 2</div>
+<div class="eyebrow">Technical specification · Draft 3</div>
 <h1>GCSE Home Study Companion</h1>
 <p class="lede">This document says where each part of the system runs, how it is built, and how a change gets from a pull request to a family's phone. It does not repeat the product requirements or the data model; those are in the PRD and the plan.</p>
 <div class="meta">
-  <div><b>Covers</b>Hosting, build, deployment, AI drafting</div>
-  <div><b>Date</b>2 September 2026</div>
+  <div><b>Covers</b>Hosting, build, deployment</div>
+  <div><b>Date</b>8 September 2026</div>
   <div><b>Status</b>Draft for review</div>
   <div><b>Source</b>PRD section 12, delivery plan</div>
 </div>
 <h2 id="s1">1. System overview</h2>
+<div class="callout"><p><strong>8 September 2026.</strong> The admin app described below was removed. Content is authored as files in the repository and reviewed through pull requests; the AI drafting service is deferred with it. The database remains as the future progress sync layer. Sections mentioning <code>apps/admin</code>, the admin Pages project, or the drafting function describe the deferred design.</p></div>
 <p>Five hosted services and one repository. Nothing runs on a server the team maintains.</p>
 <div class="tablewrap"><table><tr><th>Part</th><th>Runs on</th><th>Holds</th></tr><tr><td>Student, parent, and tutor app</td><td>Cloudflare Pages, <code>apps/web</code></td><td>Static build of a React progressive web app</td></tr><tr><td>Authoring tool</td><td>Cloudflare Pages, <code>apps/admin</code></td><td>Static build, separate project and hostname</td></tr><tr><td>Secret-holding endpoints</td><td>Cloudflare Pages Functions, inside each app</td><td>Signed R2 uploads, email sending, username sign-in</td></tr><tr><td>Database, auth, rules</td><td>Supabase, London</td><td>Postgres with row-level security, Auth, Postgres functions</td></tr><tr><td>Media</td><td>Cloudflare R2</td><td>Diagrams, images, audio, published content bundles, backups</td></tr><tr><td>Email</td><td>Resend</td><td>Verification, password reset, invites, weekly digest</td></tr><tr><td>Scheduled jobs</td><td>GitHub Actions cron</td><td>Keep-alive, decay, digest trigger, backup</td></tr></table></div>
 <p>Request path for a student: browser loads the app shell from Pages, signs in against Supabase Auth, reads content and progress from Postgres over the Supabase client with the anon key and row-level security, and fetches media from R2 through a custom hostname. Nothing secret reaches the browser.</p>

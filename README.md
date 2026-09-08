@@ -18,7 +18,7 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 
 ## Decisions so far
 
-- 8 September 2026: the first release is a single public web app with every subject's topics and no logins of any kind. Progress is saved in the browser. Google sign-in comes later, only to sync progress. Student, parent, and tutor accounts move to a later phase.
+- 8 September 2026: the admin app is removed; content is authored as files in this repository and reviewed through pull requests. The first release is a single public web app with every subject's topics and no logins of any kind. Progress is saved in the browser. Google sign-in comes later, only to sync progress. Student, parent, and tutor accounts move to a later phase.
 - Target grade 9 in every subject.
 - Exam boards: Maths Edexcel 1MA1 with AQA Level 2 Further Maths, Biology Edexcel 1BI0, Physics AQA 8463, Chemistry AQA 8462, Computer Science AQA 8525, Business Edexcel 1BS0, French Edexcel 1FR1. Music board still open.
 - Users: students, parents, and tutors. Parents own the family; tutors are linked per child by parent invite.
@@ -32,8 +32,7 @@ See the last section of the PRD. The two that block content work are the Music e
 ## Repository layout
 
 ```
-apps/web         React + TypeScript student, parent and tutor app (placeholder screens and menu)
-apps/admin       Content authoring and review tool (placeholder screens)
+apps/web         React + TypeScript web app: subjects, lessons, quizzes, worksheets, progress
 packages/shared  Subjects, topic statuses, thresholds, story IDs; Zod content schema to follow
 supabase/        Migrations, policies, seed sample content (empty until a project exists)
 docs/            Requirements, plan, tech spec, and decisions
@@ -46,8 +45,7 @@ Node 22 or later. pnpm is pinned in `package.json`; enable it once with corepack
 ```
 corepack enable
 pnpm install
-pnpm dev          # student, parent and tutor app on http://localhost:8000
-pnpm dev:admin    # authoring tool on http://localhost:8001
+pnpm dev          # the app on http://localhost:8000
 pnpm typecheck
 pnpm build
 ```

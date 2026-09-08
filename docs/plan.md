@@ -4,7 +4,7 @@ Source: PRD Draft 4 and the story backlog, both dated 2 September 2026. This pla
 
 ## 0. Scope change, 8 September 2026
 
-The first release is a single public web app: every subject's topics, browsable with no login. Content is bundled from the repository at build time, and progress is stored in the browser. Google sign-in is added later, only to sync progress. Accounts, family, parent, and tutor stories (Epics A, F, G, and TUT-3) move out of Phase 1. The database migrations stay as the authoring layer and the future sync target. Workstreams C and G and the parent parts of milestones M1 and M4 are deferred accordingly; the rest of this plan stands.
+The first release is a single public web app: every subject's topics, browsable with no login. Content is bundled from the repository at build time, and progress is stored in the browser. Google sign-in is added later, only to sync progress. Accounts, family, parent, and tutor stories (Epics A, F, G, and TUT-3) move out of Phase 1. The database migrations stay as the future sync target. The admin app was removed on 8 September 2026: content is authored as files and reviewed through pull requests, so Workstream I is deferred with it. Workstreams C and G and the parent parts of milestones M1 and M4 are deferred accordingly; the rest of this plan stands.
 
 ## 1. Where things stand
 
