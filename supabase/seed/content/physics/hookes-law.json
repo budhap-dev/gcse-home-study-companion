@@ -1,0 +1,1013 @@
+{
+  "id": "hookes-law",
+  "subjectId": "physics",
+  "unitId": "forces",
+  "title": "Hooke's law and elasticity",
+  "specPoints": [
+    "4.5.3"
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Stretching, compressing, bending",
+        "body": "To change the shape of an object you need **more than one force**. A single force would just move it. Pull both ends of a spring and it stretches; push both ends and it compresses.\n\nIf the object returns to its original shape when the forces are removed, the deformation was **elastic**. If it stays deformed, it was **inelastic**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "spring-load",
+            "props": {
+              "loads": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "k": 25,
+              "naturalLength": 5
+            },
+            "alt": "Four identical springs hanging from a bar with loads of 0, 1, 2 and 3 newtons, extending by 4, 8 and 12 centimetres"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "A metal ruler is bent slightly and springs back. Which is true?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "elastic and inelastic",
+          "calculator": "either",
+          "tags": [],
+          "solution": "It returned to its original shape: elastic.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Elastic"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The deformation was elastic",
+            "The deformation was inelastic",
+            "Only one force acted on it",
+            "It was compressed"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Hooke's law: force is proportional to extension",
+        "body": "Double the force and the spring extends twice as far. In symbols:\n\n$$F = k e$$\n\n$F$ is the force in newtons, $e$ is the **extension** in metres (the extra length, not the whole length), and $k$ is the **spring constant** in newtons per metre. A stiff spring has a large $k$. The same equation works for compression.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "$k = 25$ N/m, load 2 N",
+            "steps": [
+              {
+                "text": "$e = \\dfrac{F}{k} = \\dfrac{2}{25}$"
+              },
+              {
+                "text": "$= 0.08$ m $= 8$ cm"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A spring has $k = 25$ N/m. What force gives an extension of 0.08 m?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "using F = ke",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$F = 25 \\times 0.08 = 2$ N.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2 N"
+            }
+          ],
+          "discriminators": [],
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N"
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Finding the spring constant",
+        "body": "Convert centimetres to metres before anything else. This is where most marks are lost.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A 6 N force extends a spring by 12 cm. Find $k$.",
+            "steps": [
+              {
+                "text": "12 cm $= 0.12$ m"
+              },
+              {
+                "text": "$k = \\dfrac{F}{e} = \\dfrac{6}{0.12}$"
+              },
+              {
+                "text": "$= 50$ N/m"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A 4 N force extends a spring by 8 cm. Find $k$ in N/m.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "finding k with a unit conversion",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$k = 4 \\div 0.08 = 50$ N/m.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "50 N/m"
+            }
+          ],
+          "discriminators": [],
+          "answer": 50,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N/m"
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "The force–extension graph",
+        "body": "Force on the $y$-axis, extension on the $x$-axis. While Hooke's law holds the graph is a **straight line through the origin** and its **gradient is $k$**. At the **limit of proportionality** the line starts to curve: extension grows faster than force. The spring may still be elastic for a while beyond that, and eventually it deforms permanently.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                0.2
+              ],
+              "yRange": [
+                0,
+                10
+              ],
+              "lines": [
+                {
+                  "m": 50,
+                  "c": 0,
+                  "label": "gradient = k"
+                }
+              ],
+              "points": [
+                {
+                  "x": 0.1,
+                  "y": 5,
+                  "label": "(0.1, 5)"
+                }
+              ]
+            },
+            "alt": "Force against extension: a straight line through the origin with gradient 50 newtons per metre, marked at (0.1, 5)"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "What does the gradient of a force–extension graph represent?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "graph gradient",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Gradient $= \\dfrac{F}{e} = k$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "The spring constant"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The spring constant",
+            "The elastic potential energy",
+            "The extension",
+            "The limit of proportionality"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Required practical: force and extension",
+        "body": "Hang the spring from a clamp stand with a metre rule beside it. Record the unstretched length. Add masses one at a time and record the new length; extension is the difference. Convert mass to force with $W = mg$.\n\n**Independent** variable: force. **Dependent**: extension. **Control**: the same spring throughout. Read the ruler at eye level to avoid parallax, and take readings while adding masses only, so you do not pass the limit of proportionality without noticing.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Processing the results",
+            "steps": [
+              {
+                "text": "Force $=$ mass in kg $\\times 9.8$"
+              },
+              {
+                "text": "Extension $=$ stretched length $-$ original length, in metres"
+              },
+              {
+                "text": "Plot force against extension"
+              },
+              {
+                "text": "$k =$ gradient of the straight part"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Which is the independent variable in this practical?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "variables in the practical",
+          "calculator": "either",
+          "tags": [],
+          "solution": "You choose and change the force; the extension responds.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "The force applied"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The force applied",
+            "The extension",
+            "The spring constant",
+            "The length of the ruler"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Energy stored in a stretched spring",
+        "body": "Stretching a spring does work on it, and that work is stored in the **elastic potential** store:\n\n$$E_e = \\tfrac{1}{2} k e^2$$\n\nOnly while the spring obeys Hooke's law. Square the extension, in metres, before multiplying.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "$k = 50$ N/m, $e = 0.1$ m",
+            "steps": [
+              {
+                "text": "$E_e = \\tfrac{1}{2} \\times 50 \\times 0.1^2$"
+              },
+              {
+                "text": "$= \\tfrac{1}{2} \\times 50 \\times 0.01$"
+              },
+              {
+                "text": "$= 0.25$ J"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "A spring with $k = 100$ N/m is extended by 0.2 m. Calculate the elastic potential energy in joules.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "elastic potential energy",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$\\tfrac{1}{2} \\times 100 \\times 0.04 = 2$ J.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2 J"
+            }
+          ],
+          "discriminators": [],
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "J"
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn: read the graph",
+        "body": "Drag the extension and watch the force. The line is straight because $F = ke$; its steepness is $k$.",
+        "visuals": [
+          {
+            "type": "interactive",
+            "kind": "slider-graph",
+            "config": {
+              "formula": "linear",
+              "m": 50,
+              "c": 0,
+              "x": "extension (m)",
+              "y": "force (N)",
+              "xMax": 0.2
+            },
+            "fallback": "A straight line from the origin: 2.5 N at 0.05 m, 5 N at 0.1 m, 10 N at 0.2 m, so the spring constant is 50 N/m."
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "On the graph, what is the spring constant in N/m?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "graph gradient",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "Force $\\div$ extension at any point: $5 \\div 0.1 = 50$ N/m.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "50 N/m"
+            }
+          ],
+          "discriminators": [],
+          "answer": 50,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N/m"
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Grade 9: area under the graph, and weight from mass",
+        "body": "The **area under** a force–extension graph is the work done stretching the spring. For the straight part that area is a triangle, $\\tfrac{1}{2} F e$, and since $F = ke$ it equals $\\tfrac{1}{2} k e^2$: the two equations are the same fact. Beyond the limit of proportionality the area still gives the work done, but not all of it is stored elastically; some goes to the thermal store as the spring deforms permanently.\n\nTop questions also give a **mass** rather than a force. Convert with $W = mg$, $g = 9.8$ N/kg, and mind the grams.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "300 g mass on a spring with $k = 40$ N/m",
+            "steps": [
+              {
+                "text": "$W = 0.3 \\times 9.8 = 2.94$ N"
+              },
+              {
+                "text": "$e = \\dfrac{2.94}{40} = 0.0735$ m $= 7.4$ cm"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "numeric",
+          "prompt": "A spring with $k = 40$ N/m is extended by 0.15 m. Work out the area under its force–extension graph up to that point, in joules.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "area under the graph",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "Triangle: $\\tfrac{1}{2} \\times 6 \\times 0.15 = 0.45$ J, the same as $\\tfrac{1}{2} \\times 40 \\times 0.15^2$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "0.45 J"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.45,
+          "tolerance": 0.01,
+          "unitsRequired": false,
+          "units": "J"
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Deforming needs more than one force. Elastic returns; inelastic does not.\n- $F = ke$: force in N, extension in m, $k$ in N/m. Convert cm to m first.\n- Graph: straight through the origin, gradient $k$, curving past the limit of proportionality.\n- $E_e = \\tfrac{1}{2} k e^2$, the area under the straight part.\n- Given a mass, find the weight with $W = mg$ before anything else.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "spring-load",
+            "props": {
+              "loads": [
+                1,
+                2,
+                3
+              ],
+              "k": 25,
+              "naturalLength": 5
+            },
+            "alt": "Three springs showing extension proportional to load: 1 newton gives 4 centimetres, 2 gives 8, 3 gives 12"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is the unit of the spring constant?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "units",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$k = \\dfrac{F}{e}$, newtons per metre.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "N/m"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "N/m",
+        "N",
+        "m",
+        "J"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "A spring has spring constant 20 N/m. Calculate the force needed to extend it by 0.5 m.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "using F = ke",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$F = k e = 20 \\times 0.5 = 10$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$F = ke$ with values substituted"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10 N"
+        }
+      ],
+      "discriminators": [],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "A spring is stretched and returns to its original length when the force is removed. Which term describes this?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "elastic and inelastic",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Elastic means it goes back. Inelastic or plastic means it stays stretched.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Elastic deformation"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Elastic deformation",
+        "Inelastic deformation",
+        "Plastic deformation",
+        "Compression"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "A force of 8 N extends a spring by 16 cm. Calculate the spring constant in N/m.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "finding k with a unit conversion",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Convert first: $16$ cm $= 0.16$ m. $k = \\dfrac{F}{e} = \\dfrac{8}{0.16} = 50$ N/m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "16 cm converted to 0.16 m"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$k = F \\div e$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50 N/m"
+        }
+      ],
+      "discriminators": [],
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N/m"
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A spring with spring constant 15 N/m is pulled with a force of 3 N. Calculate its extension in metres.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "rearranging F = ke",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$e = \\dfrac{F}{k} = \\dfrac{3}{15} = 0.2$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$e = F \\div k$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.2 m"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "On a force–extension graph, what happens beyond the limit of proportionality?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "limit of proportionality",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Past the limit the relationship is no longer linear. The spring may still deform, but not in proportion.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The line curves"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The line stops being straight: extension grows faster than force",
+        "The spring breaks immediately",
+        "The line becomes steeper and straighter",
+        "The extension stops increasing"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A spring with spring constant 200 N/m is extended by 5 cm. Calculate the elastic potential energy stored, in joules.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "elastic potential energy",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$E_e = \\tfrac{1}{2} k e^2 = \\tfrac{1}{2} \\times 200 \\times 0.05^2 = 0.25$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{1}{2} \\times 200 \\times 0.05^2$ with cm converted"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.25 J"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "In the required practical on force and extension, which is a control variable?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "variables in the practical",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The spring stays the same throughout. Mass is changed (independent), extension is measured (dependent).",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The spring used"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The spring used",
+        "The mass added",
+        "The extension measured",
+        "The reading on the ruler"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A 400 g mass is hung from a spring with spring constant 49 N/m. Taking $g = 9.8$ N/kg, calculate the extension in cm.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "weight then extension",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Weight $= 0.4 \\times 9.8 = 3.92$ N. $e = \\dfrac{3.92}{49} = 0.08$ m $= 8$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$W = 0.4 \\times 9.8 = 3.92$ N"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$e = 3.92 \\div 49$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8 cm"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A spring extends by 6 cm when a force of 3 N is applied. Calculate the elastic potential energy stored when the same spring is extended by 10 cm, assuming it stays within its limit of proportionality.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "k then energy",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$k = \\dfrac{3}{0.06} = 50$ N/m. At 10 cm: $E_e = \\tfrac{1}{2} \\times 50 \\times 0.1^2 = 0.25$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$k = 50$ N/m"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "10 cm converted to 0.1 m"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{1}{2} \\times 50 \\times 0.1^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.25 J"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q11",
+      "type": "extended",
+      "prompt": "Describe how you would determine the spring constant of a spring by experiment, and explain how the graph you draw shows whether the spring has gone past its limit of proportionality.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "required practical: force and extension",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Level-marked. Level 3 needs a method someone could follow, the graph, the gradient, and the curve past the limit.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 6,
+          "description": "Level 3 (5 to 6 marks): coherent method, graph, gradient, and limit explained"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Equipment: clamp stand, spring, slotted masses, metre rule; measure the unstretched length first",
+          "marks": 1
+        },
+        {
+          "text": "Add known masses one at a time and measure the new length each time; extension = new length minus original",
+          "marks": 1
+        },
+        {
+          "text": "Convert mass to weight with $W = mg$ and repeat readings, reading at eye level to avoid parallax",
+          "marks": 1
+        },
+        {
+          "text": "Plot force on the $y$-axis against extension on the $x$-axis and draw a line of best fit",
+          "marks": 1
+        },
+        {
+          "text": "Spring constant is the gradient of the straight part of the line",
+          "marks": 1
+        },
+        {
+          "text": "The limit of proportionality is where the line stops being straight through the origin; beyond it the points curve away",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Hang the spring from a clamp stand with a metre rule alongside and record its unstretched length. Add slotted masses one at a time, recording the new length each time; extension is the new length minus the original. Convert each mass to a force using $W = mg$. Read the ruler at eye level to avoid parallax, and repeat each reading. Plot force against extension and draw a line of best fit. The gradient of the straight section is the spring constant. If the later points curve away from the straight line, the spring has passed its limit of proportionality, and only the straight part should be used for the gradient."
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "The graph shows force against extension for a spring. Use it to determine the force needed for an extension of 0.2 m, assuming the spring is still within its limit of proportionality.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "gradient of a force–extension graph",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Gradient from the points $(0.04, 2)$ and $(0.12, 6)$: $k = \\dfrac{6 - 2}{0.12 - 0.04} = 50$ N/m. At $0.2$ m: $F = 50 \\times 0.2 = 10$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Gradient found from two well-separated points"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$k = 50$ N/m"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10 N"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N",
+      "visual": {
+        "type": "diagram",
+        "component": "line-graph",
+        "props": {
+          "xRange": [
+            0,
+            0.16
+          ],
+          "yRange": [
+            0,
+            8
+          ],
+          "lines": [
+            {
+              "m": 50,
+              "c": 0
+            }
+          ],
+          "points": [
+            {
+              "x": 0.04,
+              "y": 2,
+              "label": "(0.04, 2)"
+            },
+            {
+              "x": 0.12,
+              "y": 6,
+              "label": "(0.12, 6)"
+            }
+          ]
+        },
+        "alt": "Force in newtons against extension in metres: a straight line through the origin passing through (0.04, 2) and (0.12, 6)"
+      }
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "Two identical springs, each with spring constant 40 N/m, are hung side by side from the same bar and share an 8 N load equally. Calculate the extension of each spring, in metres.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "springs sharing a load",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Each spring takes 4 N. $e = \\dfrac{4}{40} = 0.1$ m. Both extend by the same amount, so the load drops by 0.1 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Each spring carries 4 N"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$e = 4 \\div 40$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.1 m"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 0.1,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q14",
+      "type": "extended",
+      "prompt": "A newton meter is to be made from a spring with spring constant 250 N/m. Tests show its limit of proportionality is reached at an extension of 6 cm. Evaluate whether the spring is suitable for a newton meter that must read up to 20 N.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "evaluating a design",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The calculation is one mark; the evaluation is the comparison, the judgement, and the improvement.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "15 N calculated"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Compared with 20 N with a reason"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Judgement"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Improvement"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Force at the limit: $F = 250 \\times 0.06 = 15$ N",
+          "marks": 1
+        },
+        {
+          "text": "15 N is less than 20 N, so readings above 15 N would not be proportional and the scale would be wrong",
+          "marks": 1
+        },
+        {
+          "text": "Conclusion: not suitable as it stands",
+          "marks": 1
+        },
+        {
+          "text": "A fix: use a stiffer spring (higher $k$) or one with a higher limit, or restrict the meter to 15 N",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "At the limit of proportionality the force is $F = ke = 250 \\times 0.06 = 15$ N. The meter must read to 20 N, and beyond 15 N the extension is no longer proportional to force, so the scale would read incorrectly and the spring might not return to its original length. The spring is not suitable. A spring with a higher spring constant, or a higher limit of proportionality, would be needed, or the meter should be rated to 15 N."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q8"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q12"
+      ],
+      "suggestedMinutes": 15
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q9",
+        "q10",
+        "q11",
+        "q13",
+        "q14"
+      ],
+      "suggestedMinutes": 30
+    }
+  },
+  "examTechnique": {
+    "body": "$F = ke$ and $E_e = \\tfrac{1}{2}ke^2$ are both on the equation sheet, so the marks are for choosing, rearranging, converting units, and the final unit. This topic also carries a required practical, which can appear as a six-mark method question or as data to process.",
+    "examinerErrors": [
+      "Using the whole length of the spring instead of the extension.",
+      "Forgetting to convert centimetres to metres, giving $k$ one hundred times too small.",
+      "Squaring $ke$ instead of $e$ in the energy equation.",
+      "Using mass in newtons: 200 g is not 200 N, or even 2 N.",
+      "Reading $k$ from a curved part of the graph."
+    ],
+    "grade9Looks": "A grade 9 answer converts units before substituting, rearranges in symbols, uses the gradient of the straight section only, links the area under the graph to the energy equation, and describes the practical as variables, method, and processing rather than a story."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
