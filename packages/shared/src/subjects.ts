@@ -3,6 +3,11 @@ export type SubjectId =
   | 'maths' | 'physics' | 'chemistry' | 'biology'
   | 'computer-science' | 'business' | 'french' | 'music'
 
+export interface Unit {
+  id: string
+  name: string
+}
+
 export interface Subject {
   id: SubjectId
   name: string
@@ -11,28 +16,30 @@ export interface Subject {
   phase: 1 | 2 | 3
   /** Subject accent colour used for chrome inside that subject's screens. */
   colour: string
-  units: string[]
+  units: Unit[]
 }
 
 export const SUBJECTS: Subject[] = [
   { id: 'maths', name: 'Mathematics', board: 'Edexcel 1MA1', phase: 1, colour: '#0E7A86',
-    units: ['Number', 'Algebra', 'Ratio, proportion and rates of change', 'Geometry and measures', 'Probability', 'Statistics'] },
+    units: [{ id: 'number', name: 'Number' }, { id: 'algebra', name: 'Algebra' }, { id: 'ratio-proportion-and-rates-of-change', name: 'Ratio, proportion and rates of change' }, { id: 'geometry-and-measures', name: 'Geometry and measures' }, { id: 'probability', name: 'Probability' }, { id: 'statistics', name: 'Statistics' }] },
   { id: 'physics', name: 'Physics', board: 'AQA 8463', phase: 1, colour: '#5A4BD1',
-    units: ['Energy', 'Electricity', 'Particle model of matter', 'Atomic structure', 'Forces', 'Waves', 'Magnetism and electromagnetism', 'Space physics'] },
+    units: [{ id: 'energy', name: 'Energy' }, { id: 'electricity', name: 'Electricity' }, { id: 'particle-model-of-matter', name: 'Particle model of matter' }, { id: 'atomic-structure', name: 'Atomic structure' }, { id: 'forces', name: 'Forces' }, { id: 'waves', name: 'Waves' }, { id: 'magnetism-and-electromagnetism', name: 'Magnetism and electromagnetism' }, { id: 'space-physics', name: 'Space physics' }] },
   { id: 'chemistry', name: 'Chemistry', board: 'AQA 8462', phase: 2, colour: '#B5451B',
-    units: ['Atomic structure and the periodic table', 'Bonding, structure and properties', 'Quantitative chemistry', 'Chemical changes', 'Energy changes', 'Rate and extent of change', 'Organic chemistry', 'Chemical analysis', 'Chemistry of the atmosphere', 'Using resources'] },
+    units: [{ id: 'atomic-structure-and-the-periodic-table', name: 'Atomic structure and the periodic table' }, { id: 'bonding-structure-and-properties', name: 'Bonding, structure and properties' }, { id: 'quantitative-chemistry', name: 'Quantitative chemistry' }, { id: 'chemical-changes', name: 'Chemical changes' }, { id: 'energy-changes', name: 'Energy changes' }, { id: 'rate-and-extent-of-change', name: 'Rate and extent of change' }, { id: 'organic-chemistry', name: 'Organic chemistry' }, { id: 'chemical-analysis', name: 'Chemical analysis' }, { id: 'chemistry-of-the-atmosphere', name: 'Chemistry of the atmosphere' }, { id: 'using-resources', name: 'Using resources' }] },
   { id: 'biology', name: 'Biology', board: 'Edexcel 1BI0', phase: 2, colour: '#2E8B57',
-    units: ['Key concepts', 'Cells and control', 'Genetics', 'Natural selection and genetic modification', 'Health, disease and medicine', 'Plant structures', 'Animal coordination and homeostasis', 'Exchange and transport', 'Ecosystems and material cycles'] },
+    units: [{ id: 'key-concepts', name: 'Key concepts' }, { id: 'cells-and-control', name: 'Cells and control' }, { id: 'genetics', name: 'Genetics' }, { id: 'natural-selection-and-genetic-modification', name: 'Natural selection and genetic modification' }, { id: 'health-disease-and-medicine', name: 'Health, disease and medicine' }, { id: 'plant-structures', name: 'Plant structures' }, { id: 'animal-coordination-and-homeostasis', name: 'Animal coordination and homeostasis' }, { id: 'exchange-and-transport', name: 'Exchange and transport' }, { id: 'ecosystems-and-material-cycles', name: 'Ecosystems and material cycles' }] },
   { id: 'computer-science', name: 'Computer Science', board: 'AQA 8525', phase: 3, colour: '#1F3A93',
-    units: ['Fundamentals of algorithms', 'Programming', 'Data representation', 'Computer systems', 'Networks', 'Cyber security', 'Relational databases and SQL', 'Ethical, legal and environmental impacts'] },
+    units: [{ id: 'fundamentals-of-algorithms', name: 'Fundamentals of algorithms' }, { id: 'programming', name: 'Programming' }, { id: 'data-representation', name: 'Data representation' }, { id: 'computer-systems', name: 'Computer systems' }, { id: 'networks', name: 'Networks' }, { id: 'cyber-security', name: 'Cyber security' }, { id: 'relational-databases-and-sql', name: 'Relational databases and SQL' }, { id: 'ethical-legal-and-environmental-impacts', name: 'Ethical, legal and environmental impacts' }] },
   { id: 'business', name: 'Business', board: 'Edexcel 1BS0', phase: 3, colour: '#8A6D1D',
-    units: ['Theme 1: Investigating small business', 'Theme 2: Building a business'] },
+    units: [{ id: 'theme-1-investigating-small-business', name: 'Theme 1: Investigating small business' }, { id: 'theme-2-building-a-business', name: 'Theme 2: Building a business' }] },
   { id: 'french', name: 'French', board: 'Edexcel 1FR1', phase: 3, colour: '#A83E6B',
-    units: ['My personal world', 'Lifestyle and wellbeing', 'My neighbourhood', 'Media and technology', 'Studying and my future', 'Travel and tourism'] },
+    units: [{ id: 'my-personal-world', name: 'My personal world' }, { id: 'lifestyle-and-wellbeing', name: 'Lifestyle and wellbeing' }, { id: 'my-neighbourhood', name: 'My neighbourhood' }, { id: 'media-and-technology', name: 'Media and technology' }, { id: 'studying-and-my-future', name: 'Studying and my future' }, { id: 'travel-and-tourism', name: 'Travel and tourism' }] },
   { id: 'music', name: 'Music', board: 'Board to confirm', phase: 3, colour: '#6B4E9B',
-    units: ['Musical elements', 'Set works or areas of study', 'Listening and appraising'] },
+    units: [{ id: 'musical-elements', name: 'Musical elements' }, { id: 'set-works-or-areas-of-study', name: 'Set works or areas of study' }, { id: 'listening-and-appraising', name: 'Listening and appraising' }] },
 ]
 
 export function getSubject(id: string): Subject | undefined {
   return SUBJECTS.find((s) => s.id === id)
 }
+
+export const PHASE_1_SUBJECT_IDS: SubjectId[] = ['maths', 'physics']
