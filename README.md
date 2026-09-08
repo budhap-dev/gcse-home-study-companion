@@ -14,6 +14,7 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 | [docs/tech-spec.md](docs/tech-spec.md) | Technical specification: hosting, environments, build, deployment pipeline, scheduled jobs, backup, security, cost. |
 | [docs/tech-spec.html](docs/tech-spec.html) | The same specification as a formatted page. Open in a browser. |
 | [docs/content-order.md](docs/content-order.md) | Authoring queue: which topics are written first, following the pilot student's school order. |
+| [docs/curriculum/](docs/curriculum/README.md) | One document per subject: the school's Year 9 to 11 teaching order, assessments, and the mapping onto the app's units. |
 
 ## Decisions so far
 
