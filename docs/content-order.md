@@ -36,7 +36,7 @@ Next Physics topic to author: Hooke's law, since it is first in Autumn 1 and sha
 
 | When | Topics, in the school's order | Status |
 |---|---|---|
-| Autumn 1 and 2 | C2 Structures and bonding: ionic bonding · covalent bonding and simple molecules · giant covalent structures and polymers · metallic bonding and alloys · carbon structures and nanoparticles | Ionic bonding and Covalent bonding drafted |
+| Autumn 1 and 2 | C2 Structures and bonding: ionic bonding · covalent bonding and simple molecules · giant covalent structures and polymers · metallic bonding and alloys · carbon structures and nanoparticles | Ionic, covalent, metallic bonding and carbon structures drafted (C2 complete) |
 | Autumn 2 | C4 Chemical changes continued: electrolysis of melts and solutions · half equations | |
 | Spring | C5 Energy changes · C7 Organic chemistry: crude oil, alkanes, cracking | |
 | Summer | C7 continued: alkenes, alcohols, carboxylic acids, esters · polymers and biological molecules | |

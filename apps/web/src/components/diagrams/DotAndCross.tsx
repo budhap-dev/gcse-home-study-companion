@@ -32,7 +32,7 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
     m === 'dot' ? <circle cx={x} cy={y} r="3.5" fill={INK} /> : <g stroke={INK} strokeWidth="2"><line x1={x - 3.5} y1={y - 3.5} x2={x + 3.5} y2={y + 3.5} /><line x1={x - 3.5} y1={y + 3.5} x2={x + 3.5} y2={y - 3.5} /></g>
   // place n electrons round a ring, avoiding the angle range facing the other atom when `avoid` is set
   const ring = (x: number, n: number, m: 'dot' | 'cross', facing: 'left' | 'right' | null) => {
-    const out = []
+    const out: React.ReactNode[] = []
     const positions: [number, number][] = []
     // pair positions: up, down, away side (two), plus near side reserved for sharing
     // four pair positions round the ring; a covalent atom keeps the side facing its partner for the shared pair
@@ -47,7 +47,7 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
       slots.push([px + tx, py + ty], [px - tx, py - ty])
     }
     for (let i = 0; i < Math.min(n, slots.length); i++) positions.push(slots[i]!)
-    for (const [px, py] of positions) out.push(mark(px, py, m))
+    positions.forEach(([px, py], i) => out.push(<g key={`${x}-${i}`}>{mark(px, py, m)}</g>))
     return out
   }
   if (kind === 'ionic') {
