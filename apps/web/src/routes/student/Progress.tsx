@@ -1,14 +1,82 @@
-import { Placeholder } from '../../components/Placeholder.tsx'
+import { STATUS_COLOUR, STATUS_LABEL, SUBJECTS, TOPIC_STATUSES } from '@study/shared'
+import { Link } from 'react-router'
+import { StatusIcon } from '../../components/StatusChip.tsx'
+import { TOPICS, topicsForSubject } from '../../content/index.ts'
+import { evidenceFor, isoDate, streakDays, weekDays, weekMinutes } from '../../progress/store.ts'
+import { useProgress } from '../../progress/useProgress.ts'
 
 export function Progress() {
+  const progress = useProgress()
+  const days = weekDays()
+  const today = isoDate()
+  const max = Math.max(30, ...days.map((d) => progress.minutes[d] ?? 0))
+  const recent = [...progress.attempts].sort((a, b) => b.completedAt.localeCompare(a.completedAt)).slice(0, 8)
+  const titleOf = (id: string) => TOPICS.find((t) => t.id === id)?.title ?? id
+
   return (
-    <Placeholder
-      area={'Student'}
-      title={'Progress'}
-      description="Points, subject levels, this week, and the study streak."
-      stories={["MOT-1", "PRG-2", "MOT-2"]}
-      blocks={["Subject level bars", "This week activity", "Streak and days off", "Badges"]}
-    >
-    </Placeholder>
+    <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <header className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold leading-tight">Progress</h1>
+        <p className="text-ink-2">Saved on this device. {streakDays(progress)} day streak · {weekMinutes(progress)} of {progress.goalMinutes} minutes this week.</p>
+      </header>
+
+      <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
+        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">This week</h2>
+        <div className="grid grid-cols-7 gap-2">
+          {days.map((d) => {
+            const m = progress.minutes[d] ?? 0
+            const off = progress.daysOff.includes(d)
+            return (
+              <div key={d} className="flex flex-col items-center gap-1">
+                <div className="flex h-24 w-full items-end rounded-md bg-panel">
+                  <div className="w-full rounded-md" style={{ height: `${Math.round((100 * m) / max)}%`, background: off ? 'var(--color-rule)' : 'var(--color-status-secure)' }} title={`${m} min`} />
+                </div>
+                <span className={`text-[11px] ${d === today ? 'font-bold' : 'text-ink-2'}`}>{new Date(d + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short' }).slice(0, 2)}</span>
+                <span className="text-[11px] tabular-nums text-ink-2">{off ? 'off' : m}</span>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Topics by status</h2>
+        <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-2">
+          {TOPIC_STATUSES.map((s) => (
+            <li key={s} className="flex items-center gap-1.5"><StatusIcon status={s} size={12} />{STATUS_LABEL[s]}</li>
+          ))}
+        </ul>
+        {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
+          const topics = topicsForSubject(s.id)
+          const counts = TOPIC_STATUSES.map((st) => topics.filter((t) => evidenceFor(t.id, progress).status === st).length)
+          return (
+            <Link key={s.id} to={`/subjects/${s.id}`} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
+              <div className="flex items-center justify-between"><span className="font-bold" style={{ color: s.colour }}>{s.name}</span><span className="text-xs text-ink-2">{counts[3]} of {topics.length} Grade 9 ready</span></div>
+              <div className="flex h-3 overflow-hidden rounded-full bg-panel">
+                {[3, 2, 1, 0].map((i) => (
+                  <span key={i} style={{ width: `${(100 * counts[i]!) / topics.length}%`, background: STATUS_COLOUR[TOPIC_STATUSES[i]!] }} />
+                ))}
+              </div>
+            </Link>
+          )
+        })}
+      </section>
+
+      <section className="flex flex-col gap-2">
+        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Recent</h2>
+        {recent.length === 0 ? (
+          <p className="text-sm text-ink-2">Nothing finished yet. A quiz or worksheet shows up here.</p>
+        ) : (
+          <ul className="flex flex-col gap-1.5">
+            {recent.map((a) => (
+              <li key={a.id} className="flex items-center justify-between rounded-lg border border-rule bg-surface px-3 py-2 text-sm">
+                <span>{titleOf(a.topicId)} · {a.kind === 'quiz' ? 'Quiz' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`}<span className="text-ink-2"> · {a.markedHow === 'auto' ? 'auto-marked' : a.markedHow === 'self' ? 'self-marked' : 'mixed'}</span></span>
+                <span className="font-bold tabular-nums">{Math.round((100 * a.marksScored) / a.marksAvailable)}%</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </article>
   )
 }

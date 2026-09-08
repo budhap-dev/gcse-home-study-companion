@@ -7,6 +7,7 @@ import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic } from '../../content/index.ts'
 import { getState, saveLessonPosition } from '../../progress/store.ts'
+import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 const KIND_LABEL = { explain: 'Explain', 'worked-example': 'Worked example', 'your-turn': 'Your turn', summary: 'Summary', 'grade-9': 'Grade 9' } as const
 
@@ -26,6 +27,7 @@ export function Lesson() {
   })
   const [result, setResult] = useState<MarkResult | null>(null)
   const [done, setDone] = useState(false)
+  useActivityTimer(!done)
 
   useEffect(() => {
     if (topic && !done) saveLessonPosition(topic.id, index)
