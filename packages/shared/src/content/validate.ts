@@ -46,6 +46,9 @@ export function validateTopicForPublish(input: unknown): Issue[] {
     if (q.type === 'multiple-choice' && q.correct.some((i) => i >= q.options.length)) {
       error(`questions.${q.id}`, 'a correct option index is out of range')
     }
+    if (q.type === 'multiple-choice' && q.marks !== 1) {
+      error(`questions.${q.id}`, 'a multiple-choice question is worth one mark; a single selection cannot earn a method mark')
+    }
   }
 
   // Lesson shape.
@@ -68,6 +71,10 @@ export function validateTopicForPublish(input: unknown): Issue[] {
       if (!ids.has(id)) error(`worksheets.${level}`, `unknown question ${id}`)
     }
     if (new Set(sheet.questionIds).size !== sheet.questionIds.length) error(`worksheets.${level}`, 'a question appears twice')
+  }
+  for (const id of topic.worksheets.higher.questionIds) {
+    const q = ids.get(id)
+    if (q && q.gradeBand === '8-9') warn('worksheets.higher', `${id} is grade 8 to 9; the Higher worksheet is grade 6 to 8`)
   }
   for (const id of topic.worksheets.advanced.questionIds) {
     const q = ids.get(id)

@@ -269,7 +269,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "ASA: two angles and a side",
-        "body": "Two angles and the side between them. If the equal side is not between the equal angles, find the third angle with the angle sum: once two angles match, the third does too, so any matching side in the corresponding position works.",
+        "body": "Two angles and the side between them. If the equal side is **not** between the equal angles, find the third angle with the angle sum: two matching angles force the third to match, so the side is now between two known angles. Some books call this AAS; on the exam, quoting ASA after finding the third angle is fine.",
         "visuals": [
           {
             "type": "diagram",
@@ -460,7 +460,7 @@
                 "sides": [
                   7,
                   5,
-                  6.9
+                  7.54
                 ],
                 "ticks": [
                   1,
@@ -482,7 +482,7 @@
                 "sides": [
                   7,
                   5,
-                  3.2
+                  3.18
                 ],
                 "ticks": [
                   1,
@@ -1159,7 +1159,7 @@
       "id": "q11",
       "type": "multiple-choice",
       "prompt": "Two triangles each have sides of 7 cm and 5 cm and an angle of $40°$ that is not between those sides. Which statement is correct?",
-      "marks": 2,
+      "marks": 1,
       "gradeBand": "8-9",
       "skill": "why SSA fails",
       "calculator": "either",
@@ -1167,12 +1167,7 @@
       "solution": "With the angle not between the sides, the arc from the end of the 7 cm side can cross in two places, giving two different triangles with the same three measurements. SSA is not a congruence condition.",
       "markScheme": [
         {
-          "code": "M1",
-          "marks": 1,
-          "description": "Recognises SSA"
-        },
-        {
-          "code": "A1",
+          "code": "B1",
           "marks": 1,
           "description": "Not necessarily congruent"
         }
@@ -1197,7 +1192,7 @@
             "sides": [
               7,
               5,
-              6.9
+              7.54
             ],
             "ticks": [
               1,
@@ -1219,7 +1214,7 @@
             "sides": [
               7,
               5,
-              3.2
+              3.18
             ],
             "ticks": [
               1,
@@ -1325,8 +1320,8 @@
     {
       "id": "q14",
       "type": "multiple-choice",
-      "prompt": "Triangle $ABC$ has angles $30°$, $60°$, $90°$ and hypotenuse 10 cm. Triangle $DEF$ has angles $30°$, $60°$, $90°$ and shortest side 5 cm. Which is true?",
-      "marks": 2,
+      "prompt": "Triangle $ABC$ has angles $30°$, $60°$, $90°$ and hypotenuse 10 cm. Triangle $DEF$ has angles $30°$, $60°$, $90°$ and its shortest side is 5 cm. In a $30°$, $60°$, $90°$ triangle the shortest side is half the hypotenuse. Which is true?",
+      "marks": 1,
       "gradeBand": "8-9",
       "skill": "congruence from angles and one side",
       "calculator": "either",
@@ -1334,12 +1329,7 @@
       "solution": "In a $30°$, $60°$, $90°$ triangle the shortest side is half the hypotenuse, so $DEF$ also has hypotenuse 10 cm. Equal angles with a matching side: congruent.",
       "markScheme": [
         {
-          "code": "M1",
-          "marks": 1,
-          "description": "Shortest side is half the hypotenuse, so $DEF$ has hypotenuse 10"
-        },
-        {
-          "code": "A1",
+          "code": "B1",
           "marks": 1,
           "description": "Congruent"
         }
@@ -1349,10 +1339,94 @@
         "unfamiliar-context"
       ],
       "options": [
-        "They are congruent by ASA, since the 10 cm hypotenuse is opposite the right angle and the 5 cm side is opposite $30°$ in a triangle with hypotenuse 10",
+        "They are congruent, because $DEF$ also has a 10 cm hypotenuse",
         "They are similar but not congruent",
         "They are congruent by AAA",
-        "They cannot be compared"
+        "Nothing can be said without a diagram"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "extended",
+      "prompt": "$ABCD$ is a parallelogram. Prove that triangles $ABD$ and $CDB$ are congruent.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "congruence in a parallelogram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two routes score: SSS with the common side, or ASA with alternate angles. Either way each line needs its reason.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "First pair of equal sides with reason"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Second pair with reason"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Common side"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "SSS stated"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "$AB = CD$ (opposite sides of a parallelogram are equal)",
+          "marks": 1
+        },
+        {
+          "text": "$AD = CB$ (opposite sides of a parallelogram are equal)",
+          "marks": 1
+        },
+        {
+          "text": "$BD$ is common to both triangles",
+          "marks": 1
+        },
+        {
+          "text": "Congruent by SSS, stated",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$AB = CD$ (opposite sides of a parallelogram are equal). $AD = CB$ (opposite sides of a parallelogram are equal). $BD$ is common to both triangles. So triangles $ABD$ and $CDB$ are congruent by SSS. An alternative uses alternate angles: angle $ABD$ = angle $CDB$ and angle $ADB$ = angle $CBD$ (alternate angles, $AB$ parallel to $DC$ and $AD$ parallel to $BC$) with $BD$ common, giving ASA."
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Two triangles have exactly the same three angles. One has sides twice as long as the other. Which statement is correct?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "similarity versus congruence",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Same angles means the same shape: similar. Different sizes means not congruent. AAA is never a congruence condition for this reason.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Similar but not congruent"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "They are similar but not congruent",
+        "They are congruent by AAA",
+        "They are congruent by SSS",
+        "They are neither similar nor congruent"
       ],
       "correct": [
         0
@@ -1377,9 +1451,9 @@
         "q5",
         "q6",
         "q7",
-        "q14"
+        "q16"
       ],
-      "suggestedMinutes": 15
+      "suggestedMinutes": 18
     },
     "advanced": {
       "level": "advanced",
@@ -1388,9 +1462,11 @@
         "q10",
         "q11",
         "q12",
-        "q13"
+        "q13",
+        "q15",
+        "q14"
       ],
-      "suggestedMinutes": 30
+      "suggestedMinutes": 35
     }
   },
   "examTechnique": {
@@ -1419,7 +1495,9 @@
       "q11",
       "q12",
       "q13",
-      "q14"
+      "q14",
+      "q15",
+      "q16"
     ],
     "sampleSize": 10
   },

@@ -358,7 +358,10 @@
             "y=-0.5x+5",
             "y=5-x/2",
             "2y=-x+10",
-            "x+2y=10"
+            "x+2y=10",
+            "y=5-0.5x",
+            "-1/2x+5",
+            "y=5-1/2x"
           ]
         }
       },
@@ -366,7 +369,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Grade 9: proving right angles and finding vertices",
-        "body": "To **show** a triangle is right-angled, find the two gradients at the suspected corner and show their product is $-1$, then say so in a sentence. To find the fourth vertex of a rectangle or square, use the fact that opposite sides are parallel and equal: the shift from $B$ to $C$ is the same as the shift from $A$ to $D$. Both are questions about gradients wearing a geometry costume.",
+        "body": "To **show** a triangle is right-angled, find the two gradients at the suspected corner and show their product is $-1$, then say so in a sentence. To find the fourth vertex of a rectangle or square, use the fact that opposite sides are parallel and equal: the shift from $B$ to $C$ is the same as the shift from $A$ to $D$. Both are really gradient questions with a shape drawn around them.",
         "visuals": [
           {
             "type": "diagram",
@@ -414,23 +417,23 @@
         "check": {
           "id": "c7",
           "type": "numeric",
-          "prompt": "Triangle $PQR$ has $P(0, 0)$, $Q(2, 6)$ and $R(6, -2)$. Work out the gradient of $PQ$ multiplied by the gradient of $PR$.",
+          "prompt": "Triangle $PQR$ has $P(0, 0)$, $Q(2, 6)$ and $R(6, -2)$. Find the gradient of $PR$.",
           "marks": 1,
           "gradeBand": "8-9",
           "skill": "proving a right angle with gradients",
           "calculator": "either",
           "tags": [],
-          "solution": "Gradient $PQ = 3$, gradient $PR = -\\tfrac{1}{3}$, product $-1$: a right angle at $P$.",
+          "solution": "Gradient $PR = \\dfrac{-2 - 0}{6 - 0} = -\\dfrac{1}{3}$. Gradient $PQ = 3$, and $3 \\times \\left(-\\dfrac{1}{3}\\right) = -1$: a right angle at $P$.",
           "markScheme": [
             {
               "code": "B1",
               "marks": 1,
-              "description": "$-1$"
+              "description": "$-\\frac{1}{3}$"
             }
           ],
           "discriminators": [],
-          "answer": -1,
-          "tolerance": 0,
+          "answer": -0.3333333333333333,
+          "tolerance": 0.01,
           "unitsRequired": false
         }
       },
@@ -617,7 +620,8 @@
         "y=-0.5x+3",
         "y = -0.5x + 3",
         "y=3-x/2",
-        "y=3-0.5x"
+        "y=3-0.5x",
+        "y=3-1/2x"
       ]
     },
     {
@@ -745,7 +749,8 @@
         "2x+3y=21",
         "2x+3y-21=0",
         "y=7-2x/3",
-        "y=7-2/3x"
+        "y=7-2/3x",
+        "3y=21-2x"
       ]
     },
     {
@@ -757,7 +762,7 @@
       "skill": "proving a right angle with gradients",
       "calculator": "either",
       "tags": [],
-      "solution": "The two gradients earn method marks; the last mark is for the product and the sentence. Pythagoras on the three lengths is an alternative route and scores the same.",
+      "solution": "Gradient $PQ = \\dfrac{7-1}{4-1} = 2$. Gradient $PR = \\dfrac{-2-1}{7-1} = -\\dfrac{1}{2}$. $2 \\times \\left(-\\dfrac{1}{2}\\right) = -1$, so $PQ$ and $PR$ are perpendicular and the angle at $P$ is a right angle. An alternative is to find all three lengths and check that $PQ^2 + PR^2 = QR^2$, which uses the converse of Pythagoras.",
       "markScheme": [
         {
           "code": "M1",
@@ -900,7 +905,10 @@
         "y = 1/2 x + 7",
         "y=0.5x+7",
         "y = 0.5x + 7",
-        "2y=x+14"
+        "2y=x+14",
+        "y=7+x/2",
+        "y=7+0.5x",
+        "y=7+1/2x"
       ]
     },
     {
@@ -939,6 +947,87 @@
         "(1, 0)",
         "1,0"
       ]
+    },
+    {
+      "id": "q15",
+      "type": "short-text",
+      "prompt": "Find the equation of the line perpendicular to $y = 3x - 1$ that passes through $(6, 1)$. Give your answer in the form $ax + by + c = 0$ where $a$, $b$ and $c$ are integers.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "perpendicular line in integer form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Gradient $-\\tfrac{1}{3}$. Through $(6, 1)$: $1 = -2 + c$, so $c = 3$ and $y = -\\tfrac{1}{3}x + 3$. Multiply by 3: $3y = -x + 9$, so $x + 3y - 9 = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Gradient $-\\frac{1}{3}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$c = 3$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Multiplies through by 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x + 3y - 9 = 0$ or any integer multiple"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "x+3y-9=0",
+        "x+3y−9=0",
+        "-x-3y+9=0",
+        "3y+x-9=0"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "short-text",
+      "prompt": "Find the equation of the line perpendicular to $3x - 4y = 8$ that passes through $(0, 2)$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "perpendicular with a fraction gradient",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3x - 4y = 8$ rearranges to $y = \\tfrac{3}{4}x - 2$: gradient $\\tfrac{3}{4}$. Perpendicular gradient $-\\tfrac{4}{3}$, and the line crosses at $(0, 2)$: $y = -\\tfrac{4}{3}x + 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Gradient $\\frac{3}{4}$ after rearranging"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Perpendicular gradient $-\\frac{4}{3}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$y = -\\frac{4}{3}x + 2$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "y=-4/3x+2",
+        "y=-4x/3+2",
+        "y=2-4/3x",
+        "y=2-4x/3",
+        "3y=-4x+6",
+        "4x+3y=6"
+      ]
     }
   ],
   "worksheets": {
@@ -958,8 +1047,7 @@
         "q4",
         "q5",
         "q6",
-        "q7",
-        "q13"
+        "q7"
       ],
       "suggestedMinutes": 15
     },
@@ -970,9 +1058,12 @@
         "q10",
         "q11",
         "q12",
-        "q14"
+        "q14",
+        "q15",
+        "q16",
+        "q13"
       ],
-      "suggestedMinutes": 25
+      "suggestedMinutes": 40
     }
   },
   "examTechnique": {
@@ -1001,7 +1092,9 @@
       "q11",
       "q12",
       "q13",
-      "q14"
+      "q14",
+      "q15",
+      "q16"
     ],
     "sampleSize": 10
   },
