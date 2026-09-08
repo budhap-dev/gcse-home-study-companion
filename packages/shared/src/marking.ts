@@ -6,23 +6,30 @@ export interface MarkResult {
   marksAvailable: number
 }
 
-/** Superscript digits and signs to caret form, so x⁸ and x^8 compare equal. */
 const SUPERSCRIPTS: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-' }
 
+/**
+ * Superscript digits and signs to caret form, so x⁸ and x^8 compare equal. Also:
+ * Unicode minus and dashes to a hyphen, √ and "root" to sqrt, brackets around a root
+ * argument dropped, multiplication signs dropped, and a leading "y=" dropped so
+ * "y = 2x - 2" and "2x-2" compare equal.
+ */
 export function normaliseText(s: string): string {
   let out = s.toLowerCase()
-  let hasSuper = false
-  out = out.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, (run) => {
-    hasSuper = true
-    return '^' + [...run].map((c) => SUPERSCRIPTS[c] ?? c).join('')
-  })
-  void hasSuper
+  out = out.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, (run) => '^' + [...run].map((c) => SUPERSCRIPTS[c] ?? c).join(''))
   return out
     .replace(/\s+/g, '')
+    .replace(/[−–—]/g, '-')
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
+    .replace(/√\(([^)]+)\)/g, 'sqrt$1')
+    .replace(/√/g, 'sqrt')
+    .replace(/sqrt\(([^)]+)\)/g, 'sqrt$1')
+    .replace(/root/g, 'sqrt')
+    .replace(/\*/g, '')
     .replace(/[{}]/g, '')
     .replace(/\^\(([^)]+)\)/g, '^$1')
+    .replace(/^y=/, '')
 }
 
 /** Parses "0.25", "1/4", "-2", "3 m/s", "1,000". Returns undefined when it is not a number. */
