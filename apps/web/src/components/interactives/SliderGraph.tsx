@@ -20,7 +20,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
       default: return x * x
     }
   }
-  const [x, setX] = useState(Math.round(xMax / 2))
+  const [x, setX] = useState(xMax / 2)
   const id = useId()
   const yMax = Math.max(...Array.from({ length: 41 }, (_, i) => f((i / 40) * xMax)), 1)
   const W = 360
@@ -30,7 +30,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
   const sy = (v: number) => H - pad - (v / yMax) * (H - 2 * pad)
   const path = Array.from({ length: 81 }, (_, i) => { const xv = (i / 80) * xMax; return `${i ? 'L' : 'M'}${sx(xv).toFixed(1)} ${sy(f(xv)).toFixed(1)}` }).join(' ')
   const y = f(x)
-  const fmt = (v: number) => (v >= 1000 ? Math.round(v).toLocaleString('en-GB') : v >= 100 ? v.toFixed(0) : v.toFixed(1))
+  const fmt = (v: number) => (v >= 1000 ? Math.round(v).toLocaleString('en-GB') : v >= 100 ? v.toFixed(0) : v >= 1 ? v.toFixed(1) : v.toFixed(2))
   return (
     <figure className="flex flex-col gap-3 rounded-xl border border-rule bg-surface p-4">
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>

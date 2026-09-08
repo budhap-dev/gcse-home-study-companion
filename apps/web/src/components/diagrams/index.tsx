@@ -6,6 +6,8 @@ import { PowerOfPower } from './PowerOfPower.tsx'
 import { RepeatedMultiplication } from './RepeatedMultiplication.tsx'
 import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
+import { SpringLoad } from './SpringLoad.tsx'
+import { BeamMoments } from './BeamMoments.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -20,6 +22,8 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'line-graph': LineGraph,
   'triangle-construction': TriangleConstruction,
   'triangle-pair': TrianglePair,
+  'spring-load': SpringLoad,
+  'beam-moments': BeamMoments,
 }
 
 export const INK = '#1e2330'
