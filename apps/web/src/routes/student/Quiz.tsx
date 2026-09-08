@@ -7,6 +7,7 @@ import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic } from '../../content/index.ts'
 import { recordAttempt } from '../../progress/store.ts'
+import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 interface Answered {
   answer: Answer
@@ -56,6 +57,7 @@ export function Quiz() {
   const subject = subjectId ? getSubject(subjectId) : undefined
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const [state, setState] = useState<QuizState | null>(() => (topic ? load(topic.id) : null))
+  useActivityTimer(Boolean(state && !state.finishedAt))
 
   useEffect(() => {
     if (topic) save(topic.id, state)

@@ -8,6 +8,7 @@ import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
 import { recordAttempt } from '../../progress/store.ts'
+import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -62,6 +63,7 @@ export function Worksheet() {
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const level = (['core', 'higher', 'advanced'] as const).find((l) => l === levelParam)
   const [state, setState] = useState<SheetState | null>(() => (topic && level ? load(topic.id, level) : null))
+  useActivityTimer(Boolean(state && !state.finishedAt))
 
   useEffect(() => {
     if (topic && level) save(topic.id, level, state)

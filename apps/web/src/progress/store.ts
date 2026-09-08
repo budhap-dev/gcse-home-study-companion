@@ -26,9 +26,21 @@ export interface LessonRecord {
   updatedAt: string
 }
 
-interface ProgressState {
+export interface ProgressState {
   attempts: AttemptRecord[]
   lessons: Record<string, LessonRecord>
+  /** Study minutes per calendar day, ISO date keys. */
+  minutes: Record<string, number>
+  /** Weekly goal in minutes. */
+  goalMinutes: number
+  /** ISO dates marked as days off; they do not break the streak. */
+  daysOff: string[]
+}
+
+export const DEFAULT_GOAL_MINUTES = 180
+
+export function emptyState(): ProgressState {
+  return { attempts: [], lessons: {}, minutes: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [] }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -36,11 +48,11 @@ const KEY = 'study-companion.progress.v1'
 function read(): ProgressState {
   try {
     const raw = localStorage.getItem(KEY)
-    if (raw) return JSON.parse(raw) as ProgressState
+    if (raw) return { ...emptyState(), ...(JSON.parse(raw) as Partial<ProgressState>) }
   } catch {
     // storage unavailable or corrupt: start clean
   }
-  return { attempts: [], lessons: {} }
+  return emptyState()
 }
 
 function write(state: ProgressState) {
@@ -81,7 +93,66 @@ export function saveLessonPosition(topicId: string, stepIndex: number, completed
 }
 
 export function clearProgress() {
-  write({ attempts: [], lessons: {} })
+  write(emptyState())
+}
+
+/** Local calendar date as YYYY-MM-DD. */
+export function isoDate(d = new Date()): string {
+  const off = d.getTimezoneOffset() * 60000
+  return new Date(d.getTime() - off).toISOString().slice(0, 10)
+}
+
+export function addStudyMinutes(minutes: number, day = isoDate()) {
+  const state = read()
+  state.minutes[day] = (state.minutes[day] ?? 0) + minutes
+  write(state)
+}
+
+export function setGoalMinutes(minutes: number) {
+  const state = read()
+  state.goalMinutes = Math.max(30, Math.min(2000, Math.round(minutes)))
+  write(state)
+}
+
+export function toggleDayOff(day: string) {
+  const state = read()
+  state.daysOff = state.daysOff.includes(day) ? state.daysOff.filter((d) => d !== day) : [...state.daysOff, day]
+  write(state)
+}
+
+/** Monday to Sunday containing `day`, as ISO dates. */
+export function weekDays(day = isoDate()): string[] {
+  const d = new Date(day + 'T12:00:00')
+  const monday = new Date(d)
+  monday.setDate(d.getDate() - ((d.getDay() + 6) % 7))
+  return Array.from({ length: 7 }, (_, i) => {
+    const x = new Date(monday)
+    x.setDate(monday.getDate() + i)
+    return isoDate(x)
+  })
+}
+
+export function weekMinutes(state: ProgressState, day = isoDate()): number {
+  return weekDays(day).reduce((sum, d) => sum + (state.minutes[d] ?? 0), 0)
+}
+
+/** Days with a completed activity, counting back from today; days off are skipped, not broken on. */
+export function streakDays(state: ProgressState, today = isoDate()): number {
+  const active = new Set<string>()
+  for (const a of state.attempts) active.add(a.completedAt.slice(0, 10))
+  for (const l of Object.values(state.lessons)) if (l.completedAt) active.add(l.completedAt.slice(0, 10))
+  const off = new Set(state.daysOff)
+  let streak = 0
+  const d = new Date(today + 'T12:00:00')
+  // today counts if active; if not, the streak is still alive until tomorrow
+  if (!active.has(isoDate(d))) d.setDate(d.getDate() - 1)
+  for (let i = 0; i < 366; i++) {
+    const key = isoDate(d)
+    if (active.has(key)) streak++
+    else if (!off.has(key)) break
+    d.setDate(d.getDate() - 1)
+  }
+  return streak
 }
 
 function latest(attempts: AttemptRecord[], topicId: string, kind: 'quiz' | 'worksheet', level?: WorksheetLevel) {
