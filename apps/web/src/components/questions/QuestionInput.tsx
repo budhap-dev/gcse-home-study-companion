@@ -1,4 +1,4 @@
-import type { Question } from '@study/shared'
+import { seededShuffle, type Question } from '@study/shared'
 import { useId, useState } from 'react'
 import { RichText } from '../RichText.tsx'
 
@@ -96,7 +96,11 @@ function Typed({ question, disabled, onSubmit }: Props & { question: Extract<Que
 
 function Ordering({ question, disabled, onSubmit }: Props & { question: Extract<Question, { type: 'ordering' }> }) {
   // Shuffle once with a stable seed so a retake looks different but a re-render does not.
-  const [order, setOrder] = useState<number[]>(() => shuffle(question.items.map((_, i) => i), question.id))
+  const [order, setOrder] = useState<number[]>(() => {
+    const out = seededShuffle(question.items.map((_, i) => i), question.id)
+    // never hand back the correct order as the starting state
+    return out.every((v, i) => v === i) ? out.reverse() : out
+  })
   const move = (from: number, dir: -1 | 1) => {
     const to = from + dir
     if (to < 0 || to >= order.length) return
@@ -172,17 +176,4 @@ function SubmitButton({ label = 'Check answer', disabled = false, onClick }: { l
       {label}
     </button>
   )
-}
-
-function shuffle(items: number[], seed: string): number[] {
-  let h = 2166136261
-  for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619)
-  const out = [...items]
-  for (let i = out.length - 1; i > 0; i--) {
-    h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0
-    const j = h % (i + 1)
-    ;[out[i], out[j]] = [out[j]!, out[i]!]
-  }
-  // never hand back the correct order as the starting state
-  return out.every((v, i) => v === i) ? out.reverse() : out
 }
