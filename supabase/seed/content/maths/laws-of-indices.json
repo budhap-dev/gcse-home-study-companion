@@ -190,7 +190,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Zero and negative indices",
-        "body": "Keep dividing by 2 and the pattern continues past $2^1$:\n\n$2^2 = 4$, $2^1 = 2$, $2^0 = 1$, $2^{-1} = \\dfrac{1}{2}$, $2^{-2} = \\dfrac{1}{4}$.\n\nSo $a^0 = 1$ and $a^{-n} = \\dfrac{1}{a^n}$. A negative index means **reciprocal**, never a negative number.",
+        "body": "Halve each time and carry the pattern on below $2^1$:\n\n$2^2 = 4$, $2^1 = 2$, $2^0 = 1$, $2^{-1} = \\dfrac{1}{2}$, $2^{-2} = \\dfrac{1}{4}$.\n\nSo $a^0 = 1$ and $a^{-n} = \\dfrac{1}{a^n}$. A negative index means **reciprocal**, never a negative number.",
         "visuals": [
           {
             "type": "diagram",
@@ -201,6 +201,18 @@
               "to": -2
             },
             "alt": "A ladder of powers of 2 from 2 squared down to 2 to the minus 2, each rung half the one above"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A fraction base: $\\left(\\tfrac{2}{3}\\right)^{-2}$",
+            "steps": [
+              {
+                "text": "A negative index flips the fraction: $\\left(\\tfrac{3}{2}\\right)^{2}$"
+              },
+              {
+                "text": "$= \\tfrac{9}{4}$"
+              }
+            ]
           }
         ],
         "check": {
@@ -307,8 +319,8 @@
               "target": "4x^10",
               "stages": [
                 "4x^6",
-                "4x^{6-(-4)}",
-                "4x^{10}"
+                "4x^(6+4)",
+                "4x^10"
               ]
             },
             "fallback": "$(2x^3)^2 = 4x^6$. Dividing by $x^{-4}$ subtracts $-4$ from the index: $4x^{6+4} = 4x^{10}$."
@@ -346,8 +358,8 @@
       {
         "id": "s9",
         "kind": "grade-9",
-        "title": "Grade 9: different bases, same base",
-        "body": "Examiners hide the same base inside different numbers. $8$ and $4$ are both powers of $2$, so $8^x = 4^{x+1}$ becomes $2^{3x} = 2^{2x+2}$. Equal bases mean equal indices: $3x = 2x + 2$, so $x = 2$.\n\nLook for 4, 8, 16, 32 as powers of 2, and 9, 27, 81 as powers of 3.",
+        "title": "Grade 9: rewrite both sides with the same base",
+        "body": "Examiners write both sides of an equation with numbers that are secretly powers of the same base. $8$ and $4$ are both powers of $2$, so $8^x = 4^{x+1}$ becomes $2^{3x} = 2^{2x+2}$. Equal bases mean equal indices: $3x = 2x + 2$, so $x = 2$.\n\nLook for 4, 8, 16, 32 as powers of 2, and 9, 27, 81 as powers of 3.",
         "visuals": [
           {
             "type": "worked-example",
@@ -697,7 +709,8 @@
       ],
       "accepted": [
         "1/(9x^4)",
-        "1/9x^4",
+        "(1/9)x^-4",
+        "1/9x^-4",
         "x^-4/9",
         "(x^-4)/9",
         "1/(9x⁴)"
@@ -821,6 +834,76 @@
       "answer": 2.5,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "Evaluate $\\left(\\dfrac{8}{27}\\right)^{-\\frac{2}{3}}$. Give your answer as a decimal or a fraction.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "negative fractional index with a fraction base",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Flip for the negative index: $\\left(\\tfrac{27}{8}\\right)^{\\frac{2}{3}}$. Cube roots: $\\tfrac{3}{2}$. Square: $\\tfrac{9}{4} = 2.25$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Fraction inverted for the negative index"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt[3]{27} = 3$ and $\\sqrt[3]{8} = 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\frac{9}{4}$ or 2.25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 2.25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "short-text",
+      "prompt": "Simplify fully $(2a^2b^3)^3 \\div 4a^4b$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "index laws with algebra",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Cube everything in the bracket: $8a^6b^9$. Divide by $4a^4b$: $2a^{6-4}b^{9-1} = 2a^2b^8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$8a^6b^9$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Indices subtracted"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$2a^2b^8$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "2a^2b^8",
+        "2a²b⁸",
+        "2a^2*b^8"
+      ]
     }
   ],
   "worksheets": {
@@ -829,10 +912,9 @@
       "questionIds": [
         "q1",
         "q2",
-        "q3",
-        "q8"
+        "q3"
       ],
-      "suggestedMinutes": 8
+      "suggestedMinutes": 6
     },
     "higher": {
       "level": "higher",
@@ -841,7 +923,7 @@
         "q5",
         "q6",
         "q7",
-        "q12"
+        "q8"
       ],
       "suggestedMinutes": 15
     },
@@ -851,10 +933,13 @@
         "q9",
         "q10",
         "q11",
+        "q12",
         "q13",
-        "q14"
+        "q14",
+        "q15",
+        "q16"
       ],
-      "suggestedMinutes": 25
+      "suggestedMinutes": 35
     }
   },
   "examTechnique": {
@@ -882,7 +967,9 @@
       "q11",
       "q12",
       "q13",
-      "q14"
+      "q14",
+      "q15",
+      "q16"
     ],
     "sampleSize": 10
   },

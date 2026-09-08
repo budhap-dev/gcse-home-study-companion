@@ -83,7 +83,7 @@
         "check": {
           "id": "c2",
           "type": "numeric",
-          "prompt": "In an SSS construction of a triangle with sides 7 cm, 5 cm and 6 cm, what radius do you set the compasses to for the arc drawn from the end of the base where the 5 cm side starts?",
+          "prompt": "Triangle $ABC$ is constructed with $AB = 7$ cm as the base, $AC = 5$ cm and $BC = 6$ cm. What radius do you set the compasses to for the arc drawn from $A$?",
           "marks": 1,
           "gradeBand": "4-5",
           "skill": "SSS construction steps",
@@ -303,7 +303,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Grade 9: the ambiguous case",
-        "body": "Two sides and an angle that is **not** between them (SSA) do not fix a triangle. Draw $AB$, the angle at $A$, and then an arc from $B$: it can cross the angle line **twice**. Both crossings satisfy the given measurements. This is why SSA is never a condition for congruence, and it is the reasoning examiners want when they ask why two different triangles are possible.",
+        "body": "Two sides and an angle that is **not** between them (SSA) do not fix a triangle. Draw $AB$, the angle at $A$, and then an arc from $B$: it can cross the angle line **twice**. Both crossings satisfy the given measurements. This is why SSA is not a condition for congruence (the one exception is a right angle, which is the RHS condition), and it is the reasoning examiners want when they ask why two different triangles are possible.",
         "visuals": [
           {
             "type": "diagram",
@@ -679,7 +679,7 @@
     {
       "id": "q11",
       "type": "numeric",
-      "prompt": "$AB = 7$ cm, angle $A = 40°$ and $BC = 5$ cm, as in the diagram. Taking $C$ as the crossing further from $A$, angle $ACB = 64°$ to the nearest degree. Work out angle $ABC$.",
+      "prompt": "$AB = 7$ cm, angle $A = 40°$ and $BC = 5$ cm, as in the diagram. Take $C$ to be the point where $AC$ is longer. Angle $ACB = 64°$ to the nearest degree. Work out angle $ABC$.",
       "marks": 2,
       "gradeBand": "8-9",
       "skill": "angle sum in the ambiguous case",
@@ -726,7 +726,7 @@
       "id": "q12",
       "type": "multiple-choice",
       "prompt": "A triangle has sides 5 cm, 12 cm and 13 cm. Without drawing it, what can you say about its largest angle?",
-      "marks": 2,
+      "marks": 1,
       "gradeBand": "8-9",
       "skill": "converse of Pythagoras",
       "calculator": "either",
@@ -734,12 +734,7 @@
       "solution": "$5^2 + 12^2 = 25 + 144 = 169 = 13^2$, so by the converse of Pythagoras the angle opposite the 13 cm side is a right angle.",
       "markScheme": [
         {
-          "code": "M1",
-          "marks": 1,
-          "description": "$5^2 + 12^2$ compared with $13^2$"
-        },
-        {
-          "code": "A1",
+          "code": "B1",
           "marks": 1,
           "description": "Exactly 90°"
         }
@@ -795,7 +790,7 @@
     {
       "id": "q14",
       "type": "extended",
-      "prompt": "Explain why a triangle with sides 4 cm, 5 cm and 10 cm cannot be constructed, and state the smallest whole number of centimetres the 10 cm side could be changed to so that a triangle is possible.",
+      "prompt": "Explain why a triangle with sides 4 cm, 5 cm and 10 cm cannot be constructed, and state the largest whole number of centimetres the 10 cm side could be changed to so that a triangle is possible.",
       "marks": 3,
       "gradeBand": "8-9",
       "skill": "triangle inequality reasoning",
@@ -839,6 +834,79 @@
         }
       ],
       "modelAnswer": "For a triangle, the two shorter sides must add to more than the longest side. $4 + 5 = 9$, which is less than 10, so the arcs of radius 4 cm and 5 cm cannot reach each other. The third side must be less than 9 cm; changing 10 cm to 8 cm gives the largest whole-number side that works."
+    },
+    {
+      "id": "q15",
+      "type": "ordering",
+      "prompt": "Put the steps for constructing the perpendicular bisector of a line segment $AB$ in order.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "perpendicular bisector construction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The radius must stay the same for both arcs, and it must be more than half of $AB$ so the arcs meet.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "All four in order; B1 for two adjacent steps swapped"
+        }
+      ],
+      "discriminators": [],
+      "items": [
+        "Open the compasses to more than half of $AB$",
+        "Draw an arc above and below the line from $A$",
+        "Keep the same radius and draw arcs above and below from $B$",
+        "Join the two points where the arcs cross"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "extended",
+      "prompt": "Explain why every point on the perpendicular bisector of $AB$ is the same distance from $A$ as from $B$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "why the construction works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A locus question in disguise: it links constructions to congruence, which is the next topic.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Equal radii give equidistant crossing points"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Congruent triangles about the midpoint"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$PA = PB$ for every point"
+        }
+      ],
+      "discriminators": [
+        "proof",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "The construction uses equal radii from $A$ and $B$, so each arc crossing point is equidistant from $A$ and $B$",
+          "marks": 1
+        },
+        {
+          "text": "The line through the two crossing points is the perpendicular bisector, and any point $P$ on it with the midpoint $M$ gives congruent triangles $PMA$ and $PMB$ (SAS: $AM = MB$, right angles at $M$, $PM$ common)",
+          "marks": 1
+        },
+        {
+          "text": "So $PA = PB$ for every point $P$ on the line",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The arcs are drawn with the same radius from $A$ and from $B$, so each crossing point is the same distance from $A$ as from $B$. The line through them passes through the midpoint $M$ of $AB$ at right angles. For any point $P$ on that line, triangles $PMA$ and $PMB$ have $AM = MB$, a right angle at $M$, and $PM$ in common, so they are congruent by SAS and $PA = PB$."
     }
   ],
   "worksheets": {
@@ -859,9 +927,9 @@
         "q5",
         "q6",
         "q7",
-        "q12"
+        "q15"
       ],
-      "suggestedMinutes": 15
+      "suggestedMinutes": 18
     },
     "advanced": {
       "level": "advanced",
@@ -870,9 +938,11 @@
         "q10",
         "q11",
         "q13",
-        "q14"
+        "q14",
+        "q16",
+        "q12"
       ],
-      "suggestedMinutes": 25
+      "suggestedMinutes": 35
     }
   },
   "examTechnique": {
@@ -901,7 +971,9 @@
       "q11",
       "q12",
       "q13",
-      "q14"
+      "q14",
+      "q15",
+      "q16"
     ],
     "sampleSize": 10
   },

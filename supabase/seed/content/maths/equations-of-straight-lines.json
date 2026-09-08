@@ -77,7 +77,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Negative and fractional gradients",
-        "body": "A negative gradient slopes down from left to right. A gradient of $\\tfrac{1}{2}$ rises 1 for every 2 across. Read a gradient from a graph by drawing a triangle between two points where the line crosses grid intersections.\n\n$$m = \\dfrac{\\text{change in } y}{\\text{change in } x}$$",
+        "body": "A negative gradient slopes down from left to right. A gradient of $\\tfrac{1}{2}$ rises 1 for every 2 across. Read a gradient from a graph by choosing two points where the line goes exactly through a corner of the squares, then counting up and across between them.\n\n$$m = \\dfrac{\\text{change in } y}{\\text{change in } x}$$",
         "visuals": [
           {
             "type": "diagram",
@@ -101,6 +101,28 @@
                   "m": 0.5,
                   "c": -2,
                   "label": "y = ½x − 2"
+                }
+              ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": 3,
+                  "label": "(0, 3)"
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "label": "(3, 0)"
+                },
+                {
+                  "x": 0,
+                  "y": -2,
+                  "label": "(0, −2)"
+                },
+                {
+                  "x": 4,
+                  "y": 0,
+                  "label": "(4, 0)"
                 }
               ]
             },
@@ -173,7 +195,7 @@
                 }
               ]
             },
-            "alt": "The line through (1, 2) and (3, 8) with a right-angled triangle showing 2 across and 6 up"
+            "alt": "The line through (1, 2) and (3, 8) with both points marked: 2 across and 6 up between them"
           }
         ],
         "check": {
@@ -181,7 +203,7 @@
           "type": "numeric",
           "prompt": "Find the gradient of the line through $(2, 3)$ and $(6, 11)$.",
           "marks": 1,
-          "gradeBand": "6-7",
+          "gradeBand": "4-5",
           "skill": "gradient from two points",
           "calculator": "either",
           "tags": [],
@@ -271,7 +293,8 @@
           "accepted": [
             "y=3x+4",
             "y = 3x + 4",
-            "3x+4"
+            "3x+4",
+            "y=4+3x"
           ]
         }
       },
@@ -418,7 +441,7 @@
         "check": {
           "id": "c8",
           "type": "numeric",
-          "prompt": "The line $3x + 4y = 24$ crosses the $x$-axis at $A$ and the $y$-axis at $B$. Work out the area of triangle $OAB$.",
+          "prompt": "The line $3x + 4y = 24$ crosses the $x$-axis at $A$ and the $y$-axis at $B$. $O$ is the origin. Work out the area of triangle $OAB$.",
           "marks": 1,
           "gradeBand": "8-9",
           "skill": "intercepts and area",
@@ -575,7 +598,8 @@
       "accepted": [
         "y=2x+5",
         "y = 2x + 5",
-        "2x+5"
+        "2x+5",
+        "y=5+2x"
       ]
     },
     {
@@ -615,7 +639,8 @@
         "-0.5x+3",
         "-1/2x+3",
         "y=3-x/2",
-        "y=3-0.5x"
+        "y=3-0.5x",
+        "y=3-1/2x"
       ]
     },
     {
@@ -649,7 +674,8 @@
       "accepted": [
         "y=3x+1",
         "y = 3x + 1",
-        "3x+1"
+        "3x+1",
+        "y=1+3x"
       ]
     },
     {
@@ -861,7 +887,7 @@
       "skill": "collinear points",
       "calculator": "either",
       "tags": [],
-      "solution": "Two equal gradients are not enough on their own; the concluding sentence about the shared point is what turns a calculation into a proof.",
+      "solution": "Gradient $AB = \\dfrac{8-2}{3-1} = 3$. Gradient $BC = \\dfrac{17-8}{6-3} = 3$. Equal gradients and a shared point $B$ mean $A$, $B$ and $C$ lie on one straight line. Two equal gradients through a common point is exactly what collinear means; the sentence saying so is the final mark.",
       "markScheme": [
         {
           "code": "M1",
@@ -904,7 +930,7 @@
       "id": "q13",
       "type": "multiple-choice",
       "prompt": "Which of these lines does not pass through $(3, 7)$?",
-      "marks": 2,
+      "marks": 1,
       "gradeBand": "8-9",
       "skill": "testing whether a point lies on a line",
       "calculator": "either",
@@ -912,12 +938,7 @@
       "solution": "Test each: $2(3) + 1 = 7$ ✓, $3(3) - 2 = 7$ ✓, $3 + 7 = 10$ ✓, $10 - 2(3) = 4 \\ne 7$ ✗.",
       "markScheme": [
         {
-          "code": "M1",
-          "marks": 1,
-          "description": "At least two lines tested"
-        },
-        {
-          "code": "A1",
+          "code": "B1",
           "marks": 1,
           "description": "$y = 10 - 2x$"
         }
@@ -968,6 +989,98 @@
       "answer": 2,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "short-text",
+      "prompt": "$A$ is $(2, 7)$ and $B$ is $(8, 3)$. Find the coordinates of the midpoint of $AB$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "midpoint of a line segment",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Average the $x$-coordinates and the $y$-coordinates: $\\left(\\dfrac{2+8}{2}, \\dfrac{7+3}{2}\\right) = (5, 5)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Averages both coordinates"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(5, 5)$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "(5,5)",
+        "(5, 5)",
+        "5,5"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "$P$ is $(1, 2)$, $Q$ is $(4, 6)$ and $R$ is $(7, 2)$. Show that triangle $PQR$ is isosceles by finding the lengths $PQ$ and $QR$. Give the length $PQ$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "length of a line segment",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$PQ = \\sqrt{(4-1)^2 + (6-2)^2} = \\sqrt{9 + 16} = 5$. $QR = \\sqrt{(7-4)^2 + (2-6)^2} = \\sqrt{9 + 16} = 5$. Two equal sides, so the triangle is isosceles.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Pythagoras with the differences in $x$ and $y$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Both lengths found"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5, with the isosceles conclusion"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "show-that"
+      ],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "multiple-choice",
+      "prompt": "Which equation is a horizontal line?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "horizontal and vertical lines",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$y = 3$ is every point with a $y$-coordinate of 3: a horizontal line. $x = 3$ is vertical.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$y = 3$"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "$y = 3$",
+        "$x = 3$",
+        "$y = 3x$",
+        "$y = x + 3$"
+      ],
+      "correct": [
+        0
+      ]
     }
   ],
   "worksheets": {
@@ -977,7 +1090,8 @@
         "q1",
         "q2",
         "q3",
-        "q4"
+        "q4",
+        "q17"
       ],
       "suggestedMinutes": 8
     },
@@ -988,9 +1102,9 @@
         "q6",
         "q7",
         "q8",
-        "q13"
+        "q15"
       ],
-      "suggestedMinutes": 15
+      "suggestedMinutes": 18
     },
     "advanced": {
       "level": "advanced",
@@ -999,13 +1113,15 @@
         "q10",
         "q11",
         "q12",
-        "q14"
+        "q14",
+        "q16",
+        "q13"
       ],
-      "suggestedMinutes": 25
+      "suggestedMinutes": 35
     }
   },
   "examTechnique": {
-    "body": "Straight-line questions are worth 2 to 4 marks and appear on every paper. \"Find the equation\" means $y = mx + c$ unless another form is asked for. Show the gradient calculation and the substitution for $c$: both carry method marks even if the final line slips.",
+    "body": "Straight-line questions are worth 2 to 4 marks and appear on every paper. \"Find the equation\" means $y = mx + c$ unless another form is asked for. Show the gradient calculation and the substitution for $c$: both earn method marks even when the final answer is wrong.",
     "examinerErrors": [
       "Subtracting coordinates in different orders on the top and bottom of the gradient fraction.",
       "Reading the gradient from $2y = 6x + 8$ as 6 without dividing.",
@@ -1030,7 +1146,10 @@
       "q11",
       "q12",
       "q13",
-      "q14"
+      "q14",
+      "q15",
+      "q16",
+      "q17"
     ],
     "sampleSize": 10
   },
