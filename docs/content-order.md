@@ -1,6 +1,6 @@
 # Content authoring order
 
-Content is authored just ahead of what the pilot student meets in class. This is the queue. Source: the school's Year 10 curriculum overviews for Maths and Physics, shared 2 September 2026.
+Content is authored just ahead of what the pilot student meets in class. This is the queue. Source: the school's curriculum overviews for Years 9 to 11, one document per subject in [curriculum/](curriculum/README.md). Maths and Physics are queued here; the other subjects follow their curriculum documents when their phase starts.
 
 ## Mathematics, Edexcel 1MA1 Higher
 
