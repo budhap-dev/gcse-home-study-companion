@@ -10,6 +10,9 @@ import { SpringLoad } from './SpringLoad.tsx'
 import { BeamMoments } from './BeamMoments.tsx'
 import { DotAndCross } from './DotAndCross.tsx'
 import { Lattice } from './Lattice.tsx'
+import { EnergyStores } from './EnergyStores.tsx'
+import { EnergyTransferBars } from './EnergyTransferBars.tsx'
+import { EquationCard } from './EquationCard.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -28,6 +31,9 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'beam-moments': BeamMoments,
   'dot-and-cross': DotAndCross,
   'lattice': Lattice,
+  'energy-stores': EnergyStores,
+  'energy-transfer-bars': EnergyTransferBars,
+  'equation-card': EquationCard,
 }
 
 export const INK = '#1e2330'

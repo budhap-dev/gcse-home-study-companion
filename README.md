@@ -51,3 +51,7 @@ pnpm build
 ```
 
 The app is deployed by Vercel from `main` at https://gcse-home-study-companion.vercel.app. Subjects, topic maps, and topic pages read real content bundled from `supabase/seed/content`. Lesson, quiz, and worksheet screens are placeholders that name the stories they will deliver. Progress is stored in the browser. Nothing talks to a database.
+
+## Versioning
+
+The app version is the `version` field in `apps/web/package.json`, shown in the menu footer with the short commit hash. Bump the minor number when a new subject block or feature lands, the patch number for fixes.
