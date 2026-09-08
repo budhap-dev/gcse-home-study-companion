@@ -1,5 +1,5 @@
-import { getSubject, SUBJECTS, Topic } from '@study/shared'
-import type { Topic as TopicRecord } from '@study/shared'
+import { getSubject, SUBJECTS, SubjectGuide, Topic } from '@study/shared'
+import type { SubjectGuide as GuideRecord, Topic as TopicRecord } from '@study/shared'
 
 /**
  * Content is bundled at build time from the content pack in the repository,
@@ -38,4 +38,12 @@ export function getTopic(subjectId: string, topicId: string): TopicRecord | unde
 
 export function totalMarks(topic: TopicRecord, questionIds: string[]): number {
   return questionIds.reduce((sum, id) => sum + (topic.questions.find((q) => q.id === id)?.marks ?? 0), 0)
+}
+
+const guideFiles = import.meta.glob('../../../../supabase/seed/guides/*.json', { eager: true, import: 'default' })
+
+export const GUIDES: GuideRecord[] = Object.values(guideFiles).map((raw) => SubjectGuide.parse(raw))
+
+export function getGuide(subjectId: string): GuideRecord | undefined {
+  return GUIDES.find((g) => g.subjectId === subjectId)
 }
