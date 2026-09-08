@@ -1,0 +1,1083 @@
+{
+  "id": "moments-levers-and-gears",
+  "subjectId": "physics",
+  "unitId": "forces",
+  "title": "Moments, levers and gears",
+  "specPoints": [
+    "4.5.4"
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "The turning effect of a force",
+        "body": "A force on something that can turn about a **pivot** has a turning effect called a **moment**:\n\n$$M = F d$$\n\n$M$ in newton metres (N m), $F$ in newtons, $d$ the **perpendicular** distance from the pivot to the line of the force, in metres. Twice the force or twice the distance gives twice the moment.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "beam-moments",
+            "props": {
+              "length": 2,
+              "pivot": 0.5,
+              "forces": [
+                {
+                  "at": 0.9,
+                  "force": 5
+                }
+              ],
+              "showDistances": true
+            },
+            "alt": "A beam on a pivot with a 5 newton force pushing down 0.4 metres from the pivot"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "A 5 N force acts 0.4 m from a pivot. Calculate the moment.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "calculating a moment",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$5 \\times 0.4 = 2$ N m.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2 N m"
+            }
+          ],
+          "discriminators": [],
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N m"
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Perpendicular distance",
+        "body": "Only the distance measured at right angles to the force counts. A force whose line passes straight through the pivot has **no** moment, however big it is. That is why pushing a door towards its hinges does nothing, and pushing near the hinges does very little.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Door 0.8 m wide, pushed with 10 N",
+            "steps": [
+              {
+                "text": "At the edge: $10 \\times 0.8 = 8$ N m"
+              },
+              {
+                "text": "At 0.2 m from the hinge: $10 \\times 0.2 = 2$ N m"
+              },
+              {
+                "text": "Straight towards the hinge: distance 0, moment 0"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "Which force has the largest moment about a pivot?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "comparing moments",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$20 \\times 0.5 = 10$ N m beats $8$, $0$, and $6$ N m.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "20 N at 0.5 m"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "20 N at 0.5 m",
+            "10 N at 0.8 m",
+            "40 N through the pivot",
+            "15 N at 0.4 m"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The principle of moments",
+        "body": "An object is **balanced** when the total **clockwise** moment equals the total **anticlockwise** moment about the pivot. On the beam below, $6 \\times 1 = 3 \\times 2$: balanced.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "beam-moments",
+            "props": {
+              "length": 4,
+              "pivot": 2,
+              "forces": [
+                {
+                  "at": 1,
+                  "force": 6
+                },
+                {
+                  "at": 4,
+                  "force": 3
+                }
+              ],
+              "showDistances": true
+            },
+            "alt": "A balanced beam: 6 newtons 1 metre to the left of the pivot and 3 newtons 2 metres to the right"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A 9 N force acts 2 m to the left of a pivot. What force at 3 m to the right balances it?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "principle of moments",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$9 \\times 2 = F \\times 3$, so $F = 6$ N.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6 N"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N"
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Finding an unknown force",
+        "body": "Write the two moments, set them equal, solve. Say which way each one turns.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "4 N at 1.5 m anticlockwise; unknown $F$ at 0.5 m clockwise",
+            "steps": [
+              {
+                "text": "Anticlockwise: $4 \\times 1.5 = 6$ N m"
+              },
+              {
+                "text": "Clockwise: $F \\times 0.5$"
+              },
+              {
+                "text": "$F \\times 0.5 = 6$, so $F = 12$ N"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A 2 N force at 1.5 m balances a force $F$ at 0.25 m. Find $F$ in newtons.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "finding an unknown force",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$2 \\times 1.5 = F \\times 0.25$, so $F = 12$ N.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "12 N"
+            }
+          ],
+          "discriminators": [],
+          "answer": 12,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N"
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Levers: force multipliers",
+        "body": "A lever puts the load close to the pivot and the effort far from it. The moments balance, so a **small effort** over a **large distance** lifts a **large load** over a small one. A crowbar, a wheelbarrow, and a bottle opener all work this way.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "beam-moments",
+            "props": {
+              "length": 1.3,
+              "pivot": 0.3,
+              "forces": [
+                {
+                  "at": 0.2,
+                  "force": 400
+                },
+                {
+                  "at": 1.3,
+                  "force": 40,
+                  "label": "effort"
+                }
+              ],
+              "showDistances": true
+            },
+            "alt": "A crowbar: a 400 newton load 0.1 metres from the pivot and an effort 1 metre from the pivot on the other side"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "A 400 N load is 0.1 m from the pivot of a crowbar. The effort is 1 m from the pivot. Calculate the effort needed, in newtons.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "levers as force multipliers",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$400 \\times 0.1 = F \\times 1$, so $F = 40$ N.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "40 N"
+            }
+          ],
+          "discriminators": [],
+          "answer": 40,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N"
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Gears",
+        "body": "Gears transmit turning. The teeth mesh one for one, so a small gear driving a large one turns it **more slowly** but with a **larger moment**, in proportion to the teeth or radius ratio. A large gear driving a small one does the opposite: faster, smaller moment. Low gears on a bike use this to get up hills.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Small gear 12 teeth, large gear 36 teeth",
+            "steps": [
+              {
+                "text": "Ratio $36 \\div 12 = 3$"
+              },
+              {
+                "text": "Large gear turns at $\\tfrac{1}{3}$ of the speed"
+              },
+              {
+                "text": "Moment on the large gear is 3 times bigger"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A 15-tooth gear drives a 45-tooth gear. The 45-tooth gear turns",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "gears",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Ratio 3: slower and stronger.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3 times slower, 3 times the moment"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "3 times slower with 3 times the moment",
+            "3 times faster with 3 times the moment",
+            "3 times slower with one third of the moment",
+            "at the same speed"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn: a beam on two supports",
+        "body": "A **uniform** beam has its weight acting at its **centre**. To find the force from one support, take moments about the **other** support, so that support’s force has zero distance and disappears from the equation.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "beam-moments",
+            "props": {
+              "length": 4,
+              "pivot": 0,
+              "forces": [
+                {
+                  "at": 1,
+                  "force": 200
+                },
+                {
+                  "at": 2,
+                  "force": 100,
+                  "label": "100 N"
+                },
+                {
+                  "at": 4,
+                  "force": -100,
+                  "label": "R"
+                }
+              ],
+              "showDistances": false
+            },
+            "alt": "A 4 metre beam on end supports with a 200 newton load 1 metre from the left and its 100 newton weight at the centre; the right support pushes up with force R"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "Beam 4 m, weight 100 N at the centre, 200 N load 1 m from the left end. Taking moments about the left end, find the right support force $R$ in newtons.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "reactions by taking moments",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$R \\times 4 = 200 \\times 1 + 100 \\times 2 = 400$, so $R = 100$ N.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "100 N"
+            }
+          ],
+          "discriminators": [],
+          "answer": 100,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N"
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Grade 9: choosing the pivot, and tipping",
+        "body": "When there are two unknown forces, pick the pivot **at one of them**: its moment is zero, and the equation has one unknown. Then use **up equals down** to get the other. For tipping problems the pivot is the **edge** the object will rotate about, and the object’s own weight, acting at its centre, is one of the moments.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "beam-moments",
+            "props": {
+              "length": 3,
+              "pivot": 2,
+              "forces": [
+                {
+                  "at": 1.5,
+                  "force": 60,
+                  "label": "60 N"
+                },
+                {
+                  "at": 3,
+                  "force": 30,
+                  "label": "W"
+                }
+              ],
+              "showDistances": true
+            },
+            "alt": "A 3 metre plank with 2 metres on a roof and 1 metre overhanging, weight 60 newtons at its centre 0.5 metres inside the edge, and a weight W at the overhanging end"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "numeric",
+          "prompt": "A 3 m uniform plank weighing 60 N overhangs a roof edge by 1 m. What weight at the end just tips it, in newtons?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "tipping point",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$W \\times 1 = 60 \\times 0.5$, so $W = 30$ N.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "30 N"
+            }
+          ],
+          "discriminators": [],
+          "answer": 30,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "N"
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Moment $= F \\times$ perpendicular distance, in N m.\n- A force through the pivot has no moment.\n- Balanced: clockwise moments $=$ anticlockwise moments.\n- Levers multiply force by trading distance. Gears trade speed for moment.\n- A uniform beam’s weight acts at its centre. Take moments about an unknown force to remove it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "beam-moments",
+            "props": {
+              "length": 4,
+              "pivot": 2,
+              "forces": [
+                {
+                  "at": 1,
+                  "force": 6
+                },
+                {
+                  "at": 4,
+                  "force": 3
+                }
+              ],
+              "showDistances": true
+            },
+            "alt": "A balanced beam summarising the principle of moments: 6 newtons at 1 metre equals 3 newtons at 2 metres"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is the unit of a moment?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "units",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Moment $=$ force $\\times$ distance: newtons multiplied by metres, written N m.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "N m"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "N m",
+        "N/m",
+        "N",
+        "J/s"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "A force of 10 N acts at a perpendicular distance of 0.3 m from a pivot. Calculate the moment.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "calculating a moment",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$M = F d = 10 \\times 0.3 = 3$ N m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$10 \\times 0.3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3 N m"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N m"
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Where should you push a door to open it with the smallest force?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "moment and distance",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Moment $= Fd$. A larger distance from the pivot gives the same moment with a smaller force.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Far from the hinge"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "As far from the hinge as possible",
+        "As close to the hinge as possible",
+        "Exactly in the middle",
+        "It makes no difference"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "A seesaw is balanced. A force of 8 N acts 0.5 m to the left of the pivot. A force of 2 N acts to the right. How far from the pivot is the 2 N force, in metres?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "principle of moments",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Anticlockwise $= 8 \\times 0.5 = 4$ N m. For balance, $2 \\times d = 4$, so $d = 2$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$8 \\times 0.5 = 2 \\times d$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2 m"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m",
+      "visual": {
+        "type": "diagram",
+        "component": "beam-moments",
+        "props": {
+          "length": 4,
+          "pivot": 2,
+          "forces": [
+            {
+              "at": 1.5,
+              "force": 8
+            },
+            {
+              "at": 4,
+              "force": 2,
+              "label": "2 N"
+            }
+          ],
+          "showDistances": true
+        },
+        "alt": "A beam on a central pivot with 8 newtons pushing down 0.5 metres left of the pivot and 2 newtons pushing down to the right"
+      }
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A spanner is 25 cm long. A force of 40 N is applied at its end, perpendicular to the spanner. Calculate the moment on the nut, in N m.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "moment with a unit conversion",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$25$ cm $= 0.25$ m. $M = 40 \\times 0.25 = 10$ N m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "25 cm converted to 0.25 m"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10 N m"
+        }
+      ],
+      "discriminators": [],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N m"
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A lever is used to lift a 300 N load that is 0.2 m from the pivot. The effort is applied 1.2 m from the pivot on the other side. Calculate the smallest effort needed, in newtons.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "levers as force multipliers",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Load moment $= 300 \\times 0.2 = 60$ N m. Effort $\\times 1.2 = 60$, so effort $= 50$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$300 \\times 0.2 = 60$ N m"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$F \\times 1.2 = 60$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50 N"
+        }
+      ],
+      "discriminators": [],
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N",
+      "visual": {
+        "type": "diagram",
+        "component": "beam-moments",
+        "props": {
+          "length": 2.0,
+          "pivot": 0.6,
+          "forces": [
+            {
+              "at": 0.4,
+              "force": 300
+            },
+            {
+              "at": 1.8,
+              "force": 60,
+              "label": "effort"
+            }
+          ],
+          "showDistances": true
+        },
+        "alt": "A lever with a 300 newton load 0.2 metres left of the pivot and an effort 1.2 metres to the right"
+      }
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "A gear with 10 teeth drives a gear with 30 teeth. Compared with the small gear, the large gear turns",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "gears",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The teeth mesh one for one, so the large gear turns once for every three turns of the small one, and because its radius is larger the same force at the teeth gives a larger moment.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "One third speed, three times the moment"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "at one third of the speed with three times the moment",
+        "at three times the speed with one third of the moment",
+        "at the same speed with the same moment",
+        "at one third of the speed with the same moment"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A 2 kg mass hangs 0.5 m from a pivot. Taking $g = 9.8$ N/kg, calculate the moment of its weight about the pivot, in N m.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "weight then moment",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Weight $= 2 \\times 9.8 = 19.6$ N. Moment $= 19.6 \\times 0.5 = 9.8$ N m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$W = 19.6$ N"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$19.6 \\times 0.5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9.8 N m"
+        }
+      ],
+      "discriminators": [],
+      "answer": 9.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N m"
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A uniform beam of length 4 m and weight 100 N rests on supports at each end. A 200 N load is placed 1 m from the left end. By taking moments about the left end, calculate the upward force from the right support, in newtons.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "reactions by taking moments",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The weight of a uniform beam acts at its centre, 2 m from the left. Moments about the left end: clockwise $= 200 \\times 1 + 100 \\times 2 = 400$ N m. Anticlockwise $= R \\times 4$. So $R = 100$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Weight acts at 2 m"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$200 \\times 1 + 100 \\times 2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$R \\times 4 = 400$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "100 N"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 100,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N",
+      "visual": {
+        "type": "diagram",
+        "component": "beam-moments",
+        "props": {
+          "length": 4,
+          "pivot": 0,
+          "forces": [
+            {
+              "at": 1,
+              "force": 200
+            },
+            {
+              "at": 2,
+              "force": 100,
+              "label": "100 N weight"
+            },
+            {
+              "at": 4,
+              "force": -100,
+              "label": "R"
+            }
+          ],
+          "showDistances": false
+        },
+        "alt": "A 4 metre beam supported at both ends, with a 200 newton load 1 metre from the left and its own 100 newton weight at the centre"
+      }
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "For the same beam, calculate the upward force from the left support, in newtons.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "balancing forces",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Upward forces equal downward forces: $L + 100 = 200 + 100$, so $L = 200$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$L + R = 300$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "200 N"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 200,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q11",
+      "type": "extended",
+      "prompt": "A wheelbarrow has its wheel at the front, the load in the middle, and handles at the back. Explain, using moments, why a person can lift a load in a wheelbarrow that they could not lift directly.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "explaining a lever",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The mark scheme wants the pivot named, both moments described, and the comparison of distances leading to the conclusion.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Pivot identified"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Load moment"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Effort moment at a greater distance"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Smaller force, force multiplier"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "The wheel acts as the pivot",
+          "marks": 1
+        },
+        {
+          "text": "The load produces a moment about the wheel equal to load $\\times$ its distance from the wheel",
+          "marks": 1
+        },
+        {
+          "text": "The person lifts at the handles, further from the wheel, so a smaller force gives an equal and opposite moment",
+          "marks": 1
+        },
+        {
+          "text": "Because the handle distance is larger than the load distance, the lifting force is smaller than the load: the wheelbarrow is a force multiplier",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The wheel is the pivot. The load creates a moment about the wheel equal to its weight multiplied by its distance from the wheel. The person applies an upward force at the handles, which are further from the wheel. For the barrow to lift, the moment of the lifting force must equal the moment of the load. Since the handle distance is larger, the force needed is smaller than the load. The wheelbarrow acts as a lever, a force multiplier."
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A child of mass 30 kg sits 1.5 m from the pivot of a seesaw. Where must an adult of mass 60 kg sit on the other side to balance it? Give the distance from the pivot in metres.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "balancing with masses",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Moments balance: $30g \\times 1.5 = 60g \\times d$. The $g$ cancels: $45 = 60d$, so $d = 0.75$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Moments equated with weights or masses"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$45 = 60 d$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.75 m"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 0.75,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A uniform plank 3 m long and weighing 60 N lies on a flat roof with 1 m overhanging the edge. Calculate the largest weight that can be placed at the overhanging end before the plank tips, in newtons.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "tipping point",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "When the plank is about to tip it pivots at the roof edge. Its weight acts at its centre, 1.5 m from the left end, which is 0.5 m inside the edge. Moments about the edge: $W \\times 1 = 60 \\times 0.5$, so $W = 30$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Pivot at the edge when tipping"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Plank weight at 0.5 m from the edge"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$W \\times 1 = 60 \\times 0.5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30 N"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "unfamiliar-context"
+      ],
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N",
+      "visual": {
+        "type": "diagram",
+        "component": "beam-moments",
+        "props": {
+          "length": 3,
+          "pivot": 2,
+          "forces": [
+            {
+              "at": 1.5,
+              "force": 60,
+              "label": "60 N"
+            },
+            {
+              "at": 3,
+              "force": 30,
+              "label": "W"
+            }
+          ],
+          "showDistances": true
+        },
+        "alt": "A 3 metre plank with 2 metres on a roof and 1 metre overhanging; its 60 newton weight acts 0.5 metres inside the edge and a weight W hangs from the overhanging end"
+      }
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "An input gear with 20 teeth has a moment of 2 N m applied to it. It drives an output gear with 60 teeth. Calculate the moment on the output gear, in N m.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "moments through gears",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The teeth ratio is $60 \\div 20 = 3$, so the output gear has three times the radius. The force at the meshing teeth is the same, so the moment is three times larger: $2 \\times 3 = 6$ N m. The output turns at one third of the speed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Ratio 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Same force at the teeth, larger radius"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6 N m"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N m"
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q7"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q4",
+        "q5",
+        "q6",
+        "q8",
+        "q14"
+      ],
+      "suggestedMinutes": 15
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13"
+      ],
+      "suggestedMinutes": 30
+    }
+  },
+  "examTechnique": {
+    "body": "Moments questions are 2 to 4 marks, often with a diagram to read distances from. Write clockwise and anticlockwise moments on separate lines, each as force × distance, then equate. Units: N m, and distances in metres, so convert centimetres first.",
+    "examinerErrors": [
+      "Measuring distance from the wrong point, usually the end of the beam instead of the pivot.",
+      "Forgetting that a uniform beam’s own weight acts at its centre.",
+      "Using the slant length instead of the perpendicular distance.",
+      "Mixing up which moments are clockwise and which are anticlockwise.",
+      "Writing the unit as N/m."
+    ],
+    "grade9Looks": "A grade 9 answer chooses the pivot that removes an unknown, includes the beam’s weight without being told, converts lengths to metres, checks the answer with up equals down, and explains a lever or gear as a moment balance rather than a rule of thumb."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
