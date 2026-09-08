@@ -7,7 +7,9 @@ import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
-import { recordAttempt } from '../../progress/store.ts'
+import { getState, recordAttempt } from '../../progress/store.ts'
+import { settle } from '../../progress/settle.ts'
+import { xpForQuestions } from '../../progress/xp.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
@@ -153,6 +155,8 @@ export function Worksheet() {
   const go = (i: number) => { setState({ ...state, index: i }); window.scrollTo({ top: 0 }) }
   const finish = () => {
     const finishedAt = new Date().toISOString()
+    const before = getState()
+    const questionResults = questions.map((q) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: scored(q), marksAvailable: q.marks, correct: scored(q) === q.marks }))
     const extendedCount = questions.filter((q) => q.type === 'extended').length
     const selfMarked = questions.some((q) => (q.type === 'extended' ? true : state.answers[q.id]?.methodMarks !== undefined && !state.answers[q.id]?.result.correct))
     recordAttempt({
@@ -166,7 +170,10 @@ export function Worksheet() {
       grade89Available: questions.filter((q) => q.gradeBand === '8-9').reduce((s, q) => s + q.marks, 0),
       markedHow: extendedCount === questions.length ? 'self' : selfMarked ? 'mixed' : 'auto',
       completedAt: finishedAt,
+      xp: xpForQuestions(questionResults),
+      questions: questionResults,
     })
+    settle(before)
     setState({ ...state, finishedAt })
   }
 

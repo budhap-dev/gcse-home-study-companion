@@ -7,6 +7,8 @@ import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic } from '../../content/index.ts'
 import { getState, saveLessonPosition } from '../../progress/store.ts'
+import { settle, type Settlement } from '../../progress/settle.ts'
+import { Celebration } from '../../components/Celebration.tsx'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 const KIND_LABEL = { explain: 'Explain', 'worked-example': 'Worked example', 'your-turn': 'Your turn', summary: 'Summary', 'grade-9': 'Grade 9' } as const
@@ -27,6 +29,7 @@ export function Lesson() {
   })
   const [result, setResult] = useState<MarkResult | null>(null)
   const [done, setDone] = useState(false)
+  const [celebration, setCelebration] = useState<Settlement | null>(null)
   useActivityTimer(!done)
 
   useEffect(() => {
@@ -42,7 +45,10 @@ export function Lesson() {
 
   const next = () => {
     if (last) {
+      const before = getState()
       saveLessonPosition(topic.id, index, true)
+      const outcome = settle(before)
+      if (outcome.newBadges.length || outcome.levelUp) setCelebration(outcome)
       setDone(true)
       return
     }
@@ -62,9 +68,16 @@ export function Lesson() {
   if (done) {
     return (
       <article className="mx-auto flex w-full max-w-2xl flex-col gap-6 py-6 text-center">
+        {celebration && (
+          <Celebration
+            title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
+            detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}
+            onDone={() => setCelebration(null)}
+          />
+        )}
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Lesson done</p>
         <h1 className="text-3xl font-bold">{topic.title}</h1>
-        <p className="text-ink-2">All {steps.length} steps finished. The quiz is how this topic moves from Developing to Secure.</p>
+        <p className="text-ink-2">All {steps.length} steps finished, +{steps.length * 3 + 15} XP. The quiz is how this topic moves from Developing to Secure.</p>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
           <Link to={`${backTo}/quiz`} className="flex h-12 items-center justify-center rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Take the quiz</Link>
           <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>

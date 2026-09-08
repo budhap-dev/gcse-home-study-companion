@@ -1,4 +1,6 @@
-import { STATUS_COLOUR, STATUS_LABEL, SUBJECTS, TOPIC_STATUSES } from '@study/shared'
+import { BADGES, STATUS_COLOUR, STATUS_LABEL, SUBJECTS, TOPIC_STATUSES, type SubjectId } from '@study/shared'
+import { BadgeIcon } from '../../components/BadgeIcon.tsx'
+import { levelBySubject, skillStats, totalXp } from '../../progress/xp.ts'
 import { Link } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
@@ -12,13 +14,67 @@ export function Progress() {
   const max = Math.max(30, ...days.map((d) => progress.minutes[d] ?? 0))
   const recent = [...progress.attempts].sort((a, b) => b.completedAt.localeCompare(a.completedAt)).slice(0, 8)
   const titleOf = (id: string) => TOPICS.find((t) => t.id === id)?.title ?? id
+  const levels = levelBySubject(progress)
+  const { strengths, weaknesses } = skillStats(progress)
+  const subjectName = (id: string) => SUBJECTS.find((s) => s.id === id)?.name ?? id
 
   return (
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
       <header className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold leading-tight">Progress</h1>
-        <p className="text-ink-2">Saved on this device. {streakDays(progress)} day streak · {weekMinutes(progress)} of {progress.goalMinutes} minutes this week.</p>
+        <p className="text-ink-2">Saved on this device. {streakDays(progress)} day streak · {weekMinutes(progress)} of {progress.goalMinutes} minutes this week · {totalXp(progress)} XP.</p>
       </header>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Levels</h2>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
+            const level = levels[s.id as SubjectId]
+            return (
+              <div key={s.id} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <span className="font-bold" style={{ color: s.colour }}>{s.name}</span>
+                  <span className="whitespace-nowrap text-sm"><strong>{level ? level.name : 'Level 1'}</strong> <span className="text-ink-2">· level {level?.level ?? 1}</span></span>
+                </div>
+                <div className="h-2 overflow-hidden rounded-full bg-panel"><div className="h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></div>
+                <span className="text-xs text-ink-2">{level ? `${level.into} of ${level.span} XP to ${level.nextName}` : 'Finish a lesson or quiz to start'}</span>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      {(strengths.length > 0 || weaknesses.length > 0) && (
+        <section className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
+            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">Strengths</h2>
+            {strengths.length === 0 ? <p className="text-sm text-ink-2">Not enough answers yet.</p> : (
+              <ul className="flex flex-col gap-1 text-sm">{strengths.map((x) => <li key={x.subjectId + x.skill} className="flex justify-between gap-2"><span>{x.skill} <span className="text-ink-3">· {subjectName(x.subjectId)}</span></span><strong className="tabular-nums">{x.pct}%</strong></li>)}</ul>
+            )}
+          </div>
+          <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
+            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-not-secure">Work on next</h2>
+            {weaknesses.length === 0 ? <p className="text-sm text-ink-2">Nothing below 60% yet.</p> : (
+              <ul className="flex flex-col gap-1 text-sm">{weaknesses.map((x) => <li key={x.subjectId + x.skill} className="flex justify-between gap-2"><span>{x.skill} <span className="text-ink-3">· {subjectName(x.subjectId)}</span></span><strong className="tabular-nums">{x.pct}%</strong></li>)}</ul>
+            )}
+          </div>
+        </section>
+      )}
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Badges · {Object.keys(progress.badges).length} of {BADGES.length}</h2>
+        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {BADGES.map((b) => {
+            const earned = Boolean(progress.badges[b.id])
+            return (
+              <li key={b.id} className={`flex items-center gap-3 rounded-xl border border-rule px-3 py-2 ${earned ? 'bg-surface' : 'bg-panel/60'}`} title={b.description}>
+                <BadgeIcon earned={earned} />
+                <span className="flex flex-col"><span className={`text-sm font-bold ${earned ? '' : 'text-ink-2'}`}>{b.name}</span><span className="text-[11px] text-ink-2">{earned ? new Date(progress.badges[b.id]!).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : b.description}</span></span>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
 
       <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
         <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">This week</h2>
