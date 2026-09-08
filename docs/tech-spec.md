@@ -6,7 +6,7 @@ This document says where each part of the system runs, how it is built, and how 
 
 ## 1. System overview
 
-> **8 September 2026.** The admin app described below was removed. Content is authored as files in the repository and reviewed through pull requests; the AI drafting service is deferred with it. The database remains as the future progress sync layer. Sections mentioning `apps/admin`, the admin Pages project, or the drafting function describe the deferred design.
+> **8 September 2026.** Hosting moved from Cloudflare Pages to Vercel: the Vercel GitHub integration deploys `main` to production and each pull request to a preview, configured by `vercel.json` (deep-link rewrites, security and caching headers). The Cloudflare deploy workflow, headers, and redirects files are gone. The admin app described below was removed. Content is authored as files in the repository and reviewed through pull requests; the AI drafting service is deferred with it. The database remains as the future progress sync layer. Sections mentioning `apps/admin`, the admin Pages project, or the drafting function describe the deferred design.
 
 Five hosted services and one repository. Nothing runs on a server the team maintains.
 
