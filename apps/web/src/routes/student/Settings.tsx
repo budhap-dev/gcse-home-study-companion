@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { THEMES, applyTheme, currentThemeId } from '../../theme/themes.ts'
 import { setPref, usePref } from '../../theme/prefs.ts'
+import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
 import { clearProgress, isoDate, setGoalMinutes, toggleDayOff, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 
@@ -81,6 +82,11 @@ export function Settings() {
             )
           })}
         </div>
+      </section>
+
+      <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+        <h2 className="font-bold">About</h2>
+        <p className="text-sm text-ink-2">GCSE Home Study Companion {VERSION_LABEL}, built {APP_BUILT}.</p>
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">

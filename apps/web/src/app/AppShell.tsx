@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useLocation } from 'react-router'
 import { NAV } from './nav.ts'
+import { APP_BUILT, VERSION_LABEL } from './version.ts'
 
 /**
  * Layout: sidebar on wide screens, bottom bar on phones. Content is one column
@@ -18,7 +19,10 @@ export function AppShell() {
           Home Study Companion
         </NavLink>
         <Menu orientation="vertical" />
-        <p className="mt-auto px-2 text-xs text-ink-3">Progress is saved on this device.</p>
+        <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
+          <span>Progress is saved on this device.</span>
+          <span title={`Built ${APP_BUILT}`}>{VERSION_LABEL}</span>
+        </div>
       </aside>
 
       <main id="main" className="anim-fade-up flex-1 px-4 pb-24 pt-6 md:px-10 md:pb-10 md:pt-10" key={pathname}>
