@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { THEMES, applyTheme, currentThemeId } from '../../theme/themes.ts'
+import { setPref, usePref } from '../../theme/prefs.ts'
 import { clearProgress, isoDate, setGoalMinutes, toggleDayOff, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 
@@ -10,6 +11,8 @@ export function Settings() {
   const days = weekDays()
   const today = isoDate()
   const [theme, setTheme] = useState(currentThemeId)
+  const motion = usePref('motion')
+  const smileys = usePref('smileys')
 
   return (
     <article className="mx-auto flex w-full max-w-2xl flex-col gap-6">
@@ -40,6 +43,18 @@ export function Settings() {
             )
           })}
         </div>
+      </section>
+
+      <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+        <h2 className="font-bold">Animations and smileys</h2>
+        <label className="flex min-h-11 cursor-pointer items-center justify-between gap-3">
+          <span className="flex flex-col"><span className="font-bold">Animations</span><span className="text-sm text-ink-2">Confetti, pops, and page transitions. Also off when the device asks for reduced motion.</span></span>
+          <input type="checkbox" checked={motion} onChange={(e) => setPref('motion', e.target.checked)} className="h-6 w-6" />
+        </label>
+        <label className="flex min-h-11 cursor-pointer items-center justify-between gap-3">
+          <span className="flex flex-col"><span className="font-bold">Smileys</span><span className="text-sm text-ink-2">Faces and stickers on feedback, scores, and badges.</span></span>
+          <input type="checkbox" checked={smileys} onChange={(e) => setPref('smileys', e.target.checked)} className="h-6 w-6" />
+        </label>
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">

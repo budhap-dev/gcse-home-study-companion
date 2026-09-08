@@ -26,6 +26,7 @@
 }
 
 html { background: var(--color-paper); color: var(--color-ink); }
+body { background-image: var(--bg-pattern, none); background-size: var(--bg-size, auto); background-attachment: fixed; }
 body { margin: 0; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
 :focus-visible { outline: 2px solid var(--subject); outline-offset: 2px; }
@@ -51,6 +52,25 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
   .flashcard-inner:not(.is-flipped) .flashcard-face:first-child { display: flex; }
   .flashcard-inner.is-flipped .flashcard-back { display: flex; transform: none; }
 }
+
+/* Animations. Switched off wholesale by the Settings toggle or the OS reduced-motion setting. */
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes bounce-in { 0% { transform: translateY(0); } 30% { transform: translateY(-10px); } 55% { transform: translateY(0); } 75% { transform: translateY(-4px); } 100% { transform: translateY(0); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+@keyframes float-up { 0% { opacity: 0; transform: translateY(6px); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateY(-28px); } }
+@keyframes flicker { 0%, 100% { transform: scale(1) rotate(-2deg); } 50% { transform: scale(1.12) rotate(2deg); } }
+@keyframes grow-bar { from { width: 0; } }
+.anim-fade-up { animation: fade-up 0.35s ease-out both; }
+.anim-pop { animation: pop 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.2) both; }
+.anim-bounce { animation: bounce-in 0.8s ease-out both; }
+.anim-shake { animation: shake 0.4s ease-in-out both; }
+.anim-float { animation: float-up 1.4s ease-out both; }
+.anim-flicker { animation: flicker 1.6s ease-in-out infinite; transform-origin: 50% 90%; }
+.anim-bar { animation: grow-bar 0.9s ease-out both; }
+.press { transition: transform 0.12s ease; }
+.press:active { transform: scale(0.97); }
+[data-motion="off"] .anim-fade-up, [data-motion="off"] .anim-pop, [data-motion="off"] .anim-bounce, [data-motion="off"] .anim-shake, [data-motion="off"] .anim-float, [data-motion="off"] .anim-flicker, [data-motion="off"] .anim-bar, [data-motion="off"] .confetti, [data-motion="off"] .flashcard-inner { animation: none !important; transition: none !important; }
 
 /* Celebration confetti. Reduced motion renders none of these. */
 @keyframes confetti-fall {

@@ -1,5 +1,6 @@
 import { BADGES, STATUS_COLOUR, STATUS_LABEL, SUBJECTS, TOPIC_STATUSES, type SubjectId } from '@study/shared'
 import { BadgeIcon } from '../../components/BadgeIcon.tsx'
+import { Smiley } from '../../components/Smiley.tsx'
 import { levelBySubject, skillStats, totalXp } from '../../progress/xp.ts'
 import { Link } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
@@ -68,7 +69,7 @@ export function Progress() {
             const earned = Boolean(progress.badges[b.id])
             return (
               <li key={b.id} className={`flex items-center gap-3 rounded-xl border border-rule px-3 py-2 ${earned ? 'bg-surface' : 'bg-panel/60'}`} title={b.description}>
-                <BadgeIcon earned={earned} />
+                <span className="relative"><BadgeIcon earned={earned} /><Smiley className="absolute -right-1 -top-1 text-sm">{earned ? b.emoji : ''}</Smiley></span>
                 <span className="flex flex-col"><span className={`text-sm font-bold ${earned ? '' : 'text-ink-2'}`}>{b.name}</span><span className="text-[11px] text-ink-2">{earned ? new Date(progress.badges[b.id]!).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : b.description}</span></span>
               </li>
             )

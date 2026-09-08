@@ -1,5 +1,6 @@
 import { BADGES, SUBJECTS, factOfTheDay, type SubjectId } from '@study/shared'
 import { levelBySubject, totalXp } from '../../progress/xp.ts'
+import { Smiley } from '../../components/Smiley.tsx'
 import { Link } from 'react-router'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { recommend, type Task } from '../../progress/recommend.ts'
@@ -24,7 +25,7 @@ export function Home() {
       <header className="flex items-end justify-between gap-4">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-ink-2">{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
-          <h1 className="text-3xl font-bold leading-tight">{greeting}</h1>
+          <h1 className="flex items-center gap-2 text-3xl font-bold leading-tight">{greeting}<Smiley bounce>{hour < 12 ? '🌞' : hour < 18 ? '👋' : '🌙'}</Smiley></h1>
         </div>
         <span className="flex items-center gap-2">
         <Link to="/progress" className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1.5 text-sm font-bold" title="XP and badges">
@@ -32,8 +33,8 @@ export function Home() {
           <span className="ml-1 text-ink-2">·</span>{badgeCount}/{BADGES.length}
         </Link>
         <span className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1.5 text-sm font-bold" title="Days in a row with something finished">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D9A21B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 1-3-1-6 1-9z" /></svg>
-          {streak} day{streak === 1 ? '' : 's'}
+          <span className={streak > 0 ? 'anim-flicker' : ''}><Smiley>🔥</Smiley></span>
+          {streak} day{streak === 1 ? '' : 's'}{streak >= 7 ? ' streak' : ''}
         </span>
         </span>
       </header>
@@ -90,7 +91,7 @@ export function Home() {
                 <span className="flex flex-grow flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} Grade 9 ready</span></span>
                 <span className="text-right text-xs"><span className="block font-bold" style={{ color: s.colour }}>{level ? level.name : 'Level 1'}</span><span className="text-ink-2">{level ? `${level.into} / ${level.span} XP` : 'no XP yet'}</span></span>
               </span>
-              <span className="h-1.5 overflow-hidden rounded-full bg-panel"><span className="block h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></span>
+              <span className="h-1.5 overflow-hidden rounded-full bg-panel"><span className="anim-bar block h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></span>
             </Link>
           )
         })}
@@ -103,7 +104,7 @@ function TaskCard({ task, primary = false }: { task: Task; primary?: boolean }) 
   const style = { '--subject': task.subjectColour } as React.CSSProperties
   if (primary) {
     return (
-      <Link to={task.to} style={style} className="flex flex-col gap-3 rounded-2xl bg-[color:var(--subject)] p-5 text-white">
+      <Link to={task.to} style={style} className="press flex flex-col gap-3 rounded-2xl bg-[color:var(--subject)] p-5 text-white">
         <div className="flex items-center gap-2 text-xs">
           <span className="rounded-md bg-white/20 px-2 py-0.5 font-bold uppercase tracking-[0.06em]">{task.subjectName}</span>
           <span className="opacity-90">{task.title} · about {task.minutes} min</span>
@@ -130,7 +131,7 @@ function GoalRing({ minutes, goal }: { minutes: number; goal: number }) {
   return (
     <svg width="76" height="76" viewBox="0 0 76 76" role="img" aria-label={`${minutes} of ${goal} minutes this week`}>
       <circle cx="38" cy="38" r={r} fill="none" stroke="#ECE9E1" strokeWidth="8" />
-      <circle cx="38" cy="38" r={r} fill="none" stroke="#2E8B57" strokeWidth="8" strokeLinecap="round" strokeDasharray={`${c * frac} ${c}`} transform="rotate(-90 38 38)" />
+      <circle cx="38" cy="38" r={r} fill="none" stroke="#2E8B57" strokeWidth="8" strokeLinecap="round" strokeDasharray={`${c * frac} ${c}`} transform="rotate(-90 38 38)" style={{ transition: 'stroke-dasharray 0.9s ease-out' }} />
       <text x="38" y="42" textAnchor="middle" fontFamily="Bricolage Grotesque, Arial, sans-serif" fontSize="15" fontWeight="700" fill="#1E2330">{Math.round(frac * 100)}%</text>
     </svg>
   )
