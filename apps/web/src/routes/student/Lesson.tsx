@@ -78,7 +78,13 @@ export function Lesson() {
         )}
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Lesson done</p>
         <h1 className="text-3xl font-bold">{topic.title}</h1>
-        <p className="text-ink-2">All {steps.length} steps finished, +{steps.length * 3 + 15} XP. The quiz is how this topic moves from Developing to Secure.</p>
+        <p className="text-ink-2">All {steps.length} steps finished, +{steps.length * 3 + 15} XP. The quiz is where you find out what has stuck.</p>
+        <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4 text-left">
+          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">What you learned</h2>
+          <ul className="flex flex-col gap-1 text-sm">
+            {steps.filter((s) => s.kind !== 'summary').map((s) => <li key={s.id} className="flex gap-2"><span className="text-status-secure" aria-hidden>✓</span>{s.title.replace(/^(Your turn|Grade 9): /, '')}</li>)}
+          </ul>
+        </section>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
           <Link to={`${backTo}/quiz`} className="flex h-12 items-center justify-center rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Take the quiz</Link>
           <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>

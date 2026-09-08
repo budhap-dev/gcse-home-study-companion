@@ -190,7 +190,7 @@ function Intro({ subjectName, title, count, pool, minutes, onStart, backTo }: { 
         <li>{count} questions drawn from a pool of {pool}, so a retake is different.</li>
         <li>Each is marked as soon as you answer, with the worked solution.</li>
         <li>About {minutes} minutes. Your answers are kept if the page reloads.</li>
-        <li>Score 80% to make this topic Secure with its Higher worksheet, 90% towards Grade 9 ready.</li>
+        <li>The point is to find out what has clicked and what has not. Wrong answers come with the full solution.</li>
       </ul>
       <div className="flex flex-col gap-2 sm:flex-row">
         <button type="button" onClick={onStart} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Start quiz</button>
@@ -234,11 +234,20 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
         {earned?.levelUp && <p className="text-sm">Level up: <strong>{earned.levelUp}</strong></p>}
       </section>
       <p className="text-ink-2">
-        {pct >= 90 ? 'That is the quiz score Grade 9 ready needs. The Advanced worksheet is the other half.' : pct >= 80 ? 'That makes this topic Secure once the Higher worksheet is at 70%.' : pct >= 50 ? 'Developing. Go back over the missed questions and try again.' : 'Not secure yet. The lesson is a good place to go back to.'}
+        {pct >= 90 ? 'You understand this topic well. The Advanced worksheet is where you find out how far the idea stretches.' : pct >= 80 ? 'Most of this makes sense to you. The Higher worksheet will make it stick.' : pct >= 50 ? 'You are part of the way there. The questions below show exactly what to look at again.' : 'This topic has not clicked yet, and that is normal. The lesson explains it one idea at a time.'}
       </p>
+      {(() => {
+        const got = [...new Set(questions.filter((q) => state.answers[q.id]?.result.correct).map((q) => q.skill))]
+        return got.length > 0 ? (
+          <section className="flex flex-col gap-2">
+            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">You can now</h2>
+            <ul className="flex flex-wrap gap-2">{got.map((s) => <li key={s} className="rounded-full border border-rule bg-surface px-3 py-1 text-sm">{s}</li>)}</ul>
+          </section>
+        ) : null
+      })()}
       {missed.length > 0 && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">To look at again</h2>
+          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">To learn from</h2>
           <ul className="flex flex-col gap-2">
             {missed.map((q) => {
               const r = state.answers[q.id]?.result

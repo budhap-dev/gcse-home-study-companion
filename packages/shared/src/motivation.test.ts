@@ -17,12 +17,12 @@ describe('levelFor', () => {
 
 describe('messageForScore', () => {
   it('celebrates improvement before anything else', () => {
-    expect(messageForScore(72, 55)).toMatch(/last time|before|Improvement/)
+    expect(messageForScore(72, 55)).toMatch(/learned|Better than before|Up on last time/)
   })
   it('matches the band otherwise', () => {
-    expect(messageForScore(100)).toMatch(/Clean sweep|Every single|Perfect/)
-    expect(messageForScore(85)).toMatch(/Great|Strong|Secure/)
-    expect(messageForScore(60)).toMatch(/Solid|Good|On the way/)
-    expect(messageForScore(30)).toMatch(/another question|Tough|wrong answer/)
+    expect(messageForScore(100)).toMatch(/understand|yours now|Clean sweep/)
+    expect(messageForScore(85)).toMatch(/Great effort|Almost there|main idea/)
+    expect(messageForScore(60)).toMatch(/Good progress|getting there|Half way/)
+    expect(messageForScore(30)).toMatch(/another question|Tough|clicked/)
   })
 })
