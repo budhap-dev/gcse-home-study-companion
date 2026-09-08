@@ -59,22 +59,23 @@ export interface Badge {
   id: string
   name: string
   description: string
+  emoji: string
 }
 
 export const BADGES: Badge[] = [
-  { id: 'first-lesson', name: 'First lesson', description: 'Finished a lesson from start to end.' },
-  { id: 'first-quiz', name: 'First quiz', description: 'Completed a topic quiz.' },
-  { id: 'clean-sweep', name: 'Clean sweep', description: 'Scored 100% on a quiz.' },
-  { id: 'advanced-first', name: 'Into the deep end', description: 'Finished an Advanced worksheet.' },
-  { id: 'secure-first', name: 'Secure', description: 'Took a topic to Secure.' },
-  { id: 'grade-9-first', name: 'Grade 9 ready', description: 'Took a topic to Grade 9 ready.' },
-  { id: 'grade-9-five', name: 'Five at the top', description: 'Five topics Grade 9 ready.' },
-  { id: 'streak-3', name: 'Three in a row', description: 'Studied three days in a row.' },
-  { id: 'streak-7', name: 'Seven-day streak', description: 'Studied seven days in a row.' },
-  { id: 'streak-30', name: 'A whole month', description: 'Studied thirty days in a row.' },
-  { id: 'comeback', name: 'Comeback', description: 'Improved a quiz score by 20 points or more.' },
-  { id: 'goal-week', name: 'Goal reached', description: 'Hit the weekly minutes goal.' },
-  { id: 'subject-explorer', name: 'Explorer', description: 'Finished lessons in two different subjects.' },
+  { id: 'first-lesson', name: 'First lesson', description: 'Finished a lesson from start to end.', emoji: '📖' },
+  { id: 'first-quiz', name: 'First quiz', description: 'Completed a topic quiz.', emoji: '✏️' },
+  { id: 'clean-sweep', name: 'Clean sweep', description: 'Scored 100% on a quiz.', emoji: '💯' },
+  { id: 'advanced-first', name: 'Into the deep end', description: 'Finished an Advanced worksheet.', emoji: '🏊' },
+  { id: 'secure-first', name: 'Secure', description: 'Took a topic to Secure.', emoji: '🔒' },
+  { id: 'grade-9-first', name: 'Grade 9 ready', description: 'Took a topic to Grade 9 ready.', emoji: '⭐' },
+  { id: 'grade-9-five', name: 'Five at the top', description: 'Five topics Grade 9 ready.', emoji: '🌟' },
+  { id: 'streak-3', name: 'Three in a row', description: 'Studied three days in a row.', emoji: '🔥' },
+  { id: 'streak-7', name: 'Seven-day streak', description: 'Studied seven days in a row.', emoji: '🚀' },
+  { id: 'streak-30', name: 'A whole month', description: 'Studied thirty days in a row.', emoji: '🏆' },
+  { id: 'comeback', name: 'Comeback', description: 'Improved a quiz score by 20 points or more.', emoji: '📈' },
+  { id: 'goal-week', name: 'Goal reached', description: 'Hit the weekly minutes goal.', emoji: '🎯' },
+  { id: 'subject-explorer', name: 'Explorer', description: 'Finished lessons in two different subjects.', emoji: '🧭' },
 ]
 
 /** Short messages by outcome, so feedback never reads as a form letter. */
@@ -86,6 +87,15 @@ export const MESSAGES = {
   improved: ['Up from last time. That is the whole point.', 'Better than before. Momentum.', 'Improvement locked in.'],
   levelUp: ['Level up.', 'New level unlocked.', 'You just moved up a level.'],
 } as const
+
+/** A face for an outcome, for screens that show smileys. */
+export function emojiForScore(pct: number, previousPct?: number): string {
+  if (previousPct !== undefined && pct - previousPct >= 10) return '🚀'
+  if (pct === 100) return '🤩'
+  if (pct >= 80) return '😄'
+  if (pct >= 50) return '🙂'
+  return '💪'
+}
 
 export function pick<T>(list: readonly T[], seed: number): T {
   return list[Math.abs(seed) % list.length]!

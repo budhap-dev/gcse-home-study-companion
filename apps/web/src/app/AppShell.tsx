@@ -21,7 +21,7 @@ export function AppShell() {
         <p className="mt-auto px-2 text-xs text-ink-3">Progress is saved on this device.</p>
       </aside>
 
-      <main id="main" className="flex-1 px-4 pb-24 pt-6 md:px-10 md:pb-10 md:pt-10" key={pathname}>
+      <main id="main" className="anim-fade-up flex-1 px-4 pb-24 pt-6 md:px-10 md:pb-10 md:pt-10" key={pathname}>
         <Outlet />
       </main>
 

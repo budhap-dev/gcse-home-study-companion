@@ -1,4 +1,5 @@
-import { getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
+import { emojiForScore, getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
+import { Smiley } from '../../components/Smiley.tsx'
 import { Celebration } from '../../components/Celebration.tsx'
 import { settle, type Settlement } from '../../progress/settle.ts'
 import { xpForQuestions } from '../../progress/xp.ts'
@@ -90,6 +91,7 @@ export function Quiz() {
           <Celebration
             title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
             detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}
+            emoji={celebration.levelUp ? '🎉' : celebration.newBadges[0]!.emoji}
             onDone={() => setCelebration(null)}
           />
         )}
@@ -220,13 +222,13 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
         <Stat label="Marks" value={`${scored} / ${available}`} />
         <Stat label="Time" value={`${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`} />
       </section>
-      <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
-        <p className="text-lg font-bold">{message}</p>
+      <section className="anim-pop flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
+        <p className="flex items-center gap-2 text-lg font-bold"><Smiley bounce className="text-3xl">{emojiForScore(pct, previous)}</Smiley>{message}</p>
         <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-ink-2">
           {previous !== undefined && <span>Previous score: <strong className="text-ink">{previous}%</strong></span>}
           <span>{previous !== undefined ? 'Current' : 'Score'}: <strong className="text-ink">{pct}%</strong></span>
           {delta !== undefined && <span>Improvement: <strong style={{ color: delta >= 0 ? 'var(--color-status-secure)' : 'var(--color-status-not-secure)' }}>{delta >= 0 ? '+' : ''}{delta}%</strong></span>}
-          {earned && <span>XP earned: <strong className="text-ink">+{earned.xp}</strong></span>}
+          {earned && <span className="relative">XP earned: <strong className="text-ink">+{earned.xp}</strong><span aria-hidden className="anim-float absolute -top-5 left-1/2 font-bold text-status-secure">+{earned.xp}</span></span>}
         </div>
         {earned && earned.badges.length > 0 && <p className="text-sm">New badge{earned.badges.length > 1 ? 's' : ''}: <strong>{earned.badges.join(', ')}</strong></p>}
         {earned?.levelUp && <p className="text-sm">Level up: <strong>{earned.levelUp}</strong></p>}

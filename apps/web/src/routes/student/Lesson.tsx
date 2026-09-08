@@ -72,6 +72,7 @@ export function Lesson() {
           <Celebration
             title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
             detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}
+            emoji={celebration.levelUp ? '🎉' : celebration.newBadges[0]!.emoji}
             onDone={() => setCelebration(null)}
           />
         )}
