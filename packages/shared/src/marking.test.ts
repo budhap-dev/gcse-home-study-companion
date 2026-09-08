@@ -28,6 +28,14 @@ describe('normaliseText', () => {
     expect(normaliseText('2^(-2)')).toBe('2^-2')
     expect(normaliseText('2⁻²')).toBe('2^-2')
   })
+  it('treats the typographic minus, root symbols, and a leading y= as equivalent', () => {
+    expect(normaliseText('y = 2x − 2')).toBe(normaliseText('2x-2'))
+    expect(normaliseText('5√2')).toBe(normaliseText('5sqrt2'))
+    expect(normaliseText('5 root 2')).toBe(normaliseText('5sqrt(2)'))
+    expect(normaliseText('√5 + √2')).toBe(normaliseText('sqrt(5)+sqrt(2)'))
+    expect(normaliseText('2 × 3')).toBe(normaliseText('2*3'))
+    expect(normaliseText('1/(9x⁴)')).toBe(normaliseText('1/(9x^4)'))
+  })
 })
 
 describe('mark', () => {
