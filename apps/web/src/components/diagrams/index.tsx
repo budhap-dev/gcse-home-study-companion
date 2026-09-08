@@ -4,6 +4,7 @@ import { IndexLawsCard } from './IndexLawsCard.tsx'
 import { LineGraph } from './LineGraph.tsx'
 import { PowerOfPower } from './PowerOfPower.tsx'
 import { RepeatedMultiplication } from './RepeatedMultiplication.tsx'
+import { TriangleConstruction } from './TriangleConstruction.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -16,6 +17,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'power-of-power': PowerOfPower,
   'index-laws-card': IndexLawsCard,
   'line-graph': LineGraph,
+  'triangle-construction': TriangleConstruction,
 }
 
 export const INK = '#1e2330'

@@ -1,0 +1,915 @@
+{
+  "id": "constructing-triangles",
+  "subjectId": "maths",
+  "unitId": "geometry-and-measures",
+  "title": "Constructing triangles",
+  "specPoints": [
+    "G2"
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What a construction is",
+        "body": "A **construction** is an accurate drawing made with a ruler, a pair of compasses, and sometimes a protractor. The examiner marks the arcs and lines you leave behind, so never rub them out. Accuracy matters: lengths within 1 mm and angles within 1°.\n\nA triangle is fixed by three pieces of information. Which three decides the method.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Three ways to fix a triangle",
+            "steps": [
+              {
+                "text": "**SSS**: three sides. Compasses only."
+              },
+              {
+                "text": "**SAS**: two sides and the angle between them. Protractor, then compasses."
+              },
+              {
+                "text": "**ASA**: two angles and the side between them. Protractor twice."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "You are given $AB = 6$ cm, $BC = 4$ cm and $AC = 5$ cm. Which method?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "identifying construction type",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Three sides: SSS.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "SSS"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "SSS",
+            "SAS",
+            "ASA",
+            "None of these"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "SSS: three sides",
+        "body": "Draw the longest side as the base. Set the compasses to the second side and draw an arc from one end; set them to the third side and draw an arc from the other end. The third vertex is where the arcs cross.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-construction",
+            "props": {
+              "kind": "sss",
+              "sides": [
+                7,
+                5,
+                6
+              ],
+              "stage": 3
+            },
+            "alt": "Construction of triangle ABC with AB 7 cm, AC 5 cm and BC 6 cm: the base, two compass arcs, and the completed triangle"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "In an SSS construction of a triangle with sides 7 cm, 5 cm and 6 cm, what radius do you set the compasses to for the arc drawn from the end of the base where the 5 cm side starts?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "SSS construction steps",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The arc from that end has radius 5 cm; the other arc has radius 6 cm.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "5 cm"
+            }
+          ],
+          "discriminators": [],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "SAS: two sides and the angle between them",
+        "body": "Draw one side. At one end, use the protractor to draw a faint line at the given angle. Measure the second side along that line with compasses or a ruler to fix the third vertex, then join up.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-construction",
+            "props": {
+              "kind": "sas",
+              "sides": [
+                6,
+                4,
+                0
+              ],
+              "stage": 3,
+              "angles": {
+                "A": 50
+              }
+            },
+            "alt": "Construction with AB 6 cm, angle A 50 degrees and AC 4 cm: the base, the angle line at A, the arc of radius 4 cm, and the completed triangle"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "For $AB = 6$ cm, angle $A = 50°$, $AC = 4$ cm, which is drawn first after the base?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "SAS construction steps",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The angle at $A$ fixes the direction of $AC$; then $C$ is 4 cm along it.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "The 50° line at A"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The $50°$ line at $A$",
+            "An arc of 4 cm from $B$",
+            "An arc of 6 cm from $A$",
+            "The side $BC$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "ASA: two angles and the side between them",
+        "body": "Draw the side. Use the protractor at each end to draw a faint line at the given angle. The third vertex is where the two lines meet. If you are given two angles and a side that is **not** between them, find the third angle first with the angle sum and it becomes ASA.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-construction",
+            "props": {
+              "kind": "asa",
+              "sides": [
+                7,
+                0,
+                0
+              ],
+              "stage": 3,
+              "angles": {
+                "A": 50,
+                "B": 60
+              }
+            },
+            "alt": "Construction with AB 7 cm, angle A 50 degrees and angle B 60 degrees: the base, two angle lines, and the completed triangle"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "You are given $PQ = 8$ cm, angle $P = 35°$ and angle $R = 65°$. What angle do you draw at $Q$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "angle sum before ASA",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$180 - 35 - 65 = 80°$, then it is ASA.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "80°"
+            }
+          ],
+          "discriminators": [],
+          "answer": 80,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Can these sides make a triangle?",
+        "body": "The two shorter sides must add to **more** than the longest. If they add to less, the arcs never cross; if they add to exactly the longest, the arcs touch on the base and the triangle is flat.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Sides 3 cm, 4 cm, 8 cm",
+            "steps": [
+              {
+                "text": "$3 + 4 = 7$"
+              },
+              {
+                "text": "$7 < 8$, so the arcs cannot meet"
+              },
+              {
+                "text": "No triangle. The longest side must be less than 7 cm."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Which set of sides makes a triangle?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "triangle inequality",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$4 + 6 = 10 > 8$. In the others the two shorter sides add to no more than the longest.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4, 6, 8"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "2, 5, 7",
+            "3, 5, 9",
+            "4, 6, 8",
+            "1, 2, 4"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: read the finished construction",
+        "body": "A constructed triangle is accurate, so you can measure it. The isosceles triangle below has $AB = 8$ cm and $AC = BC = 5$ cm. Its height from $C$ is 3 cm, because the foot of the perpendicular is the midpoint of $AB$ and $5^2 - 4^2 = 9$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-construction",
+            "props": {
+              "kind": "sss",
+              "sides": [
+                8,
+                5,
+                5
+              ],
+              "stage": 3
+            },
+            "alt": "Isosceles triangle with base AB 8 cm and equal sides 5 cm, arcs left in"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "Triangle $ABC$ has $AB = 6$ cm and $AC = BC = 5$ cm. Work out its height from $C$ in cm.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "height of a constructed triangle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Half the base is 3 cm; $5^2 - 3^2 = 16$, so the height is 4 cm.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4 cm"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Grade 9: the ambiguous case",
+        "body": "Two sides and an angle that is **not** between them (SSA) do not fix a triangle. Draw $AB$, the angle at $A$, and then an arc from $B$: it can cross the angle line **twice**. Both crossings satisfy the given measurements. This is why SSA is never a condition for congruence, and it is the reasoning examiners want when they ask why two different triangles are possible.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-construction",
+            "props": {
+              "kind": "ssa",
+              "sides": [
+                7,
+                0,
+                5
+              ],
+              "stage": 3,
+              "angles": {
+                "A": 40
+              }
+            },
+            "alt": "SSA construction with AB 7 cm, angle A 40 degrees, BC 5 cm: the arc from B crosses the angle line at two points C and C prime"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "Which set of information can give two different triangles?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "the ambiguous case",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Only the first has the angle not between the two given sides.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$AB = 7$, angle $A = 40°$, $BC = 5$"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$AB = 7$, angle $A = 40°$, $BC = 5$",
+            "$AB = 7$, angle $A = 40°$, $AC = 5$",
+            "$AB = 7$, $AC = 5$, $BC = 6$",
+            "$AB = 7$, angle $A = 40°$, angle $B = 60°$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Leave every arc and construction line on the page.\n- SSS: base, two arcs. SAS: base, angle, measure along. ASA: base, two angles.\n- Two angles and a side not between them: find the third angle first.\n- Two shorter sides must add to more than the longest.\n- SSA can give two triangles.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-construction",
+            "props": {
+              "kind": "sss",
+              "sides": [
+                7,
+                5,
+                6
+              ],
+              "stage": 3
+            },
+            "alt": "Completed SSS construction with all arcs shown, 7, 5 and 6 centimetres"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "A triangle is to be constructed from three given side lengths. Which piece of equipment is essential?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing equipment",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Three sides means SSS: the two unknown vertices are found where compass arcs cross. No angles are given, so no protractor is needed.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A pair of compasses"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A pair of compasses",
+        "A protractor",
+        "A calculator",
+        "Tracing paper"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Triangle $PQR$ has $PQ = 8$ cm, angle $P = 40°$ and angle $Q = 70°$. Which type of construction is this?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "identifying construction type",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two angles and the side between them: angle, side, angle.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "ASA"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "SSS",
+        "SAS",
+        "ASA",
+        "SSA"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which set of lengths cannot make a triangle?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "triangle inequality",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The two shorter sides must add to more than the longest: $2 + 3 = 5 < 6$, so the arcs never cross.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2 cm, 3 cm, 6 cm"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "3 cm, 4 cm, 5 cm",
+        "2 cm, 3 cm, 6 cm",
+        "5 cm, 5 cm, 5 cm",
+        "4 cm, 6 cm, 9 cm"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "ordering",
+      "prompt": "Put the steps for constructing triangle $ABC$ with $AB = 7$ cm, $AC = 5$ cm and $BC = 6$ cm in order.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "SSS construction steps",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Base first, then one arc from each end, then join. The arcs stay on the page.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "All four in order; B1 for two adjacent steps swapped"
+        }
+      ],
+      "discriminators": [],
+      "items": [
+        "Draw $AB$ exactly 7 cm long with a ruler",
+        "Set the compasses to 5 cm and draw an arc from $A$",
+        "Set the compasses to 6 cm and draw an arc from $B$",
+        "Mark $C$ where the arcs cross and join $AC$ and $BC$"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "In triangle $ABC$, angle $A = 50°$ and angle $B = 60°$. Work out angle $C$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "angle sum",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Angles in a triangle add to $180°$: $180 - 50 - 60 = 70°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "70°"
+        }
+      ],
+      "discriminators": [],
+      "answer": 70,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "A triangle is constructed with $AB = 6$ cm, angle $A = 35°$ and $AC = 4$ cm. What is drawn at $A$ before the arc?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "SAS construction steps",
+      "calculator": "either",
+      "tags": [],
+      "solution": "SAS: the angle at $A$ comes first, then $C$ is marked 4 cm along that line.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A line at 35° to AB using a protractor"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A line at $35°$ to $AB$ using a protractor",
+        "An arc of radius 6 cm",
+        "A perpendicular to $AB$",
+        "An arc of radius 4 cm from $B$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A scale drawing uses 1 cm to represent 2 m. A triangular garden has one side drawn 4.5 cm long. How long is that side in real life, in metres?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "scale in constructions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4.5 \\times 2 = 9$ m.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "9 m"
+        }
+      ],
+      "discriminators": [],
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "Triangle $DEF$ is drawn accurately with $DE = 6$ cm, $DF = 6$ cm and $EF = 6$ cm. Write down the size of angle $D$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "properties from a construction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "All three sides equal: equilateral, so every angle is $60°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "60°"
+        }
+      ],
+      "discriminators": [],
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "Triangle $ABC$ is constructed with $AB = 8$ cm, $AC = 5$ cm and $BC = 5$ cm. Calculate the perpendicular height from $C$ to $AB$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "height of a constructed triangle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The triangle is isosceles, so the foot of the perpendicular is the midpoint of $AB$, 4 cm from $A$. Pythagoras: $h^2 = 5^2 - 4^2 = 9$, so $h = 3$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Midpoint 4 cm used, or right triangle identified"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$h^2 = 25 - 16$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3 cm"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "visual": {
+        "type": "diagram",
+        "component": "triangle-construction",
+        "props": {
+          "kind": "sss",
+          "sides": [
+            8,
+            5,
+            5
+          ],
+          "stage": 3
+        },
+        "alt": "Isosceles triangle ABC with AB 8 cm and AC and BC both 5 cm, with construction arcs"
+      }
+    },
+    {
+      "id": "q10",
+      "type": "extended",
+      "prompt": "A student is asked to construct a triangle with $AB = 7$ cm, angle $A = 40°$ and $BC = 5$ cm. Explain why the student could produce two different triangles, and describe how they look.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the ambiguous case",
+      "calculator": "either",
+      "tags": [],
+      "solution": "This is the ambiguous case. It is why SSA is not a condition for congruence, which links to the next topic.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "SSA identified or the arc crossing twice"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Explanation of the two crossings"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Both triangles described"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Recognises the information as two sides and a non-included angle (SSA)",
+          "marks": 1
+        },
+        {
+          "text": "Explains that the arc of radius 5 cm from $B$ crosses the line from $A$ in two places",
+          "marks": 1
+        },
+        {
+          "text": "Describes the two triangles: one with an acute angle at $C$, one with an obtuse angle at $C$, and both satisfy the given information",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The angle at $A$ is not between the two given sides, so this is SSA. Drawing $AB$, then a line from $A$ at $40°$, the compass arc of radius 5 cm centred at $B$ cuts that line twice. Each crossing gives a triangle with $AB = 7$ cm, angle $A = 40°$ and $BC = 5$ cm: one where angle $C$ is acute and $AC$ is longer, one where angle $C$ is obtuse and $AC$ is shorter. The information does not fix the triangle."
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "$AB = 7$ cm, angle $A = 40°$ and $BC = 5$ cm, as in the diagram. Taking $C$ as the crossing further from $A$, angle $ACB = 64°$ to the nearest degree. Work out angle $ABC$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "angle sum in the ambiguous case",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$180 - 40 - 64 = 76°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$180 - 40 - 64$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "76°"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 76,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "visual": {
+        "type": "diagram",
+        "component": "triangle-construction",
+        "props": {
+          "kind": "ssa",
+          "sides": [
+            7,
+            0,
+            5
+          ],
+          "stage": 3,
+          "angles": {
+            "A": 40
+          }
+        },
+        "alt": "SSA construction with AB 7 cm, angle A 40 degrees and BC 5 cm, showing the two possible positions of C"
+      }
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A triangle has sides 5 cm, 12 cm and 13 cm. Without drawing it, what can you say about its largest angle?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "converse of Pythagoras",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5^2 + 12^2 = 25 + 144 = 169 = 13^2$, so by the converse of Pythagoras the angle opposite the 13 cm side is a right angle.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5^2 + 12^2$ compared with $13^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Exactly 90°"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "It is exactly $90°$",
+        "It is less than $90°$",
+        "It is more than $90°$",
+        "It cannot be found without drawing"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "Triangle $XYZ$ is constructed with $XY = 10$ cm, $XZ = 6$ cm and $YZ = 8$ cm. Calculate its area in cm².",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "area from an SSS construction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$6^2 + 8^2 = 100 = 10^2$, so the angle at $Z$ is $90°$. Area $= \\tfrac{1}{2} \\times 6 \\times 8 = 24$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Right angle at $Z$ shown by Pythagoras"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{1}{2} \\times 6 \\times 8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24 cm²"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "unfamiliar-context"
+      ],
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "extended",
+      "prompt": "Explain why a triangle with sides 4 cm, 5 cm and 10 cm cannot be constructed, and state the smallest whole number of centimetres the 10 cm side could be changed to so that a triangle is possible.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "triangle inequality reasoning",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A common wrong answer is 9 cm: then the arcs just touch on the base line and the triangle is flat.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Triangle inequality stated"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4 + 5 < 10$ with the arcs not meeting"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8 cm"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "States the triangle inequality: the two shorter sides must add to more than the third",
+          "marks": 1
+        },
+        {
+          "text": "$4 + 5 = 9 < 10$, so the arcs do not meet",
+          "marks": 1
+        },
+        {
+          "text": "Longest side must be less than 9 cm, so 8 cm is the largest whole number that works",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For a triangle, the two shorter sides must add to more than the longest side. $4 + 5 = 9$, which is less than 10, so the arcs of radius 4 cm and 5 cm cannot reach each other. The third side must be less than 9 cm; changing 10 cm to 8 cm gives the largest whole-number side that works."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q8"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q12"
+      ],
+      "suggestedMinutes": 15
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q9",
+        "q10",
+        "q11",
+        "q13",
+        "q14"
+      ],
+      "suggestedMinutes": 25
+    }
+  },
+  "examTechnique": {
+    "body": "Construction questions are 2 or 3 marks and say \"use ruler and compasses\" or \"make an accurate drawing\". The marks are for the arcs and the accuracy, within 1 mm and 1°. In this app the drawing itself is done on paper; the questions here test the method, the reasoning, and the calculations examiners attach to a construction.",
+    "examinerErrors": [
+      "Rubbing out construction arcs, which loses the method mark.",
+      "Drawing the arcs freehand or from the wrong end of the base.",
+      "Measuring an angle from the wrong scale on the protractor, giving $130°$ instead of $50°$.",
+      "Treating SSA as if it fixed one triangle.",
+      "Saying a triangle with sides adding exactly to the longest is possible."
+    ],
+    "grade9Looks": "A grade 9 answer names the method from the given information, keeps every arc, uses the angle sum to turn a non-included angle into ASA, and can explain the ambiguous case and the triangle inequality in a sentence."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
