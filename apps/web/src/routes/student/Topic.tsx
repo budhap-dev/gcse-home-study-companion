@@ -61,6 +61,7 @@ export function Topic() {
           )
         })}
         <Part to="quiz" title="Quiz" note={`${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action="Start" />
+        <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={topic.examTechnique.body.slice(0, 120) + '…'} action="Read" />
       </nav>
     </article>

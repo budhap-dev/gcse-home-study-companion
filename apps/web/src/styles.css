@@ -40,6 +40,18 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
 .rich-text .katex-display { margin: 0.6em 0; overflow-x: auto; overflow-y: hidden; }
 .rich-text .katex { font-size: 1.05em; }
 
+/* Flashcards: 3D flip, a plain swap under reduced motion. */
+.flashcard-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+.flashcard-inner.is-flipped { transform: rotateY(180deg); }
+.flashcard-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flashcard-back { transform: rotateY(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .flashcard-inner { transition: none; transform: none !important; }
+  .flashcard-face { backface-visibility: visible; display: none; }
+  .flashcard-inner:not(.is-flipped) .flashcard-face:first-child { display: flex; }
+  .flashcard-inner.is-flipped .flashcard-back { display: flex; transform: none; }
+}
+
 /* Celebration confetti. Reduced motion renders none of these. */
 @keyframes confetti-fall {
   0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
