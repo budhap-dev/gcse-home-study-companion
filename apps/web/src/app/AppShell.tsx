@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useLocation } from 'react-router'
 import { NAV } from './nav.ts'
 import { APP_BUILT, VERSION_LABEL } from './version.ts'
+import { Logo } from '../components/Logo.tsx'
 
 /**
  * Layout: sidebar on wide screens, bottom bar on phones. Content is one column
@@ -15,8 +16,8 @@ export function AppShell() {
       </a>
 
       <aside className="hidden w-60 shrink-0 flex-col gap-6 border-r border-rule bg-surface px-4 py-6 md:flex">
-        <NavLink to="/" className="px-2 font-display text-lg font-bold leading-tight">
-          Home Study Companion
+        <NavLink to="/" className="px-2" aria-label="Home Study Companion, home">
+          <Logo />
         </NavLink>
         <Menu orientation="vertical" />
         <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
