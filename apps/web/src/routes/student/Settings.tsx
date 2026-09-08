@@ -5,9 +5,9 @@ export function Settings() {
     <Placeholder
       area={'Student'}
       title={'Settings'}
-      description="Display name, password, weekly goal, days off, target grade per subject, exam dates, and accessibility options."
-      stories={["FAM-5", "LRN-4", "LRN-6", "MOT-3"]}
-      blocks={["Profile", "Weekly goal and days off", "Target grade per subject", "Exam dates", "Dyslexia-friendly font and reduced motion"]}
+      description="Weekly goal, days off, target grade per subject, exam dates, accessibility options, and clearing progress on this device. Sign-in with Google comes later."
+      stories={["LRN-4", "LRN-6", "MOT-3"]}
+      blocks={["Weekly goal and days off", "Target grade per subject", "Exam dates", "Dyslexia-friendly font and reduced motion"]}
     >
     </Placeholder>
   )

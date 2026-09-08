@@ -18,7 +18,7 @@ export function AppShell() {
           Home Study Companion
         </NavLink>
         <Menu orientation="vertical" />
-        <p className="mt-auto px-2 text-xs text-ink-3">Signed out · <NavLink to="/sign-in" className="underline">Sign in</NavLink></p>
+        <p className="mt-auto px-2 text-xs text-ink-3">Progress is saved on this device.</p>
       </aside>
 
       <main id="main" className="flex-1 px-4 pb-24 pt-6 md:px-10 md:pb-10 md:pt-10" key={pathname}>
@@ -35,7 +35,7 @@ export function AppShell() {
 function Menu({ orientation }: { orientation: 'vertical' | 'horizontal' }) {
   const vertical = orientation === 'vertical'
   return (
-    <ul className={vertical ? 'flex flex-col gap-1' : 'grid grid-cols-6'}>
+    <ul className={vertical ? 'flex flex-col gap-1' : 'grid grid-cols-4'}>
       {NAV.map(({ to, label, icon: Icon, end }) => (
         <li key={to}>
           <NavLink

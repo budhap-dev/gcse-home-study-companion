@@ -17,6 +17,7 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 
 ## Decisions so far
 
+- 8 September 2026: the first release is a single public web app with every subject's topics and no logins of any kind. Progress is saved in the browser. Google sign-in comes later, only to sync progress. Student, parent, and tutor accounts move to a later phase.
 - Target grade 9 in every subject.
 - Exam boards: Maths Edexcel 1MA1 with AQA Level 2 Further Maths, Biology Edexcel 1BI0, Physics AQA 8463, Chemistry AQA 8462, Computer Science AQA 8525, Business Edexcel 1BS0, French Edexcel 1FR1. Music board still open.
 - Users: students, parents, and tutors. Parents own the family; tutors are linked per child by parent invite.
@@ -50,4 +51,4 @@ pnpm typecheck
 pnpm build
 ```
 
-Every screen is a placeholder that names the stories from docs/stories.md it will deliver and the blocks it will contain. The menu, routes, and subject theming are real; nothing talks to a database yet.
+Subjects, topic maps, and topic pages read real content bundled from `supabase/seed/content`. Lesson, quiz, and worksheet screens are placeholders that name the stories they will deliver. Progress is stored in the browser. Nothing talks to a database.

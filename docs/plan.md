@@ -2,6 +2,10 @@
 
 Source: PRD Draft 4 and the story backlog, both dated 2 September 2026. This plan turns those two documents into an ordered build. It covers Phase 1 (Maths and Physics, all 21 Must stories) in detail and sketches how Phases 2 to 4 follow. Date: 2 September 2026. Status: draft for review.
 
+## 0. Scope change, 8 September 2026
+
+The first release is a single public web app: every subject's topics, browsable with no login. Content is bundled from the repository at build time, and progress is stored in the browser. Google sign-in is added later, only to sync progress. Accounts, family, parent, and tutor stories (Epics A, F, G, and TUT-3) move out of Phase 1. The database migrations stay as the authoring layer and the future sync target. Workstreams C and G and the parent parts of milestones M1 and M4 are deferred accordingly; the rest of this plan stands.
+
 ## 1. Where things stand
 
 The repository holds requirements only: no code, no schema, no content. The PRD fixes the stack, the content model, the progress rules, and the phase cuts. The backlog gives stable story IDs and acceptance criteria. What is missing is the order of work, the vertical slices to build first, the content pipeline, and the decisions that gate each of those.

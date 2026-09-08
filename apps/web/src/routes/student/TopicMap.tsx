@@ -1,40 +1,68 @@
-import { getSubject, STATUS_COLOUR, STATUS_LABEL, TOPIC_STATUSES } from '@study/shared'
+import { getSubject, STATUS_LABEL, TOPIC_STATUSES } from '@study/shared'
 import { Link, useParams } from 'react-router'
-import { Placeholder } from '../../components/Placeholder.tsx'
+import { StatusIcon } from '../../components/StatusChip.tsx'
+import { topicsForSubject, topicsForUnit } from '../../content/index.ts'
+import { evidenceFor } from '../../progress/store.ts'
+import { useProgress } from '../../progress/useProgress.ts'
 
 export function TopicMap() {
   const { subjectId } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
+  const progress = useProgress()
+  if (!subject) return <p>Unknown subject.</p>
+  const all = topicsForSubject(subject.id)
+  const ready = all.filter((t) => evidenceFor(t.id, progress).status === 'grade-9-ready').length
+
   return (
-    <Placeholder
-      area={subject?.name ?? 'Subject'}
-      title={'Topic map'}
-      description="Topics grouped by unit in specification order, coloured and shaped by status. Tap a topic for the evidence behind it."
-      stories={["LRN-1", "PRG-1"]}
-      blocks={["Grade 9 ready count out of total", "Status legend with shapes", "Units with topic chips", "Evidence sheet for the selected topic"]}
-    >
-      <ul className="flex flex-wrap gap-4 text-xs text-ink-2">
+    <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <header className="flex flex-col gap-2">
+        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{subject.board}</p>
+        <h1 className="text-3xl font-bold leading-tight">{subject.name}</h1>
+        <p className="text-ink-2">
+          {all.length === 0 ? 'No topics written yet.' : <><strong className="text-ink">{ready} of {all.length}</strong> topics Grade 9 ready</>}
+        </p>
+      </header>
+
+      <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-2">
         {TOPIC_STATUSES.map((s) => (
           <li key={s} className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full" style={{ background: STATUS_COLOUR[s] }} aria-hidden />
+            <StatusIcon status={s} size={12} />
             {STATUS_LABEL[s]}
           </li>
         ))}
       </ul>
-      <section className="flex flex-col gap-4">
-        {(subject?.units ?? []).map((unit) => (
-          <div key={unit} className="flex flex-col gap-2">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{unit}</h2>
-            <Link
-              to={`/subjects/${subject?.id}/topics/${encodeURIComponent(unit.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}-1`}
-              className="w-fit rounded-lg border border-dashed border-rule bg-surface px-3 py-2 text-sm text-ink-2"
-            >
-              Topics for {unit} will appear here
-            </Link>
-          </div>
-        ))}
-        <Link to={`/subjects/${subject?.id}/exam-technique`} className="w-fit text-sm font-bold underline">Exam technique guide</Link>
+
+      <section className="flex flex-col gap-5">
+        {subject.units.map((unit) => {
+          const topics = topicsForUnit(subject.id, unit.id)
+          return (
+            <div key={unit.id} className="flex flex-col gap-2">
+              <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{unit.name}</h2>
+              {topics.length === 0 ? (
+                <p className="text-sm text-ink-3">Coming soon</p>
+              ) : (
+                <ul className="flex flex-wrap gap-2">
+                  {topics.map((t) => {
+                    const status = evidenceFor(t.id, progress).status
+                    return (
+                      <li key={t.id}>
+                        <Link
+                          to={`/subjects/${subject.id}/topics/${t.id}`}
+                          className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-rule bg-surface px-3 py-2 text-sm hover:border-[color:var(--subject)]"
+                        >
+                          <StatusIcon status={status} />
+                          <span>{t.title}</span>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+            </div>
+          )
+        })}
+        <Link to={`/subjects/${subject.id}/exam-technique`} className="w-fit text-sm font-bold underline">Exam technique guide</Link>
       </section>
-    </Placeholder>
+    </article>
   )
 }
