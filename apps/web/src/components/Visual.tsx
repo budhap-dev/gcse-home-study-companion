@@ -1,5 +1,7 @@
 import type { Visual as VisualBlock } from '@study/shared'
 import { RichText } from './RichText.tsx'
+import { DIAGRAMS } from './diagrams/index.tsx'
+import { SliderGraph } from './interactives/SliderGraph.tsx'
 
 /**
  * Renders one visual block. Diagrams and interactives fall back to their text
@@ -31,13 +33,23 @@ export function Visual({ visual }: { visual: VisualBlock }) {
       )
     case 'animation':
       return <img src={visual.poster} alt={visual.alt} className="rounded-xl" />
-    case 'diagram':
+    case 'diagram': {
+      const Diagram = DIAGRAMS[visual.component]
+      if (Diagram) {
+        return (
+          <figure className="flex justify-center rounded-xl border border-rule bg-surface p-3" data-diagram={visual.component}>
+            <Diagram props={visual.props} alt={visual.alt} />
+          </figure>
+        )
+      }
       return (
         <figure className="flex min-h-28 items-center justify-center rounded-xl border border-dashed border-rule bg-surface p-4 text-center text-sm text-ink-2">
           {visual.alt}
         </figure>
       )
+    }
     case 'interactive':
+      if (visual.kind === 'slider-graph') return <SliderGraph config={visual.config} alt={visual.fallback} />
       return (
         <figure className="flex flex-col gap-2 rounded-xl border border-dashed border-rule bg-surface p-4">
           <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Interactive · {visual.kind}</span>
