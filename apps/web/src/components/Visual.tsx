@@ -2,6 +2,7 @@ import type { Visual as VisualBlock } from '@study/shared'
 import { RichText } from './RichText.tsx'
 import { DIAGRAMS } from './diagrams/index.tsx'
 import { SliderGraph } from './interactives/SliderGraph.tsx'
+import { KindChip } from './KindChip.tsx'
 
 /**
  * Diagrams are drawn with dark ink on a light ground, whatever the theme. Dark
@@ -24,7 +25,8 @@ export function Visual({ visual }: { visual: VisualBlock }) {
   switch (visual.type) {
     case 'worked-example':
       return (
-        <figure className="flex flex-col gap-2 rounded-xl border border-rule bg-surface p-4">
+        <figure className="flex flex-col gap-2 rounded-xl border border-rule border-l-4 border-l-[#1f3a93] bg-surface p-4">
+          <KindChip kind="worked-example" />
           <RichText source={visual.problem} className="font-bold" />
           <ol className="flex flex-col gap-1.5 border-l-2 border-[color:var(--subject)] pl-3">
             {visual.steps.map((s, i) => (

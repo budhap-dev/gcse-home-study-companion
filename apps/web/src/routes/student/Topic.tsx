@@ -1,4 +1,5 @@
 import { getSubject, WORKSHEET_LEVELS } from '@study/shared'
+import { Smiley } from '../../components/Smiley.tsx'
 import { Link, useParams } from 'react-router'
 import { StatusChip } from '../../components/StatusChip.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
@@ -27,7 +28,7 @@ export function Topic() {
   const quizNote = quizzes.length >= 2 ? (() => { const d = pct(quizzes[0]!) - pct(quizzes[1]!); return d === 0 ? `same as last time` : `${d > 0 ? 'up' : 'down'} from ${pct(quizzes[1]!)}%` })() : undefined
 
   return (
-    <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+    <article className="mx-auto flex w-full max-w-6xl flex-col gap-6">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">
           <Link to={`/subjects/${subject.id}`} className="hover:underline">{subject.name}</Link> · {subject.units.find((u) => u.id === topic.unitId)?.name}
@@ -51,7 +52,7 @@ export function Topic() {
         ))}
       </section>
 
-      <nav aria-label="Topic parts" className="flex flex-col gap-2">
+      <nav aria-label="Topic parts" className="grid grid-cols-1 gap-2 md:grid-cols-2">
         <Part to="lesson" title="Lesson" note={`${topic.lesson.steps.length} steps, one idea each`} action={lesson && !evidence.lessonDone ? 'Resume' : 'Start'} />
         {WORKSHEET_LEVELS.map((level) => {
           const sheet = topic.worksheets[level]
@@ -72,7 +73,7 @@ export function Topic() {
 
       {topic.resources && topic.resources.length > 0 && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Practise</h2>
+          <h2 className="chip w-fit" style={{ '--chip': '#1f3a93' } as React.CSSProperties}><Smiley>💻</Smiley>Practise</h2>
           {topic.resources.map((r) => (
             <a key={r.url} href={r.url} target="_blank" rel="noopener noreferrer" className="press flex items-center justify-between gap-3 rounded-xl border border-rule bg-surface px-4 py-3">
               <span className="flex flex-col"><span className="font-bold">{r.label}</span>{r.note && <span className="text-sm text-ink-2">{r.note}</span>}</span>
@@ -85,9 +86,12 @@ export function Topic() {
   )
 }
 
+const PART_EMOJI: Record<string, string> = { Lesson: '📖', 'Core worksheet': '📝', 'Higher worksheet': '📝', 'Advanced worksheet': '🧠', Quiz: '⚡', Flashcards: '🃏', 'Exam technique': '🎓' }
+
 function Part({ to, title, note, action }: { to: string; title: string; note: string; action: string }) {
   return (
-    <Link to={to} className="flex items-center gap-4 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-[color:var(--subject)]">
+    <Link to={to} className="flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-[color:var(--subject)]">
+      <span className="tint flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl"><Smiley>{PART_EMOJI[title] ?? '📚'}</Smiley></span>
       <span className="flex flex-grow flex-col gap-0.5">
         <span className="font-bold">{title}</span>
         <span className="text-xs text-ink-2">{note}</span>

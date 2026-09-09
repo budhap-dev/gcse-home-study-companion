@@ -117,6 +117,11 @@ export function awardBadges(ids: string[]): string[] {
   return fresh
 }
 
+/** Replaces the whole state, used when the account's synced copy is merged in. */
+export function replaceState(state: ProgressState) {
+  write({ ...emptyState(), ...state })
+}
+
 export function clearProgress() {
   write(emptyState())
 }

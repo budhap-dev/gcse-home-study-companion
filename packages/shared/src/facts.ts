@@ -65,10 +65,18 @@ export const FUN_FACTS: Record<SubjectId, string[]> = {
   ],
 }
 
-export function factOfTheDay(subjectIds: SubjectId[], date = new Date()): { subjectId: SubjectId; text: string } | null {
-  const pool = subjectIds.flatMap((s) => (FUN_FACTS[s] ?? []).map((text) => ({ subjectId: s, text })))
+export interface Fact { subjectId: SubjectId; text: string }
+
+/** The pool of facts for the given subjects, in a fixed order. */
+export function factPool(subjectIds: SubjectId[]): Fact[] {
+  return subjectIds.flatMap((s) => (FUN_FACTS[s] ?? []).map((text) => ({ subjectId: s, text })))
+}
+
+/** Today's fact, or the one `offset` steps after it when the reader asks for another. */
+export function factOfTheDay(subjectIds: SubjectId[], date = new Date(), offset = 0): Fact | null {
+  const pool = factPool(subjectIds)
   if (pool.length === 0) return null
   const start = new Date(date.getFullYear(), 0, 0)
   const day = Math.floor((date.getTime() - start.getTime()) / 86400000)
-  return pool[day % pool.length]!
+  return pool[(day + offset) % pool.length]!
 }

@@ -1,4 +1,5 @@
 import { emojiForScore, getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
+import { SectionLabel } from '../../components/KindChip.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Celebration } from '../../components/Celebration.tsx'
 import { settle, type Settlement } from '../../progress/settle.ts'
@@ -141,7 +142,7 @@ export function Quiz() {
   }
 
   return (
-    <article className="mx-auto flex w-full max-w-2xl flex-col gap-5">
+    <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
       <header className="flex items-center gap-3">
         <Link to={backTo} aria-label="Leave quiz" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-rule bg-surface">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18" /></svg>
@@ -183,7 +184,7 @@ export function Quiz() {
 
 function Intro({ subjectName, title, count, pool, minutes, onStart, backTo }: { subjectName: string; title: string; count: number; pool: number; minutes: number; onStart: () => void; backTo: string }) {
   return (
-    <article className="mx-auto flex w-full max-w-2xl flex-col gap-5">
+    <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
       <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{subjectName} · Quiz</p>
       <h1 className="text-3xl font-bold leading-tight">{title}</h1>
       <ul className="flex flex-col gap-1 text-ink-2">
@@ -212,7 +213,7 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
   const delta = previous === undefined ? undefined : pct - previous
   const message = messageForScore(pct, previous, state.attemptId.charCodeAt(0) + state.attemptId.charCodeAt(1))
   return (
-    <article className="mx-auto flex w-full max-w-2xl flex-col gap-6">
+    <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Quiz finished</p>
         <h1 className="text-3xl font-bold leading-tight">{topicTitle}</h1>
@@ -240,14 +241,14 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
         const got = [...new Set(questions.filter((q) => state.answers[q.id]?.result.correct).map((q) => q.skill))]
         return got.length > 0 ? (
           <section className="flex flex-col gap-2">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">You can now</h2>
+            <SectionLabel colour="#2e8b57" emoji="✅">You can now</SectionLabel>
             <ul className="flex flex-wrap gap-2">{got.map((s) => <li key={s} className="rounded-full border border-rule bg-surface px-3 py-1 text-sm">{s}</li>)}</ul>
           </section>
         ) : null
       })()}
       {missed.length > 0 && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">To learn from</h2>
+          <SectionLabel colour="#d25b3b" emoji="🔁">To learn from</SectionLabel>
           <ul className="flex flex-col gap-2">
             {missed.map((q) => {
               const r = state.answers[q.id]?.result

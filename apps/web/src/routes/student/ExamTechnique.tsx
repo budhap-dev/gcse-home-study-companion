@@ -1,4 +1,5 @@
 import { getSubject } from '@study/shared'
+import { SectionLabel } from '../../components/KindChip.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { getGuide, topicsForSubject } from '../../content/index.ts'
@@ -15,7 +16,7 @@ export function ExamTechnique() {
   if (!subject) return <p>Unknown subject.</p>
 
   return (
-    <article className="mx-auto flex w-full max-w-3xl flex-col gap-8">
+    <article className="mx-auto flex w-full max-w-6xl flex-col gap-8">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">
           <Link to={`/subjects/${subject.id}`} className="hover:underline">{subject.name}</Link> · {subject.board}
@@ -29,7 +30,7 @@ export function ExamTechnique() {
       ) : (
         <>
           <section className="flex flex-col gap-3">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">The papers</h2>
+            <SectionLabel colour="#1f3a93" emoji="📄">The papers</SectionLabel>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
               {guide.papers.map((p) => (
                 <div key={p.name} className="flex flex-col gap-1 rounded-xl border border-rule bg-surface p-4">
@@ -42,7 +43,7 @@ export function ExamTechnique() {
           </section>
 
           <section className="flex flex-col gap-3">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">What the marks are for</h2>
+            <SectionLabel colour="#2e8b57" emoji="🎯">What the marks are for</SectionLabel>
             <ul className="flex flex-col gap-2">
               {guide.assessmentObjectives.map((ao) => (
                 <li key={ao.code} className="flex gap-3 rounded-xl border border-rule bg-surface px-4 py-3">
@@ -54,8 +55,8 @@ export function ExamTechnique() {
           </section>
 
           <section className="flex flex-col gap-3">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Command words</h2>
-            <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-[max-content_1fr]">
+            <SectionLabel colour="#c27a00" emoji="🗣️">Command words</SectionLabel>
+            <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-[max-content_1fr] lg:grid-cols-[max-content_1fr_max-content_1fr]">
               {guide.commandWords.map((c) => (
                 <div key={c.word} className="contents">
                   <dt className="font-bold">{c.word}</dt>
@@ -66,7 +67,7 @@ export function ExamTechnique() {
           </section>
 
           <section className="flex flex-col gap-3">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">What a grade 9 answer looks like</h2>
+            <SectionLabel colour="#6B4E9B" emoji="🏆">What a grade 9 answer looks like</SectionLabel>
             <ul className="flex flex-col gap-2">
               {guide.grade9ByQuestionType.map((g) => (
                 <li key={g.questionType} className="flex flex-col gap-1 rounded-xl border-l-4 border-status-grade-9 bg-surface px-4 py-3">
@@ -81,7 +82,7 @@ export function ExamTechnique() {
 
       {topics.length > 0 && (
         <section className="flex flex-col gap-3">
-          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Topic by topic</h2>
+          <SectionLabel colour="#0f766e" emoji="📚">Topic by topic</SectionLabel>
           {topics.map((t) => (
             <details key={t.id} className="rounded-xl border border-rule bg-surface px-4 py-3">
               <summary className="cursor-pointer font-bold">{t.title}</summary>

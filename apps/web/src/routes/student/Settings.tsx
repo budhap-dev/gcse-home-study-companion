@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { signOut, useAuth } from '../../auth/useAuth.ts'
+import { FamilyPanel } from '../../auth/FamilyPanel.tsx'
 import { THEMES, applyTheme, currentThemeId } from '../../theme/themes.ts'
 import { setPref, usePref } from '../../theme/prefs.ts'
 import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
@@ -16,10 +18,10 @@ export function Settings() {
   const smileys = usePref('smileys')
 
   return (
-    <article className="mx-auto flex w-full max-w-2xl flex-col gap-6">
+    <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
       <header className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold leading-tight">Settings</h1>
-        <p className="text-ink-2">Everything here lives on this device. Sign-in to keep progress across devices comes later.</p>
+        <p className="text-ink-2">Theme and preferences live on this device. Progress follows your account when family sign-in is set up.</p>
       </header>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
@@ -101,6 +103,39 @@ export function Settings() {
           <button type="button" onClick={() => setConfirmClear(true)} className="h-11 w-fit rounded-lg border border-rule px-4 font-bold">Clear progress on this device</button>
         )}
       </section>
+
+      <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
+        <h2 className="font-bold">Account</h2>
+        <AccountPanel />
+      </section>
+      <FamilySection />
     </article>
+  )
+}
+
+
+function AccountPanel() {
+  const auth = useAuth()
+  if (auth.status === 'disabled') return <p className="text-sm text-ink-2">Sign-in is not set up on this copy of the app, so progress stays on this device.</p>
+  if (auth.status !== 'allowed') return <p className="text-sm text-ink-2">Not signed in.</p>
+  return (
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <p className="flex items-center gap-3 text-sm">
+        {auth.avatar && <img src={auth.avatar} alt="" className="h-9 w-9 rounded-full" referrerPolicy="no-referrer" />}
+        <span>Signed in as <strong>{auth.name ?? auth.email}</strong> ({auth.email}, {auth.role}). Progress is saved to this account and follows you between devices.</span>
+      </p>
+      <button type="button" onClick={() => void signOut()} className="h-11 shrink-0 rounded-xl border border-rule bg-surface px-4 font-bold">Sign out</button>
+    </div>
+  )
+}
+
+function FamilySection() {
+  const auth = useAuth()
+  if (auth.status !== 'allowed') return null
+  return (
+    <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
+      <h2 className="font-bold">Family</h2>
+      <FamilyPanel />
+    </section>
   )
 }

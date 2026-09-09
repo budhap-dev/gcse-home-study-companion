@@ -1,4 +1,7 @@
 import { BADGES, SUBJECTS, factOfTheDay, type SubjectId } from '@study/shared'
+import { SectionLabel } from '../../components/KindChip.tsx'
+import { useAuth } from '../../auth/useAuth.ts'
+import { useState } from 'react'
 import { levelBySubject, totalXp } from '../../progress/xp.ts'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link } from 'react-router'
@@ -18,21 +21,26 @@ export function Home() {
   const offToday = progress.daysOff.includes(isoDate())
   const levels = levelBySubject(progress)
   const badgeCount = Object.keys(progress.badges).length
-  const fact = factOfTheDay(SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => s.id))
+  const auth = useAuth()
+  const firstName = auth.status === 'allowed' && auth.name ? auth.name.split(' ')[0] : undefined
+  const [factOffset, setFactOffset] = useState(0)
+  const fact = factOfTheDay(SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => s.id), new Date(), factOffset)
 
   return (
-    <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-      <header className="flex items-end justify-between gap-4">
+    <article className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-x-10 lg:gap-y-6">
+      <div className="flex flex-col gap-6 lg:col-start-1">
+      <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-ink-2">{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
-          <h1 className="flex items-center gap-2 text-3xl font-bold leading-tight">{greeting}<Smiley bounce>{hour < 12 ? '🌞' : hour < 18 ? '👋' : '🌙'}</Smiley></h1>
+          <h1 className="flex items-center gap-2 text-3xl font-bold leading-tight">{greeting}{firstName ? `, ${firstName}` : ''}<Smiley bounce>{hour < 12 ? '🌞' : hour < 18 ? '👋' : '🌙'}</Smiley></h1>
+          {firstName && <p className="text-sm text-ink-2">Welcome back. Your progress is saved to your account{auth.role === 'parent' ? ', and you can manage the family in Settings' : ''}.</p>}
         </div>
-        <span className="flex items-center gap-2">
-        <Link to="/progress" className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1.5 text-sm font-bold" title="XP and badges">
+        <span className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-nowrap">
+        <Link to="/progress" className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#e3c26a] bg-[#fff4cc] px-3 py-1.5 text-sm font-bold text-[#6b4d00]" title="XP and badges">
           <span className="text-ink-2">XP</span>{totalXp(progress)}
           <span className="ml-1 text-ink-2">·</span>{badgeCount}/{BADGES.length}
         </Link>
-        <span className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1.5 text-sm font-bold" title="Days in a row with something finished">
+        <span className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#f2b08a] bg-[#ffe9dc] px-3 py-1.5 text-sm font-bold text-[#8a3b12]" title="Days in a row with something finished">
           <span className={streak > 0 ? 'anim-flicker' : ''}><Smiley>🔥</Smiley></span>
           {streak} day{streak === 1 ? '' : 's'}{streak >= 7 ? ' streak' : ''}
         </span>
@@ -42,7 +50,7 @@ export function Home() {
       <section className="flex items-center gap-4 rounded-2xl border border-rule bg-surface px-4 py-3.5">
         <GoalRing minutes={minutes} goal={goal} />
         <div className="flex flex-col gap-0.5">
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Weekly goal</p>
+          <SectionLabel colour="#2e8b57" emoji="🎯">Weekly goal</SectionLabel>
           <p className="text-lg font-bold">{minutes} of {goal} minutes</p>
           <p className="text-sm text-ink-2">
             {offToday ? 'Today is a day off.' : minutes >= goal ? 'Goal reached this week.' : `${goal - minutes} minutes to go.`} <Link to="/settings" className="underline">Change goal</Link>
@@ -52,7 +60,7 @@ export function Home() {
 
       {next ? (
         <section className="flex flex-col gap-2">
-          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Next up</h2>
+          <SectionLabel colour="#c8501f" emoji="🚀">Next up</SectionLabel>
           <TaskCard task={next} primary />
         </section>
       ) : (
@@ -61,7 +69,7 @@ export function Home() {
 
       {alternatives.length > 0 && (
         <section className="flex flex-col gap-2">
-          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Or choose</h2>
+          <SectionLabel colour="#1f3a93" emoji="🧭">Or choose</SectionLabel>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {alternatives.map((t) => (
               <TaskCard key={t.to} task={t} />
@@ -70,16 +78,30 @@ export function Home() {
         </section>
       )}
 
+      </div>
+
+      <aside className="flex flex-col gap-6 lg:col-start-2 lg:row-start-1">
       {fact && (
-        <section className="flex gap-3 rounded-2xl border border-dashed border-rule bg-surface px-4 py-3" style={{ '--subject': SUBJECTS.find((s) => s.id === fact.subjectId)?.colour } as React.CSSProperties}>
-          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--subject)] text-white" aria-hidden>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z" /></svg>
-          </span>
-          <span className="flex flex-col gap-0.5"><span className="text-[11px] font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Did you know · {SUBJECTS.find((s) => s.id === fact.subjectId)?.name}</span><span className="text-sm leading-snug">{fact.text}</span></span>
+        <section
+          key={factOffset}
+          className="anim-fade-up relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-5"
+          style={{ '--subject': SUBJECTS.find((s) => s.id === fact.subjectId)?.colour, borderColor: 'color-mix(in srgb, var(--subject) 45%, transparent)', background: 'linear-gradient(135deg, color-mix(in srgb, var(--subject) 18%, var(--color-surface)), var(--color-surface) 70%)' } as React.CSSProperties}
+        >
+          <span className="pointer-events-none absolute -right-4 -top-6 text-[7rem] opacity-15" aria-hidden><Smiley>💡</Smiley></span>
+          <div className="flex items-center gap-2">
+            <span className="chip" style={{ '--chip': 'var(--subject)' } as React.CSSProperties}><Smiley>💡</Smiley>Did you know</span>
+            <span className="text-xs font-bold text-[color:var(--subject)]">{SUBJECTS.find((s) => s.id === fact.subjectId)?.name}</span>
+          </div>
+          <p className="relative text-[15px] leading-relaxed">{fact.text}</p>
+          <button type="button" onClick={() => setFactOffset((n) => n + 1)} className="press relative w-fit rounded-full bg-[color:var(--subject)] px-4 py-1.5 text-sm font-bold text-white">
+            Another one <span aria-hidden>→</span>
+          </button>
         </section>
       )}
 
-      <section className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <section className="flex flex-col gap-2">
+        <SectionLabel colour="#6B4E9B" emoji="🏅">Your subjects</SectionLabel>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
         {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
           const topics = topicsForSubject(s.id)
           const ready = topics.filter((t) => evidenceFor(t.id, progress).status === 'grade-9-ready').length
@@ -95,7 +117,9 @@ export function Home() {
             </Link>
           )
         })}
+        </div>
       </section>
+      </aside>
     </article>
   )
 }
