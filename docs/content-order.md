@@ -40,3 +40,13 @@ Next Physics topic to author: Hooke's law, since it is first in Autumn 1 and sha
 | Autumn 2 | C4 Chemical changes continued: electrolysis of melts and solutions · half equations | |
 | Spring | C5 Energy changes · C7 Organic chemistry: crude oil, alkanes, cracking | |
 | Summer | C7 continued: alkenes, alcohols, carboxylic acids, esters · polymers and biological molecules | |
+
+
+## Biology (Edexcel 1BI0)
+
+School order for Year 10: Unit 6 Plant structures first, then Unit 5 Health and disease, Unit 7 Animal coordination, Unit 9 Ecosystems, Unit 2 Cells and control. Units 1 and 8 were taught in Year 9.
+
+| Half term | Topics | Status |
+|---|---|---|
+| Autumn 1 | Unit 6: photosynthesis and limiting factors · the leaf, root hair cells, xylem and phloem · transpiration and translocation · plant adaptations, defences and hormones (Biology only) | All four drafted |
+| Autumn 1 and 2 | Unit 5: health and disease, pathogens, the immune system, medicines, non-communicable disease | Next |

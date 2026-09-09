@@ -13,6 +13,8 @@ import { Lattice } from './Lattice.tsx'
 import { EnergyStores } from './EnergyStores.tsx'
 import { EnergyTransferBars } from './EnergyTransferBars.tsx'
 import { EquationCard } from './EquationCard.tsx'
+import { CurveGraph } from './CurveGraph.tsx'
+import { Plant } from './Plant.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -34,6 +36,8 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'energy-stores': EnergyStores,
   'energy-transfer-bars': EnergyTransferBars,
   'equation-card': EquationCard,
+  'curve-graph': CurveGraph,
+  'plant': Plant,
 }
 
 export const INK = '#1e2330'
