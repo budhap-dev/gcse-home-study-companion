@@ -65,9 +65,9 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     tick(100, 125, 108, 125, 'tx4'); label(112, 128, 'water and ions, up only', 'l4')
     tick(270, 47, 262, 47, 'tp1'); label(258, 50, 'living cells', 'l5', 'end')
     tick(270, 96, 262, 96, 'tp2'); label(258, 99, 'sieve plates', 'l6', 'end')
-    tick(334, 150, 262, 150, 'tp3'); label(258, 153, 'companion cell', 'l7', 'end')
+    tick(345, 172, 345, 186, 'tp3'); label(345, 198, 'companion cell', 'l7', 'end'); 
     tick(270, 185, 262, 185, 'tp4'); label(258, 188, 'sucrose, both ways', 'l8', 'end')
-    label(362, 118, 'many', 'l9'); label(362, 130, 'mitochondria', 'l10')
+    label(362, 112, 'many', 'l9'); label(362, 124, 'mitochondria', 'l10')
   } else if (kind === 'stoma') {
     const draw = (x0: number, open: boolean, key: string) => {
       const gap = open ? 14 : 2

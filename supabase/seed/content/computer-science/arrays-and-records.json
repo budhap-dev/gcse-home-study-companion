@@ -5,7 +5,7 @@
   "title": "Arrays and records",
   "specPoints": [
     "3.2.6",
-    "3.2.7"
+    "3.1.1"
   ],
   "order": 2,
   "resources": [
@@ -21,7 +21,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "An array is a numbered list",
-        "body": "An **array** holds many values of the **same type** under one name. Each value has an **index**, and indexes **start at 0**.\n\n```\nscores ← [12, 7, 9, 15]\nOUTPUT scores[0]\nOUTPUT scores[3]\nOUTPUT LEN(scores)\n```\n\nOutput: `12`, `15`, `4`. The first item is index 0, the last is index 3, and `LEN` gives the number of items, which is always one more than the last index.",
+        "body": "An **array** holds many values of the **same type** under one name. Each value has an **index**, and indexes **start at 0**.\n\n```\nscores ← [12, 7, 9, 15]\nOUTPUT scores[0]\nOUTPUT scores[3]\nOUTPUT LEN(scores)\n```\n\nOutput: `12`, `15`, `4`. The first item is index 0, the last is index 3, and `LEN` gives the number of items, which is always one more than the last index.\n\nYou can change an item too: `scores[1] ← 20` replaces the 7, so the array becomes `[12, 20, 9, 15]`.",
         "visuals": [
           {
             "type": "diagram",
@@ -221,7 +221,7 @@
               ],
               "title": "biggest"
             },
-            "alt": "Trace of the biggest program"
+            "alt": "Trace of the biggest program: biggest starts at 12; i 1 gives 7, not bigger; i 2 gives 9, not bigger; i 3 gives 15, which is bigger, so biggest becomes 15"
           }
         ],
         "check": {
@@ -330,7 +330,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Records: different types together",
-        "body": "An array holds one type. A **record** groups **different types** under one name, each in a named **field**. A student has a name (string) and an age (integer); a record keeps them together.\n\n```\nRECORD Student\n   name : String\n   age : Integer\nENDRECORD\n\ns ← Student('Mia', 15)\nOUTPUT s.name + ' is ' + INT_TO_STRING(s.age)\n```\n\nOutput: `Mia is 15`. Fields are reached with a dot: `s.name`. An **array of records** is how a program stores a whole class: `pupils[4].age` is the age of the fifth pupil.",
+        "body": "An array holds one type. A **record** groups **different types** under one name, each in a named **field**. A student has a name (string) and an age (integer); a record keeps them together.\n\n```\nRECORD Student\n   name : String\n   age : Integer\nENDRECORD\n\ns ← Student('Mia', 15)\nOUTPUT s.name + ' is ' + INT_TO_STRING(s.age)\n```\n\nOutput: `Mia is 15`. Fields are reached with a dot: `s.name`. You update a field the same way: `s.age ← 16` changes just that field and leaves `s.name` alone. An **array of records** is how a program stores a whole class: `pupils[4].age` is the age of the fifth pupil.\n\nAn array of records is built the same way as any other array:\n\n```\npupils ← [Student('Mia', 15), Student('Jon', 16), Student('Ada', 15)]\nOUTPUT pupils[1].name\n```\n\nOutput: `Jon`.",
         "visuals": [
           {
             "type": "worked-example",
@@ -368,7 +368,7 @@
           "discriminators": [],
           "accepted": [
             "pupils[0].name",
-            "pupils[0] .name"
+            "pupils(0).name"
           ]
         }
       },
@@ -431,7 +431,7 @@
                 "i",
                 "nums[i]",
                 "found",
-                "i < LEN AND NOT found"
+                "condition"
               ],
               "rows": [
                 [
@@ -450,18 +450,18 @@
                   "2",
                   "2",
                   "True",
-                  "False after i becomes 3"
+                  "True"
                 ],
                 [
                   "3",
                   "",
                   "",
-                  ""
+                  "False: stop"
                 ]
               ],
               "title": "search for 2"
             },
-            "alt": "Trace of the search program"
+            "alt": "Trace of the search for 2 in [4, 9, 2, 7]: i 0 and 1 do not match, i 2 matches and sets found to True, i becomes 3 and the condition is then False so the loop stops"
           }
         ],
         "check": {
@@ -512,22 +512,22 @@
                 [
                   "total",
                   "total ← 0",
-                  "total ← total + a[i]"
+                  "total + a[i]"
                 ],
                 [
                   "count",
                   "count ← 0",
-                  "IF test THEN count ← count + 1"
+                  "IF test: count + 1"
                 ],
                 [
                   "biggest",
                   "biggest ← a[0]",
-                  "IF a[i] > biggest THEN biggest ← a[i]"
+                  "IF a[i] > biggest: swap"
                 ],
                 [
                   "search",
                   "found ← False",
-                  "IF a[i] = target THEN found ← True"
+                  "IF a[i] = target: found"
                 ]
               ],
               "title": "Patterns"
@@ -687,8 +687,9 @@
       "accepted": [
         "7 8",
         "7, 8",
-        "7\n8",
-        "78"
+        "78",
+        "7 then 8",
+        "7 and 8"
       ]
     },
     {
@@ -700,7 +701,7 @@
       "skill": "writing array code",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Using LEN is what makes it work for any length. A loop hard-coded to 4 would fail the question.",
+      "solution": "Using LEN is what makes it work for any length. A loop hard-coded to 4 only works for that one array, and the question asks for any length.",
       "markScheme": [
         {
           "code": "B1",
@@ -849,8 +850,12 @@
           "marks": 1
         },
         {
-          "text": "A loop over every index, bounded by LEN, adding each item to the total",
-          "marks": 2
+          "text": "A loop over every index, bounded by LEN(nums)",
+          "marks": 1
+        },
+        {
+          "text": "Adds nums[i] to the total inside the loop",
+          "marks": 1
         },
         {
           "text": "RETURN total / LEN(nums)",
@@ -915,8 +920,8 @@
       ],
       "options": [
         "An array of records, one record per student, because each student's different-typed values stay together under one index",
-        "Three separate arrays, because arrays can only hold one type each and that is simpler",
-        "One long array of strings, because everything can be converted to text",
+        "Three separate arrays, because an array can only hold one type, and keeping names, ages and scores apart is simpler to write",
+        "One long array of strings, because every value can be converted to text and read back with STRING_TO_INT when a number is needed",
         "A 2D array of integers, because scores and ages are numbers"
       ],
       "correct": [
@@ -1025,7 +1030,7 @@
       ],
       "accepted": [
         "shelf[2].pages",
-        "shelf[2] .pages"
+        "shelf(2).pages"
       ]
     }
   ],

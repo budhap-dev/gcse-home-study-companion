@@ -4,9 +4,7 @@
   "unitId": "programming",
   "title": "Robust and secure programming: validation, authentication and testing",
   "specPoints": [
-    "3.2.11",
-    "3.2.12",
-    "3.2.13"
+    "3.2.11"
   ],
   "order": 4,
   "resources": [
@@ -22,7 +20,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Robust means it does not fall over",
-        "body": "A **robust** program copes with anything the user does: wrong types, silly values, empty input. The main tool is **validation**: checking data before using it. The standard checks are:\n\n- **Range**: between two limits, such as an age from 11 to 18.\n- **Length**: enough characters, such as a password of at least 8.\n- **Presence**: not empty.\n- **Type**: a number where a number is expected.\n- **Format**: matches a pattern, such as an email with an @.\n\nValidation checks that data is **sensible**, not that it is **true**. A wrong but sensible date of birth passes.",
+        "body": "A **robust** program copes with anything the user does: wrong types, silly values, empty input. The main tool is **validation**: checking data before using it. AQA's specification names three by example, length, presence and range, and two more are worth knowing:\n\n- **Range**: between two limits, such as an age from 11 to 18.\n- **Length**: enough characters, such as a password of at least 8.\n- **Presence**: not empty.\n- **Type**: a number where a number is expected.\n- **Format**: matches a pattern, such as an email with an @.\n\nValidation checks that data is **sensible**, not that it is **true**. A wrong but sensible date of birth passes.",
         "visuals": [
           {
             "type": "worked-example",
@@ -235,6 +233,24 @@
               "title": "three wrong passwords"
             },
             "alt": "Trace of the password loop with three wrong entries"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Username and password together",
+            "steps": [
+              {
+                "text": "```\nOUTPUT 'Username?'\nuser ← USERINPUT\nOUTPUT 'Password?'\npass ← USERINPUT\nIF user = storedUser AND pass = storedPass THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Login failed'\nENDIF\n```"
+              },
+              {
+                "text": "Both must match, so the two checks are joined with AND"
+              },
+              {
+                "text": "One message covers both failures, so an attacker cannot tell which half was wrong"
+              },
+              {
+                "text": "AQA asks for plain-text usernames and passwords in code; you will not be asked to write a hash"
+              }
+            ]
           }
         ],
         "check": {
@@ -312,11 +328,17 @@
                   "erroneous",
                   "rejected",
                   ""
+                ],
+                [
+                  "−1",
+                  "boundary (outside)",
+                  "rejected",
+                  ""
                 ]
               ],
               "title": "Test plan"
             },
-            "alt": "A test table for a mark from 0 to 100"
+            "alt": "A test plan for a mark from 0 to 100, with the actual-result column left blank to fill in once each test has been run"
           }
         ],
         "check": {
@@ -340,7 +362,7 @@
           "options": [
             "2 and 4",
             "3 and 3",
-            "1 and 10",
+            "3 and 10",
             "0 and 100"
           ],
           "correct": [
@@ -351,8 +373,8 @@
       {
         "id": "s6",
         "kind": "explain",
-        "title": "Three kinds of error",
-        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. The program will not run at all.\n- A **runtime error** happens while running: dividing by zero, reading past the end of an array, opening a file that is not there.\n- A **logic error** runs without complaint but gives the **wrong answer**: `<` instead of `<=`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.",
+        "title": "Syntax errors and logic errors",
+        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. The program will not run at all.\n- A **logic error** lets the program run but gives the **wrong answer**: `<` instead of `<=`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.\n- Some faults stop a running program: dividing by zero, reading past the end of an array. Textbooks call these **runtime errors**, but AQA only asks you to sort errors into **syntax** or **logic**, and a fault like this counts as a logic error because the code obeys the language rules.",
         "visuals": [
           {
             "type": "worked-example",
@@ -496,7 +518,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- Validation checks data is sensible: range, length, presence, type, format. Use a WHILE loop with the bad-input condition joined by OR.\n- Authentication checks identity: compare passwords, limit attempts, store hashes.\n- Test with normal, boundary and erroneous data, each with an expected result written first.\n- Syntax errors stop the program running; runtime errors crash it mid-run; logic errors give wrong answers and are found by testing and trace tables.\n- In a big programming question, structure first: validated input, processing, output.",
+        "body": "- Validation checks data is sensible: range, length, presence, type, format. Use a WHILE loop with the bad-input condition joined by OR.\n- Authentication checks identity: compare passwords, limit attempts, store hashes.\n- Test with normal, boundary and erroneous data, each with an expected result written first.\n- Syntax errors stop the program running; logic errors let it run and give the wrong answer, and are found by testing and trace tables. AQA examines these two types.\n- In a big programming question, structure first: validated input, processing, output.",
         "visuals": [
           {
             "type": "diagram",
@@ -602,25 +624,23 @@
     {
       "id": "q3",
       "type": "short-text",
-      "prompt": "A program asks for a percentage score. Which of these is boundary test data: 0, 50, 101 or −5? Give the value.",
+      "prompt": "A program asks for a percentage score from 0 to 100. Which of these is boundary test data: 50, 0, 200 or −40? Give the value.",
       "marks": 1,
       "gradeBand": "4-5",
       "skill": "test data",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Boundary data sits exactly on the edge of what is allowed: 0 (and 100). 50 is normal, 101 and −5 are erroneous.",
+      "solution": "Boundary data sits on the edge of the allowed range or just outside it. Here that is 0; the full boundary set is −1, 0, 100 and 101. 50 is normal; 200 and −40 are erroneous.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "0 or 100"
+          "description": "0"
         }
       ],
       "discriminators": [],
       "accepted": [
-        "0",
-        "0 and 100",
-        "100"
+        "0"
       ]
     },
     {
@@ -701,7 +721,10 @@
         "format check",
         "format",
         "a format check",
-        "pattern check"
+        "pattern check",
+        "format validation",
+        "a format validation check",
+        "format/pattern check"
       ]
     },
     {
@@ -832,7 +855,7 @@
     {
       "id": "q10",
       "type": "extended",
-      "prompt": "Write a subroutine `get_mark()` that asks the user for a mark, keeps asking until the mark is a whole number from 0 to 100, and returns it.",
+      "prompt": "Write a subroutine `get_mark()` that asks the user for a mark, keeps asking until the mark is from 0 to 100, and returns it.",
       "marks": 6,
       "gradeBand": "8-9",
       "skill": "writing validation code",
@@ -967,22 +990,22 @@
       "skill": "errors",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "The code is legal, so it starts running; dividing by zero fails at that line. A logic error would run to the end with a wrong answer.",
+      "solution": "AQA's specification names two types of error: syntax and logic. This code is legal, so it starts running; the fault is in the reasoning, which makes it a logic error. Some textbooks call a fault that stops a running program a runtime error, but AQA does not examine a third category.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "Runtime error at execution"
+          "description": "Logic error, found when the line runs"
         }
       ],
       "discriminators": [
         "evaluate"
       ],
       "options": [
-        "A runtime error: division by zero, found only when that line is executed",
-        "A syntax error: dividing by zero breaks the rules, found before the program runs",
-        "A logic error: the total is added up wrongly, found only by testing",
-        "No error at all: the program runs and outputs the total of 6"
+        "A logic error: the code obeys the rules of the language so it runs, but dividing by zero is a mistake in the reasoning and the program fails at that line",
+        "A syntax error: dividing by zero breaks the rules of the language, so the program is rejected before it starts and nothing at all is output",
+        "No error at all: the program runs to the end, the loop adds 1, 2 and 3 correctly, and the output is the total of 6",
+        "An error in the FOR loop: it adds 1 to 3 when the question needs 1 to 4, so the total is wrong before the last line runs"
       ],
       "correct": [
         0
@@ -1044,7 +1067,7 @@
       "skill": "secure programming",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Hashing means even someone who steals the file cannot read the passwords. The others are readable or reversible.",
+      "solution": "Hashing means even someone who steals the file cannot read the passwords. The others are readable or reversible. AQA only requires you to write authentication with plain text usernames and passwords, so you will never have to code a hash, but you may be asked why storing a hash is safer than storing the password itself.",
       "markScheme": [
         {
           "code": "B1",
@@ -1065,6 +1088,76 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q16",
+      "type": "short-text",
+      "prompt": "This program should output the larger of two numbers, but it always outputs the smaller one.\n\n```\n1 a ← STRING_TO_INT(USERINPUT)\n2 b ← STRING_TO_INT(USERINPUT)\n3 IF a > b THEN\n4    OUTPUT b\n5 ELSE\n6    OUTPUT a\n7 ENDIF\n```\n\nGive the number of the first line that must be changed.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "correcting errors",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Line 3's test is right; the outputs are swapped. Line 4 should be OUTPUT a and line 6 should be OUTPUT b, so line 4 is the first that must change. This is a logic error: the program runs and gives the wrong answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Line 4"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "4",
+        "line 4"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A program accepts a password of at least 8 characters. Give one item of test data and justify why you chose it.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "justifying test data",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Name the data, say which kind it is, and say what mistake it would catch.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A named item of test data"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Its type identified"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Justification tied to the limit"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "A named item of test data, such as a 7-character password",
+          "marks": 1
+        },
+        {
+          "text": "Its type identified: boundary, being one character below the shortest allowed",
+          "marks": 1
+        },
+        {
+          "text": "The justification: it checks the program rejects everything just below the limit, which is where an off-by-one mistake in the length check would show up",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "A password of exactly 7 characters, such as \"abcdefg\". It is boundary data, one character below the shortest allowed length. It checks that the program rejects a password just under the limit, which is exactly where an off-by-one error in the length check (using < 7 instead of < 8) would let a bad password through."
     }
   ],
   "worksheets": {
@@ -1084,7 +1177,8 @@
         "q5",
         "q6",
         "q7",
-        "q8"
+        "q8",
+        "q16"
       ],
       "suggestedMinutes": 14
     },
@@ -1097,9 +1191,10 @@
         "q12",
         "q13",
         "q14",
-        "q15"
+        "q15",
+        "q17"
       ],
-      "suggestedMinutes": 42
+      "suggestedMinutes": 46
     }
   },
   "examTechnique": {
@@ -1129,7 +1224,9 @@
       "q12",
       "q13",
       "q14",
-      "q15"
+      "q15",
+      "q16",
+      "q17"
     ],
     "sampleSize": 10
   },

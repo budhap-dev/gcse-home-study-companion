@@ -208,7 +208,7 @@
         "id": "s4",
         "kind": "worked-example",
         "title": "Tracing a function call",
-        "body": "To trace a call, write a column for every parameter and every variable inside the function, plus one for the returned value. Fill in a row each time something changes.",
+        "body": "To trace a call, write a column for every parameter and every variable inside the function, plus one for the returned value. Fill in a row each time something changes.\n\n```\nSUBROUTINE double_add(a, b)\n   result ← a * 2 + b\n   RETURN result\nENDSUBROUTINE\n\nx ← double_add(3, 4)\nOUTPUT x\n```\n\n`result` is a local variable, so it gets its own column too.",
         "visuals": [
           {
             "type": "diagram",
@@ -489,7 +489,7 @@
         "id": "s8",
         "kind": "grade-9",
         "title": "Grade 9: nested calls and loops inside functions",
-        "body": "Exam questions stack the ideas: a function that contains a loop, or a call inside a call. Work **inside out**: evaluate the innermost call first, replace it with its value, then continue.\n\n```\nSUBROUTINE g(n)\n   RETURN n + 3\nENDSUBROUTINE\n\nSUBROUTINE f(n)\n   RETURN n * n\nENDSUBROUTINE\n\nOUTPUT f(g(2))\n```\n\n`g(2)` returns 5, so this is `f(5)`, which returns 25.\n\nFor a function with a loop, trace the loop fully inside the function before you write the returned value. The marker wants the trace, not just the answer.",
+        "body": "Exam questions stack the ideas: a function that contains a loop, or a call inside a call. Work **inside out**: evaluate the innermost call first, replace it with its value, then continue.\n\n```\nSUBROUTINE g(n)\n   RETURN n + 3\nENDSUBROUTINE\n\nSUBROUTINE f(n)\n   RETURN n * n\nENDSUBROUTINE\n\nOUTPUT f(g(2))\n```\n\n`g(2)` returns 5, so this is `f(5)`, which returns 25.\n\nFor a function with a loop, trace the loop fully inside the function before you write the returned value. The marker wants the trace, not just the answer.\n\n```\nSUBROUTINE sum_to(n)\n   t ← 0\n   FOR i ← 1 TO n\n      t ← t + i\n   ENDFOR\n   RETURN t\nENDSUBROUTINE\n```",
         "visuals": [
           {
             "type": "diagram",
@@ -614,7 +614,7 @@
               ],
               "title": "Layout of a trace table"
             },
-            "alt": "A blank trace table layout: one column per variable and one for output"
+            "alt": "A blank trace table layout: one column per variable, one for the returned value, and one for output"
           }
         ]
       }
@@ -669,7 +669,9 @@
       "discriminators": [],
       "accepted": [
         "RETURN",
-        "return"
+        "RETURN statement",
+        "the RETURN keyword",
+        "RETURN value"
       ]
     },
     {
@@ -720,8 +722,9 @@
       "discriminators": [],
       "accepted": [
         "Hi Amy!",
-        "hi amy!",
-        "\"Hi Amy!\""
+        "\"Hi Amy!\"",
+        "'Hi Amy!'",
+        "Hi Amy"
       ]
     },
     {
@@ -766,13 +769,14 @@
       "discriminators": [],
       "accepted": [
         "gogo!!",
-        "\"gogo!!\""
+        "\"gogo!!\"",
+        "'gogo!!'"
       ]
     },
     {
       "id": "q7",
       "type": "extended",
-      "prompt": "Explain two advantages of using subroutines in a program.",
+      "prompt": "Explain three advantages of using subroutines in a program.",
       "marks": 3,
       "gradeBand": "6-7",
       "skill": "why use subroutines",
@@ -808,7 +812,7 @@
           "marks": 1
         },
         {
-          "text": "A third acceptable point: subroutines can be written and tested separately, or shared between programs",
+          "text": "A third advantage: subroutines can be written and tested separately, or reused in another program",
           "marks": 1
         }
       ],
@@ -835,8 +839,8 @@
       "options": [
         "It is a local variable: it exists only while the subroutine runs and cannot be seen from outside it",
         "It is a global variable: every part of the program can read and change it",
-        "It keeps its value between one call of the subroutine and the next",
-        "It must have the same name as one of the parameters"
+        "It keeps its value between one call of the subroutine and the next, so the next call starts where the last one finished",
+        "It must have the same name as one of the parameters, because a subroutine can only work with the names listed in its header"
       ],
       "correct": [
         0
@@ -880,7 +884,7 @@
       "skill": "writing a function",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "The marks are for the header, the comparison, returning in both branches, the call, and clean structure. A function that outputs instead of returning loses the return marks.",
+      "solution": "The marks are for the header, the comparison, returning in both branches, the call, and clean structure. The RETURN marks are for handing the value back; a function that only outputs it has not done that job.",
       "markScheme": [
         {
           "code": "B1",
@@ -927,8 +931,12 @@
           "marks": 1
         },
         {
-          "text": "RETURN in both branches, returning the correct parameter each time",
-          "marks": 2
+          "text": "RETURN the larger parameter in the first branch",
+          "marks": 1
+        },
+        {
+          "text": "RETURN the other parameter in the ELSE branch",
+          "marks": 1
         },
         {
           "text": "Call with 7 and 12 inside an OUTPUT, for example OUTPUT larger(7, 12)",
@@ -994,7 +1002,7 @@
         "The calling code cannot use the total in a further calculation or store it, so the function only works for one purpose",
         "Functions are not allowed to contain OUTPUT statements, so the program will not run at all",
         "The total will be lost when the function ends because it is a global variable, not a local one",
-        "A function with no RETURN statement runs forever, so the program never reaches the output"
+        "A function with no RETURN statement runs forever, so the program never reaches the line that would print the total"
       ],
       "correct": [
         0
@@ -1108,8 +1116,8 @@
       ],
       "options": [
         "Student B changes one line inside the function; Student A must find and change all six calculations and may miss one",
-        "Student A's program is easier to update because the calculations are visible where they are used",
-        "Both programs need six changes, because the function is called six times",
+        "Student A's program is easier to update because every calculation is visible at the place it is used, so each one can be checked as it is changed",
+        "Both programs need six changes, because the function is called six times and each call has to be edited to pass the new exchange rate",
         "Student B's program cannot be changed without rewriting all six calls"
       ],
       "correct": [
@@ -1153,13 +1161,13 @@
     }
   },
   "examTechnique": {
-    "body": "Paper 1 tests subroutines three ways: trace a call and state what is returned or output, explain why subroutines are used, and write a subroutine to a specification. For tracing, draw the table with a column per variable and fill it row by row. For writing, get the header, the parameters and the RETURN right first; those carry the marks. Code is accepted in the exam reference language or in Python, C# or VB.NET.",
+    "body": "Paper 1 tests subroutines three ways: trace a call and state what is returned or output, explain why subroutines are used, and write a subroutine to a specification. For tracing, draw the table with a column per variable and fill it row by row. For writing, get the header, the parameters and the RETURN right first; those carry the marks. Coded answers are written in the language your paper is set in (Python, C# or VB.NET); algorithm questions can be answered in clear pseudo-code.",
     "examinerErrors": [
       "Outputting inside a function instead of returning the value.",
       "Forgetting RETURN in one branch of an IF, so the function sometimes returns nothing.",
       "Mixing up parameters (in the header) and arguments (in the call).",
       "Treating a variable assigned inside a subroutine as if it changed the global one.",
-      "Writing the answer to a trace question without the trace table, and losing the method marks when the answer is wrong."
+      "Writing the answer to a trace question without the trace table. The table is what earns the method mark when the final answer slips."
     ],
     "grade9Looks": "A grade 9 answer traces nested calls from the inside out with every value in the table, writes functions that return in every branch and never output, explains the reuse and testing benefits with a concrete example, and keeps local and global variables apart."
   },
