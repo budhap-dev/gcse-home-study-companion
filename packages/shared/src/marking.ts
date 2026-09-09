@@ -36,7 +36,7 @@ export function normaliseText(s: string): string {
 export function parseNumber(input: string, units?: string): number | undefined {
   let s = input.trim().toLowerCase().replace(/,/g, '')
   if (units) s = s.replace(units.toLowerCase(), '').trim()
-  s = s.replace(/[a-z°%]+$/i, '').trim()
+  s = s.replace(/[a-z°%/ ]+$/i, '').trim()
   // "25 000" and "180 000" are how the content itself prints large numbers.
   s = s.replace(/(\d)\s+(?=\d)/g, '$1')
   const frac = s.match(/^(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)$/)

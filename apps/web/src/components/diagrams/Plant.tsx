@@ -7,7 +7,7 @@ const GREEN = '#2e8b57', LEAF = '#dff0e3', WATER = '#1f3a93', SUGAR = '#d25b3b'
  */
 export function Plant({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const kind = String(props.kind ?? 'leaf-section')
-  const W = kind === 'leaf-section' || kind === 'root-hair' || kind === 'potometer' ? 440 : 340, H = 230
+  const W = kind === 'stoma' ? 340 : 440, H = 230
   const items: React.ReactNode[] = []
   const label = (x: number, y: number, text: string, key: string, anchor: 'start' | 'end' = 'start') => items.push(<text key={key} x={x} y={y} textAnchor={anchor} fontFamily={FONT} fontSize="10" fill={INK}>{text}</text>)
   const tick = (x1: number, y1: number, x2: number, y2: number, key: string) => items.push(<line key={key} x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK_2} strokeWidth="1" />)
@@ -51,16 +51,23 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     items.push(<rect key="x" x={40} y={20} width={60} height={190} rx="6" fill="#eef3ff" stroke={INK} strokeWidth="2.5" />)
     for (let i = 0; i < 7; i++) items.push(<path key={`lig${i}`} d={`M42 ${34 + i * 26} q 29 12 56 0`} fill="none" stroke={INK} strokeWidth="2" />)
     for (let i = 0; i < 2; i++) items.push(<path key={`up${i}`} d={`M${58 + i * 24} 190 V 40`} stroke={WATER} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
-    items.push(<rect key="p" x={200} y={20} width={60} height={190} rx="6" fill="#fff3ee" stroke={INK} strokeWidth="1.5" />)
-    for (let i = 1; i < 5; i++) items.push(<line key={`sv${i}`} x1={202} y1={20 + i * 38} x2={258} y2={20 + i * 38} stroke={INK} strokeWidth="1.5" strokeDasharray="4 3" />)
-    items.push(<rect key="cc" x={264} y={60} width={22} height={110} rx="4" fill="#fbe1d5" stroke={INK} strokeWidth="1" />)
-    items.push(<circle key="ccn" cx={275} cy={115} r="5" fill={SUGAR} opacity="0.7" />)
-    items.push(<path key="d1" d="M218 40 V 190" stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
-    items.push(<path key="d2" d="M242 190 V 40" stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
+    items.push(<rect key="p" x={270} y={20} width={60} height={190} rx="6" fill="#fff3ee" stroke={INK} strokeWidth="1.5" />)
+    for (let i = 1; i < 5; i++) items.push(<line key={`sv${i}`} x1={272} y1={20 + i * 38} x2={328} y2={20 + i * 38} stroke={INK} strokeWidth="1.5" strokeDasharray="4 3" />)
+    items.push(<rect key="cc" x={334} y={60} width={22} height={110} rx="4" fill="#fbe1d5" stroke={INK} strokeWidth="1" />)
+    items.push(<circle key="ccn" cx={345} cy={115} r="5" fill={SUGAR} opacity="0.7" />)
+    items.push(<path key="d1" d="M288 40 V 190" stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
+    items.push(<path key="d2" d="M312 190 V 40" stroke={SUGAR} strokeWidth="2" markerEnd="url(#arrow-plant)" />)
     items.push(<text key="tx" x={70} y={226} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>xylem</text>)
-    items.push(<text key="tp" x={230} y={226} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>phloem</text>)
-    label(108, 40, 'dead, hollow tube', 'l1'); label(108, 54, 'thick lignin walls', 'l2'); label(108, 68, 'no end walls', 'l3'); label(108, 82, 'water and ions, up only', 'l4')
-    label(108, 130, 'living cells', 'l5'); label(108, 144, 'sieve plates', 'l6'); label(108, 158, 'companion cells', 'l7'); label(108, 172, 'sucrose, both ways', 'l8')
+    items.push(<text key="tp" x={300} y={226} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>phloem</text>)
+    tick(100, 47, 108, 47, 'tx1'); label(112, 50, 'dead, hollow tube', 'l1')
+    tick(100, 73, 108, 73, 'tx2'); label(112, 76, 'thick lignin walls', 'l2')
+    tick(100, 99, 108, 99, 'tx3'); label(112, 102, 'no end walls', 'l3')
+    tick(100, 125, 108, 125, 'tx4'); label(112, 128, 'water and ions, up only', 'l4')
+    tick(270, 47, 262, 47, 'tp1'); label(258, 50, 'living cells', 'l5', 'end')
+    tick(270, 96, 262, 96, 'tp2'); label(258, 99, 'sieve plates', 'l6', 'end')
+    tick(334, 150, 262, 150, 'tp3'); label(258, 153, 'companion cell', 'l7', 'end')
+    tick(270, 185, 262, 185, 'tp4'); label(258, 188, 'sucrose, both ways', 'l8', 'end')
+    label(362, 118, 'many', 'l9'); label(362, 130, 'mitochondria', 'l10')
   } else if (kind === 'stoma') {
     const draw = (x0: number, open: boolean, key: string) => {
       const gap = open ? 14 : 2
