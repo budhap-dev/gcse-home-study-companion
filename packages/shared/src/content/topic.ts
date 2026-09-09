@@ -17,6 +17,8 @@ export const Topic = z.object({
   specPoints: z.array(z.string().min(1)).min(1),
   /** Position within the unit in the school's teaching order. Topics without one sort last, by title. */
   order: z.number().int().positive().optional(),
+  /** Outside places to practise this topic, shown on the topic page as links that open in a new tab. */
+  resources: z.array(z.object({ label: z.string().min(1), url: z.string().url(), note: z.string().optional() })).optional(),
   /** Shown or hidden by the student's chosen board when a topic is board-specific. */
   boards: z.array(z.string().min(1)).optional(),
   lesson: Lesson,

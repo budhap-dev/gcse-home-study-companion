@@ -1,0 +1,1105 @@
+{
+  "id": "arrays-and-records",
+  "subjectId": "computer-science",
+  "unitId": "programming",
+  "title": "Arrays and records",
+  "specPoints": [
+    "3.2.6",
+    "3.2.7"
+  ],
+  "order": 2,
+  "resources": [
+    {
+      "label": "Learn C#",
+      "url": "https://red-dune-0f7372e10.7.azurestaticapps.net/",
+      "note": "Our C# practice site. Type each example in, run it, and change it. C# is one of the languages AQA accepts in the exam."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "An array is a numbered list",
+        "body": "An **array** holds many values of the **same type** under one name. Each value has an **index**, and indexes **start at 0**.\n\n```\nscores ← [12, 7, 9, 15]\nOUTPUT scores[0]\nOUTPUT scores[3]\nOUTPUT LEN(scores)\n```\n\nOutput: `12`, `15`, `4`. The first item is index 0, the last is index 3, and `LEN` gives the number of items, which is always one more than the last index.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "index",
+                "0",
+                "1",
+                "2",
+                "3"
+              ],
+              "rows": [
+                [
+                  "value",
+                  "12",
+                  "7",
+                  "9",
+                  "15"
+                ]
+              ],
+              "title": "scores"
+            },
+            "alt": "The array scores as a table: index 0 holds 12, index 1 holds 7, index 2 holds 9, index 3 holds 15"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "`days ← ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']`. What is the index of `'Fri'`?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "array indexing",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Five items, indexes 0 to 4.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Visiting every item",
+        "body": "To do something with every item, loop over the indexes from `0` to `LEN(array) - 1`. This is called **traversing** the array. Using `LEN` means the code works however long the array is.\n\n```\nscores ← [12, 7, 9, 15]\ntotal ← 0\nFOR i ← 0 TO LEN(scores) - 1\n   total ← total + scores[i]\nENDFOR\nOUTPUT total\n```\n\nOutput: `43`.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "scores[i]",
+                "total",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "",
+                  "",
+                  "0",
+                  ""
+                ],
+                [
+                  "0",
+                  "12",
+                  "12",
+                  ""
+                ],
+                [
+                  "1",
+                  "7",
+                  "19",
+                  ""
+                ],
+                [
+                  "2",
+                  "9",
+                  "28",
+                  ""
+                ],
+                [
+                  "3",
+                  "15",
+                  "43",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "43"
+                ]
+              ],
+              "title": "total of scores"
+            },
+            "alt": "Trace of the total program: i runs 0 to 3, total goes 12, 19, 28, 43"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "What would happen if the loop ran `FOR i ← 0 TO LEN(scores)` instead?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "array bounds",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Index 4 is one past the end. This off-by-one error is the commonest array bug.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Reads past the end"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "On the last pass it would try to read scores[4], which does not exist, and the program would crash or give an error",
+            "It would work the same, because LEN is the last index and the loop would simply stop at the final item",
+            "It would skip the first item, because the loop would start counting from the wrong end of the array",
+            "It would add the total twice, because the last pass repeats the final item before the loop ends"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Finding the largest value",
+        "body": "A standard pattern: start `biggest` at the first item, then loop from index 1, replacing `biggest` whenever a larger value turns up.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the largest value in scores",
+            "steps": [
+              {
+                "text": "```\nscores ← [12, 7, 9, 15]\nbiggest ← scores[0]\nFOR i ← 1 TO LEN(scores) - 1\n   IF scores[i] > biggest THEN\n      biggest ← scores[i]\n   ENDIF\nENDFOR\nOUTPUT biggest\n```"
+              },
+              {
+                "text": "biggest starts at 12"
+              },
+              {
+                "text": "7 and 9 are not bigger; 15 is, so biggest becomes 15"
+              },
+              {
+                "text": "Output 15"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "scores[i]",
+                "scores[i] > biggest",
+                "biggest"
+              ],
+              "rows": [
+                [
+                  "",
+                  "",
+                  "",
+                  "12"
+                ],
+                [
+                  "1",
+                  "7",
+                  "False",
+                  ""
+                ],
+                [
+                  "2",
+                  "9",
+                  "False",
+                  ""
+                ],
+                [
+                  "3",
+                  "15",
+                  "True",
+                  "15"
+                ]
+              ],
+              "title": "biggest"
+            },
+            "alt": "Trace of the biggest program"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "To find the smallest value instead, which one change is needed?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "array algorithms",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Same pattern, opposite comparison. Starting at 0 would just compare the first item with itself.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Change > to <"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Change > to < in the IF",
+            "Start the loop at 0 instead of 1",
+            "Start biggest at 0",
+            "Use LEN(scores) instead of LEN(scores) − 1"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Two-dimensional arrays",
+        "body": "A **2D array** is a grid: an array of arrays. `grid[row][column]`, both from 0.\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```\n\nOutput: `7` then `8`. To visit every cell, use **nested loops**: the outer loop picks the row, the inner loop walks along it. For 2 rows and 3 columns the inner loop runs 3 times for each of 2 rows: 6 cells.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "col 0",
+                "col 1",
+                "col 2"
+              ],
+              "rows": [
+                [
+                  "row 0",
+                  "3",
+                  "8",
+                  "1"
+                ],
+                [
+                  "row 1",
+                  "5",
+                  "2",
+                  "7"
+                ]
+              ],
+              "title": "grid"
+            },
+            "alt": "The 2D array grid: row 0 is 3, 8, 1 and row 1 is 5, 2, 7"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Output every cell of grid, row by row",
+            "steps": [
+              {
+                "text": "```\nFOR r ← 0 TO 1\n   FOR c ← 0 TO 2\n      OUTPUT grid[r][c]\n   ENDFOR\nENDFOR\n```"
+              },
+              {
+                "text": "Outer loop: rows. Inner loop: columns"
+              },
+              {
+                "text": "Output order: 3, 8, 1, 5, 2, 7"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "With the grid above, what is `grid[0][2] + grid[1][0]`?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "2D arrays",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "grid[0][2] is 1 and grid[1][0] is 5.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Records: different types together",
+        "body": "An array holds one type. A **record** groups **different types** under one name, each in a named **field**. A student has a name (string) and an age (integer); a record keeps them together.\n\n```\nRECORD Student\n   name : String\n   age : Integer\nENDRECORD\n\ns ← Student('Mia', 15)\nOUTPUT s.name + ' is ' + INT_TO_STRING(s.age)\n```\n\nOutput: `Mia is 15`. Fields are reached with a dot: `s.name`. An **array of records** is how a program stores a whole class: `pupils[4].age` is the age of the fifth pupil.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Why not use two arrays, names and ages?",
+            "steps": [
+              {
+                "text": "With two arrays, names[3] and ages[3] belong together only by luck of the index"
+              },
+              {
+                "text": "Sort one array and the other no longer matches"
+              },
+              {
+                "text": "A record keeps each student's values together, so they cannot come apart"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "short-text",
+          "prompt": "`pupils` is an array of `Student` records. Write the expression for the name of the first pupil.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "arrays of records",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Index 0, then the field: pupils[0].name.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "pupils[0].name"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "pupils[0].name",
+            "pupils[0] .name"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: counting with a condition",
+        "body": "Write code that counts how many values in `temps` are above 19. Plan: a counter set to 0, a loop over every index, an IF inside that adds 1 when the test is true.\n\nThen build the same thing on our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site with an `int[]` and a `foreach` loop, and run it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Count temperatures above 19",
+            "steps": [
+              {
+                "text": "```\ntemps ← [18, 21, 19, 23, 20]\ncount ← 0\nFOR i ← 0 TO LEN(temps) - 1\n   IF temps[i] > 19 THEN\n      count ← count + 1\n   ENDIF\nENDFOR\nOUTPUT count\n```"
+              },
+              {
+                "text": "Values above 19: 21, 23, 20"
+              },
+              {
+                "text": "Output 3. The 19 is not counted because the test is >, not ≥"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "If the test were changed to `>= 19`, what would be output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "counting with a condition",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Now 19 counts too: 21, 19, 23, 20.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Grade 9: the traps examiners set",
+        "body": "Three things separate top answers on arrays:\n\n- **Off-by-one**: the last index is `LEN − 1`. A loop that goes to `LEN` reads past the end.\n- **Search loops**: a WHILE loop with a `found` flag stops early, but the counter is usually incremented **after** the match, so the final value of `i` is one more than the index found.\n- **2D order**: `grid[row][col]`, and nested loops output row by row. Count outputs as rows × columns.\n\n```\nnums ← [4, 9, 2, 7]\nfound ← False\ni ← 0\nWHILE i < LEN(nums) AND NOT found\n   IF nums[i] = 2 THEN\n      found ← True\n   ENDIF\n   i ← i + 1\nENDWHILE\nOUTPUT i\n```\n\nThe 2 is at index 2, but `i` is incremented to 3 before the loop condition is tested again, so the output is 3.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "nums[i]",
+                "found",
+                "i < LEN AND NOT found"
+              ],
+              "rows": [
+                [
+                  "0",
+                  "4",
+                  "False",
+                  "True"
+                ],
+                [
+                  "1",
+                  "9",
+                  "False",
+                  "True"
+                ],
+                [
+                  "2",
+                  "2",
+                  "True",
+                  "False after i becomes 3"
+                ],
+                [
+                  "3",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "search for 2"
+            },
+            "alt": "Trace of the search program"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "In the search program above, the target is changed to 9. What is output?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "linear search trace",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "9 is at index 1. found becomes True and i becomes 2, then the loop stops.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "2",
+            "1",
+            "9",
+            "4"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- An array holds values of one type, indexed from 0. LEN gives the count; the last index is LEN − 1.\n- Traverse with FOR i ← 0 TO LEN(a) − 1. Total, count and biggest all use this loop with a variable set up before it.\n- 2D arrays are grids: a[row][col]; nested loops visit row by row.\n- Records group fields of different types; arrays of records store many of them. Reach a field with a dot: pupils[2].name.\n- Watch the off-by-one trap and the counter in search loops.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "job",
+                "before the loop",
+                "inside the loop"
+              ],
+              "rows": [
+                [
+                  "total",
+                  "total ← 0",
+                  "total ← total + a[i]"
+                ],
+                [
+                  "count",
+                  "count ← 0",
+                  "IF test THEN count ← count + 1"
+                ],
+                [
+                  "biggest",
+                  "biggest ← a[0]",
+                  "IF a[i] > biggest THEN biggest ← a[i]"
+                ],
+                [
+                  "search",
+                  "found ← False",
+                  "IF a[i] = target THEN found ← True"
+                ]
+              ],
+              "title": "Patterns"
+            },
+            "alt": "The four standard array loops"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "`items ← ['pen', 'ink', 'pad', 'cap']`. What index does `'pad'` have?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "array indexing",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Indexes start at 0: pen is 0, ink is 1, pad is 2.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "What is output by `OUTPUT scores[3]` when `scores ← [12, 7, 9, 15]`?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "array indexing",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Index 3 is the fourth item, 15.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "15"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What does `LEN(scores)` return for `scores ← [12, 7, 9, 15]`?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "array length",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "LEN counts the items. The highest index is one less than LEN.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "4, the number of items",
+        "3, the highest index",
+        "15, the largest value",
+        "43, the total"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What is a record?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "records",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A record for a student can hold a name (string) and an age (integer) together.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Named fields of different types"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A data structure that groups related values of different types under one name, each in a named field",
+        "A list of values that must all be the same type, stored one after another under one name",
+        "A subroutine that saves the values of several variables into a text file at once",
+        "A variable that can hold only whole numbers, but any number of them at the same time"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\nscores ← [12, 7, 9, 15]\ntotal ← 0\nFOR i ← 0 TO LEN(scores) - 1\n   total ← total + scores[i]\nENDFOR\nOUTPUT total\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "traversing an array",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "12 + 7 + 9 + 15 = 43. The loop runs for i from 0 to 3.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Loop adds each of the four items"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "43"
+        }
+      ],
+      "discriminators": [],
+      "answer": 43,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "What is output by this program?\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "2D arrays",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`grid[1][2]` is row 1, column 2. Row 1 is [5, 2, 7], so that is 7. `grid[0][1]` is row 0, column 1, which is 8. Output 7 then 8. Rows first, then columns, both counted from 0.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7 then 8"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "7 8",
+        "7, 8",
+        "7\n8",
+        "78"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "extended",
+      "prompt": "Write code that outputs every item in the array `names` on its own line, whatever its length.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "writing array code",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Using LEN is what makes it work for any length. A loop hard-coded to 4 would fail the question.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Loop bounded by LEN"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "names[i] output inside the loop"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Correct syntax and 0 start"
+        }
+      ],
+      "discriminators": [],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "A FOR loop from 0 to LEN(names) − 1, or a loop that uses LEN so it works for any length",
+          "marks": 1
+        },
+        {
+          "text": "OUTPUT names[i] inside the loop, using the loop variable as the index",
+          "marks": 1
+        },
+        {
+          "text": "Correct structure: ENDFOR, index starting at 0",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nFOR i ← 0 TO LEN(names) - 1\n   OUTPUT names[i]\nENDFOR\n```"
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Why does the loop in `FOR i ← 0 TO LEN(scores) - 1` stop at `LEN(scores) - 1`?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "array bounds",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Four items live at indexes 0, 1, 2, 3. Index 4 is out of range.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Last index is LEN − 1"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Because indexes start at 0, the last item is at index LEN − 1; going to LEN would try to read an item that does not exist",
+        "Because LEN counts from 1, so the loop has to take one off to match the way the array is stored in memory",
+        "To make the loop run one extra time at the end, which is needed to add the final item to the total",
+        "Because the first item is not counted by LEN, so the loop has to stop one short to keep the total correct"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\ntemps ← [18, 21, 19, 23, 20]\ncount ← 0\nFOR i ← 0 TO LEN(temps) - 1\n   IF temps[i] > 19 THEN\n      count ← count + 1\n   ENDIF\nENDFOR\nOUTPUT count\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "counting with a condition",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Values above 19: 21, 23, 20. Note 19 itself is not counted, because the test is > not ≥.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Compares each value with 19 using >"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "extended",
+      "prompt": "Write a function `average(nums)` that returns the mean of the values in the array `nums`. You may assume the array is not empty.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing a function over an array",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Total then divide. The divide must use LEN, not a fixed number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Header with parameter"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "total ← 0"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Loop bounded by LEN"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Adds nums[i]"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RETURN total / LEN(nums)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Structure, no OUTPUT"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Function header with the array as a parameter",
+          "marks": 1
+        },
+        {
+          "text": "A total variable set to 0 before the loop",
+          "marks": 1
+        },
+        {
+          "text": "A loop over every index, bounded by LEN, adding each item to the total",
+          "marks": 2
+        },
+        {
+          "text": "RETURN total / LEN(nums)",
+          "marks": 1
+        },
+        {
+          "text": "Correct structure and the function does not output",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nSUBROUTINE average(nums)\n   total ← 0\n   FOR i ← 0 TO LEN(nums) - 1\n      total ← total + nums[i]\n   ENDFOR\n   RETURN total / LEN(nums)\nENDSUBROUTINE\n```"
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\nnums ← [4, 9, 2, 7]\nfound ← False\ni ← 0\nWHILE i < LEN(nums) AND NOT found\n   IF nums[i] = 2 THEN\n      found ← True\n   ENDIF\n   i ← i + 1\nENDWHILE\nOUTPUT i\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "linear search trace",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The loop finds 2 at index 2 and sets found to True, but i is still incremented to 3 before the WHILE condition is checked again. Output 3.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "found becomes True when i = 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3, because i is incremented after the match"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "evaluate"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A program stores 30 students' names, ages and test scores. Which structure is best, and why?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing a data structure",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Related values of different types belong in a record; many of them belong in an array of records.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Array of records"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "An array of records, one record per student, because each student's different-typed values stay together under one index",
+        "Three separate arrays, because arrays can only hold one type each and that is simpler",
+        "One long array of strings, because everything can be converted to text",
+        "A 2D array of integers, because scores and ages are numbers"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "extended",
+      "prompt": "Complete a trace table for this program, showing `i`, `biggest` and the output.\n\n```\nscores ← [12, 7, 9, 15]\nbiggest ← scores[0]\nFOR i ← 1 TO LEN(scores) - 1\n   IF scores[i] > biggest THEN\n      biggest ← scores[i]\n   ENDIF\nENDFOR\nOUTPUT biggest\n```",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "trace tables",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Write a row per pass and only change biggest when the IF is true.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Start 12"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "i = 1 and 2, no change"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "i = 3, biggest 15"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Output 15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "biggest starts at 12",
+          "marks": 1
+        },
+        {
+          "text": "i = 1: 7 is not bigger, biggest stays 12; i = 2: 9 is not bigger",
+          "marks": 1
+        },
+        {
+          "text": "i = 3: 15 is bigger, biggest becomes 15",
+          "marks": 1
+        },
+        {
+          "text": "Output 15",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "biggest = 12. i = 1: 7 > 12? No. i = 2: 9 > 12? No. i = 3: 15 > 12? Yes, biggest = 15. Output 15."
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "`grid` is a 2D array with 4 rows and 6 columns. A program uses nested loops `FOR r ← 0 TO 3` and `FOR c ← 0 TO 5` and outputs `grid[r][c]` each time. How many values are output?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "2D array traversal",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "4 rows × 6 columns = 24. The inner loop runs 6 times for each of the 4 outer passes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "short-text",
+      "prompt": "A record type `Book` has fields `title`, `author` and `pages`. `shelf` is an array of `Book` records. Write the expression that gives the number of pages in the third book on the shelf.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "arrays of records",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Third book is index 2; then the field with a dot: shelf[2].pages.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "shelf[2].pages"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "shelf[2].pages",
+        "shelf[2] .pages"
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 6
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8"
+      ],
+      "suggestedMinutes": 14
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15"
+      ],
+      "suggestedMinutes": 40
+    }
+  },
+  "examTechnique": {
+    "body": "Array questions on Paper 1 are traces (what is output), completions (fill in the missing line), and writing tasks (total, count, find, search). Use LEN in loop bounds, start at 0, and set up the result variable before the loop. For 2D arrays, say row then column. Records appear as \"state a suitable data structure and explain why\".",
+    "examinerErrors": [
+      "Starting the index at 1, or looping to LEN instead of LEN − 1.",
+      "Forgetting to set total or count to 0 before the loop.",
+      "Starting biggest at 0, which fails when all the values are negative; start it at the first item.",
+      "Reading a 2D array as column then row.",
+      "Using separate arrays where a record, or an array of records, keeps related values together."
+    ],
+    "grade9Looks": "A grade 9 answer uses LEN correctly in every loop, traces a search loop to the right final counter value, writes total, count and biggest from memory, handles a 2D array with nested loops in the right order, and can justify a record over parallel arrays."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

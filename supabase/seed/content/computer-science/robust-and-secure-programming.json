@@ -1,0 +1,1143 @@
+{
+  "id": "robust-and-secure-programming",
+  "subjectId": "computer-science",
+  "unitId": "programming",
+  "title": "Robust and secure programming: validation, authentication and testing",
+  "specPoints": [
+    "3.2.11",
+    "3.2.12",
+    "3.2.13"
+  ],
+  "order": 4,
+  "resources": [
+    {
+      "label": "Learn C#",
+      "url": "https://red-dune-0f7372e10.7.azurestaticapps.net/",
+      "note": "Our C# practice site. Type each example in, run it, and change it. C# is one of the languages AQA accepts in the exam."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Robust means it does not fall over",
+        "body": "A **robust** program copes with anything the user does: wrong types, silly values, empty input. The main tool is **validation**: checking data before using it. The standard checks are:\n\n- **Range**: between two limits, such as an age from 11 to 18.\n- **Length**: enough characters, such as a password of at least 8.\n- **Presence**: not empty.\n- **Type**: a number where a number is expected.\n- **Format**: matches a pattern, such as an email with an @.\n\nValidation checks that data is **sensible**, not that it is **true**. A wrong but sensible date of birth passes.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Choose a check for each input",
+            "steps": [
+              {
+                "text": "Postcode: format check"
+              },
+              {
+                "text": "Quantity of tickets: range check, 1 to 6"
+              },
+              {
+                "text": "Username: presence check, then a length check"
+              },
+              {
+                "text": "Year of birth: type check (a number), then a range check"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "A form rejects a phone number because it is only 5 digits long. Which check is this?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "types of validation",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "It is counting characters.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Length"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Length check",
+            "Range check",
+            "Presence check",
+            "Format check"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Validation in code: a loop, not an IF",
+        "body": "An IF can spot bad input once. A **WHILE loop** keeps asking until the input passes, so the code after it can trust the value.\n\n```\nage ← STRING_TO_INT(USERINPUT)\nWHILE age < 11 OR age > 18\n   OUTPUT 'Enter an age between 11 and 18'\n   age ← STRING_TO_INT(USERINPUT)\nENDWHILE\n```\n\nThe condition describes the **bad** input, joined with `OR`: too low **or** too high. The loop body prints a message and reads again.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "input",
+                "age",
+                "age < 11 OR age > 18",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "9",
+                  "9",
+                  "True",
+                  "Enter an age…"
+                ],
+                [
+                  "25",
+                  "25",
+                  "True",
+                  "Enter an age…"
+                ],
+                [
+                  "14",
+                  "14",
+                  "False",
+                  ""
+                ]
+              ],
+              "title": "inputs 9, 25, 14"
+            },
+            "alt": "Trace of the age validation loop with inputs 9 then 25 then 14"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "The loop condition is written as `age < 11 AND age > 18`. What happens?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "validation loops",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "No number is both below 11 and above 18. The bad-input condition needs OR.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Never true"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The condition can never be true, so no value is ever rejected",
+            "It works exactly the same as OR, so every bad value is rejected",
+            "Only ages below 11 are rejected, because that part is checked first",
+            "The loop runs forever, because the condition is always true"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Putting validation in a function",
+        "body": "Validation code is reused, so it belongs in a subroutine that returns the checked value.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A function that returns a positive number",
+            "steps": [
+              {
+                "text": "```\nSUBROUTINE get_positive()\n   n ← STRING_TO_INT(USERINPUT)\n   WHILE n <= 0\n      OUTPUT 'Must be positive'\n      n ← STRING_TO_INT(USERINPUT)\n   ENDWHILE\n   RETURN n\nENDSUBROUTINE\n```"
+              },
+              {
+                "text": "The loop repeats while n is 0 or negative"
+              },
+              {
+                "text": "Only a valid n reaches the RETURN, so the caller never sees a bad value"
+              },
+              {
+                "text": "Call it wherever a positive number is needed: size ← get_positive()"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "With `get_positive`, the user types −3, then 0, then 8. What is returned?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing validation",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "−3 and 0 both fail n ≤ 0; 8 passes and is returned.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Authentication: who are you?",
+        "body": "**Authentication** checks the **person**, usually with a username and password. Good practice:\n\n- Compare the entered password with the stored one and give the same message for a wrong username as for a wrong password, so an attacker learns nothing.\n- **Limit attempts**, then lock out, to stop guessing.\n- Never store passwords as plain text: store a **hash** and compare hashes.\n\n```\nattempts ← 0\nOUTPUT 'Password?'\nentered ← USERINPUT\nWHILE entered ≠ stored AND attempts < 2\n   attempts ← attempts + 1\n   OUTPUT 'Wrong, try again'\n   entered ← USERINPUT\nENDWHILE\nIF entered = stored THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```\n\nThe user gets three tries: one before the loop and two inside it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "entered",
+                "attempts",
+                "condition",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "wrong1",
+                  "0",
+                  "True",
+                  "Wrong, try again"
+                ],
+                [
+                  "wrong2",
+                  "1",
+                  "True",
+                  "Wrong, try again"
+                ],
+                [
+                  "wrong3",
+                  "2",
+                  "False",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "Locked out"
+                ]
+              ],
+              "title": "three wrong passwords"
+            },
+            "alt": "Trace of the password loop with three wrong entries"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Which is authentication rather than validation?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "authentication",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Password checking identifies the user; the rest check data.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Password check"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Checking a password matches the stored one",
+            "Checking an age is between 11 and 18",
+            "Checking an email contains an @",
+            "Checking a name is not blank"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Testing: normal, boundary, erroneous",
+        "body": "Before a program is used it is **tested** with three kinds of data, each with an **expected result** written down first:\n\n- **Normal**: typical values that should be accepted. For a mark from 0 to 100: 55.\n- **Boundary**: values on the edge. 0 and 100 should be accepted; 101 and −1, just outside, should be rejected.\n- **Erroneous**: values that must be rejected: 250, −40, the word \"ten\".\n\nA test table has columns for the data, the type, the expected result and the actual result.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "test data",
+                "type",
+                "expected",
+                "actual"
+              ],
+              "rows": [
+                [
+                  "55",
+                  "normal",
+                  "accepted",
+                  ""
+                ],
+                [
+                  "0",
+                  "boundary",
+                  "accepted",
+                  ""
+                ],
+                [
+                  "100",
+                  "boundary",
+                  "accepted",
+                  ""
+                ],
+                [
+                  "101",
+                  "boundary (outside)",
+                  "rejected",
+                  ""
+                ],
+                [
+                  "ten",
+                  "erroneous",
+                  "rejected",
+                  ""
+                ]
+              ],
+              "title": "Test plan"
+            },
+            "alt": "A test table for a mark from 0 to 100"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "A program accepts a number of players from 2 to 4. Which pair is boundary data?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "test data",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The edges of the allowed range.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2 and 4"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "2 and 4",
+            "3 and 3",
+            "1 and 10",
+            "0 and 100"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Three kinds of error",
+        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. The program will not run at all.\n- A **runtime error** happens while running: dividing by zero, reading past the end of an array, opening a file that is not there.\n- A **logic error** runs without complaint but gives the **wrong answer**: `<` instead of `<=`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Classify each fault",
+            "steps": [
+              {
+                "text": "OUTPUT 'Hello  (missing quote): syntax error"
+              },
+              {
+                "text": "total / count when count is 0: runtime error"
+              },
+              {
+                "text": "A discount applied before tax instead of after: logic error"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A program is meant to count values above 50 but uses `> 5`. It runs and outputs a number. What kind of error is this?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "errors",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "It ran, but the answer is wrong.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Logic"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Logic error",
+            "Syntax error",
+            "Runtime error",
+            "Not an error, because it ran"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn: design the tests, then write the check",
+        "body": "A program asks how many tickets to book, from 1 to 6. Write a test plan with normal, boundary and erroneous data and the expected result for each. Then write the validation loop.\n\nBuild the loop on our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site with `int.TryParse` for the type check and a `while` loop for the range.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Validation loop for tickets",
+            "steps": [
+              {
+                "text": "```\ntickets ← STRING_TO_INT(USERINPUT)\nWHILE tickets < 1 OR tickets > 6\n   OUTPUT 'Choose from 1 to 6'\n   tickets ← STRING_TO_INT(USERINPUT)\nENDWHILE\n```"
+              },
+              {
+                "text": "Normal: 3. Boundary: 1 and 6 accepted, 0 and 7 rejected. Erroneous: 20, −1, \"six\""
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "The user types 7, then 0, then 6. How many times is the message output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing validation",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "7 and 0 are both rejected with a message; 6 passes.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Grade 9: writing the whole thing",
+        "body": "The 8 to 12 mark programming question usually asks for input **with validation**, some processing, and output, and the mark scheme rewards each part separately. Structure first: a subroutine that returns validated input, a loop or calculation, then output. Say what each test in your plan is **for**, and give the boundary values on **both** sides of the edge. When asked about security, name the practice and the attack it stops: attempt limits stop brute force; hashing stops stolen passwords being read.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Plan a program: read scores until the user enters −1, reject anything else outside 0 to 100, then output the mean",
+            "steps": [
+              {
+                "text": "Subroutine get_score() with a loop accepting −1 or 0 to 100"
+              },
+              {
+                "text": "Main loop: total and count until −1"
+              },
+              {
+                "text": "Guard against count = 0 before dividing, then output total / count"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "Why should the mean program check that count is not 0 before dividing?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "robust programming",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Guarding the division makes the program robust to the empty case.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Avoid division by zero"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Dividing by zero causes a runtime error, so the program would crash if the user entered −1 straight away",
+            "Count is a string and must be converted to a number before it can be used in a division",
+            "Zero scores would give a mean of zero, which is a wrong answer that a logic error would produce",
+            "Because count is a global variable, and global variables cannot be used in a division"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Validation checks data is sensible: range, length, presence, type, format. Use a WHILE loop with the bad-input condition joined by OR.\n- Authentication checks identity: compare passwords, limit attempts, store hashes.\n- Test with normal, boundary and erroneous data, each with an expected result written first.\n- Syntax errors stop the program running; runtime errors crash it mid-run; logic errors give wrong answers and are found by testing and trace tables.\n- In a big programming question, structure first: validated input, processing, output.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "check",
+                "question it asks",
+                "example"
+              ],
+              "rows": [
+                [
+                  "range",
+                  "between the limits?",
+                  "1 to 6"
+                ],
+                [
+                  "length",
+                  "enough characters?",
+                  "password ≥ 8"
+                ],
+                [
+                  "presence",
+                  "anything entered?",
+                  "name not blank"
+                ],
+                [
+                  "type",
+                  "right kind of value?",
+                  "a whole number"
+                ],
+                [
+                  "format",
+                  "matches the pattern?",
+                  "email has @"
+                ]
+              ],
+              "title": "Validation checks"
+            },
+            "alt": "Reference table of validation checks"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is validation?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "validation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Validation checks the data. Authentication checks the person.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Checks input is sensible"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Checking that input is sensible and in the expected form before the program uses it",
+        "Checking that the user is the person they claim to be before letting them in",
+        "Testing a program with typical data to make sure it gives the right answers",
+        "Converting a string typed by the user into a number the program can use"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What is authentication?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "authentication",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Authentication is about who, validation is about what.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Confirming identity"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Confirming the identity of a user, for example with a username and password",
+        "Checking that a number typed by the user lies within an allowed range",
+        "Making sure every file the program opened has been closed again",
+        "Testing a program with erroneous data before it is released"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "A program asks for a percentage score. Which of these is boundary test data: 0, 50, 101 or −5? Give the value.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "test data",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Boundary data sits exactly on the edge of what is allowed: 0 (and 100). 50 is normal, 101 and −5 are erroneous.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0 or 100"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "0",
+        "0 and 100",
+        "100"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "A program crashes when the user types a word instead of a number. What kind of test data was this?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "test data",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A word where a number is expected is erroneous. A robust program rejects it and asks again.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Erroneous"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Erroneous data: input the program should reject",
+        "Normal data: typical input",
+        "Boundary data: an edge case that is allowed",
+        "Valid data that was entered too quickly"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "Which is a range check?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "types of validation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Range checks test between limits. The others are length, format and presence checks.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Age between limits"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Rejecting an age that is below 11 or above 18",
+        "Rejecting a password shorter than 8 characters",
+        "Rejecting an email address with no @ symbol",
+        "Rejecting an empty name"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "What validation check rejects a postcode that does not match the pattern of letters and numbers expected?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "types of validation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A format check compares the input with a pattern. Length, range, presence and type are the others.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Format check"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "format check",
+        "format",
+        "a format check",
+        "pattern check"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "extended",
+      "prompt": "Explain why a program that reads a number should use a loop for validation rather than a single IF statement.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "validation loops",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The point is repetition until valid.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "IF only rejects once"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Loop repeats until acceptable"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Rest of program has valid data"
+        }
+      ],
+      "discriminators": [],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "A single IF rejects the bad input once but does not ask again, so the program continues with no valid value",
+          "marks": 1
+        },
+        {
+          "text": "A loop keeps asking until the input is acceptable",
+          "marks": 1
+        },
+        {
+          "text": "So the rest of the program always works with valid data",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "An IF can spot a bad value and print a message, but the program then carries on without a good value. A WHILE loop repeats the request until the value passes the check, so when the loop ends the program is guaranteed to have valid data to work with."
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "What is a syntax error?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "errors",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Syntax errors are caught before the program runs. Logic errors run but give wrong results.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Breaks the language rules"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A mistake in the rules of the language, such as a missing bracket, that stops the program running",
+        "A program that runs all the way through but produces the wrong answer because of a mistake",
+        "A program that stops part way through because it runs out of memory while it is executing",
+        "A test that fails because the tester typed erroneous data instead of normal data"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "extended",
+      "prompt": "A program asks for a whole number of tickets between 1 and 6. Give one example each of normal, boundary and erroneous test data, and for each say what the program should do.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "test data",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Three kinds of data, each with the expected behaviour, and the boundary pair on both sides of the edge.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Normal with expected result"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Boundary inside accepted"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Boundary outside rejected"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Erroneous rejected and re-asked"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Normal: a value such as 3, accepted and processed",
+          "marks": 1
+        },
+        {
+          "text": "Boundary: 1 or 6, accepted (and 0 or 7 rejected, as boundary values just outside)",
+          "marks": 2
+        },
+        {
+          "text": "Erroneous: a value such as 10, −2 or the word \"two\", rejected with a message and the question asked again",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Normal: 3, which is accepted and used to book three tickets. Boundary: 1 and 6, the smallest and largest allowed, both accepted; 0 and 7, just outside, both rejected. Erroneous: 10, or −2, or the word two, all rejected with a message, and the program asks again."
+    },
+    {
+      "id": "q10",
+      "type": "extended",
+      "prompt": "Write a subroutine `get_mark()` that asks the user for a mark, keeps asking until the mark is a whole number from 0 to 100, and returns it.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing validation code",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The loop condition must use OR: it repeats when the mark is too low or too high.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Header and RETURN"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "STRING_TO_INT on input"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "WHILE with < 0"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "OR > 100"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Message and re-input inside"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Structure"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Subroutine header and RETURN of the mark",
+          "marks": 1
+        },
+        {
+          "text": "Reads the input and converts it with STRING_TO_INT",
+          "marks": 1
+        },
+        {
+          "text": "WHILE loop with the condition mark < 0 OR mark > 100",
+          "marks": 2
+        },
+        {
+          "text": "Inside the loop an error message and a fresh input",
+          "marks": 1
+        },
+        {
+          "text": "Correct structure: ENDWHILE, ENDSUBROUTINE, no OUTPUT of the mark inside",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nSUBROUTINE get_mark()\n   mark ← STRING_TO_INT(USERINPUT)\n   WHILE mark < 0 OR mark > 100\n      OUTPUT 'Enter a mark from 0 to 100'\n      mark ← STRING_TO_INT(USERINPUT)\n   ENDWHILE\n   RETURN mark\nENDSUBROUTINE\n```"
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "In this program `stored` holds the correct password. If the user types the wrong password every time, how many times in total is the user asked to type it?\n\n```\nattempts ← 0\nOUTPUT 'Password?'\nentered ← USERINPUT\nWHILE entered ≠ stored AND attempts < 2\n   attempts ← attempts + 1\n   OUTPUT 'Wrong, try again'\n   entered ← USERINPUT\nENDWHILE\nIF entered = stored THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing authentication code",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Once before the loop, then twice inside it (attempts goes 1 then 2, and the loop stops when attempts reaches 2). Three attempts, then Locked out.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "One input before the loop and the loop runs twice"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why is limiting password attempts a good security measure?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "authentication",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Three tries then lock out defeats guessing at scale.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Stops brute-force guessing"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It stops an attacker trying thousands of guesses in a row, so a brute-force attack on the password is not practical",
+        "It makes the password longer each time, so an attacker has to guess more characters on every attempt",
+        "It means the password does not need to be stored, because the program only remembers the number of tries",
+        "It makes the program run faster, because it checks fewer passwords before deciding to lock the user out"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "What kind of error does this program contain, and when is it found?\n\n```\ntotal ← 0\nFOR i ← 1 TO 3\n   total ← total + i\nENDFOR\nOUTPUT total / 0\n```",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "errors",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The code is legal, so it starts running; dividing by zero fails at that line. A logic error would run to the end with a wrong answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Runtime error at execution"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "A runtime error: division by zero, found only when that line is executed",
+        "A syntax error: dividing by zero breaks the rules, found before the program runs",
+        "A logic error: the total is added up wrongly, found only by testing",
+        "No error at all: the program runs and outputs the total of 6"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "extended",
+      "prompt": "A student writes a program that calculates the average of three test scores but always outputs a value that is too small. Explain what kind of error this is and describe how a trace table would help find it.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "finding errors",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Name the error type, say what the trace table records, say how it locates the line.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Logic error"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Trace records every variable"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "First wrong value locates the line"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "It is a logic error: the program runs without crashing but gives the wrong result",
+          "marks": 1
+        },
+        {
+          "text": "A trace table records the value of every variable after each line",
+          "marks": 1
+        },
+        {
+          "text": "Comparing the traced values with the expected values shows the first line where they differ, which is where the mistake is, for example dividing before adding or dividing by the wrong number",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The program runs and produces a number, so it is not a syntax or runtime error; it is a logic error. Tracing the program in a table, line by line, records what each variable holds. Comparing those values with what they should be shows exactly the first line where the value goes wrong, for example a total that is missing one score or a division by 4 instead of 3, and that line is where the fix goes."
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A website stores passwords. Which is the most secure approach among these?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "secure programming",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Hashing means even someone who steals the file cannot read the passwords. The others are readable or reversible.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Hash and compare"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "options": [
+        "Store a hash of each password and compare hashes, so the real passwords are never stored",
+        "Store the passwords in a text file that only the website can read",
+        "Store the passwords in reverse so they cannot be read directly",
+        "Email each user their password so it need not be stored"
+      ],
+      "correct": [
+        0
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 6
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8"
+      ],
+      "suggestedMinutes": 14
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15"
+      ],
+      "suggestedMinutes": 42
+    }
+  },
+  "examTechnique": {
+    "body": "These ideas appear in three places: short definitions (validation, authentication, the three error types), test-plan questions (normal, boundary, erroneous with expected results), and inside the long programming question, where a validation loop earns its own marks. Use the specification words and give the boundary values on both sides of the edge.",
+    "examinerErrors": [
+      "Confusing validation (is the data sensible?) with authentication (is this the right person?).",
+      "Writing a validation condition with AND when it needs OR.",
+      "Giving only one boundary value, or none just outside the range.",
+      "Calling a logic error a syntax error because the answer was wrong.",
+      "Describing test data without saying what the program should do with it."
+    ],
+    "grade9Looks": "A grade 9 answer names the right check for each input, writes validation as a loop in a function that returns the value, plans tests with expected results on both sides of every boundary, classifies errors by when they appear, and links each security practice to the attack it prevents."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

@@ -50,3 +50,13 @@ School order for Year 10: Unit 6 Plant structures first, then Unit 5 Health and 
 |---|---|---|
 | Autumn 1 | Unit 6: photosynthesis and limiting factors · the leaf, root hair cells, xylem and phloem · transpiration and translocation · plant adaptations, defences and hormones (Biology only) | All four drafted |
 | Autumn 1 and 2 | Unit 5: health and disease, pathogens, the immune system, medicines, non-communicable disease | Next |
+
+
+## Computer Science (AQA 8525)
+
+School order for Year 10: programming (subroutines, arrays, records, files, strings, robust programming) in Autumn; sorting, tracing and compression in Spring; Boolean logic, circuits and software in Summer. Year 9 covered algorithms, basic programming and data representation.
+
+| Half term | Topics | Status |
+|---|---|---|
+| Autumn 1 | Programming: subroutines · arrays and records · strings and files · robust and secure programming | All four drafted; each links to the family's Learn C# practice site |
+| Autumn 2 | Recap of Year 9 programming: data types, selection, iteration; more practice tracing | Next |

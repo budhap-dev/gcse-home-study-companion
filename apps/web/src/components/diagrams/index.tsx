@@ -15,6 +15,7 @@ import { EnergyTransferBars } from './EnergyTransferBars.tsx'
 import { EquationCard } from './EquationCard.tsx'
 import { CurveGraph } from './CurveGraph.tsx'
 import { Plant } from './Plant.tsx'
+import { TraceTable } from './TraceTable.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -38,6 +39,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'equation-card': EquationCard,
   'curve-graph': CurveGraph,
   'plant': Plant,
+  'trace-table': TraceTable,
 }
 
 export const INK = '#1e2330'
