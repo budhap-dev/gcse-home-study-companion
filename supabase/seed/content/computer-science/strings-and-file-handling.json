@@ -2,11 +2,9 @@
   "id": "strings-and-file-handling",
   "subjectId": "computer-science",
   "unitId": "programming",
-  "title": "String handling and files",
+  "title": "String handling, conversions, and files for your project",
   "specPoints": [
-    "3.2.5",
-    "3.2.8",
-    "3.2.9"
+    "3.2.8"
   ],
   "order": 3,
   "resources": [
@@ -22,7 +20,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Strings are sequences of characters",
-        "body": "A **string** is text: a sequence of characters, each with an **index** starting at 0, just like an array. AQA gives you four built-in operations:\n\n- `LEN(s)`: the number of characters.\n- `SUBSTRING(start, end, s)`: the characters from index `start` to index `end`, **both included**.\n- `POSITION(s, c)`: the index of the first `c` in `s`, or −1 if it is not there.\n- `+`: **concatenation**, joining two strings.\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```\n\nOutput: `8`, `com`, `3`.",
+        "body": "A **string** is text: a sequence of characters, each with an **index** starting at 0, just like an array. AQA gives you four built-in operations:\n\n- `LEN(s)`: the number of characters.\n- `SUBSTRING(start, end, s)`: the characters from index `start` to index `end`, **both included**.\n- `POSITION(s, c)`: the index of the first `c` in `s`. AQA does not say what it gives back when the character is not there, so in an exam say in words what you are checking, or use the value your language returns (−1 in Python and C#, 0 in VB.NET).\n- `+`: **concatenation**, joining two strings.\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```\n\nOutput: `8`, `com`, `3`.",
         "visuals": [
           {
             "type": "diagram",
@@ -54,7 +52,7 @@
               ],
               "title": "word ← 'computer'"
             },
-            "alt": "The string computer with indexes 0 to 7 under each character"
+            "alt": "A table with the indexes 0 to 7 in the top row and the letters of computer beneath them"
           }
         ],
         "check": {
@@ -76,7 +74,9 @@
           ],
           "discriminators": [],
           "accepted": [
-            "ut"
+            "ut",
+            "'ut'",
+            "\"ut\""
           ]
         }
       },
@@ -129,7 +129,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Converting between types",
-        "body": "Numbers and text look alike but behave differently. `12 + 3` is 15; `'12' + '3'` is `'123'`. Four conversions:\n\n- `STRING_TO_INT('12')` gives the number 12 (there is also `STRING_TO_REAL`).\n- `INT_TO_STRING(12)` gives the text `'12'`.\n- `CHAR_TO_CODE('A')` gives the character code, 65.\n- `CODE_TO_CHAR(66)` gives `'B'`.\n\n```\nOUTPUT CHAR_TO_CODE('A')\nOUTPUT CODE_TO_CHAR(66)\nOUTPUT STRING_TO_INT('12') + 3\nOUTPUT INT_TO_STRING(12) + '3'\n```\n\nOutput: `65`, `B`, `15`, `123`. Everything typed with `USERINPUT` and everything read from a file is a **string**, so convert before doing maths.",
+        "body": "Numbers and text look alike but behave differently. `12 + 3` is 15; `'12' + '3'` is `'123'`. Four conversions:\n\n- `STRING_TO_INT('12')` gives the whole number 12, and `STRING_TO_REAL('12.5')` gives the decimal 12.5.\n- `INT_TO_STRING(12)` gives the text `'12'`, and `REAL_TO_STRING(12.5)` gives the text `'12.5'`.\n- `CHAR_TO_CODE('A')` gives the character code, 65.\n- `CODE_TO_CHAR(66)` gives `'B'`.\n\n```\nOUTPUT CHAR_TO_CODE('A')\nOUTPUT CODE_TO_CHAR(66)\nOUTPUT STRING_TO_INT('12') + 3\nOUTPUT INT_TO_STRING(12) + '3'\n```\n\nOutput: `65`, `B`, `15`, `123`. Everything typed with `USERINPUT` and everything read from a file is a **string**, so convert before doing maths.",
         "visuals": [
           {
             "type": "worked-example",
@@ -180,7 +180,7 @@
         "id": "s4",
         "kind": "worked-example",
         "title": "Looping through a string",
-        "body": "Because a string has indexes, you can loop over it like an array. `SUBSTRING(i, i, text)` picks out one character.",
+        "body": "Because a string has indexes, you can loop over it like an array. `SUBSTRING(i, i, text)` picks out one character.\n\nAQA pseudo-code also has a loop that walks a string directly, without indexes:\n\n```\ncount ← 0\nFOR char IN text\n   IF char = 'a' THEN\n      count ← count + 1\n   ENDIF\nENDFOR\n```\n\nThe same loop reverses a string in two lines, and this is the version AQA's own pseudo-code guide shows:\n\n```\nreversed ← ''\nFOR char IN message\n   reversed ← char + reversed\nENDFOR\n```\n\nUse whichever you find clearer, but be ready to read `FOR char IN` in an exam question.",
         "visuals": [
           {
             "type": "worked-example",
@@ -275,7 +275,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Files: saving data between runs",
-        "body": "Variables vanish when a program ends. To keep data, write it to a **file**. AQA's pattern:\n\n1. **Open** the file for writing or reading.\n2. **Write** lines, or **read** lines until `endOfFile()`.\n3. **Close** the file, so the data is saved and the file is released.\n\n```\nmyFile ← openWrite('scores.txt')\nmyFile.writeLine('Sam,42')\nmyFile.writeLine('Ali,37')\nmyFile.close()\n\nmyFile ← openRead('scores.txt')\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   OUTPUT line\nENDWHILE\nmyFile.close()\n```\n\nOutput: `Sam,42` then `Ali,37`. Everything read back is a **string**; the 42 has to be converted before it is used as a number.",
+        "body": "Variables vanish when a program ends. To keep data, write it to a **file**. AQA does not examine file handling: it is not in the 8525 specification and there is no file syntax in AQA pseudo-code. Your Year 10 programming project uses files, though, so here is the pattern most textbooks use:\n\n1. **Open** the file for writing or reading.\n2. **Write** lines, or **read** lines until `endOfFile()`.\n3. **Close** the file, so the data is saved and the file is released.\n\n```\nmyFile ← openWrite('scores.txt')\nmyFile.writeLine('Sam,42')\nmyFile.writeLine('Ali,37')\nmyFile.close()\n\nmyFile ← openRead('scores.txt')\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   OUTPUT line\nENDWHILE\nmyFile.close()\n```\n\nOutput: `Sam,42` then `Ali,37`. Everything read back is a **string**; the 42 has to be converted before it is used as a number.",
         "visuals": [
           {
             "type": "worked-example",
@@ -366,7 +366,9 @@
           ],
           "discriminators": [],
           "accepted": [
-            "pots"
+            "pots",
+            "'pots'",
+            "\"pots\""
           ]
         }
       },
@@ -374,7 +376,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Grade 9: files plus strings plus types",
-        "body": "The hardest Paper 1 questions chain the three ideas: read a line from a file, split it into parts, convert a part to a number, then do something with it. Keep the sequence in your head: **read** (string), **find** the comma with `POSITION`, **cut** with `SUBSTRING`, **convert** with `STRING_TO_INT`, **use**.\n\nWhen writing code in the exam, open before the loop, close after it, and initialise counters before the loop. Say what a function returns rather than outputting inside it.",
+        "body": "The hardest questions chain the ideas: take a line of text (in the exam it comes from USERINPUT; in your project it comes from a file), split it into parts, convert a part to a number, then do something with it. Keep the sequence in your head: **read** (string), **find** the comma with `POSITION`, **cut** with `SUBSTRING`, **convert** with `STRING_TO_INT`, **use**.\n\nWhen writing code in the exam, open before the loop, close after it, and initialise counters before the loop. Say what a function returns rather than outputting inside it.",
         "visuals": [
           {
             "type": "worked-example",
@@ -505,7 +507,9 @@
       ],
       "discriminators": [],
       "accepted": [
-        "sunset"
+        "sunset",
+        "'sunset'",
+        "\"sunset\""
       ]
     },
     {
@@ -567,13 +571,13 @@
     {
       "id": "q5",
       "type": "short-text",
-      "prompt": "What is output by the second line of this program?\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```",
+      "prompt": "What is output by the third line of this program?\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```",
       "marks": 1,
       "gradeBand": "6-7",
       "skill": "substring",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "In AQA reference language SUBSTRING(start, end, string) takes characters from index start to index end, both included. Indexes 0, 1, 2 of computer are c, o, m: \"com\".",
+      "solution": "In AQA pseudo-code SUBSTRING(start, end, string) takes characters from index start to index end, both included. Indexes 0, 1, 2 of computer are c, o, m: \"com\".",
       "markScheme": [
         {
           "code": "B1",
@@ -583,7 +587,9 @@
       ],
       "discriminators": [],
       "accepted": [
-        "com"
+        "com",
+        "'com'",
+        "\"com\""
       ]
     },
     {
@@ -870,13 +876,13 @@
     {
       "id": "q14",
       "type": "extended",
-      "prompt": "A program must read every line of `names.txt` and count how many lines contain the letter `z` anywhere. Write the program.",
+      "prompt": "For your programming project: a program must read every line of `names.txt` and count how many lines contain the letter `z` anywhere. Write the program, using a `FOR char IN` loop to look for the letter.",
       "marks": 6,
       "gradeBand": "8-9",
       "skill": "writing file code",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Open, loop until end of file, test each line, count, close, output.",
+      "solution": "Open, loop until end of file, search the line character by character, count, close, output. Searching with a loop avoids relying on what POSITION returns when the letter is missing.",
       "markScheme": [
         {
           "code": "B1",
@@ -901,7 +907,7 @@
         {
           "code": "B1",
           "marks": 1,
-          "description": "POSITION test and count + 1"
+          "description": "Search each character with a flag, count + 1"
         },
         {
           "code": "B1",
@@ -927,7 +933,7 @@
           "marks": 2
         },
         {
-          "text": "A test that finds z in the line, such as POSITION(line, 'z') ≠ −1, adding 1 to the count",
+          "text": "A FOR char IN loop, or equivalent, that sets a flag when a z is found, and count + 1 if the flag is set",
           "marks": 1
         },
         {
@@ -935,7 +941,7 @@
           "marks": 1
         }
       ],
-      "modelAnswer": "```\nmyFile ← openRead('names.txt')\ncount ← 0\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   IF POSITION(line, 'z') ≠ -1 THEN\n      count ← count + 1\n   ENDIF\nENDWHILE\nmyFile.close()\nOUTPUT count\n```"
+      "modelAnswer": "```\nmyFile ← openRead('names.txt')\ncount ← 0\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   hasZ ← False\n   FOR char IN line\n      IF char = 'z' THEN\n         hasZ ← True\n      ENDIF\n   ENDFOR\n   IF hasZ THEN\n      count ← count + 1\n   ENDIF\nENDWHILE\nmyFile.close()\nOUTPUT count\n```"
     },
     {
       "id": "q15",
@@ -966,6 +972,34 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A program reads the string '3.5' from the user and needs to multiply it by 2. Which conversion does it need?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "type conversion",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The value has a decimal point, so STRING_TO_INT would lose the .5 or fail. STRING_TO_REAL gives the real number 3.5.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "STRING_TO_REAL"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "STRING_TO_REAL, because the value has a decimal part",
+        "STRING_TO_INT, because all numbers typed in are integers",
+        "REAL_TO_STRING, because the answer will be printed",
+        "INT_TO_STRING, because 3.5 rounds to 4 first"
+      ],
+      "correct": [
+        0
+      ]
     }
   ],
   "worksheets": {
@@ -985,7 +1019,8 @@
         "q5",
         "q6",
         "q7",
-        "q8"
+        "q8",
+        "q16"
       ],
       "suggestedMinutes": 14
     },
@@ -1004,9 +1039,9 @@
     }
   },
   "examTechnique": {
-    "body": "String questions ask what a line outputs, what a loop counts, or for code that builds or checks a string. Know that SUBSTRING includes both ends in the exam reference language, and that indexes start at 0. File questions want the open, loop, close pattern and a conversion of anything numeric that comes back as text.",
+    "body": "String questions ask what a line outputs, what a loop counts, or for code that builds or checks a string. Know that SUBSTRING includes both ends in AQA pseudo-code, that indexes start at 0, and that FOR char IN walks a string directly. Convert anything numeric that arrives as text. File handling is not examined by AQA; it is here for your programming project.",
     "examinerErrors": [
-      "Treating SUBSTRING(0, 2, s) as two characters. In AQA reference language it is three: indexes 0, 1 and 2.",
+      "Treating SUBSTRING(0, 2, s) as two characters. In AQA pseudo-code it is three: indexes 0, 1 and 2.",
       "Adding a number to USERINPUT or to a value read from a file without converting it first.",
       "Forgetting the space when joining a first name and a surname.",
       "Leaving a file open after writing.",
@@ -1030,7 +1065,8 @@
       "q12",
       "q13",
       "q14",
-      "q15"
+      "q15",
+      "q16"
     ],
     "sampleSize": 10
   },
