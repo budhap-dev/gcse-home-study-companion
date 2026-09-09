@@ -69,6 +69,18 @@ export function Topic() {
         <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={topic.examTechnique.body.slice(0, 120) + '…'} action="Read" />
       </nav>
+
+      {topic.resources && topic.resources.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Practise</h2>
+          {topic.resources.map((r) => (
+            <a key={r.url} href={r.url} target="_blank" rel="noopener noreferrer" className="press flex items-center justify-between gap-3 rounded-xl border border-rule bg-surface px-4 py-3">
+              <span className="flex flex-col"><span className="font-bold">{r.label}</span>{r.note && <span className="text-sm text-ink-2">{r.note}</span>}</span>
+              <span className="shrink-0 rounded-lg bg-[color:var(--subject)] px-4 py-2 text-sm font-bold text-white">Open</span>
+            </a>
+          ))}
+        </section>
+      )}
     </article>
   )
 }

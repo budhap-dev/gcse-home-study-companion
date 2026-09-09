@@ -1,0 +1,1193 @@
+{
+  "id": "subroutines-procedures-and-functions",
+  "subjectId": "computer-science",
+  "unitId": "programming",
+  "title": "Subroutines: procedures and functions",
+  "specPoints": [
+    "3.2.10",
+    "3.1.1"
+  ],
+  "order": 1,
+  "resources": [
+    {
+      "label": "Learn C#",
+      "url": "https://red-dune-0f7372e10.7.azurestaticapps.net/",
+      "note": "Our C# practice site. Type each example in, run it, and change it. C# is one of the languages AQA accepts in the exam."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "A subroutine is a named block of code",
+        "body": "A **subroutine** is a block of code with a name. You write it once, then **call** it by name as many times as you like. There are two kinds:\n\n- A **procedure** does a job, such as printing a message.\n- A **function** does a job **and returns a value** to the code that called it.\n\nAQA writes both with `SUBROUTINE ... ENDSUBROUTINE`. Here is a procedure and two calls:\n\n```\nSUBROUTINE greet(name)\n   OUTPUT 'Hello ' + name\nENDSUBROUTINE\n\ngreet('Sam')\ngreet('Priya')\n```\n\nOutput: `Hello Sam` then `Hello Priya`. The code inside runs once for each call.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Follow the two calls",
+            "steps": [
+              {
+                "text": "First call: name takes the value Sam, so the line outputs Hello Sam"
+              },
+              {
+                "text": "The subroutine ends and control returns to the line after the call"
+              },
+              {
+                "text": "Second call: name is now Priya, so the output is Hello Priya"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "How many times does the code inside `greet` run in the program above?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "calling subroutines",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Defining a subroutine runs nothing. Each call runs the body once.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Twice"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Twice, once for each call",
+            "Once, when the subroutine is defined",
+            "Three times, including the definition",
+            "It never runs, because subroutines are only definitions"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Parameters and arguments",
+        "body": "The names in the brackets of the header are **parameters**. The values you pass in when you call are **arguments**. They match up **in order**: the first argument goes into the first parameter.\n\n```\nSUBROUTINE show_age(name, age)\n   OUTPUT name + ' is ' + INT_TO_STRING(age)\nENDSUBROUTINE\n\nshow_age('Lee', 15)\n```\n\nOutput: `Lee is 15`. Swap the arguments round and the program would try to join 15 and a string in the wrong places.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "name",
+                "age",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "Lee",
+                  "15",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "Lee is 15"
+                ]
+              ],
+              "title": "show_age('Lee', 15)"
+            },
+            "alt": "Trace table for the call show_age with Lee and 15: name is Lee, age is 15, output Lee is 15"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "In `show_age('Lee', 15)`, what is 15?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "parameters",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Arguments are the values in the call; parameters are the names in the header.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "An argument"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "An argument: a value passed into the parameter age",
+            "A parameter: a name in the subroutine header",
+            "A return value",
+            "A local variable declared inside the subroutine"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Functions return a value",
+        "body": "A **function** ends with `RETURN` and hands a value back. The call then **becomes** that value, so you can store it, print it, or use it in a bigger expression.\n\n```\nSUBROUTINE area(width, height)\n   RETURN width * height\nENDSUBROUTINE\n\nroom ← area(4, 5)\nOUTPUT room * 2\n```\n\n`area(4, 5)` returns 20, so `room` is 20 and the output is 40. Notice the function does not output anything itself. Returning is what makes it reusable: the caller decides what to do with the answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "width",
+                "height",
+                "RETURN",
+                "room",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "4",
+                  "5",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "20",
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "20",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "",
+                  "40"
+                ]
+              ],
+              "title": "area(4, 5)"
+            },
+            "alt": "Trace of the area program: width 4, height 5, returns 20, room is 20, output 40"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "`OUTPUT area(3, 7) + 1` is run with the same `area` function. What is output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing a function",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "area(3, 7) returns 21, then 1 is added.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "22"
+            }
+          ],
+          "discriminators": [],
+          "answer": 22,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Tracing a function call",
+        "body": "To trace a call, write a column for every parameter and every variable inside the function, plus one for the returned value. Fill in a row each time something changes.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "a",
+                "b",
+                "result",
+                "RETURN",
+                "x",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "3",
+                  "4",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "10",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "10",
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "",
+                  "10",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "10"
+                ]
+              ],
+              "title": "x ← double_add(3, 4)"
+            },
+            "alt": "Trace of double_add(3, 4): a 3, b 4, result 10, returns 10, x 10, output 10"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Trace x ← double_add(3, 4)",
+            "steps": [
+              {
+                "text": "a is 3 and b is 4"
+              },
+              {
+                "text": "result ← 3 × 2 + 4 = 10"
+              },
+              {
+                "text": "RETURN 10, so x becomes 10, and the last line outputs 10"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "What would `double_add(5, 1)` return?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing a function",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "5 × 2 + 1 = 11.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "11"
+            }
+          ],
+          "discriminators": [],
+          "answer": 11,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Local and global variables",
+        "body": "A variable created **inside** a subroutine is **local**: it exists only while that subroutine runs, and nothing outside can see it. A variable created in the main program is **global**. Local variables are better: two subroutines can both use a variable called `total` without clashing, and a subroutine cannot accidentally wreck a value the rest of the program depends on.\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   total ← 20\n   OUTPUT total - amount\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```\n\nInside `spend`, `total ← 20` makes a **new local** `total`. The global `total` stays 100. Output: `15` then `100`.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "total (global)",
+                "amount",
+                "total (local)",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "100",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  "5",
+                  "20",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "15"
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "100"
+                ]
+              ],
+              "title": "spend(5) then OUTPUT total"
+            },
+            "alt": "Trace of the spend program: global total 100, inside spend a local total 20, output 15, then output 100"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Why are local variables preferred over global variables?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "local variables",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Locals are private to their subroutine, so they cannot interfere with anything else.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "No accidental interference, names reusable"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A subroutine cannot accidentally change a value the rest of the program relies on, and names can be reused safely",
+            "Local variables use less memory because their names are shorter, so the program runs faster",
+            "Global variables cannot store numbers, so any calculation has to be done with local ones",
+            "Local variables keep their value after the subroutine ends, so nothing is lost between calls"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: write a function",
+        "body": "Write a function `is_even(n)` that returns `True` if `n` is even and `False` otherwise. Plan: header with one parameter, use `MOD`, return in both cases.\n\nThen try it for real: write `IsEven` in C# on our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site and run it with 8 and 7.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "is_even(n)",
+            "steps": [
+              {
+                "text": "```\nSUBROUTINE is_even(n)\n   IF n MOD 2 = 0 THEN\n      RETURN True\n   ELSE\n      RETURN False\n   ENDIF\nENDSUBROUTINE\n```"
+              },
+              {
+                "text": "A shorter version returns the comparison itself: RETURN n MOD 2 = 0"
+              },
+              {
+                "text": "Check: is_even(8) returns True, is_even(7) returns False"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "Which line correctly uses the function to decide what to print?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "using functions",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Call the function with an argument, and use the value it returns as the condition.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "IF is_even(x) THEN"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "IF is_even(x) THEN OUTPUT 'even' ENDIF",
+            "IF is_even THEN OUTPUT 'even' ENDIF",
+            "OUTPUT is_even(x) = 'even'",
+            "is_even(x) OUTPUT 'even'"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "explain",
+        "title": "Why programs are built from subroutines",
+        "body": "**Structured programming** means breaking a problem into parts (**decomposition**) and writing a subroutine for each. The benefits come up in almost every exam:\n\n- **No repetition**: written once, called many times.\n- **One change fixes every use**.\n- **Easier to read**: the main program reads like a list of steps.\n- **Easier to test**: each subroutine can be tested on its own.\n- **Reusable**: the same subroutine can be used in another program.\n\nYou already use built-in subroutines: `LEN(word)`, `RANDOM_INT(1, 6)`, `STRING_TO_INT(text)` are all functions someone else wrote.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A quiz program without subroutines has the same ten lines of \"ask a question, check the answer, add to score\" repeated five times. Improve it.",
+            "steps": [
+              {
+                "text": "Write one subroutine ask(question, answer) that does those ten lines once"
+              },
+              {
+                "text": "Call it five times with different arguments"
+              },
+              {
+                "text": "If the checking needs to change, it changes in one place, and the main program is five readable lines"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "A program calls `LEN(name)`. What is `LEN`?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "built-in functions",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "LEN returns a value, so it is a function, and it is built into the language.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Built-in function"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A built-in function that returns the number of characters in a string",
+            "A local variable that holds the length of the name",
+            "A parameter of the main program that stores the name",
+            "A procedure that prints the length of the name"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Grade 9: nested calls and loops inside functions",
+        "body": "Exam questions stack the ideas: a function that contains a loop, or a call inside a call. Work **inside out**: evaluate the innermost call first, replace it with its value, then continue.\n\n```\nSUBROUTINE g(n)\n   RETURN n + 3\nENDSUBROUTINE\n\nSUBROUTINE f(n)\n   RETURN n * n\nENDSUBROUTINE\n\nOUTPUT f(g(2))\n```\n\n`g(2)` returns 5, so this is `f(5)`, which returns 25.\n\nFor a function with a loop, trace the loop fully inside the function before you write the returned value. The marker wants the trace, not just the answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "n",
+                "i",
+                "t",
+                "RETURN"
+              ],
+              "rows": [
+                [
+                  "4",
+                  "",
+                  "0",
+                  ""
+                ],
+                [
+                  "",
+                  "1",
+                  "1",
+                  ""
+                ],
+                [
+                  "",
+                  "2",
+                  "3",
+                  ""
+                ],
+                [
+                  "",
+                  "3",
+                  "6",
+                  ""
+                ],
+                [
+                  "",
+                  "4",
+                  "10",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  "10"
+                ]
+              ],
+              "title": "sum_to(4)"
+            },
+            "alt": "Trace of sum_to(4): t starts at 0, i goes 1 to 4, t becomes 1, 3, 6, 10, returns 10"
+          },
+          {
+            "type": "worked-example",
+            "problem": "What does sum_to(4) return?",
+            "steps": [
+              {
+                "text": "t starts at 0"
+              },
+              {
+                "text": "i = 1: t = 1. i = 2: t = 3. i = 3: t = 6. i = 4: t = 10"
+              },
+              {
+                "text": "RETURN 10"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "numeric",
+          "prompt": "With the functions f and g above, what is `g(f(3))`?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "nested function calls",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Inside out: f(3) = 9, then g(9) = 12.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "12"
+            }
+          ],
+          "discriminators": [],
+          "answer": 12,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A subroutine is a named block of code. A procedure does a job; a function also returns a value with RETURN.\n- Parameters are the names in the header; arguments are the values in the call, matched in order.\n- A function call becomes its returned value, so it can be stored or used in an expression.\n- Variables made inside a subroutine are local. Globals belong to the main program. Prefer locals.\n- Subroutines remove repetition, make one change fix every use, and make programs easier to read, test and reuse.\n- Trace nested calls from the inside out; trace loops fully before writing the return value.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "a",
+                "b",
+                "RETURN",
+                "OUTPUT"
+              ],
+              "rows": [
+                [
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Layout of a trace table"
+            },
+            "alt": "A blank trace table layout: one column per variable and one for output"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is the difference between a procedure and a function?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "procedures and functions",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Both are subroutines. The one that hands a value back with RETURN is a function.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Function returns a value"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A function returns a value to the code that called it; a procedure does not",
+        "A procedure can have parameters; a function cannot",
+        "A function must be called from inside a loop; a procedure need not be",
+        "A procedure runs faster than a function because it is shorter"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "Which keyword sends a value back from a function to the code that called it?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "functions",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "RETURN. In Python it is `return`; the idea is the same.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RETURN"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "RETURN",
+        "return"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What is a parameter?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "parameters",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Parameters are the names in the brackets of the header. The values passed in the call are the arguments.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Named input in the header"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A variable in a subroutine header that receives a value when the subroutine is called",
+        "The value a function sends back to the calling code when it reaches RETURN",
+        "A variable declared in the main program that every subroutine can read and change",
+        "A comment written above a subroutine that explains what the subroutine does"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "What is output by the call `greet('Amy')` when `greet` is:\n\n```\nSUBROUTINE greet(name)\n   OUTPUT 'Hi ' + name + '!'\nENDSUBROUTINE\n```",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "tracing a procedure",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The parameter `name` takes the value Amy, so the output is Hi Amy! with the exclamation mark.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Hi Amy!"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "Hi Amy!",
+        "hi amy!",
+        "\"Hi Amy!\""
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "What value is stored in `room` after this code runs?\n\n```\nSUBROUTINE area(width, height)\n   RETURN width * height\nENDSUBROUTINE\n\nroom ← area(4, 5)\nOUTPUT room * 2\n```",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "tracing a function",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`area(4, 5)` returns 4 × 5 = 20, which is assigned to `room`. The line after that outputs 40, but the question asks for `room`.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "What is output by the last line of this program?\n\n```\nSUBROUTINE twice(word)\n   RETURN word + word\nENDSUBROUTINE\n\nOUTPUT twice('go') + twice('!')\n```",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "tracing a function",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`twice('go')` gives gogo and `twice('!')` gives !!. Joined together: gogo!!",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gogo!!"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "gogo!!",
+        "\"gogo!!\""
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "extended",
+      "prompt": "Explain two advantages of using subroutines in a program.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "why use subroutines",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Any three of: no repetition, one change fixes every use, easier to read, easier to test, easier to debug, reusable in other programs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Written once, called many times"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Easier to read, test and fix"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Reusable or testable separately"
+        }
+      ],
+      "discriminators": [],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Code that is needed in several places is written once and called many times, so there is less repetition",
+          "marks": 1
+        },
+        {
+          "text": "Each subroutine does one job, so the program is easier to read, test and fix",
+          "marks": 1
+        },
+        {
+          "text": "A third acceptable point: subroutines can be written and tested separately, or shared between programs",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "A subroutine is written once and can be called from many places, so code is not repeated and a change only has to be made in one place. Breaking a program into subroutines that each do one job makes it easier to read, easier to test one part at a time, and easier to find and fix errors. Subroutines can also be reused in other programs."
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "A variable is declared inside a subroutine. Which statement is correct?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "local variables",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Variables created inside a subroutine are local. They are created when the subroutine starts and destroyed when it ends.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Local: only inside the subroutine"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It is a local variable: it exists only while the subroutine runs and cannot be seen from outside it",
+        "It is a global variable: every part of the program can read and change it",
+        "It keeps its value between one call of the subroutine and the next",
+        "It must have the same name as one of the parameters"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\nSUBROUTINE sum_to(n)\n   t ← 0\n   FOR i ← 1 TO n\n      t ← t + i\n   ENDFOR\n   RETURN t\nENDSUBROUTINE\n\nOUTPUT sum_to(4)\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing a function with a loop",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The loop adds 1, 2, 3 and 4 to t in turn: 0 → 1 → 3 → 6 → 10. The function returns 10.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Loop traced: t takes 1, 3, 6, 10"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "extended",
+      "prompt": "Write a function called `larger` that takes two numbers as parameters and returns the larger of the two. Then write one line that calls it with 7 and 12 and outputs the result.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing a function",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The marks are for the header, the comparison, returning in both branches, the call, and clean structure. A function that outputs instead of returning loses the return marks.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Header with two parameters"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "IF comparing them"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RETURN a in one branch"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RETURN b in the other"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Call with 7 and 12 in an OUTPUT"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "ENDIF, ENDSUBROUTINE, no OUTPUT inside"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Correct header with two parameters, for example SUBROUTINE larger(a, b)",
+          "marks": 1
+        },
+        {
+          "text": "IF statement comparing the two parameters",
+          "marks": 1
+        },
+        {
+          "text": "RETURN in both branches, returning the correct parameter each time",
+          "marks": 2
+        },
+        {
+          "text": "Call with 7 and 12 inside an OUTPUT, for example OUTPUT larger(7, 12)",
+          "marks": 1
+        },
+        {
+          "text": "Correct structure: ENDIF and ENDSUBROUTINE, and the function does not itself output",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nSUBROUTINE larger(a, b)\n   IF a > b THEN\n      RETURN a\n   ELSE\n      RETURN b\n   ENDIF\nENDSUBROUTINE\n\nOUTPUT larger(7, 12)\n```"
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "What is the second value output by this program?\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   total ← 20\n   OUTPUT total - amount\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "local and global variables",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Inside `spend`, `total ← 20` creates a new local variable called total. It does not change the global one. The procedure outputs 20 − 5 = 15, then the last line outputs the untouched global total, 100.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Local total is separate from the global total"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "100"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "answer": 100,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A programmer writes a function that calculates a total and outputs it, but never returns it. Why is this poor design?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "designing functions",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Returning the value lets the caller decide what to do with it: print it, store it, compare it. Outputting inside the function fixes the behaviour for every caller.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Caller cannot use the value"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The calling code cannot use the total in a further calculation or store it, so the function only works for one purpose",
+        "Functions are not allowed to contain OUTPUT statements, so the program will not run at all",
+        "The total will be lost when the function ends because it is a global variable, not a local one",
+        "A function with no RETURN statement runs forever, so the program never reaches the output"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "extended",
+      "prompt": "Complete a trace table for this program, showing the values of `a`, `b`, `i` and any output.\n\n```\na ← 2\nb ← 1\nFOR i ← 1 TO 3\n   b ← b * a\n   a ← a + 1\nENDFOR\nOUTPUT b\n```",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "trace tables",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Write the value of a variable only when it changes, one row per pass through the loop, with the output in its own column.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Initial values"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "i = 1 row"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "i = 2 row"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "i = 3 row and output 24"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Initial row a = 2, b = 1",
+          "marks": 1
+        },
+        {
+          "text": "Row for i = 1: b = 2, a = 3",
+          "marks": 1
+        },
+        {
+          "text": "Row for i = 2: b = 6, a = 4",
+          "marks": 1
+        },
+        {
+          "text": "Row for i = 3: b = 24, a = 5, then output 24",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Start: a = 2, b = 1. i = 1: b = 1 × 2 = 2, a = 3. i = 2: b = 2 × 3 = 6, a = 4. i = 3: b = 6 × 4 = 24, a = 5. Output 24."
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\nSUBROUTINE g(n)\n   RETURN n + 3\nENDSUBROUTINE\n\nSUBROUTINE f(n)\n   RETURN n * n\nENDSUBROUTINE\n\nOUTPUT f(g(2))\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "nested function calls",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Work from the inside out. `g(2)` returns 2 + 3 = 5. Then `f(5)` returns 5 × 5 = 25.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "g(2) = 5 evaluated first"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Two students write a program that converts prices from pounds to euros in six different places. Student A writes the calculation out each time. Student B writes one function `to_euros(pounds)` and calls it six times. The exchange rate changes. Which statement is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why use subroutines",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "One definition, one change. That is the reuse argument for subroutines in a concrete case.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "One change inside the function"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "options": [
+        "Student B changes one line inside the function; Student A must find and change all six calculations and may miss one",
+        "Student A's program is easier to update because the calculations are visible where they are used",
+        "Both programs need six changes, because the function is called six times",
+        "Student B's program cannot be changed without rewriting all six calls"
+      ],
+      "correct": [
+        0
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 6
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8"
+      ],
+      "suggestedMinutes": 14
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15"
+      ],
+      "suggestedMinutes": 40
+    }
+  },
+  "examTechnique": {
+    "body": "Paper 1 tests subroutines three ways: trace a call and state what is returned or output, explain why subroutines are used, and write a subroutine to a specification. For tracing, draw the table with a column per variable and fill it row by row. For writing, get the header, the parameters and the RETURN right first; those carry the marks. Code is accepted in the exam reference language or in Python, C# or VB.NET.",
+    "examinerErrors": [
+      "Outputting inside a function instead of returning the value.",
+      "Forgetting RETURN in one branch of an IF, so the function sometimes returns nothing.",
+      "Mixing up parameters (in the header) and arguments (in the call).",
+      "Treating a variable assigned inside a subroutine as if it changed the global one.",
+      "Writing the answer to a trace question without the trace table, and losing the method marks when the answer is wrong."
+    ],
+    "grade9Looks": "A grade 9 answer traces nested calls from the inside out with every value in the table, writes functions that return in every branch and never output, explains the reuse and testing benefits with a concrete example, and keeps local and global variables apart."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

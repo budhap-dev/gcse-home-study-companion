@@ -1,0 +1,1044 @@
+{
+  "id": "strings-and-file-handling",
+  "subjectId": "computer-science",
+  "unitId": "programming",
+  "title": "String handling and files",
+  "specPoints": [
+    "3.2.5",
+    "3.2.8",
+    "3.2.9"
+  ],
+  "order": 3,
+  "resources": [
+    {
+      "label": "Learn C#",
+      "url": "https://red-dune-0f7372e10.7.azurestaticapps.net/",
+      "note": "Our C# practice site. Type each example in, run it, and change it. C# is one of the languages AQA accepts in the exam."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Strings are sequences of characters",
+        "body": "A **string** is text: a sequence of characters, each with an **index** starting at 0, just like an array. AQA gives you four built-in operations:\n\n- `LEN(s)`: the number of characters.\n- `SUBSTRING(start, end, s)`: the characters from index `start` to index `end`, **both included**.\n- `POSITION(s, c)`: the index of the first `c` in `s`, or −1 if it is not there.\n- `+`: **concatenation**, joining two strings.\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```\n\nOutput: `8`, `com`, `3`.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "index",
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7"
+              ],
+              "rows": [
+                [
+                  "char",
+                  "c",
+                  "o",
+                  "m",
+                  "p",
+                  "u",
+                  "t",
+                  "e",
+                  "r"
+                ]
+              ],
+              "title": "word ← 'computer'"
+            },
+            "alt": "The string computer with indexes 0 to 7 under each character"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "short-text",
+          "prompt": "What does `SUBSTRING(4, 5, 'computer')` return?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "substring",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Indexes 4 and 5 are u and t.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "ut"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "ut"
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Joining and measuring",
+        "body": "`+` joins strings. It does not add a space, so put one in yourself.\n\n```\nfirst ← 'Ada'\nlast ← 'Lovelace'\nfull ← first + ' ' + last\nOUTPUT full\nOUTPUT LEN(full)\n```\n\nOutput: `Ada Lovelace` then `12`. The space counts as a character.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Build 'Sam (15)' from name ← 'Sam' and age ← 15",
+            "steps": [
+              {
+                "text": "age is a number, so convert it first: INT_TO_STRING(age)"
+              },
+              {
+                "text": "name + ' (' + INT_TO_STRING(age) + ')'"
+              },
+              {
+                "text": "Result: Sam (15), which is 8 characters long"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "What is `LEN('go' + ' ' + 'team')`?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "string length",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "2 + 1 + 4 = 7.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "answer": 7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Converting between types",
+        "body": "Numbers and text look alike but behave differently. `12 + 3` is 15; `'12' + '3'` is `'123'`. Four conversions:\n\n- `STRING_TO_INT('12')` gives the number 12 (there is also `STRING_TO_REAL`).\n- `INT_TO_STRING(12)` gives the text `'12'`.\n- `CHAR_TO_CODE('A')` gives the character code, 65.\n- `CODE_TO_CHAR(66)` gives `'B'`.\n\n```\nOUTPUT CHAR_TO_CODE('A')\nOUTPUT CODE_TO_CHAR(66)\nOUTPUT STRING_TO_INT('12') + 3\nOUTPUT INT_TO_STRING(12) + '3'\n```\n\nOutput: `65`, `B`, `15`, `123`. Everything typed with `USERINPUT` and everything read from a file is a **string**, so convert before doing maths.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A student writes total ← USERINPUT + 5 and gets an error",
+            "steps": [
+              {
+                "text": "USERINPUT returns a string, and a string cannot be added to 5"
+              },
+              {
+                "text": "Convert first: total ← STRING_TO_INT(USERINPUT) + 5"
+              },
+              {
+                "text": "Now the input 10 gives 15, not '105' or a crash"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "What is `INT_TO_STRING(4) + INT_TO_STRING(5)`?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "type conversion",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Two strings joined: the text 45.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "'45'"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "'45'",
+            "9",
+            "'9'",
+            "45 as a number"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Looping through a string",
+        "body": "Because a string has indexes, you can loop over it like an array. `SUBSTRING(i, i, text)` picks out one character.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Count the letter a in banana",
+            "steps": [
+              {
+                "text": "```\ntext ← 'banana'\ncount ← 0\nFOR i ← 0 TO LEN(text) - 1\n   IF SUBSTRING(i, i, text) = 'a' THEN\n      count ← count + 1\n   ENDIF\nENDFOR\nOUTPUT count\n```"
+              },
+              {
+                "text": "Six characters, indexes 0 to 5"
+              },
+              {
+                "text": "a is at indexes 1, 3 and 5: count ends at 3"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "character",
+                "count"
+              ],
+              "rows": [
+                [
+                  "",
+                  "",
+                  "0"
+                ],
+                [
+                  "0",
+                  "b",
+                  ""
+                ],
+                [
+                  "1",
+                  "a",
+                  "1"
+                ],
+                [
+                  "2",
+                  "n",
+                  ""
+                ],
+                [
+                  "3",
+                  "a",
+                  "2"
+                ],
+                [
+                  "4",
+                  "n",
+                  ""
+                ],
+                [
+                  "5",
+                  "a",
+                  "3"
+                ]
+              ],
+              "title": "count the letter a"
+            },
+            "alt": "Trace of counting a in banana"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "With `text ← 'mississippi'` and the same program counting `'s'`, what is output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "traversing a string",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "m-i-s-s-i-s-s-i-p-p-i has four s.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Files: saving data between runs",
+        "body": "Variables vanish when a program ends. To keep data, write it to a **file**. AQA's pattern:\n\n1. **Open** the file for writing or reading.\n2. **Write** lines, or **read** lines until `endOfFile()`.\n3. **Close** the file, so the data is saved and the file is released.\n\n```\nmyFile ← openWrite('scores.txt')\nmyFile.writeLine('Sam,42')\nmyFile.writeLine('Ali,37')\nmyFile.close()\n\nmyFile ← openRead('scores.txt')\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   OUTPUT line\nENDWHILE\nmyFile.close()\n```\n\nOutput: `Sam,42` then `Ali,37`. Everything read back is a **string**; the 42 has to be converted before it is used as a number.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Why loop with WHILE NOT endOfFile rather than a FOR loop?",
+            "steps": [
+              {
+                "text": "The program does not know how many lines the file has"
+              },
+              {
+                "text": "endOfFile() becomes True when there is nothing left to read"
+              },
+              {
+                "text": "So the loop reads exactly the lines that exist, however many there are"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "What happens to the data written with `writeLine` if the program never calls `close()`?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "file handling",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Close flushes the buffer. Missing it is the classic file bug.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "May not be saved"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Some or all of it may not be saved, because writing is buffered until the file is closed",
+            "It is saved twice, because the program writes it again when it finishes running",
+            "It is saved but cannot be read, because the file stays locked for other programs",
+            "Nothing happens: close is optional and the data is written as soon as writeLine runs"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: reverse a string",
+        "body": "Write code that builds the reverse of `word`. Plan: an empty result string, a loop from the **last** index down to 0, adding one character each time. Then test whether the word is a palindrome by comparing the two.\n\nTry it on our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site with `word[i]` and a `for` loop counting down.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Reverse and compare",
+            "steps": [
+              {
+                "text": "```\nword ← 'level'\nreversed ← ''\nFOR i ← LEN(word) - 1 TO 0 STEP -1\n   reversed ← reversed + SUBSTRING(i, i, word)\nENDFOR\nOUTPUT reversed = word\n```"
+              },
+              {
+                "text": "STEP −1 makes the loop count down: 4, 3, 2, 1, 0"
+              },
+              {
+                "text": "reversed becomes l, le, lev, leve, level"
+              },
+              {
+                "text": "level = level is True"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "With `word ← 'stop'`, what value does `reversed` hold when the loop ends?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "reversing a string",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "s-t-o-p backwards is pots.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "pots"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "pots"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Grade 9: files plus strings plus types",
+        "body": "The hardest Paper 1 questions chain the three ideas: read a line from a file, split it into parts, convert a part to a number, then do something with it. Keep the sequence in your head: **read** (string), **find** the comma with `POSITION`, **cut** with `SUBSTRING`, **convert** with `STRING_TO_INT`, **use**.\n\nWhen writing code in the exam, open before the loop, close after it, and initialise counters before the loop. Say what a function returns rather than outputting inside it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Read 'Sam,42' from a file and get the score as a number",
+            "steps": [
+              {
+                "text": "p ← POSITION(line, ',') gives 3"
+              },
+              {
+                "text": "name ← SUBSTRING(0, p - 1, line) gives Sam"
+              },
+              {
+                "text": "score ← STRING_TO_INT(SUBSTRING(p + 1, LEN(line) - 1, line)) gives 42 as a number"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "For `line ← 'Priya,108'`, what does `POSITION(line, ',')` return?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "string operations",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "P-r-i-y-a are indexes 0 to 4; the comma is at 5.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Strings are indexed from 0. LEN, SUBSTRING(start, end, s) with both ends included, POSITION, and + for joining.\n- Convert between types: STRING_TO_INT, INT_TO_STRING, CHAR_TO_CODE, CODE_TO_CHAR. Input and file data are strings.\n- Loop over a string with SUBSTRING(i, i, s) to count, reverse or check characters.\n- Files: open, read with WHILE NOT endOfFile or write lines, then close.\n- Chain them: read, POSITION, SUBSTRING, STRING_TO_INT, use.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "call",
+                "result"
+              ],
+              "rows": [
+                [
+                  "LEN('cat')",
+                  "3"
+                ],
+                [
+                  "SUBSTRING(1, 2, 'cat')",
+                  "'at'"
+                ],
+                [
+                  "POSITION('cat', 't')",
+                  "2"
+                ],
+                [
+                  "'c' + 'at'",
+                  "'cat'"
+                ],
+                [
+                  "CHAR_TO_CODE('a')",
+                  "97"
+                ],
+                [
+                  "STRING_TO_INT('7') + 1",
+                  "8"
+                ]
+              ],
+              "title": "Quick reference"
+            },
+            "alt": "Reference table of string functions and results"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "What does `LEN('keyboard')` return?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "string length",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Count the characters: k-e-y-b-o-a-r-d is 8.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "What is output by `OUTPUT 'sun' + 'set'`?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "concatenation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The + joins two strings together: concatenation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sunset"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "sunset"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which built-in function turns the text `'42'` into the number 42 so it can be used in a calculation?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "type conversion",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Input arrives as a string. STRING_TO_INT converts it before you add to it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "STRING_TO_INT"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "STRING_TO_INT",
+        "INT_TO_STRING",
+        "CHAR_TO_CODE",
+        "LEN"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Why must a program close a file after writing to it?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "file handling",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Writing is buffered. Closing flushes the data to the file and releases it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Data saved, file released"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "So the data is saved properly and the file is released for other programs to use",
+        "So the file is deleted from the disk and the space it used is made free again",
+        "So the file becomes read-only and no other program can change what was written",
+        "Closing makes no difference; it is optional and only tidies up the code"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "What is output by the second line of this program?\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "substring",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "In AQA reference language SUBSTRING(start, end, string) takes characters from index start to index end, both included. Indexes 0, 1, 2 of computer are c, o, m: \"com\".",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "com"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "com"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "What is output by the last line of this program?\n\n```\nfirst ← 'Ada'\nlast ← 'Lovelace'\nfull ← first + ' ' + last\nOUTPUT full\nOUTPUT LEN(full)\n```",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "string length",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Ada plus a space plus Lovelace is 3 + 1 + 8 = 12 characters.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "extended",
+      "prompt": "Explain the difference between `STRING_TO_INT('12') + 3` and `INT_TO_STRING(12) + '3'`, giving the result of each.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "type conversion",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The point is that + means add for numbers and join for strings.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "15 by adding"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "\"123\" by joining"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Type decides the operation"
+        }
+      ],
+      "discriminators": [],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "STRING_TO_INT makes 12 a number, so + adds: result 15",
+          "marks": 1
+        },
+        {
+          "text": "INT_TO_STRING makes 12 a string, so + concatenates: result \"123\"",
+          "marks": 1
+        },
+        {
+          "text": "The type of the values decides whether + adds or joins",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "STRING_TO_INT('12') turns the text into the number 12, so + 3 adds and the result is 15. INT_TO_STRING(12) turns the number into the text '12', so + '3' joins the two strings and the result is '123'. The same symbol does different jobs depending on the data types."
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "A file is opened with `openRead` and read line by line in a loop. Which condition should control the loop?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "file handling",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Keep reading until the end-of-file check says there is nothing left. A fixed count fails if the file changes length.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "WHILE NOT endOfFile"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "WHILE NOT myFile.endOfFile()",
+        "WHILE myFile.readLine()",
+        "FOR i ← 0 TO 10",
+        "WHILE myFile.close()"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\ntext ← 'banana'\ncount ← 0\nFOR i ← 0 TO LEN(text) - 1\n   IF SUBSTRING(i, i, text) = 'a' THEN\n      count ← count + 1\n   ENDIF\nENDFOR\nOUTPUT count\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "traversing a string",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The loop checks every character; banana has three letter a.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Each character compared with a"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "extended",
+      "prompt": "Write a function `initials(first, last)` that returns the first letter of each name joined together in capitals, so `initials('ada', 'lovelace')` returns `'AL'`. You may use `SUBSTRING` and assume a function `UPPER(text)` exists.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing string code",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Take one character from each with SUBSTRING, join them, convert to upper case, return.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Header with two parameters"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "SUBSTRING for first letter of first"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "SUBSTRING for first letter of last"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "UPPER used"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RETURN the joined result"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Structure, no OUTPUT"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Function header with two parameters",
+          "marks": 1
+        },
+        {
+          "text": "SUBSTRING(0, 0, first) and SUBSTRING(0, 0, last) to take the first characters",
+          "marks": 2
+        },
+        {
+          "text": "UPPER applied to the result, or to each letter",
+          "marks": 1
+        },
+        {
+          "text": "RETURN of the joined string",
+          "marks": 1
+        },
+        {
+          "text": "Correct structure and no OUTPUT",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nSUBROUTINE initials(first, last)\n   a ← SUBSTRING(0, 0, first)\n   b ← SUBSTRING(0, 0, last)\n   RETURN UPPER(a + b)\nENDSUBROUTINE\n```"
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "What is output by this program?\n\n```\nword ← 'level'\nreversed ← ''\nFOR i ← LEN(word) - 1 TO 0 STEP -1\n   reversed ← reversed + SUBSTRING(i, i, word)\nENDFOR\nOUTPUT reversed = word\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "reversing a string",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The loop builds the word backwards: level reversed is level, so the comparison is True. A word that reads the same backwards is a palindrome.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reversed built as level"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "True"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "True",
+        "true"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A program stores high scores in a text file, one per line as `name,score`. When the program reads the file back, what must it do before comparing scores as numbers?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "files and types",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Files hold characters. The score comes back as the string \"42\" and must be converted before it can be compared or added.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Split and STRING_TO_INT"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "evaluate"
+      ],
+      "options": [
+        "Split each line at the comma and convert the score part with STRING_TO_INT, because everything read from a file is text",
+        "Nothing: numbers written to a file stay numbers, so the score can be compared as soon as it is read",
+        "Convert the name part with INT_TO_STRING, because names are read from a file as numbers",
+        "Read the file twice, once to get the names and once to get the scores, then compare the two lists"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "short-text",
+      "prompt": "`CHAR_TO_CODE('a')` is 97. What does `CODE_TO_CHAR(CHAR_TO_CODE('a') + 2)` return? Give the character.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "character codes",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "97 + 2 = 99, and the character with code 99 is c: the letters run in order in ASCII.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "c"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "c",
+        "'c'",
+        "\"c\""
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "extended",
+      "prompt": "A program must read every line of `names.txt` and count how many lines contain the letter `z` anywhere. Write the program.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing file code",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Open, loop until end of file, test each line, count, close, output.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Open and close"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "count ← 0"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "WHILE NOT endOfFile"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "readLine each pass"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "POSITION test and count + 1"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "OUTPUT count after the loop"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Open the file for reading and close it at the end",
+          "marks": 1
+        },
+        {
+          "text": "A count variable set to 0 before the loop",
+          "marks": 1
+        },
+        {
+          "text": "WHILE NOT endOfFile loop reading a line each time",
+          "marks": 2
+        },
+        {
+          "text": "A test that finds z in the line, such as POSITION(line, 'z') ≠ −1, adding 1 to the count",
+          "marks": 1
+        },
+        {
+          "text": "Output the count after the loop",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nmyFile ← openRead('names.txt')\ncount ← 0\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   IF POSITION(line, 'z') ≠ -1 THEN\n      count ← count + 1\n   ENDIF\nENDWHILE\nmyFile.close()\nOUTPUT count\n```"
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why does a program reading user input with `USERINPUT` usually need `STRING_TO_INT` before doing arithmetic?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "type conversion",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Everything typed at the keyboard arrives as text.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Input is a string"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "USERINPUT always returns a string, even when the user types digits, so it must be converted before it can be used as a number",
+        "USERINPUT returns a real number, and STRING_TO_INT rounds it to the nearest whole number before arithmetic",
+        "STRING_TO_INT removes the spaces and punctuation from the input so that the arithmetic does not fail",
+        "Arithmetic only works on strings, so the number has to be converted into text before it can be added"
+      ],
+      "correct": [
+        0
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 6
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8"
+      ],
+      "suggestedMinutes": 14
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15"
+      ],
+      "suggestedMinutes": 42
+    }
+  },
+  "examTechnique": {
+    "body": "String questions ask what a line outputs, what a loop counts, or for code that builds or checks a string. Know that SUBSTRING includes both ends in the exam reference language, and that indexes start at 0. File questions want the open, loop, close pattern and a conversion of anything numeric that comes back as text.",
+    "examinerErrors": [
+      "Treating SUBSTRING(0, 2, s) as two characters. In AQA reference language it is three: indexes 0, 1 and 2.",
+      "Adding a number to USERINPUT or to a value read from a file without converting it first.",
+      "Forgetting the space when joining a first name and a surname.",
+      "Leaving a file open after writing.",
+      "Counting lines with a FOR loop instead of reading until endOfFile."
+    ],
+    "grade9Looks": "A grade 9 answer indexes strings from 0 without slipping, converts types at the right moment, chains POSITION, SUBSTRING and STRING_TO_INT to pull a number out of a line of text, and writes file code with open, loop, close and a counter set up before the loop."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
