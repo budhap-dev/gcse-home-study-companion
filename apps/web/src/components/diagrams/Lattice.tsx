@@ -1,7 +1,7 @@
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
 
 /**
- * Structure sketches. Props: { kind: 'ionic' | 'metallic' | 'giant-covalent' | 'simple-molecules' | 'polymer' | 'graphite' | 'graphene' | 'fullerene' | 'nanotube' }.
+ * Structure sketches. Props: { kind: 'ionic' | 'metallic' | 'giant-covalent' | 'simple-molecules' | 'polymer' | 'graphite' | 'graphene' | 'fullerene' | 'nanotube' | 'alloy' }.
  */
 export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const kind = String(props.kind ?? 'ionic')
@@ -26,7 +26,7 @@ export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: s
     }
   } else if (kind === 'giant-covalent') {
     const pts: [number, number][] = []
-    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) pts.push([50 + c * 56 + (r % 2) * 28, 40 + r * 56])
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) pts.push([50 + c * 56, 40 + r * 56])
     pts.forEach(([x, y], i) => {
       pts.forEach(([x2, y2], j) => { if (j > i && Math.hypot(x - x2, y - y2) < 70) items.push(<line key={`l${i}${j}`} x1={x} y1={y} x2={x2} y2={y2} stroke={INK} strokeWidth="2" />) })
     })
@@ -82,6 +82,22 @@ export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: s
       items.push(<line key={`o2${k}`} x1={m2[0]} y1={m2[1]} x2={pt(-90 + 72 * k + 48, 82)[0]} y2={pt(-90 + 72 * k + 48, 82)[1]} stroke={INK} strokeWidth="1.5" />)
     }
     items.push(<text key="w" x={W / 2} y={H - 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>C₆₀: a hollow ball of hexagons and pentagons</text>)
+  } else if (kind === 'alloy') {
+    // Left: a pure metal, identical ions in straight layers. Right: an alloy, larger atoms bending the layers.
+    const panel = (x0: number, big: Record<string, number>, shift: Record<string, number>, label: string) => {
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) {
+        const k = `${r}${c}`, rad = big[k] ?? 11
+        const x = x0 + 24 + c * 36, y = 38 + r * 40 + (shift[k] ?? 0)
+        items.push(<circle key={`${label}${k}`} cx={x} cy={y} r={rad} fill={big[k] ? '#d25b3b' : 'var(--subject-soft)'} stroke={INK} strokeWidth="1.5" />)
+        items.push(<text key={`t${label}${k}`} x={x} y={y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="10" fontWeight="700" fill={big[k] ? '#fff' : INK}>+</text>)
+      }
+      items.push(<text key={`l${label}`} x={x0 + 78} y={H - 8} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{label}</text>)
+    }
+    panel(10, {}, {}, 'pure metal: layers slide')
+    items.push(<line key="arr" x1={20} y1={16} x2={120} y2={16} stroke="#d25b3b" strokeWidth="2" />)
+    items.push(<polygon key="arrh" points="120,11 130,16 120,21" fill="#d25b3b" />)
+    panel(168, { '11': 16, '22': 16 }, { '01': -7, '02': -5, '12': 4, '21': 6, '23': -4 }, 'alloy: layers are jammed')
+    items.push(<line key="div" x1={W / 2} y1={10} x2={W / 2} y2={H - 24} stroke={INK_2} strokeWidth="1" strokeDasharray="4 4" />)
   } else if (kind === 'nanotube') {
     const R = 16, hx = R * Math.sqrt(3)
     items.push(<rect key="tube" x={40} y={50} width={240} height={100} fill="var(--subject-soft)" stroke="none" />)

@@ -8,20 +8,20 @@ import type { SubjectGuide as GuideRecord, Topic as TopicRecord } from '@study/s
  */
 const files = import.meta.glob('../../../../supabase/seed/content/**/*.json', { eager: true, import: 'default' })
 
-/** Subject order, then unit order within the subject, then title: the order topics are met. */
-function order(t: TopicRecord): [number, number, string] {
+/** Subject order, then unit order within the subject, then the topic's own order in the unit, then title: the order topics are met. */
+function order(t: TopicRecord): [number, number, number, string] {
   const subject = getSubject(t.subjectId)
   const unitIndex = subject?.units.findIndex((u) => u.id === t.unitId) ?? 99
   const subjectIndex = SUBJECTS.findIndex((s) => s.id === t.subjectId)
-  return [subjectIndex < 0 ? 99 : subjectIndex, unitIndex < 0 ? 99 : unitIndex, t.title]
+  return [subjectIndex < 0 ? 99 : subjectIndex, unitIndex < 0 ? 99 : unitIndex, t.order ?? 999, t.title]
 }
 
 export const TOPICS: TopicRecord[] = Object.values(files)
   .map((raw) => Topic.parse(raw))
   .sort((a, b) => {
-    const [sa, ua, ta] = order(a)
-    const [sb, ub, tb] = order(b)
-    return sa - sb || ua - ub || ta.localeCompare(tb)
+    const [sa, ua, oa, ta] = order(a)
+    const [sb, ub, ob, tb] = order(b)
+    return sa - sb || ua - ub || oa - ob || ta.localeCompare(tb)
   })
 
 export function topicsForSubject(subjectId: string): TopicRecord[] {

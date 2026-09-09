@@ -15,6 +15,8 @@ export const Topic = z.object({
   title: z.string().min(1),
   /** Specification references this topic covers, in the board's numbering. */
   specPoints: z.array(z.string().min(1)).min(1),
+  /** Position within the unit in the school's teaching order. Topics without one sort last, by title. */
+  order: z.number().int().positive().optional(),
   /** Shown or hidden by the student's chosen board when a topic is board-specific. */
   boards: z.array(z.string().min(1)).optional(),
   lesson: Lesson,

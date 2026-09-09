@@ -6,7 +6,7 @@ export interface MarkResult {
   marksAvailable: number
 }
 
-const SUPERSCRIPTS: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-' }
+const SUPERSCRIPTS: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-', '⁺': '+' }
 
 /**
  * Superscript digits and signs to caret form, so x⁸ and x^8 compare equal. Also:
@@ -16,7 +16,7 @@ const SUPERSCRIPTS: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2',
  */
 export function normaliseText(s: string): string {
   let out = s.toLowerCase()
-  out = out.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+/g, (run) => '^' + [...run].map((c) => SUPERSCRIPTS[c] ?? c).join(''))
+  out = out.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, (run) => '^' + [...run].map((c) => SUPERSCRIPTS[c] ?? c).join(''))
   return out
     .replace(/\s+/g, '')
     .replace(/[−–—]/g, '-')
@@ -24,19 +24,21 @@ export function normaliseText(s: string): string {
     .replace(/÷/g, '/')
     .replace(/√\(([^)]+)\)/g, 'sqrt$1')
     .replace(/√/g, 'sqrt')
-    .replace(/sqrt\(([^)]+)\)/g, 'sqrt$1')
     .replace(/root/g, 'sqrt')
+    .replace(/sqrt\(([^)]+)\)/g, 'sqrt$1')
     .replace(/\*/g, '')
     .replace(/[{}]/g, '')
     .replace(/\^\(([^)]+)\)/g, '^$1')
     .replace(/^y=/, '')
 }
 
-/** Parses "0.25", "1/4", "-2", "3 m/s", "1,000". Returns undefined when it is not a number. */
+/** Parses "0.25", "1/4", "-2", "3 m/s", "1,000", "25 000". Returns undefined when it is not a number. */
 export function parseNumber(input: string, units?: string): number | undefined {
   let s = input.trim().toLowerCase().replace(/,/g, '')
   if (units) s = s.replace(units.toLowerCase(), '').trim()
   s = s.replace(/[a-z°%]+$/i, '').trim()
+  // "25 000" and "180 000" are how the content itself prints large numbers.
+  s = s.replace(/(\d)\s+(?=\d)/g, '$1')
   const frac = s.match(/^(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)$/)
   if (frac) {
     const d = Number(frac[2])

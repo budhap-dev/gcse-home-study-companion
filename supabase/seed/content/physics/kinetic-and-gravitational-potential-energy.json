@@ -7,6 +7,7 @@
     "4.1.1.1",
     "4.1.1.2"
   ],
+  "order": 1,
   "lesson": {
     "steps": [
       {
@@ -20,18 +21,33 @@
             "component": "energy-stores",
             "props": {},
             "alt": "A moving bus labelled kinetic store and a book on a high shelf labelled gravitational potential store"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A skateboarder rolls down a ramp, along the flat, and stops. Describe the energy stores and transfers.",
+            "steps": [
+              {
+                "text": "At the top: energy in the gravitational potential store of the skateboarder"
+              },
+              {
+                "text": "Rolling down: energy is transferred mechanically to the kinetic store"
+              },
+              {
+                "text": "Slowing on the flat: friction transfers energy to the thermal store of the wheels and the ground, and it dissipates to the surroundings. The total stays the same throughout."
+              }
+            ]
           }
         ],
         "check": {
           "id": "c1",
           "type": "multiple-choice",
-          "prompt": "A cyclist is freewheeling along a flat road. Which store holds most of their energy?",
+          "prompt": "A cyclist is freewheeling along a flat road at a steady speed. Which store holds the energy of their motion?",
           "marks": 1,
           "gradeBand": "4-5",
           "skill": "identifying energy stores",
           "calculator": "either",
           "tags": [],
-          "solution": "Moving objects hold energy in the kinetic store.",
+          "solution": "An object that is moving has energy in its kinetic store.",
           "markScheme": [
             {
               "code": "B1",
@@ -253,13 +269,28 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Grade 9: why the mass cancels, and what happens when energy is lost",
-        "body": "Set the two stores equal and the mass appears on both sides: $m g h = \\tfrac{1}{2} m v^2$ gives $v^2 = 2 g h$. So a feather and a hammer dropped in a vacuum land at the same speed.\n\nIn the real world some energy is dissipated to the thermal store of the air. Questions give this as a percentage: if 20% is lost, only 80% of $m g h$ reaches the kinetic store. Multiply by 0.8 **before** finding the speed.",
+        "body": "Set the two stores equal and the mass appears on both sides: $m g h = \\tfrac{1}{2} m v^2$ gives $v^2 = 2 g h$. So a feather and a hammer dropped in a vacuum land at the same speed.\n\nIn the real world some energy is dissipated to the thermal store of the air. **Dissipated** means transferred to a store that is no longer useful, usually the thermal store of the surroundings, which warm up very slightly. Questions give this as a percentage: if 20% is lost, only 80% of $m g h$ reaches the kinetic store. Multiply by 0.8 **before** finding the speed.",
         "visuals": [
           {
             "type": "diagram",
             "component": "energy-transfer-bars",
             "props": {},
             "alt": "Two bar charts: before the drop, one full bar for the gravitational potential store; after, a smaller kinetic bar and a thermal bar making up the difference"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A 2 kg ball is dropped from 5 m. 20% of the energy is transferred to the thermal store of the air. Find its speed at the ground. ($g = 9.8$ N/kg)",
+            "steps": [
+              {
+                "text": "$m g h = 2 \\times 9.8 \\times 5 = 98$ J"
+              },
+              {
+                "text": "80% reaches the kinetic store: $0.8 \\times 98 = 78.4$ J"
+              },
+              {
+                "text": "$\\tfrac{1}{2} m v^2 = 78.4$, so $v^2 = 78.4$ and $v = 8.9$ m/s. With no loss it would be $\\sqrt{2 \\times 9.8 \\times 5} = 9.9$ m/s."
+              }
+            ]
           }
         ],
         "check": {
@@ -295,7 +326,20 @@
           {
             "type": "diagram",
             "component": "equation-card",
-            "props": {},
+            "props": {
+              "equations": [
+                {
+                  "name": "Kinetic energy",
+                  "equation": "Ek = ½ m v²",
+                  "units": "J, kg, m/s"
+                },
+                {
+                  "name": "Gravitational potential energy",
+                  "equation": "Ep = m g h",
+                  "units": "J, kg, N/kg, m"
+                }
+              ]
+            },
             "alt": "A card showing the kinetic and gravitational potential energy equations with their units"
           }
         ]
@@ -345,12 +389,12 @@
         {
           "code": "M1",
           "marks": 1,
-          "description": "Correct method shown"
+          "description": "$\\frac{1}{2} \\times 0.5 \\times 4^2$"
         },
         {
           "code": "A1",
           "marks": 1,
-          "description": "Correct answer"
+          "description": "4 J"
         }
       ],
       "discriminators": [],
@@ -373,12 +417,12 @@
         {
           "code": "M1",
           "marks": 1,
-          "description": "Correct method shown"
+          "description": "$10 \\times 9.8 \\times 2$"
         },
         {
           "code": "A1",
           "marks": 1,
-          "description": "Correct answer"
+          "description": "196 J"
         }
       ],
       "discriminators": [],
@@ -401,12 +445,12 @@
         {
           "code": "M1",
           "marks": 1,
-          "description": "Correct method shown"
+          "description": "$\\frac{1}{2} \\times 900 \\times 20^2$"
         },
         {
           "code": "A1",
           "marks": 1,
-          "description": "Correct answer"
+          "description": "180000 J"
         }
       ],
       "discriminators": [],
@@ -842,7 +886,7 @@
       "Using the height above the ground when the question gives a height gained, or the other way round.",
       "Substituting a speed in km/h without converting to m/s.",
       "Finding the square root before substituting, or forgetting the root altogether.",
-      "Losing a mark for a missing or wrong unit."
+      "Leaving the unit off, or giving the wrong one: joules for energy, metres per second for speed."
     ],
     "grade9Looks": "A grade 9 answer sets the two stores equal in symbols before putting numbers in, cancels the mass, deals with any percentage lost before the square root, and quotes the final speed to the number of significant figures asked for."
   },

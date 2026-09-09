@@ -9,4 +9,16 @@ Two complete topics, one per Phase 1 subject, written against the content schema
 
 Both are marked as AI-drafted and unreviewed in their `provenance`, so the validator refuses to publish them until a person sets `reviewedBy`. That is deliberate: it exercises the review gate. Review the questions and solutions, correct anything wrong, then add your name.
 
-Diagram visuals name components in the shared SVG library (`repeated-multiplication`, `energy-stores`, and so on). The library does not exist yet; each diagram carries alt text describing what it must show.
+Diagram visuals name components in the web app's SVG library, `apps/web/src/components/diagrams/index.tsx`. A test fails if content names a component that is not registered. Each diagram also carries alt text describing what it shows, which is what a screen reader gets. Components and their props:
+
+| Component | Props | Used for |
+|---|---|---|
+| `repeated-multiplication`, `index-ladder`, `power-of-power`, `index-laws-card` | see the component | Laws of indices |
+| `line-graph` | `xRange`, `yRange`, `lines [{m, c, label}]`, `points [{x, y, label}]`, `xLabel`, `yLabel`, `xStep`, `yStep` | Straight lines, force against extension |
+| `triangle-construction` | `sides [AB, AC, BC]`, `angles` | Constructions |
+| `triangle-pair` | two triangles with `sides [AB, BC, CA]` | Congruence |
+| `spring-load`, `beam-moments`, `energy-stores`, `energy-transfer-bars`, `equation-card` | see the component | Physics |
+| `dot-and-cross` | `kind: ionic` with `transfer`; `kind: covalent` with two atoms and `shared` pairs, or a central atom plus any number of single-bonded atoms | Bonding |
+| `lattice` | `kind: ionic, metallic, alloy, giant-covalent, simple-molecules, polymer, graphite, graphene, fullerene, nanotube` | Structures |
+
+Interactive visuals: only `slider-graph` is built; the other kinds render their `fallback` text.

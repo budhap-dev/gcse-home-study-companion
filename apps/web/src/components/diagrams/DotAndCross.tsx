@@ -13,8 +13,9 @@ interface AtomSpec {
 /**
  * Outer-shell dot-and-cross diagrams. Props:
  *   kind: 'ionic' | 'covalent'
- *   atoms: AtomSpec[] (two atoms; for covalent the shared pairs are drawn between them)
- *   shared: number of shared pairs (covalent only)
+ *   atoms: AtomSpec[] (two atoms; for covalent the shared pairs are drawn between them.
+ *          Three or more atoms: atoms[0] is the central atom and shares one pair with each of the others)
+ *   shared: number of shared pairs (covalent, two atoms only)
  *   transfer: number of electrons moved from atoms[0] to atoms[1] (ionic only)
  */
 export function DotAndCross({ props, alt }: { props: Record<string, unknown>; alt: string }) {
@@ -49,6 +50,53 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
     for (let i = 0; i < Math.min(n, slots.length); i++) positions.push(slots[i]!)
     positions.forEach(([px, py], i) => out.push(<g key={`${x}-${i}`}>{mark(px, py, m)}</g>))
     return out
+  }
+  if (kind === 'covalent' && atoms.length > 2) {
+    // A central atom sharing one pair with each of the atoms round it: water, ammonia, methane.
+    const centre = atoms[0]!, ends = atoms.slice(1), n = ends.length
+    const CW = 300, CH = 236, cx0 = CW / 2, cy0 = CH / 2 - 8
+    const R = 40, rEnd = 26, dist = R + rEnd - 12
+    const angles = n === 2 ? [180, 0] : n === 3 ? [90, 210, 330] : Array.from({ length: n }, (_, i) => 45 + (360 / n) * i)
+    const gaps = n === 2 ? [90, 270] : n === 3 ? [270, 30, 150] : Array.from({ length: n }, (_, i) => (360 / n) * i)
+    const lonePairs = Math.max(0, Math.floor((centre.outer - n) / 2))
+    const pt = (x: number, y: number, deg: number, d: number): [number, number] => [x + d * Math.cos((deg * Math.PI) / 180), y - d * Math.sin((deg * Math.PI) / 180)]
+    const pair = (x: number, y: number, deg: number, m1: 'dot' | 'cross', m2: 'dot' | 'cross', key: string) => {
+      const px = Math.sin((deg * Math.PI) / 180) * 5, py = Math.cos((deg * Math.PI) / 180) * 5
+      return <g key={key}>{mark(x + px, y + py, m1)}{mark(x - px, y - py, m2)}</g>
+    }
+    const items: React.ReactNode[] = []
+    items.push(<circle key="c" cx={cx0} cy={cy0} r={R} fill="none" stroke={INK} strokeWidth="1.5" />)
+    items.push(<text key="cs" x={cx0} y={cy0 + 6} textAnchor="middle" fontFamily={DISPLAY} fontSize="18" fontWeight="700" fill={INK}>{centre.symbol}</text>)
+    ends.forEach((end, i) => {
+      const a = angles[i]!
+      const [ex, ey] = pt(cx0, cy0, a, dist)
+      items.push(<circle key={`e${i}`} cx={ex} cy={ey} r={rEnd} fill="none" stroke={INK} strokeWidth="1.5" />)
+      const [lx, ly] = pt(cx0, cy0, a, dist + 6)
+      items.push(<text key={`es${i}`} x={lx} y={ly + 5} textAnchor="middle" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={INK}>{end.symbol}</text>)
+      const [mx, my] = pt(cx0, cy0, a, (R + dist - rEnd) / 2)
+      items.push(pair(mx, my, a, centre.mark, end.mark, `sp${i}`))
+      const rest = end.outer - 1
+      if (rest > 0) {
+        const pairs = Math.ceil(rest / 2)
+        for (let k = 0; k < pairs; k++) {
+          const ang = a + 180 + (k - (pairs - 1) / 2) * 70
+          const [qx, qy] = pt(ex, ey, ang, rEnd - 8)
+          items.push(pair(qx, qy, ang, end.mark, end.mark, `er${i}${k}`))
+        }
+      }
+    })
+    for (let k = 0; k < lonePairs; k++) {
+      const ang = gaps[k % gaps.length]!
+      const [qx, qy] = pt(cx0, cy0, ang, R - 8)
+      items.push(pair(qx, qy, ang, centre.mark, centre.mark, `lp${k}`))
+    }
+    const caption = `${n} shared pairs: ${n} single covalent bonds` + (lonePairs > 0 ? `, and ${lonePairs} lone pair${lonePairs > 1 ? 's' : ''} on ${centre.symbol}` : '')
+    return (
+      <svg viewBox={`0 0 ${CW} ${CH}`} width="100%" style={{ maxWidth: CW * 1.1 }} role="img" aria-label={alt}>
+        {items}
+        <text x={CW / 2} y={CH - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{caption}</text>
+      </svg>
+    )
   }
   if (kind === 'ionic') {
     const a = atoms[0]!, b = atoms[1]!
