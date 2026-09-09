@@ -1,4 +1,5 @@
-import { BADGES, STATUS_COLOUR, STATUS_LABEL, SUBJECTS, TOPIC_STATUSES, type SubjectId } from '@study/shared'
+import { BADGES, STATUS_COLOUR, STATUS_LABEL, SUBJECTS, TOPIC_STATUSES, type SubjectId, LEVEL_NAMES } from '@study/shared'
+import { SectionLabel } from '../../components/KindChip.tsx'
 import { BadgeIcon } from '../../components/BadgeIcon.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { levelBySubject, skillStats, totalXp } from '../../progress/xp.ts'
@@ -20,22 +21,22 @@ export function Progress() {
   const subjectName = (id: string) => SUBJECTS.find((s) => s.id === id)?.name ?? id
 
   return (
-    <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+    <article className="mx-auto flex w-full max-w-6xl flex-col gap-6">
       <header className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold leading-tight">Progress</h1>
         <p className="text-ink-2">Saved on this device. {streakDays(progress)} day streak · {weekMinutes(progress)} of {progress.goalMinutes} minutes this week · {totalXp(progress)} XP.</p>
       </header>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Levels</h2>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <SectionLabel colour="#6B4E9B" emoji="🏅">Levels</SectionLabel>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
             const level = levels[s.id as SubjectId]
             return (
               <div key={s.id} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                   <span className="font-bold" style={{ color: s.colour }}>{s.name}</span>
-                  <span className="whitespace-nowrap text-sm"><strong>{level ? level.name : 'Level 1'}</strong> <span className="text-ink-2">· level {level?.level ?? 1}</span></span>
+                  <span className="whitespace-nowrap text-sm"><strong>{level ? level.name : LEVEL_NAMES[s.id][0]}</strong> <span className="text-ink-2">· level {level?.level ?? 1}</span></span>
                 </div>
                 <div className="h-2 overflow-hidden rounded-full bg-panel"><div className="h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></div>
                 <span className="text-xs text-ink-2">{level ? `${level.into} of ${level.span} XP to ${level.nextName}` : 'Finish a lesson or quiz to start'}</span>
@@ -48,13 +49,13 @@ export function Progress() {
       {(strengths.length > 0 || weaknesses.length > 0) && (
         <section className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">Strengths</h2>
+            <SectionLabel colour="#2e8b57" emoji="💪">Strengths</SectionLabel>
             {strengths.length === 0 ? <p className="text-sm text-ink-2">Not enough answers yet.</p> : (
               <ul className="flex flex-col gap-1 text-sm">{strengths.map((x) => <li key={x.subjectId + x.skill} className="flex justify-between gap-2"><span>{x.skill} <span className="text-ink-3">· {subjectName(x.subjectId)}</span></span><strong className="tabular-nums">{x.pct}%</strong></li>)}</ul>
             )}
           </div>
           <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
-            <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-not-secure">Work on next</h2>
+            <SectionLabel colour="#d25b3b" emoji="🎯">Work on next</SectionLabel>
             {weaknesses.length === 0 ? <p className="text-sm text-ink-2">Nothing below 60% yet.</p> : (
               <ul className="flex flex-col gap-1 text-sm">{weaknesses.map((x) => <li key={x.subjectId + x.skill} className="flex justify-between gap-2"><span>{x.skill} <span className="text-ink-3">· {subjectName(x.subjectId)}</span></span><strong className="tabular-nums">{x.pct}%</strong></li>)}</ul>
             )}
@@ -63,8 +64,8 @@ export function Progress() {
       )}
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Badges · {Object.keys(progress.badges).length} of {BADGES.length}</h2>
-        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <SectionLabel colour="#c8501f" emoji="🏆">{`Badges · ${Object.keys(progress.badges).length} of ${BADGES.length}`}</SectionLabel>
+        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
           {BADGES.map((b) => {
             const earned = Boolean(progress.badges[b.id])
             return (
@@ -78,7 +79,7 @@ export function Progress() {
       </section>
 
       <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
-        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">This week</h2>
+        <SectionLabel colour="#1f3a93" emoji="📅">This week</SectionLabel>
         <div className="grid grid-cols-7 gap-2">
           {days.map((d) => {
             const m = progress.minutes[d] ?? 0
@@ -97,7 +98,7 @@ export function Progress() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Topics by status</h2>
+        <SectionLabel colour="#0f766e" emoji="📊">Topics by status</SectionLabel>
         <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-2">
           {TOPIC_STATUSES.map((s) => (
             <li key={s} className="flex items-center gap-1.5"><StatusIcon status={s} size={12} />{STATUS_LABEL[s]}</li>
@@ -120,7 +121,7 @@ export function Progress() {
       </section>
 
       <section className="flex flex-col gap-2">
-        <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Recent</h2>
+        <SectionLabel colour="#c27a00" emoji="🕒">Recent</SectionLabel>
         {recent.length === 0 ? (
           <p className="text-sm text-ink-2">Nothing finished yet. A quiz or worksheet shows up here.</p>
         ) : (

@@ -7,12 +7,12 @@ import { evidenceFor } from '../../progress/store.ts'
 export function Subjects() {
   const progress = useProgress()
   return (
-    <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+    <article className="mx-auto flex w-full max-w-6xl flex-col gap-6">
       <header className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold leading-tight">Subjects</h1>
         <p className="max-w-[65ch] text-ink-2">Eight subjects at Higher tier, pitched at grade 9. Topics appear here as they are written.</p>
       </header>
-      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {SUBJECTS.map((s) => {
           const topics = topicsForSubject(s.id)
           const ready = topics.filter((t) => evidenceFor(t.id, progress).status === 'grade-9-ready').length

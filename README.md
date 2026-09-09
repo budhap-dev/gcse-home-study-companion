@@ -61,3 +61,21 @@ The app version is the `version` field in `apps/web/package.json`, shown in the 
 - **Major** (0.x → 1.0.0, then 2.0.0): a milestone the family will notice. 1.0.0 is planned for when every subject has its Autumn 1 content and the app is in daily use; the next major is Google sign-in with progress sync.
 
 Bump the version in the same PR as the change, so the footer always says which release is deployed.
+
+
+## Family sign-in (Google)
+
+Sign-in is optional and switched on by two environment variables. Without them the app runs exactly as before: no accounts, progress on the device.
+
+With them, the app shows a Google sign-in screen, and only Google accounts listed in the `allowed_emails` table of your Supabase project can get in. The list lives only in the database, never in this repository. Each allowed account gets one `user_progress` row, so progress follows the student between devices; row-level security means the restriction holds even if someone bypasses the screen.
+
+Set-up, once:
+
+1. **Supabase project.** Create a free project at supabase.com. In Project Settings → Data API note the project URL (`https://<project-ref>.supabase.co`) and the publishable key (`sb_publishable_…`, the newer form of the anon key; both are safe in a browser).
+2. **Google OAuth client.** In Google Cloud Console create a project, configure the OAuth consent screen (External; add the family's Gmail addresses as test users, or publish), then Credentials → Create credentials → OAuth client ID → Web application. Authorised redirect URI: `https://<project-ref>.supabase.co/auth/v1/callback`. Copy the client ID and secret.
+3. **Enable Google in Supabase.** Authentication → Providers → Google: paste the client ID and secret. Authentication → URL configuration: Site URL `https://gcse-home-study-companion.vercel.app`; Redirect URLs: that URL, plus `http://localhost:8000` for local use.
+4. **Apply the migrations.** `supabase link --project-ref <ref>` then `supabase db push`, or paste `supabase/migrations/*.sql` into the SQL editor in order.
+5. **Allow the family's accounts.** In the SQL editor: `insert into public.allowed_emails (email, note) values ('student@gmail.com', 'student'), ('parent@gmail.com', 'parent');` Emails must be lower case.
+6. **Keys.** In Vercel → Project → Settings → Environment Variables add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (the publishable key goes in the second), then redeploy. Locally, copy `apps/web/.env.example` to `apps/web/.env.local` and fill it in.
+
+Each row has a role, `parent` or `student` (default). Make yourself a parent once with `update public.allowed_emails set role = 'parent' where email = 'you@gmail.com';`. After that, parents add and remove family accounts from Settings → Family in the app; a removed account is signed out on its next visit.

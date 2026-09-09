@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
+import { KindChip } from '../../components/KindChip.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic } from '../../content/index.ts'
@@ -11,7 +12,6 @@ import { settle, type Settlement } from '../../progress/settle.ts'
 import { Celebration } from '../../components/Celebration.tsx'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
-const KIND_LABEL = { explain: 'Explain', 'worked-example': 'Worked example', 'your-turn': 'Your turn', summary: 'Summary', 'grade-9': 'Grade 9' } as const
 
 /**
  * One step per screen. A check question must be answered before moving on the first
@@ -94,15 +94,15 @@ export function Lesson() {
   }
 
   return (
-    <article className="mx-auto flex w-full max-w-2xl flex-col gap-5">
+    <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
       <header className="flex items-center gap-3">
         <button type="button" onClick={back} aria-label={index === 0 ? 'Back to topic' : 'Previous step'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-rule bg-surface">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 6l-6 6 6 6" /></svg>
         </button>
         <div className="flex flex-grow flex-col gap-1.5">
-          <div className="flex justify-between text-xs text-ink-2">
-            <span className="font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · {topic.title}</span>
-            <span>Step {index + 1} of {steps.length}</span>
+          <div className="flex justify-between gap-2 text-xs text-ink-2">
+            <span className="line-clamp-1 font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · {topic.title}</span>
+            <span className="shrink-0 whitespace-nowrap">Step {index + 1} of {steps.length}</span>
           </div>
           <div className="grid gap-0.5" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }} role="progressbar" aria-valuemin={1} aria-valuemax={steps.length} aria-valuenow={index + 1}>
             {steps.map((s, i) => (
@@ -113,11 +113,11 @@ export function Lesson() {
       </header>
 
       <div className="flex flex-col gap-1">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{KIND_LABEL[step.kind]}</p>
+        <KindChip kind={step.kind} />
         <h1 className="text-2xl font-bold leading-tight">{step.title}</h1>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className={step.visuals.length > 1 ? 'grid grid-cols-1 gap-4 md:grid-cols-2' : 'flex flex-col gap-4'}>
         {step.visuals.map((v, i) => (
           <Visual key={i} visual={v} />
         ))}
@@ -126,8 +126,8 @@ export function Lesson() {
       <RichText source={step.body} className="text-[17px] leading-relaxed" />
 
       {step.check && (
-        <section className="flex flex-col gap-3 rounded-2xl bg-panel p-4">
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Check</p>
+        <section className="tint flex flex-col gap-3 rounded-2xl border border-[color:var(--subject)] p-4">
+          <KindChip kind="check" />
           <RichText source={step.check.prompt} className="font-bold" />
           <QuestionInput key={step.id} question={step.check} disabled={result !== null} onSubmit={submit} />
           {result && <Feedback question={step.check} result={result} />}

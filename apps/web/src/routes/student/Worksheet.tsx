@@ -85,7 +85,7 @@ export function Worksheet() {
 
   if (!state) {
     return (
-      <article className="mx-auto flex w-full max-w-2xl flex-col gap-5">
+      <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{subject.name} · {topic.title}</p>
         <h1 className="text-3xl font-bold leading-tight">{LEVEL_LABEL[level]} worksheet</h1>
         <ul className="flex flex-col gap-1 text-ink-2">

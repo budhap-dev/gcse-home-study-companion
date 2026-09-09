@@ -2,6 +2,7 @@ import { NavLink, Outlet, useLocation } from 'react-router'
 import { NAV } from './nav.ts'
 import { APP_BUILT, VERSION_LABEL } from './version.ts'
 import { Logo } from '../components/Logo.tsx'
+import { useAuth } from '../auth/useAuth.ts'
 
 /**
  * Layout: sidebar on wide screens, bottom bar on phones. Content is one column
@@ -9,6 +10,7 @@ import { Logo } from '../components/Logo.tsx'
  */
 export function AppShell() {
   const { pathname } = useLocation()
+  const auth = useAuth()
   return (
     <div className="flex min-h-dvh flex-col md:flex-row">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2">
@@ -21,7 +23,7 @@ export function AppShell() {
         </NavLink>
         <Menu orientation="vertical" />
         <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
-          <span>Progress is saved on this device.</span>
+          <span>{auth.status === 'allowed' ? `Signed in as ${auth.name ?? auth.email}. Progress is saved to your account.` : 'Progress is saved on this device.'}</span>
           <span title={`Built ${APP_BUILT}`}>{VERSION_LABEL}</span>
         </div>
       </aside>
