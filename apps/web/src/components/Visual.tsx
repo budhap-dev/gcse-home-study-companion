@@ -4,6 +4,18 @@ import { DIAGRAMS } from './diagrams/index.tsx'
 import { SliderGraph } from './interactives/SliderGraph.tsx'
 
 /**
+ * Diagrams are drawn with dark ink on a light ground, whatever the theme. Dark
+ * themes would otherwise hide them, so the canvas pins its own colours and gives
+ * the subject tint a light version for fills.
+ */
+export const LIGHT_CANVAS = {
+  background: '#ffffff',
+  '--color-surface': '#ffffff',
+  '--color-panel': '#f0ede4',
+  '--subject-soft': 'color-mix(in srgb, var(--subject) 14%, #ffffff)',
+} as React.CSSProperties
+
+/**
  * Renders one visual block. Diagrams and interactives fall back to their text
  * description until the SVG component library and interactive kinds are built,
  * which keeps every step readable on any device.
@@ -37,7 +49,7 @@ export function Visual({ visual }: { visual: VisualBlock }) {
       const Diagram = DIAGRAMS[visual.component]
       if (Diagram) {
         return (
-          <figure className="flex justify-center rounded-xl border border-rule bg-surface p-3" data-diagram={visual.component}>
+          <figure className="flex justify-center rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={visual.component}>
             <Diagram props={visual.props} alt={visual.alt} />
           </figure>
         )

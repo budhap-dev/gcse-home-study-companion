@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 import { DISPLAY, FONT, INK, INK_2, RULE } from '../diagrams/index.tsx'
+import { LIGHT_CANVAS } from '../Visual.tsx'
 
 type Formula = 'kinetic' | 'fall-speed' | 'square' | 'linear' | 'inverse-square'
 
@@ -37,7 +38,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
   const fmt = (v: number) => (v >= 1000 ? Math.round(v).toLocaleString('en-GB') : v >= 100 ? v.toFixed(0) : v >= 1 ? v.toFixed(1) : v.toFixed(2))
   return (
     <figure className="flex flex-col gap-3 rounded-xl border border-rule bg-surface p-4">
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440, ...LIGHT_CANVAS, borderRadius: 12 }} role="img" aria-label={alt}>
         {[0.25, 0.5, 0.75, 1].map((k) => <line key={k} x1={pad} y1={sy(k * yMax)} x2={W - pad} y2={sy(k * yMax)} stroke={RULE} />)}
         <line x1={pad} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />
         <line x1={sx(xMin)} y1={pad} x2={sx(xMin)} y2={H - pad} stroke={INK} strokeWidth="1.5" />
