@@ -21,6 +21,10 @@ export function Topic() {
   const evidence = evidenceFor(topic.id, progress)
   const lesson = progress.lessons[topic.id]
   const fmt = (v?: number) => (v === undefined ? 'not yet' : `${Math.round(v)}%`)
+  // The two most recent quiz scores, so the stat can show the direction of travel.
+  const quizzes = progress.attempts.filter((a) => a.topicId === topic.id && a.kind === 'quiz').sort((a, b) => b.completedAt.localeCompare(a.completedAt))
+  const pct = (a: { marksScored: number; marksAvailable: number }) => Math.round((100 * a.marksScored) / a.marksAvailable)
+  const quizNote = quizzes.length >= 2 ? (() => { const d = pct(quizzes[0]!) - pct(quizzes[1]!); return d === 0 ? `same as last time` : `${d > 0 ? 'up' : 'down'} from ${pct(quizzes[1]!)}%` })() : undefined
 
   return (
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
@@ -35,13 +39,14 @@ export function Topic() {
       <section className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
         {[
           ['Lesson', evidence.lessonDone ? 'done' : lesson ? `step ${lesson.stepIndex + 1}` : 'not started'],
-          ['Last quiz', fmt(evidence.quizPct)],
+          ['Last quiz', fmt(evidence.quizPct), quizNote],
           ['Higher sheet', fmt(evidence.higherPct)],
           ['Advanced sheet', fmt(evidence.advancedPct)],
-        ].map(([label, value]) => (
+        ].map(([label, value, note]) => (
           <div key={label} className="flex flex-col gap-0.5 rounded-lg bg-panel px-3 py-2">
             <span className="text-[11px] text-ink-2">{label}</span>
             <span className="font-bold">{value}</span>
+            {note && <span className="text-[11px] text-ink-2">{note}</span>}
           </div>
         ))}
       </section>

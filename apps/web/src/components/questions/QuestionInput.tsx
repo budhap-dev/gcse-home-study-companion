@@ -34,12 +34,17 @@ export function QuestionInput({ question, disabled = false, onSubmit }: Props) {
 
 function MultipleChoice({ question, disabled, onSubmit }: Props & { question: Extract<Question, { type: 'multiple-choice' }> }) {
   const [chosen, setChosen] = useState<number[]>([])
+  // Options are shown in a fresh order each time the question is mounted, so the
+  // position of the right answer in the content file never becomes a pattern.
+  // `chosen` and the submitted answer always hold indexes into the original options.
+  const [order] = useState<number[]>(() => seededShuffle(question.options.map((_, i) => i), `${question.id}:${Math.random()}`))
   const multi = question.correct.length > 1
   const toggle = (i: number) => setChosen((c) => (multi ? (c.includes(i) ? c.filter((x) => x !== i) : [...c, i]) : [i]))
   return (
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" role={multi ? 'group' : 'radiogroup'}>
-        {question.options.map((opt, i) => {
+        {order.map((i) => {
+          const opt = question.options[i]!
           const on = chosen.includes(i)
           return (
             <button

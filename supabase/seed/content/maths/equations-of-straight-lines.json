@@ -8,6 +8,7 @@
     "A10",
     "G11"
   ],
+  "order": 1,
   "lesson": {
     "steps": [
       {
@@ -49,11 +50,26 @@
               ]
             },
             "alt": "The line y equals 2x plus 1 crossing the y-axis at 1 and rising two for each one across, with the points (0, 1) and (1, 3) marked"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Write down the gradient and the $y$-intercept of $y = 3 - 2x$.",
+            "steps": [
+              {
+                "text": "Rearrange to the form $y = mx + c$: $y = -2x + 3$"
+              },
+              {
+                "text": "Gradient $m = -2$: the number multiplying $x$, including its sign"
+              },
+              {
+                "text": "$y$-intercept $c = 3$: the line crosses the $y$-axis at $(0, 3)$"
+              }
+            ]
           }
         ],
         "check": {
           "id": "c1",
-          "type": "short-text",
+          "type": "numeric",
           "prompt": "What is the gradient of $y = 5x - 3$?",
           "marks": 1,
           "gradeBand": "4-5",
@@ -69,8 +85,101 @@
             }
           ],
           "discriminators": [],
-          "accepted": [
-            "5"
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s1b",
+        "kind": "explain",
+        "title": "Drawing the line",
+        "body": "To draw a line from its equation, pick three $x$ values, work out $y$ for each, plot the points, and join them with a ruler. The third point is a check: if it is off the line, one of the three is wrong.\n\nFor $y = 2x - 3$: $x = 0$ gives $y = -3$, $x = 1$ gives $y = -1$, and $x = 3$ gives $y = 3$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -2,
+                5
+              ],
+              "yRange": [
+                -5,
+                5
+              ],
+              "lines": [
+                {
+                  "m": 2,
+                  "c": -3,
+                  "label": "y = 2x − 3"
+                }
+              ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": -3,
+                  "label": "(0, −3)"
+                },
+                {
+                  "x": 1,
+                  "y": -1,
+                  "label": "(1, −1)"
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "label": "(3, 3)"
+                }
+              ]
+            },
+            "alt": "The line y equals 2x minus 3 drawn through the three plotted points (0, −3), (1, −1) and (3, 3)"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Draw $y = -x + 2$",
+            "steps": [
+              {
+                "text": "Choose $x = 0$: $y = 2$, so plot $(0, 2)$"
+              },
+              {
+                "text": "Choose $x = 2$: $y = 0$, so plot $(2, 0)$"
+              },
+              {
+                "text": "Choose $x = 4$: $y = -2$, so plot $(4, -2)$ and check it lines up"
+              },
+              {
+                "text": "Join with a ruler and extend across the grid"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1b",
+          "type": "multiple-choice",
+          "prompt": "Which point lies on the line $y = 2x - 3$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "plotting a line",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Substitute $x = 2$: $2(2) - 3 = 1$, so $(2, 1)$ is on the line. The others give $-1$, $-3$ and $3$, not the $y$ values shown.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(2, 1)"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$(2, 1)$",
+            "$(1, 1)$",
+            "$(0, 3)$",
+            "$(3, 4)$"
+          ],
+          "correct": [
+            0
           ]
         }
       },
@@ -128,6 +237,21 @@
               ]
             },
             "alt": "Two lines: y equals minus x plus 3 sloping down, and y equals a half x minus 2 sloping gently up"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A line passes through $(0, 5)$ and $(4, 3)$. Find its gradient.",
+            "steps": [
+              {
+                "text": "Change in $y$: $3 - 5 = -2$ (down 2)"
+              },
+              {
+                "text": "Change in $x$: $4 - 0 = 4$ (across 4)"
+              },
+              {
+                "text": "$m = \\dfrac{-2}{4} = -\\dfrac{1}{2}$: down 1 for every 2 across"
+              }
+            ]
           }
         ],
         "check": {
@@ -196,7 +320,7 @@
                 }
               ]
             },
-            "alt": "The line through (1, 2) and (3, 8) with both points marked: 2 across and 6 up between them"
+            "alt": "The line through (1, 2) and (3, 8) with both points marked"
           }
         ],
         "check": {
@@ -300,6 +424,89 @@
         }
       },
       {
+        "id": "s5b",
+        "kind": "explain",
+        "title": "Midpoint and length",
+        "body": "The **midpoint** of $A(x_1, y_1)$ and $B(x_2, y_2)$ is the average of each coordinate:\n\n$$\\left(\\dfrac{x_1 + x_2}{2}, \\dfrac{y_1 + y_2}{2}\\right)$$\n\nThe **length** of $AB$ comes from Pythagoras on the change in $x$ and the change in $y$:\n\n$$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$\n\nFor $A(2, 7)$ and $B(8, 3)$: midpoint $(5, 5)$, and $AB = \\sqrt{6^2 + (-4)^2} = \\sqrt{52} = 2\\sqrt{13}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                10
+              ],
+              "yRange": [
+                0,
+                10
+              ],
+              "lines": [
+                {
+                  "m": -0.6666666666666666,
+                  "c": 8.333333333333334
+                }
+              ],
+              "points": [
+                {
+                  "x": 2,
+                  "y": 7,
+                  "label": "A (2, 7)"
+                },
+                {
+                  "x": 8,
+                  "y": 3,
+                  "label": "B (8, 3)"
+                },
+                {
+                  "x": 5,
+                  "y": 5,
+                  "label": "M (5, 5)"
+                }
+              ]
+            },
+            "alt": "Points A at (2, 7) and B at (8, 3) joined by a line segment, with the midpoint M at (5, 5) marked"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Midpoint and length of $PQ$ for $P(-3, 1)$ and $Q(5, 7)$",
+            "steps": [
+              {
+                "text": "Midpoint: $\\left(\\dfrac{-3 + 5}{2}, \\dfrac{1 + 7}{2}\\right) = (1, 4)$"
+              },
+              {
+                "text": "Change in $x$ is $8$, change in $y$ is $6$"
+              },
+              {
+                "text": "$PQ = \\sqrt{8^2 + 6^2} = \\sqrt{100} = 10$"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5b",
+          "type": "numeric",
+          "prompt": "Find the length of the line segment from $(1, 2)$ to $(4, 6)$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "length of a line segment",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Across 3, up 4: $\\sqrt{3^2 + 4^2} = \\sqrt{25} = 5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
         "id": "s6",
         "kind": "explain",
         "title": "Equations in disguise",
@@ -343,7 +550,8 @@
             "y=4x-3",
             "y = 4x - 3",
             "4x-3",
-            "y=4x−3"
+            "y=4x−3",
+            "y=-3+4x"
           ]
         }
       },
@@ -507,7 +715,7 @@
   "questions": [
     {
       "id": "q1",
-      "type": "short-text",
+      "type": "numeric",
       "prompt": "Write down the gradient of the line $y = 3x - 2$.",
       "marks": 1,
       "gradeBand": "4-5",
@@ -523,9 +731,9 @@
         }
       ],
       "discriminators": [],
-      "accepted": [
-        "3"
-      ]
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
     },
     {
       "id": "q2",
@@ -554,18 +762,18 @@
     {
       "id": "q3",
       "type": "numeric",
-      "prompt": "Find the gradient of the line through $(1, 2)$ and $(3, 8)$.",
+      "prompt": "Find the gradient of the line through $(2, 1)$ and $(5, 10)$.",
       "marks": 2,
       "gradeBand": "4-5",
       "skill": "gradient from two points",
       "calculator": "either",
       "tags": [],
-      "solution": "Gradient $= \\dfrac{8 - 2}{3 - 1} = \\dfrac{6}{2} = 3$.",
+      "solution": "$m = \\dfrac{10 - 1}{5 - 2} = \\dfrac{9}{3} = 3$. Subtract in the same order on the top and the bottom.",
       "markScheme": [
         {
           "code": "M1",
           "marks": 1,
-          "description": "$\\frac{8-2}{3-1}$ or a correct rise over run"
+          "description": "$\\frac{10-1}{5-2}$ or a correct rise over run"
         },
         {
           "code": "A1",
@@ -641,7 +849,9 @@
         "-1/2x+3",
         "y=3-x/2",
         "y=3-0.5x",
-        "y=3-1/2x"
+        "y=3-1/2x",
+        "y=-(1/2)x+3",
+        "y=(-1/2)x+3"
       ]
     },
     {
@@ -735,36 +945,36 @@
             }
           ]
         },
-        "alt": "A straight line crossing the y-axis at minus 1 and rising two units for each unit across"
+        "alt": "A straight line drawn on axes from minus 5 to 5, passing through the marked points (0, −1) and (1, 1)"
       }
     },
     {
       "id": "q8",
       "type": "short-text",
-      "prompt": "Rearrange $3y - 6x = 12$ into the form $y = mx + c$.",
+      "prompt": "Rearrange $4y - 8x = 20$ into the form $y = mx + c$.",
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "rearranging to y = mx + c",
       "calculator": "either",
       "tags": [],
-      "solution": "Add $6x$: $3y = 6x + 12$. Divide by 3: $y = 2x + 4$.",
+      "solution": "Add $8x$ to both sides: $4y = 8x + 20$. Divide everything by 4: $y = 2x + 5$.",
       "markScheme": [
         {
           "code": "M1",
           "marks": 1,
-          "description": "$3y = 6x + 12$"
+          "description": "$4y = 8x + 20$"
         },
         {
           "code": "A1",
           "marks": 1,
-          "description": "$y = 2x + 4$"
+          "description": "$y = 2x + 5$"
         }
       ],
       "discriminators": [],
       "accepted": [
-        "y=2x+4",
-        "y = 2x + 4",
-        "2x+4"
+        "y=2x+5",
+        "2x+5",
+        "y=5+2x"
       ]
     },
     {
@@ -831,7 +1041,7 @@
         {
           "code": "A1",
           "marks": 1,
-          "description": "$2x + y - 5 = 0$ or any integer multiple"
+          "description": "$2x + y - 5 = 0$ (or $-2x - y + 5 = 0$)"
         }
       ],
       "discriminators": [
@@ -929,33 +1139,37 @@
     },
     {
       "id": "q13",
-      "type": "multiple-choice",
-      "prompt": "Which of these lines does not pass through $(3, 7)$?",
-      "marks": 1,
+      "type": "numeric",
+      "prompt": "The line $y = mx + 7$ passes through $(4, 1)$ and $(-2, k)$. Find the value of $k$.",
+      "marks": 3,
       "gradeBand": "8-9",
-      "skill": "testing whether a point lies on a line",
+      "skill": "equation from a point and the intercept",
       "calculator": "either",
       "tags": [],
-      "solution": "Test each: $2(3) + 1 = 7$ ✓, $3(3) - 2 = 7$ ✓, $3 + 7 = 10$ ✓, $10 - 2(3) = 4 \\ne 7$ ✗.",
+      "solution": "Substitute $(4, 1)$: $1 = 4m + 7$, so $m = -1.5$. The line is $y = -1.5x + 7$. At $x = -2$: $k = -1.5(-2) + 7 = 3 + 7 = 10$.",
       "markScheme": [
         {
-          "code": "B1",
+          "code": "M1",
           "marks": 1,
-          "description": "$y = 10 - 2x$"
+          "description": "$1 = 4m + 7$ giving $m = -1.5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Substitutes $x = -2$ into $y = -1.5x + 7$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
         }
       ],
       "discriminators": [
         "multi-topic"
       ],
-      "options": [
-        "$y = 2x + 1$",
-        "$y = 3x - 2$",
-        "$x + y = 10$",
-        "$y = 10 - 2x$"
-      ],
-      "correct": [
-        3
-      ]
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
     },
     {
       "id": "q14",
@@ -1095,6 +1309,68 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q18",
+      "type": "multiple-choice",
+      "prompt": "Which of these lines does not pass through $(3, 7)$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "testing whether a point lies on a line",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Test each: $2(3) + 1 = 7$ ✓, $3(3) - 2 = 7$ ✓, $3 + 7 = 10$ ✓, $10 - 2(3) = 4 \\ne 7$ ✗.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$y = 10 - 2x$"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "$y = 2x + 1$",
+        "$y = 3x - 2$",
+        "$x + y = 10$",
+        "$y = 10 - 2x$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q19",
+      "type": "numeric",
+      "prompt": "A line has gradient 2 and passes through $(3, 4)$. Find the $x$-coordinate of the point where it crosses the $x$-axis.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "intercepts from an equation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$y = 2x + c$ with $(3, 4)$: $4 = 6 + c$, so $c = -2$ and the line is $y = 2x - 2$. On the $x$-axis $y = 0$: $0 = 2x - 2$, so $x = 1$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$c = -2$ or $y = 2x - 2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Sets $y = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1116,9 +1392,10 @@
         "q6",
         "q7",
         "q8",
-        "q15"
+        "q15",
+        "q18"
       ],
-      "suggestedMinutes": 18
+      "suggestedMinutes": 20
     },
     "advanced": {
       "level": "advanced",
@@ -1127,11 +1404,12 @@
         "q10",
         "q11",
         "q12",
+        "q13",
         "q14",
         "q16",
-        "q13"
+        "q19"
       ],
-      "suggestedMinutes": 35
+      "suggestedMinutes": 39
     }
   },
   "examTechnique": {
@@ -1163,7 +1441,9 @@
       "q14",
       "q15",
       "q16",
-      "q17"
+      "q17",
+      "q18",
+      "q19"
     ],
     "sampleSize": 10
   },

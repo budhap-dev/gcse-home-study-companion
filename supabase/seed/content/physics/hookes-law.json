@@ -4,8 +4,10 @@
   "unitId": "forces",
   "title": "Hooke's law and elasticity",
   "specPoints": [
-    "4.5.3"
+    "4.5.3",
+    "4.1.1.2"
   ],
+  "order": 1,
   "lesson": {
     "steps": [
       {
@@ -81,7 +83,7 @@
         "check": {
           "id": "c2",
           "type": "numeric",
-          "prompt": "A spring has $k = 25$ N/m. What force gives an extension of 0.08 m?",
+          "prompt": "A spring has $k = 25$ N/m. What force, in newtons, gives an extension of 0.08 m?",
           "marks": 1,
           "gradeBand": "4-5",
           "skill": "using F = ke",
@@ -106,7 +108,7 @@
         "id": "s3",
         "kind": "worked-example",
         "title": "Finding the spring constant",
-        "body": "Convert centimetres to metres before anything else. This is where most marks are lost.",
+        "body": "Convert centimetres to metres before anything else. It is the step examiners see slip most often.",
         "visuals": [
           {
             "type": "worked-example",
@@ -152,7 +154,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "The force–extension graph",
-        "body": "Force on the $y$-axis, extension on the $x$-axis. While Hooke's law holds the graph is a **straight line through the origin** and its **gradient is $k$**. At the **limit of proportionality** the line starts to curve: extension grows faster than force. The spring may still be elastic for a while beyond that, and eventually it deforms permanently.",
+        "body": "Force on the $y$-axis, extension on the $x$-axis. While Hooke's law holds the graph is a **straight line through the origin** and its **gradient is $k$**. At the **limit of proportionality** the line starts to curve: extension grows faster than force. Up to the limit of proportionality the relationship between force and extension is **linear**; beyond it, it is **non-linear**. The spring may still be elastic for a while beyond that, and eventually it deforms permanently.",
         "visuals": [
           {
             "type": "diagram",
@@ -179,9 +181,11 @@
                   "y": 5,
                   "label": "(0.1, 5)"
                 }
-              ]
+              ],
+              "xLabel": "extension (m)",
+              "yLabel": "force (N)"
             },
-            "alt": "Force against extension: a straight line through the origin with gradient 50 newtons per metre, marked at (0.1, 5)"
+            "alt": "Force in newtons on the vertical axis against extension in metres on the horizontal axis: a straight line through the origin with gradient 50 newtons per metre, marked at (0.1, 5)"
           }
         ],
         "check": {
@@ -445,9 +449,9 @@
       "discriminators": [],
       "options": [
         "N/m",
-        "N",
-        "m",
-        "J"
+        "N m",
+        "m/N",
+        "J/m"
       ],
       "correct": [
         0
@@ -456,7 +460,7 @@
     {
       "id": "q2",
       "type": "numeric",
-      "prompt": "A spring has spring constant 20 N/m. Calculate the force needed to extend it by 0.5 m.",
+      "prompt": "A spring has spring constant 20 N/m. Calculate the force needed to extend it by 0.5 m, in newtons.",
       "marks": 2,
       "gradeBand": "4-5",
       "skill": "using F = ke",
@@ -590,9 +594,9 @@
       "discriminators": [],
       "options": [
         "The line stops being straight: extension grows faster than force",
-        "The spring breaks immediately",
-        "The line becomes steeper and straighter",
-        "The extension stops increasing"
+        "The spring snaps straight away, so the line stops at that point",
+        "The line becomes steeper and straighter as the spring stiffens",
+        "The extension stops increasing however much more force is added"
       ],
       "correct": [
         0
@@ -851,9 +855,11 @@
               "y": 6,
               "label": "(0.12, 6)"
             }
-          ]
+          ],
+          "xLabel": "extension (m)",
+          "yLabel": "force (N)"
         },
-        "alt": "Force in newtons against extension in metres: a straight line through the origin passing through (0.04, 2) and (0.12, 6)"
+        "alt": "Force in newtons on the vertical axis against extension in metres on the horizontal axis: a straight line through the origin with two points marked and labelled, (0.04, 2) and (0.12, 6)"
       }
     },
     {
@@ -880,7 +886,7 @@
         {
           "code": "A1",
           "marks": 1,
-          "description": "25 000 N/m"
+          "description": "25000 N/m"
         }
       ],
       "discriminators": [],
@@ -980,6 +986,47 @@
       "tolerance": 0,
       "unitsRequired": false,
       "units": "N/m"
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A student hangs masses on a spring of unstretched length 4.0 cm and records the total length: 100 g gives 6.0 cm, 200 g gives 8.0 cm, 300 g gives 10.0 cm, 400 g gives 12.5 cm. Taking $g = 9.8$ N/kg, use the straight part of the results to calculate the spring constant, in N/m.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "processing practical data",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Extensions are 2.0, 4.0, 6.0 and 8.5 cm. The first three are proportional to the weights 0.98, 1.96 and 2.94 N, so they are on the straight part; the 400 g point is past the limit of proportionality and is left out. $k = \\dfrac{2.94}{0.06} = 49$ N/m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Extension = total length − 4.0 cm, converted to metres"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Weight = mass in kg × 9.8"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "400 g result excluded as beyond the limit of proportionality"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "49 N/m"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "answer": 49,
+      "tolerance": 0.5,
+      "units": "N/m",
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1012,9 +1059,10 @@
         "q11",
         "q14",
         "q12",
-        "q15"
+        "q15",
+        "q16"
       ],
-      "suggestedMinutes": 30
+      "suggestedMinutes": 36
     }
   },
   "examTechnique": {
@@ -1023,7 +1071,7 @@
       "Using the whole length of the spring instead of the extension.",
       "Forgetting to convert centimetres to metres, giving $k$ one hundred times too small.",
       "Squaring $ke$ instead of $e$ in the energy equation.",
-      "Using mass in newtons: 200 g is not 200 N, or even 2 N.",
+      "Using mass in place of weight: 200 g is 0.2 kg, and its weight is 0.2 × 9.8 = 1.96 N, not 200 N and not 0.2 N.",
       "Reading $k$ from a curved part of the graph."
     ],
     "grade9Looks": "A grade 9 answer converts units before substituting, rearranges in symbols, uses the gradient of the straight section only, links the area under the graph to the energy equation, and describes the practical as variables, method, and processing rather than a story."
@@ -1044,7 +1092,8 @@
       "q12",
       "q13",
       "q14",
-      "q15"
+      "q15",
+      "q16"
     ],
     "sampleSize": 10
   },
