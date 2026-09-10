@@ -9,6 +9,12 @@ export interface Stroke {
 
 const COLOURS = ['#1e2330', '#0e7a86', '#d25b3b']
 const ASPECT = 0.62
+/**
+ * The sheet and its squares keep their own light ground whatever the theme, the same
+ * way diagrams do: the pens are dark ink, so on a dark surface the strokes vanish.
+ */
+const PAPER = '#ffffff'
+const GRID = '#ece9e1'
 
 interface Props {
   strokes: Stroke[]
@@ -41,7 +47,7 @@ export function ScratchCanvas({ strokes, onChange, disabled = false }: Props) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     ctx.clearRect(0, 0, w, h)
     // faint grid, like squared paper
-    ctx.strokeStyle = '#ece9e1'
+    ctx.strokeStyle = GRID
     ctx.lineWidth = 1
     for (let x = 0; x <= w; x += 24) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke() }
     for (let y = 0; y <= h; y += 24) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke() }
@@ -130,8 +136,8 @@ export function ScratchCanvas({ strokes, onChange, disabled = false }: Props) {
         onPointerUp={onUp}
         onPointerCancel={onUp}
         onPointerLeave={onUp}
-        className="w-full touch-none rounded-xl border border-rule bg-surface"
-        style={{ aspectRatio: `1 / ${ASPECT}`, cursor: tool === 'eraser' ? 'cell' : 'crosshair' }}
+        className="w-full touch-none rounded-xl border border-rule"
+        style={{ background: PAPER, aspectRatio: `1 / ${ASPECT}`, cursor: tool === 'eraser' ? 'cell' : 'crosshair' }}
         aria-label="Scratch canvas for working"
       />
       <p className="text-xs text-ink-2">Working is saved with your answer.</p>

@@ -153,10 +153,10 @@ function GoalRing({ minutes, goal }: { minutes: number; goal: number }) {
   const c = 2 * Math.PI * r
   const frac = Math.min(1, goal > 0 ? minutes / goal : 0)
   return (
-    <svg width="76" height="76" viewBox="0 0 76 76" role="img" aria-label={`${minutes} of ${goal} minutes this week`}>
-      <circle cx="38" cy="38" r={r} fill="none" stroke="#ECE9E1" strokeWidth="8" />
+    <svg width="76" height="76" viewBox="0 0 76 76" className="text-ink" role="img" aria-label={`${minutes} of ${goal} minutes this week`}>
+      <circle cx="38" cy="38" r={r} fill="none" stroke="var(--color-rule)" strokeWidth="8" />
       <circle cx="38" cy="38" r={r} fill="none" stroke="#2E8B57" strokeWidth="8" strokeLinecap="round" strokeDasharray={`${c * frac} ${c}`} transform="rotate(-90 38 38)" style={{ transition: 'stroke-dasharray 0.9s ease-out' }} />
-      <text x="38" y="42" textAnchor="middle" fontFamily="Bricolage Grotesque, Arial, sans-serif" fontSize="15" fontWeight="700" fill="#1E2330">{Math.round(frac * 100)}%</text>
+      <text x="38" y="42" textAnchor="middle" fontFamily="Bricolage Grotesque, Arial, sans-serif" fontSize="15" fontWeight="700" fill="currentColor">{Math.round(frac * 100)}%</text>
     </svg>
   )
 }

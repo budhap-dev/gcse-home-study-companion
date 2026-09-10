@@ -2,6 +2,7 @@ import type { Visual as VisualBlock } from '@study/shared'
 import { RichText } from './RichText.tsx'
 import { DIAGRAMS } from './diagrams/index.tsx'
 import { SliderGraph } from './interactives/SliderGraph.tsx'
+import { EquationEntry } from './interactives/EquationEntry.tsx'
 import { KindChip } from './KindChip.tsx'
 
 /**
@@ -64,6 +65,7 @@ export function Visual({ visual }: { visual: VisualBlock }) {
     }
     case 'interactive':
       if (visual.kind === 'slider-graph') return <SliderGraph config={visual.config} alt={visual.fallback} />
+      if (visual.kind === 'equation-entry') return <EquationEntry config={visual.config} alt={visual.fallback} />
       return (
         <figure className="flex flex-col gap-2 rounded-xl border border-dashed border-rule bg-surface p-4">
           <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Interactive · {visual.kind}</span>

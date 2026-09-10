@@ -32,10 +32,32 @@ export function normaliseText(s: string): string {
     .replace(/^y=/, '')
 }
 
-/** Parses "0.25", "1/4", "-2", "3 m/s", "1,000", "25 000". Returns undefined when it is not a number. */
+const SUPERSCRIPT_DIGITS = '⁰¹²³⁴⁵⁶⁷⁸⁹'
+
+/**
+ * Rewrites "1.8 x 10^5", "1.8 × 10⁵" and "10^-3" into the "1.8e5" form the number
+ * check below understands. Physics answers run to 180 000 and 25 000, and a student
+ * who has just been taught standard form writes them that way.
+ */
+function standardForm(s: string): string {
+  const superscript = (run: string) => [...run].map((c) => (SUPERSCRIPT_DIGITS.includes(c) ? String(SUPERSCRIPT_DIGITS.indexOf(c)) : c === '⁻' ? '-' : c === '⁺' ? '' : c)).join('')
+  return s
+    .replace(/10\s*([⁻⁺]?[⁰¹²³⁴⁵⁶⁷⁸⁹]+)/g, (_, run: string) => `10^${superscript(run)}`)
+    .replace(/^\s*([-+]?\d*\.?\d+)?\s*[x×*]?\s*10\s*\^\s*\(?([-+]?\d+)\)?\s*$/, (_whole, mantissa: string | undefined, exponent: string) => {
+      const power = exponent.replace(/^\+/, '')
+      return `${mantissa === undefined || mantissa === '' ? '1' : mantissa}e${power}`
+    })
+}
+
+/**
+ * Parses "0.25", "1/4", "-2", "3 m/s", "1,000", "25 000", and standard form written
+ * any of the ways a student writes it: "1.8e5", "1.8 x 10^5", "1.8 × 10⁵".
+ * Returns undefined when it is not a number.
+ */
 export function parseNumber(input: string, units?: string): number | undefined {
   let s = input.trim().toLowerCase().replace(/,/g, '')
   if (units) s = s.replace(units.toLowerCase(), '').trim()
+  s = standardForm(s)
   s = s.replace(/[a-z°%/ ]+$/i, '').trim()
   // "25 000" and "180 000" are how the content itself prints large numbers.
   s = s.replace(/(\d)\s+(?=\d)/g, '$1')

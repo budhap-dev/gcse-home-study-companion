@@ -17,12 +17,12 @@ export function SignIn({ auth }: { auth: AuthState }) {
         {busy ? 'Signing in…' : 'Sign in with Google'}
       </button>
       {auth.status === 'denied' && (
-        <p className="rounded-xl border border-status-not-secure bg-[#F6E3DA] px-4 py-3 text-sm" role="alert">
+        <p className="rounded-xl border border-status-not-secure px-4 py-3 text-sm" style={{ background: 'color-mix(in srgb, var(--color-status-not-secure) 12%, var(--color-surface))' }} role="alert">
           <Smiley>🙈</Smiley> {auth.message} Ask whoever set the app up to add it, then try again.
         </p>
       )}
       {auth.status === 'error' && (
-        <p className="rounded-xl border border-status-developing bg-[#FBF0C9] px-4 py-3 text-sm" role="alert">Sign-in did not work: {auth.message}</p>
+        <p className="rounded-xl border border-status-developing px-4 py-3 text-sm" style={{ background: 'color-mix(in srgb, var(--color-status-developing) 12%, var(--color-surface))' }} role="alert">Sign-in did not work: {auth.message}</p>
       )}
       <p className="text-xs text-ink-3">This app is for our family. Only listed Google accounts can sign in, and progress is saved to your account.</p>
     </main>

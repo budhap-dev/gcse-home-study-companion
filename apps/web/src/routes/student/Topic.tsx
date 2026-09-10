@@ -1,10 +1,36 @@
 import { getSubject, WORKSHEET_LEVELS } from '@study/shared'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link, useParams } from 'react-router'
+import { RichText } from '../../components/RichText.tsx'
 import { StatusChip } from '../../components/StatusChip.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { evidenceFor } from '../../progress/store.ts'
+
+/**
+ * A short preview of a rich-text body, cut on a sentence end that is outside any
+ * maths span. A blind slice splits `$E_e = \tfrac{1}{2}ke^2$` down the middle and the
+ * card shows the raw LaTeX, which is what four topics used to do.
+ */
+export function previewOf(body: string, max = 150): string {
+  let depth = 0
+  let cut = 0
+  for (let i = 0; i < body.length && i < max; i++) {
+    if (body[i] === '$') depth = depth === 0 ? 1 : 0
+    if (depth === 0 && (body[i] === '.' || body[i] === '!' || body[i] === '?') && body[i + 1] === ' ') cut = i + 1
+  }
+  if (cut > 0) return body.slice(0, cut)
+  // No sentence ended in range: fall back to the whole body if it is short, else
+  // the longest prefix that closes every maths span it opens.
+  if (body.length <= max) return body
+  let safe = 0
+  depth = 0
+  for (let i = 0; i < max; i++) {
+    if (body[i] === '$') depth = depth === 0 ? 1 : 0
+    if (depth === 0 && body[i] === ' ') safe = i
+  }
+  return body.slice(0, safe || max) + '…'
+}
 
 const LEVEL_LABEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const
 const LEVEL_NOTE = {
@@ -68,7 +94,7 @@ export function Topic() {
         })}
         <Part to="quiz" title="Quiz" note={`${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action="Start" />
         <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
-        <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={topic.examTechnique.body.slice(0, 120) + '…'} action="Read" />
+        <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={previewOf(topic.examTechnique.body)} action="Read" />
       </nav>
 
       {topic.resources && topic.resources.length > 0 && (
@@ -94,7 +120,7 @@ function Part({ to, title, note, action }: { to: string; title: string; note: st
       <span className="tint flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl"><Smiley>{PART_EMOJI[title] ?? '📚'}</Smiley></span>
       <span className="flex flex-grow flex-col gap-0.5">
         <span className="font-bold">{title}</span>
-        <span className="text-xs text-ink-2">{note}</span>
+        <RichText source={note} inline className="text-xs text-ink-2" />
       </span>
       <span className="rounded-lg bg-[color:var(--subject)] px-3 py-1.5 text-sm font-bold text-white">{action}</span>
     </Link>
