@@ -100,3 +100,16 @@ describe('negative answers', () => {
     expect(parseNumber('£-500', '£')).toBe(-500)
   })
 })
+
+describe('apostrophes', () => {
+  it('treats a curly apostrophe as a straight one, for French answers', () => {
+    const q: Question = {
+      id: 'q', type: 'short-text', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's',
+      calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }],
+      discriminators: [], accepted: ["j'ai mal à la tête"],
+    }
+    for (const typed of ["j'ai mal à la tête", "j’ai mal à la tête", "J'ai mal à la tête", "j' ai mal à la tête"]) {
+      expect(mark(q, typed).correct, typed).toBe(true)
+    }
+  })
+})

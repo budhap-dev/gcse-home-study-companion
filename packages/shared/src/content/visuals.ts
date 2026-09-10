@@ -38,7 +38,7 @@ const WorkedExample = z.object({
 /** Interactive step types from LRN-7. Code trace arrives with Computer Science in Phase 3. */
 const Interactive = z.object({
   type: z.literal('interactive'),
-  kind: z.enum(['slider-graph', 'drag-order', 'drag-match', 'labelling', 'equation-entry']),
+  kind: z.enum(['slider-graph', 'drag-order', 'drag-match', 'labelling', 'equation-entry', 'vocab-list']),
   config: z.record(z.string(), z.unknown()),
   /** Static description of the finished state for screen readers and older devices. */
   fallback: RichText,

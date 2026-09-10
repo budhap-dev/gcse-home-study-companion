@@ -73,3 +73,21 @@ Started 10 September 2026 with the owner's approval. School order for Year 10: 1
 | Summer | 2.2 Making marketing decisions | |
 
 The grade 9 discriminators in Business are the 9 and 12 mark justify and evaluate questions and the calculations in 1.3 and 2.4, so each topic's Advanced worksheet is built from those.
+
+## French (Edexcel 1FR1, board not yet confirmed)
+
+Started 10 September 2026. The school's overview does not name a board; Edexcel 1FR1 is the PRD's assumption. School order for Year 10 term 1 and 2: good mental health, illness and accidents with the perfect tense of reflexive verbs, the simple future, lifestyle changes, then holidays, festivals and accommodation.
+
+| Half term | Topics | Status |
+|---|---|---|
+| Autumn 1 | Good mental health · Illness and accidents, with the perfect tense of reflexive verbs · What you will do to improve your life, with the simple future · Lifestyle changes | Good mental health drafted 10 September 2026; illness and accidents next |
+| Autumn 2 | Combining imperfect, present and simple future · Holidays and accommodation · Ideal holiday · Holiday activities · Festivals · Reviewing and booking accommodation | |
+| Spring | Environment: infographics, geography and climate, problems, the passive voice, collective and daily actions · New technologies · Understanding adverts | |
+| Summer | Town or village · Directions · Shopping for clothes · Role plays · Ideal home · Visiting a town or city · Exam skills | |
+
+**Blocked: the subject exam-technique guide.** Every other subject has one, giving papers, marks, timings and command words. French does not, for two reasons: the school has not named the board, and the Edexcel 1FR1 specification PDF uses subset-encoded fonts that could not be read reliably, so the paper structure could not be verified from source. Writing it from memory risks teaching the wrong exam. The app already handles a missing guide, showing "The guide for this subject has not been written yet." Ask the school which board, then write the guide from the specification.
+
+Authoring notes for French, which differs from the other subjects:
+- Vocabulary is a `vocab-list` interactive: it speaks each word with the browser's French voice and keeps the English hidden until asked for.
+- Conjugations use the `verb-table` diagram, which draws the stem and the ending apart because that split is the lesson.
+- Accepted answers carry the accented spelling **first**, then an unaccented twin, so a UK keyboard does not block a correct answer while the feedback still shows the right spelling. Every solution states the accented form.
