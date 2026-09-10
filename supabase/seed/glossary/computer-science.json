@@ -1,0 +1,389 @@
+{
+  "subjectId": "computer-science",
+  "entries": [
+    {
+      "term": "Array",
+      "definition": "A collection of items of the **same type**, stored under one name and reached by an index that starts at 0.",
+      "example": "`items ← ['pen', 'ink', 'pad', 'cap']` — `items[2]` is `'pad'`, because indexing starts at 0.",
+      "topics": [
+        "arrays-and-records"
+      ],
+      "aliases": [
+        "arrays",
+        "list"
+      ],
+      "related": [
+        "Index",
+        "Traversing",
+        "Record",
+        "Two-dimensional array"
+      ]
+    },
+    {
+      "term": "Index",
+      "definition": "The position of an item in an array or string. AQA arrays and strings start at index 0, so the last index is one less than the length.",
+      "example": "In `'computer'`, index 0 is `'c'` and index 7 is `'r'`; `LEN` is 8, so `LEN - 1` is the last index.",
+      "topics": [
+        "arrays-and-records",
+        "strings-and-file-handling"
+      ],
+      "aliases": [
+        "indices",
+        "subscript",
+        "position"
+      ],
+      "related": [
+        "Array",
+        "Off-by-one error",
+        "String"
+      ]
+    },
+    {
+      "term": "Traversing",
+      "definition": "Visiting every item in an array in turn, usually with a `FOR` loop from 0 to `LEN - 1`.",
+      "example": "```\ntotal ← 0\nFOR i ← 0 TO LEN(scores) - 1\n   total ← total + scores[i]\nENDFOR\n```",
+      "topics": [
+        "arrays-and-records"
+      ],
+      "aliases": [
+        "traverse",
+        "iterate",
+        "loop through"
+      ],
+      "related": [
+        "Array",
+        "Index",
+        "Off-by-one error"
+      ]
+    },
+    {
+      "term": "Two-dimensional array",
+      "definition": "An array of arrays, addressed with two indexes: row then column. Traversed with nested loops.",
+      "example": "A 4-row, 6-column grid traversed by `FOR r ← 0 TO 3` inside which `FOR c ← 0 TO 5` outputs `grid[r][c]` gives $4 \\times 6 = 24$ values.",
+      "topics": [
+        "arrays-and-records"
+      ],
+      "aliases": [
+        "2d array",
+        "grid",
+        "nested array"
+      ],
+      "related": [
+        "Array",
+        "Traversing"
+      ]
+    },
+    {
+      "term": "Record",
+      "definition": "A single structure holding several fields of **different** types under one name. An array of records is the usual way to store a table of data.",
+      "example": "A `Student` record with `name` (string), `age` (integer) and `average` (real). `students[3].name` reaches one field of one record.",
+      "topics": [
+        "arrays-and-records"
+      ],
+      "aliases": [
+        "records",
+        "struct",
+        "field"
+      ],
+      "related": [
+        "Array",
+        "Two-dimensional array"
+      ]
+    },
+    {
+      "term": "Off-by-one error",
+      "definition": "A loop that runs one time too many or too few, usually from confusing the length of an array with its last index.",
+      "example": "`FOR i ← 0 TO LEN(a)` runs past the end; the correct upper bound is `LEN(a) - 1`. The other classic is stopping at `LEN - 2` and missing the last item.",
+      "topics": [
+        "arrays-and-records",
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "off by one",
+        "boundary error"
+      ],
+      "related": [
+        "Index",
+        "Traversing",
+        "Boundary data"
+      ]
+    },
+    {
+      "term": "Subroutine",
+      "definition": "A named block of code that can be called from anywhere. A **procedure** does a job; a **function** returns a value. They avoid repetition and break a problem into parts.",
+      "example": "```\nSUBROUTINE area(width, height)\n   RETURN width * height\nENDSUBROUTINE\nroom ← area(4, 5)\n```",
+      "topics": [
+        "subroutines-procedures-and-functions"
+      ],
+      "aliases": [
+        "subroutines",
+        "procedure",
+        "function",
+        "method"
+      ],
+      "related": [
+        "Parameter",
+        "Return value",
+        "Local variable"
+      ]
+    },
+    {
+      "term": "Parameter",
+      "definition": "A value passed into a subroutine, named in its definition. The value actually supplied at the call is the **argument**.",
+      "example": "In `SUBROUTINE area(width, height)` the parameters are `width` and `height`; in the call `area(4, 5)` the arguments are 4 and 5.",
+      "topics": [
+        "subroutines-procedures-and-functions"
+      ],
+      "aliases": [
+        "parameters",
+        "argument",
+        "arguments"
+      ],
+      "related": [
+        "Subroutine",
+        "Return value"
+      ]
+    },
+    {
+      "term": "Return value",
+      "definition": "The value a function hands back to whatever called it. A procedure returns nothing.",
+      "example": "`g(2)` where `SUBROUTINE g(n) RETURN n + 3` gives 5, so `f(g(2))` with `f(n) RETURN n * n` gives $5^2 = 25$. Work from the inside out.",
+      "topics": [
+        "subroutines-procedures-and-functions"
+      ],
+      "aliases": [
+        "returns",
+        "return"
+      ],
+      "related": [
+        "Subroutine",
+        "Parameter"
+      ]
+    },
+    {
+      "term": "Local variable",
+      "definition": "A variable created inside a subroutine. It exists only while that subroutine runs and cannot be seen outside it. A **global** variable is visible everywhere.",
+      "example": "Assigning `total ← 20` inside a subroutine makes a new local `total`; the global `total` of 100 outside is untouched, so the last line still outputs 100.",
+      "topics": [
+        "subroutines-procedures-and-functions"
+      ],
+      "aliases": [
+        "scope",
+        "global variable",
+        "local"
+      ],
+      "related": [
+        "Subroutine"
+      ]
+    },
+    {
+      "term": "String",
+      "definition": "Text: a sequence of characters, each with an index starting at 0. AQA gives four operations: `LEN`, `SUBSTRING`, `POSITION` and `+` for concatenation.",
+      "example": "`LEN('keyboard')` is 8. `SUBSTRING(0, 2, 'computer')` is `'com'` — both ends **included**. `'Ada' + ' ' + 'Lovelace'` has length 12.",
+      "topics": [
+        "strings-and-file-handling"
+      ],
+      "aliases": [
+        "strings",
+        "text"
+      ],
+      "related": [
+        "Index",
+        "Concatenation",
+        "Casting"
+      ]
+    },
+    {
+      "term": "Concatenation",
+      "definition": "Joining two strings end to end, written with `+` in AQA pseudo-code.",
+      "example": "`first ← 'Ada'`, `last ← 'Lovelace'`, then `full ← first + ' ' + last` gives `'Ada Lovelace'`, whose length is $3 + 1 + 8 = 12$.",
+      "topics": [
+        "strings-and-file-handling"
+      ],
+      "aliases": [
+        "concatenate",
+        "joining strings"
+      ],
+      "related": [
+        "String"
+      ]
+    },
+    {
+      "term": "Casting",
+      "definition": "Converting a value from one data type to another. Input arrives as a string, so it must be cast before arithmetic.",
+      "example": "`STRING_TO_INT('42')` gives the number 42; `INT_TO_STRING(42)` gives `'42'`. Adding the string `'42'` to a number is a type error.",
+      "topics": [
+        "strings-and-file-handling"
+      ],
+      "aliases": [
+        "type conversion",
+        "string_to_int",
+        "convert"
+      ],
+      "related": [
+        "String",
+        "Validation"
+      ]
+    },
+    {
+      "term": "Validation",
+      "definition": "Checking that input is **sensible** before the program uses it. The usual checks are range, length, presence, type and format.",
+      "example": "A range check for a mark out of 100 rejects $-1$ and 101. Validation is not the same as verification, which checks the data was entered correctly.",
+      "topics": [
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "validate",
+        "range check",
+        "length check",
+        "presence check"
+      ],
+      "related": [
+        "Authentication",
+        "Boundary data",
+        "Robust programming"
+      ]
+    },
+    {
+      "term": "Authentication",
+      "definition": "Checking that the **person** is who they claim to be, usually with a username and password. Different from validation, which checks the data.",
+      "example": "A login loop that limits attempts to three before locking out. Passwords should be stored as a hash, never as plain text.",
+      "topics": [
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "authenticate",
+        "login",
+        "password"
+      ],
+      "related": [
+        "Validation",
+        "Robust programming"
+      ]
+    },
+    {
+      "term": "Robust programming",
+      "definition": "Writing a program that keeps working when the input is wrong, unexpected or hostile: validating input, authenticating users and handling every case.",
+      "example": "Using a `WHILE` loop rather than a single `IF` to re-ask for input means the rest of the program can rely on the data being valid.",
+      "topics": [
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "robust",
+        "defensive programming"
+      ],
+      "related": [
+        "Validation",
+        "Authentication",
+        "Test data"
+      ]
+    },
+    {
+      "term": "Test data",
+      "definition": "The values chosen to test a program. AQA names three kinds: **normal** data the program should accept, **boundary** data at the edges of what is allowed, and **erroneous** data it should reject.",
+      "example": "For a mark out of 100: normal 50; boundary $-1$, 0, 100 and 101, values **either side** of each limit; erroneous `'abc'`.",
+      "topics": [
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "testing",
+        "normal data",
+        "erroneous data"
+      ],
+      "related": [
+        "Boundary data",
+        "Validation",
+        "Trace table"
+      ]
+    },
+    {
+      "term": "Boundary data",
+      "definition": "Test values at the very edge of what is allowed, taken from **both sides** of each limit. It catches the off-by-one errors that normal data misses.",
+      "example": "For a range of 0 to 100 the boundary data is $-1$, 0, 100 and 101. Testing only 0 and 100 misses the errors either side.",
+      "topics": [
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "boundary values",
+        "edge case"
+      ],
+      "related": [
+        "Test data",
+        "Off-by-one error"
+      ]
+    },
+    {
+      "term": "Syntax error",
+      "definition": "Code that breaks the rules of the language, so it will not run at all. One of the **two** error types AQA names; the other is a logic error.",
+      "example": "A missing `ENDIF`, or `IF x = 5 THEN` written `IF x = 5 THN`. The program never starts, so the error is found immediately.",
+      "topics": [
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "syntax errors",
+        "compile error"
+      ],
+      "related": [
+        "Logic error",
+        "Trace table"
+      ]
+    },
+    {
+      "term": "Logic error",
+      "definition": "Code that runs but gives the wrong answer, because the instructions do not do what was intended. Harder to find than a syntax error, because nothing complains.",
+      "example": "Using `>` where `≥` was meant, so a mark of exactly 19 is not counted. A trace table is the usual way to find one.",
+      "topics": [
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "logic errors",
+        "bug"
+      ],
+      "related": [
+        "Syntax error",
+        "Trace table"
+      ]
+    },
+    {
+      "term": "Trace table",
+      "definition": "A table with one column per variable and one row per step, filled in by hand to follow what a program actually does. The standard way to find a logic error.",
+      "example": "Tracing a `WHILE` loop that searches for a value shows `i` reaching 3 even though the match was at index 2, because `i` is incremented before the condition is rechecked.",
+      "topics": [
+        "arrays-and-records",
+        "robust-and-secure-programming"
+      ],
+      "aliases": [
+        "tracing",
+        "dry run"
+      ],
+      "related": [
+        "Logic error",
+        "Test data"
+      ]
+    },
+    {
+      "term": "AQA pseudo-code",
+      "definition": "The notation AQA publishes for writing algorithms in the exam. It is **not** an *exam reference language*, which is a different board's term, and coded answers must be written in the language of the paper being sat.",
+      "example": "`total ← 0` for assignment, `FOR i ← 0 TO 9 ... ENDFOR`, `SUBROUTINE ... ENDSUBROUTINE`. Paper variants are C# (8525A), Python (8525B) and VB.NET (8525C).",
+      "topics": [
+        "subroutines-procedures-and-functions",
+        "arrays-and-records"
+      ],
+      "aliases": [
+        "pseudocode",
+        "pseudo code"
+      ],
+      "related": [
+        "Subroutine",
+        "Trace table"
+      ]
+    }
+  ],
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "glossary-1"
+    }
+  }
+}

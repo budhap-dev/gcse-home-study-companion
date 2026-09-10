@@ -1,6 +1,6 @@
 import { getSubject, mark, XP, type MarkResult } from '@study/shared'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { KindChip } from '../../components/KindChip.tsx'
@@ -23,9 +23,15 @@ export function Lesson() {
   const navigate = useNavigate()
   const subject = subjectId ? getSubject(subjectId) : undefined
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
+  const [params] = useSearchParams()
   const [index, setIndex] = useState(() => {
+    const steps = topic?.lesson.steps.length ?? 1
+    // A search result links to ?step=N (1-based) and wins over the saved position,
+    // because the student asked for that step by name.
+    const asked = Number(params.get('step'))
+    if (Number.isInteger(asked) && asked >= 1 && asked <= steps) return asked - 1
     const saved = topic ? getState().lessons[topic.id] : undefined
-    return saved && !saved.completedAt ? Math.min(saved.stepIndex, (topic?.lesson.steps.length ?? 1) - 1) : 0
+    return saved && !saved.completedAt ? Math.min(saved.stepIndex, steps - 1) : 0
   })
   const [result, setResult] = useState<MarkResult | null>(null)
   const [done, setDone] = useState(false)

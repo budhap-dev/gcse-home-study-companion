@@ -1,5 +1,5 @@
 import type { ComponentType, SVGProps } from 'react'
-import { BookIcon, ChartIcon, CogIcon, HomeIcon } from '../components/icons.tsx'
+import { BookIcon, BookmarkIcon, ChartIcon, CogIcon, HomeIcon } from '../components/icons.tsx'
 
 export interface NavItem {
   to: string
@@ -13,6 +13,7 @@ export interface NavItem {
 export const NAV: NavItem[] = [
   { to: '/', label: 'Home', icon: HomeIcon, end: true },
   { to: '/subjects', label: 'Subjects', icon: BookIcon },
+  { to: '/glossary', label: 'Glossary', icon: BookmarkIcon },
   { to: '/progress', label: 'Progress', icon: ChartIcon },
   { to: '/settings', label: 'Settings', icon: CogIcon },
 ]
