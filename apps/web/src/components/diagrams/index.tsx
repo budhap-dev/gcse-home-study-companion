@@ -10,6 +10,7 @@ import { TrianglePair } from './TrianglePair.tsx'
 import { SpringLoad } from './SpringLoad.tsx'
 import { BeamMoments } from './BeamMoments.tsx'
 import { Collision } from './Collision.tsx'
+import { FluidColumn } from './FluidColumn.tsx'
 import { DotAndCross } from './DotAndCross.tsx'
 import { Lattice } from './Lattice.tsx'
 import { EnergyStores } from './EnergyStores.tsx'
@@ -36,6 +37,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'spring-load': SpringLoad,
   'beam-moments': BeamMoments,
   'collision': Collision,
+  'fluid-column': FluidColumn,
   'dot-and-cross': DotAndCross,
   'lattice': Lattice,
   'energy-stores': EnergyStores,

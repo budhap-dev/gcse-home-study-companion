@@ -22,7 +22,7 @@ Source: the school's Year 10 Physics overview, shared 2 September 2026. The scho
 | When | Topics, in teaching order | Status |
 |---|---|---|
 | Autumn 1 | Hooke's law and elastic potential energy · Balancing forces, which the school's overview means as moments, levers and gears | Both drafted |
-| Autumn 2 | Momentum, including conservation and $F = \Delta p / \Delta t$ · Pressure in fluids and atmospheric pressure | Momentum drafted 10 September 2026; pressure next |
+| Autumn 2 | Momentum, including conservation and $F = \Delta p / \Delta t$ · Pressure in fluids and atmospheric pressure | Both drafted 10 September 2026 |
 | Spring 1 | The gas laws and behaviour of gases · Thermal physics: internal energy, specific heat capacity, specific latent heat | |
 | Spring 2 | Electromagnetic waves and light | |
 | Summer 1 | Static electricity and electric fields | |
@@ -30,7 +30,7 @@ Source: the school's Year 10 Physics overview, shared 2 September 2026. The scho
 
 School assessments the content should be ready before: milestone tests on Hooke's law, balancing forces and moments in Autumn 1; on pressure, gases and light in Autumn 2; a final exam covering Year 9 and Year 10 Physics in the summer. Year 9 material (Energy, including kinetic and gravitational potential energy) reappears in the synoptic tests, so the sample-pack topic stays useful as recap.
 
-The Autumn 2 Milestone re-tests all of Year 9 alongside Hooke's law, moments and momentum, so the Year 9 Forces topics (motion graphs, resultant forces, Newton's laws, stopping distances) are worth writing as recap once pressure in fluids is done.
+The Autumn 2 Milestone re-tests all of Year 9 alongside Hooke's law, moments and momentum, so the Year 9 Forces topics (motion graphs, resultant forces, Newton's laws, stopping distances) are the next Physics work, as recap.
 
 ## Chemistry, AQA 8462 Higher, Triple
 
