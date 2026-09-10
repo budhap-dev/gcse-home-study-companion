@@ -68,8 +68,8 @@ Started 10 September 2026 with the owner's approval. School order for Year 10: 1
 | Half term | Topics | Status |
 |---|---|---|
 | Autumn 1 and 2 | 1.4 Making the business effective: ownership and liability, franchising, location, the marketing mix, business plans · 1.5 Understanding external influences: stakeholders, technology, legislation, the economy | Both drafted 10 September 2026 |
-| Autumn 2 recap | 1.3 Putting a business idea into practice, including the calculations · 1.1 Enterprise and entrepreneurship · 1.2 Spotting a business opportunity | 1.3 drafted 10 September 2026, first because it holds the calculations; 1.1 and 1.2 next, for the Milestone on 1.1 to 1.5 |
-| Spring | 2.1 Growing the business | |
+| Autumn 2 recap | 1.3 Putting a business idea into practice, including the calculations · 1.1 Enterprise and entrepreneurship · 1.2 Spotting a business opportunity | All three drafted 10 September 2026. **Theme 1 is complete**, so every section the Autumn Milestone on 1.1 to 1.5 tests is now covered. |
+| Spring | 2.1 Growing the business | Next |
 | Summer | 2.2 Making marketing decisions | |
 
 The grade 9 discriminators in Business are the 9 and 12 mark justify and evaluate questions and the calculations in 1.3 and 2.4, so each topic's Advanced worksheet is built from those.
