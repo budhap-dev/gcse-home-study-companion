@@ -31,7 +31,6 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const W = 360
   const H = 300
   const pad = 28
-  const sx = (x: number) => pad + ((x - xMin) / (xMax - xMin)) * (W - 2 * pad)
   const sy = (y: number) => H - pad - ((y - yMin) / (yMax - yMin)) * (H - 2 * pad)
   const palette = [ACCENT, '#d25b3b', '#2e8b57', '#1f3a93']
   // A tick step of 1, 2 or 5 times a power of ten, giving roughly 5 to 10 ticks across the range.
@@ -49,6 +48,9 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   }
   const xTicks = ticks(xMin, xMax, props.xStep), yTicks = ticks(yMin, yMax, props.yStep)
   const fmt = (v: number) => String(Number(v.toFixed(4)))
+  // The left margin grows with the widest y label, so a 20 000 axis is not clipped.
+  const padL = Math.max(pad, 12 + 6.2 * Math.max(...yTicks.map((v) => fmt(v).length)))
+  const sx = (x: number) => padL + ((x - xMin) / (xMax - xMin)) * (W - padL - pad)
   // clip each line to the visible box by sampling its ends
   const segment = (l: Line) => {
     const pts: [number, number][] = []
@@ -62,8 +64,8 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
       {grid && xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={pad} x2={sx(v)} y2={H - pad} stroke={RULE} />)}
-      {grid && yTicks.map((v) => <line key={`gy${v}`} x1={pad} y1={sy(v)} x2={W - pad} y2={sy(v)} stroke={RULE} />)}
-      {yMin <= 0 && yMax >= 0 && <line x1={pad} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
+      {grid && yTicks.map((v) => <line key={`gy${v}`} x1={padL} y1={sy(v)} x2={W - pad} y2={sy(v)} stroke={RULE} />)}
+      {yMin <= 0 && yMax >= 0 && <line x1={padL} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
       {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={pad} x2={sx(0)} y2={H - pad} stroke={INK} strokeWidth="1.5" />}
       {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={sy(Math.max(yMin, Math.min(0, yMax))) + 14} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>{fmt(v)}</text>)}
       {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="10" fill={INK_2}>{fmt(v)}</text>)}
@@ -71,7 +73,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         ? <text x={W / 2} y={H - 2} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
         : <text x={W - pad} y={sy(Math.max(yMin, Math.min(0, yMax))) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>x</text>}
       {yLabel
-        ? <text x={pad} y={pad - 10} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
+        ? <text x={padL} y={pad - 10} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
         : <text x={sx(Math.max(xMin, Math.min(0, xMax))) + 8} y={pad + 4} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>y</text>}
       {lines.map((l, i) => {
         const seg = segment(l)
@@ -88,7 +90,8 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       {points.map((p, i) => (
         <g key={`p${i}`}>
           <circle cx={sx(p.x)} cy={sy(p.y)} r="4.5" fill="#fff" stroke={INK} strokeWidth="2" />
-          {p.label && <text x={sx(p.x) + 8} y={sy(p.y) - 8} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>}
+          {/* A point in the right half labels to its left, so the text stays inside the chart. */}
+          {p.label && <text x={sx(p.x) + (sx(p.x) > W / 2 ? -8 : 8)} y={sy(p.y) - 8} textAnchor={sx(p.x) > W / 2 ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>}
         </g>
       ))}
     </svg>
