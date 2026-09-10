@@ -45,7 +45,12 @@ export function VerbTable({ props, alt }: { props: Record<string, unknown>; alt:
 
       {forms.map((form, i) => {
         const y = headH + i * rowH
-        const rowStem = form.stem ?? stem
+        // SVG collapses trailing whitespace, so a space in the stem cannot open the gap
+        // itself. A trailing space means these are two words — an auxiliary and a
+        // participle — rather than a stem and an ending, so they need a word gap.
+        const raw = form.stem ?? stem
+        const spaced = /\s$/.test(raw)
+        const rowStem = raw.trimEnd()
         return (
           <g key={i}>
             <line x1={personX} y1={y + 6} x2={W - 16} y2={y + 6} stroke={RULE} />
@@ -53,7 +58,7 @@ export function VerbTable({ props, alt }: { props: Record<string, unknown>; alt:
             <text x={splitX} y={y + 24} textAnchor="end" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={form.irregular ? INK : INK_2}>
               {rowStem}
             </text>
-            <text x={splitX + 1} y={y + 24} fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={form.irregular ? INK : ACCENT}>
+            <text x={splitX + (spaced ? 7 : 1)} y={y + 24} fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={form.irregular ? INK : ACCENT}>
               {form.ending}
             </text>
             {form.irregular && (
