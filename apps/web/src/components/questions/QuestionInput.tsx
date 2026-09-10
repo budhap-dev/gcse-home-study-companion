@@ -100,7 +100,8 @@ function Typed({ question, disabled, onSubmit }: Props & { question: Extract<Que
 }
 
 function Ordering({ question, disabled, onSubmit }: Props & { question: Extract<Question, { type: 'ordering' }> }) {
-  // Shuffle once with a stable seed so a retake looks different but a re-render does not.
+  // A fixed seed: the start order is scrambled but stays put across re-renders and
+  // retakes, so the student is not re-reading a fresh arrangement of the same list.
   const [order, setOrder] = useState<number[]>(() => {
     const out = seededShuffle(question.items.map((_, i) => i), question.id)
     // never hand back the correct order as the starting state

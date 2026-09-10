@@ -50,7 +50,7 @@ pnpm typecheck
 pnpm build
 ```
 
-The app is deployed by Vercel from `main` at https://gcse-home-study-companion.vercel.app. Subjects, topic maps, and topic pages read real content bundled from `supabase/seed/content`. Lesson, quiz, and worksheet screens are placeholders that name the stories they will deliver. Progress is stored in the browser. Nothing talks to a database.
+The app is deployed by Vercel from `main` at https://gcse-home-study-companion.vercel.app. Every screen reads real content bundled from `supabase/seed/content` and `supabase/seed/guides`: subjects, topic maps, topic pages, step-by-step lessons with checks, three worksheets per topic with a scratch canvas and self-marked method marks, sampled quizzes, flashcards, and the exam technique guides. Progress, XP, badges and streaks are stored in the browser, and sync to Supabase once a family account signs in.
 
 ## Versioning
 

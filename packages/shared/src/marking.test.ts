@@ -67,3 +67,27 @@ describe('mark', () => {
     expect(mark(q, 9).marksScored).toBe(6)
   })
 })
+
+describe('standard form', () => {
+  it('accepts the ways a student writes a power of ten', () => {
+    for (const written of ['180000', '180,000', '180 000', '1.8e5', '1.8 x 10^5', '1.8 × 10^5', '1.8x10^5', '1.8 × 10⁵']) {
+      expect(parseNumber(written), written).toBe(180000)
+    }
+    expect(parseNumber('2.5 x 10^4')).toBe(25000)
+    expect(parseNumber('10^3')).toBe(1000)
+    expect(parseNumber('10⁻³')).toBeCloseTo(0.001, 12)
+    expect(parseNumber('1.6 x 10^-19')).toBeCloseTo(1.6e-19, 30)
+  })
+
+  it('still refuses things that are not numbers', () => {
+    expect(parseNumber('ten to the five')).toBeUndefined()
+    expect(parseNumber('x 10^')).toBeUndefined()
+  })
+
+  it('leaves ordinary numbers alone', () => {
+    expect(parseNumber('10')).toBe(10)
+    expect(parseNumber('100')).toBe(100)
+    expect(parseNumber('0.5')).toBe(0.5)
+    expect(parseNumber('49 N/m', 'N/m')).toBe(49)
+  })
+})

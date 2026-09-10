@@ -1,4 +1,4 @@
-import { getSubject, mark, type MarkResult } from '@study/shared'
+import { getSubject, mark, XP, type MarkResult } from '@study/shared'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -78,7 +78,7 @@ export function Lesson() {
         )}
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Lesson done</p>
         <h1 className="text-3xl font-bold">{topic.title}</h1>
-        <p className="text-ink-2">All {steps.length} steps finished, +{steps.length * 3 + 15} XP. The quiz is where you find out what has stuck.</p>
+        <p className="text-ink-2">All {steps.length} steps finished, +{steps.length * XP.lessonStep + XP.lessonComplete} XP. The quiz is where you find out what has stuck.</p>
         <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4 text-left">
           <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">What you learned</h2>
           <ul className="flex flex-col gap-1 text-sm">

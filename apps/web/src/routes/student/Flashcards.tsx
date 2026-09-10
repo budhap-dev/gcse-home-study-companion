@@ -33,7 +33,11 @@ function buildCards(topic: NonNullable<ReturnType<typeof getTopic>>): Card[] {
   }
   for (const q of topic.questions) {
     const a = answer(q)
-    if (a && q.prompt.length < 220) cards.push({ id: q.id, front: q.prompt, back: `**${a}**\n\n${q.solution}`, kind: 'question' })
+    if (!a || q.prompt.length >= 220) continue
+    // A multiple-choice prompt says "which of these", so the card has to carry the
+    // options too. Without them the front is a question the reader cannot answer.
+    const front = q.type === 'multiple-choice' ? `${q.prompt}\n\n${q.options.map((o) => `- ${o}`).join('\n')}` : q.prompt
+    cards.push({ id: q.id, front, back: `**${a}**\n\n${q.solution}`, kind: 'question' })
   }
   topic.examTechnique.examinerErrors.slice(0, 3).forEach((e, i) => cards.push({ id: `e${i}`, front: `Examiner trap ${i + 1}: what do students get wrong?`, back: e, kind: 'fact' }))
   return cards

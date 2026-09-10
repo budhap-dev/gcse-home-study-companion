@@ -8,7 +8,8 @@ import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
-import { settle } from '../../progress/settle.ts'
+import { settle, type Settlement } from '../../progress/settle.ts'
+import { Celebration } from '../../components/Celebration.tsx'
 import { xpForQuestions } from '../../progress/xp.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
@@ -34,6 +35,8 @@ interface SheetState {
   canvases: Record<string, Stroke[]>
   startedAt: string
   finishedAt?: string
+  /** Set when the attempt is recorded, so the summary can show what it earned. */
+  earned?: { xp: number; badges: string[]; levelUp?: string }
 }
 
 const key = (topicId: string, level: string) => `study-companion.worksheet.${topicId}.${level}`
@@ -65,6 +68,7 @@ export function Worksheet() {
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const level = (['core', 'higher', 'advanced'] as const).find((l) => l === levelParam)
   const [state, setState] = useState<SheetState | null>(() => (topic && level ? load(topic.id, level) : null))
+  const [celebration, setCelebration] = useState<Settlement | null>(null)
   useActivityTimer(Boolean(state && !state.finishedAt))
 
   useEffect(() => {
@@ -111,16 +115,32 @@ export function Worksheet() {
   if (state.finishedAt) {
     const pct = marksAvailable ? Math.round((100 * totalScored) / marksAvailable) : 0
     const threshold = level === 'higher' ? 70 : level === 'advanced' ? 75 : undefined
+    const earned = state.earned
     return (
       <article className="mx-auto flex w-full max-w-2xl flex-col gap-6">
+        {celebration && (
+          <Celebration
+            title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
+            detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}
+            emoji={celebration.levelUp ? '🎉' : celebration.newBadges[0]!.emoji}
+            onDone={() => setCelebration(null)}
+          />
+        )}
         <header className="flex flex-col gap-2">
           <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Worksheet finished</p>
           <h1 className="text-3xl font-bold leading-tight">{topic.title} · {LEVEL_LABEL[level]}</h1>
         </header>
-        <section className="grid grid-cols-2 gap-2">
+        <section className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           <div className="flex flex-col gap-0.5 rounded-xl bg-panel px-3 py-3"><span className="text-[11px] text-ink-2">Score</span><span className="text-xl font-bold tabular-nums">{pct}%</span></div>
           <div className="flex flex-col gap-0.5 rounded-xl bg-panel px-3 py-3"><span className="text-[11px] text-ink-2">Marks</span><span className="text-xl font-bold tabular-nums">{totalScored} / {marksAvailable}</span></div>
+          {earned && <div className="flex flex-col gap-0.5 rounded-xl bg-panel px-3 py-3"><span className="text-[11px] text-ink-2">XP earned</span><span className="text-xl font-bold tabular-nums">+{earned.xp}</span></div>}
         </section>
+        {earned && (earned.badges.length > 0 || earned.levelUp) && (
+          <section className="anim-pop flex flex-col gap-1 rounded-2xl border border-rule bg-surface p-4 text-sm">
+            {earned.badges.length > 0 && <p>New badge{earned.badges.length > 1 ? 's' : ''}: <strong>{earned.badges.join(', ')}</strong></p>}
+            {earned.levelUp && <p>Level up: <strong>{earned.levelUp}</strong></p>}
+          </section>
+        )}
         <p className="text-ink-2">
           {threshold === undefined ? 'Core done: the basics are in place. The Higher worksheet is where you start using them.' : pct >= threshold ? 'You can do this level. The method marks you gave yourself show you understand the working, not just the answers.' : 'Some of this is still settling. The questions where you dropped marks are the ones to go back over with the worked solutions.'}
         </p>
@@ -145,8 +165,11 @@ export function Worksheet() {
   const revealed = Boolean(state.revealed[question.id])
   const allAnswered = questions.every((q) => state.answers[q.id])
   const typed = question.type !== 'extended'
+  // Method marks are what is left once the accuracy mark for the final answer is gone.
+  // A wrong final answer can never reach full marks, so the offer is capped one below:
+  // without that a missed one-mark question could be self-awarded its whole mark.
   const methodLines = question.markScheme.filter((l) => !/^A\d/.test(l.code))
-  const methodTotal = methodLines.reduce((s, l) => s + l.marks, 0)
+  const methodTotal = Math.min(methodLines.reduce((s, l) => s + l.marks, 0), question.marks - 1)
 
   const submit = (answer: Answer) => setState({ ...state, answers: { ...state.answers, [question.id]: { answer, result: mark(question, answer) } } })
   const reveal = () => setState({ ...state, revealed: { ...state.revealed, [question.id]: true } })
@@ -159,6 +182,7 @@ export function Worksheet() {
     const questionResults = questions.map((q) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: scored(q), marksAvailable: q.marks, correct: scored(q) === q.marks }))
     const extendedCount = questions.filter((q) => q.type === 'extended').length
     const selfMarked = questions.some((q) => (q.type === 'extended' ? true : state.answers[q.id]?.methodMarks !== undefined && !state.answers[q.id]?.result.correct))
+    const xp = xpForQuestions(questionResults)
     recordAttempt({
       id: state.attemptId,
       topicId: topic.id,
@@ -170,11 +194,16 @@ export function Worksheet() {
       grade89Available: questions.filter((q) => q.gradeBand === '8-9').reduce((s, q) => s + q.marks, 0),
       markedHow: extendedCount === questions.length ? 'self' : selfMarked ? 'mixed' : 'auto',
       completedAt: finishedAt,
-      xp: xpForQuestions(questionResults),
+      xp,
       questions: questionResults,
     })
-    settle(before)
-    setState({ ...state, finishedAt })
+    const outcome = settle(before)
+    if (outcome.newBadges.length || outcome.levelUp) setCelebration(outcome)
+    setState({
+      ...state,
+      finishedAt,
+      earned: { xp, badges: outcome.newBadges.map((b) => b.name), levelUp: outcome.levelUp?.level.name },
+    })
   }
 
   return (
@@ -219,7 +248,7 @@ export function Worksheet() {
           {answered && (revealed || !typed) && (
             <div className="flex flex-col gap-3">
               <Feedback question={question} result={answered.result} />
-              {typed && !answered.result.correct && methodLines.length > 0 && (
+              {typed && !answered.result.correct && methodTotal > 0 && (
                 <div className="flex flex-col gap-2 rounded-xl bg-panel p-3">
                   <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Method marks you earned</p>
                   <ul className="flex flex-col gap-1 text-sm">
