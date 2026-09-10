@@ -2,6 +2,7 @@ import { getSubject, WORKSHEET_LEVELS } from '@study/shared'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
+import { termsForTopic } from '../../content/glossary.ts'
 import { StatusChip } from '../../components/StatusChip.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
 import { useProgress } from '../../progress/useProgress.ts'
@@ -96,6 +97,21 @@ export function Topic() {
         <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={previewOf(topic.examTechnique.body)} action="Read" />
       </nav>
+
+      {termsForTopic(topic.id).length > 0 && (
+        <section className="flex flex-col gap-2">
+          <h2 className="chip w-fit" style={{ '--chip': '#6B4E9B' } as React.CSSProperties}><Smiley>📖</Smiley>Key terms</h2>
+          <ul className="flex flex-wrap gap-2">
+            {termsForTopic(topic.id).map((term) => (
+              <li key={term.slug}>
+                <Link to={`/glossary?term=${term.slug}`} className="inline-flex min-h-9 items-center rounded-full border border-rule bg-surface px-3 text-sm hover:border-[color:var(--subject)]">
+                  {term.term}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {topic.resources && topic.resources.length > 0 && (
         <section className="flex flex-col gap-2">

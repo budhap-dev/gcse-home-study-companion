@@ -13,6 +13,8 @@ import { ExamTechnique } from '../routes/student/ExamTechnique.tsx'
 import { Progress } from '../routes/student/Progress.tsx'
 import { Settings } from '../routes/student/Settings.tsx'
 import { Flashcards } from '../routes/student/Flashcards.tsx'
+import { Search } from '../routes/student/Search.tsx'
+import { Glossary } from '../routes/student/Glossary.tsx'
 
 /**
  * URL structure. No accounts: every screen is for the student using this device.
@@ -32,6 +34,8 @@ export const router = createBrowserRouter([
       { path: 'subjects/:subjectId/topics/:topicId/quiz', element: <SubjectTheme><Quiz /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/worksheet/:level', element: <SubjectTheme><Worksheet /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/flashcards', element: <SubjectTheme><Flashcards /></SubjectTheme> },
+      { path: 'search', element: <Search /> },
+      { path: 'glossary', element: <Glossary /> },
       { path: 'progress', element: <Progress /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <NotFound /> },

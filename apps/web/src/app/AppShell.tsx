@@ -2,6 +2,7 @@ import { NavLink, Outlet, useLocation } from 'react-router'
 import { NAV } from './nav.ts'
 import { APP_BUILT, VERSION_LABEL } from './version.ts'
 import { Logo } from '../components/Logo.tsx'
+import { SearchBox } from '../components/SearchBox.tsx'
 import { useAuth } from '../auth/useAuth.ts'
 
 /**
@@ -21,6 +22,7 @@ export function AppShell() {
         <NavLink to="/" className="px-2" aria-label="Home Study Companion, home">
           <Logo />
         </NavLink>
+        <SearchBox />
         <Menu orientation="vertical" />
         <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
           <span>{auth.status === 'allowed' ? `Signed in as ${auth.name ?? auth.email}. Progress is saved to your account.` : 'Progress is saved on this device.'}</span>
@@ -28,8 +30,13 @@ export function AppShell() {
         </div>
       </aside>
 
-      <main id="main" className="anim-fade-up flex-1 px-4 pb-24 pt-6 md:px-10 md:pb-10 md:pt-10" key={pathname}>
-        <Outlet />
+      <main id="main" className="flex-1 px-4 pb-24 pt-4 md:px-10 md:pb-10 md:pt-10" key={pathname}>
+        <div className="mx-auto mb-4 w-full max-w-6xl md:hidden">
+          <SearchBox />
+        </div>
+        <div className="anim-fade-up">
+          <Outlet />
+        </div>
       </main>
 
       <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 border-t border-rule bg-surface pb-[env(safe-area-inset-bottom)] md:hidden">
@@ -42,7 +49,11 @@ export function AppShell() {
 function Menu({ orientation }: { orientation: 'vertical' | 'horizontal' }) {
   const vertical = orientation === 'vertical'
   return (
-    <ul className={vertical ? 'flex flex-col gap-1' : 'grid grid-cols-4'}>
+    <ul
+      className={vertical ? 'flex flex-col gap-1' : 'grid'}
+      // Tailwind cannot see a class name built at runtime, so the column count is a style.
+      style={vertical ? undefined : { gridTemplateColumns: `repeat(${NAV.length}, minmax(0, 1fr))` }}
+    >
       {NAV.map(({ to, label, icon: Icon, end }) => (
         <li key={to}>
           <NavLink

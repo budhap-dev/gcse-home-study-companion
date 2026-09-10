@@ -32,9 +32,9 @@ See the last section of the PRD. The two that block content work are the Music e
 ## Repository layout
 
 ```
-apps/web         React + TypeScript web app: subjects, lessons, quizzes, worksheets, progress
+apps/web         React + TypeScript web app: subjects, lessons, quizzes, worksheets, search, glossary, progress
 packages/shared  Subjects, topic statuses, thresholds, story IDs; Zod content schema to follow
-supabase/        Migrations, policies, seed sample content (empty until a project exists)
+supabase/        Migrations and policies; seed/content topics and seed/glossary terms
 docs/            Requirements, plan, tech spec, and decisions
 ```
 
@@ -51,6 +51,23 @@ pnpm build
 ```
 
 The app is deployed by Vercel from `main` at https://gcse-home-study-companion.vercel.app. Every screen reads real content bundled from `supabase/seed/content` and `supabase/seed/guides`: subjects, topic maps, topic pages, step-by-step lessons with checks, three worksheets per topic with a scratch canvas and self-marked method marks, sampled quizzes, flashcards, and the exam technique guides. Progress, XP, badges and streaks are stored in the browser, and sync to Supabase once a family account signs in.
+
+## Search and glossary
+
+Two ways in, both bundled with the app and working offline:
+
+- **Search** (`/search`, or the box in the sidebar, or `/` from anywhere) covers every
+  topic, every lesson step, every exam technique note and every question bank, plus the
+  glossary. Results are per section, so a hit lands on the step that teaches the idea
+  rather than the top of the topic. Matching allows for the endings school vocabulary
+  takes, so *congruency* finds *Congruent triangles* and *breakeven* finds *break-even*.
+- **Glossary** (`/glossary`) is an A to Z of every term, filterable by subject, each with
+  a definition, a worked example, the topic that teaches it and related terms. A topic
+  page lists its own key terms, and every term deep-links as `?term=<subject>-<slug>`.
+
+The search index is derived from the content already in the bundle, so neither feature
+adds a download. See [supabase/seed/glossary/README.md](supabase/seed/glossary/README.md)
+for how terms are authored.
 
 ## Versioning
 
