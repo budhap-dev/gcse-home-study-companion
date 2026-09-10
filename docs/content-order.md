@@ -67,8 +67,8 @@ Started 10 September 2026 with the owner's approval. School order for Year 10: 1
 
 | Half term | Topics | Status |
 |---|---|---|
-| Autumn 1 and 2 | 1.4 Making the business effective: ownership and liability, franchising, location, the marketing mix, business plans · 1.5 Understanding external influences: stakeholders, technology, legislation, the economy | 1.4 drafted 10 September 2026; 1.5 next |
-| Autumn 2 recap | 1.1 Enterprise and entrepreneurship · 1.2 Spotting a business opportunity · 1.3 Putting a business idea into practice, including the calculations | For the Milestone on 1.1 to 1.5 |
+| Autumn 1 and 2 | 1.4 Making the business effective: ownership and liability, franchising, location, the marketing mix, business plans · 1.5 Understanding external influences: stakeholders, technology, legislation, the economy | Both drafted 10 September 2026 |
+| Autumn 2 recap | 1.1 Enterprise and entrepreneurship · 1.2 Spotting a business opportunity · 1.3 Putting a business idea into practice, including the calculations | Next, for the Milestone on 1.1 to 1.5 |
 | Spring | 2.1 Growing the business | |
 | Summer | 2.2 Making marketing decisions | |
 
