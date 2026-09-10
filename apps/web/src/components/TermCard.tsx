@@ -18,7 +18,7 @@ export function TermCard({ term, query = '', id }: { term: Term; query?: string;
   const subject = getSubject(term.subjectId)
   const related = term.related.map((name) => termByName(name, term.subjectId)).filter((t): t is Term => Boolean(t))
   return (
-    <div id={id} className="flex scroll-mt-24 flex-col gap-2 rounded-xl border border-rule bg-surface p-4" style={{ '--subject': subject?.colour } as React.CSSProperties}>
+    <div id={id} className="flex scroll-mt-20 flex-col gap-2 rounded-xl border border-rule bg-surface p-4" style={{ '--subject': subject?.colour } as React.CSSProperties}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
         <h3 className="text-lg font-bold leading-tight"><Highlight text={term.term} query={query} /></h3>
         <span className="text-xs font-bold" style={{ color: subject?.colour }}>{subject?.name ?? term.subjectId}</span>

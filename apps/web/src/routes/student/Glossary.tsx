@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router'
 import { TermCard } from '../../components/TermCard.tsx'
 import { GLOSSARY, termBySlug, type Term } from '../../content/glossary.ts'
 import { topicsForSubject } from '../../content/index.ts'
+import { BackToTop } from '../../components/BackToTop.tsx'
 
 /**
  * An A to Z of every term the app teaches, each with a definition, a worked example and
@@ -25,15 +26,41 @@ export function Glossary() {
     else setParams({}, { replace: true })
   }, [query, focusSlug, setParams])
 
-  // A deep link scrolls its term into view and flashes it, so it is obvious which one.
+  /**
+   * A deep link scrolls its term into view and flashes it, so it is obvious which one.
+   *
+   * The scroll waits for the maths fonts. Every card holds KaTeX, and when its fonts
+   * arrive all 157 of them reflow; on a list this long the few pixels each gains push a
+   * term near the end of the alphabet a couple of hundred pixels down, leaving an
+   * already-finished smooth scroll pointing above the card. So: wait for the fonts, jump
+   * straight there, then correct once more on the next frame for any last shift.
+   */
   useEffect(() => {
     if (!focusSlug || query) { if (!focusSlug) inputRef.current?.focus(); return }
-    const el = document.getElementById(`term-${focusSlug}`)
-    if (!el) return
-    el.scrollIntoView({ block: 'center', behavior: 'smooth' })
-    el.classList.add('anim-pop')
-    const t = setTimeout(() => el.classList.remove('anim-pop'), 1200)
-    return () => clearTimeout(t)
+    let cancelled = false
+    let flashTimer: ReturnType<typeof setTimeout> | undefined
+
+    const settle = () => {
+      if (cancelled) return
+      const el = document.getElementById(`term-${focusSlug}`)
+      if (!el) return
+      el.scrollIntoView({ block: 'center', behavior: 'auto' })
+      requestAnimationFrame(() => {
+        if (cancelled) return
+        el.scrollIntoView({ block: 'center', behavior: 'auto' })
+        el.classList.add('anim-pop')
+        flashTimer = setTimeout(() => el.classList.remove('anim-pop'), 1200)
+      })
+    }
+
+    const fonts = document.fonts
+    if (fonts && fonts.status !== 'loaded') void fonts.ready.then(settle)
+    else settle()
+
+    return () => {
+      cancelled = true
+      clearTimeout(flashTimer)
+    }
   }, [focusSlug, query])
 
   const subjects = useMemo(() => SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0), [])
@@ -118,7 +145,7 @@ export function Glossary() {
         </ul>
       ) : (
         GLOSSARY_LETTERS.filter((l) => byLetter.has(l)).map((letter) => (
-          <section key={letter} id={`letter-${letter}`} className="flex scroll-mt-6 flex-col gap-3">
+          <section key={letter} id={`letter-${letter}`} className="flex scroll-mt-20 flex-col gap-3">
             <h2 className="border-b border-rule pb-1 text-2xl font-bold">{letter}</h2>
             <ul className="flex flex-col gap-3">
               {byLetter.get(letter)!.map((term) => <li key={term.slug}><TermCard term={term} id={`term-${term.slug}`} /></li>)}
@@ -126,6 +153,7 @@ export function Glossary() {
           </section>
         ))
       )}
+      <BackToTop />
     </article>
   )
 }
