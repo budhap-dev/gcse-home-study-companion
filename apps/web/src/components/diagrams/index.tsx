@@ -4,6 +4,7 @@ import { IndexLawsCard } from './IndexLawsCard.tsx'
 import { LineGraph } from './LineGraph.tsx'
 import { PowerOfPower } from './PowerOfPower.tsx'
 import { RepeatedMultiplication } from './RepeatedMultiplication.tsx'
+import { RootNumberLine } from './RootNumberLine.tsx'
 import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
 import { SpringLoad } from './SpringLoad.tsx'
@@ -25,6 +26,7 @@ import { TraceTable } from './TraceTable.tsx'
 export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unknown>; alt: string }>> = {
   'repeated-multiplication': RepeatedMultiplication,
   'index-ladder': IndexLadder,
+  'root-number-line': RootNumberLine,
   'power-of-power': PowerOfPower,
   'index-laws-card': IndexLawsCard,
   'line-graph': LineGraph,

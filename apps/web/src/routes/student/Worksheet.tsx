@@ -252,8 +252,9 @@ export function Worksheet() {
                 <div className="flex flex-col gap-2 rounded-xl bg-panel p-3">
                   <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Method marks you earned</p>
                   <ul className="flex flex-col gap-1 text-sm">
-                    {question.markScheme.map((l) => (
-                      <li key={l.code} className="flex gap-2"><span className="w-7 font-mono text-xs text-ink-3">{l.code}</span><RichText source={l.description} inline /></li>
+                    {/* Codes repeat by design: three separate B1 marks are written B1, B1, B1. */}
+                    {question.markScheme.map((l, i) => (
+                      <li key={i} className="flex gap-2"><span className="w-7 font-mono text-xs text-ink-3">{l.code}</span><RichText source={l.description} inline /></li>
                     ))}
                   </ul>
                   <div className="flex flex-wrap gap-1.5">

@@ -6,7 +6,7 @@ Content is authored just ahead of what the pilot student meets in class. This is
 
 | When | Topics, in teaching order | Status |
 |---|---|---|
-| Autumn 1 | Laws of indices · Powers and roots · Surds · Equations of straight lines · Parallel and perpendicular lines · Constructing triangles · Congruency | All six Autumn 1 topics drafted |
+| Autumn 1 | Laws of indices · Powers and roots · Surds · Equations of straight lines · Parallel and perpendicular lines · Constructing triangles · Congruency | All seven drafted. Powers and roots was missed in the first pass and added on 10 September 2026; the school's topic test covers powers, roots and surds together. |
 | Autumn 2 | Circle theorems · Expanding and factorising quadratics · Identities and equivalence · Rearranging formulae · Solving quadratic equations | |
 | Spring 1 | Combined events and tree diagrams · Sample space diagrams · Venn diagrams · Choices and outcomes · Sets and set notation · Histograms · Linear, quadratic and geometric sequences · Iteration | |
 | Spring 2 | Ratio and proportion · Similarity and linear scale factors · Exact trigonometric values · Sine rule, cosine rule and area of a triangle · Scale drawings and bearings | |
