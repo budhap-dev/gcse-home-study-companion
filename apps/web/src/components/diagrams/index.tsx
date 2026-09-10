@@ -9,6 +9,7 @@ import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
 import { SpringLoad } from './SpringLoad.tsx'
 import { BeamMoments } from './BeamMoments.tsx'
+import { Collision } from './Collision.tsx'
 import { DotAndCross } from './DotAndCross.tsx'
 import { Lattice } from './Lattice.tsx'
 import { EnergyStores } from './EnergyStores.tsx'
@@ -34,6 +35,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'triangle-pair': TrianglePair,
   'spring-load': SpringLoad,
   'beam-moments': BeamMoments,
+  'collision': Collision,
   'dot-and-cross': DotAndCross,
   'lattice': Lattice,
   'energy-stores': EnergyStores,
