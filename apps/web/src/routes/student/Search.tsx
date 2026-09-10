@@ -6,6 +6,7 @@ import { SectionLabel } from '../../components/KindChip.tsx'
 import { TermCard } from '../../components/TermCard.tsx'
 import { GLOSSARY, type Term } from '../../content/glossary.ts'
 import { search, searchIndex, type SearchHit } from '../../search/index.ts'
+import { BackToTop } from '../../components/BackToTop.tsx'
 
 const KIND_LABEL: Record<SearchHit['record']['kind'], string> = {
   topic: 'Topic',
@@ -98,6 +99,7 @@ export function Search() {
           {hits.length > 40 && <p className="text-sm text-ink-3">Showing the best 40 of {hits.length}. Add another word to narrow it.</p>}
         </section>
       )}
+      <BackToTop />
     </article>
   )
 }
