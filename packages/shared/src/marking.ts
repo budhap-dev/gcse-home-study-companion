@@ -20,6 +20,8 @@ export function normaliseText(s: string): string {
   return out
     .replace(/\s+/g, '')
     .replace(/[−–—]/g, '-')
+    // French answers are full of apostrophes, and phones type a curly one.
+    .replace(/[\u2018\u2019\u02bc`´]/g, "'")
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
     .replace(/√\(([^)]+)\)/g, 'sqrt$1')

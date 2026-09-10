@@ -21,6 +21,7 @@ import { EquationCard } from './EquationCard.tsx'
 import { CurveGraph } from './CurveGraph.tsx'
 import { Plant } from './Plant.tsx'
 import { TraceTable } from './TraceTable.tsx'
+import { VerbTable } from './VerbTable.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -50,6 +51,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'curve-graph': CurveGraph,
   'plant': Plant,
   'trace-table': TraceTable,
+  'verb-table': VerbTable,
 }
 
 export const INK = '#1e2330'
