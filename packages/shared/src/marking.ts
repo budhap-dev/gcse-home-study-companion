@@ -55,7 +55,9 @@ function standardForm(s: string): string {
  * Returns undefined when it is not a number.
  */
 export function parseNumber(input: string, units?: string): number | undefined {
-  let s = input.trim().toLowerCase().replace(/,/g, '')
+  // A phone keyboard or a pasted answer can carry a Unicode minus or dash; the
+  // Business cash-flow answers are the first negatives in the pack.
+  let s = input.trim().toLowerCase().replace(/,/g, '').replace(/[−–—]/g, '-')
   if (units) s = s.replace(units.toLowerCase(), '').trim()
   s = standardForm(s)
   s = s.replace(/[a-z°%/ ]+$/i, '').trim()

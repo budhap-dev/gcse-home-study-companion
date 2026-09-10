@@ -44,3 +44,28 @@ describe('stated answers survive marking', () => {
     expect(bad).toEqual([])
   })
 })
+
+/**
+ * A multiple-choice question whose correct option is far longer than its distractors
+ * can be answered without knowing anything: pick the long one. Exam boards balance
+ * option lengths on purpose. A second review found ten of these, eight of them in
+ * Business, where the right answer tends to be the one with the reasoning in it.
+ */
+describe('multiple-choice options are balanced in length', () => {
+  const biased: string[] = []
+  for (const file of jsonFiles(ROOT)) {
+    const topic = JSON.parse(readFileSync(file, 'utf8'))
+    const questions: Question[] = [...topic.questions, ...topic.lesson.steps.filter((s: { check?: Question }) => s.check).map((s: { check: Question }) => s.check)]
+    for (const q of questions) {
+      if (q.type !== 'multiple-choice' || q.correct.length !== 1) continue
+      const lengths = q.options.map((o) => o.length)
+      const right = lengths[q.correct[0]!]!
+      const others = lengths.filter((_, i) => i !== q.correct[0])
+      const mean = others.reduce((a, b) => a + b, 0) / others.length
+      if (right > 60 && right > 1.8 * mean) biased.push(`${file.split('/content/')[1]} ${q.id}: ${right} chars against a mean of ${Math.round(mean)}`)
+    }
+  }
+  it('never makes the correct option the obviously long one', () => {
+    expect(biased).toEqual([])
+  })
+})

@@ -91,3 +91,12 @@ describe('standard form', () => {
     expect(parseNumber('49 N/m', 'N/m')).toBe(49)
   })
 })
+
+describe('negative answers', () => {
+  it('accepts a Unicode minus or dash as well as a hyphen', () => {
+    expect(parseNumber('−500', '£')).toBe(-500)
+    expect(parseNumber('–700')).toBe(-700)
+    expect(parseNumber('-£500', '£')).toBe(-500)
+    expect(parseNumber('£-500', '£')).toBe(-500)
+  })
+})
