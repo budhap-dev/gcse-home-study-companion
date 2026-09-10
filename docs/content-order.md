@@ -60,3 +60,16 @@ School order for Year 10: programming (subroutines, arrays, records, files, stri
 |---|---|---|
 | Autumn 1 | Programming: subroutines · arrays and records · strings and files · robust and secure programming | All four drafted; each links to the family's Learn C# practice site |
 | Autumn 2 | Recap of Year 9 programming: data types, selection, iteration; more practice tracing | Next |
+
+## Business (Edexcel 1BS0)
+
+Started 10 September 2026 with the owner's approval. School order for Year 10: 1.4 and 1.5 in the Autumn, with a Milestone on 1.1 to 1.5 (multiple choice plus a case study with a 12 marker); 2.1 in the Spring; 2.2 in the Summer. 1.1 to 1.3 were taught in Year 9 and the Milestone re-tests them, so they follow as recap. Each Edexcel spec section is one app topic, so Theme 1 is five topics and Theme 2 is five.
+
+| Half term | Topics | Status |
+|---|---|---|
+| Autumn 1 and 2 | 1.4 Making the business effective: ownership and liability, franchising, location, the marketing mix, business plans · 1.5 Understanding external influences: stakeholders, technology, legislation, the economy | 1.4 drafted 10 September 2026; 1.5 next |
+| Autumn 2 recap | 1.1 Enterprise and entrepreneurship · 1.2 Spotting a business opportunity · 1.3 Putting a business idea into practice, including the calculations | For the Milestone on 1.1 to 1.5 |
+| Spring | 2.1 Growing the business | |
+| Summer | 2.2 Making marketing decisions | |
+
+The grade 9 discriminators in Business are the 9 and 12 mark justify and evaluate questions and the calculations in 1.3 and 2.4, so each topic's Advanced worksheet is built from those.
