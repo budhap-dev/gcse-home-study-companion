@@ -80,7 +80,7 @@ Started 10 September 2026. The school's overview does not name a board; Edexcel 
 
 | Half term | Topics | Status |
 |---|---|---|
-| Autumn 1 | Good mental health · Illness and accidents, with the perfect tense of reflexive verbs · What you will do to improve your life, with the simple future · Lifestyle changes | Good mental health and illness and accidents drafted 10 September 2026; the simple future next |
+| Autumn 1 | Good mental health · Illness and accidents, with the perfect tense of reflexive verbs · What you will do to improve your life, with the simple future · Lifestyle changes | Three of four drafted by 11 September 2026; lifestyle changes next, which completes the half term |
 | Autumn 2 | Combining imperfect, present and simple future · Holidays and accommodation · Ideal holiday · Holiday activities · Festivals · Reviewing and booking accommodation | |
 | Spring | Environment: infographics, geography and climate, problems, the passive voice, collective and daily actions · New technologies · Understanding adverts | |
 | Summer | Town or village · Directions · Shopping for clothes · Role plays · Ideal home · Visiting a town or city · Exam skills | |
