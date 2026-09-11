@@ -74,6 +74,35 @@ export function parseNumber(input: string, units?: string): number | undefined {
   return Number(s)
 }
 
+/** True when the comma at `at` separates two numbers, as in (3, 5) or (0, -2). Input has no spaces. */
+function isNumberSeparator(whole: string, at: number): boolean {
+  const before = whole[at - 1] ?? ''
+  let after = whole[at + 1] ?? ''
+  // A signed number follows the comma in a coordinate like (0, -2).
+  if (after === '-' || after === '+') after = whole[at + 2] ?? ''
+  return /\d/.test(before) && /\d/.test(after)
+}
+
+/** Removes commas that are prose punctuation, keeping one that separates two numbers. */
+function stripProseCommas(s: string): string {
+  return s.replace(/,/g, (comma: string, at: number, whole: string) => (isNumberSeparator(whole, at) ? comma : ''))
+}
+
+/**
+ * The accepted answer decides which punctuation matters. Punctuation it leaves out is
+ * forgiven in the typed answer — a closing full stop, the comma after "Avant" — so a
+ * French sentence typed properly is not marked wrong. Punctuation it includes is
+ * required: when a program prints "Hi Amy!", the exclamation mark is part of the output.
+ * Both arguments are already normalised.
+ */
+function matchesAccepted(given: string, accepted: string): boolean {
+  if (given === accepted) return true
+  let lenient = given
+  if (!/[.!?]$/.test(accepted)) lenient = lenient.replace(/[.!?]+$/, '')
+  if (stripProseCommas(accepted) === accepted) lenient = stripProseCommas(lenient)
+  return lenient === accepted
+}
+
 /**
  * Marks an auto-markable answer. Extended responses are self-assessed and return
  * whatever marks the student awarded themselves, capped at the marks available.
@@ -97,7 +126,7 @@ export function mark(question: Question, answer: unknown): MarkResult {
     }
     case 'short-text': {
       const given = normaliseText(String(answer ?? ''))
-      return result(given.length > 0 && question.accepted.some((a) => normaliseText(a) === given))
+      return result(given.length > 0 && question.accepted.some((a) => matchesAccepted(given, normaliseText(a))))
     }
     case 'ordering': {
       const order = Array.isArray(answer) ? (answer as number[]) : []
