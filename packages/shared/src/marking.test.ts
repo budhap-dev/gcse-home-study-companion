@@ -113,3 +113,57 @@ describe('apostrophes', () => {
     }
   })
 })
+
+describe('sentence punctuation', () => {
+  const q = (accepted: string[]): Question => ({
+    id: 'q', type: 'short-text', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's',
+    calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }],
+    discriminators: [], accepted,
+  })
+
+  it('forgives a closing full stop that the accepted answer does not have', () => {
+    const sentence = q(["je me couche tôt parce que j'ai besoin de dormir"])
+    expect(mark(sentence, "Je me couche tôt parce que j'ai besoin de dormir.").correct).toBe(true)
+    expect(mark(sentence, "Je me couche tôt parce que j'ai besoin de dormir !").correct).toBe(true)
+  })
+
+  it('forgives commas that the accepted answer does not have', () => {
+    const sentence = q(["avant je buvais du coca mais maintenant je bois de l'eau"])
+    expect(mark(sentence, "Avant, je buvais du coca, mais maintenant je bois de l'eau.").correct).toBe(true)
+  })
+
+  it('requires punctuation the accepted answer includes, as in program output', () => {
+    const output = q(['Hi Amy!'])
+    expect(mark(output, 'Hi Amy!').correct).toBe(true)
+    expect(mark(output, 'Hi Amy').correct).toBe(false)
+    const greeting = q(['Hello, Ada'])
+    expect(mark(greeting, 'Hello, Ada').correct).toBe(true)
+    expect(mark(greeting, 'Hello Ada').correct).toBe(false)
+  })
+
+  it('treats a comma between digits as part of the answer', () => {
+    const point = q(['(3,5)'])
+    expect(mark(point, '(3, 5)').correct).toBe(true)
+    expect(mark(point, '(35)').correct).toBe(false)
+  })
+
+  it('leaves normaliseText itself alone, so a decimal point survives', () => {
+    expect(normaliseText('2.5')).toBe('2.5')
+    expect(normaliseText('Hi Amy!')).toBe('hiamy!')
+  })
+})
+
+describe('negative coordinates', () => {
+  const point: Question = {
+    id: 'q', type: 'short-text', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's',
+    calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }],
+    discriminators: [], accepted: ['(0,-2)'],
+  }
+
+  it('keeps the comma before a negative number, so (0, -2) is not read as (0-2)', () => {
+    expect(mark(point, '(0, -2)').correct).toBe(true)
+    expect(mark(point, '(0,−2)').correct).toBe(true)
+    expect(mark(point, '(0-2)').correct).toBe(false)
+    expect(mark(point, '(0 -2)').correct).toBe(false)
+  })
+})
