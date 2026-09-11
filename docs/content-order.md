@@ -74,9 +74,9 @@ Started 10 September 2026 with the owner's approval. School order for Year 10: 1
 
 The grade 9 discriminators in Business are the 9 and 12 mark justify and evaluate questions and the calculations in 1.3 and 2.4, so each topic's Advanced worksheet is built from those.
 
-## French (Edexcel 1FR1, board not yet confirmed)
+## French (Edexcel 1FR1, confirmed 11 September 2026)
 
-Started 10 September 2026. The school's overview does not name a board; Edexcel 1FR1 is the PRD's assumption. School order for Year 10 term 1 and 2: good mental health, illness and accidents with the perfect tense of reflexive verbs, the simple future, lifestyle changes, then holidays, festivals and accommodation.
+Started 10 September 2026. The school's overview does not name a board; the owner confirmed Edexcel 1FR1 on 11 September 2026. School order for Year 10 term 1 and 2: good mental health, illness and accidents with the perfect tense of reflexive verbs, the simple future, lifestyle changes, then holidays, festivals and accommodation.
 
 | Half term | Topics | Status |
 |---|---|---|
@@ -85,7 +85,7 @@ Started 10 September 2026. The school's overview does not name a board; Edexcel 
 | Spring | Environment: infographics, geography and climate, problems, the passive voice, collective and daily actions · New technologies · Understanding adverts | |
 | Summer | Town or village · Directions · Shopping for clothes · Role plays · Ideal home · Visiting a town or city · Exam skills | |
 
-**Blocked: the subject exam-technique guide.** Every other subject has one, giving papers, marks, timings and command words. French does not, for two reasons: the school has not named the board, and the Edexcel 1FR1 specification PDF uses subset-encoded fonts that could not be read reliably, so the paper structure could not be verified from source. Writing it from memory risks teaching the wrong exam. The app already handles a missing guide, showing "The guide for this subject has not been written yet." Ask the school which board, then write the guide from the specification.
+**The exam-technique guide** was written on 11 September 2026, once the board was confirmed, from Pearson's own published sample papers, teacher guides and exam timetable. The specification PDF itself cannot be read here, and search summaries of Pearson's PDFs were seen to mix papers up — attaching Writing's 1 hour 20 minutes to Reading and Speaking — so the guide uses only figures that two sources agree on, or that cannot belong to another paper, such as the dictation in Listening. The Writing paper's exact question list is deliberately left out, because Pearson has amended that paper since it was published; the guide points to the current sample paper instead.
 
 Authoring notes for French, which differs from the other subjects:
 - Vocabulary is a `vocab-list` interactive: it speaks each word with the browser's French voice and keeps the English hidden until asked for.
@@ -109,4 +109,4 @@ Units are Edexcel's four areas of study, plus musical elements first, because ev
 
 **Audio is deliberately not bundled.** The set works are copyrighted, so the app ships no recordings and no links that could rot; the student plays the named recording on whatever service the family uses.
 
-**Timings are not verified, so the app no longer prints them.** The `music-timeline` in *Killer Queen* gives section timings that were written without checking them against a recording, so treat them as approximate until someone checks them by ear. From *Star Wars* on, a topic gives the structure as an ordered table with no timings, and its your-turn step asks the student to note when each section starts while listening. That is better revision anyway: making the map is the listening, and a printed map would not line up with every recording.
+**Timings are not printed.** They could not be checked against a recording, and recordings differ. Every set work gives its structure as an ordered table, and its your-turn step gives the student a blank map to fill in while listening — better revision anyway, because making the map is the listening. Killer Queen first carried timings written from memory; on 11 September 2026 the owner chose to replace them with the blank map. The `music-timeline` diagram stays available for timings someone has checked by ear.
