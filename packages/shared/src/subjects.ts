@@ -34,8 +34,10 @@ export const SUBJECTS: Subject[] = [
     units: [{ id: 'theme-1-investigating-small-business', name: 'Theme 1: Investigating small business' }, { id: 'theme-2-building-a-business', name: 'Theme 2: Building a business' }] },
   { id: 'french', name: 'French', board: 'Edexcel 1FR1', phase: 3, colour: '#A83E6B',
     units: [{ id: 'my-personal-world', name: 'My personal world' }, { id: 'lifestyle-and-wellbeing', name: 'Lifestyle and wellbeing' }, { id: 'my-neighbourhood', name: 'My neighbourhood' }, { id: 'media-and-technology', name: 'Media and technology' }, { id: 'studying-and-my-future', name: 'Studying and my future' }, { id: 'travel-and-tourism', name: 'Travel and tourism' }] },
-  { id: 'music', name: 'Music', board: 'Board to confirm', phase: 3, colour: '#6B4E9B',
-    units: [{ id: 'musical-elements', name: 'Musical elements' }, { id: 'set-works-or-areas-of-study', name: 'Set works or areas of study' }, { id: 'listening-and-appraising', name: 'Listening and appraising' }] },
+  // Units are Edexcel's four areas of study, confirmed with the school on 11 September
+  // 2026, with musical elements first because every set work is described through them.
+  { id: 'music', name: 'Music', board: 'Edexcel 1MU0', phase: 3, colour: '#6B4E9B',
+    units: [{ id: 'musical-elements', name: 'Musical elements and language' }, { id: 'instrumental-music-1700-1820', name: 'Instrumental music 1700 to 1820' }, { id: 'vocal-music', name: 'Vocal music' }, { id: 'music-for-stage-and-screen', name: 'Music for stage and screen' }, { id: 'fusions', name: 'Fusions' }] },
 ]
 
 export function getSubject(id: string): Subject | undefined {

@@ -20,14 +20,14 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 
 - 8 September 2026: the admin app is removed; content is authored as files in this repository and reviewed through pull requests. The first release is a single public web app with every subject's topics and no logins of any kind. Progress is saved in the browser. Google sign-in comes later, only to sync progress. Student, parent, and tutor accounts move to a later phase.
 - Target grade 9 in every subject.
-- Exam boards: Maths Edexcel 1MA1 with AQA Level 2 Further Maths, Biology Edexcel 1BI0, Physics AQA 8463, Chemistry AQA 8462, Computer Science AQA 8525, Business Edexcel 1BS0 (content started 10 September 2026), French Edexcel 1FR1. Music board still open, presumed Edexcel 1MU0 from the set works.
+- Exam boards: Maths Edexcel 1MA1 with AQA Level 2 Further Maths, Biology Edexcel 1BI0, Physics AQA 8463, Chemistry AQA 8462, Computer Science AQA 8525, Business Edexcel 1BS0, Music Edexcel 1MU0 (confirmed by the school on 11 September 2026, closing the PRD's last open decision). French is assumed Edexcel 1FR1; the school has not named a board, so the French exam-technique guide is not yet written.
 - Users: students, parents, and tutors. Parents own the family; tutors are linked per child by parent invite.
 - Fully interactive on phone, tablet, and desktop, installable as a progressive web app.
 - Stack: React with TypeScript on Vite, hosted on Vercel (switched from Cloudflare Pages on 8 September 2026), Supabase (London) with row-level security for the later progress sync, GitHub Actions for CI. Single repository with pnpm workspaces. Content is JSON in `supabase/seed`, reviewed through pull requests and bundled into the app at build time; the database holds only synced progress.
 
 ## Still to decide
 
-See the last section of the PRD. The two that block content work are the Music exam board and who writes and illustrates the content.
+See the last section of the PRD. The Music board was settled on 11 September 2026. What remains open: the French board, which blocks that subject's exam-technique guide, and who writes and illustrates the content long term.
 
 ## Repository layout
 
