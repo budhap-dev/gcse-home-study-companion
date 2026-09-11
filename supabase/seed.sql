@@ -71,6 +71,8 @@ insert into public.units (subject_id, id, name, sort) values
   ('french', 'media-and-technology', 'Media and technology', 4),
   ('french', 'studying-and-my-future', 'Studying and my future', 5),
   ('french', 'travel-and-tourism', 'Travel and tourism', 6),
-  ('music', 'musical-elements', 'Musical elements', 1),
-  ('music', 'set-works-or-areas-of-study', 'Set works or areas of study', 2),
-  ('music', 'listening-and-appraising', 'Listening and appraising', 3);
+  ('music', 'musical-elements', 'Musical elements and language', 1),
+  ('music', 'instrumental-music-1700-1820', 'Instrumental music 1700 to 1820', 2),
+  ('music', 'vocal-music', 'Vocal music', 3),
+  ('music', 'music-for-stage-and-screen', 'Music for stage and screen', 4),
+  ('music', 'fusions', 'Fusions', 5);
