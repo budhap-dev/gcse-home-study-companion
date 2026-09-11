@@ -6,48 +6,49 @@ import { SearchBox } from '../components/SearchBox.tsx'
 import { useAuth } from '../auth/useAuth.ts'
 
 /**
- * Layout: sidebar on wide screens, bottom bar on phones. Content is one column
- * with a maximum width so text stays readable on desktop.
+ * Layout: an app header across the top, a sidebar on wide screens, a bottom bar on
+ * phones. The header carries the app's identity and the search box, so the name is
+ * visible on a phone too, where the sidebar is hidden and nothing else shows it.
  */
 export function AppShell() {
   const { pathname } = useLocation()
   const auth = useAuth()
   return (
-    <div className="flex min-h-dvh flex-col md:flex-row">
+    <div className="flex min-h-dvh flex-col">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
       </a>
 
-      <aside className="hidden w-60 shrink-0 flex-col gap-6 border-r border-rule bg-surface px-4 py-6 md:flex">
-        <NavLink to="/" className="px-2" aria-label="Home Study Companion, home">
-          <Logo />
-        </NavLink>
-        <Menu orientation="vertical" />
-        <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
-          <span>{auth.status === 'allowed' ? `Signed in as ${auth.name ?? auth.email}. Progress is saved to your account.` : 'Progress is saved on this device.'}</span>
-          <span title={`Built ${APP_BUILT}`}>{VERSION_LABEL}</span>
-        </div>
-      </aside>
-
-      <div className="flex min-w-0 flex-1 flex-col">
-        {/* One search box, sticky over the content, so it is reachable from any scroll
-            position and the glossary page no longer shows two boxes side by side. */}
-        <header className="sticky top-0 z-30 border-b border-rule bg-paper px-4 py-2.5 md:px-10">
-          <div className="mx-auto w-full max-w-6xl">
-            <div className="max-w-2xl">
-              <SearchBox />
-            </div>
+      <header className="sticky top-0 z-30 border-b border-rule bg-paper">
+        <div className="flex h-16 items-center gap-3 px-4 md:px-6">
+          <NavLink to="/" aria-label="Home Study Companion, home" className="shrink-0">
+            <Logo inline />
+          </NavLink>
+          {/* Pushed right on desktop and bounded, so it reads as a tool rather than
+              a field spanning the whole window. */}
+          <div className="ml-auto w-full max-w-sm md:max-w-md">
+            <SearchBox />
           </div>
-        </header>
+        </div>
+      </header>
 
-        <main id="main" className="flex-1 px-4 pb-24 pt-6 md:px-10 md:pb-10" key={pathname}>
+      <div className="flex min-h-0 flex-1 md:flex-row">
+        <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-60 shrink-0 flex-col gap-4 border-r border-rule bg-surface px-4 py-5 md:flex">
+          <Menu orientation="vertical" />
+          <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
+            <span>{auth.status === 'allowed' ? `Signed in as ${auth.name ?? auth.email}. Progress is saved to your account.` : 'Progress is saved on this device.'}</span>
+            <span title={`Built ${APP_BUILT}`}>{VERSION_LABEL}</span>
+          </div>
+        </aside>
+
+        <main id="main" className="min-w-0 flex-1 px-4 pb-24 pt-6 md:px-10 md:pb-10" key={pathname}>
           <div className="anim-fade-up">
             <Outlet />
           </div>
         </main>
       </div>
 
-      <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 border-t border-rule bg-surface pb-[env(safe-area-inset-bottom)] md:hidden">
+      <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 z-30 border-t border-rule bg-surface pb-[env(safe-area-inset-bottom)] md:hidden">
         <Menu orientation="horizontal" />
       </nav>
     </div>
