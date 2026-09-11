@@ -102,9 +102,11 @@ Units are Edexcel's four areas of study, plus musical elements first, because ev
 
 | Half term | Set works | Status |
 |---|---|---|
-| Autumn 1 and 2 | Killer Queen (vocal music) · Star Wars main title (stage and screen) | Killer Queen drafted 11 September 2026; Star Wars next |
-| Spring | Bach, Brandenburg Concerto No. 5 third movement (instrumental 1700–1820) · Afro Celt Sound System, Release (fusions) | |
+| Autumn 1 and 2 | Killer Queen (vocal music) · Star Wars main title (stage and screen) | Both drafted 11 September 2026. **Music Autumn is complete.** |
+| Spring | Bach, Brandenburg Concerto No. 5 third movement (instrumental 1700–1820) · Afro Celt Sound System, Release (fusions) | Next |
 | Summer | Esperanza Spalding, Samba Em Preludio (fusions) · Defying Gravity from Wicked (stage and screen) | |
 | Year 11 | Beethoven, Pathétique first movement (instrumental 1700–1820) · Purcell, Music for a While (vocal music) | |
 
-**Audio is deliberately not bundled.** The set works are copyrighted, so the app ships no recordings and no links that could rot. Instead each topic carries a `music-timeline` diagram giving the structure with timings for the standard studio or reference recording, and tells the student to play it on whatever service the family uses and follow the map. Timings are for the recording named in the topic; live versions and remixes will not line up.
+**Audio is deliberately not bundled.** The set works are copyrighted, so the app ships no recordings and no links that could rot; the student plays the named recording on whatever service the family uses.
+
+**Timings are not verified, so the app no longer prints them.** The `music-timeline` in *Killer Queen* gives section timings that were written without checking them against a recording, so treat them as approximate until someone checks them by ear. From *Star Wars* on, a topic gives the structure as an ordered table with no timings, and its your-turn step asks the student to note when each section starts while listening. That is better revision anyway: making the map is the listening, and a printed map would not line up with every recording.
