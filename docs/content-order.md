@@ -49,7 +49,7 @@ School order for Year 10: Unit 6 Plant structures first, then Unit 5 Health and 
 | Half term | Topics | Status |
 |---|---|---|
 | Autumn 1 | Unit 6: photosynthesis and limiting factors · the leaf, root hair cells, xylem and phloem · transpiration and translocation · plant adaptations, defences and hormones (Biology only) | All four drafted |
-| Autumn 1 and 2 | Unit 5: pathogens and how disease spreads · the immune system and immunisation · antibiotics and developing medicines · non-communicable disease | First two drafted; medicines and non-communicable disease next |
+| Autumn 1 and 2 | Unit 5: pathogens and how disease spreads · the immune system and immunisation · antibiotics, new medicines and monoclonal antibodies · non-communicable disease and lifestyle | All four drafted |
 
 
 ## Computer Science (AQA 8525)
