@@ -15,6 +15,7 @@ import { FourBox } from './FourBox.tsx'
 import { DotAndCross } from './DotAndCross.tsx'
 import { Lattice } from './Lattice.tsx'
 import { MarketMap } from './MarketMap.tsx'
+import { MusicTimeline } from './MusicTimeline.tsx'
 import { EnergyStores } from './EnergyStores.tsx'
 import { EnergyTransferBars } from './EnergyTransferBars.tsx'
 import { EquationCard } from './EquationCard.tsx'
@@ -45,6 +46,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'dot-and-cross': DotAndCross,
   'lattice': Lattice,
   'market-map': MarketMap,
+  'music-timeline': MusicTimeline,
   'energy-stores': EnergyStores,
   'energy-transfer-bars': EnergyTransferBars,
   'equation-card': EquationCard,

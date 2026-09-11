@@ -91,3 +91,20 @@ Authoring notes for French, which differs from the other subjects:
 - Vocabulary is a `vocab-list` interactive: it speaks each word with the browser's French voice and keeps the English hidden until asked for.
 - Conjugations use the `verb-table` diagram, which draws the stem and the ending apart because that split is the lesson.
 - Accepted answers carry the accented spelling **first**, then an unaccented twin, so a UK keyboard does not block a correct answer while the feedback still shows the right spelling. Every solution states the accented form.
+
+## Music (Edexcel 1MU0, confirmed 11 September 2026)
+
+The school confirmed Edexcel on 11 September 2026, closing the PRD's last open decision and matching the eight set works already listed in `docs/curriculum/music.md`.
+
+**The app covers Component 3 (Appraising) only.** Performing and Composing are 30% each and are coursework, recorded and marked by the school; there is nothing to revise there. Appraising is the written exam: 1 h 45, 80 marks, 40% of the GCSE, with Section A worth 68 marks (six set works plus a dictation) and Section B worth 12 (one comparison against an unfamiliar piece from the same area of study).
+
+Units are Edexcel's four areas of study, plus musical elements first, because every set work is described through them.
+
+| Half term | Set works | Status |
+|---|---|---|
+| Autumn 1 and 2 | Killer Queen (vocal music) · Star Wars main title (stage and screen) | Killer Queen drafted 11 September 2026; Star Wars next |
+| Spring | Bach, Brandenburg Concerto No. 5 third movement (instrumental 1700–1820) · Afro Celt Sound System, Release (fusions) | |
+| Summer | Esperanza Spalding, Samba Em Preludio (fusions) · Defying Gravity from Wicked (stage and screen) | |
+| Year 11 | Beethoven, Pathétique first movement (instrumental 1700–1820) · Purcell, Music for a While (vocal music) | |
+
+**Audio is deliberately not bundled.** The set works are copyrighted, so the app ships no recordings and no links that could rot. Instead each topic carries a `music-timeline` diagram giving the structure with timings for the standard studio or reference recording, and tells the student to play it on whatever service the family uses and follow the map. Timings are for the recording named in the topic; live versions and remixes will not line up.
