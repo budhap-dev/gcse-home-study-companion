@@ -4,6 +4,8 @@ interface Curve {
   /** saturating: y = max·x/(k + x). optimum: rises to a peak then falls steeply. linear: y = m·x. inverse-square: y = k/x². */
   kind: 'saturating' | 'optimum' | 'linear' | 'inverse-square'
   label?: string
+  /** Where along x to put the label, just above the curve. Omit to label the right-hand end. */
+  labelX?: number
   colour?: string
   max?: number
   k?: number
@@ -53,10 +55,12 @@ export function CurveGraph({ props, alt }: { props: Record<string, unknown>; alt
         const colour = c.colour ?? palette[i % palette.length]!
         const d = samples[i]!.map((y, j) => `${j ? 'L' : 'M'}${sx((j / 80) * xMax).toFixed(1)} ${sy(y).toFixed(1)}`).join(' ')
         const yEnd = samples[i]![80]!
+        // Curves that all end near zero would print their labels on top of each other, so a curve can name its own spot.
+        const at = typeof c.labelX === 'number' ? { x: sx(c.labelX), y: sy(f(c, c.labelX)) - 8, anchor: 'middle' as const } : { x: W - pad - 4, y: sy(yEnd) - 6, anchor: 'end' as const }
         return (
           <g key={i}>
             <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {c.label && <text x={W - pad - 4} y={sy(yEnd) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}>{c.label}</text>}
+            {c.label && <text x={at.x} y={at.y} textAnchor={at.anchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}>{c.label}</text>}
           </g>
         )
       })}
