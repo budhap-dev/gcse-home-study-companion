@@ -23,16 +23,6 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const listId = useId()
 
-  // Matches the width at which the header shows the wordmark and space gets tight.
-  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640)
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 639px)')
-    const read = () => setNarrow(mq.matches)
-    read()
-    mq.addEventListener('change', read)
-    return () => mq.removeEventListener('change', read)
-  }, [])
-
   const trimmed = query.trim()
   const ready = trimmed.length > 1
   const terms = ready ? searchGlossary(GLOSSARY, trimmed).slice(0, MAX_TERMS) : []
@@ -94,8 +84,7 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
         ref={inputRef}
         type="search"
         value={query}
-        // The full phrase does not fit beside the wordmark on a phone.
-        placeholder={narrow ? 'Search' : 'Search topics and terms'}
+        placeholder="Search topics and terms"
         autoComplete="off"
         role="combobox"
         aria-expanded={open && rows.length > 0}

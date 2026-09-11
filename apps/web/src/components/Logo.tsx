@@ -22,15 +22,14 @@ export function LogoMark({ size = 36, className = '' }: { size?: number; classNa
 
 /**
  * Mark plus wordmark. `inline` sets the name on one line for the app header, where the
- * two-line version would be too tall; the name hides altogether on the narrowest phones
- * so the mark and the search box still fit on one row.
+ * two-line version would be too tall.
  */
 export function Logo({ inline = false, size = 36 }: { inline?: boolean; size?: number }) {
   return (
     <span className="flex items-center gap-2.5">
       <LogoMark size={size} />
       {inline ? (
-        <span className="hidden font-display text-base font-bold leading-none min-[400px]:inline">Home Study Companion</span>
+        <span className="font-display text-base font-bold leading-none">Home Study Companion</span>
       ) : (
         <span className="font-display text-lg font-bold leading-tight">
           Home Study
