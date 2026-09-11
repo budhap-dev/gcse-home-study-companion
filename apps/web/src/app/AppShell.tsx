@@ -20,13 +20,14 @@ export function AppShell() {
       </a>
 
       <header className="sticky top-0 z-30 border-b border-rule bg-paper">
-        <div className="flex h-16 items-center gap-3 px-4 md:px-6">
-          <NavLink to="/" aria-label="Home Study Companion, home" className="shrink-0">
-            <Logo inline />
+        {/* One row on desktop: name left, search pushed right and bounded, so it reads
+            as a tool rather than a field spanning the window. Two rows on a phone,
+            because the name and a usable search box will not share 390px. */}
+        <div className="flex flex-col gap-2 px-4 py-2.5 md:h-16 md:flex-row md:items-center md:gap-3 md:px-6 md:py-0">
+          <NavLink to="/" aria-label="Home Study Companion, home" className="w-fit shrink-0">
+            <Logo inline size={30} />
           </NavLink>
-          {/* Pushed right on desktop and bounded, so it reads as a tool rather than
-              a field spanning the whole window. */}
-          <div className="ml-auto w-full max-w-sm md:max-w-md">
+          <div className="w-full md:ml-auto md:max-w-md">
             <SearchBox />
           </div>
         </div>
