@@ -127,17 +127,25 @@ function sharedPrefix(a: string, b: string): number {
  * 70% of its length — so congruency reaches congruent, while read stays away from real
  * and readxyz reaches nothing at all.
  */
-function sameStem(word: string, term: string): boolean {
+export function sameStem(word: string, term: string): boolean {
   if (word.includes(term)) return true
   const need = Math.max(4, Math.ceil(Math.max(word.length, term.length) * 0.7))
   return sharedPrefix(word, term) >= need
+}
+
+/** Where the term first appears, or failing that the first word that shares its stem, so the snippet shows what matched. */
+function firstMatch(lower: string, term: string): number {
+  const literal = lower.indexOf(term)
+  if (literal !== -1) return literal
+  for (const m of lower.matchAll(/[a-z0-9]+/g)) if (sameStem(m[0], term)) return m.index ?? -1
+  return -1
 }
 
 function makeSnippet(text: string, terms: string[]): string {
   const lower = text.toLowerCase()
   let at = -1
   for (const term of terms) {
-    const found = lower.indexOf(term)
+    const found = firstMatch(lower, term)
     if (found !== -1 && (at === -1 || found < at)) at = found
   }
   if (at === -1) return text.slice(0, 150) + (text.length > 150 ? '…' : '')

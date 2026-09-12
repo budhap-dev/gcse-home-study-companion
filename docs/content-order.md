@@ -37,7 +37,7 @@ The Autumn 2 Milestone re-tests all of Year 9 alongside Hooke's law, moments and
 | When | Topics, in the school's order | Status |
 |---|---|---|
 | Autumn 1 and 2 | C2 Structures and bonding: ionic bonding · covalent bonding and simple molecules · giant covalent structures and polymers · metallic bonding and alloys · carbon structures and nanoparticles | Ionic, covalent, metallic bonding and carbon structures drafted (C2 complete) |
-| Autumn 2 | C4 Chemical changes continued: electrolysis of melts and solutions · half equations | |
+| Autumn 2 | C4 Chemical changes continued: electrolysis of melts and solutions · half equations | Both drafted 12 September 2026 (Electrolysis of molten compounds · Electrolysis of aqueous solutions, with required practical 3) |
 | Spring | C5 Energy changes · C7 Organic chemistry: crude oil, alkanes, cracking | |
 | Summer | C7 continued: alkenes, alcohols, carboxylic acids, esters · polymers and biological molecules | |
 
