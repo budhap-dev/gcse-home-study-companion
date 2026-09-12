@@ -7,7 +7,7 @@ Content is authored just ahead of what the pilot student meets in class. This is
 | When | Topics, in teaching order | Status |
 |---|---|---|
 | Autumn 1 | Laws of indices · Powers and roots · Surds · Equations of straight lines · Parallel and perpendicular lines · Constructing triangles · Congruency | All seven drafted. Powers and roots was missed in the first pass and added on 10 September 2026; the school's topic test covers powers, roots and surds together. |
-| Autumn 2 | Circle theorems · Expanding and factorising quadratics · Identities and equivalence · Rearranging formulae · Solving quadratic equations | Expanding and factorising, and solving quadratics, drafted 12 September 2026; circle theorems, identities and rearranging next |
+| Autumn 2 | Circle theorems · Expanding and factorising quadratics · Identities and equivalence · Rearranging formulae · Solving quadratic equations | All drafted 12 September 2026 (identities and rearranging as one topic) |
 | Spring 1 | Combined events and tree diagrams · Sample space diagrams · Venn diagrams · Choices and outcomes · Sets and set notation · Histograms · Linear, quadratic and geometric sequences · Iteration | |
 | Spring 2 | Ratio and proportion · Similarity and linear scale factors · Exact trigonometric values · Sine rule, cosine rule and area of a triangle · Scale drawings and bearings | |
 | Summer 1 | Quadratic curves: turning points and intercepts · Inequalities on a number line · Inequality regions · Quadratic inequalities · Area and volume scale factors · Pythagoras in 3D · Trigonometry in 3D | |
