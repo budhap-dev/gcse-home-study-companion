@@ -7,6 +7,7 @@ import { RepeatedMultiplication } from './RepeatedMultiplication.tsx'
 import { RootNumberLine } from './RootNumberLine.tsx'
 import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
+import { CircleTheorem } from './CircleTheorem.tsx'
 import { SpringLoad } from './SpringLoad.tsx'
 import { BeamMoments } from './BeamMoments.tsx'
 import { Collision } from './Collision.tsx'
@@ -38,6 +39,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'line-graph': LineGraph,
   'triangle-construction': TriangleConstruction,
   'triangle-pair': TrianglePair,
+  'circle-theorem': CircleTheorem,
   'spring-load': SpringLoad,
   'beam-moments': BeamMoments,
   'collision': Collision,
