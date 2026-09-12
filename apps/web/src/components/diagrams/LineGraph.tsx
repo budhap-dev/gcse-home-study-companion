@@ -13,17 +13,28 @@ interface Point {
   y: number
   label?: string
 }
+interface Curve {
+  /** y = a x² + b x + c */
+  a: number
+  b: number
+  c: number
+  label?: string
+  colour?: string
+  dashed?: boolean
+}
 
 /**
- * Axes with straight lines and points. Props: xRange [min, max], yRange [min, max],
- * lines [{m, c, label}], points [{x, y, label}], grid true or false, xLabel and
- * yLabel (axis captions; default to italic x and y), xStep and yStep (tick spacing;
- * chosen automatically when omitted, so small ranges such as 0 to 0.2 still get a scale).
+ * Axes with straight lines, quadratic curves and points. Props: xRange [min, max],
+ * yRange [min, max], lines [{m, c, label}], curves [{a, b, c, label}], points
+ * [{x, y, label}], grid true or false, xLabel and yLabel (axis captions; default to
+ * italic x and y), xStep and yStep (tick spacing; chosen automatically when omitted,
+ * so small ranges such as 0 to 0.2 still get a scale).
  */
 export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const [xMin, xMax] = (props.xRange as [number, number] | undefined) ?? [-5, 5]
   const [yMin, yMax] = (props.yRange as [number, number] | undefined) ?? [-5, 5]
   const lines = (props.lines as Line[] | undefined) ?? []
+  const curves = (props.curves as Curve[] | undefined) ?? []
   const points = (props.points as Point[] | undefined) ?? []
   const grid = props.grid !== false
   const xLabel = typeof props.xLabel === 'string' ? props.xLabel : undefined
@@ -61,6 +72,23 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     pts.sort((a, b) => a[0] - b[0])
     return pts.length >= 2 ? [pts[0]!, pts[pts.length - 1]!] : null
   }
+  // A curve is sampled across the x range and drawn only where it lies inside the box,
+  // so a parabola whose arms leave the top simply stops at the edge.
+  const curvePath = (k: Curve) => {
+    let d = ''
+    let pen = false
+    let last: [number, number] | null = null
+    for (let i = 0; i <= 120; i++) {
+      const x = xMin + ((xMax - xMin) * i) / 120
+      const y = k.a * x * x + k.b * x + k.c
+      if (y >= yMin && y <= yMax) {
+        d += `${pen ? 'L' : 'M'}${sx(x).toFixed(1)} ${sy(y).toFixed(1)} `
+        pen = true
+        last = [x, y]
+      } else pen = false
+    }
+    return { d, last }
+  }
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
       {grid && xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={pad} x2={sx(v)} y2={H - pad} stroke={RULE} />)}
@@ -84,6 +112,17 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
           <g key={i}>
             <line x1={sx(x1)} y1={sy(y1)} x2={sx(x2)} y2={sy(y2)} stroke={colour} strokeWidth="2.5" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinecap="round" />
             {l.label && <text x={sx(x2) - 4} y={sy(y2) + (y2 > y1 ? -8 : 16)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{l.label}</text>}
+          </g>
+        )
+      })}
+      {curves.map((k, i) => {
+        const { d, last } = curvePath(k)
+        if (!last) return null
+        const colour = k.colour ?? palette[(lines.length + i) % palette.length]!
+        return (
+          <g key={`k${i}`}>
+            <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={k.dashed ? '6 5' : undefined} strokeLinecap="round" />
+            {k.label && <text x={sx(last[0]) - 4} y={sy(last[1]) + (k.a > 0 ? -8 : 16)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>}
           </g>
         )
       })}
