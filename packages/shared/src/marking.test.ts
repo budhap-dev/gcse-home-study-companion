@@ -153,6 +153,31 @@ describe('sentence punctuation', () => {
   })
 })
 
+describe('leading articles', () => {
+  const q = (accepted: string[]): Question => ({
+    id: 'q', type: 'short-text', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's',
+    calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }],
+    discriminators: [], accepted,
+  })
+
+  it('forgives "the", "a" or "an" in front of a plain noun answer', () => {
+    expect(mark(q(['stomata']), 'The stomata').correct).toBe(true)
+    expect(mark(q(['hybridoma']), 'a hybridoma').correct).toBe(true)
+    expect(mark(q(['interrupted cadence']), 'An interrupted cadence.').correct).toBe(true)
+  })
+
+  it('does not strip an article the accepted answer itself begins with', () => {
+    expect(mark(q(['the sun']), 'the sun').correct).toBe(true)
+    expect(mark(q(['the sun']), 'sun').correct).toBe(false)
+  })
+
+  it('keeps program output, equations and accented words strict', () => {
+    expect(mark(q(['Hi Amy!']), 'the Hi Amy!').correct).toBe(false)
+    expect(mark(q(['Na→Na++e-']), 'the Na→Na++e-').correct).toBe(false)
+    expect(mark(q(['mangé']), 'a mangé').correct).toBe(false)
+  })
+})
+
 describe('negative coordinates', () => {
   const point: Question = {
     id: 'q', type: 'short-text', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's',

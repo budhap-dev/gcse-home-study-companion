@@ -104,6 +104,19 @@ function matchesAccepted(given: string, accepted: string): boolean {
 }
 
 /**
+ * "the stomata" for "stomata": a leading English article is forgiven when the
+ * accepted answer is a plain word or phrase that does not start with one. Anything
+ * with digits, quotes or symbols (program output, equations) and any accented word
+ * (French, where the article carries gender) keeps the strict comparison. Works on
+ * the raw strings because normaliseText removes the spaces the rule depends on.
+ */
+function withoutArticle(rawGiven: string, rawAccepted: string): string | null {
+  if (!/^[a-z][a-z -]*$/i.test(rawAccepted) || /^(the|an?) /i.test(rawAccepted)) return null
+  const bare = rawGiven.replace(/^\s*(the|an?)\s+/i, '')
+  return bare === rawGiven ? null : bare
+}
+
+/**
  * Marks an auto-markable answer. Extended responses are self-assessed and return
  * whatever marks the student awarded themselves, capped at the marks available.
  * `answer` shapes: multiple-choice number[]; numeric string; short-text string;
@@ -125,8 +138,14 @@ export function mark(question: Question, answer: unknown): MarkResult {
       return result(Math.abs(value - question.answer) <= question.tolerance + 1e-9)
     }
     case 'short-text': {
-      const given = normaliseText(String(answer ?? ''))
-      return result(given.length > 0 && question.accepted.some((a) => matchesAccepted(given, normaliseText(a))))
+      const raw = String(answer ?? '')
+      const given = normaliseText(raw)
+      return result(given.length > 0 && question.accepted.some((a) => {
+        const accepted = normaliseText(a)
+        if (matchesAccepted(given, accepted)) return true
+        const bare = withoutArticle(raw, a)
+        return bare !== null && matchesAccepted(normaliseText(bare), accepted)
+      }))
     }
     case 'ordering': {
       const order = Array.isArray(answer) ? (answer as number[]) : []

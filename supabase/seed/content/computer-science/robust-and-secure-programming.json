@@ -384,7 +384,7 @@
                 "text": "OUTPUT 'Hello  (missing quote): syntax error"
               },
               {
-                "text": "total / count when count is 0: runtime error"
+                "text": "total / count when count is 0: logic error — the code is legal, the reasoning is wrong (some textbooks call this a runtime error)"
               },
               {
                 "text": "A discount applied before tax instead of after: logic error"
@@ -504,7 +504,7 @@
           ],
           "discriminators": [],
           "options": [
-            "Dividing by zero causes a runtime error, so the program would crash if the user entered −1 straight away",
+            "Dividing by zero makes the program fail at that line, so it would crash if the user entered −1 straight away",
             "Count is a string and must be converted to a number before it can be used in a division",
             "Zero scores would give a mean of zero, which is a wrong answer that a logic error would produce",
             "Because count is a global variable, and global variables cannot be used in a division"
@@ -984,7 +984,7 @@
     {
       "id": "q13",
       "type": "multiple-choice",
-      "prompt": "What kind of error does this program contain, and when is it found?\n\n```\ntotal ← 0\nFOR i ← 1 TO 3\n   total ← total + i\nENDFOR\nOUTPUT total / 0\n```",
+      "prompt": "What kind of error does this program contain, and when is it found?\n\n```\ntotal ← 0\nFOR i ← 1 TO 3\n   total ← total + i\nENDFOR\ncount ← 0\nOUTPUT total / count\n```",
       "marks": 1,
       "gradeBand": "8-9",
       "skill": "errors",
@@ -1098,7 +1098,7 @@
       "skill": "correcting errors",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Line 3's test is right; the outputs are swapped. Line 4 should be OUTPUT a and line 6 should be OUTPUT b, so line 4 is the first that must change. This is a logic error: the program runs and gives the wrong answer.",
+      "solution": "Line 3's test is right; the outputs are swapped. Line 4 should be OUTPUT a and line 6 should be OUTPUT b, so line 4 is the first that must change. This is a logic error: the program runs and gives the wrong answer. Changing line 3 to `IF a < b THEN` instead also fixes the program, so 3 is accepted as well.",
       "markScheme": [
         {
           "code": "B1",
@@ -1109,7 +1109,9 @@
       "discriminators": [],
       "accepted": [
         "4",
-        "line 4"
+        "line 4",
+        "3",
+        "line 3"
       ]
     },
     {
@@ -1198,7 +1200,7 @@
     }
   },
   "examTechnique": {
-    "body": "These ideas appear in three places: short definitions (validation, authentication, the three error types), test-plan questions (normal, boundary, erroneous with expected results), and inside the long programming question, where a validation loop earns its own marks. Use the specification words and give the boundary values on both sides of the edge.",
+    "body": "These ideas appear in three places: short definitions (validation, authentication, the two error types), test-plan questions (normal, boundary, erroneous with expected results), and inside the long programming question, where a validation loop earns its own marks. Use the specification words and give the boundary values on both sides of the edge.",
     "examinerErrors": [
       "Confusing validation (is the data sensible?) with authentication (is this the right person?).",
       "Writing a validation condition with AND when it needs OR.",

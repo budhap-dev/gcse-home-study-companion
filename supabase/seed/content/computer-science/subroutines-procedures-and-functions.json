@@ -311,7 +311,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Local and global variables",
-        "body": "A variable created **inside** a subroutine is **local**: it exists only while that subroutine runs, and nothing outside can see it. A variable created in the main program is **global**. Local variables are better: two subroutines can both use a variable called `total` without clashing, and a subroutine cannot accidentally wreck a value the rest of the program depends on.\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   total ← 20\n   OUTPUT total - amount\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```\n\nInside `spend`, `total ← 20` makes a **new local** `total`. The global `total` stays 100. Output: `15` then `100`.",
+        "body": "A variable created **inside** a subroutine is **local**: it exists only while that subroutine runs, and nothing outside can see it. A variable created in the main program is **global**. Languages differ on what happens when a subroutine assigns to a name that already exists outside: in Python a new local is made unless you write `global`, whereas in C# and VB.NET the outer variable is changed. AQA's pseudo-code does not say, so an exam question will make the rule clear. This course uses the Python rule: **assigning inside a subroutine makes a new local variable.** Local variables are better: two subroutines can both use a variable called `total` without clashing, and a subroutine cannot accidentally wreck a value the rest of the program depends on.\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   total ← 20\n   OUTPUT total - amount\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```\n\nInside `spend`, `total ← 20` makes a **new local** `total`. The global `total` stays 100. Output: `15` then `100`.",
         "visuals": [
           {
             "type": "diagram",
@@ -951,7 +951,7 @@
     {
       "id": "q11",
       "type": "numeric",
-      "prompt": "What is the second value output by this program?\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   total ← 20\n   OUTPUT total - amount\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```",
+      "prompt": "What is the second value output by this program? (Assigning to a name inside a subroutine creates a new local variable, as in Python.)\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   total ← 20\n   OUTPUT total - amount\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```",
       "marks": 2,
       "gradeBand": "8-9",
       "skill": "local and global variables",
