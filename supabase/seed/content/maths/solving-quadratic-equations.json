@@ -1,0 +1,1587 @@
+{
+  "id": "solving-quadratic-equations",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Solving quadratic equations",
+  "specPoints": [
+    "A18",
+    "A4"
+  ],
+  "order": 4,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Solving by factorising, and why it works",
+        "body": "A **quadratic equation** has an $x^2$ term and, usually, two solutions. In Year 9 you solved them by factorising; here is the reasoning behind it, because the harder questions test the reasoning.\n\n$x^2 + 5x + 6 = 0$ factorises to $(x+2)(x+3) = 0$. Two things multiply to give **zero**, and that can only happen if one of them **is** zero. So $x + 2 = 0$ or $x + 3 = 0$: $x = -2$ or $x = -3$.\n\nThree consequences:\n\n- The equation must be **equal to zero** first. $x^2 = 5x + 14$ has to become $x^2 - 5x - 14 = 0$ before factorising means anything.\n- $(x+1)(x-3) = 12$ does **not** give $x + 1 = 12$. Only a product of zero splits like that.\n- The solutions are the **opposites** of the numbers in the brackets: $(x-4)(x+1) = 0$ gives $x = 4$ and $x = -1$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $x^2 = 5x + 14$",
+            "steps": [
+              {
+                "text": "Rearrange to zero: $x^2 - 5x - 14 = 0$",
+                "note": "Nothing works until this is done"
+              },
+              {
+                "text": "Factorise: $(x-7)(x+2) = 0$"
+              },
+              {
+                "text": "Either $x - 7 = 0$ or $x + 2 = 0$",
+                "note": "Because a product is zero only when a factor is"
+              },
+              {
+                "text": "$x = 7$ or $x = -2$"
+              },
+              {
+                "text": "Check: $49 = 35 + 14$ ✓ and $4 = -10 + 14$ ✓",
+                "note": "Both solutions substitute back"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Why does $(x+2)(x+3) = 0$ mean $x = -2$ or $x = -3$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "solving by factorising",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Two numbers multiply to zero only if at least one of them is zero. That is the whole method, and it is why the equation has to equal zero first.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a product is zero only if a factor is zero"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A product is zero only if one of the factors is zero",
+            "The two brackets must be equal to each other",
+            "Adding the brackets gives $2x + 5 = 0$",
+            "The numbers in the brackets are always the solutions"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "What the solutions look like on a graph",
+        "body": "$y = x^2 + 5x + 6$ is a **parabola**, a U-shaped curve. Solving $x^2 + 5x + 6 = 0$ asks where $y = 0$: where the curve **crosses the $x$-axis**. The solutions, $x = -2$ and $x = -3$, are those crossing points, and they are called the **roots**.\n\nThis picture explains the number of solutions. A parabola can cross the axis twice (two roots), just touch it (one repeated root, as in $(x-3)^2 = 0$), or miss it completely (no real roots, as in $x^2 + 2x + 5 = 0$).\n\nYou will study the shape of quadratic curves properly in the summer; for now the link is enough: **roots are where the graph meets the $x$-axis**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -6,
+                2
+              ],
+              "yRange": [
+                -2,
+                8
+              ],
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 5,
+                  "c": 6
+                }
+              ],
+              "points": [
+                {
+                  "x": -3,
+                  "y": 0,
+                  "label": "−3"
+                },
+                {
+                  "x": -2,
+                  "y": 0,
+                  "label": "−2"
+                }
+              ],
+              "lines": []
+            },
+            "alt": "The parabola y = x² + 5x + 6, crossing the x-axis at x = −3 and x = −2, with the two roots marked"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "On a graph of $y = x^2 - 9$, what do the solutions of $x^2 - 9 = 0$ show?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "roots on a graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Solutions of $y = 0$ are where the curve meets the $x$-axis: at $x = 3$ and $x = -3$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "crosses the x-axis"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Where the curve crosses the $x$-axis",
+            "Where the curve crosses the $y$-axis",
+            "The lowest point of the curve",
+            "Where the curve crosses the line $y = 9$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Coefficients, common factors and squares",
+        "body": "The same method, three shapes that catch people out.\n\n**A coefficient of $x^2$.** $2x^2 + 7x + 3 = 0$ factorises to $(2x+1)(x+3) = 0$. The first bracket gives $2x + 1 = 0$, so $x = -\\tfrac{1}{2}$ — not $-1$. Solve each bracket as a small equation.\n\n**No constant term.** $x^2 - 7x = 0$ has the common factor $x$: $x(x-7) = 0$, so $x = 0$ or $x = 7$. Dividing both sides by $x$ throws away the solution $x = 0$, and examiners look for exactly that.\n\n**A difference of two squares.** $x^2 - 9 = 0$ is $(x+3)(x-3) = 0$: $x = 3$ or $x = -3$. Or take the square root of both sides, remembering the **±**: $x = \\pm 3$. One answer scores one mark of two.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "Factorised",
+                "Solutions"
+              ],
+              "rows": [
+                [
+                  "2x² + 7x + 3 = 0",
+                  "(2x + 1)(x + 3) = 0",
+                  "x = −½ or x = −3"
+                ],
+                [
+                  "x² − 7x = 0",
+                  "x(x − 7) = 0",
+                  "x = 0 or x = 7"
+                ],
+                [
+                  "x² − 9 = 0",
+                  "(x + 3)(x − 3) = 0",
+                  "x = 3 or x = −3"
+                ]
+              ],
+              "title": "Three shapes to recognise"
+            },
+            "alt": "A table of three quadratic shapes with the factorised form and the solutions of each"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "Solve $x^2 - 4x = 0$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "common factor",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$x(x-4) = 0$, so $x = 0$ or $x = 4$. Keep the zero.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "$x(x-4) = 0$"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "$x = 0$ and $x = 4$"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "x = 0 or x = 4",
+            "0 or 4",
+            "x = 0, x = 4",
+            "0, 4",
+            "x = 0 and x = 4",
+            "0 and 4",
+            "x = 0; x = 4",
+            "0; 4",
+            "x = 4 or x = 0",
+            "4 or 0",
+            "x = 4, x = 0",
+            "4, 0",
+            "x = 4 and x = 0",
+            "4 and 0",
+            "x = 4; x = 0",
+            "4; 0"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Completing the square",
+        "body": "Some quadratics do not factorise: $x^2 + 6x + 2$ has no pair with product $2$ and sum $6$. **Completing the square** rewrites any quadratic as a squared bracket plus a number.\n\n$x^2 + 6x + 2$:\n\n1. **Halve** the coefficient of $x$: $6 \\to 3$. Write $(x+3)^2$.\n2. $(x+3)^2 = x^2 + 6x + 9$, which is $9$ too many. **Subtract** it: $(x+3)^2 - 9$.\n3. Put the constant back: $(x+3)^2 - 9 + 2 = (x+3)^2 - 7$.\n\nSo $x^2 + 6x + 2 = (x+3)^2 - 7$. Check by expanding: $x^2 + 6x + 9 - 7$ ✓.\n\nThe number inside the bracket is always **half of $b$**, sign included: $x^2 - 10x + 18 = (x-5)^2 - 25 + 18 = (x-5)^2 - 7$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "x² + 6x + 2",
+                "x² − 10x + 18"
+              ],
+              "rows": [
+                [
+                  "halve b, write the square",
+                  "(x + 3)²",
+                  "(x − 5)²"
+                ],
+                [
+                  "subtract the square of it",
+                  "(x + 3)² − 9",
+                  "(x − 5)² − 25"
+                ],
+                [
+                  "add the constant",
+                  "(x + 3)² − 7",
+                  "(x − 5)² − 7"
+                ]
+              ],
+              "title": "Completing the square"
+            },
+            "alt": "The three steps of completing the square applied to two examples"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "short-text",
+          "prompt": "Write $x^2 + 10x + 3$ in the form $(x+a)^2 + b$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "completing the square",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Half of $10$ is $5$: $(x+5)^2 - 25 + 3 = (x+5)^2 - 22$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "$(x+5)^2$"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "$(x+5)^2 - 22$"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "(x+5)^2-22",
+            "(x+5)²-22"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Solving by completing the square",
+        "body": "Once the quadratic is a square plus a number, the equation solves by undoing: subtract, square root with a **±**, then add. The answers come out **exact**, with a surd, which is why this is the method for the non-calculator paper and for any question that says *in the form $a \\pm \\sqrt{b}$*.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $x^2 + 6x + 2 = 0$, giving exact answers",
+            "steps": [
+              {
+                "text": "$(x+3)^2 - 7 = 0$"
+              },
+              {
+                "text": "$(x+3)^2 = 7$",
+                "note": "Move the number across"
+              },
+              {
+                "text": "$x + 3 = \\pm\\sqrt{7}$",
+                "note": "Both square roots: this is where the second solution comes from"
+              },
+              {
+                "text": "$x = -3 \\pm \\sqrt{7}$"
+              },
+              {
+                "text": "So $x = -3 + \\sqrt{7}$ or $x = -3 - \\sqrt{7}$",
+                "note": "Two exact solutions"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $x^2 - 6x + 2 = 0$ in the form $a \\pm \\sqrt{b}$",
+            "steps": [
+              {
+                "text": "$(x-3)^2 - 9 + 2 = 0$, so $(x-3)^2 = 7$"
+              },
+              {
+                "text": "$x - 3 = \\pm\\sqrt{7}$"
+              },
+              {
+                "text": "$x = 3 \\pm \\sqrt{7}$"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "After writing $x^2 + 4x - 1 = 0$ as $(x+2)^2 - 5 = 0$, what is the next line?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "solving by completing the square",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Move the $5$ across first: $(x+2)^2 = 5$. Then square root **with ±**: $x + 2 = \\pm\\sqrt{5}$, so $x = -2 \\pm \\sqrt{5}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$(x+2)^2 = 5$"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$(x+2)^2 = 5$",
+            "$x + 2 = 5$",
+            "$x + 2 = \\sqrt{5}$",
+            "$(x+2)^2 = -5$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "The quadratic formula",
+        "body": "For $ax^2 + bx + c = 0$:\n\n$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$\n\nIt solves **every** quadratic, and it is given on the formulae sheet, but you should know it by heart: the marks are for using it correctly, and the errors are all in the signs.\n\n$2x^2 + 3x - 4 = 0$: $a = 2$, $b = 3$, $c = -4$.\n\n$$x = \\frac{-3 \\pm \\sqrt{3^2 - 4(2)(-4)}}{2(2)} = \\frac{-3 \\pm \\sqrt{9 + 32}}{4} = \\frac{-3 \\pm \\sqrt{41}}{4}$$\n\nSo $x = 0.85$ or $x = -2.35$ (to 2 d.p.).\n\nThe two traps: **$-4ac$ with a negative $c$ becomes a plus**, and **when $b$ is negative, $-b$ is positive**. Write the substitution out in full with brackets round every negative number, and the signs take care of themselves.\n\nThe part under the root, $b^2 - 4ac$, decides how many solutions there are: positive gives two, zero gives one repeated, negative gives none (you cannot square-root a negative).",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "b² − 4ac",
+                "Solutions"
+              ],
+              "rows": [
+                [
+                  "2x² + 3x − 4 = 0",
+                  "9 + 32 = 41",
+                  "two"
+                ],
+                [
+                  "x² − 6x + 9 = 0",
+                  "36 − 36 = 0",
+                  "one, repeated (x = 3)"
+                ],
+                [
+                  "x² + 2x + 5 = 0",
+                  "4 − 20 = −16",
+                  "none"
+                ]
+              ],
+              "title": "What b² − 4ac tells you"
+            },
+            "alt": "A table of three quadratics with b² − 4ac and the number of real solutions each has"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "For $3x^2 - 2x - 4 = 0$, what is $b^2 - 4ac$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the quadratic formula",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$b = -2$, so $b^2 = 4$; $c = -4$, so $-4ac = -4(3)(-4) = +48$. Total $52$. The sign of $c$ turns the subtraction into an addition.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$52$"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$52$",
+            "$-44$",
+            "$4 - 48 = -44$ so no solutions",
+            "$-52$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn: solve by factorising",
+        "body": "Solve $3x^2 - 5x - 2 = 0$ on paper, then reveal the lines. The coefficient of $x^2$ means a split middle term, and the first bracket gives a fraction, not a whole number.",
+        "visuals": [
+          {
+            "type": "interactive",
+            "kind": "equation-entry",
+            "config": {
+              "target": "x = -1/3 or x = 2",
+              "stages": [
+                "a × c = -6, pair: -6 and +1",
+                "3x^2 - 6x + x - 2 = 0",
+                "3x(x - 2) + 1(x - 2) = 0",
+                "(3x + 1)(x - 2) = 0",
+                "x = -1/3 or x = 2"
+              ]
+            },
+            "fallback": "$(3x+1)(x-2) = 0$, so $x = -\\tfrac{1}{3}$ or $x = 2$."
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "short-text",
+          "prompt": "Solve $x^2 - 2x - 15 = 0$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "solving by factorising",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$(x-5)(x+3) = 0$, so $x = 5$ or $x = -3$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "$(x-5)(x+3) = 0$"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "$x = 5$ and $x = -3$"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "x = 5 or x = -3",
+            "5 or -3",
+            "x = 5, x = -3",
+            "5, -3",
+            "x = 5 and x = -3",
+            "5 and -3",
+            "x = 5; x = -3",
+            "5; -3",
+            "x = -3 or x = 5",
+            "-3 or 5",
+            "x = -3, x = 5",
+            "-3, 5",
+            "x = -3 and x = 5",
+            "-3 and 5",
+            "x = -3; x = 5",
+            "-3; 5"
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "explain",
+        "title": "Which method, and completing the square with a coefficient",
+        "body": "Three methods, and the question usually tells you which.\n\n- **Factorising** when it factorises. Fastest, and the usual method when the answers are whole numbers or simple fractions.\n- **Completing the square** when the answers must be **exact** — *in the form $a \\pm \\sqrt{b}$* — or when the question is about the square form itself.\n- **The formula** when the answers are wanted **to 2 decimal places**, or when nothing else works.\n\nCompleting the square with $a \\neq 1$ is a Higher skill. $2x^2 + 12x + 7$: take the $2$ out of the **first two terms only**, then complete the square inside.\n\n$$2(x^2 + 6x) + 7 = 2[(x+3)^2 - 9] + 7 = 2(x+3)^2 - 18 + 7 = 2(x+3)^2 - 11$$\n\nThe $-9$ inside gets multiplied by the $2$ on the way out: that is the step people skip.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The question says",
+                "Use"
+              ],
+              "rows": [
+                [
+                  "solve (and it factorises)",
+                  "factorising"
+                ],
+                [
+                  "in the form a ± √b",
+                  "completing the square"
+                ],
+                [
+                  "to 2 decimal places",
+                  "the formula"
+                ],
+                [
+                  "show that the solutions are …",
+                  "either exact method, every line shown"
+                ],
+                [
+                  "write in the form (x + a)² + b",
+                  "completing the square"
+                ]
+              ],
+              "title": "Choosing the method"
+            },
+            "alt": "A table matching each wording in a question to the method it calls for"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "short-text",
+          "prompt": "Write $3x^2 + 12x + 5$ in the form $a(x+b)^2 + c$.",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "completing the square with a coefficient",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$3(x^2 + 4x) + 5 = 3[(x+2)^2 - 4] + 5 = 3(x+2)^2 - 12 + 5 = 3(x+2)^2 - 7$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "$3(x^2 + 4x) + 5$"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "$3[(x+2)^2 - 4] + 5$"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "$3(x+2)^2 - 7$"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "3(x+2)^2-7",
+            "3(x+2)²-7"
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "explain",
+        "title": "Quadratics from words",
+        "body": "The longest questions give a situation, and the quadratic has to be **built** before it can be solved.\n\nA rectangle is 3 cm longer than it is wide, and its area is 54 cm². Find the width.\n\n1. **Name the unknown**: width $w$. Then the length is $w + 3$.\n2. **Write the relationship**: area is length × width, so $w(w+3) = 54$.\n3. **Rearrange to zero**: $w^2 + 3w - 54 = 0$.\n4. **Solve**: $(w+9)(w-6) = 0$, so $w = 6$ or $w = -9$.\n5. **Reject what makes no sense**: a width cannot be negative. The width is **6 cm**.\n\nStep 5 is a mark on its own. A quadratic always offers two solutions; the context decides whether both are allowed. Consecutive integers, ages and lengths usually rule one out.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "The product of two consecutive positive integers is 132",
+            "steps": [
+              {
+                "text": "Let them be $n$ and $n+1$",
+                "note": "Name the unknown"
+              },
+              {
+                "text": "$n(n+1) = 132$, so $n^2 + n - 132 = 0$"
+              },
+              {
+                "text": "$(n+12)(n-11) = 0$",
+                "note": "Product −132, sum 1: 12 and −11"
+              },
+              {
+                "text": "$n = 11$ or $n = -12$"
+              },
+              {
+                "text": "Positive, so $n = 11$: the integers are 11 and 12",
+                "note": "Reject, and answer the actual question"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Solving a quadratic for the width of a rectangle gives $w = 6$ or $w = -9$. What should the answer say?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "forming and solving a quadratic",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The algebra gives two solutions; the context rules one out. State the rejection: it is often a mark.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$w = 6$, negative rejected"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$w = 6$, because a width cannot be negative",
+            "$w = 6$ or $w = -9$",
+            "$w = -9$, because it is the larger value",
+            "$w = 6 - 9 = -3$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s10",
+        "kind": "grade-9",
+        "title": "Grade 9: exact answers, hidden quadratics and the reject step",
+        "body": "**Exact answers.** *Show that the solutions of $x^2 + 2x - 1 = 0$ are $-1 \\pm \\sqrt{2}$.* Completing the square gets there in three lines. The formula gets there too, but through $\\sqrt{8}$, which then has to become $2\\sqrt{2}$ before the fraction simplifies. Know both routes; pick the shorter.\n\n**Hidden quadratics.** $(x+1)(x-3) = 12$ is a quadratic in disguise, and the instinct to write $x + 1 = 12$ is exactly what the question is testing. Expand, rearrange to zero, solve.\n\n**Words to algebra.** The mark scheme for a context question is usually *form the equation*, *rearrange*, *solve*, *reject*. Every one of those is visible working.\n\n**No real solutions.** Be able to *explain* it two ways: $b^2 - 4ac < 0$, so the root does not exist; or the completed square $(x+1)^2 + 4$ is always positive, so it can never be zero.\n\n**Fractions from brackets.** $(3x+1)(x-2) = 0$ gives $x = -\\tfrac{1}{3}$, not $-1$. Solve each bracket as its own little equation.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Weak",
+                "Grade 9"
+              ],
+              "rows": [
+                [
+                  "x = 3 (for x² = 9)",
+                  "x = ±3"
+                ],
+                [
+                  "(x+1)(x−3) = 12, so x + 1 = 12",
+                  "expand, rearrange to zero, factorise"
+                ],
+                [
+                  "x = 6 or −9",
+                  "x = 6, since a width cannot be negative"
+                ],
+                [
+                  "(3x+1) = 0 so x = −1",
+                  "3x = −1, so x = −⅓"
+                ],
+                [
+                  "the formula gives (−2 ± √8)/2",
+                  "= (−2 ± 2√2)/2 = −1 ± √2"
+                ]
+              ],
+              "title": "What the marks are for"
+            },
+            "alt": "A table contrasting weak answers with grade 9 answers on solving quadratics"
+          }
+        ],
+        "check": {
+          "id": "c10",
+          "type": "multiple-choice",
+          "prompt": "Which statement explains why $x^2 - 4x + 7 = 0$ has no real solutions?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "the discriminant",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Completing the square: $(x-2)^2 - 4 + 7 = (x-2)^2 + 3$, which is at least $3$ for every $x$. Equivalently $b^2 - 4ac = 16 - 28 < 0$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$(x-2)^2 + 3 > 0$ for all $x$"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "$(x-2)^2 + 3$ is always positive, so it is never zero",
+            "$7$ is a prime number, so it cannot be factorised",
+            "$x^2 - 4x + 7$ has no common factor",
+            "the equation has an odd constant term"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s11",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Rearrange to zero first**, always. A product equal to 12 tells you nothing.\n- **Factorising**: $(x+2)(x+3) = 0$ gives $x = -2$ or $-3$, because a product is zero only when a factor is. Solve each bracket: $(2x+1)$ gives $-\\tfrac{1}{2}$.\n- **Common factor**: $x(x-7) = 0$ keeps the solution $x = 0$. **Squares**: $x^2 = 9$ gives $\\pm 3$.\n- **Completing the square**: halve $b$, subtract its square, add the constant. $x^2 + 6x + 2 = (x+3)^2 - 7$. With a coefficient, take it out of the first two terms and multiply the subtracted square by it.\n- **Solving by completing the square** gives exact answers: $(x+3)^2 = 7$, $x = -3 \\pm \\sqrt{7}$.\n- **The formula** $x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$; bracket every negative. $b^2 - 4ac$ negative means no real solutions.\n- **Roots** are where the parabola crosses the $x$-axis.\n- **Words**: name the unknown, form, rearrange, solve, **reject** what the context forbids.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Method",
+                "When",
+                "Answers look like"
+              ],
+              "rows": [
+                [
+                  "factorising",
+                  "it factorises",
+                  "−2 or −3, or −½"
+                ],
+                [
+                  "completing the square",
+                  "exact form a ± √b",
+                  "−3 ± √7"
+                ],
+                [
+                  "the formula",
+                  "to 2 d.p., or nothing else works",
+                  "0.85 and −2.35"
+                ]
+              ],
+              "title": "Three methods"
+            },
+            "alt": "A summary table of the three methods and when each is used"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "Solve $x^2 + 5x + 6 = 0$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "solving by factorising",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Factorise: $(x+2)(x+3) = 0$. A product is zero only if a factor is zero, so $x + 2 = 0$ or $x + 3 = 0$: $x = -2$ or $x = -3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x+2)(x+3) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = -2$ and $x = -3$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = -2 or x = -3",
+        "-2 or -3",
+        "x = -2, x = -3",
+        "-2, -3",
+        "x = -2 and x = -3",
+        "-2 and -3",
+        "x = -2; x = -3",
+        "-2; -3",
+        "x = -3 or x = -2",
+        "-3 or -2",
+        "x = -3, x = -2",
+        "-3, -2",
+        "x = -3 and x = -2",
+        "-3 and -2",
+        "x = -3; x = -2",
+        "-3; -2"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "Solve $x^2 - 9 = 0$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "solving a difference of two squares",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(x+3)(x-3) = 0$, so $x = 3$ or $x = -3$. Or: $x^2 = 9$, so $x = \\pm 3$. Both answers are needed; $x = 3$ alone loses a mark.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x+3)(x-3) = 0$ or $x^2 = 9$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 3$ and $x = -3$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = 3 or x = -3",
+        "3 or -3",
+        "x = 3, x = -3",
+        "3, -3",
+        "x = 3 and x = -3",
+        "3 and -3",
+        "x = 3; x = -3",
+        "3; -3",
+        "x = -3 or x = 3",
+        "-3 or 3",
+        "x = -3, x = 3",
+        "-3, 3",
+        "x = -3 and x = 3",
+        "-3 and 3",
+        "x = -3; x = 3",
+        "-3; 3"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Solve $(x-4)(x+1) = 0$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading solutions from factors",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Already factorised. $x - 4 = 0$ gives $x = 4$; $x + 1 = 0$ gives $x = -1$. Watch the signs: the solutions are the *opposite* of the numbers in the brackets.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$x = 4$ and $x = -1$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = 4 or x = -1",
+        "4 or -1",
+        "x = 4, x = -1",
+        "4, -1",
+        "x = 4 and x = -1",
+        "4 and -1",
+        "x = 4; x = -1",
+        "4; -1",
+        "x = -1 or x = 4",
+        "-1 or 4",
+        "x = -1, x = 4",
+        "-1, 4",
+        "x = -1 and x = 4",
+        "-1 and 4",
+        "x = -1; x = 4",
+        "-1; 4"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "Solve $x^2 - 7x = 0$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "common factor",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Take out the common factor: $x(x-7) = 0$, so $x = 0$ or $x = 7$. Dividing both sides by $x$ loses the solution $x = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x(x-7) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 0$ and $x = 7$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = 0 or x = 7",
+        "0 or 7",
+        "x = 0, x = 7",
+        "0, 7",
+        "x = 0 and x = 7",
+        "0 and 7",
+        "x = 0; x = 7",
+        "0; 7",
+        "x = 7 or x = 0",
+        "7 or 0",
+        "x = 7, x = 0",
+        "7, 0",
+        "x = 7 and x = 0",
+        "7 and 0",
+        "x = 7; x = 0",
+        "7; 0"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Solve $2x^2 + 7x + 3 = 0$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "solving ax² + bx + c = 0 by factorising",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$a \\times c = 6$, pair $1$ and $6$: $(2x+1)(x+3) = 0$. Then $2x + 1 = 0$ gives $x = -\\tfrac{1}{2}$, and $x + 3 = 0$ gives $x = -3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(2x+1)(x+3) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = -\\tfrac{1}{2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = -3$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = -1/2 or x = -3",
+        "-1/2 or -3",
+        "x = -1/2, x = -3",
+        "-1/2, -3",
+        "x = -1/2 and x = -3",
+        "-1/2 and -3",
+        "x = -1/2; x = -3",
+        "-1/2; -3",
+        "x = -3 or x = -1/2",
+        "-3 or -1/2",
+        "x = -3, x = -1/2",
+        "-3, -1/2",
+        "x = -3 and x = -1/2",
+        "-3 and -1/2",
+        "x = -3; x = -1/2",
+        "-3; -1/2",
+        "x = -0.5 or x = -3",
+        "-0.5 or -3",
+        "x = -0.5, x = -3",
+        "-0.5, -3",
+        "x = -0.5 and x = -3",
+        "-0.5 and -3",
+        "x = -0.5; x = -3",
+        "-0.5; -3",
+        "x = -3 or x = -0.5",
+        "-3 or -0.5",
+        "x = -3, x = -0.5",
+        "-3, -0.5",
+        "x = -3 and x = -0.5",
+        "-3 and -0.5",
+        "x = -3; x = -0.5",
+        "-3; -0.5"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "Write $x^2 + 8x + 3$ in the form $(x+a)^2 + b$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "completing the square",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Halve $8$ to get $4$, square it to get $16$: $(x+4)^2 = x^2 + 8x + 16$, which is $13$ too many. So $x^2 + 8x + 3 = (x+4)^2 - 13$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x+4)^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(x+4)^2 - 13$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "(x+4)^2-13",
+        "(x+4)²-13"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "Use the quadratic formula to solve $x^2 + 3x - 5 = 0$. Give the larger solution to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "the quadratic formula",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$a = 1$, $b = 3$, $c = -5$. $x = \\dfrac{-3 \\pm \\sqrt{9 - 4(1)(-5)}}{2} = \\dfrac{-3 \\pm \\sqrt{29}}{2}$. The larger is $\\dfrac{-3 + 5.385}{2} = 1.19$ (the other is $-4.19$).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "correct substitution into the formula"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{29}$ or $5.39$ seen"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.19"
+        }
+      ],
+      "discriminators": [],
+      "answer": 1.19,
+      "tolerance": 0.005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "Solve $x^2 + 4x - 21 = 0$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "solving by factorising",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Product $-21$, sum $4$: $7$ and $-3$. $(x+7)(x-3) = 0$, so $x = -7$ or $x = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x+7)(x-3) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = -7$ and $x = 3$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = 3 or x = -7",
+        "3 or -7",
+        "x = 3, x = -7",
+        "3, -7",
+        "x = 3 and x = -7",
+        "3 and -7",
+        "x = 3; x = -7",
+        "3; -7",
+        "x = -7 or x = 3",
+        "-7 or 3",
+        "x = -7, x = 3",
+        "-7, 3",
+        "x = -7 and x = 3",
+        "-7 and 3",
+        "x = -7; x = 3",
+        "-7; 3"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "Solve $x^2 = 5x + 14$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "rearranging before factorising",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Get zero on one side first: $x^2 - 5x - 14 = 0$. Then $(x-7)(x+2) = 0$, so $x = 7$ or $x = -2$. Factorising $x^2 = 5x + 14$ as it stands is meaningless.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 - 5x - 14 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x-7)(x+2) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 7$ and $x = -2$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = 7 or x = -2",
+        "7 or -2",
+        "x = 7, x = -2",
+        "7, -2",
+        "x = 7 and x = -2",
+        "7 and -2",
+        "x = 7; x = -2",
+        "7; -2",
+        "x = -2 or x = 7",
+        "-2 or 7",
+        "x = -2, x = 7",
+        "-2, 7",
+        "x = -2 and x = 7",
+        "-2 and 7",
+        "x = -2; x = 7",
+        "-2; 7"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "extended",
+      "prompt": "Solve $x^2 - 6x + 2 = 0$. Give your answers in the form $a \\pm \\sqrt{b}$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "solving by completing the square",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The form of the answer tells you the method: complete the square. $(x-3)^2 - 9 + 2 = 0$, so $(x-3)^2 = 7$, $x - 3 = \\pm\\sqrt{7}$, $x = 3 \\pm \\sqrt{7}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x-3)^2 - 7 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x - 3 = \\pm\\sqrt{7}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 3 \\pm \\sqrt{7}$"
+        }
+      ],
+      "discriminators": [],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Completed the square: (x − 3)² − 7",
+          "marks": 1
+        },
+        {
+          "text": "Square-rooted both sides with ±",
+          "marks": 1
+        },
+        {
+          "text": "x = 3 ± √7",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$x^2 - 6x + 2 = (x-3)^2 - 9 + 2 = (x-3)^2 - 7$. So $(x-3)^2 = 7$, giving $x - 3 = \\pm\\sqrt{7}$ and $x = 3 \\pm \\sqrt{7}$."
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "Solve $3x^2 - 5x - 2 = 0$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "solving ax² + bx + c = 0 by factorising",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$a \\times c = -6$, pair $-6$ and $+1$: $3x^2 - 6x + x - 2 = 3x(x-2) + 1(x-2) = (3x+1)(x-2) = 0$. So $x = -\\tfrac{1}{3}$ or $x = 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(3x+1)(x-2) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = -\\tfrac{1}{3}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 2$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "x = 2 or x = -1/3",
+        "2 or -1/3",
+        "x = 2, x = -1/3",
+        "2, -1/3",
+        "x = 2 and x = -1/3",
+        "2 and -1/3",
+        "x = 2; x = -1/3",
+        "2; -1/3",
+        "x = -1/3 or x = 2",
+        "-1/3 or 2",
+        "x = -1/3, x = 2",
+        "-1/3, 2",
+        "x = -1/3 and x = 2",
+        "-1/3 and 2",
+        "x = -1/3; x = 2",
+        "-1/3; 2"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "Write $2x^2 + 12x + 7$ in the form $a(x+b)^2 + c$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "completing the square with a coefficient",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Take the $2$ out of the first two terms: $2(x^2 + 6x) + 7$. Complete the square inside: $2[(x+3)^2 - 9] + 7 = 2(x+3)^2 - 18 + 7 = 2(x+3)^2 - 11$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2(x^2 + 6x) + 7$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2[(x+3)^2 - 9] + 7$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$2(x+3)^2 - 11$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "2(x+3)^2-11",
+        "2(x+3)²-11"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "extended",
+      "prompt": "Show that the solutions of $x^2 + 2x - 1 = 0$ are $x = -1 \\pm \\sqrt{2}$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "show that with surds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Complete the square: $(x+1)^2 - 1 - 1 = 0$, so $(x+1)^2 = 2$, $x + 1 = \\pm\\sqrt{2}$, $x = -1 \\pm \\sqrt{2}$. The formula also works: $\\dfrac{-2 \\pm \\sqrt{8}}{2}$, and then $\\sqrt{8} = 2\\sqrt{2}$ must be simplified to reach the given form.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x+1)^2 - 2 = 0$, or the formula with $\\sqrt{8}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x + 1 = \\pm\\sqrt{2}$, or $\\sqrt{8} = 2\\sqrt{2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = -1 \\pm \\sqrt{2}$ with every step shown"
+        }
+      ],
+      "discriminators": [
+        "show-that",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Completed the square, or substituted into the formula correctly",
+          "marks": 1
+        },
+        {
+          "text": "Square-rooted with ±, or simplified √8 to 2√2",
+          "marks": 1
+        },
+        {
+          "text": "Reached −1 ± √2 with no step missing",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$x^2 + 2x - 1 = (x+1)^2 - 1 - 1 = (x+1)^2 - 2$. So $(x+1)^2 = 2$, $x + 1 = \\pm\\sqrt{2}$, and $x = -1 \\pm \\sqrt{2}$, as required."
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A rectangle is 3 cm longer than it is wide. Its area is 54 cm². Find its width.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "forming and solving a quadratic",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let the width be $w$; the length is $w + 3$. Area: $w(w+3) = 54$, so $w^2 + 3w - 54 = 0$, $(w+9)(w-6) = 0$, $w = 6$ or $w = -9$. A width cannot be negative, so **6 cm**. The rejection of $-9$ is a mark.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$w(w+3) = 54$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$w^2 + 3w - 54 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(w+9)(w-6) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$w = 6$, with $-9$ rejected"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "Solve $3x^2 - 2x - 4 = 0$ using the quadratic formula. Give the smaller solution to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the quadratic formula with negative b",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$a = 3$, $b = -2$, $c = -4$. $x = \\dfrac{2 \\pm \\sqrt{4 + 48}}{6} = \\dfrac{2 \\pm \\sqrt{52}}{6}$. Smaller: $\\dfrac{2 - 7.211}{6} = -0.87$. The two traps: $-b$ becomes $+2$, and $-4ac$ becomes $+48$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{2 \\pm \\sqrt{(-2)^2 - 4(3)(-4)}}{6}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{52}$ or $7.21$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-0.87$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": -0.87,
+      "tolerance": 0.005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Why does $x^2 + 2x + 5 = 0$ have no real solutions?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the discriminant",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In the formula, $b^2 - 4ac = 4 - 20 = -16$, and $\\sqrt{-16}$ is not a real number. Completing the square says the same thing: $(x+1)^2 + 4$ is always at least $4$, so it is never zero. Not factorising with integers is not enough: $x^2 + 3x + 1 = 0$ does not factorise but has two solutions.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$b^2 - 4ac < 0$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "$b^2 - 4ac = -16$, and a negative number has no square root",
+        "the equation cannot be factorised with whole numbers",
+        "$c$ is larger than $b$, so the brackets do not exist",
+        "there is no common factor to take out"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "The product of two consecutive positive integers is 132. Form an equation and solve it to find the integers.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "forming a quadratic from words",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let the smaller be $n$; the next is $n+1$. $n(n+1) = 132$, so $n^2 + n - 132 = 0$. Pair with product $-132$ and sum $1$: $12$ and $-11$. $(n+12)(n-11) = 0$, so $n = 11$ (reject $-12$: not positive). The integers are **11 and 12**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n(n+1) = 132$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n^2 + n - 132 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(n+12)(n-11) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11 and 12, with $-12$ rejected"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Equation formed: n(n + 1) = 132",
+          "marks": 1
+        },
+        {
+          "text": "Rearranged to n² + n − 132 = 0",
+          "marks": 1
+        },
+        {
+          "text": "Factorised as (n + 12)(n − 11) = 0",
+          "marks": 1
+        },
+        {
+          "text": "11 and 12, with the negative solution rejected",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Let the integers be $n$ and $n+1$. Then $n(n+1) = 132$, so $n^2 + n - 132 = 0$. Factorising, $(n+12)(n-11) = 0$, so $n = 11$ or $n = -12$. The integers are positive, so $n = 11$ and the integers are 11 and 12."
+    },
+    {
+      "id": "q18",
+      "type": "short-text",
+      "prompt": "Solve $(x+1)(x-3) = 12$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a product equal to a non-zero number",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The trap is writing $x + 1 = 12$: that only works when the product is **zero**. Expand and rearrange: $x^2 - 2x - 3 = 12$, so $x^2 - 2x - 15 = 0$, $(x-5)(x+3) = 0$, $x = 5$ or $x = -3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 - 2x - 15 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x-5)(x+3) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 5$ and $x = -3$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "x = 5 or x = -3",
+        "5 or -3",
+        "x = 5, x = -3",
+        "5, -3",
+        "x = 5 and x = -3",
+        "5 and -3",
+        "x = 5; x = -3",
+        "5; -3",
+        "x = -3 or x = 5",
+        "-3 or 5",
+        "x = -3, x = 5",
+        "-3, 5",
+        "x = -3 and x = 5",
+        "-3 and 5",
+        "x = -3; x = 5",
+        "-3; 5"
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q16",
+        "q18",
+        "q15",
+        "q13",
+        "q14",
+        "q17"
+      ],
+      "suggestedMinutes": 40
+    }
+  },
+  "examTechnique": {
+    "body": "Solving a quadratic is worth two to four marks, and the form of the question tells you the method: whole-number answers mean factorise, *in the form $a \\pm \\sqrt{b}$* means complete the square, *to 2 decimal places* means the formula. The equation must equal zero before any of them starts, and both solutions are always required.\n\nThe longer questions build the quadratic from a context. Show the equation being formed, the rearrangement, the solving, and the rejection of the solution the context forbids: each is a mark. With the formula, write the substitution out with brackets round every negative number, because the marks are lost in the signs, not in the arithmetic.",
+    "examinerErrors": [
+      "Factorising an equation that is not equal to zero, or writing $x + 1 = 12$ from $(x+1)(x-3) = 12$.",
+      "Giving one solution: $x = 3$ for $x^2 = 9$, or dividing $x^2 - 7x = 0$ by $x$ and losing $x = 0$.",
+      "Reading $(2x+1) = 0$ as $x = -1$ instead of $x = -\\tfrac{1}{2}$.",
+      "Sign slips in the formula: $-b$ left negative when $b$ is negative, or $-4ac$ left as a subtraction when $c$ is negative.",
+      "Completing the square with the whole of $b$ instead of half, or forgetting to multiply the subtracted square by the coefficient taken out.",
+      "Not rejecting the negative solution in a length or age question, or not saying why."
+    ],
+    "grade9Looks": "A grade 9 answer chooses the method from the wording, rearranges to zero without being told, and gives both solutions in the form asked for, whether exact surds or decimals. It completes the square with a coefficient, simplifies $\\sqrt{8}$ to $2\\sqrt{2}$ when the formula produces it, and explains why an equation has no real solutions using either $b^2 - 4ac$ or the completed square. From a context it forms the equation, solves it and rejects the solution the situation forbids, saying why."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q11",
+      "q12",
+      "q14",
+      "q15",
+      "q16",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
