@@ -8,6 +8,7 @@ import { RootNumberLine } from './RootNumberLine.tsx'
 import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
 import { CircleTheorem } from './CircleTheorem.tsx'
+import { ElectrolysisCell } from './ElectrolysisCell.tsx'
 import { SpringLoad } from './SpringLoad.tsx'
 import { BeamMoments } from './BeamMoments.tsx'
 import { Collision } from './Collision.tsx'
@@ -40,6 +41,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'triangle-construction': TriangleConstruction,
   'triangle-pair': TrianglePair,
   'circle-theorem': CircleTheorem,
+  'electrolysis-cell': ElectrolysisCell,
   'spring-load': SpringLoad,
   'beam-moments': BeamMoments,
   'collision': Collision,

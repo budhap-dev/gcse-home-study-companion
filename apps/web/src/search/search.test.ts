@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { search, searchIndex } from './index.ts'
+import { sameStem, search, searchIndex } from './index.ts'
 import { TOPICS } from '../content/index.ts'
 import { GLOSSARY } from '../content/glossary.ts'
 
@@ -49,8 +49,10 @@ describe('search', () => {
   })
 
   it('gives every hit a snippet with the match inside it', () => {
+    // The match may be a stem hit (electrode for electrons), and the snippet must show that word.
     for (const hit of search('electrons').slice(0, 5)) {
-      expect(hit.snippet.toLowerCase(), hit.record.key).toContain('electron')
+      const words = hit.snippet.toLowerCase().match(/[a-z0-9]+/g) ?? []
+      expect(words.some((w) => sameStem(w, 'electrons')), hit.record.key).toBe(true)
     }
   })
 
