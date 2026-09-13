@@ -23,6 +23,7 @@ Source: the school's Year 10 Physics overview, shared 2 September 2026. The scho
 |---|---|---|
 | Autumn 1 | Hooke's law and elastic potential energy · Balancing forces, which the school's overview means as moments, levers and gears | Both drafted |
 | Autumn 2 | Momentum, including conservation and $F = \Delta p / \Delta t$ · Pressure in fluids and atmospheric pressure | Both drafted 10 September 2026 |
+| Year 9 recap | Describing motion · Resultant forces · Newton's laws · Stopping distances | All four drafted 13 September 2026 |
 | Spring 1 | The gas laws and behaviour of gases · Thermal physics: internal energy, specific heat capacity, specific latent heat | |
 | Spring 2 | Electromagnetic waves and light | |
 | Summer 1 | Static electricity and electric fields | |
@@ -30,7 +31,7 @@ Source: the school's Year 10 Physics overview, shared 2 September 2026. The scho
 
 School assessments the content should be ready before: milestone tests on Hooke's law, balancing forces and moments in Autumn 1; on pressure, gases and light in Autumn 2; a final exam covering Year 9 and Year 10 Physics in the summer. Year 9 material (Energy, including kinetic and gravitational potential energy) reappears in the synoptic tests, so the sample-pack topic stays useful as recap.
 
-The Autumn 2 Milestone re-tests all of Year 9 alongside Hooke's law, moments and momentum, so the Year 9 Forces topics (motion graphs, resultant forces, Newton's laws, stopping distances) are the next Physics work, as recap.
+The Autumn 2 Milestone re-tests all of Year 9 alongside Hooke's law, moments and momentum, so the Year 9 Forces topics were written as recap on 13 September 2026: Describing motion (4.5.6.1), Forces, weight and resultant forces (4.5.1 and 4.5.2), Newton's laws (4.5.6.2) and Stopping distances (4.5.6.3). They sit after the Year 10 topics in the Forces unit, orders 5 to 8, because the Year 10 work is what the student meets in class now. Three diagrams were added for them: `motion-graph`, `free-body` and `vector-triangle`.
 
 ## Chemistry, AQA 8462 Higher, Triple
 

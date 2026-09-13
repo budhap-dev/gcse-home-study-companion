@@ -25,6 +25,9 @@ import { CurveGraph } from './CurveGraph.tsx'
 import { Plant } from './Plant.tsx'
 import { TraceTable } from './TraceTable.tsx'
 import { VerbTable } from './VerbTable.tsx'
+import { MotionGraph } from './MotionGraph.tsx'
+import { FreeBody } from './FreeBody.tsx'
+import { VectorTriangle } from './VectorTriangle.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -58,6 +61,9 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'plant': Plant,
   'trace-table': TraceTable,
   'verb-table': VerbTable,
+  'motion-graph': MotionGraph,
+  'free-body': FreeBody,
+  'vector-triangle': VectorTriangle,
 }
 
 export const INK = '#1e2330'
