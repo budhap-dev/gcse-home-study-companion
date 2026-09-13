@@ -60,6 +60,9 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // A phone keyboard or a pasted answer can carry a Unicode minus or dash; the
   // Business cash-flow answers are the first negatives in the pack.
   let s = input.trim().toLowerCase().replace(/,/g, '').replace(/[−–—]/g, '-')
+  // A student who has just solved for x writes "x = 5", and one copying a formula
+  // writes "F = 20"; the name and the equals sign are not part of the number.
+  s = s.replace(/^[a-z]\w*\s*=\s*/, '').replace(/^=\s*/, '')
   if (units) s = s.replace(units.toLowerCase(), '').trim()
   s = standardForm(s)
   s = s.replace(/[a-z°%/ ]+$/i, '').trim()
