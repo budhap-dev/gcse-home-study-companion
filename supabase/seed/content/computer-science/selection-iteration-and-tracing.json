@@ -1,0 +1,1313 @@
+{
+  "id": "selection-iteration-and-tracing",
+  "subjectId": "computer-science",
+  "unitId": "programming",
+  "title": "Selection, iteration and tracing",
+  "specPoints": [
+    "3.2.2",
+    "3.1.1",
+    "3.2.11"
+  ],
+  "order": 6,
+  "resources": [
+    {
+      "label": "Learn C#",
+      "url": "https://red-dune-0f7372e10.7.azurestaticapps.net/",
+      "note": "Our C# practice site. Type each example in, run it, and change it. C# is one of the languages AQA accepts in the exam."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Selection: IF, ELSE IF, ELSE",
+        "body": "**Selection** chooses between paths. AQA pseudo-code:\n\n```\nIF mark >= 70 THEN\n   OUTPUT 'A'\nELSE IF mark >= 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```\n\nThe conditions are tested **in order**, and **only the first True branch runs**; the rest are skipped, even if they would also be True. So a mark of 85 outputs `A` only, never `B` as well. The order therefore matters: test the most demanding condition first.\n\n**Nested** selection is an IF inside an IF. It is easiest to trace by indenting, and by remembering that the inner IF is only reached when the outer condition was True.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "mark",
+                "mark >= 70",
+                "mark >= 50",
+                "output"
+              ],
+              "rows": [
+                [
+                  "85",
+                  "True",
+                  "(not tested)",
+                  "A"
+                ],
+                [
+                  "70",
+                  "True",
+                  "(not tested)",
+                  "A"
+                ],
+                [
+                  "69",
+                  "False",
+                  "True",
+                  "B"
+                ],
+                [
+                  "49",
+                  "False",
+                  "False",
+                  "C"
+                ]
+              ],
+              "title": "Only the first True branch runs"
+            },
+            "alt": "A trace of the grade selection for four marks, showing which branch runs"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "short-text",
+          "prompt": "What is output by the grade code above when `mark` is 50?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "tracing selection",
+          "calculator": "either",
+          "tags": [],
+          "solution": "50 is not ≥ 70, but it **is** ≥ 50: **B**. Boundaries belong to the ≥ side.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "B"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "B",
+            "b",
+            "'B'"
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Definite iteration: FOR",
+        "body": "A **FOR** loop repeats a **known** number of times, counting with a variable:\n\n```\nFOR i ← 1 TO 5\n   total ← total + i\nENDFOR\n```\n\nBoth limits are **included**: i takes 1, 2, 3, 4, 5, so the body runs five times. The number of passes from a to b is $b - a + 1$.\n\n**STEP** changes the count: `FOR i ← 2 TO 10 STEP 4` gives 2, 6, 10. A negative step counts down: `FOR i ← 3 TO 1 STEP -1` gives 3, 2, 1.\n\nAQA also allows `FOR item IN list … ENDFOR` to visit every element of an array, which you met with arrays.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "total"
+              ],
+              "rows": [
+                [
+                  "",
+                  "0"
+                ],
+                [
+                  "1",
+                  "1"
+                ],
+                [
+                  "2",
+                  "3"
+                ],
+                [
+                  "3",
+                  "6"
+                ],
+                [
+                  "4",
+                  "10"
+                ],
+                [
+                  "5",
+                  "15"
+                ]
+              ],
+              "title": "FOR i ← 1 TO 5"
+            },
+            "alt": "A trace table of a FOR loop adding 1 to 5 into total"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "How many times does `FOR i ← 0 TO 9` run its body?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "counting iterations",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "0 to 9 inclusive: $9 - 0 + 1 = $ **10**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "10"
+            }
+          ],
+          "discriminators": [],
+          "answer": 10,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Indefinite iteration: WHILE and REPEAT UNTIL",
+        "body": "When you do not know how many times, the loop runs **until something changes**: **indefinite** iteration.\n\n**WHILE** tests **before** each pass and continues while the condition is True:\n\n```\nn ← 1\nWHILE n < 20\n   n ← n * 3\nENDWHILE\n```\n\nn goes 1, 3, 9, 27; at 27 the test fails and the loop stops. If the condition is False at the start, the body never runs.\n\n**REPEAT … UNTIL** tests **after** each pass and stops when the condition becomes True:\n\n```\nREPEAT\n   count ← count + 2\nUNTIL count >= 7\n```\n\nThe body always runs **at least once**, which makes REPEAT the natural loop for *ask, then check*: input validation and password attempts.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "WHILE",
+                "REPEAT … UNTIL"
+              ],
+              "rows": [
+                [
+                  "condition tested",
+                  "before each pass",
+                  "after each pass"
+                ],
+                [
+                  "keeps going while",
+                  "condition is True",
+                  "condition is False"
+                ],
+                [
+                  "minimum passes",
+                  "0",
+                  "1"
+                ],
+                [
+                  "typical use",
+                  "process until a limit",
+                  "ask, then check"
+                ]
+              ],
+              "title": "Two indefinite loops"
+            },
+            "alt": "A table contrasting WHILE and REPEAT UNTIL loops"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "A WHILE loop's condition is False the first time it is tested. How many times does the body run?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "loop types",
+          "calculator": "either",
+          "tags": [],
+          "solution": "WHILE tests first, so a False condition means the body is skipped entirely: **0**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "0"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "0",
+            "1",
+            "It depends on the body",
+            "Infinitely"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Tracing: one column per variable, one row per change",
+        "body": "A **trace table** is how the exam tests loops. Columns for every variable, plus the condition and the output; a new row each time something changes. Never skip a row, even when a value repeats.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "n",
+                "n < 20",
+                "output"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "True",
+                  ""
+                ],
+                [
+                  "3",
+                  "True",
+                  ""
+                ],
+                [
+                  "9",
+                  "True",
+                  ""
+                ],
+                [
+                  "27",
+                  "False",
+                  "27"
+                ]
+              ],
+              "title": "WHILE n < 20: n ← n * 3"
+            },
+            "alt": "A trace table for the WHILE loop n ← n * 3 while n < 20"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Reading it",
+            "steps": [
+              {
+                "text": "Row 1: n is 1, the test is True, so the body runs and n becomes 3",
+                "note": "condition column first"
+              },
+              {
+                "text": "Rows 2 and 3: still True at 3 and 9",
+                "note": "keep going"
+              },
+              {
+                "text": "Row 4: n is 27, the test is False, the loop stops; OUTPUT n prints 27",
+                "note": "the value that fails the test is the one output"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "Using the same loop but starting with `n ← 2`, what is output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing a WHILE loop",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "2 → 6 → 18 → 54; at 54 the test is False: **54**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "54"
+            }
+          ],
+          "discriminators": [],
+          "answer": 54,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Nested loops",
+        "body": "A loop inside a loop: the **inner** loop runs completely for **each** pass of the outer one.\n\n```\nFOR i ← 1 TO 2\n   FOR j ← 1 TO 3\n      OUTPUT i * j\n   ENDFOR\nENDFOR\n```\n\nThe outer loop runs 2 times and the inner 3 times each, so the body runs $2 \\times 3 = 6$ times, outputting 1, 2, 3, then 2, 4, 6. The inner counter resets to 1 every time the outer counter moves on.\n\nIn a trace table give the inner counter its own column and watch it restart. The commonest slip is to run the inner loop only once.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "j",
+                "output"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "1",
+                  "1"
+                ],
+                [
+                  "1",
+                  "2",
+                  "2"
+                ],
+                [
+                  "1",
+                  "3",
+                  "3"
+                ],
+                [
+                  "2",
+                  "1",
+                  "2"
+                ],
+                [
+                  "2",
+                  "2",
+                  "4"
+                ],
+                [
+                  "2",
+                  "3",
+                  "6"
+                ]
+              ],
+              "title": "Nested loops: the inner one restarts"
+            },
+            "alt": "A trace table of two nested FOR loops outputting i times j"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "How many times does the body run?\n\n```\nFOR i ← 1 TO 4\n   FOR j ← 1 TO 5\n      count ← count + 1\n   ENDFOR\nENDFOR\n```",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "nested loops",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$4 \\times 5 = $ **20**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "20"
+            }
+          ],
+          "discriminators": [],
+          "answer": 20,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "The errors loops invite",
+        "body": "Three logic errors account for most lost marks.\n\n**Off-by-one.** `WHILE i < 10` stops before 10; `FOR i ← 1 TO 10` includes it. Decide whether the limit is meant to be included, then choose `<` or `<=`, and check the first and last values in a trace.\n\n**The infinite loop.** A WHILE whose condition can never become False, usually because the body forgets to change the variable in the condition: `WHILE n < 20` with no line that changes n. In a trace it shows as a column that never moves.\n\n**The inverted condition.** `UNTIL valid = False` when the loop should stop once the input is valid. Say the condition out loud: REPEAT *until* it is right.\n\nAll three are **logic errors** in AQA's terms: the code runs, but does the wrong thing. A **syntax error** would be a missing ENDFOR, which stops it running at all.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Error",
+                "Symptom",
+                "Fix"
+              ],
+              "rows": [
+                [
+                  "off-by-one",
+                  "one value too few or too many",
+                  "check the boundary: < or <="
+                ],
+                [
+                  "infinite loop",
+                  "the program never ends",
+                  "change the loop variable inside the body"
+                ],
+                [
+                  "inverted condition",
+                  "stops at the wrong time, or never",
+                  "read UNTIL and WHILE aloud"
+                ]
+              ],
+              "title": "Loop errors"
+            },
+            "alt": "A table of three common loop errors with a symptom and a fix for each"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "What is wrong here?\n\n```\nn ← 1\nWHILE n < 100\n   OUTPUT n\nENDWHILE\n```",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "infinite loops",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Nothing in the body changes n, so `n < 100` stays True for ever.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "n never changes"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "n never changes, so the loop is infinite",
+            "It should be REPEAT UNTIL",
+            "OUTPUT cannot be used in a loop",
+            "It is a syntax error"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn: trace it",
+        "body": "Trace this program in a table with columns for x, the condition and the output, then reveal. Count the rows: the number of times the body ran is one fewer than the number of times the condition was tested.\n\n```\nx ← 10\nWHILE x > 3\n   x ← x - 4\nENDWHILE\nOUTPUT x\n```\n\nThen build the same loop on our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site as a `while`, with a `Console.WriteLine(x)` inside it, and check the values it prints against the rows of your table.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "x",
+                "x > 3",
+                "output"
+              ],
+              "rows": [
+                [
+                  "10",
+                  "True",
+                  ""
+                ],
+                [
+                  "6",
+                  "True",
+                  ""
+                ],
+                [
+                  "2",
+                  "False",
+                  "2"
+                ]
+              ],
+              "title": "Trace"
+            },
+            "alt": "A trace table for x ← x − 4 while x > 3, starting from 10"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "Same loop, but starting with `x ← 15`. What is output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing a WHILE loop",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "15 → 11 → 7 → 3; at 3 the test `x > 3` is False: **3**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Grade 9: choose the loop, convert between loops, explain the purpose",
+        "body": "**Choose the loop from the problem.** A known count (10 inputs, every array element): FOR. Until a limit is reached: WHILE. Ask then check: REPEAT UNTIL. Saying *why* is a mark.\n\n**Convert between them.** Any FOR is a WHILE with a counter you manage yourself: initialise before, test at the top, increment at the bottom. Exams ask for this to see whether you understand what FOR hides.\n\n**Trace with a condition column.** Write the test result every time; the row where it flips is where the marks are.\n\n**Explain what an algorithm does.** Read the loop, find what changes, find what stops it, then say the purpose in one sentence: *counts the odd numbers from 1 to 9*, *finds the largest of ten inputs*, *allows three password attempts*.\n\n**Write algorithms with the structure closed.** ENDIF, ENDFOR, ENDWHILE, and the output **after** the loop, not inside it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Convert `FOR i ← 1 TO 5 … ENDFOR` to a WHILE",
+            "steps": [
+              {
+                "text": "`i ← 1`",
+                "note": "initialise before the loop"
+              },
+              {
+                "text": "`WHILE i <= 5`",
+                "note": "test at the top, inclusive"
+              },
+              {
+                "text": "`   … body …`",
+                "note": "the statements the FOR was repeating, unchanged"
+              },
+              {
+                "text": "`   i ← i + 1`",
+                "note": "increment at the bottom"
+              },
+              {
+                "text": "`ENDWHILE`",
+                "note": "the FOR did all this for you"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Weak",
+                "Grade 9"
+              ],
+              "rows": [
+                [
+                  "a trace with only the final value",
+                  "a row for every change, with the condition column"
+                ],
+                [
+                  "it loops",
+                  "it repeats until the entry is 'open' or three attempts are used"
+                ],
+                [
+                  "OUTPUT inside the loop when one answer is wanted",
+                  "OUTPUT after ENDFOR"
+                ],
+                [
+                  "WHILE i < 10 for 1 to 10",
+                  "WHILE i <= 10, or FOR i ← 1 TO 10"
+                ],
+                [
+                  "uses FOR for a password check",
+                  "REPEAT UNTIL, because it must ask at least once"
+                ]
+              ],
+              "title": "What the marks are for"
+            },
+            "alt": "A table contrasting weak answers with grade 9 answers on selection, iteration and tracing"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "Which loop is best for *keep asking for a number until it is between 1 and 10*?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "choosing a loop",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Ask, then check: **REPEAT … UNTIL**. A FOR would run a fixed number of times, which is not what is wanted.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "REPEAT UNTIL, ask then check"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "REPEAT … UNTIL, because it asks first and checks after",
+            "FOR, because the numbers run from 1 to 10",
+            "WHILE, because the number is known before the first ask",
+            "IF, because the number is checked against the range"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Selection**: IF … ELSE IF … ELSE … ENDIF; conditions tested in order, only the first True branch runs.\n- **FOR** (definite): both limits included, $b - a + 1$ passes; STEP for other counts; FOR … IN for arrays.\n- **WHILE** tests before, may run zero times; **REPEAT … UNTIL** tests after, runs at least once and stops when the condition becomes True.\n- **Nested loops**: the inner loop runs fully for each outer pass; passes multiply.\n- **Trace tables**: a column per variable plus the condition and output; a row per change; the value that fails the test is the one left.\n- **Errors**: off-by-one, infinite loop, inverted condition; all logic errors.\n- **Choose and convert**: FOR for a known count, WHILE for a limit, REPEAT for ask-then-check; any FOR can be written as a WHILE.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Loop",
+                "Tests",
+                "Minimum passes",
+                "Use"
+              ],
+              "rows": [
+                [
+                  "FOR",
+                  "counts",
+                  "depends on limits",
+                  "known number of times"
+                ],
+                [
+                  "WHILE",
+                  "before",
+                  "0",
+                  "until a limit"
+                ],
+                [
+                  "REPEAT UNTIL",
+                  "after",
+                  "1",
+                  "ask, then check"
+                ]
+              ],
+              "title": "Three loops"
+            },
+            "alt": "A summary table of the three loops with their test timing and minimum passes"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\ntotal ← 0\nFOR i ← 1 TO 5\n   total ← total + i\nENDFOR\nOUTPUT total\n```",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "tracing a FOR loop",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The loop runs for i = 1, 2, 3, 4, 5 (both limits included) and adds each: $1 + 2 + 3 + 4 + 5 = $ **15**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "five iterations, i from 1 to 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "How many times does the loop body run?\n\n```\nFOR i ← 3 TO 7\n   OUTPUT i\nENDFOR\n```",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "counting iterations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "3, 4, 5, 6, 7: **5** times. AQA FOR loops include both limits, so the count is $7 - 3 + 1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "5",
+        "4",
+        "7",
+        "3"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "What is output when `mark` is 69?\n\n```\nIF mark >= 70 THEN\n   OUTPUT 'A'\nELSE IF mark >= 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "tracing selection",
+      "calculator": "either",
+      "tags": [],
+      "solution": "69 is not ≥ 70, so the first branch is skipped. 69 is ≥ 50, so **B**. Only one branch of an IF–ELSE IF–ELSE ever runs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "B"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "B",
+        "b",
+        "'B'"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which loop keeps going while a condition is True and checks it **before** each pass?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "loop types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **WHILE** loop tests its condition first, so its body may run zero times. REPEAT … UNTIL tests afterwards and always runs at least once. FOR counts.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "WHILE"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "WHILE … ENDWHILE",
+        "REPEAT … UNTIL",
+        "FOR … ENDFOR",
+        "IF … ENDIF"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\nn ← 1\nWHILE n < 20\n   n ← n * 3\nENDWHILE\nOUTPUT n\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "tracing a WHILE loop",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "n goes 1 → 3 → 9 → 27. At 27 the condition `n < 20` is False, so the loop stops and **27** is output. The loop overshoots the limit: that is normal, and a trace table shows it.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3, 9, 27 in the trace"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "27"
+        }
+      ],
+      "discriminators": [],
+      "answer": 27,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\ncount ← 0\nREPEAT\n   count ← count + 2\nUNTIL count >= 7\nOUTPUT count\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "tracing REPEAT UNTIL",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "count: 2, 4, 6, 8. After 8 the condition `count >= 7` is True, so the loop ends: **8**. UNTIL stops when the condition becomes True.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2, 4, 6, 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "How many times is `total ← total + 1` executed?\n\n```\ntotal ← 0\nFOR i ← 1 TO 3\n   FOR j ← 1 TO 2\n      total ← total + 1\n   ENDFOR\nENDFOR\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "nested loops",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The inner loop runs twice for **each** of the three outer passes: $3 \\times 2 = $ **6**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3 × 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "What is output?\n\n```\nFOR i ← 2 TO 10 STEP 4\n   OUTPUT i\nENDFOR\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "STEP",
+      "calculator": "either",
+      "tags": [],
+      "solution": "STEP 4 adds 4 each time: **2, 6, 10**. 14 would pass the limit, so it is not output.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 and 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10 as the last value"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "2 6 10",
+        "2, 6, 10",
+        "2,6,10",
+        "2 then 6 then 10",
+        "2 6 10."
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Which is a definite iteration?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "definite and indefinite iteration",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Definite** iteration repeats a known number of times: a FOR loop. **Indefinite** iteration repeats until a condition changes: WHILE and REPEAT … UNTIL.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "FOR loop"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A FOR loop that runs a set number of times",
+        "A WHILE loop that runs until the user types 'stop'",
+        "A REPEAT loop that runs until a password is correct",
+        "An IF statement that runs once"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\ncount ← 0\nFOR i ← 1 TO 9\n   IF i MOD 2 = 1 THEN\n      count ← count + 1\n   ENDIF\nENDFOR\nOUTPUT count\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "selection inside iteration",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`i MOD 2 = 1` is True for the odd numbers 1, 3, 5, 7, 9: **5** of them.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "odd values of i"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\nx ← 10\nWHILE x > 3\n   x ← x - 4\nENDWHILE\nOUTPUT x\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing a WHILE loop past its limit",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "x: 10 → 6 → 2. When x is 2 the condition `x > 3` is False: **2**. Note the loop runs twice, not until x is 3.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6 then 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "What is output?\n\n```\nn ← 5\nREPEAT\n   n ← n - 1\n   OUTPUT n\nUNTIL n = 2\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing REPEAT UNTIL with output inside",
+      "calculator": "either",
+      "tags": [],
+      "solution": "n becomes 4 and is output; then 3; then 2, output, and now `n = 2` is True so the loop ends: **4, 3, 2**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4 and 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2 output before the loop ends"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "4 3 2",
+        "4, 3, 2",
+        "4,3,2",
+        "4 then 3 then 2"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "extended",
+      "prompt": "Write pseudo-code that inputs 10 numbers and outputs the largest.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing an algorithm with a loop",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A FOR loop of 10 inputs, each converted with STRING_TO_INT, a `largest` variable initialised from the first input, an IF that replaces it when a bigger number arrives, and one OUTPUT after the loop.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "FOR loop that runs 10 times"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "input converted with STRING_TO_INT inside the loop"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "largest initialised sensibly, e.g. to the first number"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "IF number > largest THEN largest ← number"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "ENDIF and ENDFOR correctly closed"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "OUTPUT largest after the loop, not inside it"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "A FOR loop running 10 times",
+          "marks": 1
+        },
+        {
+          "text": "Each number input and converted to an integer",
+          "marks": 1
+        },
+        {
+          "text": "largest initialised, for example from the first input",
+          "marks": 1
+        },
+        {
+          "text": "IF number > largest THEN largest ← number",
+          "marks": 1
+        },
+        {
+          "text": "The structures closed correctly",
+          "marks": 1
+        },
+        {
+          "text": "OUTPUT largest once, after the loop",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "largest ← STRING_TO_INT(USERINPUT)\nFOR i ← 2 TO 10\n   number ← STRING_TO_INT(USERINPUT)\n   IF number > largest THEN\n      largest ← number\n   ENDIF\nENDFOR\nOUTPUT largest"
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "This loop is meant to output the numbers 1 to 10 but outputs 1 to 9. What is the error called, and what is the fix?\n\n```\ni ← 1\nWHILE i < 10\n   OUTPUT i\n   i ← i + 1\nENDWHILE\n```",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "off-by-one errors",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The loop stops when i reaches 10, so 10 is never output: an **off-by-one** error, the commonest logic error in loops. `i <= 10` includes it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "off-by-one, use <= 10"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "An off-by-one error; change the condition to i <= 10",
+        "A syntax error; change WHILE to FOR",
+        "An off-by-one error; start i at 0",
+        "A logic error; move OUTPUT after i ← i + 1"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\ntotal ← 0\nFOR i ← 1 TO 4\n   total ← total + i * i\nENDFOR\nOUTPUT total\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing with an expression",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$1 + 4 + 9 + 16 = $ **30**: the squares of 1 to 4. A trace table with columns i, i * i and total keeps it straight.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1, 4, 9, 16"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "extended",
+      "prompt": "Explain what this algorithm does, and state the value of `tries` when it ends if the user's second entry is correct.\n\n```\ntries ← 0\nREPEAT\n   entry ← USERINPUT\n   tries ← tries + 1\nUNTIL entry = 'open' OR tries = 3\n```",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "explaining the purpose of an algorithm",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It asks for a password until either the right word is entered or three attempts have been used, whichever comes first. If the second entry is 'open', tries is **2** when the loop ends.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "repeatedly reads an entry and counts the attempts"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "stops when the entry is 'open' or after 3 attempts, whichever first"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "tries = 2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "evaluate"
+      ],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Reads entries and counts attempts",
+          "marks": 1
+        },
+        {
+          "text": "Stops on the correct entry or after three attempts",
+          "marks": 1
+        },
+        {
+          "text": "tries is 2",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The algorithm keeps reading an entry and counting the attempts. It stops as soon as the entry is 'open', or when three attempts have been made, whichever happens first: it is a password check with a limit of three tries. If the second entry is 'open', the loop ends with tries equal to 2."
+    },
+    {
+      "id": "q17",
+      "type": "multiple-choice",
+      "prompt": "Which loop runs its body at least once, whatever the condition?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "loop types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**REPEAT … UNTIL** tests its condition at the end, so the body has already run once. A WHILE with a false condition runs zero times, and FOR 5 TO 1 without a negative STEP runs zero times.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "REPEAT UNTIL"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "REPEAT … UNTIL",
+        "WHILE … ENDWHILE",
+        "FOR i ← 5 TO 1",
+        "IF … ELSE"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "Trace the nested loops. What is the **last** value output?\n\n```\nFOR i ← 1 TO 2\n   FOR j ← 1 TO 3\n      OUTPUT i * j\n   ENDFOR\nENDFOR\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "nested loop tracing",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2 \\times 3 = 6$ outputs: 1, 2, 3, 2, 4, 6. The last is $2 \\times 3 = $ **6**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "six outputs: 1, 2, 3, 2, 4, 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 16
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q14",
+        "q15",
+        "q17",
+        "q18",
+        "q16",
+        "q13"
+      ],
+      "suggestedMinutes": 40
+    }
+  },
+  "examTechnique": {
+    "body": "Paper 1 tests iteration and selection almost entirely through tracing and writing. For tracing, draw the table before you start: one column per variable, a column for the condition, a column for output, and a row every time a value changes. Include the row where the condition fails, because the value in that row is usually the answer. For nested loops give the inner counter its own column and let it restart.\n\nFor writing, choose the loop from the problem and say why if asked, keep the output outside the loop when a single result is wanted, and close every structure. Check boundaries: FOR includes both limits, WHILE with < excludes the limit. When a question asks what an algorithm does, name its purpose in one sentence rather than narrating the lines.",
+    "examinerErrors": [
+      "Tracing a WHILE loop as if it stopped exactly at the limit rather than at the first value that fails the test.",
+      "Running the inner loop of a nested pair only once.",
+      "Off-by-one errors: WHILE i < 10 when 10 should be included.",
+      "Putting OUTPUT inside the loop when the question wants a single final result.",
+      "Using a FOR loop for a task that repeats until a condition, such as a password check.",
+      "Leaving ENDIF, ENDFOR or ENDWHILE out of written pseudo-code."
+    ],
+    "grade9Looks": "A grade 9 answer traces any loop, nested or not, in a complete table with a condition column, and reads off the value that stops the loop. It writes algorithms with the right loop for the task, the structures closed and the output placed correctly, converts a FOR to a WHILE, and describes the purpose of an unfamiliar algorithm in a sentence. It names loop errors as logic errors and fixes off-by-one boundaries deliberately."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q14",
+      "q15",
+      "q17",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

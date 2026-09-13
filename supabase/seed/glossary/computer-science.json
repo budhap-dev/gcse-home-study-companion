@@ -95,6 +95,7 @@
       "definition": "A loop that runs one time too many or too few, usually from confusing the length of an array with its last index.",
       "example": "`FOR i ← 0 TO LEN(a)` runs past the end; the correct upper bound is `LEN(a) - 1`. The other classic is stopping at `LEN - 2` and missing the last item.",
       "topics": [
+        "selection-iteration-and-tracing",
         "arrays-and-records",
         "robust-and-secure-programming"
       ],
@@ -181,7 +182,8 @@
       "definition": "Text: a sequence of characters, each with an index starting at 0. AQA gives four operations: `LEN`, `SUBSTRING`, `POSITION` and `+` for concatenation.",
       "example": "`LEN('keyboard')` is 8. `SUBSTRING(0, 2, 'computer')` is `'com'` — both ends **included**. `'Ada' + ' ' + 'Lovelace'` has length 12.",
       "topics": [
-        "strings-and-file-handling"
+        "strings-and-file-handling",
+        "data-types-and-operators"
       ],
       "aliases": [
         "strings",
@@ -213,7 +215,8 @@
       "definition": "Converting a value from one data type to another. Input arrives as a string, so it must be cast before arithmetic.",
       "example": "`STRING_TO_INT('42')` gives the number 42; `INT_TO_STRING(42)` gives `'42'`. Adding the string `'42'` to a number is a type error.",
       "topics": [
-        "strings-and-file-handling"
+        "strings-and-file-handling",
+        "data-types-and-operators"
       ],
       "aliases": [
         "type conversion",
@@ -222,7 +225,8 @@
       ],
       "related": [
         "String",
-        "Validation"
+        "Validation",
+        "Data type"
       ]
     },
     {
@@ -333,7 +337,8 @@
       "definition": "Code that runs but gives the wrong answer, because the instructions do not do what was intended. Harder to find than a syntax error, because nothing complains.",
       "example": "Using `>` where `≥` was meant, so a mark of exactly 19 is not counted. A trace table is the usual way to find one.",
       "topics": [
-        "robust-and-secure-programming"
+        "robust-and-secure-programming",
+        "selection-iteration-and-tracing"
       ],
       "aliases": [
         "logic errors",
@@ -341,7 +346,8 @@
       ],
       "related": [
         "Syntax error",
-        "Trace table"
+        "Trace table",
+        "Infinite loop"
       ]
     },
     {
@@ -349,6 +355,7 @@
       "definition": "A table with one column per variable and one row per step, filled in by hand to follow what a program actually does. The standard way to find a logic error.",
       "example": "Tracing a `WHILE` loop that searches for a value shows `i` reaching 3 even though the match was at index 2, because `i` is incremented before the condition is rechecked.",
       "topics": [
+        "selection-iteration-and-tracing",
         "arrays-and-records",
         "robust-and-secure-programming"
       ],
@@ -358,7 +365,9 @@
       ],
       "related": [
         "Logic error",
-        "Test data"
+        "Test data",
+        "Condition",
+        "Nested loop"
       ]
     },
     {
@@ -367,7 +376,8 @@
       "example": "`total ← 0` for assignment, `FOR i ← 0 TO 9 ... ENDFOR`, `SUBROUTINE ... ENDSUBROUTINE`. Paper variants are C# (8525A), Python (8525B) and VB.NET (8525C).",
       "topics": [
         "subroutines-procedures-and-functions",
-        "arrays-and-records"
+        "arrays-and-records",
+        "data-types-and-operators"
       ],
       "aliases": [
         "pseudocode",
@@ -376,6 +386,368 @@
       "related": [
         "Subroutine",
         "Trace table"
+      ]
+    },
+    {
+      "term": "Data type",
+      "definition": "What kind of value a variable holds, which decides how much memory it takes and what can be done with it. AQA names five: integer, real, Boolean, character and string.",
+      "example": "A phone number is a **string**, not an integer: you never add phone numbers, and stored as a number `07700 900123` would lose its leading 0.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "data types",
+        "type",
+        "types"
+      ],
+      "related": [
+        "Integer",
+        "Real",
+        "Boolean",
+        "Character",
+        "String",
+        "Casting"
+      ]
+    },
+    {
+      "term": "Integer",
+      "definition": "A whole number — positive, negative or zero — with no decimal part. The type for anything you count.",
+      "example": "`7`, `-3` and `0` are integers; `3.5` is not. `9 DIV 2` gives the integer `4`, while `9 / 2` gives the real `4.5`.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "integers",
+        "int",
+        "whole number"
+      ],
+      "related": [
+        "Data type",
+        "Real",
+        "DIV",
+        "MOD"
+      ]
+    },
+    {
+      "term": "Real",
+      "definition": "A number that may have a decimal part. Called *float* in Python and *double* in C#, but AQA pseudo-code calls it real.",
+      "example": "`3.75`, `-0.5` and `4.0` are reals. `9 / 2` is `4.5`: real division gives a real even when both sides are whole numbers.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "reals",
+        "float",
+        "double",
+        "decimal"
+      ],
+      "related": [
+        "Data type",
+        "Integer",
+        "DIV"
+      ]
+    },
+    {
+      "term": "Boolean",
+      "definition": "A value that can only be `True` or `False`. Every condition in an IF or a loop evaluates to one.",
+      "example": "`age >= 18` is `True` for 18 and `False` for 17. Store a yes/no answer as a Boolean rather than the string `'yes'`, because a Boolean cannot be misspelt.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "booleans",
+        "bool",
+        "true or false"
+      ],
+      "related": [
+        "Data type",
+        "Boolean operator",
+        "Relational operator",
+        "Condition"
+      ]
+    },
+    {
+      "term": "Character",
+      "definition": "A single symbol: a letter, a digit, a space or a punctuation mark. A string is a sequence of characters.",
+      "example": "`'a'`, `'7'` and `'?'` are characters. The character `'7'` is not the number 7 — it has to be cast with `STRING_TO_INT` before any arithmetic.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "characters",
+        "char"
+      ],
+      "related": [
+        "Data type",
+        "String",
+        "Casting"
+      ]
+    },
+    {
+      "term": "Variable",
+      "definition": "A named space in memory whose value can change while the program runs. Created in AQA pseudo-code simply by assigning to it.",
+      "example": "`score ← 0` creates `score`. `score ← score + 1` reads the current value, adds 1 and stores the answer back, so after three passes it holds 3.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "variables"
+      ],
+      "related": [
+        "Constant",
+        "Assignment",
+        "Local variable",
+        "Data type"
+      ]
+    },
+    {
+      "term": "Constant",
+      "definition": "A named value that must not change while the program runs, declared with `CONSTANT` and conventionally named in capitals.",
+      "example": "`CONSTANT VAT ← 0.2`. Using the name instead of typing `0.2` in ten places means one edit changes the whole program, and the name says what the number is for.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "constants"
+      ],
+      "related": [
+        "Variable",
+        "Assignment"
+      ]
+    },
+    {
+      "term": "Assignment",
+      "definition": "Storing a value in a variable. AQA pseudo-code uses the arrow `←`, which means *becomes* and works right to left: evaluate the right-hand side, then store it on the left.",
+      "example": "`count ← count + 1` is not an equation. It takes the current `count`, adds 1, and puts the result back. A single `=` means *is equal to*, never assignment.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "assign",
+        "becomes",
+        "arrow"
+      ],
+      "related": [
+        "Variable",
+        "Constant",
+        "AQA pseudo-code",
+        "Relational operator"
+      ]
+    },
+    {
+      "term": "DIV",
+      "definition": "Integer division: how many whole times one number goes into another, with the remainder thrown away.",
+      "example": "`9 DIV 2` is `4`. `23 DIV 10` is `2`, the tens digit, and `minutes DIV 60` turns minutes into whole hours.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "div",
+        "integer division"
+      ],
+      "related": [
+        "MOD",
+        "Integer",
+        "Real"
+      ]
+    },
+    {
+      "term": "MOD",
+      "definition": "The remainder left after integer division. Paired with DIV, it takes numbers apart.",
+      "example": "`9 MOD 2` is `1`. `23 MOD 10` is `3`, the units digit, and `n MOD 2 = 0` is the standard test for *n is even*.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "mod",
+        "modulus",
+        "remainder"
+      ],
+      "related": [
+        "DIV",
+        "Integer",
+        "Condition"
+      ]
+    },
+    {
+      "term": "Relational operator",
+      "definition": "An operator that compares two values and gives a Boolean back: `=`, `≠`, `<`, `<=`, `>` and `>=`.",
+      "example": "`mark >= 50` is `True` for a mark of 50 and `False` for 49. AQA uses a single `=` for *is equal to*, because assignment is the arrow `←`.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "relational operators",
+        "comparison operator",
+        "comparison"
+      ],
+      "related": [
+        "Boolean",
+        "Condition",
+        "Assignment",
+        "Boolean operator"
+      ]
+    },
+    {
+      "term": "Boolean operator",
+      "definition": "`AND`, `OR` and `NOT`, which combine Booleans. `AND` is True only when both sides are, `OR` when either is, and `NOT` flips one.",
+      "example": "`age >= 13 AND age <= 19` is True only for 13 to 19 inclusive. `NOT (x = 0)` says the same thing as `x ≠ 0`.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "boolean operators",
+        "logical operator",
+        "and or not"
+      ],
+      "related": [
+        "Boolean",
+        "Operator precedence",
+        "Relational operator"
+      ]
+    },
+    {
+      "term": "Operator precedence",
+      "definition": "The order operators are applied in when brackets do not say. Brackets first, then `*`, `/`, `DIV`, `MOD`, then `+` and `-`, then the comparisons, then `NOT`, `AND` and `OR` in that order.",
+      "example": "`2 * 3 + 4` is 10, not 14. `NOT a OR b` means `(NOT a) OR b`, not `NOT (a OR b)` — bracket anything a reader could take the other way.",
+      "topics": [
+        "data-types-and-operators"
+      ],
+      "aliases": [
+        "precedence",
+        "order of operations",
+        "bidmas"
+      ],
+      "related": [
+        "Boolean operator",
+        "Relational operator",
+        "MOD"
+      ]
+    },
+    {
+      "term": "Selection",
+      "definition": "Choosing between paths with `IF … ELSE IF … ELSE … ENDIF`. The conditions are tested in order and only the first True branch runs.",
+      "example": "With `IF mark >= 70 THEN … ELSE IF mark >= 50 THEN …`, a mark of 85 takes the first branch only — never the second as well, even though 85 is also at least 50.",
+      "topics": [
+        "selection-iteration-and-tracing"
+      ],
+      "aliases": [
+        "if statement",
+        "branching",
+        "select"
+      ],
+      "related": [
+        "Condition",
+        "Iteration",
+        "Boolean"
+      ]
+    },
+    {
+      "term": "Iteration",
+      "definition": "Repeating part of a program. Definite iteration repeats a known number of times; indefinite iteration repeats until something changes.",
+      "example": "`FOR i ← 1 TO 5` runs its body five times. `WHILE n < 20` runs until `n` reaches 20, however many passes that takes.",
+      "topics": [
+        "selection-iteration-and-tracing"
+      ],
+      "aliases": [
+        "loop",
+        "loops",
+        "looping",
+        "repetition"
+      ],
+      "related": [
+        "Definite iteration",
+        "Indefinite iteration",
+        "Nested loop",
+        "Selection"
+      ]
+    },
+    {
+      "term": "Definite iteration",
+      "definition": "A loop that repeats a **known** number of times, counting with a variable: AQA's `FOR … ENDFOR`. Both limits are included.",
+      "example": "`FOR i ← 1 TO 5` gives i = 1, 2, 3, 4, 5 — five passes, because the count from a to b is $b - a + 1$. `FOR i ← 2 TO 10 STEP 4` gives 2, 6, 10.",
+      "topics": [
+        "selection-iteration-and-tracing"
+      ],
+      "aliases": [
+        "for loop",
+        "count controlled loop"
+      ],
+      "related": [
+        "Iteration",
+        "Indefinite iteration",
+        "Array"
+      ]
+    },
+    {
+      "term": "Indefinite iteration",
+      "definition": "A loop that repeats until a condition changes, so the number of passes is not known in advance. `WHILE … ENDWHILE` tests before each pass; `REPEAT … UNTIL` tests after.",
+      "example": "From `n ← 1`, `WHILE n < 20` with `n ← n * 3` runs three times: 1, 3, 9, then 27 fails the test. A REPEAT always runs at least once, which is why *ask, then check* validation uses it.",
+      "topics": [
+        "selection-iteration-and-tracing"
+      ],
+      "aliases": [
+        "while loop",
+        "repeat until",
+        "condition controlled loop"
+      ],
+      "related": [
+        "Iteration",
+        "Definite iteration",
+        "Condition",
+        "Validation"
+      ]
+    },
+    {
+      "term": "Nested loop",
+      "definition": "A loop inside another loop. The inner loop runs all the way through for each single pass of the outer one, so the numbers of passes multiply.",
+      "example": "`FOR i ← 1 TO 2` around `FOR j ← 1 TO 3` runs the body $2 \\times 3 = 6$ times, and `j` restarts at 1 each time `i` moves on. Give the inner counter its own trace column.",
+      "topics": [
+        "selection-iteration-and-tracing"
+      ],
+      "aliases": [
+        "nested loops",
+        "loop inside a loop"
+      ],
+      "related": [
+        "Iteration",
+        "Trace table",
+        "Two-dimensional array"
+      ]
+    },
+    {
+      "term": "Infinite loop",
+      "definition": "A loop whose condition can never become False, so the program never moves past it. Usually the body forgets to change the variable the condition tests.",
+      "example": "`WHILE n < 20` with no line that changes `n` runs forever. In a trace table it shows up as a column whose value never moves.",
+      "topics": [
+        "selection-iteration-and-tracing"
+      ],
+      "aliases": [
+        "endless loop"
+      ],
+      "related": [
+        "Indefinite iteration",
+        "Logic error",
+        "Trace table"
+      ]
+    },
+    {
+      "term": "Condition",
+      "definition": "An expression that works out to True or False. Every IF and every loop is driven by one.",
+      "example": "In `WHILE x > 3`, the condition is `x > 3`. Give it its own column in a trace table: the row where it flips from True to False is where the marks are.",
+      "topics": [
+        "selection-iteration-and-tracing"
+      ],
+      "aliases": [
+        "conditions",
+        "test",
+        "criterion"
+      ],
+      "related": [
+        "Boolean",
+        "Relational operator",
+        "Selection",
+        "Iteration"
       ]
     }
   ],

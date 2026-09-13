@@ -59,7 +59,8 @@ School order for Year 10: programming (subroutines, arrays, records, files, stri
 | Half term | Topics | Status |
 |---|---|---|
 | Autumn 1 | Programming: subroutines · arrays and records · strings and files · robust and secure programming | All four drafted; each links to the family's Learn C# practice site |
-| Autumn 2 | Recap of Year 9 programming: data types, selection, iteration; more practice tracing | Next |
+| Autumn 2 | Recap of Year 9 programming: data types, selection, iteration; more practice tracing | Both drafted 13 September 2026 (Data types and operators · Selection, iteration and tracing). **Computer Science Autumn is complete.** |
+| Spring | Sorting: bubble and merge · determining the purpose of an algorithm by tracing · compression | Next |
 
 ## Business (Edexcel 1BS0)
 
