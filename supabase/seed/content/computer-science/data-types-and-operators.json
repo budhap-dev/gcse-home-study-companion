@@ -1,0 +1,1289 @@
+{
+  "id": "data-types-and-operators",
+  "subjectId": "computer-science",
+  "unitId": "programming",
+  "title": "Data types and operators",
+  "specPoints": [
+    "3.2.1",
+    "3.2.2",
+    "3.2.3",
+    "3.2.4",
+    "3.2.5",
+    "3.2.7",
+    "3.2.9"
+  ],
+  "order": 5,
+  "resources": [
+    {
+      "label": "Learn C#",
+      "url": "https://red-dune-0f7372e10.7.azurestaticapps.net/",
+      "note": "Our C# practice site. Type each example in, run it, and change it. C# is one of the languages AQA accepts in the exam."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Five data types",
+        "body": "Every value a program stores has a **data type**, which decides how much memory it takes and what you can do with it. AQA names five.\n\n- **Integer**: a whole number, `7`, `-3`, `0`.\n- **Real**: a number with a decimal part, `3.75`, `-0.5`.\n- **Boolean**: `True` or `False`, and nothing else.\n- **Character**: a single symbol, `'a'`, `'7'`, `'?'`.\n- **String**: a sequence of characters, `'hello'`, `'07700 900123'`.\n\nThe type is a design decision. A phone number is a **string**, because you never add phone numbers and a leading 0 must survive. A count is an **integer**. A yes/no is a **Boolean**, not the string `'yes'`, because a Boolean cannot be misspelt.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Type",
+                "Example",
+                "Use it for"
+              ],
+              "rows": [
+                [
+                  "integer",
+                  "7, -3, 0",
+                  "counts, scores, ages"
+                ],
+                [
+                  "real",
+                  "3.75, -0.5",
+                  "measurements, money, averages"
+                ],
+                [
+                  "Boolean",
+                  "True, False",
+                  "flags: found, valid, finished"
+                ],
+                [
+                  "character",
+                  "'a', '7'",
+                  "one symbol at a time"
+                ],
+                [
+                  "string",
+                  "'hello', '07700 900123'",
+                  "text, codes, phone numbers"
+                ]
+              ],
+              "title": "Data types"
+            },
+            "alt": "A table of the five AQA data types with an example and a typical use for each"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which type should store a person's height in metres, such as 1.68?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "data types",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A decimal measurement is a **real**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "real"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "real",
+            "integer",
+            "string",
+            "character"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Variables, constants and assignment",
+        "body": "A **variable** is a named space in memory whose value can change. In AQA pseudo-code a variable is created by assigning to it with the arrow:\n\n```\nscore ← 0\nname ← 'Amy'\n```\n\nThe arrow means *becomes*, and it works **right to left**: evaluate the right-hand side, then store it on the left. So `score ← score + 1` takes the current score, adds 1, and stores the result back. It is not an equation.\n\nA **constant** is a value that must not change while the program runs, declared with `CONSTANT` and named in capitals: `CONSTANT VAT ← 0.2`. Using a constant instead of typing 0.2 everywhere means one change updates the whole program, and the name says what the number is.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Line",
+                "score"
+              ],
+              "rows": [
+                [
+                  "score ← 0",
+                  "0"
+                ],
+                [
+                  "score ← score + 1",
+                  "1"
+                ],
+                [
+                  "score ← score * 10",
+                  "10"
+                ]
+              ],
+              "title": "Assignment works right to left"
+            },
+            "alt": "A trace of three assignments showing the value of score after each line"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "What is the value of `x` after these lines?\n\n```\nx ← 4\nx ← x * 3\nx ← x - 2\n```",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "assignment",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "4, then 12, then **10**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "10"
+            }
+          ],
+          "discriminators": [],
+          "answer": 10,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Arithmetic: /, DIV and MOD",
+        "body": "The usual `+`, `-`, `*` and `/`, plus two that do integer division:\n\n- `/` is real division: `9 / 2` is `4.5`.\n- `DIV` is **integer division**: how many whole times. `9 DIV 2` is `4`.\n- `MOD` is the **remainder**: `9 MOD 2` is `1`.\n\nTogether they take numbers apart. `23 DIV 10` is 2 (the tens digit) and `23 MOD 10` is 3 (the units digit). `n MOD 2 = 0` tests whether `n` is even. `minutes DIV 60` gives hours and `minutes MOD 60` the minutes left over.\n\n**Precedence** is as in maths: brackets, then `*`, `/`, `DIV`, `MOD`, then `+` and `-`, working left to right among equals. `2 * 3 + 4` is 10; `2 * (3 + 4)` is 14.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Value",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "17 DIV 5",
+                  "3",
+                  "5 goes into 17 three times"
+                ],
+                [
+                  "17 MOD 5",
+                  "2",
+                  "17 − 15 = 2 left over"
+                ],
+                [
+                  "20 MOD 4",
+                  "0",
+                  "divides exactly: 20 is a multiple of 4"
+                ],
+                [
+                  "7 MOD 2",
+                  "1",
+                  "odd numbers give 1"
+                ],
+                [
+                  "100 DIV 7",
+                  "14",
+                  "7 × 14 = 98"
+                ],
+                [
+                  "100 MOD 7",
+                  "2",
+                  "100 − 98 = 2"
+                ]
+              ],
+              "title": "DIV and MOD"
+            },
+            "alt": "A table of DIV and MOD worked on several pairs of numbers"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "Work out `100 MOD 7`.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "MOD",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$7 \\times 14 = 98$, remainder **2**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Comparing and combining: relational and Boolean operators",
+        "body": "**Relational operators** compare two values and give a Boolean: `=`, `≠`, `<`, `<=`, `>`, `>=`. Note that AQA pseudo-code uses a single `=` for *is equal to*; the assignment is the arrow, so there is no confusion.\n\n**Boolean operators** combine Booleans:\n\n- `AND` is True only if **both** sides are True.\n- `OR` is True if **either** side is True.\n- `NOT` flips a Boolean.\n\nThey are evaluated in the order **NOT, then AND, then OR**, so `NOT a OR b` means `(NOT a) OR b`. When in doubt, bracket.\n\nThese are what every IF and every loop condition is made of, so evaluating them quickly and correctly is the skill behind tracing.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "a",
+                "b",
+                "a AND b",
+                "a OR b",
+                "NOT a"
+              ],
+              "rows": [
+                [
+                  "True",
+                  "True",
+                  "True",
+                  "True",
+                  "False"
+                ],
+                [
+                  "True",
+                  "False",
+                  "False",
+                  "True",
+                  "False"
+                ],
+                [
+                  "False",
+                  "True",
+                  "False",
+                  "True",
+                  "True"
+                ],
+                [
+                  "False",
+                  "False",
+                  "False",
+                  "False",
+                  "True"
+                ]
+              ],
+              "title": "Truth table"
+            },
+            "alt": "A truth table for AND, OR and NOT"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "What is `(4 > 2) AND (3 > 5)`?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "Boolean expressions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "True AND False is **False**: AND needs both.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "False"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "False",
+            "True",
+            "4",
+            "Error"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Evaluating an expression step by step",
+        "body": "Work from the inside out: brackets, then arithmetic, then comparisons, then NOT, AND, OR. Write each intermediate value down; the exam gives marks for the working.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "`(7 MOD 3 = 1) AND (10 DIV 4 = 2)`",
+            "steps": [
+              {
+                "text": "`7 MOD 3` is 1, so `1 = 1` is True",
+                "note": "first bracket"
+              },
+              {
+                "text": "`10 DIV 4` is 2, so `2 = 2` is True",
+                "note": "second bracket"
+              },
+              {
+                "text": "`True AND True` is **True**",
+                "note": "combine"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "`NOT (5 > 3) OR (2 = 2)`",
+            "steps": [
+              {
+                "text": "`5 > 3` is True; `NOT True` is False",
+                "note": "NOT first"
+              },
+              {
+                "text": "`2 = 2` is True",
+                "note": "second bracket"
+              },
+              {
+                "text": "`False OR True` is **True**",
+                "note": "OR last"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "`8 MOD 3 * 2 + 8 DIV 3`",
+            "steps": [
+              {
+                "text": "`8 MOD 3` is 2; `2 * 2` is 4",
+                "note": "left to right among *, DIV, MOD"
+              },
+              {
+                "text": "`8 DIV 3` is 2",
+                "note": "then the DIV, which ranks alongside it"
+              },
+              {
+                "text": "`4 + 2` is **6**",
+                "note": "+ last"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "short-text",
+          "prompt": "What is the value of `(10 MOD 4 = 2) OR (9 DIV 3 = 2)`?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "Boolean expressions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "`10 MOD 4` is 2: True. `9 DIV 3` is 3, not 2: False. `True OR False` is **True**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "True"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "true",
+            "True"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Input, output and random numbers",
+        "body": "Three built-ins you will use in every program.\n\n**Output**: `OUTPUT 'Hello'`, `OUTPUT score`. To join text and a number, convert the number first: `OUTPUT 'Score: ' + INT_TO_STRING(score)`.\n\n**Input**: `name ← USERINPUT`. Whatever the user types arrives as a **string**, so a number must be converted before arithmetic: `age ← STRING_TO_INT(USERINPUT)`. Forgetting this is the classic type error.\n\n**Random numbers**: `dice ← RANDOM_INT(1, 6)` gives a whole number from 1 to 6 inclusive. Both limits are included, which matters when the question asks how many different values are possible.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Built-in",
+                "Example",
+                "Gives"
+              ],
+              "rows": [
+                [
+                  "OUTPUT",
+                  "OUTPUT 'Hi ' + name",
+                  "text on screen"
+                ],
+                [
+                  "USERINPUT",
+                  "name ← USERINPUT",
+                  "a string, always"
+                ],
+                [
+                  "STRING_TO_INT",
+                  "age ← STRING_TO_INT(USERINPUT)",
+                  "an integer"
+                ],
+                [
+                  "INT_TO_STRING",
+                  "OUTPUT 'Score: ' + INT_TO_STRING(s)",
+                  "a string to join"
+                ],
+                [
+                  "RANDOM_INT",
+                  "dice ← RANDOM_INT(1, 6)",
+                  "1, 2, 3, 4, 5 or 6"
+                ]
+              ],
+              "title": "Built-ins"
+            },
+            "alt": "A table of the input, output, conversion and random built-ins in AQA pseudo-code"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "How many different values can `RANDOM_INT(3, 8)` return?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "random numbers",
+          "calculator": "either",
+          "tags": [],
+          "solution": "3, 4, 5, 6, 7, 8: both limits included, **6** values.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "6",
+            "5",
+            "8",
+            "3"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn: predict the output",
+        "body": "Work out what each snippet outputs before revealing. Write a value for every line; a trace table with one column per variable is the exam method, and it is faster than trying to hold it in your head.\n\nThen type two of them into our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site and run them. Watch what C# does with `9 / 2` when both sides are `int`: it behaves like `DIV`, which is the trap the exam sets.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Snippet 1",
+            "steps": [
+              {
+                "text": "`a ← 15`, `b ← 4`",
+                "note": "a = 15, b = 4"
+              },
+              {
+                "text": "`OUTPUT a DIV b` → **3**",
+                "note": "4 goes into 15 three times"
+              },
+              {
+                "text": "`OUTPUT a MOD b` → **3**",
+                "note": "15 − 12 = 3"
+              },
+              {
+                "text": "`OUTPUT (a MOD b = 3) AND (b > 3)` → **True**",
+                "note": "True AND True"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Snippet 2",
+            "steps": [
+              {
+                "text": "`x ← 5`, `x ← x * x`, `x ← x MOD 7`",
+                "note": "5, then 25, then 25 MOD 7"
+              },
+              {
+                "text": "`OUTPUT x` → **4**",
+                "note": "7 × 3 = 21, remainder 4"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "What is output?\n\n```\nx ← 6\nx ← x * x\nx ← x MOD 10\nOUTPUT x\n```",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing arithmetic",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "6, then 36, then `36 MOD 10` = **6**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Grade 9: types are decisions, and precedence is a trap",
+        "body": "**Justify the type.** The top-band question is *why* a phone number is a string, *why* a flag is Boolean, *why* money is often stored as an integer number of pence: leading zeros, no spelling mistakes, no rounding errors. One reason each.\n\n**USERINPUT is always a string.** Every program that reads a number converts it with `STRING_TO_INT` or `STRING_TO_REAL`, and the exam asks you to spot the missing conversion.\n\n**`/` against `DIV`.** `9 / 2` is 4.5, `9 DIV 2` is 4. In C#, dividing two integers with `/` behaves like DIV; in Python `/` always gives a real. Know your paper's language.\n\n**Precedence.** `NOT a OR b` is `(NOT a) OR b`; `a MOD b * 2` is `(a MOD b) * 2`. Bracket anything you are not sure of, in the exam and in your own code.\n\n**MOD is a tool, not a curiosity.** Even or odd, digit extraction, wrapping round (`(i + 1) MOD 7` for days of the week), checking divisibility.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Weak",
+                "Grade 9"
+              ],
+              "rows": [
+                [
+                  "a phone number is a string because it's text",
+                  "a string keeps the leading 0 and is never used in arithmetic"
+                ],
+                [
+                  "age ← USERINPUT",
+                  "age ← STRING_TO_INT(USERINPUT), because USERINPUT is a string"
+                ],
+                [
+                  "9 / 2 is 4",
+                  "9 / 2 is 4.5; 9 DIV 2 is 4"
+                ],
+                [
+                  "NOT a OR b, worked as NOT (a OR b)",
+                  "(NOT a) OR b: NOT binds first"
+                ],
+                [
+                  "n / 2 = 0 to test even",
+                  "n MOD 2 = 0"
+                ]
+              ],
+              "title": "What the marks are for"
+            },
+            "alt": "A table contrasting weak answers with grade 9 answers on data types and operators"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "Why is `NOT x OR y` sometimes read wrongly?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "precedence",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**NOT** binds tightest, so the expression is `(NOT x) OR y`. Bracket it to make the meaning visible.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "NOT binds to x only"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "options": [
+            "NOT binds to x alone, but readers apply it to x OR y",
+            "OR is evaluated first, so the whole of x OR y is negated",
+            "NOT cannot be written in front of a Boolean variable",
+            "The expression is True whatever x and y are set to"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Five types**: integer, real, Boolean, character, string. Choose by what the value is *for*: phone numbers are strings, flags are Booleans.\n- **Assignment** `x ← 5` works right to left; `CONSTANT NAME ← value` for values that never change.\n- **Arithmetic**: `/` real division; `DIV` whole times; `MOD` remainder. `n MOD 2 = 0` means even; `DIV 10` and `MOD 10` split off digits.\n- **Relational**: `= ≠ < <= > >=` give Booleans. **Boolean**: `AND`, `OR`, `NOT`, evaluated NOT, AND, OR.\n- **Built-ins**: `OUTPUT`, `USERINPUT` (always a string), `STRING_TO_INT`, `INT_TO_STRING`, `RANDOM_INT(a, b)` inclusive.\n- **Trace** with a column per variable, one row per change.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Operator",
+                "Example",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "DIV",
+                  "17 DIV 5",
+                  "3"
+                ],
+                [
+                  "MOD",
+                  "17 MOD 5",
+                  "2"
+                ],
+                [
+                  "/",
+                  "9 / 2",
+                  "4.5"
+                ],
+                [
+                  "=",
+                  "3 = 3",
+                  "True"
+                ],
+                [
+                  "AND",
+                  "True AND False",
+                  "False"
+                ],
+                [
+                  "OR",
+                  "True OR False",
+                  "True"
+                ],
+                [
+                  "NOT",
+                  "NOT True",
+                  "False"
+                ]
+              ],
+              "title": "Operators at a glance"
+            },
+            "alt": "A summary table of the operators with an example of each"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which data type would you use to store whether a light is on or off?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing data types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **Boolean** holds exactly two values, True or False: on or off. A string could store the word 'on', but the program then has to compare text, which is slower and easier to get wrong.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Boolean"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Boolean",
+        "integer",
+        "string",
+        "character"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Work out `17 MOD 5`.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "MOD",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**MOD** gives the remainder: $17 = 3 \\times 5 + 2$, so `17 MOD 5` is **2**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Work out `17 DIV 5`.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "DIV",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**DIV** is integer division, the whole number of times 5 goes into 17: **3**. The remainder is thrown away.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which data type is `3.75`?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "data types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A number with a decimal part is a **real**. `3` on its own would be an integer, and `'3.75'` in quotes would be a string.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "real"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "real",
+        "integer",
+        "string",
+        "Boolean"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "What is the value of `(7 MOD 3 = 1) AND (10 DIV 4 = 2)`?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Boolean expressions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`7 MOD 3` is 1, so the first part is True. `10 DIV 4` is 2, so the second is True. `True AND True` is **True**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "True"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "true",
+        "True"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "What does `score ← score + 1` do?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "assignment",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Assignment works **right to left**: work out the right-hand side using the current value, then store it in the variable on the left. It is the standard way to count.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "adds 1 and stores it back"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Adds 1 to the current value of score and stores the result back in score",
+        "Checks whether score is equal to score plus 1",
+        "Creates a second variable called score + 1",
+        "Outputs the value of score plus 1"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "Which line declares a value that must not change during the program?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "constants",
+      "calculator": "either",
+      "tags": [],
+      "solution": "AQA pseudo-code declares a constant with **CONSTANT** and the assignment arrow. A constant is named in capitals by convention and cannot be reassigned.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "CONSTANT VAT ← 0.2"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "CONSTANT VAT ← 0.2",
+        "VAT ← 0.2",
+        "FIXED VAT = 0.2",
+        "LET VAT ← 0.2"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\nx ← 23\nOUTPUT x DIV 10 + x MOD 10\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "DIV and MOD together",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`23 DIV 10` is 2 (the tens digit) and `23 MOD 10` is 3 (the units digit). $2 + 3 = $ **5**. DIV and MOD together pull a number apart into its digits.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 and 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "What is the value of `NOT (5 > 3) OR (2 = 2)`?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Boolean expressions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`5 > 3` is True, so `NOT (5 > 3)` is False. `2 = 2` is True. `False OR True` is **True**. NOT applies before OR.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "True"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "true",
+        "True"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Which expression is True only when `n` is an even number?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "using MOD",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An even number leaves no remainder when divided by 2: **`n MOD 2 = 0`**. `n MOD 2 = 1` tests for odd; `n DIV 2 = 0` is only true for 0 and 1.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n MOD 2 = 0"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "n MOD 2 = 0",
+        "n DIV 2 = 0",
+        "n / 2 = 0",
+        "n MOD 2 = 1"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\ntotal ← 0\nn ← 100\ntotal ← n DIV 7\ntotal ← total + n MOD 7\nOUTPUT total\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing arithmetic",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`100 DIV 7` is 14 and `100 MOD 7` is 2, so total is $14 + 2 = $ **16**. Write the value of each line in a trace table rather than working in your head.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "14 and 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A program stores a phone number as an integer and the leading 0 disappears. Which data type fixes this, and why?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing data types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A phone number is not used in arithmetic, so it is text: a **string** keeps the leading 0 and any spaces. Integers drop leading zeros because 0123 and 123 are the same number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "string keeps the leading zero"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "string, because it keeps every character including a leading zero",
+        "real, because it can hold longer numbers",
+        "integer, but with a larger range",
+        "Boolean, because the number is either valid or not"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "short-text",
+      "prompt": "What is the value of `(6 >= 6) AND NOT (3 = 4)`?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Boolean expressions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`6 >= 6` is True. `3 = 4` is False, so `NOT (3 = 4)` is True. `True AND True` is **True**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "True"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "true",
+        "True"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\na ← 8\nb ← 3\nc ← a MOD b * 2\nOUTPUT c + a DIV b\n```",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "precedence with DIV and MOD",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "MOD and DIV rank with multiplication, and the line is read left to right: `8 MOD 3` is 2, times 2 is 4, so c is 4. Then `a DIV b` is 2, and $4 + 2 = $ **6**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8 MOD 3 = 2, so c = 4"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8 DIV 3 = 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "extended",
+      "prompt": "A program asks the user for their age and then compares it with 18. Explain why `age ← USERINPUT` on its own would cause a problem, and write the corrected line.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "input and casting",
+      "calculator": "either",
+      "tags": [],
+      "solution": "USERINPUT returns a **string**, so comparing it with the integer 18 is a type error, or in some languages a wrong comparison. Convert it: `age ← STRING_TO_INT(USERINPUT)`.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "USERINPUT gives a string"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a string cannot be compared with, or used in arithmetic with, an integer"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "age ← STRING_TO_INT(USERINPUT)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "USERINPUT returns a string",
+          "marks": 1
+        },
+        {
+          "text": "So comparing it with the integer 18 is a type mismatch",
+          "marks": 1
+        },
+        {
+          "text": "Corrected: age ← STRING_TO_INT(USERINPUT)",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "USERINPUT always gives a string, even if the user types digits. A string cannot be compared with the integer 18 or used in arithmetic, so the program would fail or give the wrong result. The input must be converted: `age ← STRING_TO_INT(USERINPUT)`."
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Which statement about `/` and `DIV` is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "real and integer division",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`/` is ordinary division and gives a real, **4.5**. `DIV` is integer division and gives **4**. Choosing the wrong one is a common logic error in a program that expects a whole number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4.5 and 4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "`9 / 2` is 4.5 and `9 DIV 2` is 4",
+        "`9 / 2` is 4 and `9 DIV 2` is 4.5",
+        "Both give 4",
+        "Both give 4.5"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Write pseudo-code that generates a random number from 1 to 6, stores it, and outputs 'Six!' if it is 6 and 'Try again' otherwise.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "random numbers and selection",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`dice ← RANDOM_INT(1, 6)`, then an IF on `dice = 6` with ELSE. The marks are for the correct RANDOM_INT call with both limits, the assignment, the comparison with `=`, and both outputs in the right branches.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "dice ← RANDOM_INT(1, 6)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "IF dice = 6 THEN"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "OUTPUT 'Six!' in the IF branch and OUTPUT 'Try again' in the ELSE"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "ENDIF, with the structure correctly closed"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "dice ← RANDOM_INT(1, 6)",
+          "marks": 1
+        },
+        {
+          "text": "IF dice = 6 THEN",
+          "marks": 1
+        },
+        {
+          "text": "The two outputs in the correct branches",
+          "marks": 1
+        },
+        {
+          "text": "ELSE and ENDIF closing the structure",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "dice ← RANDOM_INT(1, 6)\nIF dice = 6 THEN\n   OUTPUT 'Six!'\nELSE\n   OUTPUT 'Try again'\nENDIF"
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "`RANDOM_INT(1, 6)` is called and the result is multiplied by 10, then `MOD 7` is applied. If the random number was 5, what is output?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing with MOD",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$5 \\times 10 = 50$, and `50 MOD 7`: $7 \\times 7 = 49$, remainder **1**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "50"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 6
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 12
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q16",
+        "q18",
+        "q15",
+        "q17"
+      ],
+      "suggestedMinutes": 35
+    }
+  },
+  "examTechnique": {
+    "body": "Data types and operators are tested on Paper 1 in short questions: state a type and justify it, work out DIV and MOD, evaluate a Boolean expression, spot a missing conversion. They also sit inside every trace question, because a trace is nothing but evaluating expressions line by line. The marks are for working: write intermediate values, keep a column per variable, and bracket precedence you are unsure of.\n\nJustify every data-type choice with a reason about how the value is used, not what it looks like. Remember that USERINPUT gives a string and must be converted, that `/` and DIV differ, and that the exam expects AQA pseudo-code in the question and your paper's language in coded answers.",
+    "examinerErrors": [
+      "Storing a phone number or a postcode as an integer, losing the leading zero.",
+      "Using USERINPUT in arithmetic without STRING_TO_INT.",
+      "Treating DIV as ordinary division, or MOD as division.",
+      "Reading NOT a OR b as NOT (a OR b).",
+      "Assuming RANDOM_INT(1, 6) excludes one of the limits.",
+      "Writing = for assignment in pseudo-code; AQA uses the arrow."
+    ],
+    "grade9Looks": "A grade 9 answer names the right type with a reason tied to how the value is used, evaluates DIV, MOD and Boolean expressions with the working shown and precedence respected, and uses MOD purposefully for parity, digits and wrapping. It converts input before arithmetic, distinguishes real and integer division in the paper's language, and traces short programs in a table without slips."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q16",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
