@@ -18,6 +18,9 @@ Diagram visuals name components in the web app's SVG library, `apps/web/src/comp
 | `triangle-construction` | `sides [AB, AC, BC]`, `angles` | Constructions |
 | `triangle-pair` | two triangles with `sides [AB, BC, CA]` | Congruence |
 | `spring-load`, `beam-moments`, `energy-stores`, `energy-transfer-bars`, `equation-card` | see the component | Physics |
+| `motion-graph` | `kind: distance-time, velocity-time`, `points [{t, y}]` or `series`, `gradient {from, to, label}`, `shade [{from, to, label}]`, `markers`, `labels` | Motion graphs |
+| `free-body` | `object`, `forces [{direction, size, label}]`, `resultant` | Resultant forces, Newton's laws |
+| `vector-triangle` | `vectors [{x, y, label}]` added head to tail, `resultant` | Adding forces at an angle |
 | `dot-and-cross` | `kind: ionic` with `transfer`; `kind: covalent` with two atoms and `shared` pairs, or a central atom plus any number of single-bonded atoms | Bonding |
 | `trace-table` | `columns`, `rows` (strings, blank for unchanged), `title`, `highlight` row index | Tracing code |
 | `lattice` | `kind: ionic, metallic, alloy, giant-covalent, simple-molecules, polymer, graphite, graphene, fullerene, nanotube` | Structures |
