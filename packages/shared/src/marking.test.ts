@@ -13,6 +13,13 @@ describe('parseNumber', () => {
     expect(parseNumber('14 m/s', 'm/s')).toBe(14)
     expect(parseNumber('58.8 J', 'J')).toBe(58.8)
   })
+  it('forgives a leading "x =" or "="', () => {
+    expect(parseNumber('x = 5')).toBe(5)
+    expect(parseNumber('x=-2')).toBe(-2)
+    expect(parseNumber('= 4.5')).toBe(4.5)
+    expect(parseNumber('F = 20 N', 'N')).toBe(20)
+    expect(parseNumber('area = 12 cm²', 'cm²')).toBe(12)
+  })
   it('rejects non-numbers', () => {
     expect(parseNumber('four')).toBeUndefined()
     expect(parseNumber('')).toBeUndefined()

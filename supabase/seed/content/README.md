@@ -22,4 +22,4 @@ Diagram visuals name components in the web app's SVG library, `apps/web/src/comp
 | `trace-table` | `columns`, `rows` (strings, blank for unchanged), `title`, `highlight` row index | Tracing code |
 | `lattice` | `kind: ionic, metallic, alloy, giant-covalent, simple-molecules, polymer, graphite, graphene, fullerene, nanotube` | Structures |
 
-Interactive visuals: only `slider-graph` is built; the other kinds render their `fallback` text.
+Interactive visuals: `slider-graph`, `equation-entry` (a worked example revealed one line at a time) and `vocab-list` are built; the other kinds render their `fallback` text.

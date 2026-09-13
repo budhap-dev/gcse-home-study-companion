@@ -13,11 +13,15 @@ export function renderRichText(source: string): string {
     maths.push(katex.renderToString(tex, { displayMode: display, throwOnError: false, output: 'html' }))
     return `\u0000M${maths.length - 1}\u0000`
   }
+  // A backslash-escaped dollar is currency, not a maths delimiter: the Business
+  // exchange-rate questions price a machine at \$12 000. It is parked as a token so
+  // neither the maths pass nor Markdown sees it, and put back at the end.
   const withTokens = source
+    .replace(/\\\$/g, '\u0000D\u0000')
     .replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) => keep(tex, true))
     .replace(/\$([^$\n]+?)\$/g, (_, tex) => keep(tex, false))
   const html = marked.parse(withTokens, { async: false, gfm: true, breaks: false }) as string
-  return html.replace(/\u0000M(\d+)\u0000/g, (_, i) => maths[Number(i)] ?? '')
+  return html.replace(/\u0000M(\d+)\u0000/g, (_, i) => maths[Number(i)] ?? '').replace(/\u0000D\u0000/g, () => '$')
 }
 
 export function RichText({ source, className = '', inline = false }: { source: string; className?: string; inline?: boolean }) {
