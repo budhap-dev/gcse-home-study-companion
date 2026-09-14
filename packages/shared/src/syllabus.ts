@@ -375,7 +375,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Understanding external influences', topicId: 'understanding-external-influences' },
     ] },
     { year: 10, term: 'Spring', topics: [
-      { title: 'Growing the business' },
+      { title: 'Growing the business', topicId: 'growing-the-business' },
     ] },
     { year: 10, term: 'Summer', topics: [
       { title: 'Making marketing decisions' },
