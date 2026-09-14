@@ -1,0 +1,1341 @@
+{
+  "id": "venn-diagrams",
+  "subjectId": "maths",
+  "unitId": "probability",
+  "title": "Venn diagrams",
+  "specPoints": [
+    "P6",
+    "P9"
+  ],
+  "order": 3,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What the regions mean",
+        "body": "A **Venn diagram** sorts things into overlapping sets. Each circle is one set, the rectangle round the outside is everything being considered, and every single item sits in **exactly one region**.\n\nThat last point is the whole trick. The number written inside the overlap is the number in **both**. The number written in the rest of circle A is the number in **A but not B**, not the total for A.\n\nSo when a question says \"19 study French\", that 19 is the **whole circle**, and it has to be split between the overlap and the part outside it. Filling a diagram nearly always means working **inwards to outwards**: put the overlap in first, then subtract.\n\nThe rectangle is called the **universal set**, written $\\xi$. The region inside the rectangle but outside every circle is the one students forget, and it is where a mark usually hides.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "venn-diagram",
+            "props": {
+              "labels": [
+                "French",
+                "Spanish"
+              ],
+              "values": {
+                "A": 12,
+                "B": 5,
+                "AB": 7,
+                "none": 6
+              },
+              "title": "30 students"
+            },
+            "alt": "A Venn diagram of thirty students studying French or Spanish, with twelve studying French only, seven both, five Spanish only and six neither"
+          },
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Venn diagrams",
+              "boxes": [
+                {
+                  "title": "The overlap",
+                  "points": [
+                    "in both sets",
+                    "fill this in first"
+                  ]
+                },
+                {
+                  "title": "The rest of a circle",
+                  "points": [
+                    "in that set only",
+                    "total minus the overlap"
+                  ]
+                },
+                {
+                  "title": "Outside the circles",
+                  "points": [
+                    "in neither set",
+                    "easy to forget"
+                  ]
+                },
+                {
+                  "title": "The rectangle",
+                  "points": [
+                    "the universal set ξ",
+                    "everything counted"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes about reading a Venn diagram: the overlap, the part of a circle outside it, the region outside every circle, and the universal set rectangle"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "On the Venn diagram above, how many students study French altogether?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading a Venn diagram",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The whole French circle is the French-only part plus the overlap: $12 + 7 = 19$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "19"
+            }
+          ],
+          "discriminators": [],
+          "answer": 19,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Filling one in, from the middle outwards",
+        "body": "Here is the question that produced the diagram above. **30 students** were asked which languages they study. **19** study French, **12** study Spanish, and **7** study both.\n\nNotice what those numbers are: 19 and 12 are **whole circles**, and they overlap. Adding them gives 31, which is more than 30, because the 7 in both have been counted twice. Filling the diagram fixes that automatically.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Fill in the Venn diagram for 30 students",
+            "steps": [
+              {
+                "text": "**Start in the middle.** Both languages is **7**",
+                "note": "always the overlap first"
+              },
+              {
+                "text": "French only $= 19 - 7 = 12$",
+                "note": "the whole circle minus the overlap"
+              },
+              {
+                "text": "Spanish only $= 12 - 7 = 5$",
+                "note": "the same subtraction on the other side"
+              },
+              {
+                "text": "So far $= 12 + 7 + 5 = 24$",
+                "note": "everyone inside a circle"
+              },
+              {
+                "text": "Neither $= 30 - 24 = 6$",
+                "note": "the outside region, from the total"
+              },
+              {
+                "text": "Check: $12 + 7 + 5 + 6 = 30$",
+                "note": "the four regions must give the total"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Region",
+                "How it was found",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "Both",
+                  "given",
+                  "7"
+                ],
+                [
+                  "French only",
+                  "19 − 7",
+                  "12"
+                ],
+                [
+                  "Spanish only",
+                  "12 − 7",
+                  "5"
+                ],
+                [
+                  "Neither",
+                  "30 − 24",
+                  "6"
+                ],
+                [
+                  "Total",
+                  "",
+                  "30"
+                ]
+              ],
+              "title": "Middle first, outside last"
+            },
+            "alt": "A table of the four regions of the Venn diagram, how each was worked out and its value"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "In a class of 25, 14 play football, 9 play tennis and 5 play both. How many play football only?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "filling a Venn diagram",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The football circle totals 14 and 5 of those also play tennis, so football only is $14 - 5 = 9$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "9"
+            }
+          ],
+          "discriminators": [],
+          "answer": 9,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Probability from a Venn diagram",
+        "body": "Once the diagram is filled, a probability is just a region divided by the total. The denominator is the number in the **rectangle**, not the number in a circle.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "From the diagram, find three probabilities",
+            "steps": [
+              {
+                "text": "$P(\\text{studies French}) = \\dfrac{19}{30}$",
+                "note": "the whole circle over the total"
+              },
+              {
+                "text": "$P(\\text{studies both}) = \\dfrac{7}{30}$",
+                "note": "the overlap over the total"
+              },
+              {
+                "text": "$P(\\text{studies neither}) = \\dfrac{6}{30} = \\dfrac{1}{5} = 0.2$",
+                "note": "the outside region counts too"
+              },
+              {
+                "text": "$P(\\text{studies at least one}) = \\dfrac{24}{30} = \\dfrac{4}{5} = 0.8$",
+                "note": "or $1 - \\dfrac{1}{5}$, which is quicker"
+              },
+              {
+                "text": "Every denominator is the total in the rectangle",
+                "note": "using a circle total by mistake is the usual slip"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "Using the diagram of 30 students, what is the probability that a student chosen at random studies neither language? Give your answer as a fraction or a decimal.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "probability from a Venn diagram",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$6$ students are outside both circles, so $P = \\dfrac{6}{30} = \\dfrac{1}{5} = 0.2$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "6 out of 30"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "1/5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Three sets",
+        "body": "Three circles make **eight** regions: three for one set only, three for exactly two sets, one for all three, and the outside.\n\nThe method does not change, but the order matters more: **start in the very middle and work outwards**. Fill all three, then the pairs, then the singles, then the outside. Going the other way means redoing it.\n\nWatch the wording of what you are given. \"15 play A and B\" usually means the whole overlap of A and B, which **includes** the ones who play all three. So the A-and-B-only region is $15$ minus the middle.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "venn-diagram",
+            "props": {
+              "labels": [
+                "Football",
+                "Tennis",
+                "Cricket"
+              ],
+              "values": {
+                "A": 8,
+                "B": 7,
+                "C": 2,
+                "AB": 5,
+                "AC": 4,
+                "BC": 6,
+                "ABC": 3,
+                "none": 5
+              },
+              "title": "40 people"
+            },
+            "alt": "A three set Venn diagram of forty people and three sports, with three in all three sets, five, four and six in each pair only, eight, seven and two in each single set only, and five in none"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Fill it in for 40 people",
+            "steps": [
+              {
+                "text": "All three: **3** goes in the middle",
+                "note": "given, and always first"
+              },
+              {
+                "text": "The football and tennis overlap holds 8 altogether, so football and tennis **only** $= 8 - 3 = 5$",
+                "note": "the pair total includes the middle, so subtract it"
+              },
+              {
+                "text": "The other pairs the same way: **4** and **6**",
+                "note": "three subtractions"
+              },
+              {
+                "text": "Football altogether is 20, so football only $= 20 - 5 - 4 - 3 = 8$",
+                "note": "take off all three shared regions"
+              },
+              {
+                "text": "Tennis altogether is 21, so tennis only $= 21 - 5 - 6 - 3 = 7$",
+                "note": "the same subtraction again"
+              },
+              {
+                "text": "Cricket altogether is 15, so cricket only $= 15 - 4 - 6 - 3 = 2$",
+                "note": "and once more"
+              },
+              {
+                "text": "Inside the circles $= 8 + 7 + 2 + 5 + 4 + 6 + 3 = 35$",
+                "note": "add the seven regions"
+              },
+              {
+                "text": "None of them $= 40 - 35 = 5$",
+                "note": "the outside, last"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "In a three set Venn diagram, 12 people are in both A and B, and 4 people are in all three sets. How many are in A and B but not C?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "three set Venn diagrams",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The 12 in both A and B includes the 4 in all three, so A and B but not C is $12 - 4 = 8$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Conditional probability from a Venn diagram",
+        "body": "A **conditional** probability restricts the people you are choosing from. \"Given that she studies French\" means the French circle is now the whole world, so the **denominator changes**.\n\nThis is the single most common Higher tier Venn question, and the whole of it is: use the circle total, not the grand total.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A student is chosen from those who study French. Find the probability she also studies Spanish",
+            "steps": [
+              {
+                "text": "'Given they study French' means we only look inside the French circle",
+                "note": "the rest of the diagram is ignored"
+              },
+              {
+                "text": "The French circle holds $ 12 + 7 = 19$ students",
+                "note": "this is the new denominator"
+              },
+              {
+                "text": "Of those, **7** also study Spanish",
+                "note": "the overlap is the numerator"
+              },
+              {
+                "text": "$P(\\text{Spanish} \\mid \\text{French}) = \\dfrac{7}{19}$",
+                "note": "not out of 30"
+              },
+              {
+                "text": "Compare $P(\\text{Spanish}) = \\dfrac{12}{30}$, a different question entirely",
+                "note": "the condition changed the denominator"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Numerator",
+                "Denominator"
+              ],
+              "rows": [
+                [
+                  "P(studies Spanish)",
+                  "12",
+                  "30"
+                ],
+                [
+                  "P(studies both)",
+                  "7",
+                  "30"
+                ],
+                [
+                  "P(Spanish given French)",
+                  "7",
+                  "19"
+                ],
+                [
+                  "P(French given Spanish)",
+                  "7",
+                  "12"
+                ]
+              ],
+              "title": "The condition changes the denominator"
+            },
+            "alt": "A table contrasting an ordinary probability and a conditional probability from the same Venn diagram, showing that the denominator changes"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "short-text",
+          "prompt": "From the diagram of 30 students, a student is chosen from those who study Spanish. What is the probability they also study French? Give your answer as a fraction.",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "conditional probability",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The Spanish circle holds $12$ students and $7$ of them also study French, so $P = \\dfrac{7}{12}$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "denominator is 12, not 30"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "7/12"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "7/12"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: fill it in, then read it",
+        "body": "Sixty people were asked about two streaming services. **38** use A, **27** use B, and **14** use both.\n\n1. Fill in the four regions. Start with the overlap.\n2. Check the four regions add to 60.\n3. Find $P(\\text{uses neither})$.\n4. A person is chosen from those who use A. Find the probability they also use B.\n\nThe last one has a different denominator from the others. Say which, and why.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Region",
+                "Working",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "Both",
+                  "given",
+                  "14"
+                ],
+                [
+                  "A only",
+                  "38 − 14",
+                  ""
+                ],
+                [
+                  "B only",
+                  "27 − 14",
+                  ""
+                ],
+                [
+                  "Neither",
+                  "60 − the three above",
+                  ""
+                ],
+                [
+                  "Total",
+                  "",
+                  "60"
+                ]
+              ],
+              "title": "Middle first, outside last"
+            },
+            "alt": "A blank table of the four Venn regions for sixty people and two streaming services, with the overlap given"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "Sixty people were asked about two streaming services. 38 use A, 27 use B and 14 use both. How many use neither?",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "filling a Venn diagram",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A only is $38 - 14 = 24$ and B only is $27 - 14 = 13$. Inside the circles that is $24 + 14 + 13 = 51$, so neither is $60 - 51 = 9$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "51 inside the circles"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "9"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 9,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: notation, and working backwards",
+        "body": "**The notation.** Edexcel writes Venn questions with set notation, and reading it is free marks.\n\n- $\\xi$ is the **universal set**: everything in the rectangle.\n- $A \\cap B$ is the **intersection**: in A **and** B, the overlap. The symbol has a roof on it, like the A in *and*.\n- $A \\cup B$ is the **union**: in A **or** B or both, the whole of both circles.\n- $A'$ is the **complement**: everything **not** in A, including the outside region.\n- $n(A)$ means **how many** are in A, while $P(A)$ is a probability.\n\nSo $n(A \\cap B')$ is the number in A but not B, which is the A-only region.\n\n**Working backwards.** The hardest form gives you a probability and asks for a missing number. Write the region you want over the total as an equation and solve it. If $P(\\text{both}) = \\dfrac{1}{5}$ out of 30, then the overlap is $\\dfrac{1}{5} \\times 30 = 6$, and the rest of the diagram follows.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Symbol",
+                "Name",
+                "Meaning",
+                "On the diagram"
+              ],
+              "rows": [
+                [
+                  "ξ",
+                  "universal set",
+                  "everything being considered",
+                  "the rectangle"
+                ],
+                [
+                  "A ∩ B",
+                  "intersection",
+                  "in A and B",
+                  "the overlap"
+                ],
+                [
+                  "A ∪ B",
+                  "union",
+                  "in A or B or both",
+                  "both circles together"
+                ],
+                [
+                  "A′",
+                  "complement",
+                  "not in A",
+                  "everything outside circle A"
+                ],
+                [
+                  "n(A)",
+                  "number in A",
+                  "a count, not a probability",
+                  "the whole of circle A"
+                ]
+              ],
+              "title": "Reading the notation"
+            },
+            "alt": "A table of set notation symbols with their names, their meanings and which region of a Venn diagram each describes"
+          },
+          {
+            "type": "worked-example",
+            "problem": "From the diagram, find $n(F \\cap S')$ and $P(F \\cup S)$",
+            "steps": [
+              {
+                "text": "$F \\cap S'$ means in French **and not** Spanish",
+                "note": "the French-only region"
+              },
+              {
+                "text": "$n(F \\cap S') = 12$",
+                "note": "a count, so no fraction"
+              },
+              {
+                "text": "$F \\cup S$ means French **or** Spanish or both",
+                "note": "everything inside either circle"
+              },
+              {
+                "text": "$n(F \\cup S) = 12 + 7 + 5 = 24$",
+                "note": "all three inner regions"
+              },
+              {
+                "text": "$P(F \\cup S) = \\dfrac{24}{30} = \\dfrac{4}{5}$",
+                "note": "P wants a fraction, n wants a count"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "What does $n(A \\cap B)$ mean?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "set notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$n(\\ )$ is a **count**, and $\\cap$ is the **intersection**, so this is how many are in **both**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the number in both"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "options": [
+            "The number of items in both A and B",
+            "The probability of A and B",
+            "The number in A or B or both",
+            "The number in neither A nor B"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Each region of a Venn diagram holds the items in **exactly** that region, so the overlap is **both** and the rest of a circle is **that set only**.\n- Fill in from the **middle outwards**: overlap first, then the singles, then the outside.\n- A number like \"19 study French\" is a **whole circle**, so subtract the overlap to get the French-only region.\n- Always check the regions add to the total in the rectangle.\n- For a probability, the denominator is the **total in the rectangle**, and that includes the people outside every circle.\n- For a **conditional** probability, the denominator becomes the **circle total** instead.\n- Three sets give eight regions. \"A and B\" usually includes the ones in all three, so subtract the middle.\n- Notation: $\\xi$ universal set, $\\cap$ intersection (and), $\\cup$ union (or), $A'$ not A, $n(A)$ a count.\n- This diagram: French only 12, both 7, Spanish only 5, neither 6, total 30.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "A region holds",
+                  "the items in exactly that region"
+                ],
+                [
+                  "Fill order",
+                  "middle outwards"
+                ],
+                [
+                  "A given circle total",
+                  "includes the overlap, so subtract"
+                ],
+                [
+                  "The check",
+                  "the regions add to the total"
+                ],
+                [
+                  "Ordinary probability",
+                  "denominator is the total in the rectangle"
+                ],
+                [
+                  "Conditional probability",
+                  "denominator is the circle total"
+                ],
+                [
+                  "Three sets",
+                  "eight regions; a pair total includes the middle"
+                ],
+                [
+                  "Notation",
+                  "ξ, ∩ and, ∪ or, A′ not A, n(A) a count"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of Venn diagrams covering the regions, the order of filling, the denominators and the notation"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "In a class of 25, 14 play football, 9 play tennis and 5 play both. How many play tennis only?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "filling a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The tennis circle totals 9 and 5 of those also play football, so tennis only is $9 - 5 = 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "In a class of 25, 14 play football, 9 play tennis and 5 play both. How many play neither?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "filling a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Football only is 9, both is 5 and tennis only is 4, so $9 + 5 + 4 = 18$ are inside the circles. Neither is $25 - 18 = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "18 inside the circles"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [],
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What does the rectangle around a Venn diagram represent?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "vocabulary",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The rectangle is the **universal set**, written $\\xi$. The region inside it but outside every circle holds the items in neither set.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the universal set"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The universal set: everything being considered",
+        "The items in both sets",
+        "The items in neither set",
+        "The larger of the two sets"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "A Venn diagram shows 19 in the French circle altogether and 7 in the overlap. What number goes in the French-only part?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "filling a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The whole circle is 19 and the overlap is 7, so the French-only part is $19 - 7 = 12$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "12",
+        "19",
+        "7",
+        "26"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "From a group of 30 students, 12 study French only, 7 study both, 5 study Spanish only and 6 study neither. What is the probability a student chosen at random studies both? Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "probability from a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$7$ of the $30$ students are in the overlap, so $P = \\dfrac{7}{30}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7 out of 30"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7/30"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "7/30"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "Of 30 students, 12 study French only, 7 study both French and Spanish, 5 study Spanish only and 6 study neither. What is the probability that a student chosen at random studies at least one of the two languages? Give your answer as a fraction or a decimal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "probability from a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$24$ students are inside a circle, so $P = \\dfrac{24}{30} = \\dfrac{4}{5} = 0.8$. Or use $1 - \\dfrac{6}{30}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "24 inside the circles, or uses the complement"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4/5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "In a three set Venn diagram, 15 people are in both A and B, and 6 are in all three. How many are in A and B but not C?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "three set Venn diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 15 in both A and B includes the 6 in all three, so $15 - 6 = 9$ are in A and B but not C.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [],
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Which region does a student most often forget to fill in?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "filling a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **outside** region, in neither set. It still counts towards the total, so leaving it out makes every probability wrong.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the region outside every circle"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Inside the rectangle but outside every circle",
+        "The overlap of the two circles",
+        "The whole of the first circle",
+        "The rectangle itself"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What does $A \\cup B$ mean?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\cup$ is the **union**: everything in either circle, including the overlap. $\\cap$ is the intersection, meaning both.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "in A or B or both"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "In A or B or both",
+        "In A and B",
+        "In neither A nor B",
+        "In A but not B"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "Forty people were asked about two apps. 22 use X, 18 use Y and 9 use both. How many use neither?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "filling a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "X only is $22 - 9 = 13$ and Y only is $18 - 9 = 9$. Inside the circles that is $13 + 9 + 9 = 31$, so neither is $40 - 31 = 9$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "31 inside the circles"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [],
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "Of 30 students, 12 study French only, 7 study both French and Spanish, 5 study Spanish only and 6 study neither. A student is chosen at random from those who study French. What is the probability they also study Spanish? Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "conditional probability",
+      "calculator": "either",
+      "tags": [],
+      "solution": "'Given they study French' makes the French circle the whole sample, and it holds $19$ students. $7$ of them also study Spanish, so $P = \\dfrac{7}{19}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "denominator is 19, not 30"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "numerator is the overlap, 7"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7/19"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "7/19"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "Of 40 people, 8 play football only, 7 tennis only, 2 cricket only, 5 football and tennis only, 4 football and cricket only, 6 tennis and cricket only, 3 play all three and 5 play none. How many play exactly one sport?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "three set Venn diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Exactly one means the three outer single regions: $8 + 7 + 2 = 17$. The pairs and the middle are excluded.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the three single regions"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "excludes the pairs and the middle"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "17"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 17,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "What does $n(A \\cap B')$ describe?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$B'$ is **not B**, and $\\cap$ is **and**, so this is the count in A but not B: the A-only region. $n$ means a count, not a probability.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the number in A but not B"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "The number in A but not B",
+        "The probability of A and not B",
+        "The number in neither A nor B",
+        "The number in B but not A"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "Thirty people were surveyed and $P(\\text{both}) = \\dfrac{1}{5}$. How many people are in the overlap?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "working backwards",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The overlap is $\\dfrac{1}{5}$ of the total: $\\dfrac{1}{5} \\times 30 = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies the probability by the total"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "In a class of 32, 20 study art, 15 study music and 4 study neither. How many study both?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working backwards",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Inside the circles there are $32 - 4 = 28$. Adding the circles gives $20 + 15 = 35$, which counts the overlap twice, so the overlap is $35 - 28 = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "28 inside the circles"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20 + 15 double counts the overlap"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "extended",
+      "prompt": "Sixty people were asked which of two streaming services they use. 38 use A, 27 use B and 14 use both. Draw the Venn diagram and find the probability that a person chosen at random uses neither.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "filling a Venn diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The overlap is 14, since that is the number using both. The A circle totals 38, so A only is 38 minus 14, which is 24. The B circle totals 27, so B only is 27 minus 14, which is 13. Inside the circles altogether that is 24 plus 14 plus 13, which is 51. The total is 60, so the number using neither is 60 minus 51, which is 9. The probability of using neither is therefore 9 out of 60, which cancels to 3 over 20, or 0.15.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "puts 14 in the overlap and subtracts to get 24 and 13"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "51 inside the circles"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "9 in the outside region"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3/20 or 0.15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Puts 14 in the overlap and works outwards to 24 and 13",
+          "marks": 1
+        },
+        {
+          "text": "Finds 51 people inside the circles",
+          "marks": 1
+        },
+        {
+          "text": "Finds 9 in the region outside both circles",
+          "marks": 1
+        },
+        {
+          "text": "Gives the probability as 9/60, cancelled to 3/20 or 0.15",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Fill from the middle.** Both is **14**.\n\n- A only $= 38 - 14 = \\mathbf{24}$\n- B only $= 27 - 14 = \\mathbf{13}$\n\n**Inside the circles** $= 24 + 14 + 13 = 51$.\n\n**Outside** $= 60 - 51 = \\mathbf{9}$.\n\n**Check:** $24 + 14 + 13 + 9 = 60$. ✓\n\n$$P(\\text{neither}) = \\dfrac{9}{60} = \\dfrac{3}{20} = 0.15$$"
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Of 30 students, 12 study French only, 7 study both French and Spanish, 5 study Spanish only and 6 study neither. Explain why the probability that a student studies Spanish is not the same as the probability that a student studies Spanish given that they study French, and work out both.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "conditional probability",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first probability is taken from the whole group, so its denominator is 30, the number in the rectangle. The Spanish circle holds 12 students, so the probability a student studies Spanish is 12 over 30. The second probability is conditional: being told the student studies French means the choice is now only from inside the French circle, so the denominator changes to 19, the number of French students. Of those 19, the 7 in the overlap also study Spanish, so the probability is 7 over 19. The two differ because the condition shrinks the group being chosen from, which changes the denominator and usually changes the answer.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P(Spanish) = 12 out of 30"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the condition changes the denominator to 19"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P(Spanish given French) = 7 out of 19"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "explains that the condition restricts the group chosen from"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Gives P(Spanish) as 12 out of 30",
+          "marks": 1
+        },
+        {
+          "text": "Explains that the condition restricts the choice to the French circle",
+          "marks": 1
+        },
+        {
+          "text": "Gives P(Spanish given French) as 7 out of 19",
+          "marks": 1
+        },
+        {
+          "text": "Explains clearly that the denominator changes, which is why the two differ",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The ordinary probability** is taken from the whole group, so the denominator is **30**, the number in the rectangle. The Spanish circle holds 12 students:\n\n$$P(\\text{Spanish}) = \\dfrac{12}{30} = \\dfrac{2}{5}$$\n\n**The conditional probability** is different. Being told the student studies French means we are only choosing from **inside the French circle**, which holds $12 + 7 = 19$ students. Of those, the **7** in the overlap also study Spanish:\n\n$$P(\\text{Spanish} \\mid \\text{French}) = \\dfrac{7}{19}$$\n\n**Why they differ.** The condition **shrinks the group being chosen from**, so the denominator changes from 30 to 19. Only the students who study French are still in the running, and a different denominator gives a different answer."
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "Of 40 people, 8 play football only, 7 tennis only, 2 cricket only, 5 football and tennis only, 4 football and cricket only, 6 tennis and cricket only, 3 play all three and 5 play none. How many play football altogether?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "three set Venn diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The whole football circle is its four regions: $8 + 5 + 4 + 3 = 20$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds all four regions of the circle"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q18",
+        "q16",
+        "q17"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Fill the diagram in before you answer anything. Even when the question asks for one number, the diagram is where the method marks are.\n\n**Middle outwards, every time.** Overlap first, then the singles by subtraction, then the outside region from the total. Going the other way means starting again.\n\nRemember that a stated circle total **includes** the overlap. \"19 study French\" is the whole circle, so French only is $19 - 7$.\n\nCheck your regions add to the total in the rectangle. That catches almost every arithmetic slip.\n\nFor a probability, the denominator is the **rectangle total** unless the question says *given that*, in which case it becomes the **circle total**. Deciding which before you write the fraction is the difference between full marks and none.\n\nLearn the five symbols. $\\xi$, $\\cap$, $\\cup$, $A'$ and $n(A)$ appear in the question, not in the answer, so not reading them costs marks before you start.",
+    "examinerErrors": [
+      "Putting the whole circle total in the circle-only region instead of subtracting the overlap.",
+      "Leaving out the region inside the rectangle but outside every circle, so the total is wrong.",
+      "Using a circle total as the denominator for an ordinary probability instead of the grand total.",
+      "Using the grand total for a conditional probability, when *given that* changes the denominator to the circle total.",
+      "On three sets, treating \"A and B\" as the pair-only region when it includes the ones in all three.",
+      "Confusing ∪ with ∩. Union is or, intersection is and.",
+      "Answering n(A) with a probability, or P(A) with a count.",
+      "Not checking that the regions add back to the total."
+    ],
+    "grade9Looks": "A top answer fills the diagram from the middle outwards without being told to, and checks the regions against the total before going on. It knows a stated circle total includes the overlap, and on three sets it subtracts the middle from each pair. It reads the set notation, so $n(A \\cap B')$ is answered with a count and $P(A \\cup B)$ with a fraction. Above all it spots *given that* and changes the denominator to the circle total, and can explain in words why the condition makes the answer different."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

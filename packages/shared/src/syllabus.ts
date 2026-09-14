@@ -80,9 +80,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Solving quadratic equations', topicId: 'solving-quadratic-equations' },
     ] },
     { year: 10, term: 'Spring 1', topics: [
-      { title: 'Combined events and tree diagrams' },
-      { title: 'Sample space diagrams' },
-      { title: 'Venn diagrams' },
+      { title: 'Combined events and tree diagrams', topicId: 'combined-events-and-tree-diagrams' },
+      { title: 'Sample space diagrams', topicId: 'sample-space-diagrams' },
+      { title: 'Venn diagrams', topicId: 'venn-diagrams' },
       { title: 'Choices and outcomes' },
       { title: 'Sets and set notation' },
       { title: 'Histograms' },

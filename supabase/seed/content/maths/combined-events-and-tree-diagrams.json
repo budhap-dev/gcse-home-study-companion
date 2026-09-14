@@ -1,0 +1,1333 @@
+{
+  "id": "combined-events-and-tree-diagrams",
+  "subjectId": "maths",
+  "unitId": "probability",
+  "title": "Combined events and tree diagrams",
+  "specPoints": [
+    "P8",
+    "P9"
+  ],
+  "order": 2,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two events, and the two words that decide everything",
+        "body": "A **tree diagram** shows two or more events one after the other. Each set of branches is one event, and the probabilities on the branches leaving any point always **sum to 1**.\n\nTwo words decide what the second set of branches looks like, and getting them the right way round is most of this topic.\n\n- **Independent** events: one happening does not change the probability of the other. Two flips of a coin, or two counters drawn **with replacement**, because the counter goes back and the bag is as it was.\n- **Dependent** events: the first changes the second. Two counters drawn **without replacement**, because one counter has gone, so both the top and the bottom of the second fraction change.\n\nThe reading rules never change:\n\n- **Along** the branches, **multiply**.\n- **Between** the finished paths, **add**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Tree diagrams",
+              "boxes": [
+                {
+                  "title": "Each set of branches",
+                  "points": [
+                    "sums to 1",
+                    "every time"
+                  ]
+                },
+                {
+                  "title": "Along a path",
+                  "points": [
+                    "multiply",
+                    "the branch probabilities"
+                  ]
+                },
+                {
+                  "title": "Between paths",
+                  "points": [
+                    "add",
+                    "the finished path probabilities"
+                  ]
+                },
+                {
+                  "title": "Second branches",
+                  "points": [
+                    "the same if independent",
+                    "changed if dependent"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes about tree diagrams: branches sum to one, multiply along, add between, and the difference between independent and dependent events"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "On a tree diagram, what do you do with the probabilities along a single path?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading a tree",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Multiply along** the branches to get the probability of a whole path. Adding is for combining different paths.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "multiply"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Multiply them",
+            "Add them",
+            "Subtract them from 1",
+            "Take the larger one"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "With replacement: the second branches repeat",
+        "body": "A bag holds **3 red** and **5 blue** counters, so **8** altogether. One is taken, its colour recorded, and it is **put back**. Then a second is taken.\n\nBecause the counter goes back, the bag is identical for the second draw. The second set of branches is a **copy** of the first.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "probability-tree",
+            "props": {
+              "tree": {
+                "children": [
+                  {
+                    "label": "Red",
+                    "prob": "3/8",
+                    "children": [
+                      {
+                        "label": "Red",
+                        "prob": "3/8"
+                      },
+                      {
+                        "label": "Blue",
+                        "prob": "5/8"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Blue",
+                    "prob": "5/8",
+                    "children": [
+                      {
+                        "label": "Red",
+                        "prob": "3/8"
+                      },
+                      {
+                        "label": "Blue",
+                        "prob": "5/8"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "showProducts": true
+            },
+            "alt": "A probability tree for two counters taken with replacement from a bag of 3 red and 5 blue, with the second branches the same as the first and the four path probabilities at the ends"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the probability of one of each colour",
+            "steps": [
+              {
+                "text": "$P(\\text{red}) = \\dfrac{3}{8}$ and $P(\\text{blue}) = \\dfrac{5}{8}$, both times",
+                "note": "the counter went back, so nothing changed"
+              },
+              {
+                "text": "Red then blue: $\\dfrac{3}{8} \\times \\dfrac{5}{8} = \\dfrac{15}{64}$",
+                "note": "multiply along the path"
+              },
+              {
+                "text": "Blue then red: $\\dfrac{5}{8} \\times \\dfrac{3}{8} = \\dfrac{15}{64}$",
+                "note": "a different path, same product"
+              },
+              {
+                "text": "One of each means **either** path, so add: $\\dfrac{15}{64} + \\dfrac{15}{64} = \\dfrac{15}{32}$",
+                "note": "add between paths"
+              },
+              {
+                "text": "Both orders are needed. Giving only one is the commonest lost mark in this topic",
+                "note": "'one of each' never means one path"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "Two counters are taken from a bag with replacement. What happens to the probabilities on the second set of branches?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "with replacement",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The counter goes back, so the bag is exactly as it was. The second branches **repeat** the first.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the same as the first"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "They are the same as the first",
+            "The top of each fraction falls by one",
+            "The bottom of each fraction falls by one",
+            "They all become one half"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Without replacement: both numbers change",
+        "body": "Now the same bag, **3 red** and **5 blue**, but the first counter is **not** put back.\n\nOne counter has gone, so for the second draw there are only **7** left. And if the first was red, only **2** reds remain. Both the top and the bottom of the fraction change, which is what students forget.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "probability-tree",
+            "props": {
+              "tree": {
+                "children": [
+                  {
+                    "label": "Red",
+                    "prob": "3/8",
+                    "children": [
+                      {
+                        "label": "Red",
+                        "prob": "2/7"
+                      },
+                      {
+                        "label": "Blue",
+                        "prob": "5/7"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Blue",
+                    "prob": "5/8",
+                    "children": [
+                      {
+                        "label": "Red",
+                        "prob": "3/7"
+                      },
+                      {
+                        "label": "Blue",
+                        "prob": "4/7"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "showProducts": true
+            },
+            "alt": "A probability tree for two counters taken without replacement from a bag of 3 red and 5 blue, with denominators of 7 on the second set of branches"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the probability that both counters are red",
+            "steps": [
+              {
+                "text": "First red: $\\dfrac{3}{8}$",
+                "note": "3 reds out of 8"
+              },
+              {
+                "text": "Now a red has gone: **2** reds are left out of **7** counters",
+                "note": "both numbers drop by one"
+              },
+              {
+                "text": "Second red: $\\dfrac{2}{7}$",
+                "note": "not the same as the first branch"
+              },
+              {
+                "text": "$P(\\text{both red}) = \\dfrac{3}{8} \\times \\dfrac{2}{7} = \\dfrac{3}{28}$",
+                "note": "multiply along"
+              },
+              {
+                "text": "Check: the four paths $\\dfrac{3}{28}, \\dfrac{15}{56}, \\dfrac{15}{56}, \\dfrac{5}{14}$ add to 1",
+                "note": "they must, or a branch is wrong"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "A bag holds 3 red and 5 blue counters. One is taken and not replaced, and it is red. How many counters are left in the bag altogether?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "without replacement",
+          "calculator": "either",
+          "tags": [],
+          "solution": "One counter has gone, so **7** are left: 2 red and 5 blue.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "7"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "At least one",
+        "body": "**At least one** appears in nearly every tree diagram question, and there are two ways to do it.\n\n**The long way.** List every path that has at least one, and add them. For two events that is three paths.\n\n**The short way.** At least one is the opposite of **none**, so\n\n$$P(\\text{at least one}) = 1 - P(\\text{none})$$\n\nThe short way is one multiplication and one subtraction instead of three multiplications and two additions, and it gets faster still with three events, where 'none' is one path out of eight.\n\nUse the long way once to convince yourself the two agree, then use the short way for ever.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "With replacement, find $P(\\text{at least one red})$ both ways",
+            "steps": [
+              {
+                "text": "Long way: red-red, red-blue and blue-red are the paths with at least one red",
+                "note": "three paths to add"
+              },
+              {
+                "text": "$\\dfrac{9}{64} + \\dfrac{15}{64} + \\dfrac{15}{64} = \\dfrac{39}{64}$",
+                "note": "three products, two additions"
+              },
+              {
+                "text": "Short way: the opposite of 'at least one red' is 'no reds', which is blue-blue",
+                "note": "one path"
+              },
+              {
+                "text": "$P(\\text{blue, blue}) = \\dfrac{5}{8} \\times \\dfrac{5}{8} = \\dfrac{25}{64}$",
+                "note": "one multiplication"
+              },
+              {
+                "text": "$P(\\text{at least one red}) = 1 - \\dfrac{25}{64} = \\dfrac{39}{64}$",
+                "note": "the same answer, far less work"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A bus is late with probability 0.2 on any day, independently. What is the probability it is late on at least one of two days? Give your answer as a decimal.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "at least one",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The opposite is on time both days: $0.8 \\times 0.8 = 0.64$. So $P(\\text{at least one late}) = 1 - 0.64 = 0.36$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "P(on time both days) = 0.64"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "0.36"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.36,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "A tree in decimals",
+        "body": "Tree diagrams work the same in decimals, and questions about buses, trains and machines usually come that way.\n\nA bus is late with probability **0.2** on any day, and the days are **independent**. Here are two days.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "probability-tree",
+            "props": {
+              "tree": {
+                "children": [
+                  {
+                    "label": "On time",
+                    "prob": "0.8",
+                    "children": [
+                      {
+                        "label": "On time",
+                        "prob": "0.8"
+                      },
+                      {
+                        "label": "Late",
+                        "prob": "0.2"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Late",
+                    "prob": "0.2",
+                    "children": [
+                      {
+                        "label": "On time",
+                        "prob": "0.8"
+                      },
+                      {
+                        "label": "Late",
+                        "prob": "0.2"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "showProducts": true
+            },
+            "alt": "A probability tree for a bus over two days, with on time 0.8 and late 0.2 on each set of branches, and the four path probabilities at the ends"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the probability the bus is late exactly once",
+            "steps": [
+              {
+                "text": "On time then late: $0.8 \\times 0.2 = 0.16$",
+                "note": "multiply along"
+              },
+              {
+                "text": "Late then on time: $0.2 \\times 0.8 = 0.16$",
+                "note": "the other order"
+              },
+              {
+                "text": "Exactly once means either, so add: $0.16 + 0.16 = 0.32$",
+                "note": "two paths"
+              },
+              {
+                "text": "Check the four paths: $0.64 + 0.16 + 0.16 + 0.04 = 1$",
+                "note": "they must add to 1"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "Using that tree, what is the probability the bus is on time on both days? Give your answer as a decimal.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "reading a tree",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$0.8 \\times 0.8 = 0.64$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "0.64"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.64,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: draw it, then read it",
+        "body": "A bag holds **4 green** and **6 yellow** counters. Two are taken **without replacement**.\n\n1. Draw the tree. What are the denominators on the second set of branches?\n2. Find $P(\\text{both green})$.\n3. Find $P(\\text{one of each})$, remembering both orders.\n4. Find $P(\\text{at least one green})$ using the complement.\n\nCheck at the end that your four path probabilities add to 1.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Path",
+                "First branch",
+                "Second branch",
+                "Product"
+              ],
+              "rows": [
+                [
+                  "Green, green",
+                  "4/10",
+                  "",
+                  ""
+                ],
+                [
+                  "Green, yellow",
+                  "4/10",
+                  "",
+                  ""
+                ],
+                [
+                  "Yellow, green",
+                  "6/10",
+                  "",
+                  ""
+                ],
+                [
+                  "Yellow, yellow",
+                  "6/10",
+                  "",
+                  ""
+                ],
+                [
+                  "Total",
+                  "",
+                  "",
+                  "1"
+                ]
+              ],
+              "title": "Fill this in, then check the products add to 1"
+            },
+            "alt": "A blank table for the four paths of a tree diagram with columns for the two branch probabilities and the product"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "A bag holds 4 green and 6 yellow counters. Two are taken without replacement. What is the probability that both are green? Give your answer as a fraction in its simplest form.",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "without replacement",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\dfrac{4}{10} \\times \\dfrac{3}{9} = \\dfrac{12}{90} = \\dfrac{2}{15}$. The second branch is 3 out of 9 because a green has gone.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "second branch is 3/9"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "2/15"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "2/15"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: conditional probability, and the assumption",
+        "body": "Two things separate a top answer.\n\n**Saying what the assumption is.** The specification asks you to *know the underlying assumptions*. When you multiply along a path you are assuming the events are **independent**, and a question about two buses or two machines often quietly is not. If the same weather makes both buses late, the days are not independent and the multiplication is wrong. Writing \"assuming the two days are independent\" earns marks and shows you know why.\n\n**Conditional probability.** Without replacement, the second branch is a **conditional** probability: the probability of red **given** the first was red. That is why it changes. The notation $P(A \\mid B)$ reads \"the probability of A given B\", and on a tree it is exactly a second-level branch.\n\nA question that gives you the answer and asks for a starting number is the hardest form. Work backwards: write the path as an equation and solve.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "With replacement",
+                "Without replacement"
+              ],
+              "rows": [
+                [
+                  "The counter",
+                  "goes back in",
+                  "stays out"
+                ],
+                [
+                  "Second denominator",
+                  "still 8",
+                  "7"
+                ],
+                [
+                  "Second numerator",
+                  "unchanged",
+                  "one fewer of the colour taken"
+                ],
+                [
+                  "The events",
+                  "independent",
+                  "dependent"
+                ],
+                [
+                  "Second branch is",
+                  "the same probability",
+                  "a conditional probability"
+                ]
+              ],
+              "title": "The one difference that changes everything"
+            },
+            "alt": "A table comparing with replacement and without replacement on the second branch, the denominators and whether the events are independent"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Without replacement, find $P(\\text{one of each})$ and compare it with the replacement case",
+            "steps": [
+              {
+                "text": "Red then blue: $\\dfrac{3}{8} \\times \\dfrac{5}{7} = \\dfrac{15}{56}$",
+                "note": "the blue count is unchanged, the total is not"
+              },
+              {
+                "text": "Blue then red: $\\dfrac{5}{8} \\times \\dfrac{3}{7} = \\dfrac{15}{56}$",
+                "note": "the same product, by a different route"
+              },
+              {
+                "text": "Add: $\\dfrac{15}{56} + \\dfrac{15}{56} = \\dfrac{15}{28}$",
+                "note": "both orders, always"
+              },
+              {
+                "text": "With replacement it was $\\dfrac{15}{32}$, which is smaller",
+                "note": "removing a counter makes a matching pair less likely, so one of each becomes more likely"
+              },
+              {
+                "text": "Saying *why* the answer moved that way is what a top answer adds",
+                "note": "not just two numbers, but the reason"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "Two counters are taken without replacement. Why is the second branch called a conditional probability?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "conditional probability",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The second probability **depends on** the first result, which is what conditional means: the probability of the second **given** the first.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it depends on the first result"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "options": [
+            "It depends on what the first counter was",
+            "It is always smaller than the first",
+            "It is conditional on the bag being fair",
+            "It only applies if the first was red"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Each set of branches leaving a point **sums to 1**.\n- **Multiply along** a path; **add between** paths.\n- **With replacement**: the counter goes back, the events are **independent**, and the second branches **repeat** the first.\n- **Without replacement**: the counter stays out, the events are **dependent**, and **both** the numerator and the denominator change.\n- 'One of each' always needs **both orders** added. Giving one order is the most common lost mark.\n- $P(\\text{at least one}) = 1 - P(\\text{none})$. Nearly always faster.\n- The four path probabilities must **add to 1**, which is a free check on every answer.\n- Multiplying along a path **assumes independence**. Say so when the question leaves it open.\n- With replacement here: both red $\\dfrac{9}{64}$, one of each $\\dfrac{15}{32}$. Without: both red $\\dfrac{3}{28}$, one of each $\\dfrac{15}{28}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Branches from a point",
+                  "sum to 1"
+                ],
+                [
+                  "Along a path",
+                  "multiply"
+                ],
+                [
+                  "Between paths",
+                  "add"
+                ],
+                [
+                  "With replacement",
+                  "independent; second branches repeat"
+                ],
+                [
+                  "Without replacement",
+                  "dependent; both numbers change"
+                ],
+                [
+                  "One of each",
+                  "add both orders"
+                ],
+                [
+                  "At least one",
+                  "1 − P(none)"
+                ],
+                [
+                  "The check",
+                  "the paths add to 1"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of tree diagrams covering the two reading rules, replacement, at least one and the check"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "On a tree diagram, what do the probabilities on the branches leaving a single point add up to?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Something must happen, so the branches leaving any point are exhaustive and **sum to 1**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "1",
+        "0",
+        "0.5",
+        "The number of branches"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Two events are independent. What does that mean?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "vocabulary",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Independent** means one has no effect on the other's probability. Events that cannot both happen are mutually exclusive, which is different.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one does not affect the other"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "One happening does not change the probability of the other",
+        "They cannot both happen",
+        "They have the same probability",
+        "They must add up to 1"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "A coin is flipped twice. What is the probability of two heads? Give your answer as a fraction or a decimal.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{1}{2} \\times \\dfrac{1}{2} = \\dfrac{1}{4} = 0.25$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1/4 or 0.25"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Two counters are taken from a bag without replacement. The first is red. What happens to the total on the bottom of the second fraction?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "without replacement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "One counter has left the bag, so the total falls by one. The number of reds falls by one too.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "down by one"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It goes down by one",
+        "It stays the same",
+        "It goes down by two",
+        "It goes up by one"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A bus is late with probability 0.2 each day, independently. What is the probability it is late on both of two days? Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.2 \\times 0.2 = 0.04$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies along the path"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.04"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.04,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A bus is late with probability 0.2 each day, independently. What is the probability it is late exactly once in two days? Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "adding paths",
+      "calculator": "either",
+      "tags": [],
+      "solution": "On time then late is $0.8 \\times 0.2 = 0.16$, and late then on time is also $0.16$. Adding both orders gives $0.32$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses both orders"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.32"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.32,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A bag holds 3 red and 5 blue counters. One is taken and replaced, then another is taken. What is the probability both are blue? Give your answer as a fraction or a decimal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "with replacement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{5}{8} \\times \\dfrac{5}{8} = \\dfrac{25}{64} = 0.390625$. The counter goes back, so the second branch is unchanged.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 5/8 twice"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25/64 or 0.390625"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.390625,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Why does 'one of each colour' need two paths added together?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "adding paths",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Red then blue and blue then red are **different paths** through the tree, and both give one of each, so both count.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "either could come first"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Either colour could be drawn first",
+        "The two counters are different sizes",
+        "The probabilities must sum to 1",
+        "Without replacement changes the second branch"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A machine works with probability 0.9 each day, independently. What is the probability it works on both of two days? Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.9 \\times 0.9 = 0.81$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies along the path"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.81"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.81,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What is the quickest way to find P(at least one six) when a die is thrown twice?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "at least one",
+      "calculator": "either",
+      "tags": [],
+      "solution": "'At least one' is the opposite of 'none', so $P(\\text{at least one}) = 1 - P(\\text{none})$: one multiplication instead of three.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1 − P(none)"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Work out P(no sixes) and subtract from 1",
+        "Add the probabilities of all six faces",
+        "Multiply one sixth by two",
+        "Work out P(two sixes) and double it"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "A bag holds 3 red and 5 blue counters. Two are taken without replacement. What is the probability that both are blue? Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "without replacement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{5}{8} \\times \\dfrac{4}{7} = \\dfrac{5}{14}$. The second branch is 4 out of 7 because a blue has gone.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "second branch is 4/7"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies along the path"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5/14"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "5/14"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "A bag holds 3 red and 5 blue counters. Two are taken without replacement. What is the probability of one of each colour? Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "adding paths",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Red then blue is $\\dfrac{15}{56}$ and blue then red is $\\dfrac{15}{56}$. Adding both orders gives $\\dfrac{15}{28}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds one of the two orders"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds both orders"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15/28"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "15/28"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "short-text",
+      "prompt": "A bag holds 3 red and 5 blue counters. Two are taken without replacement. What is the probability of at least one red? Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "at least one",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The opposite is both blue, which is $\\dfrac{5}{14}$. So $P(\\text{at least one red}) = 1 - \\dfrac{5}{14} = \\dfrac{9}{14}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 1 − P(both blue)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P(both blue) = 5/14"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9/14"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "9/14"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A student multiplies along a tree for two trains being late on the same morning. What assumption have they made, and why might it be wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "assumptions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiplying along a path assumes **independence**. Two trains on the same morning share weather and track, so a delay to one makes a delay to the other more likely.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "assumes independence, which may not hold"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "That the two are independent, but one delay can cause the other",
+        "That the two are mutually exclusive, but both can be late",
+        "That the probabilities sum to 1, but there are three outcomes",
+        "That the trains are equally likely, but one is longer"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "short-text",
+      "prompt": "A bag holds 4 green and 6 yellow counters. Two are taken without replacement. What is the probability of one of each colour? Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "adding paths",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Green then yellow is $\\dfrac{4}{10} \\times \\dfrac{6}{9} = \\dfrac{4}{15}$, and yellow then green is the same. Adding gives $\\dfrac{8}{15}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "one order correct"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds both orders"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8/15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "8/15"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "extended",
+      "prompt": "A bag holds 3 red and 5 blue counters. Two counters are taken at random without replacement. Work out the probability that the two counters are different colours. Show your working.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "adding paths",
+      "calculator": "either",
+      "tags": [],
+      "solution": "There are 8 counters altogether. Taking a red first has probability 3 over 8, and with a red removed there are still 5 blue out of the 7 counters left, so red then blue is 3 over 8 times 5 over 7, which is 15 over 56. Taking a blue first has probability 5 over 8, and with a blue removed there are still 3 red out of 7 left, so blue then red is 5 over 8 times 3 over 7, which is also 15 over 56. Different colours means either order, so the two are added, giving 15 over 28.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "second branch denominator is 7, showing no replacement"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "one correct order, such as red then blue"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds both orders"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15/28"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Uses a denominator of 7 on the second branches",
+          "marks": 1
+        },
+        {
+          "text": "Finds one correct order, such as red then blue",
+          "marks": 1
+        },
+        {
+          "text": "Recognises that both orders are needed and adds them",
+          "marks": 1
+        },
+        {
+          "text": "Gives 15/28 or an equivalent decimal",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**There are 8 counters altogether.**\n\n**Red then blue.** $P(\\text{red first}) = \\dfrac{3}{8}$. A red has gone, so 5 blue remain out of 7:\n\n$$ \\dfrac{3}{8} \\times \\dfrac{5}{7} = \\dfrac{15}{56} $$\n\n**Blue then red.** $P(\\text{blue first}) = \\dfrac{5}{8}$. A blue has gone, so 3 red remain out of 7:\n\n$$ \\dfrac{5}{8} \\times \\dfrac{3}{7} = \\dfrac{15}{56} $$\n\n**Different colours means either order**, so add:\n\n$$ \\dfrac{15}{56} + \\dfrac{15}{56} = \\dfrac{15}{28} $$"
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A bus is late with probability 0.2 on any day. A student works out the probability that it is late on both of two days as 0.04. State the assumption the student has made, and explain why it might not hold.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "assumptions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The student has multiplied 0.2 by 0.2, which assumes the two days are independent, meaning that the bus being late on the first day does not change the probability that it is late on the second. That assumption may not hold, because the things that make a bus late tend to last longer than a day. Heavy snow, roadworks or a driver shortage would affect both days, so a late bus on the first day makes a late bus on the second more likely, and the true probability would be higher than 0.04.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "identifies the assumption as independence"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains what independence means here"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "gives a reason the days may not be independent"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "States that the student has assumed the two days are independent",
+          "marks": 1
+        },
+        {
+          "text": "Explains that independence means the first day does not change the second",
+          "marks": 1
+        },
+        {
+          "text": "Gives a plausible reason the days are linked, such as weather or roadworks",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The assumption is independence.** Multiplying $0.2 \\times 0.2$ treats the two days as independent, meaning the bus being late on the first day does not change the probability that it is late on the second.\n\n**Why it might not hold.** The causes of lateness usually last longer than one day: heavy snow, roadworks, or a driver shortage would affect **both** days. If the bus was late on Monday, it is more likely than usual to be late on Tuesday, so the days are **dependent** and the true probability is **higher** than 0.04."
+    },
+    {
+      "id": "q18",
+      "type": "multiple-choice",
+      "prompt": "Two counters are taken without replacement from a bag of 10. What is the denominator on the second set of branches?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "without replacement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "One counter has gone whatever its colour, so the total is **9**. The numerator is what depends on the colour taken.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "9",
+        "10",
+        "8",
+        "It depends on the colour taken"
+      ],
+      "correct": [
+        0
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q18",
+        "q16",
+        "q17"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Draw the tree even when the question does not ask for one. It costs thirty seconds and it is where the method marks live.\n\nLabel the **second** set of branches last, and ask yourself one question first: does the counter go back? If not, the denominator drops by one on every second branch, and the numerator drops only on the branch matching what was taken.\n\nMultiply along, add between. Write the product at the end of each path as you go, then the check is free: they must add to 1.\n\n'One of each', 'different colours' and 'exactly one' all mean **two paths**. Write both before you add.\n\n'At least one' means $1 - P(\\text{none})$. Reach for it immediately.\n\nLeave answers as fractions unless told otherwise. Multiplying fractions is exact, and decimals from thirds or sevenths will round and lose the accuracy mark.",
+    "examinerErrors": [
+      "Giving only one order for 'one of each'. Red then blue and blue then red are both needed.",
+      "Keeping the same denominator on the second branches without replacement. One counter has gone, so it drops by one.",
+      "Dropping the numerator on every second branch rather than only on the one matching the colour taken.",
+      "Adding along a path or multiplying between paths. Multiply along, add between.",
+      "Listing all three paths for 'at least one' and slipping, when 1 − P(none) is one line.",
+      "Rounding part way through. Keep fractions until the final answer.",
+      "Multiplying along a path without saying independence is assumed, when the question invites that comment.",
+      "Forgetting to check that the path probabilities add to 1."
+    ],
+    "grade9Looks": "A top answer draws the tree, fills in the second branches correctly for the without-replacement case, and writes each path product at the end of its path. It adds both orders whenever the event can happen two ways, and uses 1 − P(none) for 'at least one' rather than adding three paths. It keeps everything as fractions and only converts at the end. Asked about a real context, it names independence as the assumption behind multiplying and gives a concrete reason it might fail. It checks that the paths sum to 1 before moving on."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
