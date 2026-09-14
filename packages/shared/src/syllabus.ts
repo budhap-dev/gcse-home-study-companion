@@ -85,9 +85,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Venn diagrams', topicId: 'venn-diagrams' },
       { title: 'Choices and outcomes', topicId: 'choices-and-outcomes' },
       { title: 'Sets and set notation', topicId: 'sets-and-set-notation' },
-      { title: 'Histograms' },
-      { title: 'Linear, quadratic and geometric sequences' },
-      { title: 'Iteration' },
+      { title: 'Histograms', topicId: 'histograms' },
+      { title: 'Linear, quadratic and geometric sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
+      { title: 'Iteration', topicId: 'iteration' },
     ] },
     { year: 10, term: 'Spring 2', topics: [
       { title: 'Ratio and proportion' },

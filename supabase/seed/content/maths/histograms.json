@@ -1,0 +1,1379 @@
+{
+  "id": "histograms",
+  "subjectId": "maths",
+  "unitId": "statistics",
+  "title": "Histograms",
+  "specPoints": [
+    "S3"
+  ],
+  "order": 1,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Why a histogram is not a bar chart",
+        "body": "A **bar chart** shows separate categories and its bars have gaps. A **histogram** shows **continuous** data grouped into classes, so its bars touch.\n\nThe real difference is what the bars mean.\n\n- On a bar chart the **height** is the frequency.\n- On a histogram the **area** is the frequency, and the height is the **frequency density**.\n\nThat is because the classes can be different widths. A class twice as wide collects roughly twice as many values just by being wider, so plotting frequency as height would make it look twice as common when it is not. Dividing by the width undoes that.\n\n$$\\text{frequency density} = \\dfrac{\\text{frequency}}{\\text{class width}}$$",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Histograms",
+              "boxes": [
+                {
+                  "title": "Bar chart",
+                  "points": [
+                    "separate categories",
+                    "bars have gaps"
+                  ]
+                },
+                {
+                  "title": "Histogram",
+                  "points": [
+                    "continuous data",
+                    "bars touch"
+                  ]
+                },
+                {
+                  "title": "Height is",
+                  "points": [
+                    "frequency density",
+                    "not frequency"
+                  ]
+                },
+                {
+                  "title": "Area is",
+                  "points": [
+                    "the frequency",
+                    "so wide classes are fair"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes contrasting a bar chart with a histogram: gaps against touching bars, height against area, the formula for frequency density and what it corrects for"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "On a histogram, what does the area of a bar represent?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "area is frequency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Area is frequency.** The height is the frequency density, and multiplying it by the class width gives the frequency back.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the frequency"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The frequency of that class",
+            "The frequency density",
+            "The width of the class",
+            "The midpoint of the class"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Working out frequency density",
+        "body": "Here are the times **60 students** take to get to school, in minutes. The classes are deliberately **unequal**, which is the case the exam always uses.\n\nFor each class: divide the frequency by the width.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Time, t minutes",
+                "Width",
+                "Frequency",
+                "Frequency density"
+              ],
+              "rows": [
+                [
+                  "0 < t ≤ 10",
+                  "10",
+                  "15",
+                  "1.5"
+                ],
+                [
+                  "10 < t ≤ 15",
+                  "5",
+                  "20",
+                  "4.0"
+                ],
+                [
+                  "15 < t ≤ 25",
+                  "10",
+                  "18",
+                  "1.8"
+                ],
+                [
+                  "25 < t ≤ 45",
+                  "20",
+                  "7",
+                  "0.35"
+                ],
+                [
+                  "Total",
+                  "",
+                  "60",
+                  ""
+                ]
+              ],
+              "title": "60 journeys"
+            },
+            "alt": "A table of the four time classes with their widths, frequencies and frequency densities, totalling sixty students"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the frequency density of each class",
+            "steps": [
+              {
+                "text": "$0 < t \\le 10$: width 10, frequency 15, so $15 \\div 10 = 1.5$",
+                "note": "the widest of the low classes"
+              },
+              {
+                "text": "$10 < t \\le 15$: width 5, frequency 20, so $20 \\div 5 = 4.0$",
+                "note": "narrow and busy, so the tallest bar"
+              },
+              {
+                "text": "$15 < t \\le 25$: width 10, frequency 18, so $18 \\div 10 = 1.8$",
+                "note": "similar frequency to the first, but a different height"
+              },
+              {
+                "text": "$25 < t \\le 45$: width 20, frequency 7, so $7 \\div 20 = 0.35$",
+                "note": "wide and quiet, so the shortest bar"
+              },
+              {
+                "text": "The second class has the **highest bar** but not the highest frequency",
+                "note": "that is exactly what frequency density is for"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A class is $20 < x \\le 40$ and holds 30 values. What is its frequency density?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "frequency density",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Width is $40 - 20 = 20$, so frequency density is $30 \\div 20 = 1.5$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "width of 20"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "1.5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 1.5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Drawing it",
+        "body": "Now the bars. The **width** of each bar is the class, and the **height** is the frequency density you just worked out.\n\nNotice the shape: the tallest bar is the narrow $10 < t \\le 15$ class, even though the widest class is not the busiest. A bar chart of the same figures would have been misleading.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "histogram",
+            "props": {
+              "bars": [
+                {
+                  "from": 0,
+                  "to": 10,
+                  "frequency": 15
+                },
+                {
+                  "from": 10,
+                  "to": 15,
+                  "frequency": 20
+                },
+                {
+                  "from": 15,
+                  "to": 25,
+                  "frequency": 18
+                },
+                {
+                  "from": 25,
+                  "to": 45,
+                  "frequency": 7
+                }
+              ],
+              "xLabel": "time t (minutes)",
+              "yLabel": "frequency density",
+              "title": "60 journeys to school",
+              "highlight": 1
+            },
+            "alt": "A histogram of the times 60 students take to get to school, with bars of frequency density 1.5, 4.0, 1.8, 0.35 over the classes 0 to 10, 10 to 15, 15 to 25 and 25 to 45 minutes, the narrow 10 to 15 class giving the tallest bar"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Check the histogram against the total",
+            "steps": [
+              {
+                "text": "Area of each bar is height × width: $1.5 \\times 10 = 15$",
+                "note": "the frequency comes back"
+              },
+              {
+                "text": "$4.0 \\times 5 = 20$, $1.8 \\times 10 = 18$, $0.35 \\times 20 = 7$",
+                "note": "and so do the rest"
+              },
+              {
+                "text": "Total area $= 15 + 20 + 18 + 7 = 60$",
+                "note": "which is the number of students"
+              },
+              {
+                "text": "If the areas do not add to the total, a density is wrong",
+                "note": "a free check on every histogram you draw"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "On that histogram the bar for $25 < t \\le 45$ has height 0.35. What frequency does it represent?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "area is frequency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Area is frequency: $0.35 \\times 20 = 7$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "multiplies the height by the width of 20"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "answer": 7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Reading a frequency back out",
+        "body": "The commonest exam question gives you the histogram and asks for a frequency over a range that is **not** a whole class. The method is always the same: **area**.\n\nAssume the values are spread evenly inside each class. That assumption is why the answer is an **estimate**, and saying so earns a mark.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Estimate how many journeys took between 15 and 20 minutes",
+            "steps": [
+              {
+                "text": "$15$ to $20$ sits inside the class $15 < t \\le 25$",
+                "note": "part of one bar, not a whole one"
+              },
+              {
+                "text": "That bar has frequency density $1.8$",
+                "note": "read it off the histogram"
+              },
+              {
+                "text": "The part wanted is $20 - 15 = 5$ minutes wide",
+                "note": "not the full 10"
+              },
+              {
+                "text": "Frequency $= 1.8 \\times 5 = 9$",
+                "note": "height × width, as always"
+              },
+              {
+                "text": "It is an **estimate**, because the values are assumed evenly spread within the class",
+                "note": "the exam wants that word"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "Class containing the range",
+                  "15 < t ≤ 25"
+                ],
+                [
+                  "Frequency density",
+                  "1.8"
+                ],
+                [
+                  "Width wanted",
+                  "20 − 15 = 5"
+                ],
+                [
+                  "Estimated frequency",
+                  "1.8 × 5 = 9"
+                ]
+              ],
+              "title": "Area, every time"
+            },
+            "alt": "A table showing how a frequency is estimated from part of a bar, giving the density, the width wanted and the area"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A histogram bar over $30 < x \\le 50$ has frequency density 0.8. Estimate the frequency for $30 < x \\le 35$.",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "reading part of a bar",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The part wanted is 5 wide, so the estimated frequency is $0.8 \\times 5 = 4$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses a width of 5"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "When the classes are equal",
+        "body": "If every class has the **same width**, dividing them all by the same number changes nothing about the shape. The bars are then in the same proportions as the frequencies, so the histogram looks like a bar chart with the gaps closed.\n\nThat is why histograms with equal classes rarely appear at Higher tier: there is nothing to test. Edexcel sets **unequal** classes precisely so that frequency density has to be used.\n\nSo when a question gives equal classes, expect the difficulty to be somewhere else: reading an estimate, comparing two distributions, or finding a missing frequency.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "histogram",
+            "props": {
+              "bars": [
+                {
+                  "from": 0,
+                  "to": 5,
+                  "frequency": 4
+                },
+                {
+                  "from": 5,
+                  "to": 10,
+                  "frequency": 9
+                },
+                {
+                  "from": 10,
+                  "to": 15,
+                  "frequency": 12
+                },
+                {
+                  "from": 15,
+                  "to": 20,
+                  "frequency": 5
+                }
+              ],
+              "xLabel": "score",
+              "yLabel": "frequency density",
+              "title": "Equal classes, all 5 wide"
+            },
+            "alt": "A histogram with four equal classes each five wide, whose bars are in the same proportions as the frequencies four, nine, twelve and five, because dividing every class by the same width does not change the shape"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Class",
+                "Width",
+                "Frequency",
+                "Frequency density"
+              ],
+              "rows": [
+                [
+                  "0 < x ≤ 5",
+                  "5",
+                  "4",
+                  "0.8"
+                ],
+                [
+                  "5 < x ≤ 10",
+                  "5",
+                  "9",
+                  "1.8"
+                ],
+                [
+                  "10 < x ≤ 15",
+                  "5",
+                  "12",
+                  "2.4"
+                ],
+                [
+                  "15 < x ≤ 20",
+                  "5",
+                  "5",
+                  "1.0"
+                ]
+              ],
+              "title": "Same width throughout, so the shape is unchanged"
+            },
+            "alt": "A table of four equal classes showing that dividing every frequency by the same width keeps the bars in proportion to the frequencies"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Every class in a histogram is 10 wide. What does that mean for the bars?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "equal class widths",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Dividing every frequency by the **same** width scales them all equally, so the shape is unchanged. Area is still frequency.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "heights stay in proportion"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Their heights stay in proportion to the frequencies",
+            "The area no longer equals the frequency",
+            "Frequency density cannot be used",
+            "The bars must have gaps between them"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: build one and read it",
+        "body": "Here are the weights of **53 parcels**, in kilograms.\n\n1. Work out the width and the frequency density of each class.\n2. Check that the areas add back to 53.\n3. Which class gives the **tallest** bar, and is it the one with the highest frequency?\n4. Estimate how many parcels weighed between 20 and 25 kg.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Weight, w kg",
+                "Width",
+                "Frequency",
+                "Frequency density"
+              ],
+              "rows": [
+                [
+                  "0 < w ≤ 20",
+                  "",
+                  "8",
+                  ""
+                ],
+                [
+                  "20 < w ≤ 30",
+                  "",
+                  "21",
+                  ""
+                ],
+                [
+                  "30 < w ≤ 50",
+                  "",
+                  "16",
+                  ""
+                ],
+                [
+                  "50 < w ≤ 90",
+                  "",
+                  "8",
+                  ""
+                ],
+                [
+                  "Total",
+                  "",
+                  "53",
+                  ""
+                ]
+              ],
+              "title": "Fill in the width, then divide"
+            },
+            "alt": "A blank table of four parcel weight classes with their frequencies, for working out widths and frequency densities"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "Of 53 parcels, 21 weigh $20 < w \\le 30$ kg. What is the frequency density of that class?",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "frequency density",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Width is 10, so the frequency density is $21 \\div 10 = 2.1$. It is the tallest bar even though it is not the widest class.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "width of 10"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "2.1"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 2.1,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: working backwards, and the median",
+        "body": "**Working backwards.** A question may give the histogram and one frequency, and ask for the scale. Find the bar whose frequency you know, divide by its width to get its density, and that fixes the vertical axis for every other bar.\n\n**Estimating the median.** The median of $60$ values is the $30$th. Add the frequencies until you pass it: $15$, then $35$, which has gone past $30$. So the median lies in the class $10 < t \\le 15$. You cannot say more than the class without assuming an even spread, and the exam accepts the class.\n\n**Comparing two histograms.** Compare the **shapes** and quote figures: which is more spread out, where each peaks, and what fraction lies above some value. Saying \"the first one is bigger\" earns nothing.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Class",
+                "Frequency",
+                "Running total"
+              ],
+              "rows": [
+                [
+                  "0 < t ≤ 10",
+                  "15",
+                  "15"
+                ],
+                [
+                  "10 < t ≤ 15",
+                  "20",
+                  "35"
+                ],
+                [
+                  "15 < t ≤ 25",
+                  "18",
+                  "53"
+                ],
+                [
+                  "25 < t ≤ 45",
+                  "7",
+                  "60"
+                ]
+              ],
+              "title": "The 30th value falls in 10 < t ≤ 15"
+            },
+            "alt": "A table of the running totals of the four journey time classes, used to find which class contains the median"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A histogram's first bar covers $0 < x \\le 4$ and is known to hold 12 values. Find the scale",
+            "steps": [
+              {
+                "text": "Width is 4 and the frequency is 12",
+                "note": "the one bar you are told about"
+              },
+              {
+                "text": "Frequency density $= 12 \\div 4 = 3$",
+                "note": "so that bar is 3 units high"
+              },
+              {
+                "text": "Measure that bar on the axis: whatever height it has, that height is 3",
+                "note": "this fixes the scale"
+              },
+              {
+                "text": "Every other bar can now be read off in the same units",
+                "note": "and multiplied by its own width"
+              },
+              {
+                "text": "Without this step the other frequencies cannot be found at all",
+                "note": "which is why it carries the method mark"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "Journey times have frequencies 15, 20, 18, 7 in the classes $0 < t \\le 10$, $10 < t \\le 15$, $15 < t \\le 25$ and $25 < t \\le 45$. The median is the 30th value. Give the upper bound of the class it lies in.",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "estimating the median",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Running totals are 15, 35, 53, 60. The 30th value is passed in the class ending at **15**, so the median lies in $10 < t \\le 15$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "builds the running totals"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "the class ending at 15"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 15,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **histogram** shows continuous grouped data, so its bars **touch**. A bar chart shows categories and has gaps.\n- **Area is frequency.** The height is the **frequency density**.\n- $\\text{frequency density} = \\dfrac{\\text{frequency}}{\\text{class width}}$, and $\\text{frequency} = \\text{density} \\times \\text{width}$.\n- Unequal classes are the point: dividing by the width stops a wide class looking busier than it is.\n- To read a frequency over part of a bar, multiply that bar's density by the **width you want**, not the whole class.\n- Any frequency read this way is an **estimate**, because the values are assumed evenly spread inside the class. Say so.\n- Check the areas add back to the total. If they do not, a density is wrong.\n- To find the scale from one known frequency, divide it by its class width and use that height as the unit.\n- The journey data: densities 1.5, 4.0, 1.8, 0.35, total 60, median in $10 < t \\le 15$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Bars touch",
+                  "the data is continuous"
+                ],
+                [
+                  "Height",
+                  "frequency density"
+                ],
+                [
+                  "Area",
+                  "the frequency"
+                ],
+                [
+                  "Density",
+                  "frequency ÷ class width"
+                ],
+                [
+                  "Frequency",
+                  "density × width"
+                ],
+                [
+                  "Part of a bar",
+                  "density × the width you want"
+                ],
+                [
+                  "Always an",
+                  "estimate: values assumed evenly spread"
+                ],
+                [
+                  "The check",
+                  "the areas add back to the total"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of histograms covering what the bars mean, the two formulas, and the checks"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Why do the bars of a histogram touch?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "histograms against bar charts",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A histogram shows **continuous** grouped data, so one class ends exactly where the next begins. A bar chart shows separate categories and has gaps.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the data is continuous"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The data is continuous, so there are no gaps between classes",
+        "Histograms always have equal class widths",
+        "It makes the bars easier to measure",
+        "The frequencies must add up to the total"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "A class is $0 < x \\le 5$ and holds 20 values. What is its frequency density?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "frequency density",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Width is 5, so $20 \\div 5 = 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "On a histogram, what is plotted on the vertical axis?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "frequency density",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The vertical axis is **frequency density**. Frequency is the **area** of each bar.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "frequency density"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Frequency density",
+        "Frequency",
+        "Class width",
+        "The midpoint of each class"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "A histogram bar covers $10 < x \\le 20$ and has a height of 3. What frequency does it represent?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "area is frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Area is frequency: $3 \\times 10 = 30$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [],
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A class is $20 < x \\le 35$ and holds 45 values. What is its frequency density?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "frequency density",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Width is $35 - 20 = 15$, so $45 \\div 15 = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "width of 15"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A histogram bar covers $0 < x \\le 8$ with a height of 2.5. What frequency does it represent?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "area is frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2.5 \\times 8 = 20$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies height by width"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "Two classes hold 20 values each, but one is 5 wide and the other is 20 wide. What do their bars look like?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "why density is used",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Densities are $20 \\div 5 = 4$ and $20 \\div 20 = 1$, so the narrow bar is **four times** as tall. Their areas are equal, which is the point.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the narrow one is four times as tall"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The narrow one is four times as tall",
+        "They are the same height",
+        "The wide one is four times as tall",
+        "The narrow one is four times as wide"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A histogram bar over $40 < x \\le 60$ has frequency density 0.75. Estimate the frequency for $40 < x \\le 50$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading part of a bar",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The part wanted is 10 wide, so $0.75 \\times 10 = 7.5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses a width of 10"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7.5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 7.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Why is a frequency read from part of a bar only an estimate?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "why it is an estimate",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Inside a class you do not know where the values actually lie, so an even spread is assumed. That assumption makes every such answer an **estimate**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "an even spread is assumed"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The values are assumed to be spread evenly within the class",
+        "The frequency density is rounded",
+        "Histogram bars cannot be measured exactly",
+        "The class widths are unequal"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A histogram's classes are all 4 wide. One bar has a height of 6. What frequency does it represent?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "area is frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$6 \\times 4 = 24$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [],
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "Of 53 parcels, 16 weigh $30 < w \\le 50$ kg. What is the frequency density of that class?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "frequency density",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Width is 20, so $16 \\div 20 = 0.8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "width of 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A histogram bar over $0 < x \\le 25$ has frequency density 1.2. Estimate the frequency for $5 < x \\le 15$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "reading part of a bar",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The part wanted is $15 - 5 = 10$ wide, so the estimate is $1.2 \\times 10 = 12$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the width of 10"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies by the density"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A histogram's first bar covers $0 < x \\le 4$ and is known to hold 12 values. A second bar covers $4 < x \\le 14$ and is drawn at half the height of the first. What frequency does the second bar represent?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working backwards",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first bar has density $12 \\div 4 = 3$, so half that height is 1.5. The second bar is 10 wide, giving $1.5 \\times 10 = 15$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "first density is 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "second density is 1.5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "Journey times have frequencies 15, 20, 18, 7 in the classes $0 < t \\le 10$, $10 < t \\le 15$, $15 < t \\le 25$ and $25 < t \\le 45$. In which class does the median lie? Give the upper bound of that class.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "estimating the median",
+      "calculator": "either",
+      "tags": [],
+      "solution": "There are 60 values, so the median is the 30th. Running totals are 15, 35, 53, 60, and the 30th is passed in $10 < t \\le 15$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the median is the 30th value"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "builds running totals"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A histogram is drawn with frequency on the vertical axis instead of frequency density, using unequal classes. What is wrong with it?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why density is used",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A wider class collects more values simply by being wider. Plotting frequency as height makes it **look** more common, which is exactly what dividing by the width corrects.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "wide classes look busier"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Wide classes look busier than they really are",
+        "The bars would no longer touch",
+        "The total frequency would change",
+        "The median could not be estimated"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "extended",
+      "prompt": "The times taken by 60 students to get to school are: $0 < t \\le 10$, 15 students; $10 < t \\le 15$, 20; $15 < t \\le 25$, 18; $25 < t \\le 45$, 7. Work out the frequency density of each class and explain which class gives the tallest bar and why.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "frequency density",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Frequency density is frequency divided by class width. The first class is ten wide and holds fifteen, so its density is one point five. The second is five wide and holds twenty, so its density is four. The third is ten wide and holds eighteen, giving one point eight. The fourth is twenty wide and holds seven, giving nought point three five. The tallest bar is the second, the class from ten to fifteen minutes, even though the third class is not far behind it in frequency. It is tallest because it is the narrowest class, so its twenty students are packed into only five minutes, whereas the third class spreads eighteen students over ten minutes. Frequency density measures exactly that crowding, which is why the histogram uses it rather than frequency.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides each frequency by its class width"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.5 and 4 correct"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.8 and 0.35 correct"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "identifies the second class as the tallest bar"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains that it is the narrowest, so the values are most crowded"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 7,
+      "criteria": [
+        {
+          "text": "Uses frequency divided by class width",
+          "marks": 1
+        },
+        {
+          "text": "Gives 1.5 and 4 correctly",
+          "marks": 1
+        },
+        {
+          "text": "Gives 1.8 and 0.35 correctly",
+          "marks": 1
+        },
+        {
+          "text": "Identifies the 10 to 15 class as the tallest bar",
+          "marks": 1
+        },
+        {
+          "text": "Explains that it is tallest because it is the narrowest class",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Frequency density is frequency ÷ class width.**\n\n| Class | Width | Frequency | Density |\n|---|---|---|---|\n| $0 < t \\le 10$ | 10 | 15 | **1.5** |\n| $10 < t \\le 15$ | 5 | 20 | **4** |\n| $15 < t \\le 25$ | 10 | 18 | **1.8** |\n| $25 < t \\le 45$ | 20 | 7 | **0.35** |\n\n**The tallest bar** is $10 < t \\le 15$, with a density of 4.\n\n**Why.** It is the **narrowest** class, so its 20 students are packed into only 5 minutes, while the third class spreads 18 students over 10 minutes. Frequency density measures exactly that crowding, which is why a histogram plots it rather than frequency."
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A histogram has unequal class widths. Explain why the frequency of a class is the area of its bar and not its height, and say what you must assume to estimate a frequency over part of a bar.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "why density is used",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The height of a bar is the frequency density, which is the frequency divided by the class width. Multiplying that height by the width therefore gives the frequency back, and height times width is the area, so the area of each bar is its frequency. Height alone cannot be the frequency, because a wider class gathers more values simply by being wider, and plotting frequency as height would make a wide class look more common than it really is. To estimate a frequency over part of a bar you must assume the values are spread evenly within the class, since the histogram does not record where inside the class each value actually falls. That is why such an answer is only an estimate.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "height is frequency density, frequency divided by width"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "height times width returns the frequency, and that product is the area"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains that a wide class would otherwise look busier than it is"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states the assumption of an even spread within the class"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "States that the height is frequency density, frequency ÷ width",
+          "marks": 1
+        },
+        {
+          "text": "Explains that height × width returns the frequency, and that is the area",
+          "marks": 1
+        },
+        {
+          "text": "Explains that plotting frequency as height would exaggerate a wide class",
+          "marks": 1
+        },
+        {
+          "text": "States the assumption that values are evenly spread within the class",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Height is frequency density**, which is $\\dfrac{\\text{frequency}}{\\text{class width}}$. Multiplying that height by the width gives the frequency back, and height × width **is** the area. So the area of each bar is its frequency.\n\n**Height alone cannot be the frequency.** A wider class gathers more values simply by being wider, so plotting frequency as height would make a wide class look more common than it really is. Dividing by the width corrects exactly that.\n\n**The assumption.** To estimate a frequency over part of a bar you must assume the values are spread **evenly within the class**, because the histogram does not record where inside a class each value falls. That is why the answer is an **estimate**."
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "A histogram bar covers $0 < x \\le 6$ and represents 18 values. Another covers $6 < x \\le 30$ and is drawn one sixth as tall. What frequency does the second bar represent?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working backwards",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first density is $18 \\div 6 = 3$, so one sixth of that is 0.5. The second bar is 24 wide, giving $0.5 \\times 24 = 12$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "first density is 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "second density is 0.5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q18",
+        "q16",
+        "q17"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Write the class width in a column before you do anything else. Nearly every lost mark in this topic comes from dividing by the wrong number, and a width column makes that impossible.\n\nSay the two sentences out loud as you work: **height is frequency density**, **area is frequency**. One of them answers every question in the topic.\n\nFor part of a bar, use the width you actually want, not the whole class. A bar over $0 < x \\le 25$ asked about from 5 to 15 is 10 wide, not 25.\n\nUse the word **estimate**, and say why: the values are assumed evenly spread inside the class. That is often a mark on its own.\n\nWhen the axis has no numbers, find the one bar whose frequency you are told, divide by its width, and use that height as your unit. Nothing else can be read until you have.\n\nFinally, add your areas back up. If they do not give the total, a density is wrong and you still have time to find it.",
+    "examinerErrors": [
+      "Plotting frequency as the height instead of frequency density.",
+      "Dividing by the upper bound instead of by the class width, so 15 < x ≤ 25 is divided by 25.",
+      "Using the whole class width when the question asks about only part of the bar.",
+      "Leaving gaps between the bars. Histogram data is continuous, so the bars touch.",
+      "Giving an exact answer where an estimate was found, or not saying that an even spread was assumed.",
+      "Reading the median as a single value from a histogram. Without extra assumptions you can only name the class.",
+      "Forgetting to find the scale from a known frequency when the vertical axis is unlabelled.",
+      "Not checking that the areas add back to the total frequency."
+    ],
+    "grade9Looks": "A top answer writes a class width column before calculating anything, and states that height is frequency density and area is frequency rather than just using them. On part of a bar it uses the width asked for, not the whole class, and calls the result an estimate while naming the assumption of an even spread. Given an unlabelled axis it recovers the scale from the one frequency it is told, and says why that step is necessary. It checks the areas against the total before moving on, and when comparing two distributions it quotes figures rather than saying one is bigger."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
