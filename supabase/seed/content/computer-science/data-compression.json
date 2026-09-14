@@ -8,6 +8,28 @@
   ],
   "order": 8,
   "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Frequency first, then the data",
+      "body": "An RLE pair is **how many**, then **what**: `3 1` means three 1s. A run of one still needs its own pair, so `1c` is not written as `c`. Check the frequencies add up to the length of the original."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Frequency times code length, added up",
+      "body": "Every Huffman bit calculation is the same: multiply each character's frequency by the **length of its code**, then add. Compare against 7 bits per character for ASCII, and subtract for the saving."
+    },
+    {
+      "kind": "spot",
+      "title": "Left is 0, right is 1",
+      "body": "Read a Huffman code by walking from the **root** to the character's leaf, writing 0 for each left branch and 1 for each right. When decoding, go back to the root after **every** character."
+    },
+    {
+      "kind": "check",
+      "title": "Does the tree travel with the file?",
+      "body": "The decoder cannot read the bits without the tree or code table, so it is stored alongside the data. That overhead is why Huffman pays off on long files and barely helps on short ones. It is usually the evaluation mark."
+    }
+  ],
   "lesson": {
     "steps": [
       {
