@@ -4,6 +4,7 @@ import { APP_BUILT, VERSION_LABEL } from './version.ts'
 import { Logo } from '../components/Logo.tsx'
 import { SearchBox } from '../components/SearchBox.tsx'
 import { useAuth } from '../auth/useAuth.ts'
+import { ScrollToTop } from './ScrollToTop.tsx'
 
 /**
  * Layout: an app header across the top, a sidebar on wide screens, a bottom bar on
@@ -15,6 +16,7 @@ export function AppShell() {
   const auth = useAuth()
   return (
     <div className="flex min-h-dvh flex-col">
+      <ScrollToTop />
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
       </a>

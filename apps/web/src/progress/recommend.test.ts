@@ -4,7 +4,7 @@ import { recommend } from './recommend.ts'
 import { emptyState, type AttemptRecord } from './store.ts'
 
 const topic = (id: string): Topic => ({
-  id, subjectId: 'maths', unitId: 'number', title: id, specPoints: ['N1'],
+  id, subjectId: 'maths', unitId: 'number', title: id, specPoints: ['N1'], year: 10,
   lesson: { steps: [{ id: 's1', kind: 'explain', title: 't', body: 'b', visuals: [{ type: 'diagram', component: 'x', props: {}, alt: 'a' }] }, { id: 's2', kind: 'grade-9', title: 't', body: 'b', visuals: [{ type: 'diagram', component: 'x', props: {}, alt: 'a' }] }, { id: 's3', kind: 'summary', title: 't', body: 'b', visuals: [{ type: 'diagram', component: 'x', props: {}, alt: 'a' }] }] },
   questions: [], worksheets: { core: { level: 'core', questionIds: ['q'], suggestedMinutes: 5 }, higher: { level: 'higher', questionIds: ['q'], suggestedMinutes: 10 }, advanced: { level: 'advanced', questionIds: ['q'], suggestedMinutes: 15 } },
   examTechnique: { body: 'b', examinerErrors: ['e'], grade9Looks: 'g' }, quiz: { questionIds: ['q'], sampleSize: 10 },
