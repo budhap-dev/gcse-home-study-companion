@@ -117,10 +117,22 @@ function matchesAccepted(given: string, accepted: string): boolean {
  * (French, where the article carries gender) keeps the strict comparison. Works on
  * the raw strings because normaliseText removes the spaces the rule depends on.
  */
-function withoutArticle(rawGiven: string, rawAccepted: string): string | null {
-  if (!/^[a-z][a-z -]*$/i.test(rawAccepted) || /^(the|an?) /i.test(rawAccepted)) return null
-  const bare = rawGiven.replace(/^\s*(the|an?)\s+/i, '')
-  return bare === rawGiven ? null : bare
+function withoutArticle(rawGiven: string, rawAccepted: string): [string, string] | null {
+  // Only plain English prose: anything with digits, quotes, symbols or accents keeps the
+  // strict comparison, so program output, equations and French (where the article carries
+  // gender) are untouched.
+  if (!/^[a-z][a-z -]*$/i.test(rawAccepted)) return null
+  // "The" often identifies a particular thing, so an accepted answer that starts with it
+  // keeps its article: "the sun" should not be matched by "sun". An indefinite "a" or
+  // "an" in front of a definition is grammatical filler, so it is dropped from both
+  // sides. Without that, "a tax on imports" rejected a student typing "tax on imports",
+  // which is the phrasing the topic itself teaches.
+  if (/^the\s/i.test(rawAccepted)) return null
+  const strip = (s: string) => s.replace(/^\s*(the|an?)\s+/i, '')
+  const given = strip(rawGiven)
+  const accepted = rawAccepted.replace(/^\s*an?\s+/i, '')
+  if (given === rawGiven && accepted === rawAccepted) return null
+  return [given, accepted]
 }
 
 /**
@@ -151,7 +163,7 @@ export function mark(question: Question, answer: unknown): MarkResult {
         const accepted = normaliseText(a)
         if (matchesAccepted(given, accepted)) return true
         const bare = withoutArticle(raw, a)
-        return bare !== null && matchesAccepted(normaliseText(bare), accepted)
+        return bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]))
       }))
     }
     case 'ordering': {

@@ -22,7 +22,7 @@
     {
       "term": "Index",
       "definition": "The position of an item in an array or string. AQA arrays and strings start at index 0, so the last index is one less than the length.",
-      "example": "In `'computer'`, index 0 is `'c'` and index 7 is `'r'`; `LEN` is 8, so `LEN - 1` is the last index.",
+      "example": "In `'computer'`, index 0 is `'c'` and index 7 is `'r'`; `LEN` is 8, so `LEN - 1` is the last index. In AQA pseudo-code a single character is read with `SUBSTRING(i, i, s)`, never `s[i]`: only arrays are subscripted.",
       "topics": [
         "arrays-and-records",
         "strings-and-file-handling"
@@ -179,7 +179,7 @@
     },
     {
       "term": "String",
-      "definition": "Text: a sequence of characters, each with an index starting at 0. AQA gives four operations: `LEN`, `SUBSTRING`, `POSITION` and `+` for concatenation.",
+      "definition": "Text: a sequence of characters, each with an index starting at 0. AQA gives these operations: `LEN`, `SUBSTRING`, `POSITION` and `+` for concatenation. It also requires converting between a character and its character code, with `CHAR_TO_CODE` and `CODE_TO_CHAR`.",
       "example": "`LEN('keyboard')` is 8. `SUBSTRING(0, 2, 'computer')` is `'com'` — both ends **included**. `'Ada' + ' ' + 'Lovelace'` has length 12.",
       "topics": [
         "strings-and-file-handling",
@@ -771,7 +771,7 @@
     {
       "term": "Pass",
       "definition": "One complete walk through a list by a sorting algorithm. Bubble sort needs several passes, and after each one the next largest value has reached its final place, so the next pass can stop one position earlier.",
-      "example": "Bubble sort on `5, 3, 8, 1` takes 3 passes to finish, because the list is sorted after the third and a fourth would make no swaps.",
+      "example": "Bubble sort on `5, 3, 8, 1` takes 4 passes: three put the list in order, and a fourth, swap-free pass is what tells the algorithm it can stop.",
       "topics": [
         "bubble-sort"
       ],
@@ -810,8 +810,7 @@
         "merge-sort"
       ],
       "aliases": [
-        "mergesort",
-        "merge"
+        "mergesort"
       ],
       "related": [
         "Divide and conquer",
@@ -823,7 +822,7 @@
     {
       "term": "Divide and conquer",
       "definition": "Solving a problem by **splitting it into smaller problems** of the same kind, solving those, then combining the answers. Merge sort is the example AQA uses.",
-      "example": "Merge sort divides a list until every part holds one item, which is already sorted, then conquers by merging the parts back together.",
+      "example": "Merge sort splits 6, 2, 9, 4 into single items, then merges them back as 2, 6 and 4, 9, and finally as 2, 4, 6, 9. Each merge is easy because both halves are already sorted.",
       "topics": [
         "merge-sort"
       ],

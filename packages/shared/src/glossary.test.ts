@@ -49,6 +49,25 @@ describe('glossary', () => {
     expect(bad).toEqual([])
   })
 
+  it('never lets an alias hijack another entry in the same subject', () => {
+    // searchGlossary scores an exact alias match above a prefix match on a name, so an
+    // alias shared with another entry silently hijacks that search. Five did, including
+    // "merge" on both Merge sort and Merge, and "root" on both Root and Roots.
+    const clashes: string[] = []
+    for (const g of parsed) {
+      const owner = new Map<string, string>()
+      for (const e of g.entries) {
+        for (const name of [e.term, ...e.aliases]) {
+          const key = name.toLowerCase().trim()
+          const held = owner.get(key)
+          if (held && held !== e.term) clashes.push(`${g.subjectId}: "${name}" on both ${held} and ${e.term}`)
+          owner.set(key, e.term)
+        }
+      }
+    }
+    expect(clashes).toEqual([])
+  })
+
   it('only points at related terms that exist', () => {
     const names = new Set(ALL.map((e) => e.term))
     const bad = ALL.flatMap((e) => e.related.filter((r) => !names.has(r)).map((r) => `${e.term} → ${r}`))
@@ -71,6 +90,32 @@ describe('glossary', () => {
 })
 
 describe('searchGlossary', () => {
+  it('puts an entry actually called the word above one that only lists it as an alias', () => {
+    // The search runs across every subject at once, so a physics alias used to outrank
+    // the entry of that exact name in another subject. "Loop" landed on Iteration and
+    // "floating" on a business term.
+    for (const [query, expected] of [
+      ['loop', 'Loop'],
+      ['floating', 'Floating'],
+      ['imperfect', 'Imperfect'],
+    ] as const) {
+      expect(searchGlossary(ALL, query)[0]!.entry.term, query).toBe(expected)
+    }
+  })
+
+  it('surfaces both sides of a genuine homonym', () => {
+    // Index is an exponent in Maths and an array position in Computer Science; vector is
+    // a disease carrier in Biology and a quantity in Physics. Both must be reachable.
+    for (const [query, subjects] of [
+      ['index', ['computer-science', 'maths']],
+      ['vector', ['biology', 'physics']],
+      ['tangent', ['maths', 'physics']],
+    ] as const) {
+      const top = searchGlossary(ALL, query).slice(0, 2).map((h) => h.entry.subjectId).sort()
+      expect(top, query).toEqual([...subjects].sort())
+    }
+  })
+
   it('puts an exact name first', () => {
     const hits = searchGlossary(ALL, 'momentum')
     expect(hits[0]!.entry.term).toBe('Momentum')

@@ -20,4 +20,24 @@ describe('diagram registry', () => {
     const missing = [...used].filter((c) => !registered.has(c))
     expect(missing, `content names diagrams with no component: ${missing.join(', ')}`).toEqual([])
   })
+
+  it('gives every diagram alt text that could replace the picture', () => {
+    // The alt text is what a screen reader hears, and it is also what renders when a
+    // component is missing from the registry. Seven diagrams carried a label rather
+    // than a description, such as "Graphite: layers of hexagons".
+    const thin: string[] = []
+    for (const f of jsonFiles(ROOT)) {
+      const topic = JSON.parse(readFileSync(f, 'utf8')) as {
+        id: string
+        lesson: { steps: { id: string; visuals: { type: string; alt?: string }[] }[] }
+      }
+      for (const step of topic.lesson.steps) {
+        for (const v of step.visuals) {
+          if (v.type !== 'diagram') continue
+          if ((v.alt ?? '').length < 40) thin.push(`${topic.id} ${step.id}: ${JSON.stringify(v.alt)}`)
+        }
+      }
+    }
+    expect(thin).toEqual([])
+  })
 })

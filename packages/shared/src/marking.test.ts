@@ -182,9 +182,19 @@ describe('leading articles', () => {
     expect(mark(q(['interrupted cadence']), 'An interrupted cadence.').correct).toBe(true)
   })
 
-  it('does not strip an article the accepted answer itself begins with', () => {
+  it('keeps a definite article the accepted answer itself begins with', () => {
+    // "The sun" names a particular thing, so the article is part of the answer.
     expect(mark(q(['the sun']), 'the sun').correct).toBe(true)
     expect(mark(q(['the sun']), 'sun').correct).toBe(false)
+  })
+
+  it('forgives an indefinite article on either side of a definition', () => {
+    // "A tax on imports" is how a definition reads, but a student writing the bare
+    // phrase the topic itself teaches was being marked wrong.
+    expect(mark(q(['a tax on imports']), 'tax on imports').correct).toBe(true)
+    expect(mark(q(['a tax on imports']), 'a tax on imports').correct).toBe(true)
+    expect(mark(q(['an import tax']), 'import tax').correct).toBe(true)
+    expect(mark(q(['a hybridoma']), 'the hybridoma').correct).toBe(true)
   })
 
   it('keeps program output, equations and accented words strict', () => {

@@ -428,7 +428,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: why bubble sort is slow",
-        "body": "Spec point 3.1.2 is **efficiency**, and this is where the top marks are.\n\nFor $n$ items bubble sort makes about $\\frac{n(n-1)}{2}$ comparisons, which grows with $n^2$. Double the list and the work roughly **quadruples**. For 10 items that is 45 comparisons; for 100 items it is 4950.\n\nThat is the answer to *why is bubble sort inefficient*: not \"it is slow\" but **the number of comparisons grows with the square of the list length**, so it becomes impractical on long lists.\n\nWhat bubble sort has going for it is worth a mark too: it is **simple to write**, it needs **no extra memory** beyond one temporary variable for the swap, and on a list that is already nearly sorted the **swapped flag** lets it finish in a single pass.",
+        "body": "Spec point 3.1.2 is **efficiency**, and this is where the top marks are.\n\nFor $n$ items bubble sort makes about $\\frac{n(n-1)}{2}$ comparisons, which grows with $n^2$. Double the list and the work roughly **quadruples**. For 10 items that is 45 comparisons; for 100 items it is 4950.\n\nThat is the answer to *why is bubble sort inefficient*: not \"it is slow\" but **the number of comparisons grows with the square of the list length**, so it becomes impractical on long lists.\n\nWhat bubble sort has going for it is worth a mark too: it is **simple to write**, it needs **no extra memory** beyond one temporary variable for the swap, and on a list that is already nearly sorted the **swapped flag** lets it finish in very few passes, and in a single pass when the list is already in order.",
         "visuals": [
           {
             "type": "diagram",
@@ -481,7 +481,7 @@
                 "note": "a worked number makes it concrete"
               },
               {
-                "text": "In reserve: it needs almost no extra memory, and on a nearly sorted list the swapped flag stops it after one pass",
+                "text": "In reserve: it needs almost no extra memory, and on an already sorted list the swapped flag stops it after a single pass, and on a nearly sorted one after very few",
                 "note": "name an advantage if the question asks you to evaluate"
               }
             ]
@@ -752,13 +752,15 @@
         "to stop the sort early if no swaps are made",
         "it stops the algorithm when a pass makes no swaps",
         "to detect a pass with no swaps so the sort can stop early",
-        "it spots a pass with no swaps and stops the algorithm early"
+        "it spots a pass with no swaps and stops the algorithm early",
+        "it shows the list is already sorted so the algorithm can stop",
+        "it detects that the list is already in order and stops the sort early"
       ]
     },
     {
       "id": "q8",
       "type": "numeric",
-      "prompt": "Using the trace in the lesson, how many comparisons does bubble sort make in total on 5, 3, 8, 1, 9, 2?",
+      "prompt": "How many comparisons does bubble sort make in total on 5, 3, 8, 1, 9, 2?",
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "counting comparisons",
@@ -1099,7 +1101,7 @@
       "skill": "evaluating an algorithm choice",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "The student is right that bubble sort scales badly. Its comparisons grow with the square of the list length, so it is impractical on long lists: 100 items need 4950 comparisons and 10 000 need about 50 million. But useless is too strong. It is very simple to write, which makes it quick to code and hard to get wrong. It needs no extra memory beyond one temporary variable, while merge sort needs room for the lists it builds. On a short list, or one that is already nearly sorted, the swapped flag lets it finish in a single pass, which can beat merge sort. So it is a poor general choice but a reasonable one for small or nearly sorted data.",
+      "solution": "The student is right that bubble sort scales badly. Its comparisons grow with the square of the list length, so it is impractical on long lists: 100 items need 4950 comparisons and 10 000 need about 50 million. But useless is too strong. It is very simple to write, which makes it quick to code and hard to get wrong. It needs no extra memory beyond one temporary variable, while merge sort needs room for the lists it builds. On a short list, or one that is already nearly sorted, the swapped flag lets it finish in very few passes, which can beat merge sort. So it is a poor general choice but a reasonable one for small or nearly sorted data.",
       "markScheme": [
         {
           "code": "C1",
@@ -1119,7 +1121,7 @@
         {
           "code": "C1",
           "marks": 1,
-          "description": "gives the nearly sorted case, where the swapped flag finishes in one pass"
+          "description": "gives the nearly sorted case, where the swapped flag stops it after very few passes"
         },
         {
           "code": "A1",
@@ -1146,7 +1148,7 @@
           "marks": 1
         },
         {
-          "text": "Notes that a nearly sorted list finishes in one pass because of the swapped flag",
+          "text": "Notes that the swapped flag stops it early on a nearly sorted list, and after a single pass on one already in order",
           "marks": 1
         },
         {
@@ -1154,7 +1156,7 @@
           "marks": 1
         }
       ],
-      "modelAnswer": "The student has a real point. Bubble sort compares every neighbouring pair on every pass, so for $n$ items it makes about $\\frac{n(n-1)}{2}$ comparisons and the work grows with the **square** of the length. A list of 100 items already needs 4950 comparisons, and 10 000 items needs close to 50 million, so as a general-purpose sort it is a poor choice. *Useless* goes too far, though. It is **simple to write**, which makes it fast to code and hard to get wrong, and it needs **no extra memory** beyond a single temporary variable for the swap, where merge sort needs space for the lists it builds up. On a **short list**, or one that is **already nearly sorted**, the swapped flag lets it finish after a single pass, which can beat merge sort outright. So the fair judgement is that bubble sort is a poor choice for large data but a reasonable one for small or nearly sorted lists."
+      "modelAnswer": "The student has a real point. Bubble sort compares every neighbouring pair on every pass, so for $n$ items it makes about $\\frac{n(n-1)}{2}$ comparisons and the work grows with the **square** of the length. A list of 100 items already needs 4950 comparisons, and 10 000 items needs close to 50 million, so as a general-purpose sort it is a poor choice. *Useless* goes too far, though. It is **simple to write**, which makes it fast to code and hard to get wrong, and it needs **no extra memory** beyond a single temporary variable for the swap, where merge sort needs space for the lists it builds up. On a **short list**, or one that is **already nearly sorted**, the swapped flag lets it finish in very few passes, which can beat merge sort outright. So the fair judgement is that bubble sort is a poor choice for large data but a reasonable one for small or nearly sorted lists."
     },
     {
       "id": "q19",
