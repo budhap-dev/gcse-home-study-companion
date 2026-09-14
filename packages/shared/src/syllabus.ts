@@ -90,11 +90,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Iteration', topicId: 'iteration' },
     ] },
     { year: 10, term: 'Spring 2', topics: [
-      { title: 'Ratio and proportion' },
-      { title: 'Similarity and linear scale factors' },
-      { title: 'Exact trigonometric values' },
-      { title: 'Sine rule, cosine rule and area of a triangle' },
-      { title: 'Scale drawings and bearings' },
+      { title: 'Ratio and proportion', topicId: 'ratio-and-proportion' },
+      { title: 'Similarity and linear scale factors', topicId: 'similarity-and-linear-scale-factors' },
+      { title: 'Exact trigonometric values', topicId: 'exact-trigonometric-values' },
+      { title: 'Sine rule, cosine rule and area of a triangle', topicId: 'sine-rule-cosine-rule-and-area' },
+      { title: 'Scale drawings and bearings', topicId: 'scale-drawings-and-bearings' },
     ] },
     { year: 10, term: 'Summer 1', topics: [
       { title: 'Quadratic curves: turning points and intercepts' },
@@ -135,7 +135,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
     { year: 11, term: 'Summer', topics: [
       { title: 'Fractions' },
-      { title: 'Ratio and proportion' },
+      { title: 'Ratio and proportion', topicId: 'ratio-and-proportion' },
       { title: 'Percentages' },
       { title: 'Enlargements, reflections, rotations and translations' },
       { title: 'Standard form' },
