@@ -110,7 +110,7 @@ export function Home() {
             <Link key={s.id} to={`/subjects/${s.id}`} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3" style={{ '--subject': s.colour } as React.CSSProperties}>
               <span className="flex items-center gap-3">
                 <span className="h-3 w-3 rounded-sm" style={{ background: s.colour }} aria-hidden />
-                <span className="flex flex-grow flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} Grade 9 ready</span></span>
+                <span className="flex flex-grow flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} mastered</span></span>
                 <span className="text-right text-xs"><span className="block font-bold" style={{ color: s.colour }}>{level ? level.name : 'Level 1'}</span><span className="text-ink-2">{level ? `${level.into} / ${level.span} XP` : 'no XP yet'}</span></span>
               </span>
               <span className="h-1.5 overflow-hidden rounded-full bg-panel"><span className="anim-bar block h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></span>

@@ -5,7 +5,7 @@ export const KINDS = {
   explain: { label: 'Explain', colour: 'var(--subject)', emoji: '💡' },
   'worked-example': { label: 'Worked example', colour: '#1f3a93', emoji: '🛠️' },
   'your-turn': { label: 'Your turn', colour: '#c27a00', emoji: '✍️' },
-  'grade-9': { label: 'Grade 9', colour: '#6B4E9B', emoji: '🏆' },
+  'grade-9': { label: 'Go deeper', colour: '#6B4E9B', emoji: '🏆' },
   summary: { label: 'Summary', colour: '#2e8b57', emoji: '📌' },
   check: { label: 'Check', colour: '#c8501f', emoji: '❓' },
 } as const

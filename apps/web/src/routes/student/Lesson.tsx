@@ -89,7 +89,7 @@ export function Lesson() {
         <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4 text-left">
           <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">What you learned</h2>
           <ul className="flex flex-col gap-1 text-sm">
-            {steps.filter((s) => s.kind !== 'summary').map((s) => <li key={s.id} className="flex gap-2"><span className="text-status-secure" aria-hidden>✓</span>{s.title.replace(/^(Your turn|Grade 9): /, '')}</li>)}
+            {steps.filter((s) => s.kind !== 'summary').map((s) => <li key={s.id} className="flex gap-2"><span className="text-status-secure" aria-hidden>✓</span>{s.title.replace(/^(Your turn|Going deeper): /, '')}</li>)}
           </ul>
         </section>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">

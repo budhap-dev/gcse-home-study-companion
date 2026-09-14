@@ -28,7 +28,7 @@ function task(topic: Topic, kind: Task['kind'], reason: string, level?: Workshee
 
 /**
  * LRN-3 order: an unfinished lesson, then a topic due for recap, then the weakest
- * attempted topic, then a Secure topic to push to Grade 9 ready through its Advanced
+ * attempted topic, then a Secure topic to push to Mastered through its Advanced
  * worksheet, then the next topic not started. Returns the recommendation and two
  * alternatives so the student always has a choice (MOT-5).
  */

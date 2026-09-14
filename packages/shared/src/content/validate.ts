@@ -85,7 +85,7 @@ export function validateTopicForPublish(input: unknown): Issue[] {
   }
   if (topic.quiz.sampleSize > topic.quiz.questionIds.length) error('quiz', 'sample size is larger than the pool')
   if (!topic.quiz.questionIds.some((id) => ids.get(id)?.gradeBand === '8-9')) {
-    error('quiz', 'the quiz pool needs grade 8 to 9 questions so Grade 9 ready can be measured')
+    error('quiz', 'the quiz pool needs grade 8 to 9 questions so Mastered can be measured')
   }
 
   // Provenance: model drafts publish only after a person reviews them.

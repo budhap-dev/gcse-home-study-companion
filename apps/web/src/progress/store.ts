@@ -21,7 +21,7 @@ export interface AttemptRecord {
   level?: WorksheetLevel
   marksScored: number
   marksAvailable: number
-  /** Marks on grade 8 to 9 questions only, for the Grade 9 ready rule. */
+  /** Marks on grade 8 to 9 questions only, for the Mastered rule. */
   grade89Scored?: number
   grade89Available?: number
   markedHow: 'auto' | 'self' | 'mixed'

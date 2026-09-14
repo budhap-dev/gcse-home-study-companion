@@ -44,7 +44,7 @@ export function Subjects() {
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-8">
       <header className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold leading-tight">Subjects</h1>
-        <p className="text-ink-2">Eight subjects at Higher tier, pitched at grade 9. Topics appear here as they are written.</p>
+        <p className="text-ink-2">Eight subjects at Higher tier, taught in full depth. Topics appear here as they are written.</p>
       </header>
 
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -62,7 +62,7 @@ export function Subjects() {
                 <span className="flex flex-col">
                   <span className="font-bold">{s.name}</span>
                   <span className="text-xs text-ink-2">
-                    {s.board} · {topics.length === 0 ? 'no topics yet' : `${ready} of ${topics.length} Grade 9 ready`}
+                    {s.board} · {topics.length === 0 ? 'no topics yet' : `${ready} of ${topics.length} mastered`}
                   </span>
                 </span>
               </Link>

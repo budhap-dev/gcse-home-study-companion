@@ -6,7 +6,7 @@ export const STATUS_LABEL: Record<TopicStatus, string> = {
   'not-secure': 'Not secure',
   developing: 'Developing',
   secure: 'Secure',
-  'grade-9-ready': 'Grade 9 ready',
+  'grade-9-ready': 'Mastered',
 }
 
 /** Colour is never the only carrier of meaning; each status also has a shape in the UI. */

@@ -19,11 +19,11 @@ describe('evidenceFor mirrors compute_topic_status', () => {
   it('a 90% quiz with no Higher worksheet is Developing, not Secure', () => {
     expect(evidenceFor('t', { ...emptyState(), attempts: [quiz(90, 1)], }).status).toBe('developing')
   })
-  it('quiz 90% and Higher 80% is Secure; adding Advanced 80% is Grade 9 ready', () => {
+  it('quiz 90% and Higher 80% is Secure; adding Advanced 80% is Mastered', () => {
     expect(evidenceFor('t', { ...emptyState(), attempts: [quiz(90, 1), sheet('higher', 80, 2)], }).status).toBe('secure')
     expect(evidenceFor('t', { ...emptyState(), attempts: [quiz(90, 1), sheet('higher', 80, 2), sheet('advanced', 80, 3)], }).status).toBe('grade-9-ready')
   })
-  it('Grade 9 ready also needs the grade 8 to 9 questions at 90%', () => {
+  it('Mastered also needs the grade 8 to 9 questions at 90%', () => {
     const weakOn89 = quiz(90, 1, [6, 10])
     expect(evidenceFor('t', { ...emptyState(), attempts: [weakOn89, sheet('higher', 80, 2), sheet('advanced', 80, 3)], }).status).toBe('secure')
   })

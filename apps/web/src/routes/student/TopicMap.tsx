@@ -32,7 +32,7 @@ export function TopicMap() {
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{subject.board}</p>
         <h1 className="text-3xl font-bold leading-tight">{subject.name}</h1>
         <p className="text-ink-2">
-          <strong className="text-ink">{ready} of {written.length}</strong> written topics Grade 9 ready
+          <strong className="text-ink">{ready} of {written.length}</strong> written topics mastered
           {planned > written.length && <> · <strong className="text-ink">{written.length} of {planned}</strong> topics available</>}
         </p>
       </header>
