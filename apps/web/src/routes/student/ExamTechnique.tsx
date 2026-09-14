@@ -22,7 +22,7 @@ export function ExamTechnique() {
           <Link to={`/subjects/${subject.id}`} className="hover:underline">{subject.name}</Link> · {subject.board}
         </p>
         <h1 className="text-3xl font-bold leading-tight">Exam technique</h1>
-        <p className="text-ink-2">How the papers work, what the command words ask for, and what separates a grade 9 answer from a grade 7.</p>
+        <p className="text-ink-2">How the papers work, what the command words ask for, and what makes an answer a strong one.</p>
       </header>
 
       {!guide ? (
@@ -67,7 +67,7 @@ export function ExamTechnique() {
           </section>
 
           <section className="flex flex-col gap-3">
-            <SectionLabel colour="#6B4E9B" emoji="🏆">What a grade 9 answer looks like</SectionLabel>
+            <SectionLabel colour="#6B4E9B" emoji="🏆">What a top answer does</SectionLabel>
             <ul className="flex flex-col gap-2">
               {guide.grade9ByQuestionType.map((g) => (
                 <li key={g.questionType} className="flex flex-col gap-1 rounded-xl border-l-4 border-status-grade-9 bg-surface px-4 py-3">
@@ -97,7 +97,7 @@ export function ExamTechnique() {
                   </ul>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Grade 9 looks like</span>
+                  <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">What a top answer does</span>
                   <RichText source={t.examTechnique.grade9Looks} className="text-sm" />
                 </div>
                 <Link to={`/subjects/${subject.id}/topics/${t.id}`} className="w-fit text-sm font-bold underline">Open topic</Link>

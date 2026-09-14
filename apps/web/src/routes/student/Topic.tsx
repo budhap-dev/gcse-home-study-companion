@@ -36,8 +36,8 @@ export function previewOf(body: string, max = 150): string {
 const LEVEL_LABEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const
 const LEVEL_NOTE = {
   core: 'Prerequisites only. Short, done once.',
-  higher: 'Grade 6 to 8 exam-style questions.',
-  advanced: 'Grade 9: multi-step, unfamiliar contexts, show that and explain.',
+  higher: 'Exam-style questions on the main ideas.',
+  advanced: 'Multi-step problems in unfamiliar contexts. Show that, and explain.',
 } as const
 
 export function Topic() {
