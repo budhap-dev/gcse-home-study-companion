@@ -21,12 +21,49 @@ export interface SyllabusBlock {
  * `docs/content-order.md`. The subject page shows all of it, so what is still to be
  * written is visible rather than merely absent.
  *
- * Year 9 lists only what the app keeps as recap: the rest was taught before the app
- * existed. Pure revision and coursework blocks are left out, because there is no topic
- * to write for them.
+ * The curriculum documents number the six half terms 1 to 6, so terms 1 and 2 are
+ * Autumn, 3 and 4 Spring, 5 and 6 Summer. Pure revision, exam-skills and coursework
+ * rows are left out, because there is no topic to write for them.
+ *
+ * A spiral curriculum teaches some things twice, so a topic may appear under two years
+ * with the same `topicId`: the school covers surds, indices, congruency, parallel and
+ * perpendicular lines, solving quadratics and arrays in Year 9 and again in Year 10.
  */
 export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
   'maths': [
+    { year: 9, term: 'Autumn', topics: [
+      { title: 'Arithmetic and quadratic sequences' },
+      { title: 'Graphs of rates of change' },
+      { title: 'Compound units: speed and density' },
+      { title: 'Sectors, cylinders and spheres' },
+      { title: 'Limits of accuracy and bounds' },
+      { title: 'Fractions, decimals and percentages' },
+      { title: 'Successive percentage change' },
+      { title: 'Direct and inverse proportion' },
+      { title: 'Parallel and perpendicular lines', topicId: 'parallel-and-perpendicular-lines' },
+      { title: 'Graphs of quadratic and cubic functions' },
+    ] },
+    { year: 9, term: 'Spring', topics: [
+      { title: 'Standard form' },
+      { title: 'Laws of indices', topicId: 'laws-of-indices' },
+      { title: 'Surds', topicId: 'surds' },
+      { title: 'Grouped and cumulative frequency' },
+      { title: 'Box plots' },
+      { title: 'Simultaneous equations' },
+      { title: 'Inequalities' },
+      { title: 'Frequency trees' },
+      { title: 'Tree diagrams' },
+    ] },
+    { year: 9, term: 'Summer', topics: [
+      { title: 'Congruent triangles', topicId: 'congruency' },
+      { title: 'Similarity' },
+      { title: 'Pythagoras' },
+      { title: 'Trigonometric ratios' },
+      { title: 'Simplifying and expanding expressions' },
+      { title: 'Solving quadratics by factorising', topicId: 'solving-quadratic-equations' },
+      { title: 'Changing the subject of a formula' },
+      { title: 'Trial and improvement' },
+    ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'Laws of indices', topicId: 'laws-of-indices' },
       { title: 'Powers and roots', topicId: 'powers-and-roots' },
@@ -79,9 +116,12 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Algebraic fractions' },
+      { title: 'Rearranging formulae' },
       { title: 'Cumulative frequency curves and box plots' },
       { title: 'Simultaneous equations' },
+      { title: 'Surds' },
       { title: 'Equation of a circle' },
+      { title: 'Exact trigonometric values' },
       { title: 'Trigonometric graphs' },
       { title: 'Functions' },
     ] },
@@ -90,18 +130,35 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Non-linear graphs' },
       { title: 'Transformations of graphs' },
       { title: 'Algebraic proof' },
+      { title: 'Sequences' },
+      { title: 'Iteration: approximating solutions' },
     ] },
     { year: 11, term: 'Summer', topics: [
+      { title: 'Fractions' },
+      { title: 'Ratio and proportion' },
+      { title: 'Percentages' },
       { title: 'Enlargements, reflections, rotations and translations' },
+      { title: 'Standard form' },
+      { title: 'Index form' },
       { title: 'Properties of angles' },
       { title: 'Constructions and loci' },
     ] },
   ],
   'physics': [
-    { year: 9, term: 'Taught in Year 9, kept for recap', topics: [
+    { year: 9, term: 'Autumn', topics: [
+      { title: 'Wave properties' },
+      { title: 'Light waves: reflection and refraction' },
+      { title: 'Sound waves' },
       { title: 'Kinetic and gravitational potential energy', topicId: 'kinetic-and-gravitational-potential-energy' },
+      { title: 'Energy transfers and dissipation' },
+    ] },
+    { year: 9, term: 'Spring', topics: [
+      { title: 'Power and efficiency' },
+      { title: 'Generating power' },
       { title: 'Describing motion: speed, velocity and acceleration', topicId: 'describing-motion' },
       { title: 'Forces, weight and resultant forces', topicId: 'resultant-forces' },
+    ] },
+    { year: 9, term: 'Summer', topics: [
       { title: 'Forces and motion: Newton\'s laws', topicId: 'newtons-laws' },
       { title: 'Stopping distances', topicId: 'stopping-distances' },
     ] },
@@ -143,6 +200,30 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
   ],
   'chemistry': [
+    { year: 9, term: 'Autumn', topics: [
+      { title: 'States of matter' },
+      { title: 'Atoms, ions and isotopes' },
+      { title: 'Formulae and balancing equations' },
+      { title: 'The periodic table and its history' },
+      { title: 'Groups 1, 7 and 0' },
+      { title: 'Transition metals' },
+      { title: 'Pure substances and formulations' },
+      { title: 'Tests for ions and gases' },
+      { title: 'Instrumental methods' },
+    ] },
+    { year: 9, term: 'Spring', topics: [
+      { title: 'Reactions of acids with bases' },
+      { title: 'Strong and weak acids' },
+      { title: 'Reactivity of metals and displacement' },
+      { title: 'Oxidation and reduction' },
+      { title: 'Measuring rates of reaction' },
+      { title: 'Collision theory and the effect of conditions' },
+    ] },
+    { year: 9, term: 'Summer', topics: [
+      { title: 'Development of the atmosphere' },
+      { title: 'Greenhouse gases and climate change' },
+      { title: 'Atmospheric pollutants from combustion' },
+    ] },
     { year: 10, term: 'Autumn 1 and 2', topics: [
       { title: 'Ionic bonding and ionic compounds', topicId: 'ionic-bonding' },
       { title: 'Covalent bonding: molecules, polymers and giant structures', topicId: 'covalent-bonding' },
@@ -177,12 +258,26 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Alternative extraction of metals' },
       { title: 'Life cycle assessment and recycling' },
       { title: 'Corrosion and its prevention' },
-      { title: 'Ceramics, polymers and composites' },
+      { title: 'Alloys, ceramics, polymers and composites' },
       { title: 'The Haber process and fertilisers' },
       { title: 'Equilibria and Le Chatelier\'s principle' },
     ] },
   ],
   'biology': [
+    { year: 9, term: 'Autumn and Spring', topics: [
+      { title: 'Microbes and microscopy' },
+      { title: 'The immune system' },
+      { title: 'The nervous system' },
+      { title: 'The genetic code' },
+      { title: 'Classification and evolution' },
+    ] },
+    { year: 9, term: 'Spring and Summer', topics: [
+      { title: 'Unit 1: cells and specialisation' },
+      { title: 'Unit 1: enzymes' },
+      { title: 'Unit 1: diffusion, osmosis and active transport' },
+      { title: 'Unit 8: the breathing system and gas exchange' },
+      { title: 'Unit 8: the circulatory system and blood' },
+    ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'Photosynthesis and limiting factors', topicId: 'photosynthesis-and-limiting-factors' },
       { title: 'The leaf, root hair cells, xylem and phloem', topicId: 'leaf-root-and-transport-tissues' },
@@ -220,9 +315,22 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
   ],
   'computer-science': [
-    { year: 9, term: 'Taught in Year 9, kept for recap', topics: [
+    { year: 9, term: 'Autumn', topics: [
+      { title: 'Problem solving' },
+      { title: 'Decomposition and abstraction' },
+      { title: 'Flow charts and pseudo-code' },
+      { title: 'Linear and binary search' },
+    ] },
+    { year: 9, term: 'Spring', topics: [
       { title: 'Data types and operators', topicId: 'data-types-and-operators' },
       { title: 'Selection, iteration and tracing', topicId: 'selection-iteration-and-tracing' },
+      { title: 'Arrays', topicId: 'arrays-and-records' },
+    ] },
+    { year: 9, term: 'Summer', topics: [
+      { title: 'Storage units and binary' },
+      { title: 'Binary arithmetic' },
+      { title: 'ASCII and Unicode' },
+      { title: 'Representing images and sound' },
     ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'Subroutines: procedures and functions', topicId: 'subroutines-procedures-and-functions' },
@@ -248,16 +356,18 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Databases and SQL' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Networks and topologies' },
+      { title: 'Networking' },
       { title: 'Cyber security threats' },
       { title: 'Social engineering and prevention' },
       { title: 'Ethical, legal and environmental issues' },
     ] },
   ],
   'business': [
-    { year: 9, term: 'Taught in Year 9, kept for recap', topics: [
+    { year: 9, term: 'Autumn', topics: [
       { title: 'Enterprise and entrepreneurship', topicId: 'enterprise-and-entrepreneurship' },
       { title: 'Spotting a business opportunity', topicId: 'spotting-a-business-opportunity' },
+    ] },
+    { year: 9, term: 'Spring', topics: [
       { title: 'Putting a business idea into practice', topicId: 'putting-a-business-idea-into-practice' },
     ] },
     { year: 10, term: 'Autumn 1 and 2', topics: [
@@ -279,6 +389,38 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
   ],
   'french': [
+    { year: 9, term: 'Autumn', topics: [
+      { title: 'Events in the Francophone world' },
+      { title: 'Opinions with nouns and infinitives' },
+      { title: 'Life online' },
+      { title: 'Staying active' },
+      { title: 'The present tense, regular and irregular' },
+      { title: 'What you watch' },
+      { title: 'Plans to go out, with the near future' },
+      { title: 'Last weekend, with the perfect tense' },
+      { title: 'Forming and answering questions' },
+    ] },
+    { year: 9, term: 'Spring', topics: [
+      { title: 'Identity' },
+      { title: 'Weekend routine, with reflexive verbs' },
+      { title: 'Friends and friendship' },
+      { title: 'Describing people' },
+      { title: 'Position of adjectives' },
+      { title: 'Positive role models' },
+      { title: 'Direct object pronouns' },
+      { title: 'Celebrations' },
+      { title: 'Combining present, perfect and near future' },
+    ] },
+    { year: 9, term: 'Summer', topics: [
+      { title: 'School life in Francophone countries' },
+      { title: 'Subjects and school life' },
+      { title: 'School rules' },
+      { title: 'Progress at school' },
+      { title: 'What school used to be like, with the imperfect' },
+      { title: 'Learning languages' },
+      { title: 'Combining present, near future and imperfect' },
+      { title: 'Meals and mealtimes' },
+    ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'Good mental health', topicId: 'good-mental-health' },
       { title: 'Illness and accidents', topicId: 'illness-and-accidents' },
@@ -311,20 +453,30 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Your ideal home' },
       { title: 'Visiting a town or city' },
     ] },
-    { year: 11, term: 'Autumn', topics: [
-      { title: 'Exam skills: translation both ways' },
-      { title: 'Exam skills: the photo card and conversation' },
+    { year: 11, term: 'Spring', topics: [
+      { title: 'Exam skills: listening, reading, writing, speaking and translation' },
     ] },
   ],
   'music': [
-    { year: 9, term: 'Taught in Year 9, kept for recap', topics: [
-      { title: 'Musical elements and language' },
+    { year: 9, term: 'Autumn', topics: [
+      { title: 'Pop music through the decades' },
+      { title: 'Fusion music, including bhangra and reggaeton' },
+    ] },
+    { year: 9, term: 'Spring', topics: [
+      { title: 'Classical history' },
+      { title: 'Theme and variations' },
+    ] },
+    { year: 9, term: 'Summer', topics: [
+      { title: 'Film composition and developing motifs' },
+      { title: 'Vocal music' },
+      { title: 'Analysis of an exemplar set work' },
     ] },
     { year: 10, term: 'Autumn 1 and 2', topics: [
       { title: 'Killer Queen', topicId: 'killer-queen' },
       { title: 'Star Wars main title', topicId: 'star-wars' },
     ] },
     { year: 10, term: 'Spring', topics: [
+      { title: 'History of instrumental music' },
       { title: 'Bach: Brandenburg Concerto No. 5, third movement', topicId: 'bach-brandenburg-5' },
       { title: 'Afro Celt Sound System: Release', topicId: 'afro-celt-release' },
     ] },
@@ -335,6 +487,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     { year: 11, term: 'Autumn', topics: [
       { title: 'Beethoven: Pathétique, first movement' },
       { title: 'Purcell: Music for a While' },
+    ] },
+    { year: 11, term: 'Spring', topics: [
+      { title: 'Musical dictation' },
+      { title: 'Analysing unfamiliar music' },
+      { title: 'Short analysis essays' },
     ] },
   ],
 }

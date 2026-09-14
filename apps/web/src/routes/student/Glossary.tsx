@@ -86,7 +86,7 @@ export function Glossary() {
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
       <header className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold leading-tight">Glossary</h1>
-        <p className="max-w-[65ch] text-ink-2">
+        <p className="text-ink-2">
           {GLOSSARY.length} terms from every subject, each with what it means, a worked example, and the topic that teaches it.
           Looking for a topic instead? <Link to="/search" className="font-bold underline">Search everything</Link>.
         </p>

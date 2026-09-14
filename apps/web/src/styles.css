@@ -55,6 +55,25 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
   .flashcard-inner.is-flipped .flashcard-back { display: flex; transform: none; }
 }
 
+/* Accordions on the subject page. A details panel cannot be transitioned directly,
+   because the browser hides its content outright when the element is shut. Animating
+   ::details-content gives that hidden box back, and the 0fr to 1fr grid row slides it
+   to whatever height the content needs without hard-coding one. allow-discrete keeps
+   the content visible for the length of the close, so it slides shut rather than
+   vanishing. Where ::details-content is unsupported the panel simply appears, which is
+   what it did before. */
+.accordion::details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease, content-visibility 0.28s allow-discrete;
+}
+.accordion[open]::details-content { grid-template-rows: 1fr; }
+/* The blanket reduced-motion rule above uses `*`, which never matches a pseudo-element,
+   so the accordion needs saying again by name. */
+@media (prefers-reduced-motion: reduce) { .accordion::details-content { transition: none !important; } }
+/* The grid item does the clipping: without min-height 0 it refuses to shrink. */
+.accordion-panel { min-height: 0; overflow: hidden; }
+
 /* Animations. Switched off wholesale by the Settings toggle or the OS reduced-motion setting. */
 @keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
@@ -72,6 +91,8 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
 .anim-bar { animation: grow-bar 0.9s ease-out both; }
 .press { transition: transform 0.12s ease; }
 .press:active { transform: scale(0.97); }
+[data-motion="off"] .accordion::details-content { transition: none !important; }
+[data-motion="off"] .accordion summary > span:first-child { transition: none !important; }
 [data-motion="off"] .anim-fade-up, [data-motion="off"] .anim-pop, [data-motion="off"] .anim-bounce, [data-motion="off"] .anim-shake, [data-motion="off"] .anim-float, [data-motion="off"] .anim-flicker, [data-motion="off"] .anim-bar, [data-motion="off"] .confetti, [data-motion="off"] .flashcard-inner { animation: none !important; transition: none !important; }
 
 /* Celebration confetti. Reduced motion renders none of these. */

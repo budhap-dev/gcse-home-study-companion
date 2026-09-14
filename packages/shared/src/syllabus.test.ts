@@ -39,17 +39,44 @@ describe('syllabus', () => {
     expect(bad).toEqual([])
   })
 
-  it('lists every written topic exactly once, so nothing is invisible', () => {
+  it('lists every written topic at least once, so nothing is invisible', () => {
     const listed = Object.values(SYLLABUS).flatMap((bs) => bs.flatMap((b) => b.topics.map((t) => t.topicId).filter(Boolean)))
-    const missing = [...written.keys()].filter((id) => !listed.includes(id))
-    const twice = listed.filter((id, i) => listed.indexOf(id) !== i)
-    expect({ missing, twice }).toEqual({ missing: [], twice: [] })
+    expect([...written.keys()].filter((id) => !listed.includes(id))).toEqual([])
+  })
+
+  /**
+   * A spiral curriculum teaches some things twice, so a topic may appear under two
+   * years: the school covers surds and congruency in Year 9 and again in Year 10.
+   * Both entries link to the same written topic. Any repeat must be across years, not
+   * twice inside one, which would just be a duplicated line on the page.
+   */
+  it('only repeats a topic across different years', () => {
+    const bad: string[] = []
+    for (const [subjectId, blocks] of Object.entries(SYLLABUS)) {
+      const seen = new Map<string, Set<number>>()
+      for (const b of blocks) {
+        for (const t of b.topics) {
+          if (!t.topicId) continue
+          const years = seen.get(t.topicId) ?? new Set<number>()
+          if (years.has(b.year)) bad.push(`${subjectId}: ${t.topicId} twice in year ${b.year}`)
+          years.add(b.year)
+          seen.set(t.topicId, years)
+        }
+      }
+    }
+    expect(bad).toEqual([])
   })
 
   it('puts a syllabus entry in the year the topic itself claims', () => {
     // The topic file's `year` and the syllabus block's `year` must agree, or the page
     // would show the same topic under two different years.
-    expect(SYLLABUS.physics.find((b) => b.year === 9)?.topics.map((t) => t.topicId)).toContain('stopping-distances')
-    expect(SYLLABUS.business.find((b) => b.year === 9)?.topics.map((t) => t.topicId)).toContain('putting-a-business-idea-into-practice')
+    const inYear = (subjectId: keyof typeof SYLLABUS, year: number) =>
+      SYLLABUS[subjectId].filter((b) => b.year === year).flatMap((b) => b.topics.map((t) => t.topicId))
+    expect(inYear('physics', 9)).toContain('stopping-distances')
+    expect(inYear('business', 9)).toContain('putting-a-business-idea-into-practice')
+    // Every subject now has a Year 9 block, because the school re-tests Year 9 in all of them.
+    for (const subjectId of Object.keys(SYLLABUS) as (keyof typeof SYLLABUS)[]) {
+      expect(SYLLABUS[subjectId].some((b) => b.year === 9), subjectId).toBe(true)
+    }
   })
 })
