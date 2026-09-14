@@ -1,0 +1,1440 @@
+{
+  "id": "linear-quadratic-and-geometric-sequences",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Linear, quadratic and geometric sequences",
+  "specPoints": [
+    "A23",
+    "A24",
+    "A25"
+  ],
+  "order": 6,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Term to term, and position to term",
+        "body": "A **sequence** is a list of numbers in order, and each one is a **term**. There are two ways to describe one, and Edexcel expects both.\n\n- A **term-to-term** rule says how to get from one term to the next: *add 4*, or *double it*. Simple, but to reach the 100th term you would have to work through all 99 before it.\n- A **position-to-term** rule, called the **nth term**, gives any term straight from its position: put $n = 100$ in and out comes the 100th term.\n\nThe nth term is what nearly every question wants, because it is the one that scales. Finding it is the skill this topic is really about.\n\nSome sequences you should simply recognise: the **triangular** numbers, the **square** numbers, the **cube** numbers, and **Fibonacci-type** sequences where each term is the sum of the two before it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Sequences",
+              "boxes": [
+                {
+                  "title": "Term to term",
+                  "points": [
+                    "how to get to the next",
+                    "add 4, or double it"
+                  ]
+                },
+                {
+                  "title": "Position to term",
+                  "points": [
+                    "the nth term",
+                    "any term from its position"
+                  ]
+                },
+                {
+                  "title": "Why nth term",
+                  "points": [
+                    "reaches term 100 at once",
+                    "without the 99 before it"
+                  ]
+                },
+                {
+                  "title": "Recognise",
+                  "points": [
+                    "triangular, square, cube",
+                    "Fibonacci-type"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes about sequences: the term to term rule, the position to term rule, why the nth term matters, and the sequences to recognise on sight"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sequence",
+                "First terms",
+                "How it is built"
+              ],
+              "rows": [
+                [
+                  "Triangular",
+                  "1, 3, 6, 10, 15, 21",
+                  "add one more each time"
+                ],
+                [
+                  "Square",
+                  "1, 4, 9, 16, 25, 36",
+                  "n × n"
+                ],
+                [
+                  "Cube",
+                  "1, 8, 27, 64, 125, 216",
+                  "n × n × n"
+                ],
+                [
+                  "Fibonacci-type",
+                  "1, 1, 2, 3, 5, 8, 13, 21",
+                  "add the two before it"
+                ]
+              ],
+              "title": "Know these without working them out"
+            },
+            "alt": "A table of the four sequences to recognise on sight: triangular, square, cube and Fibonacci numbers, with their first six terms and how each is built"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which rule lets you find the 100th term without working out the 99 before it?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the two kinds of rule",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The **nth term** takes the position straight in, so $n = 100$ gives the 100th term in one step.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the position to term rule"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The position to term rule, or nth term",
+            "The term to term rule",
+            "The first difference",
+            "The common ratio"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Linear sequences",
+        "body": "A **linear**, or arithmetic, sequence goes up by the **same amount** each time. That amount is the **first difference**, and it is the number in front of $n$.\n\nTake **3, 7, 11, 15, 19, 23**. The differences are all **4**, so the nth term starts $4n$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "n",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "rows": [
+                [
+                  "term",
+                  "3",
+                  "7",
+                  "11",
+                  "15",
+                  "19",
+                  "23"
+                ],
+                [
+                  "first difference",
+                  "",
+                  "4",
+                  "4",
+                  "4",
+                  "4",
+                  "4"
+                ],
+                [
+                  "4n",
+                  "4",
+                  "8",
+                  "12",
+                  "16",
+                  "20",
+                  "24"
+                ],
+                [
+                  "term − 4n",
+                  "-1",
+                  "-1",
+                  "-1",
+                  "-1",
+                  "-1",
+                  "-1"
+                ]
+              ],
+              "title": "Every difference is 4, so the rule starts 4n"
+            },
+            "alt": "A table of the linear sequence 3, 7, 11, 15, 19, 23 showing a constant first difference of four, the four times table beneath it, and a constant gap of minus one between the sequence and four n"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the nth term of 3, 7, 11, 15, 19, 23",
+            "steps": [
+              {
+                "text": "The first differences are all **4**, so the sequence is linear",
+                "note": "constant difference means linear"
+              },
+              {
+                "text": "The rule therefore starts **4n**",
+                "note": "the difference is the coefficient of n"
+              },
+              {
+                "text": "Compare: $4n$ gives 4, 8, 12, 16, 20, 24",
+                "note": "the four times table"
+              },
+              {
+                "text": "Each term of the sequence is **1 less**, so the nth term is $4n - 1$",
+                "note": "subtract to fix the offset"
+              },
+              {
+                "text": "Check with $n = 3$: $4 \\times 3 - 1 = 11$, and the third term is 11",
+                "note": "always check one term back"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "A sequence is 5, 8, 11, 14. Find the nth term.",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "linear nth term",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The differences are all 3, so the rule starts $3n$. The three times table gives 3, 6, 9, 12, which is 2 less each time, so the nth term is $3n + 2$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "identifies a difference of 3"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "3n + 2"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "3n+2",
+            "3n + 2",
+            "3 n + 2"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Quadratic sequences",
+        "body": "If the first differences are **not** constant, look at the **second** differences. If those are constant, the sequence is **quadratic** and the nth term contains $n^2$.\n\nThe key fact is short: the **second difference is $2a$**, where $a$ is the number in front of $n^2$.\n\nTake **4, 9, 18, 31, 48, 69**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "n",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "rows": [
+                [
+                  "term",
+                  "4",
+                  "9",
+                  "18",
+                  "31",
+                  "48",
+                  "69"
+                ],
+                [
+                  "first difference",
+                  "",
+                  "5",
+                  "9",
+                  "13",
+                  "17",
+                  "21"
+                ],
+                [
+                  "second difference",
+                  "",
+                  "",
+                  "4",
+                  "4",
+                  "4",
+                  "4"
+                ]
+              ],
+              "title": "Second difference 4, so a = 2"
+            },
+            "alt": "A difference table for the quadratic sequence 4, 9, 18, 31, 48, 69, showing first differences that grow and a constant second difference of four"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the nth term of 4, 9, 18, 31, 48, 69",
+            "steps": [
+              {
+                "text": "First differences 5, 9, 13, 17, 21 are not constant, so it is not linear",
+                "note": "move on to the second differences"
+              },
+              {
+                "text": "Second differences are all **4**, so it is quadratic",
+                "note": "constant second difference means quadratic"
+              },
+              {
+                "text": "Second difference $= 2a$, so $a = 4 \\div 2 = 2$",
+                "note": "the rule contains $2n^2$"
+              },
+              {
+                "text": "Subtract $2n^2$ from each term: 2, 1, 0, -1, -2, -3",
+                "note": "what is left is always linear"
+              },
+              {
+                "text": "That linear sequence has difference -1, so it is $-n + 3$",
+                "note": "find its nth term the usual way"
+              },
+              {
+                "text": "nth term $= 2n^2 - n + 3$. Check $n = 4$: $2(16) - 4 + 3 = 31$, and the fourth term is 31",
+                "note": "always check"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A quadratic sequence has a second difference of 6. What is the coefficient of $n^2$ in its nth term?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "quadratic nth term",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The second difference is $2a$, so $a = 6 \\div 2 = 3$. The nth term contains $3n^2$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses second difference = 2a"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "The whole quadratic method",
+        "body": "The method has three steps and never changes. Here it is on **3, 8, 15, 24, 35, 48**.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the nth term of 3, 8, 15, 24, 35, 48",
+            "steps": [
+              {
+                "text": "First differences 5, 7, 9, 11, 13, second differences 2, 2, 2, 2",
+                "note": "constant, so quadratic"
+              },
+              {
+                "text": "Second difference 2, so $a = 1$ and the rule contains $n^2$",
+                "note": "step one"
+              },
+              {
+                "text": "Subtract $n^2$: 2, 4, 6, 8, 10, 12",
+                "note": "step two, and what is left is linear"
+              },
+              {
+                "text": "That has difference 2 and starts at 2, so it is $2n$",
+                "note": "step three, the usual linear method"
+              },
+              {
+                "text": "nth term $= n^2 + 2n$. Check $n = 5$: $25 + 10 = 35$",
+                "note": "which matches the fifth term"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "What you do",
+                "On this sequence"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "halve the second difference to get a",
+                  "2 ÷ 2 = 1, so n²"
+                ],
+                [
+                  "2",
+                  "subtract a n² from every term",
+                  "leaves a linear sequence"
+                ],
+                [
+                  "3",
+                  "find the nth term of that linear part",
+                  "and add it on"
+                ],
+                [
+                  "Check",
+                  "put a value of n back in",
+                  "the term must match"
+                ]
+              ],
+              "title": "Three steps, every time"
+            },
+            "alt": "A table of the three step method for a quadratic nth term, with what each step produces"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "short-text",
+          "prompt": "A quadratic sequence is 3, 8, 15, 24. Find its nth term.",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "quadratic nth term",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Second differences are 2, so $a = 1$ and the rule contains $n^2$. Subtracting $n^2$ leaves 2, 4, 6, 8, which is $2n$. So the nth term is $n^2 + 2n$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "second difference 2, so a = 1"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "subtracts n² to leave 2n"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "n² + 2n"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "n^2+2n",
+            "n^2 + 2n",
+            "n²+2n",
+            "n² + 2n",
+            "n*n+2n"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Geometric sequences",
+        "body": "A **geometric** sequence **multiplies** by the same number each time. That number is the **common ratio**, $r$, and you find it by dividing any term by the one before it.\n\nEdexcel writes these as $r^n$ where $n$ is an integer and $r$ is a positive rational number.\n\nTake **3, 6, 12, 24, 48, 96**: each term is double the last, so $r = 2$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sequence",
+                "First term",
+                "Ratio r",
+                "Next term"
+              ],
+              "rows": [
+                [
+                  "3, 6, 12, 24, 48, 96",
+                  "3",
+                  "2",
+                  "192"
+                ],
+                [
+                  "2, 6, 18, 54, 162, 486",
+                  "2",
+                  "3",
+                  "1458"
+                ],
+                [
+                  "80, 40, 20, 10, 5, 2.5",
+                  "80",
+                  "1/2",
+                  "1.25"
+                ]
+              ],
+              "title": "Divide a term by the one before to find r"
+            },
+            "alt": "A table of three geometric sequences with their first terms and common ratios, including one that halves"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the 8th term of 3, 6, 12, 24, 48, 96",
+            "steps": [
+              {
+                "text": "$6 \\div 3 = 2$ and $12 \\div 6 = 2$, so $r = 2$",
+                "note": "check two ratios, not one"
+              },
+              {
+                "text": "The first term is 3",
+                "note": "call it the first term, not the zeroth"
+              },
+              {
+                "text": "To reach the 8th term you multiply by 2 **seven** times, not eight",
+                "note": "one fewer than the position"
+              },
+              {
+                "text": "$ 3 \\times 2^7 = 3 \\times 128 = 384$",
+                "note": "the off-by-one here is the usual slip"
+              },
+              {
+                "text": "Check the 6th: $3 \\times 2^5 = 96$, and the sixth term is 96",
+                "note": "the method is right"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "A geometric sequence starts 5, 15, 45. What is the common ratio?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "geometric sequences",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$15 \\div 5 = 3$ and $45 \\div 15 = 3$, so $r = 3$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: name the type, then the rule",
+        "body": "For each sequence, work out **which type** it is before doing anything else, then find its rule.\n\n1. 7, 12, 17, 22\n2. 2, 6, 18, 54\n3. 5, 11, 21, 35\n4. 2, 5, 7, 12, 19\n\nFor the first, give the nth term. For the second, give the common ratio and the next term. For the third, use the three-step quadratic method. For the fourth, describe the term-to-term rule in words.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sequence",
+                "First differences",
+                "Second differences",
+                "Type"
+              ],
+              "rows": [
+                [
+                  "7, 12, 17, 22",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "2, 6, 18, 54",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "5, 11, 21, 35",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "2, 5, 7, 12, 19",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Differences first, type second, rule last"
+            },
+            "alt": "A blank table for identifying the type of four sequences from their differences before finding a rule"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "Find the nth term of 5, 11, 21, 35.",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "quadratic nth term",
+          "calculator": "either",
+          "tags": [],
+          "solution": "First differences are 6, 10, 14 and second differences are 4, so $a = 2$ and the rule contains $2n^2$. Subtracting $2n^2$ leaves 3, 3, 3, 3, so the nth term is $2n^2 + 3$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "second difference 4, so a = 2"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "subtracting 2n² leaves a constant 3"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "2n² + 3"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "2n^2+3",
+            "2n^2 + 3",
+            "2n²+3",
+            "2n² + 3"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: is a number in the sequence?",
+        "body": "The hardest form of this question does not ask for a term. It asks whether a given number **appears** in the sequence, and the answer must be justified.\n\n**The method.** Set the nth term equal to the number and solve for $n$. If $n$ comes out a **positive whole number**, the number is in the sequence and $n$ tells you where. If it does not, the number is not in the sequence, and saying *why* is the mark.\n\nFor the linear sequence $4n - 1$: is 201 a term? $4n - 1 = 201$ gives $4n = 202$, so $n = 50.5$. Not a whole number, so **201 is not a term**. Is 199? $4n = 200$, $n = 50$, so yes, it is the 50th term.\n\nFor a quadratic you end up with a quadratic equation, and the same rule applies: $n$ must be a positive integer.\n\n**Geometric growth.** Comparing a linear with a geometric sequence is a favourite. The geometric one always overtakes eventually, however far behind it starts, because multiplying beats adding. Saying that in words earns the mark.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Is it a term?",
+                "Solve 4n − 1 = value",
+                "n",
+                "Verdict"
+              ],
+              "rows": [
+                [
+                  "199",
+                  "4n = 200",
+                  "50",
+                  "yes, the 50th term"
+                ],
+                [
+                  "201",
+                  "4n = 202",
+                  "50.5",
+                  "no, n is not a whole number"
+                ],
+                [
+                  "3",
+                  "4n = 4",
+                  "1",
+                  "yes, the first term"
+                ],
+                [
+                  "0",
+                  "4n = 1",
+                  "0.25",
+                  "no, n is not a whole number"
+                ]
+              ],
+              "title": "n must be a positive whole number"
+            },
+            "alt": "A table testing whether four numbers appear in the sequence with nth term four n minus one, showing the value of n each gives"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Is 48 a term of the sequence with nth term $n^2 + 2n$?",
+            "steps": [
+              {
+                "text": "Set the rule equal to the number: $n^2 + 2n = 48$",
+                "note": "this is the whole method"
+              },
+              {
+                "text": "Rearrange: $n^2 + 2n - 48 = 0$",
+                "note": "a quadratic to solve"
+              },
+              {
+                "text": "Factorise: $(n + 8)(n - 6) = 0$, so $n = -8$ or $n = 6$",
+                "note": "two solutions, as always"
+              },
+              {
+                "text": "$n = -8$ is rejected: a position cannot be negative",
+                "note": "say this, it is worth a mark"
+              },
+              {
+                "text": "$n = 6$ is a positive whole number, so **48 is the 6th term**",
+                "note": "and indeed the sequence runs 3, 8, 15, 24, 35, 48"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "You solve the nth term equal to a number and get $n = 7.5$. What does that tell you?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "is a number a term",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A position must be a **positive whole number**. A fractional $n$ means the number falls between two terms, so it is not in the sequence.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the number is not in the sequence"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "The number is not in the sequence",
+            "The number is the 7th term",
+            "The number is the 8th term",
+            "The sequence is quadratic"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **term-to-term** rule gets you to the next term; the **nth term**, or position-to-term rule, gives any term straight from its position.\n- **Linear**: constant **first** difference. That difference is the coefficient of $n$, then adjust the constant. 3, 7, 11, 15, 19, 23 gives $4n - 1$.\n- **Quadratic**: constant **second** difference. The second difference is $2a$, so halve it, subtract $an^2$ from every term, and find the nth term of the linear sequence left. 4, 9, 18, 31, 48, 69 gives $2n^2 - n + 3$.\n- **Geometric**: constant **ratio**, found by dividing a term by the one before. 3, 6, 12, 24, 48, 96 has $r = 2$.\n- To reach the $k$th term of a geometric sequence you multiply by $r$ **$k-1$** times, not $k$.\n- Recognise **triangular** 1, 3, 6, 10, **square** 1, 4, 9, 16, **cube** 1, 8, 27, 64 and **Fibonacci-type** 1, 1, 2, 3, 5, 8 sequences on sight.\n- To test whether a number is a term, set the nth term equal to it and solve. $n$ must be a **positive whole number**.\n- Always check your rule by putting one value of $n$ back in.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Type",
+                "Recognise by",
+                "Rule"
+              ],
+              "rows": [
+                [
+                  "Linear",
+                  "constant first difference",
+                  "difference × n, then adjust"
+                ],
+                [
+                  "Quadratic",
+                  "constant second difference",
+                  "halve it for a, subtract an², do the rest"
+                ],
+                [
+                  "Geometric",
+                  "constant ratio",
+                  "multiply by r each time"
+                ],
+                [
+                  "Fibonacci-type",
+                  "each term is the two before added",
+                  "term to term only"
+                ],
+                [
+                  "Is it a term?",
+                  "solve nth term = value",
+                  "n must be a positive whole number"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of the three sequence types, how each is recognised and how its rule is found"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "Find the nth term of 4, 7, 10, 13.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "linear nth term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The differences are all 3, so the rule starts $3n$. The three times table is 3, 6, 9, 12, each 1 less than the sequence, so the nth term is $3n + 1$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "difference of 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3n + 1"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "3n+1",
+        "3n + 1",
+        "3 n + 1"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "A sequence has nth term $5n - 2$. What is the 7th term?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "using an nth term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5 \\times 7 - 2 = 35 - 2 = 33$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "33"
+        }
+      ],
+      "discriminators": [],
+      "answer": 33,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What kind of sequence is 2, 6, 18, 54?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "naming the type",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$6 \\div 2 = 3$ and $18 \\div 6 = 3$, so it multiplies by a constant ratio. That makes it **geometric**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "geometric with ratio 3"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Geometric: each term is multiplied by 3",
+        "Linear: each term goes up by 4",
+        "Quadratic: the second differences are constant",
+        "Fibonacci-type: each term is the two before added"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "What is the next term of the Fibonacci-type sequence 4, 7, 11, 18?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Fibonacci-type sequences",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each term is the sum of the two before: $11 + 18 = 29$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "29"
+        }
+      ],
+      "discriminators": [],
+      "answer": 29,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A sequence has nth term $4n - 1$. Which term is equal to 199?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "is a number a term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4n - 1 = 199$ gives $4n = 200$, so $n = 50$. It is the **50th** term.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets 4n − 1 = 199"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [],
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A quadratic sequence has a second difference of 10. What is the coefficient of $n^2$?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "quadratic nth term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The second difference is $2a$, so $a = 10 \\div 2 = 5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "second difference = 2a"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A geometric sequence starts 4, 12, 36. What is the common ratio?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "geometric sequences",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$12 \\div 4 = 3$ and $36 \\div 12 = 3$, so $r = 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A geometric sequence starts 80 and halves each time. What is its 5th term?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "geometric sequences",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To reach the 5th term you halve **four** times: $80 \\to 40 \\to 20 \\to 10 \\to 5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "halves four times, not five"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "The first differences of a sequence are 5, 9, 13, 17. What kind of sequence is it?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "naming the type",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first differences are not constant, but the **second** differences are all 4, so the sequence is **quadratic**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "quadratic"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Quadratic, because the second differences are constant",
+        "Linear, because the differences go up steadily",
+        "Geometric, because the differences multiply",
+        "Fibonacci-type"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "What is the 6th triangular number?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "recognising sequences",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The triangular numbers are 1, 3, 6, 10, 15, **21**, adding one more each time.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "21"
+        }
+      ],
+      "discriminators": [],
+      "answer": 21,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "Find the nth term of the quadratic sequence 4, 9, 18, 31.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "quadratic nth term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "First differences 5, 9, 13; second differences 4, so $a = 2$. Subtracting $2n^2$ leaves 2, 1, 0, −1, which is $-n + 3$. The nth term is $2n^2 - n + 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "second difference 4, so a = 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts 2n² to leave −n + 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2n² − n + 3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "2n^2-n+3",
+        "2n^2 - n + 3",
+        "2n²-n+3",
+        "2n² - n + 3"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A geometric sequence starts 3 and has common ratio 2. What is its 8th term?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "geometric sequences",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To reach the 8th term you multiply by 2 **seven** times: $3 \\times 2^7 = 3 \\times 128 = 384$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 2 to the power 7, not 8"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3 × 128"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "384"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 384,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Is 201 a term of the sequence with nth term $4n - 1$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "is a number a term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4n - 1 = 201$ gives $4n = 202$ and $n = 50.5$. A position must be a **positive whole number**, so 201 is not a term. The sequence goes 199, 203, straight past it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n = 50.5, so not a term"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "No, solving gives n = 50.5, not a whole number",
+        "Yes, it is the 50th term of the sequence",
+        "Yes, it is the 51st term of the sequence",
+        "No, the sequence never gets as high as 201"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "The nth term of a sequence is $n^2 + 2n$. Which term is equal to 48?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "is a number a term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$n^2 + 2n = 48$ gives $n^2 + 2n - 48 = 0$, which factorises as $(n + 8)(n - 6) = 0$. Rejecting $n = -8$, since a position cannot be negative, leaves $n = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "forms n² + 2n − 48 = 0"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises and rejects the negative root"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A linear sequence starts at 1000 and adds 10 each time. A geometric one starts at 1 and doubles. Which is larger in the long run?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing growth",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The geometric sequence doubles each time, so however far behind it starts it eventually overtakes any sequence that only adds a fixed amount.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "geometric overtakes"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The geometric one, because multiplying always overtakes adding",
+        "The linear one, because it starts far higher",
+        "They stay the same distance apart",
+        "It depends on how many terms are taken"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A sequence has nth term $3n + 7$. What is the difference between the 20th and the 10th terms?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "using an nth term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 20th is $67$ and the 10th is $37$, a difference of 30. Or note that ten steps of 3 is $10 \\times 3 = 30$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds both terms, or uses ten steps of 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A quadratic sequence begins 3, 8, 15, 24, 35. Find its nth term, showing your method, and use it to find the 20th term.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "quadratic nth term",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first differences are five, seven, nine and eleven, which are not constant, so the sequence is not linear. The second differences are all two, so it is quadratic. The second difference equals two a, so a is one and the rule contains n squared. Subtracting n squared from each term gives two, four, six, eight and ten, which is a linear sequence with difference two and nth term two n. The nth term is therefore n squared plus two n. Checking with n equal to four gives sixteen plus eight, which is twenty four, matching the fourth term. The twentieth term is four hundred plus forty, which is four hundred and forty.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the second differences and states they are constant"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "halves the second difference to get a = 1"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts n² to leave 2n"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "nth term n² + 2n"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20th term 440"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Finds the second differences and states they are constant",
+          "marks": 1
+        },
+        {
+          "text": "Halves the second difference to get a = 1",
+          "marks": 1
+        },
+        {
+          "text": "Subtracts n² and identifies the linear part as 2n",
+          "marks": 1
+        },
+        {
+          "text": "Gives the nth term as n² + 2n",
+          "marks": 1
+        },
+        {
+          "text": "Finds the 20th term as 440",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Differences first.**\n\n| n | 1 | 2 | 3 | 4 | 5 |\n|---|---|---|---|---|---|\n| term | 3 | 8 | 15 | 24 | 35 |\n| first difference | | 5 | 7 | 9 | 11 |\n| second difference | | | 2 | 2 | 2 |\n\nThe first differences are not constant but the **second** differences are, so the sequence is **quadratic**.\n\n**Step 1.** Second difference $= 2a$, so $a = 1$ and the rule contains $n^2$.\n\n**Step 2.** Subtract $n^2$: $3-1, 8-4, 15-9, 24-16, 35-25 = 2, 4, 6, 8, 10$.\n\n**Step 3.** That is linear with difference 2 and nth term $2n$.\n\n$$\\text{nth term} = n^2 + 2n$$\n\n**Check** with $n = 4$: $16 + 8 = 24$. ✓\n\n**The 20th term**: $400 + 40 = \\mathbf{440}$."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Explain how you can tell whether a sequence is linear, quadratic or geometric, and show how you would check each one.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "naming the type",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Work out the first differences. If they are all the same the sequence is linear, and that constant difference is the number in front of n in the nth term. If the first differences are not constant, work out the second differences. If those are constant the sequence is quadratic, and half of that second difference is the number in front of n squared. If neither set of differences is constant, divide each term by the one before it. If that ratio is the same every time the sequence is geometric, and that ratio is what you multiply by. To check any of them, put a value of n back into the rule you have found and confirm it gives the right term.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "constant first difference means linear"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "constant second difference means quadratic"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "constant ratio between terms means geometric"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "checks by substituting a value of n back into the rule"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "States that a constant first difference means linear",
+          "marks": 1
+        },
+        {
+          "text": "States that a constant second difference means quadratic",
+          "marks": 1
+        },
+        {
+          "text": "States that a constant ratio between terms means geometric",
+          "marks": 1
+        },
+        {
+          "text": "Says to check by substituting a value of n back into the rule",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Start with the first differences.**\n\n- All the **same** → **linear**, and that difference is the coefficient of $n$.\n- **Not** the same → take the **second** differences.\n\n**Second differences all the same** → **quadratic**, and half of that second difference is the coefficient of $n^2$.\n\n**Neither constant** → divide each term by the one before. If that **ratio** is constant the sequence is **geometric**, and the ratio is what you multiply by each time.\n\n**Check every time** by putting a value of $n$ back into the rule you found and confirming it gives the right term. One substitution catches almost every slip."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Write the differences under the sequence before you do anything else. One row of first differences tells you whether you are looking at a linear sequence, and a second row settles quadratic against geometric in another few seconds.\n\nFor a linear sequence the difference **is** the coefficient of $n$. Work out that multiple of $n$, compare it with the sequence, and adjust by a constant.\n\nFor a quadratic, remember that the second difference is $2a$, not $a$. Halving it is the step most often skipped.\n\nFor a geometric sequence, check **two** ratios before deciding, and count the multiplications carefully: the 8th term needs seven of them, not eight.\n\nWhen asked whether a number is a term, set the nth term equal to it and solve. Say explicitly that $n$ must be a positive whole number, and reject a negative or fractional solution in words. That sentence is usually the final mark.\n\nCheck your rule by substituting one value of $n$. It takes ten seconds and catches nearly every error.",
+    "examinerErrors": [
+      "Using the second difference itself as the coefficient of n², instead of half of it.",
+      "Giving a term-to-term rule when the question asked for the nth term.",
+      "Multiplying by the ratio n times instead of n − 1 to reach the nth term of a geometric sequence.",
+      "Deciding a sequence is geometric from a single ratio, when the next pair does not match.",
+      "Finding a fractional n and still claiming the number is in the sequence.",
+      "Forgetting to reject the negative root when the position comes from a quadratic equation.",
+      "Writing 3n+1 as the rule but never checking it against a term.",
+      "Confusing the nth term of the sequence with the nth term of the differences."
+    ],
+    "grade9Looks": "A top answer writes a difference table first and names the type before starting any algebra. On a quadratic it halves the second difference, subtracts a n² from every term and finds the nth term of what is left, showing all three steps rather than guessing. On a geometric sequence it checks two ratios and counts the multiplications as one fewer than the position. Asked whether a number is a term, it sets the rule equal to that number, solves, and says in words that a position must be a positive whole number, rejecting a negative or fractional root explicitly. It finishes by substituting a value of n to check."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

@@ -1,0 +1,1328 @@
+{
+  "id": "iteration",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Iteration",
+  "specPoints": [
+    "A20"
+  ],
+  "order": 7,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "When you cannot solve it exactly",
+        "body": "Some equations have no neat solution. $x^3 - 2x - 5 = 0$ cannot be factorised and has no formula you are given, yet it certainly has a solution: the graph crosses the $x$-axis.\n\n**Iteration** finds that solution to as many decimal places as you like, by guessing and improving. The method is:\n\n1. **Rearrange** the equation into the form $x = \\text{something involving } x$.\n2. Put a **starting value** $x_0$ into the right-hand side.\n3. The answer out is $x_1$. Put **that** back in to get $x_2$, and keep going.\n\nWritten as a formula this is $x_{n+1} = f(x_n)$, and the subscripts are just labels: $x_0$ is the guess you were given, $x_1$ the first answer out, and so on.\n\nWhen the values stop changing to the accuracy you want, you have your solution.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Iteration",
+              "boxes": [
+                {
+                  "title": "Rearrange",
+                  "points": [
+                    "to x = something",
+                    "involving x"
+                  ]
+                },
+                {
+                  "title": "Start",
+                  "points": [
+                    "with the given x₀",
+                    "put it in the right-hand side"
+                  ]
+                },
+                {
+                  "title": "Repeat",
+                  "points": [
+                    "feed each answer back",
+                    "x₁ gives x₂, and so on"
+                  ]
+                },
+                {
+                  "title": "Stop",
+                  "points": [
+                    "when the values settle",
+                    "to the accuracy asked for"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes on iteration: rearranging to x equals something, starting from a given value, feeding each answer back in, and stopping when the values settle"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "In the iteration $x_{n+1} = f(x_n)$, what is $x_1$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "what iteration is",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$x_0$ is the starting value you are given. Putting it into the right-hand side produces **$x_1$**, and putting that back produces $x_2$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the result of putting x₀ in"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The result of putting $x_0$ into the formula",
+            "The first term of the sequence",
+            "The solution of the equation",
+            "The starting value you were given"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Running an iteration",
+        "body": "Solve $x^2 - 5x + 3 = 0$ using $x_{n+1} = \\dfrac{x_n^2 + 3}{5}$, starting at $x_0 = 0.6$.\n\nThe golden rule: **never round part way through**. Keep the full value on your calculator and use the **ANS** key, rounding only the answer you write down.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Iterate",
+                "Value to 4 d.p."
+              ],
+              "rows": [
+                [
+                  "x0",
+                  "0.6"
+                ],
+                [
+                  "x1",
+                  "0.672"
+                ],
+                [
+                  "x2",
+                  "0.6903"
+                ],
+                [
+                  "x3",
+                  "0.6953"
+                ],
+                [
+                  "x4",
+                  "0.6967"
+                ],
+                [
+                  "x5",
+                  "0.6971"
+                ]
+              ],
+              "title": "The values settle to 0.697"
+            },
+            "alt": "A table of the first five iterates of x equals x squared plus three over five, starting at nought point six and settling near nought point six nine seven"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Run it step by step",
+            "steps": [
+              {
+                "text": "$x_0 = 0.6$, given",
+                "note": "the starting value"
+              },
+              {
+                "text": "$x_1 = \\dfrac{0.6^2 + 3}{5} = \\dfrac{3.36}{5} = 0.672$",
+                "note": "put x₀ into the right-hand side"
+              },
+              {
+                "text": "$x_2 = \\dfrac{0.672^2 + 3}{5} = 0.6903$",
+                "note": "now put x₁ in, using the unrounded value"
+              },
+              {
+                "text": "$x_3 = 0.6953$, $x_4 = 0.6967$, $x_5 = 0.6971$",
+                "note": "the changes are shrinking"
+              },
+              {
+                "text": "To 3 decimal places the values have settled at **0.697**",
+                "note": "which is the solution"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "An iteration is $x_{n+1} = \\dfrac{x_n^2 + 3}{5}$ with $x_0 = 0.6$. What is $x_1$? Give your answer exactly.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "running an iteration",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\dfrac{0.6^2 + 3}{5} = \\dfrac{0.36 + 3}{5} = \\dfrac{3.36}{5} = 0.672$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "substitutes 0.6 into the right-hand side"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "0.672"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.672,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Rearranging into an iterative formula",
+        "body": "Exam questions usually hand you the formula, but they also ask you to **show** where it came from. That is pure algebra: get one $x$ on its own on the left.\n\nTake $x^3 - 2x - 5 = 0$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Show that $x^3 - 2x - 5 = 0$ rearranges to $x = \\sqrt[3]{2x + 5}$",
+            "steps": [
+              {
+                "text": "Start from $x^3 - 2x - 5 = 0$",
+                "note": "the equation as given"
+              },
+              {
+                "text": "Move the other terms across: $x^3 = 2x + 5$",
+                "note": "the cube alone on the left"
+              },
+              {
+                "text": "Take the cube root of both sides: $x = \\sqrt[3]{2x + 5}$",
+                "note": "which is the formula wanted"
+              },
+              {
+                "text": "So the iteration is $x_{n+1} = \\sqrt[3]{2x_n + 5}$",
+                "note": "subscripts added, nothing else changes"
+              },
+              {
+                "text": "A *show that* question wants these lines, not the answer",
+                "note": "the working is the marks"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Iterate",
+                "Value to 4 d.p."
+              ],
+              "rows": [
+                [
+                  "x0",
+                  "2"
+                ],
+                [
+                  "x1",
+                  "2.0801"
+                ],
+                [
+                  "x2",
+                  "2.0924"
+                ],
+                [
+                  "x3",
+                  "2.0942"
+                ],
+                [
+                  "x4",
+                  "2.0945"
+                ],
+                [
+                  "x5",
+                  "2.0945"
+                ],
+                [
+                  "x6",
+                  "2.0946"
+                ]
+              ],
+              "title": "Agreeing to 3 d.p. at x4 and x5"
+            },
+            "alt": "A table of the iterates of the cube root of two x plus five, starting at two, with x4 and x5 the first pair to agree to three decimal places"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "Rearrange $x^3 = 7x + 2$ into the form $x = \\sqrt[3]{\\ldots}$. Write what goes inside the cube root.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "rearranging",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Taking the cube root of both sides of $x^3 = 7x + 2$ gives $x = \\sqrt[3]{7x + 2}$, so **$7x + 2$** goes inside.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "takes the cube root of both sides"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "7x + 2"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "7x+2",
+            "7x + 2",
+            "7 x + 2"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Showing a solution lies between two values",
+        "body": "Before or after iterating, a question often asks you to **show** that a solution lies between two numbers. That is a different method: the **sign change**.\n\nIf $f(a)$ and $f(b)$ have **opposite signs**, and the graph is unbroken between them, it must cross zero somewhere in between. So there is a solution between $a$ and $b$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Show that $x^3 - 2x - 5 = 0$ has a solution between 2 and 2.1",
+            "steps": [
+              {
+                "text": "Write the equation as $f(x) = x^3 - 2x - 5$",
+                "note": "everything on one side, equal to zero"
+              },
+              {
+                "text": "$f(2) = 8 - 4 - 5 = -1$",
+                "note": "negative"
+              },
+              {
+                "text": "$f(2.1) = 9.261 - 4.2 - 5 = 0.061$",
+                "note": "positive"
+              },
+              {
+                "text": "There is a **sign change** from negative to positive",
+                "note": "this is the phrase the mark scheme wants"
+              },
+              {
+                "text": "The graph is continuous, so it must cross zero between them",
+                "note": "so there is a solution between 2 and 2.1"
+              },
+              {
+                "text": "Substituting the two values and naming the sign change is the whole answer",
+                "note": "no iteration needed here"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "x",
+                "f(x) = x³ − 2x − 5",
+                "Sign"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "-1",
+                  "negative"
+                ],
+                [
+                  "2.1",
+                  "0.061",
+                  "positive"
+                ]
+              ],
+              "title": "Opposite signs, so a solution lies between"
+            },
+            "alt": "A table showing the value of x cubed minus two x minus five at two and at two point one, one negative and one positive, proving a sign change"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "For $f(x) = x^3 - 2x - 5$, what is $f(2)$?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "sign change",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$2^3 - 2(2) - 5 = 8 - 4 - 5 = -1$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "substitutes x = 2"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "−1"
+            }
+          ],
+          "discriminators": [],
+          "answer": -1,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Rounding, and when to stop",
+        "body": "Two habits decide whether you get the marks.\n\n**Never round part way through.** Every rounding error feeds into the next iterate and grows. Use the **ANS** key: type the formula once with ANS in place of $x$, then press equals repeatedly.\n\n**Stop when the answer is stable to the accuracy asked for.** If a question wants 3 decimal places, keep going until two consecutive iterates **agree to 3 decimal places**, then give that value. For the first example, $x_4 = 0.6967$ and $x_5 = 0.6971$ both round to 0.697, so 0.697 is the answer.\n\nWrite the iterates down as you go. A question asking for $x_1$, $x_2$ and $x_3$ wants all three, and they carry the marks even if the last one slips.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Iterates",
+                "Values",
+                "Agree to",
+                "So you can give"
+              ],
+              "rows": [
+                [
+                  "x₂ and x₃",
+                  "0.6903, 0.6953",
+                  "1 d.p.",
+                  "0.7"
+                ],
+                [
+                  "x₃ and x₄",
+                  "0.6953, 0.6967",
+                  "2 d.p.",
+                  "0.70"
+                ],
+                [
+                  "x₄ and x₅",
+                  "0.6967, 0.6971",
+                  "3 d.p.",
+                  "0.697"
+                ]
+              ],
+              "title": "Stop when they agree to the accuracy wanted"
+            },
+            "alt": "A table showing how many decimal places two consecutive iterates agree to, and what that means for the answer"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Why should you not round each iterate before using it in the next step?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "rounding",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Each rounded value feeds into the next, so the error compounds. Keep the full value on the calculator and round only what you write down.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the error grows each step"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The rounding error grows with every step",
+            "It makes the calculator slower",
+            "The formula stops being valid",
+            "The iterates would then never settle"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: rearrange, iterate, check",
+        "body": "Take the equation $x^3 = 2x + 5$.\n\n1. Show that it rearranges to $x = \\sqrt[3]{2x + 5}$.\n2. Starting at $x_0 = 2$, work out $x_1$, $x_2$ and $x_3$ to 4 decimal places.\n3. Show that a solution lies between 2 and 2.1 using a sign change.\n4. Give the solution to 3 decimal places.\n\nUse ANS on your calculator and do not round until the last line.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Iterate",
+                "Value to 4 d.p."
+              ],
+              "rows": [
+                [
+                  "x₀",
+                  "2"
+                ],
+                [
+                  "x₁",
+                  ""
+                ],
+                [
+                  "x₂",
+                  ""
+                ],
+                [
+                  "x₃",
+                  ""
+                ]
+              ],
+              "title": "Fill this in with ANS, rounding only what you write"
+            },
+            "alt": "A blank table for recording the first four iterates of the cube root of two x plus five, starting at two"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "For $x_{n+1} = \\sqrt[3]{2x_n + 5}$ with $x_0 = 2$, what is $x_1$ to 4 decimal places?",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "running an iteration",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\sqrt[3]{2(2) + 5} = \\sqrt[3]{9} = 2.0801$ to 4 decimal places.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds the cube root of 9"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "2.0801"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 2.0801,
+          "tolerance": 5e-05,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: when the iteration runs away",
+        "body": "Not every rearrangement works. The same equation can be rearranged several ways, and some of them **diverge**: the values grow instead of settling.\n\nTake $x^3 - 2x - 5 = 0$ again, but rearranged the other way: $2x = x^3 - 5$, so $x = \\dfrac{x^3 - 5}{2}$. Starting at $x_0 = 2$ that gives 2, 1.5, -0.813, -2.768, and it keeps running away. The solution is still 2.0946, but this formula will never find it.\n\n**Why.** Near the solution, an iteration converges when the right-hand side changes **more slowly** than $x$ does, and diverges when it changes faster. Cubing makes it change much faster, so that version diverges; taking a cube root makes it change more slowly, so that version converges.\n\nYou are not asked to prove this. You are asked to **notice** it: if the values are growing or jumping about, the rearrangement is wrong for the job, and the mark comes from saying so and trying another.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Iterate",
+                "x = cube root of (2x + 5)",
+                "x = (x³ − 5) ÷ 2"
+              ],
+              "rows": [
+                [
+                  "x0",
+                  "2",
+                  "2"
+                ],
+                [
+                  "x1",
+                  "2.0801",
+                  "1.5"
+                ],
+                [
+                  "x2",
+                  "2.0924",
+                  "-0.813"
+                ],
+                [
+                  "x3",
+                  "2.0942",
+                  "-2.768"
+                ],
+                [
+                  "x4",
+                  "2.0945",
+                  "-13.106"
+                ],
+                [
+                  "x5",
+                  "2.0945",
+                  "-1128.124"
+                ]
+              ],
+              "title": "Same equation, same start, opposite behaviour"
+            },
+            "alt": "A table comparing two rearrangements of the same equation, one converging to two point zero nine four six and one running away"
+          },
+          {
+            "type": "worked-example",
+            "problem": "What to write when an iteration diverges",
+            "steps": [
+              {
+                "text": "*The values do not settle: they grow at each step.* — the observation",
+                "note": "say what you can see"
+              },
+              {
+                "text": "*So this rearrangement does not converge to the solution.* — the conclusion",
+                "note": "name the behaviour"
+              },
+              {
+                "text": "*A different rearrangement is needed, such as taking the cube root instead.* — the fix",
+                "note": "and the mark"
+              },
+              {
+                "text": "The solution itself has not changed, only the method of finding it",
+                "note": "worth saying, and often a mark"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "An iteration gives $x_1 = 1.5$, $x_2 = -0.8$, $x_3 = -2.8$, growing at each step. What should you conclude?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "divergence",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Values that grow instead of settling mean the **rearrangement diverges**. The equation still has its solution; this formula just will not find it.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the rearrangement diverges"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "This rearrangement diverges, so another is needed",
+            "The equation has no solution",
+            "The starting value was too small",
+            "The solution is negative"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Iteration** finds a solution numerically when the equation cannot be solved exactly.\n- Rearrange to $x = \\text{something in } x$, then run $x_{n+1} = f(x_n)$ from the given $x_0$.\n- $x_0$ is the **starting value given to you**; $x_1$ is the first value out.\n- **Never round part way through.** Use ANS and round only the final answer.\n- **Stop** when two consecutive iterates agree to the accuracy asked for.\n- A **sign change** in $f(x)$ between $a$ and $b$ shows a solution lies between them. Substitute both, state both signs, and say *sign change*.\n- Some rearrangements **diverge**. If the values grow or jump about, say so and use a different rearrangement.\n- Worked here: $x = \\dfrac{x^2+3}{5}$ from $x_0 = 0.6$ settles at **0.697**, and $x = \\sqrt[3]{2x+5}$ from $x_0 = 2$ settles at **2.095** to 3 d.p..",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "What it is",
+                  "a numerical solution when there is no exact one"
+                ],
+                [
+                  "The form",
+                  "x = something in x, then xₙ₊₁ = f(xₙ)"
+                ],
+                [
+                  "x₀",
+                  "the starting value you are given"
+                ],
+                [
+                  "Rounding",
+                  "never part way through; use ANS"
+                ],
+                [
+                  "When to stop",
+                  "two iterates agree to the accuracy wanted"
+                ],
+                [
+                  "Sign change",
+                  "f(a) and f(b) opposite signs, so a solution lies between"
+                ],
+                [
+                  "Diverging",
+                  "values grow or jump: try another rearrangement"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of iteration covering the method, the two habits that earn marks, the sign change and divergence"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What does $x_0$ mean in an iteration?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "what iteration is",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x_0$ is the **starting value**. Putting it into the formula gives $x_1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the starting value"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The starting value you are given",
+        "The solution of the equation",
+        "The first value the formula produces",
+        "The number of steps needed"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "An iteration is $x_{n+1} = \\dfrac{x_n^2 + 3}{5}$ with $x_0 = 0.6$. Work out $x_1$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "running an iteration",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{0.36 + 3}{5} = \\dfrac{3.36}{5} = 0.672$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes 0.6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.672"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.672,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Why is iteration used instead of solving the equation exactly?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "what iteration is",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An equation like $x^3 - 2x - 5 = 0$ cannot be factorised and has no formula you are given, but it still has a solution. Iteration finds it numerically.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no exact method is available"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Some equations have no exact method you can use",
+        "It is always faster than factorising",
+        "It gives a more accurate answer than algebra",
+        "It works only for quadratic equations"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "For $f(x) = x^3 - 2x - 5$, work out $f(2)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "sign change",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$8 - 4 - 5 = -1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−1"
+        }
+      ],
+      "discriminators": [],
+      "answer": -1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "An iteration is $x_{n+1} = \\sqrt[3]{2x_n + 5}$ with $x_0 = 2$. Work out $x_1$ to 4 decimal places.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "running an iteration",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\sqrt[3]{9} = 2.0801$ to 4 decimal places.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cube root of 9"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.0801"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2.0801,
+      "tolerance": 5e-05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "Rearrange $x^3 = 5x + 1$ into the form $x = \\sqrt[3]{\\ldots}$. Write what goes inside the cube root.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "rearranging",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Taking the cube root of both sides gives $x = \\sqrt[3]{5x + 1}$, so **$5x + 1$** goes inside.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cube roots both sides"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5x + 1"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "5x+1",
+        "5x + 1",
+        "5 x + 1"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "$f(3) = -2$ and $f(4) = 7$. What does that show?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "sign change",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The signs are opposite and the graph is continuous, so it must cross zero between them. That is a **sign change**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a solution lies between 3 and 4"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A solution of $f(x) = 0$ lies between 3 and 4",
+        "The solution is exactly 3.5",
+        "There is no solution between 3 and 4",
+        "The iteration will diverge"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "For $f(x) = x^3 - 2x - 5$, work out $f(2.1)$ to 3 decimal places.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "sign change",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2.1^3 - 2(2.1) - 5 = 9.261 - 4.2 - 5 = 0.061$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes 2.1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.061"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.061,
+      "tolerance": 0.0005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Two consecutive iterates are 0.6967 and 0.6971. To how many decimal places can you safely give the solution?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "when to stop",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Both round to **0.697**, so three decimal places are secure. They differ in the fourth, so four is not.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3 decimal places"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "3 decimal places, as 0.697",
+        "4 decimal places, as 0.6971",
+        "2 decimal places, as 0.70",
+        "1 decimal place, as 0.7"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What is the risk in rounding each iterate before using it in the next step?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "rounding",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A rounded value feeds into the next step, so the error compounds. Use ANS and keep the full value.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the error compounds"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The error grows with each step",
+        "The formula becomes invalid",
+        "The iteration always diverges",
+        "The answer comes out negative"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "An iteration is $x_{n+1} = \\dfrac{x_n^2 + 3}{5}$ with $x_0 = 0.6$. Work out $x_3$ to 4 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "running an iteration",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x_1 = 0.672$, $x_2 = 0.6903$, $x_3 = 0.6953$, keeping the full value on the calculator each time.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds x₁ = 0.672"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds x₂ = 0.6903"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.6953"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.6953,
+      "tolerance": 5e-05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "An iteration is $x_{n+1} = \\sqrt[3]{2x_n + 5}$ with $x_0 = 2$. Give the solution to 3 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "when to stop",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The iterates run 2, 2.0801, 2.0924, 2.0942, 2.0945, 2.0945. The first pair to agree to 3 decimal places is x4 and x5, giving **2.095**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "runs the iteration at least three times"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "consecutive iterates agree to 3 d.p."
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.095"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 2.095,
+      "tolerance": 0.0005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "An iteration gives 2, 1.5, −0.8, −2.8, growing at each step. What has gone wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "divergence",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Values that grow rather than settle mean this **rearrangement diverges**. The solution still exists; this formula will not reach it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the rearrangement diverges"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The rearrangement diverges, so another is needed",
+        "The equation has no solution at all",
+        "The starting value was negative",
+        "The calculator was in the wrong mode"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "$f(x) = x^2 - 5x + 3$. Work out $f(0.7)$ to 2 decimal places.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "sign change",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.49 - 3.5 + 3 = -0.01$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes 0.7"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "-0.01"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": -0.01,
+      "tolerance": 0.005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "short-text",
+      "prompt": "$x^3 - 4x - 9 = 0$. Rearrange it into the form $x = \\sqrt[3]{\\ldots}$ and write what goes inside the cube root.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "rearranging",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Move the terms across to get $x^3 = 4x + 9$, then cube root both sides: $x = \\sqrt[3]{4x + 9}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reaches x³ = 4x + 9"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4x + 9"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "4x+9",
+        "4x + 9",
+        "4 x + 9"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "An iteration is $x_{n+1} = \\dfrac{x_n^2 + 3}{5}$ with $x_0 = 0.6$. Work out $x_2$ to 4 decimal places.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "running an iteration",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x_1 = 0.672$, then $x_2 = \\dfrac{0.672^2 + 3}{5} = 0.6903$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses the unrounded x₁"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.6903"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.6903,
+      "tolerance": 5e-05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Show that $x^3 - 2x - 5 = 0$ has a solution between 2 and 2.1, then use $x_{n+1} = \\sqrt[3]{2x_n + 5}$ with $x_0 = 2$ to find that solution to 3 decimal places.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "sign change",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let f of x be x cubed minus two x minus five. Substituting two gives eight minus four minus five, which is minus one, and substituting two point one gives nine point two six one minus four point two minus five, which is nought point zero six one. One is negative and the other is positive, so there is a sign change, and since the graph is continuous it must cross zero between two and two point one. There is therefore a solution in that interval. Running the iteration from two gives two point zero eight zero one, then two point zero nine two four, then two point zero nine four two, then two point zero nine four five, then two point zero nine four five again. The last two agree to three decimal places, so the solution is two point zero nine five to three decimal places.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes both 2 and 2.1 into f(x)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "f(2) = −1 and f(2.1) = 0.061, with the sign change stated"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "runs the iteration at least three times from x₀ = 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "consecutive iterates agree to 3 decimal places"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.095"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Substitutes both 2 and 2.1 into f(x)",
+          "marks": 1
+        },
+        {
+          "text": "Gets −1 and 0.061 and states there is a sign change",
+          "marks": 1
+        },
+        {
+          "text": "Runs the iteration at least three times from x₀ = 2",
+          "marks": 1
+        },
+        {
+          "text": "Shows two consecutive iterates agreeing to 3 decimal places",
+          "marks": 1
+        },
+        {
+          "text": "Gives the solution as 2.095",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The sign change.** Let $f(x) = x^3 - 2x - 5$.\n\n$$f(2) = 8 - 4 - 5 = -1 \\qquad f(2.1) = 9.261 - 4.2 - 5 = 0.061$$\n\nOne is **negative** and the other **positive**, so there is a **sign change**. The graph is continuous, so it must cross zero between them: a solution lies between 2 and 2.1.\n\n**The iteration**, from $x_0 = 2$:\n\n| | |\n|---|---|\n| $x_1$ | 2.0801 |\n| $x_2$ | 2.0924 |\n| $x_3$ | 2.0942 |\n| $x_4$ | 2.0945 |\n| $x_5$ | 2.0945 |\n\n$x_4$ and $x_5$ agree to 3 decimal places, so the solution is $\\mathbf{2.095}$."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A student rearranges $x^3 - 2x - 5 = 0$ as $x = \\dfrac{x^3 - 5}{2}$ and iterates from $x_0 = 2$, getting 1.5, then −0.8, then −2.8. Explain what has happened and what they should do.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "divergence",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The values are not settling towards anything: they are moving further from the starting value at each step and growing in size. That means this rearrangement diverges, so however many steps the student takes it will never reach the solution. The equation itself still has a solution between two and two point one; only the formula is at fault. The student should rearrange the equation a different way, for example as x equals the cube root of two x plus five, which converges, and iterate from the same starting value.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "identifies that the values are growing rather than settling"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states that this rearrangement diverges, so it will not find the solution"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "says to use a different rearrangement, such as the cube root form"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Identifies that the values are growing rather than settling",
+          "marks": 1
+        },
+        {
+          "text": "States that the rearrangement diverges and will not reach the solution",
+          "marks": 1
+        },
+        {
+          "text": "Says to try a different rearrangement, such as the cube root form",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**What has happened.** The values are not settling: each one is further from the last and growing in size. This rearrangement **diverges**, so however many steps the student takes it will never reach the solution.\n\n**The equation is fine.** There is still a solution between 2 and 2.1. Only the **formula** is at fault, because cubing makes the right-hand side change much faster than $x$ does.\n\n**What to do.** Rearrange a different way. Writing $x^3 = 2x + 5$ and cube rooting gives $x = \\sqrt[3]{2x + 5}$, which **converges** from the same starting value."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Use the ANS key. Type the right-hand side once with ANS where the $x$ goes, press equals, and keep pressing. It is faster than retyping and it removes the rounding error that costs most of the marks in this topic.\n\nWrite every iterate down to more decimal places than the question wants. A question asking for $x_1$, $x_2$ and $x_3$ is paying for all three.\n\nFor a *show that it rearranges* question, write the algebra line by line. The answer is given, so the working is the only thing being marked.\n\nFor a *show that a solution lies between* question, substitute **both** values, write both results with their signs, and use the words **sign change**. Do not iterate: that is a different question.\n\nStop when two consecutive iterates agree to the accuracy asked for, and say that they do.\n\nIf the values grow or jump around, do not keep going. Say the rearrangement diverges and, if the question allows, use another.",
+    "examinerErrors": [
+      "Rounding each iterate before feeding it back in, so the error compounds.",
+      "Giving only the final value when the question asked for x₁, x₂ and x₃.",
+      "Confusing x₀ with x₁: the starting value you are given is x₀.",
+      "Iterating when the question asked to show a solution lies between two values, which needs a sign change instead.",
+      "Substituting into the rearranged form rather than into f(x) when testing for a sign change.",
+      "Not writing the words sign change, or not stating both signs.",
+      "Stopping too early, when the iterates agree only to two decimal places but three were asked for.",
+      "Carrying on for many steps when the values are clearly diverging."
+    ],
+    "grade9Looks": "A top answer uses ANS throughout and never rounds until the final line, writing each iterate to more places than the question needs. For a sign change it substitutes into f(x) rather than the rearranged form, states both values with their signs, uses the phrase sign change and adds that the graph is continuous. It stops when two consecutive iterates agree to the accuracy asked for and says so rather than leaving it implied. Shown a diverging iteration it recognises the behaviour at once, says the rearrangement is at fault rather than the equation, and offers a rearrangement that would converge."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

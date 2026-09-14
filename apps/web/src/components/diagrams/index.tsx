@@ -31,6 +31,7 @@ import { VectorTriangle } from './VectorTriangle.tsx'
 import { HuffmanTree } from './HuffmanTree.tsx'
 import { VennDiagram } from './VennDiagram.tsx'
 import { ProbabilityTree } from './ProbabilityTree.tsx'
+import { Histogram } from './Histogram.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -70,6 +71,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'huffman-tree': HuffmanTree,
   'venn-diagram': VennDiagram,
   'probability-tree': ProbabilityTree,
+  'histogram': Histogram,
 }
 
 export const INK = '#1e2330'
