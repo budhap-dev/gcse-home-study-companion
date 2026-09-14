@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { Provenance, Slug } from './common.ts'
+import { Provenance, RichText, Slug } from './common.ts'
 import { ExamTechniqueNote, Lesson, Quiz, Worksheet } from './lesson.ts'
 import { Question } from './questions.ts'
 
@@ -27,6 +27,21 @@ export const Topic = z.object({
   resources: z.array(z.object({ label: z.string().min(1), url: z.string().url(), note: z.string().optional() })).optional(),
   /** Shown or hidden by the student's chosen board when a topic is board-specific. */
   boards: z.array(z.string().min(1)).optional(),
+  /**
+   * Short, practical tips: how to remember something, how to recognise which method a
+   * question wants, a faster route, or a way to check an answer. Kept separate from the
+   * lesson so a student can reread them in a minute before a test, and separate from
+   * examinerErrors, which say what goes wrong rather than what to do.
+   */
+  tips: z
+    .array(
+      z.object({
+        kind: z.enum(['remember', 'spot', 'shortcut', 'check']),
+        title: z.string().min(1),
+        body: RichText,
+      }),
+    )
+    .optional(),
   lesson: Lesson,
   questions: z.array(Question).min(1),
   worksheets: z.object({ core: Worksheet, higher: Worksheet, advanced: Worksheet }),

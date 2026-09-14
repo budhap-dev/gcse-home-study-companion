@@ -98,6 +98,24 @@ export function Topic() {
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={previewOf(topic.examTechnique.body)} action="Read" />
       </nav>
 
+      {topic.tips && topic.tips.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <h2 className="chip w-fit" style={{ '--chip': '#c27a00' } as React.CSSProperties}><Smiley>💡</Smiley>Tips and tricks</h2>
+          <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {topic.tips.map((tip, i) => (
+              <li key={i} className="flex flex-col gap-1 rounded-xl border border-rule bg-surface px-4 py-3">
+                <span className="flex items-center gap-2">
+                  <Smiley>{TIP_EMOJI[tip.kind]}</Smiley>
+                  <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{TIP_LABEL[tip.kind]}</span>
+                </span>
+                <span className="font-bold">{tip.title}</span>
+                <RichText source={tip.body} className="text-sm" />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {termsForTopic(topic.id).length > 0 && (
         <section className="flex flex-col gap-2">
           <h2 className="chip w-fit" style={{ '--chip': '#6B4E9B' } as React.CSSProperties}><Smiley>📖</Smiley>Key terms</h2>
@@ -127,6 +145,10 @@ export function Topic() {
     </article>
   )
 }
+
+/** Four kinds of tip: how to remember it, how to spot it, a faster route, a way to check. */
+const TIP_EMOJI: Record<string, string> = { remember: '🧠', spot: '🔍', shortcut: '⚡', check: '✅' }
+const TIP_LABEL: Record<string, string> = { remember: 'Remember it', spot: 'Spot it', shortcut: 'Quicker way', check: 'Check it' }
 
 const PART_EMOJI: Record<string, string> = { Lesson: '📖', 'Core worksheet': '📝', 'Higher worksheet': '📝', 'Advanced worksheet': '🧠', Quiz: '⚡', Flashcards: '🃏', 'Exam technique': '🎓' }
 

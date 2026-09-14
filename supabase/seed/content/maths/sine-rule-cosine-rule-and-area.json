@@ -1,0 +1,1400 @@
+{
+  "id": "sine-rule-cosine-rule-and-area",
+  "subjectId": "maths",
+  "unitId": "geometry-and-measures",
+  "title": "Sine rule, cosine rule and area of a triangle",
+  "specPoints": [
+    "G22",
+    "G23"
+  ],
+  "order": 5,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "spot",
+      "title": "One question picks the rule",
+      "body": "Ask: **do I have a side opposite a known angle?** Yes, use the **sine rule**. No, use the **cosine rule**. Two sides and the angle between them always means cosine; three sides always means cosine."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Put the unknown on top",
+      "body": "Wanting a **side**, write $\\dfrac{b}{\\sin B} = \\dfrac{a}{\\sin A}$. Wanting an **angle**, flip both: $\\dfrac{\\sin B}{b} = \\dfrac{\\sin A}{a}$. Set it up that way and there is nothing left to rearrange, so nothing left to get wrong."
+    },
+    {
+      "kind": "remember",
+      "title": "The odd one out is opposite",
+      "body": "In $a^2 = b^2 + c^2 - 2bc\\cos A$, the letter that appears **alone** on the left is the side **opposite** the angle used. Same in the rearranged form: $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$, where $a$ is the odd one out."
+    },
+    {
+      "kind": "check",
+      "title": "Biggest side, biggest angle",
+      "body": "In any triangle the longest side faces the largest angle. Check your answer against that before moving on. A **negative cosine** is not an error either: it means the angle is obtuse, which can only happen at the largest angle, the one opposite the longest side."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Three rules, and choosing between them",
+        "body": "Right-angled triangles are handled by sine, cosine and tangent. **Any** triangle needs three new rules, all given on the formula sheet, so the skill is **choosing** the right one rather than recalling it.\n\nLabel the triangle first: capital letters for angles, and the **lower-case letter of the same name** for the side **opposite** it. So side $a$ is opposite angle $A$.\n\n- **Sine rule**: $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B} = \\dfrac{c}{\\sin C}$. Use it when you have a **matching pair**: a side and the angle opposite it.\n- **Cosine rule**: $a^2 = b^2 + c^2 - 2bc\\cos A$. Use it when you have **no matching pair**: either three sides, or two sides and the angle between them.\n- **Area**: $\\text{Area} = \\dfrac{1}{2}ab\\sin C$, where $C$ is the angle **between** the two sides.\n\nOne question decides between the first two: **do I have a side opposite a known angle?** If yes, sine rule. If no, cosine rule.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Any triangle",
+              "boxes": [
+                {
+                  "title": "Label it",
+                  "points": [
+                    "angle A opposite side a",
+                    "capitals for angles"
+                  ]
+                },
+                {
+                  "title": "Matching pair?",
+                  "points": [
+                    "a side opposite a known angle",
+                    "then the sine rule"
+                  ]
+                },
+                {
+                  "title": "No pair?",
+                  "points": [
+                    "three sides, or two and the angle between",
+                    "then the cosine rule"
+                  ]
+                },
+                {
+                  "title": "Area",
+                  "points": [
+                    "half a b sin C",
+                    "C between the two sides"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes on choosing a rule for any triangle: labelling, the sine rule for a matching pair, the cosine rule when there is none, and the area formula"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "What you are given",
+                "Rule to use",
+                "Finds"
+              ],
+              "rows": [
+                [
+                  "Two angles and any side",
+                  "sine rule",
+                  "the other sides"
+                ],
+                [
+                  "Two sides and an angle opposite one",
+                  "sine rule",
+                  "the other angle"
+                ],
+                [
+                  "Two sides and the angle between",
+                  "cosine rule",
+                  "the third side"
+                ],
+                [
+                  "Three sides",
+                  "cosine rule",
+                  "any angle"
+                ],
+                [
+                  "Two sides and the angle between",
+                  "½ab sin C",
+                  "the area"
+                ]
+              ],
+              "title": "Ask: is there a side opposite a known angle?"
+            },
+            "alt": "A table showing which rule to use for each combination of known sides and angles"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "You know two sides of a triangle and the angle between them. Which rule finds the third side?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "choosing a rule",
+          "calculator": "either",
+          "tags": [],
+          "solution": "There is no side opposite a **known** angle, so the sine rule cannot start. Two sides and the angle between them is exactly the cosine rule's case.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the cosine rule"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The cosine rule",
+            "The sine rule",
+            "The area formula",
+            "Pythagoras"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "The sine rule for a side",
+        "body": "A triangle has $A = 42°$, $B = 73°$ and side $a = 8$ cm. Find side $b$.\n\nThere is a matching pair, $a$ and $A$, so the sine rule starts immediately. Put the side you **want** on top.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-pair",
+            "props": {
+              "left": {
+                "sides": [
+                  10.84,
+                  8.0,
+                  11.43
+                ],
+                "angleText": [
+                  "42°",
+                  "73°",
+                  "65°"
+                ],
+                "lengths": [
+                  "",
+                  "a = 8 cm",
+                  "b = ?"
+                ]
+              }
+            },
+            "alt": "A triangle with angles of 42, 73 and 65 degrees, with the side of 8 centimetres opposite the 42 degree angle and the unknown side b opposite the 73 degree angle"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find b",
+            "steps": [
+              {
+                "text": "Write the rule with the unknown on top: $\\dfrac{b}{\\sin B} = \\dfrac{a}{\\sin A}$",
+                "note": "this avoids rearranging later"
+              },
+              {
+                "text": "$\\dfrac{b}{\\sin 73°} = \\dfrac{8}{\\sin 42°}$",
+                "note": "substitute the matching pair on the right"
+              },
+              {
+                "text": "$b = \\dfrac{8 \\sin 73°}{\\sin 42°}$",
+                "note": "multiply both sides by sin B"
+              },
+              {
+                "text": "$b = 11.43$ cm to 2 decimal places",
+                "note": "keep the full value on the calculator"
+              },
+              {
+                "text": "Check it is sensible: $B = 73°$ is the larger angle, so $b$ should be the longer side, and 11.43 > 8",
+                "note": "the biggest side faces the biggest angle"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "In a triangle, $a = 8$, $A = 42°$ and $B = 73°$. Find $b$ to 2 decimal places.",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "sine rule for a side",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$b = \\dfrac{8 \\sin 73°}{\\sin 42°} = 11.43$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "writes the sine rule with b on top"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "substitutes correctly"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "11.43"
+            }
+          ],
+          "discriminators": [],
+          "answer": 11.43,
+          "tolerance": 0.005,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "The sine rule for an angle",
+        "body": "Now the other direction. A triangle has $a = 9$ cm, $A = 50°$ and $b = 7$ cm. Find angle $B$.\n\nWhen the **angle** is what you want, put the **sines on top** instead. Everything else is the same.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find angle B",
+            "steps": [
+              {
+                "text": "$\\dfrac{\\sin B}{b} = \\dfrac{\\sin A}{a}$",
+                "note": "sines on top when you want an angle"
+              },
+              {
+                "text": "$\\dfrac{\\sin B}{7} = \\dfrac{\\sin 50°}{9}$",
+                "note": "substitute"
+              },
+              {
+                "text": "$\\sin B = \\dfrac{7 \\sin 50°}{9} = 0.5958$",
+                "note": "work out the sine first"
+              },
+              {
+                "text": "$B = \\sin^{-1}(0.5958) = 36.6°$",
+                "note": "then inverse sine"
+              },
+              {
+                "text": "Sensible? $b = 7$ is shorter than $a = 9$, so $B$ should be smaller than $A = 50°$, and 36.6° is",
+                "note": "the check that catches a slip"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "In a triangle, $a = 9$, $A = 50°$ and $b = 7$. Find angle $B$ in degrees, to 1 decimal place.",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "sine rule for an angle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\sin B = \\dfrac{7 \\sin 50°}{9} = 0.5958$, so $B = 36.6°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "sines on top"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds sin B"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "36.6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 36.6,
+          "tolerance": 0.05,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "The cosine rule for a side",
+        "body": "When there is **no matching pair**, the sine rule cannot start. Two sides and the angle **between** them is the cosine rule's case.\n\n$$a^2 = b^2 + c^2 - 2bc\\cos A$$\n\nThe angle $A$ and the side $a$ are opposite each other: the angle you know goes with the side you want.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "triangle-pair",
+            "props": {
+              "left": {
+                "sides": [
+                  10.0,
+                  8.29,
+                  7.0
+                ],
+                "angleText": [
+                  "55°",
+                  "",
+                  ""
+                ],
+                "lengths": [
+                  "c = 10 cm",
+                  "a = ?",
+                  "b = 7 cm"
+                ],
+                "angles": [
+                  1,
+                  0,
+                  0
+                ]
+              }
+            },
+            "alt": "A triangle with sides of 7 and 10 centimetres meeting at an angle of 55 degrees, and the unknown side a opposite that angle"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find a, given b = 7, c = 10 and A = 55°",
+            "steps": [
+              {
+                "text": "$a^2 = 7^2 + 10^2 - 2(7)(10)\\cos 55°$",
+                "note": "substitute straight in"
+              },
+              {
+                "text": "$= 49 + 100 - 140\\cos 55°$",
+                "note": "work the squares out first"
+              },
+              {
+                "text": "$= 149 - 80.301 = 68.699$",
+                "note": "one subtraction"
+              },
+              {
+                "text": "$a = \\sqrt{68.699} = 8.29$ cm",
+                "note": "do not forget the square root"
+              },
+              {
+                "text": "Sensible? $a$ should be shorter than $c = 10$ because $A = 55°$ is not the biggest angle",
+                "note": "and it is"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A triangle has $b = 7$, $c = 10$ and the angle between them $A = 55°$. Find $a$ to 2 decimal places.",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "cosine rule for a side",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$a^2 = 49 + 100 - 140\\cos 55° = 68.699$, so $a = 8.29$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "substitutes into the cosine rule"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "reaches a² = 68.7"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "8.29"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 8.29,
+          "tolerance": 0.005,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "The cosine rule for an angle",
+        "body": "Given **three sides**, the cosine rule finds any angle. Rearranged for the angle it is\n\n$$\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$$\n\nThis form is **not** on the formula sheet, so either learn it or rearrange the other one. Notice which side is on its own: $a$, the one **opposite** the angle you want.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A triangle has sides 11, 6 and 8 cm. Find the largest angle",
+            "steps": [
+              {
+                "text": "The largest angle faces the longest side, so find $A$ opposite $a = 11$",
+                "note": "always start with the biggest"
+              },
+              {
+                "text": "$\\cos A = \\dfrac{6^2 + 8^2 - 11^2}{2(6)(8)}$",
+                "note": "the odd one out is a"
+              },
+              {
+                "text": "$= \\dfrac{36 + 64 - 121}{96} = \\dfrac{-21}{96} = -0.2187$",
+                "note": "a negative cosine"
+              },
+              {
+                "text": "$A = \\cos^{-1}(-0.2187) = 102.6°$",
+                "note": "obtuse, as the negative cosine predicted"
+              },
+              {
+                "text": "A negative cosine always means an obtuse angle, which is a useful check",
+                "note": "and the cosine rule gives it directly, with no ambiguity"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "A triangle has sides 11, 6 and 8 cm. Find the largest angle in degrees, to 1 decimal place.",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "cosine rule for an angle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The largest angle faces the side of 11. $\\cos A = \\dfrac{36 + 64 - 121}{96} = -0.2187$, so $A = 102.6°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "puts the side of 11 opposite the angle wanted"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds a negative cosine"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "102.6"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 102.6,
+          "tolerance": 0.05,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "worked-example",
+        "title": "The area of any triangle",
+        "body": "$\\text{Area} = \\dfrac{1}{2}ab\\sin C$ works for **any** triangle, where $C$ is the angle **between** the two sides $a$ and $b$. The half-base-times-height formula is the special case where that angle is $90°$, since $\\sin 90° = 1$.\n\nThe one condition is that the angle must be **between** the two sides you use. If it is not, find a side or angle that is first.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the area of a triangle with sides 9 cm and 12 cm meeting at 40°",
+            "steps": [
+              {
+                "text": "$\\text{Area} = \\dfrac{1}{2}ab\\sin C$",
+                "note": "with C between the two sides"
+              },
+              {
+                "text": "$= \\dfrac{1}{2} \\times 9 \\times 12 \\times \\sin 40°$",
+                "note": "substitute"
+              },
+              {
+                "text": "$= 54 \\sin 40°$",
+                "note": "the half and the sides first"
+              },
+              {
+                "text": "$= 34.71$ cm²",
+                "note": "to 2 decimal places"
+              },
+              {
+                "text": "Units are **squared**, because it is an area",
+                "note": "dropping the square is a common lost mark"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sides",
+                "Angle between",
+                "Area"
+              ],
+              "rows": [
+                [
+                  "9 and 12 cm",
+                  "40°",
+                  "34.71 cm²"
+                ],
+                [
+                  "6 and 10 cm",
+                  "150°",
+                  "15.0 cm²"
+                ],
+                [
+                  "8 and 10 cm",
+                  "30°",
+                  "20 cm² exactly"
+                ]
+              ],
+              "title": "The angle must sit between the two sides"
+            },
+            "alt": "A table of three areas worked from the half a b sine C formula, including an obtuse angle and one using an exact value"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "Find the area of a triangle with sides 8 cm and 10 cm meeting at an angle of 30°, in cm².",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "area of a triangle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\dfrac{1}{2} \\times 8 \\times 10 \\times \\sin 30° = 40 \\times \\dfrac{1}{2} = 20$ cm².",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses half a b sin C"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "20"
+            }
+          ],
+          "discriminators": [],
+          "answer": 20,
+          "tolerance": 0.05,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: the ambiguous case",
+        "body": "The sine rule has a trap the cosine rule does not. $\\sin\\theta$ takes the **same value** at $\\theta$ and at $180° - \\theta$: $\\sin 30°$ and $\\sin 150°$ are both $0.5$. So when you use $\\sin^{-1}$ to find an angle, the calculator gives you the **acute** answer, and the obtuse one may also be valid.\n\nThis is the **ambiguous case**, and it only arises when the sine rule is used to find an **angle**.\n\n**How to handle it.** Work out the acute answer, then the obtuse partner $180° - \\theta$, then check whether the obtuse one still leaves room for the third angle.\n\nIn the earlier example $A = 50°$ and $B = 36.6°$. The obtuse partner is $180 - 36.6 = 143.4°$, and $50 + 143.4 = 193.4°$, already more than $180°$. So the obtuse answer is **impossible** here and only 36.6° works.\n\n**The cosine rule has no such problem**, because $\\cos^{-1}$ returns a unique angle between $0°$ and $180°$: a negative cosine gives an obtuse angle directly. When a question could go either way, the cosine rule is the safer tool.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "Working",
+                "Verdict"
+              ],
+              "rows": [
+                [
+                  "Acute answer",
+                  "sin⁻¹ gives 36.6°",
+                  "always valid"
+                ],
+                [
+                  "Obtuse partner",
+                  "180 − 36.6 = 143.4°",
+                  "test it"
+                ],
+                [
+                  "Angle sum",
+                  "50 + 143.4 = 193.4°",
+                  "already over 180°"
+                ],
+                [
+                  "Conclusion",
+                  "only 36.6° is possible",
+                  "the obtuse one is rejected"
+                ]
+              ],
+              "title": "Test the obtuse partner, do not assume"
+            },
+            "alt": "A table showing how to test whether the obtuse alternative from the sine rule is possible, using the angle sum of a triangle"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Why sin⁻¹ hides an answer",
+            "steps": [
+              {
+                "text": "$\\sin 30° = 0.5$ and $\\sin 150° = 0.5$",
+                "note": "the same value at two angles"
+              },
+              {
+                "text": "So $\\sin^{-1}(0.5)$ has two possible answers, 30° and 150°",
+                "note": "the calculator returns only the first"
+              },
+              {
+                "text": "Adding the two gives 180°, which is where the partner comes from",
+                "note": "180 minus the acute answer"
+              },
+              {
+                "text": "Check the partner against the angles you already have",
+                "note": "if the three cannot total 180°, reject it"
+              },
+              {
+                "text": "The cosine rule never does this: cos⁻¹ gives one answer",
+                "note": "so prefer it when an angle could be obtuse"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "You use the sine rule and get $B = 40°$. Why must you consider $140°$ as well?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "the ambiguous case",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\sin 40°$ and $\\sin 140°$ are equal, so $\\sin^{-1}$ cannot tell them apart. Check whether $140°$ still leaves room for the third angle.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "sine repeats at 180 − θ"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "Sine gives the same value at θ and 180 − θ",
+            "The calculator rounds the answer",
+            "Every triangle has an obtuse angle",
+            "The sine rule only works for acute angles"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Label the triangle: angle $A$ opposite side $a$. Everything else follows from that.\n- **Sine rule** $\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}$: use it when you have a **side opposite a known angle**.\n- Put the **unknown on top**: the side you want over its sine, or $\\sin$ of the angle you want over its side.\n- **Cosine rule** $a^2 = b^2 + c^2 - 2bc\\cos A$: use it for **two sides and the angle between**, or for **three sides**.\n- For an angle from three sides, $\\cos A = \\dfrac{b^2 + c^2 - a^2}{2bc}$. A **negative** cosine means an **obtuse** angle.\n- **Area** $= \\dfrac{1}{2}ab\\sin C$, with $C$ **between** the two sides. Units are squared.\n- The **ambiguous case**: $\\sin^{-1}$ gives only the acute answer. Check $180° - \\theta$ against the angle sum before rejecting it.\n- The cosine rule is never ambiguous, so prefer it when an angle might be obtuse.\n- Sense check every answer: the **biggest side faces the biggest angle**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Labelling",
+                  "angle A opposite side a"
+                ],
+                [
+                  "Sine rule",
+                  "a side opposite a known angle"
+                ],
+                [
+                  "Unknown on top",
+                  "the side, or sin of the angle"
+                ],
+                [
+                  "Cosine rule",
+                  "two sides and the angle between, or three sides"
+                ],
+                [
+                  "Angle from three sides",
+                  "cos A = (b² + c² − a²) ÷ 2bc"
+                ],
+                [
+                  "Negative cosine",
+                  "the angle is obtuse"
+                ],
+                [
+                  "Area",
+                  "½ab sin C, C between the sides"
+                ],
+                [
+                  "Ambiguous case",
+                  "only with the sine rule, and only for an angle"
+                ],
+                [
+                  "Sense check",
+                  "the biggest side faces the biggest angle"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of the three rules for any triangle, when each is used and what to watch for"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "In a triangle, which side is labelled $a$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "labelling",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Lower-case $a$ is always the side **opposite** capital $A$. Every one of the three rules depends on that convention.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "opposite angle A"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The side opposite angle A",
+        "The shortest side",
+        "The side between angles B and A",
+        "The base of the triangle"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "You know all three sides of a triangle and want an angle. Which rule?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing a rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With no angle known there is no matching pair, so the sine rule cannot start. Three sides is the cosine rule's case.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the cosine rule"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The cosine rule",
+        "The sine rule",
+        "The area formula",
+        "Pythagoras"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "In the area formula $\\dfrac{1}{2}ab\\sin C$, where must angle $C$ be?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "area of a triangle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$C$ must be the angle **between** the two sides used. If it is not, find another side or angle first.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "between the two sides"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Between the two sides a and b",
+        "Opposite side a",
+        "Opposite side b",
+        "Anywhere in the triangle"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "Find the area of a triangle with sides 8 cm and 10 cm meeting at 30°, in cm².",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "area of a triangle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{1}{2} \\times 8 \\times 10 \\times \\sin 30° = 40 \\times 0.5 = 20$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses half a b sin C"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0.05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "In a triangle, $a = 8$, $A = 42°$ and $B = 73°$. Find $b$ to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "sine rule for a side",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$b = \\dfrac{8 \\sin 73°}{\\sin 42°} = 11.43$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sine rule with b on top"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes correctly"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11.43"
+        }
+      ],
+      "discriminators": [],
+      "answer": 11.43,
+      "tolerance": 0.005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "In a triangle, $a = 9$, $A = 50°$ and $b = 7$. Find angle $B$ to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "sine rule for an angle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\sin B = \\dfrac{7 \\sin 50°}{9}$, so $B = 36.6°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sines on top"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds sin B"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36.6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 36.6,
+      "tolerance": 0.05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "Find the area of a triangle with sides 9 cm and 12 cm meeting at 40°, to 2 decimal places, in cm².",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "area of a triangle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{1}{2} \\times 9 \\times 12 \\times \\sin 40° = 34.71$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "54 sin 40°"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "34.71"
+        }
+      ],
+      "discriminators": [],
+      "answer": 34.71,
+      "tolerance": 0.005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "You know two angles and one side. Which rule finds another side?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "choosing a rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two angles give you the third, so you certainly have a side opposite a known angle. That is a matching pair, so the **sine rule** works.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the sine rule"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The sine rule",
+        "The cosine rule",
+        "The area formula",
+        "None of them"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "Find the area of a triangle with sides 6 cm and 10 cm meeting at 150°, to 1 decimal place, in cm².",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "area of a triangle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{1}{2} \\times 6 \\times 10 \\times \\sin 150° = 30 \\times 0.5 = 15.0$ cm². The formula works for an obtuse angle too.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "30 sin 150°"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15.0"
+        }
+      ],
+      "discriminators": [],
+      "answer": 15.0,
+      "tolerance": 0.05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Why does the area formula reduce to half base times height in a right-angled triangle?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "area of a triangle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With $C = 90°$, $\\sin C = 1$, so $\\dfrac{1}{2}ab\\sin C$ becomes $\\dfrac{1}{2}ab$, which is half base times height.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sin 90° = 1"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Because sin 90° = 1",
+        "Because the two sides are equal",
+        "Because the base is always the hypotenuse",
+        "It does not; the formulas are unrelated"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "A triangle has $b = 7$, $c = 10$ and the angle between them $A = 55°$. Find $a$ to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "cosine rule for a side",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$a^2 = 49 + 100 - 140\\cos 55° = 68.699$, so $a = 8.29$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes into the cosine rule"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "evaluates a²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8.29"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 8.29,
+      "tolerance": 0.005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A triangle has sides 11, 6 and 8 cm. Find its largest angle in degrees, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "cosine rule for an angle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The largest angle faces the side of 11: $\\cos A = \\dfrac{36 + 64 - 121}{96} = -0.2187$, giving $A = 102.6°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses the side of 11 as a"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "negative cosine"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "102.6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 102.6,
+      "tolerance": 0.05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "You find $\\cos A = -0.24$. What does the negative sign tell you?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "cosine rule for an angle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Cosine is negative between $90°$ and $180°$, so a negative cosine means the angle is **obtuse**. It is a useful check rather than an error.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the angle is obtuse"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The angle is obtuse",
+        "You have made an arithmetic error",
+        "The triangle is impossible",
+        "The angle is exactly 90 degrees"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "In a triangle, $a = 9$, $A = 50°$ and $b = 7$. The sine rule gives an acute angle $B$. What is the obtuse alternative, to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the ambiguous case",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The acute answer is $36.6°$, so the obtuse partner is $180 - 36.6 = 143.4°$. Here it is impossible, since $50 + 143.4 > 180$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the acute angle 36.6°"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts from 180"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "143.4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 143.4,
+      "tolerance": 0.05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why is the cosine rule never ambiguous when finding an angle?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the ambiguous case",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\cos^{-1}$ returns a **unique** angle between $0°$ and $180°$: positive cosines give acute angles and negative ones obtuse. Sine cannot distinguish $\\theta$ from $180° - \\theta$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "cos⁻¹ gives a unique angle"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Inverse cosine gives one answer between 0 and 180 degrees",
+        "The cosine rule only works on acute triangles",
+        "It uses three sides rather than two",
+        "Cosine is always positive"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A triangle has two angles of 42° and 73°. What is the third angle, in degrees?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "labelling",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Angles in a triangle sum to $180°$: $180 - 42 - 73 = 65°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts both from 180"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "65"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 65,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A triangle has sides of 7 cm and 10 cm with an angle of 55° between them. Find the third side and then the area, showing which rule you use each time and why.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "choosing a rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "There is no side opposite a known angle, because the fifty five degree angle sits between the two sides given, so the sine rule cannot start and the cosine rule is the one to use. Substituting gives a squared equals seven squared plus ten squared minus two times seven times ten times cosine of fifty five, which is forty nine plus one hundred minus one hundred and forty cosine fifty five. That comes to sixty eight point six nine nine, so a is eight point two nine centimetres to two decimal places. For the area the angle of fifty five degrees lies between the two sides of seven and ten, which is exactly what the area formula needs, so the area is a half times seven times ten times sine of fifty five. That is thirty five sine fifty five, which is twenty eight point six seven square centimetres to two decimal places.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "states that there is no matching pair, so the cosine rule is needed"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes into the cosine rule"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "third side 8.29 cm"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses half a b sin C with the angle between the two sides"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "area 28.67 cm²"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains that there is no side opposite a known angle, so the cosine rule is needed",
+          "marks": 1
+        },
+        {
+          "text": "Substitutes correctly into the cosine rule",
+          "marks": 1
+        },
+        {
+          "text": "Gives the third side as 8.29 cm",
+          "marks": 1
+        },
+        {
+          "text": "Uses half a b sin C with the 55 degree angle between the two sides",
+          "marks": 1
+        },
+        {
+          "text": "Gives the area as 28.67 cm²",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Which rule for the side?** The $55°$ angle sits **between** the two sides given, so there is no side opposite a known angle and the sine rule cannot start. That is the **cosine rule's** case.\n\n$$a^2 = 7^2 + 10^2 - 2(7)(10)\\cos 55° = 49 + 100 - 140\\cos 55° = 68.699$$\n\n$$a = \\mathbf{8.29} \\text{ cm}$$\n\n**Which rule for the area?** The $55°$ angle lies between the sides of 7 and 10, which is exactly what $\\dfrac{1}{2}ab\\sin C$ needs.\n\n$$\\text{Area} = \\dfrac{1}{2} \\times 7 \\times 10 \\times \\sin 55° = 35\\sin 55° = \\mathbf{28.67} \\text{ cm}^2$$"
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Explain what the ambiguous case is, why it happens, and how to decide whether the obtuse answer is possible.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "the ambiguous case",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The ambiguous case arises when the sine rule is used to find an angle. It happens because sine takes the same value at an angle and at one hundred and eighty minus that angle, so for example sine of forty degrees and sine of one hundred and forty degrees are equal. The inverse sine key on a calculator returns only the acute answer, so the obtuse one can be missed. To decide whether the obtuse answer is possible, subtract the acute answer from one hundred and eighty to get its partner, then add that partner to the angle you already knew. If the total is already one hundred and eighty degrees or more there is no room for a third angle, so the obtuse answer must be rejected and only the acute one works. If the total is less than one hundred and eighty, both answers give a valid triangle and both should be given. The cosine rule never has this problem, because inverse cosine returns a unique angle.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states it arises when the sine rule is used to find an angle"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains that sine is equal at θ and 180 − θ"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "says to test the partner against the angle sum of 180 degrees"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "concludes that both answers are valid only if the total leaves room for a third angle"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "States that the ambiguity arises when the sine rule finds an angle",
+          "marks": 1
+        },
+        {
+          "text": "Explains that sine takes the same value at θ and 180 − θ",
+          "marks": 1
+        },
+        {
+          "text": "Says to subtract from 180 and test against the angle sum",
+          "marks": 1
+        },
+        {
+          "text": "Concludes both answers are valid only if a third angle still fits",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**When it happens.** Only when the **sine rule** is used to find an **angle**.\n\n**Why.** Sine takes the **same value** at $\\theta$ and at $180° - \\theta$: $\\sin 40° = \\sin 140°$. The $\\sin^{-1}$ key returns only the **acute** answer, so the obtuse one can be missed entirely.\n\n**How to decide.** Work out the partner, $180° - \\theta$, then add it to the angle you already knew.\n\n- If the total is **$180°$ or more**, there is no room for a third angle, so reject the obtuse answer.\n- If the total is **less than $180°$**, both give a valid triangle and **both** should be given.\n\n**The cosine rule never has this problem**, because $\\cos^{-1}$ returns a unique angle between $0°$ and $180°$."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 20
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Label the diagram before anything else: capital letters on the angles, the matching lower-case letter on the side opposite each one. Every rule depends on that pairing, and most errors come from skipping it.\n\nThen ask one question: **do I have a side opposite a known angle?** Yes means the sine rule; no means the cosine rule. Write down which you chose and why, because a method mark often hangs on it.\n\nPut the unknown on top. Wanting a side, write the side over its sine. Wanting an angle, write the sine over its side. That way there is no rearranging to go wrong.\n\nKeep the full value on the calculator between steps and round only at the end. Rounding an intermediate angle and then using it will usually cost the accuracy mark.\n\nFor the area, check the angle is **between** the two sides you are using, and write cm squared.\n\nFinally, sense check. The biggest side faces the biggest angle. If your answer breaks that, something is wrong and you still have time.",
+    "examinerErrors": [
+      "Using the sine rule when there is no side opposite a known angle.",
+      "Forgetting the square root at the end of the cosine rule, so a² is given as a.",
+      "Putting the wrong side opposite the angle in the cosine rule: the side alone on the left is the one opposite the angle used.",
+      "Ignoring the ambiguous case, so an obtuse answer that was valid is never given.",
+      "Using the area formula with an angle that is not between the two sides.",
+      "Rounding an intermediate value and carrying the error into the next step.",
+      "Giving an area without squared units.",
+      "Reading a negative cosine as an error rather than as an obtuse angle."
+    ],
+    "grade9Looks": "A top answer labels the triangle first and says out loud which rule it is using and why, naming the matching pair or its absence. It writes the unknown on top so no rearranging is needed, and keeps full accuracy on the calculator until the final line. Finding an angle with the sine rule it raises the ambiguous case without being asked, works out the obtuse partner and tests it against the angle sum before accepting or rejecting it. It reads a negative cosine as an obtuse angle rather than a mistake, uses squared units for an area, and sense checks that the biggest side faces the biggest angle."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
