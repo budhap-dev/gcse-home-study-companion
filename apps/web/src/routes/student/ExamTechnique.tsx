@@ -35,7 +35,7 @@ export function ExamTechnique() {
               {guide.papers.map((p) => (
                 <div key={p.name} className="flex flex-col gap-1 rounded-xl border border-rule bg-surface p-4">
                   <span className="font-bold">{p.name}</span>
-                  <span className="text-sm text-ink-2">{p.marks} marks · {p.minutes} min · {p.calculator ? 'calculator' : 'non-calculator'}</span>
+                  <span className="text-sm text-ink-2">{p.marks} marks{p.minutes ? ` · ${p.minutes} min · ${p.calculator ? 'calculator' : 'non-calculator'}` : ' · coursework, marked by the school'}</span>
                   <span className="text-sm">{p.covers}</span>
                 </div>
               ))}

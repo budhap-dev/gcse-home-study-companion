@@ -38,7 +38,8 @@ export const SubjectGuide = z.object({
       z.object({
         name: z.string().min(1),
         marks: z.number().int().positive(),
-        minutes: z.number().int().positive(),
+        /** Omitted for a non-examined component: coursework has no exam duration. */
+        minutes: z.number().int().positive().optional(),
         calculator: z.boolean(),
         covers: z.string().min(1),
       }),

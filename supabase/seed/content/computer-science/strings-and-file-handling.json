@@ -53,6 +53,32 @@
               "title": "word ← 'computer'"
             },
             "alt": "A table with the indexes 0 to 7 in the top row and the letters of computer beneath them"
+          },
+          {
+            "type": "worked-example",
+            "problem": "With `word ← 'computer'`, work out `SUBSTRING(3, 5, word)` and `POSITION(word, 't')`",
+            "steps": [
+              {
+                "text": "Number the characters first: c 0, o 1, m 2, p 3, u 4, t 5, e 6, r 7",
+                "note": "always index from 0"
+              },
+              {
+                "text": "`SUBSTRING(3, 5, word)` takes indexes 3, 4 **and** 5, because both ends are included",
+                "note": "end − start + 1 characters, so three, not two"
+              },
+              {
+                "text": "Those characters are p, u, t, so the result is `put`",
+                "note": "read them straight off the index list"
+              },
+              {
+                "text": "`POSITION(word, 't')` is the index of the first t, which is 5",
+                "note": "the first match only"
+              },
+              {
+                "text": "`SUBSTRING(0, 0, word)` is the single character `c`",
+                "note": "the same index twice picks one character"
+              }
+            ]
           }
         ],
         "check": {
@@ -180,7 +206,7 @@
         "id": "s4",
         "kind": "worked-example",
         "title": "Looping through a string",
-        "body": "Because a string has indexes, you can loop over it like an array. `SUBSTRING(i, i, text)` picks out one character.\n\nAQA pseudo-code also has a loop that walks a string directly, without indexes:\n\n```\ncount ← 0\nFOR char IN text\n   IF char = 'a' THEN\n      count ← count + 1\n   ENDIF\nENDFOR\n```\n\nThe same loop reverses a string in two lines, and this is the version AQA's own pseudo-code guide shows:\n\n```\nreversed ← ''\nFOR char IN message\n   reversed ← char + reversed\nENDFOR\n```\n\nUse whichever you find clearer, but be ready to read `FOR char IN` in an exam question.",
+        "body": "Because a string has indexes, you can loop over it like an array. `SUBSTRING(i, i, text)` picks out one character.\n\nAQA pseudo-code also has a loop that walks a string directly, without indexes:\n\n```\ncount ← 0\nFOR char IN text\n   IF char = 'a' THEN\n      count ← count + 1\n   ENDIF\nENDFOR\n```\n\nThe same loop reverses a string in a few lines, and this is the version AQA's own pseudo-code guide shows:\n\n```\nreversed ← ''\nFOR char IN message\n   reversed ← char + reversed\nENDFOR\n```\n\nUse whichever you find clearer, but be ready to read `FOR char IN` in an exam question.",
         "visuals": [
           {
             "type": "worked-example",
@@ -812,8 +838,7 @@
         "multi-topic"
       ],
       "accepted": [
-        "True",
-        "true"
+        "True"
       ]
     },
     {

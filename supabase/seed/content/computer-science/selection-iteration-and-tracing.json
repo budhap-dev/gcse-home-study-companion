@@ -22,7 +22,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Selection: IF, ELSE IF, ELSE",
-        "body": "**Selection** chooses between paths. AQA pseudo-code:\n\n```\nIF mark >= 70 THEN\n   OUTPUT 'A'\nELSE IF mark >= 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```\n\nThe conditions are tested **in order**, and **only the first True branch runs**; the rest are skipped, even if they would also be True. So a mark of 85 outputs `A` only, never `B` as well. The order therefore matters: test the most demanding condition first.\n\n**Nested** selection is an IF inside an IF. It is easiest to trace by indenting, and by remembering that the inner IF is only reached when the outer condition was True.",
+        "body": "**Selection** chooses between paths. AQA pseudo-code:\n\n```\nIF mark ≥ 70 THEN\n   OUTPUT 'A'\nELSE IF mark ≥ 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```\n\nThe conditions are tested **in order**, and **only the first True branch runs**; the rest are skipped, even if they would also be True. So a mark of 85 outputs `A` only, never `B` as well. The order therefore matters: test the most demanding condition first.\n\n**Nested** selection is an IF inside an IF. It is easiest to trace by indenting, and by remembering that the inner IF is only reached when the outer condition was True.",
         "visuals": [
           {
             "type": "diagram",
@@ -30,8 +30,8 @@
             "props": {
               "columns": [
                 "mark",
-                "mark >= 70",
-                "mark >= 50",
+                "mark ≥ 70",
+                "mark ≥ 50",
                 "output"
               ],
               "rows": [
@@ -63,6 +63,32 @@
               "title": "Only the first True branch runs"
             },
             "alt": "A trace of the grade selection for four marks, showing which branch runs"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Trace this nested IF with `age ← 15` and `ticket ← 'no'`",
+            "steps": [
+              {
+                "text": "```\nIF age ≥ 13 THEN\n   IF ticket = 'yes' THEN\n      OUTPUT 'Enter'\n   ELSE\n      OUTPUT 'Buy a ticket'\n   ENDIF\nELSE\n   OUTPUT 'Too young'\nENDIF\n```",
+                "note": "the program"
+              },
+              {
+                "text": "Outer test: `15 ≥ 13` is True, so the outer ELSE is skipped completely",
+                "note": "the outer condition picks the half"
+              },
+              {
+                "text": "Only now is the inner IF reached at all",
+                "note": "an inner IF runs only when the outer test was True"
+              },
+              {
+                "text": "Inner test: `'no' = 'yes'` is False, so the inner ELSE runs",
+                "note": "strings compare exactly"
+              },
+              {
+                "text": "Output: `Buy a ticket`, and nothing else. With `age ← 11` the outer test fails, `Too young` is output and the inner IF is never tested",
+                "note": "trace the skipped branch too"
+              }
+            ]
           }
         ],
         "check": {
@@ -85,8 +111,8 @@
           "discriminators": [],
           "accepted": [
             "B",
-            "b",
-            "'B'"
+            "'B'",
+            "\"B\""
           ]
         }
       },
@@ -94,7 +120,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Definite iteration: FOR",
-        "body": "A **FOR** loop repeats a **known** number of times, counting with a variable:\n\n```\nFOR i ← 1 TO 5\n   total ← total + i\nENDFOR\n```\n\nBoth limits are **included**: i takes 1, 2, 3, 4, 5, so the body runs five times. The number of passes from a to b is $b - a + 1$.\n\n**STEP** changes the count: `FOR i ← 2 TO 10 STEP 4` gives 2, 6, 10. A negative step counts down: `FOR i ← 3 TO 1 STEP -1` gives 3, 2, 1.\n\nAQA also allows `FOR item IN list … ENDFOR` to visit every element of an array, which you met with arrays.",
+        "body": "A **FOR** loop repeats a **known** number of times, counting with a variable:\n\n```\nFOR i ← 1 TO 5\n   total ← total + i\nENDFOR\n```\n\nBoth limits are **included**: i takes 1, 2, 3, 4, 5, so the body runs five times. The number of passes from a to b is $b - a + 1$.\n\n**STEP** changes the count: `FOR i ← 2 TO 10 STEP 4` gives 2, 6, 10. A negative step counts down: `FOR i ← 3 TO 1 STEP -1` gives 3, 2, 1.\n\nAQA also allows `FOR item IN list … ENDFOR` to visit every element of an array, and `FOR char IN text` to walk a string. Array items cannot be changed that way, so use the indexed loop when you need to write to the array.",
         "visuals": [
           {
             "type": "diagram",
@@ -162,7 +188,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Indefinite iteration: WHILE and REPEAT UNTIL",
-        "body": "When you do not know how many times, the loop runs **until something changes**: **indefinite** iteration.\n\n**WHILE** tests **before** each pass and continues while the condition is True:\n\n```\nn ← 1\nWHILE n < 20\n   n ← n * 3\nENDWHILE\n```\n\nn goes 1, 3, 9, 27; at 27 the test fails and the loop stops. If the condition is False at the start, the body never runs.\n\n**REPEAT … UNTIL** tests **after** each pass and stops when the condition becomes True:\n\n```\nREPEAT\n   count ← count + 2\nUNTIL count >= 7\n```\n\nThe body always runs **at least once**, which makes REPEAT the natural loop for *ask, then check*: input validation and password attempts.",
+        "body": "When you do not know how many times, the loop runs **until something changes**: **indefinite** iteration.\n\n**WHILE** tests **before** each pass and continues while the condition is True:\n\n```\nn ← 1\nWHILE n < 20\n   n ← n * 3\nENDWHILE\nOUTPUT n\n```\n\nn goes 1, 3, 9, 27; at 27 the test fails and the loop stops. If the condition is False at the start, the body never runs.\n\n**REPEAT … UNTIL** tests **after** each pass and stops when the condition becomes True:\n\n```\ncount ← 0\nREPEAT\n   count ← count + 2\nUNTIL count ≥ 7\n```\n\nThe body always runs **at least once**, which makes REPEAT the natural loop for *ask, then check*: input validation and password attempts.",
         "visuals": [
           {
             "type": "diagram",
@@ -198,6 +224,32 @@
               "title": "Two indefinite loops"
             },
             "alt": "A table contrasting WHILE and REPEAT UNTIL loops"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Trace `count ← 0`, then `REPEAT count ← count + 2 UNTIL count ≥ 7`",
+            "steps": [
+              {
+                "text": "Pass 1: count becomes 2, then the test `2 ≥ 7` is False, so go round again",
+                "note": "the test comes after the body"
+              },
+              {
+                "text": "Pass 2: count becomes 4; `4 ≥ 7` is False",
+                "note": "still going"
+              },
+              {
+                "text": "Pass 3: count becomes 6; `6 ≥ 7` is False",
+                "note": "6 has not reached 7"
+              },
+              {
+                "text": "Pass 4: count becomes 8; `8 ≥ 7` is True, so the loop ends with count = 8",
+                "note": "UNTIL stops when the condition becomes True"
+              },
+              {
+                "text": "The loop overshoots 7, because UNTIL cannot stop part-way through a pass",
+                "note": "a WHILE would test before adding"
+              }
+            ]
           }
         ],
         "check": {
@@ -391,7 +443,7 @@
         "id": "s6",
         "kind": "explain",
         "title": "The errors loops invite",
-        "body": "Three logic errors account for most lost marks.\n\n**Off-by-one.** `WHILE i < 10` stops before 10; `FOR i ← 1 TO 10` includes it. Decide whether the limit is meant to be included, then choose `<` or `<=`, and check the first and last values in a trace.\n\n**The infinite loop.** A WHILE whose condition can never become False, usually because the body forgets to change the variable in the condition: `WHILE n < 20` with no line that changes n. In a trace it shows as a column that never moves.\n\n**The inverted condition.** `UNTIL valid = False` when the loop should stop once the input is valid. Say the condition out loud: REPEAT *until* it is right.\n\nAll three are **logic errors** in AQA's terms: the code runs, but does the wrong thing. A **syntax error** would be a missing ENDFOR, which stops it running at all.",
+        "body": "Three logic errors account for most lost marks.\n\n**Off-by-one.** `WHILE i < 10` stops before 10; `FOR i ← 1 TO 10` includes it. Decide whether the limit is meant to be included, then choose `<` or `≤`, and check the first and last values in a trace.\n\n**The infinite loop.** A WHILE whose condition can never become False, usually because the body forgets to change the variable in the condition: `WHILE n < 20` with no line that changes n. In a trace it shows as a column that never moves.\n\n**The inverted condition.** `UNTIL valid = False` when the loop should stop once the input is valid. Say the condition out loud: REPEAT *until* it is right.\n\nAll three are **logic errors** in AQA's terms: the code runs, but does the wrong thing. A **syntax error** would be a missing ENDFOR, which stops it running at all.",
         "visuals": [
           {
             "type": "diagram",
@@ -406,7 +458,7 @@
                 [
                   "off-by-one",
                   "one value too few or too many",
-                  "check the boundary: < or <="
+                  "check the boundary: < or ≤"
                 ],
                 [
                   "infinite loop",
@@ -528,7 +580,7 @@
                 "note": "initialise before the loop"
               },
               {
-                "text": "`WHILE i <= 5`",
+                "text": "`WHILE i ≤ 5`",
                 "note": "test at the top, inclusive"
               },
               {
@@ -568,7 +620,7 @@
                 ],
                 [
                   "WHILE i < 10 for 1 to 10",
-                  "WHILE i <= 10, or FOR i ← 1 TO 10"
+                  "WHILE i ≤ 10, or FOR i ← 1 TO 10"
                 ],
                 [
                   "uses FOR for a password check",
@@ -714,7 +766,7 @@
     {
       "id": "q3",
       "type": "short-text",
-      "prompt": "What is output when `mark` is 69?\n\n```\nIF mark >= 70 THEN\n   OUTPUT 'A'\nELSE IF mark >= 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```",
+      "prompt": "What is output when `mark` is 69?\n\n```\nIF mark ≥ 70 THEN\n   OUTPUT 'A'\nELSE IF mark ≥ 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```",
       "marks": 1,
       "gradeBand": "4-5",
       "skill": "tracing selection",
@@ -731,8 +783,8 @@
       "discriminators": [],
       "accepted": [
         "B",
-        "b",
-        "'B'"
+        "'B'",
+        "\"B\""
       ]
     },
     {
@@ -793,13 +845,13 @@
     {
       "id": "q6",
       "type": "numeric",
-      "prompt": "What is output?\n\n```\ncount ← 0\nREPEAT\n   count ← count + 2\nUNTIL count >= 7\nOUTPUT count\n```",
+      "prompt": "What is output?\n\n```\ncount ← 0\nREPEAT\n   count ← count + 2\nUNTIL count ≥ 7\nOUTPUT count\n```",
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "tracing REPEAT UNTIL",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "count: 2, 4, 6, 8. After 8 the condition `count >= 7` is True, so the loop ends: **8**. UNTIL stops when the condition becomes True.",
+      "solution": "count: 2, 4, 6, 8. After 8 the condition `count ≥ 7` is True, so the loop ends: **8**. UNTIL stops when the condition becomes True.",
       "markScheme": [
         {
           "code": "M1",
@@ -872,7 +924,8 @@
         "2, 6, 10",
         "2,6,10",
         "2 then 6 then 10",
-        "2 6 10."
+        "2 6 10.",
+        "2, 6 and 10"
       ]
     },
     {
@@ -988,7 +1041,8 @@
         "4 3 2",
         "4, 3, 2",
         "4,3,2",
-        "4 then 3 then 2"
+        "4 then 3 then 2",
+        "4, 3 and 2"
       ]
     },
     {
@@ -1005,7 +1059,7 @@
         {
           "code": "B1",
           "marks": 1,
-          "description": "FOR loop that runs 10 times"
+          "description": "a loop that reads 10 numbers in total, for example one input before `FOR i ← 2 TO 10`"
         },
         {
           "code": "B1",
@@ -1039,7 +1093,7 @@
       "suggestedMinutes": 8,
       "criteria": [
         {
-          "text": "A FOR loop running 10 times",
+          "text": "A loop that reads 10 numbers in total, for example one input before `FOR i ← 2 TO 10`",
           "marks": 1
         },
         {
@@ -1074,19 +1128,19 @@
       "skill": "off-by-one errors",
       "calculator": "either",
       "tags": [],
-      "solution": "The loop stops when i reaches 10, so 10 is never output: an **off-by-one** error, the commonest logic error in loops. `i <= 10` includes it.",
+      "solution": "The loop stops when i reaches 10, so 10 is never output: an **off-by-one** error, the commonest logic error in loops. `i ≤ 10` includes it.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "off-by-one, use <= 10"
+          "description": "off-by-one, use ≤ 10"
         }
       ],
       "discriminators": [
         "evaluate"
       ],
       "options": [
-        "An off-by-one error; change the condition to i <= 10",
+        "An off-by-one error; change the condition to i ≤ 10",
         "A syntax error; change WHILE to FOR",
         "An off-by-one error; start i at 0",
         "A logic error; move OUTPUT after i ← i + 1"
