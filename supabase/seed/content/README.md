@@ -9,6 +9,15 @@ Two complete topics, one per Phase 1 subject, written against the content schema
 
 Both are marked as AI-drafted and unreviewed in their `provenance`, so the validator refuses to publish them until a person sets `reviewedBy`. That is deliberate: it exercises the review gate. Review the questions and solutions, correct anything wrong, then add your name.
 
+## Fields every topic carries
+
+| Field | What it means |
+|---|---|
+| `unitId` | The specification unit, from the subject's `units` in `packages/shared/src/subjects.ts`. |
+| `order` | Position within the unit in the school's teaching order. |
+| `year` | The school year the class meets the topic, 9, 10 or 11, from the curriculum overview in `docs/curriculum`. The subject page groups topics by this, and a topic from an earlier year stays as recap because the synoptic tests keep re-testing it. |
+| `specPoints` | The board's own reference numbers for what the topic covers. |
+
 Diagram visuals name components in the web app's SVG library, `apps/web/src/components/diagrams/index.tsx`. A test fails if content names a component that is not registered. Each diagram also carries alt text describing what it shows, which is what a screen reader gets. Components and their props:
 
 | Component | Props | Used for |

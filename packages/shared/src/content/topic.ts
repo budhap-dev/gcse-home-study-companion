@@ -17,6 +17,12 @@ export const Topic = z.object({
   specPoints: z.array(z.string().min(1)).min(1),
   /** Position within the unit in the school's teaching order. Topics without one sort last, by title. */
   order: z.number().int().positive().optional(),
+  /**
+   * The school year in which the class is taught this topic, from the curriculum
+   * overviews in `docs/curriculum`. A topic from an earlier year stays in the app as
+   * recap, because the synoptic tests and milestones keep re-testing it.
+   */
+  year: z.union([z.literal(9), z.literal(10), z.literal(11)]),
   /** Outside places to practise this topic, shown on the topic page as links that open in a new tab. */
   resources: z.array(z.object({ label: z.string().min(1), url: z.string().url(), note: z.string().optional() })).optional(),
   /** Shown or hidden by the student's chosen board when a topic is board-specific. */

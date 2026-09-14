@@ -2,6 +2,23 @@
 
 Content is authored just ahead of what the pilot student meets in class. This is the queue. Source: the school's curriculum overviews for Years 9 to 11, one document per subject in [curriculum/](curriculum/README.md). Maths and Physics are queued here; the other subjects follow their curriculum documents when their phase starts.
 
+## What is written, by school year
+
+Every topic carries a `year` field, taken from the school's curriculum overview for that subject in [curriculum/](curriculum/README.md). The app groups a subject's topics by year, so Year 9 work the student has already been taught stays visible as recap: the milestones and synoptic tests keep re-testing it.
+
+| Subject | Year 9 (recap) | Year 10 (current) | Year 11 |
+|---|---|---|---|
+| Mathematics | — | 11: Circle theorems · Congruent triangles · Constructing triangles · Equations of straight lines · Expanding and factorising quadratics · Identities and rearranging formulae · Laws of indices · Parallel and perpendicular lines · Powers and roots · Solving quadratic equations · Surds | — |
+| Physics | 5: Describing motion: speed, velocity and acceleration · Forces and motion: Newton's laws · Forces, weight and resultant forces · Kinetic and gravitational potential energy · Stopping distances | 4: Hooke's law and elasticity · Moments, levers and gears · Momentum · Pressure in fluids | — |
+| Chemistry | — | 6: Covalent bonding: molecules, polymers and giant structures · Diamond, graphite, graphene, fullerenes and nanoparticles · Electrolysis of aqueous solutions · Electrolysis of molten compounds · Ionic bonding and ionic compounds · Metallic bonding and alloys | — |
+| Biology | — | 8: Antibiotics, new medicines and monoclonal antibodies · Non-communicable disease and lifestyle · Pathogens and how disease spreads · Photosynthesis and limiting factors · Plant adaptations, defences and hormones · The immune system and immunisation · The leaf, root hair cells, xylem and phloem · Transpiration and translocation | — |
+| Computer Science | 2: Data types and operators · Selection, iteration and tracing | 4: Arrays and records · Robust and secure programming: validation, authentication and testing · String handling, conversions, and files for your project · Subroutines: procedures and functions | — |
+| Business | 3: Enterprise and entrepreneurship · Putting a business idea into practice · Spotting a business opportunity | 2: Making the business effective · Understanding external influences | — |
+| French | — | 10: Booking and reviewing accommodation · Festivals and traditions · Good mental health · Holiday activities · Holidays and accommodation · Holidays in three tenses · Illness and accidents · Improving your life, with the simple future · Lifestyle changes · My ideal holiday, with the conditional | — |
+| Music | — | 4: Afro Celt Sound System: Release · Bach: Brandenburg Concerto No. 5, third movement · Killer Queen · Star Wars main title | — |
+
+Counts are topics drafted, not the whole syllabus: a year with no entry is simply not written yet.
+
 ## Mathematics, Edexcel 1MA1 Higher
 
 | When | Topics, in teaching order | Status |
@@ -105,7 +122,7 @@ Units are Edexcel's four areas of study, plus musical elements first, because ev
 | Half term | Set works | Status |
 |---|---|---|
 | Autumn 1 and 2 | Killer Queen (vocal music) · Star Wars main title (stage and screen) | Both drafted 11 September 2026. **Music Autumn is complete.** |
-| Spring | Bach, Brandenburg Concerto No. 5 third movement (instrumental 1700–1820) · Afro Celt Sound System, Release (fusions) | Next |
+| Spring | Bach, Brandenburg Concerto No. 5 third movement (instrumental 1700–1820) · Afro Celt Sound System, Release (fusions) | Both drafted 14 September 2026, written from Pearson's set-work support guides |
 | Summer | Esperanza Spalding, Samba Em Preludio (fusions) · Defying Gravity from Wicked (stage and screen) | |
 | Year 11 | Beethoven, Pathétique first movement (instrumental 1700–1820) · Purcell, Music for a While (vocal music) | |
 

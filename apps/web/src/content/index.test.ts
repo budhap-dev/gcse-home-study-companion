@@ -41,3 +41,33 @@ describe('step titles are plain text', () => {
     expect(bad).toEqual([])
   })
 })
+
+/**
+ * Every topic says which school year the class meets it in, so the subject page can
+ * separate Year 9 from Year 10. A topic from an earlier year is kept, not dropped:
+ * the milestones and synoptic tests keep re-testing it.
+ */
+describe('school years', () => {
+  it('gives every topic a year in the school\'s range', () => {
+    for (const t of TOPICS) expect([9, 10, 11], `${t.subjectId}/${t.id}`).toContain(t.year)
+  })
+
+  it('puts each topic in the year its curriculum document says', () => {
+    const year = (id: string) => TOPICS.find((t) => t.id === id)?.year
+    // Physics: the school covers Energy and the whole of motion and forces in Year 9.
+    expect(year('kinetic-and-gravitational-potential-energy')).toBe(9)
+    expect(year('stopping-distances')).toBe(9)
+    expect(year('hookes-law')).toBe(10)
+    // Computer Science: data types, selection and iteration are Year 9 programming.
+    expect(year('data-types-and-operators')).toBe(9)
+    expect(year('subroutines-procedures-and-functions')).toBe(10)
+    // Business: 1.1 to 1.3 are Year 9; 1.4 and 1.5 are Year 10.
+    expect(year('putting-a-business-idea-into-practice')).toBe(9)
+    expect(year('making-the-business-effective')).toBe(10)
+  })
+
+  it('keeps every subject to years the student has reached or is in', () => {
+    // Nothing beyond Year 10 is written yet, so a Year 11 topic would be a mistake.
+    expect(TOPICS.filter((t) => t.year === 11).map((t) => t.id)).toEqual([])
+  })
+})

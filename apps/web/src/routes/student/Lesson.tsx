@@ -66,6 +66,7 @@ export function Lesson() {
     if (index === 0) return navigate(backTo)
     setResult(null)
     setIndex(index - 1)
+    window.scrollTo({ top: 0 })
   }
   const submit = (answer: Answer) => {
     if (step.check) setResult(mark(step.check, answer))

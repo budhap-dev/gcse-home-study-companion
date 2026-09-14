@@ -37,6 +37,7 @@ function topic(overrides: Partial<Topic> = {}): Topic {
     id: 'newtons-second-law',
     subjectId: 'physics',
     unitId: 'forces',
+    year: 10,
     title: "Newton's second law",
     specPoints: ['4.5.6.2.2'],
     lesson: {

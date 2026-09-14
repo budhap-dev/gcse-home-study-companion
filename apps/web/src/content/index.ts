@@ -32,6 +32,16 @@ export function topicsForUnit(subjectId: string, unitId: string): TopicRecord[] 
   return TOPICS.filter((t) => t.subjectId === subjectId && t.unitId === unitId)
 }
 
+/** School years this subject has topics for, in order. */
+export function yearsForSubject(subjectId: string): number[] {
+  return [...new Set(topicsForSubject(subjectId).map((t) => t.year))].sort((a, b) => a - b)
+}
+
+/** Topics of one subject taught in one school year, in the order they are met. */
+export function topicsForYear(subjectId: string, year: number): TopicRecord[] {
+  return topicsForSubject(subjectId).filter((t) => t.year === year)
+}
+
 export function getTopic(subjectId: string, topicId: string): TopicRecord | undefined {
   return TOPICS.find((t) => t.subjectId === subjectId && t.id === topicId)
 }
