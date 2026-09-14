@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 import { DISPLAY, FONT, INK, INK_2, RULE } from '../diagrams/index.tsx'
+import { useFitSvgText } from '../fitSvgText.ts'
 import { LIGHT_CANVAS } from '../Visual.tsx'
 
 type Formula = 'kinetic' | 'fall-speed' | 'square' | 'linear' | 'inverse-square'
@@ -27,6 +28,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
   const [x, setX] = useState((xMin + xMax) / 2)
   const id = useId()
   const span = xMax - xMin
+  const fit = useFitSvgText<HTMLElement>()
   const yMax = Math.max(...Array.from({ length: 41 }, (_, i) => f(xMin + (i / 40) * span)), 1)
   const W = 360
   const H = 220
@@ -37,7 +39,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
   const y = f(x)
   const fmt = (v: number) => (v >= 1000 ? Math.round(v).toLocaleString('en-GB') : v >= 100 ? v.toFixed(0) : v >= 1 ? v.toFixed(1) : v.toFixed(2))
   return (
-    <figure className="flex flex-col gap-3 rounded-xl border border-rule bg-surface p-4">
+    <figure ref={fit} className="flex flex-col gap-3 rounded-xl border border-rule bg-surface p-4">
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440, ...LIGHT_CANVAS, borderRadius: 12 }} role="img" aria-label={alt}>
         {[0.25, 0.5, 0.75, 1].map((k) => <line key={k} x1={pad} y1={sy(k * yMax)} x2={W - pad} y2={sy(k * yMax)} stroke={RULE} />)}
         <line x1={pad} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />
@@ -54,7 +56,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
       <label htmlFor={id} className="flex items-center gap-3 text-sm">
         <span className="whitespace-nowrap text-ink-2">{String(config.x ?? 'x')}</span>
         <input id={id} type="range" min={xMin} max={xMax} step={span / 40} value={x} onChange={(e) => setX(Number(e.target.value))} className="h-11 flex-grow accent-[color:var(--subject)]" />
-        <span className="w-20 text-right font-bold tabular-nums">{fmt(x)} → {fmt(y)}</span>
+        <span className="shrink-0 whitespace-nowrap text-right font-bold tabular-nums">{fmt(x)} → {fmt(y)}</span>
       </label>
     </figure>
   )

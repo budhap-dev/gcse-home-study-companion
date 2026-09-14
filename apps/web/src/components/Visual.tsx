@@ -1,4 +1,5 @@
 import type { Visual as VisualBlock } from '@study/shared'
+import { useFitSvgText } from './fitSvgText.ts'
 import { RichText } from './RichText.tsx'
 import { DIAGRAMS } from './diagrams/index.tsx'
 import { SliderGraph } from './interactives/SliderGraph.tsx'
@@ -17,6 +18,16 @@ export const LIGHT_CANVAS = {
   '--color-panel': '#f0ede4',
   '--subject-soft': 'color-mix(in srgb, var(--subject) 14%, #ffffff)',
 } as React.CSSProperties
+
+/** The diagram canvas, fitted so a label wider than the drawing is not cut off. */
+function DiagramFigure({ component, children }: { component: string; children: React.ReactNode }) {
+  const ref = useFitSvgText<HTMLElement>()
+  return (
+    <figure ref={ref} className="flex justify-center rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={component}>
+      {children}
+    </figure>
+  )
+}
 
 /**
  * Renders one visual block. Diagrams and interactives fall back to their text
@@ -53,9 +64,9 @@ export function Visual({ visual }: { visual: VisualBlock }) {
       const Diagram = DIAGRAMS[visual.component]
       if (Diagram) {
         return (
-          <figure className="flex justify-center rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={visual.component}>
+          <DiagramFigure component={visual.component}>
             <Diagram props={visual.props} alt={visual.alt} />
-          </figure>
+          </DiagramFigure>
         )
       }
       return (
