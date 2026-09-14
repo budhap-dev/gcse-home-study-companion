@@ -86,8 +86,14 @@ export function searchGlossary(entries: GlossaryEntry[], query: string): Glossar
     const example = entry.example.toLowerCase()
 
     let score = 0
-    if (name === q || aliases.includes(q)) score += 100
-    else if (name.startsWith(q) || aliases.some((a) => a.startsWith(q))) score += 40
+    // An entry actually called the searched word beats one that only lists it as an
+    // alias. The search runs across every subject at once, so without this a physics
+    // alias could outrank the Computer Science entry of that exact name, and a student
+    // looking up "loop" or "floating" landed in the wrong subject.
+    if (name === q) score += 110
+    else if (aliases.includes(q)) score += 100
+    else if (name.startsWith(q)) score += 45
+    else if (aliases.some((a) => a.startsWith(q))) score += 40
 
     let matchedAll = true
     for (const w of terms) {

@@ -279,7 +279,7 @@
               ],
               "title": "Truth table"
             },
-            "alt": "A truth table for AND, OR and NOT"
+            "alt": "A truth table with a column each for a, b, a AND b, a OR b and NOT a, giving the result for all four combinations of true and false"
           }
         ],
         "check": {
@@ -567,7 +567,7 @@
         "id": "s8",
         "kind": "grade-9",
         "title": "Going deeper: types are decisions, and precedence is a trap",
-        "body": "**Justify the type.** The top-band question is *why* a phone number is a string, *why* a flag is Boolean, *why* money is often stored as an integer number of pence: leading zeros, no spelling mistakes, no rounding errors. One reason each.\n\n**USERINPUT is always a string.** Every program that reads a number converts it with `STRING_TO_INT` or `STRING_TO_REAL`, and the exam asks you to spot the missing conversion.\n\n**`/` against `DIV`.** `9 / 2` is 4.5, `9 DIV 2` is 4. In C#, dividing two integers with `/` behaves like DIV; in Python `/` always gives a real. Know your paper's language.\n\n**Precedence.** `NOT a OR b` is `(NOT a) OR b`; `a MOD b * 2` is `(a MOD b) * 2`. Bracket anything you are not sure of, in the exam and in your own code.\n\n**MOD is a tool, not a curiosity.** Even or odd, digit extraction, wrapping round (`(i + 1) MOD 7` for days of the week), checking divisibility.",
+        "body": "**Justify the type.** The top-band question is *why* a phone number is a string, *why* a flag is Boolean, *why* money is often stored as an integer number of pence: leading zeros, no spelling mistakes, no rounding errors. One reason each.\n\n**USERINPUT is always a string.** Every program that reads a number converts it with `STRING_TO_INT` or `STRING_TO_REAL`, and the exam asks you to spot the missing conversion.\n\n**Bracket a mixed line.** AQA's pseudo-code does not fix whether `MOD` binds tighter than `*`, and the exam languages disagree, so write `(a MOD b) * 2` when you mean it.\n\n**`/` against `DIV`.** `9 / 2` is 4.5, `9 DIV 2` is 4. In C#, dividing two integers with `/` behaves like DIV; in Python `/` always gives a real. Know your paper's language.\n\n**Precedence.** `NOT a OR b` is `(NOT a) OR b`; `a MOD b * 2` is `(a MOD b) * 2`. Bracket anything you are not sure of, in the exam and in your own code.\n\n**MOD is a tool, not a curiosity.** Even or odd, digit extraction, wrapping round (`(i + 1) MOD 7` for days of the week), checking divisibility.",
         "visuals": [
           {
             "type": "diagram",
@@ -1037,13 +1037,13 @@
     {
       "id": "q14",
       "type": "numeric",
-      "prompt": "What is output?\n\n```\na ← 8\nb ← 3\nc ← a MOD b * 2\nOUTPUT c + a DIV b\n```",
+      "prompt": "What is output?\n\n```\na ← 8\nb ← 3\nc ← (a MOD b) * 2\nOUTPUT c + a DIV b\n```",
       "marks": 3,
       "gradeBand": "8-9",
       "skill": "precedence with DIV and MOD",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "MOD and DIV rank with multiplication, and the line is read left to right: `8 MOD 3` is 2, times 2 is 4, so c is 4. Then `a DIV b` is 2, and $4 + 2 = $ **6**.",
+      "solution": "The brackets say what to do first: `8 MOD 3` is 2, times 2 is 4, so `c` is 4. Then `a DIV b` is `8 DIV 3` = 2, and $4 + 2 = $ **6**. Bracket a mixed `MOD`/`*` line rather than relying on precedence, because the exam languages do not agree on it.",
       "markScheme": [
         {
           "code": "M1",
