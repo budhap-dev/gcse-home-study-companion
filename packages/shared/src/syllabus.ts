@@ -171,9 +171,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Pressure in fluids', topicId: 'pressure-in-fluids' },
     ] },
     { year: 10, term: 'Spring 1', topics: [
-      { title: 'The gas laws and the behaviour of gases' },
-      { title: 'Internal energy and specific heat capacity' },
-      { title: 'Specific latent heat and changes of state' },
+      // The school teaches internal energy, specific heat capacity and latent heat as two
+      // rows; one written topic covers both, so they are listed here as a single line.
+      { title: 'Internal energy, specific heat capacity and latent heat', topicId: 'thermal-physics' },
+      { title: 'The gas laws and the behaviour of gases', topicId: 'behaviour-of-gases' },
     ] },
     { year: 10, term: 'Spring 2', topics: [
       { title: 'Electromagnetic waves' },
