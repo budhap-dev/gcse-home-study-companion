@@ -151,7 +151,7 @@
             "problem": "A function that returns a positive number",
             "steps": [
               {
-                "text": "```\nSUBROUTINE get_positive()\n   n ← STRING_TO_INT(USERINPUT)\n   WHILE n <= 0\n      OUTPUT 'Must be positive'\n      n ← STRING_TO_INT(USERINPUT)\n   ENDWHILE\n   RETURN n\nENDSUBROUTINE\n```"
+                "text": "```\nSUBROUTINE get_positive()\n   n ← STRING_TO_INT(USERINPUT)\n   WHILE n ≤ 0\n      OUTPUT 'Must be positive'\n      n ← STRING_TO_INT(USERINPUT)\n   ENDWHILE\n   RETURN n\nENDSUBROUTINE\n```"
               },
               {
                 "text": "The loop repeats while n is 0 or negative"
@@ -344,13 +344,13 @@
         "check": {
           "id": "c5",
           "type": "multiple-choice",
-          "prompt": "A program accepts a number of players from 2 to 4. Which pair is boundary data?",
+          "prompt": "A program accepts a number of players from 2 to 4. Which pair sits on the edge, inside the allowed range?",
           "marks": 1,
           "gradeBand": "6-7",
           "skill": "test data",
           "calculator": "non-calculator",
           "tags": [],
-          "solution": "The edges of the allowed range.",
+          "solution": "2 and 4 are the edges inside the range. Full boundary testing also uses 1 and 5, the values just outside, which should be rejected.",
           "markScheme": [
             {
               "code": "B1",
@@ -374,7 +374,7 @@
         "id": "s6",
         "kind": "explain",
         "title": "Syntax errors and logic errors",
-        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. The program will not run at all.\n- A **logic error** lets the program run but gives the **wrong answer**: `<` instead of `<=`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.\n- Some faults stop a running program: dividing by zero, reading past the end of an array. Textbooks call these **runtime errors**, but AQA only asks you to sort errors into **syntax** or **logic**, and a fault like this counts as a logic error because the code obeys the language rules.",
+        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. The program will not run at all.\n- A **logic error** lets the program run but gives the **wrong answer**: `<` instead of `≤`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.\n- Some faults stop a running program: dividing by zero, reading past the end of an array. Textbooks call these **runtime errors**, but AQA only asks you to sort errors into **syntax** or **logic**, and a fault like this counts as a logic error because the code obeys the language rules.",
         "visuals": [
           {
             "type": "worked-example",
@@ -1056,7 +1056,7 @@
           "marks": 1
         }
       ],
-      "modelAnswer": "The program runs and produces a number, so it is not a syntax or runtime error; it is a logic error. Tracing the program in a table, line by line, records what each variable holds. Comparing those values with what they should be shows exactly the first line where the value goes wrong, for example a total that is missing one score or a division by 4 instead of 3, and that line is where the fix goes."
+      "modelAnswer": "The program runs and produces a number, so it is not a syntax error: it is a logic error. Tracing the program in a table, line by line, records what each variable holds. Comparing those values with what they should be shows exactly the first line where the value goes wrong, for example a total that is missing one score or a division by 4 instead of 3, and that line is where the fix goes."
     },
     {
       "id": "q15",
@@ -1103,7 +1103,7 @@
         {
           "code": "B1",
           "marks": 1,
-          "description": "Line 4"
+          "description": "Line 4; accept line 3 if the test is reversed to `IF a < b THEN`"
         }
       ],
       "discriminators": [],

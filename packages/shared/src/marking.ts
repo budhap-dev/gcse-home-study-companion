@@ -63,6 +63,10 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // A student who has just solved for x writes "x = 5", and one copying a formula
   // writes "F = 20"; the name and the equals sign are not part of the number.
   s = s.replace(/^[a-z]\w*\s*=\s*/, '').replace(/^=\s*/, '')
+  // Money answers are written with their symbol, and the Business solutions print
+  // "£500" and "-£700" themselves, so a student copying that format must be accepted.
+  // The sign may sit either side of the symbol.
+  s = s.replace(/^([-+]?)\s*[£$€]\s*/, '$1').replace(/^[£$€]\s*([-+]?)\s*/, '$1')
   if (units) s = s.replace(units.toLowerCase(), '').trim()
   s = standardForm(s)
   s = s.replace(/[a-z°%/ ]+$/i, '').trim()

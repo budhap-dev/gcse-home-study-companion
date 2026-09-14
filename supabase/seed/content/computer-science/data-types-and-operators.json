@@ -233,7 +233,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Comparing and combining: relational and Boolean operators",
-        "body": "**Relational operators** compare two values and give a Boolean: `=`, `≠`, `<`, `<=`, `>`, `>=`. Note that AQA pseudo-code uses a single `=` for *is equal to*; the assignment is the arrow, so there is no confusion.\n\n**Boolean operators** combine Booleans:\n\n- `AND` is True only if **both** sides are True.\n- `OR` is True if **either** side is True.\n- `NOT` flips a Boolean.\n\nThey are evaluated in the order **NOT, then AND, then OR**, so `NOT a OR b` means `(NOT a) OR b`. When in doubt, bracket.\n\nThese are what every IF and every loop condition is made of, so evaluating them quickly and correctly is the skill behind tracing.",
+        "body": "**Relational operators** compare two values and give a Boolean: `=`, `≠`, `<`, `≤`, `>`, `≥`. Note that AQA pseudo-code uses a single `=` for *is equal to*; the assignment is the arrow, so there is no confusion.\n\n**Boolean operators** combine Booleans:\n\n- `AND` is True only if **both** sides are True.\n- `OR` is True if **either** side is True.\n- `NOT` flips a Boolean.\n\nThey are evaluated in the order **NOT, then AND, then OR**, so `NOT a OR b` means `(NOT a) OR b`. When in doubt, bracket.\n\nThese are what every IF and every loop condition is made of, so evaluating them quickly and correctly is the skill behind tracing.",
         "visuals": [
           {
             "type": "diagram",
@@ -390,8 +390,7 @@
           ],
           "discriminators": [],
           "accepted": [
-            "true",
-            "True"
+            "true"
           ]
         }
       },
@@ -440,6 +439,32 @@
               "title": "Built-ins"
             },
             "alt": "A table of the input, output, conversion and random built-ins in AQA pseudo-code"
+          },
+          {
+            "type": "worked-example",
+            "problem": "`age ← USERINPUT` then `OUTPUT 'Next year: ' + INT_TO_STRING(age + 1)`, with the user typing 14",
+            "steps": [
+              {
+                "text": "USERINPUT gives the string `'14'`, so `age` holds text, not a number",
+                "note": "input is always a string"
+              },
+              {
+                "text": "`age + 1` tries to add 1 to a string, which is the type error the exam is testing",
+                "note": "the missing conversion"
+              },
+              {
+                "text": "Fix the input: `age ← STRING_TO_INT(USERINPUT)`, so `age` is the integer 14",
+                "note": "convert on the way in"
+              },
+              {
+                "text": "`age + 1` is 15, and `INT_TO_STRING(15)` gives `'15'` to join to the text",
+                "note": "convert back on the way out"
+              },
+              {
+                "text": "Output: `Next year: 15`",
+                "note": "one conversion in, one out"
+              }
+            ]
           }
         ],
         "check": {
@@ -613,7 +638,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Five types**: integer, real, Boolean, character, string. Choose by what the value is *for*: phone numbers are strings, flags are Booleans.\n- **Assignment** `x ← 5` works right to left; `CONSTANT NAME ← value` for values that never change.\n- **Arithmetic**: `/` real division; `DIV` whole times; `MOD` remainder. `n MOD 2 = 0` means even; `DIV 10` and `MOD 10` split off digits.\n- **Relational**: `= ≠ < <= > >=` give Booleans. **Boolean**: `AND`, `OR`, `NOT`, evaluated NOT, AND, OR.\n- **Built-ins**: `OUTPUT`, `USERINPUT` (always a string), `STRING_TO_INT`, `INT_TO_STRING`, `RANDOM_INT(a, b)` inclusive.\n- **Trace** with a column per variable, one row per change.",
+        "body": "- **Five types**: integer, real, Boolean, character, string. Choose by what the value is *for*: phone numbers are strings, flags are Booleans.\n- **Assignment** `x ← 5` works right to left; `CONSTANT NAME ← value` for values that never change.\n- **Arithmetic**: `/` real division; `DIV` whole times; `MOD` remainder. `n MOD 2 = 0` means even; `DIV 10` and `MOD 10` split off digits.\n- **Relational**: `= ≠ < ≤ > ≥` give Booleans. **Boolean**: `AND`, `OR`, `NOT`, evaluated NOT, AND, OR.\n- **Built-ins**: `OUTPUT`, `USERINPUT` (always a string), `STRING_TO_INT`, `INT_TO_STRING`, `RANDOM_INT(a, b)` inclusive.\n- **Trace** with a column per variable, one row per change.",
         "visuals": [
           {
             "type": "diagram",
@@ -789,8 +814,7 @@
       ],
       "discriminators": [],
       "accepted": [
-        "true",
-        "True"
+        "true"
       ]
     },
     {
@@ -895,8 +919,7 @@
       ],
       "discriminators": [],
       "accepted": [
-        "true",
-        "True"
+        "true"
       ]
     },
     {
@@ -989,13 +1012,13 @@
     {
       "id": "q13",
       "type": "short-text",
-      "prompt": "What is the value of `(6 >= 6) AND NOT (3 = 4)`?",
+      "prompt": "What is the value of `(6 ≥ 6) AND NOT (3 = 4)`?",
       "marks": 1,
       "gradeBand": "8-9",
       "skill": "Boolean expressions",
       "calculator": "either",
       "tags": [],
-      "solution": "`6 >= 6` is True. `3 = 4` is False, so `NOT (3 = 4)` is True. `True AND True` is **True**.",
+      "solution": "`6 ≥ 6` is True. `3 = 4` is False, so `NOT (3 = 4)` is True. `True AND True` is **True**.",
       "markScheme": [
         {
           "code": "B1",
@@ -1007,8 +1030,7 @@
         "multi-topic"
       ],
       "accepted": [
-        "true",
-        "True"
+        "true"
       ]
     },
     {

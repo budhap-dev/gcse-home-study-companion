@@ -20,6 +20,15 @@ describe('parseNumber', () => {
     expect(parseNumber('F = 20 N', 'N')).toBe(20)
     expect(parseNumber('area = 12 cm²', 'cm²')).toBe(12)
   })
+  it('forgives a currency symbol, because the solutions print one', () => {
+    expect(parseNumber('£500')).toBe(500)
+    expect(parseNumber('-£700')).toBe(-700)
+    expect(parseNumber('£-700')).toBe(-700)
+    expect(parseNumber('£4.36')).toBe(4.36)
+    expect(parseNumber('£11 500')).toBe(11500)
+    expect(parseNumber('€40')).toBe(40)
+    expect(parseNumber('$12 000')).toBe(12000)
+  })
   it('rejects non-numbers', () => {
     expect(parseNumber('four')).toBeUndefined()
     expect(parseNumber('')).toBeUndefined()
