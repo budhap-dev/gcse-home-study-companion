@@ -1,0 +1,1421 @@
+{
+  "id": "sets-and-set-notation",
+  "subjectId": "maths",
+  "unitId": "probability",
+  "title": "Sets and set notation",
+  "specPoints": [
+    "P6"
+  ],
+  "order": 5,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "A set, and how one is written",
+        "body": "A **set** is a collection of things, called its **elements** or **members**. It is written inside **curly brackets**, and each element appears once, however many times it might occur.\n\n$$A = \\{2, 4, 6, 8, 10, 12\\}$$\n\nTwo things follow from that and are worth saying out loud:\n\n- **Order does not matter.** $\\{1, 2, 3\\}$ and $\\{3, 2, 1\\}$ are the same set.\n- **Repeats do not count.** The letters of *LEVEL* form the set $\\{L, E, V\\}$, which has three elements, not five.\n\nThe **universal set**, written $\\xi$, is everything under discussion in a particular question. It is the rectangle on a Venn diagram, and it is what \"not\" is measured against.\n\n$n(A)$ means **how many elements** are in $A$, so $n(A) = 6$ above. It is a count, never a probability.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Sets",
+              "boxes": [
+                {
+                  "title": "A set",
+                  "points": [
+                    "a collection of elements",
+                    "written in curly brackets"
+                  ]
+                },
+                {
+                  "title": "Order",
+                  "points": [
+                    "does not matter",
+                    "{1,2} is {2,1}"
+                  ]
+                },
+                {
+                  "title": "Repeats",
+                  "points": [
+                    "counted once only",
+                    "LEVEL gives three letters"
+                  ]
+                },
+                {
+                  "title": "Universal set ξ",
+                  "points": [
+                    "everything in the question",
+                    "the rectangle on a Venn"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes about sets: what a set is, that order does not matter, that repeats do not count, and what the universal set is"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Set",
+                "Elements",
+                "n(set)"
+              ],
+              "rows": [
+                [
+                  "A, the even numbers to 12",
+                  "{2, 4, 6, 8, 10, 12}",
+                  "6"
+                ],
+                [
+                  "B, the multiples of 3 to 12",
+                  "{3, 6, 9, 12}",
+                  "4"
+                ],
+                [
+                  "The letters of LEVEL",
+                  "{L, E, V}",
+                  "3"
+                ],
+                [
+                  "ξ, the numbers 1 to 12",
+                  "{1, 2, 3, …, 12}",
+                  "12"
+                ]
+              ],
+              "title": "Each element written once"
+            },
+            "alt": "A table of four sets written in curly brackets with the number of elements in each"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "How many elements are in the set formed by the letters of the word BANANA?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "what a set is",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The letters are B, A and N. Repeats are counted once, so the set is $\\{B, A, N\\}$ and $n = 3$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "The three symbols",
+        "body": "Three symbols do nearly all the work, and each has a way to remember it.\n\n- $A \\cap B$ is the **intersection**: the elements in $A$ **and** $B$. The symbol has a roof, like the letter A in **and**.\n- $A \\cup B$ is the **union**: the elements in $A$ **or** $B$ or both. It is a cup, and it scoops everything up.\n- $A'$ is the **complement**: everything **not** in $A$, measured against the universal set.\n\nUnion is the one students shrink. $A \\cup B$ includes the overlap: it is **everything in either circle**, not just the parts that do not overlap.\n\nOne more symbol appears occasionally. $\\in$ means **is an element of**, so $6 \\in A$ says 6 is in set A.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Symbol",
+                "Name",
+                "Everyday word",
+                "On a Venn diagram"
+              ],
+              "rows": [
+                [
+                  "∩",
+                  "intersection",
+                  "and",
+                  "the overlap only"
+                ],
+                [
+                  "∪",
+                  "union",
+                  "or",
+                  "everything in either circle"
+                ],
+                [
+                  "A′",
+                  "complement",
+                  "not",
+                  "everything outside circle A"
+                ],
+                [
+                  "ξ",
+                  "universal set",
+                  "everything",
+                  "the whole rectangle"
+                ],
+                [
+                  "∈",
+                  "is an element of",
+                  "is in",
+                  "one item in a region"
+                ],
+                [
+                  "n(A)",
+                  "number of elements",
+                  "how many",
+                  "a count of one region"
+                ]
+              ],
+              "title": "Six symbols, and what each one asks for"
+            },
+            "alt": "A table of the set notation symbols with their names, the everyday word for each and the region of a Venn diagram each describes"
+          },
+          {
+            "type": "worked-example",
+            "problem": "With $\\xi = $ the numbers 1 to 12, $A$ the even numbers and $B$ the multiples of 3",
+            "steps": [
+              {
+                "text": "$A = \\{2, 4, 6, 8, 10, 12\\}$ and $B = \\{3, 6, 9, 12\\}$",
+                "note": "list them before doing anything else"
+              },
+              {
+                "text": "$A \\cap B = \\{6, 12\\}$: in both, so even **and** a multiple of 3",
+                "note": "the multiples of 6"
+              },
+              {
+                "text": "$A \\cup B = \\{2, 3, 4, 6, 8, 9, 10, 12\\}$",
+                "note": "everything in either list, each written once"
+              },
+              {
+                "text": "$A' = \\{1, 3, 5, 7, 9, 11\\}$: everything in $\\xi$ that is not even",
+                "note": "the odd numbers"
+              },
+              {
+                "text": "$n(A \\cup B) = 8$, not $6 + 4 = 10$",
+                "note": "adding twice counts the overlap twice"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "Which symbol means the elements that are in A or B or both?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "set notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\cup$ is the **union**, meaning **or**. $\\cap$ is the intersection, meaning and.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the union symbol"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "∪",
+            "∩",
+            "A′",
+            "∈"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Reading a combination",
+        "body": "Questions combine the symbols, and each one is read from the **inside out**. Work out anything in **brackets** first, then apply a dash to whatever it is attached to, then the $\\cap$ or $\\cup$, and finally the $n($ if there is one.\n\nSo in $A \\cap B'$ the dash belongs to $B$ alone and is applied before the intersection. In $(A \\cup B)'$ it belongs to the whole bracket, so the union is worked out **first** and the dash applied to the result. Those two give completely different answers.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "With the same sets, find $n(A \\cap B')$ and $n((A \\cup B)')$",
+            "steps": [
+              {
+                "text": "$B'$ first: everything not a multiple of 3, so $\\{1, 2, 4, 5, 7, 8, 10, 11\\}$",
+                "note": "the dash applies to B only"
+              },
+              {
+                "text": "Now $A \\cap B'$: even **and** not a multiple of 3, so $\\{2, 4, 8, 10\\}$",
+                "note": "this is the A-only region"
+              },
+              {
+                "text": "$n(A \\cap B') = 4$",
+                "note": "the n turns the set into a count"
+              },
+              {
+                "text": "For the second, $A \\cup B = \\{2, 3, 4, 6, 8, 9, 10, 12\\}$ first",
+                "note": "brackets before the dash"
+              },
+              {
+                "text": "Then the dash: everything not in that, so $\\{1, 5, 7, 11\\}$",
+                "note": "this is the region outside both circles"
+              },
+              {
+                "text": "$n((A \\cup B)') = 4$",
+                "note": "the four numbers that are neither even nor a multiple of 3"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Elements",
+                "Count",
+                "Venn region"
+              ],
+              "rows": [
+                [
+                  "A ∩ B",
+                  "{6, 12}",
+                  "2",
+                  "the overlap"
+                ],
+                [
+                  "A ∪ B",
+                  "{2, 3, 4, 6, 8, 9, 10, 12}",
+                  "8",
+                  "both circles"
+                ],
+                [
+                  "A ∩ B′",
+                  "{2, 4, 8, 10}",
+                  "4",
+                  "A only"
+                ],
+                [
+                  "(A ∪ B)′",
+                  "{1, 5, 7, 11}",
+                  "4",
+                  "outside both"
+                ]
+              ],
+              "title": "Work from the inside out"
+            },
+            "alt": "A table of set expressions with the elements each describes, the count and the Venn region"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "With ξ the numbers 1 to 12, A the even numbers and B the multiples of 3, list the elements of A ∩ B. Give them separated by commas.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "reading set notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$A \\cap B$ is the numbers that are even **and** multiples of 3, which are the multiples of 6: **6 and 12**.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "looks for numbers in both sets"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "6, 12"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "6, 12",
+            "6,12",
+            "12, 6",
+            "12,6",
+            "{6, 12}",
+            "{12, 6}"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Sets on a Venn diagram",
+        "body": "A Venn diagram is a set diagram. Each region is one of the expressions from the last step, so once you can read the notation you can read the diagram.\n\nHere are the same two sets drawn out, with the numbers placed in the region they belong to.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "venn-diagram",
+            "props": {
+              "labels": [
+                "A: even",
+                "B: multiples of 3"
+              ],
+              "values": {
+                "A": 4,
+                "B": 2,
+                "AB": 2,
+                "none": 4
+              },
+              "title": "How many are in each region"
+            },
+            "alt": "A Venn diagram of the numbers one to twelve with the even numbers in one circle and the multiples of three in the other, showing four numbers in A only, two in the overlap, two in B only and four outside"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Region",
+                "In set notation",
+                "The numbers",
+                "How many"
+              ],
+              "rows": [
+                [
+                  "A only",
+                  "A ∩ B′",
+                  "{2, 4, 8, 10}",
+                  "4"
+                ],
+                [
+                  "Both",
+                  "A ∩ B",
+                  "{6, 12}",
+                  "2"
+                ],
+                [
+                  "B only",
+                  "A′ ∩ B",
+                  "{3, 9}",
+                  "2"
+                ],
+                [
+                  "Neither",
+                  "(A ∪ B)′",
+                  "{1, 5, 7, 11}",
+                  "4"
+                ],
+                [
+                  "Total",
+                  "ξ",
+                  "1 to 12",
+                  "12"
+                ]
+              ],
+              "title": "Every number in exactly one region"
+            },
+            "alt": "A table showing which numbers from one to twelve sit in each region of the Venn diagram"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "On that diagram, how many numbers are in neither set, that is $n((A \\cup B)')$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "sets on a Venn diagram",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The numbers that are neither even nor multiples of 3 are $\\{1, 5, 7, 11\\}$, so there are **4**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Probability written in set notation",
+        "body": "Once the diagram is filled, a probability written in set notation is read the same way as any other. $P(A \\cup B)$ is the union region over the total, and $P(A \\cap B)$ is the overlap over the total.\n\nHere are **20 people** asked about two apps. **6** use only app C, **5** use both, **4** use only app D, and **5** use neither.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "venn-diagram",
+            "props": {
+              "labels": [
+                "C",
+                "D"
+              ],
+              "values": {
+                "A": 6,
+                "B": 4,
+                "AB": 5,
+                "none": 5
+              },
+              "title": "20 people"
+            },
+            "alt": "A Venn diagram of 20 people and two apps, with 6 using only C, 5 using both, 4 using only D and 5 using neither"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find three probabilities from the diagram",
+            "steps": [
+              {
+                "text": "$P(C) = \\dfrac{6 + 5}{20} = \\dfrac{11}{20} = 0.55$",
+                "note": "the whole circle, overlap included"
+              },
+              {
+                "text": "$P(C \\cap D) = \\dfrac{5}{20} = \\dfrac{1}{4} = 0.25$",
+                "note": "the overlap only"
+              },
+              {
+                "text": "$P(C \\cup D) = \\dfrac{15}{20} = \\dfrac{3}{4} = 0.75$",
+                "note": "everything inside either circle"
+              },
+              {
+                "text": "$P(C') = 1 - \\dfrac{11}{20} = \\dfrac{9}{20} = 0.45$",
+                "note": "the complement, so subtract from 1"
+              },
+              {
+                "text": "Check: the four regions $6 + 5 + 4 + 5 = 20$",
+                "note": "they must give the total"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "From that diagram of 20 people, what is $P(C \\cup D)$? Give your answer as a fraction or a decimal.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "probability in set notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$C \\cup D$ is everyone inside either circle: $6 + 5 + 4 = 15$ out of $20$, so $P = \\dfrac{3}{4} = 0.75$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "15 out of 20"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "3/4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.75,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: read the notation, then the diagram",
+        "body": "Let $\\xi$ be the numbers **1 to 20**, let $A$ be the **multiples of 4** and let $B$ be the **numbers greater than 15**.\n\n1. List $A$ and $B$.\n2. Find $A \\cap B$ and $A \\cup B$, and write $n$ of each.\n3. Find $A \\cap B'$ and say which Venn region it is.\n4. Draw the Venn diagram and check your four regions add to 20.\n\nThen write $P(A \\cup B)$ as a fraction in its simplest form.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Elements",
+                "How many"
+              ],
+              "rows": [
+                [
+                  "A, multiples of 4",
+                  "",
+                  ""
+                ],
+                [
+                  "B, greater than 15",
+                  "",
+                  ""
+                ],
+                [
+                  "A ∩ B",
+                  "",
+                  ""
+                ],
+                [
+                  "A ∪ B",
+                  "",
+                  ""
+                ],
+                [
+                  "A ∩ B′",
+                  "",
+                  ""
+                ],
+                [
+                  "(A ∪ B)′",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "List first, then count"
+            },
+            "alt": "A blank table for listing the sets and working out the four set expressions for the numbers one to twenty"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "With ξ the numbers 1 to 20, A the multiples of 4 and B the numbers greater than 15, list the elements of A ∩ B. Give them separated by commas.",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "reading set notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$A = \\{4, 8, 12, 16, 20\\}$ and $B = \\{16, 17, 18, 19, 20\\}$. The elements in both are **16 and 20**.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "lists both sets"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "16, 20"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "16, 20",
+            "16,20",
+            "20, 16",
+            "20,16",
+            "{16, 20}",
+            "{20, 16}"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: why adding the circles overcounts",
+        "body": "A top answer knows **why** the counts behave as they do, not just how to read them off.\n\nAdding the two circle totals counts the overlap **twice**, once in each circle. That gives the rule\n\n$$n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$$\n\nFor the numbers 1 to 12: $n(A) = 6$ and $n(B) = 4$, which add to $10$, but $n(A \\cup B) = 8$. The difference is exactly $2$, the size of the overlap, because 6 and 12 were each counted twice.\n\nThis is also how a question gives you the overlap without saying so. If 20 study art, 15 study music and 28 study at least one, then the overlap is $20 + 15 - 28 = 7$.\n\n**The complement is measured against $\\xi$**, so it always depends on what the universal set is. $A'$ for the numbers 1 to 12 is different from $A'$ for the numbers 1 to 100, even with the same $A$. Questions that change $\\xi$ halfway through are testing exactly this.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Count"
+              ],
+              "rows": [
+                [
+                  "n(A), the even numbers",
+                  "6"
+                ],
+                [
+                  "n(B), the multiples of 3",
+                  "4"
+                ],
+                [
+                  "n(A) + n(B)",
+                  "10"
+                ],
+                [
+                  "n(A ∪ B), actually",
+                  "8"
+                ],
+                [
+                  "The difference",
+                  "2"
+                ],
+                [
+                  "n(A ∩ B), the overlap",
+                  "2"
+                ]
+              ],
+              "title": "The difference is the overlap, every time"
+            },
+            "alt": "A table showing that adding the two set sizes exceeds the size of the union by the size of the overlap"
+          },
+          {
+            "type": "worked-example",
+            "problem": "In a class of 32, 20 study art, 15 study music and 4 study neither. How many study both?",
+            "steps": [
+              {
+                "text": "At least one $= 32 - 4 = 28$",
+                "note": "take the neither region off the total"
+              },
+              {
+                "text": "Adding the circles gives $20 + 15 = 35$",
+                "note": "but only 28 people are involved"
+              },
+              {
+                "text": "The extra $35 - 28 = 7$ is the overlap, counted twice",
+                "note": "this is the rule rearranged"
+              },
+              {
+                "text": "So $n(A \\cap M) = \\mathbf{7}$",
+                "note": "and the diagram now fills in"
+              },
+              {
+                "text": "Check: art only 13, both 7, music only 8, neither 4, total 32",
+                "note": "it adds up"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "In a group, $n(A) = 18$, $n(B) = 12$ and $n(A \\cup B) = 25$. What is $n(A \\cap B)$?",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "counting the union",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$, so $25 = 18 + 12 - n(A \\cap B)$, giving $n(A \\cap B) = 30 - 25 = 5$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses n(A) + n(B) − n(A ∩ B)"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "5"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **set** is a collection of elements in curly brackets. **Order does not matter** and **repeats count once**.\n- $\\xi$ is the **universal set**, everything in the question, drawn as the rectangle.\n- $A \\cap B$ is the **intersection**, meaning **and**: the overlap only.\n- $A \\cup B$ is the **union**, meaning **or**: everything in either circle, the overlap included.\n- $A'$ is the **complement**, meaning **not A**, measured against $\\xi$.\n- $n(A)$ is a **count**; $P(A)$ is a **probability**. Answer each in its own form.\n- Read combinations from the **inside out**: brackets first, then a dash on whatever it is attached to, then $\\cap$ or $\\cup$, then $n$.\n- $n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$, because adding the circles counts the overlap twice.\n- With $\\xi$ the numbers 1 to 12, $A$ even and $B$ multiples of 3: $A \\cap B = \\{6, 12\\}$, $A \\cup B$ has 8 elements, and 4 numbers are in neither.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "A set",
+                  "elements in curly brackets, each written once"
+                ],
+                [
+                  "Order and repeats",
+                  "order does not matter, repeats count once"
+                ],
+                [
+                  "ξ",
+                  "the universal set: the rectangle"
+                ],
+                [
+                  "A ∩ B",
+                  "intersection: and, the overlap"
+                ],
+                [
+                  "A ∪ B",
+                  "union: or, everything in either circle"
+                ],
+                [
+                  "A′",
+                  "complement: not A, measured against ξ"
+                ],
+                [
+                  "n(A)",
+                  "a count, not a probability"
+                ],
+                [
+                  "Reading order",
+                  "dash first, then ∩ or ∪, then n"
+                ],
+                [
+                  "The union rule",
+                  "n(A ∪ B) = n(A) + n(B) − n(A ∩ B)"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of sets and set notation covering the symbols, how to read a combination and the union rule"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "How many elements are in the set formed by the letters of the word LEVEL?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "what a set is",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The letters are L, E and V. Repeats count once, so the set is $\\{L, E, V\\}$ and $n = 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which symbol means the elements in both A and B?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\cap$ is the **intersection**, meaning **and**. It has a roof, like the A in and.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the intersection symbol"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "∩",
+        "∪",
+        "A′",
+        "ξ"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What does $\\xi$ stand for on a Venn diagram?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\xi$ is the **universal set**, drawn as the rectangle. The complement is measured against it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the universal set"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The universal set: everything in the question",
+        "The intersection of the two sets",
+        "The elements in neither set",
+        "The number of elements in A"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Are the sets $\\{1, 2, 3\\}$ and $\\{3, 1, 2\\}$ the same?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "what a set is",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A set is defined by **which elements it contains**, not the order they are written in, so the two are the same set.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "yes, order does not matter"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Yes, because order does not matter in a set",
+        "No, because the order is different",
+        "No, because the first one is larger",
+        "Only if they have the same universal set"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "With ξ the numbers 1 to 10, A the even numbers and B the multiples of 3, list the elements of A ∩ B. Give them separated by commas.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$A = \\{2, 4, 6, 8, 10\\}$ and $B = \\{3, 6, 9\\}$. The only element in both is **6**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lists both sets"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "6"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "What does $A \\cup B$ include?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **union** scoops up everything in either set, and the overlap is in both, so it is included.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "everything in either, overlap included"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Everything in A or B, including the overlap",
+        "Only the parts of A and B that do not overlap",
+        "Only the overlap of A and B",
+        "Everything outside both A and B"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A Venn diagram has 7 in A only, 3 in the overlap and 5 in B only. What is $n(A \\cup B)$?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "counting the union",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The union is everything inside either circle: $7 + 3 + 5 = 15$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds all three inner regions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A Venn diagram has 7 in A only, 3 in the overlap, 5 in B only and 4 outside. What is $n(A')$?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the complement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$A'$ is everything not in A, which is B only plus the outside region: $5 + 4 = 9$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "includes the outside region"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [],
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What is the difference between $n(A)$ and $P(A)$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$n(A)$ asks **how many**, so the answer is a whole number. $P(A)$ asks how likely, so the answer is a fraction, decimal or percentage.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a count against a probability"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "n(A) is a count and P(A) is a probability",
+        "n(A) is larger than P(A) always",
+        "n(A) includes the overlap and P(A) does not",
+        "There is no difference"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "With ξ the numbers 1 to 10 and A the even numbers, list the elements of A′. Give them separated by commas.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the complement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$A'$ is everything in $\\xi$ that is not even, so the odd numbers: **1, 3, 5, 7, 9**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "everything in the universal set not in A"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1, 3, 5, 7, 9"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "1, 3, 5, 7, 9",
+        "1,3,5,7,9",
+        "9, 7, 5, 3, 1",
+        "9,7,5,3,1",
+        "{1, 3, 5, 7, 9}",
+        "{9, 7, 5, 3, 1}"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "With ξ the numbers 1 to 12, A the even numbers and B the multiples of 3, list the elements of A ∩ B′. Give them separated by commas.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "reading set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$B'$ is everything not a multiple of 3. $A \\cap B'$ is therefore the even numbers that are **not** multiples of 3: **2, 4, 8, 10**. This is the A-only region.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds B′ first"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "intersects it with A"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2, 4, 8, 10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "2, 4, 8, 10",
+        "2,4,8,10",
+        "10, 8, 4, 2",
+        "10,8,4,2",
+        "{2, 4, 8, 10}",
+        "{10, 8, 4, 2}"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "In a group, $n(A) = 20$, $n(B) = 14$ and $n(A \\cap B) = 6$. What is $n(A \\cup B)$?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting the union",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$n(A \\cup B) = n(A) + n(B) - n(A \\cap B) = 20 + 14 - 6 = 28$. Adding the circles counts the overlap twice, so subtract it once.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses the union rule"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts the overlap"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 28,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "In a class of 32, 20 study art, 15 study music and 4 study neither. How many study both?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting the union",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At least one is $32 - 4 = 28$. Adding the circles gives $20 + 15 = 35$, so the overlap counted twice is $35 - 28 = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "28 study at least one"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20 + 15 counts the overlap twice"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why does $A'$ depend on the universal set?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the complement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$A'$ means **not A**, and 'not' is measured against $\\xi$. The same set A has a different complement if the universal set changes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it is measured against the universal set"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The complement is everything in ξ that is not in A",
+        "A′ is always the same size as A",
+        "The complement excludes the overlap",
+        "A′ is only defined for two-set diagrams"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "From a group of 20 people, 6 use only app C, 5 use both apps, 4 use only app D and 5 use neither. What is $P(C \\cap D)$? Give your answer as a fraction or a decimal.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "probability in set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$C \\cap D$ is the overlap, which holds $5$ people out of $20$, so $P = \\dfrac{1}{4} = 0.25$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5 out of 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1/4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "From a group of 20 people, 6 use only app C, 5 use both apps, 4 use only app D and 5 use neither. What is $P(C')$? Give your answer as a fraction or a decimal.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the complement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$C$ holds $6 + 5 = 11$ people, so $C'$ holds $20 - 11 = 9$. That gives $P(C') = \\dfrac{9}{20} = 0.45$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n(C) = 11"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts from the total, or from 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9/20"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.45,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "With $\\xi$ the numbers 1 to 20, $A$ the multiples of 4 and $B$ the numbers greater than 15, list $A$ and $B$, then find $A \\cap B$ and $n(A \\cup B)$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "reading set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The multiples of 4 up to 20 are 4, 8, 12, 16 and 20, so A has five elements. The numbers greater than 15 are 16, 17, 18, 19 and 20, so B also has five elements. The elements in both are 16 and 20, so A intersection B is the set containing 16 and 20. For the union, adding the two sets gives five plus five, which is ten, but 16 and 20 have each been counted twice, so the union has ten minus two, which is eight elements.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lists A as 4, 8, 12, 16, 20"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lists B as 16, 17, 18, 19, 20"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds A ∩ B as 16 and 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "n(A ∪ B) = 8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Lists A correctly as the multiples of 4 up to 20",
+          "marks": 1
+        },
+        {
+          "text": "Lists B correctly as 16, 17, 18, 19, 20",
+          "marks": 1
+        },
+        {
+          "text": "Finds A ∩ B as {16, 20}",
+          "marks": 1
+        },
+        {
+          "text": "Gives n(A ∪ B) as 8, subtracting the overlap",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The sets.**\n\n$$A = \\{4, 8, 12, 16, 20\\} \\qquad B = \\{16, 17, 18, 19, 20\\}$$\n\n**The intersection** is the elements in both:\n\n$$A \\cap B = \\{16, 20\\}$$\n\n**The union.** Adding the sets gives $5 + 5 = 10$, but **16 and 20 have each been counted twice**, so\n\n$$n(A \\cup B) = 5 + 5 - 2 = \\mathbf{8}$$"
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A student writes $n(A \\cup B) = n(A) + n(B)$. Explain why this is usually wrong, and state when it would be right.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting the union",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Adding the two set sizes counts every element of the overlap twice, once as a member of A and once as a member of B, so the total comes out too large. The correct rule subtracts the overlap once, giving n of A union B equals n of A plus n of B minus n of A intersection B. The student's version is right only when the two sets have no elements in common, that is when the intersection is empty and the sets are mutually exclusive, because then there is nothing that has been counted twice.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains that the overlap is counted twice"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "gives the correct rule with the overlap subtracted"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states it is right only when the sets do not overlap"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Explains that elements of the overlap are counted twice",
+          "marks": 1
+        },
+        {
+          "text": "States the correct rule, subtracting n(A ∩ B)",
+          "marks": 1
+        },
+        {
+          "text": "States that it is right only when the intersection is empty",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Why it is usually wrong.** Adding $n(A)$ and $n(B)$ counts every element of the **overlap twice**, once as a member of A and once as a member of B, so the total is too large.\n\n**The correct rule** subtracts the overlap once:\n\n$$n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$$\n\n**When it is right.** Only when the two sets have **no elements in common**, so $A \\cap B$ is empty and the sets are mutually exclusive. Then nothing has been counted twice and subtracting zero changes nothing."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "List the sets before you do anything else. Most of the difficulty in these questions is holding two sets in your head, and writing them out removes it entirely.\n\nRead a combination from the inside out: brackets first, then a dash applied to whatever it is attached to, then the $\\cap$ or $\\cup$, then the $n$. So $n(A \\cap B')$ means find $B'$ and intersect it with $A$, while $n((A \\cup B)')$ means find the union first and take the dash of that.\n\nRemember which way the two main symbols go. $\\cap$ is **and**, and its roof looks like the A in and. $\\cup$ is **or**, a cup that scoops everything up, **including** the overlap.\n\nAnswer in the form the question asks for. $n(\\ )$ wants a whole number, $P(\\ )$ wants a fraction or decimal, and a question that says *list* wants the elements, not a count.\n\nWhen you are given two circle totals and the union, reach for $n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$. It is how a question hands you the overlap without naming it.",
+    "examinerErrors": [
+      "Reading ∪ as the overlap. Union is everything in either circle, the overlap included.",
+      "Reading ∩ as everything in either. Intersection is the overlap only.",
+      "Forgetting that the complement is measured against ξ, so A′ includes the region outside every circle.",
+      "Adding the two circle totals for the union without subtracting the overlap.",
+      "Answering n(A) with a probability, or P(A) with a count.",
+      "Counting repeated elements twice, so the letters of LEVEL give five rather than three.",
+      "Applying a dash to a whole expression when it belongs to one set, or the other way round.",
+      "Listing elements when the question asked how many, or the reverse."
+    ],
+    "grade9Looks": "A top answer writes out both sets in full before touching the notation, then works from the inside out so a dash is applied to the right thing. It knows the union includes the overlap and that the complement is measured against the universal set, so A′ picks up the region outside every circle. It uses n(A ∪ B) = n(A) + n(B) − n(A ∩ B) to recover an overlap that the question has not stated, and can explain that the rule exists because adding the circles counts the overlap twice. It answers a count with a number and a probability with a fraction, and never confuses the two."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
