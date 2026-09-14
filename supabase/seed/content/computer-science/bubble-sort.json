@@ -1,0 +1,1270 @@
+{
+  "id": "bubble-sort",
+  "subjectId": "computer-science",
+  "unitId": "fundamentals-of-algorithms",
+  "title": "Bubble sort",
+  "specPoints": [
+    "3.1.4",
+    "3.1.2"
+  ],
+  "order": 1,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two sorts, and why they are on the paper",
+        "body": "AQA names exactly **two** sorting algorithms, and you need both: **bubble sort** and **merge sort**. This topic is bubble sort; merge sort has its own.\n\nA sorting algorithm puts a list into order. That sounds trivial, but the exam is never really asking *can you sort a list*. It asks:\n\n- what does the list look like **after one pass**\n- **how many** comparisons or swaps happen\n- **why** is one algorithm slower than the other\n\nSo learn the mechanism, not the result. Writing the sorted list at the end earns almost nothing on its own.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Algorithm",
+                "How it works",
+                "Reputation"
+              ],
+              "rows": [
+                [
+                  "Bubble sort",
+                  "compare neighbours, swap them if they are the wrong way round, repeat",
+                  "simple to write, slow on long lists"
+                ],
+                [
+                  "Merge sort",
+                  "split until every list has one item, then merge pairs back in order",
+                  "harder to follow, much faster on long lists"
+                ]
+              ],
+              "title": "The two sorts AQA names"
+            },
+            "alt": "A table naming the two AQA sorting algorithms with a one-line description of how each works"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which two sorting algorithms does the AQA specification name?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the named algorithms",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "**Bubble sort and merge sort**. Linear and binary are the two *searching* algorithms, which is a different part of the specification.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "bubble sort and merge sort"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Bubble sort and merge sort",
+            "Bubble sort and quicksort",
+            "Insertion sort and merge sort",
+            "Linear sort and binary sort"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "How bubble sort works",
+        "body": "Bubble sort walks along the list comparing **each pair of neighbours**. If they are the wrong way round it **swaps** them. One walk from start to finish is called a **pass**.\n\nAfter the first pass the largest value has been carried all the way to the end, which is where the name comes from: big values bubble to the top. Because the end of the list is now correct, the next pass can stop one place earlier.\n\n```\nSUBROUTINE bubbleSort(a)\n   FOR end ← LEN(a) - 1 TO 1 STEP -1\n      swapped ← False\n      FOR i ← 0 TO end - 1\n         IF a[i] > a[i + 1] THEN\n            temp ← a[i]\n            a[i] ← a[i + 1]\n            a[i + 1] ← temp\n            swapped ← True\n         ENDIF\n      ENDFOR\n      IF swapped = False THEN\n         RETURN a\n      ENDIF\n   ENDFOR\n   RETURN a\nENDSUBROUTINE\n```\n\nThe **swapped** flag is what lets the algorithm stop early: if a whole pass makes no swaps, the list is already in order and there is nothing left to do.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "One pass over 7, 2, 5, 1",
+            "steps": [
+              {
+                "text": "Compare 7 and 2: wrong way round, so swap → **2, 7**, 5, 1",
+                "note": "compare the first neighbours"
+              },
+              {
+                "text": "Compare 7 and 5: wrong way round, so swap → 2, **5, 7**, 1",
+                "note": "move along one place, not back to the start"
+              },
+              {
+                "text": "Compare 7 and 1: wrong way round, so swap → 2, 5, **1, 7**",
+                "note": "the 7 keeps moving right"
+              },
+              {
+                "text": "After the pass: **2, 5, 1, 7**, with 3 swaps. The largest value, 7, has reached the end",
+                "note": "one pass fixes the last position, not the whole list"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "Apply one pass of bubble sort to 7, 2, 5, 1. Give the list afterwards, separated by commas.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "one pass of bubble sort",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "**2, 5, 1, 7**. Three swaps, and the largest value 7 has bubbled to the end. The list is not sorted yet, and that is normal after one pass.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2, 5, 1, 7"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "2, 5, 1, 7",
+            "2,5,1,7",
+            "2 5 1 7"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "A full sort, pass by pass",
+        "body": "Here is bubble sort run all the way on **5, 3, 8, 1, 9, 2**. Write out the list after each pass, as the exam expects, and count the swaps as you go.\n\nNotice the last row: a pass that makes **zero swaps** proves the list is in order, and the algorithm stops there. That final check is why there are 5 passes and not 4.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Pass",
+                "List after the pass",
+                "Swaps"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "3 , 5 , 1 , 8 , 2 , 9",
+                  "3"
+                ],
+                [
+                  "2",
+                  "3 , 1 , 5 , 2 , 8 , 9",
+                  "2"
+                ],
+                [
+                  "3",
+                  "1 , 3 , 2 , 5 , 8 , 9",
+                  "2"
+                ],
+                [
+                  "4",
+                  "1 , 2 , 3 , 5 , 8 , 9",
+                  "1"
+                ],
+                [
+                  "5",
+                  "1 , 2 , 3 , 5 , 8 , 9",
+                  "0"
+                ]
+              ],
+              "title": "Bubble sort on 5, 3, 8, 1, 9, 2"
+            },
+            "alt": "A table of bubble sort on 5, 3, 8, 1, 9, 2, showing the list after each of the 5 passes with the number of swaps in each"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Count the work done sorting 5, 3, 8, 1, 9, 2",
+            "steps": [
+              {
+                "text": "Pass 1 compares 5 neighbouring pairs, pass 2 compares 4, and so on down to 1",
+                "note": "each pass is one shorter, because the end of the list is already right"
+              },
+              {
+                "text": "Total comparisons: $5 + 4 + 3 + 2 + 1 = 15$",
+                "note": "this is the number the exam asks for"
+              },
+              {
+                "text": "Total swaps: 3 + 2 + 2 + 1 + 0 = **8**",
+                "note": "swaps are counted separately from comparisons"
+              },
+              {
+                "text": "Passes: **5**, because the last one makes no swaps and proves the list is sorted",
+                "note": "the early stop still costs one pass"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "Using the table, how many swaps happen in total when bubble sort runs on 5, 3, 8, 1, 9, 2?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "counting swaps",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Add the swaps column: 3 + 2 + 2 + 1 + 0 = **8**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Comparisons are not swaps",
+        "body": "This is where most marks go missing. A **comparison** happens every time two neighbours are checked. A **swap** only happens when they were the wrong way round.\n\nSo swaps are always fewer than or equal to comparisons, and for an already sorted list the swaps are zero while the comparisons are not.\n\nFor a list of $n$ items, the first pass makes $n - 1$ comparisons, the second $n - 2$, and so on:\n\n$$(n-1) + (n-2) + \\ldots + 1 = \\frac{n(n-1)}{2}$$\n\nFor 6 items that is $\\frac{6 \\times 5}{2} = 15$, which is exactly what the table above shows.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "List of 5",
+                "Comparisons",
+                "Swaps",
+                "Passes"
+              ],
+              "rows": [
+                [
+                  "1, 2, 3, 4, 5 (already sorted)",
+                  "4",
+                  "0",
+                  "1"
+                ],
+                [
+                  "5, 4, 3, 2, 1 (reversed)",
+                  "10",
+                  "10",
+                  "4"
+                ]
+              ],
+              "title": "Best case against worst case"
+            },
+            "alt": "A table contrasting the best case of an already sorted list with the worst case of a reversed list, giving comparisons, swaps and passes for each"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Why does an already sorted list still cost 4 comparisons?",
+            "steps": [
+              {
+                "text": "The algorithm cannot know the list is sorted without looking",
+                "note": "no shortcut exists before the first pass"
+              },
+              {
+                "text": "Pass 1 compares all 4 neighbouring pairs of a 5-item list",
+                "note": "4 comparisons"
+              },
+              {
+                "text": "None of them is out of order, so **swapped** stays False and 0 swaps are made",
+                "note": "the flag is what notices"
+              },
+              {
+                "text": "The flag makes the algorithm stop after that single pass",
+                "note": "best case: 1 pass, 4 comparisons, 0 swaps"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "A bubble sort runs on a list that is already in order. Which is true?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "comparisons against swaps",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Every pair is still **compared**, because the algorithm has no way of knowing the list is sorted until it looks. None is out of order, so there are **no swaps**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "comparisons but no swaps"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "There are comparisons but no swaps",
+            "There are neither comparisons nor swaps",
+            "There are swaps but no comparisons",
+            "The number of swaps equals the number of comparisons"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "What one pass actually guarantees",
+        "body": "A pass does not sort the list. It guarantees exactly one thing: **the largest value not yet placed reaches its final position**.\n\nThat is why the exam so often asks for the list after *one* pass rather than the sorted list. It is testing whether you traced the mechanism or just sorted the numbers in your head.\n\nTwo traps to avoid:\n\n- **Do not go back to the start** after a swap. Compare positions 0 and 1, then 1 and 2, then 2 and 3, moving forward only.\n- **Do not stop early within a pass.** Even after a swap, keep walking to the end of the pass.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Apply one pass to 4, 1, 3, 2",
+            "steps": [
+              {
+                "text": "Compare 4 and 1: swap → **1, 4**, 3, 2",
+                "note": "position 0 against position 1"
+              },
+              {
+                "text": "Compare 4 and 3: swap → 1, **3, 4**, 2",
+                "note": "position 1 against position 2, moving forward"
+              },
+              {
+                "text": "Compare 4 and 2: swap → 1, 3, **2, 4**",
+                "note": "position 2 against position 3"
+              },
+              {
+                "text": "Result: **1, 3, 2, 4**. The 4 is home; the 3 and 2 are still wrong",
+                "note": "one pass, one value guaranteed"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "short-text",
+          "prompt": "Apply one pass of bubble sort to 4, 1, 3, 2. Give the list afterwards.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "one pass of bubble sort",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "**1, 3, 2, 4**. Three swaps, and the largest value 4 is now at the end. The list still needs more passes.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "1, 3, 2, 4"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "1, 3, 2, 4",
+            "1,3,2,4",
+            "1 3 2 4"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: trace a pass",
+        "body": "Work through one pass of bubble sort on **9, 4, 6, 2** before you look at the check. Compare the first two, swap if needed, move along one place, and keep going to the end.\n\nWrite the list after every comparison, not just at the end. That habit is what stops the careless errors in the exam.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Comparison",
+                "Pair",
+                "Swap?",
+                "List after"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "9 and 4",
+                  "",
+                  ""
+                ],
+                [
+                  "2",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "3",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill this in as you trace"
+            },
+            "alt": "A blank trace table for one pass of bubble sort on 9, 4, 6, 2, with a row for each comparison to fill in"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "Apply one pass of bubble sort to 9, 4, 6, 2. Give the list afterwards.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "one pass of bubble sort",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "**4, 6, 2, 9**. Swap 9 and 4, then 9 and 6, then 9 and 2: three swaps, and the 9 reaches the end.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4, 6, 2, 9"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "4, 6, 2, 9",
+            "4,6,2,9",
+            "4 6 2 9"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Grade 9: why bubble sort is slow",
+        "body": "Spec point 3.1.2 is **efficiency**, and this is where the top marks are.\n\nFor $n$ items bubble sort makes about $\\frac{n(n-1)}{2}$ comparisons, which grows with $n^2$. Double the list and the work roughly **quadruples**. For 10 items that is 45 comparisons; for 100 items it is 4950.\n\nThat is the answer to *why is bubble sort inefficient*: not \"it is slow\" but **the number of comparisons grows with the square of the list length**, so it becomes impractical on long lists.\n\nWhat bubble sort has going for it is worth a mark too: it is **simple to write**, it needs **no extra memory** beyond one temporary variable for the swap, and on a list that is already nearly sorted the **swapped flag** lets it finish in a single pass.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Items, n",
+                "Comparisons, n(n−1)/2"
+              ],
+              "rows": [
+                [
+                  "5",
+                  "10"
+                ],
+                [
+                  "10",
+                  "45"
+                ],
+                [
+                  "20",
+                  "190"
+                ],
+                [
+                  "50",
+                  "1225"
+                ],
+                [
+                  "100",
+                  "4950"
+                ]
+              ],
+              "title": "Doubling the list roughly quadruples the work"
+            },
+            "alt": "A table of how the number of comparisons grows with list length for bubble sort, from 5 items up to 100"
+          },
+          {
+            "type": "worked-example",
+            "problem": "*Explain why bubble sort is inefficient for large lists.* (3 marks)",
+            "steps": [
+              {
+                "text": "*Bubble sort compares every neighbouring pair on every pass.* — 1 mark",
+                "note": "describe the mechanism first"
+              },
+              {
+                "text": "*For n items it makes about n(n−1)/2 comparisons, so the work grows with the square of n.* — 2 marks",
+                "note": "the formula is the mark"
+              },
+              {
+                "text": "*Doubling the list roughly quadruples the comparisons: 10 items need 45, but 100 items need 4950.* — 3 marks",
+                "note": "a worked number makes it concrete"
+              },
+              {
+                "text": "In reserve: it needs almost no extra memory, and on a nearly sorted list the swapped flag stops it after one pass",
+                "note": "name an advantage if the question asks you to evaluate"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "How many comparisons does a bubble sort make on a list of 10 items, using $\\frac{n(n-1)}{2}$?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "efficiency of bubble sort",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$\\frac{10 \\times 9}{2} = 45$ comparisons.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "45"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 45,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- AQA names two sorts: **bubble sort** and **merge sort**. Linear and binary are *searches*.\n- Bubble sort compares **neighbouring pairs** and swaps those in the wrong order. One walk through is a **pass**.\n- Each pass carries the largest remaining value to the end, so the next pass can stop one place earlier.\n- A **swapped flag** stops the algorithm when a pass makes no swaps.\n- **Comparisons are not swaps**: an already sorted list has comparisons but zero swaps.\n- For $n$ items: about $\\frac{n(n-1)}{2}$ comparisons, so the work grows with $n^2$.\n- On 5, 3, 8, 1, 9, 2: 5 passes, 15 comparisons, 8 swaps.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Bubble sort",
+              "boxes": [
+                {
+                  "title": "Mechanism",
+                  "points": [
+                    "compare neighbours",
+                    "swap if out of order",
+                    "move forward, never back"
+                  ]
+                },
+                {
+                  "title": "A pass",
+                  "points": [
+                    "one walk through the list",
+                    "places the largest remaining value",
+                    "next pass is one shorter"
+                  ]
+                },
+                {
+                  "title": "Counting",
+                  "points": [
+                    "comparisons ≠ swaps",
+                    "sorted list: 0 swaps",
+                    "swapped flag stops it early"
+                  ]
+                },
+                {
+                  "title": "Efficiency",
+                  "points": [
+                    "about n(n−1)/2 comparisons",
+                    "grows with n²",
+                    "simple, and needs no extra memory"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes around bubble sort: the mechanism, the pass, the counting and the efficiency"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What does one pass of a bubble sort do?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "one pass of bubble sort",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A **pass** walks the list once, comparing each neighbouring pair and swapping those in the wrong order. It does not sort the whole list.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "compares each neighbouring pair once"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Compares each neighbouring pair once, working forwards",
+        "Sorts the whole list into its final order",
+        "Splits the list into two halves and merges them",
+        "Compares every item with every other item"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "Apply one pass of bubble sort to 6, 3, 9, 1. Give the list afterwards.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "one pass of bubble sort",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Swap 6 and 3, leave 6 and 9, swap 9 and 1: **3, 6, 1, 9**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3, 6, 1, 9"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "3, 6, 1, 9",
+        "3,6,1,9",
+        "3 6 1 9"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which two sorting algorithms are named in the specification?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the named algorithms",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**Bubble sort and merge sort**. Linear and binary search are the two searching algorithms.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "bubble sort and merge sort"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Bubble sort and merge sort",
+        "Linear sort and binary sort",
+        "Bubble sort and insertion sort",
+        "Merge sort and quicksort"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "What name is given to one complete walk through the list in a bubble sort?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "vocabulary",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A **pass**. A bubble sort on a list of $n$ items needs at most $n - 1$ passes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "pass"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "pass",
+        "a pass",
+        "one pass"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A bubble sort runs on a list of 7 items. How many comparisons does the first pass make?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "counting comparisons",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first pass compares each neighbouring pair: with 7 items there are $7 - 1 = 6$ pairs, so **6** comparisons.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$7 - 1$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Why can each pass of a bubble sort be one comparison shorter than the last?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "how bubble sort works",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Each pass carries the largest remaining value to the end, so that position is already correct and does not need checking again.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the largest value is already in place"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The largest remaining value is already in place",
+        "The list gets shorter as items are removed from it",
+        "Swapping two items deletes one of them",
+        "The algorithm gives up on the final pair"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "In a bubble sort, what is the purpose of the swapped flag?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the swapped flag",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "If a whole pass makes **no swaps**, the list must already be in order, so the algorithm can **stop early** instead of running the remaining passes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "detects a pass with no swaps"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "so the algorithm stops early"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "to stop early when a pass makes no swaps",
+        "to stop the sort early if no swaps are made",
+        "it stops the algorithm when a pass makes no swaps",
+        "to detect a pass with no swaps so the sort can stop early",
+        "it spots a pass with no swaps and stops the algorithm early"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "Using the trace in the lesson, how many comparisons does bubble sort make in total on 5, 3, 8, 1, 9, 2?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "counting comparisons",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$5 + 4 + 3 + 2 + 1 = 15$ comparisons.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5 + 4 + 3 + 2 + 1$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "A bubble sort is given the list 1, 2, 3, 4, 5. What happens?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "best case",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The algorithm still compares all 4 pairs, finds none out of order, so the **swapped flag** stays False and it stops after that single pass.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one pass, 4 comparisons, no swaps"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "One pass of 4 comparisons and no swaps, then it stops",
+        "No comparisons and no swaps at all",
+        "Four full passes, each making one swap",
+        "It reports an error, because there is nothing to sort"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "Apply one pass of bubble sort to 8, 5, 7, 3, 6. Give the list afterwards.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "one pass of bubble sort",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Swap 8 and 5, swap 8 and 7, swap 8 and 3, swap 8 and 6: **5, 7, 3, 6, 8**. Four swaps, and the 8 reaches the end.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the 8 is carried right by successive swaps"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5, 7, 3, 6, 8"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "5, 7, 3, 6, 8",
+        "5,7,3,6,8",
+        "5 7 3 6 8"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "How many comparisons does a bubble sort make on a list of 20 items, using $\\frac{n(n-1)}{2}$?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "efficiency of bubble sort",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\frac{20 \\times 19}{2} = \\frac{380}{2} = 190$ comparisons.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{20 \\times 19}{2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "190"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 190,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "ordering",
+      "prompt": "Put the steps of one pass of a bubble sort in order.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "how bubble sort works",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Compare the first pair, swap if needed, move forward one place, and only check the swapped flag once the whole pass is finished.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "compare before swapping"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "move forward, not back to the start"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "the flag is checked at the end of the pass"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "items": [
+        "Compare the item at position 0 with the item at position 1",
+        "Swap them if they are in the wrong order",
+        "Move along one place and compare the next pair",
+        "Carry on to the end of the pass, then check whether any swap was made"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "extended",
+      "prompt": "Explain why bubble sort is not a suitable choice for sorting a list of 10 000 items.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "efficiency of bubble sort",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Bubble sort compares every neighbouring pair on every pass, so for n items it makes about n(n−1)/2 comparisons. The work therefore grows with the square of the list length: doubling the list roughly quadruples the comparisons. For 10 000 items that is about 50 million comparisons, which is far too slow to be practical. Merge sort splits the list instead of walking it repeatedly, so it handles long lists far better.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "bubble sort compares every neighbouring pair on every pass"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "about n(n−1)/2 comparisons for n items"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the work grows with the square of n, so doubling the list roughly quadruples it"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "applies it to 10 000 items, or names merge sort as the better choice"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "States that bubble sort compares every neighbouring pair on every pass",
+          "marks": 1
+        },
+        {
+          "text": "Gives the number of comparisons as about $\\frac{n(n-1)}{2}$",
+          "marks": 1
+        },
+        {
+          "text": "Explains that the work grows with $n^2$, so doubling the list roughly quadruples it",
+          "marks": 1
+        },
+        {
+          "text": "Applies this to 10 000 items, or concludes that merge sort is the better choice",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Bubble sort works by comparing every neighbouring pair on every pass, and it needs almost as many passes as there are items. For a list of $n$ items that comes to about $\\frac{n(n-1)}{2}$ comparisons, so the amount of work grows with the **square** of the list length: doubling the list roughly **quadruples** the comparisons. A list of 10 items needs 45 comparisons, but 10 000 items needs close to 50 million, which would take far too long to be useful. **Merge sort** repeatedly splits the list instead of walking it over and over, so the work grows far more slowly and it is the sensible choice at that size."
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Which statement about comparisons and swaps in a bubble sort is always true?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparisons against swaps",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A swap can only follow a comparison that found a pair out of order, so swaps are **never more** than comparisons, and are often far fewer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "swaps never exceed comparisons"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "The number of swaps is never greater than the number of comparisons",
+        "The number of swaps always equals the number of comparisons",
+        "The number of comparisons is never greater than the number of swaps",
+        "Neither number depends on the order of the list"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "Bubble sort is run on 3, 1, 4, 2. How many swaps are made in total?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting swaps",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Pass 1: 3 and 1 swap, 3 and 4 stay, 4 and 2 swap, giving 1, 3, 2, 4 with 2 swaps. Pass 2: 1 and 3 stay, 3 and 2 swap, giving 1, 2, 3, 4 with 1 swap. Pass 3: no swaps, so it stops. Total **3** swaps.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "pass 1 makes 2 swaps"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "pass 2 makes 1 swap"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A bubble sort has just finished a pass in which no swaps were made. What does this prove?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the swapped flag",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "If no neighbouring pair was out of order, then every pair is in order, so the **whole list is sorted** and the algorithm stops.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the list is sorted, so it stops"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "The list is already in order, so the algorithm can stop",
+        "The list is in reverse order",
+        "Exactly one more pass is needed",
+        "The algorithm has made an error"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "A bubble sort on a list of $n$ items makes 28 comparisons in total. How many items are in the list?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "rearranging the comparison formula",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\frac{n(n-1)}{2} = 28$, so $n(n-1) = 56$. Since $8 \\times 7 = 56$, the list has **8** items.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n(n-1) = 56$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$8 \\times 7 = 56$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A student says: *bubble sort is useless, so there is no reason ever to use it.* Evaluate that statement.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "evaluating an algorithm choice",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The student is right that bubble sort scales badly. Its comparisons grow with the square of the list length, so it is impractical on long lists: 100 items need 4950 comparisons and 10 000 need about 50 million. But useless is too strong. It is very simple to write, which makes it quick to code and hard to get wrong. It needs no extra memory beyond one temporary variable, while merge sort needs room for the lists it builds. On a short list, or one that is already nearly sorted, the swapped flag lets it finish in a single pass, which can beat merge sort. So it is a poor general choice but a reasonable one for small or nearly sorted data.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "accepts that the work grows with the square of the list length"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "supports it with a number, such as 4950 comparisons for 100 items"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "gives an advantage: simplicity, or no extra memory needed"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "gives the nearly sorted case, where the swapped flag finishes in one pass"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "reaches a judgement: poor in general, reasonable for short or nearly sorted lists"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 7,
+      "criteria": [
+        {
+          "text": "Accepts the criticism: comparisons grow with the square of the list length",
+          "marks": 1
+        },
+        {
+          "text": "Supports it with a figure, such as 4950 comparisons for 100 items",
+          "marks": 1
+        },
+        {
+          "text": "Gives an advantage, such as being simple to write or needing no extra memory",
+          "marks": 1
+        },
+        {
+          "text": "Notes that a nearly sorted list finishes in one pass because of the swapped flag",
+          "marks": 1
+        },
+        {
+          "text": "Judgement: a poor general choice, but reasonable for short or nearly sorted lists",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The student has a real point. Bubble sort compares every neighbouring pair on every pass, so for $n$ items it makes about $\\frac{n(n-1)}{2}$ comparisons and the work grows with the **square** of the length. A list of 100 items already needs 4950 comparisons, and 10 000 items needs close to 50 million, so as a general-purpose sort it is a poor choice. *Useless* goes too far, though. It is **simple to write**, which makes it fast to code and hard to get wrong, and it needs **no extra memory** beyond a single temporary variable for the swap, where merge sort needs space for the lists it builds up. On a **short list**, or one that is **already nearly sorted**, the swapped flag lets it finish after a single pass, which can beat merge sort outright. So the fair judgement is that bubble sort is a poor choice for large data but a reasonable one for small or nearly sorted lists."
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "Why does the pseudo-code use a temporary variable when swapping two items?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "swapping two values",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Writing `a[i] ← a[i+1]` first would destroy the original `a[i]`, so there would be nothing left to copy into `a[i+1]`. The **temporary variable** holds it safely.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the first value would be overwritten"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "The first value would be overwritten before it is copied",
+        "It makes the swap run faster than a direct exchange",
+        "AQA pseudo-code has no way to compare two items",
+        "It stores the number of swaps made so far"
+      ],
+      "correct": [
+        0
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 16
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Bubble sort questions are nearly always one of three things: the list after one pass, a count of comparisons or swaps, or an explanation of why it is inefficient. Read which of the three is being asked before you start, because writing the fully sorted list when the question said *one pass* earns nothing.\n\nWhen you trace, write the list after **every comparison**, not just at the end of the pass. It is slower but it is the only reliable way, and the working is often worth a mark by itself.\n\nFor efficiency, quote $\\frac{n(n-1)}{2}$ and say that the work grows with $n^2$. *It is slow* is not an answer; *doubling the list roughly quadruples the comparisons* is.",
+    "examinerErrors": [
+      "Giving the fully sorted list when the question asked for the list after one pass.",
+      "Going back to the start of the list after a swap. A pass moves forward only.",
+      "Counting a comparison as a swap. Every pair is compared; only those out of order are swapped.",
+      "Saying an already sorted list needs no comparisons. It needs a full pass of them to discover it is sorted.",
+      "Thinking a swap-free pass always happens. It is needed to stop **early**, but a reversed list is still swapping on its last pass and simply runs out of passes at n − 1.",
+      "Explaining inefficiency as *it is slow* without the $n^2$ growth or a number to back it up.",
+      "Writing the swap as two assignments with no temporary variable, which destroys the first value."
+    ],
+    "grade9Looks": "A grade 9 answer traces a pass comparison by comparison and shows the list at each stage, separates comparisons from swaps without being asked, and knows that one pass guarantees only that the largest remaining value is in place. On efficiency it quotes $\\frac{n(n-1)}{2}$, explains growth with $n^2$, and puts a number to it. Asked to evaluate, it gives bubble sort its due — simple, no extra memory, one pass on nearly sorted data — before concluding that merge sort is the better general choice."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q19"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

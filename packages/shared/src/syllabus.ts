@@ -339,10 +339,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Robust and secure programming: validation, authentication and testing', topicId: 'robust-and-secure-programming' },
     ] },
     { year: 10, term: 'Spring', topics: [
-      { title: 'Bubble sort' },
-      { title: 'Merge sort' },
-      { title: 'Working out what an algorithm does by tracing it' },
-      { title: 'Compression: lossy, lossless and run length encoding' },
+      { title: 'Bubble sort', topicId: 'bubble-sort' },
+      { title: 'Merge sort', topicId: 'merge-sort' },
+      { title: 'Working out what an algorithm does by tracing it', topicId: 'determining-the-purpose-of-an-algorithm' },
+      { title: 'Data compression: Huffman coding and run length encoding', topicId: 'data-compression' },
     ] },
     { year: 10, term: 'Summer', topics: [
       { title: 'Boolean logic and truth tables' },

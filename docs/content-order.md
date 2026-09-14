@@ -12,7 +12,7 @@ Every topic carries a `year` field, taken from the school's curriculum overview 
 | Physics | 5: Describing motion: speed, velocity and acceleration · Forces and motion: Newton's laws · Forces, weight and resultant forces · Kinetic and gravitational potential energy · Stopping distances | 4: Hooke's law and elasticity · Moments, levers and gears · Momentum · Pressure in fluids | — |
 | Chemistry | — | 6: Covalent bonding: molecules, polymers and giant structures · Diamond, graphite, graphene, fullerenes and nanoparticles · Electrolysis of aqueous solutions · Electrolysis of molten compounds · Ionic bonding and ionic compounds · Metallic bonding and alloys | — |
 | Biology | — | 8: Antibiotics, new medicines and monoclonal antibodies · Non-communicable disease and lifestyle · Pathogens and how disease spreads · Photosynthesis and limiting factors · Plant adaptations, defences and hormones · The immune system and immunisation · The leaf, root hair cells, xylem and phloem · Transpiration and translocation | — |
-| Computer Science | 2: Data types and operators · Selection, iteration and tracing | 4: Arrays and records · Robust and secure programming: validation, authentication and testing · String handling, conversions, and files for your project · Subroutines: procedures and functions | — |
+| Computer Science | 2: Data types and operators · Selection, iteration and tracing | 8: Arrays and records · Bubble sort · Data compression: Huffman coding and run length encoding · Merge sort · Robust and secure programming: validation, authentication and testing · String handling, conversions, and files for your project · Subroutines: procedures and functions · Working out what an algorithm does by tracing it | — |
 | Business | 3: Enterprise and entrepreneurship · Putting a business idea into practice · Spotting a business opportunity | 2: Making the business effective · Understanding external influences | — |
 | French | — | 10: Booking and reviewing accommodation · Festivals and traditions · Good mental health · Holiday activities · Holidays and accommodation · Holidays in three tenses · Illness and accidents · Improving your life, with the simple future · Lifestyle changes · My ideal holiday, with the conditional | — |
 | Music | — | 4: Afro Celt Sound System: Release · Bach: Brandenburg Concerto No. 5, third movement · Killer Queen · Star Wars main title | — |
@@ -80,7 +80,7 @@ School order for Year 10: programming (subroutines, arrays, records, files, stri
 |---|---|---|
 | Autumn 1 | Programming: subroutines · arrays and records · strings and files · robust and secure programming | All four drafted; each links to the family's Learn C# practice site |
 | Autumn 2 | Recap of Year 9 programming: data types, selection, iteration; more practice tracing | Both drafted 13 September 2026 (Data types and operators · Selection, iteration and tracing). **Computer Science Autumn is complete.** |
-| Spring | Sorting: bubble and merge · determining the purpose of an algorithm by tracing · compression | Next |
+| Spring | Sorting: bubble and merge · determining the purpose of an algorithm by tracing · compression | All four drafted 14 September 2026 (Bubble sort · Merge sort · Working out what an algorithm does by tracing it · Data compression). **Computer Science Spring is complete.** |
 
 ## Business (Edexcel 1BS0)
 
