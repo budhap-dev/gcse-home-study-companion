@@ -1,0 +1,1343 @@
+{
+  "id": "merge-sort",
+  "subjectId": "computer-science",
+  "unitId": "fundamentals-of-algorithms",
+  "title": "Merge sort",
+  "specPoints": [
+    "3.1.4",
+    "3.1.2"
+  ],
+  "order": 2,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Divide and conquer",
+        "body": "Bubble sort walks the same list over and over. Merge sort does something completely different: it **splits the problem up**.\n\nThe idea has two halves, and the exam expects both by name:\n\n1. **Divide.** Split the list in half, then split each half in half, and keep going until every list holds a **single item**. A list of one item is already sorted, which is the point.\n2. **Conquer, by merging.** Take the small sorted lists in pairs and **merge** each pair into one sorted list. Repeat until only one list is left.\n\nNothing is compared until the merging starts. All the work of sorting happens on the way back up.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Merge sort",
+              "boxes": [
+                {
+                  "title": "Divide",
+                  "points": [
+                    "split each list in half",
+                    "keep splitting"
+                  ]
+                },
+                {
+                  "title": "Base case",
+                  "points": [
+                    "lists of one item",
+                    "already sorted"
+                  ]
+                },
+                {
+                  "title": "Merge",
+                  "points": [
+                    "take two sorted lists",
+                    "compare their fronts"
+                  ]
+                },
+                {
+                  "title": "Repeat",
+                  "points": [
+                    "merge in pairs",
+                    "until one list is left"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes around merge sort: divide, the base case of a single item, merge, and repeat until one list remains"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Why does merge sort keep splitting until each list holds one item?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "divide and conquer",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "A single item is **already sorted** by definition, so it is the point at which splitting can stop and merging can begin.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a one-item list is already sorted"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A list of one item is already in order",
+            "One item is the smallest list a computer can store",
+            "It makes the list shorter to search",
+            "Splitting puts the items into order as it goes"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "The splitting stage",
+        "body": "Here is the divide stage on **6, 2, 9, 4, 1, 7, 3**. Each row halves every list from the row above. With an odd number of items one half is simply one longer.\n\nNotice that **no comparisons happen here at all**. The splitting is just bookkeeping; the sorting is done by the merges.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Level",
+                "Lists"
+              ],
+              "rows": [
+                [
+                  "0",
+                  "[6, 2, 9, 4, 1, 7, 3]"
+                ],
+                [
+                  "1",
+                  "[6, 2, 9]   [4, 1, 7, 3]"
+                ],
+                [
+                  "2",
+                  "[6]   [2, 9]   [4, 1]   [7, 3]"
+                ],
+                [
+                  "3",
+                  "[6]   [2]   [9]   [4]   [1]   [7]   [3]"
+                ]
+              ],
+              "title": "Splitting 6, 2, 9, 4, 1, 7, 3"
+            },
+            "alt": "A table of the splitting stage of merge sort on 6, 2, 9, 4, 1, 7, 3, showing the lists at each level until every list holds one item"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Split 6, 2, 9, 4, 1, 7, 3 down to single items",
+            "steps": [
+              {
+                "text": "Level 0 is the whole list: [6, 2, 9, 4, 1, 7, 3]",
+                "note": "seven items"
+              },
+              {
+                "text": "Level 1 halves it: [6, 2, 9]   [4, 1, 7, 3]",
+                "note": "an odd length, so one half is longer"
+              },
+              {
+                "text": "Level 2 halves each of those: [6]   [2, 9]   [4, 1]   [7, 3]",
+                "note": "lists of one are left alone"
+              },
+              {
+                "text": "Level 3: [6]   [2]   [9]   [4]   [1]   [7]   [3], every list holds one item, so splitting stops",
+                "note": "now the merging can begin"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "A merge sort splits the list 6, 2, 9, 4. What are the two lists after the first split? Give them as two groups separated by a semicolon.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the splitting stage",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The list is halved down the middle: **6, 2** and **9, 4**. No comparisons happen during splitting.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6, 2 and 9, 4"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "6, 2; 9, 4",
+            "6,2;9,4",
+            "6, 2 ; 9, 4",
+            "[6, 2]; [9, 4]"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Merging two sorted lists",
+        "body": "Merging is the part that does the sorting, and it is the part the exam tests. The rule is short:\n\n> Look at the **front item of each list**. Take the smaller one and put it into the new list. Repeat. When one list runs out, copy the rest of the other straight across.\n\nThe crucial point is that you only ever look at the **front** of each list. You never scan through them. That is why merging is fast.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Merge [2, 6] and [4, 9]",
+            "steps": [
+              {
+                "text": "Fronts are 2 and 4. 2 is smaller, so take it → [2]",
+                "note": "one comparison"
+              },
+              {
+                "text": "Fronts are now 6 and 4. 4 is smaller, so take it → [2, 4]",
+                "note": "two comparisons"
+              },
+              {
+                "text": "Fronts are 6 and 9. 6 is smaller, so take it → [2, 4, 6]",
+                "note": "three comparisons"
+              },
+              {
+                "text": "The first list is empty, so copy the rest of the second across → [2, 4, 6, 9]",
+                "note": "no comparison needed for the leftovers"
+              },
+              {
+                "text": "Result: [2, 4, 6, 9] using 3 comparisons",
+                "note": "four items merged with three comparisons"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "Merge the two sorted lists 1, 5 and 3, 4. Give the merged list.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "merging two sorted lists",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Compare 1 and 3, take 1. Compare 5 and 3, take 3. Compare 5 and 4, take 4. The first list still holds 5, so copy it across: **1, 3, 4, 5**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "1, 3, 4, 5"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "1, 3, 4, 5",
+            "1,3,4,5",
+            "1 3 4 5"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "The merging stage",
+        "body": "Now the way back up for **6, 2, 9, 4, 1, 7, 3**. Each round merges back exactly the lists the splitting produced, in pairs. A list with no partner, like the lone **6** here, simply waits for the next round.\n\nRead the last row: one list, in order. That is the sorted result.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Round",
+                "Lists after merging"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "[6]   [2, 9]   [1, 4]   [3, 7]"
+                ],
+                [
+                  "2",
+                  "[2, 6, 9]   [1, 3, 4, 7]"
+                ],
+                [
+                  "3",
+                  "[1, 2, 3, 4, 6, 7, 9]"
+                ]
+              ],
+              "title": "Merging back up to 1, 2, 3, 4, 6, 7, 9"
+            },
+            "alt": "A table of the merging stage of merge sort on 6, 2, 9, 4, 1, 7, 3, showing the lists after each round of merging until one sorted list remains"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Merge [2, 3, 8] and [1, 6]",
+            "steps": [
+              {
+                "text": "Fronts 2 and 1: take **1** → [1]",
+                "note": "the smaller front always goes first"
+              },
+              {
+                "text": "Fronts 2 and 6: take **2** → [1, 2]",
+                "note": "back to the first list"
+              },
+              {
+                "text": "Fronts 3 and 6: take **3** → [1, 2, 3]",
+                "note": "still the first list"
+              },
+              {
+                "text": "Fronts 8 and 6: take **6** → [1, 2, 3, 6]",
+                "note": "now the second"
+              },
+              {
+                "text": "The second list is empty, so copy the 8 across → [1, 2, 3, 6, 8]",
+                "note": "leftovers cost no comparisons"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "short-text",
+          "prompt": "Merge the two sorted lists 4, 7 and 2, 5. Give the merged list.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "merging two sorted lists",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Take 2, then 4, then 5, then copy the 7 across: **2, 4, 5, 7**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2, 4, 5, 7"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "2, 4, 5, 7",
+            "2,4,5,7",
+            "2 4 5 7"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "How many rounds of merging",
+        "body": "Because each round **halves** the number of lists, the number of rounds grows very slowly with the length of the list.\n\nA list of 8 splits into 8 single items, which merge into 4 lists, then 2, then 1: **3 rounds**. A list of 16 needs 4 rounds. Doubling the list adds **one** round, not double the work.\n\nThat is the whole reason merge sort beats bubble sort on long lists, and it is what an efficiency question is after.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Items",
+                "Rounds of merging"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "1"
+                ],
+                [
+                  "4",
+                  "2"
+                ],
+                [
+                  "8",
+                  "3"
+                ],
+                [
+                  "16",
+                  "4"
+                ],
+                [
+                  "32",
+                  "5"
+                ],
+                [
+                  "1024",
+                  "10"
+                ]
+              ],
+              "title": "Doubling the list adds one round"
+            },
+            "alt": "A table showing how many rounds of merging are needed as the list length doubles, from 2 items up to 1024"
+          },
+          {
+            "type": "worked-example",
+            "problem": "How many rounds does merge sort need on 8, 3, 5, 1, 7, 2, 6, 4?",
+            "steps": [
+              {
+                "text": "Split down to 8 single-item lists",
+                "note": "the divide stage makes no comparisons"
+              },
+              {
+                "text": "Round 1 merges them into 4 pairs: [3, 8]   [1, 5]   [2, 7]   [4, 6]",
+                "note": "8 lists become 4"
+              },
+              {
+                "text": "Round 2 merges those into 2: [1, 3, 5, 8]   [2, 4, 6, 7]",
+                "note": "4 become 2"
+              },
+              {
+                "text": "Round 3 merges the last pair: [1, 2, 3, 4, 5, 6, 7, 8]",
+                "note": "2 become 1, and the list is sorted"
+              },
+              {
+                "text": "**3 rounds** for 8 items, because $2^3 = 8$",
+                "note": "16 items would need 4"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "How many rounds of merging does a merge sort need for a list of 16 items?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "rounds of merging",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Each round halves the number of lists: 16 → 8 → 4 → 2 → 1. That is **4** rounds, because $2^4 = 16$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: merge and split",
+        "body": "Take **1, 4, 6** and **2, 3, 9**, both already sorted, and merge them. Compare only the fronts, take the smaller, and write the growing list at every step.\n\nThen try the splitting stage on a list of your own of 5 items, and check that the odd one out ends up alone.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "Front of list A",
+                "Front of list B",
+                "Take",
+                "Merged so far"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "1",
+                  "2",
+                  "",
+                  ""
+                ],
+                [
+                  "2",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "3",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "4",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "5",
+                  "",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill this in as you merge"
+            },
+            "alt": "A blank merging table for the sorted lists 1, 4, 6 and 2, 3, 9, with a row for each comparison to fill in"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "Merge the two sorted lists 1, 4, 6 and 2, 3, 9. Give the merged list.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "merging two sorted lists",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Take 1, then 2, then 3, then 4, then 6, then copy the 9 across: **1, 2, 3, 4, 6, 9**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "1, 2, 3, 4, 6, 9"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "1, 2, 3, 4, 6, 9",
+            "1,2,3,4,6,9",
+            "1 2 3 4 6 9"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Grade 9: merge sort against bubble sort",
+        "body": "A comparison question is worth several marks, and the answer has a shape.\n\n**Speed.** Bubble sort's comparisons grow with $n^2$; merge sort's grow far more slowly, because each round halves the number of lists and there are only about $\\log_2 n$ rounds. For 1024 items bubble sort needs about half a million comparisons and merge sort about ten thousand.\n\n**Memory.** This is the trade-off, and it is the point students miss. Merge sort **builds new lists as it merges**, so it needs extra memory roughly the size of the original list. Bubble sort swaps items where they are and needs almost none.\n\n**Consistency.** Merge sort takes the same number of rounds whatever order the list starts in. Bubble sort is much faster on an already sorted list, because the swapped flag stops it after one pass, and much slower on a reversed one.\n\nSo: merge sort is faster on long lists but uses more memory; bubble sort is simpler and can win on short or nearly sorted lists.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Bubble sort",
+                "Merge sort"
+              ],
+              "rows": [
+                [
+                  "Comparisons",
+                  "about n(n−1)/2, grows with n²",
+                  "grows far more slowly, about n log n"
+                ],
+                [
+                  "Memory",
+                  "almost none: swaps in place",
+                  "extra memory for the lists it builds"
+                ],
+                [
+                  "Already sorted list",
+                  "one pass, then it stops",
+                  "the same number of rounds as always"
+                ],
+                [
+                  "Writing the code",
+                  "short and simple",
+                  "longer, usually recursive"
+                ]
+              ],
+              "title": "The trade-off"
+            },
+            "alt": "A table comparing merge sort and bubble sort on speed, memory, consistency and difficulty"
+          },
+          {
+            "type": "worked-example",
+            "problem": "*Compare the efficiency of merge sort and bubble sort.* (4 marks)",
+            "steps": [
+              {
+                "text": "*Bubble sort compares every neighbouring pair on every pass, so its comparisons grow with the square of the list length.* — 1 mark",
+                "note": "name the mechanism, not just the verdict"
+              },
+              {
+                "text": "*Merge sort halves the number of lists at each round, so it needs only about log₂ n rounds and is far faster on long lists.* — 2 marks",
+                "note": "the halving is the reason"
+              },
+              {
+                "text": "*For 1024 items that is roughly half a million comparisons against about ten thousand.* — 3 marks",
+                "note": "numbers make the difference concrete"
+              },
+              {
+                "text": "*But merge sort builds new lists as it merges, so it needs extra memory, while bubble sort swaps in place and needs almost none.* — 4 marks",
+                "note": "the trade-off is where the fourth mark lives"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "What is the main disadvantage of merge sort compared with bubble sort?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "comparing the two sorts",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Merge sort **builds new lists** as it merges, so it needs extra memory roughly the size of the original. Bubble sort swaps in place.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "extra memory"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "It needs extra memory for the lists it builds",
+            "It cannot sort lists longer than 1000 items",
+            "It only works on lists that are nearly sorted",
+            "It makes more comparisons on a long list"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Merge sort is **divide and conquer**: split until every list holds one item, then merge pairs back together.\n- A one-item list is **already sorted**, which is why splitting stops there.\n- **No comparisons happen while splitting.** All the work is in the merges.\n- To merge two sorted lists, compare only their **front items**, take the smaller, and copy the leftovers across when one runs out.\n- Each round **halves** the number of lists, so a list of 8 needs 3 rounds and 16 needs 4. Doubling the list adds one round.\n- Merge sort is much **faster** than bubble sort on long lists, but needs **extra memory** for the lists it builds.\n- On 6, 2, 9, 4, 1, 7, 3: 3 levels of splitting, then 3 rounds of merging to reach 1, 2, 3, 4, 6, 7, 9.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Stage 1",
+                  "divide: halve until every list holds one item"
+                ],
+                [
+                  "Stage 2",
+                  "merge: combine pairs, comparing only the front items"
+                ],
+                [
+                  "Comparisons",
+                  "none while splitting; all of them while merging"
+                ],
+                [
+                  "Rounds",
+                  "each round halves the lists, so about log₂ n of them"
+                ],
+                [
+                  "Strength",
+                  "far faster than bubble sort on long lists"
+                ],
+                [
+                  "Cost",
+                  "extra memory for the lists it builds"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of merge sort: the two stages, what happens in each, and the efficiency trade-off"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is the first stage of a merge sort?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "divide and conquer",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Merge sort **divides** first: it halves the list repeatedly until every list holds one item. Only then does the merging start.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "splitting the list into halves"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Splitting the list into halves, again and again",
+        "Comparing each neighbouring pair in turn",
+        "Merging the smallest lists together",
+        "Finding the largest value in the list"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "A merge sort splits the list 8, 3, 5, 1. What are the two lists after the first split? Separate them with a semicolon.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the splitting stage",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Halve it down the middle: **8, 3** and **5, 1**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8, 3 and 5, 1"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "8, 3; 5, 1",
+        "8,3;5,1",
+        "8, 3 ; 5, 1",
+        "[8, 3]; [5, 1]"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Why does the splitting stop when each list holds a single item?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "divide and conquer",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A list of one item is **already sorted**, so there is nothing left to divide and the merging can begin.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a one-item list is already sorted"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A single item is already in order",
+        "A computer cannot split a list further",
+        "One item takes the least memory",
+        "The items are then in the right order"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "Merge the two sorted lists 2, 8 and 5, 6. Give the merged list.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "merging two sorted lists",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Take 2, then 5, then 6, then copy the 8 across: **2, 5, 6, 8**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2, 5, 6, 8"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "2, 5, 6, 8",
+        "2,5,6,8",
+        "2 5 6 8"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "When merging two sorted lists, which items are compared?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "merging two sorted lists",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Only the **front** item of each list. Take the smaller, then compare the new fronts. That is what makes merging fast.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the front item of each"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The front item of each list",
+        "Every item of one list with every item of the other",
+        "The last item of each list",
+        "The middle item of each list"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "How many rounds of merging does a merge sort need for a list of 32 items?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "rounds of merging",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Each round halves the number of lists: 32 → 16 → 8 → 4 → 2 → 1, so **5** rounds, because $2^5 = 32$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "halving 32 down to 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "Merge the two sorted lists 1, 3, 7 and 2, 8. Give the merged list.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "merging two sorted lists",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Take 1, then 2, then 3, then 7, then copy the 8 across: **1, 2, 3, 7, 8**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "compares only the front items"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1, 2, 3, 7, 8"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "1, 2, 3, 7, 8",
+        "1,2,3,7,8",
+        "1 2 3 7 8"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "How many comparisons happen during the splitting stage of a merge sort?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the splitting stage",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**None.** Splitting just divides the list in half; every comparison happens during the merging.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "none"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "None at all",
+        "One for each split",
+        "One for each item",
+        "The same number as during merging"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "What name is given to the strategy of splitting a problem into smaller problems and combining the answers?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "vocabulary",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**Divide and conquer**. Merge sort is the example the specification uses.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "divide and conquer"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "divide and conquer",
+        "divide-and-conquer",
+        "divide and conquer approach"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "A merge sort is given a list that is already in order. What happens?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "consistency",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Merge sort does **the same work whatever the order**: it cannot tell the list is sorted, so it splits and merges as usual. Bubble sort is the one that finishes early.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the same number of rounds"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It splits and merges as usual, taking the same number of rounds",
+        "It stops immediately without splitting",
+        "It takes one round instead of several",
+        "It behaves exactly like a bubble sort"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "ordering",
+      "prompt": "Put the stages of a merge sort in order.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "divide and conquer",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Divide all the way down, then merge all the way back up. The comparisons happen only on the way up.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "splitting before merging"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "splits down to single items"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "merging continues until one list remains"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "items": [
+        "Split the list in half",
+        "Keep splitting until every list holds one item",
+        "Merge the one-item lists into sorted pairs",
+        "Keep merging pairs until one sorted list is left"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "Trace a merge sort on 8, 3, 5, 1, 7, 2, 6, 4. Give the list at the end of the second round of merging, as two groups separated by a semicolon.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "tracing a merge sort",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Round 1 gives [3, 8]   [1, 5]   [2, 7]   [4, 6]. Round 2 merges those in pairs: **[1, 3, 5, 8]   [2, 4, 6, 7]**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "round 1: [3, 8]   [1, 5]   [2, 7]   [4, 6]"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "merges the four lists in pairs"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "[1, 3, 5, 8]   [2, 4, 6, 7]"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "1, 3, 5, 8; 2, 4, 6, 7",
+        "1,3,5,8;2,4,6,7",
+        "[1, 3, 5, 8]; [2, 4, 6, 7]"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Why does merge sort handle a list of 10 000 items far better than bubble sort?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing the two sorts",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Each round **halves** the number of lists, so only about $\\log_2 n$ rounds are needed. Bubble sort's work grows with $n^2$ instead.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "halving means few rounds"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Each round halves the lists, so few rounds are needed",
+        "It compares fewer items in each comparison",
+        "It does not need to look at every item",
+        "It sorts the list without any comparisons"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A merge sort merges the sorted lists 1, 4 and 2, 3. How many comparisons does that merge make?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting comparisons in a merge",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Compare 1 and 2, take 1. Compare 4 and 2, take 2. Compare 4 and 3, take 3. The second list is now empty, so the 4 is copied across without a comparison: **3** comparisons.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "compares only the front items"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the leftover item needs no comparison"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "extended",
+      "prompt": "Explain how a merge sort would sort the list 5, 2, 8, 1. Describe both stages.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "tracing a merge sort",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Divide first. The list 5, 2, 8, 1 is halved into 5, 2 and 8, 1. Each of those is halved again into the single items 5, 2, 8 and 1. A one-item list is already sorted, so splitting stops. Then merge. Merging 5 and 2 compares their fronts and gives 2, 5; merging 8 and 1 gives 1, 8. Finally merge 2, 5 with 1, 8: compare 2 and 1 and take 1, compare 2 and 8 and take 2, compare 5 and 8 and take 5, then copy the 8 across. The result is 1, 2, 5, 8. No comparisons happen while splitting; they all happen in the merges.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 2,
+          "description": "Level 1 (1 to 2): the two stages named, with little detail"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "Level 2 (3 to 4): both stages described, with the lists mostly correct"
+        },
+        {
+          "code": "C3",
+          "marks": 2,
+          "description": "Level 3 (5 to 6): a full trace of both stages with the lists correct and the comparisons explained"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Splits 5, 2, 8, 1 into 5, 2 and 8, 1",
+          "marks": 1
+        },
+        {
+          "text": "Splits again into the single items 5, 2, 8 and 1",
+          "marks": 1
+        },
+        {
+          "text": "States that a one-item list is already sorted, so splitting stops",
+          "marks": 1
+        },
+        {
+          "text": "Merges the single items into 2, 5 and 1, 8",
+          "marks": 1
+        },
+        {
+          "text": "Merges those two lists by comparing their front items",
+          "marks": 1
+        },
+        {
+          "text": "Reaches 1, 2, 5, 8, and notes that comparisons happen only while merging",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Divide first.** The list **5, 2, 8, 1** is halved into **5, 2** and **8, 1**. Each of those is halved again, giving the single items **5**, **2**, **8** and **1**. A list of one item is already sorted, so the splitting stops there, and no comparisons have been made yet.\n\n**Then merge.** Merging **5** with **2** compares the two fronts and gives **2, 5**. Merging **8** with **1** gives **1, 8**. Now merge those two sorted lists: compare the fronts 2 and 1 and take **1**; compare 2 and 8 and take **2**; compare 5 and 8 and take **5**; the first list is now empty, so the **8** is copied across without a comparison. The result is **1, 2, 5, 8**. Every comparison happened during the merging, none during the splitting."
+    },
+    {
+      "id": "q16",
+      "type": "extended",
+      "prompt": "Compare merge sort and bubble sort, and say which you would choose to sort a list of one million items.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "comparing the two sorts",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Bubble sort compares every neighbouring pair on every pass, so its comparisons grow with the square of the list length. Merge sort halves the number of lists at every round, so it needs only about log to base 2 of n rounds and is far faster on long lists. The trade-off is memory: merge sort builds new lists as it merges and so needs extra memory roughly the size of the original, while bubble sort swaps items in place and needs almost none. Bubble sort is also simpler to write and finishes in a single pass on an already sorted list. For a million items the speed difference is overwhelming, so merge sort is the right choice, provided the extra memory is available.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "bubble sort's comparisons grow with the square of the list length"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "merge sort halves the lists each round, so far fewer rounds"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "merge sort needs extra memory; bubble sort sorts in place"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "an advantage of bubble sort: simpler, or one pass on a sorted list"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "chooses merge sort for a million items, with the memory caveat"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 7,
+      "criteria": [
+        {
+          "text": "Bubble sort's comparisons grow with the square of the list length",
+          "marks": 1
+        },
+        {
+          "text": "Merge sort halves the number of lists each round, so it needs far fewer",
+          "marks": 1
+        },
+        {
+          "text": "Merge sort needs extra memory for the lists it builds; bubble sort sorts in place",
+          "marks": 1
+        },
+        {
+          "text": "Names an advantage of bubble sort, such as simplicity or one pass on a sorted list",
+          "marks": 1
+        },
+        {
+          "text": "Chooses merge sort for a million items, noting the memory cost",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Bubble sort** compares every neighbouring pair on every pass, so for $n$ items it makes about $\\frac{n(n-1)}{2}$ comparisons and the work grows with the **square** of the length. **Merge sort** halves the number of lists at every round, so it needs only about $\\log_2 n$ rounds and grows far more slowly.\n\nThe trade-off is **memory**. Merge sort builds new lists as it merges, so it needs extra space roughly the size of the original list. Bubble sort swaps items where they sit and needs almost none. Bubble sort is also **simpler to write**, and on an already sorted list its swapped flag finishes the job in a single pass, which merge sort cannot match.\n\nFor **one million items** the difference is overwhelming: bubble sort would need something like $5 \\times 10^{11}$ comparisons, while merge sort needs around 20 rounds. **Merge sort** is the right choice, as long as the machine has the extra memory it needs."
+    },
+    {
+      "id": "q17",
+      "type": "multiple-choice",
+      "prompt": "A merge sort is run on a list of 7 items. What happens when a list cannot be halved evenly?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the splitting stage",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "One half just takes the extra item. Merge sort works on lists of any length; nothing is discarded and nothing is padded.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one half is one longer"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "One half is simply one item longer than the other",
+        "The algorithm rounds the list up to 8 items",
+        "The last item is left out of the sort",
+        "The algorithm cannot sort an odd-length list"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "Merging two sorted lists of 4 items each produces a list of 8. What is the largest number of comparisons this merge could need?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting comparisons in a merge",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Every comparison places one item. Once 7 items have been placed, the last one is copied across without a comparison, so the most needed is $8 - 1 = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "each comparison places one item"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the final item needs no comparison"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "Which statement about merge sort is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "consistency",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Merge sort cannot detect that a list is already sorted, so it **splits and merges as usual every time**. That consistency is a strength on long lists and a weakness on nearly sorted short ones.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the same work whatever the order"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "It does the same amount of work whatever order the list starts in",
+        "It is fastest when the list is already sorted",
+        "It uses less memory than a bubble sort",
+        "It makes all its comparisons while splitting"
+      ],
+      "correct": [
+        0
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 16
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Merge sort questions come in two shapes: trace it, or compare it with bubble sort. For a trace, draw the splitting as a tree or as rows of lists, then the merging as rows back up. Show every level. A question asking for the lists *after the second round of merging* is testing whether you traced it, so do not jump to the sorted answer.\n\nWhen merging, compare only the **front** items and say so. Writing out the fronts you compared is often worth a mark on its own.\n\nFor a comparison question, the marks split three ways: speed, memory and consistency. Most students get speed and stop. The memory point, that merge sort builds new lists while bubble sort swaps in place, is the one that separates answers.",
+    "examinerErrors": [
+      "Saying comparisons happen while splitting. Splitting makes none; every comparison is in a merge.",
+      "Sorting each half in your head instead of merging it. The merge is the method being tested.",
+      "Comparing every item of one list with every item of the other. Only the front items are compared.",
+      "Forgetting to copy the leftovers across when one list runs out.",
+      "Claiming merge sort finishes early on an already sorted list. It does the same rounds whatever the order; bubble sort is the one that stops early.",
+      "Giving speed as the only difference from bubble sort. The extra memory merge sort needs is usually a mark.",
+      "Saying an odd-length list cannot be split. One half simply takes the extra item."
+    ],
+    "grade9Looks": "A grade 9 answer traces both stages with every level written out, and states that splitting makes no comparisons. It describes merging as comparing the front items and copying leftovers across, and can count the comparisons a merge needs. On efficiency it explains that halving the lists gives about $\\log_2 n$ rounds against bubble sort's $n^2$ comparisons, puts numbers to it, and then gives the trade-off: merge sort needs extra memory, bubble sort sorts in place and can finish in one pass on a nearly sorted list."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q13",
+      "q14",
+      "q17",
+      "q18",
+      "q19"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

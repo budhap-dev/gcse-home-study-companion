@@ -1,0 +1,1423 @@
+{
+  "id": "data-compression",
+  "subjectId": "computer-science",
+  "unitId": "data-representation",
+  "title": "Data compression: Huffman coding and run length encoding",
+  "specPoints": [
+    "3.3.8"
+  ],
+  "order": 8,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Why files are compressed",
+        "body": "**Compression** means storing the same information in **fewer bits**. Nothing is thrown away by the two methods on this specification: the original can be rebuilt exactly.\n\nIt matters for three reasons, and an exam answer usually wants two of them:\n\n- **Storage.** A smaller file takes less room on a disk or a phone.\n- **Transmission.** Fewer bits take less time to send, and use less of a mobile data allowance.\n- **Cost.** Less bandwidth and less storage to pay for, which is why streaming services care.\n\nAQA asks for exactly two methods: **run length encoding** and **Huffman coding**. Both spot **repetition** and store it more cleverly.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Compression",
+              "boxes": [
+                {
+                  "title": "What it is",
+                  "points": [
+                    "fewer bits",
+                    "same information"
+                  ]
+                },
+                {
+                  "title": "Storage",
+                  "points": [
+                    "less disk space",
+                    "more files fit"
+                  ]
+                },
+                {
+                  "title": "Transmission",
+                  "points": [
+                    "faster to send",
+                    "less mobile data"
+                  ]
+                },
+                {
+                  "title": "Two methods",
+                  "points": [
+                    "run length encoding",
+                    "Huffman coding"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes about data compression: what it means, and the three reasons files are compressed"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What does compressing a file mean?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "what compression is",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Compression stores **the same information in fewer bits**. The file still holds everything it did before.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the same information in fewer bits"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Storing the same information in fewer bits",
+            "Storing the file in more than one place",
+            "Making the file open more quickly",
+            "Removing the parts of the file nobody reads"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Run length encoding",
+        "body": "**Run length encoding** looks for **runs**: the same value repeated. It replaces each run with a **frequency/data pair**, which is how many times, followed by what.\n\nA row of black and white pixels like **1, 1, 1, 0, 0, 1, 1, 1, 1, 0** becomes **3 1, 2 0, 4 1, 1 0**: three 1s, two 0s, four 1s, one 0.\n\nCheck the frequencies add up to the length of the original. That single check catches most mistakes.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Run",
+                "Frequency",
+                "Data",
+                "Pair"
+              ],
+              "rows": [
+                [
+                  "1 1 1",
+                  "3",
+                  "1",
+                  "3 1"
+                ],
+                [
+                  "0 0",
+                  "2",
+                  "0",
+                  "2 0"
+                ],
+                [
+                  "1 1 1 1",
+                  "4",
+                  "1",
+                  "4 1"
+                ],
+                [
+                  "0",
+                  "1",
+                  "0",
+                  "1 0"
+                ]
+              ],
+              "title": "1, 1, 1, 0, 0, 1, 1, 1, 1, 0 becomes 3 1, 2 0, 4 1, 1 0"
+            },
+            "alt": "A table of the run length encoding of a row of ten pixels, showing each run, its frequency and the pair that stores it"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Encode the text aaaabbbc using RLE",
+            "steps": [
+              {
+                "text": "The first run is four **a**s, so the pair is **4a**",
+                "note": "count the run, then name the value"
+              },
+              {
+                "text": "Next comes a run of three **b**s, giving **3b**",
+                "note": "a new run starts whenever the value changes"
+              },
+              {
+                "text": "Then a single **c**, which is still a run, giving **1c**",
+                "note": "a run of one still needs its pair"
+              },
+              {
+                "text": "Result: **4a 3b 1c**",
+                "note": "eight characters stored as three pairs"
+              },
+              {
+                "text": "Check: 4 + 3 + 1 = 8, the length of the original",
+                "note": "the frequencies must add up"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "How many frequency/data pairs are needed to encode the row 1, 1, 0, 0, 0, 1 using run length encoding?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "run length encoding",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Three runs: two 1s, three 0s, then one 1. That is **3** pairs: 2 1, 3 0, 1 1.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "When run length encoding fails",
+        "body": "RLE only helps when there are **long runs**. Give it something that keeps changing and it makes the file **bigger**.\n\nTake **abcabc**. Every run is one character long, so it encodes as **1a 1b 1c 1a 1b 1c**: 6 pairs to store 6 characters, and each pair needs a frequency **as well as** the character. The file has roughly doubled.\n\nThat is why RLE is used for **simple images** with blocks of one colour, such as icons, scans of black-and-white documents and fax images, and not for photographs or ordinary English text.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Original",
+                "Encoded",
+                "Verdict"
+              ],
+              "rows": [
+                [
+                  "a a a a a a",
+                  "6a",
+                  "much smaller"
+                ],
+                [
+                  "a a a a b b b c",
+                  "4a 3b 1c",
+                  "smaller"
+                ],
+                [
+                  "a b c a b c",
+                  "1a 1b 1c 1a 1b 1c",
+                  "larger, so RLE is the wrong tool"
+                ]
+              ],
+              "title": "Long runs help; constant changes hurt"
+            },
+            "alt": "A table comparing run length encoding on three kinds of data, showing where it saves space and where it makes the data larger"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Why can run length encoding make a file larger?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "limits of run length encoding",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Each pair costs a **frequency as well as** the value. With runs of one, that is two things stored where there was one.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the frequency costs space too"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Every run needs a frequency stored as well as the value",
+            "It stores each value twice over",
+            "It adds a frequency to the end of the file",
+            "It cannot store the value zero"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Huffman coding: short codes for common characters",
+        "body": "Ordinary text stores every character in the same number of bits: **7 bits** each in ASCII, whether the character is an **e** or a **z**.\n\nHuffman coding gives the **most common** characters the **shortest** codes and the rare ones longer codes. Because the common ones appear so often, the total comes out much smaller.\n\nThe codes are read off a **Huffman tree**:\n\n- Start at the top, the **root**.\n- Every branch to the **left** is a **0**, every branch to the **right** is a **1**.\n- Write the bits down as you walk to the character's **leaf**. That string of bits is its code.\n\nNo code is ever the start of another code, which is what lets a decoder read a long string of bits back without any separators between the characters.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "huffman-tree",
+            "props": {
+              "tree": {
+                "weight": 6,
+                "left": {
+                  "char": "a",
+                  "weight": 3
+                },
+                "right": {
+                  "weight": 3,
+                  "left": {
+                    "char": "b",
+                    "weight": 1
+                  },
+                  "right": {
+                    "char": "n",
+                    "weight": 2
+                  }
+                }
+              },
+              "caption": "Left is 0, right is 1. The code is under each leaf."
+            },
+            "alt": "A Huffman tree for the word banana. The root splits to the letter a on the left with code 0, and on the right to a branch that splits to b with code 10 and n with code 11."
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "In a Huffman tree, which characters end up with the shortest codes?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "reading a Huffman tree",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The **most common** characters sit nearest the root, so their codes are shortest. That is what makes the total number of bits small.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the most common ones"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The ones that appear most often",
+            "The ones that come first in the alphabet",
+            "The ones that appear least often",
+            "The ones stored on the left of the tree"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Building the tree and counting the bits",
+        "body": "The tree is built from the **frequencies**. Repeatedly take the **two smallest** and join them under a new branch whose weight is their total, until one tree is left.\n\nHere is **mississippi**: i 4, s 4, p 2, m 1.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Join",
+                "New weight",
+                "Left to join"
+              ],
+              "rows": [
+                [
+                  "m + p",
+                  "3",
+                  "(mp) 3, i 4, s 4"
+                ],
+                [
+                  "(mp) + i",
+                  "7",
+                  "s 4, (imp) 7"
+                ],
+                [
+                  "s + (imp)",
+                  "11",
+                  "(imps) 11"
+                ]
+              ],
+              "title": "Building the tree for mississippi"
+            },
+            "alt": "A table of the steps that build the Huffman tree for mississippi, showing which two smallest weights are joined at each step and what is left afterwards"
+          },
+          {
+            "type": "diagram",
+            "component": "huffman-tree",
+            "props": {
+              "tree": {
+                "weight": 11,
+                "left": {
+                  "char": "s",
+                  "weight": 4
+                },
+                "right": {
+                  "weight": 7,
+                  "left": {
+                    "weight": 3,
+                    "left": {
+                      "char": "m",
+                      "weight": 1
+                    },
+                    "right": {
+                      "char": "p",
+                      "weight": 2
+                    }
+                  },
+                  "right": {
+                    "char": "i",
+                    "weight": 4
+                  }
+                }
+              },
+              "caption": "The finished tree. Follow 0 for left and 1 for right."
+            },
+            "alt": "A Huffman tree for the word mississippi. The letter s sits one branch from the root with code 0, i has code 11, m has code 100 and p has code 101."
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Character",
+                "Frequency",
+                "Code",
+                "Bits each",
+                "Bits in total"
+              ],
+              "rows": [
+                [
+                  "i",
+                  "4",
+                  "11",
+                  "2",
+                  "8"
+                ],
+                [
+                  "s",
+                  "4",
+                  "0",
+                  "1",
+                  "4"
+                ],
+                [
+                  "p",
+                  "2",
+                  "101",
+                  "3",
+                  "6"
+                ],
+                [
+                  "m",
+                  "1",
+                  "100",
+                  "3",
+                  "3"
+                ],
+                [
+                  "Total",
+                  "11",
+                  "",
+                  "",
+                  "21"
+                ]
+              ],
+              "title": "21 bits in total"
+            },
+            "alt": "A table working out the number of bits needed to store mississippi using its Huffman codes, with a row for each character"
+          },
+          {
+            "type": "worked-example",
+            "problem": "How many bits does Huffman coding save on mississippi?",
+            "steps": [
+              {
+                "text": "Uncompressed: 11 characters at 7 bits each in ASCII",
+                "note": "every character costs the same"
+              },
+              {
+                "text": "11 × 7 = **77 bits**",
+                "note": "this is the number to compare against"
+              },
+              {
+                "text": "Compressed: 4×2 + 4×1 + 2×3 + 1×3 = **21 bits**",
+                "note": "frequency times code length, added up"
+              },
+              {
+                "text": "Saving: 77 − 21 = **56 bits**",
+                "note": "the question almost always asks for this"
+              },
+              {
+                "text": "That is about a 72% reduction",
+                "note": "worth saying if the marks allow"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "Using the tree above, how many bits are needed to store the letter i four times?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "counting Huffman bits",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The code for **i** is 11, which is 2 bits. Four times 2 is **8** bits.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: banana",
+        "body": "Use the **banana** tree from earlier, where **a** is 0, **b** is 10 and **n** is 11.\n\n1. Write out the bits for the whole word by replacing each letter with its code.\n2. Count them.\n3. Work out the ASCII cost, at 7 bits per character, and subtract to find the saving.\n\nThen try decoding **11010** by starting at the root and returning to the root each time you reach a leaf.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Character",
+                "Frequency",
+                "Code",
+                "Bits each",
+                "Bits in total"
+              ],
+              "rows": [
+                [
+                  "a",
+                  "3",
+                  "0",
+                  "",
+                  ""
+                ],
+                [
+                  "n",
+                  "2",
+                  "11",
+                  "",
+                  ""
+                ],
+                [
+                  "b",
+                  "1",
+                  "10",
+                  "",
+                  ""
+                ],
+                [
+                  "Total",
+                  "6",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill this in, then compare with 6 × 7 bits"
+            },
+            "alt": "A blank table for working out the number of bits banana needs when stored with its Huffman codes"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "How many bits are needed to store banana using the codes a = 0, n = 11 and b = 10?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "counting Huffman bits",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Three a at 1 bit is 3, two n at 2 bits is 4, one b at 2 bits is 2. Altogether **9** bits, against 42 in ASCII.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "9"
+            }
+          ],
+          "discriminators": [],
+          "answer": 9,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Grade 9: choosing the method, and the hidden cost",
+        "body": "Two points separate a top answer.\n\n**The tree has to be stored too.** The decoder cannot read the bits without knowing the codes, so the tree or code table travels with the compressed data. On a short message that overhead can wipe out the saving, which is why Huffman pays off on **long** files where the same tree serves thousands of characters.\n\n**The methods suit different data.** RLE wants **long runs of identical values**, so it is at home on simple images with blocks of one colour. Huffman wants **uneven frequencies**, which is exactly what ordinary text has: e and t everywhere, q and z almost never. On text that keeps changing, RLE makes the file bigger while Huffman still makes a substantial saving. The 72% saved on *mississippi* is unusually high because that word uses only four different letters; on ordinary English prose Huffman saves nearer 40%.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Run length encoding",
+                "Huffman coding"
+              ],
+              "rows": [
+                [
+                  "Looks for",
+                  "long runs of the same value",
+                  "characters that appear far more often than others"
+                ],
+                [
+                  "Stores",
+                  "frequency and data pairs",
+                  "a short bit code for each character"
+                ],
+                [
+                  "Suits",
+                  "simple images, blocks of one colour",
+                  "ordinary text"
+                ],
+                [
+                  "Fails on",
+                  "data that keeps changing, making it larger",
+                  "data where every character is equally common"
+                ],
+                [
+                  "Overhead",
+                  "none beyond the pairs",
+                  "the tree or code table must be stored as well"
+                ]
+              ],
+              "title": "Which method for which data"
+            },
+            "alt": "A table comparing run length encoding and Huffman coding on what they look for, the data that suits each, and where each fails"
+          },
+          {
+            "type": "worked-example",
+            "problem": "*A file holds the text mississippi. Explain how Huffman coding compresses it and calculate the saving.* (5 marks)",
+            "steps": [
+              {
+                "text": "*The frequency of each character is counted, and the two lowest are repeatedly joined under a new branch until one tree is left.* — 1 mark",
+                "note": "the building method"
+              },
+              {
+                "text": "*Common characters end up nearest the root, so they get the shortest codes.* — 2 marks",
+                "note": "the reason it saves space"
+              },
+              {
+                "text": "*Reading left as 0 and right as 1 gives s = 0, i = 11, m = 100 and p = 101.* — 3 marks",
+                "note": "read the codes off the tree"
+              },
+              {
+                "text": "*The compressed size is 4×2 + 4×1 + 2×3 + 1×3 = 21 bits, against 11 × 7 = 77 bits in ASCII.* — 4 marks",
+                "note": "both numbers, shown"
+              },
+              {
+                "text": "*So it saves 56 bits, although the tree must be stored as well.* — 5 marks",
+                "note": "the subtraction, and the caveat"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "Why might Huffman coding save very little on a very short message?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "evaluating compression",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The decoder needs the **tree or code table**, so it is stored alongside the data. On a short message that overhead can cost more than the compression saves.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the tree must be stored too"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "The tree has to be stored with it",
+            "Short messages have no repeated characters",
+            "Short codes cannot be used on short messages",
+            "ASCII is already the smallest possible code"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Compression** stores the same information in fewer bits, saving storage, transmission time and cost.\n- **Run length encoding** replaces runs of the same value with **frequency/data pairs**, so 1, 1, 1, 0, 0, 1, 1, 1, 1, 0 becomes 3 1, 2 0, 4 1, 1 0.\n- Check that the RLE frequencies **add up** to the length of the original.\n- RLE makes data **larger** when there are no long runs, because each pair costs a frequency as well as a value.\n- **Huffman coding** gives common characters short codes. Read a code off the tree by walking from the root, **left is 0 and right is 1**.\n- Build the tree by repeatedly joining the **two smallest** frequencies under a new branch.\n- Compressed size is **frequency × code length**, added up. Uncompressed ASCII is **7 bits per character**.\n- mississippi: 21 bits compressed against 77 in ASCII, a saving of **56 bits**.\n- The **tree must be stored too**, so Huffman pays off most on long files.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Compression",
+                  "the same information in fewer bits"
+                ],
+                [
+                  "RLE",
+                  "frequency/data pairs, one per run"
+                ],
+                [
+                  "RLE suits",
+                  "long runs: simple images, blocks of one colour"
+                ],
+                [
+                  "Huffman",
+                  "short codes for common characters"
+                ],
+                [
+                  "Reading the tree",
+                  "left is 0, right is 1, from the root to the leaf"
+                ],
+                [
+                  "Compressed bits",
+                  "add up frequency × code length"
+                ],
+                [
+                  "ASCII bits",
+                  "7 bits per character"
+                ],
+                [
+                  "Saving",
+                  "ASCII bits minus compressed bits"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of data compression covering both methods, how to read a Huffman tree and the two bit calculations"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Give one reason why a file might be compressed before it is sent over the internet.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "why compression is used",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A compressed file holds **fewer bits**, so it takes less time to transmit and uses less bandwidth.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it is faster to send"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Fewer bits take less time to send",
+        "Compressed files are easier to read",
+        "It stops the file being changed on the way",
+        "Compressed files do not need a file name"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "How many frequency/data pairs are needed to encode the row 0, 0, 0, 1, 1, 0 using run length encoding?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "run length encoding",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Three runs: three 0s, two 1s, then one 0. That is **3** pairs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What does each pair in run length encoding hold?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "run length encoding",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A **frequency/data pair**: how many times the value repeats, followed by the value itself.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the frequency and the value"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "How many times a value is repeated, and the value",
+        "The value and its position in the file",
+        "The first and last value of the run",
+        "The value and how many bits it needs"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "How many bits are needed to store the 11 characters of mississippi in ASCII, at 7 bits per character?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "ASCII bit calculations",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "11 × 7 = **77** bits. Every character costs the same in ASCII, however common it is.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "77"
+        }
+      ],
+      "discriminators": [],
+      "answer": 77,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Write the text aaaabbbc using run length encoding as frequency/data pairs.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "run length encoding",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Four a, then three b, then a single c, which still needs a pair: **4a 3b 1c**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "splits it into runs of a, b and c"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4a 3b 1c"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "4a3b1c",
+        "4a 3b 1c",
+        "4a, 3b, 1c",
+        "4a,3b,1c",
+        "4 a 3 b 1 c",
+        "(4,a)(3,b)(1,c)"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "A Huffman tree is read by walking down from the root. What does a branch to the left represent?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading a Huffman tree",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**Left is 0 and right is 1.** The bits collected on the way down to a leaf are that character's code.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a 0"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A 0 in the code",
+        "A 1 in the code",
+        "The end of a character's code",
+        "The most common character"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "Huffman codes for banana are a = 0, n = 11 and b = 10. How many bits are needed to store the whole word?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "counting Huffman bits",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Three a at 1 bit is 3, two n at 2 bits is 4, one b at 2 bits is 2. Altogether **9** bits.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies each frequency by its code length"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [],
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Run length encoding is used on the text abcabc. What happens?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "limits of run length encoding",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Every run is one character long, so each needs a frequency **as well as** the value. Six pairs replace six characters, making it **larger**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it gets larger"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The encoded data is larger than the original",
+        "The data is halved in size",
+        "The repeated abc is stored only once",
+        "The encoding fails because no value repeats"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "How many bits does the word banana need in ASCII, at 7 bits per character?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "ASCII bit calculations",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "6 × 7 = **42** bits.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "42"
+        }
+      ],
+      "discriminators": [],
+      "answer": 42,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "In a Huffman tree the codes are s = 0, i = 11, m = 100 and p = 101. Which character has the code 100?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading a Huffman tree",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Walking **right, left, left** from the root, because 1 is a right branch and 0 a left one, reaches the leaf for **m**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "m"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "m"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "The word mississippi has the Huffman codes s = 0, i = 11, m = 100 and p = 101, and the letters appear m once, i four times, s four times and p twice. How many bits does the compressed word need?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting Huffman bits",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "s: 4 × 1 = 4. i: 4 × 2 = 8. p: 2 × 3 = 6. m: 1 × 3 = 3. Altogether 4 + 8 + 6 + 3 = **21** bits.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies each frequency by its code length"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the four totals"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "21"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 21,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "Storing mississippi takes 21 bits with Huffman coding and 77 bits in ASCII. How many bits are saved?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "calculating the saving",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "77 − 21 = **56** bits saved, which is roughly three quarters of the original.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts the compressed size from the ASCII size"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "56"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 56,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "What must be stored alongside data compressed with Huffman coding?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "evaluating compression",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Without the **tree or code table** the bits cannot be turned back into characters, so it travels with the compressed data.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the tree or code table"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The tree, or the table of codes",
+        "The original uncompressed file",
+        "The frequency of every possible character",
+        "The number of bits that were saved"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "short-text",
+      "prompt": "Using the Huffman codes a = 0, b = 10 and n = 11, decode the bit string 100110110.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "decoding a Huffman code",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Start at the root each time a leaf is reached: 10 gives **b**, 0 gives **a**, 11 gives **n**, 0 gives **a**, 11 gives **n**, 0 gives **a**. The word is **banana**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "starts at the root again after each character"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "decodes the first three characters correctly"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "banana"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "banana"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "Banana needs 9 bits with Huffman coding and 42 bits in ASCII. How many bits are saved?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "calculating the saving",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "42 − 9 = **33** bits saved.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts 9 from 42"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "33"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 33,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Which file would run length encoding compress best?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing a method",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A scan of a page has **long runs** of white, then short runs of black. Photographs and text change too often for RLE to help.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the black and white scan"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "A black and white scan of a printed page",
+        "A photograph of a busy street",
+        "A recording of someone speaking",
+        "A page of ordinary English text"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "ordering",
+      "prompt": "Put the steps of building a Huffman tree into order.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "building a Huffman tree",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Count the frequencies, then repeatedly join the two smallest under a branch carrying their total, until one tree remains.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "counts the frequencies first"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "joins the two lowest"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "repeats until one tree is left"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "items": [
+        "Count how often each character appears",
+        "Join the two lowest frequencies under a new branch",
+        "Give the new branch the total of the two frequencies",
+        "Repeat until a single tree is left, then read each code from the root"
+      ]
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A text file holds the word mississippi. Explain how Huffman coding compresses it, and calculate how many bits are saved compared with ASCII.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "calculating the saving",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Huffman coding starts by counting how often each character appears: m once, p twice, i four times and s four times. The two lowest frequencies are repeatedly joined under a new branch carrying their total, until a single tree is left, so the most common characters finish nearest the root and get the shortest codes. Reading the tree with left as 0 and right as 1 gives s as 0, i as 11, m as 100 and p as 101. The compressed size is found by multiplying each frequency by the length of its code and adding the results: four times one is four, four times two is eight, two times three is six and one times three is three, which is twenty one bits in total. In ASCII every character takes seven bits, so eleven characters take seventy seven bits. The saving is seventy seven minus twenty one, which is fifty six bits, although the tree itself must be stored with the file.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "counts the frequency of each character"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "joins the two lowest frequencies repeatedly until one tree is left"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "common characters end up with the shortest codes"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "compressed size is 21 bits, from frequency times code length"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "ASCII size is 11 × 7 = 77 bits"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "saving of 56 bits"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Counts the frequency of each character",
+          "marks": 1
+        },
+        {
+          "text": "Explains that the two lowest frequencies are repeatedly joined under a new branch",
+          "marks": 1
+        },
+        {
+          "text": "States that the most common characters end up with the shortest codes",
+          "marks": 1
+        },
+        {
+          "text": "Calculates the compressed size as 21 bits using frequency × code length",
+          "marks": 1
+        },
+        {
+          "text": "Calculates the ASCII size as 11 × 7 = 77 bits",
+          "marks": 1
+        },
+        {
+          "text": "Gives the saving as 56 bits",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Counting first.** Huffman coding counts how often each character appears: **m** once, **p** twice, **i** four times, **s** four times.\n\n**Building the tree.** The **two lowest** frequencies are joined under a new branch carrying their total, and that repeats until one tree is left. The effect is that the **most common** characters finish **nearest the root**, so they get the **shortest** codes.\n\n**Reading the codes.** Walking down from the root, left as 0 and right as 1, gives $s = 0$, $i = 11$, $m = 100$, $p = 101$.\n\n**The compressed size** is frequency × code length, added up:\n\n$$(4 \\times 1) + (4 \\times 2) + (2 \\times 3) + (1 \\times 3) = 4 + 8 + 6 + 3 = 21 \\text{ bits}$$\n\n**The uncompressed size** is 7 bits per character in ASCII:\n\n$$11 \\times 7 = 77 \\text{ bits}$$\n\n**The saving** is $77 - 21 = \\mathbf{56}$ **bits**, about three quarters of the original. The tree itself must be stored with the file, which eats into that saving on a message this short."
+    },
+    {
+      "id": "q19",
+      "type": "extended",
+      "prompt": "Compare run length encoding with Huffman coding. For each, describe the kind of data it suits and one situation where it would be a poor choice.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "choosing a method",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Run length encoding replaces runs of identical values with frequency and data pairs, so it suits data with long runs such as a simple icon or a black and white scan where large areas are one colour. It is a poor choice for a photograph or for ordinary English text, because the values change constantly, every run is one long, and storing a frequency alongside each value makes the file larger than it was. Huffman coding gives short bit codes to the characters that appear most often, so it suits ordinary text where some characters such as e and t are far more common than q and z. It is a poor choice when every character appears about equally often, since no code can then be much shorter than the rest, and on a very short message, because the tree or code table has to be stored alongside the data and can cost more than the compression saves.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "RLE stores runs as frequency/data pairs"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "RLE suits data with long runs, such as simple images"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "RLE makes constantly changing data larger"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "Huffman gives the most common characters the shortest codes, suiting text"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Huffman is poor on evenly spread characters, or short messages where the tree costs more than it saves"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 7,
+      "criteria": [
+        {
+          "text": "Explains that RLE stores runs as frequency/data pairs",
+          "marks": 1
+        },
+        {
+          "text": "States that RLE suits data with long runs, such as simple images",
+          "marks": 1
+        },
+        {
+          "text": "Explains that RLE makes constantly changing data larger",
+          "marks": 1
+        },
+        {
+          "text": "Explains that Huffman gives common characters short codes, suiting ordinary text",
+          "marks": 1
+        },
+        {
+          "text": "Gives a poor case for Huffman: even frequencies, or a short message where the tree costs more",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Run length encoding** replaces each run of identical values with a **frequency/data pair**. It suits data with **long runs**: a simple icon, a logo, or a black and white scan where large areas are a single colour.\n\nIt is a **poor choice** for a photograph or for ordinary English text. The values change constantly, so nearly every run is one long, and storing a frequency beside each value makes the file **larger** than the original.\n\n**Huffman coding** gives the **most common** characters the **shortest** bit codes. That suits ordinary text, where **e** and **t** appear far more often than **q** and **z**, so the short codes get used over and over.\n\nIt is a **poor choice** when every character appears about **equally often**, because no code can then be much shorter than the rest and there is little to gain. It also struggles on a **very short message**: the tree or code table must be stored alongside the data, and that overhead can cost more than the compression saves."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 16
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Huffman questions nearly always end in a calculation, and the calculation is always the same shape: **frequency × code length**, added up, then compared with **7 bits per character** for ASCII. Write both numbers down even when only the saving is asked for, because the method marks live there.\n\nRead codes off the tree carefully. Left is 0 and right is 1, and the code ends at a leaf. When decoding, return to the **root** after every character; students who carry on down the tree get nonsense.\n\nFor run length encoding, write the pairs as **frequency then data**, and check the frequencies add up to the length of the original. Include the runs of length one: they still need a pair.\n\nAQA asks for these two methods only. There is no need to write about lossy or lossless compression, and doing so wastes time that the calculation marks need.",
+    "examinerErrors": [
+      "Forgetting that a run of one still needs a pair, so 1c is written as just c.",
+      "Writing RLE pairs the wrong way round. The frequency comes first, then the data.",
+      "Adding the code lengths instead of multiplying each by its frequency.",
+      "Using 8 bits per character for ASCII. Standard ASCII is 7 bits; 8 is extended ASCII.",
+      "Giving the compressed size when the question asked for the saving, or the other way round.",
+      "Carrying on down the tree when decoding instead of returning to the root after each character.",
+      "Forgetting that the tree or code table must be stored alongside the compressed data.",
+      "Claiming run length encoding always makes a file smaller. On data that keeps changing it makes it larger."
+    ],
+    "grade9Looks": "A grade 9 answer builds the tree by repeatedly joining the two lowest frequencies, explains that this puts the common characters nearest the root, and reads the codes off correctly with left as 0 and right as 1. It shows both bit calculations, frequency × code length for the compressed size and 7 bits per character for ASCII, and subtracts to give the saving. On evaluation it names the data each method suits, points out that RLE can enlarge a file with no long runs, and remembers that the Huffman tree has to be stored with the data, so short messages gain little."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

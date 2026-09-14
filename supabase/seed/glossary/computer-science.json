@@ -749,6 +749,274 @@
         "Selection",
         "Iteration"
       ]
+    },
+    {
+      "term": "Bubble sort",
+      "definition": "A sorting algorithm that compares **each neighbouring pair** in turn and swaps them when they are the wrong way round. One walk from start to finish is a **pass**, and passes repeat until a pass makes no swaps.",
+      "example": "Sorting `5, 3, 8, 1`: the first pass compares 5 with 3 and swaps, then 5 with 8 and leaves them, then 8 with 1 and swaps, giving `3, 5, 1, 8` with the largest value at the end.",
+      "topics": [
+        "bubble-sort"
+      ],
+      "aliases": [
+        "bubble",
+        "bubblesort"
+      ],
+      "related": [
+        "Pass",
+        "Swap",
+        "Merge sort",
+        "Efficiency of an algorithm"
+      ]
+    },
+    {
+      "term": "Pass",
+      "definition": "One complete walk through a list by a sorting algorithm. Bubble sort needs several passes, and after each one the next largest value has reached its final place, so the next pass can stop one position earlier.",
+      "example": "Bubble sort on `5, 3, 8, 1` takes 3 passes to finish, because the list is sorted after the third and a fourth would make no swaps.",
+      "topics": [
+        "bubble-sort"
+      ],
+      "aliases": [
+        "passes"
+      ],
+      "related": [
+        "Bubble sort",
+        "Swap",
+        "Iteration"
+      ]
+    },
+    {
+      "term": "Swap",
+      "definition": "Exchanging the values held by two variables or two positions in an array. It needs a **temporary variable**, because writing one value over the other would destroy it before it had been copied.",
+      "example": "`temp ← a[0]` then `a[0] ← a[1]` then `a[1] ← temp` exchanges the first two items. Without `temp`, the original `a[0]` would be lost.",
+      "topics": [
+        "bubble-sort"
+      ],
+      "aliases": [
+        "swapping",
+        "swaps"
+      ],
+      "related": [
+        "Bubble sort",
+        "Variable",
+        "Array",
+        "Assignment"
+      ]
+    },
+    {
+      "term": "Merge sort",
+      "definition": "A sorting algorithm that **splits** a list in half repeatedly until every list holds one item, then **merges** the small sorted lists back together in pairs. It is much faster than bubble sort on long lists but needs extra memory.",
+      "example": "`6, 2, 9, 4` splits into `6`, `2`, `9`, `4`, merges to `2, 6` and `4, 9`, then merges again to `2, 4, 6, 9`.",
+      "topics": [
+        "merge-sort"
+      ],
+      "aliases": [
+        "mergesort",
+        "merge"
+      ],
+      "related": [
+        "Divide and conquer",
+        "Merge",
+        "Bubble sort",
+        "Efficiency of an algorithm"
+      ]
+    },
+    {
+      "term": "Divide and conquer",
+      "definition": "Solving a problem by **splitting it into smaller problems** of the same kind, solving those, then combining the answers. Merge sort is the example AQA uses.",
+      "example": "Merge sort divides a list until every part holds one item, which is already sorted, then conquers by merging the parts back together.",
+      "topics": [
+        "merge-sort"
+      ],
+      "aliases": [
+        "divide-and-conquer"
+      ],
+      "related": [
+        "Merge sort",
+        "Merge"
+      ]
+    },
+    {
+      "term": "Merge",
+      "definition": "Combining two **already sorted** lists into one sorted list by comparing only their **front items**, taking the smaller each time, and copying across whatever is left when one list runs out.",
+      "example": "Merging `2, 6` with `4, 9`: take 2, then 4, then 6, then copy the 9 across, giving `2, 4, 6, 9` in three comparisons.",
+      "topics": [
+        "merge-sort"
+      ],
+      "aliases": [
+        "merging"
+      ],
+      "related": [
+        "Merge sort",
+        "Divide and conquer"
+      ]
+    },
+    {
+      "term": "Efficiency of an algorithm",
+      "definition": "How much **work** an algorithm does for a given amount of data, usually counted in comparisons. Two algorithms can give the same answer while one takes far longer on a long list.",
+      "example": "On 1000 items bubble sort makes roughly 500 000 comparisons because its work grows with $n^2$, while merge sort needs about 10 rounds of merging.",
+      "topics": [
+        "bubble-sort",
+        "merge-sort"
+      ],
+      "aliases": [
+        "efficiency",
+        "algorithmic efficiency"
+      ],
+      "related": [
+        "Bubble sort",
+        "Merge sort",
+        "Divide and conquer"
+      ]
+    },
+    {
+      "term": "Running total",
+      "definition": "A variable that starts at **0** and has each item added to it inside a loop, so it holds the sum of everything seen so far. Spotting this pattern usually tells you what an algorithm is for.",
+      "example": "`total ← 0` then `total ← total + a[i]` inside the loop leaves `total` holding 56 for the list `12, 15, 9, 20`.",
+      "topics": [
+        "determining-the-purpose-of-an-algorithm"
+      ],
+      "aliases": [
+        "accumulator"
+      ],
+      "related": [
+        "Counter",
+        "Trace table",
+        "Iteration"
+      ]
+    },
+    {
+      "term": "Counter",
+      "definition": "A variable that starts at **0** and has **1** added to it each time something happens, so it records **how many times**. Adding 1 rather than the item's value is what makes it a counter rather than a running total.",
+      "example": "`count ← count + 1` inside an `IF a[i] > 10 THEN` counts how many items are greater than 10, not what they add up to.",
+      "topics": [
+        "determining-the-purpose-of-an-algorithm"
+      ],
+      "aliases": [
+        "counting",
+        "count"
+      ],
+      "related": [
+        "Running total",
+        "Trace table",
+        "Selection"
+      ]
+    },
+    {
+      "term": "Data compression",
+      "definition": "Storing the same information in **fewer bits**, so a file takes less storage space and less time to send. AQA covers two methods: run length encoding and Huffman coding.",
+      "example": "The word *mississippi* takes 77 bits in ASCII, but only 21 bits once Huffman coding has given the common letters short codes.",
+      "topics": [
+        "data-compression"
+      ],
+      "aliases": [
+        "compression",
+        "compressing"
+      ],
+      "related": [
+        "Run length encoding",
+        "Huffman coding",
+        "ASCII"
+      ]
+    },
+    {
+      "term": "Run length encoding",
+      "definition": "A compression method that replaces each **run** of repeated values with a **frequency/data pair**: how many times, followed by the value. It shrinks data with long runs and enlarges data that keeps changing.",
+      "example": "The pixel row `1 1 1 0 0 1 1 1 1 0` becomes `3 1, 2 0, 4 1, 1 0`, four pairs instead of ten values.",
+      "topics": [
+        "data-compression"
+      ],
+      "aliases": [
+        "rle",
+        "run-length encoding"
+      ],
+      "related": [
+        "Frequency/data pair",
+        "Data compression",
+        "Huffman coding"
+      ]
+    },
+    {
+      "term": "Frequency/data pair",
+      "definition": "The unit of run length encoding: the **number of repeats first**, then the **value** being repeated. A run of one still needs its own pair.",
+      "example": "`4a 3b 1c` encodes `aaaabbbc`. The frequencies 4 + 3 + 1 add up to 8, the length of the original, which is the check worth doing.",
+      "topics": [
+        "data-compression"
+      ],
+      "aliases": [
+        "frequency data pair",
+        "run length pair"
+      ],
+      "related": [
+        "Run length encoding",
+        "Data compression"
+      ]
+    },
+    {
+      "term": "Huffman coding",
+      "definition": "A compression method that gives the **most common** characters the **shortest** bit codes and rare characters longer ones, so a whole message needs far fewer bits than fixed-length ASCII.",
+      "example": "In *banana*, a = `0`, b = `10`, n = `11`, so the word takes 9 bits instead of the 42 that ASCII would need.",
+      "topics": [
+        "data-compression"
+      ],
+      "aliases": [
+        "huffman"
+      ],
+      "related": [
+        "Huffman tree",
+        "Data compression",
+        "ASCII",
+        "Bit"
+      ]
+    },
+    {
+      "term": "Huffman tree",
+      "definition": "The tree the Huffman codes are read from. It is built by repeatedly joining the **two lowest frequencies** under a new branch, and a code is read by walking from the root to a character's leaf, **left as 0 and right as 1**.",
+      "example": "Walking **right, left, left** from the root of the *mississippi* tree reaches **m**, so its code is `100`: 1 for the right branch, then 0 and 0 for the two left ones.",
+      "topics": [
+        "data-compression"
+      ],
+      "aliases": [
+        "huffman trees"
+      ],
+      "related": [
+        "Huffman coding",
+        "Data compression"
+      ]
+    },
+    {
+      "term": "ASCII",
+      "definition": "A character set that stores each character in a **fixed 7 bits**, whatever the character is. Because every character costs the same, it is the size that compressed data is compared against.",
+      "example": "The 11 characters of *mississippi* take $11 \\times 7 = 77$ bits in ASCII, against 21 bits with Huffman coding.",
+      "topics": [
+        "data-compression"
+      ],
+      "aliases": [
+        "ascii code",
+        "character set"
+      ],
+      "related": [
+        "Bit",
+        "Character",
+        "Data compression",
+        "Huffman coding"
+      ]
+    },
+    {
+      "term": "Bit",
+      "definition": "A single **binary digit**, 0 or 1, and the smallest unit of data a computer stores. Compression questions are answered in bits, so every calculation ends in a number of them.",
+      "example": "A Huffman code of `101` is 3 bits long, so a character with that code costs 3 bits each time it appears.",
+      "topics": [
+        "data-compression"
+      ],
+      "aliases": [
+        "bits",
+        "binary digit"
+      ],
+      "related": [
+        "ASCII",
+        "Data compression",
+        "Huffman coding"
+      ]
     }
   ],
   "provenance": {

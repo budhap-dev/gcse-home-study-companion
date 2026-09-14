@@ -1,0 +1,1362 @@
+{
+  "id": "determining-the-purpose-of-an-algorithm",
+  "subjectId": "computer-science",
+  "unitId": "fundamentals-of-algorithms",
+  "title": "Working out what an algorithm does by tracing it",
+  "specPoints": [
+    "3.1.1"
+  ],
+  "order": 3,
+  "year": 10,
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Reading an algorithm you have never seen",
+        "body": "An exam will hand you a short algorithm with no name and ask **what it does**. You are not expected to recognise it. You are expected to **trace** it: run it by hand, a line at a time, writing down what every variable holds.\n\nThe way to describe what you find has three parts, and the mark scheme usually wants all three:\n\n- **Input** — what goes in. A list, a number, a string.\n- **Processing** — what is done to it. Added up, compared, counted, reversed.\n- **Output** — what comes out, and *what it means*.\n\nThe last part is the one worth marks. \"It outputs max\" repeats the code back. \"It outputs the largest value in the list\" says what the algorithm is **for**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Describing an algorithm",
+              "boxes": [
+                {
+                  "title": "Input",
+                  "points": [
+                    "what goes in",
+                    "a list, number or string"
+                  ]
+                },
+                {
+                  "title": "Processing",
+                  "points": [
+                    "what happens to it",
+                    "added, compared, counted"
+                  ]
+                },
+                {
+                  "title": "Output",
+                  "points": [
+                    "what comes out",
+                    "and what it means"
+                  ]
+                },
+                {
+                  "title": "Purpose",
+                  "points": [
+                    "one plain sentence",
+                    "not a line-by-line retelling"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes about reading an unfamiliar algorithm: input, processing, output, and the purpose stated in plain English"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "An algorithm ends with OUTPUT max. Which answer best describes its purpose?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "describing purpose",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Naming the variable just repeats the code. The purpose says what the value **means**: the largest value in the list.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the largest value in the list"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "It outputs the largest value in the list",
+            "It outputs the variable called max",
+            "It outputs the value of a[i]",
+            "It outputs the last item the loop looked at"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Building a trace table",
+        "body": "A **trace table** has one column per variable and one row per time round the loop. Fill it in as you go and never keep a value in your head.\n\nHere is the algorithm, with the list **a = 4, 9, 2, 7, 5**.\n\n```\nmax ← a[0]\nFOR i ← 1 TO LEN(a) - 1\n   IF a[i] > max THEN\n      max ← a[i]\n   ENDIF\nENDFOR\nOUTPUT max\n```\n\nThe loop starts at **i = 1**, not 0, because `max` has already been given `a[0]` before the loop.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "a[i]",
+                "a[i] > max?",
+                "max"
+              ],
+              "rows": [
+                [
+                  "before the loop",
+                  "-",
+                  "-",
+                  "4"
+                ],
+                [
+                  "1",
+                  "9",
+                  "Yes",
+                  "9"
+                ],
+                [
+                  "2",
+                  "2",
+                  "No",
+                  "9"
+                ],
+                [
+                  "3",
+                  "7",
+                  "No",
+                  "9"
+                ],
+                [
+                  "4",
+                  "5",
+                  "No",
+                  "9"
+                ]
+              ],
+              "title": "Tracing a = 4, 9, 2, 7, 5"
+            },
+            "alt": "A trace table for the largest-value algorithm running on the list 4, 9, 2, 7, 5, with columns for i, a[i], whether the condition is true, and max"
+          },
+          {
+            "type": "worked-example",
+            "problem": "What does this algorithm output for 4, 9, 2, 7, 5?",
+            "steps": [
+              {
+                "text": "`max ← a[0]` sets max to **4** before the loop starts",
+                "note": "the first item is the best guess so far"
+              },
+              {
+                "text": "i = 1: a[1] is 9, which is bigger, so max becomes **9**",
+                "note": "the condition is true"
+              },
+              {
+                "text": "i = 2: a[2] is 2, not bigger, so max stays **9**",
+                "note": "the condition is false, nothing changes"
+              },
+              {
+                "text": "i = 3: a[3] is 7, not bigger than 9, so max stays **9**",
+                "note": "still false"
+              },
+              {
+                "text": "i = 4: a[4] is 5, not bigger, so max stays **9**",
+                "note": "the loop ends here"
+              },
+              {
+                "text": "Output: **9**, the largest value in the list",
+                "note": "the purpose, not just the number"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Trace the same algorithm on the list 3, 11, 6, 11, 2. What does it output?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "tracing a loop",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "max starts at 3, rises to 11 at i = 1, and nothing later beats it. The output is **11**, the largest value.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "11"
+            }
+          ],
+          "discriminators": [],
+          "answer": 11,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The patterns worth recognising",
+        "body": "Most exam algorithms are one of a handful of patterns. Spotting the pattern tells you the purpose almost immediately, and the trace then confirms it.\n\n- A variable starting at **0** with `total ← total + something` inside the loop is a **running total**.\n- A variable starting at **0** with `count ← count + 1` inside an `IF` is a **counter**: it counts how many items pass the test.\n- A variable set to the **first item** and replaced when something beats it is a **largest** or **smallest** finder.\n- A string built up with `out ← out + SUBSTRING(i, i, s)` is **constructing a new string**, and the direction of the loop tells you whether it is reversing it.\n\nThe giveaway is always the **starting value** and the **one line inside the loop**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Pattern",
+                "Starts at",
+                "Inside the loop",
+                "Purpose"
+              ],
+              "rows": [
+                [
+                  "Running total",
+                  "0",
+                  "total ← total + a[i]",
+                  "adds the items up"
+                ],
+                [
+                  "Counter",
+                  "0",
+                  "count ← count + 1 inside an IF",
+                  "counts items that pass a test"
+                ],
+                [
+                  "Largest or smallest",
+                  "the first item",
+                  "max ← a[i] when bigger",
+                  "finds the biggest or smallest"
+                ],
+                [
+                  "Building a string",
+                  "an empty string",
+                  "out ← out + SUBSTRING(i, i, s)",
+                  "makes a new string from an old one"
+                ]
+              ],
+              "title": "Four patterns that cover most questions"
+            },
+            "alt": "A table of four common algorithm patterns, the starting value each uses, the line inside the loop and the purpose it signals"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "A variable starts at 0 and the loop contains count ← count + 1 inside an IF statement. What is the variable doing?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "recognising patterns",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Adding **1** rather than the item's value makes it a **counter**, and the `IF` means it counts only the items that pass the test.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "counting the items that pass the test"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Counting how many items pass the test",
+            "Adding up the values of the items",
+            "Storing the largest item found so far",
+            "Recording the position of the last item"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "A total, and what the output means",
+        "body": "Now a harder one. Trace it first and read the last line afterwards, because that is where the purpose hides.\n\n```\ntotal ← 0\nFOR i ← 0 TO LEN(a) - 1\n   total ← total + a[i]\nENDFOR\nOUTPUT total / LEN(a)\n```\n\nWith **a = 12, 15, 9, 20**:",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "a[i]",
+                "total"
+              ],
+              "rows": [
+                [
+                  "before the loop",
+                  "-",
+                  "0"
+                ],
+                [
+                  "0",
+                  "12",
+                  "12"
+                ],
+                [
+                  "1",
+                  "15",
+                  "27"
+                ],
+                [
+                  "2",
+                  "9",
+                  "36"
+                ],
+                [
+                  "3",
+                  "20",
+                  "56"
+                ]
+              ],
+              "title": "Tracing a = 12, 15, 9, 20"
+            },
+            "alt": "A trace table for the running total algorithm on the list 12, 15, 9, 20, with columns for i, a[i] and total"
+          },
+          {
+            "type": "worked-example",
+            "problem": "What does this algorithm output, and what does it mean?",
+            "steps": [
+              {
+                "text": "`total ← 0` then `total ← total + a[i]` is a **running total**",
+                "note": "the pattern names itself"
+              },
+              {
+                "text": "After the loop, total holds **56**, the sum of the four values",
+                "note": "the trace table's last row"
+              },
+              {
+                "text": "The output line divides by `LEN(a)`, which is 4",
+                "note": "this is the part students skip"
+              },
+              {
+                "text": "56 ÷ 4 = **14**",
+                "note": "the number"
+              },
+              {
+                "text": "Purpose: it outputs the **mean average** of the values in the list",
+                "note": "not 'it outputs total divided by length'"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "Trace that algorithm on the list 6, 10, 8. What does it output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing a loop",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The running total reaches 24, and the output line divides by the length: 24 ÷ 3 = **8**, the mean average.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "An algorithm that hides what it is",
+        "body": "This one has no helpful variable names at all. Trace it with **x = 17** and **y = 5**.\n\n```\ncount ← 0\nWHILE x ≥ y\n   x ← x - y\n   count ← count + 1\nENDWHILE\nOUTPUT count\nOUTPUT x\n```",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Round",
+                "x",
+                "count"
+              ],
+              "rows": [
+                [
+                  "before the loop",
+                  "17",
+                  "0"
+                ],
+                [
+                  "1",
+                  "12",
+                  "1"
+                ],
+                [
+                  "2",
+                  "7",
+                  "2"
+                ],
+                [
+                  "3",
+                  "2",
+                  "3"
+                ]
+              ],
+              "title": "Tracing x = 17, y = 5"
+            },
+            "alt": "A trace table for the repeated subtraction algorithm with x starting at 17 and y equal to 5, showing x falling and count rising"
+          },
+          {
+            "type": "worked-example",
+            "problem": "What are the two outputs, and what do they mean?",
+            "steps": [
+              {
+                "text": "The loop takes 5 away from x and adds 1 to count, and stops when x drops below y",
+                "note": "that stopping condition is the clue"
+              },
+              {
+                "text": "17 − 5 = 12, count 1. 12 − 5 = 7, count 2. 7 − 5 = 2, count 3",
+                "note": "after that 2 is less than 5, so the loop stops"
+              },
+              {
+                "text": "It outputs **3** and then **2**",
+                "note": "two numbers, and the question is what they are"
+              },
+              {
+                "text": "3 is how many times 5 fits into 17, and 2 is what is left over",
+                "note": "17 ÷ 5 is 3 remainder 2"
+              },
+              {
+                "text": "Purpose: it performs **whole-number division**, outputting the quotient and the remainder",
+                "note": "division by repeated subtraction"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "Trace the same algorithm with x = 20 and y = 6. What is the first thing it outputs?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing a while loop",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "20 − 6 = 14, 14 − 6 = 8, 8 − 6 = 2, and 2 is less than 6 so the loop stops. count is **3**, because 6 fits into 20 three times.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn: trace and name it",
+        "body": "Here is a string algorithm. Trace it with **s = 'stream'**, filling in a row each time round the loop, then write one sentence saying what it does.\n\n```\nout ← ''\nFOR i ← LEN(s) - 1 TO 0 STEP -1\n   out ← out + SUBSTRING(i, i, s)\nENDFOR\nOUTPUT out\n```\n\nRemember that the loop counts **downwards**, so it starts at the last character. A string of 6 characters has positions 0 to 5.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "i",
+                "SUBSTRING(i, i, s)",
+                "out"
+              ],
+              "rows": [
+                [
+                  "before the loop",
+                  "-",
+                  "(empty)"
+                ],
+                [
+                  "5",
+                  "",
+                  ""
+                ],
+                [
+                  "4",
+                  "",
+                  ""
+                ],
+                [
+                  "3",
+                  "",
+                  ""
+                ],
+                [
+                  "2",
+                  "",
+                  ""
+                ],
+                [
+                  "1",
+                  "",
+                  ""
+                ],
+                [
+                  "0",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill this in, then name the purpose"
+            },
+            "alt": "A blank trace table for the string algorithm with columns for i, the character at that position and the string built so far"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "Trace that algorithm with s = 'stream'. What does it output?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "tracing a string algorithm",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The loop runs from position 5 down to 0, adding each character to the end of `out`: m, a, e, r, t, s. The output is **maerts**, the string reversed.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "maerts"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "maerts"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Grade 9: saying why, not just what",
+        "body": "Top marks go to answers that say what the algorithm is **for** and can spot where it would go wrong.\n\nTake the largest-value algorithm again. Why does it start with `max ← a[0]` rather than `max ← 0`? Because if every value in the list were **negative**, nothing would ever beat 0 and the algorithm would wrongly output 0. Starting with the first item means the answer is always a value that is actually in the list.\n\nThat kind of observation, a specific input that breaks it, is what an *evaluate* question is asking for. A guess at the purpose is not enough; a trace on an awkward input proves it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "List",
+                "max ← a[0] gives",
+                "max ← 0 gives"
+              ],
+              "rows": [
+                [
+                  "4, 9, 2",
+                  "9",
+                  "9"
+                ],
+                [
+                  "−4, −9, −2",
+                  "−2",
+                  "0, which is wrong"
+                ],
+                [
+                  "0, 0, 0",
+                  "0",
+                  "0"
+                ]
+              ],
+              "title": "Why the starting value matters"
+            },
+            "alt": "A table comparing two starting values for the largest-value algorithm on three lists, showing where starting at zero gives the wrong answer"
+          },
+          {
+            "type": "worked-example",
+            "problem": "*State the purpose of the algorithm and identify one weakness.* (4 marks)",
+            "steps": [
+              {
+                "text": "*It takes a list of numbers as its input.* — 1 mark",
+                "note": "name the input"
+              },
+              {
+                "text": "*It compares each item in turn with the largest found so far, replacing it when a bigger one appears.* — 2 marks",
+                "note": "the processing, in one sentence"
+              },
+              {
+                "text": "*It outputs the largest value in the list.* — 3 marks",
+                "note": "the purpose in plain English"
+              },
+              {
+                "text": "*If max were started at 0 instead of a[0], a list of only negative numbers would wrongly output 0.* — 4 marks",
+                "note": "a specific input that breaks it"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "Why does the largest-value algorithm set max to a[0] rather than to 0 before the loop?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "evaluating an algorithm",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Nothing negative ever beats 0, so the algorithm would output **0**, a value not even in the list. Starting at `a[0]` guarantees the answer comes from the list.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "negative lists would output 0"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "A list of all negative numbers would wrongly output 0",
+            "Starting at 0 would make the loop run one time too many",
+            "The first item is always the largest in the list",
+            "a[0] is the only value the loop can read"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- To work out what an unfamiliar algorithm does, **trace it**: one column per variable, one row per pass of the loop.\n- Describe it as **input**, **processing** and **output**, and say what the output *means*.\n- Naming the variable is not a purpose. \"It outputs the largest value in the list\" earns the mark; \"it outputs max\" does not.\n- Look at the **starting value** and the **one line inside the loop**: 0 with `+ a[i]` is a total, 0 with `+ 1` is a counter, the first item is a largest or smallest finder.\n- Read the **line after the loop**. Dividing the total by the length turns a sum into a **mean average**.\n- Repeated subtraction with a counter is **whole-number division**: the counter is the quotient, what is left is the remainder.\n- Test an awkward input. A list of negatives breaks a largest-finder that starts at 0.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Trace table",
+                  "one column per variable, one row per loop pass"
+                ],
+                [
+                  "Input",
+                  "what goes in: a list, a number, a string"
+                ],
+                [
+                  "Processing",
+                  "what the loop does to it"
+                ],
+                [
+                  "Output",
+                  "what comes out, and what it means"
+                ],
+                [
+                  "Clue 1",
+                  "the starting value of each variable"
+                ],
+                [
+                  "Clue 2",
+                  "the single line inside the loop"
+                ],
+                [
+                  "Clue 3",
+                  "the line after the loop ends"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of how to work out what an algorithm does, from tracing to stating the purpose"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is a trace table used for?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "trace tables",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A trace table has **one column per variable** and one row per step, so you can follow the values instead of holding them in your head.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "records the variables as it runs"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Recording the value of each variable as an algorithm runs",
+        "Listing the errors an algorithm contains",
+        "Showing how long an algorithm takes to run",
+        "Converting an algorithm into program code"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Trace the algorithm max ← a[0], then for each later item replace max if the item is bigger. What does it output for the list 6, 2, 11, 8?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "tracing a loop",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "max starts at 6, is replaced by 11 at position 2, and 8 does not beat it. The output is **11**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "11"
+        }
+      ],
+      "discriminators": [],
+      "answer": 11,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "An algorithm takes a list, adds every item to a running total, and then outputs the total divided by the number of items. What is its purpose?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "describing purpose",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A running total divided by the number of items is the **mean average**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the mean average"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "To find the mean average of the list",
+        "To find the largest value in the list",
+        "To count how many items the list holds",
+        "To put the list into order"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "In the sentence \"the algorithm takes a list of numbers and outputs the largest one\", which word names the input?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "inputs, processing and outputs",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The **list** of numbers is what goes into the algorithm. The largest value is the output.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the list"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "list",
+        "a list",
+        "the list",
+        "list of numbers",
+        "a list of numbers"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "An algorithm sets total to 0, then adds each item of the list 12, 15, 9, 20 to it. What does total hold when the loop ends?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "tracing a running total",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "12 + 15 = 27, + 9 = 36, + 20 = **56**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "56"
+        }
+      ],
+      "discriminators": [],
+      "answer": 56,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Inside a loop an algorithm has count ← count + 1, but only when a[i] is greater than 10. What does count hold at the end?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "recognising patterns",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Adding **1** rather than the value makes it a counter, and the condition means it counts **how many items** are greater than 10.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "how many items are over 10"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "How many items in the list are greater than 10",
+        "The total of the items greater than 10",
+        "The position of the last item greater than 10",
+        "The largest item in the list"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "An algorithm runs WHILE x ≥ y with x ← x − y inside the loop, starting at x = 20 and y = 6. What value does x hold when the loop stops?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "tracing a while loop",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "20 − 6 = 14, 14 − 6 = 8, 8 − 6 = 2. Now 2 is less than 6, so the loop stops with x holding **2**, the remainder of 20 ÷ 6.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts 6 repeatedly while x is at least 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A FOR loop is written as FOR i ← 1 TO LEN(a) − 1, and the list holds 6 items. How many times does the loop body run?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "tracing a loop",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "LEN(a) − 1 is 5, so i takes the values 1, 2, 3, 4, 5. That is **5** times.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "An algorithm builds a string with out ← out + SUBSTRING(i, i, s) while i counts down from the last position to 0. In one word, what does it do to the string?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "recognising patterns",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Taking the characters from the end towards the start and adding each to the end of a new string **reverses** it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "reverses it"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "reverses",
+        "reverses it",
+        "reverse",
+        "it reverses it",
+        "reverses the string"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Why is it a mistake to describe an algorithm by saying \"it outputs the variable total\"?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "describing purpose",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Naming the variable just reads the code back. A purpose says what the value **is**, such as the sum of the list or its average.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it does not say what the value means"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It repeats the code without saying what the value means",
+        "The variable might be renamed later",
+        "Variables cannot be output directly",
+        "Trace tables do not include the output"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "An algorithm sets count to 0, then repeatedly takes y away from x while x is at least y, adding 1 to count each time. With x = 17 and y = 5, what does count hold at the end?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing a while loop",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "17 − 5 = 12, 12 − 5 = 7, 7 − 5 = 2, and 2 is less than 5. count holds **3**, because 5 fits into 17 three times.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts 5 while x is at least 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "That algorithm outputs count and then x. What is its purpose?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "describing purpose",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Counting how many times y fits into x is **whole-number division**. The counter is the answer and whatever is left in x is the remainder.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "division with a remainder"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "Whole-number division, giving the answer and the remainder",
+        "Multiplying the two numbers together",
+        "Finding the larger of the two numbers",
+        "Counting down from x to zero"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "short-text",
+      "prompt": "An algorithm builds a new string by taking the characters of s from the last position down to 0. What does it output for s = 'stream'?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing a string algorithm",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Positions 5 down to 0 give m, a, e, r, t, s, so the output is **maerts**, the string reversed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "works from the last character backwards"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "maerts"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "maerts"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "An algorithm counts the characters of a string that are a, e, i, o or u. What does it output for the string 'computer'?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing a counter",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The vowels in **computer** are o, u and e, so the output is **3**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "counts only the vowels"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A largest-value algorithm starts with max ← 0 instead of max ← a[0]. Which list would make it give the wrong answer?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "evaluating an algorithm",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "No negative value ever beats 0, so it would output **0**, which is not even in the list. The correct answer is −2.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the all-negative list"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "−4, −9, −2",
+        "4, 9, 2",
+        "0, 5, 10",
+        "9, 4, 2"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "An algorithm loops FOR i ← 0 TO LEN(a) − 1 over a list of 8 items, and inside the loop it compares a[i] with the item after it. At which value of i does this go wrong?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "evaluating an algorithm",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The last position is 7, so when i is **7** the algorithm looks for a[8], which does not exist. The loop should have stopped at LEN(a) − 2.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the last valid position is 7"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a[i + 1] would then be a[8]"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "ordering",
+      "prompt": "Put the steps of working out what an unfamiliar algorithm does into a sensible order.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "tracing method",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Find the inputs, set up the table, run it by hand, then turn the final value into a sentence about what the algorithm is for.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the inputs first"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "traces before interpreting"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "ends by stating the purpose"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "items": [
+        "Identify the inputs the algorithm takes",
+        "Draw a trace table with one column per variable",
+        "Work through the algorithm a line at a time, filling in the table",
+        "Read the output and say in plain English what it means"
+      ]
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "An algorithm sets total to 0 and count to 0. For each item in a list it adds the item to total and adds 1 to count. It then outputs total divided by count. State the purpose of this algorithm, and explain how you worked it out.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "describing purpose",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The input is a list of numbers. Inside the loop total collects a running sum of the items while count records how many items there have been, so after the loop total holds the sum of the list and count holds its length. The output line divides the sum by the number of items, which is the definition of the mean average, so the purpose of the algorithm is to output the mean average of the numbers in the list. It was worked out by tracing: starting both variables at 0, adding a[i] to one and 1 to the other, and then reading the line after the loop rather than stopping at the end of the loop.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "identifies the input as a list of numbers"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "total is a running sum of the items"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "count holds how many items there are"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the output divides the sum by the number of items"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states the purpose: it outputs the mean average"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 7,
+      "criteria": [
+        {
+          "text": "Identifies the input as a list of numbers",
+          "marks": 1
+        },
+        {
+          "text": "Explains that total collects a running sum",
+          "marks": 1
+        },
+        {
+          "text": "Explains that count records how many items there are",
+          "marks": 1
+        },
+        {
+          "text": "Notes that the output line divides the sum by the count",
+          "marks": 1
+        },
+        {
+          "text": "States the purpose in plain English: it finds the mean average",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The **input** is a list of numbers.\n\nInside the loop, `total ← total + a[i]` builds a **running sum**, so after the loop total holds the sum of every item. At the same time `count ← count + 1` adds one for each item whatever its value, so count ends up holding **how many items the list has**, which is its length.\n\nThe line **after** the loop is the one that gives the purpose away: it divides the sum by the number of items, and that is the definition of the **mean average**.\n\nSo the algorithm **outputs the mean average of the numbers in the list**. Tracing is what shows it: start both variables at 0, follow them down the list, and then read the output line rather than stopping when the loop does."
+    },
+    {
+      "id": "q19",
+      "type": "extended",
+      "prompt": "A list of exam marks is passed to an algorithm that sets best to 0, then replaces best with any mark that is larger, and finally outputs best. Explain what the algorithm is intended to do, and evaluate whether it always works.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "evaluating an algorithm",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The algorithm takes a list of marks as its input, compares each mark in turn with the largest found so far, and replaces best whenever a larger mark appears, so it is intended to output the highest mark in the list. For ordinary exam marks it works, because marks cannot be negative and any real mark above zero will replace the starting value. It is still unsafe as written. Because best starts at 0 rather than at the first item of the list, an input where every value is negative would leave best at 0 and the algorithm would output 0, a value that is not in the list at all. A list where every mark is 0 gives 0, which happens to be right but only by accident. The fix is to set best to the first item of the list before the loop and start the comparison at the second, which guarantees the output is a value that really appears in the list. An empty list should also be rejected, since there is no highest mark to report.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 2,
+          "description": "Level 1 (1 to 2): states that the algorithm finds the highest mark"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "Level 2 (3 to 4): explains the comparison and replacement, and notes the starting value of 0"
+        },
+        {
+          "code": "C3",
+          "marks": 2,
+          "description": "Level 3 (5 to 6): identifies an input that breaks it and gives the correct fix"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "States that the algorithm is intended to find the highest mark",
+          "marks": 1
+        },
+        {
+          "text": "Explains that each mark is compared with the largest found so far",
+          "marks": 1
+        },
+        {
+          "text": "Notes that best starts at 0 rather than at the first item",
+          "marks": 1
+        },
+        {
+          "text": "Identifies that a list of negative values would wrongly output 0",
+          "marks": 1
+        },
+        {
+          "text": "Gives the fix: start best at the first item and compare from the second",
+          "marks": 1
+        },
+        {
+          "text": "Notes a further limitation, such as an empty list having no answer",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**What it is meant to do.** The input is a list of exam marks. Each mark is compared with the largest found so far, and `best` is replaced whenever a larger mark appears, so the algorithm is intended to **output the highest mark in the list**.\n\n**Does it always work?** For ordinary exam marks, yes. Marks cannot be negative, so any real mark above zero will replace the starting value and the trace comes out right.\n\n**But it is unsafe as written.** `best` starts at **0** rather than at the first item. Give it a list where every value is negative and nothing ever beats 0, so it outputs **0**, a value that is not in the list at all. A list of all zeroes returns 0, which is correct only by accident.\n\n**The fix** is `best ← a[0]` before the loop, with the comparison starting at the second item. That guarantees the output is a value that genuinely appears in the list. An **empty list** should also be rejected, because there is no highest mark to report."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 16
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Draw the trace table before you do anything else. One column per variable, one row per pass of the loop, and write the starting values on a row of their own. Most lost marks come from trying to hold three variables in your head.\n\nWatch the loop bounds. `FOR i ← 1 TO LEN(a) − 1` on a list of 6 runs five times, from 1 to 5, and a loop that reads `a[i + 1]` must stop one place earlier still.\n\nRead the line **after** the loop. A running total is a sum until the last line divides it, and then it is an average. Questions are written so that stopping at the end of the loop gives the wrong purpose.\n\nWhen asked what the algorithm does, answer in one plain sentence about the **output's meaning**. Do not narrate the code line by line: that is a description of how, and the question asked what for.",
+    "examinerErrors": [
+      "Describing an algorithm line by line instead of stating its purpose in one sentence.",
+      "Saying \"it outputs max\" or \"it outputs total\". Naming the variable is not a purpose.",
+      "Stopping at the end of the loop and missing the line after it, which often turns a sum into an average.",
+      "Getting the loop count wrong: FOR i ← 1 TO LEN(a) − 1 on 6 items runs five times, not six.",
+      "Forgetting that positions start at 0, so the last item of a list of 8 is at position 7.",
+      "Tracing in your head rather than filling in a trace table, then losing track of a variable.",
+      "Missing that a WHILE loop tests its condition before each pass, so it can run zero times."
+    ],
+    "grade9Looks": "A grade 9 answer fills in a complete trace table, including a row for the starting values, and gets the loop bounds right. It states the purpose in one plain sentence about what the output means, naming the input and the processing as well. It reads the line after the loop and notices when that changes the purpose. Asked to evaluate, it gives a specific input that breaks the algorithm, such as an all-negative list defeating a largest-finder that starts at 0, and then gives the fix."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
