@@ -13,7 +13,7 @@ Every topic carries a `year` field, taken from the school's curriculum overview 
 | Chemistry | — | 6: Covalent bonding: molecules, polymers and giant structures · Diamond, graphite, graphene, fullerenes and nanoparticles · Electrolysis of aqueous solutions · Electrolysis of molten compounds · Ionic bonding and ionic compounds · Metallic bonding and alloys | — |
 | Biology | — | 8: Antibiotics, new medicines and monoclonal antibodies · Non-communicable disease and lifestyle · Pathogens and how disease spreads · Photosynthesis and limiting factors · Plant adaptations, defences and hormones · The immune system and immunisation · The leaf, root hair cells, xylem and phloem · Transpiration and translocation | — |
 | Computer Science | 2: Data types and operators · Selection, iteration and tracing | 8: Arrays and records · Bubble sort · Data compression: Huffman coding and run length encoding · Merge sort · Robust and secure programming: validation, authentication and testing · String handling, conversions, and files for your project · Subroutines: procedures and functions · Working out what an algorithm does by tracing it | — |
-| Business | 3: Enterprise and entrepreneurship · Putting a business idea into practice · Spotting a business opportunity | 2: Making the business effective · Understanding external influences | — |
+| Business | 3: Enterprise and entrepreneurship · Putting a business idea into practice · Spotting a business opportunity | 3: Growing the business · Making the business effective · Understanding external influences | — |
 | French | — | 10: Booking and reviewing accommodation · Festivals and traditions · Good mental health · Holiday activities · Holidays and accommodation · Holidays in three tenses · Illness and accidents · Improving your life, with the simple future · Lifestyle changes · My ideal holiday, with the conditional | — |
 | Music | — | 4: Afro Celt Sound System: Release · Bach: Brandenburg Concerto No. 5, third movement · Killer Queen · Star Wars main title | — |
 
@@ -90,7 +90,7 @@ Started 10 September 2026 with the owner's approval. School order for Year 10: 1
 |---|---|---|
 | Autumn 1 and 2 | 1.4 Making the business effective: ownership and liability, franchising, location, the marketing mix, business plans · 1.5 Understanding external influences: stakeholders, technology, legislation, the economy | Both drafted 10 September 2026 |
 | Autumn 2 recap | 1.3 Putting a business idea into practice, including the calculations · 1.1 Enterprise and entrepreneurship · 1.2 Spotting a business opportunity | All three drafted 10 September 2026. **Theme 1 is complete**, so every section the Autumn Milestone on 1.1 to 1.5 tests is now covered. |
-| Spring | 2.1 Growing the business | Next |
+| Spring | 2.1 Growing the business | Drafted 14 September 2026, written from the Edexcel specification Issue 2 (July 2022). Covers 2.1.1 to 2.1.4 in one topic. |
 | Summer | 2.2 Making marketing decisions | |
 
 The grade 9 discriminators in Business are the 9 and 12 mark justify and evaluate questions and the calculations in 1.3 and 2.4, so each topic's Advanced worksheet is built from those.
