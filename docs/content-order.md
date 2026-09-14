@@ -19,6 +19,8 @@ Every topic carries a `year` field, taken from the school's curriculum overview 
 
 Counts are topics drafted, not the whole syllabus: a year with no entry is simply not written yet.
 
+The **whole** syllabus, written or not, lives in `packages/shared/src/syllabus.ts`, built from the curriculum overviews and from this queue. The subject page renders all of it, so a topic still to be written shows as *Coming soon* rather than being absent. A test asserts that every written topic appears there exactly once, so nothing can become invisible. Pure revision and coursework blocks are left out, because there is no topic to write for them.
+
 ## Mathematics, Edexcel 1MA1 Higher
 
 | When | Topics, in teaching order | Status |

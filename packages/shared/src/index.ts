@@ -1,4 +1,5 @@
 export * from './subjects.ts'
+export * from './syllabus.ts'
 export * from './progress.ts'
 export * from './stories.ts'
 export * from './content/index.ts'
