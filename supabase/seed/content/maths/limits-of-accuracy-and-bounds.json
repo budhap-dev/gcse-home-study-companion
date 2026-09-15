@@ -1,0 +1,1443 @@
+{
+  "id": "limits-of-accuracy-and-bounds",
+  "subjectId": "maths",
+  "unitId": "number",
+  "title": "Limits of accuracy and bounds",
+  "specPoints": [
+    "N15",
+    "N16"
+  ],
+  "order": 1,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Half a unit either side",
+      "body": "Whatever the measurement is rounded to, the interval is **half that unit** either side. Nearest cm gives ±0.5; nearest 10 g gives ±5; 1 decimal place gives ±0.05; 2 decimal places ±0.005."
+    },
+    {
+      "kind": "spot",
+      "title": "Rounded or truncated?",
+      "body": "**Rounded** to 24 means $23.5 \\leqslant x < 24.5$, either side. **Truncated** to 24 means $24 \\leqslant x < 25$, entirely above. Truncation only ever loses, so the interval never goes below the stated value."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Reason it out, do not recall a rule",
+      "body": "**Higher tier.** For the largest answer, ask what makes it large. A speed is largest with the **greatest distance** in the **shortest time** — so upper over lower. Adding and multiplying pair like with like; subtracting and dividing cross over."
+    },
+    {
+      "kind": "check",
+      "title": "The upper bound is exactly 24.5",
+      "body": "Even though we write $x < 24.5$, the **upper bound** is $24.5$: the smallest value the measurement cannot reach. Writing 24.49 to avoid the strict inequality is wrong, because the length can be larger than that."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What a rounded number is hiding",
+        "body": "When a measurement is given as **24 cm to the nearest centimetre**, the real length is not 24. It is *something that rounds to 24*.\n\nAnything from **23.5** up to **24.5** rounds to 24, so the true value lies in that range. That range is called the **error interval**, and its ends are the **lower bound** and the **upper bound**.\n\n$$23.5 \\leqslant \\text{length} < 24.5$$\n\nThe rule is always the same: go **half a unit either side** of the rounded value.\n\n- to the nearest **cm**: half a unit is **0.5**\n- to the nearest **10 g**: half a unit is **5**\n- to **1 decimal place**: half a unit is **0.05**\n- to **2 decimal places**: half a unit is **0.005**\n\nNotice the symbols. The lower bound uses $\\leqslant$ because 23.5 **does** round to 24. The upper bound uses $<$ because 24.5 rounds **up** to 25, so it is not included. That asymmetry is deliberate and it is marked.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Measurement",
+                "Rounded to the nearest",
+                "Half a unit",
+                "Error interval"
+              ],
+              "rows": [
+                [
+                  "24 cm",
+                  "1 cm",
+                  "0.5",
+                  "23.5 ⩽ x < 24.5"
+                ],
+                [
+                  "250 g",
+                  "10 g",
+                  "5",
+                  "245 ⩽ x < 255"
+                ],
+                [
+                  "3.6",
+                  "0.1 (1 d.p.)",
+                  "0.05",
+                  "3.55 ⩽ x < 3.65"
+                ],
+                [
+                  "7.42",
+                  "0.01 (2 d.p.)",
+                  "0.005",
+                  "7.415 ⩽ x < 7.425"
+                ]
+              ],
+              "title": "Half a unit either side, every time"
+            },
+            "alt": "A table of error intervals for measurements rounded to different degrees of accuracy"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "A length is 24 cm to the nearest centimetre. What is its error interval?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "error intervals",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Half a unit either side of 24 gives 23.5 and 24.5. The lower bound is **included** ($\\leqslant$) because 23.5 rounds up to 24; the upper bound is **excluded** ($<$) because 24.5 rounds up to 25.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "23.5 ⩽ x < 24.5"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "23.5 ⩽ x < 24.5",
+            "23 ⩽ x < 25",
+            "23.5 < x ⩽ 24.5",
+            "24 ⩽ x < 25"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Rounding is not truncation",
+        "body": "The specification mentions **truncation** as well as rounding, and the two give different intervals.\n\n- **Rounding** to the nearest cm: 24 could have come from anything between **23.5** and **24.5**.\n- **Truncating** to the nearest cm means simply chopping off the decimals. A truncated 24 could have come from anything between **24** and **25**.\n\n$$\\text{rounded: } 23.5 \\leqslant x < 24.5 \\qquad \\text{truncated: } 24 \\leqslant x < 25$$\n\nTruncation only ever loses, never gains: a truncated value is always **less than or equal to** the true one. So the interval sits entirely **above** the stated value, not either side of it.\n\nA question saying *measured to the nearest* means rounding. One saying *truncated* or *rounded down* means the other. Reading which is being asked is the whole difficulty; the arithmetic is easy once you know.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Stated as 24",
+                "Interval",
+                "Where it sits"
+              ],
+              "rows": [
+                [
+                  "rounded to the nearest 1",
+                  "24",
+                  "23.5 ⩽ x < 24.5",
+                  "either side of 24"
+                ],
+                [
+                  "truncated to the nearest 1",
+                  "24",
+                  "24 ⩽ x < 25",
+                  "entirely above 24"
+                ]
+              ],
+              "title": "Truncation only ever loses"
+            },
+            "alt": "A table comparing the error interval from rounding with the one from truncating, for the same stated value"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "A length is truncated to 24 cm. What is the error interval?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "error intervals",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Truncating chops the decimals off, so anything from 24 up to (but not including) 25 truncates to 24. The interval sits **entirely above** the stated value.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "24 ⩽ x < 25"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "24 ⩽ x < 25",
+            "23.5 ⩽ x < 24.5",
+            "23 ⩽ x < 24",
+            "24.5 ⩽ x < 25.5"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Higher tier: bounds in a calculation",
+        "body": "This is the **Higher tier** part of N16. Once two measurements each have bounds, a calculation using them has bounds too.\n\nThe question is always *which bound do I pair with which?*, and the answer depends on the operation.\n\nFor **multiplication and addition**, bigger inputs give a bigger answer, so:\n\n- **upper bound** of the answer $=$ upper $\\times$ upper\n- **lower bound** of the answer $=$ lower $\\times$ lower",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A rectangle measures 12 cm by 8 cm, each to the nearest cm. Find the bounds of its area",
+            "steps": [
+              {
+                "text": "Bounds of the length: $11.5 \\leqslant l < 12.5$",
+                "note": "half a unit either side"
+              },
+              {
+                "text": "Bounds of the width: $7.5 \\leqslant w < 8.5$",
+                "note": "and again"
+              },
+              {
+                "text": "Upper bound of the area $= 12.5 \\times 8.5 = 106.25$ cm²",
+                "note": "both as big as possible"
+              },
+              {
+                "text": "Lower bound $= 11.5 \\times 7.5 = 86.25$ cm²",
+                "note": "both as small as possible"
+              },
+              {
+                "text": "So $86.25 \\leqslant \\text{area} < 106.25$",
+                "note": "a wide interval, from two measurements each out by half a centimetre"
+              },
+              {
+                "text": "Note the area is not $12 \\times 8 = 96$ plus or minus a bit; the interval is not symmetric about 96",
+                "note": "which surprises people"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Operation",
+                "Upper bound of the answer",
+                "Lower bound of the answer"
+              ],
+              "rows": [
+                [
+                  "a + b",
+                  "upper + upper",
+                  "lower + lower"
+                ],
+                [
+                  "a × b",
+                  "upper × upper",
+                  "lower × lower"
+                ],
+                [
+                  "a − b",
+                  "upper − lower",
+                  "lower − upper"
+                ],
+                [
+                  "a ÷ b",
+                  "upper ÷ lower",
+                  "lower ÷ upper"
+                ]
+              ],
+              "title": "Subtraction and division cross over"
+            },
+            "alt": "A table of which bounds to pair for each operation"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A rectangle is 12 cm by 8 cm, each to the nearest cm. What is the upper bound of its area, in cm²?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: bounds",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$12.5 \\times 8.5 = 106.25$ cm².",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds both upper bounds"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "multiplies them"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "106.25"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 106.25,
+          "tolerance": 0.01,
+          "unitsRequired": false,
+          "units": "cm²"
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Higher tier: when the bounds cross over",
+        "body": "**Subtraction and division** are the cases that catch people, because making the answer as big as possible means making one input **small**.\n\nThink about a speed: $\\text{speed} = \\dfrac{\\text{distance}}{\\text{time}}$.\n\nTo get the **fastest possible** speed you want the **greatest distance** covered in the **shortest time**. So the upper bound pairs the **upper** distance with the **lower** time.\n\nPairing upper with upper, as you would for multiplication, gives a smaller number — and the wrong answer.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A car travels 100 m to the nearest metre in 8 s to the nearest second. Find the bounds of its average speed",
+            "steps": [
+              {
+                "text": "Distance: $99.5 \\leqslant d < 100.5$",
+                "note": "half a metre either side"
+              },
+              {
+                "text": "Time: $7.5 \\leqslant t < 8.5$",
+                "note": "half a second either side"
+              },
+              {
+                "text": "**Fastest**: greatest distance, shortest time",
+                "note": "think about what makes a speed large"
+              },
+              {
+                "text": "Upper bound $= \\dfrac{100.5}{7.5} = 13.4$ m/s",
+                "note": "upper over lower"
+              },
+              {
+                "text": "Lower bound $= \\dfrac{99.5}{8.5} = 11.71$ m/s",
+                "note": "lower over upper"
+              },
+              {
+                "text": "Pairing upper with upper would give $\\dfrac{100.5}{8.5} = 11.82$, which is **not** the maximum",
+                "note": "the error this step exists to prevent"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "To make the answer as big as possible",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "a + b: make both big",
+                  "adding more gives more"
+                ],
+                [
+                  "a × b: make both big",
+                  "multiplying by more gives more"
+                ],
+                [
+                  "a − b: make a big and b small",
+                  "taking away less leaves more"
+                ],
+                [
+                  "a ÷ b: make a big and b small",
+                  "sharing between fewer gives each more"
+                ]
+              ],
+              "title": "Reason it out rather than recalling a rule"
+            },
+            "alt": "A table of the reasoning for each operation, in words rather than as a rule to memorise"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A car travels 100 m to the nearest metre in 8 s to the nearest second. What is the upper bound of its average speed, in m/s?",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: bounds",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Greatest distance over shortest time: $\\dfrac{100.5}{7.5} = 13.4$ m/s.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses the upper bound of distance"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "divides by the lower bound of time"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "13.4"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "answer": 13.4,
+          "tolerance": 0.01,
+          "unitsRequired": false,
+          "units": "m/s"
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Higher tier: deciding an answer to a sensible accuracy",
+        "body": "A common final part asks you to give the answer **to a suitable degree of accuracy**, and to justify it.\n\nThe method: **round both bounds to the same accuracy and see whether they match.** The most accurate level at which they still match is the most you can honestly claim.\n\nTake bounds of $8.412$ and $8.419$.\n\n- To **3 significant figures** they give $8.41$ and $8.42$ — **different**.\n- To **2 significant figures** they both give $8.4$ — **the same**.\n\nSo the answer can be given as $8.4$, to 2 significant figures, and no further. It is tempting to write $8.41$ because the bounds look as though they agree on those digits, but rounding is what decides it, and at 3 significant figures they part company.\n\nFor the speed from the last step, with bounds $11.71$ and $13.4$:\n\n- to 2 significant figures, $12$ and $13$ — different;\n- to 1 significant figure, both give $10$.\n\nSo the only honest statement is $10$ m/s to 1 significant figure. From measurements that rough, that is genuinely all you know.\n\nThe reasoning you must write down is:\n\n> Rounded to *n* significant figures the two bounds agree, so the answer can be given to *n* significant figures.\n\nA number alone earns less than a number with that sentence.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Lower bound",
+                "Upper bound",
+                "To 1 s.f.",
+                "To 2 s.f.",
+                "To 3 s.f.",
+                "Best you can claim"
+              ],
+              "rows": [
+                [
+                  "8.412",
+                  "8.419",
+                  "8 and 8",
+                  "8.4 and 8.4",
+                  "8.41 and 8.42",
+                  "8.4, to 2 s.f."
+                ],
+                [
+                  "11.71",
+                  "13.40",
+                  "10 and 10",
+                  "12 and 13",
+                  "11.7 and 13.4",
+                  "10, to 1 s.f."
+                ],
+                [
+                  "7.82",
+                  "8.18",
+                  "8 and 8",
+                  "7.8 and 8.2",
+                  "7.82 and 8.18",
+                  "8, to 1 s.f."
+                ]
+              ],
+              "title": "Round both, then compare"
+            },
+            "alt": "A table of deciding accuracy by rounding both bounds and seeing where they still match"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Bounds of 8.412 and 8.419: to what accuracy can the answer be given?",
+            "steps": [
+              {
+                "text": "To **3 s.f.**: $8.41$ and $8.42$",
+                "note": "round both, do not eyeball the digits"
+              },
+              {
+                "text": "Those differ, so 3 significant figures is **not** justified",
+                "note": "the tempting wrong answer"
+              },
+              {
+                "text": "To **2 s.f.**: $8.4$ and $8.4$",
+                "note": "try one fewer"
+              },
+              {
+                "text": "They match, so the answer is $8.4$ to 2 significant figures",
+                "note": "and this is as far as you can go"
+              },
+              {
+                "text": "Write the justification as a sentence; the number alone is not the full answer",
+                "note": "it is a separate mark"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Bounds for an answer are 8.412 and 8.419. To what accuracy can the answer be given?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: bounds",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Round **both**. To 3 s.f. they give $8.41$ and $8.42$, which differ. To 2 s.f. both give $8.4$, so **8.4** is the most that can be claimed. The midpoint is never justified.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8.4, to 2 significant figures"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "8.4, to 2 significant figures",
+            "8.41, to 3 significant figures",
+            "8.415, the midpoint",
+            "8.42, rounded up"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.** Write the error interval for each.\n\n1. 7 cm, to the nearest centimetre.\n2. 250 g, to the nearest 10 g.\n3. 3.6 s, to 1 decimal place.\n4. 24 m, truncated to the nearest metre.\n\n**Part B, Higher tier.** A rectangle is 15 cm by 6 cm, each to the nearest cm.\n\n5. Find the upper bound of its area.\n6. Find the lower bound of its perimeter.\n\n**Part C, Higher tier.** A runner covers 200 m, to the nearest metre, in 25 s, to the nearest second.\n\n7. Find the upper and lower bounds of the average speed.\n8. Give the speed to a suitable degree of accuracy, justifying your choice.\n\nQuestion 7 is the one to be careful with: think about what makes a speed large before pairing anything.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Quantity",
+                "Lower bound",
+                "Upper bound",
+                "Which pair for the maximum?"
+              ],
+              "rows": [
+                [
+                  "length",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "width",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "area",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "speed",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Decide the pairing by reasoning, not by rule"
+            },
+            "alt": "A blank table for the bounds calculations, with a column for which bound of each measurement to use"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "A rectangle is 15 cm by 6 cm, each to the nearest cm. What is the upper bound of its area, in cm²?",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: bounds",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The upper bounds are 15.5 cm and 6.5 cm, so the upper bound of the area is $15.5 \\times 6.5 = 100.75$ cm².",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds both upper bounds"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "multiplies"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "100.75"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 100.75,
+          "tolerance": 0.01,
+          "unitsRequired": false,
+          "units": "cm²"
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: why bounds matter",
+        "body": "**The interval is not symmetric after a calculation.** For the 12 by 8 rectangle, the nominal area is $96$ cm², but the bounds are $86.25$ and $106.25$. That is $9.75$ below and $10.25$ above — not the same. Multiplying two intervals does not give an interval centred on the product, and assuming it does is a real error rather than a rounding nicety.\n\n**Errors grow.** Each measurement here was out by at most $0.5$ cm, under 5% of its value. The area could be out by more than $10$ cm² from $96$, which is about 10%. Combining measurements **compounds** their uncertainties, and dividing compounds them faster still.\n\n**The practical point.** This is why the last part of these questions asks for a sensible accuracy. A calculator shows $13.4$ m/s for that speed, but the lower bound is $11.7$ — so quoting $13.4$ claims a precision the measurements cannot support. The honest answer is that the speed is somewhere around $12$ or $13$ m/s and the timing needs to be better.\n\n**A subtlety about the upper bound symbol.** The upper bound is $24.5$, and we write $x < 24.5$, so the bound itself is not attainable. Nonetheless $24.5$ **is** the upper bound — it is the smallest number the measurement cannot reach. Questions ask for *the upper bound*, and the answer is $24.5$, not $24.49$ or $24.4999$. Writing $24.49$ is a common and costly attempt to be clever.\n\n**One more trap.** *To the nearest 10* and *to 1 significant figure* are not the same for every number. 250 to the nearest 10 gives bounds 245 and 255. But 250 to 1 significant figure would be 300, with quite different bounds. Read what the rounding was actually to.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "nominal area, 12 × 8",
+                  "96 cm²"
+                ],
+                [
+                  "lower bound",
+                  "86.25 cm²"
+                ],
+                [
+                  "upper bound",
+                  "106.25 cm²"
+                ],
+                [
+                  "distance below",
+                  "9.75"
+                ],
+                [
+                  "distance above",
+                  "10.25"
+                ]
+              ],
+              "title": "Multiplying intervals does not keep the centre"
+            },
+            "alt": "A table showing that the bounds of an area are not symmetric about the nominal value"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Why is 24.5 the upper bound, even though the length cannot equal 24.5?",
+            "steps": [
+              {
+                "text": "The interval is $23.5 \\leqslant x < 24.5$",
+                "note": "note the strict symbol at the top"
+              },
+              {
+                "text": "So the length can be $24.4999\\ldots$, as close to $24.5$ as you like",
+                "note": "but never equal to it"
+              },
+              {
+                "text": "The **upper bound** is the smallest value the measurement cannot exceed",
+                "note": "that is what the term means"
+              },
+              {
+                "text": "That value is exactly $24.5$",
+                "note": "so 24.5 is the answer"
+              },
+              {
+                "text": "Writing $24.49$ is wrong: the length can be larger than that",
+                "note": "and it loses the mark"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "A length is 24 cm to the nearest cm. What is its upper bound?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: bounds",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The **upper bound** is the smallest value the measurement cannot reach, which is exactly **24.5**. Writing 24.49 is wrong, because the length can be larger than that.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "24.5"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "24.5",
+            "24.49",
+            "24.4999",
+            "24"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A rounded measurement hides an **error interval**: half a unit either side.\n- 24 cm to the nearest cm gives $23.5 \\leqslant x < 24.5$.\n- The lower bound uses $\\leqslant$; the upper uses $<$, because the upper value would round up.\n- To 1 d.p., half a unit is $0.05$; to 2 d.p., $0.005$; to the nearest 10, it is $5$.\n- **Truncation** is different: a truncated 24 gives $24 \\leqslant x < 25$, entirely **above** the stated value.\n- **Higher tier**: for a calculation, pair the bounds by reasoning about what makes the answer large.\n- $a + b$ and $a \\times b$: **upper with upper**, **lower with lower**.\n- $a - b$ and $a \\div b$: they **cross over** — upper $\\div$ lower for the maximum.\n- For a speed, the fastest is the **greatest distance** over the **shortest time**.\n- The interval after a calculation is **not symmetric** about the nominal answer.\n- To choose an accuracy, keep the digits the bounds **agree** on, and write the reason.\n- The upper bound of 24 to the nearest cm is exactly **24.5**, never 24.49.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Error interval",
+                  "half a unit either side of the rounded value"
+                ],
+                [
+                  "Symbols",
+                  "lower ⩽, upper <"
+                ],
+                [
+                  "To 1 d.p.",
+                  "half a unit is 0.05"
+                ],
+                [
+                  "Truncation",
+                  "the interval sits entirely above the stated value"
+                ],
+                [
+                  "Higher tier",
+                  "bounds in a calculation"
+                ],
+                [
+                  "Adding and multiplying",
+                  "upper with upper, lower with lower"
+                ],
+                [
+                  "Subtracting and dividing",
+                  "they cross over"
+                ],
+                [
+                  "Fastest speed",
+                  "greatest distance over shortest time"
+                ],
+                [
+                  "After a calculation",
+                  "the interval is not symmetric"
+                ],
+                [
+                  "Choosing an accuracy",
+                  "keep the digits the bounds agree on, and say why"
+                ],
+                [
+                  "The upper bound of 24",
+                  "exactly 24.5, never 24.49"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of limits of accuracy covering error intervals, truncation, the Higher tier pairings and the accuracy judgement"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "A length is 24 cm to the nearest centimetre. What is its error interval?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "error intervals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Half a unit either side: $23.5 \\leqslant x < 24.5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "23.5 ⩽ x < 24.5"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "23.5 ⩽ x < 24.5",
+        "23 ⩽ x < 25",
+        "23.5 < x ⩽ 24.5",
+        "24 ⩽ x < 25"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "A mass is 250 g to the nearest 10 g. What are its bounds?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "error intervals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Half of 10 is 5, so the bounds are $250 \\pm 5$: **245 and 255**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "245 and 255"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "245 and 255",
+        "249.5 and 250.5",
+        "240 and 260",
+        "245 and 250"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "A time is 3.6 s to 1 decimal place. What is its lower bound?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "error intervals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Half a unit at 1 d.p. is $0.05$, so the lower bound is $3.6 - 0.05 = 3.55$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3.55"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "3.55",
+        "3.5",
+        "3.59",
+        "3.6"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which symbol belongs at the upper end of an error interval?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "error intervals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**<**, because the upper value would round **up** to the next number and so is not included.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "<"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "<",
+        "⩽",
+        ">",
+        "="
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "A length is truncated to 24 cm. What is its error interval?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "error intervals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Truncating chops off the decimals, so the interval sits **entirely above** the stated value.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24 ⩽ x < 25"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "24 ⩽ x < 25",
+        "23.5 ⩽ x < 24.5",
+        "23 ⩽ x < 24",
+        "24.5 ⩽ x < 25.5"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A rectangle is 12 cm by 8 cm, each to the nearest cm. What is the upper bound of its area, in cm²?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$12.5 \\times 8.5 = 106.25$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses both upper bounds"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "106.25"
+        }
+      ],
+      "discriminators": [],
+      "answer": 106.25,
+      "tolerance": 0.01,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A rectangle is 12 cm by 8 cm, each to the nearest cm. What is the lower bound of its area, in cm²?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$11.5 \\times 7.5 = 86.25$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses both lower bounds"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "86.25"
+        }
+      ],
+      "discriminators": [],
+      "answer": 86.25,
+      "tolerance": 0.01,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "For $a \\div b$, which pairing gives the upper bound?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sharing between **fewer** gives each more, so the maximum is the **upper** numerator over the **lower** denominator.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "upper ÷ lower"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Upper a divided by lower b",
+        "Upper a divided by upper b",
+        "Lower a divided by lower b",
+        "Lower a divided by upper b"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A length is 7 cm to the nearest cm. What is its upper bound, in cm?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "error intervals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Half a unit above 7 is **7.5**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7.5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 7.5,
+      "tolerance": 0.001,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Why is the lower bound written with ⩽ rather than <?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "error intervals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$23.5$ rounds **up** to 24, so it is a possible true value and is **included**. $24.5$ rounds up to 25, so it is not.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "23.5 rounds to 24"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "23.5 does round to 24, so it is included",
+        "It is just a convention",
+        "Because lower bounds are always inclusive by definition",
+        "To match the upper bound"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "A car travels 100 m to the nearest metre in 8 s to the nearest second. What is the upper bound of its average speed, in m/s?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Greatest distance, shortest time: $\\dfrac{100.5}{7.5} = 13.4$ m/s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "upper distance"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "over lower time"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13.4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 13.4,
+      "tolerance": 0.01,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A length is 24 cm to the nearest cm. What is its upper bound?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The upper bound is the smallest value the measurement cannot reach: exactly **24.5**. Writing 24.49 is wrong, because the length can exceed it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24.5"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "24.5",
+        "24.49",
+        "24.4999",
+        "24.9"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Bounds for an answer are 8.412 and 8.419. To what accuracy can it be given?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Round **both** bounds. To 3 s.f. they give $8.41$ and $8.42$, which differ; to 2 s.f. both give $8.4$. So **8.4** is the most that can be claimed.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8.4, to 2 significant figures"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "8.4, to 2 significant figures",
+        "8.41, to 3 significant figures",
+        "8.415, the midpoint",
+        "8.42, rounded up"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A rectangle is 15 cm by 6 cm, each to the nearest cm. What is the upper bound of its area, in cm²?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$15.5 \\times 6.5 = 100.75$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds both upper bounds"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "100.75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 100.75,
+      "tolerance": 0.01,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why is the interval for an area not symmetric about the nominal value?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For 12 by 8, the nominal area is 96 but the bounds are 86.25 and 106.25 — 9.75 below and 10.25 above. **Multiplying intervals does not keep the midpoint.**",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "multiplying does not keep the centre"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Multiplying two intervals does not keep the centre",
+        "Because areas are always rounded up",
+        "Because one measurement is bigger than the other",
+        "It is symmetric; the question is wrong"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A runner covers 200 m to the nearest metre in 25 s to the nearest second. What is the lower bound of the average speed, in m/s, to 2 decimal places?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Slowest is the **shortest distance** over the **longest time**: $\\dfrac{199.5}{25.5} = 7.82$ m/s to 2 d.p.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lower distance"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "over upper time"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7.82"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 7.82,
+      "tolerance": 0.01,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A rectangle measures 15 cm by 6 cm, each to the nearest centimetre. Find the upper and lower bounds of its area and of its perimeter, showing which bounds you used and why.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each measurement is given to the nearest centimetre, so each has bounds half a centimetre either side. The length lies between fourteen point five and fifteen point five centimetres, and the width lies between five point five and six point five centimetres. For the area, which is length multiplied by width, making both measurements as large as possible makes the area as large as possible, so the upper bound is fifteen point five times six point five, which is one hundred point seven five square centimetres. Making both as small as possible gives the lower bound, which is fourteen point five times five point five, or seventy nine point seven five square centimetres. For the perimeter, which is twice the length plus twice the width, the same reasoning applies because adding more gives more. The upper bound is two times fifteen point five plus two times six point five, which is forty four centimetres, and the lower bound is two times fourteen point five plus two times five point five, which is forty centimetres. In both cases the upper bounds were paired together and the lower bounds were paired together, because both operations increase when their inputs increase.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "states the bounds of the length as 14.5 and 15.5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "states the bounds of the width as 5.5 and 6.5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "upper bound of the area 100.75 cm²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "lower bound of the area 79.75 cm²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "bounds of the perimeter 40 cm and 44 cm"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains that upper pairs with upper because both operations increase with their inputs"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "States the bounds of the length correctly",
+          "marks": 1
+        },
+        {
+          "text": "States the bounds of the width correctly",
+          "marks": 1
+        },
+        {
+          "text": "Gives the upper bound of the area as 100.75 cm²",
+          "marks": 1
+        },
+        {
+          "text": "Gives the lower bound of the area as 79.75 cm²",
+          "marks": 1
+        },
+        {
+          "text": "Gives the bounds of the perimeter as 40 cm and 44 cm",
+          "marks": 1
+        },
+        {
+          "text": "Explains why upper pairs with upper for both operations",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The measurements.** Each is to the nearest cm, so half a unit either side:\n\n$$14.5 \\leqslant l < 15.5 \\qquad 5.5 \\leqslant w < 6.5$$\n\n**Area.** Both bigger makes the product bigger, so pair like with like:\n\n$$\\text{upper} = 15.5 \\times 6.5 = \\mathbf{100.75} \\text{ cm}^2$$\n$$\\text{lower} = 14.5 \\times 5.5 = \\mathbf{79.75} \\text{ cm}^2$$\n\n**Perimeter.** $2l + 2w$, and adding more gives more, so again like with like:\n\n$$\\text{upper} = 2(15.5) + 2(6.5) = \\mathbf{44} \\text{ cm}$$\n$$\\text{lower} = 2(14.5) + 2(5.5) = \\mathbf{40} \\text{ cm}$$\n\n**Why like with like.** Both **multiplication** and **addition** increase when their inputs increase, so the maximum uses both upper bounds. Subtraction and division would cross over."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A runner covers 200 m, measured to the nearest metre, in 25 s, measured to the nearest second. Find the bounds of the average speed, and state the speed to a suitable degree of accuracy, justifying your choice.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: bounds",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The distance is given to the nearest metre, so it lies between one hundred and ninety nine point five and two hundred point five metres. The time is given to the nearest second, so it lies between twenty four point five and twenty five point five seconds. Speed is distance divided by time, so the fastest possible speed comes from the greatest distance divided by the shortest time, which is two hundred point five divided by twenty four point five, giving eight point one eight metres per second to two decimal places. The slowest possible speed comes from the shortest distance divided by the longest time, which is one hundred and ninety nine point five divided by twenty five point five, giving seven point eight two metres per second. To choose a sensible accuracy, round both bounds to the same number of significant figures and see whether they match. To two significant figures they give seven point eight and eight point two, which are different. To one significant figure they both give eight. The answer can therefore be given as eight metres per second to one significant figure, and no more precisely than that, because quoting further figures would claim a precision the measurements do not support.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "states the bounds of the distance and the time"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides the upper distance by the lower time"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "upper bound 8.18 m/s"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "lower bound 7.82 m/s"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "rounds both bounds and justifies the accuracy at which they agree"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "States the bounds of both the distance and the time",
+          "marks": 1
+        },
+        {
+          "text": "Divides the upper distance by the lower time for the maximum",
+          "marks": 1
+        },
+        {
+          "text": "Gives the upper bound as 8.18 m/s",
+          "marks": 1
+        },
+        {
+          "text": "Gives the lower bound as 7.82 m/s",
+          "marks": 1
+        },
+        {
+          "text": "Rounds both bounds and states the accuracy at which they agree",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The measurements.**\n\n$$199.5 \\leqslant d < 200.5 \\qquad 24.5 \\leqslant t < 25.5$$\n\n**The bounds of the speed.** Speed is a **division**, so the bounds **cross over**. Fastest means the greatest distance in the shortest time:\n\n$$\\text{upper} = \\frac{200.5}{24.5} = \\mathbf{8.18} \\text{ m/s (2 d.p.)}$$\n$$\\text{lower} = \\frac{199.5}{25.5} = \\mathbf{7.82} \\text{ m/s}$$\n\n**A suitable accuracy.** Round **both** bounds and compare:\n\n- to **2 s.f.**: $7.8$ and $8.2$ — different;\n- to **1 s.f.**: $8$ and $8$ — the same.\n\nSo the speed is **8 m/s to 1 significant figure**, and no more precisely. Quoting 8.18 would claim a precision the measurements cannot support.\n\nThe sentence *the bounds agree to n significant figures, so the answer may be given to n* is what earns the final mark."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Write both bounds down before calculating anything, with the right symbols: $\\leqslant$ at the bottom, $<$ at the top.\n\nCheck what the measurement was rounded **to**, and halve that. To the nearest 10 is not the same as to 1 significant figure.\n\nRead whether the question says *rounded* or *truncated*. They give different intervals.\n\nFor a calculation, do not recall a rule — reason about what makes the answer large. A quotient is largest when the top is biggest and the bottom smallest.\n\nIf asked for a suitable accuracy, compare the bounds digit by digit and keep those that agree. Then write the sentence: the bounds agree to this many figures, so the answer can be given to that many.\n\nGive the upper bound as the exact value, 24.5, not 24.49.",
+    "examinerErrors": [
+      "Using the wrong half-unit, such as 0.5 for a measurement given to 1 decimal place.",
+      "Writing the upper bound as 24.49 to avoid the strict inequality.",
+      "Using ⩽ at both ends of the interval.",
+      "Pairing upper with upper for a division, which does not give the maximum.",
+      "Treating truncation as rounding, or the other way round.",
+      "Assuming the interval after a calculation is symmetric about the nominal answer.",
+      "Giving an answer to more figures than the bounds support.",
+      "Stating a suitable accuracy without the justifying sentence."
+    ],
+    "grade9Looks": "A top answer writes both bounds with the correct symbols before touching the calculation, and chooses the pairing by asking what makes the answer large rather than by recalling a rule — which is why it never gets a division the wrong way round. It knows the interval after a multiplication is not centred on the nominal value, and says so if the question invites it. Asked for a sensible accuracy, it compares the bounds digit by digit and writes the justification as a sentence, recognising that the point of the whole exercise is to know how much of the calculator display is real."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

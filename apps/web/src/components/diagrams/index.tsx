@@ -36,6 +36,7 @@ import { RayDiagram } from './RayDiagram.tsx'
 import { ReactionProfile } from './ReactionProfile.tsx'
 import { InequalityLine } from './InequalityLine.tsx'
 import { InequalityRegion } from './InequalityRegion.tsx'
+import { VectorFigure } from './VectorFigure.tsx'
 import { Cuboid } from './Cuboid.tsx'
 
 /**
@@ -49,6 +50,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'reaction-profile': ReactionProfile,
   'inequality-line': InequalityLine,
   'inequality-region': InequalityRegion,
+  'vector-figure': VectorFigure,
   'cuboid': Cuboid,
   'index-ladder': IndexLadder,
   'root-number-line': RootNumberLine,
