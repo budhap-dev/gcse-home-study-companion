@@ -1,0 +1,1375 @@
+{
+  "id": "vector-arithmetic",
+  "subjectId": "maths",
+  "unitId": "geometry-and-measures",
+  "title": "Vector arithmetic",
+  "specPoints": [
+    "G24",
+    "G25"
+  ],
+  "order": 4,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Tops with tops, bottoms with bottoms",
+      "body": "Adding and subtracting column vectors never mixes the two rows. $\\binom{3}{1} + \\binom{1}{4} = \\binom{4}{5}$. A scalar multiplies **both** rows. Nothing ever crosses over."
+    },
+    {
+      "kind": "spot",
+      "title": "The middle letter cancels",
+      "body": "$\\overrightarrow{AB} + \\overrightarrow{BC} = \\overrightarrow{AC}$: go A to B to C and you have gone A to C. And reversing negates, so $\\overrightarrow{BA} = -\\overrightarrow{AB}$. Nearly every diagram question is built from those two facts."
+    },
+    {
+      "kind": "shortcut",
+      "title": "AB is b minus a",
+      "body": "With $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$, the vector $\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$ — undo a, then do b. The midpoint of AB is then $\\tfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$, the average. Both are worth knowing by heart."
+    },
+    {
+      "kind": "check",
+      "title": "Say the word parallel",
+      "body": "Showing $\\overrightarrow{PQ} = 2\\overrightarrow{RS}$ earns the working mark; **therefore PQ is parallel to RS** earns the conclusion mark. Examiners report the missing sentence as the commonest loss in vector questions. Factorise first, so the multiple is visible."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What a vector is",
+        "body": "A **vector** has both a **size** and a **direction**. A number alone — a **scalar** — has only size.\n\nWritten as a **column vector**, the top number is the movement **across** and the bottom number the movement **up**:\n\n$$\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$$\n\nmeans 3 to the right and 1 up. Negative numbers mean left and down.\n\nTwo vectors are **equal** if they have the same size **and** the same direction. That means a vector can be drawn anywhere on the page: it is the movement that matters, not where it starts. Two arrows of the same length pointing the same way represent the **same vector**, even if they are drawn in different places.\n\nNotation you need to read:\n\n- **bold a**, or $\\underline{a}$ when written by hand\n- $\\overrightarrow{AB}$ — the vector **from A to B**\n\nThe arrow direction matters: $\\overrightarrow{BA}$ is the same length but points the opposite way, so $\\overrightarrow{BA} = -\\overrightarrow{AB}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Notation",
+                "Meaning"
+              ],
+              "rows": [
+                [
+                  "a in bold",
+                  "a vector, written in print"
+                ],
+                [
+                  "a underlined",
+                  "the same vector, written by hand"
+                ],
+                [
+                  "AB with an arrow over it",
+                  "the vector from A to B"
+                ],
+                [
+                  "BA with an arrow over it",
+                  "the opposite vector, equal to −AB"
+                ],
+                [
+                  "top number of a column",
+                  "movement across"
+                ],
+                [
+                  "bottom number",
+                  "movement up"
+                ]
+              ],
+              "title": "Same size and direction means the same vector, wherever it is drawn"
+            },
+            "alt": "A table of vector notation and what each form means"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What does the top number of a column vector represent?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "column vectors",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The **top** number is the movement **across** and the bottom number the movement **up**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "movement across"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Movement across",
+            "Movement up",
+            "The magnitude",
+            "The angle"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Adding and subtracting",
+        "body": "Adding column vectors is done **separately, top and bottom**. Nothing crosses over.\n\n$$\\mathbf{a} + \\mathbf{b} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix} + \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 5 \\end{pmatrix}$$\n\nSubtracting works the same way, and it helps to think of it as **adding the negative**:\n\n$$\\mathbf{a} - \\mathbf{b} = \\mathbf{a} + (-\\mathbf{b}) = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix} + \\begin{pmatrix} -1 \\\\ -4 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix}$$",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Work out $\\mathbf{a} + \\mathbf{b}$ and $\\mathbf{a} - \\mathbf{b}$ for $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$",
+            "steps": [
+              {
+                "text": "**Adding**: tops together, $3 + 1 = 4$",
+                "note": "the two parts never mix"
+              },
+              {
+                "text": "Bottoms together, $1 + 4 = 5$",
+                "note": "so $\\mathbf{a} + \\mathbf{b} = \\begin{pmatrix} 4 \\\\ 5 \\end{pmatrix}$"
+              },
+              {
+                "text": "**Subtracting**: tops, $3 - 1 = 2$",
+                "note": "watch the signs"
+              },
+              {
+                "text": "Bottoms, $1 - 4 = -3$",
+                "note": "which is negative here"
+              },
+              {
+                "text": "So $\\mathbf{a} - \\mathbf{b} = \\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix}$",
+                "note": "and the negative bottom means the movement is downwards"
+              },
+              {
+                "text": "Check: $\\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix} + \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ ✓",
+                "note": "adding b back gets you to a"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "vector-triangle",
+            "alt": "A vector diagram showing vector a of 3 across and 1 up followed by vector b of 1 across and 4 up, with the resultant from start to finish",
+            "props": {
+              "vectors": [
+                {
+                  "x": 3,
+                  "y": 1,
+                  "label": "a"
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "label": "b"
+                }
+              ],
+              "resultant": true,
+              "unit": ""
+            }
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "Work out $\\mathbf{a} + \\mathbf{b}$ where $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$. Give your answer as two numbers separated by a comma, top then bottom.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "column vectors",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Add the tops and the bottoms separately: $3 + 1 = 4$ and $1 + 4 = 5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4, 5"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "4, 5",
+            "4,5",
+            "(4, 5)",
+            "(4,5)"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Multiplying by a scalar",
+        "body": "Multiplying a vector by a **scalar** — an ordinary number — multiplies **both** parts:\n\n$$2\\mathbf{a} = 2\\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 6 \\\\ 2 \\end{pmatrix}$$\n\nWhat that does geometrically is the important part.\n\n- The vector becomes **$k$ times as long**.\n- Its **direction is unchanged** if $k$ is positive.\n- Its direction is **reversed** if $k$ is negative.\n\nSo $2\\mathbf{a}$ is twice as long and points the same way; $-\\mathbf{a}$ is the same length and points the opposite way.\n\n**Any scalar multiple of a vector is parallel to it.** That single fact does most of the work in vector geometry, because showing two vectors are multiples of each other proves the lines are parallel.\n\nThe **magnitude** — the length — is found with Pythagoras:\n\n$$\\left| \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix} \\right| = \\sqrt{3^2 + 4^2} = 5$$\n\nand doubling the vector doubles the magnitude.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Multiple",
+                "Length",
+                "Direction"
+              ],
+              "rows": [
+                [
+                  "2a",
+                  "twice as long",
+                  "the same"
+                ],
+                [
+                  "3a",
+                  "three times as long",
+                  "the same"
+                ],
+                [
+                  "½a",
+                  "half as long",
+                  "the same"
+                ],
+                [
+                  "−a",
+                  "the same length",
+                  "reversed"
+                ],
+                [
+                  "−2a",
+                  "twice as long",
+                  "reversed"
+                ]
+              ],
+              "title": "Any multiple is parallel to the original"
+            },
+            "alt": "A table of what multiplying a vector by different scalars does to its length and direction"
+          },
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Magnitude",
+                  "equation": "|v| = √(x² + y²)",
+                  "units": "the length of the vector"
+                }
+              ]
+            },
+            "alt": "An equation card for the magnitude of a column vector, found using Pythagoras"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "Work out $2\\mathbf{a}$ where $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$. Give two numbers separated by a comma, top then bottom.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "scalar multiples",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Multiply **both** parts by 2: $2 \\times 3 = 6$ and $2 \\times 1 = 2$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6, 2"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "6, 2",
+            "6,2",
+            "(6, 2)",
+            "(6,2)"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Vectors on a diagram",
+        "body": "On a diagram, $\\overrightarrow{AB}$ means the journey **from A to B**. Journeys join up:\n\n$$\\overrightarrow{AB} + \\overrightarrow{BC} = \\overrightarrow{AC}$$\n\nGo from A to B, then from B to C, and you have gone from A to C. The **B in the middle cancels**, which is the single most useful pattern in the whole topic.\n\nTwo consequences worth having ready.\n\n- **Reversing** a journey negates the vector: $\\overrightarrow{BA} = -\\overrightarrow{AB}$.\n- To get from B to C **via A**, go backwards then forwards: $\\overrightarrow{BC} = \\overrightarrow{BA} + \\overrightarrow{AC} = -\\overrightarrow{AB} + \\overrightarrow{AC}$.\n\nThat second one is how most diagram questions are solved: you are given two vectors from a common point and asked for the one joining their ends.\n\nA journey that returns to where it started is the **zero vector**: going all the way round a triangle gives $\\mathbf{0}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Journey",
+                "Vector",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "A to B then B to C",
+                  "AC",
+                  "the middle letter cancels"
+                ],
+                [
+                  "B to A",
+                  "−AB",
+                  "the reverse of the journey"
+                ],
+                [
+                  "B to C via A",
+                  "−AB + AC",
+                  "backwards then forwards"
+                ],
+                [
+                  "all the way round a triangle",
+                  "0",
+                  "you end where you started"
+                ]
+              ],
+              "title": "The middle letter cancels"
+            },
+            "alt": "A table of journeys between points and the vector each one gives"
+          },
+          {
+            "type": "worked-example",
+            "problem": "On a diagram $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. Find $\\overrightarrow{AB}$",
+            "steps": [
+              {
+                "text": "You need the journey from A to B",
+                "note": "read the arrow direction"
+              },
+              {
+                "text": "There is no direct route given, so go via O",
+                "note": "the only point both connect to"
+              },
+              {
+                "text": "$\\overrightarrow{AB} = \\overrightarrow{AO} + \\overrightarrow{OB}$",
+                "note": "the middle letter O will cancel"
+              },
+              {
+                "text": "$\\overrightarrow{AO} = -\\mathbf{a}$, because it reverses $\\overrightarrow{OA}$",
+                "note": "reversing negates"
+              },
+              {
+                "text": "So $\\overrightarrow{AB} = -\\mathbf{a} + \\mathbf{b} = \\mathbf{b} - \\mathbf{a}$",
+                "note": "the standard result, worth remembering"
+              },
+              {
+                "text": "Sense check: going from A to B should undo a and then do b",
+                "note": "which is exactly what it says"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "On a diagram $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. What is $\\overrightarrow{AB}$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "vectors on a diagram",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\overrightarrow{AB} = \\overrightarrow{AO} + \\overrightarrow{OB} = -\\mathbf{a} + \\mathbf{b} = \\mathbf{b} - \\mathbf{a}$. Going from A means **undoing** a first.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "b − a"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "b − a",
+            "a − b",
+            "a + b",
+            "−a − b"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Midpoints and fractions of a line",
+        "body": "Questions often mark a point part of the way along a line. The method is always the same: get to the start of the line, then go a fraction of the way along it.\n\nIf M is the **midpoint** of AB, then\n\n$$\\overrightarrow{AM} = \\tfrac{1}{2}\\overrightarrow{AB}$$\n\nand to reach M from O you go to A first, then half of AB.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "$\\overrightarrow{OA} = \\mathbf{a}$, $\\overrightarrow{OB} = \\mathbf{b}$, and M is the midpoint of AB. Find $\\overrightarrow{OM}$",
+            "steps": [
+              {
+                "text": "Journey: O to A, then A to M",
+                "note": "build it out of journeys you know"
+              },
+              {
+                "text": "$\\overrightarrow{OM} = \\mathbf{a} + \\overrightarrow{AM}$",
+                "note": "the first leg is given"
+              },
+              {
+                "text": "$\\overrightarrow{AM} = \\tfrac{1}{2}\\overrightarrow{AB} = \\tfrac{1}{2}(\\mathbf{b} - \\mathbf{a})$",
+                "note": "half of the vector from the last step"
+              },
+              {
+                "text": "$\\overrightarrow{OM} = \\mathbf{a} + \\tfrac{1}{2}\\mathbf{b} - \\tfrac{1}{2}\\mathbf{a}$",
+                "note": "expand the bracket"
+              },
+              {
+                "text": "$= \\tfrac{1}{2}\\mathbf{a} + \\tfrac{1}{2}\\mathbf{b} = \\tfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$",
+                "note": "collect the terms"
+              },
+              {
+                "text": "The midpoint is the **average** of the two vectors, which is worth remembering",
+                "note": "and a good check on the algebra"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Point",
+                "Where it is",
+                "OP"
+              ],
+              "rows": [
+                [
+                  "M",
+                  "midpoint of AB",
+                  "½(a + b)"
+                ],
+                [
+                  "P",
+                  "⅓ of the way from A to B",
+                  "a + ⅓(b − a)"
+                ],
+                [
+                  "Q",
+                  "¾ of the way from A to B",
+                  "a + ¾(b − a)"
+                ]
+              ],
+              "title": "Get to A first, then go a fraction along AB"
+            },
+            "alt": "A table of points along a line AB and the vector reaching each from O"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "M is the midpoint of AB, with $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. What is $\\overrightarrow{OM}$?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "vectors on a diagram",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\overrightarrow{OM} = \\mathbf{a} + \\tfrac{1}{2}(\\mathbf{b} - \\mathbf{a}) = \\tfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$ — the **average** of the two.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "½(a + b)"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "options": [
+            "½(a + b)",
+            "½(b − a)",
+            "a + b",
+            "½a + b"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.** With $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$, work out:\n\n1. $\\mathbf{a} + \\mathbf{b}$\n2. $\\mathbf{a} - \\mathbf{b}$\n3. $3\\mathbf{a}$\n4. $2\\mathbf{a} + \\mathbf{b}$\n\n**Part B.**\n\n5. Find $|\\mathbf{a}|$, the magnitude of $\\mathbf{a}$, leaving your answer as a surd.\n6. Explain why $6\\mathbf{a}$ is parallel to $\\mathbf{a}$.\n\n**Part C.** On a diagram, $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$.\n\n7. Write $\\overrightarrow{AB}$ in terms of $\\mathbf{a}$ and $\\mathbf{b}$.\n8. N is the point one third of the way from A to B. Write $\\overrightarrow{ON}$ in terms of $\\mathbf{a}$ and $\\mathbf{b}$, simplifying your answer.\n\nFor question 8, get to A first and then go one third of the way along AB.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Top",
+                "Bottom"
+              ],
+              "rows": [
+                [
+                  "a + b",
+                  "",
+                  ""
+                ],
+                [
+                  "a − b",
+                  "",
+                  ""
+                ],
+                [
+                  "3a",
+                  "",
+                  ""
+                ],
+                [
+                  "2a + b",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Tops with tops, bottoms with bottoms"
+            },
+            "alt": "A blank table for the vector arithmetic, with a column for the top and bottom of each answer"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "Work out $2\\mathbf{a} + \\mathbf{b}$ where $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$. Give two numbers separated by a comma.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "column vectors",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$2\\mathbf{a} = \\begin{pmatrix} 6 \\\\ 2 \\end{pmatrix}$, then add $\\mathbf{b}$: $6 + 1 = 7$ and $2 + 4 = 6$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7, 6"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "7, 6",
+            "7,6",
+            "(7, 6)",
+            "(7,6)"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: parallel, and proving it",
+        "body": "**Parallel means scalar multiple.** Two vectors are parallel exactly when one is a number times the other. $6\\mathbf{a}$ is parallel to $\\mathbf{a}$; so is $-\\tfrac{1}{2}\\mathbf{a}$, pointing the other way.\n\nThat is the whole of what a vector proof needs. To show two lines are parallel, get a vector for each and show one is a multiple of the other.\n\n> If $\\overrightarrow{PQ} = 2\\mathbf{a} + 4\\mathbf{b}$ and $\\overrightarrow{RS} = \\mathbf{a} + 2\\mathbf{b}$, then $\\overrightarrow{PQ} = 2\\overrightarrow{RS}$, so **PQ is parallel to RS**, and twice as long.\n\n**The sentence matters.** Writing $\\overrightarrow{PQ} = 2\\overrightarrow{RS}$ and stopping earns the working mark but not the conclusion. You must say *therefore PQ is parallel to RS*. Examiners report this as the commonest lost mark in vector questions.\n\n**Collinear points.** If $\\overrightarrow{AB}$ and $\\overrightarrow{BC}$ are multiples of each other, then A, B and C lie on a **straight line** — because the two parts of the journey point the same way and they share the point B. The word for that is **collinear**, and questions ask you to prove it.\n\n**A caution.** $\\mathbf{a} + \\mathbf{b}$ is **not** parallel to $\\mathbf{a}$, and it is not longer than $|\\mathbf{a}| + |\\mathbf{b}|$ either unless the two point the same way. Vectors do not add like lengths: $\\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ has magnitude $\\sqrt{10}$ and $\\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$ has $\\sqrt{17}$, but their sum $\\begin{pmatrix} 4 \\\\ 5 \\end{pmatrix}$ has magnitude $\\sqrt{41}$, which is less than $\\sqrt{10} + \\sqrt{17}$.\n\n**Simplify before concluding.** A vector answer like $\\tfrac{2}{3}\\mathbf{a} + \\tfrac{4}{3}\\mathbf{b}$ hides the factor. Written as $\\tfrac{2}{3}(\\mathbf{a} + 2\\mathbf{b})$ the multiple is visible, and the parallel conclusion becomes obvious.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "What to write"
+              ],
+              "rows": [
+                [
+                  "find each vector",
+                  "in terms of a and b"
+                ],
+                [
+                  "factorise",
+                  "so the common factor is visible"
+                ],
+                [
+                  "state the multiple",
+                  "PQ = 2 RS"
+                ],
+                [
+                  "draw the conclusion",
+                  "therefore PQ is parallel to RS"
+                ],
+                [
+                  "for collinear points",
+                  "and they share a common point, so A, B, C lie on a line"
+                ]
+              ],
+              "title": "The conclusion sentence is a separate mark"
+            },
+            "alt": "A table of what a vector proof must contain, and the mark most often lost"
+          },
+          {
+            "type": "worked-example",
+            "problem": "$\\overrightarrow{PQ} = 2\\mathbf{a} + 4\\mathbf{b}$ and $\\overrightarrow{RS} = \\mathbf{a} + 2\\mathbf{b}$. Show PQ is parallel to RS",
+            "steps": [
+              {
+                "text": "Look for a common factor in $\\overrightarrow{PQ}$",
+                "note": "this is the whole method"
+              },
+              {
+                "text": "$2\\mathbf{a} + 4\\mathbf{b} = 2(\\mathbf{a} + 2\\mathbf{b})$",
+                "note": "factorise it out"
+              },
+              {
+                "text": "$\\mathbf{a} + 2\\mathbf{b}$ is exactly $\\overrightarrow{RS}$",
+                "note": "so the factor is 2"
+              },
+              {
+                "text": "$\\overrightarrow{PQ} = 2\\overrightarrow{RS}$",
+                "note": "state the multiple"
+              },
+              {
+                "text": "**Therefore PQ is parallel to RS**, and twice as long",
+                "note": "the sentence that earns the final mark"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "You have shown that $\\overrightarrow{PQ} = 2\\overrightarrow{RS}$. What must you write next?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "vector proof",
+          "calculator": "either",
+          "tags": [],
+          "solution": "One vector being a **scalar multiple** of another means the lines are **parallel** — but you have to **say so**. The conclusion is a separate mark from the working.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "therefore they are parallel"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "Therefore PQ is parallel to RS",
+            "Therefore PQ equals RS",
+            "Therefore PQRS is a square",
+            "Nothing; the working is enough"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **vector** has size and direction; a **scalar** has size only.\n- In a **column vector**, the top number is across and the bottom is up.\n- Two vectors are **equal** if they have the same size and direction, wherever they are drawn.\n- **Add and subtract** separately, tops with tops and bottoms with bottoms.\n- Subtracting is **adding the negative**.\n- A **scalar multiple** makes a vector $k$ times as long, **reversing** it if $k$ is negative.\n- **Any scalar multiple is parallel** to the original.\n- **Magnitude**: $|\\mathbf{v}| = \\sqrt{x^2 + y^2}$, by Pythagoras.\n- $\\overrightarrow{AB} + \\overrightarrow{BC} = \\overrightarrow{AC}$: the **middle letter cancels**.\n- $\\overrightarrow{BA} = -\\overrightarrow{AB}$.\n- With $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$: $\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$, and the **midpoint** of AB is $\\tfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$.\n- To prove lines **parallel**, show one vector is a multiple of the other — then **write the conclusion**.\n- **Factorise** a vector answer so the common factor is visible.\n- Vectors do **not** add like lengths: $|\\mathbf{a} + \\mathbf{b}|$ is usually less than $|\\mathbf{a}| + |\\mathbf{b}|$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "A vector",
+                  "size and direction; a scalar has size only"
+                ],
+                [
+                  "Column vector",
+                  "top across, bottom up"
+                ],
+                [
+                  "Equal vectors",
+                  "same size and direction, drawn anywhere"
+                ],
+                [
+                  "Adding",
+                  "tops with tops, bottoms with bottoms"
+                ],
+                [
+                  "Subtracting",
+                  "add the negative"
+                ],
+                [
+                  "Scalar multiple",
+                  "k times as long; reversed if k is negative"
+                ],
+                [
+                  "Parallel",
+                  "exactly when one is a multiple of the other"
+                ],
+                [
+                  "Magnitude",
+                  "√(x² + y²)"
+                ],
+                [
+                  "Journeys",
+                  "AB + BC = AC, the middle letter cancelling"
+                ],
+                [
+                  "Reversing",
+                  "BA = −AB"
+                ],
+                [
+                  "AB from O",
+                  "b − a"
+                ],
+                [
+                  "Midpoint of AB",
+                  "½(a + b)"
+                ],
+                [
+                  "To prove parallel",
+                  "show the multiple, then say they are parallel"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of vector arithmetic covering notation, the operations, journeys on a diagram and proofs"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What does the top number of a column vector represent?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "column vectors",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **top** number is movement **across**; the bottom is movement up.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "movement across"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Movement across",
+        "Movement up",
+        "The length",
+        "The angle"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "Work out $\\mathbf{a} + \\mathbf{b}$ where $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$. Give two numbers separated by a comma.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "column vectors",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3 + 1 = 4$ and $1 + 4 = 5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4, 5"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "4, 5",
+        "4,5",
+        "(4, 5)",
+        "(4,5)"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What is the difference between a vector and a scalar?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "column vectors",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **vector** has both **size and direction**; a **scalar** is just a number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a vector has direction"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A vector has direction as well as size",
+        "A scalar has direction as well as size",
+        "A vector is always longer",
+        "There is no difference"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "Work out $2\\mathbf{a}$ where $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$. Give two numbers separated by a comma.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "scalar multiples",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply both parts by 2.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6, 2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "6, 2",
+        "6,2",
+        "(6, 2)",
+        "(6,2)"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Work out $\\mathbf{a} - \\mathbf{b}$ where $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$. Give two numbers separated by a comma.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "column vectors",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3 - 1 = 2$ and $1 - 4 = -3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2, -3"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "2, -3",
+        "2,-3",
+        "(2, -3)",
+        "(2,-3)",
+        "2, −3"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "What does multiplying a vector by −1 do?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "scalar multiples",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A negative scalar **reverses** the direction; a multiplier of 1 in size leaves the **length** unchanged.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "reverses the direction"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Keeps its length and reverses its direction",
+        "Halves it",
+        "Makes it zero",
+        "Doubles it"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "What is the magnitude of the vector with top 3 and bottom 4?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "magnitude",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\sqrt{3^2 + 4^2} = \\sqrt{25} = 5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses Pythagoras"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0.05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "$\\overrightarrow{AB} + \\overrightarrow{BC}$ equals what?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "vectors on a diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The journeys join and the **middle letter cancels**: $\\overrightarrow{AC}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "AC"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "AC",
+        "AB",
+        "BC",
+        "0"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "On a diagram $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. What is $\\overrightarrow{AB}$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "vectors on a diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{AB} = -\\mathbf{a} + \\mathbf{b} = \\mathbf{b} - \\mathbf{a}$: undo a, then do b.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "b − a"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "b − a",
+        "a − b",
+        "a + b",
+        "−a − b"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "When are two vectors parallel?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "vector proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Parallel** means one is a number times the other, whatever that number is.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one is a multiple of the other"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "When one is a scalar multiple of the other",
+        "When they have the same magnitude",
+        "When they add to zero",
+        "When both are positive"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "Work out $2\\mathbf{a} + \\mathbf{b}$ where $\\mathbf{a} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}$. Give two numbers separated by a comma.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "column vectors",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2\\mathbf{a}$ is $(6, 2)$, then add $(1, 4)$ to get $(7, 6)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7, 6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "7, 6",
+        "7,6",
+        "(7, 6)",
+        "(7,6)"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "M is the midpoint of AB, with $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. What is $\\overrightarrow{OM}$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "vectors on a diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\mathbf{a} + \\tfrac{1}{2}(\\mathbf{b} - \\mathbf{a}) = \\tfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$: the average of the two.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "½(a + b)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "½(a + b)",
+        "½(b − a)",
+        "a + b",
+        "½a + b"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "You have shown $\\overrightarrow{PQ} = 2\\overrightarrow{RS}$. What must you write next?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "vector proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The multiple shows they are **parallel**, but the conclusion is a **separate mark**. Examiners report this as the commonest omission.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "therefore parallel"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Therefore PQ is parallel to RS",
+        "Therefore PQ equals RS",
+        "Therefore PQRS is a rectangle",
+        "Nothing more is needed"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why is $\\tfrac{2}{3}\\mathbf{a} + \\tfrac{4}{3}\\mathbf{b}$ best written as $\\tfrac{2}{3}(\\mathbf{a} + 2\\mathbf{b})$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "vector proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Factorising exposes the **scalar multiple**, which is exactly what a parallel or collinear argument needs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it makes the factor visible"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It makes the common factor visible",
+        "It is a shorter thing to write down",
+        "Fractions must always be factorised",
+        "It changes the vector into another one"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "What does it mean for three points to be collinear?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "vector proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Collinear** means on a **straight line**. Showing $\\overrightarrow{AB}$ and $\\overrightarrow{BC}$ are multiples, with B in common, proves it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "they lie on a straight line"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "They lie on a straight line",
+        "They form a triangle",
+        "They are equally spaced",
+        "They are all the same point"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Is $|\\mathbf{a} + \\mathbf{b}|$ the same as $|\\mathbf{a}| + |\\mathbf{b}|$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "magnitude",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Vectors do not add like lengths. $(3,1)$ and $(1,4)$ have magnitudes $\\sqrt{10}$ and $\\sqrt{17}$, but their sum $(4,5)$ has $\\sqrt{41}$, which is **less** than the total.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no, unless they are in the same direction"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "No, unless they point the same way",
+        "Yes, always",
+        "No, it is always larger",
+        "Yes, for column vectors"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "On a diagram, $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. N is the point one third of the way from A to B. Find $\\overrightarrow{ON}$ in terms of $\\mathbf{a}$ and $\\mathbf{b}$, simplifying your answer.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "vectors on a diagram",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To reach N from O, first travel from O to A, which is the vector a, and then travel one third of the way along AB. The vector from A to B is found by going backwards along OA and then forwards along OB, which gives minus a plus b, or b minus a. One third of that is one third of b minus a. So the vector ON is a plus one third of b minus a. Expanding the bracket gives a plus one third b minus one third a. Collecting the a terms gives two thirds a plus one third b. This can be written more neatly as one third of the quantity two a plus b, which shows the structure of the answer clearly.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "writes ON as OA plus a fraction of AB"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds AB as b − a"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "takes one third of AB"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "reaches ⅔a + ⅓b"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "simplifies to ⅓(2a + b)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Writes ON as OA plus a fraction of AB",
+          "marks": 1
+        },
+        {
+          "text": "Finds AB as b − a",
+          "marks": 1
+        },
+        {
+          "text": "Takes one third of AB",
+          "marks": 1
+        },
+        {
+          "text": "Reaches ⅔a + ⅓b",
+          "marks": 1
+        },
+        {
+          "text": "Simplifies to ⅓(2a + b)",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The journey.** O to A, then one third of the way from A to B:\n\n$$\\overrightarrow{ON} = \\mathbf{a} + \\tfrac{1}{3}\\overrightarrow{AB}$$\n\n**Finding AB.** Undo a, then do b:\n\n$$\\overrightarrow{AB} = -\\mathbf{a} + \\mathbf{b} = \\mathbf{b} - \\mathbf{a}$$\n\n**Substituting and simplifying.**\n\n$$\\overrightarrow{ON} = \\mathbf{a} + \\tfrac{1}{3}(\\mathbf{b} - \\mathbf{a}) = \\mathbf{a} + \\tfrac{1}{3}\\mathbf{b} - \\tfrac{1}{3}\\mathbf{a} = \\tfrac{2}{3}\\mathbf{a} + \\tfrac{1}{3}\\mathbf{b}$$\n\n$$= \\tfrac{1}{3}(2\\mathbf{a} + \\mathbf{b})$$\n\nFactorising at the end is worth doing: it makes any scalar multiple visible, which is what a later parallel or collinear part would need."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "$\\overrightarrow{PQ} = 4\\mathbf{a} + 6\\mathbf{b}$ and $\\overrightarrow{RS} = 2\\mathbf{a} + 3\\mathbf{b}$. Show that PQ is parallel to RS, and state how their lengths compare.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "vector proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Look for a common factor in the vector PQ. Four a plus six b can be written as two times the quantity two a plus three b, because two is a factor of both four and six. The expression inside the bracket, two a plus three b, is exactly the vector RS. Therefore the vector PQ is equal to two times the vector RS. Since one vector is a scalar multiple of the other, the two lines PQ and RS are parallel. Because the scalar is two, the line PQ is also twice as long as the line RS. It is important to state the conclusion about being parallel explicitly, since showing the multiple alone does not answer the question that was asked.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises PQ as 2(2a + 3b)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "identifies the bracket as RS, so PQ = 2 RS"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states that PQ is parallel to RS because one is a scalar multiple of the other"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states that PQ is twice as long as RS"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Factorises PQ to expose the common factor",
+          "marks": 1
+        },
+        {
+          "text": "States that PQ = 2 RS",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that PQ is parallel to RS, giving the reason",
+          "marks": 1
+        },
+        {
+          "text": "States that PQ is twice the length of RS",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Factorise.** Two divides both 4 and 6:\n\n$$\\overrightarrow{PQ} = 4\\mathbf{a} + 6\\mathbf{b} = 2(2\\mathbf{a} + 3\\mathbf{b})$$\n\n**Recognise the bracket.** $2\\mathbf{a} + 3\\mathbf{b}$ is exactly $\\overrightarrow{RS}$, so\n\n$$\\overrightarrow{PQ} = 2\\overrightarrow{RS}$$\n\n**Conclude — and this is a separate mark.** One vector is a **scalar multiple** of the other, **therefore PQ is parallel to RS**.\n\n**Lengths.** The scalar is 2, so **PQ is twice as long as RS**.\n\nShowing the multiple without writing the parallel conclusion is the commonest lost mark in vector questions."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "For column vectors, work the two rows separately and keep the signs visible.\n\nOn a diagram, build every answer out of journeys you have been given, choosing a route where the middle letters cancel.\n\nWrite $\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$ down as soon as you see O, A and B. Most parts build on it.\n\nFor a point part of the way along a line, get to the start of the line first, then take the fraction of the whole vector.\n\n**Factorise your answer.** A common factor is what a parallel or collinear argument needs, and it is invisible until you take it out.\n\nAnd when you have shown a scalar multiple, write the sentence: *therefore the lines are parallel*. The working alone does not answer the question.",
+    "examinerErrors": [
+      "Mixing the rows when adding column vectors.",
+      "Writing $\\overrightarrow{AB}$ as $\\mathbf{a} - \\mathbf{b}$ instead of $\\mathbf{b} - \\mathbf{a}$.",
+      "Forgetting that reversing a journey negates the vector.",
+      "Taking a fraction of the wrong vector for a point along a line.",
+      "Leaving an answer unfactorised, so the scalar multiple stays hidden.",
+      "Showing the multiple but never writing the word parallel.",
+      "Treating $|\\mathbf{a} + \\mathbf{b}|$ as $|\\mathbf{a}| + |\\mathbf{b}|$.",
+      "Using a scalar where a vector belongs, or the reverse."
+    ],
+    "grade9Looks": "A top answer writes $\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$ before it is asked for, because almost every later part depends on it, and it builds each new vector as a journey rather than guessing at a combination. It factorises the final expression as a matter of habit, which turns a messy answer into visible evidence of a scalar multiple. And it finishes a proof with the conclusion in words — parallel, or collinear with a shared point — knowing that the algebra is the working and the sentence is the answer."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

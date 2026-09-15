@@ -1,0 +1,1493 @@
+{
+  "id": "surface-areas-and-volumes",
+  "subjectId": "maths",
+  "unitId": "geometry-and-measures",
+  "title": "Surface areas and volumes",
+  "specPoints": [
+    "G16",
+    "G17"
+  ],
+  "order": 3,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "A prism is cross-section times length",
+      "body": "One formula covers cuboids, triangular prisms and cylinders: work out the **area of the cross-section**, then multiply by the length. Write the cross-section on its own line — that is where the marks are lost, not in the multiplication."
+    },
+    {
+      "kind": "spot",
+      "title": "The cone has two different heights",
+      "body": "**h** is the vertical height and **l** the slant height, joined by $l^2 = r^2 + h^2$. The **volume** uses $h$; the **curved surface** uses $l$. Putting $l$ into the volume is the error these questions are built to catch."
+    },
+    {
+      "kind": "check",
+      "title": "Radius or diameter?",
+      "body": "Circle the word *diameter* and halve it before anything else. Because a sphere's volume uses $r^3$, using a diameter makes the answer $2^3 = \\mathbf{8}$ times too big — a recognisable size of error if you check."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Joining faces vanish",
+      "body": "For a composite solid, **add** the volumes but **leave out** the faces where the parts meet — they are inside. A hemisphere on a cylinder contributes its curved surface, $2\\pi r^2$, and no flat circle at all."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Prisms: one formula for all of them",
+        "body": "A **prism** is a solid with the same **cross-section** all the way through. A cuboid is a prism, so is a triangular prism, and so is a **cylinder** — its cross-section is a circle.\n\nThat gives one formula covering all of them:\n\n$$\\text{volume} = \\text{area of cross-section} \\times \\text{length}$$\n\nSo for a cylinder, the cross-section is a circle of area $\\pi r^2$, and the volume is\n\n$$V = \\pi r^2 h$$\n\nA cylinder of radius $5$ cm and height $12$ cm has volume $\\pi \\times 5^2 \\times 12 = 300\\pi \\approx 942.5$ cm³.\n\n**Work out the cross-section first, as its own line.** Most lost marks here are not in the formula but in rushing the area of an awkward cross-section — a trapezium, say — and then multiplying a wrong number by the length.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Any prism",
+                  "equation": "V = area of cross-section × length",
+                  "units": "cm³"
+                },
+                {
+                  "name": "Cylinder",
+                  "equation": "V = π r² h",
+                  "units": "cm³"
+                }
+              ]
+            },
+            "alt": "An equation card for the volume of a prism as the area of its cross-section times its length, and for the volume of a cylinder"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Solid",
+                "Cross-section",
+                "Its area",
+                "Volume"
+              ],
+              "rows": [
+                [
+                  "cuboid",
+                  "rectangle",
+                  "l × w",
+                  "l × w × h"
+                ],
+                [
+                  "triangular prism",
+                  "triangle",
+                  "½ b × h",
+                  "½ b h × length"
+                ],
+                [
+                  "cylinder",
+                  "circle",
+                  "π r²",
+                  "π r² h"
+                ]
+              ],
+              "title": "Find the cross-section first, on its own line"
+            },
+            "alt": "A table of prisms, showing that one formula covers them all once the cross-section is known"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "A cylinder has radius 5 cm and height 12 cm. What is its volume, in cm³ to 1 decimal place?",
+          "marks": 3,
+          "gradeBand": "4-5",
+          "skill": "volume of a prism",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$V = \\pi r^2 h = \\pi \\times 25 \\times 12 = 300\\pi \\approx 942.5$ cm³.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses π r² h"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "substitutes correctly"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "942.5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 942.5,
+          "tolerance": 0.5,
+          "unitsRequired": false,
+          "units": "cm³"
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Surface area: count the faces",
+        "body": "Surface area is the **total area of every face**. There is no single formula: you add up the pieces, which is why it takes longer and why a sketch helps.\n\nFor a **cylinder**, imagine cutting the curved surface and unrolling it. It becomes a **rectangle** whose width is the circumference of the circle and whose height is the height of the cylinder:\n\n$$\\text{curved surface} = 2\\pi r h$$\n\nAdd the two circular ends:\n\n$$\\text{total surface area} = 2\\pi r^2 + 2\\pi r h$$\n\nFor the same $5$ by $12$ cylinder: curved $= 2\\pi(5)(12) = 120\\pi$, ends $= 2\\pi(25) = 50\\pi$, total $= 170\\pi \\approx 534.1$ cm².\n\n**Read whether the question wants the total or just the curved surface.** A tin with no lid has **one** circle, not two. A pipe has **none**. Questions are deliberately set on open solids, and answering for a closed one is the commonest error in this topic.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Curved surface",
+                  "equation": "= 2 π r h",
+                  "units": "cm²"
+                },
+                {
+                  "name": "Total surface",
+                  "equation": "= 2 π r² + 2 π r h",
+                  "units": "cm²"
+                }
+              ]
+            },
+            "alt": "An equation card for the curved surface area and the total surface area of a cylinder"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The solid",
+                "Circular ends",
+                "Surface area"
+              ],
+              "rows": [
+                [
+                  "a closed cylinder",
+                  "2",
+                  "2πr² + 2πrh"
+                ],
+                [
+                  "a tin with no lid",
+                  "1",
+                  "πr² + 2πrh"
+                ],
+                [
+                  "a pipe, open both ends",
+                  "0",
+                  "2πrh"
+                ]
+              ],
+              "title": "Read the question before choosing"
+            },
+            "alt": "A table of how many circular ends to include, depending on what the solid is"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A cylinder has radius 5 cm and height 12 cm. What is its curved surface area, in cm² to 1 decimal place?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "surface area",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Curved surface $= 2\\pi r h = 2\\pi(5)(12) = 120\\pi \\approx 377.0$ cm². The ends are not included.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses 2π r h"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "substitutes"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "377.0"
+            }
+          ],
+          "discriminators": [],
+          "answer": 376.99,
+          "tolerance": 0.5,
+          "unitsRequired": false,
+          "units": "cm²"
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Spheres, cones and pyramids",
+        "body": "These four formulae are **given on the formula sheet** in the exam, but you must know **which to use and what each letter means**.\n\n**Sphere**\n$$V = \\frac{4}{3}\\pi r^3 \\qquad A = 4\\pi r^2$$\n\n**Cone**\n$$V = \\frac{1}{3}\\pi r^2 h \\qquad \\text{curved surface} = \\pi r l$$\n\n**Pyramid**\n$$V = \\frac{1}{3} \\times \\text{base area} \\times \\text{height}$$\n\nThree things decide most marks.\n\n- The **radius, not the diameter.** A sphere of diameter 12 cm has $r = 6$. Using 12 gives an answer eight times too big.\n- In the cone, **$h$ is the vertical height** and **$l$ is the slant height**. They are different lengths, and the volume wants $h$ while the curved surface wants $l$.\n- A cone's volume is exactly **one third** of the cylinder with the same base and height. That is a useful check.\n\nFor a sphere of radius $6$ cm: $V = \\frac{4}{3}\\pi(216) = 288\\pi \\approx 904.8$ cm³.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Sphere",
+                  "equation": "V = 4/3 π r³, A = 4 π r²",
+                  "units": "cm³, cm²"
+                },
+                {
+                  "name": "Cone",
+                  "equation": "V = ⅓ π r² h, curved = π r l",
+                  "units": "cm³, cm²"
+                },
+                {
+                  "name": "Pyramid",
+                  "equation": "V = ⅓ × base area × height",
+                  "units": "cm³"
+                }
+              ]
+            },
+            "alt": "An equation card for the volume and surface area of a sphere, the volume and curved surface of a cone, and the volume of a pyramid"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Letter",
+                "What it is",
+                "Used in"
+              ],
+              "rows": [
+                [
+                  "r",
+                  "radius of the circular base",
+                  "both formulae"
+                ],
+                [
+                  "h",
+                  "vertical height, base to tip",
+                  "the volume"
+                ],
+                [
+                  "l",
+                  "slant height, along the sloping side",
+                  "the curved surface"
+                ]
+              ],
+              "title": "h and l are not the same length"
+            },
+            "alt": "A table of the letters in the cone formulae, showing that h and l are different lengths"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A sphere has radius 6 cm. What is its volume, in cm³ to 1 decimal place?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "volume of a sphere",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$V = \\frac{4}{3}\\pi r^3 = \\frac{4}{3}\\pi(216) = 288\\pi \\approx 904.8$ cm³.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses 4/3 π r³"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "cubes the radius"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "904.8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 904.8,
+          "tolerance": 0.5,
+          "unitsRequired": false,
+          "units": "cm³"
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Finding the slant height first",
+        "body": "A cone question usually gives the **radius and the vertical height**, then asks for the **curved surface area** — which needs the **slant height**. You have to find it with Pythagoras.\n\nThe radius, the vertical height and the slant height form a **right-angled triangle**, with the slant height as the hypotenuse:\n\n$$l^2 = r^2 + h^2$$",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A cone has radius 3 cm and vertical height 4 cm. Find its volume and its curved surface area",
+            "steps": [
+              {
+                "text": "**Volume** uses $h$: $V = \\frac{1}{3}\\pi r^2 h = \\frac{1}{3}\\pi(9)(4) = 12\\pi \\approx 37.7$ cm³",
+                "note": "the vertical height, not the slant"
+              },
+              {
+                "text": "**Slant height**: $l^2 = 3^2 + 4^2 = 9 + 16 = 25$",
+                "note": "Pythagoras on the right-angled triangle"
+              },
+              {
+                "text": "$l = \\sqrt{25} = 5$ cm",
+                "note": "a 3, 4, 5 triangle"
+              },
+              {
+                "text": "**Curved surface** uses $l$: $\\pi r l = \\pi(3)(5) = 15\\pi \\approx 47.1$ cm²",
+                "note": "now the slant height"
+              },
+              {
+                "text": "Check the volume: the cylinder on the same base and height would be $\\pi(9)(4) = 36\\pi$, and a third of that is $12\\pi$ ✓",
+                "note": "the one-third relationship"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Quantity",
+                "Formula",
+                "Which height"
+              ],
+              "rows": [
+                [
+                  "volume",
+                  "⅓ π r² h",
+                  "vertical height h"
+                ],
+                [
+                  "curved surface area",
+                  "π r l",
+                  "slant height l"
+                ],
+                [
+                  "slant height",
+                  "l² = r² + h²",
+                  "found by Pythagoras"
+                ],
+                [
+                  "total surface area",
+                  "π r l + π r²",
+                  "curved plus the base circle"
+                ]
+              ],
+              "title": "Using l in the volume is the classic error"
+            },
+            "alt": "A table of the three lengths in a cone and which formula each belongs to"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A cone has radius 3 cm and vertical height 4 cm. What is its curved surface area, in cm² to 1 decimal place?",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "surface area of a cone",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Slant height $l = \\sqrt{9+16} = 5$ cm, so the curved surface is $\\pi r l = 15\\pi \\approx 47.1$ cm².",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds the slant height by Pythagoras"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses π r l"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "47.1"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 47.1,
+          "tolerance": 0.5,
+          "unitsRequired": false,
+          "units": "cm²"
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Composite solids",
+        "body": "A **composite solid** is made of simpler ones joined together. Work out each part separately and then **add or subtract**.\n\nThe skill is deciding what counts. For **volume**, add the parts. For **surface area**, be careful: the faces where the parts join are **inside** the solid and do not count.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A cylinder of radius 4 cm and height 10 cm has a hemisphere of the same radius on top. Find the total volume",
+            "steps": [
+              {
+                "text": "**Cylinder**: $V = \\pi(16)(10) = 160\\pi$ cm³",
+                "note": "the straightforward part"
+              },
+              {
+                "text": "**Hemisphere**: half a sphere, so $\\frac{1}{2} \\times \\frac{4}{3}\\pi(64) = \\frac{128}{3}\\pi$ cm³",
+                "note": "halve the sphere formula"
+              },
+              {
+                "text": "**Total**: $160\\pi + \\frac{128}{3}\\pi \\approx 636.7$ cm³",
+                "note": "add them"
+              },
+              {
+                "text": "Keep both parts in terms of $\\pi$ until the very end",
+                "note": "rounding twice loses accuracy"
+              },
+              {
+                "text": "For the **surface area** you would not count the circle where they meet: it is inside the solid",
+                "note": "the trap in the surface area version"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Face",
+                "Include it?",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "curved surface of the cylinder",
+                  "yes",
+                  "it is on the outside"
+                ],
+                [
+                  "the bottom circle",
+                  "yes",
+                  "it is on the outside"
+                ],
+                [
+                  "curved surface of the hemisphere",
+                  "yes",
+                  "it is on the outside"
+                ],
+                [
+                  "the circle where they join",
+                  "no",
+                  "it is inside the solid"
+                ]
+              ],
+              "title": "Joining faces disappear"
+            },
+            "alt": "A table of what to include in a composite solid's surface area, using a cylinder with a hemisphere on top"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "A cylinder of radius 4 cm and height 10 cm has a hemisphere of the same radius on top. What is the total volume, in cm³ to 1 decimal place?",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "composite solids",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Cylinder $160\\pi$, hemisphere $\\frac{128}{3}\\pi$, total $\\approx 636.7$ cm³.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds the cylinder's volume"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "halves the sphere formula"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "636.7"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 636.7,
+          "tolerance": 0.5,
+          "unitsRequired": false,
+          "units": "cm³"
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. A cylinder has radius 3 cm and height 8 cm. Find its volume and its total surface area.\n2. A sphere has **diameter** 10 cm. Find its volume. Be careful.\n3. A square-based pyramid has a base of side 6 cm and vertical height 10 cm. Find its volume.\n\n**Part B.**\n\n4. A cone has radius 6 cm and vertical height 8 cm. Find its slant height, then its curved surface area.\n5. Find the same cone's **total** surface area.\n\n**Part C.**\n\n6. A solid is a cylinder of radius 4 cm and height 10 cm with a hemisphere on top. Find its total surface area, saying which faces you included and which you left out.\n\nQuestion 2 is the one to slow down on: the question gives a diameter.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Solid",
+                "Formula",
+                "Substituted",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "cylinder volume",
+                  "",
+                  "",
+                  " "
+                ],
+                [
+                  "sphere volume",
+                  "",
+                  "",
+                  " "
+                ],
+                [
+                  "pyramid volume",
+                  "",
+                  "",
+                  " "
+                ],
+                [
+                  "cone curved surface",
+                  "",
+                  "",
+                  " "
+                ]
+              ],
+              "title": "Write the formula before substituting"
+            },
+            "alt": "A blank table for the calculations, with a column for the formula and one for the value substituted"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "A square-based pyramid has a base of side 6 cm and vertical height 10 cm. What is its volume, in cm³?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "volume of a pyramid",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Base area $= 6 \\times 6 = 36$ cm², so $V = \\frac{1}{3} \\times 36 \\times 10 = 120$ cm³.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds the base area"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses one third of base × height"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "120"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 120,
+          "tolerance": 0.5,
+          "unitsRequired": false,
+          "units": "cm³"
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: the traps and the exact answers",
+        "body": "**Radius, not diameter.** A sphere of diameter 12 cm has $r = 6$. Since the volume uses $r^3$, using 12 gives an answer $2^3 = 8$ times too big. Circle the word *diameter* whenever you see it, and halve it before anything else.\n\n**The cone's two heights.** $h$ is vertical, $l$ is slant. The volume uses $h$; the curved surface uses $l$; and $l^2 = r^2 + h^2$ connects them. Using $l$ in the volume gives an answer that is too big, and it is the error the question is usually designed to catch.\n\n**Leaving answers in terms of $\\pi$.** If a question says *give your answer in terms of $\\pi$*, do not press the $\\pi$ key at all. The answer for that cylinder is $300\\pi$ cm³, and writing $942.5$ scores nothing. Exact answers are also more accurate to carry into a second step, so keep $\\pi$ as long as you can even when the final answer is decimal.\n\n**Surface area of a composite.** The faces where parts join vanish. For a cylinder with a hemisphere on top, the total is\n\n$$\\underbrace{2\\pi r h}_{\\text{curved cylinder}} + \\underbrace{\\pi r^2}_{\\text{base}} + \\underbrace{2\\pi r^2}_{\\text{hemisphere}}$$\n\nNote the hemisphere's curved surface is **half** of $4\\pi r^2$, which is $2\\pi r^2$ — and that there is **no** flat circle on the hemisphere, because it is joined to the cylinder.\n\n**Units.** Lengths in cm give areas in cm² and volumes in cm³. If a question mixes cm and m, convert **first**. And remember that converting volumes is not the same as converting lengths: $1$ m³ is $1\\,000\\,000$ cm³, not $100$.\n\n**A check worth doing.** A cone or pyramid is **one third** of the prism on the same base and height. A hemisphere is **half** a sphere. If your composite answer is bigger than the box that would contain it, something has gone wrong.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "The effect"
+              ],
+              "rows": [
+                [
+                  "using the diameter as the radius",
+                  "volume comes out 8 times too big"
+                ],
+                [
+                  "using the slant height in the volume",
+                  "the answer is too big"
+                ],
+                [
+                  "giving a decimal when π was asked for",
+                  "no marks, however accurate"
+                ],
+                [
+                  "counting the joining face of a composite",
+                  "surface area too big"
+                ],
+                [
+                  "mixing cm and m",
+                  "the answer is out by a factor of 100, 10 000 or 1 000 000"
+                ]
+              ],
+              "title": "Each has a recognisable size of error"
+            },
+            "alt": "A table of the traps in this topic and what each one does to the answer"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A cylinder with a hemisphere on top, radius 4 cm, cylinder height 10 cm. Find the total surface area",
+            "steps": [
+              {
+                "text": "**Curved cylinder**: $2\\pi r h = 2\\pi(4)(10) = 80\\pi$",
+                "note": "the side of the cylinder"
+              },
+              {
+                "text": "**Base circle**: $\\pi r^2 = 16\\pi$",
+                "note": "the bottom, which is on the outside"
+              },
+              {
+                "text": "**Hemisphere**: half of $4\\pi r^2$, so $2\\pi(16) = 32\\pi$",
+                "note": "half the sphere's surface"
+              },
+              {
+                "text": "**The joining circle**: not counted, because it is inside the solid",
+                "note": "the mark this question tests"
+              },
+              {
+                "text": "Total $= 80\\pi + 16\\pi + 32\\pi = 128\\pi \\approx 402.1$ cm²",
+                "note": "added in terms of π, then evaluated once"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "For a cylinder with a hemisphere on top, which face is NOT part of the surface area?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "composite solids",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The **joining circle** is **inside** the solid, so it is not part of its surface. Counting it makes the surface area too big.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the joining circle"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "The circle where the two parts join",
+            "The base of the cylinder",
+            "The curved surface of the cylinder",
+            "The curved surface of the hemisphere"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **prism** has the same cross-section throughout: $V = \\text{cross-section} \\times \\text{length}$.\n- **Cylinder**: $V = \\pi r^2 h$, curved surface $= 2\\pi r h$, total $= 2\\pi r^2 + 2\\pi r h$.\n- **Sphere**: $V = \\frac{4}{3}\\pi r^3$, $A = 4\\pi r^2$.\n- **Cone**: $V = \\frac{1}{3}\\pi r^2 h$, curved surface $= \\pi r l$.\n- **Pyramid**: $V = \\frac{1}{3} \\times \\text{base area} \\times \\text{height}$.\n- In a cone, **$h$ is vertical and $l$ is slant**, connected by $l^2 = r^2 + h^2$.\n- The **volume** uses $h$; the **curved surface** uses $l$.\n- Always check whether you are given the **radius or the diameter**. Using a diameter as a radius makes a volume **8 times** too big.\n- Read whether the solid is **open or closed**: a tin with no lid has one circle, a pipe has none.\n- For a **composite solid**, add the volumes; for surface area, **leave out the joining faces**.\n- A hemisphere's curved surface is $2\\pi r^2$, and it has no flat circle when it is joined to something.\n- If asked for an answer **in terms of $\\pi$**, do not evaluate it.\n- A cone or pyramid is **one third** of the prism on the same base and height.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Any prism",
+                  "V = cross-section × length"
+                ],
+                [
+                  "Cylinder",
+                  "V = π r² h; curved 2π r h; total 2π r² + 2π r h"
+                ],
+                [
+                  "Sphere",
+                  "V = 4/3 π r³; A = 4 π r²"
+                ],
+                [
+                  "Cone",
+                  "V = ⅓ π r² h; curved π r l"
+                ],
+                [
+                  "Pyramid",
+                  "V = ⅓ × base area × height"
+                ],
+                [
+                  "The cone's heights",
+                  "h vertical for volume, l slant for curved surface"
+                ],
+                [
+                  "Slant height",
+                  "l² = r² + h²"
+                ],
+                [
+                  "Radius or diameter",
+                  "halve a diameter first; a volume goes 8 times wrong"
+                ],
+                [
+                  "Open or closed",
+                  "a tin has one circle, a pipe has none"
+                ],
+                [
+                  "Composite volume",
+                  "add the parts"
+                ],
+                [
+                  "Composite surface",
+                  "leave out the joining faces"
+                ],
+                [
+                  "In terms of π",
+                  "do not evaluate"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of surface areas and volumes covering every solid, the cone's two heights, and the traps"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "A cylinder has radius 5 cm and height 12 cm. What is its volume, in cm³ to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "4-5",
+      "skill": "volume of a prism",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$V = \\pi r^2 h = 300\\pi \\approx 942.5$ cm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses π r² h"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "942.5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 942.5,
+      "tolerance": 0.5,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What is the volume of any prism?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "volume of a prism",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Every prism has the same cross-section throughout, so its volume is **cross-section × length**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "cross-section × length"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Area of cross-section × length",
+        "Length × width × height",
+        "⅓ × base × height",
+        "4/3 π r³"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What is the formula for the volume of a sphere?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "volume of a sphere",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$V = \\frac{4}{3}\\pi r^3$. The one with $4\\pi r^2$ is the sphere's **surface area**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4/3 π r³"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "4/3 π r³",
+        "4 π r²",
+        "⅓ π r² h",
+        "π r² h"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "A cylinder is open at both ends, like a pipe. How many circles are in its surface area?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "surface area",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A pipe open at both ends has **no** circular faces: its surface is just the curved part, $2\\pi r h$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "none"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "None",
+        "One",
+        "Two",
+        "Three"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A cylinder has radius 5 cm and height 12 cm. What is its curved surface area, in cm² to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "surface area",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2\\pi r h = 120\\pi \\approx 377.0$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 2π r h"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "377.0"
+        }
+      ],
+      "discriminators": [],
+      "answer": 376.99,
+      "tolerance": 0.5,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A sphere has radius 6 cm. What is its volume, in cm³ to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "volume of a sphere",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\frac{4}{3}\\pi(216) = 288\\pi \\approx 904.8$ cm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 4/3 π r³"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cubes the radius"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "904.8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 904.8,
+      "tolerance": 0.5,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "In the cone formulae, what does l stand for?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "surface area of a cone",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$l$ is the **slant height**, along the sloping side. The vertical height is $h$, and they are different lengths.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the slant height"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The slant height",
+        "The vertical height",
+        "The length of the base",
+        "The radius"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A cone has radius 3 cm and vertical height 4 cm. What is its slant height, in cm?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "surface area of a cone",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$l^2 = 3^2 + 4^2 = 25$, so $l = 5$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses Pythagoras"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5 cm"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0.05,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A square-based pyramid has a base of side 6 cm and vertical height 10 cm. What is its volume, in cm³?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "volume of a pyramid",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\frac{1}{3} \\times 36 \\times 10 = 120$ cm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the base area"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses ⅓ base × height"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "120"
+        }
+      ],
+      "discriminators": [],
+      "answer": 120,
+      "tolerance": 0.5,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "A sphere has diameter 12 cm. What value of r goes into the formula?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "volume of a sphere",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The formula uses the **radius**, which is half the diameter: $r = 6$. Using 12 makes the volume **8 times** too big.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "6",
+        "12",
+        "24",
+        "3"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "A cone has radius 3 cm and vertical height 4 cm. What is its curved surface area, in cm² to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "surface area of a cone",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$l = 5$ cm, so $\\pi r l = 15\\pi \\approx 47.1$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the slant height"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses π r l"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "47.1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 47.1,
+      "tolerance": 0.5,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A cylinder of radius 4 cm and height 10 cm has a hemisphere of the same radius on top. What is the total volume, in cm³ to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "composite solids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$160\\pi + \\frac{128}{3}\\pi \\approx 636.7$ cm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cylinder volume"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "half a sphere"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "636.7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 636.7,
+      "tolerance": 0.5,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "For a cylinder with a hemisphere on top, which face is NOT counted in the surface area?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "composite solids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The joining circle is **inside** the solid, so it is not part of the surface.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the joining circle"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The circle where they join",
+        "The base of the cylinder",
+        "The curved cylinder surface",
+        "The curved hemisphere surface"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A question asks for a cylinder's volume in terms of π. What should you write?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "volume of a prism",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**In terms of π** means leave π in the answer: $300\\pi$ cm³. A decimal scores nothing, however accurate.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "300π"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "300π",
+        "942.5",
+        "942.48",
+        "300 × 3.14"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why does using a diameter as the radius make a sphere's volume 8 times too big?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "volume of a sphere",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$V = \\frac{4}{3}\\pi r^3$. Doubling $r$ multiplies the volume by $2^3 = 8$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the volume uses r³"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The volume uses r³, and 2³ = 8",
+        "The volume uses r², and 2² = 4",
+        "Because π is involved",
+        "It makes it 2 times too big, not 8"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A cylinder of radius 4 cm and height 10 cm has a hemisphere on top. What is the total surface area, in cm² to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "composite solids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Curved cylinder $80\\pi$, base $16\\pi$, hemisphere $32\\pi$, and no joining circle. Total $128\\pi \\approx 402.1$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the three outside faces"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "omits the joining circle"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "402.1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 402.1,
+      "tolerance": 0.5,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A cone has radius 6 cm and vertical height 8 cm. Find its volume and its total surface area, giving both to 1 decimal place.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "surface area of a cone",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The volume of a cone uses the vertical height, so it is one third times pi times six squared times eight, which is one third times pi times thirty six times eight, giving ninety six pi, or about three hundred and one point six cubic centimetres. For the surface area the slant height is needed, and that comes from Pythagoras on the right angled triangle formed by the radius, the vertical height and the slant height. Six squared plus eight squared is thirty six plus sixty four, which is one hundred, so the slant height is ten centimetres. The curved surface area is pi times the radius times the slant height, which is pi times six times ten, giving sixty pi. The total surface area also includes the circular base, whose area is pi times six squared, or thirty six pi. Adding these gives ninety six pi square centimetres, which is about three hundred and one point six square centimetres. Note that the volume and the total surface area happen to have the same numerical value here, which is a coincidence of these particular dimensions and not a general rule.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses ⅓ π r² h with the vertical height"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "volume 96π, about 301.6 cm³"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the slant height as 10 cm by Pythagoras"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "curved surface π r l = 60π"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the base circle 36π"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "total surface area about 301.6 cm²"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Uses the vertical height in the volume formula",
+          "marks": 1
+        },
+        {
+          "text": "Gives the volume as 96π or about 301.6 cm³",
+          "marks": 1
+        },
+        {
+          "text": "Finds the slant height as 10 cm",
+          "marks": 1
+        },
+        {
+          "text": "Calculates the curved surface as 60π",
+          "marks": 1
+        },
+        {
+          "text": "Adds the base circle of 36π",
+          "marks": 1
+        },
+        {
+          "text": "Gives the total surface area as about 301.6 cm²",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Volume** uses the **vertical** height:\n\n$$V = \\tfrac{1}{3}\\pi r^2 h = \\tfrac{1}{3}\\pi(36)(8) = 96\\pi \\approx \\mathbf{301.6} \\text{ cm}^3$$\n\n**Slant height**, by Pythagoras:\n\n$$l^2 = 6^2 + 8^2 = 100 \\quad\\Rightarrow\\quad l = 10 \\text{ cm}$$\n\n**Curved surface** uses the **slant** height:\n\n$$\\pi r l = \\pi(6)(10) = 60\\pi$$\n\n**Base circle**: $\\pi r^2 = 36\\pi$.\n\n**Total surface area** $= 60\\pi + 36\\pi = 96\\pi \\approx \\mathbf{301.6} \\text{ cm}^2$\n\nThe volume and total surface area come out to the same number here. That is a coincidence of these dimensions, not a rule — and the units differ, cm³ against cm²."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A solid is a cylinder of radius 4 cm and height 10 cm with a hemisphere of the same radius on top. Find its total surface area, stating clearly which faces you have included and which you have left out.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "composite solids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The surface of this solid is made of three parts. The first is the curved surface of the cylinder, which is two pi r h, that is two times pi times four times ten, giving eighty pi square centimetres. The second is the flat circular base at the bottom of the cylinder, which is pi r squared, that is pi times sixteen, giving sixteen pi square centimetres. The third is the curved surface of the hemisphere, which is half of the sphere formula four pi r squared, so it is two pi r squared, that is two times pi times sixteen, giving thirty two pi square centimetres. The circle where the hemisphere sits on top of the cylinder is not included, because it is inside the solid and is not part of its outer surface. Adding the three parts gives eighty pi plus sixteen pi plus thirty two pi, which is one hundred and twenty eight pi square centimetres, or about four hundred and two point one square centimetres to one decimal place.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "curved surface of the cylinder, 80π"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "base circle, 16π"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "hemisphere as half the sphere's surface, 32π"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states that the joining circle is excluded because it is inside the solid"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "total 128π, about 402.1 cm²"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Calculates the curved surface of the cylinder as 80π",
+          "marks": 1
+        },
+        {
+          "text": "Includes the base circle as 16π",
+          "marks": 1
+        },
+        {
+          "text": "Calculates the hemisphere's curved surface as 32π, half the sphere formula",
+          "marks": 1
+        },
+        {
+          "text": "States that the joining circle is excluded because it is inside the solid",
+          "marks": 1
+        },
+        {
+          "text": "Gives the total as 128π, about 402.1 cm²",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Three faces are on the outside.**\n\n- **Curved cylinder**: $2\\pi r h = 2\\pi(4)(10) = 80\\pi$\n- **Base circle**: $\\pi r^2 = 16\\pi$\n- **Hemisphere**: half of $4\\pi r^2$, so $2\\pi(16) = 32\\pi$\n\n**One face is left out.** The circle where the hemisphere meets the cylinder is **inside** the solid, so it is not part of its surface. Saying this explicitly is a mark.\n\n**Total.**\n\n$$80\\pi + 16\\pi + 32\\pi = 128\\pi \\approx \\mathbf{402.1} \\text{ cm}^2$$\n\nNote the hemisphere contributes **only** its curved surface — no flat circle, because that is the joining face."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Write the formula down before substituting anything. Most of these are given on the formula sheet, so the mark is for choosing the right one and using it correctly.\n\nCheck whether you have been given a radius or a diameter, and halve it first if necessary.\n\nFor a cone, decide which height the formula wants. The volume takes the vertical height, the curved surface the slant height, and Pythagoras connects them.\n\nRead whether the solid is open or closed before counting circles.\n\nKeep π in your working until the last line. If the question asks for an answer in terms of π, do not evaluate at all.\n\nFor a composite, list the faces you are including and say which you have left out. That sentence carries a mark on its own.\n\nGive areas in cm² and volumes in cm³, and convert any mixed units before you start.",
+    "examinerErrors": [
+      "Using a diameter where the formula wants the radius.",
+      "Putting the slant height into the volume of a cone.",
+      "Including two circles for a solid that is open at one end.",
+      "Counting the joining face of a composite solid.",
+      "Evaluating π when the question asked for an answer in terms of π.",
+      "Rounding partway through and carrying the rounded value on.",
+      "Giving a volume in cm² or an area in cm³.",
+      "Mixing centimetres and metres without converting."
+    ],
+    "grade9Looks": "A top answer writes each formula before substituting, so choosing the wrong one becomes visible rather than silent. It halves a diameter as its first line and says so. In a cone question it labels the vertical and slant heights separately and computes the slant one explicitly, rather than hoping the given length is the right one. It works in terms of π throughout and evaluates once, at the end. And for a composite it states which faces are included and which are internal, because that reasoning is the question rather than a preliminary to it."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
