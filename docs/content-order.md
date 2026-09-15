@@ -44,7 +44,7 @@ Source: the school's Year 10 Physics overview, shared 2 September 2026. The scho
 | Autumn 2 | Momentum, including conservation and $F = \Delta p / \Delta t$ · Pressure in fluids and atmospheric pressure | Both drafted 10 September 2026 |
 | Year 9 recap | Describing motion · Resultant forces · Newton's laws · Stopping distances | All four drafted 13 September 2026 |
 | Spring 1 | The gas laws and behaviour of gases · Thermal physics: internal energy, specific heat capacity, specific latent heat | **Spring 1 is complete.** Both drafted 14 September 2026: Internal energy, specific heat capacity and latent heat (AQA 4.3.2.1-3), and The behaviour of gases (4.3.3.1-3). The school's two thermal rows are one written topic, so the syllabus lists them as one line. Note that 4.3.3 is **Physics only**, and 4.3.3.3, work done on a gas, is also **Higher tier**; both are taught here and flagged in the lesson. |
-| Spring 2 | Electromagnetic waves and light | |
+| Spring 2 | Electromagnetic waves and light | **Spring 2 is complete.** Both drafted 15 September 2026: The electromagnetic spectrum (AQA 4.6.2.1, 4.6.2.3, 4.6.2.4) and Light: reflection, refraction and colour (4.6.1.3, 4.6.2.2, 4.6.2.6). The light topic is **Physics only** throughout, and its refraction explanation is also **Higher tier**. Introduces the `ray-diagram` component, which computes the refracted angle from the speed ratio so the picture cannot contradict the prose. |
 | Summer 1 | Static electricity and electric fields | |
 | Summer 2 | Circuits: current, potential difference, resistance, series and parallel, building circuits | |
 

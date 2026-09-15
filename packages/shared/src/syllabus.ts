@@ -177,8 +177,8 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'The gas laws and the behaviour of gases', topicId: 'behaviour-of-gases' },
     ] },
     { year: 10, term: 'Spring 2', topics: [
-      { title: 'Electromagnetic waves' },
-      { title: 'Light: reflection and refraction' },
+      { title: 'Electromagnetic waves', topicId: 'electromagnetic-spectrum' },
+      { title: 'Light: reflection and refraction', topicId: 'light-reflection-and-refraction' },
     ] },
     { year: 10, term: 'Summer 1', topics: [
       { title: 'Static electricity and electric fields' },

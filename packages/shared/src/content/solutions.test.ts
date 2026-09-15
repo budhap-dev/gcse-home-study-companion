@@ -32,6 +32,11 @@ function numbersIn(solution: string): string[] {
     // A minus sign sits outside the macro, as in `$-\tfrac{1}{2}$`, so it has to be carried in.
     .replace(/([-−–])?\s*\\[tdc]?frac\{\s*(-?\d+(?:\.\d+)?)\s*\}\{\s*(-?\d+(?:\.\d+)?)\s*\}/g, (_m, sign: string | undefined, a: string, b: string) => ` ${sign ? '-' : ''}${a}/${b} `)
     .replace(/\\,/g, '')
+    // Standard form, which Physics solutions are written in: `3 \times 10^{18}` and
+    // `6 \times 10^{-7}` are numbers a student reads as numbers, so they have to be
+    // read as numbers here too. Without this a solution could state 1 x 10^8 while the
+    // marker expected something else entirely and nothing would notice.
+    .replace(/(-?\d+(?:\.\d+)?)\s*(?:\\times|×)\s*10\s*\^\s*\{?\s*(-?\d+)\s*\}?/g, (_m, mantissa: string, power: string) => ` ${Number(mantissa) * 10 ** Number(power)} `)
     .replace(/[{}]/g, ' ')
   const out: string[] = []
   for (const m of text.matchAll(/-?\s*[£$€]?\s*\d[\d ,]*(?:\.\d+)?(?:\s*\/\s*-?\d+(?:\.\d+)?)?/g)) out.push(m[0].trim())
