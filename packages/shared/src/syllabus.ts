@@ -243,11 +243,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Cracking and alkenes', topicId: 'cracking-and-alkenes' },
     ] },
     { year: 10, term: 'Summer', topics: [
-      { title: 'Alkenes and their reactions' },
-      { title: 'Alcohols' },
-      { title: 'Carboxylic acids and esters' },
-      { title: 'Addition and condensation polymers' },
-      { title: 'Proteins, carbohydrates and DNA' },
+      { title: 'Alkenes and their reactions', topicId: 'alkenes-and-their-reactions' },
+      { title: 'Alcohols', topicId: 'alcohols' },
+      { title: 'Carboxylic acids and esters', topicId: 'carboxylic-acids-and-esters' },
+      { title: 'Addition and condensation polymers', topicId: 'addition-and-condensation-polymers' },
+      { title: 'Proteins, carbohydrates and DNA', topicId: 'proteins-carbohydrates-and-dna' },
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Conservation of mass and moles' },
