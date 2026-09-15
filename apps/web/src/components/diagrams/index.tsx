@@ -34,6 +34,9 @@ import { ProbabilityTree } from './ProbabilityTree.tsx'
 import { Histogram } from './Histogram.tsx'
 import { RayDiagram } from './RayDiagram.tsx'
 import { ReactionProfile } from './ReactionProfile.tsx'
+import { InequalityLine } from './InequalityLine.tsx'
+import { InequalityRegion } from './InequalityRegion.tsx'
+import { Cuboid } from './Cuboid.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -44,6 +47,9 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'repeated-multiplication': RepeatedMultiplication,
   'ray-diagram': RayDiagram,
   'reaction-profile': ReactionProfile,
+  'inequality-line': InequalityLine,
+  'inequality-region': InequalityRegion,
+  'cuboid': Cuboid,
   'index-ladder': IndexLadder,
   'root-number-line': RootNumberLine,
   'power-of-power': PowerOfPower,

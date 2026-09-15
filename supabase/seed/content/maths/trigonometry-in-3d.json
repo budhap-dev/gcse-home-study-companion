@@ -1,0 +1,1371 @@
+{
+  "id": "trigonometry-in-3d",
+  "subjectId": "maths",
+  "unitId": "geometry-and-measures",
+  "title": "Trigonometry in 3D",
+  "specPoints": [
+    "G20"
+  ],
+  "order": 2,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "The angle is to the shadow",
+      "body": "The angle between a **line and a plane** is the angle between the line and its **shadow** on that plane. For a space diagonal and the base, the shadow is the **base diagonal** — so that is always the first thing to find."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Use tan, because you already have both sides",
+      "body": "$\\tan \\theta = \\dfrac{\\text{height}}{\\text{base diagonal}}$ needs only the two sides you find first. Sin and cos also need the space diagonal, which is extra work and an extra chance to slip — though computing one of them afterwards is a free check."
+    },
+    {
+      "kind": "check",
+      "title": "Compare the height with the base diagonal first",
+      "body": "Height **longer** than the base diagonal means the angle is **more** than 45°; shorter means less; equal means exactly 45°. Knowing roughly what to expect catches the classic error of swapping opposite and adjacent, which returns $90 - \\theta$."
+    },
+    {
+      "kind": "spot",
+      "title": "Never round the base diagonal",
+      "body": "Carry it in the calculator rather than writing down a rounded value and typing it back. For a 2 by 3 base, rounding $\\sqrt{13}$ to 3.6 moves the angle by about 0.1°, which is enough to fall outside the accepted range."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "The angle between a line and a plane",
+        "body": "This topic is **Higher tier**, and it builds directly on 3D Pythagoras.\n\nA typical question asks for the **angle between the space diagonal and the base** of a cuboid. That phrase — *the angle between a line and a plane* — has a precise meaning, and understanding it is most of the work.\n\nImagine the space diagonal running from a bottom corner up to the opposite top corner. Now shine a light straight down: the diagonal casts a **shadow** on the base. That shadow is the **base diagonal**.\n\nThe angle you want is the angle between the line and its own shadow.\n\nSo the triangle you need has:\n\n- the **base diagonal** lying flat (the shadow);\n- the **vertical edge** going straight up;\n- the **space diagonal** as the hypotenuse.\n\nIt is the same upright triangle as in 3D Pythagoras. The difference is that now you want the **angle** rather than the third side — and since you can always find the base diagonal, you always have two sides, which is enough.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "cuboid",
+            "alt": "A cuboid 4 cm by 3 cm by 12 cm with the base diagonal shown dashed, the space diagonal solid, and the angle between them marked at the bottom corner",
+            "props": {
+              "w": 4,
+              "d": 3,
+              "h": 12,
+              "show": "both",
+              "angle": true
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Side of the triangle",
+                "What it is in the cuboid",
+                "Its role"
+              ],
+              "rows": [
+                [
+                  "flat side",
+                  "the base diagonal",
+                  "adjacent to the angle"
+                ],
+                [
+                  "upright side",
+                  "the vertical edge",
+                  "opposite the angle"
+                ],
+                [
+                  "hypotenuse",
+                  "the space diagonal",
+                  "opposite the right angle"
+                ]
+              ],
+              "title": "The base diagonal is the shadow of the space diagonal"
+            },
+            "alt": "A table of the three sides of the triangle used for the angle between the space diagonal and the base"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What is the angle between the space diagonal and the base of a cuboid measured between?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: 3D trigonometry",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The angle between a **line and a plane** is the angle between the line and its **projection** onto that plane — its shadow, which here is the **base diagonal**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the diagonal and its shadow"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The diagonal and its shadow on the base",
+            "The diagonal and the vertical edge",
+            "Two edges of the base",
+            "The diagonal and the longest edge"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Finding the angle",
+        "body": "The method is three steps, and the first is always the same.\n\n1. Find the **base diagonal** with 2D Pythagoras.\n2. Draw the upright triangle, flat and separately.\n3. Use **tan**, because you have the opposite and the adjacent.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the angle between the space diagonal and the base of a 4 by 3 by 12 cm cuboid",
+            "steps": [
+              {
+                "text": "Base diagonal: $\\sqrt{4^2 + 3^2} = \\sqrt{25} = 5$ cm",
+                "note": "step 1, ordinary Pythagoras"
+              },
+              {
+                "text": "Draw the triangle: base $5$ cm flat, height $12$ cm upright",
+                "note": "step 2, and it is now a 2D problem"
+              },
+              {
+                "text": "Opposite $= 12$, adjacent $= 5$, so use **tan**",
+                "note": "step 3: opposite over adjacent"
+              },
+              {
+                "text": "$\\tan \\theta = \\dfrac{12}{5} = 2.4$",
+                "note": "substitute"
+              },
+              {
+                "text": "$\\theta = \\tan^{-1}(2.4) = 67.4°$",
+                "note": "and use the inverse on your calculator"
+              },
+              {
+                "text": "Sense check: the height $12$ is much bigger than the base $5$, so a steep angle above 45° is right",
+                "note": "always worth ten seconds"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "You have",
+                "Ratio",
+                "In this triangle"
+              ],
+              "rows": [
+                [
+                  "opposite and adjacent",
+                  "tan",
+                  "height and base diagonal"
+                ],
+                [
+                  "opposite and hypotenuse",
+                  "sin",
+                  "height and space diagonal"
+                ],
+                [
+                  "adjacent and hypotenuse",
+                  "cos",
+                  "base diagonal and space diagonal"
+                ]
+              ],
+              "title": "tan is usual, because the base diagonal is the easiest side to find"
+            },
+            "alt": "A table of which trigonometric ratio to use, depending on which two sides you have"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A cuboid measures 4 cm by 3 cm by 12 cm. What is the angle between its space diagonal and the base, in degrees to 1 decimal place?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: 3D trigonometry",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Base diagonal $= 5$ cm, so $\\tan \\theta = \\dfrac{12}{5} = 2.4$ and $\\theta = 67.4°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds the base diagonal"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses tan with 12 and 5"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "67.4°"
+            }
+          ],
+          "discriminators": [],
+          "answer": 67.4,
+          "tolerance": 0.15,
+          "unitsRequired": false,
+          "units": "°"
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "All three ratios agree",
+        "body": "Once you have found the base diagonal, you actually know **all three** sides of the upright triangle: base $5$, height $12$, hypotenuse $13$. So any of the three ratios will give the same angle.\n\n- $\\tan \\theta = \\dfrac{12}{5}$ gives $67.38°$\n- $\\sin \\theta = \\dfrac{12}{13}$ gives $67.38°$\n- $\\cos \\theta = \\dfrac{5}{13}$ gives $67.38°$\n\nUse **tan** by preference, for one reason: it needs only the two sides you find **first**, the base diagonal and the vertical edge. Using sin or cos means finding the space diagonal as well, which is extra work and an extra chance to slip.\n\nBut knowing that all three agree gives you a free **check**. If you have time, compute the angle a second way. If the two disagree, one of your sides is wrong.\n\n**A caution about rounding.** Use the **unrounded** base diagonal in the ratio. Rounding $\\sqrt{13}$ to $3.6$ before dividing can shift the angle by a few tenths of a degree, which is enough to lose the accuracy mark.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Ratio",
+                "Calculation",
+                "Angle"
+              ],
+              "rows": [
+                [
+                  "tan",
+                  "12 ÷ 5 = 2.4",
+                  "67.38°"
+                ],
+                [
+                  "sin",
+                  "12 ÷ 13 = 0.923…",
+                  "67.38°"
+                ],
+                [
+                  "cos",
+                  "5 ÷ 13 = 0.384…",
+                  "67.38°"
+                ]
+              ],
+              "title": "Prefer tan: it uses the two sides you already have"
+            },
+            "alt": "A table showing that all three ratios give the same angle in this triangle"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Why is tan usually the best ratio for the angle between a space diagonal and the base?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: 3D trigonometry",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**tan** needs only the **base diagonal** and the **vertical edge**. Using sin or cos also requires the space diagonal, which is extra work and an extra chance for error.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it uses the sides you already have"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "It uses the two sides you find first",
+            "It is more accurate than sin or cos ever is",
+            "It is the only ratio that works in 3D",
+            "It lets you avoid using a calculator"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "A 45 degree case",
+        "body": "Some cuboids give a memorable answer, and recognising why is a good test of whether the method is understood.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the angle between the space diagonal and the base of a 6 by 8 by 10 cm cuboid",
+            "steps": [
+              {
+                "text": "Base diagonal: $\\sqrt{6^2 + 8^2} = \\sqrt{100} = 10$ cm",
+                "note": "the familiar 6, 8, 10 triangle"
+              },
+              {
+                "text": "The height is also $10$ cm",
+                "note": "which is the same as the base diagonal"
+              },
+              {
+                "text": "$\\tan \\theta = \\dfrac{10}{10} = 1$",
+                "note": "opposite equals adjacent"
+              },
+              {
+                "text": "$\\theta = \\tan^{-1}(1) = 45°$",
+                "note": "the angle whose tangent is 1"
+              },
+              {
+                "text": "Whenever the height equals the base diagonal, the answer is exactly 45°",
+                "note": "worth recognising instantly"
+              },
+              {
+                "text": "It does **not** mean the cuboid is a cube: here it is 6 by 8 by 10",
+                "note": "a tempting but wrong conclusion"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A cuboid measures 6 cm by 8 cm by 10 cm. What is the angle between its space diagonal and the base, in degrees?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: 3D trigonometry",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Base diagonal $= \\sqrt{36 + 64} = 10$ cm, equal to the height, so $\\tan \\theta = 1$ and $\\theta = 45°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds the base diagonal of 10"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses tan"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "45°"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 45,
+          "tolerance": 0.15,
+          "unitsRequired": false,
+          "units": "°"
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Other angles in the same box",
+        "body": "Not every question asks for the angle with the base. Read carefully which angle is wanted, because the triangle changes.\n\n- **Space diagonal and the base**: the triangle is base diagonal, height, space diagonal. Use $\\tan \\theta = \\dfrac{\\text{height}}{\\text{base diagonal}}$.\n- **Space diagonal and a vertical edge**: the same triangle, but now the angle is at the **top**, so the roles of opposite and adjacent swap: $\\tan \\theta = \\dfrac{\\text{base diagonal}}{\\text{height}}$.\n- **Face diagonal and an edge**: a flat triangle on one face, no 3D work at all.\n\nThe two angles in the upright triangle add to **90°**, since the third angle is the right angle. So if the angle with the base is $67.38°$, the angle with the vertical edge is $90 - 67.38 = 22.62°$. That is a quick way to get the second one, and a good check on the first.\n\n**The habit that prevents most errors**: before calculating, label which side is **opposite** the angle you want and which is **adjacent** to it. In 3D those roles are easy to swap by accident, and swapping them turns $\\theta$ into $90 - \\theta$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The angle asked for",
+                "The triangle",
+                "The ratio"
+              ],
+              "rows": [
+                [
+                  "space diagonal and the base",
+                  "base diagonal, height, space diagonal",
+                  "tan = height ÷ base diagonal"
+                ],
+                [
+                  "space diagonal and a vertical edge",
+                  "the same triangle, angle at the top",
+                  "tan = base diagonal ÷ height"
+                ],
+                [
+                  "face diagonal and an edge",
+                  "a flat triangle on one face",
+                  "ordinary 2D trigonometry"
+                ]
+              ],
+              "title": "The two angles in the upright triangle add to 90°"
+            },
+            "alt": "A table of the different angles a question might ask for in a cuboid, and the triangle each one needs"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "The angle between a space diagonal and the base is 67.4°. What is the angle between the same diagonal and the vertical edge, in degrees to 1 decimal place?",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: 3D trigonometry",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The two angles are in the same right-angled triangle, so they add to 90°: $90 - 67.4 = 22.6°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "subtracts from 90"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "22.6°"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 22.6,
+          "tolerance": 0.15,
+          "unitsRequired": false,
+          "units": "°"
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.** A cuboid measures 5 cm by 12 cm by 7 cm.\n\n1. Find the diagonal of its base.\n2. Find the angle between the space diagonal and the base, to 1 decimal place.\n3. Find the angle between the space diagonal and the vertical edge.\n\n**Part B.**\n\n4. Check your answer to question 2 using a different ratio. You will need the space diagonal.\n5. A cuboid is 6 cm by 8 cm by 10 cm. Without a calculator, state the angle between its space diagonal and the base, and explain how you know.\n\n**Part C.**\n\n6. A cuboid has a base 4 cm by 3 cm. What height would make the angle with the base exactly 45°?\n\nQuestion 6 runs the method backwards: think about what has to be true of $\\tan \\theta$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "cuboid",
+            "alt": "A cuboid 5 cm by 12 cm by 7 cm with both diagonals shown and the base angle marked, for the your-turn questions",
+            "props": {
+              "w": 5,
+              "d": 12,
+              "h": 7,
+              "show": "both",
+              "angle": true
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "Working",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "base diagonal",
+                  "",
+                  ""
+                ],
+                [
+                  "tan of the angle",
+                  "",
+                  ""
+                ],
+                [
+                  "the angle",
+                  "",
+                  ""
+                ],
+                [
+                  "angle with the vertical edge",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Keep the unrounded base diagonal for the ratio"
+            },
+            "alt": "A blank table for the angle calculation, with a row for each step"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "A cuboid measures 5 cm by 12 cm by 7 cm. What is the angle between its space diagonal and the base, in degrees to 1 decimal place?",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: 3D trigonometry",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Base diagonal $= \\sqrt{25 + 144} = 13$ cm, so $\\tan \\theta = \\dfrac{7}{13}$ and $\\theta = 28.3°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds the base diagonal of 13"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses tan with 7 and 13"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "28.3°"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 28.3,
+          "tolerance": 0.15,
+          "unitsRequired": false,
+          "units": "°"
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: reading the question, and running it backwards",
+        "body": "**Reading which angle is wanted.** The commonest lost mark here is not arithmetic but comprehension. *The angle between AG and the base* is not the same as *the angle between AG and the edge AE*. Before calculating, write down which two things the angle is between, and which triangle contains both. Thirty seconds there saves the whole question.\n\nA reliable test: the angle between a line and a **plane** is always measured to the line's **shadow** on that plane. If the question names a plane, find the shadow.\n\n**Running it backwards.** A question may give the angle and ask for a length.\n\n> A cuboid has a base 4 cm by 3 cm. What height gives an angle of 45° with the base?\n\nThe base diagonal is 5 cm. For 45°, $\\tan 45° = 1$, so\n\n$$\\frac{\\text{height}}{5} = 1 \\quad\\Rightarrow\\quad \\text{height} = 5 \\text{ cm}$$\n\nThe height must equal the base diagonal. That is the general rule behind the 45° case, and it is worth stating as a sentence rather than a number.\n\n**Accuracy.** Keep the base diagonal unrounded. For a 2 by 3 base the diagonal is $\\sqrt{13} = 3.6055\\ldots$; rounding to 3.6 before dividing shifts the angle by about 0.1°, which is enough to fall outside the accepted range. Store it in your calculator rather than writing it down and typing it back in.\n\n**A sense check that always works.** If the vertical edge is **longer** than the base diagonal, the angle is **more** than 45°; if it is shorter, **less**. Compare the two numbers before you calculate, and you will know roughly what to expect. An answer of 22° where you expected 67° usually means opposite and adjacent were swapped — which is exactly the error that turns $\\theta$ into $90 - \\theta$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "If the height is",
+                "Compared with the base diagonal",
+                "The angle is"
+              ],
+              "rows": [
+                [
+                  "longer",
+                  "height > base diagonal",
+                  "more than 45°"
+                ],
+                [
+                  "equal",
+                  "height = base diagonal",
+                  "exactly 45°"
+                ],
+                [
+                  "shorter",
+                  "height < base diagonal",
+                  "less than 45°"
+                ]
+              ],
+              "title": "Know roughly what to expect before you calculate"
+            },
+            "alt": "A table of the sense check comparing the height with the base diagonal before calculating"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A cuboid has a base 4 cm by 3 cm. What height gives an angle of 45° with the base?",
+            "steps": [
+              {
+                "text": "Base diagonal $= \\sqrt{16 + 9} = 5$ cm",
+                "note": "as always, this comes first"
+              },
+              {
+                "text": "For the angle to be 45°, $\\tan 45° = 1$",
+                "note": "recall the exact value"
+              },
+              {
+                "text": "So $\\dfrac{\\text{height}}{5} = 1$",
+                "note": "set up the equation"
+              },
+              {
+                "text": "Height $= 5$ cm",
+                "note": "the height equals the base diagonal"
+              },
+              {
+                "text": "In general, 45° happens exactly when the height equals the base diagonal",
+                "note": "state the rule, not just the number"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "The vertical edge of a cuboid is shorter than its base diagonal. What can you say about the angle between the space diagonal and the base?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: 3D trigonometry",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\tan \\theta = \\dfrac{\\text{height}}{\\text{base diagonal}}$. If the height is smaller, the ratio is **less than 1**, so the angle is **less than 45°**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "less than 45°"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "It is less than 45°",
+            "It is more than 45°",
+            "It is exactly 45°",
+            "It cannot be determined"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- This topic is **Higher tier**; the Foundation specification stops at two-dimensional figures.\n- The angle between a **line and a plane** is the angle between the line and its **shadow** on that plane.\n- For a space diagonal and the base, the shadow is the **base diagonal**.\n- **Method**: find the base diagonal, draw the upright triangle flat, then use **tan**.\n- $\\tan \\theta = \\dfrac{\\text{height}}{\\text{base diagonal}}$.\n- For a 4 by 3 by 12 cuboid: base diagonal $5$ cm, $\\tan \\theta = \\dfrac{12}{5}$, $\\theta = 67.4°$.\n- **All three ratios agree** once you know all three sides, which gives you a free check.\n- Prefer **tan**, because it uses the two sides you find first.\n- The angle with the **vertical edge** is $90°$ minus the angle with the base.\n- **Keep the base diagonal unrounded** in the ratio. Rounding it can shift the angle enough to lose the mark.\n- **Sense check**: height longer than the base diagonal means more than 45°, shorter means less.\n- The angle is exactly **45°** when the height **equals** the base diagonal.\n- Read carefully which angle is wanted. Swapping opposite and adjacent turns $\\theta$ into $90 - \\theta$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Tier",
+                  "Higher only"
+                ],
+                [
+                  "Angle between a line and a plane",
+                  "between the line and its shadow on the plane"
+                ],
+                [
+                  "The shadow of a space diagonal",
+                  "the base diagonal"
+                ],
+                [
+                  "Method",
+                  "base diagonal, draw the triangle flat, then tan"
+                ],
+                [
+                  "The ratio",
+                  "tan θ = height ÷ base diagonal"
+                ],
+                [
+                  "All three ratios",
+                  "agree, so a second one is a free check"
+                ],
+                [
+                  "Prefer tan",
+                  "it uses the sides you already have"
+                ],
+                [
+                  "Angle with the vertical edge",
+                  "90° minus the angle with the base"
+                ],
+                [
+                  "Accuracy",
+                  "never round the base diagonal before dividing"
+                ],
+                [
+                  "Sense check",
+                  "taller than the base diagonal means more than 45°"
+                ],
+                [
+                  "Exactly 45°",
+                  "when the height equals the base diagonal"
+                ],
+                [
+                  "The classic error",
+                  "swapping opposite and adjacent, giving 90 − θ"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of 3D trigonometry covering the angle to a plane, the method, the ratios and the checks"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "The angle between a line and a plane is measured between the line and what?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It is the angle between the line and its **projection** onto the plane — its shadow.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "its shadow on the plane"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Its shadow on the plane",
+        "The nearest edge of the plane",
+        "A vertical line",
+        "The longest line in the plane"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "For the angle between a space diagonal and the base, what is the shadow?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Shining a light straight down, the space diagonal casts the **base diagonal** as its shadow.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the base diagonal"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The base diagonal",
+        "The longest edge of the base",
+        "The height",
+        "The space diagonal itself"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which ratio is usually best for this angle?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**tan**, because it uses the base diagonal and the height — the two sides you find first.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "tan"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "tan",
+        "sin",
+        "cos",
+        "Any, but sin is quickest"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What is the first step in finding the angle?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **base diagonal** comes first, by 2D Pythagoras. It is the adjacent side of the triangle you need.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "find the base diagonal"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Find the base diagonal",
+        "Find the space diagonal",
+        "Find the volume",
+        "Measure the angle with a protractor"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A cuboid measures 4 cm by 3 cm by 12 cm. What is the angle between its space diagonal and the base, in degrees to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Base diagonal 5 cm, so $\\tan \\theta = \\tfrac{12}{5} = 2.4$ and $\\theta = 67.4°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the base diagonal"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses tan"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "67.4°"
+        }
+      ],
+      "discriminators": [],
+      "answer": 67.4,
+      "tolerance": 0.15,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A cuboid measures 6 cm by 8 cm by 10 cm. What is the angle between its space diagonal and the base, in degrees?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Base diagonal $= 10$ cm, equal to the height, so $\\tan \\theta = 1$ and $\\theta = 45°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "base diagonal 10"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses tan"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "45°"
+        }
+      ],
+      "discriminators": [],
+      "answer": 45,
+      "tolerance": 0.15,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "In the upright triangle, which side is opposite the angle with the base?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **vertical edge** is opposite the angle; the base diagonal is adjacent; the space diagonal is the hypotenuse.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the vertical edge"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The vertical edge",
+        "The base diagonal",
+        "The space diagonal",
+        "The longest edge of the base"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Why should the base diagonal not be rounded before using it in the ratio?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rounding $\\sqrt{13}$ to 3.6 before dividing shifts the angle by about a tenth of a degree, which can fall outside the accepted range.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it can shift the angle"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Rounding can shift the angle by enough to lose the mark",
+        "It is always a whole number",
+        "It is quicker not to round",
+        "Calculators cannot store it"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A cuboid has a base diagonal of 13 cm and a height of 7 cm. What is the angle between the space diagonal and the base, to 1 decimal place?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\tan \\theta = \\tfrac{7}{13}$, so $\\theta = 28.3°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses tan"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28.3°"
+        }
+      ],
+      "discriminators": [],
+      "answer": 28.3,
+      "tolerance": 0.15,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "The angle between a space diagonal and the base is 67.4°. What is the angle between the same diagonal and the vertical edge?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The two angles are in the same right-angled triangle, so they add to 90°: $90 - 67.4 = 22.6°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "22.6°"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "22.6°",
+        "67.4°",
+        "45°",
+        "112.6°"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "A cuboid measures 5 cm by 12 cm by 7 cm. What is the angle between its space diagonal and the base, to 1 decimal place?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Base diagonal $= \\sqrt{25 + 144} = 13$ cm, so $\\tan \\theta = \\tfrac{7}{13}$ and $\\theta = 28.3°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the base diagonal"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses tan"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28.3°"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 28.3,
+      "tolerance": 0.15,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "The vertical edge is shorter than the base diagonal. What is the angle with the base?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\tan \\theta = \\tfrac{\\text{height}}{\\text{base diagonal}} < 1$, so the angle is **less than 45°**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "less than 45°"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Less than 45°",
+        "More than 45°",
+        "Exactly 45°",
+        "It cannot be determined"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A cuboid has a base 4 cm by 3 cm. What height makes the angle with the base exactly 45°, in cm?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Base diagonal $= 5$ cm. For 45°, $\\tan 45° = 1$, so the height must equal the base diagonal: **5 cm**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the base diagonal"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses tan 45° = 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5 cm"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "answer": 5,
+      "tolerance": 0.05,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why is it worth knowing that all three ratios give the same angle?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Once all three sides are known, computing the angle a **second way** checks it. If the two disagree, one of the sides is wrong.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it gives a free check"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "A second ratio gives a free check on your answer",
+        "Because tan sometimes fails",
+        "Because the calculator needs two methods",
+        "It is not worth knowing"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A student gets 22.6° where 67.4° was expected. What is the likely error?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Swapping opposite and adjacent gives the **other** angle in the same triangle, which is $90 - \\theta$. Here $90 - 67.4 = 22.6$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "opposite and adjacent swapped"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Opposite and adjacent were swapped",
+        "The calculator was in radians",
+        "The base diagonal was wrong",
+        "Pythagoras was applied twice"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A cuboid is 6 by 8 by 10 cm and the angle with the base is 45°. Does that make it a cube?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "45° happens whenever the **height equals the base diagonal**. Here that is 10 cm in both cases, but the cuboid is 6 by 8 by 10 and plainly not a cube.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no, the height equals the base diagonal"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "No, the height simply equals the base diagonal",
+        "Yes, only cubes give 45°",
+        "Yes, because all the angles are equal",
+        "There is not enough information"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A cuboid measures 5 cm by 12 cm by 7 cm. Find the angle between its space diagonal and the base, showing your method, and check your answer using a different trigonometric ratio.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first step is to find the diagonal of the base, using Pythagoras on the five by twelve rectangle. Five squared plus twelve squared is twenty five plus one hundred and forty four, which is one hundred and sixty nine, and the square root of that is thirteen, so the base diagonal is thirteen centimetres. The triangle needed for the angle has the base diagonal of thirteen centimetres lying flat, the vertical edge of seven centimetres going straight up, and the space diagonal as its hypotenuse. The angle with the base has the vertical edge opposite it and the base diagonal adjacent to it, so the correct ratio is tangent. Tan of the angle is seven divided by thirteen, which is zero point five three eight, and taking the inverse tangent gives twenty eight point three degrees to one decimal place. To check this using a different ratio, first find the space diagonal, which is the square root of one hundred and sixty nine plus forty nine, that is the square root of two hundred and eighteen, or about fourteen point seven six centimetres. Then sine of the angle is seven divided by fourteen point seven six, which gives the same angle of twenty eight point three degrees, confirming the answer.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "applies Pythagoras to the base"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "base diagonal 13 cm"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the correct triangle and chooses tan"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tan θ = 7 ÷ 13"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28.3°"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "checks with sin or cos, finding the space diagonal first"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Applies Pythagoras to the base to get 13 cm",
+          "marks": 1
+        },
+        {
+          "text": "Identifies the upright triangle with the base diagonal and the vertical edge",
+          "marks": 1
+        },
+        {
+          "text": "Chooses tan, with the vertical edge opposite and the base diagonal adjacent",
+          "marks": 1
+        },
+        {
+          "text": "Forms tan θ = 7 ÷ 13",
+          "marks": 1
+        },
+        {
+          "text": "Gives the angle as 28.3°",
+          "marks": 1
+        },
+        {
+          "text": "Checks using a different ratio, finding the space diagonal",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Step 1: the base diagonal.**\n\n$$\\sqrt{5^2 + 12^2} = \\sqrt{25 + 144} = \\sqrt{169} = 13 \\text{ cm}$$\n\n**Step 2: the triangle.** Base $13$ cm flat, height $7$ cm upright, space diagonal as hypotenuse.\n\n**Step 3: the ratio.** The vertical edge is **opposite** and the base diagonal **adjacent**, so use **tan**:\n\n$$\\tan \\theta = \\frac{7}{13} \\quad\\Rightarrow\\quad \\theta = 28.3°$$\n\n**The check.** Space diagonal $= \\sqrt{169 + 49} = \\sqrt{218} \\approx 14.76$ cm. Then\n\n$$\\sin \\theta = \\frac{7}{14.76} \\quad\\Rightarrow\\quad \\theta = 28.3° \\ ✓$$\n\nThe two agree, so the sides were right. And the sense check holds: the height is **shorter** than the base diagonal, so the angle is **less** than 45°."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Explain why the angle between the space diagonal and the base of a cuboid is exactly 45° when the cuboid measures 6 cm by 8 cm by 10 cm, and state the general condition for this angle to be 45°.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: 3D trigonometry",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The base of the cuboid is six centimetres by eight centimetres, so its diagonal is the square root of thirty six plus sixty four, which is the square root of one hundred, or ten centimetres. The triangle used to find the angle has this base diagonal of ten centimetres lying flat and the vertical edge of ten centimetres standing upright. The tangent of the angle is the opposite over the adjacent, which is ten divided by ten, giving exactly one, and the angle whose tangent is one is forty five degrees. In general, the angle between the space diagonal and the base is forty five degrees precisely when the height of the cuboid is equal to the diagonal of its base, because that is what makes the tangent equal to one. It is worth noting that this does not require the cuboid to be a cube, since this example is six by eight by ten and is clearly not one.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the base diagonal as 10 cm"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states that the height also equals 10 cm, so tan θ = 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "concludes the angle is 45°"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states the general condition: the height equals the base diagonal"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Finds the base diagonal as 10 cm",
+          "marks": 1
+        },
+        {
+          "text": "States that the height equals the base diagonal, so tan θ = 1",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that the angle is 45°",
+          "marks": 1
+        },
+        {
+          "text": "States the general condition, that the height equals the base diagonal",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The base diagonal.**\n\n$$\\sqrt{6^2 + 8^2} = \\sqrt{36 + 64} = \\sqrt{100} = 10 \\text{ cm}$$\n\n**Why 45°.** The height is also **10 cm**, so in the upright triangle the opposite and adjacent sides are **equal**:\n\n$$\\tan \\theta = \\frac{10}{10} = 1 \\quad\\Rightarrow\\quad \\theta = 45°$$\n\n**The general condition.** The angle is exactly 45° **whenever the height equals the diagonal of the base**, because that is what makes the tangent equal to 1.\n\n**A caution.** This does **not** mean the cuboid is a cube. Here it is 6 by 8 by 10, plainly not one — the condition is about the height matching the base *diagonal*, not the base edges."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Write down which two things the angle is between before doing anything else. If it is a line and a plane, find the line's shadow on that plane.\n\nFind the base diagonal first, and keep it in the calculator unrounded.\n\nSketch the upright triangle separately and label which side is opposite the angle and which is adjacent. In three dimensions these are easy to swap, and swapping them gives $90 - \\theta$.\n\nUse tan by preference. If you have time, check with sin or cos, which needs the space diagonal as well.\n\nSense check before you calculate: compare the height with the base diagonal and decide whether to expect more or less than 45°.\n\nGive angles to 1 decimal place unless told otherwise, and include the degree symbol.",
+    "examinerErrors": [
+      "Measuring the angle to an edge of the base instead of to the base diagonal.",
+      "Swapping opposite and adjacent, which returns 90 − θ.",
+      "Rounding the base diagonal before dividing.",
+      "Using the space diagonal as the adjacent side.",
+      "Leaving the calculator in radians.",
+      "Answering for the angle with the vertical edge when the base was asked for.",
+      "Assuming a 45° answer means the shape is a cube.",
+      "Omitting the degree symbol or the decimal place asked for."
+    ],
+    "grade9Looks": "A top answer identifies the plane and finds the shadow before reaching for a ratio, so it never measures to the wrong line. It labels opposite and adjacent explicitly, which is what prevents the $90 - \\theta$ error that no arithmetic check would catch. It predicts whether the angle is above or below 45° by comparing the height with the base diagonal, then confirms with the calculation rather than trusting it blindly. Where time allows it verifies with a second ratio, and it keeps every intermediate value in the calculator so the final rounding is the only one."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

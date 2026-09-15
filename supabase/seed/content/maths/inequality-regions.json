@@ -1,0 +1,1413 @@
+{
+  "id": "inequality-regions",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Inequality regions on a graph",
+  "specPoints": [
+    "A22"
+  ],
+  "order": 3,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Dashed is the open circle",
+      "body": "On a number line a strict inequality gets an **open circle**; on a graph it gets a **dashed line**. Same idea, same mark. $\\leqslant$ and $\\geqslant$ get a **solid** line, and points on it count."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Test (0, 0) rather than reasoning",
+      "body": "To decide which side to shade, substitute $(0, 0)$ into the inequality. If it works, shade the side with the origin. It needs no rearranging, so the symbol cannot flip on you — which is exactly how the side gets chosen wrongly."
+    },
+    {
+      "kind": "check",
+      "title": "Substitute a point into every inequality",
+      "body": "Once shaded, take a point clearly inside and test it against **all** of them. If any fails, a side is shaded the wrong way. It takes seconds and it is the only way to catch a reversed region, which is otherwise invisible."
+    },
+    {
+      "kind": "spot",
+      "title": "The largest value sits at a corner",
+      "body": "Asked for the greatest value of something like $x + 2y$ inside a region, test the **corners** only. The expression changes steadily along each edge, so its extremes are at the ends — three or four substitutions, no searching."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "An inequality in two variables",
+        "body": "This whole topic is **Higher tier**.\n\nAn inequality like $y > 2x - 1$ has two variables, so a single solution is a **pair** of numbers: a point $(x, y)$. There are infinitely many, and together they fill a **region** of the graph.\n\nThe method has three steps, and they are the same every time.\n\n1. Draw the **boundary line**, treating the inequality as an equation. For $y > 2x - 1$, draw $y = 2x - 1$.\n2. Make the line **dashed** if the inequality is strict ($<$ or $>$), or **solid** if it includes the line ($\\leqslant$ or $\\geqslant$).\n3. Shade the side that satisfies it.\n\nThe dashed and solid convention is the two-variable version of the open and filled circles on a number line, and it carries a mark in exactly the same way.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "inequality-region",
+            "alt": "A graph showing the region above the dashed line y equals 2x minus 1, shaded to show the solution of y is greater than 2x minus 1",
+            "props": {
+              "xRange": [
+                -1,
+                6
+              ],
+              "yRange": [
+                -1,
+                6
+              ],
+              "constraints": [
+                {
+                  "m": 2,
+                  "c": -1,
+                  "side": "above",
+                  "inclusive": false
+                }
+              ],
+              "label": "R"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "What to do",
+                "What it decides"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "draw the boundary as if it were an equation",
+                  "where the region ends"
+                ],
+                [
+                  "2",
+                  "dashed for < or >, solid for ⩽ or ⩾",
+                  "whether the line itself counts"
+                ],
+                [
+                  "3",
+                  "shade the side that satisfies it",
+                  "which points are solutions"
+                ]
+              ],
+              "title": "Dashed and solid are the two-variable open and filled circles"
+            },
+            "alt": "A table of the three steps for drawing an inequality region, and what each decides"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "When is the boundary line of a region drawn dashed?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: regions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A **dashed** line means the points on the line are **not** included, which is what $<$ and $>$ say. $\\leqslant$ and $\\geqslant$ take a **solid** line.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "when it is strict"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "When the inequality is strict, < or >",
+            "When it is ⩽ or ⩾",
+            "Always",
+            "Never"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Which side to shade",
+        "body": "Deciding the side is where most marks are lost, and there is a method that never fails: **test a point**.\n\nPick any point that is clearly not on the line — $(0, 0)$ is ideal when the line does not pass through the origin — and put it into the inequality. If it works, shade that side. If it does not, shade the other side.\n\nThat is more reliable than reasoning about which way the inequality points, because rearranging can flip things without your noticing.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Shade the region satisfying $y > 2x - 1$",
+            "steps": [
+              {
+                "text": "Draw $y = 2x - 1$, **dashed**, because the symbol is strict",
+                "note": "step 1 and step 2"
+              },
+              {
+                "text": "Test $(0, 0)$: is $0 > 2(0) - 1$?",
+                "note": "pick the easiest point"
+              },
+              {
+                "text": "$0 > -1$ ✓, so $(0, 0)$ **is** a solution",
+                "note": "the test tells you the side"
+              },
+              {
+                "text": "Shade the side of the line containing the origin",
+                "note": "which is the region above the line here"
+              },
+              {
+                "text": "Check another: $(3, 0)$ gives $0 > 5$ ✗, so that side is correctly unshaded",
+                "note": "one confirmation costs seconds"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Why testing beats reasoning",
+            "steps": [
+              {
+                "text": "For $2y + 3x < 12$ it is not obvious which side is which",
+                "note": "the inequality is not in the form y < …"
+              },
+              {
+                "text": "Test $(0, 0)$: $0 + 0 < 12$ ✓",
+                "note": "still just as easy"
+              },
+              {
+                "text": "So shade the side with the origin",
+                "note": "no rearranging, no chance of flipping a symbol"
+              },
+              {
+                "text": "Rearranging to $y < 6 - 1.5x$ would also work, but gives one more chance to slip",
+                "note": "the test needs no algebra at all"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "To decide which side of a line to shade, what is the most reliable method?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: regions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Test a point.** Substitute $(0, 0)$, or any point clearly off the line. If it satisfies the inequality, shade its side. It needs no rearranging, so nothing can flip.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "test a point"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Test a point such as (0, 0) in the inequality",
+            "Always shade above the line",
+            "Shade the side nearer the origin",
+            "Rearrange until y is on the left"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Several inequalities at once",
+        "body": "A question usually gives **three or four** inequalities and asks for the region satisfying **all** of them. That region is the **overlap**.\n\nTake $x \\geqslant 0$, $y \\geqslant 0$ and $x + y \\leqslant 5$.\n\n- $x \\geqslant 0$ is everything to the **right** of the y axis, with a solid boundary.\n- $y \\geqslant 0$ is everything **above** the x axis, solid.\n- $x + y \\leqslant 5$ is everything **below** the line $x + y = 5$, solid.\n\nThe three together give a **triangle** with vertices at $(0,0)$, $(5,0)$ and $(0,5)$.\n\nTo draw $x + y = 5$ quickly, find where it crosses the axes: put $x = 0$ to get $y = 5$, and $y = 0$ to get $x = 5$. Join $(0,5)$ to $(5,0)$. That is far faster than making a table of values.\n\nLabel the region **R**, because the question will ask you to.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "inequality-region",
+            "alt": "A graph showing the triangular region satisfying x greater than or equal to 0, y greater than or equal to 0 and x plus y less than or equal to 5, with all three boundaries solid and the region labelled R",
+            "props": {
+              "xRange": [
+                -1,
+                6
+              ],
+              "yRange": [
+                -1,
+                6
+              ],
+              "constraints": [
+                {
+                  "x": 0,
+                  "side": "right",
+                  "inclusive": true
+                },
+                {
+                  "m": 0,
+                  "c": 0,
+                  "side": "above",
+                  "inclusive": true
+                },
+                {
+                  "m": -1,
+                  "c": 5,
+                  "side": "below",
+                  "inclusive": true
+                }
+              ],
+              "label": "R"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Inequality",
+                "Boundary",
+                "Shade",
+                "Line"
+              ],
+              "rows": [
+                [
+                  "x ⩾ 0",
+                  "the y axis",
+                  "to the right",
+                  "solid"
+                ],
+                [
+                  "y ⩾ 0",
+                  "the x axis",
+                  "above",
+                  "solid"
+                ],
+                [
+                  "x + y ⩽ 5",
+                  "the line through (0,5) and (5,0)",
+                  "below",
+                  "solid"
+                ]
+              ],
+              "title": "The region is where all three overlap"
+            },
+            "alt": "A table of the three inequalities making the triangular region, with the boundary and the side to shade for each"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "How do you quickly draw the line $x + y = 5$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: regions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Put $x = 0$ to get $y = 5$, and $y = 0$ to get $x = 5$. Join $(0, 5)$ to $(5, 0)$. Two points, no table.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "use the axis crossings"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Find where it crosses the axes: (0, 5) and (5, 0)",
+            "Make a table of ten values",
+            "Rearrange to y = mx + c first",
+            "Plot the origin and one other point"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Reading a region off a graph",
+        "body": "The question also comes the other way round: a region is drawn, and you have to write down the inequalities.\n\nWork through the boundaries one at a time.\n\n1. Find the **equation of each boundary line**, using its gradient and intercept, or its axis crossings.\n2. Decide the **symbol** from the line style: dashed means $<$ or $>$, solid means $\\leqslant$ or $\\geqslant$.\n3. Decide the **direction** by testing a point **inside** the shaded region.\n\nStep 3 is the one to be careful with. Pick a point that is clearly inside, substitute it, and see which way the inequality has to point for it to be true.\n\nFor the triangle above, a point inside is $(1, 1)$. Testing it: $1 \\geqslant 0$ ✓, $1 \\geqslant 0$ ✓, and $1 + 1 = 2 \\leqslant 5$ ✓. All three hold, which confirms the three inequalities are right.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "What you need",
+                "Where to get it"
+              ],
+              "rows": [
+                [
+                  "the equation of the boundary",
+                  "its gradient and y intercept, or its axis crossings"
+                ],
+                [
+                  "whether it is strict",
+                  "the line style: dashed or solid"
+                ],
+                [
+                  "which way the symbol points",
+                  "test a point inside the shaded region"
+                ],
+                [
+                  "a check",
+                  "substitute the same point into all of them"
+                ]
+              ],
+              "title": "The line style and a test point settle everything"
+            },
+            "alt": "A table of how to read each inequality off a drawn region, and the evidence for each part"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "A region is drawn with a solid boundary. Which symbols could its inequality use?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "Higher tier: regions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A **solid** line means the points on it **are** included, so the symbol is $\\leqslant$ or $\\geqslant$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "⩽ or ⩾"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "⩽ or ⩾",
+            "< or >",
+            "= only",
+            "Any of them"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Integer points inside a region",
+        "body": "A common follow-up asks for the **integer coordinates** inside the region, or the point that makes something largest.\n\nFor the triangle $x \\geqslant 0$, $y \\geqslant 0$, $x + y \\leqslant 5$, the integer points are those with whole-number coordinates satisfying all three. There are **21** of them.\n\nCount them **systematically**, column by column, or you will miss some.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Count the integer points in the region $x \\geqslant 0$, $y \\geqslant 0$, $x + y \\leqslant 5$",
+            "steps": [
+              {
+                "text": "$x = 0$: $y$ can be $0$ to $5$, so **6** points",
+                "note": "start at the left and work across"
+              },
+              {
+                "text": "$x = 1$: $y$ can be $0$ to $4$, so **5** points",
+                "note": "the limit falls by one each time"
+              },
+              {
+                "text": "$x = 2$: **4** points; $x = 3$: **3**; $x = 4$: **2**; $x = 5$: **1**",
+                "note": "the pattern continues"
+              },
+              {
+                "text": "Total: $6 + 5 + 4 + 3 + 2 + 1 = 21$",
+                "note": "and the count is complete"
+              },
+              {
+                "text": "Counting at random misses points and repeats others, which is why the column order matters",
+                "note": "the method is the mark"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "x",
+                "Possible y",
+                "How many"
+              ],
+              "rows": [
+                [
+                  "0",
+                  "0 to 5",
+                  "6"
+                ],
+                [
+                  "1",
+                  "0 to 4",
+                  "5"
+                ],
+                [
+                  "2",
+                  "0 to 3",
+                  "4"
+                ],
+                [
+                  "3",
+                  "0 to 2",
+                  "3"
+                ],
+                [
+                  "4",
+                  "0 to 1",
+                  "2"
+                ],
+                [
+                  "5",
+                  "0",
+                  "1"
+                ],
+                [
+                  "",
+                  "total",
+                  "21"
+                ]
+              ],
+              "title": "Work across in order, so nothing is missed"
+            },
+            "alt": "A table counting the integer points in the region column by column"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "How many points with integer coordinates satisfy $x \\geqslant 0$, $y \\geqslant 0$ and $x + y \\leqslant 5$?",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: regions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Counting by column: $6 + 5 + 4 + 3 + 2 + 1 = 21$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "counts systematically by column"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "21"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 21,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.** On one set of axes, shade the region satisfying all three of\n\n$$x \\geqslant 1, \\qquad y > x, \\qquad x + y \\leqslant 6$$\n\n1. Which boundaries are solid and which are dashed? Say why for each.\n2. Draw and shade the region, and label it R.\n3. Test the point $(2, 3)$. Is it in the region? Show your working for all three inequalities.\n\n**Part B.**\n\n4. Write down the coordinates of one integer point inside the region.\n5. Is $(1, 1)$ inside it? Explain using one of the inequalities.\n\nQuestion 5 is the one to think about: $(1, 1)$ satisfies two of the three.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Inequality",
+                "Boundary line",
+                "Solid or dashed",
+                "Shade which side"
+              ],
+              "rows": [
+                [
+                  "x ⩾ 1",
+                  "",
+                  "",
+                  " "
+                ],
+                [
+                  "y > x",
+                  "",
+                  "",
+                  " "
+                ],
+                [
+                  "x + y ⩽ 6",
+                  "",
+                  "",
+                  " "
+                ]
+              ],
+              "title": "Test (0, 0) or another point for each"
+            },
+            "alt": "A blank table for deciding each boundary's line style and which side to shade"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "Is the point $(1, 1)$ in the region $x \\geqslant 1$, $y > x$, $x + y \\leqslant 6$?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: regions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$x \\geqslant 1$ ✓ and $1 + 1 = 2 \\leqslant 6$ ✓, but $y > x$ needs $1 > 1$, which is **false**. The point lies **on** the dashed boundary, and a dashed line is excluded.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "no, y > x fails"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "No, because y > x fails",
+            "Yes, all three hold",
+            "No, because x ⩾ 1 fails",
+            "No, because x + y ⩽ 6 fails"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: the boundary is where the marks are",
+        "body": "Two things separate a full-mark answer here, and both concern the **boundary** rather than the shading.\n\n**First: a point on a dashed line is not in the region.** This is the two-variable version of the open circle, and it is tested directly. $(1, 1)$ against $y > x$ gives $1 > 1$, which is false. The point sits exactly on the line, so it is out. Students who shade beautifully still lose this mark.\n\n**Second: say what you shaded.** Some questions ask you to shade the region that satisfies the inequalities; others ask you to shade the region that does **not**, leaving the answer unshaded. Read which, and label **R** on the part you mean. An unlabelled diagram can be read either way, and the examiner will not guess in your favour.\n\n**A check worth doing every time.** Once shaded, take a point clearly inside and substitute it into **all** the inequalities. If any fails, your shading is wrong somewhere. It takes a few seconds and it catches a reversed side, which is otherwise invisible.\n\n**Where regions lead.** A question may ask which point in the region makes something largest — for instance the greatest value of $x + 2y$. The answer is always at a **corner** of the region, because moving along any edge changes the expression steadily, so the extreme is at an end. Testing the three or four corners is enough; you never need to test the interior.\n\nThat last idea is the beginning of linear programming, and knowing it turns a hard-looking question into arithmetic on three points.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The situation",
+                "What it means"
+              ],
+              "rows": [
+                [
+                  "a point on a dashed line",
+                  "not in the region; the inequality is strict"
+                ],
+                [
+                  "a point on a solid line",
+                  "in the region"
+                ],
+                [
+                  "shade the region that satisfies",
+                  "label it R"
+                ],
+                [
+                  "shade the region that does not",
+                  "the answer is the unshaded part; say so"
+                ],
+                [
+                  "find the largest value of an expression",
+                  "test the corners, not the interior"
+                ]
+              ],
+              "title": "The shading is easy; the boundary is where marks are lost"
+            },
+            "alt": "A table of the two boundary rules that decide the last marks on a region question"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the greatest value of $x + 2y$ in the region $x \\geqslant 0$, $y \\geqslant 0$, $x + y \\leqslant 5$",
+            "steps": [
+              {
+                "text": "The extreme value is always at a **corner**",
+                "note": "because the expression changes steadily along each edge"
+              },
+              {
+                "text": "The corners are $(0,0)$, $(5,0)$ and $(0,5)$",
+                "note": "read them off the graph"
+              },
+              {
+                "text": "$(0,0)$: $0 + 0 = 0$",
+                "note": "test each one"
+              },
+              {
+                "text": "$(5,0)$: $5 + 0 = 5$",
+                "note": "the second corner"
+              },
+              {
+                "text": "$(0,5)$: $0 + 10 = 10$",
+                "note": "the third"
+              },
+              {
+                "text": "So the greatest value is **10**, at $(0, 5)$",
+                "note": "three substitutions, no searching"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "In a region bounded by straight lines, where is the largest value of an expression like $x + 2y$ found?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: regions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The expression changes **steadily** along each edge, so its extreme values sit at the **corners**. Testing the three or four corners is enough.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "at a corner"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "At a corner of the region",
+            "At the centre of the region",
+            "Anywhere inside it",
+            "On the longest edge"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- This topic is **Higher tier**.\n- An inequality in two variables is satisfied by a **region** of points, not by single numbers.\n- Draw the **boundary** by treating the inequality as an equation.\n- **Dashed** for $<$ and $>$; **solid** for $\\leqslant$ and $\\geqslant$. This is the two-variable open and filled circle.\n- Decide the side by **testing a point**, usually $(0, 0)$. It needs no rearranging, so nothing can flip.\n- For several inequalities, the region is the **overlap** of all of them.\n- Draw a line like $x + y = 5$ from its **axis crossings**: $(0, 5)$ and $(5, 0)$.\n- Reading a region off a graph: equation from the line, symbol from the **line style**, direction from a **point inside**.\n- A point **on a dashed line is not in the region**.\n- Always **label R**, and read whether the question wants the region shaded or left unshaded.\n- Count integer points **column by column**, so none is missed. The triangle here has **21**.\n- The largest or smallest value of an expression in a region is always at a **corner**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Tier",
+                  "Higher only"
+                ],
+                [
+                  "A solution",
+                  "a point, and together they fill a region"
+                ],
+                [
+                  "The boundary",
+                  "the inequality treated as an equation"
+                ],
+                [
+                  "Dashed",
+                  "< or >: the line is not included"
+                ],
+                [
+                  "Solid",
+                  "⩽ or ⩾: the line is included"
+                ],
+                [
+                  "Which side",
+                  "test a point, usually (0, 0)"
+                ],
+                [
+                  "Several inequalities",
+                  "the region is the overlap"
+                ],
+                [
+                  "Drawing x + y = 5",
+                  "join its axis crossings"
+                ],
+                [
+                  "Reading one off",
+                  "equation, then line style, then a point inside"
+                ],
+                [
+                  "On a dashed line",
+                  "not in the region"
+                ],
+                [
+                  "Always",
+                  "label R and say which part you mean"
+                ],
+                [
+                  "Largest value",
+                  "at a corner of the region"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of inequality regions covering the boundary, the shading, reading a region and the corner rule"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "When is the boundary line of a region drawn dashed?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **dashed** line means the points on it are **not** included, which is what the strict symbols say.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "when it is strict"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "When the inequality is < or >",
+        "When it is ⩽ or ⩾",
+        "Always",
+        "Only for vertical lines"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What does a solution of an inequality in two variables look like?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With two variables a solution is a **pair** of numbers, that is a **point**. All the solutions together fill a region.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a point"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A point (x, y)",
+        "A single number",
+        "A line",
+        "An equation"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What is the most reliable way to decide which side of a line to shade?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Test a point.** If it satisfies the inequality, shade its side. No rearranging means nothing can flip.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "test a point"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Test a point such as (0, 0)",
+        "Always shade above",
+        "Always shade towards the origin",
+        "Rearrange until y is on the left"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What letter is conventionally used to label the required region?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The region is labelled **R**, and an unlabelled diagram can be read either way.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "R"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "R",
+        "S",
+        "A",
+        "X"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "How do you quickly draw the line $x + y = 5$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Put $x = 0$ for $y = 5$, and $y = 0$ for $x = 5$. Two points, and no table.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "use the axis crossings"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Join its axis crossings (0, 5) and (5, 0)",
+        "Make a table of ten values",
+        "Plot the origin and the point (1, 1)",
+        "Rearrange to y = mx + c and use the gradient"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Is the point $(1, 1)$ a solution of $y > x$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$y > x$ needs $1 > 1$, which is **false**. The point is **on** the boundary, and a strict inequality excludes the line.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no, it is on the line"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "No, it lies on the line and the symbol is strict",
+        "Yes, because 1 is not less than 1",
+        "Yes, because it is on the boundary",
+        "It cannot be decided"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "A region is drawn with a solid boundary. Which symbol does its inequality use?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Solid** means the points on the line **are** included, so the symbol is $\\leqslant$ or $\\geqslant$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "⩽ or ⩾"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "⩽ or ⩾",
+        "< or >",
+        "= only",
+        "Any symbol at all"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Testing $(0, 0)$ in $2y + 3x < 12$ gives $0 < 12$. What does that tell you?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The origin **satisfies** the inequality, so it lies **inside** the region. Shade its side.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "shade the side with the origin"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Shade the side containing the origin",
+        "Shade the side away from the origin",
+        "The origin is on the boundary",
+        "Nothing useful"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Three inequalities are given. What region satisfies all of them?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "All three must hold at once, so the region is the **overlap**, where the three shaded areas coincide.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the overlap"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The overlap of the three regions",
+        "The largest of the three",
+        "The union of the three",
+        "The area outside all three"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "How many integer points satisfy $x \\geqslant 0$, $y \\geqslant 0$ and $x + y \\leqslant 3$?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Column by column: $x = 0$ gives 4, $x = 1$ gives 3, $x = 2$ gives 2, $x = 3$ gives 1. Total $4 + 3 + 2 + 1 = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "counts by column"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "How many integer points satisfy $x \\geqslant 0$, $y \\geqslant 0$ and $x + y \\leqslant 5$?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$6 + 5 + 4 + 3 + 2 + 1 = 21$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "counts by column"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "21"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 21,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "In a region bounded by straight lines, where is the greatest value of $x + 2y$ found?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The expression changes **steadily** along each edge, so the extreme values are at the **corners**. Test the three or four corners.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "at a corner"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "At a corner of the region",
+        "At its centre",
+        "Anywhere inside",
+        "On the longest edge"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "For the region $x \\geqslant 0$, $y \\geqslant 0$, $x + y \\leqslant 5$, what is the greatest value of $x + 2y$?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Test the corners: $(0,0)$ gives 0, $(5,0)$ gives 5, $(0,5)$ gives 10. The greatest is **10**, at $(0, 5)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the corners"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tests each one"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why is testing a point better than reasoning about which way the inequality points?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rearranging an inequality can **reverse** it — particularly if you divide by a negative — and the slip is invisible. Substituting a point needs no rearranging at all.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rearranging can flip the symbol"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Rearranging can flip the symbol without you noticing",
+        "It is the only method allowed",
+        "Reasoning never works",
+        "Points are easier to plot"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A question asks you to shade the region that does NOT satisfy the inequalities. What should your answer show?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "If the shading marks what fails, the **answer is the unshaded part**. Say which convention you used and label it, or the diagram can be read either way.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the answer is the unshaded part, labelled"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The required region left unshaded, and said so",
+        "Nothing shaded at all",
+        "Both regions shaded",
+        "The same as shading the region that does satisfy them"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Which point is inside the region $x \\geqslant 1$, $y > x$, $x + y \\leqslant 6$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(2,3)$: $2 \\geqslant 1$ ✓, $3 > 2$ ✓, $2 + 3 = 5 \\leqslant 6$ ✓. $(1,1)$ fails $y > x$; $(0,4)$ fails $x \\geqslant 1$; $(4,3)$ fails $y > x$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(2, 3)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "(2, 3)",
+        "(1, 1)",
+        "(0, 4)",
+        "(4, 3)"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Shade the region satisfying $x \\geqslant 1$, $y > x$ and $x + y \\leqslant 6$. Say which boundaries are dashed and which are solid, and show that $(2, 3)$ lies inside the region.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The boundary of the first inequality is the vertical line x equals one, drawn solid because the symbol includes the line. The boundary of the second is the line y equals x, drawn dashed because the symbol is strictly greater than, so points on the line are not part of the region. The boundary of the third is the line x plus y equals six, which passes through the points zero, six and six, zero, and it is drawn solid because that symbol includes the line as well. The required region is the overlap of the three, and should be labelled R. To show that the point two, three lies inside it, substitute into all three inequalities. For the first, two is greater than or equal to one, which is true. For the second, three is greater than two, which is true. For the third, two plus three is five, which is less than or equal to six, so that is true as well. Since all three inequalities hold, the point lies inside the region.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 1 drawn solid"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = x drawn dashed, because the inequality is strict"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x + y = 6 drawn solid, through (0, 6) and (6, 0)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "shades the overlap and labels it R"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes (2, 3) into all three inequalities"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "shows all three hold, so the point is inside"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Draws x = 1 as a solid line",
+          "marks": 1
+        },
+        {
+          "text": "Draws y = x dashed, because the inequality is strict",
+          "marks": 1
+        },
+        {
+          "text": "Draws x + y = 6 solid, using its axis crossings",
+          "marks": 1
+        },
+        {
+          "text": "Shades the overlap of all three and labels it R",
+          "marks": 1
+        },
+        {
+          "text": "Substitutes (2, 3) into all three inequalities",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that all three hold, so the point is inside",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The boundaries.**\n\n- $x \\geqslant 1$: the vertical line $x = 1$, **solid**, since the symbol includes the line.\n- $y > x$: the line $y = x$, **dashed**, since the symbol is strict — points on it are **out**.\n- $x + y \\leqslant 6$: the line through $(0, 6)$ and $(6, 0)$, **solid**.\n\nShade the **overlap** of the three and label it **R**.\n\n**Testing $(2, 3)$.**\n\n- $x \\geqslant 1$: $2 \\geqslant 1$ ✓\n- $y > x$: $3 > 2$ ✓\n- $x + y \\leqslant 6$: $2 + 3 = 5 \\leqslant 6$ ✓\n\nAll three hold, so $(2, 3)$ is inside. Substituting into **every** inequality is what earns the final mark — checking one is not a demonstration."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A student shades the region for $y > 2x - 1$ and includes the point $(1, 1)$, which lies on the boundary line. Explain the error, and describe a check that would have caught it.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: regions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The inequality is strictly greater than, so the boundary line itself is not part of the region and should be drawn dashed rather than solid. The point one, one lies exactly on the line, because two times one minus one is one, and the inequality requires y to be strictly greater than that value. Since one is not greater than one, the point does not satisfy the inequality and must be excluded from the region. The check that would have caught it is simply to substitute the point into the original inequality before including it. Putting x equal to one and y equal to one gives one is greater than one, which is false, so the point is not a solution. This is the two variable version of using an open circle on a number line, where the endpoint is excluded for a strict inequality.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states that a strict inequality excludes the boundary, which should be dashed"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "shows that (1, 1) lies on the line, since 2(1) − 1 = 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "concludes 1 > 1 is false, so the point is not a solution"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "describes substituting the point into the inequality as the check"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "States that a strict inequality excludes its boundary line, which is drawn dashed",
+          "marks": 1
+        },
+        {
+          "text": "Shows that (1, 1) lies on the line",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that 1 > 1 is false, so the point is excluded",
+          "marks": 1
+        },
+        {
+          "text": "Describes substituting the point as the check that catches it",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The error.** $y > 2x - 1$ is **strict**, so the boundary is **not** part of the region and is drawn **dashed**.\n\n**Why $(1, 1)$ is out.** It lies exactly **on** the line: $2(1) - 1 = 1$. The inequality needs $y$ **strictly greater** than that, and $1 > 1$ is **false**.\n\n**The check.** Substitute the point into the original inequality before including it. $(1, 1)$ gives $1 > 1$ ✗ — caught in seconds.\n\nThis is the two-variable version of the **open circle** on a number line: a strict inequality always excludes its own boundary."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Draw each boundary by treating the inequality as an equation, and use the **axis crossings** rather than a table of values.\n\nDecide the line style before you draw it: dashed for a strict inequality, solid otherwise. It is a mark on its own.\n\nChoose the side by substituting $(0, 0)$, or another point clearly off the line. Do not rearrange first.\n\nShade the overlap of all the inequalities, and **label it R**. If the question asks you to shade what fails instead, say so on the diagram.\n\nCheck by taking a point inside and testing it against every inequality, not just one.\n\nIf asked for a greatest or least value, test the corners only.\n\nAnd remember a point on a dashed line is **not** in the region, however clearly it sits inside the shading.",
+    "examinerErrors": [
+      "Drawing a solid line for a strict inequality, or a dashed line for an inclusive one.",
+      "Shading the wrong side, usually after rearranging and flipping a symbol.",
+      "Leaving the region unlabelled, so the diagram can be read either way.",
+      "Including a point that lies on a dashed boundary.",
+      "Making a table of values instead of using the axis crossings.",
+      "Checking only one inequality when confirming a point is inside.",
+      "Searching the interior for the largest value of an expression instead of testing the corners.",
+      "Shading the failing region when the question asked for the satisfying one, without saying which."
+    ],
+    "grade9Looks": "A top answer decides each line style from the symbol before drawing anything, and picks the side by substituting rather than by reasoning, because it knows rearranging is where the flip happens. It labels R without being reminded, and states which convention it used when the question is ambiguous. Asked to justify that a point is inside, it substitutes into every inequality rather than the convenient one. And faced with a greatest-value question it goes straight to the corners, knowing that a linear expression cannot have an interior maximum."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
