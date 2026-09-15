@@ -171,6 +171,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Pressure in fluids', topicId: 'pressure-in-fluids' },
     ] },
     { year: 10, term: 'Spring 1', topics: [
+      // Checking AQA 8463 against the school's overview found 4.3.1.1 and 4.3.1.2 in
+      // neither, though both are examinable and density carries required practical 5.
+      { title: 'Density and changes of state', topicId: 'density-and-changes-of-state' },
       // The school teaches internal energy, specific heat capacity and latent heat as two
       // rows; one written topic covers both, so they are listed here as a single line.
       { title: 'Internal energy, specific heat capacity and latent heat', topicId: 'thermal-physics' },
@@ -179,6 +182,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     { year: 10, term: 'Spring 2', topics: [
       { title: 'Electromagnetic waves', topicId: 'electromagnetic-spectrum' },
       { title: 'Light: reflection and refraction', topicId: 'light-reflection-and-refraction' },
+      // Absent from the school's overview too: lenses and black body radiation are
+      // physics only, and waves for detection are physics only and Higher tier.
+      { title: 'Lenses', topicId: 'lenses' },
+      { title: 'Infrared radiation and black bodies', topicId: 'infrared-radiation-and-black-bodies' },
+      { title: 'Waves for detection and exploration', topicId: 'waves-for-detection-and-exploration' },
     ] },
     { year: 10, term: 'Summer 1', topics: [
       { title: 'Static electricity and electric fields', topicId: 'static-electricity-and-electric-fields' },
@@ -303,10 +311,13 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Osmoregulation and the kidneys', topicId: 'osmoregulation-and-the-kidneys' },
     ] },
     { year: 10, term: 'Summer', topics: [
-      { title: 'Ecosystems and interdependence' },
-      { title: 'Material cycles' },
-      { title: 'Cells, mitosis and growth' },
-      { title: 'The nervous system and the brain' },
+      { title: 'Ecosystems and interdependence', topicId: 'ecosystems-and-interdependence' },
+      { title: 'Material cycles', topicId: 'material-cycles' },
+      { title: 'Cells, mitosis and growth', topicId: 'cells-mitosis-and-growth' },
+      { title: 'The nervous system and the brain', topicId: 'the-nervous-system-and-the-brain' },
+      // Spec points 2.15B to 2.17B — the eye, its defects and their correction — appeared
+      // in no row of the school's plan, so this one was added.
+      { title: 'The eye and its defects', topicId: 'the-eye-and-its-defects' },
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Meiosis and sexual reproduction' },
