@@ -26,6 +26,10 @@ function DiagramFigure({ component, children }: { component: string; children: R
     // items-center, not the default stretch: an svg with a viewBox and width:100% has
     // no intrinsic height, so a stretching flex parent pulls it to the height of the
     // tallest thing in the grid row and the drawing floats in a sea of whitespace.
+    // That alone was not enough -- it centred the drawing but left the figure itself
+    // stretched, so a short verb table still sat in a box sized to the vocabulary list
+    // beside it. The grid in Lesson.tsx now uses items-start, so the figure takes its
+    // own height and this keeps the drawing centred within it.
     <figure ref={ref} className="flex items-center justify-center rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={component}>
       {children}
     </figure>

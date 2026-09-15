@@ -141,7 +141,7 @@ export function Lesson() {
         <h1 className="text-2xl font-bold leading-tight">{step.title}</h1>
       </div>
 
-      <div className={paired ? 'grid grid-cols-1 gap-4 md:grid-cols-2' : 'flex flex-col gap-4'}>
+      <div className={paired ? 'grid grid-cols-1 items-start gap-4 md:grid-cols-2' : 'flex flex-col gap-4'}>
         {step.visuals.map((v, i) => (
           <Visual key={i} visual={v} />
         ))}

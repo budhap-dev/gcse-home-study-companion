@@ -98,3 +98,38 @@ describe('escaped dollars', () => {
     expect(flags('\\overline{A . B}'), 'a Boolean expression with a NOT').toBe(false)
   })
 })
+
+/**
+ * marked has always turned a Markdown table into a real <table>, but nothing in the
+ * stylesheet targeted one, so every cell rendered with no border and no padding and the
+ * columns ran together: a tempo table in the Music set work read "103Allegro" where it
+ * should have read "103  Allegro". Sixteen lesson steps across five subjects were
+ * affected, and neither the browser walk nor the clipped-text scan could see it, because
+ * the text was present and inside its box -- just unreadable.
+ *
+ * These hold the two halves of the fix: the renderer emits the scroll wrapper, and the
+ * stylesheet targets the elements inside it.
+ */
+describe('a Markdown table', () => {
+  const html = renderRichText('| Bar | Tempo |\n|---|---|\n| 103 | Allegro |\n')
+
+  it('renders as a real table', () => {
+    expect(html).toContain('<table>')
+    expect(html).toContain('<th>Bar</th>')
+    expect(html).toContain('<td>103</td>')
+  })
+
+  it('is wrapped so a wide one scrolls instead of pushing the page sideways', () => {
+    expect(html).toContain('<div class="rich-table"><table>')
+    expect(html).toContain('</table></div>')
+    // every table opened is closed inside its own wrapper
+    expect(html.match(/<div class="rich-table">/g)?.length).toBe(html.match(/<\/table><\/div>/g)?.length)
+  })
+
+  it('has cell styling in the stylesheet, or the columns run together', () => {
+    const css = readFileSync(join(import.meta.dirname, '../styles.css'), 'utf8')
+    expect(css).toMatch(/\.rich-text th,\s*\.rich-text td\s*\{[^}]*padding:/)
+    expect(css).toMatch(/\.rich-text th,\s*\.rich-text td\s*\{[^}]*border:/)
+    expect(css).toMatch(/\.rich-table\s*\{[^}]*overflow-x:\s*auto/)
+  })
+})
