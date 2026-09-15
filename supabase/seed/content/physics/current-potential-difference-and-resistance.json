@@ -1,0 +1,1628 @@
+{
+  "id": "current-potential-difference-and-resistance",
+  "subjectId": "physics",
+  "unitId": "electricity",
+  "title": "Current, potential difference and resistance",
+  "specPoints": [
+    "4.2.1.1",
+    "4.2.1.2",
+    "4.2.1.3",
+    "4.2.1.4"
+  ],
+  "order": 2,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "check",
+      "title": "Minutes are not seconds",
+      "body": "$Q = It$ needs time in **seconds**. Five minutes is 300 s, four minutes 240 s. Convert on the line before you substitute, and a whole class of lost marks disappears."
+    },
+    {
+      "kind": "remember",
+      "title": "Ammeter in, voltmeter across",
+      "body": "An **ammeter** goes **in series**, so the current it measures flows through it. A **voltmeter** goes **across** the component. Questions ask this constantly, and *in parallel with the component* is the same answer."
+    },
+    {
+      "kind": "spot",
+      "title": "Thermistor and lamp go opposite ways",
+      "body": "Hotter **filament lamp** → resistance **up**. Hotter **thermistor** → resistance **down**. They are easy to confuse and questions rely on it, so learn them as a contrasting pair rather than separately."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Never read resistance off a gradient",
+      "body": "On an I–V graph the gradient is $\\frac{1}{R}$, so steeper means **less** resistance. Instead of remembering which way round, read $V$ and $I$ at one point and calculate $R = V/I$. It works on curves too."
+    },
+    {
+      "kind": "remember",
+      "title": "Through the origin is part of the answer",
+      "body": "*A straight line* is not proportionality; **a straight line through the origin** is. When describing the graph for an ohmic resistor, those three extra words are usually the difference between one mark and two."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Charge, current and the equation that links them",
+        "body": "For electrical charge to flow through a **closed circuit**, the circuit must include a **source of potential difference** — a cell or a power supply. Without one, nothing flows.\n\n**Electric current is a flow of electrical charge.** More precisely, the size of the current is the **rate of flow of charge**: how much charge passes a point each second.\n\n$$\\text{charge flow} = \\text{current} \\times \\text{time} \\qquad Q = It$$\n\n- charge flow, $Q$, in **coulombs, C**\n- current, $I$, in **amperes, A** (*amp* is accepted)\n- time, $t$, in **seconds, s**\n\nThe time must be in **seconds**. A question in minutes is a question that wants you to multiply by 60 first, and forgetting is the single commonest arithmetic loss here.\n\nOne more fact, and it is the foundation of everything in the next topic:\n\n$$\\textbf{A current has the same value at any point in a single closed loop.}$$\n\nCharge is not used up as it goes round. A lamp does not consume current — it transfers energy. The same current that leaves the cell returns to it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Charge flow",
+                  "equation": "Q = I t",
+                  "units": "coulombs, C"
+                },
+                {
+                  "name": "Current",
+                  "equation": "I = Q ÷ t",
+                  "units": "amperes, A"
+                },
+                {
+                  "name": "Time",
+                  "equation": "t = Q ÷ I",
+                  "units": "seconds, s"
+                }
+              ]
+            },
+            "alt": "An equation card giving charge flow as current times time, with the units of each quantity"
+          },
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A simple series circuit with a cell, a switch and a lamp, showing that a closed loop with a source of potential difference is needed for charge to flow",
+            "props": {
+              "supply": {
+                "pd": 6,
+                "label": "cell"
+              },
+              "parts": [
+                {
+                  "kind": "switch",
+                  "label": "switch"
+                },
+                {
+                  "kind": "lamp",
+                  "label": "lamp"
+                },
+                {
+                  "kind": "ammeter",
+                  "label": "ammeter"
+                }
+              ],
+              "note": "A closed loop with a source of potential difference"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Quantity",
+                "Symbol",
+                "Unit",
+                "Unit symbol"
+              ],
+              "rows": [
+                [
+                  "charge flow",
+                  "Q",
+                  "coulomb",
+                  "C"
+                ],
+                [
+                  "current",
+                  "I",
+                  "ampere (amp)",
+                  "A"
+                ],
+                [
+                  "time",
+                  "t",
+                  "second",
+                  "s"
+                ]
+              ],
+              "title": "Time in seconds, always"
+            },
+            "alt": "A table of the three quantities in Q = I t with their symbols and units"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "A current of 2.0 A flows for 30 s. What charge flows, in coulombs?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "charge and current",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$Q = It = 2.0 \\times 30 = 60$ C.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "Q = I t"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "60"
+            }
+          ],
+          "discriminators": [],
+          "answer": 60,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "C"
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Circuit symbols",
+        "body": "Circuit diagrams use **standard symbols**, and you must be able to **draw and interpret** them. Marks are lost for symbols that are nearly right, so learn the details:\n\n- A **cell** is one **long thin** line and one **short thick** line. The long line is the positive terminal. Two or more cells together make a **battery**.\n- A **lamp** is a circle with a **cross** in it, drawn corner to corner.\n- A **resistor** is a plain **rectangle** — not a zigzag, which is the American symbol.\n- A **switch** is a line that lifts away from one of two dots.\n- An **ammeter** is a circle with **A**, a **voltmeter** a circle with **V**.\n- A **diode** is a **triangle pointing at a bar**. The triangle points the way the current can flow.\n- A **thermistor** is a resistor with a **diagonal line** through it; an **LDR** is a resistor in a circle with **two arrows pointing in**.\n\nThe two meters are connected differently, and this is asked constantly:\n\n- An **ammeter** goes **in series** — in the loop, so the current it measures passes through it.\n- A **voltmeter** goes **in parallel**, **across** the component whose potential difference you want.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Component",
+                "How the symbol is drawn",
+                "Watch out for"
+              ],
+              "rows": [
+                [
+                  "cell",
+                  "a long thin line and a short thick line",
+                  "the long line is positive"
+                ],
+                [
+                  "battery",
+                  "two or more cells in a row",
+                  ""
+                ],
+                [
+                  "lamp",
+                  "a circle with a cross in it",
+                  "not a circle with a dot"
+                ],
+                [
+                  "resistor",
+                  "a plain rectangle",
+                  "not a zigzag"
+                ],
+                [
+                  "switch",
+                  "a line lifting from one of two dots",
+                  ""
+                ],
+                [
+                  "ammeter",
+                  "a circle with A in it",
+                  "connected in series"
+                ],
+                [
+                  "voltmeter",
+                  "a circle with V in it",
+                  "connected across a component"
+                ],
+                [
+                  "diode",
+                  "a triangle pointing at a bar",
+                  "the triangle shows the direction"
+                ],
+                [
+                  "thermistor",
+                  "a rectangle with a diagonal line",
+                  ""
+                ],
+                [
+                  "LDR",
+                  "a rectangle in a circle with two arrows in",
+                  ""
+                ]
+              ],
+              "title": "Ammeter in series, voltmeter across"
+            },
+            "alt": "A table of standard circuit symbols and how each one is drawn"
+          },
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A series circuit containing a cell, a resistor, a diode and a lamp drawn in standard circuit symbols",
+            "props": {
+              "supply": {
+                "pd": 6
+              },
+              "parts": [
+                {
+                  "kind": "resistor",
+                  "label": "resistor"
+                },
+                {
+                  "kind": "diode",
+                  "label": "diode"
+                },
+                {
+                  "kind": "lamp",
+                  "label": "lamp"
+                }
+              ],
+              "note": "Standard symbols: rectangle, triangle and bar, circle with a cross"
+            }
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "How is an ammeter connected into a circuit?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "circuit symbols",
+          "calculator": "either",
+          "tags": [],
+          "solution": "An **ammeter** measures current, so it must be **in series** — in the loop, with the current passing through it. A **voltmeter** goes **across** a component.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "in series"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "In series, so the current passes through it",
+            "In parallel, across a component",
+            "Either way works",
+            "Between the two terminals of the cell"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Potential difference, current and resistance",
+        "body": "The current through a component depends on **both** the **resistance** of the component and the **potential difference** across it.\n\n$$\\textbf{The greater the resistance, the smaller the current for a given potential difference.}$$\n\n$$V = IR$$\n\n- potential difference, $V$, in **volts, V**\n- current, $I$, in **amperes, A**\n- resistance, $R$, in **ohms, Ω**\n\nQuestions are set using the term **potential difference**, but you get credit for either *potential difference* or *voltage*.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Potential difference",
+                  "equation": "V = I R",
+                  "units": "volts, V"
+                },
+                {
+                  "name": "Current",
+                  "equation": "I = V ÷ R",
+                  "units": "amperes, A"
+                },
+                {
+                  "name": "Resistance",
+                  "equation": "R = V ÷ I",
+                  "units": "ohms, Ω"
+                }
+              ]
+            },
+            "alt": "An equation card giving potential difference as current times resistance, rearranged three ways"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A 12 V supply is connected across a 4 Ω resistor. Find the current",
+            "steps": [
+              {
+                "text": "Write the equation: $V = IR$",
+                "note": "and decide which letter you want"
+              },
+              {
+                "text": "Rearrange for current: $I = \\dfrac{V}{R}$",
+                "note": "the one being divided is the one you want"
+              },
+              {
+                "text": "Substitute: $I = \\dfrac{12}{4}$",
+                "note": "put the numbers in before working anything out"
+              },
+              {
+                "text": "$I = 3$ A",
+                "note": "with the unit"
+              },
+              {
+                "text": "Check by going back: $V = 3 \\times 4 = 12$ V ✓",
+                "note": "one line, and it catches a rearranging error"
+              },
+              {
+                "text": "If the resistance were 6 Ω instead, the current would be 2 A",
+                "note": "bigger resistance, smaller current"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A circuit with a twelve volt supply and a four ohm resistor, labelled with the current of three amperes that flows",
+            "props": {
+              "supply": {
+                "pd": 12
+              },
+              "parts": [
+                {
+                  "kind": "resistor",
+                  "label": "R",
+                  "resistance": 4
+                }
+              ]
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Resistance",
+                "Potential difference",
+                "Current"
+              ],
+              "rows": [
+                [
+                  "4 Ω",
+                  "12 V",
+                  "3 A"
+                ],
+                [
+                  "6 Ω",
+                  "12 V",
+                  "2 A"
+                ],
+                [
+                  "12 Ω",
+                  "12 V",
+                  "1 A"
+                ],
+                [
+                  "24 Ω",
+                  "12 V",
+                  "0.5 A"
+                ]
+              ],
+              "title": "Double the resistance, halve the current"
+            },
+            "alt": "A table showing how the current falls as the resistance rises for a fixed twelve volt supply"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A potential difference of 12 V is applied across a 4 Ω resistor. What is the current, in amperes?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "Ohm's law",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "$I = \\dfrac{V}{R} = \\dfrac{12}{4} = 3$ A.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "rearranges V = IR"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "A"
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Components whose resistance changes",
+        "body": "For **some** resistors the value of $R$ stays **constant**; for others it **changes as the current changes**. Knowing which is which is the point of this section.\n\n**Ohmic conductor** (a resistor at constant temperature). The current is **directly proportional** to the potential difference, so the resistance stays **constant** as the current changes. Its graph of current against potential difference is a **straight line through the origin**.\n\n**Filament lamp.** Its resistance **increases as the temperature of the filament increases**. A bigger current heats the filament more, so the resistance rises and the graph **curves over**, getting less steep.\n\n**Diode.** The current flows in **one direction only**. In the reverse direction the diode has a **very high resistance**, so almost no current flows.\n\n**Thermistor.** Its resistance **decreases as the temperature increases** — the opposite way round to the filament lamp, which is why they are easy to confuse. Used in a **thermostat**: as the room warms, the thermistor's resistance falls, the current rises, and the circuit switches the heating off.\n\n**LDR** (light-dependent resistor). Its resistance **decreases as light intensity increases**. Used to **switch lights on when it gets dark**: less light means more resistance, and the circuit responds.\n\nThe two sensors are worth learning as a pair, because they work the same way: *more of the thing, less resistance*.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Component",
+                "Is R constant?",
+                "What changes it",
+                "Used for"
+              ],
+              "rows": [
+                [
+                  "resistor at constant temperature",
+                  "yes",
+                  "nothing",
+                  "a fixed resistance"
+                ],
+                [
+                  "filament lamp",
+                  "no",
+                  "resistance rises as it gets hotter",
+                  "lighting"
+                ],
+                [
+                  "diode",
+                  "no",
+                  "very high resistance in reverse",
+                  "letting current flow one way"
+                ],
+                [
+                  "thermistor",
+                  "no",
+                  "resistance falls as temperature rises",
+                  "thermostats"
+                ],
+                [
+                  "LDR",
+                  "no",
+                  "resistance falls as light rises",
+                  "switching lights on at dusk"
+                ]
+              ],
+              "title": "More heat or more light means less resistance in a sensor"
+            },
+            "alt": "A table of circuit components showing whether the resistance is constant and what changes it"
+          },
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A circuit containing a thermistor and a lamp in series with a cell, as used in a thermostat",
+            "props": {
+              "supply": {
+                "pd": 6
+              },
+              "parts": [
+                {
+                  "kind": "thermistor",
+                  "label": "thermistor"
+                },
+                {
+                  "kind": "lamp",
+                  "label": "heater"
+                }
+              ],
+              "note": "As the room warms, the thermistor's resistance falls"
+            }
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "What happens to the resistance of a thermistor as the temperature increases?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "components",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A thermistor's resistance **decreases** as temperature rises — the opposite way round to a filament lamp, whose resistance **increases** as it heats up.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it decreases"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "It decreases",
+            "It increases",
+            "It stays the same",
+            "It falls to zero"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "The two required practicals",
+        "body": "Two required practicals belong to this section, and both are examinable in detail.\n\n**Required practical 3 — factors affecting resistance.** Use circuit diagrams to set up circuits and investigate:\n\n- the **length of a wire** at constant temperature;\n- **combinations of resistors in series and parallel**.\n\nMethod for the wire: connect the wire into a circuit with an **ammeter in series** and a **voltmeter across the wire**. Measure the current and potential difference for several lengths, and calculate $R = \\dfrac{V}{I}$ at each. The resistance is **directly proportional to length**, so the graph of resistance against length is a **straight line through the origin**.\n\nThe phrase **at constant temperature** is there for a reason: a current warms the wire, and a warmer wire has a higher resistance, which would spoil the result. So use a **low current**, and switch off between readings.\n\n**Required practical 4 — I–V characteristics.** Use circuit diagrams to construct circuits and investigate the **I–V characteristics** of a **filament lamp**, a **diode** and a **resistor at constant temperature**.\n\nThe circuit is the same each time: the component, an **ammeter in series** with it, a **voltmeter across** it, and a way of varying the potential difference. Record current against potential difference and plot the graph. To get the negative half, **reverse the connections** to the supply.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "The circuit used to measure the resistance of a component, with an ammeter in series and the component in the loop with a cell",
+            "props": {
+              "supply": {
+                "pd": 6
+              },
+              "parts": [
+                {
+                  "kind": "ammeter",
+                  "label": "A"
+                },
+                {
+                  "kind": "resistor",
+                  "label": "the component"
+                },
+                {
+                  "kind": "switch"
+                }
+              ],
+              "note": "Ammeter in series; the voltmeter goes across the component"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Practical",
+                "What is varied",
+                "What is measured",
+                "The result"
+              ],
+              "rows": [
+                [
+                  "3: resistance of a wire",
+                  "the length of the wire",
+                  "current and potential difference",
+                  "resistance is proportional to length"
+                ],
+                [
+                  "3: resistor combinations",
+                  "series or parallel",
+                  "current and potential difference",
+                  "series adds; parallel reduces"
+                ],
+                [
+                  "4: I-V characteristics",
+                  "the potential difference",
+                  "the current",
+                  "a line, a curve or a one-way graph"
+                ]
+              ],
+              "title": "The same circuit each time: ammeter in series, voltmeter across"
+            },
+            "alt": "A table of the two required practicals with what is measured and the expected result"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Component",
+                "Shape of the graph",
+                "What it shows"
+              ],
+              "rows": [
+                [
+                  "resistor at constant temperature",
+                  "a straight line through the origin",
+                  "resistance is constant"
+                ],
+                [
+                  "filament lamp",
+                  "an S shape, getting less steep",
+                  "resistance rises as it heats up"
+                ],
+                [
+                  "diode",
+                  "almost no current one way, rising sharply the other",
+                  "it conducts in one direction only"
+                ]
+              ],
+              "title": "Read the shape, then say what it means"
+            },
+            "alt": "A table of the three I to V graphs expected in required practical 4 and what each shape shows"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Why must the wire be kept at a constant temperature in required practical 3?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "required practicals",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The resistance of a wire **rises with temperature**, so warming would change the very quantity being measured. Use a **low current** and switch off between readings.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "resistance rises with temperature"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "options": [
+            "A warmer wire has a higher resistance",
+            "A warmer wire is dangerous to touch",
+            "The ammeter only works when it is cold",
+            "Heating makes the wire grow longer"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. A current of 3.0 A flows for 5 minutes. What charge flows? (Careful with the time.)\n2. Draw the circuit symbols for a cell, a resistor, a lamp and a diode.\n3. Where does a voltmeter go, and where does an ammeter go?\n\n**Part B.**\n\n4. A 9 V supply drives a current of 0.75 A through a resistor. Find its resistance.\n5. What is the current through a 20 Ω resistor with 5 V across it?\n6. State what happens to the resistance of a thermistor as it gets warmer, and of an LDR as it gets darker.\n\n**Part C.**\n\n7. Sketch the I–V graph for a filament lamp and explain its shape.\n8. Describe how you would measure the resistance of a length of wire, naming the instruments and where each is connected.\n\nFor question 1, convert the minutes to seconds before you do anything else — 5 minutes is 300 s.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Charge flow",
+                  "equation": "Q = I t",
+                  "units": "time in seconds"
+                },
+                {
+                  "name": "Potential difference",
+                  "equation": "V = I R",
+                  "units": "pd in volts"
+                }
+              ]
+            },
+            "alt": "An equation card with the two equations needed for this topic"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Equation",
+                "Rearranged",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "charge in 5 minutes",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "resistance from 9 V and 0.75 A",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "current through 20 Ω at 5 V",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Write the equation before the numbers"
+            },
+            "alt": "A blank table for the calculations in Part B"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "A current of 3.0 A flows for 5 minutes. What charge flows, in coulombs?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "charge and current",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "5 minutes is $5 \\times 60 = 300$ s. Then $Q = It = 3.0 \\times 300 = 900$ C.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "converts 5 minutes to 300 s"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "Q = I t"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "900"
+            }
+          ],
+          "discriminators": [],
+          "answer": 900,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "C"
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: reading an I-V graph",
+        "body": "**The graph is drawn current against potential difference**, so the **gradient is not the resistance** — it is $\\frac{1}{R}$. A **steeper** line means a **smaller** resistance. This catches a lot of people, and the safe method is never to use the gradient at all: pick a point on the graph, read off $V$ and $I$, and calculate $R = \\dfrac{V}{I}$.\n\n**Explaining the three shapes.**\n\n- **Resistor at constant temperature** — a straight line through the origin. Current is **directly proportional** to potential difference, so $R$ is **constant**. *Through the origin* is part of the answer: a straight line that misses the origin is not proportionality.\n- **Filament lamp** — the line curves over, getting **less steep** as the potential difference rises. A larger current makes the filament **hotter**, and a hotter filament has a **higher resistance**, so the current rises less than proportionally. Because it is symmetrical, the graph is an S shape through the origin.\n- **Diode** — almost **no current** in the reverse direction, because the resistance that way is **very high**, then a sharp rise in the forward direction. The graph is not symmetrical, and that asymmetry is the whole point.\n\n**Why a hotter filament resists more.** The atoms in the metal vibrate more when it is hotter, so the electrons collide with them more often and find it harder to get through. You are not required to give that mechanism, but it makes the fact memorable rather than arbitrary.\n\n**Thermistor or filament lamp?** They change the opposite ways, and questions exploit it:\n\n- **Filament lamp**: hotter → resistance **up**.\n- **Thermistor**: hotter → resistance **down**.\n\n**Getting the units right.** $Q = It$ needs time in **seconds**; a question in minutes or hours is testing that conversion. And write **potential difference** in preference to *voltage* — both score, but the mark schemes are written in the first.\n\n**Same current everywhere.** In a single loop the current is the same at every point. So if a question gives you a reading from one ammeter in a series circuit, you already know every other ammeter in that loop.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A filament lamp's I-V graph curves over. Explain why",
+            "steps": [
+              {
+                "text": "As the potential difference increases, the **current increases**",
+                "note": "start with what changes"
+              },
+              {
+                "text": "A larger current makes the filament **hotter**",
+                "note": "the physical cause"
+              },
+              {
+                "text": "The **resistance of a filament lamp increases** as its temperature increases",
+                "note": "the fact from the spec"
+              },
+              {
+                "text": "So each extra volt produces **less extra current** than the last",
+                "note": "link resistance back to the graph"
+              },
+              {
+                "text": "The line therefore gets **less steep**: it curves over",
+                "note": "name the shape"
+              },
+              {
+                "text": "It happens the same way with the connections reversed, giving an **S shape**",
+                "note": "and it passes through the origin"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "You want",
+                "What to do",
+                "Watch out for"
+              ],
+              "rows": [
+                [
+                  "the resistance at a point",
+                  "read off V and I there, then divide",
+                  "the gradient is 1 over R, not R"
+                ],
+                [
+                  "whether R is constant",
+                  "look for a straight line through the origin",
+                  "a straight line missing the origin is not proportional"
+                ],
+                [
+                  "whether it heats up",
+                  "look for the line getting less steep",
+                  ""
+                ],
+                [
+                  "whether it is a diode",
+                  "look for one side almost flat",
+                  "the graph is not symmetrical"
+                ]
+              ],
+              "title": "Read off a point and divide; never trust the gradient"
+            },
+            "alt": "A table of what to read from an I to V graph and how, warning that the gradient is not the resistance"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "On a graph of current against potential difference, what does a steeper line mean?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Ohm's law",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The gradient is $\\frac{1}{R}$, not $R$. **Steeper means smaller resistance** — more current for each volt. Safer still: read off a point and calculate $R = V/I$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a smaller resistance"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "A smaller resistance",
+            "A larger resistance",
+            "More charge flowing",
+            "A higher temperature"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Charge flows only in a **closed circuit** containing a **source of potential difference**.\n- Current is the **rate of flow of charge**: $Q = It$, with $Q$ in **coulombs**, $I$ in **amperes**, $t$ in **seconds**.\n- **Convert minutes to seconds** before using $Q = It$.\n- **A current has the same value at any point in a single closed loop.**\n- $V = IR$: potential difference in **volts**, resistance in **ohms**.\n- **The greater the resistance, the smaller the current** for a given potential difference.\n- An **ammeter** goes **in series**; a **voltmeter** goes **across** the component.\n- A **resistor at constant temperature** is ohmic: current is **proportional** to pd, so $R$ is constant and the graph is a **straight line through the origin**.\n- A **filament lamp's** resistance **increases** as it gets hotter, so its graph **curves over**.\n- A **diode** conducts in **one direction only**, with a **very high resistance** in reverse.\n- A **thermistor's** resistance **falls as temperature rises** — used in thermostats.\n- An **LDR's** resistance **falls as light intensity rises** — used to switch lights on at dusk.\n- On an I–V graph the gradient is $\\frac{1}{R}$, so **steeper means less resistance**. Read off a point and divide instead.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Current",
+                  "the rate of flow of charge"
+                ],
+                [
+                  "Charge flow",
+                  "Q = I t, with time in seconds"
+                ],
+                [
+                  "In one loop",
+                  "the current is the same everywhere"
+                ],
+                [
+                  "Potential difference",
+                  "V = I R"
+                ],
+                [
+                  "Bigger resistance",
+                  "smaller current for the same pd"
+                ],
+                [
+                  "Ammeter",
+                  "in series"
+                ],
+                [
+                  "Voltmeter",
+                  "across the component"
+                ],
+                [
+                  "Ohmic resistor",
+                  "straight line through the origin; R constant"
+                ],
+                [
+                  "Filament lamp",
+                  "R rises as it heats; the graph curves over"
+                ],
+                [
+                  "Diode",
+                  "conducts one way; very high resistance in reverse"
+                ],
+                [
+                  "Thermistor",
+                  "hotter means less resistance; thermostats"
+                ],
+                [
+                  "LDR",
+                  "brighter means less resistance; lights at dusk"
+                ],
+                [
+                  "I-V gradient",
+                  "it is 1 over R, so steeper means less resistance"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of current, potential difference and resistance covering the two equations, the meters and the components"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "A current of 2.0 A flows for 30 s. What charge flows, in coulombs?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "charge and current",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$Q = It = 2.0 \\times 30 = 60$ C.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Q = I t"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60"
+        }
+      ],
+      "discriminators": [],
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "C"
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What is electric current?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "charge and current",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Current is the **rate of flow of charge** — how much charge passes a point each second.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the rate of flow of charge"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The rate of flow of electrical charge",
+        "The energy stored in a cell",
+        "The resistance of a component",
+        "The number of electrons in a wire"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "How is a voltmeter connected?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A voltmeter measures the potential difference **across** a component, so it is connected **in parallel** with it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "across the component"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Across the component",
+        "In series with the component",
+        "In place of the cell",
+        "It does not matter"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What is needed for charge to flow round a circuit?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "charge and current",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The circuit must be **closed** and must include a **source of potential difference**, such as a cell.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a closed loop and a source of pd"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A closed loop and a source of potential difference",
+        "A resistor",
+        "An ammeter",
+        "A switch that is open"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A potential difference of 12 V is applied across a 4 Ω resistor. What is the current, in amperes?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Ohm's law",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$I = V/R = 12/4 = 3$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "rearranges V = IR"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A current of 0.75 A flows when 9 V is applied across a resistor. What is its resistance, in ohms?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Ohm's law",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$R = V/I = 9/0.75 = 12$ Ω.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "rearranges V = IR"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A current of 3.0 A flows for 5 minutes. What charge flows, in coulombs?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "charge and current",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "5 minutes is 300 s, so $Q = 3.0 \\times 300 = 900$ C. The time must be in seconds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "converts to 300 s"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Q = I t"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "900"
+        }
+      ],
+      "discriminators": [],
+      "answer": 900,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "C"
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "What happens to the resistance of a filament lamp as it gets hotter?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "components",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A filament lamp's resistance **increases** with temperature — the opposite way round to a thermistor.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it increases"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It increases",
+        "It decreases",
+        "It stays the same",
+        "It falls to zero"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What happens to the resistance of an LDR as the light gets brighter?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "components",
+      "calculator": "either",
+      "tags": [],
+      "solution": "More light means **less** resistance, which is why an LDR can switch a lamp on when it gets **dark**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it decreases"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It decreases",
+        "It increases",
+        "It stays the same",
+        "It becomes infinite"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What is true of the current in a single closed loop?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "charge and current",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**The same at every point.** Charge is not used up going round; components transfer energy, not current.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the same at every point"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It is the same at every point",
+        "It is used up by each component",
+        "It is largest near the cell",
+        "It halves at each component"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "On a graph of current against potential difference, what does a steeper line mean?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Ohm's law",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The gradient is $\\frac{1}{R}$, so **steeper means smaller resistance**. Read off a point and divide to be safe.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a smaller resistance"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "A smaller resistance",
+        "A larger resistance",
+        "More charge in the circuit",
+        "A higher temperature"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why does the I-V graph for a filament lamp curve over?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "components",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A larger current makes the filament **hotter**, and a hotter filament has a **higher resistance**, so each extra volt gives less extra current.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "heating raises the resistance"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "A bigger current heats it, raising its resistance",
+        "The lamp runs out of charge",
+        "The ammeter becomes inaccurate",
+        "The potential difference stops rising"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "What is the shape of the I-V graph for a resistor at constant temperature?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Ohm's law",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Current is **directly proportional** to pd, so a **straight line through the origin**. Through the origin is part of the answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a straight line through the origin"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "A straight line through the origin",
+        "A curve that flattens",
+        "A line that misses the origin",
+        "Flat one way and steep the other"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why must the wire be kept at constant temperature when investigating how resistance depends on length?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "required practicals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Resistance **rises with temperature**, so warming would change the quantity being measured. Use a low current and switch off between readings.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "resistance rises with temperature"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "A warmer wire has a higher resistance",
+        "A warm wire is unsafe to handle",
+        "The ammeter fails when warm",
+        "The wire would expand and break"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A thermistor is used in a thermostat. How does it work?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "components",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A thermistor's resistance **falls** as temperature rises, so the current rises and the circuit can switch the heating off.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "resistance falls as it warms"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "As the room warms, its resistance falls and the current rises",
+        "As the room warms, its resistance rises",
+        "It keeps the resistance constant",
+        "It measures light rather than heat"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Why does a diode give an unsymmetrical I-V graph?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "components",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Current flows **one way only**: in reverse the resistance is **very high**, so almost no current flows and that half of the graph is nearly flat.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "very high resistance in reverse"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It has a very high resistance in the reverse direction",
+        "It heats up in one direction only",
+        "The voltmeter reads only one way",
+        "It stores charge one way round"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A 12 V supply is connected to a resistor. The current is 0.5 A. Find the resistance, then find the charge that flows in 4 minutes, and state what the current would be if the resistance were doubled.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "Ohm's law",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The resistance is found using the equation potential difference equals current times resistance. Rearranging gives resistance equals potential difference divided by current, so the resistance is twelve divided by nought point five, which is twenty four ohms. To find the charge, the time must first be converted into seconds. Four minutes is four times sixty, which is two hundred and forty seconds. Using charge flow equals current times time, the charge is nought point five times two hundred and forty, which is one hundred and twenty coulombs. If the resistance were doubled to forty eight ohms with the same twelve volt supply, the current would be twelve divided by forty eight, which is nought point two five amperes. This is half the original current, which is expected because for a fixed potential difference the current is inversely proportional to the resistance, so doubling the resistance halves the current.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "rearranges V = IR to find resistance"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24 Ω"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "converts 4 minutes to 240 s"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "120 C"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses the doubled resistance with the same pd"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.25 A, half the original"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 11,
+      "criteria": [
+        {
+          "text": "Rearranges V = IR correctly",
+          "marks": 1
+        },
+        {
+          "text": "Gives the resistance as 24 Ω",
+          "marks": 1
+        },
+        {
+          "text": "Converts 4 minutes into 240 seconds",
+          "marks": 1
+        },
+        {
+          "text": "Gives the charge as 120 C",
+          "marks": 1
+        },
+        {
+          "text": "Uses the doubled resistance with the same potential difference",
+          "marks": 1
+        },
+        {
+          "text": "Gives the new current as 0.25 A and relates it to the original",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The resistance.**\n\n$$R = \\frac{V}{I} = \\frac{12}{0.5} = 24\\ \\Omega$$\n\n**The charge.** Convert the time **first**:\n\n$$4 \\text{ minutes} = 4 \\times 60 = 240 \\text{ s}$$\n\n$$Q = It = 0.5 \\times 240 = 120 \\text{ C}$$\n\n**Doubling the resistance.** With the same 12 V supply and $R = 48\\ \\Omega$:\n\n$$I = \\frac{12}{48} = 0.25 \\text{ A}$$\n\nThat is **half** the original current — as expected, because for a fixed potential difference the current is **inversely proportional** to resistance. Saying *why* the answer halves is worth the last mark on its own; a bare 0.25 A does not show you knew it had to."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Describe how you would investigate the I-V characteristic of a filament lamp. Name the instruments and say where each is connected, describe the readings you would take, and explain the shape of the graph you would obtain.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "required practicals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The lamp is connected in a circuit with a cell or power supply and a way of varying the potential difference across it. An ammeter is connected in series with the lamp so that the current through the lamp passes through the ammeter, and a voltmeter is connected in parallel across the lamp so that it measures the potential difference across it. The potential difference is increased in steps, and at each step the readings on the ammeter and the voltmeter are recorded. To obtain the negative half of the graph, the connections to the supply are reversed and the readings are repeated. A graph of current against potential difference is then plotted. The graph is a curve that passes through the origin and becomes less steep as the potential difference increases, making an S shape overall. The reason is that a larger current makes the filament hotter, and the resistance of a filament lamp increases as its temperature increases, so each additional volt produces less additional current than the one before.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "ammeter in series with the lamp"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "voltmeter in parallel across the lamp"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "varies the potential difference and records both readings"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "reverses the connections to obtain the negative half"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "describes an S-shaped curve through the origin, getting less steep"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "explains it by the filament heating and its resistance rising"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 11,
+      "criteria": [
+        {
+          "text": "Connects an ammeter in series with the lamp",
+          "marks": 1
+        },
+        {
+          "text": "Connects a voltmeter across the lamp",
+          "marks": 1
+        },
+        {
+          "text": "Varies the potential difference and records both readings",
+          "marks": 1
+        },
+        {
+          "text": "Reverses the connections for the negative half",
+          "marks": 1
+        },
+        {
+          "text": "Describes the S-shaped curve getting less steep",
+          "marks": 1
+        },
+        {
+          "text": "Explains the shape by the rising resistance of a hot filament",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The circuit.**\n\n- The **lamp**, with a supply and a way of **varying the potential difference**.\n- An **ammeter in series** with the lamp, so the current through the lamp passes through it.\n- A **voltmeter in parallel**, **across** the lamp.\n\n**The readings.** Increase the potential difference in steps and record the **ammeter and voltmeter** readings at each. Then **reverse the connections** to the supply and repeat, to get the negative half of the graph.\n\n**The graph.** Plot current against potential difference. It is a **curve through the origin** that becomes **less steep** as the potential difference rises, and because reversing gives the mirror image, the whole graph is an **S shape**.\n\n**Why.** A larger current makes the filament **hotter**. The resistance of a filament lamp **increases as its temperature increases**, so each extra volt produces **less** extra current than the one before — and the line flattens.\n\nSay *in series* and *across*: naming the instruments without saying where they go scores only half."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Write the equation before the numbers, then rearrange, then substitute. Showing the equation earns a method mark even if the arithmetic fails.\n\nCheck the time units in any Q = I t question. Minutes and hours are there to be converted.\n\nSay where a meter is connected, not just its name: an ammeter in series, a voltmeter across the component.\n\nWhen describing an I-V graph, name the shape and then say what it means about the resistance.\n\nUse the words potential difference rather than voltage. Both are credited, but the mark schemes use the first.\n\nFor a required practical, name the instruments, say where each is connected, and say what is varied and what is measured.",
+    "examinerErrors": [
+      "Leaving the time in minutes in Q = I t.",
+      "Connecting an ammeter across a component instead of in series.",
+      "Saying the gradient of an I-V graph is the resistance.",
+      "Saying a filament lamp's resistance falls as it heats up.",
+      "Confusing a thermistor with an LDR.",
+      "Describing an ohmic graph as a straight line without saying through the origin.",
+      "Drawing a resistor as a zigzag rather than a rectangle.",
+      "Saying current is used up by the components in a loop."
+    ],
+    "grade9Looks": "A top answer writes the equation first and rearranges before substituting, so the method survives an arithmetic slip. It converts time units without being prompted. On graph questions it reads a point and divides rather than trusting the gradient, and when it does describe the gradient it knows it is one over the resistance. It explains the filament lamp curve by the causal chain — more current, hotter filament, higher resistance, less extra current — rather than stating that resistance changes. And it treats thermistor and LDR as one idea, more of the thing meaning less resistance, which halves what there is to remember."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

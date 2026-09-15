@@ -181,11 +181,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Light: reflection and refraction', topicId: 'light-reflection-and-refraction' },
     ] },
     { year: 10, term: 'Summer 1', topics: [
-      { title: 'Static electricity and electric fields' },
+      { title: 'Static electricity and electric fields', topicId: 'static-electricity-and-electric-fields' },
     ] },
     { year: 10, term: 'Summer 2', topics: [
-      { title: 'Current, potential difference and resistance' },
-      { title: 'Series and parallel circuits' },
+      { title: 'Current, potential difference and resistance', topicId: 'current-potential-difference-and-resistance' },
+      { title: 'Series and parallel circuits', topicId: 'series-and-parallel-circuits' },
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Resistance and Ohm\'s law' },
