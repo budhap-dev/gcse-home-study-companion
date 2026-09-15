@@ -439,14 +439,16 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Booking and reviewing accommodation', topicId: 'booking-and-reviewing-accommodation' },
     ] },
     { year: 10, term: 'Spring', topics: [
-      { title: 'Infographics about the environment' },
-      { title: 'Geography and climate' },
-      { title: 'Environmental problems' },
-      { title: 'The passive voice' },
-      { title: 'Working together to protect the environment' },
-      { title: 'Day-to-day environmental actions' },
-      { title: 'New technologies' },
-      { title: 'Understanding adverts' },
+      // The school lists infographics separately; they are taught inside the geography
+      // topic, which is where the figures being read come from.
+      { title: 'Geography and climate, with infographics', topicId: 'geography-and-climate' },
+      { title: 'Environmental problems', topicId: 'environmental-problems' },
+      { title: 'The passive voice', topicId: 'the-passive-voice' },
+      // Two rows in the school's list, day-to-day actions and collective ones, taught
+      // here as one topic because the French is the same and the contrast is the lesson.
+      { title: 'Day-to-day and collective environmental actions', topicId: 'taking-action-for-the-environment' },
+      { title: 'New technologies', topicId: 'new-technologies' },
+      { title: 'Understanding adverts', topicId: 'understanding-adverts' },
     ] },
     { year: 10, term: 'Summer', topics: [
       { title: 'Your town or village' },

@@ -12,9 +12,16 @@ function jsonFiles(dir: string): string[] {
 }
 const topics = jsonFiles(ROOT).map((f) => ({ file: f.split('/').pop()!, topic: Topic.parse(JSON.parse(readFileSync(f, 'utf8'))) }))
 
-/** The same wording, however it is spaced or emphasised, is the same question to a student. */
-function key(prompt: string): string {
-  return prompt.toLowerCase().replace(/[*_`$]/g, '').replace(/\s+/g, ' ').trim()
+/**
+ * The same wording, however it is spaced or emphasised, is the same question to a
+ * student. For a multiple-choice question the options are part of the question: two
+ * items can share a generic stem like "Which is correct?" and still be entirely
+ * different questions, so the options go into the key as well.
+ */
+function key(q: { prompt: string; type?: string; options?: string[] }): string {
+  const norm = (s: string) => s.toLowerCase().replace(/[*_`$]/g, '').replace(/\s+/g, ' ').trim()
+  const stem = norm(q.prompt)
+  return q.options ? `${stem} :: ${q.options.map(norm).join(' | ')}` : stem
 }
 
 /**
@@ -31,7 +38,7 @@ describe('a repeated question', () => {
     const checks = topic.lesson.steps.flatMap((s) => (s.check ? [s.check] : []))
     return checks.flatMap((check) =>
       topic.questions
-        .filter((q) => key(q.prompt) === key(check.prompt))
+        .filter((q) => key(q) === key(check))
         .map((q) => ({ file, check, question: q })),
     )
   })
@@ -56,7 +63,7 @@ describe('a repeated question', () => {
     for (const { file, topic } of topics) {
       const seen = new Map<string, string>()
       for (const q of topic.questions) {
-        const k = key(q.prompt)
+        const k = key(q)
         const first = seen.get(k)
         if (first) bad.push(`${file}: ${first} and ${q.id}`)
         else seen.set(k, q.id)
