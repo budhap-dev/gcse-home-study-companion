@@ -1,0 +1,1545 @@
+{
+  "id": "series-and-parallel-circuits",
+  "subjectId": "physics",
+  "unitId": "electricity",
+  "title": "Series and parallel circuits",
+  "specPoints": [
+    "4.2.2"
+  ],
+  "order": 3,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Current and pd swap roles",
+      "body": "**Series** shares the **potential difference** and keeps the current the same. **Parallel** shares the **current** and keeps the pd the same. One sentence gives you all six rules, and you never have to recall them as two separate lists."
+    },
+    {
+      "kind": "check",
+      "title": "Make the shares add back up",
+      "body": "In series the pds must add to the **supply pd**; in parallel the branch currents must add to the **total current**. One line at the end of every calculation, and it catches nearly every slip earlier in the working."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Total, then current, then the component",
+      "body": "For any series question: add the resistances, divide the supply pd by that total to get the current, then use $V = IR$ on the one component you were asked about. Four steps, always the same order."
+    },
+    {
+      "kind": "spot",
+      "title": "Bigger resistance, bigger pd — but smaller current",
+      "body": "In **series** the same current flows, so the bigger resistance takes the bigger **pd**. In **parallel** the same pd applies, so the bigger resistance carries the **smaller current**. Opposite, for the same reason."
+    },
+    {
+      "kind": "remember",
+      "title": "You never have to calculate a parallel total",
+      "body": "The spec says so explicitly. Know it is **less than the smallest branch** and be able to explain **why** — another path means more current for the same pd. If you are deriving a formula, you have misread the question."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two ways to join components",
+        "body": "There are **two ways** of joining electrical components: **in series** and **in parallel**. Some circuits include both.\n\n- **In series**, the components are in a **single loop**, one after another. There is only one path for the charge.\n- **In parallel**, the components are on **separate branches**, so the charge has a **choice of paths**.\n\nThe practical difference is worth seeing before the rules: if one component in a **series** circuit breaks, the loop is broken and **everything stops**. In a **parallel** circuit the other branches keep working, which is why the lights in a house are wired in parallel and why one bulb failing does not darken the room.\n\nThe rules for each follow from that single fact about paths, and are worth learning as a contrasting pair rather than as two lists.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A series circuit with a cell and two lamps in a single loop, one after the other",
+            "props": {
+              "supply": {
+                "pd": 6
+              },
+              "parts": [
+                {
+                  "kind": "lamp",
+                  "label": "lamp 1"
+                },
+                {
+                  "kind": "lamp",
+                  "label": "lamp 2"
+                }
+              ],
+              "note": "In series: one loop, one path for the charge"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A parallel circuit with a cell and two lamps on separate branches, so the charge has a choice of paths",
+            "props": {
+              "supply": {
+                "pd": 6
+              },
+              "arrangement": "parallel",
+              "parts": [
+                {
+                  "kind": "lamp",
+                  "label": "lamp 1"
+                },
+                {
+                  "kind": "lamp",
+                  "label": "lamp 2"
+                }
+              ],
+              "note": "In parallel: separate branches, a choice of paths"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Series",
+                "Parallel"
+              ],
+              "rows": [
+                [
+                  "Paths for the charge",
+                  "one",
+                  "one per branch"
+                ],
+                [
+                  "If one component breaks",
+                  "the loop is broken and everything stops",
+                  "the other branches keep working"
+                ],
+                [
+                  "Where it is used",
+                  "a torch, a string of decorations",
+                  "house lighting and sockets"
+                ]
+              ],
+              "title": "One path or several: everything follows from that"
+            },
+            "alt": "A table comparing what happens in series and parallel circuits when one component breaks"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What happens in a series circuit if one component breaks?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "series and parallel",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A series circuit is a **single loop**, so a break anywhere stops the current **everywhere**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "everything stops"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Everything stops working",
+            "The others carry on",
+            "Only the next one stops",
+            "The current doubles"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "The rules for series circuits",
+        "body": "For components connected **in series**:\n\n- there is the **same current through each component**;\n- the **total potential difference of the power supply is shared** between the components;\n- the **total resistance of two components is the sum** of the resistance of each component.\n\n$$R_{total} = R_1 + R_2$$\n\nEach rule makes sense from the single path. The charge has nowhere else to go, so the **same current** passes through everything. Each component takes a share of the energy each coulomb carries, so the **pd is shared**. And each component is one more obstacle in the only path, so the **resistances add**.\n\n**How the pd shares out.** Not equally, unless the resistances are equal. The **bigger resistance takes the bigger share** — because the same current through a bigger resistance means a bigger $V = IR$. In a 4 Ω and 8 Ω pair on a 12 V supply, the 8 Ω resistor takes 8 V and the 4 Ω takes 4 V.\n\n**Why adding resistors in series increases the total resistance.** Each extra component adds another obstacle to the **one path** the charge must take, so the total opposition rises and the current falls.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A series circuit with a twelve volt supply, a four ohm resistor and an eight ohm resistor, labelled with the current and the potential difference across each",
+            "props": {
+              "supply": {
+                "pd": 12
+              },
+              "parts": [
+                {
+                  "kind": "resistor",
+                  "label": "R1",
+                  "resistance": 4
+                },
+                {
+                  "kind": "resistor",
+                  "label": "R2",
+                  "resistance": 8
+                }
+              ]
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Rule",
+                "In symbols",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "same current through each component",
+                  "I is the same everywhere",
+                  "there is only one path"
+                ],
+                [
+                  "the supply pd is shared",
+                  "V1 + V2 = V supply",
+                  "each component takes a share of the energy"
+                ],
+                [
+                  "the resistances add",
+                  "R total = R1 + R2",
+                  "each one is another obstacle in the one path"
+                ]
+              ],
+              "title": "All three follow from there being a single path"
+            },
+            "alt": "A table of the three rules for series circuits with the reason for each"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A 12 V supply is connected to a 4 Ω and an 8 Ω resistor in series. Find the current and the pd across each",
+            "steps": [
+              {
+                "text": "Total resistance: $R = 4 + 8 = 12$ Ω",
+                "note": "in series the resistances add"
+              },
+              {
+                "text": "Current: $I = \\dfrac{V}{R} = \\dfrac{12}{12} = 1$ A",
+                "note": "use the total resistance and the supply pd"
+              },
+              {
+                "text": "This current is the **same through both** resistors",
+                "note": "one path"
+              },
+              {
+                "text": "Across the 4 Ω: $V = IR = 1 \\times 4 = 4$ V",
+                "note": "V = IR for that component"
+              },
+              {
+                "text": "Across the 8 Ω: $V = 1 \\times 8 = 8$ V",
+                "note": "and again"
+              },
+              {
+                "text": "Check: $4 + 8 = 12$ V, the supply pd ✓",
+                "note": "the shares must add back up"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A 4 Ω and an 8 Ω resistor are connected in series. What is the total resistance, in ohms?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "series circuits",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "In series the resistances add: $4 + 8 = 12$ Ω.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "adds the resistances"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "12"
+            }
+          ],
+          "discriminators": [],
+          "answer": 12,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "Ω"
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The rules for parallel circuits",
+        "body": "For components connected **in parallel**:\n\n- the **potential difference across each component is the same**;\n- the **total current through the whole circuit is the sum** of the currents through the separate components;\n- the **total resistance of two resistors is less than the resistance of the smallest individual resistor**.\n\nAgain each rule follows from the shape. Every branch is connected **directly across the supply**, so each gets the **full supply pd**. The charge divides between the branches and rejoins, so the branch currents **add** to the total. And adding a branch gives the charge **another route**, so more current flows overall — which means the **total resistance has fallen**.\n\n**Why adding resistors in parallel decreases the total resistance** is worth being able to say in words, because it is the part students find least obvious:\n\n$$\\textbf{Each new branch is an extra path, so more current flows for the same pd — and more current for the same pd means less resistance.}$$\n\nThink of it as opening another checkout: the queue moves faster even though the new till is no faster than the old one.\n\n**One thing you do not have to do.** The specification says students are **not required to calculate** the total resistance of two resistors joined in parallel. You need to know it is **less than the smallest** branch and be able to explain why — but no formula is required.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A parallel circuit with a twelve volt supply and two branches, one of four ohms and one of twelve ohms, each labelled with its own current",
+            "props": {
+              "supply": {
+                "pd": 12
+              },
+              "arrangement": "parallel",
+              "parts": [
+                {
+                  "kind": "resistor",
+                  "label": "R1",
+                  "resistance": 4
+                },
+                {
+                  "kind": "resistor",
+                  "label": "R2",
+                  "resistance": 12
+                }
+              ]
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Rule",
+                "In symbols",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "the same pd across each component",
+                  "V is the same on every branch",
+                  "each branch is connected straight across the supply"
+                ],
+                [
+                  "the branch currents add",
+                  "I total = I1 + I2",
+                  "the charge divides and then rejoins"
+                ],
+                [
+                  "the total resistance is less than the smallest branch",
+                  "",
+                  "each branch is another path for the charge"
+                ]
+              ],
+              "title": "You are not required to calculate the parallel total"
+            },
+            "alt": "A table of the three rules for parallel circuits with the reason for each"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A 12 V supply is connected to a 4 Ω and a 12 Ω resistor in parallel. Find the current in each branch and the total",
+            "steps": [
+              {
+                "text": "Each branch has the **full 12 V** across it",
+                "note": "in parallel the pd is the same on every branch"
+              },
+              {
+                "text": "Through the 4 Ω: $I = \\dfrac{12}{4} = 3$ A",
+                "note": "V = IR on that branch alone"
+              },
+              {
+                "text": "Through the 12 Ω: $I = \\dfrac{12}{12} = 1$ A",
+                "note": "and again"
+              },
+              {
+                "text": "Total current: $3 + 1 = 4$ A",
+                "note": "the branch currents add"
+              },
+              {
+                "text": "The smaller resistance carries the **bigger** current",
+                "note": "the opposite way round to the series pd share"
+              },
+              {
+                "text": "Total resistance would be $\\dfrac{12}{4} = 3$ Ω, less than **both** branches",
+                "note": "which is the rule, though you are not asked to calculate it"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Two resistors are connected in parallel across a 12 V supply. What is the potential difference across each?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "parallel circuits",
+          "calculator": "either",
+          "tags": [],
+          "solution": "In parallel each branch is connected **directly across the supply**, so each gets the **full 12 V**. Sharing happens in **series**, not parallel.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "12 V across each"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "12 V across each",
+            "6 V across each",
+            "It depends on their resistances",
+            "0 V across each"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Working through a series circuit",
+        "body": "Most calculation questions are series circuits, and they all follow the same order. Do the steps in this order and the numbers come out without guesswork.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Three resistors, 2 Ω, 3 Ω and 5 Ω, are in series across a 20 V supply. Find the current and the pd across the 5 Ω resistor",
+            "steps": [
+              {
+                "text": "**Step 1. Total resistance.** $2 + 3 + 5 = 10$ Ω",
+                "note": "in series, add them"
+              },
+              {
+                "text": "**Step 2. Current.** $I = \\dfrac{V}{R} = \\dfrac{20}{10} = 2$ A",
+                "note": "supply pd over total resistance"
+              },
+              {
+                "text": "**Step 3.** This current is the **same through every resistor**",
+                "note": "so you now know the current everywhere"
+              },
+              {
+                "text": "**Step 4. The pd you were asked for.** $V = IR = 2 \\times 5 = 10$ V",
+                "note": "V = IR on that one component"
+              },
+              {
+                "text": "**Check.** The others take $2 \\times 2 = 4$ V and $2 \\times 3 = 6$ V",
+                "note": "and $4 + 6 + 10 = 20$ V ✓"
+              },
+              {
+                "text": "The 5 Ω takes half the supply pd because it is half the total resistance",
+                "note": "a useful shortcut to sanity check any share"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "What to do",
+                "Why it works"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "add the resistances for the total",
+                  "in series they add"
+                ],
+                [
+                  "2",
+                  "current = supply pd divided by total resistance",
+                  "V = IR for the whole circuit"
+                ],
+                [
+                  "3",
+                  "that current is the same through every component",
+                  "there is only one path"
+                ],
+                [
+                  "4",
+                  "V = IR on the component you were asked about",
+                  "using the current from step 2"
+                ]
+              ],
+              "title": "Total, then current, then the component you were asked about"
+            },
+            "alt": "A table of the four steps for any series circuit calculation"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "Three resistors of 2 Ω, 3 Ω and 5 Ω are in series across a 20 V supply. What is the current, in amperes?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "series circuits",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "Total resistance $= 2 + 3 + 5 = 10$ Ω, so $I = \\dfrac{20}{10} = 2$ A.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "adds to get 10 Ω"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "A"
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Series circuits for measurement and testing",
+        "body": "The spec asks you to **explain the design and use of dc series circuits for measurement and testing purposes**, which is a fancy way of describing the circuits you use in the practicals.\n\n**Why series for measuring current.** An ammeter must have the current it is measuring pass **through** it, so it goes **in series**. Putting it in series also means it reads the current through **that whole loop**, which by the first rule is the current through every component in it.\n\n**Why a voltmeter goes across.** Potential difference is measured **between two points** — the difference in energy per coulomb between one side of a component and the other. So a voltmeter is connected **in parallel**, across the component.\n\n**A testing circuit.** To measure a component's resistance you put the component and an **ammeter in series**, a **voltmeter across the component**, and vary the supply. Then $R = \\dfrac{V}{I}$ at each setting. A series circuit is right here because it makes the current through the component easy to know and control.\n\n**Combinations in series and parallel** were part of required practical 3. Connecting two identical resistors in **series doubles** the total resistance and **halves** the current; connecting them in **parallel** gives a total **below either one**, so the current rises. Measuring both confirms the two rules.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A testing circuit with a cell, a switch, an ammeter and the component under test all in series in one loop",
+            "props": {
+              "supply": {
+                "pd": 6
+              },
+              "parts": [
+                {
+                  "kind": "switch",
+                  "label": "switch"
+                },
+                {
+                  "kind": "ammeter",
+                  "label": "A"
+                },
+                {
+                  "kind": "resistor",
+                  "label": "component"
+                }
+              ],
+              "note": "Ammeter in series with the component; a voltmeter goes across it"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Instrument",
+                "Connected",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "ammeter",
+                  "in series",
+                  "the current must pass through it to be measured"
+                ],
+                [
+                  "voltmeter",
+                  "across the component",
+                  "pd is the difference between two points"
+                ],
+                [
+                  "the component under test",
+                  "in series with the ammeter",
+                  "so the current through it is known"
+                ]
+              ],
+              "title": "The connection follows from what the instrument measures"
+            },
+            "alt": "A table of why each instrument is connected the way it is"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Why is an ammeter connected in series rather than across a component?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "measuring circuits",
+          "calculator": "either",
+          "tags": [],
+          "solution": "An ammeter measures the current **flowing through it**, so it must be placed **in the path** — in series.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the current must pass through it"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The current it measures must pass through it",
+            "It would break if connected across",
+            "It measures pd, not current",
+            "So it does not affect the pd"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. State the three rules for a series circuit.\n2. State the three rules for a parallel circuit.\n3. Two 6 Ω resistors are in series. What is the total resistance?\n\n**Part B.**\n\n4. A 9 V supply is connected to a 2 Ω and a 7 Ω resistor in series. Find the total resistance, the current, and the pd across each resistor. Check your two pds add to 9 V.\n5. A 6 V supply is connected to a 2 Ω and a 3 Ω resistor in parallel. Find the current in each branch and the total current.\n6. Why do the lights in a house get wired in parallel rather than in series?\n\n**Part C.**\n\n7. Explain qualitatively why adding resistors in series increases the total resistance, while adding them in parallel decreases it.\n8. In a series circuit with a 3 Ω and a 9 Ω resistor, which takes the larger share of the supply pd, and why?\n\nFor question 4, always check at the end that the individual pds add up to the supply pd. It costs one line and catches most errors.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "alt": "A series circuit with a nine volt supply, a two ohm resistor and a seven ohm resistor, for the calculation in part B",
+            "props": {
+              "supply": {
+                "pd": 9
+              },
+              "parts": [
+                {
+                  "kind": "resistor",
+                  "label": "2 Ω",
+                  "resistance": 2
+                },
+                {
+                  "kind": "resistor",
+                  "label": "7 Ω",
+                  "resistance": 7
+                }
+              ],
+              "showValues": false,
+              "note": "Work out the current, then the pd across each"
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Total resistance",
+                "Current",
+                "Across the first",
+                "Across the second"
+              ],
+              "rows": [
+                [
+                  "series, 9 V, 2 Ω and 7 Ω",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "parallel, 6 V, 2 Ω and 3 Ω",
+                  "not required",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "For the parallel one, find each branch current instead"
+            },
+            "alt": "A blank table for the two calculations in Part B"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "A 6 V supply is connected to a 2 Ω and a 3 Ω resistor in parallel. What is the total current, in amperes?",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "parallel circuits",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "Each branch has the full 6 V: $6/2 = 3$ A and $6/3 = 2$ A. The branch currents add: $3 + 2 = 5$ A.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds each branch current"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "adds them"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "A"
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: why the rules are opposite",
+        "body": "The two sets of rules mirror each other, and seeing the mirror halves what there is to learn:\n\n| | Series | Parallel |\n|---|---|---|\n| **Current** | the **same** through each | **shared** between branches |\n| **Potential difference** | **shared** between components | the **same** across each |\n| **Adding a component** | total resistance **rises** | total resistance **falls** |\n\nCurrent and potential difference **swap roles**. If you remember that series shares the *pd* and parallel shares the *current*, the whole table follows.\n\n**Which component gets the bigger share?** Also opposite, and also worth reasoning rather than recalling:\n\n- In **series**, the same current passes through both, so $V = IR$ makes the **bigger resistance** take the **bigger pd**.\n- In **parallel**, the same pd is across both, so $I = \\frac{V}{R}$ makes the **smaller resistance** carry the **bigger current**.\n\n**Explaining the parallel case in words.** This is the one that carries the marks, because it is genuinely counter-intuitive:\n\n> Each resistor added in parallel provides **another path** for the charge. With more paths available, **more current flows** for the same potential difference. Since more current for the same pd means **less resistance**, the total resistance falls — and it must end up **below** the smallest branch, because that branch alone already carried its own current and the others add to it.\n\nThat last clause is the strongest form of the argument, and it explains the *less than the smallest* rule rather than just stating it.\n\n**A check worth doing every time.** In a series calculation, the individual pds must **add to the supply pd**. In a parallel one, the branch currents must **add to the total current**. One line each, and they catch almost every slip.\n\n**What is not required.** You do **not** have to calculate the total resistance of two resistors in parallel. If you find yourself deriving a formula for it, you have misread the question — it is asking you to compare, or to explain, not to compute.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Series",
+                "Parallel"
+              ],
+              "rows": [
+                [
+                  "current",
+                  "the same through each component",
+                  "shared between the branches"
+                ],
+                [
+                  "potential difference",
+                  "shared between the components",
+                  "the same across each branch"
+                ],
+                [
+                  "adding a component",
+                  "the total resistance rises",
+                  "the total resistance falls"
+                ],
+                [
+                  "the bigger resistance gets",
+                  "the bigger share of pd",
+                  "the smaller share of current"
+                ],
+                [
+                  "your check",
+                  "the pds add to the supply pd",
+                  "the branch currents add to the total"
+                ]
+              ],
+              "title": "Current and pd swap roles between the two"
+            },
+            "alt": "A table showing how the series and parallel rules mirror each other"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Explain why adding a resistor in parallel decreases the total resistance",
+            "steps": [
+              {
+                "text": "Each resistor in parallel is connected **across the same supply pd**",
+                "note": "start from what is the same"
+              },
+              {
+                "text": "Adding another one gives the charge **another path** to flow through",
+                "note": "the physical change"
+              },
+              {
+                "text": "So the **total current** leaving the supply **increases**",
+                "note": "more paths, more current"
+              },
+              {
+                "text": "The supply pd has **not** changed",
+                "note": "this is the step that makes it work"
+              },
+              {
+                "text": "More current for the same pd means **less resistance**, from $R = \\dfrac{V}{I}$",
+                "note": "the definition does the work"
+              },
+              {
+                "text": "And the total must be below the **smallest** branch, since that branch alone already carried its own current",
+                "note": "which explains the rule rather than stating it"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "Why does adding a resistor in parallel decrease the total resistance?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "parallel circuits",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Another **path** means more total current for the **same** pd — and more current for the same pd means **less** resistance.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "another path, so more current flows"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "It gives the charge another path, so more current flows",
+            "It reduces the supply pd",
+            "It shares the current more evenly",
+            "It lowers each resistor's own resistance"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Components are joined **in series** (one loop, one path) or **in parallel** (separate branches).\n- **Series**: the **same current** through each; the supply pd is **shared**; the resistances **add**, $R_{total} = R_1 + R_2$.\n- **Parallel**: the **same pd** across each; the branch currents **add** to the total; the total resistance is **less than the smallest** branch.\n- Current and pd **swap roles** between the two, which is the quickest way to hold all six rules.\n- In **series** the **bigger resistance** takes the **bigger pd**; in **parallel** the **smaller resistance** carries the **bigger current**.\n- **Adding in series raises** the total resistance: another obstacle in the one path.\n- **Adding in parallel lowers** it: another path, so more current for the same pd.\n- Series order of working: **total resistance → current → the component you were asked about**.\n- **Check**: series pds add to the supply pd; parallel branch currents add to the total.\n- **Ammeter in series**, **voltmeter across** — each follows from what it measures.\n- You are **not required** to calculate the total resistance of two resistors in parallel.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Series",
+                  "one loop, one path"
+                ],
+                [
+                  "Parallel",
+                  "separate branches, a choice of paths"
+                ],
+                [
+                  "Series current",
+                  "the same through every component"
+                ],
+                [
+                  "Series pd",
+                  "shared between the components"
+                ],
+                [
+                  "Series resistance",
+                  "R total = R1 + R2"
+                ],
+                [
+                  "Parallel pd",
+                  "the same across every branch"
+                ],
+                [
+                  "Parallel current",
+                  "the branch currents add"
+                ],
+                [
+                  "Parallel resistance",
+                  "less than the smallest branch"
+                ],
+                [
+                  "Bigger resistance in series",
+                  "takes the bigger pd"
+                ],
+                [
+                  "Bigger resistance in parallel",
+                  "carries the smaller current"
+                ],
+                [
+                  "Order of working",
+                  "total resistance, then current, then the component"
+                ],
+                [
+                  "Not required",
+                  "calculating the parallel total"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of series and parallel circuits covering the rules, the shares and the checks"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "A 4 Ω and an 8 Ω resistor are connected in series. What is the total resistance, in ohms?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "series circuits",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "In series the resistances add: $4 + 8 = 12$ Ω.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the resistances"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What is true of the current in a series circuit?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "series circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**The same through each component**, because there is only one path.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the same through every component"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It is the same through every component",
+        "It is shared between the components",
+        "It is largest at the cell",
+        "It halves at each component"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What happens in a series circuit if one component breaks?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "series and parallel",
+      "calculator": "either",
+      "tags": [],
+      "solution": "One loop, so a break anywhere stops the current **everywhere**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "everything stops"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Everything stops",
+        "The others keep working",
+        "Only the next one stops",
+        "The current doubles"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What is true of the potential difference in a parallel circuit?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "parallel circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each branch is connected **directly across the supply**, so each gets the **full** supply pd.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the same across every branch"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It is the same across every branch",
+        "It is shared between the branches",
+        "It is zero on every branch",
+        "It doubles on each branch"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A 12 V supply is connected to a 4 Ω and an 8 Ω resistor in series. What is the current, in amperes?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "series circuits",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Total resistance $= 12$ Ω, so $I = 12/12 = 1$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total resistance 12 Ω"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A 12 V supply is connected to a 4 Ω and an 8 Ω resistor in series. What is the potential difference across the 8 Ω resistor, in volts?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "series circuits",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The current is 1 A through both, so across the 8 Ω: $V = IR = 1 \\times 8 = 8$ V. Check: $4 + 8 = 12$ V ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the current"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "V = IR on that resistor"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "V"
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A 12 V supply is connected to a 4 Ω and a 12 Ω resistor in parallel. What is the current through the 4 Ω resistor, in amperes?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "parallel circuits",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Each branch has the full 12 V, so $I = 12/4 = 3$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses the full 12 V on the branch"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "In a series circuit, which resistor takes the larger share of the potential difference?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "series circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The same current passes through both, so $V = IR$ gives the **larger resistance** the **larger pd**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the larger resistance"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The larger resistance",
+        "The smaller resistance",
+        "They always share it equally",
+        "The one nearer the cell"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Why are the lights in a house wired in parallel?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "series and parallel",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In parallel each lamp has its **own branch**, so one failing leaves the others on. It also gives each the full mains pd.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one failing does not affect the others"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "So one failing does not switch off the others",
+        "So they are brighter",
+        "So they share the current",
+        "So they use less electricity"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A 6 V supply is connected to a 2 Ω and a 3 Ω resistor in parallel. What is the total current, in amperes?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "parallel circuits",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Each branch has 6 V: $6/2 = 3$ A and $6/3 = 2$ A. The branch currents add: $3 + 2 = 5$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds each branch current"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds them"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Why does adding a resistor in parallel decrease the total resistance?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "parallel circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Another **path** means more current for the **same** pd, and more current for the same pd means **less resistance**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "another path, so more current"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It gives the charge another path, so more current flows",
+        "It lowers the supply pd",
+        "It shares the current more evenly",
+        "It reduces each resistor's own value"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why does adding a resistor in series increase the total resistance?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "series circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "There is only **one path**, so every extra component adds to the opposition the charge meets.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "another obstacle in the one path"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Each one is another obstacle in the single path",
+        "It uses up the current",
+        "It raises the supply pd",
+        "The cell weakens"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Two resistors, 4 Ω and 12 Ω, are connected in parallel. What can you say about the total resistance?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "parallel circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The total is **less than the smallest** branch, so less than 4 Ω. You are not required to calculate it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "less than 4 Ω"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It is less than 4 Ω",
+        "It is between 4 Ω and 12 Ω",
+        "It is 16 Ω",
+        "It is exactly 8 Ω"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "In a parallel circuit, which branch carries the larger current?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "parallel circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The same pd is across both, so $I = V/R$ gives the **smaller resistance** the **larger current** — the opposite way round to the series pd share.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the smaller resistance"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "The one with the smaller resistance",
+        "The one with the larger resistance",
+        "They always carry the same",
+        "The one nearer the cell"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A student finds the pds across two series resistors are 4 V and 7 V on a 12 V supply. What does this tell them?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "series circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In series the pds **share out the supply pd**, so they must add to 12 V. $4 + 7 = 11$, so something is wrong — which is why the check is worth doing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "they must add to the supply pd"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "There is a mistake: they must add to 12 V",
+        "The circuit is parallel",
+        "The supply is faulty",
+        "Nothing is wrong"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "How do the series and parallel rules relate to each other?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "series and parallel",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Series shares the **pd** and keeps the current the same; parallel shares the **current** and keeps the pd the same. Remembering the swap gives you all six rules.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "current and pd swap roles"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Current and potential difference swap roles",
+        "They are the same rules",
+        "Parallel rules apply only to lamps",
+        "Series rules are a special case"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A 12 V supply is connected to a 4 Ω resistor and an 8 Ω resistor in series. Calculate the total resistance, the current in the circuit, and the potential difference across each resistor. Show a check on your answer.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "series circuits",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In a series circuit the resistances add, so the total resistance is four plus eight, which is twelve ohms. The current is found from the supply potential difference and the total resistance, using current equals potential difference divided by resistance. This gives twelve divided by twelve, which is one ampere. In a series circuit the current is the same through every component, so one ampere flows through both resistors. The potential difference across the four ohm resistor is found from potential difference equals current times resistance, giving one times four, which is four volts. Across the eight ohm resistor it is one times eight, which is eight volts. As a check, the two potential differences should add up to the supply potential difference, and four volts plus eight volts is twelve volts, which matches the supply. The eight ohm resistor takes the larger share because the same current passes through both, so the larger resistance has the larger potential difference across it.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the resistances to get 12 Ω"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses I = V over R with the total resistance"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "current 1 A"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4 V across the 4 Ω resistor"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8 V across the 8 Ω resistor"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "checks that the pds add to the supply pd"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 12,
+      "criteria": [
+        {
+          "text": "Adds the resistances for the total",
+          "marks": 1
+        },
+        {
+          "text": "Uses the total resistance to find the current",
+          "marks": 1
+        },
+        {
+          "text": "Gives the current as 1 A",
+          "marks": 1
+        },
+        {
+          "text": "Gives 4 V across the 4 Ω resistor",
+          "marks": 1
+        },
+        {
+          "text": "Gives 8 V across the 8 Ω resistor",
+          "marks": 1
+        },
+        {
+          "text": "Checks that the two pds add to 12 V",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Total resistance.** In series they add:\n\n$$R = 4 + 8 = 12\\ \\Omega$$\n\n**Current.** Use the supply pd and the **total** resistance:\n\n$$I = \\frac{V}{R} = \\frac{12}{12} = 1 \\text{ A}$$\n\nThis current is the **same through both** resistors — there is only one path.\n\n**The potential differences.** Apply $V = IR$ to each resistor separately:\n\n- across the 4 Ω: $V = 1 \\times 4 = 4$ V\n- across the 8 Ω: $V = 1 \\times 8 = 8$ V\n\n**The check.** The pds must share out the supply pd:\n\n$$4 + 8 = 12 \\text{ V} \\quad \\checkmark$$\n\nAnd the result makes sense: the **8 Ω** resistor takes the **larger** share, because the same current through a larger resistance gives a larger $V = IR$.\n\nThe check is one line and it is a mark of its own — it is also the thing that would have caught a rearranging error three steps earlier."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Explain qualitatively why adding resistors in series increases the total resistance, while adding resistors in parallel decreases it. Refer to the paths available to the charge and to the potential difference in each case.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "series and parallel",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In a series circuit there is only one path for the charge to follow, so every component the charge passes through is a further obstacle to its flow. Adding another resistor therefore adds to the total opposition, so the total resistance increases and the current falls for the same supply potential difference. In a parallel circuit each resistor is connected directly across the supply, so each branch has the full supply potential difference across it. Adding another resistor in parallel provides an additional path for the charge to take. Because the supply potential difference has not changed but there is now an extra route, more current flows out of the supply altogether. Since resistance is the potential difference divided by the current, more current for the same potential difference means the total resistance has decreased. The total resistance must in fact be smaller than the smallest individual resistor, because that resistor alone was already carrying its own current and the other branches add further current on top of it.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "series: one path, so each component is a further obstacle"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "series: the total resistance rises and the current falls"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "parallel: each branch has the full supply pd"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "parallel: another resistor gives another path, so more current flows"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "parallel: more current for the same pd means less resistance"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 11,
+      "criteria": [
+        {
+          "text": "Explains that a series circuit has one path",
+          "marks": 1
+        },
+        {
+          "text": "States that adding in series increases the total resistance",
+          "marks": 1
+        },
+        {
+          "text": "States that each parallel branch has the full supply pd",
+          "marks": 1
+        },
+        {
+          "text": "Explains that another branch is another path, so more current flows",
+          "marks": 1
+        },
+        {
+          "text": "Links more current at the same pd to a lower total resistance",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**In series.** There is only **one path** for the charge. Every component in that path is a further **obstacle** to the flow, so adding one adds to the total opposition: the **total resistance increases** and the current falls for the same supply pd.\n\n**In parallel.** Each resistor is connected **directly across the supply**, so every branch has the **full supply pd** across it.\n\nAdding another resistor in parallel gives the charge **another path**. The supply pd has **not** changed, but there is now an extra route, so **more current** flows out of the supply altogether.\n\nSince\n\n$$R = \\frac{V}{I}$$\n\nmore current for the **same** pd means the **total resistance has fallen**.\n\n**Why it must be below the smallest branch.** That branch on its own was already carrying its own current; the other branches add **further** current on top. So the total current is larger than any single branch's, and the total resistance smaller than any single branch's.\n\nThat last paragraph is what separates an explanation from a restatement: it gives a reason for the *less than the smallest* rule rather than quoting it."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Decide first whether the circuit is series or parallel, because every rule depends on it.\n\nFor a series calculation, work in the fixed order: total resistance, then current, then V = IR on the component named.\n\nFinish by checking that the shares add back up: pds to the supply pd in series, branch currents to the total in parallel.\n\nFor a parallel circuit, remember each branch has the full supply pd, so you can work on one branch at a time.\n\nWhen asked to explain why resistance rises or falls, talk about the paths available to the charge, and say that the supply pd has not changed.\n\nDo not try to calculate the total resistance of two parallel resistors: the specification does not require it, and the question is asking for a comparison or an explanation instead.",
+    "examinerErrors": [
+      "Sharing the potential difference between parallel branches, where each gets the full pd.",
+      "Using one resistor's value instead of the total when finding the current in a series circuit.",
+      "Forgetting that the current is the same through every component in series.",
+      "Saying the total resistance of a parallel pair lies between the two values.",
+      "Giving the larger current to the larger resistance in a parallel circuit.",
+      "Omitting the check that the series pds add to the supply pd.",
+      "Explaining the parallel case without saying that the supply pd is unchanged.",
+      "Attempting a parallel resistance calculation that is not required."
+    ],
+    "grade9Looks": "A top answer says which arrangement it is before doing anything, and works series questions in the same four steps every time. It checks that the shares add back up without being asked, and treats that check as part of the answer rather than as rough work. Explaining the parallel case, it mentions that the supply pd has **not** changed — the step most answers omit, and the one that makes the argument work. It can say why the total must be below the smallest branch rather than quoting the rule. And it holds the six rules as one idea: current and potential difference swapping roles between the two arrangements."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
