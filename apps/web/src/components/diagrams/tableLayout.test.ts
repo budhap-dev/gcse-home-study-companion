@@ -1,9 +1,10 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { charBudget, columnWidths, rowHeight, wrapCell } from './tableLayout.ts'
+import { FULL_ROW, MAX_TABLE_WIDTH, MIN_TEXT_PX, TEXT_PX, charBudget, columnWidths, naturalWidth, rowHeight, wrapCell } from './tableLayout.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
+const CONTENT = ROOT
 
 function jsonFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
@@ -71,5 +72,55 @@ describe('every table in the content pack fits its columns', () => {
 
   it('wraps every cell so that no line runs past its column', () => {
     expect(overflow).toEqual([])
+  })
+})
+
+/**
+ * A step with two visuals lays them side by side, giving each half the lesson column.
+ * The table SVG is drawn at width:100% and scales its whole viewBox to fit, so a table
+ * wider than that box shrinks its 12px text along with everything else. This went
+ * unnoticed for a long time: the browser walk only reports errors and the clipped-text
+ * scan only reports text running outside its box, and shrunken text does neither. The
+ * five-column colour table in Shopping for clothes rendered at about half size.
+ *
+ * needsFullRow decides which tables take the whole row instead. These tests hold every
+ * table in the content pack to the guarantee that follows from it: no table renders
+ * below READABLE of its natural size, and so none renders text under about 10px.
+ */
+describe('every table in the content pack', () => {
+  const tables: { file: string; step: string; columns: string[]; rows: string[][] }[] = []
+  for (const file of jsonFiles(CONTENT)) {
+    const topic = JSON.parse(readFileSync(file, 'utf8'))
+    for (const step of topic.lesson?.steps ?? []) {
+      for (const v of step.visuals ?? []) {
+        if (v.component !== 'trace-table') continue
+        tables.push({ file: file.split('/').pop()!, step: step.id, columns: v.props?.columns ?? [], rows: v.props?.rows ?? [] })
+      }
+    }
+  }
+
+  it('finds tables to check', () => {
+    expect(tables.length).toBeGreaterThan(100)
+  })
+
+  /**
+   * A table takes the whole row, so it is drawn into a 742px box. Anything wider than
+   * MAX_TABLE_WIDTH scales below MIN_TEXT_PX and stops being readable — the comparison
+   * table in Making marketing decisions was 1036 units and rendered its text at 8.6px.
+   * Split a table that trips this, or shorten its headings.
+   */
+  it('is narrow enough to render its text above the readable floor', () => {
+    const tooWide = tables
+      .filter((t) => naturalWidth(t.columns, t.rows) > MAX_TABLE_WIDTH)
+      .map((t) => {
+        const w = naturalWidth(t.columns, t.rows)
+        return `${t.file} ${t.step}: ${w} wide, text ${((TEXT_PX * FULL_ROW) / w).toFixed(1)}px (max ${MAX_TABLE_WIDTH})`
+      })
+    expect(tooWide).toEqual([])
+  })
+
+  it('has a readable floor above 12px only when it fits', () => {
+    expect(MIN_TEXT_PX).toBeLessThan(TEXT_PX)
+    expect(MAX_TABLE_WIDTH).toBe(Math.floor((FULL_ROW * TEXT_PX) / MIN_TEXT_PX))
   })
 })
