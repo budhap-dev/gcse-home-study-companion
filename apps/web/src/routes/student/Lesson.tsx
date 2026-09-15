@@ -18,6 +18,22 @@ import { useActivityTimer } from '../../progress/useActivityTimer.ts'
  * time through; a wrong answer explains and still allows progress. Position is saved
  * on every step so the lesson resumes where it was left.
  */
+/**
+ * Two visuals normally sit side by side, which gives each one a 350px box rather than
+ * 742px. A table scales its whole drawing to its box, so at half width its 12px text
+ * drops to about 8px: present, but not readable. Measured across the content pack, most
+ * tables are wider than 350 units, and the static width estimate is only a lower bound
+ * (the bold header font is wider than it assumes), so there is no safe threshold to test
+ * against. A table therefore never shares a row — it keeps its natural size, capped at
+ * 1.1x by the component, and its partner sits below it.
+ *
+ * Only tables are treated this way: every other diagram is drawn to fit the box it is
+ * given, and a vocabulary list is a column of text that reads fine at either width.
+ */
+function isTable(v: { type: string; component?: string }): boolean {
+  return v.type === 'diagram' && v.component === 'trace-table'
+}
+
 export function Lesson() {
   const { subjectId, topicId } = useParams()
   const navigate = useNavigate()
@@ -45,6 +61,7 @@ export function Lesson() {
   if (!subject || !topic) return <p>Unknown topic.</p>
   const steps = topic.lesson.steps
   const step = steps[index]!
+  const paired = step.visuals.length > 1 && !step.visuals.some(isTable)
   const last = index === steps.length - 1
   const backTo = `/subjects/${subject.id}/topics/${topic.id}`
   const canAdvance = !step.check || result !== null
@@ -124,7 +141,7 @@ export function Lesson() {
         <h1 className="text-2xl font-bold leading-tight">{step.title}</h1>
       </div>
 
-      <div className={step.visuals.length > 1 ? 'grid grid-cols-1 gap-4 md:grid-cols-2' : 'flex flex-col gap-4'}>
+      <div className={paired ? 'grid grid-cols-1 gap-4 md:grid-cols-2' : 'flex flex-col gap-4'}>
         {step.visuals.map((v, i) => (
           <Visual key={i} visual={v} />
         ))}
