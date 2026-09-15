@@ -171,6 +171,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Pressure in fluids', topicId: 'pressure-in-fluids' },
     ] },
     { year: 10, term: 'Spring 1', topics: [
+      // Checking AQA 8463 against the school's overview found 4.3.1.1 and 4.3.1.2 in
+      // neither, though both are examinable and density carries required practical 5.
+      { title: 'Density and changes of state', topicId: 'density-and-changes-of-state' },
       // The school teaches internal energy, specific heat capacity and latent heat as two
       // rows; one written topic covers both, so they are listed here as a single line.
       { title: 'Internal energy, specific heat capacity and latent heat', topicId: 'thermal-physics' },
@@ -179,6 +182,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     { year: 10, term: 'Spring 2', topics: [
       { title: 'Electromagnetic waves', topicId: 'electromagnetic-spectrum' },
       { title: 'Light: reflection and refraction', topicId: 'light-reflection-and-refraction' },
+      // Absent from the school's overview too: lenses and black body radiation are
+      // physics only, and waves for detection are physics only and Higher tier.
+      { title: 'Lenses', topicId: 'lenses' },
+      { title: 'Infrared radiation and black bodies', topicId: 'infrared-radiation-and-black-bodies' },
+      { title: 'Waves for detection and exploration', topicId: 'waves-for-detection-and-exploration' },
     ] },
     { year: 10, term: 'Summer 1', topics: [
       { title: 'Static electricity and electric fields', topicId: 'static-electricity-and-electric-fields' },

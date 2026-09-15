@@ -38,6 +38,8 @@ School assessments the content should be ready before: topic tests on powers, ro
 
 Source: the school's Year 10 Physics overview, shared 2 September 2026. The school covers Energy in Year 9 and starts Year 10 on Forces, so the specification order is not the teaching order.
 
+**A coverage gap, found 15 September 2026 by checking the specification against the school's overview.** Six AQA 8463 points appear in **neither** the school's Year 9 to 11 overview nor this plan, though all are examinable for Triple Higher: **4.3.1.1** density of materials, which also carries **required practical 5**; **4.3.1.2** changes of state; **4.6.2.5** lenses and **4.6.1.5** waves for detection and exploration, both *physics only*; and **4.6.3.1** and **4.6.3.2**, emission and absorption of infrared radiation and perfect black bodies. Four topics have been written to fill it: **Density and changes of state**, **Lenses**, **Infrared radiation and black bodies**, and **Waves for detection and exploration**, with syllabus rows added for each. Checked the same way, **Chemistry and Maths have no such gap** — every Year 10 point is claimed by a written topic, and every unclaimed point belongs to a planned Year 9 or Year 11 row.
+
 | When | Topics, in teaching order | Status |
 |---|---|---|
 | Autumn 1 | Hooke's law and elastic potential energy · Balancing forces, which the school's overview means as moments, levers and gears | Both drafted |
