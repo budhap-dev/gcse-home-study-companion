@@ -70,11 +70,31 @@ describe('escaped dollars', () => {
           // A sentence break or two plain English words in a row inside $...$ is prose that a
           // stray $ has captured. Words inside \text{} are deliberate, and a pound sign is
           // not a signal: the Business solutions write $= 9500 - 7200 = £2300$ on purpose.
+          // The capital must begin an actual word: Boolean algebra writes AND as a dot, so
+          // "A . B" is notation, not a sentence, and flagging it caught nothing real.
           const bare = tex.replace(/\\text\{[^}]*\}/g, '')
-          if (/\.\s+[A-Z]|(?<![\\a-z])[a-z]{3,}\s+[a-z]{2,}\b/.test(bare)) swallowed.push(`${where}${path}: $${tex.slice(0, 60)}$`)
+          const sentenceBreak = /\.\s+[A-Z](?=[a-z]|\s+[a-z])/
+          const twoWords = /(?<![\\a-z])[a-z]{3,}\s+[a-z]{2,}\b/
+          if (sentenceBreak.test(bare) || twoWords.test(bare)) swallowed.push(`${where}${path}: $${tex.slice(0, 60)}$`)
         }
       }
     }
     expect(swallowed).toEqual([])
+  })
+
+  it('still catches a swallowed sentence, and leaves Boolean notation alone', () => {
+    // The tightening above must not have blunted the rule. A stray $ capturing real prose
+    // still looks like a sentence; a dot between two capitals is an AND.
+    const flags = (tex: string) => {
+      const sentenceBreak = /\.\s+[A-Z](?=[a-z]|\s+[a-z])/
+      const twoWords = /(?<![\\a-z])[a-z]{3,}\s+[a-z]{2,}\b/
+      return sentenceBreak.test(tex) || twoWords.test(tex)
+    }
+    expect(flags('x^2. The car then travels'), 'a swallowed sentence').toBe(true)
+    expect(flags('12. A car travels 30 m'), 'a swallowed sentence starting with A').toBe(true)
+    expect(flags('the total distance travelled'), 'swallowed prose').toBe(true)
+    expect(flags('A . B'), 'Boolean AND').toBe(false)
+    expect(flags('(A . B) + C'), 'a Boolean expression').toBe(false)
+    expect(flags('\\overline{A . B}'), 'a Boolean expression with a NOT').toBe(false)
   })
 })

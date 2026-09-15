@@ -362,9 +362,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Data compression: Huffman coding and run length encoding', topicId: 'data-compression' },
     ] },
     { year: 10, term: 'Summer', topics: [
-      { title: 'Boolean logic and truth tables' },
-      { title: 'Logic circuits' },
-      { title: 'Application and system software' },
+      { title: 'Boolean logic and truth tables', topicId: 'boolean-logic-and-truth-tables' },
+      { title: 'Logic circuits', topicId: 'logic-circuits' },
+      { title: 'Application and system software', topicId: 'application-and-system-software' },
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Classification of programming languages' },

@@ -1,0 +1,1282 @@
+{
+  "id": "logic-circuits",
+  "subjectId": "computer-science",
+  "unitId": "computer-systems",
+  "title": "Logic circuits",
+  "specPoints": [
+    "3.4.2"
+  ],
+  "order": 2,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "spot",
+      "title": "A point at the front means OR",
+      "body": "**AND** is a **D**: flat back, rounded front, no point. **OR** is a **shield** that comes to a **point**. If the shape has a point it is an OR or an XOR — never an AND, however rounded the rest looks."
+    },
+    {
+      "kind": "shortcut",
+      "title": "The last operation is the output gate",
+      "body": "To draw a circuit from an expression, find the operation done **last** — the one joining the main parts — and put it **nearest the output**. Everything in brackets happens first, so it goes **further left**."
+    },
+    {
+      "kind": "remember",
+      "title": "Read from the inputs, draw from the output",
+      "body": "Reading a circuit, work **left to right**, naming each gate's output as you reach it. Drawing one, start at the **right** with the last operation. The two tasks run in opposite directions, and using the wrong one is where it goes wrong."
+    },
+    {
+      "kind": "check",
+      "title": "NOT takes one input",
+      "body": "One for NOT, two for AND, OR and XOR. A NOT gate drawn with two wires into it is simply wrong and gets no benefit of the doubt — and it is an easy thing to check before handing the diagram over."
+    },
+    {
+      "kind": "check",
+      "title": "Test your circuit with a table",
+      "body": "A circuit that looks right can still be wired wrongly. Build the truth table and check a row or two against the expression. It takes a minute and it is the only real check available."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "The four symbols",
+        "body": "A **logic circuit diagram** shows how gates are wired together. Inputs come in on the **left**, wires run between the gates, and the output **Q** leaves on the **right**.\n\nYou need four symbols, and they must be drawn distinguishably:\n\n- **NOT** — a **triangle** with a small **circle** on its point. That circle is the part that inverts, and a triangle without it is not a NOT gate.\n- **AND** — a **D shape**: flat at the back, a smooth half-circle at the front.\n- **OR** — a **shield**: curved at the back, coming to a **point** at the front.\n- **XOR** — the OR shield with an **extra curved line** across the back.\n\nThe two that get confused are **AND and OR**. The AND is flat at the back and rounded at the front; the OR curves at the back and points at the front. If a shape has a **point**, it is an OR or an XOR, never an AND.\n\nAnd **XOR is an OR with one extra line**. Leaving that line off turns an XOR into an OR, which changes the circuit's behaviour in one row of its table.\n\nThe specification says you will only need **NOT, AND, OR and XOR** within logic circuits — the same four as before, and no others.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "logic-circuit",
+            "alt": "A single AND gate drawn as a D shape with two inputs A and B and an output Q, with its truth table",
+            "props": {
+              "expression": {
+                "op": "AND",
+                "inputs": [
+                  "A",
+                  "B"
+                ]
+              }
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Gate",
+                "The symbol",
+                "What to check"
+              ],
+              "rows": [
+                [
+                  "NOT",
+                  "a triangle with a small circle on its point",
+                  "the circle is what inverts"
+                ],
+                [
+                  "AND",
+                  "a D shape: flat back, rounded front",
+                  "no point at the front"
+                ],
+                [
+                  "OR",
+                  "a shield: curved back, pointed front",
+                  "it comes to a point"
+                ],
+                [
+                  "XOR",
+                  "the OR shield with an extra curved line at the back",
+                  "the extra line is the whole difference"
+                ]
+              ],
+              "title": "A point at the front means OR or XOR, never AND"
+            },
+            "alt": "A table of the four logic gate symbols and how each one is drawn"
+          }
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Reading a circuit",
+        "body": "To write the **Boolean expression** for a circuit, work **from the inputs towards the output**, naming the output of each gate as you go. Trying to read it in one glance is where mistakes come from.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "logic-circuit",
+            "alt": "A circuit with A and B going into an AND gate, C going into a NOT gate, and both results going into an OR gate to give Q",
+            "props": {
+              "expression": {
+                "op": "OR",
+                "inputs": [
+                  {
+                    "op": "AND",
+                    "inputs": [
+                      "A",
+                      "B"
+                    ]
+                  },
+                  {
+                    "op": "NOT",
+                    "inputs": [
+                      "C"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "worked-example",
+            "problem": "Write the Boolean expression for the circuit above",
+            "steps": [
+              {
+                "text": "Start at the **inputs**, not the output",
+                "note": "the direction matters"
+              },
+              {
+                "text": "**A** and **B** go into an **AND** gate, so that gate's output is **A . B**",
+                "note": "name the first gate's output"
+              },
+              {
+                "text": "**C** goes into a **NOT** gate, so that output is **C with an overbar**",
+                "note": "and the second"
+              },
+              {
+                "text": "Those two outputs are the **inputs to an OR gate**",
+                "note": "follow the wires"
+              },
+              {
+                "text": "So **Q = (A . B) + C̄**",
+                "note": "combine them with the OR symbol"
+              },
+              {
+                "text": "The brackets make the order clear, even where they are not strictly needed",
+                "note": "and cost nothing"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "What to do"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "start at the inputs on the left"
+                ],
+                [
+                  "2",
+                  "write the output of each gate as an expression"
+                ],
+                [
+                  "3",
+                  "follow the wires to the next gate"
+                ],
+                [
+                  "4",
+                  "combine, using brackets to show the order"
+                ]
+              ],
+              "title": "Work from the inputs towards the output"
+            },
+            "alt": "A table of the method for reading a circuit into an expression"
+          }
+        ]
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Building a circuit from an expression",
+        "body": "The reverse task is asked just as often: given an expression, **draw the circuit**. Here the method runs the other way — work out what the **last** operation is, and build backwards.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Draw the circuit for Q = (A + B) . C̄",
+            "steps": [
+              {
+                "text": "Find the **last** operation — the one joining the two halves. Here it is the **.**, an **AND**",
+                "note": "this gate is nearest the output"
+              },
+              {
+                "text": "So the output gate is an **AND**, with two inputs to be worked out",
+                "note": "draw it on the right"
+              },
+              {
+                "text": "Its first input is **A + B**, which is an **OR** gate fed by A and B",
+                "note": "the left half"
+              },
+              {
+                "text": "Its second input is **C̄**, which is a **NOT** gate fed by C",
+                "note": "the right half"
+              },
+              {
+                "text": "Draw the OR and the NOT to the **left**, and wire both into the AND",
+                "note": "inputs on the left, output on the right"
+              },
+              {
+                "text": "Label the inputs A, B and C on the far left and the output **Q** on the far right",
+                "note": "a diagram without labels loses marks"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "logic-circuit",
+            "alt": "The circuit for A OR B AND NOT C, with an OR gate and a NOT gate both feeding an AND gate, together with its truth table",
+            "props": {
+              "expression": {
+                "op": "AND",
+                "inputs": [
+                  {
+                    "op": "OR",
+                    "inputs": [
+                      "A",
+                      "B"
+                    ]
+                  },
+                  {
+                    "op": "NOT",
+                    "inputs": [
+                      "C"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "What to do"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "find the last operation: the one joining the main parts"
+                ],
+                [
+                  "2",
+                  "that gate goes nearest the output"
+                ],
+                [
+                  "3",
+                  "work out what feeds each of its inputs"
+                ],
+                [
+                  "4",
+                  "draw those gates to the left, and wire them in"
+                ],
+                [
+                  "5",
+                  "label the inputs and the output Q"
+                ]
+              ],
+              "title": "Reading goes left to right; drawing starts from the right"
+            },
+            "alt": "A table of the method for building a circuit from an expression"
+          }
+        ]
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Wiring matters, not just the gates",
+        "body": "Two circuits can use **exactly the same gates** and behave completely differently, because of **how they are wired**. This is worth seeing once, because it is why a circuit must be read carefully rather than recognised at a glance.\n\nCompare:\n\n- $Q = (A + B) . \\overline{C}$ — an OR and a NOT feeding an **AND**\n- $Q = A + (B . \\overline{C})$ — a NOT and an AND feeding an **OR**\n\nBoth contain **one OR, one AND and one NOT**. The only difference is which gate is nearest the output. Their truth tables **differ in two of the eight rows**.\n\nSo *the circuit has an AND, an OR and a NOT* is not a description of what it does. What it does depends on the **order** — which gate feeds which.\n\nThe practical consequence: when a question gives you a circuit, **trace the wires**. Do not simply list the gates you can see and assume the obvious combination.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "logic-circuit",
+            "alt": "The circuit and truth table for A OR the quantity B AND NOT C, for comparison with the earlier circuit that uses the same three gates wired differently",
+            "props": {
+              "expression": {
+                "op": "OR",
+                "inputs": [
+                  "A",
+                  {
+                    "op": "AND",
+                    "inputs": [
+                      "B",
+                      {
+                        "op": "NOT",
+                        "inputs": [
+                          "C"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "(A + B) . NOT C",
+                "A + (B . NOT C)"
+              ],
+              "rows": [
+                [
+                  "gates used",
+                  "one OR, one AND, one NOT",
+                  "one OR, one AND, one NOT"
+                ],
+                [
+                  "the gate nearest the output",
+                  "AND",
+                  "OR"
+                ],
+                [
+                  "output when A=1, B=0, C=1",
+                  "0",
+                  "1"
+                ],
+                [
+                  "rows where they differ",
+                  "two of the eight: 101 and 111",
+                  ""
+                ]
+              ],
+              "title": "Same gates, different wiring, different function"
+            },
+            "alt": "A table comparing two circuits built from the same three gates wired differently"
+          }
+        ]
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Modifying a circuit",
+        "body": "The specification asks you to **create, modify and interpret** circuit diagrams — and *modify* is the one people prepare for least.\n\nA modification question gives you a working circuit and asks for a change: *add an input so the output is also 1 when D is 1*, or *change the circuit so it gives 0 when both A and B are 1*.\n\nThe method is to work out **what kind of change the words describe**:\n\n- **Also 1 when…** means another route to an output of 1 — so **OR** the new condition into the existing output.\n- **Only when…as well** means an extra requirement — so **AND** the new condition in.\n- **Not when…** means the condition must be inverted — so put a **NOT** on it.\n\nThen draw the extra gate **nearest the output**, because it acts on the result of everything before it.\n\n**Check by table.** After modifying, build the truth table and confirm the rows the question mentioned come out right. A modification that looks sensible but changes the wrong rows is the commonest way marks are lost here, and the table catches it in a minute.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The question says",
+                "What to add",
+                "Where"
+              ],
+              "rows": [
+                [
+                  "also 1 when D is 1",
+                  "an OR gate",
+                  "nearest the output"
+                ],
+                [
+                  "only if D is also 1",
+                  "an AND gate",
+                  "nearest the output"
+                ],
+                [
+                  "not when D is 1",
+                  "a NOT on D, then combine",
+                  "before the new gate"
+                ],
+                [
+                  "1 when exactly one of them",
+                  "an XOR gate",
+                  ""
+                ]
+              ],
+              "title": "Then check the change with a truth table"
+            },
+            "alt": "A table translating the wording of a modification into the gate to add"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Draw the symbols for NOT, AND, OR and XOR. What distinguishes AND from OR? And OR from XOR?\n2. Where do the inputs go on a circuit diagram, and where does the output go?\n3. Which gates may appear in a logic circuit on this course?\n\n**Part B.**\n\n4. Write the Boolean expression for a circuit in which A and B feed an OR gate, and that output and C feed an AND gate.\n5. Draw the circuit for Q = A . B̄.\n6. Draw the circuit for Q = (A ⊕ B) + C.\n\n**Part C.**\n\n7. Two circuits both contain one AND, one OR and one NOT. Explain how they can behave differently.\n8. A circuit gives Q = A . B. Modify it so that Q is also 1 whenever C is 1, and draw the new circuit.\n\nFor question 5, remember the overbar applies to B alone — the NOT gate takes only B as its input, and its output feeds the AND.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "logic-circuit",
+            "alt": "The circuit and truth table for A AND NOT B, provided as a model for the circuits to draw",
+            "props": {
+              "expression": {
+                "op": "AND",
+                "inputs": [
+                  "A",
+                  {
+                    "op": "NOT",
+                    "inputs": [
+                      "B"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Gate nearest the output",
+                "Gates feeding it"
+              ],
+              "rows": [
+                [
+                  "A . NOT B",
+                  "",
+                  ""
+                ],
+                [
+                  "(A XOR B) + C",
+                  "",
+                  ""
+                ],
+                [
+                  "(A . B) + C",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Find the last operation first"
+            },
+            "alt": "A blank table for recording the circuits you draw"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: the last operation is the output gate",
+        "body": "**The single most useful idea.** When converting an expression into a circuit, find the operation that is done **last** — the one joining the main parts — and that gate goes **nearest the output**. Everything else feeds into it.\n\nIn $Q = (A + B) . \\overline{C}$ the last operation is the **AND**, because the OR and the NOT both have to be worked out before it can act. So the AND is the output gate.\n\nThat also tells you how to read brackets: they say **do this first**, which means **draw it further left**.\n\n**Reading a circuit is the same idea backwards.** Start at the inputs, name each gate's output as you reach it, and combine. Working from the output backwards is possible but much harder to keep straight, because you are guessing at what feeds each input.\n\n**Why the same gates can behave differently.** A circuit is not a bag of gates; it is a **structure**. $(A + B) . \\overline{C}$ and $A + (B . \\overline{C})$ use one OR, one AND and one NOT each, and their tables differ in **two of eight rows**. So an answer that lists the gates has not described the circuit. Trace the wires.\n\n**Drawing marks.** A circuit diagram is marked on more than its shape:\n\n- the **correct symbols**, distinguishable from each other\n- the **inputs labelled** on the left, the **output labelled Q** on the right\n- **wires that clearly connect** — a wire ending near a gate rather than at it can be read as unconnected\n- the **right number of inputs to each gate**: NOT takes **one**, the others take **two**\n\nThat last one matters. A NOT gate drawn with two inputs is a common slip and cannot be given the benefit of the doubt.\n\n**Check any circuit you draw by building its table** and testing a row or two against the expression. It takes a minute and it is the only way to be sure the wiring says what you meant.\n\n**And one limit worth knowing.** The specification allows up to **three inputs**, only these four gates, and no NAND or NOR. A question will never need more than that, so a solution that seems to require it has been misread.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Convert Q = (A ⊕ B) . C into a circuit",
+            "steps": [
+              {
+                "text": "Find the **last** operation: the **.**, an AND — the XOR is in brackets, so it happens first",
+                "note": "last operation, nearest the output"
+              },
+              {
+                "text": "Draw an **AND** gate on the right, feeding the output **Q**",
+                "note": "the output gate"
+              },
+              {
+                "text": "Its inputs are **(A ⊕ B)** and **C**",
+                "note": "two inputs to work out"
+              },
+              {
+                "text": "**A ⊕ B** is an **XOR** gate fed by A and B — draw it to the left",
+                "note": "the bracketed part goes further left"
+              },
+              {
+                "text": "**C** goes straight into the AND, with no gate of its own",
+                "note": "a wire, not a gate"
+              },
+              {
+                "text": "Label A, B and C on the left, Q on the right, and check each gate has the right number of inputs",
+                "note": "the marks that are not about shape"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Feature",
+                "Why it matters"
+              ],
+              "rows": [
+                [
+                  "inputs labelled on the left",
+                  "the diagram must say which input is which"
+                ],
+                [
+                  "output labelled Q on the right",
+                  "and which wire is the result"
+                ],
+                [
+                  "wires clearly joined to the gates",
+                  "a near miss can be read as unconnected"
+                ],
+                [
+                  "one input to a NOT, two to the others",
+                  "a NOT with two inputs is simply wrong"
+                ],
+                [
+                  "a truth table check",
+                  "the only way to be sure the wiring says what you meant"
+                ]
+              ],
+              "title": "Shape alone does not earn the marks"
+            },
+            "alt": "A table of what a circuit diagram is marked on besides the gate shapes"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Inputs go on the **left**, the output **Q** on the **right**.\n- **NOT** is a **triangle with a circle** on its point — the circle does the inverting.\n- **AND** is a **D shape**: flat back, rounded front, **no point**.\n- **OR** is a **shield**: curved back, **pointed** front.\n- **XOR** is the OR shield with an **extra curved line** at the back.\n- Only **NOT, AND, OR and XOR** appear in circuits on this course, with up to **three inputs**.\n- **To read a circuit**: work from the **inputs towards the output**, naming each gate's output as you go.\n- **To draw a circuit**: find the **last operation** — that gate goes **nearest the output** — then work out what feeds each input.\n- **Brackets mean do this first**, which means **draw it further left**.\n- The **same gates wired differently** give different functions: $(A + B) . \\overline{C}$ and $A + (B . \\overline{C})$ differ in two of eight rows.\n- **To modify a circuit**: *also 1 when* means **OR** it in; *only if also* means **AND** it in; *not when* means add a **NOT**.\n- Label the inputs and the output, join the wires clearly, and give **NOT one input** and the others **two**.\n- **Check a circuit by building its truth table.**",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Layout",
+                  "inputs on the left, output Q on the right"
+                ],
+                [
+                  "NOT",
+                  "a triangle with a circle on the point"
+                ],
+                [
+                  "AND",
+                  "a D shape, flat back and rounded front"
+                ],
+                [
+                  "OR",
+                  "a shield, curved back and pointed front"
+                ],
+                [
+                  "XOR",
+                  "the OR shield with an extra line at the back"
+                ],
+                [
+                  "Allowed",
+                  "only NOT, AND, OR and XOR, up to three inputs"
+                ],
+                [
+                  "Reading a circuit",
+                  "work from the inputs towards the output"
+                ],
+                [
+                  "Drawing a circuit",
+                  "the last operation is the gate nearest the output"
+                ],
+                [
+                  "Brackets",
+                  "do this first, so draw it further left"
+                ],
+                [
+                  "Same gates, different wiring",
+                  "a different function entirely"
+                ],
+                [
+                  "Modifying: also 1 when",
+                  "OR the new condition in"
+                ],
+                [
+                  "Modifying: only if also",
+                  "AND it in"
+                ],
+                [
+                  "Inputs per gate",
+                  "one for NOT, two for the rest"
+                ],
+                [
+                  "Always",
+                  "check it with a truth table"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of logic circuits covering the symbols, reading, drawing and modifying"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Where does the output go on a logic circuit diagram?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Inputs on the **left**, output **Q** on the **right**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "on the right"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "On the right",
+        "On the left",
+        "At the top",
+        "At the bottom"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "How is a NOT gate drawn?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **triangle with a circle** on its point — and the **circle** is the part that inverts.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a triangle with a circle"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A triangle with a small circle on its point",
+        "A D shape",
+        "A shield with a point",
+        "A shield with an extra line"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "How is an AND gate drawn?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **D shape**. If the front comes to a **point** it is an OR or XOR, not an AND.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a D shape"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A D shape, flat at the back and rounded at the front",
+        "A shield with a point",
+        "A triangle",
+        "A shield with two lines"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which gates may appear in a logic circuit on this course?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Only those **four**. The specification says NAND and NOR are not needed.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "NOT, AND, OR and XOR"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "NOT, AND, OR and XOR",
+        "Any logic gate",
+        "NAND and NOR only",
+        "AND and OR only"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "What distinguishes an XOR symbol from an OR symbol?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "XOR is the OR shield with **one extra curved line** at the back. Leaving it off turns it into an OR.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "an extra curved line"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "An extra curved line across the back",
+        "A circle on the point",
+        "A flat back",
+        "A third input"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "In which direction should you read a circuit to write its expression?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "From the **inputs towards the output**, naming each gate's output as you reach it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "from the inputs towards the output"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "From the inputs towards the output",
+        "From the output backwards",
+        "From the top down",
+        "From the middle outwards"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "A and B feed an OR gate. That output and C feed an AND gate. Write the Boolean expression for Q, using a dot for AND and a plus for OR.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The OR happens first, so it is bracketed: **Q = (A + B) . C**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(A + B) . C"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "(A + B) . C"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "How many inputs does a NOT gate take?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**One**. A NOT gate drawn with two inputs is simply wrong and cannot be credited.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "Any number"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "In Q = (A + B) . C, which gate is nearest the output?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "building a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **last operation** is the AND — the OR is in brackets and happens first — so the AND is the **output gate**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the AND"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The AND",
+        "The OR",
+        "The NOT",
+        "They are side by side"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What do brackets in a Boolean expression tell you about the circuit?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "building a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Brackets mean **do this first**, and in a circuit *first* means **further to the left**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "drawn further left"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "That part is drawn further left, because it happens first",
+        "That part uses a NOT gate",
+        "Those inputs are ignored",
+        "The circuit needs three inputs"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Two circuits each contain one AND, one OR and one NOT. Can they behave differently?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A circuit is a **structure**, not a bag of gates. $(A + B) . \\overline{C}$ and $A + (B . \\overline{C})$ differ in **two of eight** rows.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the wiring decides"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Yes: the wiring decides what the circuit does",
+        "No: the same gates always give the same result",
+        "Only if the inputs differ",
+        "Only if one uses XOR"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "What is the first step in drawing a circuit from an expression?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "building a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The operation done **last** joins the main parts, so its gate sits **nearest the output** and everything else feeds into it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "find the last operation"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Find the last operation, which becomes the output gate",
+        "Draw all the gates in a row",
+        "Start with the NOT gates",
+        "Build the truth table"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "A circuit gives Q = A . B. How would you modify it so Q is also 1 whenever C is 1?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "modifying a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "*Also 1 when* means **another route to 1**, so **OR** the new condition into the existing output: $Q = (A . B) + C$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "OR C into the output"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Add an OR gate nearest the output, with C as its other input",
+        "Add an AND gate with C",
+        "Add a NOT gate on C",
+        "Replace the AND with an XOR"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Besides the gate shapes, what is a circuit diagram marked on?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Inputs labelled on the **left**, the output labelled **Q**, wires that **clearly connect**, and the right **number of inputs** to each gate.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "labels and clear connections"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Labelled inputs and output, and wires clearly joined",
+        "How neatly it is drawn",
+        "The number of gates used",
+        "The colour of the wires"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why should you build a truth table after drawing a circuit?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "building a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A circuit that looks right can still be wired wrongly. The **table** tests it against the expression, and it takes a minute.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it checks the wiring"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It is the only way to check the wiring says what you meant",
+        "It is required by the mark scheme",
+        "It makes the circuit neater",
+        "It reduces the number of gates"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A question seems to need a NAND gate. What has most likely happened?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "circuit symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification allows only **NOT, AND, OR and XOR**, up to three inputs. A solution that seems to need more has been misread.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the question has been misread"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The question has been misread: NAND is not on this course",
+        "NAND must be drawn as a NOT and an AND",
+        "The specification has changed",
+        "NAND is allowed in circuits only"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Describe how to convert the Boolean expression Q = (A + B) . NOT C into a logic circuit diagram, and state what must be labelled.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "building a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first step is to find the operation that is carried out last, because the gate for that operation is the one placed nearest to the output. In this expression the bracketed part A plus B must be worked out first, and the NOT applied to C must also be worked out first, so the last operation is the dot, which represents AND. An AND gate is therefore drawn on the right hand side, and its output is the output of the whole circuit. The first input to that AND gate is A plus B, which is an OR gate with A and B as its two inputs, so an OR gate is drawn to the left and its output is wired into the AND gate. The second input to the AND gate is NOT C, so a NOT gate is drawn, also to the left, with C as its single input, and its output is wired into the AND gate as well. Finally the three inputs A, B and C must be labelled on the far left of the diagram and the output must be labelled Q on the far right. Each wire must be drawn so that it clearly joins the gate it feeds, and the NOT gate must have exactly one input while the AND and OR gates each have two.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the AND as the last operation"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "places the AND gate nearest the output"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "an OR gate fed by A and B feeds the AND"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "a NOT gate fed by C feeds the AND"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "labels the inputs on the left and Q on the right"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "notes that a NOT takes one input and the others two"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 12,
+      "criteria": [
+        {
+          "text": "Identifies the last operation as the AND",
+          "marks": 1
+        },
+        {
+          "text": "Places that gate nearest the output",
+          "marks": 1
+        },
+        {
+          "text": "Describes the OR gate fed by A and B",
+          "marks": 1
+        },
+        {
+          "text": "Describes the NOT gate fed by C",
+          "marks": 1
+        },
+        {
+          "text": "States that the inputs and output must be labelled",
+          "marks": 1
+        },
+        {
+          "text": "States the correct number of inputs to each gate",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Find the last operation.** The bracket $(A + B)$ must be worked out first, and so must $\\overline{C}$ — so the **last** operation is the **.**, an **AND**. That gate goes **nearest the output**.\n\n**Build backwards from it.**\n\n- Draw the **AND** gate on the right; its output is **Q**.\n- Its first input is $A + B$: an **OR** gate fed by **A** and **B**, drawn to the left, wired into the AND.\n- Its second input is $\\overline{C}$: a **NOT** gate fed by **C**, also to the left, wired into the AND.\n\n**Label it.** Inputs **A, B and C** on the far left; the output **Q** on the far right.\n\n**And check the details that carry marks:**\n\n- every wire **clearly joins** the gate it feeds\n- the **NOT has one input**; the AND and OR have **two** each\n\nA useful final step is to build the truth table and test a row against the expression — it is the only way to be sure the wiring says what you meant."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Explain why two logic circuits containing exactly the same gates can produce different outputs, using an example.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "reading a circuit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A logic circuit is not simply a collection of gates but a structure in which the order of the gates, and which gate feeds which, determines what the circuit does. Two circuits can therefore contain exactly the same gates and still behave completely differently. For example, consider a circuit in which A and B feed an OR gate, C feeds a NOT gate, and the outputs of those two gates feed an AND gate, giving the expression A plus B, all ANDed with NOT C. Now consider a second circuit which also contains one OR gate, one AND gate and one NOT gate, but wired so that C feeds the NOT gate, B and the output of the NOT gate feed the AND gate, and A and the output of the AND gate feed the OR gate, giving the expression A OR the quantity B AND NOT C. Both circuits use one OR, one AND and one NOT, but the gate nearest the output is an AND in the first case and an OR in the second. If their truth tables are constructed, they are found to differ in two of the eight rows. For instance when A is one, B is zero and C is one, the first circuit gives zero while the second gives one. This is why a circuit must be read by tracing the wires rather than by listing the gates that appear in it.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states that the wiring, not just the gates, determines the function"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "gives two circuits with the same three gates"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "identifies that a different gate is nearest the output"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states that their truth tables differ"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "concludes that a circuit must be read by tracing the wires"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "States that the wiring determines what the circuit does",
+          "marks": 1
+        },
+        {
+          "text": "Gives two circuits using the same gates",
+          "marks": 1
+        },
+        {
+          "text": "Identifies which gate is nearest the output in each",
+          "marks": 1
+        },
+        {
+          "text": "States that the truth tables differ",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that circuits must be read by tracing wires",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The principle.** A circuit is a **structure**, not a bag of gates. Which gate feeds which — and which is nearest the output — decides what it does.\n\n**An example.** Both of these use **one OR, one AND and one NOT**:\n\n- $Q = (A + B) . \\overline{C}$ — A and B into an **OR**, C into a **NOT**, both into an **AND**\n- $Q = A + (B . \\overline{C})$ — C into a **NOT**, that and B into an **AND**, that and A into an **OR**\n\nThe difference is which gate is **nearest the output**: an AND in the first, an OR in the second.\n\n**The consequence.** Their truth tables differ in **two of the eight rows**. When $A = 1$, $B = 0$, $C = 1$ the first gives **0** and the second gives **1**.\n\n**So:** *the circuit has an AND, an OR and a NOT* is not a description of what it does. A circuit must be read by **tracing the wires** from the inputs to the output, not by listing the gates that appear in it."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Draw the four symbols so they are clearly different from each other, especially AND against OR.\n\nPut the inputs on the left and label them, and label the output Q on the right.\n\nTo read a circuit, work from the inputs towards the output, writing each gate's output as an expression.\n\nTo draw a circuit, find the last operation first and place that gate nearest the output.\n\nGive a NOT gate one input and the others two, and make every wire clearly join the gate it feeds.\n\nAfter drawing, build the truth table and check a row against the expression.",
+    "examinerErrors": [
+      "Drawing an AND gate with a pointed front, which makes it an OR.",
+      "Leaving the extra line off an XOR, which makes it an OR.",
+      "Omitting the small circle from a NOT gate.",
+      "Drawing a NOT gate with two inputs.",
+      "Failing to label the inputs or the output.",
+      "Drawing a wire that stops short of the gate it should feed.",
+      "Placing the first operation nearest the output instead of the last.",
+      "Listing the gates in a circuit instead of tracing how they are wired."
+    ],
+    "grade9Looks": "A top answer knows that reading and drawing run in opposite directions, and says which it is doing. It finds the last operation before drawing anything, so the output gate is right from the start and the rest follows. It treats a circuit as a structure rather than a set of gates, and can show with a truth table that the same gates wired differently give a different function. It labels inputs and output without being told, checks that a NOT has one input, and verifies the finished circuit against its expression with a table."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
