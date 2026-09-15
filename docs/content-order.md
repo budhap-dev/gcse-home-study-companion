@@ -70,6 +70,7 @@ School order for Year 10: Unit 6 Plant structures first, then Unit 5 Health and 
 |---|---|---|
 | Autumn 1 | Unit 6: photosynthesis and limiting factors · the leaf, root hair cells, xylem and phloem · transpiration and translocation · plant adaptations, defences and hormones (Biology only) | All four drafted |
 | Autumn 1 and 2 | Unit 5: pathogens and how disease spreads · the immune system and immunisation · antibiotics, new medicines and monoclonal antibodies · non-communicable disease and lifestyle | All four drafted |
+| Spring | Unit 7: animal coordination, control and homeostasis | **Spring is complete.** Five topics drafted 15 September 2026 from the Edexcel 1BI0 specification PDF. The school's plan named four, but spec points **7.4 to 7.8** — the menstrual cycle, hormonal contraception and assisted reproduction — were covered by none of them, so a fifth topic was added and a syllabus row with it. Three of the five are **Biology only** (the B suffix): thermoregulation is 7.10B to 7.12B and the kidneys 7.10B and 7.18B to 7.22B, so neither appears in Combined Science. Also adds `bio_common.py`: the older bio5a-d generators each carried their own copy of the self-checks, and new topics now use the shared `finish()` so a check added once reaches all of them. |
 
 
 ## Computer Science (AQA 8525)

@@ -294,10 +294,13 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Non-communicable disease and lifestyle', topicId: 'non-communicable-disease-and-lifestyle' },
     ] },
     { year: 10, term: 'Spring', topics: [
-      { title: 'Hormones and the endocrine system' },
-      { title: 'Blood glucose control and diabetes' },
-      { title: 'Thermoregulation' },
-      { title: 'Osmoregulation and the kidneys' },
+      { title: 'Hormones and the endocrine system', topicId: 'hormones-and-the-endocrine-system' },
+      // Spec points 7.4 to 7.8 — the menstrual cycle, contraception and ART — were not
+      // covered by any of the four rows the school's plan lists, so this row was added.
+      { title: 'The menstrual cycle and fertility', topicId: 'the-menstrual-cycle-and-fertility' },
+      { title: 'Blood glucose control and diabetes', topicId: 'blood-glucose-control-and-diabetes' },
+      { title: 'Thermoregulation', topicId: 'thermoregulation' },
+      { title: 'Osmoregulation and the kidneys', topicId: 'osmoregulation-and-the-kidneys' },
     ] },
     { year: 10, term: 'Summer', topics: [
       { title: 'Ecosystems and interdependence' },
