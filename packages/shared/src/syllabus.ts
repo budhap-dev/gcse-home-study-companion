@@ -303,10 +303,13 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Osmoregulation and the kidneys', topicId: 'osmoregulation-and-the-kidneys' },
     ] },
     { year: 10, term: 'Summer', topics: [
-      { title: 'Ecosystems and interdependence' },
-      { title: 'Material cycles' },
-      { title: 'Cells, mitosis and growth' },
-      { title: 'The nervous system and the brain' },
+      { title: 'Ecosystems and interdependence', topicId: 'ecosystems-and-interdependence' },
+      { title: 'Material cycles', topicId: 'material-cycles' },
+      { title: 'Cells, mitosis and growth', topicId: 'cells-mitosis-and-growth' },
+      { title: 'The nervous system and the brain', topicId: 'the-nervous-system-and-the-brain' },
+      // Spec points 2.15B to 2.17B — the eye, its defects and their correction — appeared
+      // in no row of the school's plan, so this one was added.
+      { title: 'The eye and its defects', topicId: 'the-eye-and-its-defects' },
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Meiosis and sexual reproduction' },
