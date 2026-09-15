@@ -21,7 +21,15 @@ export function renderRichText(source: string): string {
     .replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) => keep(tex, true))
     .replace(/\$([^$\n]+?)\$/g, (_, tex) => keep(tex, false))
   const html = marked.parse(withTokens, { async: false, gfm: true, breaks: false }) as string
-  return html.replace(/\u0000M(\d+)\u0000/g, (_, i) => maths[Number(i)] ?? '').replace(/\u0000D\u0000/g, () => '$')
+  return (
+    html
+      .replace(/\u0000M(\d+)\u0000/g, (_, i) => maths[Number(i)] ?? '')
+      .replace(/\u0000D\u0000/g, () => '$')
+      // A wide table has to scroll rather than push the page sideways on a phone, and
+      // marked emits a bare <table>, so the scroll container is added here.
+      .replace(/<table>/g, '<div class="rich-table"><table>')
+      .replace(/<\/table>/g, '</table></div>')
+  )
 }
 
 export function RichText({ source, className = '', inline = false }: { source: string; className?: string; inline?: boolean }) {

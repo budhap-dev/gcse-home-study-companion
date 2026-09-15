@@ -496,13 +496,13 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Star Wars main title', topicId: 'star-wars' },
     ] },
     { year: 10, term: 'Spring', topics: [
-      { title: 'History of instrumental music' },
+      { title: 'History of instrumental music', topicId: 'history-of-instrumental-music' },
       { title: 'Bach: Brandenburg Concerto No. 5, third movement', topicId: 'bach-brandenburg-5' },
       { title: 'Afro Celt Sound System: Release', topicId: 'afro-celt-release' },
     ] },
     { year: 10, term: 'Summer', topics: [
-      { title: 'Esperanza Spalding: Samba Em Preludio' },
-      { title: 'Defying Gravity from Wicked' },
+      { title: 'Esperanza Spalding: Samba Em Preludio', topicId: 'samba-em-preludio' },
+      { title: 'Defying Gravity from Wicked', topicId: 'defying-gravity' },
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Beethoven: Pathétique, first movement' },
