@@ -236,8 +236,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     { year: 10, term: 'Spring', topics: [
       { title: 'Exothermic and endothermic reactions', topicId: 'exothermic-and-endothermic-reactions' },
       { title: 'Energy profiles and bond energies', topicId: 'reaction-profiles-and-bond-energies' },
-      // 4.5.2, chemistry only, is still to be written.
-      { title: 'Cells, batteries and fuel cells' },
+      { title: 'Cells, batteries and fuel cells', topicId: 'cells-batteries-and-fuel-cells' },
       // The school's last two rows are these two topics: combustion is taught with the
       // alkanes it burns, and cracking with the alkenes it produces.
       { title: 'Crude oil, hydrocarbons and alkanes', topicId: 'crude-oil-and-alkanes' },
