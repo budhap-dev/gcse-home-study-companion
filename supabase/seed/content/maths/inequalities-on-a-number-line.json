@@ -1,0 +1,1311 @@
+{
+  "id": "inequalities-on-a-number-line",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Inequalities and the number line",
+  "specPoints": [
+    "A22"
+  ],
+  "order": 2,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Open for strict, filled for or equal to",
+      "body": "$<$ and $>$ get an **open** circle, because the endpoint is not a solution. $\\leqslant$ and $\\geqslant$ get a **filled** one, because it is. The circle is worth its own mark, so decide it from the symbol before you draw anything."
+    },
+    {
+      "kind": "check",
+      "title": "Dividing by a negative reverses the symbol",
+      "body": "It is the only step in solving an inequality that differs from solving an equation. $2 < 5$, but $-2 > -5$: multiplying by a negative reflects the number line and swaps which is bigger, so the symbol must swap too."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Move x to the side where it is positive",
+      "body": "For $5 - 2x \\geqslant 1$, add $2x$ instead of dividing by $-2$: $5 \\geqslant 1 + 2x$, then $4 \\geqslant 2x$, then $2 \\geqslant x$. The x term stays positive throughout, so the flip you might forget never comes up."
+    },
+    {
+      "kind": "spot",
+      "title": "Test each end against its own symbol",
+      "body": "For integer solutions of $-2 \\leqslant x < 3$, check the ends separately: $-2$ is **in** because of $\\leqslant$, 3 is **out** because of $<$. And count the negatives — starting at zero loses $-2$ and $-1$."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Reading the four symbols",
+        "body": "An **inequality** says one thing is bigger or smaller than another, rather than equal to it. Four symbols do all the work.\n\n- $x < 5$ — x is **less than** 5. Five itself is **not** included.\n- $x > 5$ — x is **greater than** 5.\n- $x \\leqslant 5$ — x is **less than or equal to** 5. Five **is** included.\n- $x \\geqslant 5$ — x is **greater than or equal to** 5.\n\nThe line underneath is the whole difference: it means *or equal to*, and it decides whether the endpoint counts.\n\nA good way to keep the direction straight: the symbol **opens towards the larger side**. In $x < 5$ the wide end faces the 5, so 5 is the larger. In $7 > 2$ the wide end faces the 7.\n\nAn inequality usually has **infinitely many** solutions, not one. $x < 5$ is satisfied by 4, by 4.9, by $-100$, and by every number below 5. That is why we draw the answer rather than writing a single number.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Symbol",
+                "Means",
+                "Is the endpoint included?"
+              ],
+              "rows": [
+                [
+                  "x < 5",
+                  "less than 5",
+                  "no"
+                ],
+                [
+                  "x > 5",
+                  "greater than 5",
+                  "no"
+                ],
+                [
+                  "x ⩽ 5",
+                  "less than or equal to 5",
+                  "yes"
+                ],
+                [
+                  "x ⩾ 5",
+                  "greater than or equal to 5",
+                  "yes"
+                ]
+              ],
+              "title": "The line underneath means or equal to"
+            },
+            "alt": "A table of the four inequality symbols, what each means, and whether the endpoint is included"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which numbers satisfy $x \\leqslant 3$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading inequalities",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The line under the symbol means **or equal to**, so **3 itself is included**, along with every number below it.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3 and everything below"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "3 and every number below it",
+            "Every number below 3, but not 3",
+            "3 and every number above it",
+            "Only 3"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Showing it on a number line",
+        "body": "A solution set is drawn on a number line with a **circle** at the boundary and a **line** over the numbers that work.\n\n- **Open circle** for $<$ or $>$: the endpoint is **not** included.\n- **Filled circle** for $\\leqslant$ or $\\geqslant$: the endpoint **is** included.\n\nThen shade towards the numbers that satisfy it, with an **arrow** if the solution carries on forever.\n\nThat is the whole convention, and it is worth being precise about, because an open circle where a filled one belongs loses the mark even when the algebra is perfect.\n\nA quick way to check your drawing: pick a number in the shaded part and test it in the original inequality. If it works, you have shaded the right side.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "inequality-line",
+            "props": {
+              "from": -5,
+              "to": 5,
+              "lower": {
+                "value": 2.0,
+                "inclusive": false
+              },
+              "label": "x > 2"
+            },
+            "alt": "A number line from minus 5 to 5 with an open circle at 2 and the line shaded to the right, showing x greater than 2"
+          },
+          {
+            "type": "diagram",
+            "component": "inequality-line",
+            "props": {
+              "from": -5,
+              "to": 5,
+              "upper": {
+                "value": 2.0,
+                "inclusive": true
+              },
+              "label": "x ⩽ 2"
+            },
+            "alt": "A number line from minus 5 to 5 with a filled circle at 2 and the line shaded to the left, showing x less than or equal to 2"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Inequality",
+                "Circle at the boundary",
+                "Shade towards"
+              ],
+              "rows": [
+                [
+                  "x < 2",
+                  "open",
+                  "smaller numbers"
+                ],
+                [
+                  "x ⩽ 2",
+                  "filled",
+                  "smaller numbers"
+                ],
+                [
+                  "x > 2",
+                  "open",
+                  "larger numbers"
+                ],
+                [
+                  "x ⩾ 2",
+                  "filled",
+                  "larger numbers"
+                ]
+              ],
+              "title": "Open for strict, filled for or equal to"
+            },
+            "alt": "A table of which circle to draw for each symbol and which way to shade"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "What kind of circle do you draw at 4 for the inequality $x \\geqslant 4$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "number lines",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\geqslant$ **includes** the endpoint, so the circle is **filled**. An open circle is for the strict symbols $<$ and $>$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a filled circle"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A filled circle",
+            "An open circle",
+            "No circle",
+            "A cross"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Solving one",
+        "body": "Solving an inequality works **exactly like solving an equation**: do the same thing to both sides until $x$ is alone.\n\nThere is one difference, and it is the thing this topic is really testing. **If you multiply or divide by a negative number, the symbol reverses.**\n\nWhy? Because $2 < 5$, but multiplying both sides by $-1$ gives $-2$ and $-5$ — and $-2$ is **greater** than $-5$. The order has flipped, so the symbol must flip with it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $3x + 4 < 19$",
+            "steps": [
+              {
+                "text": "Subtract 4 from both sides: $3x < 15$",
+                "note": "same as an equation"
+              },
+              {
+                "text": "Divide both sides by 3: $x < 5$",
+                "note": "3 is positive, so the symbol stays as it is"
+              },
+              {
+                "text": "Check: $x = 4$ gives $3(4) + 4 = 16 < 19$ ✓",
+                "note": "test a number inside"
+              },
+              {
+                "text": "Check: $x = 5$ gives $19$, which is **not** less than 19 ✗",
+                "note": "and one on the boundary"
+              },
+              {
+                "text": "So the solution is $x < 5$",
+                "note": "an open circle at 5, shaded left"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $5 - 2x \\geqslant 1$",
+            "steps": [
+              {
+                "text": "Subtract 5: $-2x \\geqslant -4$",
+                "note": "still the same as an equation"
+              },
+              {
+                "text": "Divide by $-2$ — and **reverse the symbol**",
+                "note": "this is the step that decides the mark"
+              },
+              {
+                "text": "$x \\leqslant 2$",
+                "note": "$\\geqslant$ has become $\\leqslant$"
+              },
+              {
+                "text": "Check: $x = 0$ gives $5 - 0 = 5 \\geqslant 1$ ✓, and $0 \\leqslant 2$ ✓",
+                "note": "a number inside works in both"
+              },
+              {
+                "text": "Check: $x = 3$ gives $5 - 6 = -1$, not $\\geqslant 1$ ✗",
+                "note": "and one outside fails in both, which confirms the flip"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "inequality-line",
+            "props": {
+              "from": -5,
+              "to": 5,
+              "upper": {
+                "value": 2.0,
+                "inclusive": true
+              },
+              "label": "x ⩽ 2"
+            },
+            "alt": "A number line from minus 5 to 5 with a filled circle at 2 and the line shaded to the left, the solution of 5 minus 2x is greater than or equal to 1"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "Solve $5 - 2x \\geqslant 1$. Write your answer as an inequality in x.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "solving inequalities",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$-2x \\geqslant -4$, then divide by $-2$ and **reverse**: $x \\leqslant 2$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x ⩽ 2"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "x <= 2",
+            "x ⩽ 2",
+            "x≤2",
+            "x <=2",
+            "x ≤ 2"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Double inequalities",
+        "body": "Sometimes $x$ is trapped between two numbers:\n\n$$-3 \\leqslant 2x + 1 < 7$$\n\nThis is really two inequalities at once. Solve it by doing the same thing to **all three parts**.\n\n1. Subtract 1 everywhere: $-4 \\leqslant 2x < 6$\n2. Divide everything by 2: $-2 \\leqslant x < 3$\n\nSo $x$ is between $-2$ and $3$, **including** $-2$ but **not** 3. On a number line that is a **filled** circle at $-2$, an **open** circle at 3, and shading between them. No arrows, because the solution does not carry on.\n\nIf a step involves dividing by a negative, the symbols reverse **and** the whole inequality is usually rewritten the other way round, so the smaller number is on the left. Keeping the smaller number on the left is what makes a double inequality readable.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "inequality-line",
+            "props": {
+              "from": -5,
+              "to": 5,
+              "lower": {
+                "value": -2.0,
+                "inclusive": true
+              },
+              "upper": {
+                "value": 3.0,
+                "inclusive": false
+              },
+              "label": "−2 ⩽ x < 3"
+            },
+            "alt": "A number line from minus 5 to 5 with a filled circle at minus 2, an open circle at 3, and the line shaded between them, showing minus 2 is less than or equal to x which is less than 3"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $-3 \\leqslant 2x + 1 < 7$",
+            "steps": [
+              {
+                "text": "Subtract 1 from all **three** parts: $-4 \\leqslant 2x < 6$",
+                "note": "whatever you do, do it everywhere"
+              },
+              {
+                "text": "Divide all three by 2: $-2 \\leqslant x < 3$",
+                "note": "2 is positive, so nothing reverses"
+              },
+              {
+                "text": "Check $x = 0$: $2(0) + 1 = 1$, and $-3 \\leqslant 1 < 7$ ✓",
+                "note": "a number inside"
+              },
+              {
+                "text": "Check $x = 3$: $2(3) + 1 = 7$, and $7 < 7$ is false ✗",
+                "note": "the open end really is excluded"
+              },
+              {
+                "text": "Filled circle at $-2$, open circle at 3, shaded between",
+                "note": "and no arrows"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "short-text",
+          "prompt": "Solve $-3 \\leqslant 2x + 1 < 7$. Give your answer in the form a ⩽ x < b.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "solving inequalities",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Subtract 1 from all three parts, then divide all three by 2: $-2 \\leqslant x < 3$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "−2 ⩽ x < 3"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "-2 <= x < 3",
+            "−2 ⩽ x < 3",
+            "-2 ⩽ x < 3",
+            "-2<=x<3",
+            "-2 ≤ x < 3"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Integer solutions",
+        "body": "A very common question asks for the **integer** solutions: the whole numbers that satisfy the inequality.\n\nFor $-2 \\leqslant x < 3$ the integers are\n\n$$-2, -1, 0, 1, 2$$\n\nThat is 5 values. Two things decide the ends, and both are easy to get wrong.\n\n- $-2$ **is** included, because the symbol is $\\leqslant$.\n- $3$ is **not** included, because the symbol is $<$.\n\nSo check each end separately against its own symbol. Writing the solution set on a number line first makes this almost automatic: the filled circle is in, the open circle is out.\n\nWatch for negative numbers. Students often start counting at 0 and forget that $-2$ and $-1$ are integers too.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Value",
+                "Is it a solution?",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "−3",
+                  "no",
+                  "below the lower bound"
+                ],
+                [
+                  "−2",
+                  "yes",
+                  "⩽ includes the endpoint"
+                ],
+                [
+                  "−1, 0, 1, 2",
+                  "yes",
+                  "between the bounds"
+                ],
+                [
+                  "3",
+                  "no",
+                  "< excludes the endpoint"
+                ],
+                [
+                  "4",
+                  "no",
+                  "above the upper bound"
+                ]
+              ],
+              "title": "Five integer solutions in total"
+            },
+            "alt": "A table of the integer solutions of minus 2 is less than or equal to x, which is less than 3, testing each end against its own symbol"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "How many integer solutions does $-2 \\leqslant x < 3$ have?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "integer solutions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The integers are $-2, -1, 0, 1, 2$: **5** of them. $-2$ is in because of $\\leqslant$; 3 is out because of $<$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.** Solve each inequality and draw the solution on a number line.\n\n1. $4x - 3 > 9$\n2. $7 - 3x \\leqslant 1$\n3. $-5 < 3x + 1 \\leqslant 10$\n\n**Part B.**\n\n4. Write down all the integer solutions of your answer to question 3.\n5. For question 2, check your answer by substituting a number that should work and one that should not.\n\n**Part C, Higher tier.**\n\n6. Write the solution to question 1 in set notation.\n\nQuestion 2 is the one to be careful with: dividing by a negative reverses the symbol.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Inequality",
+                "Solution",
+                "Circles and shading"
+              ],
+              "rows": [
+                [
+                  "4x − 3 > 9",
+                  "",
+                  ""
+                ],
+                [
+                  "7 − 3x ⩽ 1",
+                  "",
+                  ""
+                ],
+                [
+                  "−5 < 3x + 1 ⩽ 10",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Check each answer by substituting"
+            },
+            "alt": "A blank table for solving three inequalities, with a column for the solution and one for the circles to draw"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "Solve $7 - 3x \\leqslant 1$. Write your answer as an inequality in x.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "solving inequalities",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$-3x \\leqslant -6$, then divide by $-3$ and **reverse**: $x \\geqslant 2$. Check $x = 3$: $7 - 9 = -2 \\leqslant 1$ ✓.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x ⩾ 2"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "x >= 2",
+            "x ⩾ 2",
+            "x≥2",
+            "x >=2",
+            "x ≥ 2"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Higher tier: set notation, and why the symbol flips",
+        "body": "**Set notation** is the Higher tier addition to this topic. The solution $x > 2$ is written\n\n$$\\{x : x > 2\\}$$\n\nwhich reads *the set of values of x such that x is greater than 2*. The colon means **such that**.\n\nA double inequality goes inside one pair of brackets:\n\n$$\\{x : -2 \\leqslant x < 3\\}$$\n\nAnd two separate pieces are joined with $\\cup$, the union:\n\n$$\\{x : x < -1\\} \\cup \\{x : x > 4\\}$$\n\nwhich is how you write *x is less than $-1$ or greater than 4* — two rays with a gap between them.\n\n**Why dividing by a negative reverses the symbol.** It is worth understanding rather than memorising, because it is the step examiners target.\n\nStart with something obviously true: $2 < 5$. Multiply both sides by $-1$: the numbers become $-2$ and $-5$. On a number line $-2$ is to the **right** of $-5$, so $-2 > -5$. Multiplying by a negative **reflects** the number line, and reflecting swaps which number is bigger. So the symbol must swap too.\n\nA safer route if you find the flip error-prone: **move the x term to the side where it is positive** instead. For $5 - 2x \\geqslant 1$, add $2x$ to both sides to get $5 \\geqslant 1 + 2x$, then $4 \\geqslant 2x$, then $2 \\geqslant x$ — which is $x \\leqslant 2$. Same answer, no flip needed at any point.\n\nThat trick is worth having, because it removes the single commonest error in the topic.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "In words",
+                "Inequality",
+                "Set notation"
+              ],
+              "rows": [
+                [
+                  "x is greater than 2",
+                  "x > 2",
+                  "{x : x > 2}"
+                ],
+                [
+                  "x is between −2 and 3",
+                  "−2 ⩽ x < 3",
+                  "{x : −2 ⩽ x < 3}"
+                ],
+                [
+                  "x is below −1 or above 4",
+                  "x < −1 or x > 4",
+                  "{x : x < −1} ∪ {x : x > 4}"
+                ]
+              ],
+              "title": "The colon means such that"
+            },
+            "alt": "A table of set notation for three kinds of solution set"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $5 - 2x \\geqslant 1$ without ever dividing by a negative",
+            "steps": [
+              {
+                "text": "Add $2x$ to both sides: $5 \\geqslant 1 + 2x$",
+                "note": "the x term is now positive"
+              },
+              {
+                "text": "Subtract 1: $4 \\geqslant 2x$",
+                "note": "still nothing negative"
+              },
+              {
+                "text": "Divide by 2: $2 \\geqslant x$",
+                "note": "2 is positive, so no flip"
+              },
+              {
+                "text": "Rewrite with x on the left: $x \\leqslant 2$",
+                "note": "reading it the other way round reverses how it is written, not the maths"
+              },
+              {
+                "text": "Same answer as before, with no chance of forgetting the flip",
+                "note": "which is why this route is worth knowing"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "Which is the correct set notation for $-2 \\leqslant x < 3$?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: set notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Set notation needs the **curly brackets** and the colon meaning *such that*: $\\{x : -2 \\leqslant x < 3\\}$. $\\{-2, 3\\}$ would be a set of just two numbers.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "{x : −2 ⩽ x < 3}"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "options": [
+            "{x : −2 ⩽ x < 3}",
+            "(−2, 3)",
+            "{−2, 3}",
+            "x : −2 ⩽ x < 3"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- $<$ and $>$ **exclude** the endpoint; $\\leqslant$ and $\\geqslant$ **include** it.\n- On a number line: **open circle** for strict, **filled circle** for or equal to. Shade towards the numbers that work, with an **arrow** if it carries on.\n- Solve an inequality exactly like an equation, with one exception.\n- **Multiplying or dividing by a negative reverses the symbol.**\n- Avoid the flip entirely by moving the x term to the side where it is **positive**.\n- For a double inequality, do the same thing to **all three parts**.\n- For integer solutions, test **each end against its own symbol**, and do not forget the negative integers.\n- $-2 \\leqslant x < 3$ has the integer solutions $-2, -1, 0, 1, 2$.\n- **Higher tier**: set notation is $\\{x : x > 2\\}$, where the colon means *such that*.\n- Two separate pieces join with $\\cup$: $\\{x : x < -1\\} \\cup \\{x : x > 4\\}$.\n- Always check by substituting a number that should work and one that should not.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "< and >",
+                  "exclude the endpoint; open circle"
+                ],
+                [
+                  "⩽ and ⩾",
+                  "include the endpoint; filled circle"
+                ],
+                [
+                  "Solving",
+                  "exactly like an equation, with one exception"
+                ],
+                [
+                  "The exception",
+                  "multiplying or dividing by a negative reverses the symbol"
+                ],
+                [
+                  "The safer route",
+                  "move the x term to the side where it is positive"
+                ],
+                [
+                  "Double inequality",
+                  "do the same thing to all three parts"
+                ],
+                [
+                  "Integer solutions",
+                  "test each end against its own symbol"
+                ],
+                [
+                  "Higher tier",
+                  "set notation: {x : x > 2}, the colon meaning such that"
+                ],
+                [
+                  "Two pieces",
+                  "joined with the union symbol"
+                ],
+                [
+                  "Always",
+                  "substitute to check both a value that works and one that does not"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of inequalities covering the symbols, number lines, solving, double inequalities and set notation"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which numbers satisfy $x \\leqslant 3$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The line means **or equal to**, so 3 is included along with everything below it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3 and everything below"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "3 and every number below it",
+        "Every number below 3, but not 3",
+        "3 and every number above it",
+        "Only the number 3"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What kind of circle is drawn at 4 for $x \\geqslant 4$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "number lines",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\geqslant$ includes the endpoint, so the circle is **filled**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a filled circle"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A filled circle",
+        "An open circle",
+        "No circle at all",
+        "A square"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What does $x > 5$ mean?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$>$ means **greater than**, and 5 itself is **not** included.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "greater than 5"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "x is greater than 5",
+        "x is greater than or equal to 5",
+        "x is less than 5",
+        "x equals 5"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "Solve $3x + 4 < 19$. Write your answer as an inequality in x.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3x < 15$, so $x < 5$. Dividing by a positive leaves the symbol alone.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x < 5"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x < 5",
+        "x<5"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Solve $5 - 2x \\geqslant 1$. Write your answer as an inequality in x.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$-2x \\geqslant -4$, then divide by $-2$ and **reverse**: $x \\leqslant 2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x ⩽ 2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x <= 2",
+        "x ⩽ 2",
+        "x≤2",
+        "x <=2",
+        "x ≤ 2"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "When does the inequality symbol reverse?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Only when you **multiply or divide by a negative number**. Adding and subtracting never reverse it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "multiplying or dividing by a negative"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "When you multiply or divide by a negative",
+        "When you subtract from both sides",
+        "When you add to both sides",
+        "Whenever you divide"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "Solve $-3 \\leqslant 2x + 1 < 7$. Give your answer in the form a ⩽ x < b.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Subtract 1 from all three parts, then divide all three by 2: $-2 \\leqslant x < 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−2 ⩽ x < 3"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "-2 <= x < 3",
+        "−2 ⩽ x < 3",
+        "-2 ⩽ x < 3",
+        "-2<=x<3",
+        "-2 ≤ x < 3"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "How many integer solutions does $-2 \\leqslant x < 3$ have?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "integer solutions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$-2, -1, 0, 1, 2$, so there are **5** of them. $-2$ is in because of $\\leqslant$, and 3 is out because of $<$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Why does dividing by a negative reverse the symbol?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2 < 5$, but multiplying by $-1$ gives $-2$ and $-5$, and $-2 > -5$. The reflection **swaps the order**, so the symbol swaps too.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it reflects the number line"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It reflects the number line, swapping which is bigger",
+        "Because negative numbers are always smaller",
+        "Because the answer itself becomes negative",
+        "It is just a rule, with no reason behind it"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "What is the largest integer that satisfies $x < 5$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "integer solutions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "5 itself is excluded by the strict symbol, so the largest integer is **4**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "Solve $7 - 3x \\leqslant 1$. Write your answer as an inequality in x.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$-3x \\leqslant -6$, then divide by $-3$ and reverse: $x \\geqslant 2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x ⩾ 2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "x >= 2",
+        "x ⩾ 2",
+        "x≥2",
+        "x >=2",
+        "x ≥ 2"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Which is the correct set notation for $-2 \\leqslant x < 3$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Curly brackets, and a colon meaning *such that*. $\\{-2, 3\\}$ would be a set containing only those two numbers.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "{x : −2 ⩽ x < 3}"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "{x : −2 ⩽ x < 3}",
+        "(−2, 3)",
+        "{−2, 3}",
+        "[−2, 3)"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "How do you write 'x is less than −1 or greater than 4' in set notation?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: set notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two separate pieces are joined by the **union**, $\\cup$. The intersection $\\cap$ would be the values in **both**, which is nothing at all here.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "joined with the union"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "{x : x < −1} ∪ {x : x > 4}",
+        "{x : x < −1} ∩ {x : x > 4}",
+        "{x : −1 < x < 4}",
+        "{−1, 4}"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "How can you solve $5 - 2x \\geqslant 1$ without ever dividing by a negative?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Adding $2x$ gives $5 \\geqslant 1 + 2x$, then $4 \\geqslant 2x$, then $2 \\geqslant x$. The x term is positive throughout, so no flip can be forgotten.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "add 2x to both sides"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Add 2x to both sides first",
+        "Divide by 5 first",
+        "Multiply both sides by −1",
+        "Square both sides"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "What is the smallest integer that satisfies $x > -2$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "integer solutions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$-2$ itself is excluded by the strict symbol, so the smallest integer is $-1$. Forgetting that negative integers count is the usual error here.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": -1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "On a number line, the solution has a filled circle at −2, an open circle at 3, and shading between. What is the inequality?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "number lines",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Filled at $-2$ means $\\leqslant$ at that end; open at 3 means $<$ at that end. So $-2 \\leqslant x < 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−2 ⩽ x < 3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "−2 ⩽ x < 3",
+        "−2 < x ⩽ 3",
+        "−2 < x < 3",
+        "−2 ⩽ x ⩽ 3"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Solve $-5 < 3x + 1 \\leqslant 10$, show the solution on a number line, and write down all its integer solutions.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Start by subtracting one from all three parts, which gives minus six is less than three x, which is less than or equal to nine. Then divide all three parts by three, which gives minus two is less than x, which is less than or equal to three. Since three is positive, no symbol reverses. On a number line this is an open circle at minus two, because the symbol there is strictly less than, and a filled circle at three, because that end includes the value, with the line shaded between them and no arrows. The integer solutions are minus one, zero, one, two and three. Minus two is excluded because the circle there is open, while three is included because its circle is filled, so there are five integer solutions in total.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts 1 from all three parts"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "divides by 3 to get −2 < x ⩽ 3"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "open circle at −2 and filled circle at 3"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "shades between them, with no arrows"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "integer solutions −1, 0, 1, 2, 3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Subtracts 1 from all three parts",
+          "marks": 1
+        },
+        {
+          "text": "Divides all three parts by 3 to reach −2 < x ⩽ 3",
+          "marks": 1
+        },
+        {
+          "text": "Draws an open circle at −2 and a filled circle at 3",
+          "marks": 1
+        },
+        {
+          "text": "Shades between the circles, with no arrows",
+          "marks": 1
+        },
+        {
+          "text": "Lists the integer solutions as −1, 0, 1, 2, 3",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Solving.** Subtract 1 from all three parts:\n\n$$-6 < 3x \\leqslant 9$$\n\nDivide all three by 3. Three is positive, so nothing reverses:\n\n$$-2 < x \\leqslant 3$$\n\n**On the number line.** An **open** circle at $-2$, because that end is strict. A **filled** circle at 3, because that end includes the value. Shade **between** them, with **no arrows** — the solution does not carry on.\n\n**Integer solutions.** $-1, 0, 1, 2, 3$ — five of them. $-2$ is out because its circle is open; 3 is in because its circle is filled.\n\nTesting each end against **its own** symbol is what makes this reliable."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A student solves $4 - 2x > 10$ and writes $x > -3$. Explain the mistake and give the correct solution.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "solving inequalities",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The student has subtracted four from both sides correctly, giving minus two x is greater than six, and has then divided both sides by minus two to reach the value minus three. The mistake is that they have kept the symbol pointing the same way. Dividing both sides of an inequality by a negative number reverses the symbol, because multiplying by a negative reflects the number line and so swaps which of the two numbers is larger. The correct solution is therefore x is less than minus three, not greater than it. This can be checked by substituting a value. Taking x equal to minus four gives four minus two times minus four, which is four plus eight, or twelve, and twelve is indeed greater than ten, so minus four is a solution. Since minus four is less than minus three, the correct inequality must be x is less than minus three.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "identifies that the error is failing to reverse the symbol when dividing by a negative"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains why dividing by a negative reverses it"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "gives the correct solution x < −3"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "checks by substituting a value that satisfies the original inequality"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Identifies the failure to reverse the symbol when dividing by a negative",
+          "marks": 1
+        },
+        {
+          "text": "Explains why dividing by a negative reverses the symbol",
+          "marks": 1
+        },
+        {
+          "text": "Gives the correct solution as x < −3",
+          "marks": 1
+        },
+        {
+          "text": "Confirms it by substituting a value into the original inequality",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**The mistake.** The student reached $-2x > 6$ correctly, then divided by $-2$ **without reversing the symbol**.\n\n**Why it reverses.** Multiplying or dividing by a negative **reflects** the number line, which swaps which of two numbers is larger. $2 < 5$, but $-2 > -5$.\n\n**The correct solution.**\n\n$$4 - 2x > 10 \\;\\Rightarrow\\; -2x > 6 \\;\\Rightarrow\\; x < -3$$\n\n**The check.** Take $x = -4$: $4 - 2(-4) = 4 + 8 = 12$, and $12 > 10$ ✓. Since $-4$ **is** a solution and $-4 < -3$, the answer must be $x < -3$, not $x > -3$.\n\nSubstituting one value would have caught this in a few seconds."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Solve exactly as you would an equation, and watch for one step only: multiplying or dividing by a negative. If that is coming, consider moving the x term to the other side instead so it never happens.\n\nAlways substitute at the end. Put in a number that should work and one that should not. It takes seconds and it catches a reversed symbol immediately.\n\nWhen you draw the solution, decide each circle from its own symbol before drawing, and add an arrow only if the solution carries on.\n\nFor integer solutions, test both ends separately, and remember that negative integers count.\n\nAt Higher tier, use curly brackets and the colon for set notation, and the union symbol for two separate pieces.\n\nIf the question says *show your answer on a number line*, the diagram is worth marks in itself: circles of the right kind, shading the right way, and an arrow where one belongs.",
+    "examinerErrors": [
+      "Forgetting to reverse the symbol when dividing by a negative.",
+      "Drawing an open circle where the symbol includes the endpoint.",
+      "Shading the wrong side of the circle.",
+      "Leaving an arrow on a bounded solution, or omitting one from a solution that continues.",
+      "Listing integer solutions but starting at zero and missing the negative ones.",
+      "Including the endpoint in a list of integer solutions when the symbol is strict.",
+      "Changing only part of a double inequality instead of all three parts.",
+      "Writing set notation without the curly brackets or without the colon."
+    ],
+    "grade9Looks": "A top answer avoids the negative division altogether by rearranging so the x term is positive, and then substitutes a value to confirm the direction rather than trusting the algebra. It reads each circle off its own symbol, so a double inequality gets one open and one filled circle without hesitation. Asked for integer solutions, it tests the two ends separately and counts the negatives. And when a mistake is presented to it, it explains the reflection of the number line rather than restating the rule."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

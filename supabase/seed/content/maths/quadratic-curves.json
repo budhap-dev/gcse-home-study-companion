@@ -1,0 +1,1436 @@
+{
+  "id": "quadratic-curves",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Quadratic curves: roots, intercepts and turning points",
+  "specPoints": [
+    "A11",
+    "A12"
+  ],
+  "order": 1,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "shortcut",
+      "title": "The y intercept is just c",
+      "body": "Put $x = 0$ into $ax^2 + bx + c$ and every term but $c$ vanishes. So the y intercept is $(0, c)$, always, with no working. Do this first — it is a free mark that many candidates spend time earning."
+    },
+    {
+      "kind": "remember",
+      "title": "The vertex sits midway between the roots",
+      "body": "A parabola is symmetrical, so once you have the roots you have the vertex: take their **mean** for $x$, then substitute back for $y$. Roots at $-4$ and $2$ give $x = -1$, no completing the square needed."
+    },
+    {
+      "kind": "check",
+      "title": "Flip the sign inside the bracket",
+      "body": "**Higher tier.** From $y = (x + p)^2 + q$ the turning point is $(-p,\\ q)$. So $(x + 1)^2 - 9$ has its vertex at $(-1, -9)$, not $(1, -9)$. The same flip applies going from roots to brackets: a root at $-4$ gives $(x + 4)$."
+    },
+    {
+      "kind": "spot",
+      "title": "Where the vertex sits tells you the number of roots",
+      "body": "For a curve opening upwards: vertex **below** the x axis means **two** roots, **on** it means **one**, **above** it means **none**. So a question asking how many roots there are can be answered from the turning point alone, without solving anything."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What the picture tells you",
+        "body": "A quadratic graph has a shape you can read three numbers off, and each has its own name.\n\n- The **roots**, where the curve crosses the **x axis**. These are the solutions of $y = 0$.\n- The **y intercept**, where it crosses the **y axis**. This is the value of $y$ when $x = 0$.\n- The **turning point**, the lowest or highest point of the curve. Also called the **vertex**.\n\nFor $y = x^2 - 6x + 5$ the roots are $x = 1$ and $x = 5$, the y intercept is $(0, 5)$, and the turning point is $(3, -4)$.\n\nTwo facts save a great deal of work.\n\n- The **y intercept is just $c$**. Put $x = 0$ into $ax^2 + bx + c$ and everything but $c$ disappears. You never need to calculate it.\n- The turning point sits **exactly midway between the roots**, because a parabola is symmetrical. Here $1$ and $5$ have midpoint $3$, which is the x coordinate of the vertex.\n\nWhether the curve is a valley or a hill is decided by **a**. If $a > 0$ it opens **upwards** and the turning point is a **minimum**; if $a < 0$ it opens **downwards** and the turning point is a **maximum**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -0.5,
+                6.5
+              ],
+              "yRange": [
+                -5.0,
+                9.25
+              ],
+              "curves": [
+                {
+                  "a": 1,
+                  "b": -6,
+                  "c": 5
+                }
+              ],
+              "points": [
+                {
+                  "x": 1.0,
+                  "y": 0,
+                  "label": "(1, 0)"
+                },
+                {
+                  "x": 5.0,
+                  "y": 0,
+                  "label": "(5, 0)"
+                },
+                {
+                  "x": 3.0,
+                  "y": -4.0,
+                  "label": "(3, -4)"
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "label": "(0, 5)"
+                }
+              ],
+              "xLabel": "x",
+              "yLabel": "y"
+            },
+            "alt": "The graph of y = x squared minus 6x plus 5, showing the roots at x = 1 and x = 5, the y intercept at (0, 5), and the minimum turning point at (3, -4)"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Feature",
+                "What it is",
+                "How to find it"
+              ],
+              "rows": [
+                [
+                  "roots",
+                  "where it crosses the x axis",
+                  "solve y = 0"
+                ],
+                [
+                  "y intercept",
+                  "where it crosses the y axis",
+                  "it is c; put x = 0"
+                ],
+                [
+                  "turning point",
+                  "the lowest or highest point",
+                  "midway between the roots"
+                ],
+                [
+                  "shape",
+                  "valley or hill",
+                  "a > 0 opens up; a < 0 opens down"
+                ]
+              ],
+              "title": "Three features, three different questions"
+            },
+            "alt": "A table of the three features of a quadratic graph, what each means and how to find it"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What is the y intercept of $y = x^2 - 6x + 5$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading a quadratic graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Put $x = 0$: $y = 0 - 0 + 5 = 5$. The y intercept is **$(0, 5)$**, which is just the value of $c$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(0, 5)"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "(0, 5)",
+            "(5, 0)",
+            "(0, -6)",
+            "(0, 0)"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Finding the roots",
+        "body": "The roots are the solutions of $y = 0$, so you **factorise and solve**. For a quadratic that factorises, this is the quickest route by far.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the roots of $y = x^2 - 6x + 5$",
+            "steps": [
+              {
+                "text": "Set $y = 0$: $x^2 - 6x + 5 = 0$",
+                "note": "the roots are where the curve meets the x axis"
+              },
+              {
+                "text": "Two numbers multiplying to $+5$ and adding to $-6$: $-1$ and $-5$",
+                "note": "the usual search"
+              },
+              {
+                "text": "$(x - 1)(x - 5) = 0$",
+                "note": "factorise"
+              },
+              {
+                "text": "So $x = 1$ or $x = 5$",
+                "note": "each bracket can be the zero"
+              },
+              {
+                "text": "The curve crosses the x axis at $(1, 0)$ and $(5, 0)$",
+                "note": "state them as coordinates if the question asks for points"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the roots of $y = x^2 + 2x - 8$",
+            "steps": [
+              {
+                "text": "$x^2 + 2x - 8 = 0$",
+                "note": "set y to zero"
+              },
+              {
+                "text": "Two numbers multiplying to $-8$ and adding to $+2$: $+4$ and $-2$",
+                "note": "opposite signs, because the product is negative"
+              },
+              {
+                "text": "$(x + 4)(x - 2) = 0$",
+                "note": "factorise"
+              },
+              {
+                "text": "$x = -4$ or $x = 2$",
+                "note": "note the sign flip: $x + 4 = 0$ gives $x = -4$"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "Find the roots of $y = x^2 + 2x - 8$. Give both values of x, separated by a comma.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "roots",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$(x + 4)(x - 2) = 0$, so $x = -4$ or $x = 2$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "-4 and 2"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "-4, 2",
+            "-4,2",
+            "2, -4",
+            "2,-4",
+            "x = -4, x = 2"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The turning point from the roots",
+        "body": "Because a parabola is **symmetrical**, its turning point lies exactly **midway between the roots**. That gives a two-step method that needs no new technique.\n\n1. Find the roots, and take their **mean** for the x coordinate.\n2. Substitute that x back into the equation for the y coordinate.\n\nFor $y = x^2 - 6x + 5$ with roots $1$ and $5$:\n\n$$x = \\frac{1 + 5}{2} = 3$$\n\n$$y = 3^2 - 6(3) + 5 = 9 - 18 + 5 = -4$$\n\nSo the turning point is $(3, -4)$, and since $a = 1 > 0$ it is a **minimum**.\n\nThe line $x = 3$ is the **line of symmetry** of the curve. A question asking for that is asking for the x coordinate of the vertex, written as an equation of a line.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Curve",
+                "Roots",
+                "x of vertex",
+                "y of vertex",
+                "Minimum or maximum"
+              ],
+              "rows": [
+                [
+                  "y = x² − 6x + 5",
+                  "1 and 5",
+                  "3",
+                  "−4",
+                  "minimum, a > 0"
+                ],
+                [
+                  "y = x² + 2x − 8",
+                  "−4 and 2",
+                  "−1",
+                  "−9",
+                  "minimum, a > 0"
+                ],
+                [
+                  "y = −x² + 4x − 3",
+                  "1 and 3",
+                  "2",
+                  "1",
+                  "maximum, a < 0"
+                ]
+              ],
+              "title": "The vertex is midway between the roots"
+            },
+            "alt": "A table of the two-step method for finding a turning point from the roots, worked for two curves"
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -0.5,
+                4.5
+              ],
+              "yRange": [
+                -6.25,
+                2.0
+              ],
+              "curves": [
+                {
+                  "a": -1,
+                  "b": 4,
+                  "c": -3
+                }
+              ],
+              "points": [
+                {
+                  "x": 1.0,
+                  "y": 0,
+                  "label": "(1, 0)"
+                },
+                {
+                  "x": 3.0,
+                  "y": 0,
+                  "label": "(3, 0)"
+                },
+                {
+                  "x": 2.0,
+                  "y": 1.0,
+                  "label": "(2, 1)"
+                },
+                {
+                  "x": 0,
+                  "y": -3,
+                  "label": "(0, -3)"
+                }
+              ],
+              "xLabel": "x",
+              "yLabel": "y"
+            },
+            "alt": "The graph of y = minus x squared plus 4x minus 3, an upside-down parabola with roots at x = 1 and x = 3 and a maximum turning point at (2, 1)"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "The roots of a quadratic are $x = -4$ and $x = 2$. What is the x coordinate of its turning point?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "turning points",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The vertex is midway between the roots: $\\dfrac{-4 + 2}{2} = -1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "-1"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "-1",
+            "x = -1",
+            "−1"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Which way up, and why it matters",
+        "body": "The sign of **a** decides the shape, and the shape decides whether the turning point is a minimum or a maximum.\n\n- $a > 0$: the curve opens **upwards**, like a valley. The turning point is the **lowest** point, a **minimum**.\n- $a < 0$: the curve opens **downwards**, like a hill. The turning point is the **highest** point, a **maximum**.\n\nThis matters for real problems. If a quadratic models the height of a ball, $a$ is negative, and the turning point gives the **greatest height**. If it models cost, $a$ is usually positive and the turning point gives the **lowest cost**.\n\nA related question type gives you the graph and asks how many roots there are. Count the crossings:\n\n- **two** roots if the curve crosses the x axis twice;\n- **one** root if it just touches the axis, which happens when the turning point is **on** the axis;\n- **no** roots if it never reaches the axis at all.\n\nA curve with no roots is perfectly normal. It simply means $y = 0$ has no solutions.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "a > 0",
+                "a < 0"
+              ],
+              "rows": [
+                [
+                  "Shape",
+                  "opens upwards, a valley",
+                  "opens downwards, a hill"
+                ],
+                [
+                  "Turning point",
+                  "minimum, the lowest point",
+                  "maximum, the highest point"
+                ],
+                [
+                  "Models",
+                  "cost, area: a smallest value",
+                  "height of a ball: a greatest value"
+                ]
+              ],
+              "title": "The sign of a decides everything about the shape"
+            },
+            "alt": "A table of how the sign of a and the position of the turning point decide the shape and the number of roots"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "What the curve does",
+                "Number of roots"
+              ],
+              "rows": [
+                [
+                  "crosses the x axis twice",
+                  "two"
+                ],
+                [
+                  "touches the x axis once",
+                  "one"
+                ],
+                [
+                  "never reaches the x axis",
+                  "none"
+                ]
+              ],
+              "title": "Count the crossings"
+            },
+            "alt": "A table of how many roots a quadratic has, read from where its curve meets the x axis"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "A quadratic has $a < 0$. What is its turning point?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "reading a quadratic graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$a < 0$ opens the curve **downwards**, so the turning point is the **highest** point: a **maximum**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a maximum"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A maximum",
+            "A minimum",
+            "Neither",
+            "It depends on c"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Higher tier: the turning point by completing the square",
+        "body": "This is the **Higher tier** addition to this topic, and it is the method to use when the quadratic does **not** factorise, since then there are no roots to take the midpoint of.\n\nCompleting the square rewrites $y = x^2 + bx + c$ as\n\n$$y = (x + p)^2 + q$$\n\nand then the turning point is $(-p,\\ q)$ — read straight off, with the **sign of p flipped**.\n\nWhy it works: $(x + p)^2$ is never negative and is **zero** when $x = -p$. So the smallest $y$ can be is $q$, and that happens at $x = -p$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the turning point of $y = x^2 - 6x + 5$ by completing the square",
+            "steps": [
+              {
+                "text": "Halve the coefficient of $x$: $-6 \\div 2 = -3$",
+                "note": "this is the number inside the bracket"
+              },
+              {
+                "text": "$(x - 3)^2 = x^2 - 6x + 9$",
+                "note": "expanding shows a spare $+9$"
+              },
+              {
+                "text": "So $x^2 - 6x = (x - 3)^2 - 9$",
+                "note": "subtract the spare 9 to get back to where you started"
+              },
+              {
+                "text": "$y = (x - 3)^2 - 9 + 5 = (x - 3)^2 - 4$",
+                "note": "bring the $+5$ back in"
+              },
+              {
+                "text": "Turning point $(3, -4)$",
+                "note": "flip the sign inside the bracket; q is the y coordinate"
+              },
+              {
+                "text": "It matches the midpoint method, which gave $(3, -4)$",
+                "note": "two routes, one answer"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Completed square form",
+                "Turning point",
+                "Minimum or maximum"
+              ],
+              "rows": [
+                [
+                  "y = (x − 3)² − 4",
+                  "(3, −4)",
+                  "minimum"
+                ],
+                [
+                  "y = (x + 1)² − 9",
+                  "(−1, −9)",
+                  "minimum"
+                ],
+                [
+                  "y = (x − 2)² + 7",
+                  "(2, 7)",
+                  "minimum, and no roots"
+                ]
+              ],
+              "title": "Flip the sign inside the bracket"
+            },
+            "alt": "A table reading the turning point straight off the completed square form for three curves"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "A curve is written as $y = (x + 1)^2 - 9$. What is its turning point?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: completing the square",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Read it off with the sign inside the bracket **flipped**: $(x + 1)$ gives $x = -1$, and $q = -9$. So $(-1, -9)$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(-1, -9)"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "options": [
+            "(-1, -9)",
+            "(1, -9)",
+            "(-1, 9)",
+            "(1, 9)"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.** For $y = x^2 + 2x - 8$:\n\n1. Write down the y intercept without calculating anything.\n2. Find the roots by factorising.\n3. Find the turning point using the midpoint of the roots.\n4. State whether it is a minimum or a maximum, and how you know.\n\n**Part B, Higher tier.** For the same curve:\n\n5. Write it in the form $(x + p)^2 + q$.\n6. Read the turning point off, and check it against your answer to question 3.\n\n**Part C.** A curve is $y = (x - 2)^2 + 7$.\n\n7. What is its turning point?\n8. How many roots does it have? Explain how you can tell without solving anything.\n\nQuestion 8 is the one worth thinking hardest about.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Feature",
+                "Your answer",
+                "How you found it"
+              ],
+              "rows": [
+                [
+                  "y intercept",
+                  "",
+                  ""
+                ],
+                [
+                  "roots",
+                  "",
+                  ""
+                ],
+                [
+                  "turning point",
+                  "",
+                  ""
+                ],
+                [
+                  "minimum or maximum",
+                  "",
+                  ""
+                ],
+                [
+                  "completed square form",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill in the y intercept first, since it needs no work"
+            },
+            "alt": "A blank table for working through a quadratic, with a row for each feature"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "How many roots does $y = (x - 2)^2 + 7$ have?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "Higher tier: completing the square",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The turning point is $(2, 7)$, a **minimum** at $y = 7$. The lowest the curve ever gets is $7$, which is **above** the x axis, so it never crosses it: **no roots**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "none"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "None",
+            "One",
+            "Two",
+            "It cannot be decided"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: reading a graph backwards",
+        "body": "The harder questions run the other way: you are given features and asked for the equation, or given a graph and asked to solve something from it.\n\n**From roots to equation.** If the roots are $p$ and $q$, the curve is $y = (x - p)(x - q)$, possibly multiplied by a constant. Roots at $-4$ and $2$ give\n\n$$y = (x + 4)(x - 2) = x^2 + 2x - 8$$\n\nNotice the sign flip again: a root at $-4$ gives a bracket $(x + 4)$.\n\n**Using a graph to solve a different equation.** If you are given the curve $y = x^2 - 6x + 5$ and asked to solve $x^2 - 6x + 5 = 3$, do **not** start again. Draw the line $y = 3$ and read off where it meets the curve. The question is asking where the curve is at height 3.\n\nThat generalises: to solve $\\text{quadratic} = k$ from a graph, draw $y = k$ and read the crossings.\n\n**Why the turning point tells you the number of roots.** For a curve opening **upwards**, the turning point is the lowest point. So:\n\n- turning point **below** the x axis: the curve must come back up through it twice, so **two roots**;\n- turning point **on** the axis: it touches, so **one root**;\n- turning point **above** the axis: it never gets down to the axis, so **no roots**.\n\nFor a curve opening downwards the same argument runs upside down. This is why completing the square answers a question about the number of roots without solving anything, and it is the neatest reasoning available in this topic.\n\n**One warning.** The y intercept is $c$, but $c$ is **not** the turning point's y coordinate unless $b = 0$. Confusing the two is the commonest error here.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Turning point",
+                "The curve",
+                "Number of roots"
+              ],
+              "rows": [
+                [
+                  "below the x axis",
+                  "comes back up through it twice",
+                  "two"
+                ],
+                [
+                  "on the x axis",
+                  "just touches it",
+                  "one"
+                ],
+                [
+                  "above the x axis",
+                  "never reaches it",
+                  "none"
+                ]
+              ],
+              "title": "For a curve opening downwards, turn the argument upside down"
+            },
+            "alt": "A table linking the position of the turning point to the number of roots, for a curve opening upwards"
+          },
+          {
+            "type": "worked-example",
+            "problem": "The graph of $y = x^2 - 6x + 5$ is drawn. Use it to solve $x^2 - 6x + 5 = 3$",
+            "steps": [
+              {
+                "text": "You are being asked where the curve is at **height 3**",
+                "note": "read the question as a picture"
+              },
+              {
+                "text": "Draw the horizontal line $y = 3$",
+                "note": "one line, no algebra"
+              },
+              {
+                "text": "Read off the two x values where the line meets the curve",
+                "note": "there will be two, since the line is above the minimum of $-4$"
+              },
+              {
+                "text": "Those x values are the solutions",
+                "note": "and the question is finished"
+              },
+              {
+                "text": "Starting again with the quadratic formula would earn the same marks far more slowly",
+                "note": "the point of the question is the reading"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "The graph of $y = x^2 - 6x + 5$ is drawn. How would you use it to solve $x^2 - 6x + 5 = 3$?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "reading a quadratic graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The equation asks where the curve reaches **height 3**, so draw the horizontal line **$y = 3$** and read off the x coordinates where it crosses.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "draw y = 3"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "Draw the line y = 3 and read where it meets the curve",
+            "Draw the line x = 3 and read the y values",
+            "Move the curve up by 3 and find the new roots",
+            "Solve it algebraically; the graph cannot help"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- The **roots** are where the curve meets the **x axis**: solve $y = 0$, usually by factorising.\n- The **y intercept** is $(0, c)$. It needs no calculation.\n- The **turning point** is midway between the roots. Take their **mean**, then substitute back for $y$.\n- $a > 0$ opens **upwards**, so the turning point is a **minimum**. $a < 0$ opens **downwards**, so it is a **maximum**.\n- The **line of symmetry** is $x =$ the x coordinate of the turning point.\n- **Higher tier**: completing the square gives $y = (x + p)^2 + q$, and the turning point is $(-p, q)$. **Flip the sign inside the bracket.**\n- Completing the square works when the quadratic does **not** factorise, where the midpoint method has nothing to work with.\n- Number of roots, for a curve opening upwards: turning point **below** the axis gives **two**, **on** it gives **one**, **above** it gives **none**.\n- Roots $p$ and $q$ give the equation $y = (x - p)(x - q)$, with the signs flipped.\n- To solve $\\text{quadratic} = k$ from a graph, draw the line $y = k$ and read the crossings.\n- $c$ is the y intercept, **not** the y coordinate of the turning point.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Roots",
+                  "solve y = 0, usually by factorising"
+                ],
+                [
+                  "y intercept",
+                  "(0, c), no working needed"
+                ],
+                [
+                  "Turning point",
+                  "midway between the roots, then substitute"
+                ],
+                [
+                  "a > 0",
+                  "opens upwards; the turning point is a minimum"
+                ],
+                [
+                  "a < 0",
+                  "opens downwards; the turning point is a maximum"
+                ],
+                [
+                  "Line of symmetry",
+                  "x = the x coordinate of the turning point"
+                ],
+                [
+                  "Higher tier",
+                  "(x + p)² + q gives the turning point (−p, q)"
+                ],
+                [
+                  "Number of roots",
+                  "read from where the turning point sits"
+                ],
+                [
+                  "From roots to equation",
+                  "y = (x − p)(x − q), signs flipped"
+                ],
+                [
+                  "Solving quadratic = k",
+                  "draw y = k and read the crossings"
+                ],
+                [
+                  "The trap",
+                  "c is the y intercept, not the vertex's y"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of quadratic curves covering roots, intercepts, turning points, shape and the Higher tier method"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is the y intercept of $y = x^2 - 6x + 5$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a quadratic graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Put $x = 0$: the y intercept is $(0, c) = (0, 5)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(0, 5)"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "(0, 5)",
+        "(5, 0)",
+        "(0, -6)",
+        "(0, -4)"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Where are the roots of a quadratic found on its graph?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "roots",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **roots** are where $y = 0$, which is where the curve crosses the **x axis**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "where it crosses the x axis"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Where it crosses the x axis",
+        "Where it crosses the y axis",
+        "At the turning point",
+        "At the line of symmetry"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "A quadratic has $a > 0$. Which way does its curve open?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a quadratic graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$a > 0$ opens the curve **upwards**, like a valley, so the turning point is a minimum.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "upwards"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Upwards",
+        "Downwards",
+        "It depends on b",
+        "It depends on c"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What is another name for the turning point of a quadratic?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "turning points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The turning point is also called the **vertex**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the vertex"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The vertex",
+        "The root",
+        "The intercept",
+        "The gradient"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Find the roots of $y = x^2 + 2x - 8$. Give both values of x, separated by a comma.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "roots",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(x + 4)(x - 2) = 0$, so $x = -4$ or $x = 2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-4 and 2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "-4, 2",
+        "-4,2",
+        "2, -4",
+        "2,-4",
+        "x = -4, x = 2"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "The roots of a quadratic are $x = 1$ and $x = 5$. What is the x coordinate of its turning point?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "turning points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The vertex is midway between the roots: $\\dfrac{1 + 5}{2} = 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "3",
+        "x = 3"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "A quadratic has $a < 0$. What kind of turning point does it have?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "turning points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$a < 0$ opens downwards, so the turning point is the **highest** point: a **maximum**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a maximum"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A maximum",
+        "A minimum",
+        "Neither",
+        "Both"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "The turning point of a curve is at $(3, -4)$. What is the equation of its line of symmetry? Give just the number after x =.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "turning points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The line of symmetry is vertical through the vertex: $x = 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "A quadratic graph touches the x axis exactly once. How many roots does it have?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "roots",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Touching the axis once means $y = 0$ has exactly **one** solution: one root.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "One",
+        "Two",
+        "None",
+        "Three"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "Find the y coordinate of the turning point of $y = x^2 + 2x - 8$, given that its x coordinate is $-1$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "turning points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute $x = -1$: $(-1)^2 + 2(-1) - 8 = 1 - 2 - 8 = -9$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-9"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "-9",
+        "−9",
+        "y = -9"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A curve is written as $y = (x + 1)^2 - 9$. What is its turning point?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: completing the square",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Flip the sign inside the bracket: $x = -1$, and $q = -9$. So $(-1, -9)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(-1, -9)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "(-1, -9)",
+        "(1, -9)",
+        "(-1, 9)",
+        "(1, 9)"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "How many roots does $y = (x - 2)^2 + 7$ have?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: completing the square",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The minimum is at $(2, 7)$, so the lowest the curve ever gets is $y = 7$, **above** the x axis. It never crosses: **no roots**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "none"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "None",
+        "One",
+        "Two",
+        "Three"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "A quadratic has roots at $x = -4$ and $x = 2$. What is a possible equation?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "roots",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A root at $-4$ gives the bracket $(x + 4)$, and a root at $2$ gives $(x - 2)$. The signs **flip**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(x + 4)(x - 2)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "y = (x + 4)(x - 2)",
+        "y = (x - 4)(x + 2)",
+        "y = (x + 4)(x + 2)",
+        "y = (x - 4)(x - 2)"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "The graph of $y = x^2 - 6x + 5$ is drawn. How do you use it to solve $x^2 - 6x + 5 = 3$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading a quadratic graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The equation asks where the curve reaches height 3, so draw the horizontal line **$y = 3$** and read off the crossings.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "draw y = 3"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Draw y = 3 and read where it meets the curve",
+        "Draw x = 3 and read the y values",
+        "Move the curve down by 3",
+        "Use the quadratic formula instead"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A curve opening upwards has its turning point below the x axis. How many roots does it have?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "roots",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The lowest point is **below** the axis and the curve opens upwards, so it must come back up through the axis on **both** sides: **two** roots.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "two"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Two",
+        "One",
+        "None",
+        "It cannot be decided"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Why does completing the square answer 'how many roots?' without solving anything?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: completing the square",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Completing the square gives the **turning point**. Whether that point is below, on, or above the x axis decides whether there are two, one or no roots.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it gives the turning point"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It gives the turning point, whose position decides it",
+        "It factorises the quadratic for you",
+        "It works out the y intercept",
+        "It gives only the line of symmetry"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "For the curve $y = x^2 + 2x - 8$, find the y intercept, the roots and the turning point, and state whether the turning point is a minimum or a maximum. Show your method for each.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "reading a quadratic graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The y intercept is found by putting x equal to zero, which leaves minus eight, so the y intercept is the point zero, minus eight. For the roots, set y to zero and factorise. Two numbers that multiply to minus eight and add to plus two are plus four and minus two, so the equation factorises to x plus four, times x minus two, equals zero. The roots are therefore x equals minus four and x equals two. The turning point lies midway between the roots, so its x coordinate is minus four plus two, all over two, which is minus one. Substituting x equals minus one into the equation gives one minus two minus eight, which is minus nine, so the turning point is at minus one, minus nine. Since the coefficient of x squared is positive, the curve opens upwards, so this turning point is a minimum.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y intercept (0, −8)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises to (x + 4)(x − 2)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "roots x = −4 and x = 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "takes the midpoint of the roots for x = −1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "substitutes to get y = −9, so (−1, −9)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "minimum, because a > 0"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Gives the y intercept as (0, −8)",
+          "marks": 1
+        },
+        {
+          "text": "Factorises the quadratic correctly",
+          "marks": 1
+        },
+        {
+          "text": "States both roots",
+          "marks": 1
+        },
+        {
+          "text": "Uses the midpoint of the roots to find the x coordinate of the turning point",
+          "marks": 1
+        },
+        {
+          "text": "Substitutes to find the y coordinate, giving (−1, −9)",
+          "marks": 1
+        },
+        {
+          "text": "States that it is a minimum because a > 0",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**y intercept.** Put $x = 0$: $y = -8$, so $(0, -8)$. No working needed — it is just $c$.\n\n**Roots.** Set $y = 0$ and factorise. Two numbers multiplying to $-8$ and adding to $+2$ are $+4$ and $-2$:\n\n$$(x + 4)(x - 2) = 0 \\quad\\Rightarrow\\quad x = -4 \\text{ or } x = 2$$\n\n**Turning point.** Midway between the roots:\n\n$$x = \\frac{-4 + 2}{2} = -1, \\qquad y = (-1)^2 + 2(-1) - 8 = -9$$\n\nSo the turning point is $(-1, -9)$.\n\n**Minimum or maximum.** $a = 1 > 0$, so the curve opens **upwards** and the turning point is a **minimum**."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A curve has equation $y = (x - 4)^2 + 3$. Without solving any equations, state its turning point and explain how many times the curve crosses the x axis.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "Higher tier: completing the square",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The curve is already written in completed square form, so the turning point can be read straight off. The bracket is x minus four, and flipping that sign gives an x coordinate of four, while the number outside the bracket, three, gives the y coordinate. The turning point is therefore at four, three. Because the coefficient of x squared is positive, the curve opens upwards, which means this turning point is the lowest point on the whole curve. The lowest value y ever takes is therefore three, which is above the x axis, so the curve never reaches the axis at all and crosses it zero times.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "turning point (4, 3)"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states that a > 0 so the curve opens upwards and the point is a minimum"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "concludes the smallest value of y is 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "concludes the curve never crosses the x axis, so no roots"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Reads the turning point as (4, 3), flipping the sign in the bracket",
+          "marks": 1
+        },
+        {
+          "text": "States that the curve opens upwards, so this is a minimum",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that the smallest value of y is 3",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that the curve never crosses the x axis",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Turning point.** The form is $(x + p)^2 + q$, so flip the sign inside the bracket: $x = 4$. The number outside gives $y = 3$. The turning point is $(4, 3)$.\n\n**How many crossings.** $a = 1 > 0$, so the curve opens **upwards** and $(4, 3)$ is the **lowest** point on it. The smallest value $y$ ever takes is therefore **3**, which is **above** the x axis — so the curve never reaches the axis and crosses it **zero** times.\n\nNotice no equation was solved. The turning point alone settles it, which is the whole reason completing the square is worth doing."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Write down the y intercept first. It is $c$, it takes no working, and it is a mark.\n\nFor the roots, factorise and solve. Watch the signs: $(x + 4) = 0$ gives $x = -4$.\n\nFor the turning point, use the **midpoint of the roots** if the quadratic factorises, because it is much faster than completing the square. Keep completing the square for the cases where there are no roots to take a midpoint of.\n\nSay whether the turning point is a minimum or a maximum, and give the reason: the sign of $a$.\n\nIf a question asks how many roots there are, answer from the **turning point** rather than by solving. It is quicker and it is the reasoning the mark scheme wants.\n\nIf a graph is given and you are asked to solve quadratic $= k$, draw the line $y = k$. Do not start the algebra again.",
+    "examinerErrors": [
+      "Giving the y intercept as $(c, 0)$ rather than $(0, c)$.",
+      "Reading the roots off as $(x + 4)$ giving $x = 4$, instead of $x = -4$.",
+      "Taking $c$ as the y coordinate of the turning point, which is only true when $b = 0$.",
+      "Giving the line of symmetry as a number rather than an equation of the form $x = 3$.",
+      "Saying $a < 0$ gives a minimum. It gives a maximum.",
+      "Reading the turning point from $(x + 1)^2 - 9$ as $(1, -9)$ instead of $(-1, -9)$.",
+      "Solving algebraically when the question said to use the graph.",
+      "Assuming every quadratic has two roots."
+    ],
+    "grade9Looks": "A top answer picks the quickest correct route rather than the one it remembers: the midpoint of the roots when the quadratic factorises, completing the square when it does not. It answers a question about the number of roots from the position of the turning point, without solving anything, and says why that works. Given a graph and an equation to solve, it draws a line rather than starting the algebra again. And it keeps the three features distinct, never confusing the y intercept with the y coordinate of the vertex."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

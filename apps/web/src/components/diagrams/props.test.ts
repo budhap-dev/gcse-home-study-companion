@@ -25,6 +25,32 @@ function componentFileNames(): Map<string, string> {
   return out
 }
 
+/**
+ * The declared shape of each prop a component reads as a typed array, taken from its
+ * source: `props.curves as Curve[]` plus `interface Curve { a: number; b: number }`
+ * yields curves -> the required keys a and b. Keys written `x?:` are optional.
+ */
+function requiredKeysByProp(componentName: string): Map<string, string[]> {
+  const out = new Map<string, string[]>()
+  const file = readdirSync(HERE).find((f) => f === `${componentName}.tsx`)
+  if (!file) return out
+  const src = readFileSync(join(HERE, file), 'utf8')
+  const interfaces = new Map<string, string[]>()
+  for (const m of src.matchAll(/interface\s+(\w+)\s*\{([^}]*)\}/g)) {
+    const keys: string[] = []
+    for (const line of m[2].split('\n')) {
+      const k = /^\s*(\w+)(\??)\s*:/.exec(line)
+      if (k && k[2] !== '?') keys.push(k[1])
+    }
+    interfaces.set(m[1], keys)
+  }
+  for (const m of src.matchAll(/props\.(\w+)\s+as\s+(\w+)\[\]/g)) {
+    const keys = interfaces.get(m[2])
+    if (keys?.length) out.set(m[1], keys)
+  }
+  return out
+}
+
 function jsonFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
     const full = join(dir, name)
@@ -33,13 +59,13 @@ function jsonFiles(dir: string): string[] {
 }
 
 interface Visual { type?: string; component?: string; props?: Record<string, unknown> }
-const used: { file: string; step: string; component: string; keys: string[] }[] = []
+const used: { file: string; step: string; component: string; keys: string[]; props?: Record<string, unknown> }[] = []
 for (const file of jsonFiles(CONTENT)) {
   const topic = JSON.parse(readFileSync(file, 'utf8'))
   for (const step of topic.lesson?.steps ?? []) {
     for (const v of (step.visuals ?? []) as Visual[]) {
       if (v.type !== 'diagram' || !v.component) continue
-      used.push({ file: file.split('/').pop()!, step: step.id, component: v.component, keys: Object.keys(v.props ?? {}) })
+      used.push({ file: file.split('/').pop()!, step: step.id, component: v.component, keys: Object.keys(v.props ?? {}), props: v.props })
     }
   }
 }
@@ -74,6 +100,44 @@ describe('diagram props', () => {
       }
     }
     expect(bad).toEqual([])
+  })
+
+/**
+   * A prop can have the right name and the wrong shape, which the check above cannot
+   * see. A quadratic passed to line-graph as a list of points rather than as its
+   * coefficients was accepted silently: the axes and the labelled points drew, and the
+   * curve did not. So each array prop's entries are checked against the interface the
+   * component declares for it.
+   */
+  it('passes each array prop in the shape the component declares', () => {
+    const bad: string[] = []
+    for (const u of used) {
+      const componentName = files.get(u.component)
+      if (!componentName) continue
+      const shapes = requiredKeysByProp(componentName)
+      for (const [prop, keys] of shapes) {
+        const value = u.props?.[prop]
+        if (!Array.isArray(value)) continue
+        for (const [i, entry] of value.entries()) {
+          if (entry === null || typeof entry !== 'object' || Array.isArray(entry)) {
+            bad.push(`${u.file} ${u.step}: <${u.component}> ${prop}[${i}] is not an object`)
+            continue
+          }
+          for (const k of keys) {
+            if (!(k in (entry as Record<string, unknown>))) {
+              bad.push(`${u.file} ${u.step}: <${u.component}> ${prop}[${i}] has no "${k}"`)
+            }
+          }
+        }
+      }
+    }
+    expect(bad).toEqual([])
+  })
+
+  /** The shape reader has to find something, or the test above passes for nothing. */
+  it('reads a declared prop shape out of a component', () => {
+    expect(requiredKeysByProp('LineGraph').get('curves')).toEqual(['a', 'b', 'c'])
+    expect(requiredKeysByProp('LineGraph').get('points')).toEqual(['x', 'y'])
   })
 
   /** The detector has to fire, or the test above passes for the wrong reason. */

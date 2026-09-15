@@ -23,7 +23,10 @@ export const LIGHT_CANVAS = {
 function DiagramFigure({ component, children }: { component: string; children: React.ReactNode }) {
   const ref = useFitSvgText<HTMLElement>()
   return (
-    <figure ref={ref} className="flex justify-center rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={component}>
+    // items-center, not the default stretch: an svg with a viewBox and width:100% has
+    // no intrinsic height, so a stretching flex parent pulls it to the height of the
+    // tallest thing in the grid row and the drawing floats in a sea of whitespace.
+    <figure ref={ref} className="flex items-center justify-center rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={component}>
       {children}
     </figure>
   )
