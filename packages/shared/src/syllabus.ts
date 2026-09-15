@@ -234,11 +234,14 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Electrolysis of aqueous solutions', topicId: 'electrolysis-of-aqueous-solutions' },
     ] },
     { year: 10, term: 'Spring', topics: [
-      { title: 'Exothermic and endothermic reactions' },
-      { title: 'Energy profiles and bond energies' },
+      { title: 'Exothermic and endothermic reactions', topicId: 'exothermic-and-endothermic-reactions' },
+      { title: 'Energy profiles and bond energies', topicId: 'reaction-profiles-and-bond-energies' },
+      // 4.5.2, chemistry only, is still to be written.
       { title: 'Cells, batteries and fuel cells' },
-      { title: 'Crude oil and fractional distillation' },
-      { title: 'Alkanes, combustion and cracking' },
+      // The school's last two rows are these two topics: combustion is taught with the
+      // alkanes it burns, and cracking with the alkenes it produces.
+      { title: 'Crude oil, hydrocarbons and alkanes', topicId: 'crude-oil-and-alkanes' },
+      { title: 'Cracking and alkenes', topicId: 'cracking-and-alkenes' },
     ] },
     { year: 10, term: 'Summer', topics: [
       { title: 'Alkenes and their reactions' },
