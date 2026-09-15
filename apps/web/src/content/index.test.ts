@@ -14,8 +14,19 @@ describe('content order', () => {
     }
   })
 
-  it('starts Chemistry bonding with ionic bonding and Maths geometry with constructing triangles', () => {
-    expect(topicsForSubject('chemistry').map((t) => t.id).slice(0, 4)).toEqual(['ionic-bonding', 'covalent-bonding', 'metallic-bonding-and-alloys', 'carbon-structures-and-nanoparticles'])
+  /**
+   * Alphabetical order would put carbon structures first in the Chemistry bonding unit
+   * and congruency before constructing triangles in Maths, so these two sequences pin
+   * that topics are listed in the order they are taught. The assertion is on the unit
+   * rather than on the first four topics of the subject, because Year 9 recap content
+   * now precedes Year 10 in the list and would otherwise make this test measure
+   * something other than what it is named for.
+   */
+  it('orders Chemistry bonding and Maths geometry by teaching order, not alphabetically', () => {
+    const bonding = topicsForSubject('chemistry')
+      .filter((t) => t.unitId === 'bonding-structure-and-properties')
+      .map((t) => t.id)
+    expect(bonding).toEqual(['states-of-matter', 'ionic-bonding', 'covalent-bonding', 'metallic-bonding-and-alloys', 'carbon-structures-and-nanoparticles'])
     const maths = topicsForSubject('maths').map((t) => t.id)
     expect(maths.indexOf('constructing-triangles')).toBeLessThan(maths.indexOf('congruency'))
   })
