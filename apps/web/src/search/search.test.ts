@@ -98,7 +98,10 @@ describe('stem matching', () => {
 
   it('does not join words that merely start alike', () => {
     // "graphical" shares five letters with graphite and graphene and must reach neither.
-    expect(search('graphical')).toEqual([])
+    // It does legitimately reach "graphics", which is the same idea, so the check is that
+    // it stays away from the carbon topic rather than that it finds nothing at all.
+    expect(search('graphical').map((r) => r.record.topicId)).not.toContain('carbon-structures-and-nanoparticles')
+    expect(search('graphite').map((r) => r.record.topicId)).toContain('carbon-structures-and-nanoparticles')
     expect(search('readxyz')).toEqual([])
     expect(search('zebra')).toEqual([])
   })
