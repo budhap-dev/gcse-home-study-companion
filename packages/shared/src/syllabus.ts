@@ -381,7 +381,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Growing the business', topicId: 'growing-the-business' },
     ] },
     { year: 10, term: 'Summer', topics: [
-      { title: 'Making marketing decisions' },
+      { title: 'Making marketing decisions', topicId: 'making-marketing-decisions' },
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Making operational decisions' },
