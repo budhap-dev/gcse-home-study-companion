@@ -146,15 +146,17 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
   ],
   'physics': [
     { year: 9, term: 'Autumn', topics: [
-      { title: 'Wave properties' },
-      { title: 'Light waves: reflection and refraction' },
-      { title: 'Sound waves' },
+      { title: 'Wave properties', topicId: 'wave-properties' },
+      // The school teaches light in Year 9 term 1 and re-tests it in the Year 10 term 4
+      // milestone, so both rows point at the one topic, as the Maths recap rows do.
+      { title: 'Light waves: reflection and refraction', topicId: 'light-reflection-and-refraction' },
+      { title: 'Sound waves', topicId: 'sound-waves' },
       { title: 'Kinetic and gravitational potential energy', topicId: 'kinetic-and-gravitational-potential-energy' },
-      { title: 'Energy transfers and dissipation' },
+      { title: 'Energy transfers and dissipation', topicId: 'energy-transfers-and-dissipation' },
     ] },
     { year: 9, term: 'Spring', topics: [
-      { title: 'Power and efficiency' },
-      { title: 'Generating power' },
+      { title: 'Power and efficiency', topicId: 'power-and-efficiency' },
+      { title: 'Generating power', topicId: 'generating-power' },
       { title: 'Describing motion: speed, velocity and acceleration', topicId: 'describing-motion' },
       { title: 'Forces, weight and resultant forces', topicId: 'resultant-forces' },
     ] },
