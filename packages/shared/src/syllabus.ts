@@ -38,18 +38,20 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Sectors, cylinders and spheres' },
       { title: 'Limits of accuracy and bounds', topicId: 'limits-of-accuracy-and-bounds' },
       { title: 'Fractions, decimals and percentages' },
-      { title: 'Successive percentage change' },
+      // Successive change, the multiplier and reverse percentages are all taught by the
+      // Compound interest topic, so the Year 9 row points there rather than duplicating it.
+      { title: 'Successive percentage change', topicId: 'compound-interest-growth-and-decay' },
       { title: 'Direct and inverse proportion', topicId: 'ratio-and-proportion' },
       { title: 'Parallel and perpendicular lines', topicId: 'parallel-and-perpendicular-lines' },
       { title: 'Graphs of quadratic and cubic functions' },
     ] },
     { year: 9, term: 'Spring', topics: [
-      { title: 'Standard form' },
+      { title: 'Standard form', topicId: 'standard-form' },
       { title: 'Laws of indices', topicId: 'laws-of-indices' },
       { title: 'Surds', topicId: 'surds' },
       { title: 'Grouped and cumulative frequency' },
       { title: 'Box plots' },
-      { title: 'Simultaneous equations' },
+      { title: 'Simultaneous equations', topicId: 'simultaneous-equations' },
       { title: 'Inequalities', topicId: 'inequalities-on-a-number-line' },
       { title: 'Frequency trees' },
       { title: 'Tree diagrams', topicId: 'combined-events-and-tree-diagrams' },
@@ -59,7 +61,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Similarity', topicId: 'similarity-and-linear-scale-factors' },
       { title: 'Pythagoras' },
       { title: 'Trigonometric ratios' },
-      { title: 'Simplifying and expanding expressions' },
+      { title: 'Simplifying and expanding expressions', topicId: 'simplifying-and-expanding-expressions' },
       { title: 'Solving quadratics by factorising', topicId: 'solving-quadratic-equations' },
       { title: 'Changing the subject of a formula', topicId: 'identities-and-rearranging-formulae' },
       // The school's wording is the old one. "Trial and improvement" appears nowhere in
