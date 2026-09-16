@@ -38,6 +38,22 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
     )
   }
 
+  /**
+   * Two spheres sit side by side, so a long label under one runs into the label under the
+   * other. Wrapping at a width that fits half the diagram keeps them apart, whatever the
+   * content says — "the cloth, having lost electrons" beside "the rod, having gained them"
+   * overlapped before this.
+   */
+  const wrap = (text: string, perLine = 18) => {
+    const lines: string[] = []
+    let line = ''
+    for (const word of text.split(' ')) {
+      if (line && (line + ' ' + word).length > perLine) { lines.push(line); line = word } else line = line ? line + ' ' + word : word
+    }
+    if (line) lines.push(line)
+    return lines
+  }
+
   const sphere = (cx: number, sign: 1 | -1, label: string | undefined, key: string) => (
     <g key={key}>
       <circle cx={cx} cy={midY} r={R} fill={sign > 0 ? '#f6e2dc' : '#dce6f3'} stroke={INK} strokeWidth={1.6} />
@@ -46,7 +62,9 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
       </text>
       {label && (
         <text x={cx} y={midY + R + 22} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
-          {label}
+          {wrap(label).map((line, i) => (
+            <tspan key={i} x={cx} dy={i === 0 ? 0 : 14}>{line}</tspan>
+          ))}
         </text>
       )}
     </g>

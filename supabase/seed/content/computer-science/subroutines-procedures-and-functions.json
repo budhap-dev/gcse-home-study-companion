@@ -81,13 +81,13 @@
           ],
           "discriminators": [],
           "options": [
-            "Twice, once for each call",
-            "Once, when the subroutine is defined",
             "Three times, including the definition",
-            "It never runs, because subroutines are only definitions"
+            "It never runs, because subroutines are only definitions",
+            "Twice, once for each call",
+            "Once, when the subroutine is defined"
           ],
           "correct": [
-            0
+            2
           ]
         }
       },
@@ -164,13 +164,13 @@
           ],
           "discriminators": [],
           "options": [
-            "A parameter, which is what AQA calls both the value and the name",
             "A return value sent back by the subroutine",
-            "A local variable declared inside the subroutine",
-            "The name given in the subroutine header only"
+            "A parameter, which is what AQA calls both the value and the name",
+            "The name given in the subroutine header only",
+            "A local variable declared inside the subroutine"
           ],
           "correct": [
-            0
+            1
           ]
         }
       },
@@ -418,13 +418,13 @@
           ],
           "discriminators": [],
           "options": [
+            "Global variables cannot store numbers, so any calculation has to be done with local ones",
             "A subroutine cannot accidentally change a value the rest of the program relies on, and names can be reused safely",
             "Local variables use less memory because their names are shorter, so the program runs faster",
-            "Global variables cannot store numbers, so any calculation has to be done with local ones",
             "Local variables keep their value after the subroutine ends, so nothing is lost between calls"
           ],
           "correct": [
-            0
+            1
           ]
         }
       },
@@ -469,13 +469,13 @@
           ],
           "discriminators": [],
           "options": [
-            "IF is_even(x) THEN OUTPUT 'even' ENDIF",
-            "IF is_even THEN OUTPUT 'even' ENDIF",
+            "is_even(x) OUTPUT 'even'",
             "OUTPUT is_even(x) = 'even'",
-            "is_even(x) OUTPUT 'even'"
+            "IF is_even THEN OUTPUT 'even' ENDIF",
+            "IF is_even(x) THEN OUTPUT 'even' ENDIF"
           ],
           "correct": [
-            0
+            3
           ]
         }
       },
@@ -520,13 +520,13 @@
           ],
           "discriminators": [],
           "options": [
-            "A built-in function that returns the number of characters in a string",
-            "A local variable that holds the length of the name",
+            "A procedure that prints the length of the name",
             "A parameter of the main program that stores the name",
-            "A procedure that prints the length of the name"
+            "A local variable that holds the length of the name",
+            "A built-in function that returns the number of characters in a string"
           ],
           "correct": [
-            0
+            3
           ]
         }
       },
@@ -685,13 +685,13 @@
       ],
       "discriminators": [],
       "options": [
-        "A function returns a value to the code that called it; a procedure does not",
-        "A procedure can have parameters; a function cannot",
         "A function must be called from inside a loop; a procedure need not be",
+        "A procedure can have parameters; a function cannot",
+        "A function returns a value to the code that called it; a procedure does not",
         "A procedure runs faster than a function because it is shorter"
       ],
       "correct": [
-        0
+        2
       ]
     },
     {
@@ -738,13 +738,13 @@
       ],
       "discriminators": [],
       "options": [
-        "A variable in a subroutine header that receives a value when the subroutine is called",
-        "The value a function sends back to the calling code when it reaches RETURN",
         "A variable declared in the main program that every subroutine can read and change",
-        "A comment written above a subroutine that explains what the subroutine does"
+        "A comment written above a subroutine that explains what the subroutine does",
+        "The value a function sends back to the calling code when it reaches RETURN",
+        "A variable in a subroutine header that receives a value when the subroutine is called"
       ],
       "correct": [
-        0
+        3
       ]
     },
     {
@@ -881,13 +881,13 @@
       ],
       "discriminators": [],
       "options": [
+        "It keeps its value between one call of the subroutine and the next, so the next call starts where the last one finished",
         "It is a local variable: it exists only while the subroutine runs and cannot be seen from outside it",
         "It is a global variable: every part of the program can read and change it",
-        "It keeps its value between one call of the subroutine and the next, so the next call starts where the last one finished",
         "It must have the same name as one of the parameters, because a subroutine can only work with the names listed in its header"
       ],
       "correct": [
-        0
+        1
       ]
     },
     {
@@ -1043,13 +1043,13 @@
         "evaluate"
       ],
       "options": [
-        "The calling code cannot use the total in a further calculation or store it, so the function only works for one purpose",
+        "A function with no RETURN statement runs forever, so the program never reaches the line that would print the total",
         "Functions are not allowed to contain OUTPUT statements, so the program will not run at all",
-        "The total will be lost when the function ends because it is a global variable, not a local one",
-        "A function with no RETURN statement runs forever, so the program never reaches the line that would print the total"
+        "The calling code cannot use the total in a further calculation or store it, so the function only works for one purpose",
+        "The total will be lost when the function ends because it is a global variable, not a local one"
       ],
       "correct": [
-        0
+        2
       ]
     },
     {
@@ -1160,9 +1160,9 @@
       ],
       "options": [
         "Student B changes one line inside the function; Student A must find and change all six calculations and may miss one",
-        "Student A's program is easier to update because every calculation is visible at the place it is used, so each one can be checked as it is changed",
+        "Student B's program cannot be changed without rewriting all six calls",
         "Both programs need six changes, because the function is called six times and each call has to be edited to pass the new exchange rate",
-        "Student B's program cannot be changed without rewriting all six calls"
+        "Student A's program is easier to update because every calculation is visible at the place it is used, so each one can be checked as it is changed"
       ],
       "correct": [
         0

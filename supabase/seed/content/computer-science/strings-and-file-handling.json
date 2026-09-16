@@ -215,13 +215,13 @@
           ],
           "discriminators": [],
           "options": [
+            "45 as a number",
             "'45'",
-            "9",
             "'9'",
-            "45 as a number"
+            "9"
           ],
           "correct": [
-            0
+            1
           ]
         }
       },
@@ -361,13 +361,13 @@
           ],
           "discriminators": [],
           "options": [
-            "Some or all of it may not be saved, because writing is buffered until the file is closed",
-            "It is saved twice, because the program writes it again when it finishes running",
             "It is saved but cannot be read, because the file stays locked for other programs",
-            "Nothing happens: close is optional and the data is written as soon as writeLine runs"
+            "Nothing happens: close is optional and the data is written as soon as writeLine runs",
+            "Some or all of it may not be saved, because writing is buffered until the file is closed",
+            "It is saved twice, because the program writes it again when it finishes running"
           ],
           "correct": [
-            0
+            2
           ]
         }
       },
@@ -581,9 +581,9 @@
       "discriminators": [],
       "options": [
         "STRING_TO_INT",
-        "INT_TO_STRING",
         "CHAR_TO_CODE",
-        "LEN"
+        "LEN",
+        "INT_TO_STRING"
       ],
       "correct": [
         0
@@ -727,13 +727,13 @@
       ],
       "discriminators": [],
       "options": [
-        "WHILE NOT myFile.endOfFile()",
         "WHILE myFile.readLine()",
-        "FOR i ← 0 TO 10",
-        "WHILE myFile.close()"
+        "WHILE NOT myFile.endOfFile()",
+        "WHILE myFile.close()",
+        "FOR i ← 0 TO 10"
       ],
       "correct": [
-        0
+        1
       ]
     },
     {
@@ -886,13 +886,13 @@
         "evaluate"
       ],
       "options": [
-        "Split each line at the comma and convert the score part with STRING_TO_INT, because everything read from a file is text",
-        "Nothing: numbers written to a file stay numbers, so the score can be compared as soon as it is read",
         "Convert the name part with INT_TO_STRING, because names are read from a file as numbers",
+        "Nothing: numbers written to a file stay numbers, so the score can be compared as soon as it is read",
+        "Split each line at the comma and convert the score part with STRING_TO_INT, because everything read from a file is text",
         "Read the file twice, once to get the names and once to get the scores, then compare the two lists"
       ],
       "correct": [
-        0
+        2
       ]
     },
     {
@@ -1012,13 +1012,13 @@
         "evaluate"
       ],
       "options": [
-        "USERINPUT always returns a string, even when the user types digits, so it must be converted before it can be used as a number",
         "USERINPUT returns a real number, and STRING_TO_INT rounds it to the nearest whole number before arithmetic",
-        "STRING_TO_INT removes the spaces and punctuation from the input so that the arithmetic does not fail",
-        "Arithmetic only works on strings, so the number has to be converted into text before it can be added"
+        "USERINPUT always returns a string, even when the user types digits, so it must be converted before it can be used as a number",
+        "Arithmetic only works on strings, so the number has to be converted into text before it can be added",
+        "STRING_TO_INT removes the spaces and punctuation from the input so that the arithmetic does not fail"
       ],
       "correct": [
-        0
+        1
       ]
     },
     {
@@ -1041,9 +1041,9 @@
       "discriminators": [],
       "options": [
         "STRING_TO_REAL, because the value has a decimal part",
+        "INT_TO_STRING, because 3.5 rounds to 4 first",
         "STRING_TO_INT, because all numbers typed in are integers",
-        "REAL_TO_STRING, because the answer will be printed",
-        "INT_TO_STRING, because 3.5 rounds to 4 first"
+        "REAL_TO_STRING, because the answer will be printed"
       ],
       "correct": [
         0

@@ -69,3 +69,47 @@ describe('multiple-choice options are balanced in length', () => {
     expect(biased).toEqual([])
   })
 })
+
+/**
+ * The correct option must not sit in the same place every time. On 16 September 2026 a
+ * sweep of the whole pack found the correct answer at position 0 in **98%** of the 2335
+ * multiple-choice questions, and at 100% in six of the eight subjects — a student who
+ * noticed could have scored full marks on every quiz without reading a single question,
+ * which would also have made "Mastered" meaningless.
+ *
+ * Nothing caught it because every other check looks at one question at a time: the
+ * schema, the marker round-trip and the option-length rule are all satisfied by a
+ * question whose answer happens to be first. It is only visible in aggregate.
+ *
+ * The threshold is deliberately loose. Real papers are not perfectly uniform and a
+ * position may legitimately run ahead; what this rules out is the degenerate case.
+ */
+describe('correct options are spread across the positions', () => {
+  const at = [0, 0, 0, 0, 0, 0]
+  for (const file of jsonFiles(ROOT)) {
+    const topic = JSON.parse(readFileSync(file, 'utf8'))
+    const questions: Question[] = [...topic.questions, ...topic.lesson.steps.filter((s: { check?: Question }) => s.check).map((s: { check: Question }) => s.check)]
+    for (const q of questions) {
+      if (q.type !== 'multiple-choice' || q.correct.length !== 1) continue
+      at[q.correct[0]!]! += 1
+    }
+  }
+  const total = at.reduce((a, b) => a + b, 0)
+
+  it('found the multiple-choice questions', () => {
+    expect(total).toBeGreaterThan(500)
+  })
+
+  it('never puts more than 40% of correct answers in one position', () => {
+    const worst = Math.max(...at)
+    const share = worst / total
+    expect(
+      share,
+      `position ${at.indexOf(worst)} holds ${Math.round(share * 100)}% of correct answers: ${at.slice(0, 4).join(' / ')}`,
+    ).toBeLessThan(0.4)
+  })
+
+  it('uses every position of a four-option question', () => {
+    for (let i = 0; i < 4; i++) expect(at[i], `no correct answer is ever at position ${i}`).toBeGreaterThan(0)
+  })
+})
