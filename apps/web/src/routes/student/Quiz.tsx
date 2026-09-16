@@ -148,9 +148,11 @@ export function Quiz() {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18" /></svg>
         </Link>
         <div className="flex flex-grow flex-col gap-1.5">
-          <div className="flex justify-between text-xs text-ink-2">
-            <span className="font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · {topic.title} · Quiz</span>
-            <span>Question {state.index + 1} of {questions.length}</span>
+          {/* The title is clamped and the counter fixed, as in the lesson header: a long
+              topic name otherwise wraps to three lines on a phone and squeezes the count. */}
+          <div className="flex justify-between gap-2 text-xs text-ink-2">
+            <span className="line-clamp-1 font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · {topic.title} · Quiz</span>
+            <span className="shrink-0 whitespace-nowrap">Question {state.index + 1} of {questions.length}</span>
           </div>
           <div className="grid gap-0.5" style={{ gridTemplateColumns: `repeat(${questions.length}, minmax(0, 1fr))` }} role="progressbar" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={state.index + 1}>
             {questions.map((q, i) => {
