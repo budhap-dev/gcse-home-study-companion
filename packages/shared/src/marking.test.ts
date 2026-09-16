@@ -34,9 +34,58 @@ describe('parseNumber', () => {
     expect(parseNumber('')).toBeUndefined()
     expect(parseNumber('1/0')).toBeUndefined()
   })
+
+  /**
+   * A division sign is a key on every maths keyboard, so a student who presses it means
+   * a fraction. normaliseText had always accepted it and parseNumber had not.
+   */
+  it('reads a division sign as a fraction', () => {
+    expect(parseNumber('3÷4')).toBe(0.75)
+    expect(parseNumber('3 ÷ 4')).toBe(0.75)
+    expect(parseNumber('-1÷2')).toBe(-0.5)
+  })
+
+  /** Brackets round the parts of a fraction, which is what a maths editor produces. */
+  it('reads a bracketed fraction', () => {
+    expect(parseNumber('(3)/(4)')).toBe(0.75)
+    expect(parseNumber('(3)/4')).toBe(0.75)
+    expect(parseNumber('(-1)/(2)')).toBe(-0.5)
+  })
+
+  /**
+   * "1 1/2" is one and a half. The rule that joins "25 000" into 25000 used to run first
+   * and turn it into 11/2, so the student was marked as meaning 5.5 — a wrong number
+   * returned silently, which is worse than refusing to read it at all.
+   */
+  it('reads a mixed number, and does not silently mangle it', () => {
+    expect(parseNumber('1 1/2')).toBe(1.5)
+    expect(parseNumber('2 3/4')).toBe(2.75)
+    expect(parseNumber('-1 1/2')).toBe(-1.5)
+    expect(parseNumber('1 1/0')).toBeUndefined()
+  })
+
+  /** The rules above must not disturb the spaced thousands the content itself prints. */
+  it('still reads spaced thousands', () => {
+    expect(parseNumber('25 000')).toBe(25000)
+    expect(parseNumber('180 000')).toBe(180000)
+    expect(parseNumber('1 000 000')).toBe(1000000)
+  })
 })
 
 describe('normaliseText', () => {
+  /** A student without a pi key types the letters; the content writes the symbol. */
+  it('matches a typed pi against an accepted π', () => {
+    expect(normaliseText('2pir')).toBe(normaliseText('2πr'))
+    expect(normaliseText('r=sqrt(a/pi)')).toBe(normaliseText('r=sqrt(a/π)'))
+  })
+
+  /** Folding runs symbol to letters, so words that happen to contain "pi" are untouched. */
+  it('leaves words containing pi alone', () => {
+    expect(normaliseText('pitch')).toBe('pitch')
+    expect(normaliseText('capital')).toBe('capital')
+    expect(normaliseText('pipette')).toBe('pipette')
+  })
+
   it('ignores case, spaces, superscripts, and braces', () => {
     expect(normaliseText('x⁸')).toBe('x^8')
     expect(normaliseText(' X ^ 8 ')).toBe('x^8')
