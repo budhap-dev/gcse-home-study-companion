@@ -48,7 +48,14 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const el = document.activeElement
-      const typing = el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement
+      // Anything that takes typed text of its own keeps its slash. Testing only for input
+      // and textarea missed the maths answer field, so a student typing a fraction had the
+      // slash stolen and the rest of the answer went into the search box.
+      const typing =
+        el instanceof HTMLInputElement ||
+        el instanceof HTMLTextAreaElement ||
+        (el instanceof HTMLElement && el.isContentEditable) ||
+        Boolean(el instanceof Element && el.closest('math-field'))
       if (e.key !== '/' || typing) return
       const input = inputRef.current
       if (!input || input.offsetParent === null) return
