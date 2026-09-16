@@ -236,7 +236,7 @@ export function Worksheet() {
           </div>
           {question.visual && <Visual visual={question.visual} />}
           <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
-          <QuestionInput key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
+          <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
           {answered && typed && (
             <p className="text-sm font-bold" style={{ color: answered.result.correct ? 'var(--color-status-secure)' : 'var(--color-status-not-secure)' }}>
               {answered.result.correct ? `Final answer correct: ${question.marks} of ${question.marks}` : 'Final answer not matched. Reveal the solution and award your method marks.'}

@@ -1,6 +1,8 @@
 import { seededShuffle, type Question } from '@study/shared'
-import { useId, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { RichText } from '../RichText.tsx'
+import { MathField } from './MathField.tsx'
+import type { KeypadKind } from './keyboardLayouts.ts'
 
 export type Answer = number[] | string | number | Record<string, string>
 
@@ -8,6 +10,8 @@ interface Props {
   question: Question
   /** Locked after submission. */
   disabled?: boolean
+  /** Chooses the maths keypad: Physics writes standard form where Business writes pounds. */
+  subjectId?: string
   onSubmit: (answer: Answer) => void
 }
 
@@ -16,13 +20,13 @@ interface Props {
  * Ordering and labelling get simple keyboard-friendly versions here; drag-and-drop
  * arrives with the interactive step work.
  */
-export function QuestionInput({ question, disabled = false, onSubmit }: Props) {
+export function QuestionInput({ question, disabled = false, subjectId, onSubmit }: Props) {
   switch (question.type) {
     case 'multiple-choice':
       return <MultipleChoice question={question} disabled={disabled} onSubmit={onSubmit} />
     case 'numeric':
     case 'short-text':
-      return <Typed question={question} disabled={disabled} onSubmit={onSubmit} />
+      return <Typed question={question} disabled={disabled} subjectId={subjectId} onSubmit={onSubmit} />
     case 'ordering':
       return <Ordering question={question} disabled={disabled} onSubmit={onSubmit} />
     case 'extended':
@@ -66,10 +70,30 @@ function MultipleChoice({ question, disabled, onSubmit }: Props & { question: Ex
   )
 }
 
-function Typed({ question, disabled, onSubmit }: Props & { question: Extract<Question, { type: 'numeric' | 'short-text' }> }) {
+/**
+ * Which keypad a question wants, decided from the question's own shape — never from its
+ * answer, which a keypad that changed with it would leak.
+ *
+ * A numeric question always takes one, because the answer is a value. A short-text
+ * question does not, because most of them are words and the device's own keyboard is the
+ * right tool for those; the student can still call the maths keys up with the toggle.
+ */
+export function keypadFor(question: Extract<Question, { type: 'numeric' | 'short-text' }>, subjectId: string): KeypadKind | undefined {
+  if (question.type === 'short-text') return undefined
+  // Physics and Chemistry write their larger values in standard form.
+  if (subjectId === 'physics' || subjectId === 'chemistry') return 'number-plus'
+  if (subjectId === 'maths') return 'number-plus'
+  return 'number'
+}
+
+function Typed({ question, disabled, subjectId, onSubmit }: Props & { question: Extract<Question, { type: 'numeric' | 'short-text' }> }) {
   const [value, setValue] = useState('')
+  const suggested = keypadFor(question, subjectId ?? '')
+  const [kind, setKind] = useState<KeypadKind | undefined>(suggested)
+  const box = useRef<HTMLInputElement>(null)
   const id = useId()
   const units = question.type === 'numeric' ? question.units : undefined
+
   return (
     <form
       className="flex flex-col gap-3"
@@ -79,22 +103,42 @@ function Typed({ question, disabled, onSubmit }: Props & { question: Extract<Que
       }}
     >
       <label htmlFor={id} className="sr-only">Your answer</label>
-      <div className="flex items-center gap-2">
+      <div className={`flex items-center gap-2 ${kind ? 'hidden' : ''}`}>
         <input
           id={id}
+          ref={box}
           value={value}
           disabled={disabled}
           onChange={(e) => setValue(e.target.value)}
-          inputMode={question.type === 'numeric' ? 'decimal' : 'text'}
+          // With the keypad open the device keyboard would cover it, so it is asked to
+          // stay down. The field is still a real input: a physical keyboard still types.
+          inputMode={kind ? 'none' : question.type === 'numeric' ? 'decimal' : 'text'}
           autoComplete="off"
           autoCapitalize="off"
           spellCheck={false}
           placeholder={question.type === 'numeric' ? 'Number' : 'Answer'}
           className="h-12 flex-grow rounded-lg border border-rule bg-surface px-3 text-lg focus:border-[color:var(--subject)] disabled:opacity-70"
         />
-        {units && <span className="text-ink-2">{units}</span>}
+        {units && <span className="shrink-0 text-ink-2">{units}</span>}
       </div>
-      {!disabled && <SubmitButton disabled={!value.trim()} />}
+
+      {!disabled && (
+        <>
+          {kind && (
+            <MathField kind={kind} value={value} onChange={setValue} onEnter={() => value.trim() && onSubmit(value)} />
+          )}
+          <div className="flex items-center gap-2">
+            <SubmitButton disabled={!value.trim()} />
+            <button
+              type="button"
+              onClick={() => setKind(kind ? undefined : (suggested ?? 'algebra'))}
+              className="h-11 shrink-0 rounded-lg border border-rule bg-surface px-3 text-sm font-bold text-ink-2"
+            >
+              {kind ? 'Use my keyboard' : 'Maths keys'}
+            </button>
+          </div>
+        </>
+      )}
     </form>
   )
 }

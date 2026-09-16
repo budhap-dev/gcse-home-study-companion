@@ -171,7 +171,7 @@ export function Quiz() {
         </div>
         {question.visual && <Visual visual={question.visual} />}
         <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
-        <QuestionInput key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
+        <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
         {answered && <Feedback question={question} result={answered.result} />}
       </section>
 
