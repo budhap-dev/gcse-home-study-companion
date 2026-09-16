@@ -1,0 +1,1229 @@
+{
+  "id": "box-plots",
+  "subjectId": "maths",
+  "unitId": "statistics",
+  "title": "Box plots",
+  "specPoints": [
+    "S4"
+  ],
+  "order": 31,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Five numbers make a box plot",
+      "body": "**Minimum, lower quartile, median, upper quartile, maximum.** The box runs from the lower quartile to the upper quartile, the line inside it is the median, and the whiskers reach out to the two ends. Everything on the diagram is one of those five."
+    },
+    {
+      "kind": "spot",
+      "title": "The box holds the middle half",
+      "body": "A quarter of the data sits in each section: below the box, in each half of the box, and above it. So the **box is the middle 50%**, and its **width is the interquartile range**. A narrow box means consistent data."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Quartiles are medians of the halves",
+      "body": "Find the **median** first. The **lower quartile** is the median of the values below it, and the **upper quartile** the median of the values above it. When $n$ is odd, leave the median itself out of both halves."
+    },
+    {
+      "kind": "check",
+      "title": "Compare twice, in context",
+      "body": "A *compare* question wants **two** statements: one about an **average** (the medians) and one about **spread** (the IQRs), each written **in the context** of the question. \"B’s median mark is higher, so B did better on average\" earns the mark; \"B is higher\" does not."
+    },
+    {
+      "kind": "spot",
+      "title": "Prefer the IQR to the range",
+      "body": "The **range** uses the two most extreme values, so one unusual result changes it completely. The **interquartile range** ignores the top and bottom quarters, so it is not thrown by an outlier. That is why comparisons of spread normally use the IQR."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What a box plot shows",
+        "body": "**A box plot draws five numbers from a data set on a scale:**\n\n1. the **minimum**\n2. the **lower quartile**, $Q_1$ — a quarter of the way through the data\n3. the **median**, $Q_2$ — halfway through\n4. the **upper quartile**, $Q_3$ — three quarters of the way through\n5. the **maximum**\n\nThe **box** runs from the lower quartile to the upper quartile. The **line inside** the box is the median. The **whiskers** stretch from the box out to the minimum and the maximum.\n\n**Each section holds a quarter of the data.** Below the box, in the left half of the box, in the right half of the box, above the box: 25% each. That gives two things worth reading off at a glance:\n\n- The **box** contains the **middle 50%** of the data.\n- The **width of the box** is the **interquartile range**, $Q_3 - Q_1$ — the spread of that middle half.\n\n**The plot below has** minimum 5, lower quartile 9, median 14, upper quartile 20 and maximum 26. So its range is $26 - 5 = 21$, its IQR is $20 - 9 = 11$, and half of the values lie between 9 and 20.\n\n**A box plot deliberately does not show every value.** It shows the shape of the data — where the middle is, how spread out it is, and whether it is bunched or stretched at either end — which is exactly what is wanted when two sets are to be compared.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "box-plot",
+            "props": {
+              "plots": [
+                {
+                  "label": "Times",
+                  "min": 5,
+                  "q1": 9,
+                  "median": 14,
+                  "q3": 20,
+                  "max": 26
+                }
+              ],
+              "xLabel": "time (minutes)"
+            },
+            "alt": "A box plot on a scale from 0 to 30 minutes with minimum 5, lower quartile 9, median 14, upper quartile 20 and maximum 26"
+          },
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "The four quarters",
+              "boxes": [
+                {
+                  "title": "Below the box",
+                  "points": [
+                    "minimum to lower quartile",
+                    "the lowest 25%"
+                  ]
+                },
+                {
+                  "title": "Left half of the box",
+                  "points": [
+                    "lower quartile to median",
+                    "the next 25%"
+                  ]
+                },
+                {
+                  "title": "Right half of the box",
+                  "points": [
+                    "median to upper quartile",
+                    "the next 25%"
+                  ]
+                },
+                {
+                  "title": "Above the box",
+                  "points": [
+                    "upper quartile to maximum",
+                    "the highest 25%"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box summary of the quarter of the data held by each section of a box plot"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What does the width of the box on a box plot represent?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading a box plot",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The box runs from the **lower quartile to the upper quartile**, so its width is $Q_3 - Q_1$: the **interquartile range**, the spread of the middle half of the data.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the interquartile range"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The interquartile range",
+            "The range",
+            "The median",
+            "The total number of values"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Finding the five numbers from a list",
+        "body": "**Put the data in order first.** Nothing else works until it is sorted.\n\nThen the **median** is the middle value. Each **quartile is the median of the half on its side**. When there is an odd number of values, the median itself is **left out** of both halves. When the number is even, the median is the mean of the two middle values, and each half is simply the half.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Class A scored 15, 22, 12, 27, 18, 34, 20, 25, 15, 30, 24 on a test. Find the five-number summary.",
+            "steps": [
+              {
+                "text": "In order: 12, 15, 15, 18, 20, 22, 24, 25, 27, 30, 34",
+                "note": "11 values, so the middle one is the 6th"
+              },
+              {
+                "text": "Median: the 6th value, **22**",
+                "note": "five values below it, five above"
+              },
+              {
+                "text": "Lower half: 12, 15, 15, 18, 20 — the median of these five is the 3rd, **15**",
+                "note": "the median itself is left out of the half"
+              },
+              {
+                "text": "Upper half: 24, 25, 27, 30, 34 — the median of these is **27**",
+                "note": "the 3rd of the five above"
+              },
+              {
+                "text": "Minimum **12**, maximum **34**",
+                "note": "the two ends of the sorted list"
+              },
+              {
+                "text": "So IQR $= 27 - 15 = 12$ and range $= 34 - 12 = 22$",
+                "note": "the IQR is the box width, the range is whisker tip to whisker tip"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Class B scored 14, 18, 20, 22, 23, 24, 26, 27, 28, 29, 31, 38 (already in order). Find the median and quartiles.",
+            "steps": [
+              {
+                "text": "12 values, so the median is halfway between the 6th and 7th: $\\frac{24 + 26}{2} = 25$",
+                "note": "an even count means no single middle value"
+              },
+              {
+                "text": "Lower half: 14, 18, 20, 22, 23, 24 — six values, so its median is $\\frac{20 + 22}{2} = 21$",
+                "note": "nothing is left out when n is even"
+              },
+              {
+                "text": "Upper half: 26, 27, 28, 29, 31, 38 — median $\\frac{28 + 29}{2} = 28.5$",
+                "note": "quartiles need not be whole numbers"
+              },
+              {
+                "text": "IQR $= 28.5 - 21 = 7.5$",
+                "note": "smaller than Class A’s, which the next step uses"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "The data set 3, 5, 6, 7, 8, 9, 11, 12, 14, 15 is in order. What is the lower quartile?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "finding a quartile",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "Ten values, so the lower half is 3, 5, 6, 7, 8 — the five below the median. The median of those five is the 3rd, **6**.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "takes the lower half"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Comparing two box plots",
+        "body": "**Drawn on the same scale, two box plots can be compared by eye, and the exam asks for exactly two comparisons:**\n\n- one about **average**: compare the **medians**\n- one about **spread**: compare the **interquartile ranges** (or ranges)\n\n**Each comparison must be in context.** The mark is for saying what the numbers mean about the situation, not for reading them off.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "box-plot",
+            "props": {
+              "plots": [
+                {
+                  "label": "Class A",
+                  "min": 12,
+                  "q1": 15,
+                  "median": 22,
+                  "q3": 27,
+                  "max": 34,
+                  "iqr": 12,
+                  "range": 22
+                },
+                {
+                  "label": "Class B",
+                  "min": 14,
+                  "q1": 21,
+                  "median": 25,
+                  "q3": 28.5,
+                  "max": 38,
+                  "iqr": 7.5,
+                  "range": 24
+                }
+              ],
+              "xLabel": "marks"
+            },
+            "alt": "Two box plots on one scale of marks. Class A runs from 12 to 34 with quartiles 15 and 27 and median 22. Class B runs from 14 to 38 with quartiles 21 and 28.5 and median 25."
+          },
+          {
+            "type": "worked-example",
+            "problem": "Compare the marks of the two classes.",
+            "steps": [
+              {
+                "text": "Medians: A is 22, B is 25",
+                "note": "read the line inside each box"
+              },
+              {
+                "text": "**B’s median is higher, so on average Class B scored better**",
+                "note": "a comparison of average, in context: the mark is for the second half of the sentence"
+              },
+              {
+                "text": "IQRs: A is 12, B is 7.5",
+                "note": "the width of each box"
+              },
+              {
+                "text": "**B’s IQR is smaller, so Class B’s marks were more consistent**",
+                "note": "a comparison of spread, in context"
+              },
+              {
+                "text": "Two statements, average and spread, both explained: full marks",
+                "note": "\"B is higher\" on its own earns nothing, because it says nothing about the classes"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Statement",
+                "Earns the mark?",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "B’s median is 25",
+                  "no",
+                  "a reading, not a comparison"
+                ],
+                [
+                  "B’s median is higher",
+                  "no",
+                  "a comparison, but not in context"
+                ],
+                [
+                  "B’s median is higher, so B did better on average",
+                  "yes",
+                  "compared, and interpreted"
+                ],
+                [
+                  "B’s IQR is smaller, so B’s marks were more consistent",
+                  "yes",
+                  "spread, compared and interpreted"
+                ]
+              ],
+              "title": "The last two are the pair a ‘compare’ question is looking for"
+            },
+            "alt": "A table showing which comparison statements about box plots earn marks and why"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Which statement would earn a mark for comparing spread?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "comparing distributions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A spread comparison needs the **IQR or range**, **compared**, and **interpreted** in context. Only the first does all three. The second is a reading, and the last two are about average, not spread.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "smaller IQR, so more consistent"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Class B’s IQR is smaller, so their marks were more consistent",
+            "Class B’s IQR is 7.5, which is less than half the width of the scale",
+            "Class B did better than Class A overall, judging by the whole diagram",
+            "Class B’s median is higher than Class A’s, so B scored better on average"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Why the IQR, and what the shape tells you",
+        "body": "**The range depends on the two most extreme values.** One student who happened to have a terrible day can double it. The **interquartile range** ignores the top and bottom quarters entirely, so a single unusual value cannot change it. That is why the IQR is the measure of spread to prefer when the data may contain an **outlier**, and why exam questions normally expect it.\n\n**The box plot also shows the shape of the data.**\n\n- If the median sits in the **middle of the box** and the whiskers are similar, the data is roughly **symmetrical**.\n- If the median is **closer to the lower quartile** and the right whisker is long, the data is **bunched at the low end** with a tail of high values — **positively skewed**.\n- The reverse, with a long left whisker, is **negatively skewed**.\n\n**An outlier is a value far from the rest.** Some questions mark outliers as separate points beyond the whiskers; for this course you need to **recognise** an outlier and know that it affects the range and the mean but not the median or IQR, which is one reason those two are the measures of choice.\n\n**Reading percentages off a box plot.** Because each section is a quarter of the data:\n\n- **25%** of values lie above the upper quartile\n- **50%** lie inside the box\n- **75%** lie below the upper quartile\n\nIf a box plot of 40 students has an upper quartile of 20 marks, then $25\\%$ of 40 is **10 students** scored more than 20. The box plot never shows the individual values, but it shows exactly how many are in each quarter.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Feature",
+                "What it tells you"
+              ],
+              "rows": [
+                [
+                  "median near the middle of the box",
+                  "roughly symmetrical"
+                ],
+                [
+                  "median near the lower quartile, long right whisker",
+                  "positive skew: a tail of high values"
+                ],
+                [
+                  "median near the upper quartile, long left whisker",
+                  "negative skew: a tail of low values"
+                ],
+                [
+                  "a very long whisker on one side",
+                  "possibly an outlier at that end"
+                ],
+                [
+                  "narrow box",
+                  "the middle half is tightly grouped: consistent"
+                ],
+                [
+                  "wide box",
+                  "the middle half is spread out: variable"
+                ]
+              ],
+              "title": "The IQR is unaffected by an outlier; the range is dominated by one"
+            },
+            "alt": "A table of box plot shapes and what each says about the data"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Why is the interquartile range usually preferred to the range when comparing spread?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "choosing a measure of spread",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The range uses only the maximum and minimum, so one outlier changes it completely. The IQR ignores the top and bottom quarters, so an extreme value cannot affect it. It is always **smaller** than the range, not larger.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "unaffected by an extreme value"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "It is not affected by a single extreme value",
+            "It is always larger than the range",
+            "It is quicker to calculate",
+            "It uses every value in the data set"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Name the five values a box plot shows.\n2. What fraction of the data lies inside the box?\n3. A box plot has lower quartile 9 and upper quartile 20. What is the IQR?\n\n**Part B.**\n\n4. Find the five-number summary of 12, 15, 15, 18, 20, 22, 24, 25, 27, 30, 34.\n5. Find the median and quartiles of 14, 18, 20, 22, 23, 24, 26, 27, 28, 29, 31, 38.\n6. A box plot of 40 students has an upper quartile of 20 marks. How many students scored more than 20?\n\n**Part C.**\n\n7. Class A has median 22 and IQR 12; Class B has median 25 and IQR 7.5. Write two comparison statements that would earn marks.\n8. Explain why one very high value changes the range but not the IQR.\n9. A box plot has its median close to the lower quartile and a long right whisker. Describe the shape of the data.\n\nFor question 7, each statement needs a comparison **and** what it means for the classes.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Class A",
+                "Class B",
+                "Which is better, and why?"
+              ],
+              "rows": [
+                [
+                  "median",
+                  "22",
+                  "25",
+                  ""
+                ],
+                [
+                  "IQR",
+                  "12",
+                  "7.5",
+                  ""
+                ],
+                [
+                  "range",
+                  "22",
+                  "24",
+                  ""
+                ]
+              ],
+              "title": "Fill in the last column with a sentence, not a number"
+            },
+            "alt": "A blank table for comparing two classes by median, IQR and range"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Sort before anything else.** Every wrong quartile in this topic starts with an unsorted list. Write the ordered list down, count it, and mark the middle.\n\n**Odd and even are handled differently, and the difference is examined.** With an **odd** count the median is a single value and is **left out** of both halves before the quartiles are found. With an **even** count the median is the mean of the two middle values, and each half is just the half. Mixing these up moves a quartile by half a place, which is usually enough to lose the mark.\n\n**Two comparisons, each in context.** A *compare* question is looking for one statement about **average** and one about **spread**, and each must say what it means for the situation. *B’s median is higher, so B did better on average* and *B’s IQR is smaller, so B was more consistent* is the complete answer. A third statement about the range adds nothing if the IQR has been used, and a statement that just reads a number off earns nothing.\n\n**Say \"more consistent\", not \"better\".** A smaller spread is not automatically better — it depends on the question. A shop wanting predictable delivery times prefers the small IQR; a coach looking for one outstanding runner might not. Interpret the spread in the way the context asks.\n\n**The box plot hides the count.** It shows proportions, not numbers. Two box plots can look identical and describe 12 people and 12 000 people. So a claim like *more students in B scored over 25* cannot be made from the plots alone unless the two class sizes are known — you can say a **larger proportion** did.\n\n**Know what an outlier does.** It stretches the range and drags the mean, and it leaves the median and the IQR alone. That is the whole argument for preferring the median and IQR when the data may contain one, and it is worth stating explicitly when a question asks which measure to use.\n\n**Shape is a reading too.** A median off-centre in its box and one long whisker means the data is **skewed** towards the long side. Being able to say *the data is positively skewed, with most values low and a tail of high ones* is a grade 9 sentence.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students do",
+                "What is correct"
+              ],
+              "rows": [
+                [
+                  "unsorted data",
+                  "takes the middle of the list as given",
+                  "sorts first, always"
+                ],
+                [
+                  "odd count",
+                  "includes the median in both halves",
+                  "leaves it out"
+                ],
+                [
+                  "‘compare’ questions",
+                  "reads off two numbers",
+                  "compares average and spread, in context"
+                ],
+                [
+                  "\"better\"",
+                  "calls a smaller IQR better",
+                  "calls it more consistent, then interprets"
+                ],
+                [
+                  "counts",
+                  "claims more people from the plot alone",
+                  "claims a larger proportion"
+                ],
+                [
+                  "outliers",
+                  "reports the range",
+                  "reports the IQR, and says why"
+                ],
+                [
+                  "shape",
+                  "ignores it",
+                  "reads skew from the median’s position"
+                ]
+              ],
+              "title": "The second and third rows account for most lost marks in this topic"
+            },
+            "alt": "A table of common errors when finding and comparing box plots"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A box plot shows **five numbers**: minimum, lower quartile, median, upper quartile, maximum.\n- The **box** runs from $Q_1$ to $Q_3$; the **line inside** is the median; the **whiskers** reach the ends.\n- **Each section holds a quarter** of the data, so the box is the **middle 50%**.\n- The **width of the box is the IQR**: $Q_3 - Q_1$.\n- **Sort the data first.** The median is the middle; each quartile is the **median of its half**.\n- **Odd count**: leave the median out of both halves. **Even count**: the median is the mean of the two middle values.\n- **Compare** with two statements: **medians** for average, **IQRs** for spread, each **in context**.\n- *Higher median, so better on average. Smaller IQR, so more consistent.*\n- A **reading** is not a comparison; a comparison without **context** earns nothing.\n- Prefer the **IQR** to the range, because an **outlier** does not affect it.\n- An outlier changes the **range and mean**, not the **median and IQR**.\n- The plot shows **proportions**, not counts: 25% above the upper quartile, whatever $n$ is.\n- With $n$ known, 25% of $n$ is the number in each quarter.\n- **Skew**: median near $Q_1$ with a long right whisker is **positive skew**.\n- Smaller spread means **more consistent**, which is not always **better** — interpret the context.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Five numbers",
+                  "min, Q1, median, Q3, max"
+                ],
+                [
+                  "The box",
+                  "lower quartile to upper quartile"
+                ],
+                [
+                  "The line in the box",
+                  "the median"
+                ],
+                [
+                  "Each section",
+                  "a quarter of the data"
+                ],
+                [
+                  "Box width",
+                  "the interquartile range"
+                ],
+                [
+                  "First step",
+                  "sort the data"
+                ],
+                [
+                  "Quartiles",
+                  "medians of the two halves"
+                ],
+                [
+                  "Odd n",
+                  "leave the median out of the halves"
+                ],
+                [
+                  "Compare: average",
+                  "the medians, in context"
+                ],
+                [
+                  "Compare: spread",
+                  "the IQRs, in context"
+                ],
+                [
+                  "Why the IQR",
+                  "an outlier cannot change it"
+                ],
+                [
+                  "What the plot hides",
+                  "the number of values"
+                ],
+                [
+                  "Positive skew",
+                  "median low in the box, long right whisker"
+                ],
+                [
+                  "Smaller IQR means",
+                  "more consistent, not better"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of reading, drawing and comparing box plots"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which five values does a box plot show?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the five-number summary",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A box plot is built from the **five-number summary**: the two extremes, the two quartiles and the median. The mean and mode are not on it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "min, Q1, median, Q3, max"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Minimum, lower quartile, median, upper quartile, maximum",
+        "Minimum, mean, median, mode, maximum",
+        "Lower quartile, median, upper quartile, mean, range",
+        "Minimum, range, median, IQR, maximum"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What fraction of the data lies inside the box?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a box plot",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The box runs from the lower quartile to the upper quartile, and a quarter of the data sits in each half of it, so the box holds the **middle half**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a half"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A half",
+        "A quarter",
+        "Three quarters",
+        "All of it"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "A box plot has lower quartile 9 and upper quartile 20. What is the interquartile range?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the IQR",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\text{IQR} = Q_3 - Q_1 = 20 - 9 = 11$.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11"
+        }
+      ],
+      "discriminators": [],
+      "answer": 11,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "A box plot runs from a minimum of 5 to a maximum of 26. What is the range?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the range",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$26 - 5 = 21$. The range is whisker tip to whisker tip.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "21"
+        }
+      ],
+      "discriminators": [],
+      "answer": 21,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Find the median of 15, 22, 12, 27, 18, 34, 20, 25, 15, 30, 24.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding the median",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Sorted: 12, 15, 15, 18, 20, 22, 24, 25, 27, 30, 34. Eleven values, so the median is the 6th: **22**. Taking the middle of the unsorted list gives 34, which is wrong.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sorts the data"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "22"
+        }
+      ],
+      "discriminators": [],
+      "answer": 22,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "The data 12, 15, 15, 18, 20, 22, 24, 25, 27, 30, 34 is in order. What is the upper quartile?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding a quartile",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Eleven values with the median at the 6th. The upper half is the five above it: 24, 25, 27, 30, 34. Its median is the 3rd of those, **27**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "takes the five values above the median"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "27"
+        }
+      ],
+      "discriminators": [],
+      "answer": 27,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "The data 14, 18, 20, 22, 23, 24, 26, 27, 28, 29, 31, 38 is in order. What is the median?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding the median",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Twelve values, so the median is the mean of the 6th and 7th: $\\frac{24 + 26}{2} = 25$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "averages the 6th and 7th values"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25"
+        }
+      ],
+      "discriminators": [],
+      "answer": 25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "The data 14, 18, 20, 22, 23, 24, 26, 27, 28, 29, 31, 38 is in order. What is the lower quartile?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding a quartile",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Twelve values, so the lower half is the first six: 14, 18, 20, 22, 23, 24. Its median is $\\frac{20 + 22}{2} = 21$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "takes the lower six values"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "21"
+        }
+      ],
+      "discriminators": [],
+      "answer": 21,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "What must you do to a list of data before finding its median or quartiles?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "preparing the data",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Put it in order.** The median and quartiles are positions in the **sorted** list; taking the middle of an unsorted list gives a meaningless answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sort it"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "sort it",
+        "put it in order",
+        "order it",
+        "sort the data",
+        "put the data in order",
+        "arrange in order"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A box plot summarises the marks of 40 students. The upper quartile is 20. How many students scored more than 20?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "proportions from a box plot",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "A quarter of the data lies above the upper quartile, and $25\\%$ of 40 is **10** students.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 25% above the upper quartile"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Class A has median 22 and IQR 12. Class B has median 25 and IQR 7.5. Which pair of statements fully answers \"compare the two classes\"?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing distributions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A full comparison has a statement about **average** and one about **spread**, each **interpreted in context**. Only the first does that. The second just reads numbers off; the third compares but says \"better\" for a smaller IQR, which means *more consistent*, not better; the fourth claims a **count** from a plot that shows only **proportions**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "average and spread, each interpreted in context"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "B’s median is higher so B did better on average, and B’s IQR is smaller so B was more consistent",
+        "B’s median is 25 and B’s IQR is 7.5, so B is the better class",
+        "B’s median is higher and B’s IQR is smaller, so B is better in both ways",
+        "A’s range is larger, so A has more students who scored very high marks"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "One student in a class scores far higher than everyone else. Which measures does this outlier change?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the effect of an outlier",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **range** uses the maximum directly, and the **mean** adds every value in, so both move. The **median** is a position, and the **IQR** ignores the top quarter entirely, so neither is affected. That is why the median and IQR are preferred when outliers are possible.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "range and mean change; median and IQR do not"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The range and the mean, but not the median or IQR",
+        "The median and IQR, but not the range or mean",
+        "All four measures equally",
+        "None of them, because one value cannot matter"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Two box plots look identical. A student says the two groups must contain the same number of people. Why is this wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what a box plot hides",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A box plot is built from five values that mark the **quarters** of the data. Twelve people and twelve thousand can produce the same five numbers. The plot shows **where** the data lies, never **how much** of it there is.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the plot shows proportions, not counts"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "A box plot shows proportions of the data, not how many values there are",
+        "Box plots are always drawn for exactly 100 values",
+        "The groups must have different sizes for the plots to match",
+        "The whiskers would be different lengths for different group sizes"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A box plot has its median close to the lower quartile and a long whisker on the right. What does this show?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading shape",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Half the data is squeezed into the short left part, so the values are **bunched at the low end**, and the long right whisker is a **tail of high values**. That is **positive skew**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "positive skew"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Positive skew: most values are low, with a tail of high ones",
+        "Negative skew: most values are high, with a tail of low ones",
+        "The data is symmetrical about the median",
+        "The data contains no values above the upper quartile"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A student finds the quartiles of 11 values by including the median in both halves. What happens?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "odd and even counts",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With 11 values the halves should hold **five** each, the median left out. Including it makes six-value halves, so each quartile becomes the mean of two values instead of a single one and moves by half a place — typically enough to lose the mark.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the quartiles shift by half a place"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "Each half has six values, and each quartile shifts by half a place",
+        "Nothing changes, because the median is in the middle",
+        "The quartiles come out equal to the median",
+        "The interquartile range becomes zero"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A box plot summarises 200 delivery times. The lower quartile is 18 minutes and the upper quartile is 31 minutes. How many deliveries took between 18 and 31 minutes?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "proportions from a box plot",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Between the quartiles is the **box**, which holds the middle **50%** of the data. Half of 200 is **100** deliveries. The plot cannot say which ones — only how many.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 50% inside the box"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "100"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 100,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain how to find the five-number summary of a list of data, how each part of a box plot is drawn from it, and why the interquartile range is usually preferred to the range as a measure of spread.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "box plots",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The five-number summary is the **minimum**, the **lower quartile**, the **median**, the **upper quartile** and the **maximum**.\n\nEverything starts with **sorting the data**. The median and the quartiles are positions in the ordered list, so nothing can be found until it is in order.\n\nThe **median** is the middle value. With an **odd** number of values it is the single value in the middle; with an **even** number it is the mean of the two middle values. For 12, 15, 15, 18, 20, 22, 24, 25, 27, 30, 34 there are 11 values, so the median is the 6th, which is 22.\n\nEach **quartile is the median of the half on its side**. The lower quartile is the median of the values below the overall median, and the upper quartile is the median of the values above it. When the count is **odd**, the median itself is **left out** of both halves, so each half of the 11 values contains five: 12, 15, 15, 18, 20 gives a lower quartile of 15, and 24, 25, 27, 30, 34 gives an upper quartile of 27. When the count is **even**, the halves are simply the two halves of the list. Getting this odd/even detail wrong shifts a quartile by half a place.\n\nThe **box plot** is drawn from those five numbers on a scale. The **box** runs from the lower quartile to the upper quartile. A **line inside the box** marks the median. The **whiskers** extend from each end of the box to the minimum and the maximum.\n\nBecause each of the four sections holds a **quarter of the data**, the box contains the **middle 50%**, and its width is the **interquartile range**, $Q_3 - Q_1 = 27 - 15 = 12$ here.\n\nThe **range** is the maximum minus the minimum, $34 - 12 = 22$. It uses only the two most extreme values, so a **single unusual result** — one student who had a very bad or very good day — can change it completely. The **interquartile range** ignores the lowest quarter and the highest quarter altogether, so an outlier at either end has no effect on it whatsoever. The IQR therefore describes the spread of the **typical** data rather than the spread of its two most unusual points, which is why it is the measure normally preferred, and why it pairs naturally with the median, which is unaffected by outliers for the same reason.",
+      "markScheme": [
+        {
+          "code": "B3",
+          "marks": 3,
+          "description": "finding the five numbers"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "drawing the plot"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "IQR versus range"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains that the data is sorted first, and how the median and quartiles are found, including the odd/even difference.",
+          "marks": 3
+        },
+        {
+          "text": "Describes how the box, median line and whiskers are drawn from the five numbers.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that the IQR ignores the extremes, so an outlier cannot affect it, unlike the range.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "The five-number summary is the **minimum**, the **lower quartile**, the **median**, the **upper quartile** and the **maximum**.\n\nEverything starts with **sorting the data**. The median and the quartiles are positions in the ordered list, so nothing can be found until it is in order.\n\nThe **median** is the middle value. With an **odd** number of values it is the single value in the middle; with an **even** number it is the mean of the two middle values. For 12, 15, 15, 18, 20, 22, 24, 25, 27, 30, 34 there are 11 values, so the median is the 6th, which is 22.\n\nEach **quartile is the median of the half on its side**. The lower quartile is the median of the values below the overall median, and the upper quartile is the median of the values above it. When the count is **odd**, the median itself is **left out** of both halves, so each half of the 11 values contains five: 12, 15, 15, 18, 20 gives a lower quartile of 15, and 24, 25, 27, 30, 34 gives an upper quartile of 27. When the count is **even**, the halves are simply the two halves of the list. Getting this odd/even detail wrong shifts a quartile by half a place.\n\nThe **box plot** is drawn from those five numbers on a scale. The **box** runs from the lower quartile to the upper quartile. A **line inside the box** marks the median. The **whiskers** extend from each end of the box to the minimum and the maximum.\n\nBecause each of the four sections holds a **quarter of the data**, the box contains the **middle 50%**, and its width is the **interquartile range**, $Q_3 - Q_1 = 27 - 15 = 12$ here.\n\nThe **range** is the maximum minus the minimum, $34 - 12 = 22$. It uses only the two most extreme values, so a **single unusual result** — one student who had a very bad or very good day — can change it completely. The **interquartile range** ignores the lowest quarter and the highest quarter altogether, so an outlier at either end has no effect on it whatsoever. The IQR therefore describes the spread of the **typical** data rather than the spread of its two most unusual points, which is why it is the measure normally preferred, and why it pairs naturally with the median, which is unaffected by outliers for the same reason."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Class A’s test marks have median 22 and interquartile range 12. Class B’s have median 25 and interquartile range 7.5. Both classes sat the same test. Compare the two classes, and explain what a box plot of each class could and could not tell you about how many students scored over 30.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "comparing distributions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A comparison of two distributions needs two things: a statement about **average** and a statement about **spread**, each interpreted in the context of the question.\n\n**Average.** Class B’s median is 25 and Class A’s is 22. B’s median is **higher**, so **on average, Class B scored better on the test**. Simply writing that B’s median is 25 would be a reading, not a comparison, and would earn nothing; the mark is for saying what the difference means.\n\n**Spread.** Class B’s interquartile range is 7.5 and Class A’s is 12. B’s IQR is **smaller**, so the middle half of B’s marks are bunched more tightly together: **Class B’s marks were more consistent**. It is important to say *more consistent* rather than *better*. A smaller spread is not a good thing in itself — it means the class performed more uniformly, which may or may not be what a teacher wants. Here it means fewer very low marks in B, but also fewer very high ones relative to their median.\n\nPutting the two together: Class B did better on average and more consistently than Class A.\n\n**What a box plot could tell you about scoring over 30.** A box plot is drawn from the five-number summary, and each section of it holds a **quarter of the data**. So if 30 happened to be one of the plotted values — say Class A’s upper quartile — the plot would say that **25% of Class A** scored above 30. It would also show whether **anyone** in each class scored over 30 at all, from where the maximum whisker ends. Those are statements about **proportions**.\n\n**What it could not tell you** is **how many** students that is. The plot has no scale for the number of values; two classes of 12 and 120 could produce identical plots. To turn 25% into a count you would need to know the **size of the class**, which is not on the diagram. Nor could it tell you how many scored over 30 if 30 fell somewhere inside a section, because within a quarter the individual values are not shown at all.\n\nSo from the plots alone the honest claim is that *a larger proportion* of one class scored over 30, never that *more students* did.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "medians compared in context"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "IQRs compared as consistency"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "proportions, not counts"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "what the plot can say"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Compares the medians and interprets the result in context.",
+          "marks": 2
+        },
+        {
+          "text": "Compares the IQRs and interprets the result as consistency, not as better.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that a box plot shows proportions, so a count needs the class size.",
+          "marks": 2
+        },
+        {
+          "text": "Notes what could be said: the proportion above the upper quartile, or the maximum reached.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "A comparison of two distributions needs two things: a statement about **average** and a statement about **spread**, each interpreted in the context of the question.\n\n**Average.** Class B’s median is 25 and Class A’s is 22. B’s median is **higher**, so **on average, Class B scored better on the test**. Simply writing that B’s median is 25 would be a reading, not a comparison, and would earn nothing; the mark is for saying what the difference means.\n\n**Spread.** Class B’s interquartile range is 7.5 and Class A’s is 12. B’s IQR is **smaller**, so the middle half of B’s marks are bunched more tightly together: **Class B’s marks were more consistent**. It is important to say *more consistent* rather than *better*. A smaller spread is not a good thing in itself — it means the class performed more uniformly, which may or may not be what a teacher wants. Here it means fewer very low marks in B, but also fewer very high ones relative to their median.\n\nPutting the two together: Class B did better on average and more consistently than Class A.\n\n**What a box plot could tell you about scoring over 30.** A box plot is drawn from the five-number summary, and each section of it holds a **quarter of the data**. So if 30 happened to be one of the plotted values — say Class A’s upper quartile — the plot would say that **25% of Class A** scored above 30. It would also show whether **anyone** in each class scored over 30 at all, from where the maximum whisker ends. Those are statements about **proportions**.\n\n**What it could not tell you** is **how many** students that is. The plot has no scale for the number of values; two classes of 12 and 120 could produce identical plots. To turn 25% into a count you would need to know the **size of the class**, which is not on the diagram. Nor could it tell you how many scored over 30 if 30 fell somewhere inside a section, because within a quarter the individual values are not shown at all.\n\nSo from the plots alone the honest claim is that *a larger proportion* of one class scored over 30, never that *more students* did."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Sort the data, find the median, then take the median of each half** — leaving the median out of both halves when the count is odd.\n\nA *compare* question wants **two** sentences: **medians** for average and **IQRs** for spread, each saying what it means **in context**. Reading a number off is not a comparison, and a smaller IQR means **more consistent**, not better.",
+    "examinerErrors": [
+      "Finding the median of the list **as given**, without sorting it.",
+      "Including the median in both halves when the count is **odd**.",
+      "Reading off two numbers instead of **comparing** them.",
+      "Comparing without saying what it means **in context**.",
+      "Calling a smaller IQR \"better\" rather than **more consistent**.",
+      "Claiming **how many** people from a plot that shows only **proportions**.",
+      "Using the range when an **outlier** makes the IQR the right choice.",
+      "Confusing the **box width** (IQR) with the whisker span (range)."
+    ],
+    "grade9Looks": "A grade 9 answer **sorts first**, handles the **odd/even** difference correctly, and gives quartiles as decimals when that is what the halves produce. On a *compare* question it writes exactly **two interpreted sentences** — average from the medians, spread from the IQRs — and says *more consistent* rather than *better*. It knows the plot shows **proportions, not counts**, so it claims a *larger proportion* rather than *more people* unless the group size is given. It prefers the **IQR** when an outlier is possible and can say why, and it reads **skew** from where the median sits in its box."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

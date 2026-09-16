@@ -44,6 +44,8 @@ import { LensDiagram } from './LensDiagram.tsx'
 import { LogicCircuit } from './LogicCircuit.tsx'
 import { VectorFigure } from './VectorFigure.tsx'
 import { Cuboid } from './Cuboid.tsx'
+import { BoxPlot } from './BoxPlot.tsx'
+import { CumulativeFrequency } from './CumulativeFrequency.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -96,6 +98,8 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'venn-diagram': VennDiagram,
   'probability-tree': ProbabilityTree,
   'histogram': Histogram,
+  'box-plot': BoxPlot,
+  'cumulative-frequency': CumulativeFrequency,
 }
 
 export const INK = '#1e2330'
