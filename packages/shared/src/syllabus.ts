@@ -35,7 +35,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Arithmetic and quadratic sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
       { title: 'Graphs of rates of change', topicId: 'rate-of-change-and-real-life-graphs' },
       { title: 'Compound units: speed and density', topicId: 'compound-measures' },
-      { title: 'Sectors, cylinders and spheres' },
+      // Cylinders and spheres are taught by Surface areas and volumes (G16, G17).
+      // The uncovered half of this row was G18, arcs and sectors, so it links there.
+      { title: 'Sectors, cylinders and spheres', topicId: 'arc-length-and-sector-area' },
       { title: 'Limits of accuracy and bounds', topicId: 'limits-of-accuracy-and-bounds' },
       { title: 'Fractions, decimals and percentages' },
       // Successive change, the multiplier and reverse percentages are all taught by the
@@ -59,8 +61,8 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     { year: 9, term: 'Summer', topics: [
       { title: 'Congruent triangles', topicId: 'congruency' },
       { title: 'Similarity', topicId: 'similarity-and-linear-scale-factors' },
-      { title: 'Pythagoras' },
-      { title: 'Trigonometric ratios' },
+      { title: 'Pythagoras', topicId: 'pythagoras-in-2d' },
+      { title: 'Trigonometric ratios', topicId: 'trigonometric-ratios' },
       { title: 'Simplifying and expanding expressions', topicId: 'simplifying-and-expanding-expressions' },
       { title: 'Solving quadratics by factorising', topicId: 'solving-quadratic-equations' },
       { title: 'Changing the subject of a formula', topicId: 'identities-and-rearranging-formulae' },

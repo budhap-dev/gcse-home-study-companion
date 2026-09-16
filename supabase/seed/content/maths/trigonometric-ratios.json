@@ -1,0 +1,1255 @@
+{
+  "id": "trigonometric-ratios",
+  "subjectId": "maths",
+  "unitId": "geometry-and-measures",
+  "title": "Trigonometric ratios",
+  "specPoints": [
+    "G20"
+  ],
+  "order": 21,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "SOH CAH TOA",
+      "body": "$\\sin = \\frac{O}{H}$, $\\cos = \\frac{A}{H}$, $\\tan = \\frac{O}{A}$. **Label the sides first** — opposite, adjacent, hypotenuse — then pick the ratio that uses the two sides you care about and ignore the third."
+    },
+    {
+      "kind": "spot",
+      "title": "Label from the angle, not from the page",
+      "body": "**Opposite** and **adjacent** swap over depending on which angle you are working from. The **hypotenuse** never moves — it is always opposite the right angle. Label the hypotenuse first, then the opposite, and whatever is left is the adjacent."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Finding an angle means an inverse",
+      "body": "If the **angle** is missing, use $\\sin^{-1}$, $\\cos^{-1}$ or $\\tan^{-1}$ — the **shift** key on the calculator. Pressing plain $\\sin$ on a ratio gives a meaningless number, which is the usual sign this step was missed."
+    },
+    {
+      "kind": "check",
+      "title": "Is the answer a sensible size?",
+      "body": "The **hypotenuse must be the longest side**, and an angle in a right-angled triangle must be **under 90°**. If a side comes out longer than the hypotenuse, the ratio was used upside down."
+    },
+    {
+      "kind": "spot",
+      "title": "Is the unknown on the top or the bottom?",
+      "body": "If the unknown is on **top**, multiply: $O = H \\sin\\theta$. If it is on the **bottom**, divide: $H = \\frac{O}{\\sin\\theta}$. Multiplying when you should divide is the most common slip, and it always makes the answer too small."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Labelling the sides",
+        "body": "**In a right-angled triangle, the three sides are named relative to the angle you are working from.**\n\n- **Hypotenuse** — opposite the **right angle**. Always the longest side, and it **never changes**.\n- **Opposite** — opposite the **angle you are using**.\n- **Adjacent** — the remaining side, next to the angle.\n\n**Label the hypotenuse first.** It is fixed, so it is the safe starting point. Then find the angle in question, look straight across from it for the **opposite**, and whatever side is left is the **adjacent**.\n\n**Opposite and adjacent swap when you change angle.** A triangle has two acute angles, and a side that is opposite one of them is adjacent to the other. That is not a trick — it is the definition — but it is where most labelling errors come from.\n\nThe three ratios are\n\n$$\\sin\\theta = \\frac{O}{H} \\qquad \\cos\\theta = \\frac{A}{H} \\qquad \\tan\\theta = \\frac{O}{A}$$\n\nremembered as **SOH CAH TOA**.\n\n**Choosing a ratio is mechanical**: mark the side you know and the side you want, then pick the ratio that contains both. The third side is irrelevant, and you never need it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "SOH",
+                  "equation": "sin θ = opposite / hypotenuse",
+                  "units": "the two sides not touching the angle... except the hypotenuse"
+                },
+                {
+                  "name": "CAH",
+                  "equation": "cos θ = adjacent / hypotenuse",
+                  "units": "the two sides that touch the angle"
+                },
+                {
+                  "name": "TOA",
+                  "equation": "tan θ = opposite / adjacent",
+                  "units": "the two shorter sides; no hypotenuse"
+                }
+              ]
+            },
+            "alt": "An equation card for the three trigonometric ratios"
+          },
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Labelling, in order",
+              "boxes": [
+                {
+                  "title": "1. Hypotenuse",
+                  "points": [
+                    "opposite the right angle",
+                    "never changes"
+                  ]
+                },
+                {
+                  "title": "2. Opposite",
+                  "points": [
+                    "opposite the angle you are using",
+                    "moves if you change angle"
+                  ]
+                },
+                {
+                  "title": "3. Adjacent",
+                  "points": [
+                    "the side that is left",
+                    "next to the angle"
+                  ]
+                },
+                {
+                  "title": "4. Pick the ratio",
+                  "points": [
+                    "mark what you know and what you want",
+                    "choose the ratio holding both"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box routine for labelling a triangle and choosing a ratio"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which side never changes, whichever angle you work from?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "labelling sides",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The **hypotenuse** is defined by the **right angle**, not by the angle you are using, so it stays put. Opposite and adjacent swap when you switch to the other acute angle.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the hypotenuse"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The hypotenuse",
+            "The opposite",
+            "The adjacent",
+            "They all change"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Finding a side",
+        "body": "**Label, choose the ratio, then look at where the unknown sits.**\n\n- Unknown on **top** → **multiply**.\n- Unknown on the **bottom** → **divide**.\n\nThat single distinction accounts for most of the marks lost on this topic, and it is worth writing the rearranged formula down before reaching for the calculator.\n\n**Make sure the calculator is in degrees.** A calculator in radians gives wrong answers that look entirely plausible, with no error message.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A right-angled triangle has hypotenuse 12 cm and an angle of 35°. Find the side opposite that angle, to 2 decimal places.",
+            "steps": [
+              {
+                "text": "Known: **hypotenuse** 12. Wanted: **opposite**",
+                "note": "label the hypotenuse first, then look across from the 35° angle"
+              },
+              {
+                "text": "O and H together means **SOH**: $\\sin 35° = \\frac{O}{12}$",
+                "note": "the adjacent side is not needed at all"
+              },
+              {
+                "text": "The unknown is on **top**, so **multiply**: $O = 12 \\sin 35°$",
+                "note": "write the rearrangement before calculating"
+              },
+              {
+                "text": "$= 6.88$ cm (2 d.p.)",
+                "note": "check the calculator is in degrees, not radians"
+              },
+              {
+                "text": "Check: 6.88 is less than the hypotenuse 12 ✓",
+                "note": "no side can beat the hypotenuse"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "The side opposite a 40° angle is 9 cm. Find the hypotenuse, to 2 decimal places.",
+            "steps": [
+              {
+                "text": "Known: **opposite** 9. Wanted: **hypotenuse**",
+                "note": "O and H again, so SOH again"
+              },
+              {
+                "text": "$\\sin 40° = \\frac{9}{H}$",
+                "note": "this time the unknown is underneath"
+              },
+              {
+                "text": "The unknown is on the **bottom**, so **divide**: $H = \\frac{9}{\\sin 40°}$",
+                "note": "multiplying here would give 5.79, which is smaller than the opposite side and impossible"
+              },
+              {
+                "text": "$= 14.00$ cm (2 d.p.)",
+                "note": "dividing by a sine, which is under 1, makes the answer bigger"
+              },
+              {
+                "text": "Check: 14.00 is bigger than 9 ✓",
+                "note": "the hypotenuse must be the longest side"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A right-angled triangle has an angle of 28° with an adjacent side of 8 cm. Find the opposite side, to 2 decimal places.",
+            "steps": [
+              {
+                "text": "Known: **adjacent** 8. Wanted: **opposite**",
+                "note": "no hypotenuse involved"
+              },
+              {
+                "text": "O and A together means **TOA**: $\\tan 28° = \\frac{O}{8}$",
+                "note": "tan is the ratio that avoids the hypotenuse entirely"
+              },
+              {
+                "text": "Unknown on **top**, so **multiply**: $O = 8 \\tan 28° = 4.25$ cm",
+                "note": "under 45° means tan is under 1, so the answer should be smaller than 8"
+              },
+              {
+                "text": "Check: 4.25 is indeed less than 8 ✓",
+                "note": "a quick sanity check on the size"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A right-angled triangle has hypotenuse 12 cm and an angle of 35°. Find the opposite side in cm, to 2 decimal places.",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "finding a side",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "O and H means **SOH**: $\\sin 35° = \\frac{O}{12}$. The unknown is on top, so multiply: $O = 12 \\sin 35° = 6.88$ cm.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses 12 sin 35"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "6.88"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6.88,
+          "tolerance": 0.01,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Finding an angle",
+        "body": "**When the angle is what is missing, you know two sides.** Form the ratio, then undo it with an **inverse** function — $\\sin^{-1}$, $\\cos^{-1}$ or $\\tan^{-1}$, reached with the **shift** key.\n\nPressing plain $\\sin$ on a ratio is the classic error. It returns a small decimal rather than an angle, and the giveaway is an \"angle\" like 0.38.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A right-angled triangle has hypotenuse 13 cm and an opposite side of 5 cm. Find the angle, to 1 decimal place.",
+            "steps": [
+              {
+                "text": "O and H are known, so **SOH**: $\\sin\\theta = \\frac{5}{13}$",
+                "note": "form the fraction first, and keep it exact"
+              },
+              {
+                "text": "$\\frac{5}{13} = 0.3846...$",
+                "note": "this is the ratio, not the angle"
+              },
+              {
+                "text": "Undo the sine: $\\theta = \\sin^{-1}(0.3846...) = 22.6°$",
+                "note": "shift then sin; without it you would get 0.0067"
+              },
+              {
+                "text": "Check: $13 \\sin 22.6° = 5$ ✓",
+                "note": "running it forwards rebuilds the side you started with"
+              },
+              {
+                "text": "And 22.6° is under 90° ✓",
+                "note": "every angle in a right-angled triangle other than the right angle must be"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A right-angled triangle has an opposite side of 7 cm and an adjacent side of 10 cm. Find the angle, to 1 decimal place.",
+            "steps": [
+              {
+                "text": "O and A are known, so **TOA**: $\\tan\\theta = \\frac{7}{10}$",
+                "note": "no hypotenuse needed, and none given"
+              },
+              {
+                "text": "$\\theta = \\tan^{-1}(0.7) = 35.0°$",
+                "note": "the ratio is under 1, so the angle is under 45°"
+              },
+              {
+                "text": "Check: $10 \\tan 35.0° = 7$ ✓",
+                "note": "it rebuilds the 7 cm side"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A right-angled triangle has an adjacent side of 6 cm and a hypotenuse of 11 cm. Find the angle, to 1 decimal place.",
+            "steps": [
+              {
+                "text": "A and H are known, so **CAH**: $\\cos\\theta = \\frac{6}{11}$",
+                "note": "the opposite side is neither known nor needed"
+              },
+              {
+                "text": "$\\theta = \\cos^{-1}(0.5454...) = 56.9°$",
+                "note": "keep the full fraction on the calculator rather than typing 0.55"
+              },
+              {
+                "text": "Check: $11 \\cos 56.9° = 6$ ✓",
+                "note": "back to the 6 cm adjacent side"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A right-angled triangle has an opposite side of 7 cm and an adjacent side of 10 cm. Find the angle in degrees, to 1 decimal place.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "finding an angle",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "O and A means **TOA**: $\\tan\\theta = \\frac{7}{10} = 0.7$, so $\\theta = \\tan^{-1}(0.7) = 35.0°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses tan⁻¹ of 7/10"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "35.0"
+            }
+          ],
+          "discriminators": [],
+          "answer": 35,
+          "tolerance": 0.1,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Why the ratios work at all",
+        "body": "**All right-angled triangles with the same angles are similar**, so their sides are in the same proportion however big they are. That is the whole reason a single number like $\\sin 35°$ can be useful — it is a **ratio**, and ratios do not care about size.\n\n**A triangle proves it.** Take the 3, 4, 5 triangle and find the angle opposite the side of 3 using each ratio in turn:\n\n- $\\tan^{-1}\\left(\\frac{3}{4}\\right) = 36.87°$\n- $\\sin^{-1}\\left(\\frac{3}{5}\\right) = 36.87°$\n- $\\cos^{-1}\\left(\\frac{4}{5}\\right) = 36.87°$\n\nAll three agree, because they describe the **same** angle from different pairs of sides. Any ratio you have the two sides for will do — so **choose the one using the sides you were given**, not the one you remember best.\n\n**Which explains a common piece of advice**: prefer the sides the question actually supplies over a side you worked out yourself. If your earlier answer was wrong, using it again carries the error forward; using the **given** sides keeps each part independent.\n\n**Two useful sanity checks fall out of the definitions.**\n\n- $\\sin$ and $\\cos$ are always **less than 1**, because the hypotenuse is the longest side and it is on the bottom. A ratio above 1 means the fraction was inverted.\n- $\\tan$ has **no such limit** — it passes 1 at 45° and grows without bound — because both sides in it are shorter sides.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Ratio",
+                "Fraction",
+                "Sides used",
+                "Can it exceed 1?"
+              ],
+              "rows": [
+                [
+                  "sin θ",
+                  "opposite / hypotenuse",
+                  "one short side and the longest",
+                  "no"
+                ],
+                [
+                  "cos θ",
+                  "adjacent / hypotenuse",
+                  "one short side and the longest",
+                  "no"
+                ],
+                [
+                  "tan θ",
+                  "opposite / adjacent",
+                  "the two short sides",
+                  "yes, above 45°"
+                ]
+              ],
+              "title": "A sine or cosine above 1 means the fraction is upside down"
+            },
+            "alt": "A table comparing the three ratios and their limits"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "A student calculates $\\sin\\theta = 1.4$. What does this tell you?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "checking a ratio",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Sine is **opposite ÷ hypotenuse**, and the hypotenuse is the **longest** side, so the fraction can never exceed 1. A value of 1.4 means the sides were divided the wrong way round.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the fraction is inverted"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "The fraction was written upside down",
+            "The angle is larger than 90 degrees",
+            "The calculator was set to radians",
+            "Nothing is wrong: sine can exceed 1"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Which side is the hypotenuse, and why does it never change?\n2. Write out SOH CAH TOA and say which two sides each ratio uses.\n3. A triangle has hypotenuse 12 cm and an angle of 35°. Find the opposite side.\n\n**Part B.**\n\n4. The side opposite a 40° angle is 9 cm. Find the hypotenuse.\n5. An angle of 28° has an adjacent side of 8 cm. Find the opposite side.\n6. A triangle has opposite 7 cm and adjacent 10 cm. Find the angle.\n\n**Part C.**\n\n7. A triangle has adjacent 6 cm and hypotenuse 11 cm. Find the angle.\n8. A ladder 6 m long rests with its foot 1.5 m from a wall. Find the angle it makes with the ground.\n9. A student gets $\\sin\\theta = 1.4$. Explain what has gone wrong without redoing the calculation.\n\nFor questions 4 and 5, decide whether the unknown is on the top or the bottom **before** you calculate.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Known",
+                "Wanted",
+                "Which ratio?",
+                "Multiply or divide?"
+              ],
+              "rows": [
+                [
+                  "hypotenuse 12, angle 35°",
+                  "opposite",
+                  "",
+                  ""
+                ],
+                [
+                  "opposite 9, angle 40°",
+                  "hypotenuse",
+                  "",
+                  ""
+                ],
+                [
+                  "adjacent 8, angle 28°",
+                  "opposite",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill both blank columns before touching a calculator"
+            },
+            "alt": "A blank table for choosing a ratio and an operation in three questions"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Label before you choose.** Hypotenuse first, because it is fixed by the **right angle**; then opposite, looking across from the angle in question; then adjacent, which is whatever remains. Opposite and adjacent **swap** if you switch to the other acute angle, and that swap is behind most wrong-ratio answers.\n\n**Top or bottom decides multiply or divide.** With the unknown on **top**, multiply: $O = H\\sin\\theta$. With it on the **bottom**, divide: $H = \\frac{O}{\\sin\\theta}$. Multiplying when you should divide always makes the answer **too small**, and if the result is smaller than a side it should exceed, that is the error.\n\n**Finding an angle needs an inverse.** $\\sin^{-1}$, $\\cos^{-1}$, $\\tan^{-1}$ — the shift key. An \"angle\" of 0.38 is the signature of pressing plain $\\sin$ on a ratio.\n\n**Check the calculator is in degrees.** Radians produce wrong answers with no warning and no error message. It is worth confirming before the first question of a paper, not after.\n\n**Sine and cosine can never exceed 1**, since the hypotenuse sits underneath and is the longest side. A value above 1 means the fraction is upside down. **Tangent has no such limit**, because it uses the two shorter sides — it reaches 1 at 45° and grows from there.\n\n**Prefer the sides you were given.** Any ratio containing your two known sides gives the same angle, so pick the one built from the **question's** numbers rather than from a value you worked out in an earlier part. If that earlier answer was wrong, reusing it carries the mistake forward; using the given sides keeps the parts independent.\n\n**Round only at the end, and only as asked.** Carry the full value through every intermediate step. Rounding an angle to 1 decimal place and then using it to find a side introduces an error the mark scheme will not allow.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students do",
+                "What is correct"
+              ],
+              "rows": [
+                [
+                  "unknown on the bottom",
+                  "multiplies by the ratio",
+                  "divides by the ratio"
+                ],
+                [
+                  "finding an angle",
+                  "presses sin instead of sin⁻¹",
+                  "uses the inverse, via shift"
+                ],
+                [
+                  "labelling",
+                  "keeps the labels when the angle changes",
+                  "relabels opposite and adjacent"
+                ],
+                [
+                  "calculator mode",
+                  "leaves it in radians",
+                  "checks degrees before starting"
+                ],
+                [
+                  "sin above 1",
+                  "writes it down anyway",
+                  "recognises an inverted fraction"
+                ],
+                [
+                  "multi-part questions",
+                  "reuses their own earlier answer",
+                  "uses the sides the question gave"
+                ],
+                [
+                  "rounding",
+                  "rounds the angle then uses it",
+                  "carries the full value through"
+                ]
+              ],
+              "title": "The first two rows account for most of the lost marks in this topic"
+            },
+            "alt": "A table of common errors in trigonometry questions"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Hypotenuse**: opposite the **right angle**, always longest, **never changes**.\n- **Opposite**: across from the angle you are using. **Adjacent**: the side left over.\n- Opposite and adjacent **swap** if you work from the other acute angle.\n- **SOH CAH TOA**: $\\sin = \\frac{O}{H}$, $\\cos = \\frac{A}{H}$, $\\tan = \\frac{O}{A}$.\n- Choose the ratio containing the side you **know** and the side you **want**.\n- Unknown on **top** → **multiply**. Unknown on the **bottom** → **divide**.\n- Multiplying instead of dividing always makes the answer **too small**.\n- Finding an **angle** needs an **inverse**: $\\sin^{-1}$, $\\cos^{-1}$, $\\tan^{-1}$, via **shift**.\n- An \"angle\" like 0.38 means plain sine was pressed instead of the inverse.\n- Check the calculator is in **degrees**; radians fail silently.\n- $\\sin$ and $\\cos$ are **never above 1**; a larger value means an inverted fraction.\n- $\\tan$ has **no upper limit**, passing 1 at 45°.\n- All three ratios give the **same angle**, so use the sides the question **gave you**.\n- The hypotenuse must be the **longest** side, and each other angle **under 90°**.\n- **Round once, at the end** — never round an angle and then use it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Hypotenuse",
+                  "opposite the right angle; never moves"
+                ],
+                [
+                  "Opposite",
+                  "across from the angle in use"
+                ],
+                [
+                  "Adjacent",
+                  "the side that is left"
+                ],
+                [
+                  "SOH",
+                  "sin = opposite / hypotenuse"
+                ],
+                [
+                  "CAH",
+                  "cos = adjacent / hypotenuse"
+                ],
+                [
+                  "TOA",
+                  "tan = opposite / adjacent"
+                ],
+                [
+                  "Unknown on top",
+                  "multiply"
+                ],
+                [
+                  "Unknown on the bottom",
+                  "divide"
+                ],
+                [
+                  "Missing angle",
+                  "use the inverse, via shift"
+                ],
+                [
+                  "An angle of 0.38",
+                  "plain sin was pressed, not sin⁻¹"
+                ],
+                [
+                  "Calculator mode",
+                  "degrees, not radians"
+                ],
+                [
+                  "sin or cos above 1",
+                  "the fraction is upside down"
+                ],
+                [
+                  "tan above 1",
+                  "normal, for angles over 45°"
+                ],
+                [
+                  "Multi-part questions",
+                  "use the given sides, not your own answer"
+                ],
+                [
+                  "Rounding",
+                  "once, at the end"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of the trigonometric ratios"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which side is the hypotenuse?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "labelling sides",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The hypotenuse is opposite the **right angle**, so it is fixed no matter which acute angle you work from. The side opposite the angle in use is the **opposite**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "opposite the right angle"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The side opposite the right angle",
+        "The side opposite the angle you are using",
+        "The side next to the angle you are using",
+        "The shortest side of the triangle"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which ratio is $\\frac{\\text{opposite}}{\\text{adjacent}}$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the three ratios",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**TOA**: $\\tan\\theta = \\frac{O}{A}$. It is the only ratio that does not involve the hypotenuse.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "tan"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "tan",
+        "sin",
+        "cos",
+        "none of them"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "A right-angled triangle has hypotenuse 12 cm and an angle of 35°. Find the side opposite that angle, in cm to 2 decimal places.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "finding a side",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "O and H means **SOH**: $\\sin 35° = \\frac{O}{12}$. The unknown is on top, so multiply: $O = 12 \\sin 35° = 6.88$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 12 sin 35"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6.88"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6.88,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "You know the adjacent side and the hypotenuse. Which ratio should you use?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing a ratio",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**CAH**: $\\cos\\theta = \\frac{A}{H}$ is the ratio built from the adjacent and the hypotenuse. Pick the ratio containing the two sides you have.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "cos"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "cos",
+        "sin",
+        "tan",
+        "any of them"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "The side opposite a 40° angle is 9 cm. Find the hypotenuse, in cm to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "finding a side",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\sin 40° = \\frac{9}{H}$. The unknown is on the **bottom**, so **divide**: $H = \\frac{9}{\\sin 40°} = 14.00$ cm. Multiplying instead would give 5.79, smaller than the opposite side and therefore impossible.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "forms sin 40 = 9/H"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides rather than multiplies"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14.00"
+        }
+      ],
+      "discriminators": [],
+      "answer": 14,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A right-angled triangle has an angle of 28° with an adjacent side of 8 cm. Find the opposite side, in cm to 2 decimal places.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding a side",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "O and A means **TOA**: $\\tan 28° = \\frac{O}{8}$, so $O = 8\\tan 28° = 4.25$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 8 tan 28"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4.25"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4.25,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A right-angled triangle has an opposite side of 7 cm and an adjacent side of 10 cm. Find the angle, in degrees to 1 decimal place.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding an angle",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "**TOA**: $\\tan\\theta = \\frac{7}{10} = 0.7$, so $\\theta = \\tan^{-1}(0.7) = 35.0°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses tan⁻¹"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "35.0"
+        }
+      ],
+      "discriminators": [],
+      "answer": 35,
+      "tolerance": 0.1,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A right-angled triangle has hypotenuse 13 cm and an opposite side of 5 cm. Find the angle, in degrees to 1 decimal place.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding an angle",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "**SOH**: $\\sin\\theta = \\frac{5}{13}$, so $\\theta = \\sin^{-1}\\left(\\frac{5}{13}\\right) = 22.6°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses sin⁻¹ of 5/13"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "22.6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 22.6,
+      "tolerance": 0.1,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "When the unknown side is on the bottom of the fraction, do you multiply or divide?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "rearranging",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Divide.** From $\\sin\\theta = \\frac{O}{H}$ you get $H = \\frac{O}{\\sin\\theta}$. Multiplying instead always makes the answer too small.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "divide"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "divide",
+        "division",
+        "you divide",
+        "divide by the ratio"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A right-angled triangle has an adjacent side of 6 cm and a hypotenuse of 11 cm. Find the angle, in degrees to 1 decimal place.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding an angle",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "**CAH**: $\\cos\\theta = \\frac{6}{11}$, so $\\theta = \\cos^{-1}\\left(\\frac{6}{11}\\right) = 56.9°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses cos⁻¹ of 6/11"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "56.9"
+        }
+      ],
+      "discriminators": [],
+      "answer": 56.9,
+      "tolerance": 0.1,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A student calculates $\\sin\\theta = 1.4$. What has gone wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "checking a ratio",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sine is **opposite ÷ hypotenuse**, and the hypotenuse is the **longest** side, so the fraction can never exceed 1. A value of 1.4 means the two sides were divided the wrong way round.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the fraction is inverted"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The fraction was written upside down",
+        "The angle must be obtuse",
+        "The calculator was in degrees rather than radians",
+        "Nothing: sine can be greater than 1"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A student finds an \"angle\" of 0.38 degrees. What did they most likely do?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "diagnosing an error",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Finding an angle needs the **inverse** function, reached with **shift**. Pressing plain $\\sin$ on a ratio returns another small decimal rather than an angle, and a result under 1° is the usual giveaway.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "pressed sin instead of the inverse"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Pressed sin instead of sin⁻¹",
+        "Used the wrong two sides in the fraction",
+        "Rounded to too few decimal places",
+        "Used tan where cos was needed"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A ladder 6 m long rests against a wall with its foot 1.5 m from the base. Find the angle between the ladder and the ground, in degrees to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "trigonometry in context",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The **ladder** is the hypotenuse and the 1.5 m along the ground is **adjacent** to the angle being asked for. A and H means **CAH**: $\\cos\\theta = \\frac{1.5}{6} = 0.25$, so $\\theta = \\cos^{-1}(0.25) = 75.5°$. A steep ladder should give a large angle, and it does.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the ladder as the hypotenuse"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses cos⁻¹ of 1.5/6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "75.5"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 75.5,
+      "tolerance": 0.1,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why can tan be greater than 1 when sin and cos cannot?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why the limits differ",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sine and cosine both have the **hypotenuse** underneath, and it is the longest side, so those fractions stay below 1. Tangent is **opposite ÷ adjacent** — two shorter sides — and either may be the larger, so it passes 1 at 45° and grows without limit.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "tan uses two shorter sides"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Tan divides two shorter sides, neither of which must be larger",
+        "Tan is measured in different units from sin and cos",
+        "Tan only applies to angles above 45 degrees",
+        "Sin and cos can exceed 1 for obtuse angles"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "In part (b) of a question you need a side you calculated in part (a). What is the safer approach?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "independent working",
+      "calculator": "either",
+      "tags": [],
+      "solution": "All three ratios give the **same** angle, so if a ratio exists that uses only the **given** sides, prefer it. Reusing your own earlier answer carries any error in part (a) forward into part (b); working from the question's own numbers keeps the parts independent.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "use the given sides where a ratio allows"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Use the sides the question gave, if a ratio allows it",
+        "Always reuse the part (a) answer, rounded to 1 decimal place",
+        "Use whichever ratio you remember most easily",
+        "Recalculate part (a) with a different ratio first"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A triangle has hypotenuse 10 cm. A student calculates an opposite side of 14 cm. What went wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "checking an answer",
+      "calculator": "either",
+      "tags": [],
+      "solution": "No side can exceed the **hypotenuse**, so 14 cm against a hypotenuse of 10 cm is impossible on sight. That happens when the ratio is used upside down or the operation reversed. The check costs a second and needs no recalculation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the ratio was used the wrong way round"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "They multiplied where they should have divided, or inverted the ratio",
+        "They used degrees when radians were needed",
+        "They used sin where cos was required",
+        "Nothing: the opposite side can exceed the hypotenuse"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain how to label the sides of a right-angled triangle, how to choose which trigonometric ratio to use, and how to decide whether to multiply or divide.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "trigonometric ratios",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The three sides are named **relative to the angle being used**, so labelling has to come first.\n\nStart with the **hypotenuse**, because it is the only one that is fixed: it is the side **opposite the right angle**, and it is always the longest. It does not change no matter which acute angle you work from, which makes it the safe place to begin.\n\nThen find the angle the question is about and look **straight across** from it — that side is the **opposite**. Whatever side remains is the **adjacent**, the one lying alongside the angle.\n\nAn important consequence: **opposite and adjacent swap over** if you switch to the other acute angle, because a side opposite one acute angle is adjacent to the other. The hypotenuse stays where it is. Forgetting to relabel when moving between parts of a question is a very common source of wrong-ratio answers.\n\nThe three ratios are remembered as **SOH CAH TOA**:\n\n$$\\sin\\theta = \\frac{O}{H} \\qquad \\cos\\theta = \\frac{A}{H} \\qquad \\tan\\theta = \\frac{O}{A}$$\n\n**Choosing between them is mechanical.** Mark the side you **know** and the side you **want**, then pick the ratio containing **both**. The third side plays no part and never needs to be found. For a known hypotenuse and a wanted opposite, that is $\\sin$; for two shorter sides, $\\tan$, which avoids the hypotenuse entirely.\n\nThe last decision is **multiply or divide**, and it depends on where the unknown sits in the fraction.\n\nIf the unknown is on **top**, multiply. From $\\sin\\theta = \\frac{O}{H}$ with $H$ known, $O = H\\sin\\theta$. With a hypotenuse of 12 and an angle of 35°, $O = 12\\sin 35° = 6.88$.\n\nIf the unknown is on the **bottom**, divide. With the opposite known and the hypotenuse wanted, $H = \\frac{O}{\\sin\\theta}$. With an opposite of 9 and an angle of 40°, $H = \\frac{9}{\\sin 40°} = 14.00$.\n\nGetting this the wrong way round always makes the answer **too small**, and it is easy to catch: here, multiplying would have given about 5.79, which is shorter than the 9 cm opposite side and so impossible, since the hypotenuse must be the longest side.\n\nFinally, if the **angle** is what is missing rather than a side, form the ratio from the two known sides and undo it with an **inverse** function — $\\sin^{-1}$, $\\cos^{-1}$ or $\\tan^{-1}$, reached with the shift key.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "labelling from the right angle"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "opposite and adjacent swap"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "SOH CAH TOA and choosing a ratio"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "multiply or divide"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains the labelling, starting from the hypotenuse and the right angle.",
+          "marks": 2
+        },
+        {
+          "text": "Notes that opposite and adjacent swap when the angle changes.",
+          "marks": 1
+        },
+        {
+          "text": "States SOH CAH TOA and explains choosing the ratio containing the known and wanted sides.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that an unknown on top means multiply and an unknown on the bottom means divide.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "The three sides are named **relative to the angle being used**, so labelling has to come first.\n\nStart with the **hypotenuse**, because it is the only one that is fixed: it is the side **opposite the right angle**, and it is always the longest. It does not change no matter which acute angle you work from, which makes it the safe place to begin.\n\nThen find the angle the question is about and look **straight across** from it — that side is the **opposite**. Whatever side remains is the **adjacent**, the one lying alongside the angle.\n\nAn important consequence: **opposite and adjacent swap over** if you switch to the other acute angle, because a side opposite one acute angle is adjacent to the other. The hypotenuse stays where it is. Forgetting to relabel when moving between parts of a question is a very common source of wrong-ratio answers.\n\nThe three ratios are remembered as **SOH CAH TOA**:\n\n$$\\sin\\theta = \\frac{O}{H} \\qquad \\cos\\theta = \\frac{A}{H} \\qquad \\tan\\theta = \\frac{O}{A}$$\n\n**Choosing between them is mechanical.** Mark the side you **know** and the side you **want**, then pick the ratio containing **both**. The third side plays no part and never needs to be found. For a known hypotenuse and a wanted opposite, that is $\\sin$; for two shorter sides, $\\tan$, which avoids the hypotenuse entirely.\n\nThe last decision is **multiply or divide**, and it depends on where the unknown sits in the fraction.\n\nIf the unknown is on **top**, multiply. From $\\sin\\theta = \\frac{O}{H}$ with $H$ known, $O = H\\sin\\theta$. With a hypotenuse of 12 and an angle of 35°, $O = 12\\sin 35° = 6.88$.\n\nIf the unknown is on the **bottom**, divide. With the opposite known and the hypotenuse wanted, $H = \\frac{O}{\\sin\\theta}$. With an opposite of 9 and an angle of 40°, $H = \\frac{9}{\\sin 40°} = 14.00$.\n\nGetting this the wrong way round always makes the answer **too small**, and it is easy to catch: here, multiplying would have given about 5.79, which is shorter than the 9 cm opposite side and so impossible, since the hypotenuse must be the longest side.\n\nFinally, if the **angle** is what is missing rather than a side, form the ratio from the two known sides and undo it with an **inverse** function — $\\sin^{-1}$, $\\cos^{-1}$ or $\\tan^{-1}$, reached with the shift key."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A ladder 6 m long rests against a vertical wall with its foot 1.5 m from the base of the wall. Find the angle the ladder makes with the ground and how far up the wall it reaches, explaining your choice of method and how you check each answer.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "trigonometry in context",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **right angle** in this situation is between the **wall and the ground**, since the wall is vertical. The **ladder** lies opposite that right angle, so the ladder is the **hypotenuse**, 6 m. Reasoning from the right angle rather than from which line looks slanted is what makes this reliable.\n\nRelative to the angle at the ground, the 1.5 m along the ground is the **adjacent** side, and the height up the wall is the **opposite**.\n\n**The angle.** I know the adjacent (1.5) and the hypotenuse (6), so I use **CAH**:\n\n$$\\cos\\theta = \\frac{1.5}{6} = 0.25$$\n\nThe angle is missing, so I undo the cosine with the **inverse**:\n\n$$\\theta = \\cos^{-1}(0.25) = 75.5°$$\n\n**The height.** I could use $\\sin$ with the angle I have just found, but it is better to use the sides the **question** gave me. Pythagoras does exactly that:\n\n$$h = \\sqrt{6^2 - 1.5^2} = \\sqrt{36 - 2.25} = \\sqrt{33.75} = 5.81 \\text{ m (2 d.p.)}$$\n\nThe reason for preferring this is that it keeps the two answers **independent**. If my angle were wrong, using it to find the height would carry that error forward and lose marks twice over. Working from the original 6 m and 1.5 m means a mistake in one part cannot contaminate the other.\n\n**Checking both answers.**\n\nThe angle is **75.5°**, which is under 90° as any angle in a right-angled triangle other than the right angle must be. It is also a large angle, which fits: the foot is only 1.5 m out from a 6 m ladder, so the ladder is steep. Had I found something like 14°, that would describe a ladder lying almost flat and would not match the numbers.\n\nThe height is **5.81 m**, comfortably **less than the 6 m ladder**, as it has to be — a ladder cannot reach higher than its own length. If it had come out above 6 m, I would know the ratio had been used upside down or Pythagoras applied the wrong way round.\n\nAs a further confirmation, running the trigonometry forwards gives $6\\cos 75.5° = 1.50$ m, recovering the distance along the ground that the question started with.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the ladder is the hypotenuse"
+        },
+        {
+          "code": "M2",
+          "marks": 2,
+          "description": "cos⁻¹(1.5/6) correctly evaluated"
+        },
+        {
+          "code": "M2",
+          "marks": 2,
+          "description": "height from the given sides"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "both answers checked"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Identifies the ladder as the hypotenuse, reasoning from where the right angle is.",
+          "marks": 2
+        },
+        {
+          "text": "Chooses cosine for the angle and computes it correctly.",
+          "marks": 2
+        },
+        {
+          "text": "Finds the height using the given sides rather than the calculated angle.",
+          "marks": 2
+        },
+        {
+          "text": "Checks both answers for plausibility.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The **right angle** in this situation is between the **wall and the ground**, since the wall is vertical. The **ladder** lies opposite that right angle, so the ladder is the **hypotenuse**, 6 m. Reasoning from the right angle rather than from which line looks slanted is what makes this reliable.\n\nRelative to the angle at the ground, the 1.5 m along the ground is the **adjacent** side, and the height up the wall is the **opposite**.\n\n**The angle.** I know the adjacent (1.5) and the hypotenuse (6), so I use **CAH**:\n\n$$\\cos\\theta = \\frac{1.5}{6} = 0.25$$\n\nThe angle is missing, so I undo the cosine with the **inverse**:\n\n$$\\theta = \\cos^{-1}(0.25) = 75.5°$$\n\n**The height.** I could use $\\sin$ with the angle I have just found, but it is better to use the sides the **question** gave me. Pythagoras does exactly that:\n\n$$h = \\sqrt{6^2 - 1.5^2} = \\sqrt{36 - 2.25} = \\sqrt{33.75} = 5.81 \\text{ m (2 d.p.)}$$\n\nThe reason for preferring this is that it keeps the two answers **independent**. If my angle were wrong, using it to find the height would carry that error forward and lose marks twice over. Working from the original 6 m and 1.5 m means a mistake in one part cannot contaminate the other.\n\n**Checking both answers.**\n\nThe angle is **75.5°**, which is under 90° as any angle in a right-angled triangle other than the right angle must be. It is also a large angle, which fits: the foot is only 1.5 m out from a 6 m ladder, so the ladder is steep. Had I found something like 14°, that would describe a ladder lying almost flat and would not match the numbers.\n\nThe height is **5.81 m**, comfortably **less than the 6 m ladder**, as it has to be — a ladder cannot reach higher than its own length. If it had come out above 6 m, I would know the ratio had been used upside down or Pythagoras applied the wrong way round.\n\nAs a further confirmation, running the trigonometry forwards gives $6\\cos 75.5° = 1.50$ m, recovering the distance along the ground that the question started with."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Label first**: hypotenuse (opposite the right angle), then opposite, then adjacent. Mark what you **know** and what you **want**, and pick the ratio holding both.\n\nThen ask where the unknown sits: on **top**, multiply; on the **bottom**, divide. If the **angle** is missing, use the **inverse** — and check the calculator is in degrees.",
+    "examinerErrors": [
+      "Multiplying when the unknown was on the bottom of the fraction.",
+      "Pressing $\\sin$ rather than $\\sin^{-1}$ when finding an angle.",
+      "Keeping the old labels after switching to the other acute angle.",
+      "Leaving the calculator in radians, which fails silently.",
+      "Accepting a sine or cosine above 1 instead of spotting an inverted fraction.",
+      "Giving a side longer than the hypotenuse.",
+      "Reusing a rounded answer from an earlier part instead of the given sides.",
+      "Rounding an angle and then using it to calculate a side."
+    ],
+    "grade9Looks": "A grade 9 answer **labels the triangle before choosing a ratio**, starting from the right angle, and relabels when the angle changes. It says whether the unknown is on the **top or the bottom** before calculating, and writes the rearranged formula down. It uses an **inverse** for a missing angle, and it sanity-checks: sine and cosine never exceed 1, no side exceeds the hypotenuse, and every other angle is under 90°. In a multi-part question it works from the **given** sides rather than its own earlier answer, and it carries full values through, rounding **once** at the end."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
