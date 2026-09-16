@@ -48,6 +48,76 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
    KaTeX base is pinned to 1rem and the script-size glyphs land back above 11px. */
 .rich-text.text-sm .katex, .rich-text.text-xs .katex { font-size: 1rem; }
 
+/* The maths answer field, and its keyboard docked inline beneath it.
+   MathLive's keyboard is built to sit fixed across the bottom of the window, where it
+   would cover the question and the Check button. Docking it into a container leaves its
+   backdrop absolutely positioned, so the container collapsed to nothing; making that
+   backdrop take part in the layout is what gives the slot its height. */
+.math-keyboard-slot .ML__keyboard { position: relative; }
+.math-keyboard-slot .MLK__backdrop { position: relative; }
+.math-field-host math-field { border: 0; }
+.math-field-host math-field::part(container) { padding: 2px 0; }
+/* A focused field should read as focused, like every other input in the app. */
+.math-field-host:focus-within { border-color: var(--subject); }
+
+/* The keyboard wears the app's colours rather than MathLive's grey, and fills the width
+   it is given: the default caps each key and centres the lot, which left a phone showing
+   a narrow huddle of keys in a wide grey panel. */
+.math-keyboard-slot {
+  --keyboard-background: var(--color-panel);
+  --keyboard-border: var(--color-rule);
+  --keyboard-accent-color: var(--subject);
+  --keyboard-horizontal-rule: var(--color-rule);
+  /* Zero: this insets the key plate without narrowing it, so any value here pushes
+     the last column past the right edge. The slot's own padding does the inset. */
+  --keyboard-padding-horizontal: 0px;
+  --keyboard-padding-top: 6px;
+  --keyboard-padding-bottom: 6px;
+
+  --keycap-background: var(--color-surface);
+  --keycap-background-hover: var(--color-panel);
+  --keycap-background-active: var(--subject);
+  --keycap-background-pressed: var(--subject);
+  --keycap-border: var(--color-rule);
+  --keycap-border-bottom: var(--color-rule);
+  --keycap-text: var(--color-ink);
+  --keycap-text-active: #fff;
+  --keycap-text-pressed: #fff;
+  --keycap-secondary-background: var(--color-panel);
+  --keycap-secondary-text: var(--subject);
+  --keycap-secondary-border: var(--color-rule);
+  --keycap-height: 48px;
+  --keycap-max-width: 9999px;
+  --keycap-font-size: 19px;
+  --keycap-gap: 6px;
+  --keycap-shift-color: var(--subject);
+  /* Zeroed: the slot supplies the inset, and these pushed every row 6px past its right
+     edge, which clipped the last column of keys. */
+  --keyboard-row-padding-left: 0px;
+  --keyboard-row-padding-right: 0px;
+}
+.math-keyboard-slot .MLK__backdrop { padding: 6px; }
+.math-keyboard-slot .MLK__plate { max-width: none; width: 100%; }
+.math-keyboard-slot .MLK__layer,
+.math-keyboard-slot .MLK__rows { width: 100%; }
+/* Each row fills the width and its keys share it equally. Left to itself the keyboard
+   sizes every key to its label, which on a phone gave 26px keys huddled in the middle of
+   a full-width panel — a third of the 44px a thumb needs. */
+.math-keyboard-slot .MLK__row { display: flex; width: 100%; gap: var(--keycap-gap); }
+.math-keyboard-slot .MLK__row > * { flex: 1 1 0; min-width: 0; max-width: none; }
+.math-keyboard-slot .MLK__row > .separator { flex: 1 1 0; background: none; border: 0; }
+/* Backspace and the arrows are keys too. Left on the keyboard's own background they read
+   as glyphs floating in the panel rather than as something to press. */
+.math-keyboard-slot .MLK__row > .action {
+  background: var(--color-panel);
+  border: 1px solid var(--color-rule);
+  border-radius: 8px;
+  color: var(--subject);
+}
+.math-keyboard-slot .MLK__row > .action:active { background: var(--subject); color: #fff; }
+/* MathLive's own dismiss bar is redundant inline, where the keyboard is part of the page. */
+.math-keyboard-slot .MLK__toolbar { display: none; }
+
 /* Flashcards: 3D flip, a plain swap under reduced motion. */
 /* Both faces sit in the same grid cell rather than being absolutely positioned, so the
    card grows to whichever face is taller. With `position: absolute` the faces were out of

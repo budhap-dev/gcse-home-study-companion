@@ -153,7 +153,7 @@ export function Lesson() {
         <section className="tint flex flex-col gap-3 rounded-2xl border border-[color:var(--subject)] p-4">
           <KindChip kind="check" />
           <RichText source={step.check.prompt} className="font-bold" />
-          <QuestionInput key={step.id} question={step.check} disabled={result !== null} onSubmit={submit} />
+          <QuestionInput subjectId={subjectId} key={step.id} question={step.check} disabled={result !== null} onSubmit={submit} />
           {result && <Feedback question={step.check} result={result} />}
         </section>
       )}

@@ -14,6 +14,22 @@ const SUPERSCRIPTS: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2',
  * argument dropped, multiplication signs dropped, and a leading "y=" dropped so
  * "y = 2x - 2" and "2x-2" compare equal.
  */
+/**
+ * Brackets a student added for clarity, round a single term: `(√3)/2` means the same as
+ * `√3/2`. Only groups holding no `+`, `−`, `*`, `/` or `^` are dropped, because those are
+ * exactly the brackets that change what an expression means — `(1+3)/4` is not `1+3/4`,
+ * and `(2/3)^2` is not `2/3^2`. Runs repeatedly so `((3))` collapses too.
+ */
+function dropRedundantBrackets(s: string): string {
+  let out = s
+  for (let pass = 0; pass < 5; pass++) {
+    const next = out.replace(/\(([^()+\-*/^]+)\)/g, '$1')
+    if (next === out) break
+    out = next
+  }
+  return out
+}
+
 export function normaliseText(s: string): string {
   let out = s.toLowerCase()
   out = out.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, (run) => '^' + [...run].map((c) => SUPERSCRIPTS[c] ?? c).join(''))
@@ -22,6 +38,10 @@ export function normaliseText(s: string): string {
     .replace(/[−–—]/g, '-')
     // French answers are full of apostrophes, and phones type a curly one.
     .replace(/[\u2018\u2019\u02bc`´]/g, "'")
+    // A student without a pi key types "pi", and the content writes "π". Folding the
+    // symbol to the letters rather than the other way round is what makes this safe:
+    // going the other way would rewrite "pitch" and "capital" in every word answer.
+    .replace(/π/g, 'pi')
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
     .replace(/√\(([^)]+)\)/g, 'sqrt$1')
@@ -32,6 +52,8 @@ export function normaliseText(s: string): string {
     .replace(/[{}]/g, '')
     .replace(/\^\(([^)]+)\)/g, '^$1')
     .replace(/^y=/, '')
+    // Last, so the rules above have already turned √(3) and sqrt(3) into sqrt3.
+    .replace(/^[\s\S]*$/, dropRedundantBrackets)
 }
 
 const SUPERSCRIPT_DIGITS = '⁰¹²³⁴⁵⁶⁷⁸⁹'
@@ -60,6 +82,10 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // A phone keyboard or a pasted answer can carry a Unicode minus or dash; the
   // Business cash-flow answers are the first negatives in the pack.
   let s = input.trim().toLowerCase().replace(/,/g, '').replace(/[−–—]/g, '-')
+  // A division sign is a key on every maths keyboard, so a student who presses it means
+  // a fraction. normaliseText has always done this; parseNumber did not, so 3÷4 was read
+  // as no number at all.
+  s = s.replace(/÷/g, '/')
   // A student who has just solved for x writes "x = 5", and one copying a formula
   // writes "F = 20"; the name and the equals sign are not part of the number.
   s = s.replace(/^[a-z]\w*\s*=\s*/, '').replace(/^=\s*/, '')
@@ -70,6 +96,20 @@ export function parseNumber(input: string, units?: string): number | undefined {
   if (units) s = s.replace(units.toLowerCase(), '').trim()
   s = standardForm(s)
   s = s.replace(/[a-z°%/ ]+$/i, '').trim()
+  // Brackets round the parts of a fraction: (3)/(4). Students write it, and it is what a
+  // WYSIWYG maths editor produces, so it has to read as three quarters rather than as
+  // nothing at all.
+  s = s.replace(/\((-?\d+(?:\.\d+)?)\)/g, '$1')
+  // A mixed number, before the rule below joins digits across a space. "1 1/2" is one and
+  // a half; joining first turned it into 11/2 and marked the student as meaning 5.5 — a
+  // wrong number returned silently, which is worse than refusing to read it.
+  const mixed = s.match(/^(-?)(\d+)\s+(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)$/)
+  if (mixed) {
+    const denominator = Number(mixed[4])
+    if (denominator === 0) return undefined
+    const size = Number(mixed[2]) + Number(mixed[3]) / denominator
+    return mixed[1] === '-' ? -size : size
+  }
   // "25 000" and "180 000" are how the content itself prints large numbers.
   s = s.replace(/(\d)\s+(?=\d)/g, '$1')
   const frac = s.match(/^(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)$/)
