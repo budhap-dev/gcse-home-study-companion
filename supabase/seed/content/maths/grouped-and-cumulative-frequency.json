@@ -1,0 +1,1282 @@
+{
+  "id": "grouped-and-cumulative-frequency",
+  "subjectId": "maths",
+  "unitId": "statistics",
+  "title": "Grouped and cumulative frequency",
+  "specPoints": [
+    "S3",
+    "S4"
+  ],
+  "order": 30,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Plot at the upper bound",
+      "body": "A cumulative frequency is the number of values **up to the end** of a class, so each point goes at the **upper class boundary**, never the midpoint. Plotting at midpoints shifts the whole curve left and every reading with it."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Median at n over 2, quartiles at n over 4",
+      "body": "On a cumulative frequency graph the median is read across from $\\frac{n}{2}$, the lower quartile from $\\frac{n}{4}$ and the upper quartile from $\\frac{3n}{4}$ — with $n$ the **total**, the last cumulative frequency. Not $\\frac{n + 1}{2}$: that is for a small list, not a curve."
+    },
+    {
+      "kind": "check",
+      "title": "The last cumulative frequency is the total",
+      "body": "The running total must finish at $n$. If your last cumulative frequency is not the total number of values, an addition slipped somewhere on the way down the table."
+    },
+    {
+      "kind": "spot",
+      "title": "Midpoints for the mean, bounds for the graph",
+      "body": "Two different jobs, two different numbers. To **estimate the mean** from a grouped table, use each class **midpoint** times its frequency. To **draw the cumulative frequency graph**, use each class **upper bound**. Swapping them is the commonest slip in the topic."
+    },
+    {
+      "kind": "remember",
+      "title": "Grouped answers are estimates",
+      "body": "A grouped table hides the individual values, so the mean, median and quartiles found from it are **estimates**, and saying so is worth a mark. The only thing you can state exactly is the **modal class**."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Grouped data, and what it costs you",
+        "body": "**When there is a lot of continuous data, it is recorded in classes.** Forty students timed on a task might be tallied like this:\n\n| Time, t (minutes) | Frequency |\n| --- | --- |\n| 0 < t ≤ 10 | 4 |\n| 10 < t ≤ 20 | 10 |\n| 20 < t ≤ 30 | 16 |\n| 30 < t ≤ 40 | 8 |\n| 40 < t ≤ 50 | 2 |\n\n**The grouping loses the individual values.** We know 16 students took between 20 and 30 minutes, but not what any of them actually took. So every average and every measure of spread from a grouped table is an **estimate**, and a good answer says so.\n\n**Three things you can still find.**\n\n- The **modal class** is the class with the highest frequency: **20 < t ≤ 30**. This one is exact, because it needs no individual values.\n- The **median class** is the class holding the middle value. With $n = 40$, that is the 20th and 21st values. Adding down: 4, then 14, then 30 — so the 20th value is in **20 < t ≤ 30**.\n- An **estimate of the mean**, by assuming every value in a class sits at its **midpoint**.\n\n**Read the inequality signs carefully.** $0 < t \\le 10$ means times up to and including 10 but not 0, so a time of exactly 10 minutes belongs to the first class, not the second. The classes must not overlap and must not leave gaps.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Time t (minutes)",
+                "Frequency",
+                "Midpoint",
+                "Frequency × midpoint"
+              ],
+              "rows": [
+                [
+                  "0 < t ≤ 10",
+                  "4",
+                  "5",
+                  "20"
+                ],
+                [
+                  "10 < t ≤ 20",
+                  "10",
+                  "15",
+                  "150"
+                ],
+                [
+                  "20 < t ≤ 30",
+                  "16",
+                  "25",
+                  "400"
+                ],
+                [
+                  "30 < t ≤ 40",
+                  "8",
+                  "35",
+                  "280"
+                ],
+                [
+                  "40 < t ≤ 50",
+                  "2",
+                  "45",
+                  "90"
+                ]
+              ],
+              "title": "The midpoints assume every value sits in the centre of its class, so the mean is an estimate: 940 ÷ 40 = 23.5"
+            },
+            "alt": "A grouped frequency table of forty times with a midpoint column and a frequency-times-midpoint column for estimating the mean"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Why is a mean found from a grouped frequency table only an estimate?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "grouped data",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Grouping records which **class** each value falls in, not the value itself. The calculation assumes every value sits at its class **midpoint**, which is almost never exactly true, so the result is an estimate.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the individual values are lost in the grouping"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The individual values are not known, only the class each one is in",
+            "The frequencies are rounded to the nearest whole number",
+            "The classes are not all the same width",
+            "The total number of values is unknown"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Estimating the mean",
+        "body": "**Assume every value in a class is at the midpoint, then use the ordinary mean formula.**\n\n$$\\text{estimated mean} = \\frac{\\sum f x}{\\sum f}$$\n\nwhere $x$ is each **midpoint** and $f$ its frequency. Two columns added to the table do the whole job.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Estimate the mean time from the table of forty students.",
+            "steps": [
+              {
+                "text": "Midpoints: 5, 15, 25, 35, 45",
+                "note": "halfway between the bounds of each class"
+              },
+              {
+                "text": "Multiply each by its frequency: 20, 150, 400, 280, 90",
+                "note": "4 × 5, 10 × 15, 16 × 25, 8 × 35, 2 × 45"
+              },
+              {
+                "text": "Add them: $\\sum fx = 940$",
+                "note": "the estimated total of all forty times"
+              },
+              {
+                "text": "Divide by the total frequency: $940 \\div 40 = 23.5$ minutes",
+                "note": "divide by n, the number of students — not by 5, the number of classes"
+              },
+              {
+                "text": "State that it is an **estimate**",
+                "note": "the real mean is unknowable from the grouped data, and saying so is worth a mark"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Using the table of forty students (frequencies 4, 10, 16, 8, 2 in classes of width 10 from 0 to 50), estimate the mean time in minutes.",
+          "marks": 3,
+          "gradeBand": "6-7",
+          "skill": "estimating the mean",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "Midpoints 5, 15, 25, 35, 45. Then $\\sum fx = 20 + 150 + 400 + 280 + 90 = 940$, and $940 \\div 40 = 23.5$ minutes, as an estimate.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses the midpoints"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "reaches Σfx = 940 and divides by 40"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "23.5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 23.5,
+          "tolerance": 0.01,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "The cumulative frequency graph",
+        "body": "**Cumulative frequency is a running total**: how many values are **up to** the end of each class. It answers questions of the form *how many took 30 minutes or less?*\n\n**Plot each cumulative frequency at the upper bound of its class**, because that is the value it counts up to. Then join the points, with a smooth curve or straight lines — both are accepted. Start the curve at the **lower bound of the first class with a cumulative frequency of 0**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Time t (minutes)",
+                "Frequency",
+                "Cumulative frequency"
+              ],
+              "rows": [
+                [
+                  "0 < t ≤ 10",
+                  "4",
+                  "4"
+                ],
+                [
+                  "10 < t ≤ 20",
+                  "10",
+                  "14"
+                ],
+                [
+                  "20 < t ≤ 30",
+                  "16",
+                  "30"
+                ],
+                [
+                  "30 < t ≤ 40",
+                  "8",
+                  "38"
+                ],
+                [
+                  "40 < t ≤ 50",
+                  "2",
+                  "40"
+                ]
+              ],
+              "title": "The running total must finish at 40, the number of students"
+            },
+            "alt": "A grouped frequency table of forty times with a cumulative frequency column running 4, 14, 30, 38, 40"
+          },
+          {
+            "type": "diagram",
+            "component": "cumulative-frequency",
+            "props": {
+              "points": [
+                {
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "x": 10,
+                  "y": 4
+                },
+                {
+                  "x": 20,
+                  "y": 14
+                },
+                {
+                  "x": 30,
+                  "y": 30
+                },
+                {
+                  "x": 40,
+                  "y": 38
+                },
+                {
+                  "x": 50,
+                  "y": 40
+                }
+              ],
+              "xLabel": "time (minutes)",
+              "readings": [
+                {
+                  "y": 20,
+                  "label": "median"
+                }
+              ]
+            },
+            "alt": "A cumulative frequency graph rising from (0, 0) through (10, 4), (20, 14), (30, 30), (40, 38) to (50, 40), with a reading across from 20 on the vertical axis and down to the median on the time axis"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Draw the cumulative frequency graph and use it to estimate the median time.",
+            "steps": [
+              {
+                "text": "Running totals: 4, then $4 + 10 = 14$, then $14 + 16 = 30$, then $30 + 8 = 38$, then $38 + 2 = 40$",
+                "note": "each is the frequency added to the total so far"
+              },
+              {
+                "text": "Plot at the **upper bounds**: (10, 4), (20, 14), (30, 30), (40, 38), (50, 40), starting from (0, 0)",
+                "note": "not at the midpoints"
+              },
+              {
+                "text": "The median is the $\\frac{n}{2} = 20$th value, so read across from 20 on the cumulative frequency axis",
+                "note": "n over 2, not n plus 1 over 2: the curve is continuous"
+              },
+              {
+                "text": "Across to the line, then down: **about 23.75 minutes**",
+                "note": "anything close is accepted, because it is read from a graph"
+              },
+              {
+                "text": "Check: 20 lies between the cumulative frequencies 14 and 30, so the median must be in 20–30 ✓",
+                "note": "the median class from the table agrees"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Where is each cumulative frequency plotted?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "plotting cumulative frequency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A cumulative frequency counts every value **up to the end** of its class, so the point sits at the **upper bound**. Midpoints are for estimating the mean, not for this graph.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the upper bound"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "At the upper bound of its class",
+            "At the midpoint of its class",
+            "At the lower bound of its class",
+            "Anywhere inside its class"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Quartiles, and reading the graph both ways",
+        "body": "**The quartiles come from the same graph.** Read across from $\\frac{n}{4}$ for the lower quartile and $\\frac{3n}{4}$ for the upper quartile, and the difference is the **interquartile range**.\n\n**The graph also runs the other way.** To find how many values are **above** a given point, read **up** from that point to the line, across to the cumulative frequency, and subtract from $n$ — because the graph counts values **below**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "cumulative-frequency",
+            "props": {
+              "points": [
+                {
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "x": 10,
+                  "y": 4
+                },
+                {
+                  "x": 20,
+                  "y": 14
+                },
+                {
+                  "x": 30,
+                  "y": 30
+                },
+                {
+                  "x": 40,
+                  "y": 38
+                },
+                {
+                  "x": 50,
+                  "y": 40
+                }
+              ],
+              "xLabel": "time (minutes)",
+              "readings": [
+                {
+                  "y": 10,
+                  "label": "LQ"
+                },
+                {
+                  "y": 30,
+                  "label": "UQ"
+                }
+              ]
+            },
+            "alt": "The same cumulative frequency graph of forty times with readings across from 10 and from 30 on the vertical axis, giving the lower and upper quartiles on the time axis"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Estimate the interquartile range of the forty times.",
+            "steps": [
+              {
+                "text": "Lower quartile: read across from $\\frac{40}{4} = 10$",
+                "note": "a quarter of the way up the total"
+              },
+              {
+                "text": "It meets the line at about **16 minutes**",
+                "note": "10 lies between the plotted 4 and 14, so it lands in the 10–20 class"
+              },
+              {
+                "text": "Upper quartile: read across from $\\frac{3 \\times 40}{4} = 30$",
+                "note": "three quarters of the way up"
+              },
+              {
+                "text": "30 is exactly the plotted point, so the upper quartile is **30 minutes**",
+                "note": "the line passes through (30, 30)"
+              },
+              {
+                "text": "IQR $\\approx 30 - 16 = 14$ minutes",
+                "note": "the spread of the middle half of the students"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Estimate how many students took longer than 35 minutes.",
+            "steps": [
+              {
+                "text": "Read **up** from 35 on the time axis to the line",
+                "note": "this time the known value is on the horizontal axis"
+              },
+              {
+                "text": "Across to the cumulative frequency: about **34**",
+                "note": "35 is halfway between 30 and 40, where the line rises from 30 to 38"
+              },
+              {
+                "text": "That is the number who took **35 minutes or less**",
+                "note": "cumulative frequency always counts up to a value"
+              },
+              {
+                "text": "So longer than 35: $40 - 34 = 6$ students",
+                "note": "subtract from the total, and forgetting to is the classic error"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "On the graph of forty times, the cumulative frequency at 35 minutes reads as 34. How many students took longer than 35 minutes?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "reading the graph",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "The graph gives the number who took **35 minutes or less**, 34. Longer than 35 is the rest: $40 - 34 = 6$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "subtracts the reading from 40"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "All questions use the table of forty students: frequencies 4, 10, 16, 8, 2 in the classes 0–10, 10–20, 20–30, 30–40, 40–50 minutes.\n\n**Part A.**\n\n1. Write down the modal class.\n2. Complete the cumulative frequency column.\n3. At which value of $t$ is the cumulative frequency 30 plotted?\n\n**Part B.**\n\n4. Estimate the mean time.\n5. From the graph, estimate the median.\n6. From the graph, estimate the lower and upper quartiles and the interquartile range.\n\n**Part C.**\n\n7. Estimate how many students took longer than 35 minutes.\n8. A student plots the cumulative frequencies at the class midpoints. Explain what happens to every reading taken from their graph.\n9. Explain why the modal class is exact but the estimated mean is not.\n\nFor question 8, think about which direction the whole curve moves.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Time t (minutes)",
+                "Frequency",
+                "Cumulative frequency",
+                "Plot at t ="
+              ],
+              "rows": [
+                [
+                  "0 < t ≤ 10",
+                  "4",
+                  "",
+                  ""
+                ],
+                [
+                  "10 < t ≤ 20",
+                  "10",
+                  "",
+                  ""
+                ],
+                [
+                  "20 < t ≤ 30",
+                  "16",
+                  "",
+                  ""
+                ],
+                [
+                  "30 < t ≤ 40",
+                  "8",
+                  "",
+                  ""
+                ],
+                [
+                  "40 < t ≤ 50",
+                  "2",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill in the running total, then the value of t each point is plotted at"
+            },
+            "alt": "A blank cumulative frequency table for the forty times, with a column for the plotting position"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Upper bounds for the graph, midpoints for the mean.** They are different jobs. A cumulative frequency counts everything **up to** the end of a class, so it belongs at the **upper bound**; the mean estimate assumes values sit in the **middle** of their class, so it uses **midpoints**. Plotting at midpoints slides the entire curve half a class to the left, and every reading — median, quartiles, counts — comes out too small by the same amount.\n\n**The curve is continuous, so the median is at $\\frac{n}{2}$**, not $\\frac{n+1}{2}$. The $n + 1$ version locates a position in a short list of individual values; on a graph of grouped data there are no individual positions to locate. With $n = 40$, read across from 20. Both give almost the same answer, but the mark scheme names $\\frac{n}{2}$.\n\n**Cumulative frequency counts values below.** To find how many are **above** a value, read the graph and **subtract from $n$**. Handing over the reading itself answers the opposite question. When the question says *more than* or *at least*, that subtraction is the whole of the final mark.\n\n**Everything from grouped data is an estimate, except the modal class.** The mean, median and quartiles all assume something about where the values sit inside their classes. Writing *estimate* or *approximately* is not hedging; it is the correct description, and the mark scheme often has a mark for it.\n\n**Cumulative frequency graphs feed box plots.** The five-number summary — minimum, $Q_1$, median, $Q_3$, maximum — can be read straight off the curve, using the lowest and highest class bounds as the ends. That is how a box plot is built from grouped data, and a question can ask for exactly that.\n\n**The shape says something too.** A steep section of the curve means many values in that class; a flat section means few. The steepest part of the graph is the modal class, seen another way.\n\n**Check the total.** The last cumulative frequency must equal $n$. A running total that ends anywhere else means an addition error further up, and the graph will be wrong from that point down.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students do",
+                "What is correct"
+              ],
+              "rows": [
+                [
+                  "plotting position",
+                  "plots at the midpoints",
+                  "plots at the upper bounds"
+                ],
+                [
+                  "the median",
+                  "reads across from (n + 1)/2",
+                  "reads across from n/2"
+                ],
+                [
+                  "\"more than\"",
+                  "gives the graph reading",
+                  "subtracts the reading from n"
+                ],
+                [
+                  "estimating the mean",
+                  "divides Σfx by the number of classes",
+                  "divides by n, the total frequency"
+                ],
+                [
+                  "language",
+                  "states the mean as exact",
+                  "calls it an estimate"
+                ],
+                [
+                  "the running total",
+                  "does not check the last value",
+                  "checks it equals n"
+                ]
+              ],
+              "title": "The first row moves every reading on the graph by half a class"
+            },
+            "alt": "A table of common errors in grouped and cumulative frequency questions"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Grouped data** records the class each value falls in, not the value, so results are **estimates**.\n- The **modal class** has the highest frequency, and is the one exact statement available.\n- The **median class** holds the middle value: add down the frequencies until you pass $\\frac{n}{2}$.\n- **Estimated mean** $= \\frac{\\sum fx}{\\sum f}$ with $x$ the class **midpoints**; divide by $n$, not by the number of classes.\n- **Cumulative frequency** is a running total: how many values **up to** the end of each class.\n- The last cumulative frequency must equal **$n$**.\n- Plot each cumulative frequency at the **upper bound** of its class, starting from (lower bound, 0).\n- Join with a smooth curve or straight lines; both are accepted.\n- **Median**: read across from $\\frac{n}{2}$. **Quartiles**: from $\\frac{n}{4}$ and $\\frac{3n}{4}$. **IQR** $= Q_3 - Q_1$.\n- To find how many are **above** a value, read up from it and **subtract from $n$**.\n- **Midpoints for the mean, upper bounds for the graph** — never the other way round.\n- A **steep** section of the curve means a class with many values.\n- The five-number summary read from the curve builds a **box plot**.\n- Say **estimate**: it is accurate, and it is often a mark.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Modal class",
+                  "the highest frequency; exact"
+                ],
+                [
+                  "Median class",
+                  "where the running total passes n/2"
+                ],
+                [
+                  "Estimated mean",
+                  "Σ(f × midpoint) ÷ n"
+                ],
+                [
+                  "Cumulative frequency",
+                  "a running total, ending at n"
+                ],
+                [
+                  "Plot at",
+                  "the upper class bound"
+                ],
+                [
+                  "Start from",
+                  "(lower bound of first class, 0)"
+                ],
+                [
+                  "Median",
+                  "read across from n/2"
+                ],
+                [
+                  "Lower quartile",
+                  "read across from n/4"
+                ],
+                [
+                  "Upper quartile",
+                  "read across from 3n/4"
+                ],
+                [
+                  "IQR",
+                  "upper quartile − lower quartile"
+                ],
+                [
+                  "\"More than\" a value",
+                  "n minus the reading"
+                ],
+                [
+                  "Midpoints",
+                  "for the mean only"
+                ],
+                [
+                  "Steep curve",
+                  "a class with many values"
+                ],
+                [
+                  "Every result",
+                  "an estimate, and say so"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of grouped frequency tables and cumulative frequency graphs"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "In the table of forty times (frequencies 4, 10, 16, 8, 2 in classes 0–10, 10–20, 20–30, 30–40, 40–50 minutes), which is the modal class?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the modal class",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The modal class is the one with the **highest frequency**, 16: **20 < t ≤ 30**. Give the class, not the frequency.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "20 < t ≤ 30"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "20 < t ≤ 30",
+        "20 to 30",
+        "20-30",
+        "20 < t <= 30",
+        "between 20 and 30"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "The frequencies of five classes are 4, 10, 16, 8 and 2. What is the cumulative frequency at the end of the third class?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "running totals",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$4 + 10 + 16 = 30$: the number of values up to the end of the third class.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [],
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "The class 20 < t ≤ 30 has a cumulative frequency of 30. Where is that point plotted?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "plotting cumulative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A cumulative frequency is plotted at the **upper bound** of its class, because it counts everything up to that value: **t = 30**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "t = 30"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "At t = 30",
+        "At t = 25",
+        "At t = 20",
+        "At t = 15"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What must the final cumulative frequency in a table equal?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "running totals",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The running total counts every value once by the end, so it finishes at $n$. If it does not, an addition has slipped.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the total, n"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The total number of values",
+        "The highest frequency",
+        "The number of classes",
+        "The width of the last class"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Using the table of forty times (frequencies 4, 10, 16, 8, 2 in classes of width 10 from 0 to 50), estimate the mean time in minutes.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "estimating the mean",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Midpoints 5, 15, 25, 35, 45. $\\sum fx = 20 + 150 + 400 + 280 + 90 = 940$; then $940 \\div 40 = 23.5$ minutes, as an estimate.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses midpoints"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides 940 by 40"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "23.5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 23.5,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A cumulative frequency graph shows 40 values. From which value on the cumulative frequency axis do you read across to find the median?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading the median",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The median is read across from $\\frac{n}{2} = \\frac{40}{2} = 20$.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "On the cumulative frequency graph of the forty times, the line passes through (20, 14) and (30, 30). Estimate the median time in minutes.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading the median",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Read across from 20. Between (20, 14) and (30, 30) the line rises 16 over 10 minutes, and 20 is 6 above 14, so the median is about $20 + \\frac{6}{16} \\times 10 = 23.75$ minutes. Anything close is accepted from a graph.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reads across from 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "about 23.75"
+        }
+      ],
+      "discriminators": [],
+      "answer": 23.75,
+      "tolerance": 0.5,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "On the same graph, the lower quartile reads as 16 minutes and the upper quartile as 30 minutes. What is the interquartile range?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the IQR",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$30 - 16 = 14$ minutes: the spread of the middle half.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14"
+        }
+      ],
+      "discriminators": [],
+      "answer": 14,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Which value is used for each class when estimating the mean from a grouped table?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "estimating the mean",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **midpoint**: the estimate assumes every value in a class sits at its centre. Upper bounds are for plotting the cumulative frequency graph, not for the mean.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the midpoint"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The midpoint",
+        "The upper bound",
+        "The lower bound",
+        "The class width"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A cumulative frequency graph of 40 times gives a reading of 34 at 35 minutes. How many of the times were longer than 35 minutes?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading the graph",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The reading is the number of times **35 minutes or less**. Longer than 35 is $40 - 34 = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts from 40"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A student plots every cumulative frequency at the class midpoint instead of the upper bound. What happens to the median they read off?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "diagnosing an error",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Every point moves **left** by half a class, so the whole curve shifts left and every reading — the median included — is **too small** by that amount. The shape is unchanged, which is why the error is easy to miss.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "too small by half a class width"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It comes out too small, by about half a class width",
+        "It comes out too large, by about half a class width",
+        "It is unaffected, because the shape of the curve is the same",
+        "It cannot be read, because the curve no longer rises"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why is the median read across from n/2 on a cumulative frequency graph rather than from (n + 1)/2?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why n over 2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The $(n+1)/2$ rule locates the middle **position** in a list of individual values. Grouped data on a continuous curve has no such positions, so the median is simply the value that half the data lies below: $\\frac{n}{2}$ up the axis.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the curve is continuous"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The curve is continuous, so there are no individual positions to count",
+        "Because n/2 is always a whole number and (n + 1)/2 is not",
+        "Because the graph starts at zero rather than at one",
+        "Because (n + 1)/2 is only used for finding the quartiles"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Which statement about a grouped frequency table is exact rather than an estimate?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "estimates and exact values",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **modal class** needs only the frequencies, which are known exactly. The mean, median and IQR all assume where values sit inside their classes, so each is an estimate.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the modal class"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The modal class",
+        "The mean",
+        "The median",
+        "The interquartile range"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A section of a cumulative frequency curve is much steeper than the rest. What does that show?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading the shape",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The curve rises by the **frequency** of each class. A steep rise over a class means a large frequency — that is the modal class seen on the graph. A flat section means few values.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a large frequency in that class"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Many values fall in that class",
+        "Few values fall in that class",
+        "The class is wider than the others",
+        "The values in that class are larger"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "A grouped table has classes 0–20, 20–40 and 40–60 with frequencies 5, 12 and 3. Estimate the mean.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "estimating the mean",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Midpoints 10, 30, 50. $\\sum fx = 50 + 360 + 150 = 560$ and $n = 20$, so the estimated mean is $560 \\div 20 = 28$. Dividing by 3, the number of classes, would be the classic error.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses midpoints 10, 30, 50"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reaches 560 and divides by 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 28,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "How can a box plot be drawn from a cumulative frequency graph?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "linking graphs",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **five-number summary** is all a box plot needs: the lowest and highest class bounds serve as the ends, and $Q_1$, the median and $Q_3$ are read across from $\\frac{n}{4}$, $\\frac{n}{2}$ and $\\frac{3n}{4}$. The box plot is then an estimate, like everything from grouped data.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "read the five numbers off the curve"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Read the quartiles and median off the curve and use the first and last class bounds as the ends",
+        "Draw the box across the modal class and the whiskers to the median",
+        "Copy the steepest section of the curve as the box",
+        "It cannot be done, because a box plot needs the individual values"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain how to draw a cumulative frequency graph from a grouped frequency table and how to use it to estimate the median and interquartile range. Explain why the results are estimates.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "cumulative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **cumulative frequency** is a running total. Starting at the top of the table, each class’s frequency is added to everything above it, so the cumulative frequency of a class is the number of values **up to the end** of that class. For the forty times with frequencies 4, 10, 16, 8 and 2, the running totals are 4, 14, 30, 38 and 40. The last one must equal $n$, the total number of values — here 40 — and checking that catches any addition slip.\n\nTo draw the graph, each cumulative frequency is plotted at the **upper bound** of its class, because that is the value it counts up to: (10, 4), (20, 14), (30, 30), (40, 38) and (50, 40). The curve starts at the lower bound of the first class with a cumulative frequency of zero, (0, 0). The points are then joined, either with a smooth curve or with straight lines — both are accepted. Plotting at the midpoints instead is the classic error: it slides the whole curve half a class to the left and makes every reading too small.\n\nThe **median** is the value that half the data lies below, so it is read across from $\\frac{n}{2}$ on the cumulative frequency axis — 20 here — to the curve, then down to the horizontal axis. It comes out at about 23.75 minutes. The **lower quartile** is read across from $\\frac{n}{4} = 10$, giving about 16 minutes, and the **upper quartile** from $\\frac{3n}{4} = 30$, giving 30 minutes. The **interquartile range** is the difference, about 14 minutes, and it measures the spread of the middle half of the data.\n\nAll of these are **estimates**. Grouping the data records only which class each value fell in, not the value itself, so the exact positions of the values inside each class are unknown. The graph joins the plotted points with a line that assumes the values are spread evenly through each class, and the readings inherit that assumption. The only exact statement available from a grouped table is the **modal class**, which needs nothing but the frequencies. That is why a good answer writes *estimate* or *approximately* — it is the accurate description of what the graph gives.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the running total"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "plotting at upper bounds"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "reading the median and quartiles"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "why estimates"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains the running total and that the final value equals n.",
+          "marks": 2
+        },
+        {
+          "text": "States that points are plotted at the upper class bounds, starting from zero.",
+          "marks": 2
+        },
+        {
+          "text": "Explains reading across from n/2, n/4 and 3n/4 and subtracting for the IQR.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that grouping loses the individual values, so the results are estimates.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "A **cumulative frequency** is a running total. Starting at the top of the table, each class’s frequency is added to everything above it, so the cumulative frequency of a class is the number of values **up to the end** of that class. For the forty times with frequencies 4, 10, 16, 8 and 2, the running totals are 4, 14, 30, 38 and 40. The last one must equal $n$, the total number of values — here 40 — and checking that catches any addition slip.\n\nTo draw the graph, each cumulative frequency is plotted at the **upper bound** of its class, because that is the value it counts up to: (10, 4), (20, 14), (30, 30), (40, 38) and (50, 40). The curve starts at the lower bound of the first class with a cumulative frequency of zero, (0, 0). The points are then joined, either with a smooth curve or with straight lines — both are accepted. Plotting at the midpoints instead is the classic error: it slides the whole curve half a class to the left and makes every reading too small.\n\nThe **median** is the value that half the data lies below, so it is read across from $\\frac{n}{2}$ on the cumulative frequency axis — 20 here — to the curve, then down to the horizontal axis. It comes out at about 23.75 minutes. The **lower quartile** is read across from $\\frac{n}{4} = 10$, giving about 16 minutes, and the **upper quartile** from $\\frac{3n}{4} = 30$, giving 30 minutes. The **interquartile range** is the difference, about 14 minutes, and it measures the spread of the middle half of the data.\n\nAll of these are **estimates**. Grouping the data records only which class each value fell in, not the value itself, so the exact positions of the values inside each class are unknown. The graph joins the plotted points with a line that assumes the values are spread evenly through each class, and the readings inherit that assumption. The only exact statement available from a grouped table is the **modal class**, which needs nothing but the frequencies. That is why a good answer writes *estimate* or *approximately* — it is the accurate description of what the graph gives."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "The forty times have frequencies 4, 10, 16, 8 and 2 in the classes 0–10, 10–20, 20–30, 30–40 and 40–50 minutes. Estimate the mean, and explain how you would use a cumulative frequency graph to estimate how many students took longer than 35 minutes, including the step students most often miss.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "grouped data",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To **estimate the mean**, I assume every value sits at the **midpoint** of its class: 5, 15, 25, 35 and 45 minutes. Multiplying each midpoint by its frequency gives $4 \\times 5 = 20$, $10 \\times 15 = 150$, $16 \\times 25 = 400$, $8 \\times 35 = 280$ and $2 \\times 45 = 90$, which add to $\\sum fx = 940$. This is the estimated total of all forty times. Dividing by the total frequency — 40, the number of students, not 5, the number of classes — gives\n\n$$\\frac{940}{40} = 23.5 \\text{ minutes}$$\n\nThis is an **estimate**, because the grouping has hidden the actual times; the midpoint assumption is the best available, but it is an assumption. A quick check: 23.5 sits inside the modal class 20–30, which holds the most students, so it is plausible.\n\nTo find how many students took **longer than 35 minutes**, I would use the **cumulative frequency graph**, plotted at the upper bounds: (10, 4), (20, 14), (30, 30), (40, 38), (50, 40), starting from (0, 0).\n\nThis time the known value is on the **horizontal** axis. I read **up** from 35 minutes to the curve, then **across** to the cumulative frequency axis. Between (30, 30) and (40, 38) the curve rises by 8 over 10 minutes, and 35 is halfway, so the reading is about $30 + 4 = 34$.\n\nHere is the step students most often miss. That 34 is the number of students who took **35 minutes or less**, because a cumulative frequency always counts values **up to** a point. The question asks for **longer** than 35, which is everyone else:\n\n$$40 - 34 = 6 \\text{ students}$$\n\nHanding over 34 answers the opposite question and loses the final mark, even though the graph has been read correctly. Whenever the question says *more than*, *longer than* or *at least*, the reading has to be subtracted from $n$.\n\nAs with the mean, the answer is an estimate: the curve assumes the eight students in the 30–40 class are spread evenly through it, and the true number over 35 could be anywhere from 2 to 10. Six is the best estimate the graph can give.",
+      "markScheme": [
+        {
+          "code": "M2",
+          "marks": 2,
+          "description": "midpoints and Σfx = 940"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "23.5, as an estimate"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "reading up from 35"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "subtracting from n"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Uses midpoints and Σfx to estimate the mean as 23.5, dividing by 40.",
+          "marks": 3
+        },
+        {
+          "text": "Explains reading up from 35 to the curve and across to the cumulative frequency.",
+          "marks": 2
+        },
+        {
+          "text": "Explains subtracting the reading from 40, because the graph counts values below.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "To **estimate the mean**, I assume every value sits at the **midpoint** of its class: 5, 15, 25, 35 and 45 minutes. Multiplying each midpoint by its frequency gives $4 \\times 5 = 20$, $10 \\times 15 = 150$, $16 \\times 25 = 400$, $8 \\times 35 = 280$ and $2 \\times 45 = 90$, which add to $\\sum fx = 940$. This is the estimated total of all forty times. Dividing by the total frequency — 40, the number of students, not 5, the number of classes — gives\n\n$$\\frac{940}{40} = 23.5 \\text{ minutes}$$\n\nThis is an **estimate**, because the grouping has hidden the actual times; the midpoint assumption is the best available, but it is an assumption. A quick check: 23.5 sits inside the modal class 20–30, which holds the most students, so it is plausible.\n\nTo find how many students took **longer than 35 minutes**, I would use the **cumulative frequency graph**, plotted at the upper bounds: (10, 4), (20, 14), (30, 30), (40, 38), (50, 40), starting from (0, 0).\n\nThis time the known value is on the **horizontal** axis. I read **up** from 35 minutes to the curve, then **across** to the cumulative frequency axis. Between (30, 30) and (40, 38) the curve rises by 8 over 10 minutes, and 35 is halfway, so the reading is about $30 + 4 = 34$.\n\nHere is the step students most often miss. That 34 is the number of students who took **35 minutes or less**, because a cumulative frequency always counts values **up to** a point. The question asks for **longer** than 35, which is everyone else:\n\n$$40 - 34 = 6 \\text{ students}$$\n\nHanding over 34 answers the opposite question and loses the final mark, even though the graph has been read correctly. Whenever the question says *more than*, *longer than* or *at least*, the reading has to be subtracted from $n$.\n\nAs with the mean, the answer is an estimate: the curve assumes the eight students in the 30–40 class are spread evenly through it, and the true number over 35 could be anywhere from 2 to 10. Six is the best estimate the graph can give."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Midpoints for the mean, upper bounds for the graph.** Build the running total, check it ends at $n$, and plot each value at the end of its class.\n\nRead the median across from $\\frac{n}{2}$ and the quartiles from $\\frac{n}{4}$ and $\\frac{3n}{4}$. For a *more than* question, read the graph and **subtract from $n$**. Call every result an **estimate**.",
+    "examinerErrors": [
+      "Plotting cumulative frequencies at the **midpoints** instead of the upper bounds.",
+      "Reading the median across from $\\frac{n+1}{2}$ rather than $\\frac{n}{2}$.",
+      "Giving the graph reading for a *more than* question without subtracting from $n$.",
+      "Dividing $\\sum fx$ by the number of **classes** instead of by $n$.",
+      "Using upper bounds, not midpoints, when estimating the mean.",
+      "A running total that does not end at $n$, left unchecked.",
+      "Stating the estimated mean as if it were exact.",
+      "Giving the frequency instead of the class when asked for the modal class."
+    ],
+    "grade9Looks": "A grade 9 answer keeps **midpoints** and **upper bounds** for their separate jobs without hesitation, and checks the running total ends at $n$ before plotting anything. It reads the median from $\\frac{n}{2}$ and can say why the $n + 1$ version does not apply to a continuous curve. On a *more than* question it reads the graph and **subtracts from $n$**, saying what the reading counted. It calls every grouped result an **estimate** and knows the modal class is the exception, and it can turn the curve into a **box plot** by reading off the five-number summary."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
