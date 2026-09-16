@@ -42,6 +42,26 @@ describe('tips and tricks', () => {
     }
   })
 
+  /**
+   * Every topic models at least one procedure. Eleven had none at all — mostly the
+   * descriptive Chemistry topics, where it is easy to assume there is nothing to work
+   * through, and where in fact an identification chain, a life-cycle evaluation or a
+   * structured comparison is exactly what the paper asks for.
+   */
+  it('models at least one procedure in every topic', () => {
+    const bare = topics
+      .filter(({ topic }) => !topic.lesson.steps.some((s) => s.visuals.some((v) => v.type === 'worked-example')))
+      .map(({ file }) => file)
+    expect(bare).toEqual([])
+  })
+
+  it('gives every topic at least four tips', () => {
+    const thin = topics
+      .filter(({ topic }) => (topic.tips ?? []).length < 4)
+      .map(({ file, topic }) => `${file}: ${(topic.tips ?? []).length}`)
+    expect(thin).toEqual([])
+  })
+
   it('covers more than one kind when a topic has several tips', () => {
     // Four tips that all say "remember this" would be a list, not a toolkit.
     for (const { file, topic } of topics) {

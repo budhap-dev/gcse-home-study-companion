@@ -118,6 +118,17 @@ function sumSide(text: string): Amounts {
   return { atoms, charge }
 }
 
+/** Does any string anywhere in this value contain something that parses as an equation? */
+function hasEquation(node: unknown): boolean {
+  if (typeof node === 'string') {
+    EQUATION.lastIndex = 0
+    return EQUATION.test(fromLatex(node))
+  }
+  if (Array.isArray(node)) return node.some(hasEquation)
+  if (node && typeof node === 'object') return Object.values(node).some(hasEquation)
+  return false
+}
+
 /** Every string that asserts a correct equation, with a path so a failure can be found. */
 function claims(node: unknown, path: string, found: [string, string][] = []): [string, string][] {
   if (typeof node === 'string') found.push([path, node])
@@ -141,7 +152,18 @@ function claims(node: unknown, path: string, found: [string, string][] = []): [s
     const isWorkedExample = (node as { type?: string }).type === 'worked-example'
     for (const [key, child] of Object.entries(node)) {
       if (DELIBERATE.has(key)) continue
-      if (isWorkedExample && key === 'steps') continue
+      if (isWorkedExample && key === 'steps') {
+        // A worked example builds an equation up, so its early steps are unbalanced on
+        // purpose: `Mg → Mg²⁺` before the electrons are added. Only the *last* step that
+        // carries an equation states a finished one, so that is the one to check.
+        // Skipping the whole list, as this did until 16 September 2026, hid every
+        // equation a worked example asserts as its result.
+        if (Array.isArray(child)) {
+          const last = child.map((s) => hasEquation(s)).lastIndexOf(true)
+          if (last >= 0) claims(child[last], `${path}.${key}[${last}]`, found)
+        }
+        continue
+      }
       claims(child, `${path}.${key}`, found)
     }
   }
