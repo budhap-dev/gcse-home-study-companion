@@ -42,8 +42,41 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const W = 360
   const H = 300
   const pad = 28
+  /**
+   * An x-axis caption needs a band of its own below the tick numbers. It used to sit at
+   * H - 2, twelve pixels under tick labels whose own descenders reached further than
+   * that, so the two touched. The plot box is unchanged; the canvas simply grows.
+   */
+  const captionBand = xLabel ? 16 : 0
+  const totalH = H + captionBand
   const sy = (y: number) => H - pad - ((y - yMin) / (yMax - yMin)) * (H - 2 * pad)
   const palette = [ACCENT, '#d25b3b', '#2e8b57', '#1f3a93']
+
+  /**
+   * Labels are placed at the thing they name — the end of a line, a plotted point — and
+   * two of those can land on each other: two roots a unit apart, or a line label where
+   * the axis letter sits. This nudges each new label clear of the ones already placed,
+   * upwards if there is room above and downwards otherwise, so a chart can never print
+   * one label over another. Positions are approximate because SVG cannot measure text
+   * here; the browser check is what confirms the result.
+   */
+  const placed: { x: number; y: number; w: number }[] = []
+  const clear = (x: number, y: number, text: string, size = 12, anchorEnd = false) => {
+    const w = text.length * size * 0.55
+    const left = anchorEnd ? x - w : x
+    const hits = (at: number) => placed.some((q) => Math.abs(q.y - at) < size + 2 && left < q.x + q.w && q.x < left + w)
+    let out = y
+    for (let step = 0; step < 8 && hits(out); step++) out = y - (step + 1) * (size + 4)
+    if (hits(out)) { out = y; for (let step = 0; step < 8 && hits(out); step++) out = y + (step + 1) * (size + 4) }
+    placed.push({ x: left, y: out, w })
+    return out
+  }
+  /** Register a label that must not move, so movable ones are nudged clear of it. */
+  const reserve = (x: number, y: number, text: string, size = 11, anchorEnd = false) => {
+    const w = text.length * size * 0.55
+    placed.push({ x: anchorEnd ? x - w : x, y, w })
+    return y
+  }
   // A tick step of 1, 2 or 5 times a power of ten, giving roughly 5 to 10 ticks across the range.
   const niceStep = (range: number) => {
     const raw = range / 8
@@ -90,19 +123,21 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     return { d, last }
   }
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
+    <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
       {grid && xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={pad} x2={sx(v)} y2={H - pad} stroke={RULE} />)}
       {grid && yTicks.map((v) => <line key={`gy${v}`} x1={padL} y1={sy(v)} x2={W - pad} y2={sy(v)} stroke={RULE} />)}
       {yMin <= 0 && yMax >= 0 && <line x1={padL} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
       {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={pad} x2={sx(0)} y2={H - pad} stroke={INK} strokeWidth="1.5" />}
-      {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={sy(Math.max(yMin, Math.min(0, yMax))) + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
-      {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
+      {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={reserve(sx(v) - String(fmt(v)).length * 3, sy(Math.max(yMin, Math.min(0, yMax))) + 14, fmt(v))} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
+      {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={reserve(sx(Math.max(xMin, Math.min(0, xMax))) - 6, sy(v) + 4, fmt(v), 11, true)} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
       {xLabel
-        ? <text x={W / 2} y={H - 2} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
+        ? <text x={W / 2} y={totalH - 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
         : <text x={W - pad} y={sy(Math.max(yMin, Math.min(0, yMax))) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>x</text>}
       {yLabel
         ? <text x={padL} y={pad - 10} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
-        : <text x={sx(Math.max(xMin, Math.min(0, xMax))) + 8} y={pad + 4} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>y</text>}
+        : // Above the plot rather than inside it: a steep line's own label is drawn at the
+          // top of the axis and used to land on this letter.
+          <text x={sx(Math.max(xMin, Math.min(0, xMax))) + 8} y={clear(sx(Math.max(xMin, Math.min(0, xMax))) + 8, pad - 8, 'y')} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>y</text>}
       {lines.map((l, i) => {
         const seg = segment(l)
         if (!seg) return null
@@ -111,7 +146,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={i}>
             <line x1={sx(x1)} y1={sy(y1)} x2={sx(x2)} y2={sy(y2)} stroke={colour} strokeWidth="2.5" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {l.label && <text x={sx(x2) - 4} y={sy(y2) + (y2 > y1 ? -8 : 16)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{l.label}</text>}
+            {l.label && <text x={sx(x2) - 4} y={clear(sx(x2) - 4, sy(y2) + (y2 > y1 ? -8 : 16), l.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{l.label}</text>}
           </g>
         )
       })}
@@ -122,7 +157,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={`k${i}`}>
             <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={k.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {k.label && <text x={sx(last[0]) - 4} y={sy(last[1]) + (k.a > 0 ? -8 : 16)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>}
+            {k.label && <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>}
           </g>
         )
       })}
@@ -130,7 +165,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         <g key={`p${i}`}>
           <circle cx={sx(p.x)} cy={sy(p.y)} r="4.5" fill="#fff" stroke={INK} strokeWidth="2" />
           {/* A point in the right half labels to its left, so the text stays inside the chart. */}
-          {p.label && <text x={sx(p.x) + (sx(p.x) > W / 2 ? -8 : 8)} y={sy(p.y) - 8} textAnchor={sx(p.x) > W / 2 ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>}
+          {p.label && <text x={sx(p.x) + (sx(p.x) > W / 2 ? -8 : 8)} y={clear(sx(p.x) + (sx(p.x) > W / 2 ? -8 : 8), sy(p.y) - 8, p.label, 12, sx(p.x) > W / 2)} textAnchor={sx(p.x) > W / 2 ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>}
         </g>
       ))}
     </svg>

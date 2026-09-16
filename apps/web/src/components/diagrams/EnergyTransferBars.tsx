@@ -21,8 +21,8 @@ export function EnergyTransferBars({ props, alt }: { props: Record<string, unkno
         return (
           <g key={s}>
             <rect x={x} y={150 - h} width="36" height={h} fill={colours[s] ?? INK_2} rx="3" />
-            <text x={x + 18} y={146 - h} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK}>{v ? `${v}%` : ''}</text>
-            <text x={x + 18} y="166" textAnchor="middle" fontFamily={FONT} fontSize="9" fill={INK_2}>{s.split(' ')[0]}</text>
+            <text x={x + 18} y={146 - h} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{v ? `${v}%` : ''}</text>
+            <text x={x + 18} y="166" textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{s.split(' ')[0]}</text>
           </g>
         )
       })}

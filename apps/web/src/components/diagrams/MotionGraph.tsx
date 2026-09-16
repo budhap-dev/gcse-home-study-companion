@@ -66,6 +66,24 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
   const yMin = Math.floor(dataYMin / yStep) * yStep
   const W = 400, H = 300, padT = 20, padR = 20, padB = 44
   const fmt = (v: number) => String(Number(v.toFixed(4)))
+
+  /**
+   * Labels sit at the thing they name — the middle of a segment, the end of a line, a
+   * marker — and two can land on each other. Each new one is nudged clear of those
+   * already placed. Widths are approximate because SVG cannot measure text here; the
+   * browser check is what confirms the result.
+   */
+  const placed: { x: number; y: number; w: number }[] = []
+  const clear = (x: number, y: number, text: string, size = 11, anchor: 'start' | 'middle' | 'end' = 'middle') => {
+    const w = text.length * size * 0.55
+    const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x
+    const hits = (at: number) => placed.some((q) => Math.abs(q.y - at) < size + 2 && left < q.x + q.w && q.x < left + w)
+    let out = y
+    for (let step = 0; step < 8 && hits(out); step++) out = y - (step + 1) * (size + 4)
+    if (hits(out)) { out = y; for (let step = 0; step < 8 && hits(out); step++) out = y + (step + 1) * (size + 4) }
+    placed.push({ x: left, y: out, w })
+    return out
+  }
   const yTicks: number[] = []
   for (let v = yMin; v <= yMax + 1e-9; v += yStep) yTicks.push(Number(v.toFixed(6)))
   const xTicks: number[] = []
@@ -90,18 +108,18 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
         return (
           <g key={`sh${i}`}>
             <path d={d} fill={ACCENT} opacity="0.18" />
-            {s.label && <text x={sx(mid)} y={(sy(valueAt(first, mid)) + sy(0)) / 2 + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK}>{s.label}</text>}
+            {s.label && <text x={sx(mid)} y={clear(sx(mid), (sy(valueAt(first, mid)) + sy(0)) / 2 + 4, s.label)} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK}>{s.label}</text>}
           </g>
         )
       })}
       <line x1={padL} y1={sy(0)} x2={W - padR} y2={sy(0)} stroke={INK} strokeWidth="1.5" />
       <line x1={padL} y1={padT} x2={padL} y2={H - padB} stroke={INK} strokeWidth="1.5" />
-      {yTicks.map((v) => <text key={`ty${v}`} x={padL - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="10" fill={INK_2}>{fmt(v)}</text>)}
-      {xTicks.map((v) => <text key={`tx${v}`} x={sx(v)} y={H - padB + 14} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>{fmt(v)}</text>)}
+      {yTicks.map((v) => <text key={`ty${v}`} x={padL - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
+      {xTicks.map((v) => <text key={`tx${v}`} x={sx(v)} y={H - padB + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
       {markers.map((m, i) => (
         <g key={`m${i}`}>
           <line x1={sx(m.t)} y1={padT} x2={sx(m.t)} y2={H - padB} stroke={INK_2} strokeDasharray="4 4" />
-          <text x={sx(m.t) > W - padR - 70 ? sx(m.t) - 4 : sx(m.t) + 4} y={padT + 12} textAnchor={sx(m.t) > W - padR - 70 ? 'end' : 'start'} fontFamily={FONT} fontSize="10" fill={INK_2}>{m.label}</text>
+          <text x={sx(m.t) > W - padR - 70 ? sx(m.t) - 4 : sx(m.t) + 4} y={clear(sx(m.t) > W - padR - 70 ? sx(m.t) - 4 : sx(m.t) + 4, padT + 12, m.label, 11, sx(m.t) > W - padR - 70 ? 'end' : 'start')} textAnchor={sx(m.t) > W - padR - 70 ? 'end' : 'start'} fontFamily={FONT} fontSize="11" fill={INK_2}>{m.label}</text>
         </g>
       ))}
       {series.map((s, i) => {
@@ -110,7 +128,7 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
         return (
           <g key={`s${i}`}>
             <path d={path(s.points)} fill="none" stroke={colour} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" strokeDasharray={s.dashed ? '6 5' : undefined} />
-            {s.label && end && <text x={Math.min(sx(end.t), W - padR - 2)} y={sy(end.y) - 8} textAnchor="end" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}>{s.label}</text>}
+            {s.label && end && <text x={Math.min(sx(end.t), W - padR - 2)} y={clear(Math.min(sx(end.t), W - padR - 2), sy(end.y) - 8, s.label, 11, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}>{s.label}</text>}
           </g>
         )
       })}
@@ -130,11 +148,11 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
             <line x1={x2} y1={Y1} x2={x2} y2={Y2} stroke="#d25b3b" strokeWidth="1.5" strokeDasharray="5 4" />
             <text x={(x1 + x2) / 2} y={runY} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{fmt(run)} s</text>
             <text x={riseX} y={(Y1 + Y2) / 2 + 4} textAnchor={riseAnchor} fontFamily={FONT} fontSize="11" fill="#d25b3b">{fmt(rise)}</text>
-            {gradient.label && <text x={riseX} y={(Y1 + Y2) / 2 + 18} textAnchor={riseAnchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill="#d25b3b">{gradient.label}</text>}
+            {gradient.label && <text x={riseX} y={clear(riseX, (Y1 + Y2) / 2 + 18, gradient.label, 11, riseAnchor)} textAnchor={riseAnchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill="#d25b3b">{gradient.label}</text>}
           </g>
         )
       })()}
-      {labels.map((l, i) => <text key={`l${i}`} x={sx(l.t)} y={sy(l.y)} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{l.text}</text>)}
+      {labels.map((l, i) => <text key={`l${i}`} x={sx(l.t)} y={clear(sx(l.t), sy(l.y), l.text)} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{l.text}</text>)}
       <text x={(padL + W - padR) / 2} y={H - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
       <text x={padL} y={padT - 6} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
     </svg>

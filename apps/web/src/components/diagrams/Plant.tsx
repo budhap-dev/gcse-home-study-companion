@@ -9,7 +9,7 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
   const kind = String(props.kind ?? 'leaf-section')
   const W = kind === 'stoma' ? 340 : 440, H = 230
   const items: React.ReactNode[] = []
-  const label = (x: number, y: number, text: string, key: string, anchor: 'start' | 'end' = 'start') => items.push(<text key={key} x={x} y={y} textAnchor={anchor} fontFamily={FONT} fontSize="10" fill={INK}>{text}</text>)
+  const label = (x: number, y: number, text: string, key: string, anchor: 'start' | 'end' = 'start') => items.push(<text key={key} x={x} y={y} textAnchor={anchor} fontFamily={FONT} fontSize="11" fill={INK}>{text}</text>)
   const tick = (x1: number, y1: number, x2: number, y2: number, key: string) => items.push(<line key={key} x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK_2} strokeWidth="1" />)
   if (kind === 'leaf-section') {
     const x0 = 20, x1 = 200
@@ -30,8 +30,18 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     items.push(<path key="g1b" d="M80 176 Q92 184 80 192 Z" fill={LEAF} stroke={INK} strokeWidth="1" />)
     items.push(<path key="g2b" d="M110 176 Q98 184 110 192 Z" fill={LEAF} stroke={INK} strokeWidth="1" />)
     items.push(<path key="co2" d="M95 214 L95 196" stroke={INK_2} strokeWidth="1.2" markerEnd="url(#arrow-plant)" />)
-    const L: [number, string, number][] = [[24, 'waxy cuticle', 24], [34, 'upper epidermis', 34], [75, 'palisade mesophyll: most chloroplasts', 75], [140, 'spongy mesophyll: air spaces', 140], [184, 'lower epidermis with stomata', 184]]
-    L.forEach(([y, t, ly], i) => { tick(x1, y, 212, ly, `t${i}`); label(216, ly + 3, t, `l${i}`) })
+    // The cuticle and the upper epidermis are genuinely only ten pixels apart in the leaf,
+    // so their labels collided once the text reached a readable size. The leader lines
+    // still point at the true depths; only the label ends are spread apart.
+    const layers: [number, string][] = [[24, 'waxy cuticle'], [34, 'upper epidermis'], [75, 'palisade mesophyll: most chloroplasts'], [140, 'spongy mesophyll: air spaces'], [184, 'lower epidermis with stomata']]
+    const MIN_GAP = 16
+    let lastLabelY = -Infinity
+    layers.forEach(([y, t], i) => {
+      const ly = Math.max(y, lastLabelY + MIN_GAP)
+      lastLabelY = ly
+      tick(x1, y, 212, ly, `t${i}`)
+      label(216, ly + 3, t, `l${i}`)
+    })
     tick(133, 140, 212, 158, 'tv'); label(216, 161, 'vein: xylem and phloem', 'lv')
     label(216, 215, 'CO₂ in, O₂ out through a stoma', 'lc')
   } else if (kind === 'root-hair') {
@@ -75,12 +85,12 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
       items.push(<path key={`${key}b`} d={`M${x0 + gap} 60 C ${x0 + 40} 80 ${x0 + 40} 130 ${x0 + gap} 150 C ${x0 + gap + 22} 130 ${x0 + gap + 22} 80 ${x0 + gap} 60 Z`} fill={LEAF} stroke={INK} strokeWidth="1.5" />)
       for (const dx of [-1, 1]) for (let k = 0; k < 3; k++) items.push(<circle key={`${key}c${dx}${k}`} cx={x0 + dx * (gap + 14)} cy={85 + k * 20} r="3" fill={GREEN} />)
       items.push(<text key={`${key}t`} x={x0} y={180} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{open ? 'open' : 'closed'}</text>)
-      items.push(<text key={`${key}s`} x={x0} y={196} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>{open ? 'guard cells turgid: water in' : 'guard cells flaccid: water out'}</text>)
+      items.push(<text key={`${key}s`} x={x0} y={196} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{open ? 'guard cells turgid: water in' : 'guard cells flaccid: water out'}</text>)
     }
     draw(90, true, 'o'); draw(250, false, 'c')
     items.push(<path key="in" d="M90 40 V 20" stroke={INK_2} strokeWidth="1.2" markerEnd="url(#arrow-plant)" />)
     label(100, 30, 'water vapour out, CO₂ in', 'lo')
-    items.push(<text key="cap" x={W / 2} y={218} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>the stoma is the gap between the two guard cells</text>)
+    items.push(<text key="cap" x={W / 2} y={218} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>the stoma is the gap between the two guard cells</text>)
   } else if (kind === 'potometer') {
     items.push(<rect key="res" x={30} y={40} width={26} height={70} rx="3" fill="#eef3ff" stroke={INK} strokeWidth="1.2" />)
     items.push(<rect key="tap" x={34} y={110} width={18} height={10} fill="#ccc" stroke={INK} strokeWidth="1" />)
@@ -95,7 +105,7 @@ export function Plant({ props, alt }: { props: Record<string, unknown>; alt: str
     label(100, 195, 'capillary tube with scale: distance the bubble moves per minute', 'l2', 'start')
     tick(206, 146, 206, 128, 't1'); label(212, 126, 'air bubble', 'l3')
     label(200, 60, 'leafy shoot, cut under water', 'l4')
-    items.push(<text key="cap" x={W / 2} y={218} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>a potometer measures water uptake, which follows the rate of transpiration</text>)
+    items.push(<text key="cap" x={W / 2} y={218} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>a potometer measures water uptake, which follows the rate of transpiration</text>)
   }
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 460 }} role="img" aria-label={alt}>

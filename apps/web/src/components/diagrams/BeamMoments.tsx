@@ -28,7 +28,9 @@ export function BeamMoments({ props, alt }: { props: Record<string, unknown>; al
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.min(600, W * 1.2) }} role="img" aria-label={alt}>
       <rect x={x(0)} y={beamY - 6} width={length * scale} height="12" rx="2" fill="var(--subject-soft)" stroke={INK} strokeWidth="2" />
       <polygon points={`${x(pivot)},${beamY + 6} ${x(pivot) - 16},${beamY + 40} ${x(pivot) + 16},${beamY + 40}`} fill={INK} />
-      <text x={x(pivot)} y={beamY + 56} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>pivot</text>
+      {/* Below the distance labels rather than twelve pixels under them: a force close to
+          the pivot puts its distance label directly over this one. */}
+      <text x={x(pivot)} y={beamY + 62} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>pivot</text>
       {forces.map((f, i) => {
         const len = 22 + (Math.abs(f.force) / maxF) * 38
         const down = f.force > 0
@@ -43,7 +45,7 @@ export function BeamMoments({ props, alt }: { props: Record<string, unknown>; al
             {showDistances && f.at !== pivot && (
               <g>
                 <line x1={x(Math.min(f.at, pivot))} y1={beamY + 30} x2={x(Math.max(f.at, pivot))} y2={beamY + 30} stroke={INK_2} strokeDasharray="3 3" />
-                <text x={x((f.at + pivot) / 2)} y={beamY + 44} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>{Math.abs(f.at - pivot)} m</text>
+                <text x={x((f.at + pivot) / 2)} y={beamY + 44} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{Math.abs(f.at - pivot)} m</text>
               </g>
             )}
           </g>
