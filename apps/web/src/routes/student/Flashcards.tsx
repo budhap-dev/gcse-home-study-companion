@@ -4,23 +4,54 @@ import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { getTopic } from '../../content/index.ts'
 
-interface Card {
+export interface Card {
   id: string
   front: string
   back: string
   kind: 'fact' | 'question'
 }
 
+/**
+ * Split one summary bullet into a prompt and an answer.
+ *
+ * Summary bullets are written as a bold cue followed by the detail — "**Oxygen debt** the
+ * oxygen needed afterwards to break down the lactic acid" — so the bold run is the front
+ * of the card. Where there is no bold lead, a small set of separators finds the break.
+ * Splitting on punctuation alone used to fail on most bullets, because the "**" markers sit
+ * between the full stop and the space.
+ */
+function cueAndDetail(bullet: string): { front: string; back: string } | null {
+  const text = bullet.trim()
+
+  const lead = /^\*\*(.+?)\*\*[\s,:—-]*(.+)$/s.exec(text)
+  if (lead) {
+    const front = lead[1]!.replace(/\*\*/g, '').replace(/[.:,]\s*$/, '').trim()
+    const back = lead[2]!.trim()
+    if (front.length >= 6 && front.length < 70 && back.length >= 8) return { front, back }
+  }
+
+  const plain = text.replace(/\*\*/g, '').trim()
+  for (const sep of [/:\s/, / — /, /;\s/, /\.\s/, /,\s(?=because|which|so\b)/]) {
+    const at = sep.exec(plain)
+    if (!at) continue
+    const front = plain.slice(0, at.index).trim()
+    const back = plain.slice(at.index + at[0].length).trim()
+    if (front.length >= 8 && front.length < 70 && back.length >= 8) return { front, back }
+  }
+  return null
+}
+
 /** Cards come from the topic itself: its summary points, its questions, and its exam technique note. */
-function buildCards(topic: NonNullable<ReturnType<typeof getTopic>>): Card[] {
+export function buildCards(topic: NonNullable<ReturnType<typeof getTopic>>): Card[] {
   const cards: Card[] = []
   const summary = topic.lesson.steps.find((s) => s.kind === 'summary')
   if (summary) {
     summary.body.split('\n').filter((l) => l.trim().startsWith('- ')).forEach((l, i) => {
-      const text = l.trim().slice(2)
-      const [head, ...rest] = text.split(/:\s|\.\s/)
-      if (rest.length > 0 && head && head.length < 60) cards.push({ id: `s${i}`, front: head.replace(/\*\*/g, ''), back: rest.join('. '), kind: 'fact' })
-      else cards.push({ id: `s${i}`, front: `Key point ${i + 1} of ${topic.title}`, back: text, kind: 'fact' })
+      const cue = cueAndDetail(l.trim().slice(2))
+      // A bullet with no cue in it makes no card. It used to make one headed
+      // "Key point 7 of ...", which asks the reader nothing: 56% of the summary cards in
+      // the pack were that. A shorter deck of real prompts is worth more than a long one.
+      if (cue) cards.push({ id: `s${i}`, front: cue.front, back: cue.back, kind: 'fact' })
     })
   }
   const answer = (q: Question): string | null => {
@@ -93,7 +124,7 @@ export function Flashcards() {
           <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · Flashcards</span>
           <span className="font-bold">{topic.title}</span>
         </div>
-        <span className="text-sm text-ink-2 tabular-nums">{known} known · {queue.length} left</span>
+        <span className="shrink-0 whitespace-nowrap text-sm text-ink-2 tabular-nums">{known} known · {queue.length} left</span>
       </header>
 
       <button
@@ -102,13 +133,13 @@ export function Flashcards() {
         aria-pressed={flipped}
         className="flashcard relative min-h-72 w-full rounded-2xl text-left [perspective:1200px]"
       >
-        <div className={`flashcard-inner relative h-full min-h-72 w-full ${flipped ? 'is-flipped' : ''}`}>
-          <div className="flashcard-face absolute inset-0 flex flex-col gap-3 rounded-2xl border-2 border-[color:var(--subject)] bg-surface p-5">
+        <div className={`flashcard-inner relative min-h-72 w-full ${flipped ? 'is-flipped' : ''}`}>
+          <div className="flashcard-face flex flex-col gap-3 rounded-2xl border-2 border-[color:var(--subject)] bg-surface p-5">
             <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{card.kind === 'question' ? 'Question' : 'Recall'}</span>
             <RichText source={card.front} className="text-[17px] leading-relaxed" />
             <span className="mt-auto text-xs text-ink-2">Tap to flip</span>
           </div>
-          <div className="flashcard-face flashcard-back absolute inset-0 flex flex-col gap-3 rounded-2xl border-2 border-rule bg-panel p-5">
+          <div className="flashcard-face flashcard-back flex flex-col gap-3 rounded-2xl border-2 border-rule bg-panel p-5">
             <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Answer</span>
             <RichText source={card.back} className="text-[16px] leading-relaxed" />
           </div>

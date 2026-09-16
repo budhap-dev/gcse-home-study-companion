@@ -108,7 +108,8 @@ export function TopicMap() {
             </details>
           )
         })}
-        <Link to={`/subjects/${subject.id}/exam-technique`} className="w-fit text-sm font-bold underline">Exam technique guide</Link>
+        {/* A standalone link, so it needs a thumb-sized target rather than the 20px a bare line of text gives. */}
+        <Link to={`/subjects/${subject.id}/exam-technique`} className="flex w-fit items-center py-2 text-sm font-bold underline">Exam technique guide</Link>
       </section>
     </article>
   )

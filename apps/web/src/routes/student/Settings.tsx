@@ -79,7 +79,7 @@ export function Settings() {
             return (
               <button key={d} type="button" aria-pressed={on} onClick={() => toggleDayOff(d)} className={`flex h-14 flex-col items-center justify-center rounded-lg text-xs font-bold ${on ? 'bg-ink text-surface' : 'border border-rule'} ${d === today ? 'ring-2 ring-[color:var(--subject)] ring-offset-1' : ''}`}>
                 <span>{new Date(d + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short' }).slice(0, 2)}</span>
-                <span className="text-[10px] font-normal">{d.slice(8)}</span>
+                <span className="text-[11px] font-normal">{d.slice(8)}</span>
               </button>
             )
           })}
