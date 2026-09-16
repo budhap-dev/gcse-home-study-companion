@@ -32,14 +32,14 @@ export interface SyllabusBlock {
 export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
   'maths': [
     { year: 9, term: 'Autumn', topics: [
-      { title: 'Arithmetic and quadratic sequences' },
-      { title: 'Graphs of rates of change' },
-      { title: 'Compound units: speed and density' },
+      { title: 'Arithmetic and quadratic sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
+      { title: 'Graphs of rates of change', topicId: 'rate-of-change-and-real-life-graphs' },
+      { title: 'Compound units: speed and density', topicId: 'compound-measures' },
       { title: 'Sectors, cylinders and spheres' },
       { title: 'Limits of accuracy and bounds', topicId: 'limits-of-accuracy-and-bounds' },
       { title: 'Fractions, decimals and percentages' },
       { title: 'Successive percentage change' },
-      { title: 'Direct and inverse proportion' },
+      { title: 'Direct and inverse proportion', topicId: 'ratio-and-proportion' },
       { title: 'Parallel and perpendicular lines', topicId: 'parallel-and-perpendicular-lines' },
       { title: 'Graphs of quadratic and cubic functions' },
     ] },
@@ -50,19 +50,22 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Grouped and cumulative frequency' },
       { title: 'Box plots' },
       { title: 'Simultaneous equations' },
-      { title: 'Inequalities' },
+      { title: 'Inequalities', topicId: 'inequalities-on-a-number-line' },
       { title: 'Frequency trees' },
-      { title: 'Tree diagrams' },
+      { title: 'Tree diagrams', topicId: 'combined-events-and-tree-diagrams' },
     ] },
     { year: 9, term: 'Summer', topics: [
       { title: 'Congruent triangles', topicId: 'congruency' },
-      { title: 'Similarity' },
+      { title: 'Similarity', topicId: 'similarity-and-linear-scale-factors' },
       { title: 'Pythagoras' },
       { title: 'Trigonometric ratios' },
       { title: 'Simplifying and expanding expressions' },
       { title: 'Solving quadratics by factorising', topicId: 'solving-quadratic-equations' },
-      { title: 'Changing the subject of a formula' },
-      { title: 'Trial and improvement' },
+      { title: 'Changing the subject of a formula', topicId: 'identities-and-rearranging-formulae' },
+      // The school's wording is the old one. "Trial and improvement" appears nowhere in
+      // Edexcel 1MA1; the spec asks for A20, solving numerically by iteration, which is the
+      // same method and is what the Iteration topic teaches.
+      { title: 'Trial and improvement', topicId: 'iteration' },
     ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'Laws of indices', topicId: 'laws-of-indices' },
