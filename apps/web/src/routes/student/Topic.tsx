@@ -7,6 +7,7 @@ import { StatusChip } from '../../components/StatusChip.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { evidenceFor } from '../../progress/store.ts'
+import { ResetProgress } from '../../components/ResetProgress.tsx'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -142,6 +143,15 @@ export function Topic() {
           ))}
         </section>
       )}
+
+      <section className="flex flex-col gap-2 border-t border-rule pt-5">
+        <ResetProgress
+          label="Reset this topic"
+          what="this topic"
+          topicIds={[topic.id]}
+          hasProgress={progress.attempts.some((a) => a.topicId === topic.id) || Boolean(progress.lessons[topic.id])}
+        />
+      </section>
     </article>
   )
 }
