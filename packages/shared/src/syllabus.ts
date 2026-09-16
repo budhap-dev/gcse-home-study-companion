@@ -125,29 +125,33 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
     { year: 11, term: 'Autumn', topics: [
       { title: 'Algebraic fractions' },
-      { title: 'Rearranging formulae' },
-      { title: 'Cumulative frequency curves and box plots' },
-      { title: 'Simultaneous equations' },
-      { title: 'Surds' },
+      { title: 'Rearranging formulae', topicId: 'identities-and-rearranging-formulae' },
+      // Box plots are a topic of their own; this row links to the curve topic, which
+      // teaches reading the five-number summary off a cumulative frequency graph.
+      { title: 'Cumulative frequency curves and box plots', topicId: 'grouped-and-cumulative-frequency' },
+      { title: 'Simultaneous equations', topicId: 'simultaneous-equations' },
+      { title: 'Surds', topicId: 'surds' },
       { title: 'Equation of a circle' },
-      { title: 'Exact trigonometric values' },
+      { title: 'Exact trigonometric values', topicId: 'exact-trigonometric-values' },
       { title: 'Trigonometric graphs' },
       { title: 'Functions' },
     ] },
     { year: 11, term: 'Spring', topics: [
+      // Not linked: the Year 11 Autumn row "Ratio and proportion" already points at that
+      // topic, and one topic twice in a year would list it twice on the same page.
       { title: 'Direct and inverse proportion' },
       { title: 'Non-linear graphs' },
       { title: 'Transformations of graphs' },
       { title: 'Algebraic proof' },
-      { title: 'Sequences' },
-      { title: 'Iteration: approximating solutions' },
+      { title: 'Sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
+      { title: 'Iteration: approximating solutions', topicId: 'iteration' },
     ] },
     { year: 11, term: 'Summer', topics: [
       { title: 'Fractions' },
       { title: 'Ratio and proportion', topicId: 'ratio-and-proportion' },
       { title: 'Percentages' },
       { title: 'Enlargements, reflections, rotations and translations' },
-      { title: 'Standard form' },
+      { title: 'Standard form', topicId: 'standard-form' },
       { title: 'Index form' },
       { title: 'Properties of angles' },
       { title: 'Constructions and loci' },
