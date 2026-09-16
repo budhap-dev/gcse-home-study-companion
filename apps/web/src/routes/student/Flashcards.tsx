@@ -133,13 +133,13 @@ export function Flashcards() {
         aria-pressed={flipped}
         className="flashcard relative min-h-72 w-full rounded-2xl text-left [perspective:1200px]"
       >
-        <div className={`flashcard-inner relative h-full min-h-72 w-full ${flipped ? 'is-flipped' : ''}`}>
-          <div className="flashcard-face absolute inset-0 flex flex-col gap-3 rounded-2xl border-2 border-[color:var(--subject)] bg-surface p-5">
+        <div className={`flashcard-inner relative w-full ${flipped ? 'is-flipped' : ''}`}>
+          <div className="flashcard-face flex flex-col gap-3 rounded-2xl border-2 border-[color:var(--subject)] bg-surface p-5">
             <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{card.kind === 'question' ? 'Question' : 'Recall'}</span>
             <RichText source={card.front} className="text-[17px] leading-relaxed" />
             <span className="mt-auto text-xs text-ink-2">Tap to flip</span>
           </div>
-          <div className="flashcard-face flashcard-back absolute inset-0 flex flex-col gap-3 rounded-2xl border-2 border-rule bg-panel p-5">
+          <div className="flashcard-face flashcard-back flex flex-col gap-3 rounded-2xl border-2 border-rule bg-panel p-5">
             <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Answer</span>
             <RichText source={card.back} className="text-[16px] leading-relaxed" />
           </div>

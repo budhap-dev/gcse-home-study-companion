@@ -44,7 +44,12 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
 .rich-text .katex { font-size: 1.05em; }
 
 /* Flashcards: 3D flip, a plain swap under reduced motion. */
-.flashcard-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+/* Both faces sit in the same grid cell rather than being absolutely positioned, so the
+   card grows to whichever face is taller. With `position: absolute` the faces were out of
+   flow and the card stayed at its min-height, so a question card carrying four options
+   spilled its text out over the buttons below it. */
+.flashcard-inner { display: grid; transition: transform 0.5s; transform-style: preserve-3d; }
+.flashcard-face { grid-area: 1 / 1; }
 .flashcard-inner.is-flipped { transform: rotateY(180deg); }
 .flashcard-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .flashcard-back { transform: rotateY(180deg); }
