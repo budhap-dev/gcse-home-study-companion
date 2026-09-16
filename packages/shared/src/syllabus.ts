@@ -223,17 +223,20 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Instrumental methods', topicId: 'instrumental-methods' },
     ] },
     { year: 9, term: 'Spring', topics: [
-      { title: 'Reactions of acids with bases' },
-      { title: 'Strong and weak acids' },
-      { title: 'Reactivity of metals and displacement' },
-      { title: 'Oxidation and reduction' },
-      { title: 'Measuring rates of reaction' },
-      { title: 'Collision theory and the effect of conditions' },
+      { title: 'Reactions of acids with bases', topicId: 'reactions-of-acids-with-bases' },
+      // Required practical 1, making a soluble salt from an insoluble oxide or carbonate
+      // (4.4.2.3), is covered by neither of the school's two acid rows, so this was added.
+      { title: 'Making soluble salts', topicId: 'making-soluble-salts' },
+      { title: 'Strong and weak acids', topicId: 'strong-and-weak-acids' },
+      { title: 'Reactivity of metals and displacement', topicId: 'reactivity-of-metals-and-displacement' },
+      { title: 'Oxidation and reduction', topicId: 'oxidation-and-reduction' },
+      { title: 'Measuring rates of reaction', topicId: 'measuring-rates-of-reaction' },
+      { title: 'Collision theory and the effect of conditions', topicId: 'collision-theory-and-catalysts' },
     ] },
     { year: 9, term: 'Summer', topics: [
-      { title: 'Development of the atmosphere' },
-      { title: 'Greenhouse gases and climate change' },
-      { title: 'Atmospheric pollutants from combustion' },
+      { title: 'Development of the atmosphere', topicId: 'development-of-the-atmosphere' },
+      { title: 'Greenhouse gases and climate change', topicId: 'greenhouse-gases-and-climate-change' },
+      { title: 'Atmospheric pollutants from combustion', topicId: 'atmospheric-pollutants-from-combustion' },
     ] },
     { year: 10, term: 'Autumn 1 and 2', topics: [
       { title: 'Ionic bonding and ionic compounds', topicId: 'ionic-bonding' },

@@ -41,9 +41,11 @@ const SUP: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2', '³': '3
  * One species: an optional multiplier, a formula with subscripts and bracket groups, and
  * an optional charge. Charges are written both ways in the content — `Cu²⁺` in prose and
  * `Cu2+` in the accepted lists, because that is what a student types — so both are read.
- * A free electron is `e⁻`, `e-`, or the bare `e` a student types.
+ * A free electron is `e⁻`, `e-`, or the bare `e` a student types. An ASCII charge may be
+ * followed by punctuation — an equation often ends a sentence — so the lookahead allows it;
+ * requiring whitespace made `Cl^-}$.` read as a neutral chlorine atom.
  */
-const TERM = String.raw`\d*\s*(?:e(?![a-z])[⁻-]?|[A-Z][a-z]?(?:[₀-₉0-9]|\([A-Z][a-z]?[₀-₉0-9]*\)[₀-₉0-9]*|[A-Z][a-z]?)*(?:[⁰¹²³⁴⁵⁶⁷⁸⁹]*[⁺⁻]|\d*[+-](?=\s|$|→))?)(?:\s*\((?:s|l|g|aq)\))?`
+const TERM = String.raw`\d*\s*(?:e(?![a-z])[⁻-]?|[A-Z][a-z]?(?:[₀-₉0-9]|\([A-Z][a-z]?[₀-₉0-9]*\)[₀-₉0-9]*|[A-Z][a-z]?)*(?:[⁰¹²³⁴⁵⁶⁷⁸⁹]*[⁺⁻]|\d*[+-](?=[\s.,;:)\]]|$|→))?)(?:\s*\((?:s|l|g|aq)\))?`
 const SIDE = String.raw`${TERM}(?:[ \t]*[+\-][ \t]*${TERM})*`
 const EQUATION = new RegExp(String.raw`${SIDE}[ \t]*→[ \t]*${SIDE}`, 'g')
 
