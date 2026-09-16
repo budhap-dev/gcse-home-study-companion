@@ -25,6 +25,23 @@ describe('exam technique preview', () => {
     }
   })
 
+  const stars = (s: string) => (s.match(/\*\*/g) ?? []).length
+
+  it('never cuts through a bold span', () => {
+    for (const t of TOPICS) {
+      const preview = previewOf(t.examTechnique.body)
+      expect(stars(preview) % 2, `${t.id}: ${preview}`).toBe(0)
+    }
+  })
+
+  it('ends a sentence that closes with bold after the bold, and never falls back into one', () => {
+    // The frequency trees note: the first full stop sits inside the bold, so "period then
+    // space" never matched, the fallback ran, and the card printed "take a percentage **of…".
+    const note = '**Counts in the boxes adds to its parent.** Fill blanks by subtraction, take a percentage **of the parent box**, and check the end boxes add to the root.'
+    expect(previewOf(note, 150)).toBe('**Counts in the boxes adds to its parent.**')
+    expect(stars(previewOf('**' + 'word '.repeat(60) + '**', 40)) % 2).toBe(0)
+  })
+
   it('closes an unfinished maths span rather than splitting it', () => {
     expect(previewOf('The formula $E = mc^2$ matters. And more.', 150)).toBe('The formula $E = mc^2$ matters.')
     expect(dollars(previewOf('$a$ ' + 'word '.repeat(60), 40)) % 2).toBe(0)
