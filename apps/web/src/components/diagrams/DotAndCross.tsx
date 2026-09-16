@@ -115,7 +115,7 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
               {ring(cx[i]!, own, at.mark, null)}
               {gained > 0 && ring(cx[i]!, own + gained, a.mark, null).slice(own)}
               <text x={cx[i]! + r + 14} y={cy - r + 2} textAnchor="middle" fontFamily={DISPLAY} fontSize="16" fontWeight="700" fill="#d25b3b">{at.charge ?? (i === 0 ? `${transfer > 1 ? transfer : ''}+` : `${transfer > 1 ? transfer : ''}−`)}</text>
-              {n === 0 && <text x={cx[i]} y={cy + 24} textAnchor="middle" fontFamily={FONT} fontSize="9" fill={INK_2}>outer electrons given away</text>}
+              {n === 0 && <text x={cx[i]} y={cy + 24} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>outer electrons given away</text>}
             </g>
           )
         })}

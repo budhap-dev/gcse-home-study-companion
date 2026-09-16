@@ -15,14 +15,29 @@ export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: s
       items.push(<text key={`t${r}${c}`} x={x} y={y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK}>{pos ? '+' : '−'}</text>)
     }
   } else if (kind === 'metallic') {
+    const ions: [number, number][] = []
     for (let r = 0; r < 3; r++) for (let c = 0; c < 6; c++) {
       const x = 40 + c * 48 + (r % 2) * 24, y = 45 + r * 50
+      ions.push([x, y])
       items.push(<circle key={`${r}${c}`} cx={x} cy={y} r="16" fill="var(--subject-soft)" stroke={INK} strokeWidth="1.5" />)
       items.push(<text key={`t${r}${c}`} x={x} y={y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK}>+</text>)
     }
-    for (let i = 0; i < 26; i++) {
-      const x = 30 + ((i * 37) % 280), y = 30 + ((i * 53) % 150)
-      items.push(<text key={`e${i}`} x={x} y={y} textAnchor="middle" fontFamily={FONT} fontSize="10" fill="#d25b3b">e⁻</text>)
+    /**
+     * The delocalised electrons are scattered *between* the ions. They used to be placed
+     * by a formula that knew nothing about where the ions were, so some were drawn on top
+     * of an ion's "+" — unreadable, and wrong about the chemistry, since the whole point
+     * is a sea of electrons around the positive ions rather than on them.
+     */
+    const clearOfIons = ([x, y]: [number, number]) => ions.every(([ix, iy]) => Math.hypot(x - ix, y - iy) > 24)
+    const taken: [number, number][] = []
+    const clearOfElectrons = ([x, y]: [number, number]) => taken.every(([ex, ey]) => Math.abs(x - ex) > 20 || Math.abs(y - ey) > 14)
+    let placed = 0
+    for (let i = 0; i < 90 && placed < 24; i++) {
+      const spot: [number, number] = [30 + ((i * 37) % 280), 30 + ((i * 53) % 150)]
+      if (!clearOfIons(spot) || !clearOfElectrons(spot)) continue
+      taken.push(spot)
+      items.push(<text key={`e${i}`} x={spot[0]} y={spot[1]} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">e⁻</text>)
+      placed++
     }
   } else if (kind === 'giant-covalent') {
     const pts: [number, number][] = []
@@ -55,7 +70,7 @@ export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: s
         const hex = Array.from({ length: 6 }, (_, k) => { const a = (Math.PI / 3) * k; return `${(x + 20 * Math.cos(a)).toFixed(1)},${(y0 + 20 * Math.sin(a)).toFixed(1)}` }).join(' ')
         items.push(<polygon key={`h${layer}${c}`} points={hex} fill="var(--subject-soft)" stroke={INK} strokeWidth="1.5" />)
       }
-      if (layer === 0) items.push(<text key="gap" x={W - 8} y={y0 + 50} textAnchor="end" fontFamily={FONT} fontSize="10" fill="#d25b3b">weak forces between layers</text>)
+      if (layer === 0) items.push(<text key="gap" x={W - 8} y={y0 + 50} textAnchor="end" fontFamily={FONT} fontSize="11" fill="#d25b3b">weak forces between layers</text>)
     }
   } else if (kind === 'graphene') {
     const R = 20, hx = R * Math.sqrt(3)
@@ -89,7 +104,7 @@ export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: s
         const k = `${r}${c}`, rad = big[k] ?? 11
         const x = x0 + 24 + c * 36, y = 38 + r * 40 + (shift[k] ?? 0)
         items.push(<circle key={`${label}${k}`} cx={x} cy={y} r={rad} fill={big[k] ? '#d25b3b' : 'var(--subject-soft)'} stroke={INK} strokeWidth="1.5" />)
-        items.push(<text key={`t${label}${k}`} x={x} y={y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="10" fontWeight="700" fill={big[k] ? '#fff' : INK}>+</text>)
+        items.push(<text key={`t${label}${k}`} x={x} y={y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={big[k] ? '#fff' : INK}>+</text>)
       }
       items.push(<text key={`l${label}`} x={x0 + 78} y={H - 8} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{label}</text>)
     }

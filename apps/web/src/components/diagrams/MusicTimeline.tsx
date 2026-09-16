@@ -49,7 +49,7 @@ export function MusicTimeline({ props, alt }: { props: Record<string, unknown>; 
             <rect x={x0} y={barY} width={w} height={barH} fill={fill(i)} stroke={RULE} />
             {/* Only label inside the bar when the section is wide enough to hold it. */}
             {w > 34 && (
-              <text x={x0 + w / 2} y={barY + 19} textAnchor="middle" fontFamily={DISPLAY} fontSize="10" fontWeight="700" fill={INK}>
+              <text x={x0 + w / 2} y={barY + 19} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK}>
                 {i + 1}
               </text>
             )}

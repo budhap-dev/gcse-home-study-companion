@@ -22,7 +22,7 @@ export function SpringLoad({ props, alt }: { props: Record<string, unknown>; alt
       {Array.from({ length: Math.floor((natural + maxExt)) + 1 }, (_, i) => (
         <g key={i}>
           <line x1="30" y1={30 + i * scale} x2={i % 5 === 0 ? 42 : 38} y2={30 + i * scale} stroke={INK_2} />
-          {i % 5 === 0 && <text x="20" y={34 + i * scale} textAnchor="end" fontFamily={FONT} fontSize="9" fill={INK_2}>{i}</text>}
+          {i % 5 === 0 && <text x="20" y={34 + i * scale} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{i}</text>}
         </g>
       ))}
       {loads.map((F, idx) => {
@@ -47,7 +47,7 @@ export function SpringLoad({ props, alt }: { props: Record<string, unknown>; alt
                 <line x1={x + 22} y1={30 + natural * scale} x2={x + 22} y2={30 + len} stroke="#d25b3b" strokeWidth="1.5" />
                 <line x1={x + 18} y1={30 + natural * scale} x2={x + 26} y2={30 + natural * scale} stroke="#d25b3b" strokeWidth="1.5" />
                 <line x1={x + 18} y1={30 + len} x2={x + 26} y2={30 + len} stroke="#d25b3b" strokeWidth="1.5" />
-                <text x={x + 27} y={30 + natural * scale + (len - natural * scale) / 2 + 4} fontFamily={FONT} fontSize="10" fill="#d25b3b">{ext.toFixed(ext % 1 ? 1 : 0)} cm</text>
+                <text x={x + 27} y={30 + natural * scale + (len - natural * scale) / 2 + 4} fontFamily={FONT} fontSize="11" fill="#d25b3b">{ext.toFixed(ext % 1 ? 1 : 0)} cm</text>
               </g>
             )}
           </g>

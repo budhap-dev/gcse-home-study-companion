@@ -45,7 +45,7 @@ export function ElectrolysisCell({ props, alt }: { props: Record<string, unknown
       <line x1={242} y1={17} x2={242} y2={31} stroke={INK} strokeWidth="3" />
       <text x={206} y={20} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>−</text>
       <text x={254} y={20} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>+</text>
-      <text x={230} y={48} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>d.c. supply</text>
+      <text x={230} y={48} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>d.c. supply</text>
       {/* electrodes */}
       <rect x={left - eW / 2} y={eTop} width={eW} height={eBottom - eTop} fill="#6b6b6b" stroke={INK} />
       <rect x={right - eW / 2} y={eTop} width={eW} height={eBottom - eTop} fill="#6b6b6b" stroke={INK} />
@@ -70,7 +70,7 @@ export function ElectrolysisCell({ props, alt }: { props: Record<string, unknown
       {/* products */}
       {cathode && <text x={beaker.x - 6} y={liquidTop - 8} textAnchor="end" fontFamily={FONT} fontSize="11" fill={ACCENT}>{cathode}</text>}
       {anode && <text x={beaker.x + beaker.w + 6} y={liquidTop - 8} fontFamily={FONT} fontSize="11" fill={ACCENT}>{anode}</text>}
-      {material && <text x={beaker.x + beaker.w + 6} y={eTop + 12} fontFamily={FONT} fontSize="10" fill={INK_2}>{material}</text>}
+      {material && <text x={beaker.x + beaker.w + 6} y={eTop + 12} fontFamily={FONT} fontSize="11" fill={INK_2}>{material}</text>}
       {electrolyte && <text x={W / 2} y={H - 8} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK}>{electrolyte}</text>}
     </svg>
   )
