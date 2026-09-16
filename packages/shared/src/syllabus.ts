@@ -39,13 +39,15 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       // The uncovered half of this row was G18, arcs and sectors, so it links there.
       { title: 'Sectors, cylinders and spheres', topicId: 'arc-length-and-sector-area' },
       { title: 'Limits of accuracy and bounds', topicId: 'limits-of-accuracy-and-bounds' },
-      { title: 'Fractions, decimals and percentages' },
+      { title: 'Fractions, decimals and percentages', topicId: 'fractions-decimals-and-percentages' },
       // Successive change, the multiplier and reverse percentages are all taught by the
       // Compound interest topic, so the Year 9 row points there rather than duplicating it.
       { title: 'Successive percentage change', topicId: 'compound-interest-growth-and-decay' },
       { title: 'Direct and inverse proportion', topicId: 'ratio-and-proportion' },
       { title: 'Parallel and perpendicular lines', topicId: 'parallel-and-perpendicular-lines' },
-      { title: 'Graphs of quadratic and cubic functions' },
+      // Quadratic graphs are taught by Quadratic curves (A11, A12). The half of this row
+      // nothing covered was the cubic and reciprocal graphs of A12, so it links there.
+      { title: 'Graphs of quadratic and cubic functions', topicId: 'cubic-and-reciprocal-graphs' },
     ] },
     { year: 9, term: 'Spring', topics: [
       { title: 'Standard form', topicId: 'standard-form' },
@@ -55,7 +57,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Box plots', topicId: 'box-plots' },
       { title: 'Simultaneous equations', topicId: 'simultaneous-equations' },
       { title: 'Inequalities', topicId: 'inequalities-on-a-number-line' },
-      { title: 'Frequency trees' },
+      { title: 'Frequency trees', topicId: 'frequency-trees' },
       { title: 'Tree diagrams', topicId: 'combined-events-and-tree-diagrams' },
     ] },
     { year: 9, term: 'Summer', topics: [

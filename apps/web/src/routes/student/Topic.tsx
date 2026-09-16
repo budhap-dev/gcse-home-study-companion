@@ -15,23 +15,36 @@ import { ResetProgress } from '../../components/ResetProgress.tsx'
  * card shows the raw LaTeX, which is what four topics used to do.
  */
 export function previewOf(body: string, max = 150): string {
-  let depth = 0
+  // Bold is tracked the same way as maths: a cut inside `**…**` leaves a literal pair
+  // of asterisks on the card, which the frequency trees note did until 16 September.
+  let maths = 0
+  let bold = 0
   let cut = 0
   for (let i = 0; i < body.length && i < max; i++) {
-    if (body[i] === '$') depth = depth === 0 ? 1 : 0
-    if (depth === 0 && (body[i] === '.' || body[i] === '!' || body[i] === '?') && body[i + 1] === ' ') cut = i + 1
+    if (body[i] === '$') { maths = maths === 0 ? 1 : 0; continue }
+    if (body.startsWith('**', i)) { bold = bold === 0 ? 1 : 0; i++; continue }
+    if (maths || !(body[i] === '.' || body[i] === '!' || body[i] === '?')) continue
+    if (bold === 0 && body[i + 1] === ' ') cut = i + 1
+    // A sentence that ends inside bold — "…its parent.** Fill" — ends after the bold closes.
+    else if (bold === 1 && body.startsWith('**', i + 1) && (body[i + 3] === ' ' || i + 3 >= body.length)) cut = i + 3
   }
   if (cut > 0) return body.slice(0, cut)
   // No sentence ended in range: fall back to the whole body if it is short, else
-  // the longest prefix that closes every maths span it opens.
+  // the longest prefix that closes every maths span and every bold it opens.
   if (body.length <= max) return body
   let safe = 0
-  depth = 0
+  maths = 0
+  bold = 0
   for (let i = 0; i < max; i++) {
-    if (body[i] === '$') depth = depth === 0 ? 1 : 0
-    if (depth === 0 && body[i] === ' ') safe = i
+    if (body[i] === '$') { maths = maths === 0 ? 1 : 0; continue }
+    if (body.startsWith('**', i)) { bold = bold === 0 ? 1 : 0; i++; continue }
+    if (maths === 0 && bold === 0 && body[i] === ' ') safe = i
   }
-  return body.slice(0, safe || max) + '…'
+  if (safe) return body.slice(0, safe) + '…'
+  // Nowhere safe to cut: a span opened at the start and runs past the limit. Cut at the
+  // limit and close whatever is still open, so the card never shows a stray delimiter.
+  const end = body[max - 1] === '*' && body[max] === '*' ? max - 1 : max
+  return body.slice(0, end) + (maths ? '$' : '') + (bold ? '**' : '') + '…'
 }
 
 const LEVEL_LABEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const

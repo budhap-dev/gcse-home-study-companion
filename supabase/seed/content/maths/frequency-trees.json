@@ -1,0 +1,1207 @@
+{
+  "id": "frequency-trees",
+  "subjectId": "maths",
+  "unitId": "probability",
+  "title": "Frequency trees",
+  "specPoints": [
+    "P1",
+    "P6"
+  ],
+  "order": 6,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Counts in the boxes, categories on the branches",
+      "body": "A frequency tree holds **numbers of people or things** at each node, not probabilities. The branches are labelled with the **category** each count belongs to. That is the whole difference from a probability tree."
+    },
+    {
+      "kind": "check",
+      "title": "Each pair of branches adds up to its parent",
+      "body": "The two counts coming out of a node must **add to the count in that node**. 42 walk and 28 do not, so the boys box says 70. Use it both ways: to **fill a missing box** by subtracting, and to **check** a finished tree."
+    },
+    {
+      "kind": "spot",
+      "title": "A percentage of a branch fills the next one",
+      "body": "\"60% of the boys walk\" fills the branch below the boys box: $0.6 \\times 70 = 42$. The rest, $70 - 42 = 28$, fills the other branch. Questions give the tree in words and expect you to translate it."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Probability is a count over a count",
+      "body": "To find a probability from the tree, read off the **count that fits** over the **count you are choosing from**. Choosing from everyone, the bottom is the root. Choosing from the girls, the bottom is the girls box. Simplify at the end."
+    },
+    {
+      "kind": "check",
+      "title": "Watch which group you are choosing from",
+      "body": "\"A boy is chosen at random\" means the denominator is the **boys** count, 70. \"A student who walks is chosen\" means the denominator is the **walks** total, 77 — a number that appears **nowhere on the tree** until you add the two walking boxes together."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What a frequency tree records",
+        "body": "**A frequency tree sorts a group of people or things by two questions in turn, and records how many end up in each place.**\n\nSuppose 120 students are asked whether they are a boy or a girl, and then whether they walk to school. The first question splits 120 into 70 boys and 50 girls. The second splits each of those again: of the 70 boys, 42 walk and 28 do not; of the 50 girls, 35 walk and 15 do not.\n\n**The counts sit in the boxes. The categories sit on the branches.** That is the whole structure, and it is what separates a frequency tree from a probability tree, where the branches carry probabilities and the nodes are empty.\n\n**Every pair of branches adds up to its parent.** $42 + 28 = 70$, $35 + 15 = 50$, and $70 + 50 = 120$. This rule is what makes the tree useful: a box left blank can be **filled by subtraction**, and a finished tree can be **checked** by adding.\n\n**The four end boxes are the four possible combinations**: a boy who walks, a boy who does not, a girl who walks, a girl who does not. Together they account for everyone — $42 + 28 + 35 + 15 = 120$ — which is the second check worth doing.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "frequency-tree",
+            "props": {
+              "root": {
+                "label": "120 students",
+                "count": 120,
+                "children": [
+                  {
+                    "label": "boys",
+                    "count": 70,
+                    "children": [
+                      {
+                        "label": "walks",
+                        "count": 42
+                      },
+                      {
+                        "label": "does not walk",
+                        "count": 28
+                      }
+                    ]
+                  },
+                  {
+                    "label": "girls",
+                    "count": 50,
+                    "children": [
+                      {
+                        "label": "walks",
+                        "count": 35
+                      },
+                      {
+                        "label": "does not walk",
+                        "count": 15
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "alt": "A frequency tree for 120 students splitting into 70 boys and 50 girls, the boys into 42 who walk and 28 who do not, and the girls into 35 who walk and 15 who do not"
+          },
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Reading the tree",
+              "boxes": [
+                {
+                  "title": "Boxes",
+                  "points": [
+                    "hold counts",
+                    "how many people are in that group"
+                  ]
+                },
+                {
+                  "title": "Branches",
+                  "points": [
+                    "hold categories",
+                    "boys, girls, walks, does not walk"
+                  ]
+                },
+                {
+                  "title": "Each pair of branches",
+                  "points": [
+                    "adds to its parent box",
+                    "42 + 28 = 70"
+                  ]
+                },
+                {
+                  "title": "The end boxes",
+                  "points": [
+                    "every combination, once each",
+                    "they add to the total"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box summary of what the boxes and branches of a frequency tree hold and how they add up"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What goes in the boxes of a frequency tree?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading a frequency tree",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The boxes hold **counts** — numbers of people or things. Categories go on the branches, and probabilities do not appear at all until you work them out from the counts.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "counts"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Counts: how many are in each group",
+            "Probabilities, as fractions or decimals",
+            "The category names",
+            "Percentages of the total"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Filling a tree from a description",
+        "body": "**Exam questions describe the tree in words and leave boxes blank.** Translating the words is the skill: a total fills the root, a number or a percentage fills one branch, and subtraction fills the other.\n\nWork **from the root outwards**, and finish by checking that the four end boxes add up to the total.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "120 students were asked how they travel to school. 70 are boys. 60% of the boys walk. 35 of the girls walk. Complete the frequency tree.",
+            "steps": [
+              {
+                "text": "Root: **120**. Boys: **70**",
+                "note": "both given directly"
+              },
+              {
+                "text": "Girls: $120 - 70 = $ **50**",
+                "note": "the two branches from the root add to 120"
+              },
+              {
+                "text": "Boys who walk: 60% of 70 $= 0.6 \\times 70 = $ **42**",
+                "note": "\"of the boys\" means the percentage is of the boys box, not the total"
+              },
+              {
+                "text": "Boys who do not walk: $70 - 42 = $ **28**",
+                "note": "subtract from the parent"
+              },
+              {
+                "text": "Girls who walk: **35** (given). Girls who do not: $50 - 35 = $ **15**",
+                "note": "subtract from the parent again"
+              },
+              {
+                "text": "Check: $42 + 28 + 35 + 15 = 120$ ✓",
+                "note": "the four end boxes account for everyone"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Box",
+                "Where it came from"
+              ],
+              "rows": [
+                [
+                  "120",
+                  "the total, given"
+                ],
+                [
+                  "70",
+                  "given"
+                ],
+                [
+                  "50",
+                  "120 − 70"
+                ],
+                [
+                  "42",
+                  "60% of 70"
+                ],
+                [
+                  "28",
+                  "70 − 42"
+                ],
+                [
+                  "35",
+                  "given"
+                ],
+                [
+                  "15",
+                  "50 − 35"
+                ]
+              ],
+              "title": "Three boxes were given; the other four came from a percentage and three subtractions"
+            },
+            "alt": "A table showing where each of the seven counts in the frequency tree came from"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Of 120 students, 70 are boys. 60% of the boys walk to school. How many boys do not walk?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "filling a tree",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "60% of 70 is $42$ boys who walk, so $70 - 42 = 28$ do not.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "finds 60% of 70 = 42"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "28"
+            }
+          ],
+          "discriminators": [],
+          "answer": 28,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Probabilities from the tree",
+        "body": "**A probability from a frequency tree is one count over another.** The top is the count that fits what you want; the bottom is the count of the group you are **choosing from**.\n\nThe group you are choosing from is the part students get wrong. *A student* means everyone, 120. *A boy* means the boys box, 70. *A student who walks* means all the walkers — a total that is **not on the tree** until you add the two walking boxes.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A student is chosen at random. Find the probability that they walk to school.",
+            "steps": [
+              {
+                "text": "Choosing from **everyone**: the bottom is 120",
+                "note": "\"a student\" means the whole group"
+              },
+              {
+                "text": "Walkers: $42 + 35 = 77$",
+                "note": "both walking boxes, one from each side of the tree"
+              },
+              {
+                "text": "P(walks) $= \\frac{77}{120}$",
+                "note": "it does not simplify"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A boy is chosen at random. Find the probability that he walks.",
+            "steps": [
+              {
+                "text": "Choosing from the **boys**: the bottom is 70",
+                "note": "not 120, because the choice was made among the boys only"
+              },
+              {
+                "text": "Boys who walk: 42",
+                "note": "one box"
+              },
+              {
+                "text": "P(walks | boy) $= \\frac{42}{70} = \\frac{3}{5}$",
+                "note": "the same 60% the question started with, as it should be"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A student who walks to school is chosen at random. Find the probability that she is a girl.",
+            "steps": [
+              {
+                "text": "Choosing from the **walkers**: the bottom is $77$",
+                "note": "a total that has to be built from two boxes"
+              },
+              {
+                "text": "Girls who walk: 35",
+                "note": "the top is the walkers who are also girls"
+              },
+              {
+                "text": "P(girl | walks) $= \\frac{35}{77} = \\frac{5}{11}$",
+                "note": "dividing top and bottom by 7"
+              },
+              {
+                "text": "Note this is **not** $\\frac{35}{50}$",
+                "note": "35/50 answers a different question: a girl chosen, does she walk?"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "A girl is chosen at random from the 50 girls. 35 of the girls walk. What is the probability she walks?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "probability from a tree",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The choice is made **among the girls**, so the bottom is 50: $\\frac{35}{50} = \\frac{7}{10}$. The other fractions choose from the wrong group.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "35/50"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "35/50",
+            "35/120",
+            "35/77",
+            "50/120"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Frequency trees and two-way tables",
+        "body": "**The same information fits in a two-way table.** Rows for one question, columns for the other, and totals along the edge:\n\n| | walks | does not walk | total |\n| --- | --- | --- | --- |\n| boys | 42 | 28 | 70 |\n| girls | 35 | 15 | 50 |\n| total | 77 | 43 | 120 |\n\n**Every number on the tree is in the table, and the table has three the tree does not show**: the column totals 77 and 43, and they are exactly the totals you need for *a student who walks is chosen*. When a question chooses from a category that sits on the **second** split, the two-way table gives you the denominator directly; on the tree you have to add it up.\n\n**Frequency trees are a first step to probability trees.** Divide each count by its parent and the tree turns into probabilities: the boys branch becomes $\\frac{70}{120}$, and the walks branch below it $\\frac{42}{70}$. Multiplying along the path, $\\frac{70}{120} \\times \\frac{42}{70} = \\frac{42}{120}$, which is P(boy who walks) read straight from the end box. The two trees are two views of the same data.\n\n**Expected frequencies run the other way.** If the probability of an event is known and the experiment is repeated many times, the expected number of times it happens is $\\text{probability} \\times \\text{number of trials}$. A frequency tree built from those expected counts is what spec point P2 means by predicting outcomes.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "walks",
+                "does not walk",
+                "total"
+              ],
+              "rows": [
+                [
+                  "boys",
+                  "42",
+                  "28",
+                  "70"
+                ],
+                [
+                  "girls",
+                  "35",
+                  "15",
+                  "50"
+                ],
+                [
+                  "total",
+                  "77",
+                  "43",
+                  "120"
+                ]
+              ],
+              "title": "The bottom row holds the two totals the tree never shows"
+            },
+            "alt": "A two-way table of the same 120 students by sex and by whether they walk, with row and column totals"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Which total is in the two-way table but not in the frequency tree?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "trees and tables",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The tree splits by sex first, so walkers are spread across two end boxes and their total, **77**, appears nowhere. The table's column totals give it directly.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the walkers total, 77"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The number who walk, 77",
+            "The number of boys, 70",
+            "The total number of students, 120",
+            "The number of girls who walk, 35"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "All questions use the 120 students: 70 boys, of whom 60% walk; 50 girls, of whom 35 walk.\n\n**Part A.**\n\n1. How many girls are there?\n2. How many boys walk?\n3. How many boys do not walk?\n\n**Part B.**\n\n4. Draw the complete frequency tree and check the four end boxes add to 120.\n5. A student is chosen at random. Find the probability they walk.\n6. A boy is chosen at random. Find the probability he walks.\n\n**Part C.**\n\n7. A student who walks is chosen at random. Find the probability they are a girl.\n8. Explain why the answer to question 7 is not $\\frac{35}{50}$.\n9. Draw the two-way table for the same data and say which totals it shows that the tree does not.\n\nFor question 7, work out how many students walk in total first.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Choosing from",
+                "Denominator",
+                "Numerator"
+              ],
+              "rows": [
+                [
+                  "P(walks)",
+                  "everyone",
+                  "",
+                  ""
+                ],
+                [
+                  "P(walks | boy)",
+                  "boys",
+                  "",
+                  ""
+                ],
+                [
+                  "P(girl | walks)",
+                  "walkers",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill the denominator column first: it is the group the choice is made from"
+            },
+            "alt": "A blank table for identifying the denominator and numerator of three probabilities from the frequency tree"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**The denominator is the group the question chooses from, and it is stated in the question.** *A student* is 120. *A boy* is 70. *A student who walks* is 77. Reading that phrase carefully is most of the mark, because the counting afterwards is easy. $\\frac{35}{50}$ and $\\frac{35}{77}$ use the same box on top and answer different questions.\n\n**A percentage \"of the boys\" is of the boys box.** Sixty percent of the boys walk means $0.6 \\times 70$, not $0.6 \\times 120$. The phrase after *of* names the parent box, and a tree filled with $0.6 \\times 120 = 72$ boys walking is impossible on sight, since only 70 are boys.\n\n**Totals for the second split are not on the tree.** Walkers are 42 on one side and 35 on the other, and the question that chooses from them needs $42 + 35 = 77$. A two-way table shows that total in its bottom row; a tree does not, and forgetting to add the two boxes is how $\\frac{35}{42}$ appears as a wrong answer.\n\n**Check the end boxes.** The four end counts must add to the root, and each pair must add to its parent. A tree that fails either check has an arithmetic error, and one wrong box makes every probability read from it wrong.\n\n**Frequency trees, probability trees and two-way tables are three views of one data set.** Divide each count by its parent and the frequency tree becomes a probability tree; lay the end boxes out in a grid and it becomes a two-way table. Choosing the view that shows the total you need is a grade 9 move — a table when the question chooses from the second split, a tree when it works down a path.\n\n**Expected frequency is probability times trials.** Given $P(\\text{walks}) = \\frac{77}{120}$, in a different group of 600 students you would expect $\\frac{77}{120} \\times 600 = 385$ walkers. That is an expectation, not a guarantee, and saying so is correct rather than cautious.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students do",
+                "What is correct"
+              ],
+              "rows": [
+                [
+                  "\"a boy is chosen\"",
+                  "uses 120 as the denominator",
+                  "uses 70"
+                ],
+                [
+                  "\"a walker is chosen\"",
+                  "uses 42, one box",
+                  "adds both walking boxes: 77"
+                ],
+                [
+                  "\"60% of the boys\"",
+                  "takes 60% of 120",
+                  "takes 60% of 70"
+                ],
+                [
+                  "a blank box",
+                  "leaves it",
+                  "subtracts from the parent"
+                ],
+                [
+                  "checking",
+                  "does not add the end boxes",
+                  "checks they add to the root"
+                ],
+                [
+                  "tree versus table",
+                  "always draws the tree",
+                  "uses the table when a second-split total is needed"
+                ]
+              ],
+              "title": "The first two rows are the same error: the wrong group chosen from"
+            },
+            "alt": "A table of common errors with frequency trees"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A frequency tree sorts a group by **two questions in turn** and records **how many** land in each place.\n- **Counts in the boxes, categories on the branches.** No probabilities on the tree itself.\n- **Each pair of branches adds to its parent**: fill a blank box by **subtracting**.\n- The four **end boxes** are every combination once, and they add to the **root**.\n- A percentage **\"of the boys\"** is of the **boys box**: $0.6 \\times 70 = 42$.\n- A probability is **a count over a count**: what fits, over the group **chosen from**.\n- *A student*: denominator 120. *A boy*: 70. *A student who walks*: 77.\n- Totals on the **second split** — the walkers — are **not on the tree**; add the two boxes.\n- $\\frac{35}{50}$ is P(walks, given a girl); $\\frac{35}{77}$ is P(girl, given a walker). Different questions.\n- A **two-way table** holds the same data and shows the second-split totals directly.\n- Divide each count by its parent and the tree becomes a **probability tree**.\n- **Expected frequency** = probability × number of trials.\n- **Check** every finished tree: end boxes add to the root.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Boxes",
+                  "counts"
+                ],
+                [
+                  "Branches",
+                  "categories"
+                ],
+                [
+                  "Blank box",
+                  "subtract from the parent"
+                ],
+                [
+                  "End boxes",
+                  "add to the root"
+                ],
+                [
+                  "\"60% of the boys\"",
+                  "60% of the boys box"
+                ],
+                [
+                  "Probability",
+                  "a count over the group chosen from"
+                ],
+                [
+                  "\"A student\"",
+                  "denominator 120"
+                ],
+                [
+                  "\"A boy\"",
+                  "denominator 70"
+                ],
+                [
+                  "\"A walker\"",
+                  "denominator 42 + 35 = 77"
+                ],
+                [
+                  "Second-split totals",
+                  "not on the tree: add them"
+                ],
+                [
+                  "Two-way table",
+                  "same data, shows those totals"
+                ],
+                [
+                  "Probability tree",
+                  "each count over its parent"
+                ],
+                [
+                  "Expected frequency",
+                  "probability × trials"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of frequency trees, their probabilities and their relation to two-way tables"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "Of 120 students, 70 are boys. How many are girls?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "filling a tree",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$120 - 70 = 50$: the two branches from the root add to the total.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [],
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "60% of the 70 boys walk to school. How many boys walk?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "filling a tree",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$0.6 \\times 70 = 42$. The percentage is of the boys box, not the total.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "42"
+        }
+      ],
+      "discriminators": [],
+      "answer": 42,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What is written on the branches of a frequency tree?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a frequency tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Branches carry the **categories**. The counts sit in the boxes at the ends of the branches, and probabilities are not on a frequency tree at all.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the categories"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The categories, such as boys and girls",
+        "The probabilities of each outcome",
+        "The counts in each group",
+        "The total number of people"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "Of the 50 girls, 35 walk to school. How many girls do not walk?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "filling a tree",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$50 - 35 = 15$.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "On the tree, 42 boys and 35 girls walk to school. How many students walk in total?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "second-split totals",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$42 + 35 = 77$. This total is not shown on the tree, so it has to be added up.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "77"
+        }
+      ],
+      "discriminators": [],
+      "answer": 77,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "A student is chosen at random from the 120. 77 of them walk. What is the probability the student walks? Give a fraction.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "probability from a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Choosing from everyone, so the bottom is 120: $\\frac{77}{120}$. It does not simplify.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "77/120"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "77/120",
+        "77 over 120",
+        "77 out of 120"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "A boy is chosen at random from the 70 boys. 42 of them walk. What is the probability he walks? Give a fraction in its lowest terms.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "probability from a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Choosing from the boys, so the bottom is 70: $\\frac{42}{70} = \\frac{3}{5}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3/5"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "3/5",
+        "3 over 5",
+        "three fifths"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "A student who walks to school is chosen at random. Which denominator is correct?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "choosing the denominator",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The choice is made from the **walkers**, so the bottom is the number who walk: $42 + 35 = 77$. That total is not on the tree and has to be built.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "77"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "77, the total number who walk",
+        "120, the total number of students",
+        "42, the number of boys who walk",
+        "50, the number of girls"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A tree shows 120 students: 70 boys, of whom 42 walk and 28 do not; 50 girls, of whom 35 walk and 15 do not. Add the four end boxes. What total should they give?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "checking a tree",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$42 + 28 + 35 + 15 = 120$, the root. The end boxes account for everyone exactly once.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "120"
+        }
+      ],
+      "discriminators": [],
+      "answer": 120,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "Of the 50 girls, 35 walk. A girl is chosen at random. What is the probability she walks, in its lowest terms?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "probability from a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Choosing from the girls: $\\frac{35}{50} = \\frac{7}{10}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7/10"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "7/10",
+        "7 over 10",
+        "seven tenths",
+        "0.7"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "short-text",
+      "prompt": "A student who walks is chosen at random. 35 of the 77 walkers are girls. What is the probability the student is a girl, in its lowest terms?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "conditional probability from a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Choosing from the **walkers**, 77: $\\frac{35}{77} = \\frac{5}{11}$, dividing top and bottom by 7. Not $\\frac{35}{50}$, which answers whether a chosen **girl** walks.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5/11"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "accepted": [
+        "5/11",
+        "5 over 11",
+        "five elevenths"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why is $\\frac{35}{50}$ the wrong answer to \"a walker is chosen; find the probability they are a girl\"?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing the denominator",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The denominator is the group **chosen from**. $\\frac{35}{50}$ chooses from the girls and asks whether she walks; the question chooses from the **walkers**, 77, and asks whether they are a girl. Same box on top, different question.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the choice was from the 77 walkers, not the 50 girls"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "50 is the number of girls, but the choice was made from the 77 walkers",
+        "35 is wrong: it should be the number of boys who walk",
+        "The fraction should be turned upside down",
+        "Probabilities from a tree must have 120 on the bottom"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "A student fills the \"boys who walk\" box with 60% of 120 = 72. How could they have spotted the error at once?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "checking a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "\"60% **of the boys**\" is of the **boys box**, 70, giving 42. A branch can never exceed its parent, and 72 walking boys against 70 boys is impossible on sight.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a branch cannot exceed its parent"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Only 70 students are boys, so 72 boys cannot walk",
+        "The answer to a percentage question is never a whole number",
+        "60% of anything must be less than 60",
+        "The boys box should have been 120"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Which total does a two-way table show that the frequency tree does not?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "trees and tables",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The tree splits by sex first, so walkers sit in two separate end boxes. The table's **column total** adds them: 77. The other three are all single boxes on the tree.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the walkers total"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "The number who walk across both boys and girls",
+        "The total number of students",
+        "The number of boys",
+        "The number of girls who do not walk"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "The probability a student walks is $\\frac{77}{120}$. In a different group of 600 students, how many would you expect to walk?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "expected frequency",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Expected frequency $= \\text{probability} \\times \\text{number}$: $\\frac{77}{120} \\times 600 = 77 \\times 5 = 385$. An expectation, not a guarantee.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies 77/120 by 600"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "385"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 385,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "How does a frequency tree become a probability tree?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "trees and probability",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each branch's probability is its count over its **parent**: $\\frac{70}{120}$ for boys, then $\\frac{42}{70}$ for walking below it. Multiplying along a path, $\\frac{70}{120} \\times \\frac{42}{70} = \\frac{42}{120}$, is the end box over the root — the two trees agree.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "each count over its parent"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Divide each count by the count in its parent box",
+        "Divide each count by 100",
+        "Multiply each count by the total",
+        "Swap the labels on the branches and the boxes"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain what a frequency tree records, how to complete one from a description that gives a total, a count and a percentage, and how to find a probability from it, including how to decide the denominator.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "frequency trees",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A frequency tree sorts a group by **two questions in turn** and records **how many** people end up in each place. Its **boxes hold counts** — numbers of people — and its **branches carry the categories** those counts belong to. For 120 students the first split is by sex, boys or girls, and the second by whether each walks to school, giving four end boxes: boys who walk, boys who do not, girls who walk, girls who do not.\n\nThe rule that holds the tree together is that **each pair of branches adds up to its parent box**: the boys who walk plus the boys who do not equal the boys, and boys plus girls equal the total. It follows that the four end boxes add to the root.\n\nTo **complete a tree from a description**, work from the root outwards. The **total** fills the root. A **count** given directly — 70 boys — fills its box, and its partner comes by **subtraction**: $120 - 70 = 50$ girls. A **percentage** fills a branch as a percentage **of the parent box**, so \"60% of the boys walk\" gives $0.6 \\times 70 = 42$, and the other branch is $70 - 42 = 28$. The phrase after *of* names the parent: taking 60% of 120 instead would give 72 walking boys out of 70, which is impossible and should be caught at once. Finish by adding the end boxes — $42 + 28 + 35 + 15 = 120$ — as a check.\n\nA **probability from the tree** is one count over another. The top is the count of what you want; the bottom is the count of the **group the choice is made from**, and that group is named in the question. If *a student* is chosen, the choice is from all 120, so P(walks) $= \\frac{77}{120}$. If *a boy* is chosen, the choice is from the 70 boys, so P(walks) $= \\frac{42}{70} = \\frac{3}{5}$. If *a student who walks* is chosen, the choice is from the walkers, so P(girl) $= \\frac{35}{77} = \\frac{5}{11}$.\n\nThat last denominator, 77, illustrates a point worth stating: totals for the **second split** are **not on the tree**. Walkers sit in two end boxes, 42 and 35, on opposite sides, and their total has to be added up before it can be used. Reading $\\frac{35}{42}$ or $\\frac{35}{50}$ instead comes from taking a single box as the denominator when the question chose from a group spread across two.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the structure"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "completing the tree"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "probabilities and denominators"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "second-split totals"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains counts in boxes, categories on branches, and pairs adding to the parent.",
+          "marks": 2
+        },
+        {
+          "text": "Describes filling from the root outwards, using a percentage of the parent and subtraction.",
+          "marks": 2
+        },
+        {
+          "text": "Explains a probability as a count over the group chosen from, with an example of each denominator.",
+          "marks": 2
+        },
+        {
+          "text": "Notes that second-split totals must be added because they are not on the tree.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "A frequency tree sorts a group by **two questions in turn** and records **how many** people end up in each place. Its **boxes hold counts** — numbers of people — and its **branches carry the categories** those counts belong to. For 120 students the first split is by sex, boys or girls, and the second by whether each walks to school, giving four end boxes: boys who walk, boys who do not, girls who walk, girls who do not.\n\nThe rule that holds the tree together is that **each pair of branches adds up to its parent box**: the boys who walk plus the boys who do not equal the boys, and boys plus girls equal the total. It follows that the four end boxes add to the root.\n\nTo **complete a tree from a description**, work from the root outwards. The **total** fills the root. A **count** given directly — 70 boys — fills its box, and its partner comes by **subtraction**: $120 - 70 = 50$ girls. A **percentage** fills a branch as a percentage **of the parent box**, so \"60% of the boys walk\" gives $0.6 \\times 70 = 42$, and the other branch is $70 - 42 = 28$. The phrase after *of* names the parent: taking 60% of 120 instead would give 72 walking boys out of 70, which is impossible and should be caught at once. Finish by adding the end boxes — $42 + 28 + 35 + 15 = 120$ — as a check.\n\nA **probability from the tree** is one count over another. The top is the count of what you want; the bottom is the count of the **group the choice is made from**, and that group is named in the question. If *a student* is chosen, the choice is from all 120, so P(walks) $= \\frac{77}{120}$. If *a boy* is chosen, the choice is from the 70 boys, so P(walks) $= \\frac{42}{70} = \\frac{3}{5}$. If *a student who walks* is chosen, the choice is from the walkers, so P(girl) $= \\frac{35}{77} = \\frac{5}{11}$.\n\nThat last denominator, 77, illustrates a point worth stating: totals for the **second split** are **not on the tree**. Walkers sit in two end boxes, 42 and 35, on opposite sides, and their total has to be added up before it can be used. Reading $\\frac{35}{42}$ or $\\frac{35}{50}$ instead comes from taking a single box as the denominator when the question chose from a group spread across two."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "120 students: 70 are boys, 60% of the boys walk to school, and 35 of the girls walk. A student who walks is chosen at random. Find the probability that they are a girl, explain why the answer is not $\\frac{35}{50}$, and describe how a two-way table would have made the denominator easier to find.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "conditional probability from a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "First I fill in the counts the question leaves out. Girls: $120 - 70 = 50$. Boys who walk: 60% of the boys is $0.6 \\times 70 = 42$, so $70 - 42 = 28$ do not. Girls who walk: 35, so $50 - 35 = 15$ do not. Check: $42 + 28 + 35 + 15 = 120$ ✓.\n\nThe question chooses **a student who walks**. So the group being chosen from is the **walkers**, and that is the denominator. Walkers are spread across two end boxes — 42 boys and 35 girls — so the total is\n\n$$42 + 35 = 77$$\n\nOf those 77, the girls are 35. So\n\n$$P(\\text{girl} \\mid \\text{walks}) = \\frac{35}{77} = \\frac{5}{11}$$\n\ndividing top and bottom by 7.\n\n**Why not $\\frac{35}{50}$.** That fraction has the right number on top but the wrong group on the bottom. 50 is the number of **girls**, so $\\frac{35}{50}$ answers a different question: *a girl is chosen at random; what is the probability she walks?* It chooses from the girls and asks about walking. The question asked chooses from the **walkers** and asks about being a girl. Both use the same box, the 35 girls who walk, which is why they are easy to confuse — but the denominator is always the group the choice was made from, and the question names it: *a student who walks*.\n\nThe two answers are also numerically different, $\\frac{7}{10}$ against $\\frac{5}{11}$, so it is not a matter of writing the same thing two ways.\n\n**How a two-way table helps.** Laid out with rows for boys and girls and columns for walks and does not walk, the table has a **totals row** along the bottom: 77 walk and 43 do not. The denominator I needed is printed there directly. On the frequency tree, which splits by sex first, the walkers are in two separate boxes on opposite sides and their total appears nowhere — it has to be added up, and forgetting to is how $\\frac{35}{42}$ turns up as a wrong answer. Whenever a question chooses from a category on the **second** split, the table shows the denominator and the tree does not, so the table is the better view for that kind of question.",
+      "markScheme": [
+        {
+          "code": "M2",
+          "marks": 2,
+          "description": "the counts"
+        },
+        {
+          "code": "A2",
+          "marks": 2,
+          "description": "5/11, denominator justified"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "why not 35/50"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the table"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Completes the counts: 50 girls, 42 boys walk, 77 walkers.",
+          "marks": 2
+        },
+        {
+          "text": "Gives 35/77 = 5/11 with the denominator justified as the walkers.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that 35/50 answers a different question, choosing from the girls.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that the table column total gives 77 directly.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "First I fill in the counts the question leaves out. Girls: $120 - 70 = 50$. Boys who walk: 60% of the boys is $0.6 \\times 70 = 42$, so $70 - 42 = 28$ do not. Girls who walk: 35, so $50 - 35 = 15$ do not. Check: $42 + 28 + 35 + 15 = 120$ ✓.\n\nThe question chooses **a student who walks**. So the group being chosen from is the **walkers**, and that is the denominator. Walkers are spread across two end boxes — 42 boys and 35 girls — so the total is\n\n$$42 + 35 = 77$$\n\nOf those 77, the girls are 35. So\n\n$$P(\\text{girl} \\mid \\text{walks}) = \\frac{35}{77} = \\frac{5}{11}$$\n\ndividing top and bottom by 7.\n\n**Why not $\\frac{35}{50}$.** That fraction has the right number on top but the wrong group on the bottom. 50 is the number of **girls**, so $\\frac{35}{50}$ answers a different question: *a girl is chosen at random; what is the probability she walks?* It chooses from the girls and asks about walking. The question asked chooses from the **walkers** and asks about being a girl. Both use the same box, the 35 girls who walk, which is why they are easy to confuse — but the denominator is always the group the choice was made from, and the question names it: *a student who walks*.\n\nThe two answers are also numerically different, $\\frac{7}{10}$ against $\\frac{5}{11}$, so it is not a matter of writing the same thing two ways.\n\n**How a two-way table helps.** Laid out with rows for boys and girls and columns for walks and does not walk, the table has a **totals row** along the bottom: 77 walk and 43 do not. The denominator I needed is printed there directly. On the frequency tree, which splits by sex first, the walkers are in two separate boxes on opposite sides and their total appears nowhere — it has to be added up, and forgetting to is how $\\frac{35}{42}$ turns up as a wrong answer. Whenever a question chooses from a category on the **second** split, the table shows the denominator and the tree does not, so the table is the better view for that kind of question."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Counts in the boxes, categories on the branches, and each pair of branches adds to its parent.** Fill blanks by subtraction, take a percentage **of the parent box**, and check the end boxes add to the root.\n\nFor a probability, the denominator is the group the question **chooses from**: everyone, one branch, or a second-split total you have to **add up** because it is not on the tree.",
+    "examinerErrors": [
+      "Using 120 as the denominator when a **boy** was chosen.",
+      "Using a single box, 42, as the denominator when a **walker** was chosen.",
+      "Taking \"60% of the boys\" as 60% of the **total**.",
+      "Leaving a box blank instead of subtracting from its parent.",
+      "Not checking that the end boxes add to the root.",
+      "Giving $\\frac{35}{50}$ for a question that chose from the walkers.",
+      "Putting probabilities on the branches of a frequency tree.",
+      "Forgetting to simplify a fraction when lowest terms are asked for."
+    ],
+    "grade9Looks": "A grade 9 answer fills the tree from the root outwards, takes each percentage **of its parent box**, and checks the end boxes add to the root before reading anything off. It names the **group chosen from** before writing a fraction, and adds two boxes together when the question chooses from a second-split category. It can say why $\\frac{35}{50}$ and $\\frac{35}{77}$ answer different questions, and it reaches for a **two-way table** when the denominator it needs is a total the tree does not show."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

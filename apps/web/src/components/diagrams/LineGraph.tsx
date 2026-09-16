@@ -14,11 +14,21 @@ interface Point {
   label?: string
 }
 interface Curve {
-  /** y = a x² + b x + c */
+  /** y = a x² + b x + c, plus cube·x³ when a cubic is wanted */
   a: number
   b: number
   c: number
+  /** Coefficient of x³. With a, b and c zero this draws y = cube·x³ on its own. */
+  cube?: number
+  /** When set, the curve is y = reciprocal / x instead, drawn in two arms either side of the asymptote. */
+  reciprocal?: number
   label?: string
+  /**
+   * Where along x to put the label, just above the curve. By default it sits at the
+   * curve's last visible point, which for a curve that ends near y = 0 — a reciprocal
+   * arm — is on top of the axis letter.
+   */
+  labelX?: number
   colour?: string
   dashed?: boolean
 }
@@ -107,14 +117,17 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   }
   // A curve is sampled across the x range and drawn only where it lies inside the box,
   // so a parabola whose arms leave the top simply stops at the edge.
+  // A reciprocal is infinite at x = 0, which fails the box test in curvePath, so the pen
+  // lifts there of its own accord and the two arms draw separately.
+  const yOf = (k: Curve, x: number) => (k.reciprocal !== undefined ? k.reciprocal / x : (k.cube ?? 0) * x * x * x + k.a * x * x + k.b * x + k.c)
   const curvePath = (k: Curve) => {
     let d = ''
     let pen = false
     let last: [number, number] | null = null
     for (let i = 0; i <= 120; i++) {
       const x = xMin + ((xMax - xMin) * i) / 120
-      const y = k.a * x * x + k.b * x + k.c
-      if (y >= yMin && y <= yMax) {
+      const y = yOf(k, x)
+      if (Number.isFinite(y) && y >= yMin && y <= yMax) {
         d += `${pen ? 'L' : 'M'}${sx(x).toFixed(1)} ${sy(y).toFixed(1)} `
         pen = true
         last = [x, y]
@@ -157,7 +170,9 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={`k${i}`}>
             <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={k.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {k.label && <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>}
+            {k.label && (typeof k.labelX === 'number'
+              ? <text x={sx(k.labelX) + 6} y={clear(sx(k.labelX) + 6, sy(yOf(k, k.labelX)) - 8, k.label, 12)} textAnchor="start" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>
+              : <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>)}
           </g>
         )
       })}
