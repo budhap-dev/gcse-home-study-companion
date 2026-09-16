@@ -1,0 +1,1195 @@
+{
+  "id": "simultaneous-equations",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Simultaneous equations",
+  "specPoints": [
+    "A19",
+    "A21"
+  ],
+  "order": 9,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "shortcut",
+      "title": "Same signs subtract, opposite signs add",
+      "body": "Once one letter has **matching coefficients**, look at the signs. **Same sign → subtract** the equations. **Opposite signs → add** them. Getting this the wrong way round leaves the letter you were trying to remove."
+    },
+    {
+      "kind": "check",
+      "title": "Substitute into the other equation",
+      "body": "Find both values, then put them into the equation you did **not** use to find the second one. If it balances, the pair is right. Checking in the same equation you just solved proves nothing."
+    },
+    {
+      "kind": "spot",
+      "title": "Two unknowns need two equations",
+      "body": "One equation with two letters has infinitely many solutions — $x + y = 10$ is true for $(1,9)$, $(2,8)$ and endlessly more. It takes a **second** equation to pin down one pair, which is why they are solved *simultaneously*."
+    },
+    {
+      "kind": "remember",
+      "title": "Scale one or both to make a match",
+      "body": "If no coefficient matches, multiply one or both equations through so that one letter does. Multiply **every term**, including the number on the right — forgetting that term is the commonest slip in the method."
+    },
+    {
+      "kind": "check",
+      "title": "On a graph, the solution is the crossing point",
+      "body": "Two linear equations are two straight lines, and the solution is where they **cross**. That is why there is normally exactly one answer, and it makes a graph a fair way to find an approximate solution when a question asks for one."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Why two equations",
+        "body": "**One equation with two unknowns has no single answer.** Take\n\n$$x + y = 10$$\n\nThis is satisfied by $(1, 9)$, by $(2, 8)$, by $(4.5, 5.5)$ and by infinitely many other pairs. Nothing in the equation picks one of them out.\n\n**Add a second equation and that changes.** If also\n\n$$x - y = 4$$\n\nthen only **one** pair satisfies **both** at once. Solving them *simultaneously* means finding the pair that works in both.\n\n**The graphical picture makes this obvious.** Each linear equation is a **straight line**, and every point on that line is a solution of it. Two lines normally **cross exactly once**, and that crossing point is the pair that lies on both — the simultaneous solution.\n\nThat also tells you when things go differently. **Parallel lines never meet**, so such a pair has **no solution**; and if the two equations are really the same line, every point on it works.\n\n**The spec asks for both routes**: solving **algebraically**, which is exact, and finding **approximate solutions using a graph**. The algebra is what most questions want, but the graph is what explains it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Why two equations are needed",
+              "boxes": [
+                {
+                  "title": "One equation",
+                  "points": [
+                    "x + y = 10",
+                    "infinitely many pairs work"
+                  ]
+                },
+                {
+                  "title": "Two equations",
+                  "points": [
+                    "x + y = 10 and x − y = 4",
+                    "only one pair works in both"
+                  ]
+                },
+                {
+                  "title": "On a graph",
+                  "points": [
+                    "each equation is a straight line",
+                    "the solution is where they cross"
+                  ]
+                },
+                {
+                  "title": "The exceptions",
+                  "points": [
+                    "parallel lines never cross: no solution",
+                    "the same line twice: every point works"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box summary of why a pair of equations is needed and what the graph shows"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What does the crossing point of two straight-line graphs represent?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the graphical meaning",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Every point on a line satisfies that line's equation, so a point on **both** lines satisfies **both** equations. That is exactly what a simultaneous solution is.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the pair that satisfies both equations"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The pair of values that satisfies both equations",
+            "The largest value either equation can take",
+            "The point where both lines have the same gradient",
+            "The average of the two equations"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "When a coefficient already matches",
+        "body": "**The method is elimination: get rid of one letter, solve for the other, then come back.**\n\nIf one letter already has the **same coefficient** in both equations, you can eliminate it straight away.\n\n**Same signs → subtract. Opposite signs → add.**\n\nThat rule is worth saying out loud each time, because doing it the wrong way round doubles the letter you were trying to remove.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "same sign → subtract, opposite signs → add",
+                  "equation": "once one letter has matching coefficients",
+                  "units": "the aim is to make that letter vanish"
+                }
+              ]
+            },
+            "alt": "An equation card for the elimination rule"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $3x + 2y = 16$ and $x + 2y = 8$.",
+            "steps": [
+              {
+                "text": "The $y$ terms are **$+2y$ in both** — matching coefficients, same sign",
+                "note": "so subtracting will remove them"
+              },
+              {
+                "text": "Subtract the second from the first: $(3x - x) + (2y - 2y) = 16 - 8$",
+                "note": "subtract every term, including the numbers on the right"
+              },
+              {
+                "text": "$2x = 8$, so $x = 4$",
+                "note": "the y has gone, leaving one equation in one unknown"
+              },
+              {
+                "text": "Substitute into the simpler equation: $4 + 2y = 8$, so $2y = 4$ and $y = 2$",
+                "note": "use whichever equation is easier to rearrange"
+              },
+              {
+                "text": "Check in the **other** equation: $3(4) + 2(2) = 16$ ✓",
+                "note": "checking in the equation you just used would prove nothing"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $4x + y = 13$ and $2x - y = 5$.",
+            "steps": [
+              {
+                "text": "The $y$ terms are $+y$ and $-y$ — matching size, **opposite** signs",
+                "note": "nothing needs scaling: they already match"
+              },
+              {
+                "text": "Opposite signs, so **add**: $(4x + 2x) + (y - y) = 13 + 5$",
+                "note": "adding cancels the y terms"
+              },
+              {
+                "text": "$6x = 18$, so $x = 3$",
+                "note": "4x + 2x = 6x, and 13 + 5 = 18"
+              },
+              {
+                "text": "Substitute: $4(3) + y = 13$, so $y = 1$",
+                "note": "12 + y = 13, so y is 1"
+              },
+              {
+                "text": "Check in the other: $2(3) - 1 = 5$ ✓",
+                "note": "both equations balance, so the pair is right"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Solve $x + y = 10$ and $x - y = 4$. What is $x$?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "elimination",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "The $y$ terms have **opposite signs**, so **add**: $2x = 14$, giving $x = 7$. Then $y = 3$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "adds the equations to eliminate y"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "answer": 7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "When nothing matches: scaling first",
+        "body": "**Most pairs need a step first.** If no coefficient matches, **multiply one or both equations** so that one letter does.\n\n**Multiply every term**, including the number on the right-hand side. Missing that term is the most common error in the whole method, and it produces an answer that looks reasonable and is wrong.\n\nChoose whichever letter needs the smaller multipliers — there is no rule saying it must be $x$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $2x + 3y = 12$ and $5x - 2y = 11$.",
+            "steps": [
+              {
+                "text": "Nothing matches. Aim to make the $y$ coefficients $6$ and $-6$",
+                "note": "3 and 2 both divide into 6, which keeps the numbers small"
+              },
+              {
+                "text": "Multiply the first by **2**: $4x + 6y = 24$",
+                "note": "every term: 2×2=4, 3×2=6, and 12×2=24 — the number on the right doubles too"
+              },
+              {
+                "text": "Multiply the second by **3**: $15x - 6y = 33$",
+                "note": "every term: 5×3=15, −2×3=−6, and 11×3=33"
+              },
+              {
+                "text": "The $y$ terms are now $+6y$ and $-6y$ — opposite signs, so **add**",
+                "note": "adding makes them cancel, leaving only x"
+              },
+              {
+                "text": "$19x = 57$, so $x = 3$",
+                "note": "4x + 15x = 19x, and 24 + 33 = 57"
+              },
+              {
+                "text": "Substitute into the first: $2(3) + 3y = 12$, so $3y = 6$ and $y = 2$",
+                "note": "the first equation has the smaller numbers, so use that one"
+              },
+              {
+                "text": "Check in the second: $5(3) - 2(2) = 11$ ✓",
+                "note": "the equation not used to find y, so it is a genuine check"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "To solve $2x + 3y = 12$ and $5x - 2y = 11$ by eliminating $y$, what should you multiply the equations by?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "scaling to eliminate",
+          "calculator": "either",
+          "tags": [],
+          "solution": "To make the $y$ coefficients match at 6, multiply the first (which has $3y$) by **2** and the second (which has $-2y$) by **3**. That gives $+6y$ and $-6y$ — opposite signs, so the equations are added.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the first by 2 and the second by 3"
+            }
+          ],
+          "discriminators": [
+            "show-that"
+          ],
+          "options": [
+            "The first by 2 and the second by 3",
+            "The first by 3 and the second by 2",
+            "Both by 6",
+            "The first by 5 and the second by 2"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Turning a situation into equations",
+        "body": "**Spec point A21 asks you to translate a situation into equations, solve them, and interpret the answer.** Those are three separate jobs and the marks are split across them.\n\n**A worked example in words.** Three coffees and two teas cost £11. One coffee and two teas cost £7. What does each cost?\n\n1. **Define the letters, in writing.** Let $c$ be the cost of a coffee in pounds and $t$ the cost of a tea. Stating this is worth a mark and makes the rest readable.\n2. **Write one equation per sentence**:\n\n$$3c + 2t = 11$$\n$$c + 2t = 7$$\n\n3. **Solve.** The $t$ terms match with the same sign, so subtract: $2c = 4$, giving $c = 2$. Then $2 + 2t = 7$, so $t = 2.5$.\n4. **Interpret, in the units of the question.** A coffee costs **£2** and a tea **£2.50**.\n\n**That last step is a real mark.** An answer of *c = 2, t = 2.5* has solved the algebra but not answered the question, which asked about money.\n\n**Check against the original words, not just the equations.** Three coffees and two teas: $3 \\times £2 + 2 \\times £2.50 = £11$ ✓. This catches a mistranslation, which the algebra itself cannot — if you wrote the equations wrongly, solving them correctly still gives the wrong answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "What to do",
+                "Why it earns marks"
+              ],
+              "rows": [
+                [
+                  "define",
+                  "let c be the cost of a coffee in pounds",
+                  "the reader knows what the letters mean"
+                ],
+                [
+                  "translate",
+                  "one equation per sentence of the problem",
+                  "this is the step A21 is really testing"
+                ],
+                [
+                  "solve",
+                  "eliminate, then substitute back",
+                  "the algebra"
+                ],
+                [
+                  "interpret",
+                  "a coffee costs £2, a tea £2.50",
+                  "answers the question that was asked"
+                ],
+                [
+                  "check",
+                  "put the values back into the original words",
+                  "catches a mistranslation, which the algebra cannot"
+                ]
+              ],
+              "title": "The last row is the only check that tests whether the equations were right in the first place"
+            },
+            "alt": "A table of the five steps in turning a worded problem into simultaneous equations"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Why should you check a worded answer against the original sentences rather than the equations?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "interpreting the answer",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Substituting into your **equations** only tests your **algebra**. If the translation from words to equations was wrong, the algebra will be flawlessly wrong. Only checking against the **original situation** tests the translation.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a mistranslation survives a check against the equations"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "If the equations were written wrongly, solving them correctly still gives a wrong answer",
+            "The equations are harder to read once the letters have been substituted back into them",
+            "Substituting into an equation you wrote yourself is not allowed as a method of checking",
+            "The original sentences already contain the answer, so the algebra never needed doing"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Why can one equation with two unknowns not be solved on its own?\n2. Solve $x + y = 10$ and $x - y = 4$.\n3. If two equations have $+3y$ and $-3y$, do you add or subtract?\n\n**Part B.**\n\n4. Solve $3x + 2y = 16$ and $x + 2y = 8$.\n5. Solve $2x + y = 11$ and $x - y = 1$.\n6. To eliminate $y$ from $2x + 3y = 19$ and $5x - 2y = 4$, what would you multiply each equation by?\n\n**Part C.**\n\n7. Solve $4x + y = 13$ and $2x - y = 5$, and check your answer in both equations.\n8. Three pens and two rulers cost £8. One pen and two rulers cost £4. Find the cost of each, and say what your answer means in pounds.\n9. Explain what it means, graphically, if a pair of simultaneous equations has no solution.\n\nFor question 8, define your letters before you write any equations.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Pair of equations",
+                "Which letter to eliminate",
+                "Add or subtract?"
+              ],
+              "rows": [
+                [
+                  "x + y = 10, x − y = 4",
+                  "",
+                  ""
+                ],
+                [
+                  "3x + 2y = 16, x + 2y = 8",
+                  "",
+                  ""
+                ],
+                [
+                  "4x + y = 13, 2x − y = 5",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Two of these three are added and one is subtracted"
+            },
+            "alt": "A blank table for deciding how to eliminate in three pairs of equations"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Say the rule before you act on it.** Once a letter has matching coefficients: **same sign, subtract; opposite signs, add**. Done the wrong way round, the letter you meant to remove **doubles** instead of vanishing, and the mistake is usually spotted three lines later. Saying which you are doing and why costs nothing.\n\n**Multiply every term when scaling.** Doubling $2x + 3y = 12$ gives $4x + 6y = \\mathbf{24}$, not $4x + 6y = 12$. Leaving the right-hand side alone is the single most common error in the method, and the resulting answer looks perfectly plausible.\n\n**Check in the equation you did not use.** After finding $x$, you substitute into one equation to get $y$ — so that equation is **guaranteed** to balance and tests nothing. The **other** equation is the real check. Checking in both is better still.\n\n**The graph explains the exceptions.** Two lines that **cross once** give one solution. **Parallel** lines — same gradient, different intercept — never meet, so the pair has **no solution**, and algebraically you will find both letters vanishing to leave something false like $0 = 7$. If the two equations describe the **same line**, everything cancels to $0 = 0$ and every point on the line works. Recognising what those outcomes mean is worth more than being puzzled by them.\n\n**In a worded problem, the translation is the examined skill.** Define the letters **in writing**, write one equation per sentence, and finish by **interpreting** the answer in the units asked for. *c = 2* is not an answer to a question about money; **a coffee costs £2** is.\n\n**And check a worded answer against the words.** Substituting into your own equations tests only your algebra. If the equations were wrong, the algebra will be flawlessly wrong — only the original situation can catch that.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students do",
+                "What is correct"
+              ],
+              "rows": [
+                [
+                  "same signs",
+                  "adds the equations",
+                  "subtracts them"
+                ],
+                [
+                  "scaling",
+                  "multiplies only the left side",
+                  "multiplies every term, including the number"
+                ],
+                [
+                  "checking",
+                  "checks in the equation just used",
+                  "checks in the other equation"
+                ],
+                [
+                  "no solution",
+                  "assumes a mistake",
+                  "parallel lines: the algebra gives something false"
+                ],
+                [
+                  "worded answers",
+                  "stops at x = 2, y = 2.5",
+                  "a coffee costs £2, a tea £2.50"
+                ],
+                [
+                  "checking words",
+                  "substitutes into their own equations",
+                  "checks against the original sentences"
+                ]
+              ],
+              "title": "The second row produces an answer that looks reasonable and is wrong"
+            },
+            "alt": "A table of common errors in solving simultaneous equations"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **One equation with two unknowns** has infinitely many solutions; a **second** equation pins down one pair.\n- Each linear equation is a **straight line**, and the solution is where the lines **cross**.\n- The spec asks for both **algebraic** solutions and **approximate** ones from a graph.\n- The method is **elimination**: remove one letter, solve for the other, then substitute back.\n- If a letter already has **matching coefficients**: **same sign → subtract**, **opposite signs → add**.\n- If nothing matches, **scale one or both equations** so that one letter does.\n- **Multiply every term**, including the number on the right — the commonest error in the method.\n- Choose whichever letter needs the **smaller multipliers**; it need not be $x$.\n- Having found one value, **substitute** it into the simpler equation to get the other.\n- **Check in the equation you did not use** — the one you used is guaranteed to balance.\n- **Parallel lines** mean **no solution**, and the algebra collapses to something false such as $0 = 7$.\n- Two equations describing the **same line** give $0 = 0$ and infinitely many solutions.\n- For a **worded problem**: **define the letters in writing**, write **one equation per sentence**, solve, then **interpret** in the right units.\n- **Check a worded answer against the original words**, because a mistranslation survives a check against your own equations.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "One equation, two unknowns",
+                  "infinitely many solutions"
+                ],
+                [
+                  "Two equations",
+                  "normally one solution"
+                ],
+                [
+                  "On a graph",
+                  "the crossing point of two lines"
+                ],
+                [
+                  "The method",
+                  "elimination, then substitute back"
+                ],
+                [
+                  "Same signs",
+                  "subtract"
+                ],
+                [
+                  "Opposite signs",
+                  "add"
+                ],
+                [
+                  "Nothing matches",
+                  "scale one or both equations"
+                ],
+                [
+                  "When scaling",
+                  "multiply every term, including the number"
+                ],
+                [
+                  "Choose the letter",
+                  "whichever needs smaller multipliers"
+                ],
+                [
+                  "Check in",
+                  "the equation you did not use"
+                ],
+                [
+                  "Parallel lines",
+                  "no solution; algebra gives 0 = 7"
+                ],
+                [
+                  "Same line twice",
+                  "0 = 0; infinitely many solutions"
+                ],
+                [
+                  "Worded problems",
+                  "define, translate, solve, interpret"
+                ],
+                [
+                  "Final check",
+                  "against the original words"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of solving simultaneous equations"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Why can $x + y = 10$ not be solved on its own?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "why two equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(1, 9)$, $(2, 8)$, $(4.5, 5.5)$ and endlessly many other pairs all work. A **second** equation is needed to pick out one pair.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "infinitely many pairs satisfy it"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Infinitely many pairs of values satisfy it",
+        "It has no solutions at all",
+        "The letters are the wrong way round",
+        "It needs to be drawn as a graph first"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Two equations have $+3y$ and $-3y$. What should you do?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the elimination rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Opposite signs → add.** Adding makes $+3y$ and $-3y$ cancel. Subtracting would give $6y$, which is the opposite of what you want.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "add the equations"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Add the equations",
+        "Subtract the equations",
+        "Multiply the equations",
+        "Divide one by the other"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Solve $x + y = 10$ and $x - y = 4$. What is $y$?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "elimination",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Adding gives $2x = 14$, so $x = 7$. Substituting: $7 + y = 10$, so $y = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "eliminates one letter"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "On a graph, where is the solution of a pair of simultaneous equations?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the graphical meaning",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Where they cross.** That point lies on both lines, so its coordinates satisfy both equations.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "where the two lines cross"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Where the two lines cross",
+        "Where each line crosses the y-axis",
+        "Where the lines are steepest",
+        "At the origin"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Solve $3x + 2y = 16$ and $x + 2y = 8$. What is $x$?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "elimination",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The $y$ terms match with the **same sign**, so **subtract**: $2x = 8$, giving $x = 4$. Then $y = 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts, since the signs match"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reaches 2x = 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "Solve $2x + y = 11$ and $x - y = 1$. What is $x$?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "elimination",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The $y$ terms have **opposite signs**, so **add**: $3x = 12$, giving $x = 4$, and $y = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds to eliminate y"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "Doubling $2x + 3y = 12$ gives which equation?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "scaling an equation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Every term** doubles, including the number on the right: $4x + 6y = 24$. Leaving the 12 unchanged is the commonest error in the whole method.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4x + 6y = 24"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "4x + 6y = 24",
+        "4x + 6y = 12",
+        "4x + 3y = 24",
+        "2x + 6y = 24"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Two equations have $+2y$ in both. What should you do?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the elimination rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Same sign → subtract.** Subtracting makes the $2y$ terms cancel; adding would give $4y$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "subtract the equations"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Subtract the equations",
+        "Add the equations",
+        "Multiply both by 2",
+        "Nothing can be done"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "After finding $x$ and $y$, which equation should you check in?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "checking a solution",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The equation you substituted into is **guaranteed** to balance, so it tests nothing. The **other** one is the real check.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the one you did not use"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The one you did not use to find the second value",
+        "The one you just used",
+        "Either: it makes no difference",
+        "Neither; checking is not possible"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "What is the first thing to write down when turning a worded problem into simultaneous equations?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "translating a problem",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Define the letters**, in writing: *let $c$ be the cost of a coffee in pounds*. It is worth a mark and makes everything after it readable.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "define the letters"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "define the letters",
+        "what the letters stand for",
+        "let x be and let y be",
+        "definitions of the letters",
+        "state what each letter means"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Solving a pair of equations, both letters vanish and you are left with $0 = 7$. What does this mean?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "no solution",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A false statement like $0 = 7$ means the pair is **inconsistent**: the lines have the **same gradient but different intercepts**, so they are **parallel** and never cross. It is a genuine result, not a slip. If instead everything collapsed to $0 = 0$, the two equations would describe the **same line**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the lines are parallel, so no solution"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "The lines are parallel, so there is no solution",
+        "The answer is x = 0 and y = 7",
+        "You have made an arithmetic error",
+        "Every pair of values is a solution"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A student subtracts two equations that both contain $-4y$ and gets $-8y$. What went wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the elimination rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Subtracting $-4y$ from $-4y$ gives $0$, not $-8y$ — they have **added** while believing they subtracted. $-4y - (-4y) = -4y + 4y = 0$. The sign of the **second** term flips when subtracting, which is the step missed.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "subtracting them cancels; they added instead"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "Same signs should be subtracted, and subtracting cancels them",
+        "Opposite signs should be subtracted, so they should have added",
+        "The second equation should be multiplied by −1 before anything",
+        "Nothing went wrong: subtracting −4y from −4y does give −8y"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "Three pens and two rulers cost £8. One pen and two rulers cost £4. What is the cost of one pen, in pounds?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "translating a problem",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Let $p$ be the cost of a pen and $r$ of a ruler. Then $3p + 2r = 8$ and $p + 2r = 4$. The $r$ terms match with the **same sign**, so subtract: $2p = 4$, giving $p = 2$. A pen costs **£2** — and checking against the words: $3 \\times £2 + 2 \\times £1 = £8$ ✓.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "writes both equations from the words"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "eliminates r"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£2"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why is it not enough to answer a worded problem with \"x = 2, y = 2.5\"?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "interpreting the answer",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Spec point A21 asks you to **interpret the solution**, not just find it. The algebra is done, but the question was about money, so the answer is *a coffee costs £2 and a tea £2.50*. That final translation back into the context carries its own mark.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the answer must be interpreted in the units asked for"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The question asked about costs, so the answer must be in pounds",
+        "The values should be whole numbers",
+        "x and y are not allowed as letters",
+        "The answer should be given as a ratio"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "To eliminate $x$ from $3x + 2y = 12$ and $5x - y = 7$, what is the most efficient scaling?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "scaling efficiently",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To match the $x$ coefficients at 15, the equation with $3x$ is multiplied by **5** and the one with $5x$ by **3**. Note that eliminating $y$ here would be easier still — multiply the second by 2 to get $-2y$ against $+2y$ — and nothing requires you to eliminate $x$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the first by 5 and the second by 3"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "options": [
+        "Multiply the first by 5 and the second by 3",
+        "Multiply the first by 3 and the second by 5",
+        "Multiply both by 15",
+        "Multiply the second by 2 only"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Why does checking a worded answer in your own equations prove less than checking it against the words?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "checking a translation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substituting into your equations tests only the **algebra**. If the sentences were translated wrongly, your answer will satisfy those wrong equations perfectly, and the check passes. Only going back to the **original situation** — three coffees and two teas really costing £11 — can catch a mistranslation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a wrong translation still produces equations the answer fits"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "A wrong translation would still give equations your answer satisfies",
+        "An equation cannot be checked by substituting values back into it",
+        "The wording of the question always states the answer somewhere",
+        "Checking against equations takes longer than rereading the words"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain why a pair of simultaneous equations is needed to find two unknowns, describe how elimination works, and explain what it means graphically when there is no solution.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "simultaneous equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A single equation with two unknowns cannot be solved on its own because **infinitely many pairs satisfy it**. $x + y = 10$ is true for $(1, 9)$, $(2, 8)$, $(4.5, 5.5)$ and endlessly many others — nothing in the equation singles one out. Adding a **second** equation changes that: normally only **one pair** satisfies both at once, and finding it is what solving *simultaneously* means.\n\nThe usual method is **elimination**: get rid of one letter so that a single equation in a single unknown remains.\n\nFirst, get one letter to have **matching coefficients** in both equations. Sometimes it already does. If not, **multiply one or both equations through** until it does — and multiply **every term**, including the number on the right-hand side. Forgetting that number is the commonest error in the whole method, because the answer it produces still looks plausible.\n\nThen apply the rule: **same signs, subtract; opposite signs, add**. In $3x + 2y = 16$ and $x + 2y = 8$ the $y$ terms are $+2y$ in both, so subtracting gives $2x = 8$ and $x = 4$. In $4x + y = 13$ and $2x - y = 5$ the $y$ terms are opposite, so adding gives $6x = 18$ and $x = 3$. Getting the rule backwards **doubles** the letter you were trying to remove.\n\nWith one value found, **substitute it back** into the simpler equation to find the other. Then **check in the equation you did not use** — the one you substituted into is guaranteed to balance and tests nothing.\n\nGraphically, each equation is a **straight line**, and every point on a line satisfies its equation. The solution is therefore the point lying on **both** lines: their **crossing point**. That is why there is normally exactly one answer.\n\nIt also explains the exception. Two lines with the **same gradient but different intercepts** are **parallel** and never meet, so the pair has **no solution**. Algebraically this shows up unmistakably: both letters vanish and you are left with something false, such as $0 = 7$. That is a genuine result rather than a mistake. And if the two equations describe the **same line**, everything cancels to $0 = 0$, meaning every point on that line is a solution.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "why two equations are needed"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the elimination method"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the sign rule"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "parallel lines and no solution"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains that one equation with two unknowns has infinitely many solutions, and a second narrows it to one pair.",
+          "marks": 2
+        },
+        {
+          "text": "Describes elimination: match a coefficient, add or subtract according to the signs, solve, then substitute back.",
+          "marks": 2
+        },
+        {
+          "text": "States the rule: same signs subtract, opposite signs add.",
+          "marks": 1
+        },
+        {
+          "text": "Explains that parallel lines never cross, so there is no solution, and the algebra produces a false statement.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "A single equation with two unknowns cannot be solved on its own because **infinitely many pairs satisfy it**. $x + y = 10$ is true for $(1, 9)$, $(2, 8)$, $(4.5, 5.5)$ and endlessly many others — nothing in the equation singles one out. Adding a **second** equation changes that: normally only **one pair** satisfies both at once, and finding it is what solving *simultaneously* means.\n\nThe usual method is **elimination**: get rid of one letter so that a single equation in a single unknown remains.\n\nFirst, get one letter to have **matching coefficients** in both equations. Sometimes it already does. If not, **multiply one or both equations through** until it does — and multiply **every term**, including the number on the right-hand side. Forgetting that number is the commonest error in the whole method, because the answer it produces still looks plausible.\n\nThen apply the rule: **same signs, subtract; opposite signs, add**. In $3x + 2y = 16$ and $x + 2y = 8$ the $y$ terms are $+2y$ in both, so subtracting gives $2x = 8$ and $x = 4$. In $4x + y = 13$ and $2x - y = 5$ the $y$ terms are opposite, so adding gives $6x = 18$ and $x = 3$. Getting the rule backwards **doubles** the letter you were trying to remove.\n\nWith one value found, **substitute it back** into the simpler equation to find the other. Then **check in the equation you did not use** — the one you substituted into is guaranteed to balance and tests nothing.\n\nGraphically, each equation is a **straight line**, and every point on a line satisfies its equation. The solution is therefore the point lying on **both** lines: their **crossing point**. That is why there is normally exactly one answer.\n\nIt also explains the exception. Two lines with the **same gradient but different intercepts** are **parallel** and never meet, so the pair has **no solution**. Algebraically this shows up unmistakably: both letters vanish and you are left with something false, such as $0 = 7$. That is a genuine result rather than a mistake. And if the two equations describe the **same line**, everything cancels to $0 = 0$, meaning every point on that line is a solution."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Three coffees and two teas cost £11. One coffee and two teas cost £7. Set up and solve a pair of simultaneous equations to find the cost of each, showing how you would check your answer.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "translating and solving",
+      "calculator": "either",
+      "tags": [],
+      "solution": "First, **define the letters** in writing. Let $c$ be the cost of a coffee in pounds, and $t$ the cost of a tea in pounds. This is worth doing explicitly — it is worth a mark, and everything that follows is unreadable without it.\n\nNow **translate one sentence at a time**. Three coffees and two teas cost £11 gives\n\n$$3c + 2t = 11$$\n\nand one coffee and two teas cost £7 gives\n\n$$c + 2t = 7$$\n\nThe $t$ terms are **$+2t$ in both** — matching coefficients with the **same sign** — so the equations are **subtracted**:\n\n$$(3c - c) + (2t - 2t) = 11 - 7$$\n\nwhich gives $2c = 4$, so $c = 2$.\n\n**Substitute back** into the simpler equation: $2 + 2t = 7$, so $2t = 5$ and $t = 2.5$.\n\n**Interpret the answer in the units the question used.** A coffee costs **£2** and a tea costs **£2.50**. Stopping at *c = 2, t = 2.5* has completed the algebra but not answered a question about money, and that final translation carries a mark of its own.\n\nFor the **check**, there are two things worth doing, and they are not the same. Substituting into the equation I did not use tests the algebra: $3(2) + 2(2.5) = 6 + 5 = 11$ ✓.\n\nBut the more valuable check is against the **original words**: three coffees at £2 and two teas at £2.50 come to £6 + £5 = **£11**, and one coffee and two teas come to £2 + £5 = **£7**. Both sentences are satisfied.\n\nThat second check matters because it tests something the first cannot. Substituting into my **own** equations only confirms my arithmetic — if I had translated the sentences wrongly, my answer would fit those wrong equations perfectly and the check would still pass. Only going back to the situation itself can catch a mistranslation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "letters defined with units"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "both equations from the words"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "correct elimination and solution"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "interpreted in pounds, and checked"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Defines the letters in writing, with their units.",
+          "marks": 1
+        },
+        {
+          "text": "Writes both equations correctly from the two sentences.",
+          "marks": 2
+        },
+        {
+          "text": "Eliminates correctly, noting that the matching terms have the same sign so are subtracted.",
+          "marks": 2
+        },
+        {
+          "text": "Interprets the answer in pounds rather than leaving it as values of letters.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "First, **define the letters** in writing. Let $c$ be the cost of a coffee in pounds, and $t$ the cost of a tea in pounds. This is worth doing explicitly — it is worth a mark, and everything that follows is unreadable without it.\n\nNow **translate one sentence at a time**. Three coffees and two teas cost £11 gives\n\n$$3c + 2t = 11$$\n\nand one coffee and two teas cost £7 gives\n\n$$c + 2t = 7$$\n\nThe $t$ terms are **$+2t$ in both** — matching coefficients with the **same sign** — so the equations are **subtracted**:\n\n$$(3c - c) + (2t - 2t) = 11 - 7$$\n\nwhich gives $2c = 4$, so $c = 2$.\n\n**Substitute back** into the simpler equation: $2 + 2t = 7$, so $2t = 5$ and $t = 2.5$.\n\n**Interpret the answer in the units the question used.** A coffee costs **£2** and a tea costs **£2.50**. Stopping at *c = 2, t = 2.5* has completed the algebra but not answered a question about money, and that final translation carries a mark of its own.\n\nFor the **check**, there are two things worth doing, and they are not the same. Substituting into the equation I did not use tests the algebra: $3(2) + 2(2.5) = 6 + 5 = 11$ ✓.\n\nBut the more valuable check is against the **original words**: three coffees at £2 and two teas at £2.50 come to £6 + £5 = **£11**, and one coffee and two teas come to £2 + £5 = **£7**. Both sentences are satisfied.\n\nThat second check matters because it tests something the first cannot. Substituting into my **own** equations only confirms my arithmetic — if I had translated the sentences wrongly, my answer would fit those wrong equations perfectly and the check would still pass. Only going back to the situation itself can catch a mistranslation."
+    }
+  ],
+  "examTechnique": {
+    "body": "The method is short and the errors are predictable. Match a coefficient, apply **same signs subtract, opposite signs add**, solve, substitute back, and check in the **other** equation.\n\nWhen scaling, multiply **every** term. When the question is in words, **define the letters**, write one equation per sentence, and finish by saying what the answer means in the units asked for.",
+    "examinerErrors": [
+      "Adding when the signs **match**, or subtracting when they are **opposite**.",
+      "Scaling an equation but leaving the **number on the right** unchanged.",
+      "Checking in the equation just used, which is guaranteed to balance.",
+      "Treating $0 = 7$ as an arithmetic slip rather than as **no solution**.",
+      "Forgetting to **define the letters** in a worded problem.",
+      "Leaving a worded answer as *x = 2* rather than **£2**.",
+      "Losing a sign when subtracting: $-4y - (-4y)$ is $0$, not $-8y$.",
+      "Solving for one letter and forgetting to find the other."
+    ],
+    "grade9Looks": "A grade 9 answer states the sign rule **before** using it, and says which equation it is checking in and why the other one would prove nothing. It scales by multiplying **every** term, and picks whichever letter needs the **smaller** multipliers rather than defaulting to $x$. It recognises $0 = 7$ as **parallel lines with no solution** and $0 = 0$ as the same line twice, instead of assuming a mistake. On a worded problem it **defines the letters**, **interprets** the answer in the right units, and checks against the **original sentences** — knowing that a check against its own equations would pass even if the translation were wrong."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

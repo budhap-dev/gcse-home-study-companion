@@ -1,0 +1,1192 @@
+{
+  "id": "standard-form",
+  "subjectId": "maths",
+  "unitId": "number",
+  "title": "Standard form",
+  "specPoints": [
+    "N9"
+  ],
+  "order": 5,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "The front number lives between 1 and 10",
+      "body": "In $A \\times 10^n$, **$A$ must satisfy $1 \\le A < 10$**. So $12 \\times 10^5$ is **not** in standard form even though it is the right size — it becomes $1.2 \\times 10^6$. Checking $A$ last is the step most often skipped."
+    },
+    {
+      "kind": "shortcut",
+      "title": "The power counts the places the point moves",
+      "body": "To write a number in standard form, move the decimal point until one non-zero digit is in front of it, and **count the moves**. Moved **left**, the power is **positive**; moved **right**, it is **negative**."
+    },
+    {
+      "kind": "spot",
+      "title": "A negative power means small, not negative",
+      "body": "$6.2 \\times 10^{-4}$ is **0.00062** — a small positive number. The minus sign is about **size**, not sign. A negative *number* in standard form carries its minus at the front: $-6.2 \\times 10^4$."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Multiply the fronts, add the powers",
+      "body": "Multiplying: multiply the $A$s and **add** the powers. Dividing: divide the $A$s and **subtract** them. Then check the front is still between 1 and 10 and fix it if not — that last step is where the marks go."
+    },
+    {
+      "kind": "check",
+      "title": "Sanity-check the size",
+      "body": "Before writing the answer, ask roughly how big it should be. $3 \\times 10^5$ is a few hundred thousand; if your answer comes out as a few hundred, a power has been lost. The order of magnitude is easier to check than the digits."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What standard form is for",
+        "body": "**Some numbers are awkward to write.** The distance to the Sun is about 150 000 000 km. The width of a human hair is about 0.00007 m. Counting those zeros is slow and easy to get wrong.\n\n**Standard form writes any number as**\n\n$$A \\times 10^n$$\n\n**where $1 \\le A < 10$ and $n$ is an integer.**\n\nThat condition on $A$ is not decoration — it is what makes the form **standard**. Every number has exactly **one** way of being written like this, so two numbers can be compared at a glance.\n\n**Reading it.** $10^n$ says how many times to multiply by ten:\n\n- $10^3 = 1000$, so $4.5 \\times 10^3 = 4500$\n- $10^{-3} = \\dfrac{1}{1000}$, so $4.5 \\times 10^{-3} = 0.0045$\n\n**A positive power means a big number; a negative power means a small one.** The power is never the number of zeros — it is the number of places the decimal point moves.\n\n**The most common error in the whole topic** is writing something like $12 \\times 10^5$. The size is right, but $12$ is not between 1 and 10, so it is **not standard form**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "A × 10ⁿ, with 1 ≤ A < 10",
+                  "equation": "n is an integer, positive or negative",
+                  "units": "positive n: a big number. negative n: a small one"
+                }
+              ]
+            },
+            "alt": "An equation card for the definition of standard form"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Ordinary number",
+                "Standard form",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "4500",
+                  "4.5 × 10³",
+                  "point moves 3 places left"
+                ],
+                [
+                  "450000",
+                  "4.5 × 10⁵",
+                  "point moves 5 places left"
+                ],
+                [
+                  "0.45",
+                  "4.5 × 10⁻¹",
+                  "point moves 1 place right"
+                ],
+                [
+                  "0.00045",
+                  "4.5 × 10⁻⁴",
+                  "point moves 4 places right"
+                ],
+                [
+                  "12 × 10⁵",
+                  "not standard form",
+                  "12 is not between 1 and 10"
+                ]
+              ],
+              "title": "The last row is the right size but the wrong form, which is the usual slip"
+            },
+            "alt": "A table of numbers written in ordinary and standard form"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which of these is written correctly in standard form?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "recognising standard form",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**$4.5 \\times 10^6$.** The front number must satisfy $1 \\le A < 10$. $0.8$ is below 1, and $12$ and $45$ are above 10 — all three are the right size but the wrong form.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4.5 × 10⁶"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "0.8 × 10⁴",
+            "12 × 10³",
+            "4.5 × 10⁶",
+            "45 × 10⁻²"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Converting, both ways",
+        "body": "**To write a number in standard form:** move the decimal point until exactly one non-zero digit sits in front of it, then count the moves. **Left is positive, right is negative.**\n\n**To go back:** move the point the other way by the same number of places.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Write 4 500 000 in standard form.",
+            "steps": [
+              {
+                "text": "Put the point after the first non-zero digit: **4.5**",
+                "note": "one digit in front of the point, as the form requires"
+              },
+              {
+                "text": "Count the moves from 4 500 000 to 4.5: **6 places left**",
+                "note": "not the number of zeros; count the places the point travels"
+              },
+              {
+                "text": "Left means a **positive** power: $4.5 \\times 10^{6}$",
+                "note": "a big number, so a positive power, which is a quick check"
+              },
+              {
+                "text": "Check by going back: $4.5 \\times 10^{6} = 4 500 000$",
+                "note": "converting back costs a moment and catches a miscount"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Write 0.00062 in standard form.",
+            "steps": [
+              {
+                "text": "Put the point after the first non-zero digit: **6.2**",
+                "note": "the leading zeros are not significant digits"
+              },
+              {
+                "text": "Count the moves: **4 places right**",
+                "note": "from 0.00062 to 6.2"
+              },
+              {
+                "text": "Right means a **negative** power: $6.2 \\times 10^{-4}$",
+                "note": "a small number, so a negative power"
+              },
+              {
+                "text": "The number is still **positive** — the minus is about size, not sign",
+                "note": "a negative number would be written −6.2 × 10^4"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "Write 0.00081 in standard form.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "converting to standard form",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The point moves **4 places right** to give $8.1$, so the power is $-4$: $8.1 \\times 10^{-4}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8.1 x 10^-4"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "8.1 x 10^-4",
+            "8.1 × 10^-4",
+            "8.1e-4",
+            "8.1 x 10-4"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Multiplying and dividing",
+        "body": "**Multiplying:** multiply the front numbers and **add** the powers.\n\n**Dividing:** divide the front numbers and **subtract** the powers.\n\n**Then check the front number.** If it has fallen outside $1 \\le A < 10$, fix it — and adjust the power to match. That final step is what most marks are for.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "(A × 10ᵖ) × (B × 10q) = AB × 10^(p+q)",
+                  "equation": "multiply the fronts, add the powers",
+                  "units": "then fix A if it is no longer between 1 and 10"
+                },
+                {
+                  "name": "(A × 10ᵖ) ÷ (B × 10q) = (A÷B) × 10^(p−q)",
+                  "equation": "divide the fronts, subtract the powers",
+                  "units": "same final check"
+                }
+              ]
+            },
+            "alt": "An equation card for multiplying and dividing in standard form"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Work out $(3 \\times 10^{5}) \\times (4 \\times 10^{7})$, giving your answer in standard form.",
+            "steps": [
+              {
+                "text": "Multiply the fronts: $3 \\times 4 = 12$",
+                "note": "just the numbers in front"
+              },
+              {
+                "text": "Add the powers: $5 + 7 = 12$",
+                "note": "add, never multiply, the powers"
+              },
+              {
+                "text": "So far: $12 \\times 10^{12}$",
+                "note": "the right size, but 12 is not between 1 and 10"
+              },
+              {
+                "text": "Fix the front: $12 = 1.2 \\times 10^{1}$, so the power goes up by one",
+                "note": "moving the point one place left costs one power"
+              },
+              {
+                "text": "$= 1.2 \\times 10^{13}$",
+                "note": "now in standard form; skipping this step is the usual lost mark"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Work out $(8 \\times 10^{9}) \\div (2 \\times 10^{4})$.",
+            "steps": [
+              {
+                "text": "Divide the fronts: $8 \\div 2 = 4$",
+                "note": "just the numbers in front, as with multiplying"
+              },
+              {
+                "text": "Subtract the powers: $9 - 4 = 5$",
+                "note": "subtract in the order given"
+              },
+              {
+                "text": "$= 4 \\times 10^{5}$",
+                "note": "4 is already between 1 and 10, so nothing to fix"
+              },
+              {
+                "text": "Check the size: about 400 000, which is far smaller than the 8e+9 we started with",
+                "note": "dividing by a large number should shrink it, and it has"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Working out (3 × 10⁴) × (5 × 10⁶) gives 15 × 10¹⁰. What must be done next?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "fixing the front number",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$15$ is **not** between 1 and 10. Moving the point **one place left** makes it $1.5$, which **adds one** to the power: $1.5 \\times 10^{11}$. Check: $15 \\times 10^{10} = 150\\,000\\,000\\,000 = 1.5 \\times 10^{11}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "1.5 × 10¹¹"
+            }
+          ],
+          "discriminators": [
+            "show-that"
+          ],
+          "options": [
+            "Nothing: it is already in standard form",
+            "Rewrite it as 1.5 × 10¹¹",
+            "Rewrite it as 1.5 × 10⁹",
+            "Rewrite it as 15 × 10¹¹"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Adding, subtracting and comparing",
+        "body": "**Adding and subtracting is different**, and the difference catches people out. You **cannot** simply add the fronts and keep the power, because the two numbers may be different sizes.\n\n**The safe method: make the powers the same first.**\n\nTo work out $(3 \\times 10^5) + (4 \\times 10^4)$:\n\n1. Rewrite the smaller one with the **same power** as the larger: $4 \\times 10^4 = 0.4 \\times 10^5$.\n2. Now add the fronts: $3 + 0.4 = 3.4$.\n3. So the answer is $3.4 \\times 10^5$.\n\n**Alternatively, write both as ordinary numbers**, add, and convert back. On a calculator paper that is often quicker and less error-prone — and the exam does not care which route you took.\n\n**Comparing numbers in standard form** is where the form earns its keep:\n\n1. Compare the **powers** first. A bigger power means a bigger number.\n2. Only if the powers are **equal** do you compare the front numbers.\n\nSo $2 \\times 10^8$ is larger than $9 \\times 10^7$, even though 9 is bigger than 2 — because $10^8$ beats $10^7$. **That works only because $A$ is always between 1 and 10**, which is the whole reason the form insists on it.\n\n**With negative powers, remember which way the scale runs.** $10^{-6}$ is **smaller** than $10^{-3}$, so $5 \\times 10^{-6} < 2 \\times 10^{-3}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Comparison",
+                "Which is bigger",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "2 × 10⁸ and 9 × 10⁷",
+                  "2 × 10⁸",
+                  "compare the powers first: 8 beats 7"
+                ],
+                [
+                  "3.1 × 10⁵ and 3.5 × 10⁵",
+                  "3.5 × 10⁵",
+                  "powers equal, so compare the fronts"
+                ],
+                [
+                  "5 × 10⁻⁶ and 2 × 10⁻³",
+                  "2 × 10⁻³",
+                  "−3 is greater than −6, so it is the larger"
+                ],
+                [
+                  "7 × 10⁻² and 7 × 10²",
+                  "7 × 10²",
+                  "same front, so the power decides"
+                ]
+              ],
+              "title": "Powers first, fronts only as a tie-break: that is what the form is for"
+            },
+            "alt": "A table comparing pairs of numbers in standard form"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Which is the largest?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "comparing standard form",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**$3 \\times 10^6$.** Compare the **powers** first: 6 beats 5 and 4, so it wins despite having the smallest front number. That shortcut works only because every front number is between 1 and 10.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3 × 10⁶"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "9 × 10⁵",
+            "3 × 10⁶",
+            "8 × 10⁴",
+            "5 × 10⁵"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Write 73 000 in standard form.\n2. Write $2.4 \\times 10^{-3}$ as an ordinary number.\n3. Which is larger: $4 \\times 10^7$ or $9 \\times 10^6$?\n\n**Part B.**\n\n4. Work out $(2 \\times 10^3) \\times (4 \\times 10^5)$.\n5. Work out $(6 \\times 10^8) \\div (3 \\times 10^2)$.\n6. Work out $(5 \\times 10^6) \\times (4 \\times 10^7)$, giving your answer in standard form.\n\n**Part C.**\n\n7. Work out $(3 \\times 10^5) + (4 \\times 10^4)$, giving your answer in standard form.\n8. A student writes $30 \\times 10^4$ as their final answer. Explain what is wrong and correct it.\n9. Put these in order, smallest first: $6 \\times 10^{-3}$, $2 \\times 10^{-5}$, $9 \\times 10^{-4}$, $1 \\times 10^{-3}$.\n\nFor question 6, the front number will need fixing.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Calculation",
+                "Fronts",
+                "Powers",
+                "Needs fixing?"
+              ],
+              "rows": [
+                [
+                  "(2 × 10³) × (4 × 10⁵)",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "(5 × 10⁶) × (4 × 10⁷)",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "(6 × 10⁸) ÷ (3 × 10²)",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Only one of these three leaves a front number outside 1 to 10"
+            },
+            "alt": "A blank table for working through three standard form calculations"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**The condition $1 \\le A < 10$ is the point of the whole form.** It is what makes the representation **unique**: every number has exactly one standard form. That uniqueness is what lets you compare two numbers by looking at their **powers alone**, and it is why an answer of $12 \\times 10^5$ loses a mark even though it is numerically correct — it is not *the* standard form.\n\n**Count places, not zeros.** For whole numbers the two often agree, which is why the habit survives — but $4.5 \\times 10^6$ has six places and only five zeros. On a decimal it breaks immediately: $0.00062$ has three zeros after the point and a power of $-4$. Counting the **journey of the decimal point** always works.\n\n**Add the powers when multiplying, and always check the front afterwards.** The two-step shape — do the arithmetic, then normalise — is where the method differs from ordinary multiplication, and the second step is the one dropped under time pressure.\n\n**Adding needs a common power first.** $(3 \\times 10^5) + (4 \\times 10^4)$ is **not** $7 \\times 10^9$ or $7 \\times 10^5$. Rewrite one so the powers match, or convert both to ordinary numbers. On a calculator paper the second route is usually faster and safer, and no marks depend on which you choose.\n\n**A negative power means small, not negative.** $6.2 \\times 10^{-4}$ is a small **positive** number. A genuinely negative number carries its sign at the front. Questions mix the two deliberately.\n\n**Use order of magnitude as a free check.** Before writing an answer, ask roughly how big it should be. A calculation on numbers around $10^5$ and $10^7$ should land near $10^{12}$ — if it lands near $10^{2}$, a power has been dropped. Checking the **size** is quicker than rechecking the digits, and catches the errors that matter most.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students write",
+                "What is correct"
+              ],
+              "rows": [
+                [
+                  "the front number",
+                  "12 × 10⁵",
+                  "1.2 × 10⁶: A must be at least 1 and under 10"
+                ],
+                [
+                  "finding the power",
+                  "counts the zeros",
+                  "counts the places the decimal point moves"
+                ],
+                [
+                  "multiplying",
+                  "multiplies the powers",
+                  "adds the powers"
+                ],
+                [
+                  "adding",
+                  "adds fronts and keeps the power",
+                  "makes the powers match first"
+                ],
+                [
+                  "a negative power",
+                  "treated as a negative number",
+                  "a small positive number"
+                ],
+                [
+                  "comparing",
+                  "compares the front numbers",
+                  "compares the powers first"
+                ]
+              ],
+              "title": "The first row is the one that turns a right answer into a lost mark"
+            },
+            "alt": "A table of common standard form errors and the correct method"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Standard form is $A \\times 10^n$, where **$1 \\le A < 10$** and **$n$ is an integer**.\n- That condition makes the form **unique**, which is what lets numbers be compared by their powers.\n- To convert: move the decimal point until **one non-zero digit** is in front, and **count the places**.\n- Moved **left** → **positive** power. Moved **right** → **negative** power.\n- **Count places, not zeros** — $4.5 \\times 10^6$ has six places and five zeros.\n- A **negative power** means a **small positive** number, not a negative one.\n- **Multiplying**: multiply the fronts, **add** the powers.\n- **Dividing**: divide the fronts, **subtract** the powers.\n- **Then check $A$ is still between 1 and 10**, and adjust the power if you fix it.\n- Moving the point **one place left** adds **one** to the power.\n- **Adding or subtracting**: make the **powers match** first, or convert to ordinary numbers.\n- **Comparing**: compare the **powers** first; only use the fronts as a tie-break.\n- With negative powers, $10^{-3}$ is **larger** than $10^{-6}$.\n- **Check the order of magnitude** of any answer before writing it down.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "The form",
+                  "A × 10ⁿ, with 1 ≤ A < 10"
+                ],
+                [
+                  "Why the condition",
+                  "it makes the form unique"
+                ],
+                [
+                  "Converting",
+                  "count the places the point moves"
+                ],
+                [
+                  "Moved left",
+                  "positive power"
+                ],
+                [
+                  "Moved right",
+                  "negative power"
+                ],
+                [
+                  "Negative power",
+                  "a small positive number"
+                ],
+                [
+                  "Multiplying",
+                  "multiply fronts, add powers"
+                ],
+                [
+                  "Dividing",
+                  "divide fronts, subtract powers"
+                ],
+                [
+                  "Afterwards",
+                  "check A is between 1 and 10"
+                ],
+                [
+                  "Point one place left",
+                  "power goes up by one"
+                ],
+                [
+                  "Adding",
+                  "make the powers match first"
+                ],
+                [
+                  "Comparing",
+                  "powers first, fronts as a tie-break"
+                ],
+                [
+                  "Free check",
+                  "is the order of magnitude right?"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of standard form: the definition, converting, multiplying, dividing, adding and comparing"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "Write 73 000 in standard form.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "converting to standard form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The point moves **4 places left**, so $7.3 \\times 10^{4}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7.3 x 10^4"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "7.3 x 10^4",
+        "7.3 × 10^4",
+        "7.3e4",
+        "7.3 x 104"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Write 2.4 × 10⁻³ as an ordinary number.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "converting from standard form",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The point moves **3 places right**: $0.0024$. A negative power means a small positive number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.0024"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.0024,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which is larger, 4 × 10⁷ or 9 × 10⁶?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "comparing standard form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**$4 \\times 10^7$.** Compare the **powers** first: 7 beats 6, so the smaller front number does not matter.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4 × 10⁷"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "9 × 10⁶",
+        "They are equal",
+        "4 × 10⁷",
+        "It cannot be decided"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Why is 12 × 10⁵ not in standard form?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "recognising standard form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Standard form requires $1 \\le A < 10$. It should be written $1.2 \\times 10^6$ — the same size, but the standard way of writing it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A must be at least 1 and under 10"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The front number must be at least 1 and less than 10",
+        "The power must always be positive",
+        "The front number must be a whole number",
+        "The power must be smaller than the front number"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "(2 × 10³) × (4 × 10⁵) = A × 10ⁿ. What is n?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "multiplying in standard form",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Fronts: $2 \\times 4 = 8$. Powers: $3 + 5 = 8$. So $8 \\times 10^8$, and $8$ is already between 1 and 10, so $n = 8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the powers"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "(6 × 10⁸) ÷ (3 × 10²) = A × 10ⁿ. What is A?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "dividing in standard form",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Fronts: $6 \\div 3 = 2$. Powers: $8 - 2 = 6$. So $2 \\times 10^6$, and $A = 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides the front numbers"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "When multiplying two numbers in standard form, what happens to the powers?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "multiplying in standard form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Added.** Multiplying powers of ten adds the indices: $10^3 \\times 10^5 = 10^8$. They are **subtracted** when dividing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "they are added"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "They are added",
+        "They are multiplied",
+        "They are subtracted",
+        "The larger one is kept"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "(5 × 10⁶) × (4 × 10⁷) written correctly in standard form is what?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "fixing the front number",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Fronts: $5 \\times 4 = 20$. Powers: $6 + 7 = 13$. That gives $20 \\times 10^{13}$, but $20$ is not between 1 and 10, so it becomes $2 \\times 10^{14}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2 x 10^14"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "2 x 10^14",
+        "2 × 10^14",
+        "2e14",
+        "2 x 1014"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What does a negative power in standard form tell you?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "negative powers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **small positive** number. $6.2 \\times 10^{-4} = 0.00062$. A genuinely negative number carries its minus sign at the **front**: $-6.2 \\times 10^4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "small but still positive"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The number is small but still positive",
+        "The number is negative",
+        "The answer is wrong",
+        "The front number must also be negative"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "How many places does the decimal point move when writing 0.00062 in standard form?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "converting to standard form",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "**4 places right**, giving $6.2 \\times 10^{-4}$. Note there are only **three zeros** after the point — count places, not zeros.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Why can two numbers in standard form be compared by looking at their powers first?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why the form works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Since $1 \\le A < 10$ **always**, the front number can never make up a whole power of ten. So a larger power always wins, and the fronts only matter as a **tie-break**. Remove that condition and the shortcut fails — which is exactly why the form insists on it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "every front number is between 1 and 10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "Because every front number is between 1 and 10",
+        "Because the powers are always positive",
+        "Because the front numbers are always equal",
+        "Because standard form ignores the front number"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A student works out (3 × 10⁵) + (4 × 10⁴) as 7 × 10⁹. What have they done wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "adding in standard form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Adding the powers is the rule for **multiplying**. To add, make the **powers match** first: $4 \\times 10^4 = 0.4 \\times 10^5$, so the sum is $3.4 \\times 10^5$. Converting both to ordinary numbers works just as well.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "they added the powers, which is the rule for multiplying"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "They added the powers, which only applies to multiplying",
+        "They should have multiplied the front numbers",
+        "They should have subtracted the powers",
+        "Nothing: the answer is correct"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "(3 × 10⁵) + (4 × 10⁴) = A × 10⁵. What is A?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "adding in standard form",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Make the powers match: $4 \\times 10^4 = 0.4 \\times 10^5$. Then $3 + 0.4 = 3.4$, so the answer is $3.4 \\times 10^5$. Checking as ordinary numbers: $300\\,000 + 40\\,000 = 340\\,000$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "rewrites one number with a matching power"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the front numbers"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3.4"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "answer": 3.4,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Which of these is the smallest?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing negative powers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**$2 \\times 10^{-5}$.** With negative powers the scale still runs by power first, and $-5$ is the **most negative**, so it gives the smallest number. As ordinary numbers: 0.00002, 0.006, 0.0009, 0.001.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2 × 10⁻⁵"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "2 × 10⁻⁵",
+        "6 × 10⁻³",
+        "9 × 10⁻⁴",
+        "1 × 10⁻³"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why is counting zeros an unreliable way to find the power?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "converting reliably",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The two agree only sometimes. $4\\,500\\,000$ has **five zeros** but the point moves **six places**. On decimals it breaks straight away: $0.00062$ has three zeros after the point and a power of $-4$. Counting the **journey of the point** always works.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the counts differ, as in 4.5 × 10⁶"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "4.5 × 10⁶ has six places but only five zeros",
+        "Zeros are never significant figures",
+        "The power is always one more than the zeros",
+        "Standard form does not use zeros at all"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A calculation on numbers around 10⁵ and 10⁷ gives an answer of about 10³. What does this suggest?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "checking by order of magnitude",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiplying numbers near $10^5$ and $10^7$ should land near $10^{12}$. An answer near $10^3$ is out by nine orders of magnitude, so a power has been **dropped or subtracted instead of added**. Checking the **size** is faster than rechecking every digit, and catches exactly the errors that matter.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a power has been lost"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "A power has probably been lost somewhere",
+        "The answer is fine, since the fronts were small",
+        "The powers should have been multiplied",
+        "Standard form cannot be used for this calculation"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain what standard form is, why the front number must be between 1 and 10, and how to multiply two numbers written in it.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "standard form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Standard form** writes a number as $A \\times 10^n$, where **$A$ is at least 1 and less than 10** and **$n$ is an integer**. It exists because some numbers are awkward to write out: 150 000 000 and 0.00007 are both easier to read, compare and calculate with in this form.\n\nThe condition on $A$ is the part worth understanding. It makes the representation **unique**: every number has **exactly one** standard form. $12 \\times 10^5$ and $1.2 \\times 10^6$ are the same size, but only the second is standard form, and an answer left in the first way loses a mark despite being numerically right.\n\nThat uniqueness is not just tidiness — it is what makes the form **useful**. Because $A$ can never reach 10, it can never make up a whole power of ten, so **a larger power always means a larger number**. Two numbers can therefore be compared by looking at their **powers alone**, using the fronts only as a tie-break. $2 \\times 10^8$ beats $9 \\times 10^7$ even though 9 is larger than 2. Remove the condition and that shortcut collapses.\n\nTo **multiply** two numbers in standard form, **multiply the front numbers and add the powers**. For $(3 \\times 10^{5}) \\times (4 \\times 10^{7})$: the fronts give $3 \\times 4 = 12$, and the powers give $5 + 7 = 12$, so far $12 \\times 10^{12}$.\n\nThe answer is not finished there, and this is where marks are most often lost. **$12$ is not between 1 and 10**, so it is not standard form. Moving the decimal point one place left turns $12$ into $1.2$ and **adds one to the power**, giving $1.2 \\times 10^{13}$. Doing the arithmetic and then **normalising** is a two-step habit worth keeping, because the second step is the one dropped under time pressure.\n\nDividing works the same way with the operations reversed: divide the fronts and **subtract** the powers, then run the same final check.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the form and both conditions"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "why the condition matters"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "multiply fronts, add powers"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the normalising step afterwards"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "States the form A × 10ⁿ with 1 ≤ A < 10 and n an integer.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that the condition makes the form unique, so numbers can be compared by their powers.",
+          "marks": 2
+        },
+        {
+          "text": "Describes multiplying: multiply the front numbers and add the powers.",
+          "marks": 1
+        },
+        {
+          "text": "States that the front number must then be checked and the power adjusted if it is fixed.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Standard form** writes a number as $A \\times 10^n$, where **$A$ is at least 1 and less than 10** and **$n$ is an integer**. It exists because some numbers are awkward to write out: 150 000 000 and 0.00007 are both easier to read, compare and calculate with in this form.\n\nThe condition on $A$ is the part worth understanding. It makes the representation **unique**: every number has **exactly one** standard form. $12 \\times 10^5$ and $1.2 \\times 10^6$ are the same size, but only the second is standard form, and an answer left in the first way loses a mark despite being numerically right.\n\nThat uniqueness is not just tidiness — it is what makes the form **useful**. Because $A$ can never reach 10, it can never make up a whole power of ten, so **a larger power always means a larger number**. Two numbers can therefore be compared by looking at their **powers alone**, using the fronts only as a tie-break. $2 \\times 10^8$ beats $9 \\times 10^7$ even though 9 is larger than 2. Remove the condition and that shortcut collapses.\n\nTo **multiply** two numbers in standard form, **multiply the front numbers and add the powers**. For $(3 \\times 10^{5}) \\times (4 \\times 10^{7})$: the fronts give $3 \\times 4 = 12$, and the powers give $5 + 7 = 12$, so far $12 \\times 10^{12}$.\n\nThe answer is not finished there, and this is where marks are most often lost. **$12$ is not between 1 and 10**, so it is not standard form. Moving the decimal point one place left turns $12$ into $1.2$ and **adds one to the power**, giving $1.2 \\times 10^{13}$. Doing the arithmetic and then **normalising** is a two-step habit worth keeping, because the second step is the one dropped under time pressure.\n\nDividing works the same way with the operations reversed: divide the fronts and **subtract** the powers, then run the same final check."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Explain why adding numbers in standard form needs a different method from multiplying them, and describe two ways of doing it correctly.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "adding in standard form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "When two numbers in standard form are **multiplied**, the powers are **added**. That follows from how indices work: $10^3 \\times 10^5$ means three tens multiplied together times five tens multiplied together, which is eight tens multiplied together, or $10^8$. The rule is a consequence of the index law, not a convention.\n\n**Adding is a different operation entirely, and no such rule applies.** $(3 \\times 10^5) + (4 \\times 10^4)$ is not $7 \\times 10^9$, and it is not $7 \\times 10^5$ either. The reason is that the two numbers are of **different sizes**: one is three hundred thousand and the other is forty thousand. Front numbers can only be added when they are counting the **same thing** — the same power of ten — and here they are not.\n\nThe first correct method is to **make the powers match**. Rewrite the smaller number with the larger number's power: $4 \\times 10^4 = 0.4 \\times 10^5$. Now both are counting hundreds of thousands, so the fronts can be added: $3 + 0.4 = 3.4$, giving $3.4 \\times 10^5$. Note that $0.4$ is temporarily outside the allowed range for $A$, which is fine mid-calculation — only the **final answer** has to be in standard form, and $3.4$ is.\n\nThe second method is to **convert both to ordinary numbers**, add them, and convert back: $300\\,000 + 40\\,000 = 340\\,000 = 3.4 \\times 10^5$. On a calculator paper this is often quicker and harder to get wrong, and it doubles as a **check** on the first method. No marks depend on which route is taken.\n\nThe same reasoning applies to subtraction. And it is worth noticing what the two methods have in common: both work by making the two numbers **comparable** before combining them, which is precisely the step that multiplication does not need.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "why powers add when multiplying"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "why that does not apply to adding"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the matching-powers method"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the ordinary-numbers method"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains that when multiplying, the powers are added, because multiplying powers of ten adds the indices.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that adding cannot combine the powers, because the two numbers may be of different sizes.",
+          "marks": 2
+        },
+        {
+          "text": "Gives the first method: rewrite one number so the powers match, then add the front numbers.",
+          "marks": 1
+        },
+        {
+          "text": "Gives the second method: convert both to ordinary numbers, add, and convert back.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "When two numbers in standard form are **multiplied**, the powers are **added**. That follows from how indices work: $10^3 \\times 10^5$ means three tens multiplied together times five tens multiplied together, which is eight tens multiplied together, or $10^8$. The rule is a consequence of the index law, not a convention.\n\n**Adding is a different operation entirely, and no such rule applies.** $(3 \\times 10^5) + (4 \\times 10^4)$ is not $7 \\times 10^9$, and it is not $7 \\times 10^5$ either. The reason is that the two numbers are of **different sizes**: one is three hundred thousand and the other is forty thousand. Front numbers can only be added when they are counting the **same thing** — the same power of ten — and here they are not.\n\nThe first correct method is to **make the powers match**. Rewrite the smaller number with the larger number's power: $4 \\times 10^4 = 0.4 \\times 10^5$. Now both are counting hundreds of thousands, so the fronts can be added: $3 + 0.4 = 3.4$, giving $3.4 \\times 10^5$. Note that $0.4$ is temporarily outside the allowed range for $A$, which is fine mid-calculation — only the **final answer** has to be in standard form, and $3.4$ is.\n\nThe second method is to **convert both to ordinary numbers**, add them, and convert back: $300\\,000 + 40\\,000 = 340\\,000 = 3.4 \\times 10^5$. On a calculator paper this is often quicker and harder to get wrong, and it doubles as a **check** on the first method. No marks depend on which route is taken.\n\nThe same reasoning applies to subtraction. And it is worth noticing what the two methods have in common: both work by making the two numbers **comparable** before combining them, which is precisely the step that multiplication does not need."
+    }
+  ],
+  "examTechnique": {
+    "body": "Two habits carry this topic. First, **finish the job**: after multiplying or dividing, check the front number is still between 1 and 10 and fix it if not. Second, **count places, not zeros** when converting.\n\nWatch for the operation. Powers **add** when multiplying and **subtract** when dividing, but adding and subtracting need the **powers made equal first** — or the numbers written out in full, which is often quicker.",
+    "examinerErrors": [
+      "Leaving an answer as $12 \\times 10^5$, which is the right size but **not standard form**.",
+      "Counting **zeros** instead of the places the decimal point moves.",
+      "**Multiplying** the powers instead of adding them.",
+      "Adding the powers when the question is an **addition**.",
+      "Treating a **negative power** as a negative number.",
+      "Comparing the **front numbers** first instead of the powers.",
+      "Subtracting the powers in the wrong order when dividing.",
+      "Forgetting to adjust the **power** after fixing the front number."
+    ],
+    "grade9Looks": "A grade 9 answer explains **why** $1 \\le A < 10$ matters: it makes the form **unique**, which is what allows two numbers to be compared by their **powers alone**. It treats a standard form calculation as **two steps** — the arithmetic, then the normalising — and never leaves the second undone. It knows that adding requires the powers to be **made equal first**, and can say why: front numbers can only be added when they count the same power of ten. And it checks its work by **order of magnitude**, because a dropped power is far easier to spot in the size of an answer than in its digits."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
