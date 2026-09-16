@@ -20,6 +20,7 @@ import { MarketMap } from './MarketMap.tsx'
 import { MusicTimeline } from './MusicTimeline.tsx'
 import { EnergyStores } from './EnergyStores.tsx'
 import { EnergyTransferBars } from './EnergyTransferBars.tsx'
+import { SurfaceAreaVolume } from './SurfaceAreaVolume.tsx'
 import { EquationCard } from './EquationCard.tsx'
 import { CurveGraph } from './CurveGraph.tsx'
 import { Plant } from './Plant.tsx'
@@ -82,6 +83,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'music-timeline': MusicTimeline,
   'energy-stores': EnergyStores,
   'energy-transfer-bars': EnergyTransferBars,
+  'surface-area-volume': SurfaceAreaVolume,
   'equation-card': EquationCard,
   'curve-graph': CurveGraph,
   'plant': Plant,

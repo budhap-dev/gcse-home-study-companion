@@ -95,8 +95,8 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       {grid && yTicks.map((v) => <line key={`gy${v}`} x1={padL} y1={sy(v)} x2={W - pad} y2={sy(v)} stroke={RULE} />)}
       {yMin <= 0 && yMax >= 0 && <line x1={padL} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
       {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={pad} x2={sx(0)} y2={H - pad} stroke={INK} strokeWidth="1.5" />}
-      {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={sy(Math.max(yMin, Math.min(0, yMax))) + 14} textAnchor="middle" fontFamily={FONT} fontSize="10" fill={INK_2}>{fmt(v)}</text>)}
-      {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="10" fill={INK_2}>{fmt(v)}</text>)}
+      {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={sy(Math.max(yMin, Math.min(0, yMax))) + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
+      {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
       {xLabel
         ? <text x={W / 2} y={H - 2} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
         : <text x={W - pad} y={sy(Math.max(yMin, Math.min(0, yMax))) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>x</text>}
