@@ -5,6 +5,7 @@ import { StatusIcon } from '../../components/StatusChip.tsx'
 import { topicsForSubject } from '../../content/index.ts'
 import { evidenceFor } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
+import { ResetProgress } from '../../components/ResetProgress.tsx'
 
 const YEAR_NOTE: Record<number, string> = {
   9: 'Taught before the app existed. Kept as recap, because the milestones and synoptic tests keep coming back to it.',
@@ -25,6 +26,9 @@ export function TopicMap() {
   // Open the year the student is working through: the latest one that has any topic
   // written. Earlier years are recap and later ones are not started, so both stay shut.
   const current = years.filter((y) => blocks.some((b) => b.year === y && b.topics.some((t) => t.topicId))).pop() ?? years[0]
+  /** Has the student done anything on any of these topics? Drives whether a reset is offered. */
+  const studied = (ids: string[]) => ids.some((id) => progress.attempts.some((a) => a.topicId === id) || Boolean(progress.lessons[id]))
+  const subjectTopicIds = written.map((t) => t.id)
 
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
@@ -103,6 +107,17 @@ export function TopicMap() {
                     </ul>
                   </div>
                 ))}
+                {(() => {
+                  const yearTopicIds = inYear.flatMap((b) => b.topics.map((t) => t.topicId).filter((id): id is string => Boolean(id)))
+                  return (
+                    <ResetProgress
+                      label={`Reset Year ${year}`}
+                      what={`Year ${year} ${subject.name}`}
+                      topicIds={yearTopicIds}
+                      hasProgress={studied(yearTopicIds)}
+                    />
+                  )
+                })()}
                 </div>
               </div>
             </details>
@@ -110,6 +125,12 @@ export function TopicMap() {
         })}
         {/* A standalone link, so it needs a thumb-sized target rather than the 20px a bare line of text gives. */}
         <Link to={`/subjects/${subject.id}/exam-technique`} className="flex w-fit items-center py-2 text-sm font-bold underline">Exam technique guide</Link>
+        <ResetProgress
+          label={`Reset all ${subject.name}`}
+          what={`all of ${subject.name}`}
+          topicIds={subjectTopicIds}
+          hasProgress={studied(subjectTopicIds)}
+        />
       </section>
     </article>
   )

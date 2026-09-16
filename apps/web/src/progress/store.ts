@@ -126,6 +126,31 @@ export function clearProgress() {
   write(emptyState())
 }
 
+/**
+ * The state with the given topics forgotten: their attempts and their place in the lesson.
+ *
+ * Study minutes, the weekly goal, days off and badges are deliberately untouched. None of
+ * them belongs to a topic — the minutes were still studied and the streak was still kept —
+ * so resetting one topic must not cost a student a streak they earned.
+ *
+ * Pure, like evidenceFor, so it can be tested without a browser's localStorage.
+ */
+export function withoutTopics(state: ProgressState, topicIds: string[]): ProgressState {
+  const wanted = new Set(topicIds)
+  if (!wanted.size) return state
+  return {
+    ...state,
+    attempts: state.attempts.filter((a) => !wanted.has(a.topicId)),
+    lessons: Object.fromEntries(Object.entries(state.lessons).filter(([id]) => !wanted.has(id))),
+  }
+}
+
+/** Forgets the given topics, leaving minutes, goal, days off and badges alone. */
+export function clearTopicProgress(topicIds: string[]): void {
+  if (!topicIds.length) return
+  write(withoutTopics(read(), topicIds))
+}
+
 /** Local calendar date as YYYY-MM-DD. */
 export function isoDate(d = new Date()): string {
   const off = d.getTimezoneOffset() * 60000
