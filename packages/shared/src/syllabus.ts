@@ -285,11 +285,20 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Classification and evolution' },
     ] },
     { year: 9, term: 'Spring and Summer', topics: [
-      { title: 'Unit 1: cells and specialisation' },
-      { title: 'Unit 1: enzymes' },
-      { title: 'Unit 1: diffusion, osmosis and active transport' },
-      { title: 'Unit 8: the breathing system and gas exchange' },
-      { title: 'Unit 8: the circulatory system and blood' },
+      { title: 'Unit 1: cells and specialisation', topicId: 'cells-and-how-they-are-specialised' },
+      // Spec points 1.3 to 1.6 — microscope technology, size and scale, the units, and
+      // the magnification core practical — were covered by none of the five rows the
+      // school's plan lists, so this row was added.
+      { title: 'Unit 1: microscopes, magnification and scale', topicId: 'microscopes-magnification-and-scale' },
+      { title: 'Unit 1: enzymes', topicId: 'enzymes-and-how-they-work' },
+      // The same for 1.13B and 1.14B, the food tests core practical and calorimetry.
+      { title: 'Unit 1: food tests and calorimetry', topicId: 'food-tests-and-calorimetry' },
+      { title: 'Unit 1: diffusion, osmosis and active transport', topicId: 'diffusion-osmosis-and-active-transport' },
+      { title: 'Unit 8: the breathing system and gas exchange', topicId: 'exchange-surfaces-and-gas-exchange' },
+      { title: 'Unit 8: the circulatory system and blood', topicId: 'the-heart-blood-vessels-and-blood' },
+      // And for 8.9 to 8.11: respiration and its core practical belong to neither of the
+      // two Unit 8 rows above, which are about gas exchange and about transport.
+      { title: 'Unit 8: aerobic and anaerobic respiration', topicId: 'aerobic-and-anaerobic-respiration' },
     ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'Photosynthesis and limiting factors', topicId: 'photosynthesis-and-limiting-factors' },
