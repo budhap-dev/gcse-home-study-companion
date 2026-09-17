@@ -211,11 +211,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Series and parallel circuits', topicId: 'series-and-parallel-circuits' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Resistance and Ohm\'s law' },
-      { title: 'Circuit rules' },
-      { title: 'Mains electricity' },
-      { title: 'The model of the atom' },
-      { title: 'Radiation and nuclear power' },
+      { title: 'Resistance and Ohm\'s law', topicId: 'resistance-and-ohms-law' },
+      { title: 'Circuit rules', topicId: 'circuit-rules' },
+      { title: 'Mains electricity', topicId: 'mains-electricity' },
+      { title: 'The model of the atom', topicId: 'the-model-of-the-atom' },
+      { title: 'Radiation and nuclear power', topicId: 'radiation-and-nuclear-power' },
     ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Electromagnetic devices' },
