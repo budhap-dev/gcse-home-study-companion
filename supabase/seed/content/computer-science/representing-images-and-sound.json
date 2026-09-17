@@ -1,0 +1,1133 @@
+{
+  "id": "representing-images-and-sound",
+  "subjectId": "computer-science",
+  "unitId": "data-representation",
+  "title": "Representing images and sound",
+  "specPoints": [
+    "3.3.6",
+    "3.3.7"
+  ],
+  "order": 4,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Two formulae, both given in the specification",
+      "body": "Image: **size in bits = W × H × D**. Sound: **size in bits = rate × res × secs**. Both give **bits**, so divide by **8** for bytes. Learn them as multiplications of everything involved and neither can be muddled."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Colour depth is bits, not colours",
+      "body": "**D is the number of bits per pixel.** The number of **colours** is $2^D$: 1 bit gives 2, 2 bits give 4, 8 bits give 256. Questions swap the two deliberately, so read which is being asked for."
+    },
+    {
+      "kind": "spot",
+      "title": "The answer is in bits until you divide",
+      "body": "Both formulae produce **bits**. A question asking for **bytes** needs ÷ 8, and one asking for **kB** needs ÷ 8 ÷ 1000. Forgetting the divide is the single most common way to lose the last mark here."
+    },
+    {
+      "kind": "check",
+      "title": "Every factor is linear",
+      "body": "Double the sampling rate, or the resolution, or the seconds, and the file **doubles**. Double an image's width **and** height and it goes up **four** times, because both dimensions are in the formula."
+    },
+    {
+      "kind": "remember",
+      "title": "A sample is an amplitude at a point in time",
+      "body": "The specification's wording: a sample is **a measure of amplitude at a point in time**. Sampling **rate** is how many are taken each second, in hertz; sample **resolution** is how many **bits** each one uses."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Bitmap images",
+        "body": "**A pixel is a picture element** — short for exactly that — and it is a **single point** in an image. A bitmap image is a grid of them, and the computer stores a binary code for each one saying what colour it is.\n\nZoom far enough into any photograph and the squares appear. There is nothing else in a bitmap: no lines, no shapes, just the colour of every point.\n\n**Two properties describe a bitmap:**\n\n**Image size** is measured in **pixels**, written **width × height**. A 100 × 50 image is 100 pixels across and 50 down, so it holds 5000 pixels altogether.\n\n**Colour depth** is the number of **bits used to represent each pixel**. This is the one that gets misread: it is a count of **bits**, not of colours. The number of colours available is $2^D$:\n\n| Colour depth | Colours available |\n| --- | --- |\n| 1 bit | $2^1 = $ **2** |\n| 2 bits | $2^2 = $ **4** |\n| 8 bits | $2^8 = $ **256** |\n| 24 bits | $2^{24} = $ **16,777,216** |\n\n**Both affect the file size**, because every pixel is stored and every pixel takes the same number of bits. More pixels means more of them to store; a greater colour depth means each one costs more.\n\n**And both affect quality.** More pixels give more detail — too few and the image looks blocky. A greater colour depth allows finer shading — too little and smooth gradients turn into visible bands.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "A bitmap image",
+              "boxes": [
+                {
+                  "title": "Pixel",
+                  "points": [
+                    "short for picture element",
+                    "a single point in the image"
+                  ]
+                },
+                {
+                  "title": "Image size",
+                  "points": [
+                    "measured in pixels",
+                    "written width × height"
+                  ]
+                },
+                {
+                  "title": "Colour depth",
+                  "points": [
+                    "bits used per pixel",
+                    "gives 2 to the power D colours"
+                  ]
+                },
+                {
+                  "title": "File size",
+                  "points": [
+                    "W × H × D bits",
+                    "divide by 8 for bytes"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box summary of pixels, image size, colour depth and the file size formula"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What does colour depth measure?",
+          "options": [
+            "The number of bits used to represent each pixel",
+            "The number of pixels in the image",
+            "The number of colours in the image",
+            "The width of the image in pixels"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "defining colour depth",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Colour depth is the number of **bits per pixel**. The number of **colours** available is $2^D$ — so 8 bits give 256 colours, but the depth is 8.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the number of bits per pixel"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Calculating an image file size",
+        "body": "**The formula is given in the specification:**\n\n$$\\text{Size (bits)} = W \\times H \\times D$$\n$$\\text{Size (bytes)} = \\frac{W \\times H \\times D}{8}$$\n\nwhere $W$ is the width, $H$ the height and $D$ the colour depth in bits.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "An image is 100 pixels wide and 50 pixels high with a colour depth of 8 bits. Find its file size in kilobytes.",
+            "steps": [
+              {
+                "text": "Count the pixels: 100 × 50 = **5000** pixels",
+                "note": "width × height — the image size in the notation the specification uses"
+              },
+              {
+                "text": "Each pixel takes 8 bits, so 5000 × 8 = **40,000 bits**",
+                "note": "this is the whole formula: W × H × D"
+              },
+              {
+                "text": "Convert to bytes: 40,000 ÷ 8 = **5,000 bytes**",
+                "note": "the formula gives **bits**, so this divide is needed whenever bytes are asked for"
+              },
+              {
+                "text": "Convert to kilobytes: 5,000 ÷ 1000 = **5 kB**",
+                "note": "1 kB is 1,000 bytes in this specification, not 1,024"
+              },
+              {
+                "text": "Check the effect of a change: at 16-bit depth it would be **10 kB**, exactly double",
+                "note": "every factor is linear, which is a quick way to test an answer"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Change",
+                "Effect on file size"
+              ],
+              "rows": [
+                [
+                  "double the colour depth",
+                  "×2"
+                ],
+                [
+                  "double the width",
+                  "×2"
+                ],
+                [
+                  "double the width and the height",
+                  "×4"
+                ],
+                [
+                  "halve the colour depth",
+                  "÷2"
+                ]
+              ],
+              "title": "Both dimensions are in the formula, so scaling an image affects it twice over"
+            },
+            "alt": "A table showing how changes to an image affect its file size"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "An image is 20 pixels wide and 10 pixels high with a colour depth of 4 bits. What is its file size in bits?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "image file size",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$20 \\times 10 \\times 4 = $ **800** bits. (That would be 100 bytes, but the question asked for bits.)",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "20 × 10 × 4"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "800"
+            }
+          ],
+          "discriminators": [],
+          "answer": 800,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Binary and the picture",
+        "body": "**You may be given a bit pattern and asked to draw the image, or given an image and asked to write the pattern.**\n\nWith a colour depth of **1 bit**, each pixel is a single 0 or 1 — two colours, so say black and white. The bits are read **across each row in turn**, top row first.\n\nThis 4 × 4 pattern:\n\n`1001` `0110` `0110` `1001`\n\nreads as four rows of four pixels. Taking **1 as black**, the black pixels sit at the four corners and at the four middle squares — a cross from corner to corner.\n\n**Check the count.** 4 × 4 × 1 = **16 bits**, and the pattern has exactly 16 digits. If your pattern is longer or shorter than $W \\times H \\times D$, you have mis-read the width.\n\n**Going the other way** is the same process reversed: take the top row, write a bit for each pixel, then the next row, and so on. The width has to be known — the same 16 bits would make a completely different picture as 2 × 8 or 8 × 2.\n\n**Which value means which colour is a convention**, and a question will tell you. Do not assume 1 is black; read the key given.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Row",
+                "Bits",
+                "Pixels (1 = black)"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "1001",
+                  "■ □ □ ■"
+                ],
+                [
+                  "2",
+                  "0110",
+                  "□ ■ ■ □"
+                ],
+                [
+                  "3",
+                  "0110",
+                  "□ ■ ■ □"
+                ],
+                [
+                  "4",
+                  "1001",
+                  "■ □ □ ■"
+                ]
+              ],
+              "title": "16 bits in total: 4 × 4 × 1"
+            },
+            "alt": "A table converting a 4 by 4 one-bit bitmap pattern into a picture, forming a cross"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A black and white bitmap is 4 pixels wide and 4 pixels high with a colour depth of 1 bit. How many bits are needed to store it?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "bits in a bitmap",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$4 \\times 4 \\times 1 = $ **16** bits — one for each pixel.",
+          "markScheme": [
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "16"
+            }
+          ],
+          "discriminators": [],
+          "answer": 16,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Representing sound",
+        "body": "**Sound is analogue.** A real sound wave varies **continuously** — it has a value at every instant, and those values change smoothly. A computer can only store **discrete** numbers, so the wave must be converted to a digital form before it can be stored or processed.\n\n**That conversion is called sampling.** The wave's height is measured at regular intervals and each measurement is stored as a binary number. The specification defines a **sample** as **a measure of amplitude at a point in time**.\n\n**Two properties describe the result:**\n\n**Sampling rate** is the **number of samples taken in a second**, measured in **hertz** — 1 hertz is 1 sample per second. A rate of 8,000 Hz takes 8,000 measurements every second.\n\n**Sample resolution** is the **number of bits per sample**. More bits means each measurement can be recorded more precisely.\n\n**Both affect quality and file size.** A higher rate captures more of the wave's shape, so the digital version follows the original more closely. A higher resolution records each height more exactly. Both mean more data.\n\n**The formula, again from the specification:**\n\n$$\\text{File size (bits)} = \\text{rate} \\times \\text{res} \\times \\text{secs}$$\n\n**Worked:** 8,000 Hz at 8-bit resolution for 10 seconds is 8,000 × 8 × 10 = **640,000 bits**, which is 80,000 bytes, or **80 kB**.\n\n**The digital version is never exact.** Between two samples the computer has no record of what the wave did, so some of the original is always lost. More samples make the approximation closer, never perfect.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Property",
+                "What it measures",
+                "Unit"
+              ],
+              "rows": [
+                [
+                  "sampling rate",
+                  "samples taken in one second",
+                  "hertz (Hz)"
+                ],
+                [
+                  "sample resolution",
+                  "bits used for each sample",
+                  "bits"
+                ],
+                [
+                  "a sample",
+                  "amplitude at a point in time",
+                  "a binary number"
+                ]
+              ],
+              "title": "File size (bits) = rate × res × secs"
+            },
+            "alt": "A table of the two properties of digital sound, what each measures and its unit"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "What is sample resolution?",
+          "options": [
+            "The number of bits used for each sample",
+            "The number of samples taken each second",
+            "The length of the recording in seconds",
+            "The loudness of the recorded sound"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "defining sample resolution",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Sample **resolution** is the number of **bits per sample**. The number of samples each second is the sampling **rate**, measured in hertz.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the number of bits per sample"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. What is a pixel, and what is the word short for?\n2. What does colour depth measure?\n3. What is a sample?\n\n**Part B.**\n\n4. An image is 40 × 30 pixels with a colour depth of 2 bits. Find its size in bits.\n5. How many colours can a colour depth of 4 bits represent?\n6. A sound is sampled at 4,000 Hz with 8-bit resolution for 5 seconds. Find its size in bits.\n\n**Part C.**\n\n7. Convert your answer to question 4 into bytes, then into kilobytes.\n8. An image's width and height are both doubled. Explain what happens to its file size and why.\n9. Explain why a digital recording can never be an exact copy of the original sound.\n\nBoth formulae give **bits**. Check what unit each question wants before writing the answer down.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Quantity",
+                "Formula",
+                "Your working"
+              ],
+              "rows": [
+                [
+                  "Image, in bits",
+                  "W × H × D",
+                  ""
+                ],
+                [
+                  "Image, in bytes",
+                  "(W × H × D) ÷ 8",
+                  ""
+                ],
+                [
+                  "Sound, in bits",
+                  "rate × res × secs",
+                  ""
+                ]
+              ],
+              "title": "Write the formula out before substituting the numbers"
+            },
+            "alt": "A blank table for working image and sound file size calculations"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Write the formula before the numbers.** $W \\times H \\times D$ and $\\text{rate} \\times \\text{res} \\times \\text{secs}$. Both are given in the specification, both are plain multiplications, and writing them first earns the method mark even if the arithmetic then slips.\n\n**Both formulae give bits.** Check the unit the question asks for. Bytes needs ÷ 8; kilobytes needs ÷ 8 then ÷ 1000. A right number in the wrong unit loses the final mark, and this is the most common way it goes here.\n\n**Colour depth is bits per pixel, and $2^D$ is the number of colours.** A question may give you either and ask for the other. If a question says \"256 colours\", the depth to put in the formula is **8**, not 256 — substituting 256 is a large and very visible error.\n\n**Reason about changes rather than recalculating.** Every factor is **linear**: double the rate, the resolution or the duration and the file doubles. For an image, doubling **both** width and height multiplies the size by **four**, because both appear in the formula. Saying \"four times, because both dimensions doubled\" is a better answer than a page of arithmetic.\n\n**Use the specification's wording for a sample**: *a measure of amplitude at a point in time*. Not \"a bit of the sound\".\n\n**Explain why digital sound is approximate.** The original wave is **continuous** — it has a value at every instant. Sampling records it only at **intervals**, and between two samples nothing is stored. The digital version is therefore always an approximation; a higher rate makes it closer but never exact. That reasoning is what an \"explain\" question is looking for, rather than \"it loses quality\".\n\n**Know the width before drawing a bitmap.** The same bits make a different picture at a different width, and the bit count must equal $W \\times H \\times D$ — a free check on whether you have read the pattern correctly.\n\n**Do not invent extra terms.** The specification says to use **only** colour depth and the number of pixels. Adding an allowance for a file header is not wanted here and will not match the mark scheme.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What goes wrong",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "units",
+                  "leaves the answer in bits",
+                  "divide by 8, then by 1000"
+                ],
+                [
+                  "colour depth",
+                  "substitutes 256 for D",
+                  "D is 8; 256 is 2 to the 8"
+                ],
+                [
+                  "doubling both sides",
+                  "says the size doubles",
+                  "it is ×4 — both are in the formula"
+                ],
+                [
+                  "a sample",
+                  "\"a bit of the sound\"",
+                  "amplitude at a point in time"
+                ],
+                [
+                  "why sound is lossy",
+                  "\"quality drops\"",
+                  "nothing is stored between samples"
+                ],
+                [
+                  "drawing a bitmap",
+                  "guesses the width",
+                  "bit count must equal W × H × D"
+                ],
+                [
+                  "extra terms",
+                  "adds a header allowance",
+                  "only pixels and colour depth"
+                ]
+              ],
+              "title": "The first row loses more marks than the other six together"
+            },
+            "alt": "A table of common errors in image and sound file size questions"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **pixel** is short for **picture element** — a single point in an image.\n- **Image size** is in pixels, written **width × height**.\n- **Colour depth** is the number of **bits per pixel**.\n- The number of colours available is **$2^D$**: 1 bit gives 2, 8 bits give 256.\n- **Size (bits) = W × H × D**; **Size (bytes) = W × H × D ÷ 8**.\n- More pixels or greater depth means a **larger file** and **better quality**.\n- Doubling **both** dimensions multiplies file size by **four**.\n- A 1-bit bitmap is read **across each row in turn**; the bit count must equal $W \\times H \\times D$.\n- **Sound is analogue** — continuous — and must be converted to digital.\n- That conversion is **sampling**.\n- A **sample** is a **measure of amplitude at a point in time**.\n- **Sampling rate** is samples per second, in **hertz**.\n- **Sample resolution** is the number of **bits per sample**.\n- **File size (bits) = rate × res × secs**.\n- Nothing is recorded **between** samples, so digital sound is always an **approximation**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Pixel",
+                  "picture element, a single point"
+                ],
+                [
+                  "Image size",
+                  "width × height in pixels"
+                ],
+                [
+                  "Colour depth",
+                  "bits per pixel"
+                ],
+                [
+                  "Colours available",
+                  "2 to the power D"
+                ],
+                [
+                  "Image size in bits",
+                  "W × H × D"
+                ],
+                [
+                  "Image size in bytes",
+                  "W × H × D ÷ 8"
+                ],
+                [
+                  "Double both dimensions",
+                  "file size × 4"
+                ],
+                [
+                  "Sound is",
+                  "analogue, so continuous"
+                ],
+                [
+                  "Sampling",
+                  "measuring the wave at intervals"
+                ],
+                [
+                  "A sample",
+                  "amplitude at a point in time"
+                ],
+                [
+                  "Sampling rate",
+                  "samples per second, in hertz"
+                ],
+                [
+                  "Sample resolution",
+                  "bits per sample"
+                ],
+                [
+                  "Sound size in bits",
+                  "rate × res × secs"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of bitmap images and digital sound with both file size formulae"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "The word pixel is short for which two words?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "defining a pixel",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Picture element**. A pixel is a single point in an image.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "picture element"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "picture element"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "How is the size of a bitmap image measured?",
+      "options": [
+        "In pixels, as width × height",
+        "In bytes, as width + height",
+        "In centimetres across the screen",
+        "In the number of colours it uses"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "image size",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Image size is measured **in pixels**, using the notation **width × height**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "in pixels, width × height"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "An image is 20 pixels wide and 10 pixels high with a colour depth of 4 bits. What is its file size in bits?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "image file size",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$20 \\times 10 \\times 4 = $ **800** bits.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20 × 10 × 4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "800"
+        }
+      ],
+      "discriminators": [],
+      "answer": 800,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "How many colours can be represented with a colour depth of 4 bits?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "colour depth and colours",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2^4 = $ **16** colours. The depth is 4 **bits**; the colours are what those bits can distinguish.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [],
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A sound is sampled at 4000 Hz with a sample resolution of 8 bits for 5 seconds. What is the file size in bits?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "sound file size",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rate × res × secs $= 4000 \\times 8 \\times 5 = $ **160 000** bits.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4000 × 8 × 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "160 000"
+        }
+      ],
+      "discriminators": [],
+      "answer": 160000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "An image is 100 pixels wide and 50 pixels high with a colour depth of 8 bits. What is its file size in bytes?",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "image file size in bytes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$100 \\times 50 \\times 8 = 40\\,000$ bits, and $40\\,000 \\div 8 = $ **5000** bytes. The formula gives bits, so the divide by 8 is essential.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "100 × 50 × 8"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5000"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "Complete the specification's definition: a sample is a measure of ______ at a point in time.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "defining a sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A measure of **amplitude** at a point in time — the height of the sound wave at that instant.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "amplitude"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "amplitude"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "What unit is sampling rate measured in?",
+      "options": [
+        "Hertz",
+        "Bits",
+        "Bytes per second",
+        "Decibels"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "sampling rate",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Hertz (Hz)**, where 1 hertz is 1 sample per second. Bits are the unit of sample **resolution**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "hertz"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A black and white bitmap is 8 pixels wide and 8 pixels high with a colour depth of 1 bit. How many bits are needed to store it?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "bits in a bitmap",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$8 \\times 8 \\times 1 = $ **64** bits — one bit for each of the 64 pixels.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8 × 8 × 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "64"
+        }
+      ],
+      "discriminators": [],
+      "answer": 64,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Why must sound be converted before a computer can store it?",
+      "options": [
+        "Sound is analogue and continuous, but a computer stores discrete values",
+        "Sound travels too quickly to be recorded directly",
+        "Sound is already digital but in the wrong format",
+        "Computers can only store images, not sound"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "why sound is sampled",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A sound wave is **analogue** — it varies continuously and has a value at every instant. A computer stores **discrete** binary numbers, so the wave must be sampled at intervals and each measurement stored as a number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sound is analogue, computers store discrete values"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "An image's width and height are both doubled, with the colour depth unchanged. What happens to its file size?",
+      "options": [
+        "It becomes four times as large",
+        "It becomes twice as large",
+        "It becomes eight times as large",
+        "It stays the same, as the depth is unchanged"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "scaling an image",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Both $W$ and $H$ appear in $W \\times H \\times D$, so doubling each multiplies the size by $2 \\times 2 = $ **4**. Answering \"twice\" means only one of the two dimensions has been counted.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "four times as large"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A question says an image uses 256 colours. What value goes into the file size formula as D?",
+      "options": [
+        "8, because 256 colours needs 8 bits per pixel",
+        "256, because that is the colour depth given",
+        "2, because there are two states per bit",
+        "32, because 256 divided by 8 is 32"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "colours against colour depth",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$D$ is the **bits per pixel**, and $2^8 = 256$, so $D = $ **8**. Putting 256 into the formula makes the answer 32 times too large — a very visible error, and a common one.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "D = 8"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A sound is sampled at 8000 Hz with 8-bit resolution for 10 seconds. What is the file size in kilobytes?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "sound file size in kilobytes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$8000 \\times 8 \\times 10 = 640\\,000$ bits. Divide by 8: $80\\,000$ bytes. Divide by 1000: **80** kB. Both divisions are needed, and the second uses 1 kB = 1000 bytes.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8000 × 8 × 10 = 640 000 bits"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by 8 and by 1000"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "80"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "answer": 80,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why can a digital recording never be an exact copy of the original sound?",
+      "options": [
+        "Nothing is recorded between one sample and the next",
+        "Binary cannot represent the loudness of a sound",
+        "The microphone always adds errors to every sample",
+        "Sound files are always compressed when saved"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why sampling approximates",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The original wave is **continuous**, with a value at every instant. Sampling records it only at **intervals**, and whatever the wave did between two samples is never stored. Raising the sampling rate makes the approximation closer but never exact.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "nothing is stored between samples"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "The same 16 bits of a 1-bit bitmap are read as 2 pixels wide instead of 4. What happens?",
+      "options": [
+        "A different image appears, because the rows break in different places",
+        "The image is identical but rotated by ninety degrees",
+        "Only half of the image can be displayed",
+        "Nothing changes, as the same bits are stored"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "width and bitmap interpretation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The bits are the same but the **rows break in different places**, so the picture is completely different: 16 bits make a 4 × 4 image or an 8 × 2 one. This is why the width must be known, and why checking the bit count against $W \\times H \\times D$ is worth doing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a different image, as the rows break differently"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Two recordings of the same sound have the same duration and sampling rate, but one has twice the sample resolution. What is true?",
+      "options": [
+        "It is twice the size, and each amplitude is recorded more precisely",
+        "It is twice the size, and twice as many samples are taken",
+        "It is the same size, as only the rate affects file size",
+        "It is four times the size, as resolution is squared"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "resolution against rate",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Resolution is a **linear** factor in rate × res × secs, so doubling it **doubles** the file. It changes how precisely each amplitude is recorded, not **how many** samples are taken — that is the sampling **rate**, which is unchanged here.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "twice the size, more precise amplitudes"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain how a bitmap image is represented, and describe how the number of pixels and the colour depth affect the file size and the quality.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "bitmap representation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **pixel** — short for **picture element** — is a **single point** in an image. A bitmap image is a grid of pixels, and the computer stores a binary code for each one recording its colour. There is nothing else in a bitmap: no shapes or lines, just the colour of every point, which is why zooming far enough into one shows the squares.\n\nTwo properties describe it. **Image size** is measured **in pixels**, written **width × height**, so a 100 × 50 image holds 5,000 pixels. **Colour depth** is the number of **bits used to represent each pixel**. It is a count of bits, not of colours: the number of colours available is $2^D$, so a depth of 1 bit gives 2 colours, 8 bits gives 256, and 24 bits gives over 16 million.\n\n**The file size formula** given in the specification is:\n\n$$\\text{Size (bits)} = W \\times H \\times D \\qquad \\text{Size (bytes)} = \\frac{W \\times H \\times D}{8}$$\n\nFor an image 100 pixels wide and 50 high at 8-bit depth: $100 \\times 50 \\times 8 = 40\\,000$ bits, which is $40\\,000 \\div 8 = 5\\,000$ bytes, or **5 kB**. The formula produces **bits**, so the division by 8 is essential whenever bytes are asked for — leaving the answer in bits is the commonest way to lose the final mark.\n\n**Both factors increase the file size**, because every pixel is stored and every pixel costs the same number of bits. More pixels means more of them; a greater colour depth means each one is more expensive. Both act **linearly**, so doubling the colour depth doubles the file. Doubling **both** the width and the height multiplies it by **four**, since both appear in the formula — a point worth making in this form rather than by recalculating.\n\n**Both also improve quality.** More pixels give more detail, because the image is sampled at more points; too few and it looks blocky, with the individual squares visible. A greater colour depth allows finer shading between similar colours; too little and a smooth gradient, such as a sky, breaks into visible bands.\n\nSo the choice is a trade-off. Higher values give a better image and a larger file, and the right setting depends on what the image is for — a photograph to be printed needs far more of both than an icon on a web page.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "pixels, size and depth"
+        },
+        {
+          "code": "M2",
+          "marks": 2,
+          "description": "the formula, with an example"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "effect on size and quality"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Describes pixels, image size and colour depth correctly.",
+          "marks": 2
+        },
+        {
+          "text": "Gives the file size formula and uses it in an example.",
+          "marks": 2
+        },
+        {
+          "text": "Explains the effect of both factors on size and quality.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "A **pixel** — short for **picture element** — is a **single point** in an image. A bitmap image is a grid of pixels, and the computer stores a binary code for each one recording its colour. There is nothing else in a bitmap: no shapes or lines, just the colour of every point, which is why zooming far enough into one shows the squares.\n\nTwo properties describe it. **Image size** is measured **in pixels**, written **width × height**, so a 100 × 50 image holds 5,000 pixels. **Colour depth** is the number of **bits used to represent each pixel**. It is a count of bits, not of colours: the number of colours available is $2^D$, so a depth of 1 bit gives 2 colours, 8 bits gives 256, and 24 bits gives over 16 million.\n\n**The file size formula** given in the specification is:\n\n$$\\text{Size (bits)} = W \\times H \\times D \\qquad \\text{Size (bytes)} = \\frac{W \\times H \\times D}{8}$$\n\nFor an image 100 pixels wide and 50 high at 8-bit depth: $100 \\times 50 \\times 8 = 40\\,000$ bits, which is $40\\,000 \\div 8 = 5\\,000$ bytes, or **5 kB**. The formula produces **bits**, so the division by 8 is essential whenever bytes are asked for — leaving the answer in bits is the commonest way to lose the final mark.\n\n**Both factors increase the file size**, because every pixel is stored and every pixel costs the same number of bits. More pixels means more of them; a greater colour depth means each one is more expensive. Both act **linearly**, so doubling the colour depth doubles the file. Doubling **both** the width and the height multiplies it by **four**, since both appear in the formula — a point worth making in this form rather than by recalculating.\n\n**Both also improve quality.** More pixels give more detail, because the image is sampled at more points; too few and it looks blocky, with the individual squares visible. A greater colour depth allows finer shading between similar colours; too little and a smooth gradient, such as a sky, breaks into visible bands.\n\nSo the choice is a trade-off. Higher values give a better image and a larger file, and the right setting depends on what the image is for — a photograph to be printed needs far more of both than an icon on a web page."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Explain how sound is represented digitally, and explain why a digital recording is always an approximation of the original.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "digital sound",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Sound is analogue.** A real sound wave varies **continuously**: it has a value at every instant and those values change smoothly. A computer can only store **discrete** binary numbers, so the wave has to be converted into a digital form before it can be stored or processed.\n\nThat conversion is **sampling**. The height of the wave is measured at regular intervals and each measurement is stored as a binary number. The specification defines a **sample** as **a measure of amplitude at a point in time** — the height of the wave at that instant.\n\nTwo properties describe the result. **Sampling rate** is the **number of samples taken in one second**, measured in **hertz**, where 1 Hz is one sample per second. **Sample resolution** is the **number of bits used for each sample**; more bits allow each amplitude to be recorded more precisely.\n\nThe file size follows from multiplying everything involved:\n\n$$\\text{File size (bits)} = \\text{rate} \\times \\text{res} \\times \\text{secs}$$\n\nA recording at 8,000 Hz with 8-bit resolution for 10 seconds is $8000 \\times 8 \\times 10 = 640\\,000$ bits, which is 80,000 bytes, or **80 kB**. Each of the three factors is **linear**, so doubling the rate, the resolution or the duration doubles the file — and raising the rate and the resolution together raises quality and size at the same time.\n\n**The digital version can never be exact**, and the reason is in the method itself. The original wave is **continuous**, so it has a value at every one of infinitely many instants. Sampling records it only at **intervals**, and whatever the wave did **between** two samples is never captured — the computer simply has no record of it, and reconstructing the sound means assuming something about the gap.\n\nThe **resolution** adds a second approximation. Each amplitude must be rounded to one of the $2^{res}$ values the available bits can express, so even the samples that were taken are stored slightly wrong.\n\nRaising either setting reduces the error. A higher rate leaves smaller gaps; a higher resolution makes each stored value closer to the true one. But neither closes the gap entirely, because a continuous wave cannot be captured by a finite number of measurements however many are taken. The digital recording is an **approximation** that can be made as close as is worth paying for in file size — which is exactly the trade-off that decides settings such as CD quality.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "analogue sound and sampling"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "rate, resolution and the formula"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "why it is an approximation"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains that sound is analogue and must be sampled.",
+          "marks": 2
+        },
+        {
+          "text": "Defines sampling rate and sample resolution, with the formula.",
+          "marks": 2
+        },
+        {
+          "text": "Explains why the digital version can never be exact.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Sound is analogue.** A real sound wave varies **continuously**: it has a value at every instant and those values change smoothly. A computer can only store **discrete** binary numbers, so the wave has to be converted into a digital form before it can be stored or processed.\n\nThat conversion is **sampling**. The height of the wave is measured at regular intervals and each measurement is stored as a binary number. The specification defines a **sample** as **a measure of amplitude at a point in time** — the height of the wave at that instant.\n\nTwo properties describe the result. **Sampling rate** is the **number of samples taken in one second**, measured in **hertz**, where 1 Hz is one sample per second. **Sample resolution** is the **number of bits used for each sample**; more bits allow each amplitude to be recorded more precisely.\n\nThe file size follows from multiplying everything involved:\n\n$$\\text{File size (bits)} = \\text{rate} \\times \\text{res} \\times \\text{secs}$$\n\nA recording at 8,000 Hz with 8-bit resolution for 10 seconds is $8000 \\times 8 \\times 10 = 640\\,000$ bits, which is 80,000 bytes, or **80 kB**. Each of the three factors is **linear**, so doubling the rate, the resolution or the duration doubles the file — and raising the rate and the resolution together raises quality and size at the same time.\n\n**The digital version can never be exact**, and the reason is in the method itself. The original wave is **continuous**, so it has a value at every one of infinitely many instants. Sampling records it only at **intervals**, and whatever the wave did **between** two samples is never captured — the computer simply has no record of it, and reconstructing the sound means assuming something about the gap.\n\nThe **resolution** adds a second approximation. Each amplitude must be rounded to one of the $2^{res}$ values the available bits can express, so even the samples that were taken are stored slightly wrong.\n\nRaising either setting reduces the error. A higher rate leaves smaller gaps; a higher resolution makes each stored value closer to the true one. But neither closes the gap entirely, because a continuous wave cannot be captured by a finite number of measurements however many are taken. The digital recording is an **approximation** that can be made as close as is worth paying for in file size — which is exactly the trade-off that decides settings such as CD quality."
+    }
+  ],
+  "examTechnique": {
+    "body": "Write the formula first: **W × H × D** for an image, **rate × res × secs** for sound. Both give **bits** — divide by **8** for bytes and again by **1000** for kilobytes.\n\nColour depth is **bits per pixel**; the number of colours is $2^D$. Reason about changes linearly: doubling **both** image dimensions gives **×4**.",
+    "examinerErrors": [
+      "Leaving the answer in bits when bytes were asked for.",
+      "Substituting the number of colours for the colour depth.",
+      "Saying doubling both dimensions doubles the file size.",
+      "Confusing sampling rate with sample resolution.",
+      "Defining a sample as \"a bit of the sound\".",
+      "Explaining lossy sound as \"the quality drops\" with no reason.",
+      "Adding an allowance for a file header, which is not wanted.",
+      "Drawing a bitmap without checking the bit count against W × H × D."
+    ],
+    "grade9Looks": "A grade 9 answer writes **W × H × D** or **rate × res × secs** before substituting, and converts to the unit the question actually asked for. It keeps **colour depth** (bits) apart from the **number of colours** ($2^D$), and reasons about change linearly — *four times, because both dimensions are in the formula* — rather than recalculating. It uses the specification's wording, **a measure of amplitude at a point in time**, and explains approximation from the method: the wave is **continuous**, sampling records only **intervals**, and each sample is additionally **rounded** to the available bits. It says a higher rate gets closer without ever being exact."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

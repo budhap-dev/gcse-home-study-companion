@@ -1,0 +1,1148 @@
+{
+  "id": "ascii-and-unicode",
+  "subjectId": "computer-science",
+  "unitId": "data-representation",
+  "title": "ASCII and Unicode",
+  "specPoints": [
+    "3.3.5"
+  ],
+  "order": 3,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Three numbers carry most questions",
+      "body": "**A is 65**, **a is 97**, **0 is 48**. Each group runs in sequence from there, so any letter or digit can be worked out by counting on. The exam gives you a table, but knowing these saves looking things up."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Count on from the start of the group",
+      "body": "For any letter, take its position in the alphabet and add. **F** is the 6th letter, so its code is 65 + 5 = **70**. Count from **0**, not 1 — that off-by-one is the commonest slip here."
+    },
+    {
+      "kind": "spot",
+      "title": "The character \"7\" is not the number 7",
+      "body": "The digit characters start at **48**, so `'7'` has the code **55**. This is why a program has to convert a typed digit before doing arithmetic with it, and why `'2' + '2'` does not give 4."
+    },
+    {
+      "kind": "check",
+      "title": "Upper and lower case differ by 32",
+      "body": "**a (97) − A (65) = 32**, and the same gap holds for every letter. So if a code you have worked out is 32 away from the answer you expected, you have the wrong case."
+    },
+    {
+      "kind": "remember",
+      "title": "Unicode matches ASCII up to 127",
+      "body": "The first **128** Unicode codes are **identical** to ASCII. That is why old ASCII text still opens correctly today, and it is the point to make when asked about the advantages of Unicode."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Character sets",
+        "body": "**A computer stores everything as binary, including text.** So there has to be an agreed answer to the question: which bit pattern means which character?\n\n**A character set is that agreement** — a list of the characters a system can use, each paired with a unique binary code. Without one, a file saved on one machine would be meaningless on another, because nothing would say what the patterns stood for.\n\n**A character includes more than letters.** Digits, punctuation, the space, and **control characters** such as carriage return all have codes of their own.\n\n**ASCII** — the American Standard Code for Information Interchange — is the older of the two the specification names. It is a **7-bit** code, so it has $2^7 = $ **128** characters, numbered **0 to 127**. That is enough for the English alphabet in both cases, the ten digits, punctuation and the control characters, and no more.\n\n**128 is a small number.** It leaves no room for accented letters such as é, for Greek or Arabic or Chinese, or for the mathematical symbols and emoji people now expect. ASCII was designed for English on American equipment in the 1960s, and it fits that job exactly and nothing beyond it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "A character set",
+              "boxes": [
+                {
+                  "title": "What it is",
+                  "points": [
+                    "an agreed list of characters",
+                    "each with a unique binary code"
+                  ]
+                },
+                {
+                  "title": "Why it is needed",
+                  "points": [
+                    "everything is stored as binary",
+                    "without it a file means nothing elsewhere"
+                  ]
+                },
+                {
+                  "title": "What counts as a character",
+                  "points": [
+                    "letters, digits, punctuation",
+                    "space and control characters"
+                  ]
+                },
+                {
+                  "title": "ASCII",
+                  "points": [
+                    "7 bits, so 128 characters",
+                    "codes 0 to 127"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box summary of what a character set is, why one is needed, and the size of ASCII"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "How many different characters can 7-bit ASCII represent?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the size of ASCII",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Seven bits give $2^7 = $ **128** patterns, so 128 characters with codes running 0 to 127.",
+          "markScheme": [
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "128"
+            }
+          ],
+          "discriminators": [],
+          "answer": 128,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Codes run in sequence",
+        "body": "**Character codes are grouped, and each group runs in order.** This is stated in the specification, and it is what makes the arithmetic questions possible.\n\n| Group | First | Last |\n| --- | --- | --- |\n| Capital letters | **A = 65** | Z = 90 |\n| Lower case letters | **a = 97** | z = 122 |\n| Digits | **0 = 48** | 9 = 57 |\n\n**So one code per group gives you the rest.** If A is 65, then B is 66, C is 67, and any letter is 65 plus its position in the alphabet **counting from 0**.\n\n**Count from zero.** A is 0 places along, not 1. F is the 6th letter, which is **5** places along, so 65 + 5 = **70**. Counting from 1 gives 71, and that off-by-one is the most frequent error in this topic.\n\n**Upper and lower case are exactly 32 apart**, since 97 − 65 = 32. The gap is the same for every letter, so converting case is just adding or subtracting 32.\n\n**The digit characters are not the numbers they show.** `'7'` has the code **55** (48 + 7), not 7. A program that reads a typed digit gets the **character**, and must convert it before doing arithmetic — which is why joining `'2'` and `'2'` gives `'22'` rather than 4.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Character",
+                "Code",
+                "Worked out as"
+              ],
+              "rows": [
+                [
+                  "A",
+                  "65",
+                  "the start of the group"
+                ],
+                [
+                  "B",
+                  "66",
+                  "65 + 1"
+                ],
+                [
+                  "F",
+                  "70",
+                  "65 + 5"
+                ],
+                [
+                  "Z",
+                  "90",
+                  "65 + 25"
+                ],
+                [
+                  "a",
+                  "97",
+                  "65 + 32"
+                ],
+                [
+                  "0",
+                  "48",
+                  "the start of the digit group"
+                ],
+                [
+                  "7",
+                  "55",
+                  "48 + 7"
+                ]
+              ],
+              "title": "Every code here is one addition away from the start of its group"
+            },
+            "alt": "A table showing how each character code is worked out from the first code in its group"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "In ASCII the code for A is 65. What is the code for F?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "counting on within a group",
+          "calculator": "either",
+          "tags": [],
+          "solution": "F is the 6th letter, so **5** places on from A (counting from 0). $65 + 5 = $ **70**.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "identifies F as 5 on from A"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "70"
+            }
+          ],
+          "discriminators": [],
+          "answer": 70,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Using an encoding table",
+        "body": "**The exam gives you a table and asks you to go both ways.** The skill is reading it carefully and counting from the right place.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Using A = 65, a = 97 and 0 = 48, give the codes for the word \"Cat\" and for the character \"7\".",
+            "steps": [
+              {
+                "text": "**C** is a capital. It is the 3rd letter, so 2 places on: 65 + 2 = **67**",
+                "note": "count from 0 — A itself is 0 places along"
+              },
+              {
+                "text": "**a** is lower case, so it starts from 97, not 65: it is the 1st letter, 0 places on, giving **97**",
+                "note": "using 65 here would give 65, which is capital A"
+              },
+              {
+                "text": "**t** is lower case and the 20th letter: 97 + 19 = **116**",
+                "note": "the same method, just a longer count"
+              },
+              {
+                "text": "So \"Cat\" is **67, 97, 116**",
+                "note": "three characters, three codes — one per character, always"
+              },
+              {
+                "text": "The character **\"7\"** is in the digit group, which starts at 48: 48 + 7 = **55**",
+                "note": "not 7 — the character showing a digit is not the value of that digit"
+              },
+              {
+                "text": "Going back the other way: code 67 is 2 on from 65, so it is the 3rd capital, **C**",
+                "note": "subtract the group start, then count forward that many letters"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Character",
+                "Code",
+                "Binary (7 bits)"
+              ],
+              "rows": [
+                [
+                  "C",
+                  "67",
+                  "1000011"
+                ],
+                [
+                  "a",
+                  "97",
+                  "1100001"
+                ],
+                [
+                  "t",
+                  "116",
+                  "1110100"
+                ]
+              ],
+              "title": "Each character takes 7 bits in ASCII, so \"Cat\" takes 21 bits"
+            },
+            "alt": "A table of the characters in the word Cat with their ASCII codes in decimal and binary"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "In ASCII the code for the character 0 is 48. What is the code for the character 7?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "digit characters",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The digits run in sequence from 48, so $48 + 7 = $ **55**. Note that this is the code for the **character** 7, not the number 7.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "48 + 7"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "55"
+            }
+          ],
+          "discriminators": [],
+          "answer": 55,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Unicode",
+        "body": "**Unicode exists because 128 characters are nowhere near enough.**\n\n**Its purpose** is to give **every character in every writing system** its own unique code — Latin, Greek, Cyrillic, Arabic, Hebrew, Chinese, Japanese, and the mathematical symbols, currency signs and emoji besides.\n\n**It does this by using more bits per character.** ASCII has 7 bits and so 128 codes; Unicode uses more, which is what buys the room for over a hundred thousand characters.\n\n**Its advantages over ASCII:**\n\n- It can represent **far more characters** — every alphabet, not just the English one.\n- Text in **any language** can be stored and exchanged, including several languages in one document.\n- It is a **single worldwide standard**, so a file opens the same way everywhere. Before it there were many incompatible extensions of ASCII, and text moved between countries turned to nonsense.\n- **The first 128 codes are identical to ASCII**, so every ASCII file is already valid Unicode and nothing old was broken.\n\n**Its disadvantage is size.** More bits per character means **larger files** for the same text, which is why plain English text in Unicode can take more space than the same text in ASCII.\n\n**That backwards compatibility is the clever part.** Unicode could have renumbered everything and been tidier. Keeping ASCII's codes for the first 128 characters meant decades of existing files and programs kept working, which is why it was adopted at all.\n\nYou do **not** need to know about UTF-8, UTF-16 or any other version of Unicode.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "ASCII",
+                "Unicode"
+              ],
+              "rows": [
+                [
+                  "Bits per character",
+                  "7",
+                  "more than 7"
+                ],
+                [
+                  "Number of characters",
+                  "128",
+                  "over a hundred thousand"
+                ],
+                [
+                  "Alphabets covered",
+                  "English only",
+                  "all writing systems"
+                ],
+                [
+                  "File size",
+                  "smaller",
+                  "larger for the same text"
+                ],
+                [
+                  "First 128 codes",
+                  "codes 0 to 127",
+                  "identical to ASCII"
+                ]
+              ],
+              "title": "The last row is why Unicode could replace ASCII without breaking anything"
+            },
+            "alt": "A comparison table of ASCII and Unicode across five properties"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "What is the main advantage of Unicode over ASCII?",
+          "options": [
+            "It can represent characters from all writing systems, not just English",
+            "It uses fewer bits per character, so files are smaller",
+            "It stores text without needing a character set at all",
+            "It is faster for a computer to process than ASCII"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "advantages of Unicode",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Unicode covers **every alphabet and symbol**, which 128 ASCII codes cannot. It uses **more** bits per character, so files are **larger** — that is the trade-off, not a benefit.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it represents all writing systems"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. What is a character set?\n2. How many characters does 7-bit ASCII have, and what are the lowest and highest codes?\n3. Give the ASCII codes for A, a and the character 0.\n\n**Part B.**\n\nUse A = 65, a = 97 and 0 = 48.\n\n4. Give the code for the letter D.\n5. Give the code for the letter q.\n6. Give the code for the character 5.\n\n**Part C.**\n\n7. A code is 84. Which character is it?\n8. Explain the purpose of Unicode and give two advantages over ASCII.\n9. Explain why Unicode keeps the same codes as ASCII for its first 128 characters.\n\nFor questions 4 to 7, count from **0**: A is 0 places along, not 1.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Character",
+                "Group starts at",
+                "Places along",
+                "Code"
+              ],
+              "rows": [
+                [
+                  "D",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "q",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "5",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill the middle two columns and the code follows"
+            },
+            "alt": "A blank table for working out character codes from the start of each group"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Count from zero.** A is 65 and is **0** places along, so the 6th letter F is 65 + **5** = 70. Counting from 1 gives 71. This single off-by-one costs more marks in this topic than anything else.\n\n**Check the case before you start.** Capitals begin at 65 and lower case at 97. If your answer is exactly **32** away from what you expected, you have used the wrong group.\n\n**Keep the character and the value apart.** `'7'` is code **55**, not 7. This is not a technicality — it is why a program must convert input before doing arithmetic, and why `'2' + '2'` gives `'22'`. Saying so shows you understand what the code is for.\n\n**Give the purpose of Unicode as coverage, not size.** It exists so that **every writing system** has its own codes. Answering that it is \"bigger\" describes the mechanism and misses what the question asks.\n\n**Do not claim Unicode saves space.** It uses **more** bits per character, so the same English text takes **more** room than in ASCII. That is Unicode's one real disadvantage, and naming it is what a full-mark comparison looks like.\n\n**Make the backwards-compatibility point.** The first **128** Unicode codes are identical to ASCII, so every existing ASCII file was already valid Unicode. That is why it could be adopted worldwide without breaking decades of stored text — a better answer than simply listing that it has more characters.\n\n**Remember that \"character\" is broader than \"letter\".** Punctuation, the space, and control characters such as carriage return all occupy codes. A question asking how many characters a set holds is counting all of them.\n\n**You do not need UTF-8 or UTF-16.** The specification says so explicitly, so do not spend an answer on them.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What goes wrong",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "counting letters",
+                  "counts A as 1",
+                  "A is 0 places along"
+                ],
+                [
+                  "case",
+                  "uses 65 for lower case",
+                  "lower case starts at 97"
+                ],
+                [
+                  "digit characters",
+                  "says the code for \"7\" is 7",
+                  "it is 48 + 7 = 55"
+                ],
+                [
+                  "purpose of Unicode",
+                  "\"it is bigger\"",
+                  "every writing system gets a code"
+                ],
+                [
+                  "Unicode size",
+                  "claims smaller files",
+                  "more bits, so larger files"
+                ],
+                [
+                  "compatibility",
+                  "not mentioned",
+                  "first 128 codes match ASCII"
+                ],
+                [
+                  "what a character is",
+                  "letters only",
+                  "punctuation, space, control codes too"
+                ]
+              ],
+              "title": "The first row alone accounts for most of the lost marks here"
+            },
+            "alt": "A table of common errors when working with character sets"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **character set** pairs every usable character with a **unique binary code**.\n- Without one, a file would be meaningless on another machine.\n- Characters include **punctuation, the space and control characters**, not just letters.\n- **ASCII is 7-bit**: $2^7 = $ **128** characters, codes **0 to 127**.\n- Codes are **grouped and run in sequence**.\n- **A = 65**, **a = 97**, **character 0 = 48**.\n- Count places from **0**: F is 65 + 5 = **70**.\n- Upper and lower case differ by **32**.\n- The character `'7'` is code **55**, not 7.\n- **Unicode's purpose** is a code for **every character in every writing system**.\n- It uses **more bits**, giving over a hundred thousand characters.\n- Advantages: all alphabets, any language, one worldwide standard.\n- Its first **128** codes are **identical to ASCII**, so old files still work.\n- Its disadvantage is **larger files** for the same text.\n- **UTF-8 and UTF-16 are not required.**",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Character set",
+                  "characters paired with unique codes"
+                ],
+                [
+                  "ASCII bits",
+                  "7"
+                ],
+                [
+                  "ASCII characters",
+                  "128 (codes 0 to 127)"
+                ],
+                [
+                  "A",
+                  "65"
+                ],
+                [
+                  "a",
+                  "97"
+                ],
+                [
+                  "Character 0",
+                  "48"
+                ],
+                [
+                  "Case difference",
+                  "32"
+                ],
+                [
+                  "Counting",
+                  "from 0, not 1"
+                ],
+                [
+                  "Character \"7\"",
+                  "55, not 7"
+                ],
+                [
+                  "Unicode purpose",
+                  "every writing system"
+                ],
+                [
+                  "Unicode and ASCII",
+                  "first 128 codes identical"
+                ],
+                [
+                  "Unicode drawback",
+                  "larger files"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of character sets, ASCII codes and Unicode"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "What is a character set?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "defining a character set",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **character set** is the agreed list of characters a system can use, each paired with a **unique binary code**, so that a stored pattern can be read back as the right character.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a list of characters each with a unique binary code"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "a list of characters each with a unique binary code",
+        "characters and the codes that represent them",
+        "an agreed set of characters with unique codes"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "How many different characters can 7-bit ASCII represent?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the size of ASCII",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2^7 = $ **128** characters, with codes running 0 to 127.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "128"
+        }
+      ],
+      "discriminators": [],
+      "answer": 128,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "In ASCII the code for A is 65. What is the code for D?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "counting on within a group",
+      "calculator": "either",
+      "tags": [],
+      "solution": "D is the 4th letter, so **3** places on from A. $65 + 3 = $ **68**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3 places on from A"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "68"
+        }
+      ],
+      "discriminators": [],
+      "answer": 68,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which of these has its own character code in ASCII?",
+      "options": [
+        "The space",
+        "The number 300",
+        "A whole word",
+        "A paragraph of text"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "what counts as a character",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **space** is a character with its own code, as are punctuation marks and control characters. A code represents **one character**, never a word or a number larger than the set.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the space"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "In ASCII the code for a is 97. What is the code for q?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "counting on within a group",
+      "calculator": "either",
+      "tags": [],
+      "solution": "q is the 17th letter, so **16** places on from a. $97 + 16 = $ **113**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "16 places on from a"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "113"
+        }
+      ],
+      "discriminators": [],
+      "answer": 113,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "In ASCII the code for the character 0 is 48. What is the code for the character 5?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "digit characters",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The digits run in sequence from 48, so $48 + 5 = $ **53**. That is the code for the **character** 5, not the value 5.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "48 + 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "53"
+        }
+      ],
+      "discriminators": [],
+      "answer": 53,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "By how much do the ASCII codes for a capital letter and the matching lower case letter differ?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the case gap",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Capitals start at 65 and lower case at 97, so the gap is $97 - 65 = $ **32**, and it is the same for every letter.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "32"
+        }
+      ],
+      "discriminators": [],
+      "answer": 32,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "A character has the ASCII code 84. Given that A is 65, which character is it?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "code to character",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$84 - 65 = 19$, so it is 19 places on from A. Counting from A as 0, that is the 20th capital letter: **T**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "T"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "T"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What is the purpose of Unicode?",
+      "options": [
+        "To give every character in every writing system a unique code",
+        "To store text using fewer bits than ASCII does",
+        "To replace binary storage of text with something faster",
+        "To encrypt text so that it cannot be read without a key"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the purpose of Unicode",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Unicode exists so that **every writing system** — every alphabet, plus symbols and emoji — has its own unique code. It uses **more** bits than ASCII, not fewer, and it has nothing to do with encryption.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a unique code for every writing system"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Up to which code number does Unicode use the same codes as ASCII?",
+      "options": [
+        "127",
+        "255",
+        "65",
+        "1024"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Unicode and ASCII compatibility",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first **128** codes, numbered **0 to 127**, are identical in both. That is what makes every ASCII file already valid Unicode.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "127"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A student writes that Unicode is better than ASCII because it produces smaller files. Why is this wrong?",
+      "options": [
+        "Unicode uses more bits per character, so files are larger",
+        "Unicode files are exactly the same size as ASCII files",
+        "File size depends only on the number of characters, not the encoding",
+        "Unicode does not store text in files at all"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the cost of Unicode",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The extra characters are bought with **more bits each**, so the same English text takes **more** space in Unicode than in ASCII. Larger files are Unicode's one genuine disadvantage, and a full comparison names it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "more bits per character, so larger files"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why did Unicode keep ASCII's codes for its first 128 characters?",
+      "options": [
+        "So that existing ASCII files and programs would still work",
+        "Because those 128 codes cannot be changed by any standard",
+        "To make Unicode files smaller than they would otherwise be",
+        "Because ASCII characters are used more often than others"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "backwards compatibility",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Renumbering would have been tidier but would have broken **decades of stored text and software**. Keeping the ASCII codes meant every existing ASCII file was already valid Unicode, which is a large part of why Unicode was adopted worldwide.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "existing ASCII files still work"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "A program reads the character 7 typed by a user and adds 1 to its ASCII code. What character results, and why is this not 8 as a number?",
+      "options": [
+        "The character 8, because the digits run in sequence from 48",
+        "The number 8, because adding to a code adds to its value",
+        "The character 1, because only the added value is kept",
+        "Nothing valid, because codes cannot be added to"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "digit characters",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The character 7 has code **55**, and 55 + 1 = 56, which is the character **8** — because the digit characters run in sequence from 48. It looks like arithmetic on the number but it is not: the program moved one place along the **character** group. Genuine arithmetic needs the character converted to a number first.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the character 8, as digits run in sequence"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "How many bits are needed to store the word \"Cat\" in 7-bit ASCII?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "text and storage",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Three characters at 7 bits each: $3 \\times 7 = $ **21** bits. Note that the capital and the lower case letters take the same space — the case affects the code, not the size.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3 characters × 7 bits"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "21"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "answer": 21,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why can character codes be worked out from a single known code, such as A = 65?",
+      "options": [
+        "Codes are grouped and run in sequence within each group",
+        "Every code is a multiple of the first code in its group",
+        "All character sets use the same codes for every character",
+        "Codes are assigned randomly but stored in a lookup table"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why sequence matters",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification states that codes are **grouped and run in sequence**. Because the capitals occupy consecutive codes from 65, every other capital can be calculated once one is known — and the same holds for lower case and for digits.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "codes are grouped and run in sequence"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Two computers exchange a text file and one displays nonsense. What does this suggest?",
+      "options": [
+        "They are interpreting the codes with different character sets",
+        "The file was too large to transfer completely",
+        "One computer stores text in decimal rather than binary",
+        "Character codes change when a file is copied"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why a shared standard matters",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The bits arrive unchanged; what differs is the **agreement about what they mean**. If the two machines use different character sets, the same code stands for a different character on each. This was a real and constant problem before Unicode, and avoiding it is exactly why a single worldwide standard matters.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "different character sets are being used"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain what a character set is, describe how ASCII represents characters, and explain how a code can be worked out from a known one.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "character sets and ASCII",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **character set** is an agreed list of the characters a system can use, in which each character is paired with a **unique binary code**. One is needed because a computer stores everything as binary, so without an agreement about which pattern stands for which character a stored file would be meaningless — and meaningless in a **different** way on every machine that opened it.\n\nIt is worth being clear that a \"character\" is more than a letter. Digits, punctuation, the space and **control characters** such as carriage return all have codes of their own.\n\n**ASCII** is a **7-bit** character set. Seven bits give $2^7 = $ **128** different patterns, so ASCII has **128** characters with codes numbered **0 to 127**. That is enough for the English alphabet in both cases, the ten digits, punctuation and the control characters, and nothing more — no accented letters, no other alphabets, no mathematical symbols.\n\n**Codes are grouped, and each group runs in sequence.** The capital letters occupy consecutive codes beginning at **A = 65**, the lower case letters beginning at **a = 97**, and the digit characters beginning at **0 = 48**.\n\nThis is what allows a code to be worked out from a known one. To find the code for **F**, note that F is the 6th letter of the alphabet and therefore **5** places along from A, **counting from 0**. So its code is $65 + 5 = \\mathbf{70}$. Counting from 1 instead would give 71, and that off-by-one is the commonest error in this topic.\n\nThe same method works backwards. A character with code 84 is $84 - 65 = 19$ places on from A, which makes it the 20th capital letter, **T**.\n\nTwo details follow from the grouping. Upper and lower case differ by exactly **32** for every letter, since $97 - 65 = 32$, so changing case is a matter of adding or subtracting 32. And the **digit characters are not the values they show**: the character `'7'` has the code $48 + 7 = \\mathbf{55}$, not 7. This is why a program must convert a typed digit before doing arithmetic with it.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "character set defined"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "ASCII described"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "sequence, with an example"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Defines a character set and says why one is needed.",
+          "marks": 2
+        },
+        {
+          "text": "Describes 7-bit ASCII, its size and its range of codes.",
+          "marks": 2
+        },
+        {
+          "text": "Explains the sequential grouping and works an example.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "A **character set** is an agreed list of the characters a system can use, in which each character is paired with a **unique binary code**. One is needed because a computer stores everything as binary, so without an agreement about which pattern stands for which character a stored file would be meaningless — and meaningless in a **different** way on every machine that opened it.\n\nIt is worth being clear that a \"character\" is more than a letter. Digits, punctuation, the space and **control characters** such as carriage return all have codes of their own.\n\n**ASCII** is a **7-bit** character set. Seven bits give $2^7 = $ **128** different patterns, so ASCII has **128** characters with codes numbered **0 to 127**. That is enough for the English alphabet in both cases, the ten digits, punctuation and the control characters, and nothing more — no accented letters, no other alphabets, no mathematical symbols.\n\n**Codes are grouped, and each group runs in sequence.** The capital letters occupy consecutive codes beginning at **A = 65**, the lower case letters beginning at **a = 97**, and the digit characters beginning at **0 = 48**.\n\nThis is what allows a code to be worked out from a known one. To find the code for **F**, note that F is the 6th letter of the alphabet and therefore **5** places along from A, **counting from 0**. So its code is $65 + 5 = \\mathbf{70}$. Counting from 1 instead would give 71, and that off-by-one is the commonest error in this topic.\n\nThe same method works backwards. A character with code 84 is $84 - 65 = 19$ places on from A, which makes it the 20th capital letter, **T**.\n\nTwo details follow from the grouping. Upper and lower case differ by exactly **32** for every letter, since $97 - 65 = 32$, so changing case is a matter of adding or subtracting 32. And the **digit characters are not the values they show**: the character `'7'` has the code $48 + 7 = \\mathbf{55}$, not 7. This is why a program must convert a typed digit before doing arithmetic with it."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Compare ASCII and Unicode. Explain why Unicode was needed, its advantages, and what it costs.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "comparing ASCII and Unicode",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**ASCII** is a 7-bit character set, which gives it $2^7 = $ **128** characters with codes from 0 to 127. That was designed for English on American equipment and it covers that job exactly: both cases of the alphabet, the ten digits, punctuation and control characters.\n\n**The limitation is that 128 is a very small number.** There is no room in ASCII for accented letters such as é, for Greek, Cyrillic, Arabic, Hebrew, Chinese or Japanese, or for mathematical symbols, currency signs and emoji. As computers spread beyond English-speaking countries this became untenable. Various incompatible extensions of ASCII appeared, and text moved between countries frequently arrived as nonsense — the bits were unchanged, but the two machines disagreed about what they meant.\n\n**Unicode's purpose** is to solve that properly: to give **every character in every writing system** a single unique code. It achieves this by using **more bits per character** than ASCII, which buys room for well over a hundred thousand characters.\n\n**Its advantages** follow from that. It can represent **all alphabets**, not just English. Text in **any language** can be stored and exchanged, and several languages can appear in one document. Because it is a **single worldwide standard**, a file displays the same way wherever it is opened, which removes the whole class of problem described above.\n\n**Its disadvantage is size.** More bits per character means **larger files** for the same text. For plain English — which ASCII already handled — Unicode takes more space for no visible gain. That is the genuine cost, and a comparison that does not mention it is incomplete. A common mistake is to claim Unicode produces *smaller* files, which has the trade-off exactly backwards.\n\n**The compatibility point is what made adoption possible.** The first **128** Unicode codes are **identical** to ASCII's. Unicode could have renumbered everything and been tidier, but keeping those codes meant every existing ASCII file was already valid Unicode and every program that read ASCII kept working. Decades of stored text did not have to be converted. Designing for the systems that already exist, rather than only for the problem in hand, is why Unicode succeeded where a cleaner standard might not have.\n\nThe specification does not require any knowledge of UTF-8, UTF-16 or other versions of Unicode.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the limitation of ASCII"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "purpose and advantages"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "cost and compatibility"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains the limitation of ASCII that made Unicode necessary.",
+          "marks": 2
+        },
+        {
+          "text": "Gives the purpose and advantages of Unicode.",
+          "marks": 2
+        },
+        {
+          "text": "States the disadvantage and the compatibility point.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**ASCII** is a 7-bit character set, which gives it $2^7 = $ **128** characters with codes from 0 to 127. That was designed for English on American equipment and it covers that job exactly: both cases of the alphabet, the ten digits, punctuation and control characters.\n\n**The limitation is that 128 is a very small number.** There is no room in ASCII for accented letters such as é, for Greek, Cyrillic, Arabic, Hebrew, Chinese or Japanese, or for mathematical symbols, currency signs and emoji. As computers spread beyond English-speaking countries this became untenable. Various incompatible extensions of ASCII appeared, and text moved between countries frequently arrived as nonsense — the bits were unchanged, but the two machines disagreed about what they meant.\n\n**Unicode's purpose** is to solve that properly: to give **every character in every writing system** a single unique code. It achieves this by using **more bits per character** than ASCII, which buys room for well over a hundred thousand characters.\n\n**Its advantages** follow from that. It can represent **all alphabets**, not just English. Text in **any language** can be stored and exchanged, and several languages can appear in one document. Because it is a **single worldwide standard**, a file displays the same way wherever it is opened, which removes the whole class of problem described above.\n\n**Its disadvantage is size.** More bits per character means **larger files** for the same text. For plain English — which ASCII already handled — Unicode takes more space for no visible gain. That is the genuine cost, and a comparison that does not mention it is incomplete. A common mistake is to claim Unicode produces *smaller* files, which has the trade-off exactly backwards.\n\n**The compatibility point is what made adoption possible.** The first **128** Unicode codes are **identical** to ASCII's. Unicode could have renumbered everything and been tidier, but keeping those codes meant every existing ASCII file was already valid Unicode and every program that read ASCII kept working. Decades of stored text did not have to be converted. Designing for the systems that already exist, rather than only for the problem in hand, is why Unicode succeeded where a cleaner standard might not have.\n\nThe specification does not require any knowledge of UTF-8, UTF-16 or other versions of Unicode."
+    }
+  ],
+  "examTechnique": {
+    "body": "Count places from **0**: A is 65 and is 0 places along, so F is $65 + 5 = 70$. Check the **case** first — capitals start at 65, lower case at 97, a gap of **32**.\n\nKeep the **character** apart from the **value**: `'7'` is 55. For Unicode, give the purpose as **covering every writing system**, and admit the cost — **larger files**.",
+    "examinerErrors": [
+      "Counting A as 1 place along instead of 0.",
+      "Using 65 as the start for a lower case letter.",
+      "Saying the code for the character 7 is 7.",
+      "Giving Unicode's purpose as \"it is bigger\".",
+      "Claiming Unicode produces smaller files.",
+      "Forgetting that the space and punctuation have codes.",
+      "Writing about UTF-8 or UTF-16, which are not required.",
+      "Missing that Unicode matches ASCII for the first 128 codes."
+    ],
+    "grade9Looks": "A grade 9 answer counts from **0** and checks the **case** before working anything out, so it never lands 32 away from the right code. It keeps the **character** `'7'` (code 55) distinct from the **number** 7, and can say why that matters for a program reading input. On Unicode it gives the purpose as **a code for every writing system**, names the cost — **more bits, larger files** — and makes the point most answers miss: the first **128** codes are identical to ASCII, so existing files and software kept working, which is why the standard could be adopted at all."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

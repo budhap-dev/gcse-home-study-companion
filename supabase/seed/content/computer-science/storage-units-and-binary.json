@@ -1,0 +1,1133 @@
+{
+  "id": "storage-units-and-binary",
+  "subjectId": "computer-science",
+  "unitId": "data-representation",
+  "title": "Storage units and binary",
+  "specPoints": [
+    "3.3.1",
+    "3.3.2",
+    "3.3.3"
+  ],
+  "order": 1,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Write the place values down first",
+      "body": "Every binary conversion starts the same way: **128  64  32  16  8  4  2  1**. Write that row before anything else and the rest is adding up. Trying to hold the doubling in your head is where mistakes come from."
+    },
+    {
+      "kind": "shortcut",
+      "title": "One hex digit is exactly four bits",
+      "body": "To go from binary to hex, **split into fours from the right** and convert each half on its own: `1001 1100` is 9 and 12, so **9C**. No division needed in either direction."
+    },
+    {
+      "kind": "spot",
+      "title": "AQA uses 1 kB = 1,000 bytes",
+      "body": "The specification lists the **decimal** prefixes: 1 kB is **1,000** bytes, 1 MB is 1,000 kB, and so on. You may have seen 1,024 elsewhere — that is the older powers-of-two usage, and the specification says you do not need it."
+    },
+    {
+      "kind": "check",
+      "title": "Eight bits stop at 255",
+      "body": "The largest 8-bit value is **11111111 = 255 = FF**. If a conversion gives you more than 255 from eight bits, or more than two hex digits, something has gone wrong — check it before moving on."
+    },
+    {
+      "kind": "remember",
+      "title": "b is a bit, B is a byte",
+      "body": "The specification is explicit: lower case **b** means a **bit**, capital **B** means a **byte**. So 8 b = 1 B, and a \"100 Mb\" connection is eight times slower than a \"100 MB\" one sounds."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Three number bases",
+        "body": "**A base is how many digits a number system has.**\n\n- **Decimal, base 10** — ten digits, 0 to 9. What people count in.\n- **Binary, base 2** — two digits, 0 and 1. What computers use.\n- **Hexadecimal, base 16** — sixteen digits: 0 to 9, then **A B C D E F** standing for 10 to 15.\n\n**Computers use binary to represent all data and instructions.** A circuit is easiest to build with two reliable states — on and off, high and low voltage — so everything is stored as patterns of two symbols.\n\n**A bit pattern on its own means nothing.** The same eight bits could be a whole number, a letter, part of a colour in a photograph, part of a sound, or an instruction. What it means depends entirely on what the computer has been told to do with it. This is worth holding on to, because the rest of this unit is really about the different things one pattern can be read as.\n\n**Why hexadecimal is used** is asked directly on the paper. Hex is not a different way of storing anything — nothing is ever stored in hex. It is a way of **writing** binary for people:\n\n- It is much **shorter**: `10011100` becomes `9C`.\n- It is easier to **read, remember and copy**, so people make **fewer mistakes**.\n- One hex digit is exactly **four bits**, so converting is quick and no arithmetic is lost.\n\nColour codes on web pages are written in hex for exactly this reason.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Base",
+                "Digits used",
+                "Who uses it"
+              ],
+              "rows": [
+                [
+                  "decimal, base 10",
+                  "0 to 9",
+                  "people, everyday counting"
+                ],
+                [
+                  "binary, base 2",
+                  "0 and 1",
+                  "the computer itself"
+                ],
+                [
+                  "hexadecimal, base 16",
+                  "0 to 9 then A to F",
+                  "people writing binary down"
+                ]
+              ],
+              "title": "Nothing is stored in hex — it is a shorthand for writing binary"
+            },
+            "alt": "A table of the three number bases, the digits each uses and who uses it"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Why is hexadecimal often used in computer science?",
+          "options": [
+            "It is a shorter way to write binary, so people make fewer mistakes",
+            "Computers store data in hexadecimal rather than in binary",
+            "It can represent numbers that binary cannot represent",
+            "It takes up less space in memory than binary does"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "why hexadecimal",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Hex is **for people**, not for the machine. It is shorter and easier to read and copy, so fewer mistakes are made. Everything is still **stored in binary** — hex takes up no less space.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "shorter to write, fewer mistakes"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Binary and decimal",
+        "body": "**Each binary place is worth twice the one to its right.** For eight bits:\n\n**128  64  32  16  8  4  2  1**\n\n**Binary to decimal: add up the places with a 1 under them.** For `10011100`, the 1s sit under 128, 16, 8, 4, and 128 + 16 + 8 + 4 = **156**.\n\n**Decimal to binary: work left to right, taking each place if it fits.** For 156: 128 fits, leaving 28. 64 does not fit, so 0. 32 does not, so 0. 16 fits, leaving 12. 8 fits, leaving 4. 4 fits, leaving 0. Then 2 and 1 are both 0. That gives `10011100`.\n\n**The specification sets the range at 0 to 255.** Eight bits, and 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255. So:\n\n- the largest value is `11111111` = **255**\n- an answer above 255 from eight bits is **wrong**\n\n**Pad to eight bits.** 45 is `00101101`, not `101101`. The leading zeros carry no value but they show you are working in a byte, and questions usually expect them.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Place",
+                "128",
+                "64",
+                "32",
+                "16",
+                "8",
+                "4",
+                "2",
+                "1"
+              ],
+              "rows": [
+                [
+                  "Bit",
+                  "1",
+                  "0",
+                  "0",
+                  "1",
+                  "1",
+                  "1",
+                  "0",
+                  "0"
+                ],
+                [
+                  "Worth",
+                  "128",
+                  "0",
+                  "0",
+                  "16",
+                  "8",
+                  "4",
+                  "0",
+                  "0"
+                ]
+              ],
+              "title": "10011100 = 128 + 16 + 8 + 4 = 156"
+            },
+            "alt": "A place-value table converting the binary number 10011100 into decimal"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Convert the binary number 00101101 to decimal.",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "binary to decimal",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The 1s sit under 32, 8, 4 and 1, so $32 + 8 + 4 + 1 = $ **45**.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "identifies the place values 32, 8, 4, 1"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "45"
+            }
+          ],
+          "discriminators": [],
+          "answer": 45,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "One value, three bases",
+        "body": "**The same number written three ways.** Being able to move between any two of them in either direction is what the specification asks for.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Write the decimal number 156 in binary and in hexadecimal.",
+            "steps": [
+              {
+                "text": "Write the place values: **128  64  32  16  8  4  2  1**",
+                "note": "always first — everything else is then just adding up"
+              },
+              {
+                "text": "Take each place that fits: 128 yes (28 left), 64 no, 32 no, 16 yes (12 left), 8 yes (4 left), 4 yes (0 left), 2 no, 1 no",
+                "note": "working left to right means you never have to go back"
+              },
+              {
+                "text": "Read the bits off: **10011100**",
+                "note": "check by adding: 128 + 16 + 8 + 4 = 156 ✓"
+              },
+              {
+                "text": "For hex, split into two fours: **1001** and **1100**",
+                "note": "split from the **right**; one hex digit is exactly four bits"
+              },
+              {
+                "text": "1001 = 8 + 1 = 9, and 1100 = 8 + 4 = 12, which is written **C**",
+                "note": "12 is past 9, so it takes a letter: A is 10, B 11, C 12, D 13, E 14, F 15"
+              },
+              {
+                "text": "So 156 = `10011100` = **9C**",
+                "note": "check the other way: 9 × 16 = 144, plus 12 = 156 ✓"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Decimal",
+                "Binary",
+                "Hex"
+              ],
+              "rows": [
+                [
+                  "156",
+                  "10011100",
+                  "9C"
+                ],
+                [
+                  "45",
+                  "00101101",
+                  "2D"
+                ],
+                [
+                  "255",
+                  "11111111",
+                  "FF"
+                ],
+                [
+                  "0",
+                  "00000000",
+                  "00"
+                ]
+              ],
+              "title": "The last two rows are the limits of a byte, worth knowing by heart"
+            },
+            "alt": "A table of four values written in decimal, binary and hexadecimal"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "Convert the decimal number 45 to hexadecimal.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "decimal to hex",
+          "calculator": "either",
+          "tags": [],
+          "solution": "45 in binary is `00101101`. Split into fours: `0010` = 2 and `1101` = 13 = D. So **2D**. Checking: $2 \\times 16 = 32$, plus 13 is 45 ✓",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2D"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "2D",
+            "0x2D"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Units of information",
+        "body": "**The two units the specification names:**\n\n- A **bit** is the **fundamental unit of information** — a single 0 or 1.\n- A **byte** is a group of **8 bits**.\n\nAnd the symbols matter: **`b` is a bit, `B` is a byte.** A broadband speed quoted as 100 Mb is not the same as 100 MB.\n\n**Larger quantities use prefixes, and AQA uses the decimal ones:**\n\n| Prefix | Meaning |\n| --- | --- |\n| **kilo (kB)** | 1 kB = **1,000** bytes |\n| **mega (MB)** | 1 MB = **1,000** kilobytes |\n| **giga (GB)** | 1 GB = **1,000** megabytes |\n| **tera (TB)** | 1 TB = **1,000** gigabytes |\n\nEach step is **×1,000**, so 1 MB is 1,000,000 bytes and 1 GB is 1,000,000,000 bytes.\n\n**You may have seen 1,024 instead.** Historically these words were used for powers of 2, and 2¹⁰ = 1,024. The specification notes this but says the **decimal** values are what you use, and that you do not need the kibi/mebi names that properly belong to the powers of 2.\n\n**Comparing sizes is the skill being tested.** To see how many 5 MB photos fit in 4 GB, put both in the same unit: 4 GB = 4000 MB, and 4000 ÷ 5 = **800** photos.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Unit",
+                "In bytes"
+              ],
+              "rows": [
+                [
+                  "1 byte (B)",
+                  "8 bits"
+                ],
+                [
+                  "1 kilobyte (kB)",
+                  "1,000 bytes"
+                ],
+                [
+                  "1 megabyte (MB)",
+                  "1,000,000 bytes"
+                ],
+                [
+                  "1 gigabyte (GB)",
+                  "1,000,000,000 bytes"
+                ],
+                [
+                  "1 terabyte (TB)",
+                  "1,000,000,000,000 bytes"
+                ]
+              ],
+              "title": "Every step up is a factor of 1,000"
+            },
+            "alt": "A table of storage units and their values in bytes"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "How many bits are there in 2 bytes?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "bits and bytes",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A byte is **8 bits**, so 2 bytes is $2 \\times 8 = $ **16** bits.",
+          "markScheme": [
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "16"
+            }
+          ],
+          "discriminators": [],
+          "answer": 16,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Name the three number bases in the specification and give the digits each uses.\n2. How many bits are in a byte?\n3. How many bytes are in 1 kB?\n\n**Part B.**\n\n4. Convert `01001010` to decimal.\n5. Convert 200 to binary, using eight bits.\n6. Convert `11011010` to hexadecimal.\n\n**Part C.**\n\n7. Convert the hexadecimal number B4 to decimal.\n8. A memory card holds 8 GB. How many 4 MB songs will fit on it?\n9. Explain why hexadecimal is used in computer science, and why nothing is actually stored in it.\n\nWrite the place-value row **128 64 32 16 8 4 2 1** before starting questions 4 to 7.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Place",
+                "128",
+                "64",
+                "32",
+                "16",
+                "8",
+                "4",
+                "2",
+                "1"
+              ],
+              "rows": [
+                [
+                  "Bit",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "Worth",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Copy this row out for each conversion"
+            },
+            "alt": "A blank eight-bit place-value table for working conversions"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Write the place values first, every time.** `128  64  32  16  8  4  2  1`. Almost every lost mark in this topic comes from doubling in your head and slipping a place.\n\n**Split into nibbles from the right, not the left.** Binary to hex works because one hex digit is exactly four bits. With an odd number of bits, pad on the **left**: `1011010` is seven bits, so it becomes `01011010` = 5A. Splitting from the left instead gives a different and wrong answer.\n\n**Know that 255 = 11111111 = FF is the ceiling.** It is a free check on every answer. More than 255 from a byte, or three hex digits, means something is wrong.\n\n**Hex is a notation, not a storage format.** *It takes up less space* is a common answer and it is wrong: the machine stores binary either way. Hex is shorter **to write and read**, which is a benefit to **people**, and that is the reason to give.\n\n**Use AQA's decimal prefixes.** 1 kB = **1,000** bytes. You will meet 1,024 elsewhere, and it is not wrong in the world — but the specification names the decimal values, and a calculation built on 1,024 will not match the mark scheme.\n\n**Convert to a common unit before comparing.** Do not try to divide gigabytes by megabytes in your head. Put both into MB, or both into bytes, and the division becomes ordinary arithmetic.\n\n**Remember that a bit pattern has no meaning by itself.** `10011100` is 156 as a whole number, but the same eight bits could be a character, part of a pixel's colour, or part of a sound sample. Saying so is often what separates a full-mark answer on \"what does this represent\" from a half one.\n\n**Watch the case of b and B.** A 100 Mb/s connection transfers 12.5 MB each second, not 100. Exam questions do use both.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What goes wrong",
+                "What to do"
+              ],
+              "rows": [
+                [
+                  "doubling in your head",
+                  "a place gets skipped",
+                  "write 128 64 32 16 8 4 2 1 down first"
+                ],
+                [
+                  "splitting for hex",
+                  "split from the left",
+                  "split into fours from the right, never the left"
+                ],
+                [
+                  "seven-bit numbers",
+                  "nibbles come out wrong",
+                  "pad with zeros on the left first"
+                ],
+                [
+                  "why hex",
+                  "says it saves space",
+                  "shorter for people to read and write"
+                ],
+                [
+                  "prefixes",
+                  "uses 1,024",
+                  "AQA uses 1 kB = 1,000 B"
+                ],
+                [
+                  "comparing sizes",
+                  "divides GB by MB directly",
+                  "convert both to one unit first"
+                ],
+                [
+                  "b and B",
+                  "treats them as the same",
+                  "b is a bit, B is a byte"
+                ]
+              ],
+              "title": "The first two rows account for most lost marks in this topic"
+            },
+            "alt": "A table of common errors in number-base conversion and storage units"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Three bases: **decimal (10)**, **binary (2)**, **hexadecimal (16)**.\n- Hex digits run 0 to 9 then **A to F** for 10 to 15.\n- Computers use **binary for all data and instructions**.\n- A bit pattern has **no meaning on its own** — it depends on how it is read.\n- **Hex is used because it is shorter for people**, not because it saves space.\n- Eight-bit place values: **128  64  32  16  8  4  2  1**.\n- **Binary to decimal**: add the places with a 1 under them.\n- **Decimal to binary**: take each place left to right if it fits.\n- The range is **0 to 255**: `11111111` = 255 = **FF**.\n- **One hex digit = four bits**; split into fours **from the right**.\n- `10011100` = 156 = **9C**.\n- A **bit** is the fundamental unit; a **byte** is **8 bits**.\n- **b** is a bit, **B** is a byte.\n- Prefixes are **decimal**: 1 kB = **1,000** B, and each step up is ×1,000.\n- To compare sizes, **convert both to the same unit** first.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Bases",
+                  "decimal 10, binary 2, hex 16"
+                ],
+                [
+                  "Hex digits",
+                  "0-9 then A-F"
+                ],
+                [
+                  "Why hex",
+                  "shorter for people to read and write"
+                ],
+                [
+                  "Place values",
+                  "128 64 32 16 8 4 2 1"
+                ],
+                [
+                  "Binary to decimal",
+                  "add the places with a 1"
+                ],
+                [
+                  "Decimal to binary",
+                  "take each place if it fits"
+                ],
+                [
+                  "Byte range",
+                  "0 to 255"
+                ],
+                [
+                  "Largest byte",
+                  "11111111 = 255 = FF"
+                ],
+                [
+                  "One hex digit",
+                  "exactly four bits"
+                ],
+                [
+                  "Split nibbles",
+                  "from the right"
+                ],
+                [
+                  "Bit and byte",
+                  "b is a bit, B is a byte"
+                ],
+                [
+                  "Prefixes",
+                  "1 kB = 1,000 B, then ×1,000 each"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of number bases, conversion methods and storage units"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "How many bits are there in one byte?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "units of information",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A byte is a group of **8** bits.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which base does hexadecimal use?",
+      "options": [
+        "Base 16",
+        "Base 2",
+        "Base 10",
+        "Base 8"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "number bases",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Hexadecimal is **base 16**: the digits 0 to 9 and then A to F for the values 10 to 15.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "base 16"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Convert the binary number 00101101 to decimal.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "binary to decimal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 1s are under 32, 8, 4 and 1, so $32 + 8 + 4 + 1 = $ **45**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses the place values"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "45"
+        }
+      ],
+      "discriminators": [],
+      "answer": 45,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "How many bytes are there in 1 kilobyte, using the values in the AQA specification?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "storage prefixes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification uses the **decimal** prefixes, so 1 kB is **1,000** bytes. The 1,024 you may have seen belongs to the older powers-of-two usage.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1000"
+        }
+      ],
+      "discriminators": [],
+      "answer": 1000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Convert the decimal number 156 to binary, using eight bits.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "decimal to binary",
+      "calculator": "either",
+      "tags": [],
+      "solution": "128 fits leaving 28, 64 and 32 do not, 16 fits leaving 12, 8 fits leaving 4, and 4 fits leaving 0. That gives **10011100**. Check: $128 + 16 + 8 + 4 = 156$ ✓",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10011100"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "10011100"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "Convert the binary number 11011010 to hexadecimal.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "binary to hex",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Split into fours from the right: `1101` and `1010`. $1101 = 8 + 4 + 1 = 13 = $ **D**, and $1010 = 8 + 2 = 10 = $ **A**. So **DA**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "DA"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "DA",
+        "0xDA"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "Convert the hexadecimal number B4 to decimal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "hex to decimal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "B is 11, so $11 \\times 16 = 176$, and $176 + 4 = $ **180**. Or in binary: `1011 0100` = $128 + 32 + 16 + 4 = 180$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "B = 11, so 11 × 16"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "180"
+        }
+      ],
+      "discriminators": [],
+      "answer": 180,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A memory card holds 8 GB. How many 4 MB songs will fit on it?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "comparing storage sizes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Put both in the same unit: 8 GB is $8 \\times 1000 = 8000$ MB. Then $8000 \\div 4 = $ **2000** songs.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "converts 8 GB to 8000 MB"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2000"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What is the largest whole number that eight bits can represent?",
+      "options": [
+        "255",
+        "256",
+        "128",
+        "512"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the range of a byte",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`11111111` is $128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = $ **255**. There are 256 different patterns, but they run from **0** to 255, so the largest value is 255.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "255"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What does the symbol `B` mean, as opposed to `b`?",
+      "options": [
+        "A byte, where b means a bit",
+        "A bit, where b means a byte",
+        "A binary digit, the same as b",
+        "A base, as in base 16"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bit and byte symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification states that **b represents bit** and **B represents byte**. So 100 Mb is eight times less data than 100 MB.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "B is a byte, b is a bit"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A student says hexadecimal is used because it takes up less space in memory. Why is this wrong?",
+      "options": [
+        "Data is stored in binary whatever notation people write it in",
+        "Hexadecimal actually takes up more space than binary",
+        "Memory can only store decimal values, not hexadecimal",
+        "Hexadecimal cannot represent every value that binary can"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why hexadecimal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Nothing is ever **stored** in hex. The machine holds binary; hex is a way of **writing it down** that is shorter and easier for people to read and copy, which is why fewer mistakes are made. The saving is on paper, not in memory.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "data is stored in binary regardless"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "Convert the seven-bit binary number 1011010 to hexadecimal.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "binary to hex with padding",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Seven bits do not split into fours, so **pad on the left**: `01011010`. Then `0101` = 5 and `1010` = 10 = A, giving **5A**. Splitting the original from the left instead would give a different and wrong answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5A"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "accepted": [
+        "5A",
+        "0x5A"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "The same eight bits `10011100` appear in two different files. What determines what they represent?",
+      "options": [
+        "How the program reading them is told to interpret them",
+        "The number of bits, which fixes the meaning at eight",
+        "Whether they were written in hexadecimal or binary",
+        "Nothing — a bit pattern always means the same value"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "bit patterns and meaning",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A bit pattern carries **no meaning on its own**. The same eight bits could be the number 156, a character, part of a pixel's colour, part of a sound sample, or an instruction — it depends entirely on how they are read.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "how they are interpreted"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A 500 GB drive is full of 250 MB video files. How many files does it hold?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "comparing storage sizes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Convert to one unit first: 500 GB is $500 \\times 1000 = 500\\,000$ MB. Then $500\\,000 \\div 250 = $ **2000** files.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "converts 500 GB to 500 000 MB"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2000"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "answer": 2000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why does converting between binary and hexadecimal need no arithmetic, while converting between binary and decimal does?",
+      "options": [
+        "16 is a power of 2, so one hex digit is exactly four bits",
+        "10 is a power of 2, but 16 is not",
+        "Hexadecimal and binary both use the same digits",
+        "Decimal conversion needs arithmetic only for values over 255"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why nibbles work",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$16 = 2^4$, so every hex digit maps onto exactly **four bits** and the two can be lined up and swapped a block at a time. 10 is **not** a power of 2, so no block of bits lines up with a decimal digit and the conversion has to be done by adding place values.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "16 is a power of 2, so one digit is four bits"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A student converts 300 to binary and writes `100101100`. What is wrong, given the specification's range?",
+      "options": [
+        "300 is above 255, so it does not fit in the eight bits required",
+        "The conversion is arithmetically incorrect for 300",
+        "Binary cannot represent any number above 255",
+        "Leading zeros should have been added to make twelve bits"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the range of a byte",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The arithmetic is right — `100101100` really is 300 — but it takes **nine** bits. The specification sets the range at **0 to 255**, which is what eight bits hold, so a question in this range cannot have 300 as an answer and something earlier has gone wrong.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "300 needs more than eight bits"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain how binary, decimal and hexadecimal relate to one another, and why hexadecimal is often used in computer science.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "number bases",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Decimal** is **base 10** and uses the digits 0 to 9; it is what people count in. **Binary** is **base 2** and uses only 0 and 1; computers use it to represent **all data and instructions**, because a circuit is easiest to build with two reliable states. **Hexadecimal** is **base 16**, using 0 to 9 and then **A to F** for the values 10 to 15.\n\nThe important relationship is between **binary and hexadecimal**. Sixteen is $2^4$, so **one hex digit is exactly four bits**. That means the two can be converted a block at a time with no arithmetic: `10011100` splits from the right into `1001` and `1100`, which are 9 and 12, so the value is **9C**. Going back is just as direct. Nothing is lost or rounded in either direction.\n\nDecimal has no such relationship with binary, because 10 is **not** a power of 2. No group of bits lines up with a decimal digit, so converting has to be done by adding place values: `10011100` is $128 + 16 + 8 + 4 = 156$.\n\n**Hexadecimal is used** because it is a much **shorter** way of writing binary — two characters instead of eight for a single byte — and because it is far easier for a person to **read, remember and copy** without slipping a digit. Long runs of 0s and 1s are exactly the kind of thing people make mistakes with. Since the conversion to and from binary is so direct, none of that convenience costs anything. This is why colour codes on web pages are written in hex.\n\nIt is worth saying clearly what hexadecimal is **not**. It is **not a storage format**: the computer holds binary whatever notation a person writes it in, so hex does **not** save any memory. A common wrong answer is that hex \"takes up less space\". The saving is on the page and in the reader's attention, not in the machine.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the three bases"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "one hex digit is four bits"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "why hex is used, and the misconception"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Describes the three bases and the digits each uses.",
+          "marks": 2
+        },
+        {
+          "text": "Explains the relationship between binary and hexadecimal.",
+          "marks": 2
+        },
+        {
+          "text": "Gives correct reasons for using hexadecimal, and says what it is not.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Decimal** is **base 10** and uses the digits 0 to 9; it is what people count in. **Binary** is **base 2** and uses only 0 and 1; computers use it to represent **all data and instructions**, because a circuit is easiest to build with two reliable states. **Hexadecimal** is **base 16**, using 0 to 9 and then **A to F** for the values 10 to 15.\n\nThe important relationship is between **binary and hexadecimal**. Sixteen is $2^4$, so **one hex digit is exactly four bits**. That means the two can be converted a block at a time with no arithmetic: `10011100` splits from the right into `1001` and `1100`, which are 9 and 12, so the value is **9C**. Going back is just as direct. Nothing is lost or rounded in either direction.\n\nDecimal has no such relationship with binary, because 10 is **not** a power of 2. No group of bits lines up with a decimal digit, so converting has to be done by adding place values: `10011100` is $128 + 16 + 8 + 4 = 156$.\n\n**Hexadecimal is used** because it is a much **shorter** way of writing binary — two characters instead of eight for a single byte — and because it is far easier for a person to **read, remember and copy** without slipping a digit. Long runs of 0s and 1s are exactly the kind of thing people make mistakes with. Since the conversion to and from binary is so direct, none of that convenience costs anything. This is why colour codes on web pages are written in hex.\n\nIt is worth saying clearly what hexadecimal is **not**. It is **not a storage format**: the computer holds binary whatever notation a person writes it in, so hex does **not** save any memory. A common wrong answer is that hex \"takes up less space\". The saving is on the page and in the reader's attention, not in the machine."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A phone has 64 GB of storage. Photos are 5 MB each and songs are 4 MB each. Explain how you would work out how many of each it could hold, and explain the units involved.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "storage units in context",
+      "calculator": "either",
+      "tags": [],
+      "solution": "First, the **units**. A **bit** is the fundamental unit of information, a single 0 or 1, and a **byte** is a group of **8 bits**. Larger quantities use prefixes, and the specification uses the **decimal** ones: 1 **kB** is 1,000 bytes, 1 **MB** is 1,000 kB, and 1 **GB** is 1,000 MB. Each step up is a factor of 1,000, so 64 GB is $64 \\times 1000 = 64\\,000$ MB.\n\nThe symbols matter too: lower case **b** means a bit and capital **B** means a byte, so a figure quoted in Mb is eight times less data than the same figure in MB.\n\nTo work out the **number of photos**, both quantities must be in the **same unit** first — dividing gigabytes by megabytes directly is where this calculation usually goes wrong. With the storage in MB:\n\n$64\\,000 \\div 5 = \\mathbf{12\\,800}$ photos.\n\nFor **songs** at 4 MB each:\n\n$64\\,000 \\div 4 = \\mathbf{16\\,000}$ songs.\n\nThe phone could hold either of those, or some mixture, but not both totals at once — the 64 GB is shared.\n\nThere are **assumptions** worth stating. The calculation treats the whole 64 GB as free, which it never is: the operating system and the apps take a substantial share, so the real figures would be lower. It also assumes every photo is exactly 5 MB, when in practice photo sizes vary a great deal with the subject and the compression used, so 12,800 is an estimate rather than a count.\n\nFinally, the **1,000 against 1,024** question. The specification uses the decimal prefixes, so 1 GB is 1,000 MB and that is what an exam answer should use. Historically these words were often used for powers of 2, where $2^{10} = 1024$, and some manufacturers and operating systems still count that way — which is why a drive sold as 64 GB can show as around 59.6 GB on a computer. The specification notes this history but says the **kibi** and **mebi** names that properly belong to the powers of 2 are not required, and a calculation built on 1,024 will not match the mark scheme.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "units and prefixes defined"
+        },
+        {
+          "code": "M2",
+          "marks": 2,
+          "description": "common unit and correct calculation"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "assumptions or the prefix convention"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Defines bit and byte and the decimal prefixes used.",
+          "marks": 2
+        },
+        {
+          "text": "Converts to a common unit and calculates correctly.",
+          "marks": 2
+        },
+        {
+          "text": "Comments on assumptions or on the 1,000 against 1,024 issue.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "First, the **units**. A **bit** is the fundamental unit of information, a single 0 or 1, and a **byte** is a group of **8 bits**. Larger quantities use prefixes, and the specification uses the **decimal** ones: 1 **kB** is 1,000 bytes, 1 **MB** is 1,000 kB, and 1 **GB** is 1,000 MB. Each step up is a factor of 1,000, so 64 GB is $64 \\times 1000 = 64\\,000$ MB.\n\nThe symbols matter too: lower case **b** means a bit and capital **B** means a byte, so a figure quoted in Mb is eight times less data than the same figure in MB.\n\nTo work out the **number of photos**, both quantities must be in the **same unit** first — dividing gigabytes by megabytes directly is where this calculation usually goes wrong. With the storage in MB:\n\n$64\\,000 \\div 5 = \\mathbf{12\\,800}$ photos.\n\nFor **songs** at 4 MB each:\n\n$64\\,000 \\div 4 = \\mathbf{16\\,000}$ songs.\n\nThe phone could hold either of those, or some mixture, but not both totals at once — the 64 GB is shared.\n\nThere are **assumptions** worth stating. The calculation treats the whole 64 GB as free, which it never is: the operating system and the apps take a substantial share, so the real figures would be lower. It also assumes every photo is exactly 5 MB, when in practice photo sizes vary a great deal with the subject and the compression used, so 12,800 is an estimate rather than a count.\n\nFinally, the **1,000 against 1,024** question. The specification uses the decimal prefixes, so 1 GB is 1,000 MB and that is what an exam answer should use. Historically these words were often used for powers of 2, where $2^{10} = 1024$, and some manufacturers and operating systems still count that way — which is why a drive sold as 64 GB can show as around 59.6 GB on a computer. The specification notes this history but says the **kibi** and **mebi** names that properly belong to the powers of 2 are not required, and a calculation built on 1,024 will not match the mark scheme."
+    }
+  ],
+  "examTechnique": {
+    "body": "Write the place values **128 64 32 16 8 4 2 1** before any conversion. For hex, split into fours **from the right**, padding with zeros on the left if needed.\n\nUse AQA's **decimal** prefixes — 1 kB = 1,000 B — and convert both quantities to the **same unit** before comparing. Check every byte answer against the ceiling: **11111111 = 255 = FF**.",
+    "examinerErrors": [
+      "Doubling the place values in your head and skipping one.",
+      "Splitting binary into nibbles from the left instead of the right.",
+      "Failing to pad a seven-bit number before converting to hex.",
+      "Saying hexadecimal is used because it saves memory.",
+      "Using 1,024 rather than the specification's 1,000.",
+      "Dividing gigabytes by megabytes without converting first.",
+      "Giving 256 as the largest value eight bits can hold.",
+      "Treating b and B as interchangeable."
+    ],
+    "grade9Looks": "A grade 9 answer writes the **place values down first** and checks its own conversion by adding back. It splits nibbles **from the right** and pads short numbers on the left. It explains hex as shorter **for people**, and says explicitly that nothing is stored in it. It uses **1 kB = 1,000 B**, converts to a common unit before comparing, and knows the ceiling **11111111 = 255 = FF** as a free check. It can also say why binary and hex convert so cleanly — **16 is a power of 2** — while decimal does not, and that a bit pattern means nothing until something decides how to read it."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

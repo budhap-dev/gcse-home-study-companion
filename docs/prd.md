@@ -102,6 +102,15 @@ A tutor has their own account type and is linked to individual students, not to 
 
 Eight subjects at Higher tier. The table gives the top-level structure the content will follow and the extra levels each subject needs. Paper structure is listed because exam technique and quizzes are organised around it.
 
+**Two further subjects are in scope but deferred.** Added 17 September 2026, after the original eight were agreed:
+
+| Subject | Board | Status |
+|---|---|---|
+| Further Maths | AQA Level 2 Certificate (8365), to confirm | Deferred. Already named in the board list above and covered as a level within Mathematics; needs its own subject and curriculum overview. |
+| English | Open | Deferred. Whether this is English Language, English Literature or both is not yet decided, and no board is chosen. |
+
+Both start only once the eight subjects above have their Years 9, 10 and 11 rows written. Before either is drafted, confirm the qualification and board, and fetch a school curriculum overview as was done for the other subjects.
+
 | Subject | Board | Levels covered | Content spine | Subject-specific needs |
 |---|---|---|---|---|
 | Mathematics | Edexcel 1MA1 / AQA L2 Further | Higher, Advanced (grades 8 to 9), Further Maths (Level 2) | Number · Algebra · Ratio, proportion and rates of change · Geometry and measures · Probability · Statistics · Further: number and algebra, coordinate geometry, calculus, matrices, geometry and trigonometry | Three papers: Paper 1 non-calculator, Papers 2 and 3 calculator, 80 marks each. Rendered maths notation. Method and accuracy marks (M, A, B) in the Edexcel style. |

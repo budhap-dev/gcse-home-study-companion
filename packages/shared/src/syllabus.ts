@@ -371,10 +371,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Arrays', topicId: 'arrays-and-records' },
     ] },
     { year: 9, term: 'Summer', topics: [
-      { title: 'Storage units and binary' },
-      { title: 'Binary arithmetic' },
-      { title: 'ASCII and Unicode' },
-      { title: 'Representing images and sound' },
+      { title: 'Storage units and binary', topicId: 'storage-units-and-binary' },
+      { title: 'Binary arithmetic', topicId: 'binary-arithmetic' },
+      { title: 'ASCII and Unicode', topicId: 'ascii-and-unicode' },
+      { title: 'Representing images and sound', topicId: 'representing-images-and-sound' },
     ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'Subroutines: procedures and functions', topicId: 'subroutines-procedures-and-functions' },
