@@ -1,0 +1,1162 @@
+{
+  "id": "secondary-storage",
+  "subjectId": "computer-science",
+  "unitId": "computer-systems",
+  "title": "Secondary storage",
+  "specPoints": [
+    "3.4.5"
+  ],
+  "order": 6,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Three types, three mechanisms",
+      "body": "**Solid state** uses **electrical circuits**, **magnetic** uses a **spinning magnetised disc**, **optical** uses a **laser**. Learn the mechanism for each — \"explain the operation\" questions want how it physically works, not what it is used for."
+    },
+    {
+      "kind": "shortcut",
+      "title": "No moving parts explains most SSD answers",
+      "body": "Faster, quieter, more durable, less power — all of it follows from **no moving parts**. Say that phrase and then the consequence, and one idea earns several marks."
+    },
+    {
+      "kind": "spot",
+      "title": "Secondary storage is non-volatile and not directly accessible",
+      "body": "The definition has **two** halves: **non-volatile**, and **not directly accessible by the CPU**. Answers that give only \"it keeps data when switched off\" miss the part that distinguishes it from ROM."
+    },
+    {
+      "kind": "check",
+      "title": "Cloud storage is still someone else's disc",
+      "body": "The specification is explicit: cloud storage uses **magnetic and/or solid state storage at a remote location**. It is not a fourth type of storage — it is the same hardware somewhere else, reached over a network."
+    },
+    {
+      "kind": "remember",
+      "title": "An embedded system does one job",
+      "body": "An **embedded** system is built into a device to do **one dedicated task** — a washing machine, a microwave. A **non-embedded** system, such as a laptop, is **general purpose** and runs whatever you install."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Why secondary storage exists",
+        "body": "**The specification defines it carefully:**\n\n> **Secondary storage is any non-volatile storage mechanism not directly accessible by the CPU.**\n\nThere are **two** parts to that, and both matter.\n\n**Non-volatile** — the contents survive the power being switched off.\n\n**Not directly accessible by the CPU** — the processor cannot reach it the way it reaches main memory. Data must be **copied into main memory** before the CPU can work on it.\n\n**Why it is required.** Main memory is **volatile**, so everything in RAM vanishes when the machine is switched off. Without secondary storage, every file, program and setting would be gone each time. RAM is also comparatively **small and expensive**, whereas secondary storage is far larger for the money.\n\nSo a computer needs both: fast volatile memory for what it is doing **now**, and slower non-volatile storage for keeping things **permanently**.\n\n**Note the boundary is accessibility, not speed.** Secondary storage is usually slower, but that is a consequence, not the definition — and it is why ROM, which is non-volatile but **is** directly accessible, is **not** secondary storage.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Secondary storage",
+              "boxes": [
+                {
+                  "title": "Definition",
+                  "points": [
+                    "non-volatile",
+                    "not directly accessible by the CPU"
+                  ]
+                },
+                {
+                  "title": "Why it is needed",
+                  "points": [
+                    "RAM loses everything on power off",
+                    "RAM is small and expensive"
+                  ]
+                },
+                {
+                  "title": "How data is used",
+                  "points": [
+                    "copied into main memory first",
+                    "the CPU works on it there"
+                  ]
+                },
+                {
+                  "title": "Not the same as ROM",
+                  "points": [
+                    "ROM is non-volatile too",
+                    "but the CPU can access it directly"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box card defining secondary storage, why it is needed and how it differs from ROM"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Why does a computer need secondary storage as well as RAM?",
+          "options": [
+            "RAM is volatile, so its contents are lost when the power is switched off",
+            "RAM cannot be read by the CPU without help",
+            "Secondary storage is faster than RAM for most tasks",
+            "RAM can only hold programs, never data files"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "why secondary storage is needed",
+          "calculator": "either",
+          "tags": [],
+          "solution": "RAM is **volatile** — everything in it is lost at power off. Secondary storage is **non-volatile**, so files and programs survive. It is also far cheaper per gigabyte, though it is **slower**, not faster.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "RAM is volatile so data would be lost"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "The three types",
+        "body": "**The specification names three, and asks you to explain the operation of each.**\n\n**Solid state (SSD, memory card, USB stick).** Data is stored in **electrical circuits** with **no moving parts**. The specification says you need to know that SSDs use electrical circuits to persistently store data, but **not** the precise details such as NAND gates.\n\n**Magnetic (hard disk drive, magnetic tape).** A **disc spins** while a **read-write head** moves across its surface, **magnetising** tiny areas in one direction or the other to record 0s and 1s. Mechanical, and therefore vulnerable to being knocked.\n\n**Optical (CD, DVD, Blu-ray).** A **laser** burns tiny **pits** into the disc surface, leaving flat areas called **lands** between them. To read it, a laser shines on the surface and the difference in how pits and lands **reflect** the light is read as 0s and 1s.\n\n**The mechanism is what the question wants.** *An SSD is fast and a hard disk is slow* describes them; it does not explain how either works.\n\n**Everything else follows from the mechanism.** No moving parts makes solid state fast, quiet, durable and low-power. Moving parts make magnetic drives cheaper per gigabyte but slower and easier to damage. Optical discs are cheap, removable and easily posted, but hold far less and scratch.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Type",
+                "How it physically works",
+                "Examples"
+              ],
+              "rows": [
+                [
+                  "Solid state",
+                  "electrical circuits hold the data with no moving parts",
+                  "SSD, USB stick, memory card"
+                ],
+                [
+                  "Magnetic",
+                  "a spinning disc is magnetised in patterns by a moving head",
+                  "hard disk drive, magnetic tape"
+                ],
+                [
+                  "Optical",
+                  "a laser burns and reads pits and lands on a disc surface",
+                  "CD, DVD, Blu-ray"
+                ]
+              ],
+              "title": "The middle column is what an \"explain the operation\" question is asking for"
+            },
+            "alt": "A table of the three secondary storage types, the mechanism of each and examples"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "How does optical storage record data?",
+          "options": [
+            "A laser burns pits into the surface, with lands between them",
+            "A head magnetises areas of a spinning disc",
+            "Data is held in electrical circuits with no moving parts",
+            "Data is etched into the disc by a fine mechanical needle"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "how optical storage works",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A **laser** burns **pits**, leaving flat **lands** between them, and reading uses the difference in **reflection**. Magnetising a spinning disc is magnetic storage; electrical circuits are solid state.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a laser burns pits, with lands between"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Choosing storage",
+        "body": "**Comparison questions are common, and they are usually decided by the mechanism.**",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A 8 GB video file is copied to an SSD at 500 MB/s and to a hard disk at 100 MB/s. Compare, and advise a customer choosing a laptop drive.",
+            "steps": [
+              {
+                "text": "Put the file size in MB: 8 GB = **8,000 MB**",
+                "note": "1 GB is 1,000 MB in this specification"
+              },
+              {
+                "text": "SSD: 8,000 ÷ 500 = **16 seconds**",
+                "note": "time = amount ÷ rate"
+              },
+              {
+                "text": "Hard disk: 8,000 ÷ 100 = **80 seconds**",
+                "note": "5 times as long for the same file"
+              },
+              {
+                "text": "The reason is the **mechanism**: the SSD has **no moving parts**, while the hard disk must **spin the disc and move the head** into place",
+                "note": "always trace the difference back to how each one works"
+              },
+              {
+                "text": "For a **laptop**, solid state also wins on **durability** — being knocked while the head is moving can damage a hard disk — and on **power** and **noise**",
+                "note": "all four advantages come from the same fact: no moving parts"
+              },
+              {
+                "text": "The hard disk wins on **cost per gigabyte**, so it suits **bulk storage and backups** rather than a laptop drive",
+                "note": "the honest comparison names what the other option is better at"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Solid state",
+                "Magnetic",
+                "Optical"
+              ],
+              "rows": [
+                [
+                  "Speed",
+                  "fastest",
+                  "slower",
+                  "slowest"
+                ],
+                [
+                  "Durability",
+                  "high — no moving parts",
+                  "low — moving parts",
+                  "scratches easily"
+                ],
+                [
+                  "Cost per GB",
+                  "highest",
+                  "low",
+                  "lowest"
+                ],
+                [
+                  "Capacity",
+                  "high",
+                  "highest",
+                  "low"
+                ],
+                [
+                  "Portable",
+                  "yes",
+                  "less so",
+                  "very"
+                ]
+              ],
+              "title": "Solid state wins on almost everything except price per gigabyte"
+            },
+            "alt": "A comparison table of solid state, magnetic and optical storage across five criteria"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "An 8 GB file is copied at 500 MB/s. How many seconds does it take? (1 GB = 1000 MB)",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "transfer time",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$8 \\times 1000 = 8000$ MB, and $8000 \\div 500 = $ **16** seconds.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "converts to 8000 MB"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "16"
+            }
+          ],
+          "discriminators": [],
+          "answer": 16,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Cloud storage and embedded systems",
+        "body": "**Cloud storage** means keeping files on storage at a **remote location**, reached over a network, rather than on a device you own.\n\n**It is not a new kind of storage.** The specification is explicit that cloud storage **uses magnetic and/or solid state storage at a remote location** — the same hardware as anything else, just somewhere else and someone else's.\n\n**Advantages over local storage:**\n\n- Files are reachable from **any device, anywhere** with a connection.\n- **Easy to share** with other people.\n- The provider handles **backups** and replacing failed drives.\n- Capacity can be **increased** without buying hardware.\n\n**Disadvantages:**\n\n- Needs an **internet connection** — no connection, no files.\n- Access is limited by **connection speed**, which is far slower than a local drive.\n- **Ongoing cost**, rather than buying a drive once.\n- **Security and privacy**: your data sits on someone else's hardware, and you are trusting their protection and their staff.\n\n**Embedded systems** are the other idea in this part of the specification. An **embedded system** is a computer built **into a device** to perform **one dedicated task** — the controller in a washing machine, a microwave, or a car's engine management.\n\n**A non-embedded system is general purpose.** A laptop or phone runs whatever software you choose to install. An embedded system does the **one job** it was built for and cannot be repurposed.\n\nEmbedded systems are usually **cheaper, smaller and more reliable** for their task, because they carry only what that task requires.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Embedded",
+                "Non-embedded"
+              ],
+              "rows": [
+                [
+                  "Purpose",
+                  "one dedicated task",
+                  "general purpose"
+                ],
+                [
+                  "Software",
+                  "fixed, built in",
+                  "whatever the user installs"
+                ],
+                [
+                  "Examples",
+                  "washing machine, microwave, car engine",
+                  "laptop, desktop, smartphone"
+                ],
+                [
+                  "Typical cost",
+                  "lower",
+                  "higher"
+                ]
+              ],
+              "title": "The dividing question is whether it does one job or many"
+            },
+            "alt": "A table comparing embedded and non-embedded systems across purpose, software, examples and cost"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Which is an example of an embedded system?",
+          "options": [
+            "The controller inside a washing machine",
+            "A laptop running several applications",
+            "A smartphone with apps installed",
+            "A desktop computer used for gaming"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "embedded systems",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The **washing machine controller** does **one dedicated task** and cannot be repurposed. The other three are **general purpose** — they run whatever software the user installs.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the washing machine controller"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Give the specification's definition of secondary storage.\n2. Name the three types of secondary storage.\n3. What is an embedded system?\n\n**Part B.**\n\n4. Explain how magnetic storage records data.\n5. Explain how optical storage records data.\n6. A 8 GB file is copied at 100 MB/s. How long does it take?\n\n**Part C.**\n\n7. Give two advantages and two disadvantages of cloud storage compared with local storage.\n8. Explain why an SSD is more suitable than a hard disk for a laptop.\n9. Explain why ROM is non-volatile but is **not** secondary storage.\n\nFor questions 4 and 5, describe the **mechanism** — what physically happens to the disc.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Type",
+                "How it physically works",
+                "One advantage"
+              ],
+              "rows": [
+                [
+                  "Solid state",
+                  "",
+                  ""
+                ],
+                [
+                  "Magnetic",
+                  "",
+                  ""
+                ],
+                [
+                  "Optical",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill in from memory, then check against the lesson"
+            },
+            "alt": "A blank table of the three storage types with empty columns for mechanism and an advantage"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Give both halves of the definition.** Secondary storage is **non-volatile** *and* **not directly accessible by the CPU**. The second half is what separates it from **ROM**, which is non-volatile but **is** directly accessible — a question that asks why ROM is not secondary storage is testing exactly this.\n\n**Explain operation as a mechanism.** *A laser burns pits, leaving lands between them, and reading detects the difference in reflection.* Answers that say an optical disc \"stores data with a laser\" have named the component without describing what it does.\n\n**Trace every advantage back to the mechanism.** Solid state is fast, silent, durable and low-power **because it has no moving parts**. Saying the phrase once and drawing four consequences from it is worth far more than four unconnected assertions.\n\n**Do not over-learn SSDs.** The specification states that the precise details, such as the use of NAND gates, are **not required**. Electrical circuits, persistently storing data, no moving parts — that is the level wanted.\n\n**Say what cloud storage actually is.** It uses **magnetic and/or solid state storage at a remote location**. It is not a fourth type. That single sentence prevents the common error of treating \"the cloud\" as some different technology.\n\n**Give cloud disadvantages that are not just \"you need internet\".** Access speed is limited by the **connection**, the cost is **ongoing** rather than one-off, and the data sits on **someone else's hardware** — a privacy and security question as much as a technical one. That last point links directly to the ethical and legal part of the specification.\n\n**Name the cost when recommending solid state.** Magnetic storage is **cheaper per gigabyte** and offers the **largest capacities**, which is why it remains the sensible choice for bulk storage and backups. An answer that says SSDs are better in every respect is not being honest about the trade.\n\n**Define embedded by purpose, not by size.** An embedded system does **one dedicated task**; a non-embedded one is **general purpose**. Small is not the test — a phone is small and general purpose, and a car's engine management system is neither small nor general.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students write",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "the definition",
+                  "only \"it keeps data when off\"",
+                  "also not directly accessible by the CPU"
+                ],
+                [
+                  "operation",
+                  "names the component only",
+                  "describes what physically happens"
+                ],
+                [
+                  "SSD advantages",
+                  "four unlinked assertions",
+                  "all follow from no moving parts"
+                ],
+                [
+                  "SSD detail",
+                  "writes about NAND gates",
+                  "not required by the specification"
+                ],
+                [
+                  "cloud storage",
+                  "treated as a new technology",
+                  "magnetic or solid state, stored remotely"
+                ],
+                [
+                  "cloud drawbacks",
+                  "only \"you need internet\"",
+                  "speed, ongoing cost, someone else's hardware"
+                ],
+                [
+                  "recommending SSD",
+                  "better in every way",
+                  "magnetic is cheaper per gigabyte"
+                ],
+                [
+                  "embedded",
+                  "defined as \"small\"",
+                  "defined as one dedicated task"
+                ]
+              ],
+              "title": "The first and last rows are definitions the exam tests directly"
+            },
+            "alt": "A table of common errors about secondary storage, cloud storage and embedded systems"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Secondary storage** is **non-volatile** storage **not directly accessible by the CPU**.\n- It is needed because **RAM is volatile**, small and expensive.\n- Data must be **copied into main memory** before the CPU can use it.\n- **ROM** is non-volatile but **is** directly accessible, so it is not secondary storage.\n- Three types: **solid state**, **magnetic**, **optical**.\n- **Solid state**: electrical circuits, **no moving parts**.\n- **Magnetic**: a **spinning disc** magnetised by a moving **head**.\n- **Optical**: a **laser** burns **pits**, leaving **lands**, read by **reflection**.\n- Solid state is fastest, most durable and lowest power — all from **no moving parts**.\n- **Magnetic** is cheapest per gigabyte and offers the largest capacities.\n- **Optical** is cheap and very portable but holds least and scratches.\n- **Cloud storage** is **magnetic and/or solid state storage at a remote location**.\n- Cloud advantages: access anywhere, easy sharing, backups handled, easy to expand.\n- Cloud disadvantages: needs a connection, limited by connection speed, ongoing cost, someone else's hardware.\n- An **embedded system** does **one dedicated task**; a **non-embedded** system is **general purpose**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Secondary storage",
+                  "non-volatile, not directly CPU accessible"
+                ],
+                [
+                  "Why needed",
+                  "RAM is volatile, small, expensive"
+                ],
+                [
+                  "Not secondary storage",
+                  "ROM — directly accessible"
+                ],
+                [
+                  "Solid state",
+                  "electrical circuits, no moving parts"
+                ],
+                [
+                  "Magnetic",
+                  "spinning disc, magnetised by a head"
+                ],
+                [
+                  "Optical",
+                  "laser burns pits, lands between"
+                ],
+                [
+                  "Fastest and most durable",
+                  "solid state"
+                ],
+                [
+                  "Cheapest per GB",
+                  "magnetic"
+                ],
+                [
+                  "Cloud storage is",
+                  "magnetic or solid state, remote"
+                ],
+                [
+                  "Cloud needs",
+                  "an internet connection"
+                ],
+                [
+                  "Embedded",
+                  "one dedicated task"
+                ],
+                [
+                  "Non-embedded",
+                  "general purpose"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of secondary storage types, cloud storage and embedded systems"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "Name the three types of secondary storage in the specification. Separate them with commas.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "types of storage",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Solid state, optical and magnetic.** Cloud storage is not a fourth type — it uses magnetic and/or solid state storage remotely.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "solid state, optical, magnetic"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "solid state, optical, magnetic",
+        "solid state, magnetic, optical",
+        "magnetic, optical, solid state"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which type of storage uses a laser to read and write data?",
+      "options": [
+        "Optical",
+        "Magnetic",
+        "Solid state",
+        "Cloud"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "how optical storage works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Optical** storage — a laser burns pits into the disc, and reading detects how pits and lands reflect light.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "optical"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which of these is an embedded system?",
+      "options": [
+        "A microwave oven controller",
+        "A laptop computer",
+        "A desktop computer",
+        "A tablet with apps installed"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "embedded systems",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **microwave controller** performs **one dedicated task**. The other three are **general purpose** and run whatever is installed on them.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a microwave oven controller"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Why does solid state storage have no moving parts?",
+      "options": [
+        "It stores data in electrical circuits",
+        "It uses a laser rather than a head",
+        "It spins too fast for parts to move",
+        "It stores data magnetically on a fixed disc"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "how solid state works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Solid state stores data in **electrical circuits**, so nothing needs to spin or move — which is why it is fast, quiet, durable and low-power.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it stores data in electrical circuits"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Explain briefly how magnetic storage records data.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "how magnetic storage works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **disc spins** while a **read-write head** moves over it, **magnetising** tiny areas in one direction or the other to record 0s and 1s.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a head magnetises areas of a spinning disc"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "a head magnetises areas of a spinning disc",
+        "a moving head magnetises parts of a spinning disc",
+        "areas of a spinning disc are magnetised"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "An 8 GB file is copied to a drive at 100 MB/s. How many seconds does it take? (1 GB = 1000 MB)",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "transfer time",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$8 \\times 1000 = 8000$ MB, and $8000 \\div 100 = $ **80** seconds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "converts to 8000 MB"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "80"
+        }
+      ],
+      "discriminators": [],
+      "answer": 80,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "What does the specification say cloud storage actually uses?",
+      "options": [
+        "Magnetic and/or solid state storage at a remote location",
+        "A new form of storage available only over networks",
+        "Optical discs held in an automated library",
+        "The spare capacity of other users' home computers"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "what cloud storage is",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Cloud storage is **magnetic and/or solid state storage at a remote location**. It is ordinary hardware, owned by someone else and reached over a network — not a new technology.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "magnetic and/or solid state, stored remotely"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "Give one advantage of cloud storage over local storage.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "cloud advantages",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Acceptable answers include **access from any device anywhere**, **easy sharing**, **backups handled by the provider**, and **capacity expanded without buying hardware**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "files can be accessed from anywhere"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "files can be accessed from anywhere",
+        "access from any device",
+        "easy to share files with others",
+        "backups are handled by the provider",
+        "capacity can be increased easily"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Which type of secondary storage generally costs least per gigabyte for large capacities?",
+      "options": [
+        "Magnetic",
+        "Solid state",
+        "Cloud",
+        "Register"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "comparing storage",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Magnetic** storage is the cheapest per gigabyte and offers the largest capacities, which is why it is still used for bulk storage and backups. A register is not secondary storage at all.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "magnetic"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What must happen before the CPU can work on a file held in secondary storage?",
+      "options": [
+        "It must be copied into main memory",
+        "It must be converted into ROM",
+        "It must be compressed by the operating system",
+        "Nothing — the CPU reads it where it is"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "why data is copied to memory",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Secondary storage is **not directly accessible by the CPU**, so the data has to be **copied into main memory** before the processor can use it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "copied into main memory"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "ROM keeps its contents when the power is off. Why is it not classed as secondary storage?",
+      "options": [
+        "The CPU can access it directly",
+        "It becomes volatile once the computer has started",
+        "It is far too small to count as storage",
+        "It can only ever be written to once"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the full definition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The definition has **two** parts: non-volatile **and not directly accessible by the CPU**. ROM satisfies the first but fails the second, so it is main memory rather than secondary storage. Size has nothing to do with it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the CPU can access ROM directly"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why is solid state storage more suitable than a hard disk for a laptop that is carried around?",
+      "options": [
+        "It has no moving parts, so a knock is far less likely to damage it",
+        "It holds more data than a hard disk of the same size",
+        "It costs less per gigabyte than a hard disk",
+        "It does not need to be connected to power"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing storage for a context",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A hard disk has a **head moving over a spinning disc**, and a knock while it is running can damage the surface. Solid state has **no moving parts**, so it is far more durable — and also lighter on power, which matters on battery. It costs **more** per gigabyte, not less.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no moving parts, so more durable"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Beyond needing an internet connection, what is a significant drawback of cloud storage?",
+      "options": [
+        "The data sits on hardware owned and controlled by someone else",
+        "It cannot be used to store files larger than one gigabyte",
+        "Files stored in the cloud cannot be shared with others",
+        "It uses optical discs, which scratch easily"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "evaluating cloud storage",
+      "calculator": "either",
+      "tags": [],
+      "solution": "You are trusting a third party's **security, staff and continued existence** with your data — a privacy and security concern as much as a technical one. Access speed limited by the **connection** and the **ongoing** subscription cost are the other real drawbacks.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the data is on someone else's hardware"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A company needs to back up 50 TB of archived data as cheaply as possible, with access needed only rarely. Which storage suits best?",
+      "options": [
+        "Magnetic, because it is cheapest per gigabyte at large capacity",
+        "Solid state, because it is the fastest to read from",
+        "Optical, because individual discs are the cheapest to buy",
+        "Cloud only, because backups are handled automatically"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing storage for a context",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Magnetic** wins here: the priority is **cost at very large capacity**, and speed hardly matters since access is rare — which is exactly the case where the SSD's advantages are not worth paying for. Optical is cheap per disc but far too small a capacity for 50 TB.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "magnetic: cheapest per gigabyte at scale"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "What makes a system embedded rather than non-embedded?",
+      "options": [
+        "It is built into a device to perform one dedicated task",
+        "It is physically smaller than a desktop computer",
+        "It has no screen or keyboard attached to it",
+        "It cannot be connected to a network"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "defining embedded",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The test is **purpose**: an embedded system does **one dedicated task** and cannot be repurposed. Size is not the criterion — a smartphone is small and **general purpose**, while a car's engine management system is embedded and not small.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "built in, performing one dedicated task"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Why can several advantages of solid state storage be explained by a single fact?",
+      "options": [
+        "Speed, durability, silence and low power all follow from having no moving parts",
+        "They all follow from solid state being the most expensive option",
+        "They all follow from solid state using a laser to read data",
+        "They all follow from solid state being volatile memory"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reasoning from the mechanism",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Nothing has to spin up or move into position, so access is **fast**; there is nothing to damage in a knock, so it is **durable**; nothing moves, so it is **silent**; and no motor means **less power**. Tracing several marks back to one mechanism is what a strong answer does.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "all follow from having no moving parts"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain what secondary storage is and why it is needed, and describe how solid state, magnetic and optical storage each work.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "secondary storage",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Secondary storage** is any **non-volatile** storage mechanism that is **not directly accessible by the CPU**. Both halves of that definition matter: ROM is also non-volatile, but the CPU **can** access it directly, so ROM is main memory rather than secondary storage.\n\nIt is **required** because main memory is **volatile** — everything in RAM is lost the moment the power goes off. Without secondary storage, every file, program and setting would disappear each time the machine was switched off. RAM is also comparatively **small and expensive**, whereas secondary storage gives far more capacity for the money. Because the CPU cannot reach it directly, data must first be **copied into main memory** before the processor can work on it.\n\n**Solid state storage** — SSDs, USB sticks, memory cards — holds data in **electrical circuits**, with **no moving parts** at all. The specification requires knowing that SSDs use electrical circuits to persistently store data, but explicitly **not** the precise details such as the use of NAND gates.\n\n**Magnetic storage** — hard disk drives and tape — works mechanically. A **disc spins** at high speed while a **read-write head** moves across its surface, **magnetising** tiny areas in one direction or the other to represent 0s and 1s. Reading detects the direction of magnetisation.\n\n**Optical storage** — CD, DVD and Blu-ray — uses a **laser**. Writing burns microscopic **pits** into the disc surface, leaving the flat areas between them, called **lands**. Reading shines a laser at the surface and detects the difference in how pits and lands **reflect** the light, which is interpreted as 0s and 1s.\n\n**Comparing them**, almost every difference traces back to the mechanism. Solid state is the **fastest**, most **durable**, quietest and lowest-power, all because it has **no moving parts** — nothing must spin up or move into position, and nothing can be damaged by a knock. Magnetic is **slower** and more fragile because of those moving parts, but is the **cheapest per gigabyte** and offers the **largest capacities**, which keeps it in use for bulk storage and backups. Optical holds the **least** and scratches easily, but discs are extremely cheap and highly portable, which suits distributing media.\n\nSo the right choice depends on what is being optimised: speed and durability point to solid state, capacity for the money to magnetic, and cheap distribution to optical.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "definition and need"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "solid state and magnetic"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "optical, and comparison"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Defines secondary storage fully and explains why it is required.",
+          "marks": 2
+        },
+        {
+          "text": "Describes the operation of solid state and magnetic storage.",
+          "marks": 2
+        },
+        {
+          "text": "Describes the operation of optical storage and compares the three.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Secondary storage** is any **non-volatile** storage mechanism that is **not directly accessible by the CPU**. Both halves of that definition matter: ROM is also non-volatile, but the CPU **can** access it directly, so ROM is main memory rather than secondary storage.\n\nIt is **required** because main memory is **volatile** — everything in RAM is lost the moment the power goes off. Without secondary storage, every file, program and setting would disappear each time the machine was switched off. RAM is also comparatively **small and expensive**, whereas secondary storage gives far more capacity for the money. Because the CPU cannot reach it directly, data must first be **copied into main memory** before the processor can work on it.\n\n**Solid state storage** — SSDs, USB sticks, memory cards — holds data in **electrical circuits**, with **no moving parts** at all. The specification requires knowing that SSDs use electrical circuits to persistently store data, but explicitly **not** the precise details such as the use of NAND gates.\n\n**Magnetic storage** — hard disk drives and tape — works mechanically. A **disc spins** at high speed while a **read-write head** moves across its surface, **magnetising** tiny areas in one direction or the other to represent 0s and 1s. Reading detects the direction of magnetisation.\n\n**Optical storage** — CD, DVD and Blu-ray — uses a **laser**. Writing burns microscopic **pits** into the disc surface, leaving the flat areas between them, called **lands**. Reading shines a laser at the surface and detects the difference in how pits and lands **reflect** the light, which is interpreted as 0s and 1s.\n\n**Comparing them**, almost every difference traces back to the mechanism. Solid state is the **fastest**, most **durable**, quietest and lowest-power, all because it has **no moving parts** — nothing must spin up or move into position, and nothing can be damaged by a knock. Magnetic is **slower** and more fragile because of those moving parts, but is the **cheapest per gigabyte** and offers the **largest capacities**, which keeps it in use for bulk storage and backups. Optical holds the **least** and scratches easily, but discs are extremely cheap and highly portable, which suits distributing media.\n\nSo the right choice depends on what is being optimised: speed and durability point to solid state, capacity for the money to magnetic, and cheap distribution to optical."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A small company is deciding whether to store its files on local drives in the office or in cloud storage. Discuss the advantages and disadvantages of each and give a justified recommendation.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "evaluating cloud storage",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It is worth being clear first about what **cloud storage** actually is. It uses **magnetic and/or solid state storage at a remote location**, reached over a network. It is not a different kind of storage technology — it is the same hardware, owned and run by somebody else.\n\n**Advantages of cloud storage for this company.** Staff could reach files from **any device, anywhere** with a connection, which matters if anyone works from home or visits customers. Files are **easy to share**, both internally and with clients, without emailing copies around. The provider handles **backups** and replaces failed drives, which a small company with no IT staff would otherwise have to do itself — and in practice often would not. Capacity can be **increased** immediately without buying hardware, so the company does not have to predict its needs in advance.\n\n**Disadvantages.** The obvious one is that an **internet connection** is required: if the office connection fails, nobody can reach anything, and the business stops. Less obviously, access is limited by **connection speed**, which is far slower than a local drive — so working on large files is noticeably slower than opening them locally. The cost is **ongoing**, a subscription that continues indefinitely, rather than buying a drive once. And the data sits on **hardware owned and controlled by someone else**, so the company is trusting that provider's security, its staff, and its continued existence with confidential business information.\n\n**Advantages of local storage** are the mirror image. Access is **fast**, because the drive is on the premises. There is **no ongoing fee** after the hardware is bought. The company keeps **full control** of its own data, which may matter for confidential records. The disadvantages are that **backups are the company's own responsibility** — and a fire, flood or theft could destroy both the working copy and the backup if they are kept in the same building — remote access is difficult, and adding capacity means buying and installing more hardware.\n\n**Recommendation.** I would use **both**, rather than choosing one. Day-to-day working files should sit on **local storage**, so that everyday access is fast and work can continue if the internet connection drops. The company should then use **cloud storage for backups**, because that keeps a copy **physically away from the office** and so protects against fire, flood or theft — the single biggest weakness of a purely local arrangement.\n\nIf the company must choose only one, the deciding factor is the nature of the data. Where the files are highly confidential and the office connection is unreliable, **local** is safer. Where staff work in several places and there is nobody to manage backups, **cloud** is the better risk, because a small company that never gets round to backing up will eventually lose everything.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "what cloud is, and advantages"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "disadvantages"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "justified recommendation"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains what cloud storage is and gives its advantages.",
+          "marks": 2
+        },
+        {
+          "text": "Gives the disadvantages, beyond needing a connection.",
+          "marks": 2
+        },
+        {
+          "text": "Reaches a justified recommendation weighing both.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "It is worth being clear first about what **cloud storage** actually is. It uses **magnetic and/or solid state storage at a remote location**, reached over a network. It is not a different kind of storage technology — it is the same hardware, owned and run by somebody else.\n\n**Advantages of cloud storage for this company.** Staff could reach files from **any device, anywhere** with a connection, which matters if anyone works from home or visits customers. Files are **easy to share**, both internally and with clients, without emailing copies around. The provider handles **backups** and replaces failed drives, which a small company with no IT staff would otherwise have to do itself — and in practice often would not. Capacity can be **increased** immediately without buying hardware, so the company does not have to predict its needs in advance.\n\n**Disadvantages.** The obvious one is that an **internet connection** is required: if the office connection fails, nobody can reach anything, and the business stops. Less obviously, access is limited by **connection speed**, which is far slower than a local drive — so working on large files is noticeably slower than opening them locally. The cost is **ongoing**, a subscription that continues indefinitely, rather than buying a drive once. And the data sits on **hardware owned and controlled by someone else**, so the company is trusting that provider's security, its staff, and its continued existence with confidential business information.\n\n**Advantages of local storage** are the mirror image. Access is **fast**, because the drive is on the premises. There is **no ongoing fee** after the hardware is bought. The company keeps **full control** of its own data, which may matter for confidential records. The disadvantages are that **backups are the company's own responsibility** — and a fire, flood or theft could destroy both the working copy and the backup if they are kept in the same building — remote access is difficult, and adding capacity means buying and installing more hardware.\n\n**Recommendation.** I would use **both**, rather than choosing one. Day-to-day working files should sit on **local storage**, so that everyday access is fast and work can continue if the internet connection drops. The company should then use **cloud storage for backups**, because that keeps a copy **physically away from the office** and so protects against fire, flood or theft — the single biggest weakness of a purely local arrangement.\n\nIf the company must choose only one, the deciding factor is the nature of the data. Where the files are highly confidential and the office connection is unreliable, **local** is safer. Where staff work in several places and there is nobody to manage backups, **cloud** is the better risk, because a small company that never gets round to backing up will eventually lose everything."
+    }
+  ],
+  "examTechnique": {
+    "body": "Give **both** halves of the definition: **non-volatile** and **not directly accessible by the CPU**. For \"explain the operation\", describe the **mechanism** — pits and lands, a magnetised spinning disc, electrical circuits.\n\nTrace advantages back to **no moving parts**. Say cloud storage is **magnetic and/or solid state at a remote location**, and define embedded by **one dedicated task**.",
+    "examinerErrors": [
+      "Defining secondary storage only as \"it keeps data when switched off\".",
+      "Naming the component instead of describing how it works.",
+      "Writing about NAND gates, which are explicitly not required.",
+      "Treating cloud storage as a fourth type of storage.",
+      "Giving \"you need internet\" as the only cloud disadvantage.",
+      "Claiming solid state is better than magnetic in every respect.",
+      "Defining an embedded system as simply \"a small computer\".",
+      "Forgetting data must be copied into main memory before use."
+    ],
+    "grade9Looks": "A grade 9 answer gives **both halves** of the secondary storage definition and can use the second half to explain why **ROM is not** secondary storage. It describes each mechanism physically — **pits and lands** read by reflection, a **head magnetising a spinning disc**, **electrical circuits** — and then derives the advantages from them, noting that speed, durability, silence and low power all follow from **no moving parts**. It states that cloud storage is **magnetic or solid state at a remote location**, gives disadvantages beyond connectivity — **connection speed**, **ongoing cost**, **someone else's hardware** — and concedes that **magnetic remains cheapest per gigabyte**. It defines embedded by **dedicated purpose**, not by size."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

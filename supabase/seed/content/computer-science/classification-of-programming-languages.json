@@ -1,0 +1,1155 @@
+{
+  "id": "classification-of-programming-languages",
+  "subjectId": "computer-science",
+  "unitId": "computer-systems",
+  "title": "Classification of programming languages",
+  "specPoints": [
+    "3.4.4"
+  ],
+  "order": 4,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Low means close to the machine",
+      "body": "**Low-level** does not mean simple or basic — it means **close to the hardware**. Machine code and assembly are low-level because they work in the processor's own instructions. High-level means close to the way **people** think."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Three translators, two of them direct",
+      "body": "**Assemblers and compilers produce machine code directly.** **Interpreters do not** — they call machine code subroutines inside themselves to carry each statement out. That one distinction is stated in the specification and is worth a mark on its own."
+    },
+    {
+      "kind": "spot",
+      "title": "Assembly is 1:1, and that is the point",
+      "body": "Each line of assembly becomes **exactly one** machine code instruction. That is why an assembler is simple, and why assembly gives such precise control — and why 5 lines of assembly give 5 instructions, no more."
+    },
+    {
+      "kind": "check",
+      "title": "Machine code is tied to its processor",
+      "body": "Each type of processor has **its own instruction set**, so machine code written for one will not run on a different family. High-level code can be recompiled for each — which is most of why people use it."
+    },
+    {
+      "kind": "remember",
+      "title": "Everything gets translated",
+      "body": "A processor executes **machine code only**. So all high-level **and** assembly code must be translated before it can run. Assembly is low-level but it still is not machine code."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two levels of language",
+        "body": "**A processor understands one thing: machine code.** Everything else has to be translated into it before anything can run.\n\nThe specification divides languages into two **levels**.\n\n**Low-level languages** work in the processor's own terms. There are two:\n\n- **Machine code** — instructions **expressed in binary**, which the processor executes directly.\n- **Assembly language** — the same instructions written with short mnemonics such as `LDA` or `ADD` instead of binary.\n\n**High-level languages** — Python, C#, VB.NET — are written in terms closer to how **people** think about a problem. One line does the work of many machine instructions.\n\n**\"Low\" does not mean simple.** It means **close to the hardware**. Low-level code is generally *harder* to write, not easier — you are managing the machine yourself.\n\n**Machine code is specific to a processor.** Each type of processor has **its own instruction set**, so machine code written for one family will not run on another. A high-level program can be recompiled for each, which is a large part of why almost all software is written in high-level languages.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Levels of language",
+              "boxes": [
+                {
+                  "title": "Machine code",
+                  "points": [
+                    "expressed in binary",
+                    "executed directly by the processor"
+                  ]
+                },
+                {
+                  "title": "Assembly",
+                  "points": [
+                    "mnemonics such as LDA, ADD",
+                    "1:1 with machine code"
+                  ]
+                },
+                {
+                  "title": "High-level",
+                  "points": [
+                    "Python, C#, VB.NET",
+                    "close to how people think"
+                  ]
+                },
+                {
+                  "title": "Low means",
+                  "points": [
+                    "close to the hardware",
+                    "not simple, usually harder"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box card comparing machine code, assembly and high-level languages and what low-level means"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What does it mean to call a language low-level?",
+          "options": [
+            "It works closely with the hardware, in the processor's own terms",
+            "It is simpler and easier to learn than other languages",
+            "It can only be used to write very short programs",
+            "It runs more slowly than a high-level language"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "levels of language",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Low-level** means **close to the hardware**. It is usually *harder* to write than high-level code, not easier, and low-level code typically runs faster rather than slower.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "close to the hardware"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Machine code and assembly",
+        "body": "**Both are low-level, and they are not the same thing.**\n\n**Machine code** is **binary**. It is what the processor actually executes — no translation is needed, because this is the processor's own language.\n\n**Assembly language** replaces those binary patterns with short **mnemonics** a person can read. `ADD` is easier to work with than a string of 0s and 1s, but the instructions are the same instructions.\n\n**The key fact: assembly has a 1:1 correspondence with machine code.** Each line of assembly becomes **exactly one** machine code instruction. Write 5 lines, get 5 instructions.\n\nThat is what makes assembly low-level. A high-level language has no such relationship — one line of Python might become dozens of machine instructions, or none at all.\n\n**Assembly still has to be translated.** It is not machine code; it is a readable way of writing machine code. The program that translates it is an **assembler**, and because of the 1:1 relationship an assembler has a simple job.\n\n**Where assembly is actually used**, according to the specification:\n\n- developing software for **embedded systems**\n- **controlling specific hardware components**\n\nBoth are cases where the exact instructions and precise timing matter, and where memory is tight.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Machine code",
+                "Assembly language"
+              ],
+              "rows": [
+                [
+                  "Written as",
+                  "binary",
+                  "mnemonics such as ADD, LDA"
+                ],
+                [
+                  "Readable by people",
+                  "very hard",
+                  "difficult but possible"
+                ],
+                [
+                  "Needs translating",
+                  "no",
+                  "yes, by an assembler"
+                ],
+                [
+                  "Relationship",
+                  "—",
+                  "1:1 with machine code"
+                ],
+                [
+                  "Tied to a processor",
+                  "yes",
+                  "yes"
+                ]
+              ],
+              "title": "Both are low-level; only machine code runs without translation"
+            },
+            "alt": "A table comparing machine code and assembly language across five properties"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "What is meant by saying assembly language has a 1:1 correspondence with machine code?",
+          "options": [
+            "Each line of assembly becomes exactly one machine code instruction",
+            "Assembly and machine code are two names for the same thing",
+            "Assembly runs exactly as fast as machine code does",
+            "One assembly program produces one machine code file"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the 1:1 correspondence",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Each line of assembly is assembled into **one** machine code instruction. They are not the same thing — assembly still needs translating by an **assembler**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "one line becomes one instruction"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Why most programs are high-level",
+        "body": "**The specification asks you to explain why most computer programs are written in high-level languages.** It comes down to a trade.\n\n**Advantages of high-level:**\n\n- **Easier and faster to write**, read and maintain — one line does the work of many.\n- **Portable**: the same source can be recompiled for a **different processor**, where machine code cannot move at all.\n- **Fewer mistakes**, and easier to find the ones you make.\n- No need to know the processor's instruction set.\n\n**Advantages of low-level:**\n\n- **Direct control** of the hardware, down to individual instructions.\n- Can be made to run **faster** and use **less memory**.\n- Necessary where you must address particular hardware directly.\n\n**Disadvantages of low-level:** hard to write, hard to read, very easy to get wrong, and **tied to one processor family** — move to a different processor and the work starts again.\n\n**So the answer to \"why high-level\"** is that programmer time is expensive and computers are fast. For almost all software, being quick to write, easy to maintain and portable matters more than the last few percent of speed. Low-level is reserved for the cases where that trade goes the other way — **embedded systems** and **controlling specific hardware**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "High-level",
+                "Low-level"
+              ],
+              "rows": [
+                [
+                  "Ease of writing",
+                  "easier and faster",
+                  "difficult and slow"
+                ],
+                [
+                  "Portability",
+                  "recompile for another processor",
+                  "tied to one processor family"
+                ],
+                [
+                  "Control of hardware",
+                  "limited",
+                  "direct and precise"
+                ],
+                [
+                  "Speed and memory",
+                  "usually good enough",
+                  "can be better"
+                ],
+                [
+                  "Typical use",
+                  "almost all software",
+                  "embedded systems, hardware control"
+                ]
+              ],
+              "title": "Programmer time is expensive and computers are fast, which is why high-level usually wins"
+            },
+            "alt": "A table comparing high-level and low-level languages across five criteria"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Why are most computer programs written in high-level languages?",
+          "options": [
+            "They are faster to write and can be recompiled for other processors",
+            "They always run faster than low-level programs",
+            "They do not need to be translated before running",
+            "They use less memory than low-level programs"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "why high-level dominates",
+          "calculator": "either",
+          "tags": [],
+          "solution": "High-level code is **quicker to write and maintain** and is **portable** between processors. It usually runs **slower** and uses **more** memory than good low-level code, and it certainly still needs translating.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "faster to write, and portable"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "The three translators",
+        "body": "**All high-level and assembly code must be translated.** The specification names three translators and asks for the differences between them and when each is appropriate.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Name the three types of translator and explain how they differ.",
+            "steps": [
+              {
+                "text": "An **assembler** translates **assembly language** into machine code",
+                "note": "because of the 1:1 correspondence, each line becomes one instruction"
+              },
+              {
+                "text": "A **compiler** translates a **high-level** program into machine code, **all of it before the program runs**",
+                "note": "you get an executable file that then runs on its own, with no translator present"
+              },
+              {
+                "text": "An **interpreter** takes a **high-level** program and translates and runs it **one line at a time**",
+                "note": "the interpreter must be present every time the program runs"
+              },
+              {
+                "text": "Assemblers and compilers **produce machine code directly**. An interpreter **does not**",
+                "note": "the specification is explicit: interpreters call machine code subroutines within their own code to carry statements out"
+              },
+              {
+                "text": "A compiled program runs **faster**; an interpreted one is easier to **test**, because it runs up to the error",
+                "note": "this is the practical difference students are asked to apply"
+              },
+              {
+                "text": "So: **assembler** for assembly, **compiler** to ship finished software, **interpreter** while developing and debugging",
+                "note": "the \"when would you use each\" part of the question"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Translator",
+                "Translates",
+                "Produces machine code directly?"
+              ],
+              "rows": [
+                [
+                  "Assembler",
+                  "assembly language",
+                  "yes"
+                ],
+                [
+                  "Compiler",
+                  "high-level language",
+                  "yes"
+                ],
+                [
+                  "Interpreter",
+                  "high-level language",
+                  "no — it calls its own machine code subroutines"
+                ]
+              ],
+              "title": "Two of the three produce machine code directly; the interpreter is the exception"
+            },
+            "alt": "A table of the three translators, what each translates and whether it produces machine code directly"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Which translator does NOT generate machine code directly?",
+          "options": [
+            "The interpreter",
+            "The compiler",
+            "The assembler",
+            "All three generate machine code directly"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "how translators differ",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Assemblers and compilers translate their input into machine code directly. An **interpreter** does not — it calls appropriate machine code subroutines **within its own code** to carry out each statement.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the interpreter"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Name the two levels of programming language.\n2. Name the two low-level languages.\n3. Name the three types of translator.\n\n**Part B.**\n\n4. Explain what is meant by a 1:1 correspondence between assembly and machine code.\n5. Give two advantages of high-level languages over low-level ones.\n6. State two situations where assembly language is used.\n\n**Part C.**\n\n7. Explain the difference between a compiler and an interpreter.\n8. Explain why machine code written for one processor will not run on another.\n9. A team is developing and testing a new program, then shipping it to customers. Say which translator suits each stage and why.\n\nFor question 7, say what each one **produces** as well as when it does the work.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Translator",
+                "Translates",
+                "When you would use it"
+              ],
+              "rows": [
+                [
+                  "Assembler",
+                  "",
+                  ""
+                ],
+                [
+                  "Compiler",
+                  "",
+                  ""
+                ],
+                [
+                  "Interpreter",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill the last two columns from memory, then check"
+            },
+            "alt": "A blank table listing the assembler, compiler and interpreter with empty columns for what each translates and when it would be used"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Say that an interpreter does not produce machine code.** This is the detail that separates a full answer. Assemblers and compilers translate **into machine code directly**; an interpreter **calls machine code subroutines within its own code** to carry each statement out. Most answers say an interpreter \"translates line by line\" and stop, which is true but is not the distinction the specification draws.\n\n**Keep \"low-level\" and \"simple\" apart.** Low-level means **close to the hardware**. It is harder to write, not easier. Examiners see *low-level languages are easier because they are basic* regularly, and it is wrong twice over.\n\n**Be precise about the 1:1 correspondence.** Each **line** of assembly becomes **one machine code instruction**. It does not mean assembly *is* machine code — assembly still needs an assembler.\n\n**Explain portability properly.** Machine code is tied to a processor because **each type of processor has its own instruction set**. High-level code is portable not because it runs anywhere as-is, but because it can be **recompiled** for each target. That distinction is worth making.\n\n**Give the real reason high-level dominates.** Programmer time is expensive and computers are fast, so being quick to write, easy to maintain and portable beats the last few percent of performance for almost all software. Low-level survives exactly where that trade reverses — **embedded systems** and **controlling specific hardware**.\n\n**Match the translator to the stage.** An **interpreter** suits development and debugging, because it runs up to the error and stops there. A **compiler** suits shipping, because the customer gets an executable that runs without a translator present and runs faster. Saying *when* as well as *what* is what the specification asks for.\n\n**Remember assembly is still translated.** It is low-level, but it is not machine code. Only machine code runs untranslated.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students write",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "interpreters",
+                  "\"translates line by line\"",
+                  "does not produce machine code directly"
+                ],
+                [
+                  "low-level",
+                  "\"simpler, so easier\"",
+                  "close to the hardware, harder to write"
+                ],
+                [
+                  "1:1",
+                  "\"assembly is machine code\"",
+                  "one line becomes one instruction"
+                ],
+                [
+                  "portability",
+                  "\"high-level runs anywhere\"",
+                  "it can be recompiled for each processor"
+                ],
+                [
+                  "why high-level",
+                  "\"it is easier\"",
+                  "programmer time beats a few percent of speed"
+                ],
+                [
+                  "when to use each",
+                  "names the translator only",
+                  "names the stage it suits and why"
+                ],
+                [
+                  "assembly",
+                  "treated as needing no translation",
+                  "an assembler translates it"
+                ]
+              ],
+              "title": "The first row is the single most common half-answer in this topic"
+            },
+            "alt": "A table of common errors about language levels and translators"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Languages come in two **levels**: **low-level** and **high-level**.\n- **Low-level** means **close to the hardware**, not simple.\n- The two low-level languages are **machine code** and **assembly**.\n- **Machine code** is expressed in **binary** and runs directly.\n- **Assembly** uses **mnemonics** and has a **1:1 correspondence** with machine code.\n- One line of assembly becomes **exactly one** machine code instruction.\n- Assembly is used for **embedded systems** and **controlling specific hardware**.\n- All **high-level and assembly** code must be **translated**.\n- Each processor type has **its own instruction set**, so machine code is not portable.\n- High-level code is **portable** because it can be **recompiled**.\n- High-level: easier, faster to write, portable, fewer errors.\n- Low-level: direct hardware control, can be faster and smaller.\n- Three translators: **assembler**, **compiler**, **interpreter**.\n- **Assemblers and compilers** produce machine code **directly**; **interpreters do not**.\n- A **compiler** translates everything first; an **interpreter** translates and runs a line at a time.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Two levels",
+                  "low-level and high-level"
+                ],
+                [
+                  "Low-level means",
+                  "close to the hardware"
+                ],
+                [
+                  "Low-level languages",
+                  "machine code and assembly"
+                ],
+                [
+                  "Machine code",
+                  "binary, runs directly"
+                ],
+                [
+                  "Assembly",
+                  "mnemonics, 1:1 with machine code"
+                ],
+                [
+                  "Assembly used for",
+                  "embedded systems, hardware control"
+                ],
+                [
+                  "Needs translating",
+                  "high-level and assembly"
+                ],
+                [
+                  "Machine code portability",
+                  "none — own instruction set per processor"
+                ],
+                [
+                  "Assembler",
+                  "assembly to machine code, directly"
+                ],
+                [
+                  "Compiler",
+                  "whole program first, machine code directly"
+                ],
+                [
+                  "Interpreter",
+                  "line at a time, NOT machine code directly"
+                ],
+                [
+                  "Why high-level wins",
+                  "programmer time beats a little speed"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of language levels, machine code, assembly and the three translators"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "Name the two levels of programming language given in the specification. Separate them with a comma.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "levels of language",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Low-level** and **high-level**. Low-level means close to the hardware; high-level is closer to how people think.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "low-level, high-level"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "low-level, high-level",
+        "high-level, low-level",
+        "low level and high level"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "In what form is machine code expressed?",
+      "options": [
+        "Binary",
+        "Mnemonics such as ADD",
+        "Ordinary English words",
+        "Hexadecimal only"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "machine code",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Machine code is expressed in **binary** and is executed directly by the processor. Mnemonics belong to **assembly** language.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "binary"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Which translator converts assembly language into machine code?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the three translators",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An **assembler**. Because assembly has a 1:1 correspondence with machine code, each line becomes exactly one instruction.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "assembler"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "assembler",
+        "an assembler"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which of these is a high-level language?",
+      "options": [
+        "Python",
+        "Machine code",
+        "Assembly language",
+        "Binary"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "classifying languages",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Python** is high-level. Machine code and assembly are the two low-level languages, and binary is a number base rather than a language.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Python"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "What does a 1:1 correspondence between assembly and machine code mean?",
+      "options": [
+        "Each line of assembly becomes exactly one machine code instruction",
+        "Assembly language and machine code are identical",
+        "Assembly programs are the same length as machine code files",
+        "One assembler can translate exactly one language"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the 1:1 correspondence",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each **line** of assembly is assembled into **one** machine code instruction. They are not identical — assembly still has to be translated.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one line becomes one instruction"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "State one situation, named in the specification, where assembly language is used.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "uses of assembly",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification names **developing software for embedded systems** and **controlling specific hardware components** — both cases where exact instructions, timing and small memory matter.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "embedded systems"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "embedded systems",
+        "controlling specific hardware components",
+        "developing software for embedded systems",
+        "controlling hardware"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "What is the main difference between a compiler and an interpreter?",
+      "options": [
+        "A compiler translates everything before the program runs; an interpreter a line at a time",
+        "A compiler translates high-level code, while an interpreter translates assembly language",
+        "An interpreter produces an executable file that then runs on its own afterwards",
+        "A compiler must be present on the machine every time the program is run"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "compiler against interpreter",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **compiler** translates everything **before** execution, producing a file that then runs on its own. An **interpreter** translates and runs **a line at a time** and must be present whenever the program runs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "whole program first against line at a time"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Why will machine code written for one processor generally not run on a different type of processor?",
+      "options": [
+        "Each type of processor has its own instruction set",
+        "Machine code is stored in a different number base on each",
+        "Machine code must be recompiled after every execution",
+        "Different processors use different amounts of memory"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "why machine code is not portable",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each type of processor has **its own machine code instruction set**, so the same binary pattern means something different, or nothing, on another family.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "each processor has its own instruction set"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "Give one advantage of a high-level language over a low-level one.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "high-level advantages",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Acceptable answers include **easier and faster to write**, **easier to read and maintain**, **fewer errors**, and **portable** — it can be recompiled for a different processor.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "easier to write"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "easier to write",
+        "faster to write",
+        "portable",
+        "it is portable between processors",
+        "easier to maintain",
+        "fewer errors",
+        "easier to read"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Does assembly language need to be translated before a processor can run it?",
+      "options": [
+        "Yes — an assembler translates it into machine code",
+        "No — it is low-level, so it runs directly",
+        "No — the processor reads mnemonics directly",
+        "Only when it is used on an embedded system"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "what needs translating",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Yes. A processor executes **machine code only**. Assembly is low-level but it is **not** machine code, so an **assembler** must translate it first.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "yes, by an assembler"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A student writes that an interpreter \"translates the program into machine code one line at a time\". Which part is wrong?",
+      "options": [
+        "An interpreter does not generate machine code directly at all",
+        "Interpreters translate whole programs, not single lines",
+        "Interpreters translate into assembly rather than machine code",
+        "Nothing is wrong — this is the full definition"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "how an interpreter works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The \"line at a time\" part is right, but the specification is explicit that **interpreters do not generate machine code directly** — they call appropriate **machine code subroutines within their own code** to carry out each statement. Assemblers and compilers are the ones that produce machine code directly.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "an interpreter does not produce machine code directly"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A team is debugging a program that fails partway through. Why might an interpreter suit this better than a compiler?",
+      "options": [
+        "It runs up to the error and stops there, showing where the problem is",
+        "It automatically corrects the errors it finds",
+        "It produces a faster program for testing purposes",
+        "It translates the program only once, saving time"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing a translator",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An interpreter executes **up to the failing line** and stops, so the error is located immediately and small changes can be tried without recompiling. A compiler must translate the whole program first, which is better for **shipping** — faster execution and no translator needed on the customer's machine.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it runs up to the error and stops there"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "A student says low-level languages are easier because they are simpler. Why is this wrong?",
+      "options": [
+        "Low-level means close to the hardware, and such code is harder to write",
+        "Low-level languages are simpler but run more slowly",
+        "Low-level languages are only simple on embedded systems",
+        "Low-level code is easier to write but harder to read"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what low-level means",
+      "calculator": "either",
+      "tags": [],
+      "solution": "\"Low\" refers to the **distance from the hardware**, not to difficulty. Low-level code is generally **harder** to write, because the programmer manages the machine directly — and it typically runs **faster**, not slower.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "low-level means close to the hardware, and is harder"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "In what sense is a high-level program portable between different processors?",
+      "options": [
+        "The same source code can be recompiled for each processor",
+        "The compiled file will run unchanged on any processor",
+        "High-level code runs without any translation at all",
+        "The processor translates high-level code as it runs"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "portability",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **source code** is portable: it can be **recompiled** for each target processor. The compiled machine code is **not** portable, because each processor family has its own instruction set. That distinction is what a full-mark answer makes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the source can be recompiled for each"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why does an assembler have a simpler job than a compiler?",
+      "options": [
+        "Each assembly line maps to exactly one machine code instruction",
+        "Assembly programs are always much shorter than high-level ones",
+        "An assembler does not have to produce machine code",
+        "Assembly language is already machine code"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why the 1:1 relationship matters",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **1:1 correspondence** means the assembler substitutes one instruction for each line, with no decisions to make about how to express a statement. A compiler must turn one high-level line into **however many** machine instructions it takes, which is a much harder problem.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the 1:1 mapping leaves nothing to decide"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Why is assembly still chosen for some embedded systems, despite being harder to write?",
+      "options": [
+        "It gives precise control of the hardware and can use less memory",
+        "It is the only language that does not need translating",
+        "Embedded processors cannot run compiled code",
+        "It is portable between all embedded processors"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "when low-level is right",
+      "calculator": "either",
+      "tags": [],
+      "solution": "On an embedded system, memory is tight and exact timing and hardware control may matter more than development speed — so the usual trade reverses. Assembly still needs **translating** by an assembler, and it is **not** portable.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "precise hardware control and less memory"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain the differences between low-level and high-level languages, and explain why most computer programs are written in high-level languages.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "levels of language",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Low-level languages** work in the processor's own terms — \"low\" refers to the **distance from the hardware**, not to difficulty. There are two. **Machine code** is expressed in **binary** and is executed directly by the processor with no translation. **Assembly language** writes the same instructions using short **mnemonics** such as `ADD` or `LDA`, and has a **1:1 correspondence** with machine code: each line becomes **exactly one** machine code instruction. Assembly is still not machine code, so it must be translated by an **assembler**.\n\n**High-level languages** — Python, C#, VB.NET — are written in terms much closer to how a person thinks about the problem. There is no 1:1 relationship: a single high-level line may become dozens of machine instructions. High-level code must also be translated, by a **compiler** or an **interpreter**.\n\n**The differences that matter** follow from this. Low-level code gives **direct, precise control** of the hardware and can be made to run **faster** and in **less memory**. Against that, it is **difficult to write and read**, easy to get wrong, and **tied to one processor family**, because each type of processor has **its own instruction set**.\n\nHigh-level code is **much faster to write**, easier to read and maintain, and produces fewer errors. It is also **portable**, though in a specific sense worth stating carefully: the **source code** can be **recompiled** for a different processor. The compiled machine code itself is no more portable than any other machine code.\n\n**Most programs are written in high-level languages** because of how that trade falls in practice. Programmer time is expensive and computers are fast, so for almost all software, being quick to write, easy to maintain and portable is worth far more than the last few percent of speed or memory. A large program would be impractical to write and maintain in assembly at all.\n\nLow-level languages survive precisely where the trade reverses. The specification names **developing software for embedded systems** and **controlling specific hardware components** — situations where memory is tight, exact timing matters, and particular hardware must be addressed directly.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "low-level described"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "high-level described"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "why high-level dominates"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Describes low-level languages, including machine code and assembly.",
+          "marks": 2
+        },
+        {
+          "text": "Describes high-level languages and how they differ.",
+          "marks": 2
+        },
+        {
+          "text": "Explains why high-level languages dominate, with the trade-off.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Low-level languages** work in the processor's own terms — \"low\" refers to the **distance from the hardware**, not to difficulty. There are two. **Machine code** is expressed in **binary** and is executed directly by the processor with no translation. **Assembly language** writes the same instructions using short **mnemonics** such as `ADD` or `LDA`, and has a **1:1 correspondence** with machine code: each line becomes **exactly one** machine code instruction. Assembly is still not machine code, so it must be translated by an **assembler**.\n\n**High-level languages** — Python, C#, VB.NET — are written in terms much closer to how a person thinks about the problem. There is no 1:1 relationship: a single high-level line may become dozens of machine instructions. High-level code must also be translated, by a **compiler** or an **interpreter**.\n\n**The differences that matter** follow from this. Low-level code gives **direct, precise control** of the hardware and can be made to run **faster** and in **less memory**. Against that, it is **difficult to write and read**, easy to get wrong, and **tied to one processor family**, because each type of processor has **its own instruction set**.\n\nHigh-level code is **much faster to write**, easier to read and maintain, and produces fewer errors. It is also **portable**, though in a specific sense worth stating carefully: the **source code** can be **recompiled** for a different processor. The compiled machine code itself is no more portable than any other machine code.\n\n**Most programs are written in high-level languages** because of how that trade falls in practice. Programmer time is expensive and computers are fast, so for almost all software, being quick to write, easy to maintain and portable is worth far more than the last few percent of speed or memory. A large program would be impractical to write and maintain in assembly at all.\n\nLow-level languages survive precisely where the trade reverses. The specification names **developing software for embedded systems** and **controlling specific hardware components** — situations where memory is tight, exact timing matters, and particular hardware must be addressed directly."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Describe the three types of translator, explain how they differ, and explain which would be appropriate at different stages of developing and releasing a program.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "translators",
+      "calculator": "either",
+      "tags": [],
+      "solution": "All code written in a **high-level or assembly** language must be translated, because a processor executes **machine code** only. The specification names **three** types of translator.\n\nAn **assembler** translates **assembly language** into machine code. Because of the **1:1 correspondence**, each line of assembly becomes exactly one machine code instruction, which makes the assembler's job a straightforward substitution.\n\nA **compiler** translates a **high-level** program into machine code, translating **the whole program before it runs**. The result is an executable file which then runs on its own, with no translator present.\n\nAn **interpreter** also takes a **high-level** program, but translates and executes it **one line at a time**, and must be present every time the program runs.\n\n**The distinction the specification draws** is about what each **produces**. Assemblers and compilers **translate their input into machine code directly**. An interpreter **does not generate machine code directly** — it calls appropriate **machine code subroutines within its own code** to carry out each statement. Saying only that an interpreter \"works line by line\" leaves this out, and it is the part that separates a full answer.\n\nThe practical consequences follow. A **compiled** program runs **faster**, because translation has already happened and is not repeated, and it can be distributed without the source or a translator. An **interpreted** program starts running immediately with no compilation step, and stops **at** the line that fails.\n\n**Applied to the stages of a project:**\n\nWhile **developing and debugging**, an **interpreter** suits the work well. It runs up to the failing line and stops there, so the error is located immediately, and a small change can be tried straight away without waiting for a full recompilation. Over many short edit-and-test cycles that saves a great deal of time.\n\nWhen **releasing to customers**, a **compiler** is the right choice. Customers get an executable that runs **faster** and needs **no translator installed**, and the source code is not distributed with it. The one-off cost of compiling is paid by the developer rather than by every user on every run.\n\nAn **assembler** would only be involved if part of the system — a device driver or an embedded component — had been written in assembly for direct hardware control.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the three translators named"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "how they differ"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "applied to stages, with reasons"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Names all three translators and what each translates.",
+          "marks": 2
+        },
+        {
+          "text": "Explains how they differ, including what each produces.",
+          "marks": 2
+        },
+        {
+          "text": "Applies them to stages of development and release, with reasons.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "All code written in a **high-level or assembly** language must be translated, because a processor executes **machine code** only. The specification names **three** types of translator.\n\nAn **assembler** translates **assembly language** into machine code. Because of the **1:1 correspondence**, each line of assembly becomes exactly one machine code instruction, which makes the assembler's job a straightforward substitution.\n\nA **compiler** translates a **high-level** program into machine code, translating **the whole program before it runs**. The result is an executable file which then runs on its own, with no translator present.\n\nAn **interpreter** also takes a **high-level** program, but translates and executes it **one line at a time**, and must be present every time the program runs.\n\n**The distinction the specification draws** is about what each **produces**. Assemblers and compilers **translate their input into machine code directly**. An interpreter **does not generate machine code directly** — it calls appropriate **machine code subroutines within its own code** to carry out each statement. Saying only that an interpreter \"works line by line\" leaves this out, and it is the part that separates a full answer.\n\nThe practical consequences follow. A **compiled** program runs **faster**, because translation has already happened and is not repeated, and it can be distributed without the source or a translator. An **interpreted** program starts running immediately with no compilation step, and stops **at** the line that fails.\n\n**Applied to the stages of a project:**\n\nWhile **developing and debugging**, an **interpreter** suits the work well. It runs up to the failing line and stops there, so the error is located immediately, and a small change can be tried straight away without waiting for a full recompilation. Over many short edit-and-test cycles that saves a great deal of time.\n\nWhen **releasing to customers**, a **compiler** is the right choice. Customers get an executable that runs **faster** and needs **no translator installed**, and the source code is not distributed with it. The one-off cost of compiling is paid by the developer rather than by every user on every run.\n\nAn **assembler** would only be involved if part of the system — a device driver or an embedded component — had been written in assembly for direct hardware control."
+    }
+  ],
+  "examTechnique": {
+    "body": "Say that **assemblers and compilers produce machine code directly** and that an **interpreter does not** — it calls machine code subroutines within its own code. That one sentence is the difference between a half answer and a full one.\n\nRemember **low-level means close to the hardware**, that assembly is **1:1** with machine code, and that portability means the **source** can be **recompiled**.",
+    "examinerErrors": [
+      "Describing an interpreter only as \"translating line by line\".",
+      "Saying low-level languages are easier because they are simpler.",
+      "Treating assembly language as though it were machine code.",
+      "Forgetting that assembly must be translated by an assembler.",
+      "Claiming compiled machine code runs on any processor.",
+      "Naming a translator without saying when it would be used.",
+      "Saying high-level programs run faster than low-level ones.",
+      "Giving \"it is easier\" as the whole reason high-level dominates."
+    ],
+    "grade9Looks": "A grade 9 answer states that an **interpreter does not generate machine code directly**, and that assemblers and compilers do. It treats **low-level** as meaning close to the hardware, and therefore **harder**, not simpler. It is exact about the **1:1 correspondence** — one line, one instruction — while noting assembly still needs an assembler. It explains portability as the **source** being **recompiled** rather than machine code running anywhere, and it justifies high-level dominance by the real trade: **programmer time against a few percent of speed**, with low-level kept for **embedded systems and hardware control** where that trade reverses."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

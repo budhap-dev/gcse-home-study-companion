@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { SYLLABUS } from '@study/shared'
 import { TOPICS, topicsForSubject } from './index.ts'
 
 describe('content order', () => {
@@ -77,8 +78,19 @@ describe('school years', () => {
     expect(year('making-the-business-effective')).toBe(10)
   })
 
-  it('keeps every subject to years the student has reached or is in', () => {
-    // Nothing beyond Year 10 is written yet, so a Year 11 topic would be a mistake.
-    expect(TOPICS.filter((t) => t.year === 11).map((t) => t.id)).toEqual([])
+  it('links every Year 11 topic from a Year 11 syllabus row', () => {
+    // This replaces an earlier guard that simply asserted no Year 11 topic existed. That
+    // was a tripwire for a fact ("nothing beyond Year 10 is written yet"), not a rule, and
+    // it expired the moment Year 11 was written on purpose. The mistake it actually
+    // guarded against was a topic carrying the wrong `year`, so check that directly and
+    // for every topic rather than only for the years that happen to be unwritten.
+    const linkedInYear11 = new Set(
+      Object.values(SYLLABUS)
+        .flatMap((blocks) => blocks.filter((b) => b.year === 11))
+        .flatMap((b) => b.topics.map((t) => t.topicId))
+        .filter(Boolean),
+    )
+    const stray = TOPICS.filter((t) => t.year === 11 && !linkedInYear11.has(t.id)).map((t) => t.id)
+    expect(stray).toEqual([])
   })
 })
