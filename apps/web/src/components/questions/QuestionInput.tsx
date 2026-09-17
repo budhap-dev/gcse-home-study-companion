@@ -79,7 +79,10 @@ function MultipleChoice({ question, disabled, onSubmit }: Props & { question: Ex
  * right tool for those; the student can still call the maths keys up with the toggle.
  */
 export function keypadFor(question: Extract<Question, { type: 'numeric' | 'short-text' }>, subjectId: string): KeypadKind | undefined {
-  if (question.type === 'short-text') return undefined
+  // A prompt that asks for an exact form wants the maths field, whatever the answer
+  // type: nobody should be typing √130 or 12π on a phone's text keyboard. The prompt is
+  // in front of the student already, so reading it gives nothing away.
+  if (question.type === 'short-text') return /in terms of|surd|exact|standard form|as a power|single power|as a fraction|simplest form/i.test(question.prompt) ? 'algebra' : undefined
   // Physics and Chemistry write their larger values in standard form.
   if (subjectId === 'physics' || subjectId === 'chemistry') return 'number-plus'
   if (subjectId === 'maths') return 'number-plus'
