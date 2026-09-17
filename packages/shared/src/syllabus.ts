@@ -394,10 +394,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Application and system software', topicId: 'application-and-system-software' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Classification of programming languages' },
-      { title: 'The CPU and memory' },
-      { title: 'Secondary storage' },
-      { title: 'Databases and SQL' },
+      { title: 'Classification of programming languages', topicId: 'classification-of-programming-languages' },
+      { title: 'The CPU and memory', topicId: 'the-cpu-and-memory' },
+      { title: 'Secondary storage', topicId: 'secondary-storage' },
+      { title: 'Databases and SQL', topicId: 'databases-and-sql' },
     ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Networking' },

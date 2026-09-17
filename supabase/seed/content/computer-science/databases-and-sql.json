@@ -1,0 +1,1178 @@
+{
+  "id": "databases-and-sql",
+  "subjectId": "computer-science",
+  "unitId": "relational-databases-and-sql",
+  "title": "Databases and SQL",
+  "specPoints": [
+    "3.7.1",
+    "3.7.2"
+  ],
+  "order": 1,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Table, record, field",
+      "body": "A **table** holds data about one kind of thing. A **record** is one **row** — one student. A **field** is one **column** — one property, such as Name. Get these three right and the rest of the vocabulary follows."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Primary key identifies, foreign key links",
+      "body": "A **primary key** **uniquely identifies** each record in its own table. A **foreign key** is a field that **refers to the primary key of another table**. One identifies, the other connects."
+    },
+    {
+      "kind": "spot",
+      "title": "Strings need quotes, numbers do not",
+      "body": "`WHERE YearGroup = 11` takes no quotes because it is a number. `WHERE ClubName = 'Drama'` needs **single quotes** because it is text. Dropping the quotes is the commonest SQL error in the exam."
+    },
+    {
+      "kind": "check",
+      "title": "WHERE is not optional on UPDATE or DELETE",
+      "body": "A `DELETE FROM Student` with **no WHERE** deletes **every record**. Same for `UPDATE`. Always write the WHERE clause, and check it selects only what you intend."
+    },
+    {
+      "kind": "remember",
+      "title": "Two benefits, and they are different",
+      "body": "**Redundancy** is storing the same thing **more than once**. **Inconsistency** is what happens when one of those copies is **changed and the others are not**. Redundancy is the cause; inconsistency is the damage."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Databases and the words for them",
+        "body": "**A database is an organised, persistent collection of data**, structured so that it can be searched and updated efficiently.\n\n**A relational database** stores data in **several linked tables** rather than one big one. The links are what make it relational.\n\n**The six terms the specification names:**\n\n- **Table** — holds data about **one kind of thing**: students, or clubs.\n- **Record** — one **row**; all the data about one student.\n- **Field** — one **column**; one property, such as `Name`.\n- **Data type** — what kind of value a field holds: integer, text, date, Boolean.\n- **Primary key** — a field that **uniquely identifies** each record in its table.\n- **Foreign key** — a field that **refers to the primary key of another table**, creating the link.\n\n**In the example used through this topic** there are two tables. `Student` has the primary key `StudentID`. `Club` has the primary key `ClubID`. The `ClubID` field **in `Student`** is a **foreign key**: it points at a record in `Club`.\n\n**Why a primary key must be unique** is worth seeing plainly: if two students shared an ID, nothing could tell them apart, and a query asking for \"the student with ID 3\" would have no single answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "StudentID",
+                "Name",
+                "YearGroup",
+                "ClubID"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "Amara",
+                  "11",
+                  "2"
+                ],
+                [
+                  "2",
+                  "Ben",
+                  "10",
+                  "1"
+                ],
+                [
+                  "3",
+                  "Chloe",
+                  "11",
+                  "1"
+                ],
+                [
+                  "4",
+                  "Dev",
+                  "9",
+                  "3"
+                ],
+                [
+                  "5",
+                  "Elif",
+                  "11",
+                  "2"
+                ]
+              ],
+              "title": "StudentID is the primary key; ClubID is a foreign key pointing at the Club table"
+            },
+            "alt": "The Student table with five records and four fields, showing the primary and foreign keys"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "ClubID",
+                "ClubName"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "Chess"
+                ],
+                [
+                  "2",
+                  "Drama"
+                ],
+                [
+                  "3",
+                  "Robotics"
+                ]
+              ],
+              "title": "ClubID is this table's primary key — each club name is stored exactly once"
+            },
+            "alt": "The Club table with three records, its primary key and the club names"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What is a record in a database table?",
+          "options": [
+            "One row, holding all the data about one thing",
+            "One column, holding one property",
+            "The name given to the whole table",
+            "The field that uniquely identifies the row"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "database vocabulary",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A **record** is one **row** — all the data about a single student. A **field** is one **column**, and the identifying field is the **primary key**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "one row, all the data about one thing"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Why split the data into tables",
+        "body": "**The specification says a relational database facilitates the elimination of data inconsistency and data redundancy.** Those are two different problems, and the difference is examined.\n\n**Data redundancy** is storing the **same data more than once**.\n\nSuppose there were no `Club` table, and each student record simply held the club's name. There are **5** students, so the club names would be written out **5** times instead of the **3** times needed. The same text is repeated for no reason, wasting space and effort.\n\n**Data inconsistency** is what happens **next**. If the Drama club is renamed, every row holding the old name has to be changed. Miss one — or mistype one as \"Dramaa\" — and the database now holds **two different answers to the same question**, with nothing to say which is right.\n\n**Splitting the data fixes both.** The name \"Drama\" is stored **once**, in the `Club` table. Students refer to it by `ClubID`. Renaming the club means changing **one** value in **one** place, and every student automatically follows.\n\n**Note the relationship between the two.** Redundancy is the **cause**; inconsistency is the **damage it eventually does**. Answers that treat them as the same thing lose a mark.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Why use linked tables",
+              "boxes": [
+                {
+                  "title": "Redundancy",
+                  "points": [
+                    "the same data stored repeatedly",
+                    "the club name 5 times, not 3"
+                  ]
+                },
+                {
+                  "title": "Inconsistency",
+                  "points": [
+                    "copies disagree after an edit",
+                    "no way to tell which is right"
+                  ]
+                },
+                {
+                  "title": "The fix",
+                  "points": [
+                    "store each fact exactly once",
+                    "refer to it with a foreign key"
+                  ]
+                },
+                {
+                  "title": "The payoff",
+                  "points": [
+                    "rename in one place",
+                    "every linked record follows"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box card on data redundancy, inconsistency, and how linked tables remove both"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "What is data redundancy?",
+          "options": [
+            "Storing the same data more than once",
+            "Data that disagrees between two copies",
+            "Data stored without a primary key",
+            "Data that is no longer needed by anyone"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "redundancy against inconsistency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Redundancy** is storing the same data **repeatedly**. When those copies come to **disagree**, that is **inconsistency** — the damage that redundancy causes.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "storing the same data more than once"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Retrieving data with SQL",
+        "body": "**SQL** is the language used to query a database. For retrieving, the specification names four keywords: **SELECT**, **FROM**, **WHERE** and **ORDER BY … ASC | DESC**.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "List the names of all Year 11 students, in alphabetical order.",
+            "steps": [
+              {
+                "text": "**SELECT** names the **fields** you want: `SELECT Name`",
+                "note": "to return every field, `SELECT *` — but only ask for what you need"
+              },
+              {
+                "text": "**FROM** names the **table**: `FROM Student`",
+                "note": "the table the fields come from"
+              },
+              {
+                "text": "**WHERE** gives the **condition**: `WHERE YearGroup = 11`",
+                "note": "no quotes — YearGroup holds a number"
+              },
+              {
+                "text": "**ORDER BY** sorts the result: `ORDER BY Name ASC`",
+                "note": "ASC is ascending, DESC descending"
+              },
+              {
+                "text": "Altogether: `SELECT Name FROM Student WHERE YearGroup = 11 ORDER BY Name ASC`",
+                "note": "the keywords always come in this order"
+              },
+              {
+                "text": "Result: **Amara, Chloe, Elif** — 3 records",
+                "note": "check against the table: three students are in Year 11"
+              },
+              {
+                "text": "With `DESC` instead, the same three come back reversed: **Elif, Chloe, Amara**",
+                "note": "the records selected do not change, only their order"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Keyword",
+                "What it does"
+              ],
+              "rows": [
+                [
+                  "SELECT",
+                  "which fields to return"
+                ],
+                [
+                  "FROM",
+                  "which table to take them from"
+                ],
+                [
+                  "WHERE",
+                  "the condition a record must meet"
+                ],
+                [
+                  "ORDER BY … ASC",
+                  "sort the results, smallest or A first"
+                ],
+                [
+                  "ORDER BY … DESC",
+                  "sort the results the other way"
+                ]
+              ],
+              "title": "These four keywords always appear in this order"
+            },
+            "alt": "A table of the four SQL retrieval keywords and what each does"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "In SQL, which keyword gives the condition a record must meet to be included?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "SQL keywords",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**WHERE**. `SELECT` chooses the fields, `FROM` chooses the table, and `ORDER BY` sorts what comes back.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "WHERE"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "WHERE"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Two tables, and changing data",
+        "body": "**Querying across two tables** is where the foreign key earns its place. The specification says questions will use **no more than two tables**.\n\nTo list who is in the Drama club, the name is in `Club` but the students are in `Student`, so both tables are needed and the **link** must be stated:\n\n```\nSELECT Student.Name\nFROM Student, Club\nWHERE Student.ClubID = Club.ClubID\nAND Club.ClubName = 'Drama'\n```\n\nThe first condition **joins** the tables by matching the foreign key to the primary key. The second filters. Result: **Amara and Elif**.\n\n**Note `Table.Field`** — when two tables are involved, say which table each field belongs to.\n\n**Adding a record:**\n\n```\nINSERT INTO Club (ClubID, ClubName)\nVALUES (4, 'Debating')\n```\n\n**Changing records:**\n\n```\nUPDATE Student\nSET YearGroup = 12\nWHERE YearGroup = 11\n```\n\n**Deleting records:**\n\n```\nDELETE FROM Student\nWHERE StudentID = 4\n```\n\n**The WHERE clause is the dangerous part.** `DELETE FROM Student` on its own deletes **every record in the table**. The same applies to `UPDATE`: without a condition, every row is changed. Always write it, and always check what it selects.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Task",
+                "SQL"
+              ],
+              "rows": [
+                [
+                  "retrieve",
+                  "SELECT … FROM … WHERE … ORDER BY …"
+                ],
+                [
+                  "add a record",
+                  "INSERT INTO table (fields) VALUES (values)"
+                ],
+                [
+                  "change records",
+                  "UPDATE table SET field = value WHERE …"
+                ],
+                [
+                  "remove records",
+                  "DELETE FROM table WHERE …"
+                ]
+              ],
+              "title": "UPDATE and DELETE without a WHERE clause affect every record in the table"
+            },
+            "alt": "A table of the four SQL operations and the general form of each"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "What happens if a DELETE statement is written without a WHERE clause?",
+          "options": [
+            "Every record in the table is deleted",
+            "Nothing is deleted, as a condition is required",
+            "Only the first record is deleted",
+            "The table itself is removed from the database"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the danger of a missing WHERE",
+          "calculator": "either",
+          "tags": [],
+          "solution": "With no condition, **every record matches**, so the whole table is emptied. The table still exists but holds nothing — which is why the WHERE clause should be checked before running a DELETE.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "every record is deleted"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "Use the `Student` and `Club` tables from this lesson.\n\n**Part A.**\n\n1. Define a record and a field.\n2. What is a primary key?\n3. What is a foreign key?\n\n**Part B.**\n\n4. Write SQL to list the names of all Year 10 students.\n5. Write SQL to list all student names in reverse alphabetical order.\n6. Write SQL to add a club with `ClubID` 4 and name Debating.\n\n**Part C.**\n\n7. Write SQL to list the names of students in the Chess club, using both tables.\n8. Explain the difference between data redundancy and data inconsistency.\n9. Write SQL to delete the student with `StudentID` 2, and explain what would happen if the WHERE clause were left out.\n\nRemember: **quotes around text**, none around numbers.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "StudentID",
+                "Name",
+                "YearGroup",
+                "ClubID"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "Amara",
+                  "11",
+                  "2"
+                ],
+                [
+                  "2",
+                  "Ben",
+                  "10",
+                  "1"
+                ],
+                [
+                  "3",
+                  "Chloe",
+                  "11",
+                  "1"
+                ],
+                [
+                  "4",
+                  "Dev",
+                  "9",
+                  "3"
+                ],
+                [
+                  "5",
+                  "Elif",
+                  "11",
+                  "2"
+                ]
+              ],
+              "title": "Use this table and the Club table for all the questions"
+            },
+            "alt": "The Student table repeated for reference while answering the questions"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Quote text, never numbers.** `WHERE ClubName = 'Drama'` needs **single quotes**; `WHERE YearGroup = 11` must not have them. This is the most frequent SQL error in the exam and it is entirely avoidable.\n\n**Keep the keywords in order.** `SELECT … FROM … WHERE … ORDER BY …`. Writing `WHERE` before `FROM` is not a small slip — the statement is simply invalid.\n\n**State the join condition when using two tables.** `WHERE Student.ClubID = Club.ClubID` is what connects them. Without it every student is paired with every club, and the answer is nonsense. Use `Table.Field` so it is clear which field is which.\n\n**Distinguish redundancy from inconsistency.** Redundancy is storing the same data **more than once**; inconsistency is copies **disagreeing** after one is changed. Redundancy is the **cause**, inconsistency the **damage**. Treating them as synonyms loses a mark that is simply there for the taking.\n\n**Explain a primary key by what breaks without one.** If two records shared an ID, no query could reliably pick out one of them, and any foreign key pointing at that ID would be ambiguous. Uniqueness is not an arbitrary rule — it is what makes the links work.\n\n**Be exact about which table holds the foreign key.** In this example `ClubID` is the **primary key of `Club`** and a **foreign key in `Student`**. The same field name plays two roles, and saying which is which in which table is what a precise answer does.\n\n**Take the WHERE clause on UPDATE and DELETE seriously.** Omitting it changes or deletes **every record**. An answer that mentions this risk when asked about DELETE is showing judgement, not just syntax.\n\n**Only select the fields you need.** `SELECT *` returns everything, which is more data than required and slower. Asking for `Name` alone is better practice, and questions usually name the fields wanted.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students write",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "text values",
+                  "WHERE ClubName = Drama",
+                  "WHERE ClubName = 'Drama'"
+                ],
+                [
+                  "numbers",
+                  "WHERE YearGroup = '11'",
+                  "WHERE YearGroup = 11"
+                ],
+                [
+                  "keyword order",
+                  "WHERE before FROM",
+                  "SELECT, FROM, WHERE, ORDER BY"
+                ],
+                [
+                  "two tables",
+                  "no join condition given",
+                  "WHERE Student.ClubID = Club.ClubID"
+                ],
+                [
+                  "redundancy",
+                  "used to mean inconsistency",
+                  "redundancy causes inconsistency"
+                ],
+                [
+                  "foreign key",
+                  "names the field only",
+                  "says which table holds it, and what it points to"
+                ],
+                [
+                  "DELETE",
+                  "no WHERE clause",
+                  "WHERE, and says why it matters"
+                ]
+              ],
+              "title": "The first two rows are opposite halves of the same mistake"
+            },
+            "alt": "A table of common SQL and database errors and their corrections"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **database** is an organised, persistent collection of data.\n- A **relational database** stores data in **linked tables**.\n- **Table** — one kind of thing. **Record** — one row. **Field** — one column.\n- **Data type** — what kind of value a field holds.\n- A **primary key uniquely identifies** each record in its table.\n- A **foreign key** refers to the **primary key of another table**.\n- **Redundancy** is storing the same data **more than once**.\n- **Inconsistency** is copies **disagreeing** after a change.\n- Redundancy is the **cause**; inconsistency is the **damage**.\n- Linked tables store each fact **once**, so a change is made in **one place**.\n- Retrieval: `SELECT … FROM … WHERE … ORDER BY … ASC | DESC`.\n- **Text needs single quotes**; numbers do not.\n- Two tables need a **join condition** matching foreign key to primary key.\n- `INSERT INTO table (fields) VALUES (values)` adds a record.\n- `UPDATE … SET … WHERE …` and `DELETE FROM … WHERE …` — **without WHERE, every record is affected**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Table",
+                  "data about one kind of thing"
+                ],
+                [
+                  "Record",
+                  "one row"
+                ],
+                [
+                  "Field",
+                  "one column"
+                ],
+                [
+                  "Primary key",
+                  "uniquely identifies a record"
+                ],
+                [
+                  "Foreign key",
+                  "refers to another table's primary key"
+                ],
+                [
+                  "Redundancy",
+                  "the same data stored twice or more"
+                ],
+                [
+                  "Inconsistency",
+                  "copies that disagree"
+                ],
+                [
+                  "SELECT",
+                  "which fields"
+                ],
+                [
+                  "FROM",
+                  "which table"
+                ],
+                [
+                  "WHERE",
+                  "the condition"
+                ],
+                [
+                  "ORDER BY",
+                  "ASC or DESC"
+                ],
+                [
+                  "No WHERE",
+                  "UPDATE and DELETE hit every record"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of relational database terms and the SQL keywords"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "In a database table, what is one row called?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "database vocabulary",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **record** — all the data about one thing. A column is a **field**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a record"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "a record",
+        "record"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What does a primary key do?",
+      "options": [
+        "It uniquely identifies each record in its table",
+        "It links two tables together directly",
+        "It sets the data type used by a field",
+        "It sorts the records into order"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "primary keys",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **primary key uniquely identifies** each record in its own table. The field that links to another table is a **foreign key**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "uniquely identifies each record"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Which SQL keyword states which table the data should come from?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "SQL keywords",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**FROM**. `SELECT` chooses the fields and `WHERE` gives the condition.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "FROM"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "FROM"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which SQL clause sorts results from Z to A?",
+      "options": [
+        "ORDER BY … DESC",
+        "ORDER BY … ASC",
+        "SORT BY … DESC",
+        "WHERE … DESC"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "sorting results",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**ORDER BY … DESC** sorts descending. `ASC` sorts ascending, and there is no `SORT BY` keyword.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "ORDER BY … DESC"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "short-text",
+      "prompt": "Using the Student table, write SQL to list the names of all Year 10 students. Write the full statement.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "writing a query",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`SELECT Name FROM Student WHERE YearGroup = 10` — no quotes around 10, because `YearGroup` holds a number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "SELECT Name FROM Student WHERE YearGroup = 10"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "SELECT Name FROM Student WHERE YearGroup = 10"
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Why does `WHERE ClubName = 'Drama'` need quotation marks when `WHERE YearGroup = 11` does not?",
+      "options": [
+        "Drama is text, and text values must be quoted",
+        "Club names are always longer than numbers",
+        "Quotes are needed whenever two tables are used",
+        "The quotes tell SQL to sort the results"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "quoting values",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Text** values need **single quotes**; numeric values must not have them. Quoting a number, or failing to quote text, are the two commonest SQL errors in the exam.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Drama is text, so it must be quoted"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "Using the Student table in this topic, how many records does `SELECT Name FROM Student WHERE YearGroup = 11` return?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "predicting a query result",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Amara, Chloe and Elif are in Year 11, so the query returns **3** records.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the Year 11 students"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "In the Student table, `ClubID` refers to the primary key of the Club table. What is `ClubID` called in Student?",
+      "options": [
+        "A foreign key",
+        "A primary key",
+        "A composite field",
+        "An index"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "foreign keys",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **foreign key** — a field that refers to the **primary key of another table**. The same field is the **primary key** of `Club`, but in `Student` it is a foreign key.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a foreign key"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "Write SQL to add a record to the Club table with ClubID 4 and ClubName Debating. Write the full statement.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "inserting a record",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`INSERT INTO Club (ClubID, ClubName) VALUES (4, 'Debating')` — the fields in one bracket, the values in the next, in the same order, with quotes around the text.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "INSERT INTO Club (ClubID, ClubName) VALUES (4, 'Debating')"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "INSERT INTO Club (ClubID, ClubName) VALUES (4, 'Debating')"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What is data inconsistency?",
+      "options": [
+        "Two copies of the same data that no longer agree",
+        "Data stored more than once in a database",
+        "Data entered in the wrong data type",
+        "A record with no primary key value"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "redundancy against inconsistency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Inconsistency** is copies **disagreeing** — one was updated and another was not. Storing data more than once is **redundancy**, which is what makes inconsistency possible.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "copies that no longer agree"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Why must a primary key be unique?",
+      "options": [
+        "Otherwise no query could reliably identify a single record",
+        "Otherwise the table cannot be sorted into order",
+        "Otherwise the field cannot be given a data type",
+        "Otherwise the table would need a second field"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why uniqueness matters",
+      "calculator": "either",
+      "tags": [],
+      "solution": "If two records shared an ID, a request for \"the record with ID 3\" would have **no single answer**, and any **foreign key** pointing at that ID would be ambiguous too. Uniqueness is what makes both lookups and links work.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no query could identify a single record"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A query uses two tables but omits the condition linking them. What is the result?",
+      "options": [
+        "Every record of one table is paired with every record of the other",
+        "The query returns no records at all",
+        "Only records from the first table are returned",
+        "The database rejects the statement as invalid"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the join condition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Without `WHERE Student.ClubID = Club.ClubID`, every combination is returned — 5 students × 3 clubs = 15 meaningless rows. The statement is **valid**, which is what makes the mistake dangerous: it runs and gives a confident wrong answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "every record is paired with every record"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Explain what makes redundancy and inconsistency different from one another.",
+      "options": [
+        "Redundancy is the cause; inconsistency is the damage it does",
+        "They are two names for the same problem",
+        "Inconsistency happens first, and causes redundancy",
+        "Redundancy affects fields and inconsistency affects tables"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "redundancy against inconsistency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Storing a club name on every student row is **redundancy**. When the club is renamed and one row is missed, the copies **disagree** — that is **inconsistency**. Without the repetition there would be nothing to disagree, which is why redundancy is the cause.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "redundancy causes inconsistency"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "short-text",
+      "prompt": "Write SQL to change the YearGroup of the student with StudentID 2 to 11. Write the full statement.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "updating a record",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`UPDATE Student SET YearGroup = 11 WHERE StudentID = 2`. The **WHERE clause is essential** — without it every student in the table would be moved to Year 11.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "UPDATE Student SET YearGroup = 11 WHERE StudentID = 2"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "accepted": [
+        "UPDATE Student SET YearGroup = 11 WHERE StudentID = 2"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A school stores each student's club name directly in the Student table instead of using a Club table. What goes wrong when a club is renamed?",
+      "options": [
+        "Every student row must be edited, and any missed row now disagrees",
+        "The club name can no longer be searched for",
+        "The Student table loses its primary key",
+        "Students can no longer belong to more than one club"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why tables are split",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The name is stored **once per student**, so renaming means editing **every** row holding it. Miss one, or mistype one, and the database holds two answers to the same question with no way to tell which is right. With a `Club` table the name is stored **once** and one edit fixes everything.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "every row must be edited; a missed one disagrees"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Why is `SELECT Name` usually better practice than `SELECT *`?",
+      "options": [
+        "It returns only the data actually needed",
+        "It is the only form that allows a WHERE clause",
+        "It automatically sorts the results into order",
+        "It prevents records from being deleted by mistake"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "good query practice",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`SELECT *` returns **every field**, which is more data to transfer and process than required. Naming the fields you actually want is clearer to read and more efficient — and exam questions usually specify which fields are wanted.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it returns only the data needed"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain what a relational database is, define the terms primary key and foreign key, and explain how using linked tables removes data redundancy and inconsistency.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "relational databases",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **database** is an organised, persistent collection of data structured so that it can be searched and updated efficiently. A **relational database** stores that data in **several linked tables** rather than in one large one, and the links between the tables are what make it relational.\n\nEach **table** holds data about **one kind of thing** — students, or clubs. A **record** is one **row**, holding all the data about a single student. A **field** is one **column**, holding one property such as `Name`. Each field has a **data type** — integer, text, date or Boolean — which fixes what kind of value it may contain.\n\nA **primary key** is a field that **uniquely identifies each record** in its own table. `StudentID` is the primary key of `Student`. Uniqueness is essential: if two students shared an ID, a request for \"the student with ID 3\" would have no single answer.\n\nA **foreign key** is a field that **refers to the primary key of another table**. In the `Student` table, `ClubID` is a foreign key pointing at the primary key of `Club`. It is worth being precise here: the same field name is the **primary key in `Club`** and a **foreign key in `Student`**.\n\n**Data redundancy** is storing the **same data more than once**. If there were no `Club` table and each student record simply held the club's name, then with five students the club names would be written out **five** times rather than the **three** actually needed — the same text repeated for no reason, wasting space.\n\n**Data inconsistency** is what that repetition eventually causes. If the Drama club is renamed, every row holding the old name must be changed. Miss one, or mistype it, and the database now holds **two different answers to the same question**, with nothing to indicate which is correct. Redundancy is the **cause**; inconsistency is the **damage**, and they are not two names for the same thing.\n\n**Linked tables remove both.** The name \"Drama\" is stored **exactly once**, in the `Club` table, and students refer to it through the foreign key `ClubID`. There is no repetition, so there is no redundancy — and because the fact exists in only one place, renaming the club means changing **one value in one row**, with every student record automatically reflecting the change. There are no other copies that could fall out of step.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "relational database and vocabulary"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "primary and foreign keys"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "redundancy and inconsistency"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains what a relational database is and defines the key terms.",
+          "marks": 2
+        },
+        {
+          "text": "Defines primary and foreign keys and how they link tables.",
+          "marks": 2
+        },
+        {
+          "text": "Explains redundancy and inconsistency and how linking removes both.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "A **database** is an organised, persistent collection of data structured so that it can be searched and updated efficiently. A **relational database** stores that data in **several linked tables** rather than in one large one, and the links between the tables are what make it relational.\n\nEach **table** holds data about **one kind of thing** — students, or clubs. A **record** is one **row**, holding all the data about a single student. A **field** is one **column**, holding one property such as `Name`. Each field has a **data type** — integer, text, date or Boolean — which fixes what kind of value it may contain.\n\nA **primary key** is a field that **uniquely identifies each record** in its own table. `StudentID` is the primary key of `Student`. Uniqueness is essential: if two students shared an ID, a request for \"the student with ID 3\" would have no single answer.\n\nA **foreign key** is a field that **refers to the primary key of another table**. In the `Student` table, `ClubID` is a foreign key pointing at the primary key of `Club`. It is worth being precise here: the same field name is the **primary key in `Club`** and a **foreign key in `Student`**.\n\n**Data redundancy** is storing the **same data more than once**. If there were no `Club` table and each student record simply held the club's name, then with five students the club names would be written out **five** times rather than the **three** actually needed — the same text repeated for no reason, wasting space.\n\n**Data inconsistency** is what that repetition eventually causes. If the Drama club is renamed, every row holding the old name must be changed. Miss one, or mistype it, and the database now holds **two different answers to the same question**, with nothing to indicate which is correct. Redundancy is the **cause**; inconsistency is the **damage**, and they are not two names for the same thing.\n\n**Linked tables remove both.** The name \"Drama\" is stored **exactly once**, in the `Club` table, and students refer to it through the foreign key `ClubID`. There is no repetition, so there is no redundancy — and because the fact exists in only one place, renaming the club means changing **one value in one row**, with every student record automatically reflecting the change. There are no other copies that could fall out of step."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Using the Student and Club tables, write SQL to list the names of students in the Chess club, and explain how the query works. Then explain the risks of UPDATE and DELETE statements.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing and reasoning about SQL",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The student names are in `Student` but the club **name** is in `Club`, so both tables are needed:\n\n```\nSELECT Student.Name\nFROM Student, Club\nWHERE Student.ClubID = Club.ClubID\nAND Club.ClubName = 'Chess'\n```\n\nThis returns **Ben** and **Chloe**.\n\n**How it works, clause by clause.** `SELECT Student.Name` states which **field** is wanted; writing `Student.Name` rather than just `Name` makes clear which table it comes from, which matters once two tables are involved. `FROM Student, Club` names **both tables**.\n\nThe first condition, `WHERE Student.ClubID = Club.ClubID`, is the **join**: it matches the **foreign key** in `Student` to the **primary key** in `Club`, so each student is paired only with **their own** club. The second condition, `AND Club.ClubName = 'Chess'`, then filters those pairs down to the club wanted. `Chess` is **text**, so it takes **single quotes**; a number such as `11` would not.\n\n**Leaving out the join condition is the classic error.** The statement is still **valid SQL**, so it runs without complaint — but every student is paired with every club, giving 5 × 3 = **15** meaningless rows. A query that fails loudly is much safer than one that returns a confident wrong answer, which is why the join condition should be checked first.\n\n**The risks of UPDATE and DELETE** come from the same clause. `UPDATE Student SET YearGroup = 12 WHERE YearGroup = 11` moves the three Year 11 students up. Omit the `WHERE` and the statement becomes `UPDATE Student SET YearGroup = 12`, which sets **every student in the school** to Year 12 — including those in Years 9 and 10.\n\n`DELETE` is worse, because the damage cannot be undone by simply running another statement. `DELETE FROM Student WHERE StudentID = 4` removes one record; `DELETE FROM Student` removes **every record in the table**. The table still exists, but it is empty, and the only recovery is from a backup.\n\nThe practical safeguard is to run the condition as a `SELECT` first — `SELECT * FROM Student WHERE StudentID = 4` — and confirm it returns exactly the records intended before turning it into a `DELETE` or an `UPDATE`.",
+      "markScheme": [
+        {
+          "code": "M2",
+          "marks": 2,
+          "description": "correct two-table query"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "explains each clause"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "the risk of a missing WHERE"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Writes a correct two-table query with a join condition.",
+          "marks": 2
+        },
+        {
+          "text": "Explains how each clause of the query works.",
+          "marks": 2
+        },
+        {
+          "text": "Explains the risk of omitting WHERE from UPDATE and DELETE.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "The student names are in `Student` but the club **name** is in `Club`, so both tables are needed:\n\n```\nSELECT Student.Name\nFROM Student, Club\nWHERE Student.ClubID = Club.ClubID\nAND Club.ClubName = 'Chess'\n```\n\nThis returns **Ben** and **Chloe**.\n\n**How it works, clause by clause.** `SELECT Student.Name` states which **field** is wanted; writing `Student.Name` rather than just `Name` makes clear which table it comes from, which matters once two tables are involved. `FROM Student, Club` names **both tables**.\n\nThe first condition, `WHERE Student.ClubID = Club.ClubID`, is the **join**: it matches the **foreign key** in `Student` to the **primary key** in `Club`, so each student is paired only with **their own** club. The second condition, `AND Club.ClubName = 'Chess'`, then filters those pairs down to the club wanted. `Chess` is **text**, so it takes **single quotes**; a number such as `11` would not.\n\n**Leaving out the join condition is the classic error.** The statement is still **valid SQL**, so it runs without complaint — but every student is paired with every club, giving 5 × 3 = **15** meaningless rows. A query that fails loudly is much safer than one that returns a confident wrong answer, which is why the join condition should be checked first.\n\n**The risks of UPDATE and DELETE** come from the same clause. `UPDATE Student SET YearGroup = 12 WHERE YearGroup = 11` moves the three Year 11 students up. Omit the `WHERE` and the statement becomes `UPDATE Student SET YearGroup = 12`, which sets **every student in the school** to Year 12 — including those in Years 9 and 10.\n\n`DELETE` is worse, because the damage cannot be undone by simply running another statement. `DELETE FROM Student WHERE StudentID = 4` removes one record; `DELETE FROM Student` removes **every record in the table**. The table still exists, but it is empty, and the only recovery is from a backup.\n\nThe practical safeguard is to run the condition as a `SELECT` first — `SELECT * FROM Student WHERE StudentID = 4` — and confirm it returns exactly the records intended before turning it into a `DELETE` or an `UPDATE`."
+    }
+  ],
+  "examTechnique": {
+    "body": "Keep the keywords in order — `SELECT … FROM … WHERE … ORDER BY …` — and **quote text but not numbers**. With two tables, always give the **join condition** matching foreign key to primary key, and write `Table.Field`.\n\nKeep **redundancy** (stored twice) apart from **inconsistency** (copies disagree), and never omit `WHERE` from `UPDATE` or `DELETE`.",
+    "examinerErrors": [
+      "Forgetting single quotes around a text value.",
+      "Putting quotes around a number.",
+      "Writing the keywords out of order.",
+      "Omitting the join condition in a two-table query.",
+      "Using redundancy and inconsistency as if they meant the same thing.",
+      "Saying a foreign key identifies records in its own table.",
+      "Omitting WHERE from an UPDATE or DELETE.",
+      "Using SELECT * when the question named the fields wanted."
+    ],
+    "grade9Looks": "A grade 9 answer quotes **text** and not **numbers**, keeps the keywords in order, and always supplies the **join condition** in a two-table query — knowing that omitting it still **runs** and returns every combination, which is worse than an error. It says which table holds the **foreign key** and which holds the **primary key** it points to, and explains uniqueness by what **breaks** without it. It separates **redundancy** (the cause) from **inconsistency** (the damage), and when writing `DELETE` or `UPDATE` it names the risk of a missing `WHERE` and suggests testing the condition with a `SELECT` first."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
