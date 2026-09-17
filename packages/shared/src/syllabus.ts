@@ -218,9 +218,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Radiation and nuclear power', topicId: 'radiation-and-nuclear-power' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Electromagnetic devices' },
-      { title: 'Stars and galaxies' },
-      { title: 'The Big Bang' },
+      { title: 'Electromagnetic devices', topicId: 'electromagnetic-devices' },
+      { title: 'Stars and galaxies', topicId: 'stars-and-galaxies' },
+      { title: 'The Big Bang', topicId: 'the-big-bang' },
     ] },
   ],
   'chemistry': [
