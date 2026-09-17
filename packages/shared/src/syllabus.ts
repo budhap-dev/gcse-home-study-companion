@@ -353,9 +353,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Genetic disorders and screening', topicId: 'genetic-disorders-and-screening' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Variation and natural selection' },
-      { title: 'Evidence for evolution and classification' },
-      { title: 'Selective breeding and genetic engineering' },
+      { title: 'Variation and natural selection', topicId: 'variation-and-natural-selection' },
+      { title: 'Evidence for evolution and classification', topicId: 'evidence-for-evolution-and-classification' },
+      { title: 'Selective breeding and genetic engineering', topicId: 'selective-breeding-and-genetic-engineering' },
     ] },
   ],
   'computer-science': [
