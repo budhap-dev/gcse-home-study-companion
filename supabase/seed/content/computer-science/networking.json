@@ -1,0 +1,1171 @@
+{
+  "id": "networking",
+  "subjectId": "computer-science",
+  "unitId": "networks",
+  "title": "Networking",
+  "specPoints": [
+    "3.5"
+  ],
+  "order": 1,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "The layers in order",
+      "body": "**Application → Transport → Internet → Link**. Going down is sending, going up is receiving. Learn them in this order and the protocol questions become lookups."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Put the protocol on its layer",
+      "body": "**Application**: HTTP, HTTPS, SMTP, IMAP, FTP. **Transport**: TCP and UDP. **Internet**: IP. The specification assigns them exactly this way, and questions ask directly."
+    },
+    {
+      "kind": "spot",
+      "title": "HTTPS is HTTP with encryption",
+      "body": "The **S** is the whole difference: HTTPS provides an **encrypted** version of HTTP, so data intercepted on the way is unreadable. Say **encrypted**, not \"more secure\", which describes the effect without giving the reason."
+    },
+    {
+      "kind": "check",
+      "title": "Ethernet and Wi-Fi are families",
+      "body": "The specification is explicit that **Ethernet** and **Wi-Fi** are each a **family of related protocols**, not a single protocol. You do not need the individual members. **Wi-Fi is a trademark**; the generic term is **WLAN**."
+    },
+    {
+      "kind": "remember",
+      "title": "A LAN is small and singly owned",
+      "body": "A **LAN** covers a **small geographical area** and is usually **owned and managed by one person or organisation**. A **WAN** covers a **wide area** under **collective or distributed** ownership — and the **internet is the biggest WAN**."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Networks and their types",
+        "body": "**A computer network is two or more computers connected together so they can communicate and share resources.**\n\n**The advantages** of networking machines are sharing **files**, sharing **hardware** such as printers, **communication** between users, **central backup**, and **central management** of software and security.\n\n**The disadvantages** are the **cost** of the equipment, the need for **expertise** to set it up and maintain it, greater exposure to **malware and unauthorised access**, and the fact that if a central part fails, **everyone** is affected.\n\n**The three types the specification names:**\n\n**PAN** — Personal Area Network. Very small, around one person. Only **Bluetooth** needs to be considered.\n\n**LAN** — Local Area Network. Covers a **relatively small geographical area** such as one building or site, and is usually **owned and controlled by a single person or organisation**.\n\n**WAN** — Wide Area Network. Covers a **wide geographical area**, and is usually under **collective or distributed ownership** — no one body owns it all. The **internet is the biggest example of a WAN**.\n\n**The two things that separate a LAN from a WAN** are therefore **geographical size** and **ownership**. Answers that give only size are half right.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Type",
+                "Area covered",
+                "Ownership"
+              ],
+              "rows": [
+                [
+                  "PAN",
+                  "around one person — Bluetooth",
+                  "the individual"
+                ],
+                [
+                  "LAN",
+                  "relatively small, one site or building",
+                  "a single person or organisation"
+                ],
+                [
+                  "WAN",
+                  "a wide geographical area",
+                  "collective or distributed"
+                ]
+              ],
+              "title": "The internet is the biggest example of a WAN"
+            },
+            "alt": "A table of the three network types showing the area each covers and who owns it"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which two things distinguish a LAN from a WAN?",
+          "options": [
+            "The geographical area covered and who owns it",
+            "The number of computers and the cable used",
+            "The speed of the connection and its cost",
+            "The operating system and the protocols used"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "LAN against WAN",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A LAN covers a **small area** and is owned by a **single organisation**; a WAN covers a **wide area** under **collective or distributed** ownership. Both halves are needed.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "geographical area and ownership"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Wired, wireless and topologies",
+        "body": "**Networks can be wired or wireless**, and the specification asks you to compare them.\n\n**Wireless advantages**: no cabling to install, devices can **move around**, cheaper and quicker to set up, easy to add devices.\n\n**Wireless disadvantages**: generally **slower**, a **shorter range** that walls reduce, more prone to **interference**, and **less secure** — the signal travels beyond the building, so anyone nearby can attempt to receive it.\n\n**Wired networks** use different cables. **Copper** is cheaper and fine over short distances. **Fibre** carries data faster and much further with less signal loss, so it suits **long distances** and **backbone** links — at a higher cost.\n\n**Two LAN topologies** are named, and you may be asked to **draw** them and to **choose** between them.\n\n**Star**: every device has its **own cable** to a central **switch**. With 6 devices that is **6** cables. If one cable fails only **that device** is cut off, and performance holds up well because devices do not compete for one shared line. It costs more in cable, and **if the central switch fails the whole network goes down**.\n\n**Bus**: every device connects to a **single shared backbone** cable. It uses the **least cable** and is cheap, but the devices **share** it, so it slows as traffic rises, and **a break in the backbone splits the network**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Star",
+                "Bus"
+              ],
+              "rows": [
+                [
+                  "Layout",
+                  "each device cabled to a central switch",
+                  "all devices share one backbone cable"
+                ],
+                [
+                  "Cable needed",
+                  "one per device — 6 for 6",
+                  "one backbone, so the least"
+                ],
+                [
+                  "If one cable breaks",
+                  "only that device is lost",
+                  "the network is split in two"
+                ],
+                [
+                  "Single point of failure",
+                  "the central switch",
+                  "the backbone cable"
+                ],
+                [
+                  "Under heavy traffic",
+                  "holds up well",
+                  "slows, as the cable is shared"
+                ]
+              ],
+              "title": "Star costs more but fails more gracefully; bus is cheap but fragile"
+            },
+            "alt": "A table comparing star and bus topologies across layout, cabling, failure and performance"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "In a star topology, what happens if one device's cable is cut?",
+          "options": [
+            "Only that device loses its connection",
+            "The whole network stops working",
+            "The network splits into two halves",
+            "All devices slow down but keep working"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "star topology",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Each device has **its own** cable to the switch, so only **that device** is affected. The whole network failing is what happens if the **central switch** fails, and splitting in two is a **bus** failure.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "only that device"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Protocols",
+        "body": "**A network protocol is a set of rules for how devices communicate.** Both ends must follow the same rules or the data is meaningless.\n\n**Ethernet** — a **family** of related protocols for **wired** LANs. The specification says you do **not** need the individual protocols within it.\n\n**Wi-Fi** — likewise a **family**, for **wireless** LANs. Two details are examined: **Wi-Fi is a trademark**, and the generic term for networks of this kind is **WLAN**.\n\n**TCP** (Transmission Control Protocol) — sets up the connection and makes delivery **reliable**, splitting data into packets and ensuring they arrive and are reassembled in order.\n\n**UDP** (User Datagram Protocol) — sends packets **without** those guarantees. Faster, with less overhead, but delivery is not assured.\n\n**IP** (Internet Protocol) — **addresses** packets and **routes** them across the network.\n\n**HTTP** — transfers web pages.\n\n**HTTPS** — an **encrypted** version of HTTP, for more secure web transactions.\n\n**FTP** — transfers files between computers.\n\n**SMTP** — **sends** email.\n\n**IMAP** — **retrieves** email from a server, leaving it there so several devices stay in step.\n\n**A memory aid for the email pair**: SMTP **S**ends. IMAP takes **I**n.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Protocol",
+                "What it is for"
+              ],
+              "rows": [
+                [
+                  "Ethernet",
+                  "a family of protocols for wired LANs"
+                ],
+                [
+                  "Wi-Fi",
+                  "a family of protocols for wireless LANs (WLAN)"
+                ],
+                [
+                  "TCP",
+                  "reliable delivery: packets arrive and are reassembled in order"
+                ],
+                [
+                  "UDP",
+                  "faster delivery with no guarantee of arrival"
+                ],
+                [
+                  "IP",
+                  "addressing packets and routing them"
+                ],
+                [
+                  "HTTP",
+                  "transferring web pages"
+                ],
+                [
+                  "HTTPS",
+                  "HTTP, encrypted"
+                ],
+                [
+                  "FTP",
+                  "transferring files"
+                ],
+                [
+                  "SMTP",
+                  "sending email"
+                ],
+                [
+                  "IMAP",
+                  "retrieving email from a server"
+                ]
+              ],
+              "title": "SMTP Sends; IMAP takes In"
+            },
+            "alt": "A table of the ten network protocols named in the specification and the purpose of each"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "What does HTTPS provide that HTTP does not?",
+          "options": [
+            "Encryption, so intercepted data cannot be read",
+            "A faster connection to the web server",
+            "The ability to transfer files as well as pages",
+            "Automatic reassembly of packets in order"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "HTTP against HTTPS",
+          "calculator": "either",
+          "tags": [],
+          "solution": "HTTPS is an **encrypted** version of HTTP. Reassembling packets in order is **TCP**'s job, and transferring files is **FTP**'s.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "encryption"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "The four layer TCP/IP model",
+        "body": "**The specification asks you to name the four layers and describe their main functions.** Layers divide the work up, so each part deals with one thing and the layers below it can change without the ones above needing to.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Name the four layers of the TCP/IP model and say what each does.",
+            "steps": [
+              {
+                "text": "**Application layer** — where network applications such as browsers and email programs operate",
+                "note": "protocols here: HTTP, HTTPS, SMTP, IMAP, FTP"
+              },
+              {
+                "text": "**Transport layer** — sets up communication between the two hosts and agrees settings such as packet size",
+                "note": "protocols here: TCP and UDP — the two that manage delivery"
+              },
+              {
+                "text": "**Internet layer** — addresses and packages data, and routes the packets across the network",
+                "note": "the protocol here is IP, which is where addressing happens"
+              },
+              {
+                "text": "**Link layer** — where the network hardware such as the NIC sits, along with device drivers",
+                "note": "the specification names no protocol at this layer; it is where the hardware sits"
+              },
+              {
+                "text": "Sending goes **down** the layers; receiving goes back **up** them",
+                "note": "the browser hands data down; the NIC passes it up on arrival"
+              },
+              {
+                "text": "Each layer deals with **one job only**, so one can be changed without rewriting the others",
+                "note": "this is why swapping Wi-Fi for a cable changes nothing about the web page you are reading"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Layer",
+                "Main function",
+                "Protocols"
+              ],
+              "rows": [
+                [
+                  "Application",
+                  "where network applications such as browsers and email programs operate",
+                  "HTTP, HTTPS, SMTP, IMAP, FTP"
+                ],
+                [
+                  "Transport",
+                  "sets up communication between the two hosts and agrees settings such as packet size",
+                  "TCP, UDP"
+                ],
+                [
+                  "Internet",
+                  "addresses and packages data, and routes the packets across the network",
+                  "IP"
+                ],
+                [
+                  "Link",
+                  "where the network hardware such as the NIC sits, along with device drivers",
+                  "— (hardware and drivers)"
+                ]
+              ],
+              "title": "Ten protocols, four layers, and every one has a fixed home"
+            },
+            "alt": "A table of the four TCP/IP layers, the function of each and the protocols that operate there"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "short-text",
+          "prompt": "On which layer of the TCP/IP model does the IP protocol operate?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "placing protocols on layers",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The **internet** layer, which addresses and packages data and routes packets across the network.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "internet"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "internet",
+            "the internet layer",
+            "internet layer"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Define a computer network, and give one advantage and one disadvantage of using one.\n2. Name the three types of network in the specification.\n3. Name the four layers of the TCP/IP model, in order.\n\n**Part B.**\n\n4. Give two differences between a LAN and a WAN.\n5. Draw a star topology with 6 devices, and say how many cables it needs.\n6. State which protocol sends email and which retrieves it.\n\n**Part C.**\n\n7. Explain two advantages and two disadvantages of a wireless network compared with a wired one.\n8. A school is choosing between star and bus for a new computer room. Recommend one, with reasons.\n9. Explain why the TCP/IP model is divided into layers at all.\n\nFor question 9, think about what changing one layer would mean for the others.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Layer",
+                "Main function",
+                "Protocols"
+              ],
+              "rows": [
+                [
+                  "Application",
+                  "",
+                  ""
+                ],
+                [
+                  "Transport",
+                  "",
+                  ""
+                ],
+                [
+                  "Internet",
+                  "",
+                  ""
+                ],
+                [
+                  "Link",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill in from memory, then check against the lesson"
+            },
+            "alt": "A blank table of the four TCP/IP layers with empty columns for function and protocols"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Give both halves of the LAN/WAN difference.** **Geographical area** *and* **ownership** — a LAN is usually owned by a **single** organisation, a WAN is under **collective or distributed** ownership. Size alone is a half answer.\n\n**Learn which layer each protocol sits on.** HTTP, HTTPS, SMTP, IMAP and FTP are **application**; TCP and UDP are **transport**; IP is **internet**. The specification states this directly and questions ask for it directly.\n\n**Say \"encrypted\" about HTTPS.** *More secure* names the effect without the mechanism. HTTPS provides an **encrypted** version of HTTP, so anything intercepted in transit **cannot be read**.\n\n**Remember Ethernet and Wi-Fi are families**, not single protocols — and that **Wi-Fi is a trademark** while the generic term is **WLAN**. Both points are stated explicitly in the specification, which usually means they are examined.\n\n**Distinguish TCP from UDP by what is traded.** TCP guarantees packets **arrive and are reassembled in order**, at the cost of extra overhead. UDP drops those guarantees to go **faster**. Neither is simply better: the choice depends on whether a lost packet matters more than a delay.\n\n**Be exact about topology failures.** In a **star**, one broken cable loses **one device**, but the **central switch** is a single point of failure for everything. In a **bus**, a break in the **backbone splits the network**, and heavy traffic slows everyone because the cable is **shared**. Naming *which* failure belongs to *which* topology is where marks are won and lost.\n\n**Give a real reason for layering.** Each layer handles **one job**, so a layer can be **changed or replaced without rewriting the others** — which is why moving from a cable to Wi-Fi changes nothing about the web page you are reading. It also makes faults easier to isolate. *It makes it simpler* is not an explanation.\n\n**On wireless security, be concrete.** The signal **travels beyond the building**, so anyone within range can attempt to receive it — which is why encryption matters more on wireless than on a cable someone would have to physically reach.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students write",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "LAN vs WAN",
+                  "size only",
+                  "size and ownership"
+                ],
+                [
+                  "HTTPS",
+                  "\"it is more secure\"",
+                  "it is an encrypted version of HTTP"
+                ],
+                [
+                  "Ethernet, Wi-Fi",
+                  "treated as single protocols",
+                  "each is a family of protocols"
+                ],
+                [
+                  "Wi-Fi",
+                  "used as the generic term",
+                  "a trademark; the generic term is WLAN"
+                ],
+                [
+                  "TCP and UDP",
+                  "\"UDP is worse\"",
+                  "UDP trades guarantees for speed"
+                ],
+                [
+                  "star failure",
+                  "says the network goes down",
+                  "one cable loses one device"
+                ],
+                [
+                  "layering",
+                  "\"it makes it simpler\"",
+                  "a layer can change without the others"
+                ],
+                [
+                  "wireless security",
+                  "\"it is less secure\"",
+                  "the signal leaves the building"
+                ]
+              ],
+              "title": "Six of these eight are cases of naming an effect without its mechanism"
+            },
+            "alt": "A table of common errors about networks, protocols and topologies"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **network** is computers connected to communicate and share resources.\n- Advantages: share files and hardware, communicate, central backup and management.\n- Disadvantages: cost, expertise needed, malware spread, central failure affects all.\n- **PAN** — around one person; only **Bluetooth** is needed.\n- **LAN** — small area, **single** owner.\n- **WAN** — wide area, **collective or distributed** ownership; the **internet** is the biggest.\n- **Wireless**: mobile and cheap to set up, but slower, shorter range and **less secure**.\n- **Fibre** carries data further and faster than **copper**, at greater cost.\n- **Star**: one cable per device to a switch; one break loses **one device**; the **switch** is the weak point.\n- **Bus**: one shared backbone; least cable; a break **splits** the network; shared traffic slows it.\n- A **protocol** is a set of rules for communication.\n- **Ethernet** and **Wi-Fi** are **families**; Wi-Fi is a **trademark**, the generic term is **WLAN**.\n- **TCP** guarantees ordered delivery; **UDP** is faster without guarantees; **IP** addresses and routes.\n- **HTTPS** is **encrypted** HTTP. **SMTP** sends mail, **IMAP** retrieves it, **FTP** transfers files.\n- The four layers: **Application → Transport → Internet → Link**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "LAN",
+                  "small area, single owner"
+                ],
+                [
+                  "WAN",
+                  "wide area, distributed ownership"
+                ],
+                [
+                  "PAN",
+                  "one person — Bluetooth"
+                ],
+                [
+                  "Star",
+                  "one cable each; switch is the weak point"
+                ],
+                [
+                  "Bus",
+                  "one shared backbone; a break splits it"
+                ],
+                [
+                  "Protocol",
+                  "rules for how devices communicate"
+                ],
+                [
+                  "Ethernet / Wi-Fi",
+                  "families of protocols, not single ones"
+                ],
+                [
+                  "Wi-Fi generic term",
+                  "WLAN"
+                ],
+                [
+                  "TCP / UDP",
+                  "reliable and ordered / fast, no guarantee"
+                ],
+                [
+                  "IP",
+                  "addresses and routes packets"
+                ],
+                [
+                  "HTTPS",
+                  "HTTP, encrypted"
+                ],
+                [
+                  "Layers",
+                  "Application → Transport → Internet → Link"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of network types, topologies, protocols and the four TCP/IP layers"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "Name the four layers of the TCP/IP model, in order, starting with the one where applications operate. Separate them with commas.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the four layers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Application, transport, internet, link.** Sending goes down the layers; receiving comes back up.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "application, transport, internet, link"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "application, transport, internet, link"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which network type is the internet the biggest example of?",
+      "options": [
+        "WAN",
+        "LAN",
+        "PAN",
+        "WLAN"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "network types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **internet is the biggest example of a WAN** — a wide area network under collective or distributed ownership.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "WAN"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Which protocol is used to send email?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "email protocols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**SMTP** — Simple Mail Transfer Protocol — **sends** email. **IMAP** retrieves it from a server.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "SMTP"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "SMTP"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which technology needs to be considered for a PAN?",
+      "options": [
+        "Bluetooth",
+        "Fibre optic cable",
+        "Ethernet cable",
+        "Satellite"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "PAN",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification says that for a Personal Area Network, **only Bluetooth needs to be considered**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Bluetooth"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "On which layer of the TCP/IP model do TCP and UDP operate?",
+      "options": [
+        "Transport",
+        "Application",
+        "Internet",
+        "Link"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "placing protocols on layers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **transport** layer, which sets up communication between the two hosts and agrees settings such as packet size.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "transport"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "What happens to a bus network if the backbone cable is broken in the middle?",
+      "options": [
+        "The network is split into two parts that cannot communicate",
+        "Only the device nearest the break is disconnected",
+        "The network continues at a slightly reduced speed",
+        "Traffic is automatically rerouted around the break"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bus topology",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Every device shares the **single backbone**, so a break in it **splits the network in two**. Losing one device only is a **star** failure.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the network is split in two"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "A school network covers one site and is managed entirely by the school. Which type of network is it?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "identifying a network type",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **LAN** — a relatively small geographical area, owned and controlled by a **single** organisation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "LAN"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "LAN",
+        "a LAN",
+        "local area network"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Why is fibre cable often chosen instead of copper for long connections?",
+      "options": [
+        "It carries data faster and further with less signal loss",
+        "It is cheaper to buy and to install",
+        "It is the only cable that works with Ethernet",
+        "It does not need to be physically protected"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "wired network cables",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Fibre** carries data **faster and much further with less signal loss**, which is why it suits long distances and backbone links. It costs **more** than copper, which is why copper is still used over short runs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "faster and further, with less loss"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What is a network protocol?",
+      "options": [
+        "A set of rules for how devices communicate",
+        "A physical cable joining two devices",
+        "A program that detects network faults",
+        "The hardware address built into a network card"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "defining a protocol",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A protocol is a **set of rules** governing communication. Both devices must follow the same rules, or the data received is meaningless. The built-in hardware address is the **MAC address**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a set of rules for communication"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Which statement about Wi-Fi does the specification make?",
+      "options": [
+        "It is a trademark, and the generic term is WLAN",
+        "It is a single protocol rather than a family",
+        "It operates at the internet layer of the model",
+        "It is always faster than a wired connection"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Wi-Fi as a family and trademark",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Wi-Fi is a **family of related protocols** and a **trademark**; the generic term for such networks is **WLAN**. You do not need the individual protocols within the family.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a trademark, generic term WLAN"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A video call drops the occasional frame but stays in real time. Which transport protocol is likely in use, and why?",
+      "options": [
+        "UDP, because speed matters more than every packet arriving",
+        "TCP, because it guarantees every packet arrives in order",
+        "IP, because it routes packets across the network",
+        "HTTP, because it transfers data to the application"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "TCP against UDP",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**UDP** drops the delivery guarantees in exchange for **speed** and less overhead. In a live call a re-sent frame would arrive too late to be useful, so a dropped frame is better than a delay — the opposite of a file transfer, where TCP's guarantees are essential.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "UDP: speed matters more than every packet"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why is the central switch a weakness in a star topology?",
+      "options": [
+        "Every device connects through it, so all of them are lost if it fails",
+        "It slows down as more devices are added to the network",
+        "It splits the network into two halves when it fails",
+        "It can only handle one device's traffic at a time"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "single points of failure",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A single broken **cable** loses only **one device**, which is the star's strength. But every device reaches the network **through the switch**, so if it fails **nothing** can communicate. Each topology has its own single point of failure — the switch in a star, the backbone in a bus.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "all devices connect through it"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Why is a wireless network generally less secure than a wired one?",
+      "options": [
+        "The signal travels beyond the building, so anyone in range can receive it",
+        "Wireless data is never encrypted by any protocol at all",
+        "Wireless networks cannot use passwords or any authentication",
+        "Wireless signals are slower and therefore easier to read"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "wireless security",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The signal is **broadcast** and does not stop at the walls, so an attacker needs only to be **within range** rather than to get physical access to a cable. That is why **encryption** matters more on wireless. Wireless can certainly use encryption and authentication — the point is that it must.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the signal travels beyond the building"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Why is the TCP/IP model divided into layers?",
+      "options": [
+        "Each layer does one job, so one can change without rewriting the others",
+        "It makes the network run measurably faster",
+        "It allows four protocols to run at the same time",
+        "Each layer encrypts the data passed down to it"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why layering exists",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each layer handles **one job**, so a layer can be **changed or replaced independently** — which is why switching from a cable to Wi-Fi changes the **link** layer and nothing above it. It also makes faults easier to isolate. Layering does not itself make anything faster.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one layer can change without the others"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A company must transfer a large file and every byte must arrive intact. Which protocol pair is appropriate?",
+      "options": [
+        "FTP over TCP, as TCP guarantees ordered delivery",
+        "FTP over UDP, as UDP transfers files more quickly",
+        "SMTP over TCP, as SMTP is designed for large files",
+        "HTTP over UDP, as web protocols suit file transfer"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing protocols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**FTP** is the file transfer protocol, and it needs **TCP** underneath because every packet must **arrive and be reassembled in order** — a single missing byte corrupts the file. UDP's speed is worthless here. SMTP **sends email**, not files in general.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "FTP over TCP"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A school wants a new computer room where one faulty cable will not stop everyone working. Which topology, and why?",
+      "options": [
+        "Star, because each device has its own cable to the switch",
+        "Bus, because a single backbone is simpler to repair",
+        "Bus, because it uses the least cable of the two",
+        "Star, because it removes every single point of failure"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing a topology",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Star** — each device has its **own** cable, so one fault loses **one** machine, and performance also holds up better under load. Note it does **not** remove every single point of failure: the **central switch** is still one, so the honest answer names that too.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "star: each device has its own cable"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Describe the four layer TCP/IP model, explaining the function of each layer and naming protocols that operate at each.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "the TCP/IP model",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The TCP/IP model divides network communication into **four layers**: **application**, **transport**, **internet** and **link**. Data being sent passes **down** through them, and data being received passes back **up**.\n\nThe **application layer** is where the **network applications themselves operate** — web browsers, email programs and similar. The protocols here are the ones a user's software speaks directly: **HTTP** for web pages, **HTTPS** for encrypted web transactions, **SMTP** for sending email, **IMAP** for retrieving it, and **FTP** for transferring files.\n\nThe **transport layer** **sets up the communication between the two hosts**, which agree settings such as the **size of packets**. Its two protocols are **TCP** and **UDP**. **TCP** provides **reliable** delivery: data is split into packets, and the protocol ensures they arrive and are reassembled **in the correct order**, re-sending anything lost. **UDP** sends packets **without those guarantees**, which makes it faster and lighter but means delivery is not assured.\n\nThe **internet layer** **addresses and packages data for transmission, and routes the packets across the network**. The protocol here is **IP**, which gives every packet its source and destination address so that routers can decide where to send it next.\n\nThe **link layer** is where the **network hardware** sits — the network interface card — along with the operating system's **device drivers**. The specification names no protocol at this layer.\n\n**Layering is used because each layer handles one job only.** This means a layer can be **changed or replaced without rewriting the ones above or below it**. Moving a laptop from a wired connection to Wi-Fi changes the **link** layer entirely, and yet the browser, the web page and the TCP connection are all unaffected — they are dealing with their own layer and rely only on the interface to the next one.\n\nIt also makes **faults easier to isolate**: a problem can be traced to a particular layer rather than to \"the network\" as a whole, and each layer can be developed and tested independently.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the four layers named"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "functions described"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "protocols placed, and why layers"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Names all four layers in the correct order.",
+          "marks": 2
+        },
+        {
+          "text": "Describes the main function of each layer.",
+          "marks": 2
+        },
+        {
+          "text": "Places the named protocols on the correct layers and explains why layering is used.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "The TCP/IP model divides network communication into **four layers**: **application**, **transport**, **internet** and **link**. Data being sent passes **down** through them, and data being received passes back **up**.\n\nThe **application layer** is where the **network applications themselves operate** — web browsers, email programs and similar. The protocols here are the ones a user's software speaks directly: **HTTP** for web pages, **HTTPS** for encrypted web transactions, **SMTP** for sending email, **IMAP** for retrieving it, and **FTP** for transferring files.\n\nThe **transport layer** **sets up the communication between the two hosts**, which agree settings such as the **size of packets**. Its two protocols are **TCP** and **UDP**. **TCP** provides **reliable** delivery: data is split into packets, and the protocol ensures they arrive and are reassembled **in the correct order**, re-sending anything lost. **UDP** sends packets **without those guarantees**, which makes it faster and lighter but means delivery is not assured.\n\nThe **internet layer** **addresses and packages data for transmission, and routes the packets across the network**. The protocol here is **IP**, which gives every packet its source and destination address so that routers can decide where to send it next.\n\nThe **link layer** is where the **network hardware** sits — the network interface card — along with the operating system's **device drivers**. The specification names no protocol at this layer.\n\n**Layering is used because each layer handles one job only.** This means a layer can be **changed or replaced without rewriting the ones above or below it**. Moving a laptop from a wired connection to Wi-Fi changes the **link** layer entirely, and yet the browser, the web page and the TCP connection are all unaffected — they are dealing with their own layer and rely only on the interface to the next one.\n\nIt also makes **faults easier to isolate**: a problem can be traced to a particular layer rather than to \"the network\" as a whole, and each layer can be developed and tested independently."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A small business is setting up a network in a new office. Discuss whether it should use wired or wireless connections and which topology it should choose, giving a justified recommendation.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "designing a network",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Wireless** would be quick and cheap to install, since there is **no cabling** to run through a new office, and staff could **move around** freely with laptops and phones. Adding a new device needs no work at all.\n\nAgainst that, wireless is generally **slower**, has a **shorter range** that walls and floors reduce further, and is more prone to **interference**. The security concern is the significant one: the signal **travels beyond the building**, so an attacker only needs to be **within range** rather than gain physical access to a cable. That makes strong **encryption** and **authentication** essential rather than optional.\n\n**Wired** connections are **faster**, more **reliable**, and more secure, because reaching the data means physically reaching the cable. The costs are the **installation work** and the loss of mobility. Within the wiring, **copper** is cheaper and perfectly adequate over the short runs inside one office, while **fibre** carries data faster and further with less signal loss and would suit a **backbone** link between floors, or the connection out to the internet.\n\n**On topology**, a **bus** network uses a **single shared backbone** and therefore the **least cable**, making it the cheaper option. But the devices **share** that cable, so performance degrades as traffic rises, and a **break in the backbone splits the network in two** — a fault that stops much of the office working and can be hard to locate.\n\nA **star** gives every device **its own cable to a central switch**. With six devices that is six cables, so it costs more. In return, a broken cable takes out **only that one device**, and performance holds up much better under load because machines are not competing for one line. Its own weakness is the **central switch**: everything connects through it, so if the switch fails, **nothing** can communicate.\n\n**Recommendation.** I would use a **wired star** network as the backbone of the office, with **Wi-Fi** added for laptops, phones and visitors.\n\nThe star is worth its extra cabling cost because a small business cannot afford a single cable fault stopping everyone, and because it scales better as the company grows. Bus topologies save money that is quickly lost to downtime. Wired connections for the fixed desktops give the speed, reliability and security the business needs for its day-to-day work.\n\nAdding **wireless alongside** rather than instead keeps the flexibility staff actually want, without the whole network depending on it. The one weakness this leaves is the **central switch**, so I would recommend keeping a **spare switch** on site — it is a cheap way to turn a day of downtime into an hour.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "wired against wireless"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "star against bus"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "justified recommendation"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Compares wired and wireless with advantages and disadvantages.",
+          "marks": 2
+        },
+        {
+          "text": "Compares star and bus topologies for this situation.",
+          "marks": 2
+        },
+        {
+          "text": "Reaches a justified recommendation, acknowledging the trade-offs.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Wireless** would be quick and cheap to install, since there is **no cabling** to run through a new office, and staff could **move around** freely with laptops and phones. Adding a new device needs no work at all.\n\nAgainst that, wireless is generally **slower**, has a **shorter range** that walls and floors reduce further, and is more prone to **interference**. The security concern is the significant one: the signal **travels beyond the building**, so an attacker only needs to be **within range** rather than gain physical access to a cable. That makes strong **encryption** and **authentication** essential rather than optional.\n\n**Wired** connections are **faster**, more **reliable**, and more secure, because reaching the data means physically reaching the cable. The costs are the **installation work** and the loss of mobility. Within the wiring, **copper** is cheaper and perfectly adequate over the short runs inside one office, while **fibre** carries data faster and further with less signal loss and would suit a **backbone** link between floors, or the connection out to the internet.\n\n**On topology**, a **bus** network uses a **single shared backbone** and therefore the **least cable**, making it the cheaper option. But the devices **share** that cable, so performance degrades as traffic rises, and a **break in the backbone splits the network in two** — a fault that stops much of the office working and can be hard to locate.\n\nA **star** gives every device **its own cable to a central switch**. With six devices that is six cables, so it costs more. In return, a broken cable takes out **only that one device**, and performance holds up much better under load because machines are not competing for one line. Its own weakness is the **central switch**: everything connects through it, so if the switch fails, **nothing** can communicate.\n\n**Recommendation.** I would use a **wired star** network as the backbone of the office, with **Wi-Fi** added for laptops, phones and visitors.\n\nThe star is worth its extra cabling cost because a small business cannot afford a single cable fault stopping everyone, and because it scales better as the company grows. Bus topologies save money that is quickly lost to downtime. Wired connections for the fixed desktops give the speed, reliability and security the business needs for its day-to-day work.\n\nAdding **wireless alongside** rather than instead keeps the flexibility staff actually want, without the whole network depending on it. The one weakness this leaves is the **central switch**, so I would recommend keeping a **spare switch** on site — it is a cheap way to turn a day of downtime into an hour."
+    }
+  ],
+  "examTechnique": {
+    "body": "Give **both** halves of the LAN/WAN difference — **area** and **ownership**. Know which layer each protocol sits on: **application** for HTTP, HTTPS, SMTP, IMAP, FTP; **transport** for TCP and UDP; **internet** for IP.\n\nSay HTTPS is **encrypted** HTTP. Name the right failure for the right topology: a star loses **one device** per broken cable, a bus **splits**.",
+    "examinerErrors": [
+      "Separating LAN from WAN by size alone.",
+      "Saying HTTPS is \"more secure\" without saying encrypted.",
+      "Treating Ethernet or Wi-Fi as a single protocol.",
+      "Using Wi-Fi as the generic term instead of WLAN.",
+      "Putting TCP on the internet layer or IP on the transport layer.",
+      "Saying a broken cable stops a whole star network.",
+      "Claiming UDP is simply worse than TCP.",
+      "Explaining layering as \"it makes it simpler\"."
+    ],
+    "grade9Looks": "A grade 9 answer gives **area and ownership** for LAN against WAN, and places every protocol on its correct layer without hesitating. It says HTTPS is **encrypted** HTTP rather than \"more secure\", and knows **Ethernet and Wi-Fi are families**, with **WLAN** as the generic term. It presents **UDP** as a **trade** — speed for guarantees — and picks the right one for a live video call against a file transfer. On topologies it names the **specific** failure of each, including that a star still has the **switch** as a single point of failure, and it explains layering by what it **enables**: a layer can change without the others, which is why moving to Wi-Fi leaves the web page untouched."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

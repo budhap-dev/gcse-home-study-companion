@@ -400,10 +400,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Databases and SQL', topicId: 'databases-and-sql' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Networking' },
-      { title: 'Cyber security threats' },
-      { title: 'Social engineering and prevention' },
-      { title: 'Ethical, legal and environmental issues' },
+      { title: 'Networking', topicId: 'networking' },
+      { title: 'Cyber security threats', topicId: 'cyber-security-threats' },
+      { title: 'Social engineering and prevention', topicId: 'social-engineering-and-prevention' },
+      { title: 'Ethical, legal and environmental issues', topicId: 'ethical-legal-and-environmental-issues' },
     ] },
   ],
   'business': [
