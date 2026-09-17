@@ -347,10 +347,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'The eye and its defects', topicId: 'the-eye-and-its-defects' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Meiosis and sexual reproduction' },
-      { title: 'DNA, genes and protein synthesis' },
-      { title: 'Inheritance and genetic diagrams' },
-      { title: 'Genetic disorders and screening' },
+      { title: 'Meiosis and sexual reproduction', topicId: 'meiosis-and-sexual-reproduction' },
+      { title: 'DNA, genes and protein synthesis', topicId: 'dna-genes-and-protein-synthesis' },
+      { title: 'Inheritance and genetic diagrams', topicId: 'inheritance-and-genetic-diagrams' },
+      { title: 'Genetic disorders and screening', topicId: 'genetic-disorders-and-screening' },
     ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Variation and natural selection' },
