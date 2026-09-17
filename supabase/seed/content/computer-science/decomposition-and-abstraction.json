@@ -1,0 +1,1116 @@
+{
+  "id": "decomposition-and-abstraction",
+  "subjectId": "computer-science",
+  "unitId": "fundamentals-of-algorithms",
+  "title": "Decomposition and abstraction",
+  "specPoints": [
+    "3.1.1"
+  ],
+  "order": 2,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Two words, two jobs",
+      "body": "**Decomposition** breaks a problem **into parts**. **Abstraction** removes **unnecessary detail**. One splits, the other strips. Mixing them up is the commonest error on this part of the specification, and the two words are worth learning as a pair."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Each sub-problem must name a task",
+      "body": "The specification says each sub-problem should accomplish an **identifiable task**. So write sub-problems as **things to do** — *mark the answers* — not as topics — *marking*. If you cannot say what it does, it is not a sub-problem yet."
+    },
+    {
+      "kind": "spot",
+      "title": "\"Unnecessary\" depends on the purpose",
+      "body": "There is no list of details that are always unnecessary. A detail is unnecessary **for a particular purpose**. Walking distance is unnecessary on an Underground map and essential on a street map, so always say what the abstraction is *for*."
+    },
+    {
+      "kind": "check",
+      "title": "Name the detail you removed",
+      "body": "An answer that says *abstraction removes unnecessary detail* repeats the definition. Naming a specific detail — *the real distances between stations* — and saying **why** it can go is what turns a definition into an explanation."
+    },
+    {
+      "kind": "remember",
+      "title": "Sub-problems can subdivide again",
+      "body": "The specification adds that a sub-problem **might itself be further subdivided**. So decomposition is not one cut into three pieces; it carries on until each part is small enough to solve directly."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Decomposition",
+        "body": "**A big problem is hard to solve. Several small ones are not.**\n\nThe specification defines it:\n\n> **Decomposition means breaking a problem into a number of sub-problems, so that each sub-problem accomplishes an identifiable task, which might itself be further subdivided.**\n\nThree things in that sentence are examined.\n\n**Breaking a problem into sub-problems.** Instead of \"write a quiz app\", you get \"ask the questions\", \"mark the answers\", \"show the result\". Each is small enough to think about on its own.\n\n**Each accomplishes an identifiable task.** A sub-problem must be something you can **say the job of**. *Mark the answers* is a task. *Marking* is a topic, and a topic is not yet a sub-problem — you cannot start work on it.\n\n**Which might itself be further subdivided.** *Mark the answers* still splits: compare the answer with the correct one, then add to the score. Decomposition keeps going until each piece is small enough to write directly.\n\n**Why it helps.** Small problems are easier to solve, easier to test, and can be worked on by different people at the same time. When something goes wrong, the fault is in one small part rather than somewhere in the whole thing.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Decomposition",
+              "boxes": [
+                {
+                  "title": "What it is",
+                  "points": [
+                    "breaking a problem into sub-problems",
+                    "the specification's own wording"
+                  ]
+                },
+                {
+                  "title": "Each sub-problem",
+                  "points": [
+                    "accomplishes an identifiable task",
+                    "something you can say the job of"
+                  ]
+                },
+                {
+                  "title": "And then",
+                  "points": [
+                    "might itself be further subdivided",
+                    "until each part is small enough"
+                  ]
+                },
+                {
+                  "title": "Why bother",
+                  "points": [
+                    "easier to solve and to test",
+                    "several people can work at once"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box summary of decomposition: what it is, what a sub-problem must be, that it subdivides again, and why it helps"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What does decomposition mean?",
+          "options": [
+            "Breaking a problem into sub-problems, each accomplishing a task",
+            "Removing the detail that is not needed for the problem",
+            "Writing an algorithm out as a program in a real language",
+            "Testing an algorithm with several different sets of data"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "defining decomposition",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Decomposition **breaks a problem into sub-problems**, each accomplishing an identifiable task. Removing unnecessary detail is **abstraction**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "breaking a problem into sub-problems"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Abstraction",
+        "body": "**The specification defines abstraction too:**\n\n> **Abstraction is the process of removing unnecessary detail from a problem.**\n\nIt does **not** break the problem up. It leaves the problem whole and throws away the parts that do not matter, so that what is left is easier to work with.\n\n**The standard example is the Underground map.** It shows which lines run where and where you can change. It does **not** show the real distances between stations, the curves of the tunnels, or where the streets are above. All of that is real, and all of it is **unnecessary for finding your route**. The map is easier to use precisely because those things are gone.\n\n**Nothing is unnecessary on its own.** A detail is unnecessary **for a purpose**. The real distances are unnecessary for choosing which train to catch, and essential for planning where to dig a new tunnel. So an abstraction is always an abstraction **for** something, and an answer that does not say what it is for is not finished.\n\n**In a program,** abstraction is why a quiz app stores a student's name and score but not their eye colour. The eye colour is real; it is nothing to do with the quiz.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "On the Underground map",
+                "Kept or removed?",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "which line goes where",
+                  "kept",
+                  "you cannot plan a route without it"
+                ],
+                [
+                  "where you can change trains",
+                  "kept",
+                  "it decides the route"
+                ],
+                [
+                  "the real distance between stations",
+                  "removed",
+                  "it does not change which train to catch"
+                ],
+                [
+                  "the curves of the tunnels",
+                  "removed",
+                  "a straight line is easier to read"
+                ],
+                [
+                  "the streets above",
+                  "removed",
+                  "nothing to do with travelling by tube"
+                ]
+              ],
+              "title": "The removed details are all real; they are simply not needed for planning a journey"
+            },
+            "alt": "A table of details on an Underground map, showing which are kept for route planning and which are removed"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "An Underground map does not show the real distances between stations. What is this an example of?",
+          "options": [
+            "Abstraction, because an unnecessary detail has been removed",
+            "Decomposition, because the journey is broken into stages",
+            "An error, because the map is not drawn accurately",
+            "An algorithm, because it is a sequence of steps"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "recognising abstraction",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Abstraction** — the distance is real, but it does not affect which train you catch, so removing it makes the map easier to use for its purpose.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "abstraction: unnecessary detail removed"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Decomposing a quiz app",
+        "body": "**Take a problem too big to start on: build an app that gives a student a quiz and tells them how they did.**",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Decompose the problem of building a quiz app.",
+            "steps": [
+              {
+                "text": "Ask what the app must **do**, and list the jobs: **ask the questions**, **mark the answers**, **show the result**",
+                "note": "three jobs, each something you could say the purpose of"
+              },
+              {
+                "text": "Check each is a **task**, not a topic: *mark the answers* is a task; *marking* would not be",
+                "note": "if you cannot say what it does, it is not a sub-problem yet"
+              },
+              {
+                "text": "Subdivide *mark the answers*: compare with the correct answer, then add one to the score",
+                "note": "the specification says a sub-problem might itself be further subdivided"
+              },
+              {
+                "text": "Subdivide the other two the same way, giving **6** small jobs in all",
+                "note": "stop when each piece is small enough to write directly"
+              },
+              {
+                "text": "Each of the 6 can now be written and **tested on its own**",
+                "note": "this is the practical payoff — a fault shows up in one small part, not somewhere in the whole app"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sub-problem",
+                "Splits into"
+              ],
+              "rows": [
+                [
+                  "Ask the questions",
+                  "show a question; read the answer"
+                ],
+                [
+                  "Mark the answers",
+                  "compare with the correct answer; add one to the score"
+                ],
+                [
+                  "Show the result",
+                  "work out the percentage; display it"
+                ]
+              ],
+              "title": "Three sub-problems, each splitting into two, giving 6 small jobs"
+            },
+            "alt": "A table showing three sub-problems of a quiz app and the two smaller jobs each splits into"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "A quiz app is split into \"ask the questions\", \"mark the answers\" and \"show the result\". Name the technique.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "recognising decomposition",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Decomposition** — the problem has been broken into sub-problems, each accomplishing an identifiable task.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "decomposition"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "decomposition",
+            "decomposing"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Telling the two apart",
+        "body": "**They are easy to confuse, and the exam asks you to name which is which.**\n\nThe question to ask is simple: **has the problem been split, or has something been thrown away?**\n\n- Split into parts → **decomposition**\n- Detail removed → **abstraction**\n\n**Worked through on one problem — a school register app:**\n\n*Breaking it into \"take the register\", \"store the marks\", \"produce a report\"* is **decomposition**. The problem is now three problems. Nothing has been discarded.\n\n*Storing each student's name and class but not their hair colour* is **abstraction**. The problem is still one problem. A detail that does not matter has gone.\n\n**They are used together, not instead of each other.** You decompose a problem into parts, and you abstract away the detail each part does not need. Neither replaces the other, and a good answer about designing a system usually mentions both.\n\n**In the exam,** a question naming one of them expects the other to be kept out of your answer. Saying *decomposition removes unnecessary detail* loses the mark outright, however good the rest of the sentence is.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "What was done",
+                "Which technique",
+                "How you can tell"
+              ],
+              "rows": [
+                [
+                  "split the app into three jobs",
+                  "decomposition",
+                  "one problem became several"
+                ],
+                [
+                  "stored name and class, not hair colour",
+                  "abstraction",
+                  "a detail was dropped"
+                ],
+                [
+                  "split \"mark the answers\" again",
+                  "decomposition",
+                  "a sub-problem was subdivided"
+                ],
+                [
+                  "drew the map with straight lines",
+                  "abstraction",
+                  "the real curves were dropped"
+                ]
+              ],
+              "title": "Split or strip — that one question settles which technique is being described"
+            },
+            "alt": "A table of four design decisions, naming the technique used in each and the reason"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "A register app stores each student's name and class but not their hair colour. Which technique is this?",
+          "options": [
+            "Abstraction",
+            "Decomposition",
+            "Both equally",
+            "Neither"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "telling the two apart",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Abstraction**: a detail has been **removed** because it is not needed. The problem has not been split into parts, so it is not decomposition.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "abstraction"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Give the specification's definition of decomposition.\n2. Give the specification's definition of abstraction.\n3. State one reason decomposing a problem helps.\n\n**Part B.**\n\n4. Name the technique: an app is split into \"take the register\", \"store the marks\" and \"produce a report\".\n5. Name the technique: a map is drawn with straight lines instead of the real curves of the tunnels.\n6. Decompose the problem \"build an app that tracks a student's homework\" into three sub-problems.\n\n**Part C.**\n\n7. Take one of your three sub-problems from question 6 and subdivide it again.\n8. A student writes *decomposition means removing detail that is not needed*. Explain what is wrong.\n9. Explain why the real distance between stations is unnecessary on an Underground map but necessary on an engineer's plan.\n\nFor question 6, write each sub-problem as a **task** — something the app does.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sub-problem",
+                "Splits into"
+              ],
+              "rows": [
+                [
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  ""
+                ],
+                [
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Write each one as a task: something the app does"
+            },
+            "alt": "A blank table for decomposing a homework-tracking app into sub-problems"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Learn the two definitions as a pair, because the exam tests the difference.** Decomposition **breaks a problem into sub-problems**; abstraction **removes unnecessary detail**. One splits, the other strips. Swapping them is the single commonest error here, and it costs the whole mark.\n\n**Write sub-problems as tasks.** The specification says each must accomplish an **identifiable task**. *Mark the answers* names a job; *marking* names a topic. The test is whether you could start work on it tomorrow.\n\n**Remember that a sub-problem might itself be further subdivided.** That clause is in the definition and is often left out of answers. Decomposition is not a single cut into three; it continues until each part is small enough to solve directly.\n\n**Always say what the abstraction is for.** No detail is unnecessary in itself. Station distances are unnecessary **for choosing a train** and essential **for digging a tunnel**. An answer that names the purpose is doing the thing the question is actually testing.\n\n**Name the detail you removed.** *Abstraction removes unnecessary detail* repeats the definition and shows nothing. *The map leaves out the real distances, because they do not change which train you catch* explains it. In an extended answer, one named example is worth more than a paragraph of definition.\n\n**Say that the two work together.** A real system is decomposed into parts, and each part abstracts away what it does not need. A question about designing a system is usually looking for both, and for the fact that they are not alternatives.\n\n**Watch for abstraction that goes too far.** Removing a detail that turns out to matter gives a model that is simple and wrong — an Underground map with the changing stations left off would be beautifully simple and useless. Judging what can go is the difficult part, not the removing.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students write",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "the definitions",
+                  "decomposition removes detail",
+                  "decomposition breaks into sub-problems"
+                ],
+                [
+                  "sub-problems",
+                  "names a topic: marking",
+                  "names a task: mark the answers"
+                ],
+                [
+                  "the definition's last clause",
+                  "stops at one level",
+                  "a sub-problem may subdivide again"
+                ],
+                [
+                  "explaining abstraction",
+                  "repeats: removes unnecessary detail",
+                  "names the detail and why it can go"
+                ],
+                [
+                  "unnecessary",
+                  "treated as a fixed property",
+                  "unnecessary for a stated purpose"
+                ],
+                [
+                  "the two together",
+                  "treats them as alternatives",
+                  "decompose, then abstract within each part"
+                ]
+              ],
+              "title": "The first row is the difference between full marks and none"
+            },
+            "alt": "A table of common errors when writing about decomposition and abstraction"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Decomposition** breaks a problem into **sub-problems**.\n- Each sub-problem must accomplish an **identifiable task**.\n- A sub-problem **might itself be further subdivided**.\n- Write a sub-problem as a **task** — *mark the answers* — not a topic.\n- Decomposing makes parts easier to **solve**, easier to **test**, and shareable between people.\n- A fault then shows up in **one small part**, not somewhere in the whole thing.\n- **Abstraction** removes **unnecessary detail** from a problem.\n- It leaves the problem whole; it does **not** split it.\n- The Underground map keeps the **lines and changes**, removes the **distances and curves**.\n- No detail is unnecessary in itself — only **unnecessary for a purpose**.\n- Always state the **purpose** an abstraction serves.\n- **Split or strip**: split is decomposition, strip is abstraction.\n- The two are used **together**, not instead of each other.\n- Abstraction taken **too far** gives a model that is simple and wrong.\n- Naming the detail removed is worth more than repeating the definition.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Decomposition",
+                  "breaking a problem into sub-problems"
+                ],
+                [
+                  "Each sub-problem",
+                  "accomplishes an identifiable task"
+                ],
+                [
+                  "And",
+                  "might itself be further subdivided"
+                ],
+                [
+                  "Written as",
+                  "a task, not a topic"
+                ],
+                [
+                  "Why",
+                  "easier to solve, test and share"
+                ],
+                [
+                  "Abstraction",
+                  "removing unnecessary detail"
+                ],
+                [
+                  "It does not",
+                  "split the problem up"
+                ],
+                [
+                  "Underground map keeps",
+                  "the lines and the changes"
+                ],
+                [
+                  "and removes",
+                  "the distances and the curves"
+                ],
+                [
+                  "Unnecessary means",
+                  "unnecessary for a stated purpose"
+                ],
+                [
+                  "Telling them apart",
+                  "split or strip"
+                ],
+                [
+                  "Used",
+                  "together, not as alternatives"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of decomposition and abstraction, their definitions and how to tell them apart"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "Complete the definition: decomposition means breaking a problem into a number of ______.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "defining decomposition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Into a number of **sub-problems**, each of which accomplishes an identifiable task.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sub-problems"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "sub-problems",
+        "smaller problems"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "Complete the definition: abstraction is the process of removing ______ detail from a problem.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "defining abstraction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Removing **unnecessary** detail — the specification's own word.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "unnecessary"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "unnecessary",
+        "unneeded",
+        "irrelevant"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "An app is split into \"take the register\", \"store the marks\" and \"produce a report\". Which technique is this?",
+      "options": [
+        "Decomposition",
+        "Abstraction",
+        "Implementation",
+        "Iteration"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "recognising decomposition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Decomposition**: one problem has become three sub-problems, each accomplishing an identifiable task.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "decomposition"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "A map is drawn with straight lines instead of the real curves of the tunnels. Which technique is this?",
+      "options": [
+        "Abstraction",
+        "Decomposition",
+        "Validation",
+        "Selection"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "recognising abstraction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Abstraction**: a real detail has been removed because it does not help anyone plan a journey.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "abstraction"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "Which is written as a sub-problem rather than a topic?",
+      "options": [
+        "Mark the answers",
+        "Marking",
+        "Answers",
+        "The marking part"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "writing sub-problems",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Mark the answers** names an identifiable **task** — something you could start work on. The other three name a topic, which is not yet a sub-problem.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "mark the answers"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "A student says decomposition means removing detail that is not needed. Name the technique they have actually described.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "telling the two apart",
+      "calculator": "either",
+      "tags": [],
+      "solution": "They have described **abstraction**. Decomposition breaks a problem into sub-problems; it removes nothing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "abstraction"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "abstraction"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "The definition of decomposition adds that a sub-problem \"might itself be further subdivided\". What does this mean?",
+      "options": [
+        "A sub-problem can be broken into smaller sub-problems in turn",
+        "Only three sub-problems are allowed at any one time",
+        "A sub-problem must be solved before the next one is written",
+        "Sub-problems must all be of exactly the same size"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "levels of decomposition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Decomposition **continues**. \"Mark the answers\" splits again into comparing with the correct answer and adding to the score, and it stops only when each part is small enough to write directly.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a sub-problem can be broken down further"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Why does decomposing a problem make it easier to test?",
+      "options": [
+        "Each small part can be tested on its own",
+        "Smaller problems cannot contain errors",
+        "Testing is only possible on sub-problems",
+        "The parts do not need testing once split"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "why decomposition helps",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each part is tested **separately**, so a fault is located in one small piece rather than somewhere in the whole system. Small parts can certainly still contain errors — they are just easier to find.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "each part can be tested on its own"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "A quiz app stores each student's name and score but not their eye colour. Name the technique.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "recognising abstraction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Abstraction**. Eye colour is real but has nothing to do with a quiz, so it is unnecessary detail and is left out.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "abstraction"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "abstraction"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Which pair correctly matches the two techniques?",
+      "options": [
+        "Decomposition splits; abstraction strips",
+        "Decomposition strips; abstraction splits",
+        "Both split the problem into parts",
+        "Both remove unnecessary detail"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "telling the two apart",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Decomposition splits** a problem into sub-problems; **abstraction strips** unnecessary detail away. Split or strip is the quickest way to decide which a question is describing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "decomposition splits, abstraction strips"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Why is the distance between stations unnecessary on an Underground map but necessary on an engineer's plan?",
+      "options": [
+        "A detail is unnecessary only for a particular purpose",
+        "Engineers use a different kind of map altogether",
+        "Distances change depending on the train being used",
+        "Passengers are not allowed to know real distances"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "purpose-dependent abstraction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Nothing is unnecessary **in itself**. Distance does not change which train a passenger catches, so it can go from their map; it decides where a tunnel is dug, so it cannot go from the engineer's. Every abstraction is an abstraction **for** something.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "unnecessary only for a particular purpose"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "What is the risk of taking abstraction too far?",
+      "options": [
+        "A detail that mattered is removed, so the model is wrong",
+        "The problem becomes impossible to decompose afterwards",
+        "The removed details can never be recovered again",
+        "Abstraction always improves a model, so there is no risk"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "limits of abstraction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Simplicity is not the goal by itself. An Underground map with the **changing stations** removed would be simpler and useless. The hard part of abstraction is judging what can go, not the removing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a detail that mattered is removed"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Which answer best explains an abstraction rather than repeating its definition?",
+      "options": [
+        "The map leaves out real distances, as they do not change which train to catch",
+        "Abstraction is the process of removing unnecessary detail from a problem",
+        "The map has had all of its unnecessary detail removed by abstraction",
+        "Unnecessary details are removed so that the map is easier to read"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "explaining an abstraction",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first answer **names the detail** and says **why** it can go. The others restate the definition in different words, which shows only that it has been learnt.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "names the detail and the reason"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "short-text",
+      "prompt": "Decomposition and abstraction are used together. Which is applied to the whole problem first — the splitting or the stripping? Answer \"splitting\" or \"stripping\".",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "using both together",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Splitting** — the problem is decomposed into parts, and then each part has the detail it does not need abstracted away. They are not alternatives: a real design uses both.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "splitting"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "accepted": [
+        "splitting",
+        "splitting first",
+        "split"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A student decomposes a problem into \"input\", \"processing\" and \"output\". Why is this a weak decomposition?",
+      "options": [
+        "They are stages of any program, so no sub-problem names a task of this one",
+        "Three sub-problems is too few for a problem of any size",
+        "Input and output are not allowed to be sub-problems",
+        "They cannot be subdivided any further than that"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "judging a decomposition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Every program has input, processing and output, so those three headings would fit **any** problem and tell you nothing about this one. A sub-problem must accomplish an **identifiable task** — *mark the answers*, not *processing*.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the parts fit any program, so name no task"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "When is a problem decomposed far enough?",
+      "options": [
+        "When each part is small enough to be solved directly",
+        "When there are exactly three sub-problems at each level",
+        "When no part can be subdivided in any way at all",
+        "When every part has the same number of steps"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "levels of decomposition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Decomposition stops being useful once each part can be **written directly**. Almost anything can be split further in principle, so the test is practical, not structural.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "when each part can be solved directly"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain the difference between decomposition and abstraction, using an example of each.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "the two techniques",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Decomposition** means **breaking a problem into a number of sub-problems, so that each sub-problem accomplishes an identifiable task**, and a sub-problem **might itself be further subdivided**.\n\nFor example, \"build a quiz app\" is too large to start on. It decomposes into three sub-problems: **ask the questions**, **mark the answers**, and **show the result**. Each names a task you could begin work on. \"Mark the answers\" then subdivides again, into comparing the student's answer with the correct one and adding to the score. The splitting continues until each part is small enough to write directly.\n\n**Abstraction** is the process of **removing unnecessary detail from a problem**. It does not split the problem up; it leaves it whole and discards what does not matter.\n\nFor example, an Underground map shows which lines run where and where you can change trains, but leaves out the real distances between stations, the curves of the tunnels and the streets above. Those details are all real. They are simply **unnecessary for planning a journey**, and leaving them out is exactly what makes the map usable.\n\n**The difference** is that decomposition **splits** and abstraction **strips**. After decomposition there are more problems than before, and nothing has been thrown away. After abstraction there is still one problem, and some of its detail has gone. Asking \"has this been split, or has something been left out?\" settles which technique a situation is describing.\n\nOne further point is that **unnecessary** is not a fixed property. The distance between stations is unnecessary to a passenger choosing a train, and essential to an engineer planning where to dig. An abstraction is always an abstraction **for a purpose**, and saying what that purpose is is part of explaining it.\n\nThe two techniques are used **together**, not as alternatives. A system is decomposed into parts, and within each part the detail that part does not need is abstracted away — the quiz app's marking component needs the student's answer and score, and has no use for their name or their eye colour.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "decomposition defined with an example"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "abstraction defined with an example"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "the difference, and used together"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Defines decomposition and gives an example.",
+          "marks": 2
+        },
+        {
+          "text": "Defines abstraction and gives an example.",
+          "marks": 2
+        },
+        {
+          "text": "Explains how the two differ and that they are used together.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Decomposition** means **breaking a problem into a number of sub-problems, so that each sub-problem accomplishes an identifiable task**, and a sub-problem **might itself be further subdivided**.\n\nFor example, \"build a quiz app\" is too large to start on. It decomposes into three sub-problems: **ask the questions**, **mark the answers**, and **show the result**. Each names a task you could begin work on. \"Mark the answers\" then subdivides again, into comparing the student's answer with the correct one and adding to the score. The splitting continues until each part is small enough to write directly.\n\n**Abstraction** is the process of **removing unnecessary detail from a problem**. It does not split the problem up; it leaves it whole and discards what does not matter.\n\nFor example, an Underground map shows which lines run where and where you can change trains, but leaves out the real distances between stations, the curves of the tunnels and the streets above. Those details are all real. They are simply **unnecessary for planning a journey**, and leaving them out is exactly what makes the map usable.\n\n**The difference** is that decomposition **splits** and abstraction **strips**. After decomposition there are more problems than before, and nothing has been thrown away. After abstraction there is still one problem, and some of its detail has gone. Asking \"has this been split, or has something been left out?\" settles which technique a situation is describing.\n\nOne further point is that **unnecessary** is not a fixed property. The distance between stations is unnecessary to a passenger choosing a train, and essential to an engineer planning where to dig. An abstraction is always an abstraction **for a purpose**, and saying what that purpose is is part of explaining it.\n\nThe two techniques are used **together**, not as alternatives. A system is decomposed into parts, and within each part the detail that part does not need is abstracted away — the quiz app's marking component needs the student's answer and score, and has no use for their name or their eye colour."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A team is designing an app that helps a student manage their homework. Explain how decomposition and abstraction would be used, and what could go wrong if either were done badly.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "applying both techniques",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Decomposition** would break the app into sub-problems, each **accomplishing an identifiable task**: **record a piece of homework**, **show what is due**, and **mark a piece as done**. Each is something the team could start work on.\n\nEach of those **subdivides further**. \"Record a piece of homework\" splits into asking for the subject, asking for the deadline, and storing the two together. \"Show what is due\" splits into finding the pieces that are not yet done, sorting them by deadline, and displaying the list. The splitting stops when each part is small enough to write directly.\n\nThe benefit is practical. Each small part can be written and **tested on its own**, different members of the team can work at the same time, and when the list comes out in the wrong order the fault is in the sorting step rather than somewhere in the whole app.\n\n**Abstraction** would then remove the detail the app does not need. For each piece of homework it would store the **subject**, the **deadline** and whether it is **done**. It would not store the teacher's room number, the colour of the exercise book, or how long the student expects the work to take — all real, none of which affects what the app must do. The reason each can go is that nothing the app does depends on it.\n\n**If the decomposition were done badly**, the parts would not name tasks. Splitting the app into \"input\", \"processing\" and \"output\" looks like a decomposition, but those are the stages of **any** program: they say nothing about homework, and no one could start work from them. Parts that overlap cause a different problem — if two sub-problems both decide what counts as \"due\", the two can disagree, and a bug appears that is not inside either part.\n\n**If the abstraction were done badly**, a detail that mattered would be thrown away. Storing the deadline as a **date only**, with no time, seems a harmless simplification until a piece is due at 9am and the app shows it as not yet overdue all day. The model is simpler and **wrong**. The risk runs the other way too: keeping everything — room numbers, book colours — makes the app harder to build and gives the student more to type for no benefit.\n\nThe difficult judgement in both cases is the same one. Deciding **what counts as a task** and **what counts as unnecessary** is where the design work actually is, and neither has a rule that can be applied without understanding the purpose the app is meant to serve.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "a decomposition into tasks"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "abstraction with a reason"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "the risks of doing either badly"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Decomposes the problem into sub-problems written as tasks.",
+          "marks": 2
+        },
+        {
+          "text": "Identifies detail that abstraction would remove, with a reason.",
+          "marks": 2
+        },
+        {
+          "text": "Explains what goes wrong when either technique is done badly.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Decomposition** would break the app into sub-problems, each **accomplishing an identifiable task**: **record a piece of homework**, **show what is due**, and **mark a piece as done**. Each is something the team could start work on.\n\nEach of those **subdivides further**. \"Record a piece of homework\" splits into asking for the subject, asking for the deadline, and storing the two together. \"Show what is due\" splits into finding the pieces that are not yet done, sorting them by deadline, and displaying the list. The splitting stops when each part is small enough to write directly.\n\nThe benefit is practical. Each small part can be written and **tested on its own**, different members of the team can work at the same time, and when the list comes out in the wrong order the fault is in the sorting step rather than somewhere in the whole app.\n\n**Abstraction** would then remove the detail the app does not need. For each piece of homework it would store the **subject**, the **deadline** and whether it is **done**. It would not store the teacher's room number, the colour of the exercise book, or how long the student expects the work to take — all real, none of which affects what the app must do. The reason each can go is that nothing the app does depends on it.\n\n**If the decomposition were done badly**, the parts would not name tasks. Splitting the app into \"input\", \"processing\" and \"output\" looks like a decomposition, but those are the stages of **any** program: they say nothing about homework, and no one could start work from them. Parts that overlap cause a different problem — if two sub-problems both decide what counts as \"due\", the two can disagree, and a bug appears that is not inside either part.\n\n**If the abstraction were done badly**, a detail that mattered would be thrown away. Storing the deadline as a **date only**, with no time, seems a harmless simplification until a piece is due at 9am and the app shows it as not yet overdue all day. The model is simpler and **wrong**. The risk runs the other way too: keeping everything — room numbers, book colours — makes the app harder to build and gives the student more to type for no benefit.\n\nThe difficult judgement in both cases is the same one. Deciding **what counts as a task** and **what counts as unnecessary** is where the design work actually is, and neither has a rule that can be applied without understanding the purpose the app is meant to serve."
+    }
+  ],
+  "examTechnique": {
+    "body": "Learn both definitions in the specification's words: decomposition **breaks a problem into sub-problems, each accomplishing an identifiable task**; abstraction **removes unnecessary detail**. **Split or strip** decides which a question is describing.\n\nWrite sub-problems as **tasks**, and when explaining an abstraction, **name the detail** removed and the **purpose** that makes it unnecessary.",
+    "examinerErrors": [
+      "Swapping the two definitions over.",
+      "Writing sub-problems as topics — *marking* rather than *mark the answers*.",
+      "Leaving out that a sub-problem might itself be further subdivided.",
+      "Explaining abstraction by repeating \"removes unnecessary detail\".",
+      "Treating \"unnecessary\" as fixed rather than tied to a purpose.",
+      "Decomposing into \"input, processing, output\", which fits any problem.",
+      "Presenting the two techniques as alternatives rather than as used together.",
+      "Assuming more abstraction is always better."
+    ],
+    "grade9Looks": "A grade 9 answer holds the two definitions apart cleanly — **split** against **strip** — and quotes the clause that a sub-problem **might itself be further subdivided**. Its sub-problems are **tasks**, so the decomposition could be acted on. When it explains an abstraction it **names the detail** removed and the **purpose** that makes it unnecessary, rather than restating the definition. It knows the two are used **together**, and it can say what goes wrong when either is done badly: parts that name no task, or a simplification that quietly makes the model wrong."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
