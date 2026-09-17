@@ -1,0 +1,1155 @@
+{
+  "id": "linear-and-binary-search",
+  "subjectId": "computer-science",
+  "unitId": "fundamentals-of-algorithms",
+  "title": "Linear and binary search",
+  "specPoints": [
+    "3.1.3",
+    "3.1.2"
+  ],
+  "order": 4,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Binary search needs a sorted list",
+      "body": "Linear search works on **any** list. Binary search only works on a list that is **already in order**, because every step assumes that everything left of the midpoint is smaller. Saying so is the single most examined fact about the two."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Halve, compare, discard",
+      "body": "Binary search is three moves repeated: go to the **middle**, compare it with the target, and **throw away the half that cannot contain it**. Naming the discarded half in your answer is what shows you understand it, rather than just knowing the word."
+    },
+    {
+      "kind": "check",
+      "title": "Count the items examined, not the loops",
+      "body": "When a question asks how many items are **checked**, count the values actually compared with the target. For the list in this topic, finding 23 takes **6** by linear search and **3** by binary — and the 3 is the answer, not the number of times round the loop."
+    },
+    {
+      "kind": "spot",
+      "title": "Doubling the list adds one step",
+      "body": "Every extra step of binary search **doubles** the list it can handle. So going from 1000 items to 2000 adds a **single** step, where linear search does twice the work. That is the comparison an efficiency question wants."
+    },
+    {
+      "kind": "remember",
+      "title": "Both must stop when it is not there",
+      "body": "Linear search stops at the **end of the list**. Binary search stops when the **range is empty** — when the low end passes the high end. An algorithm that never reports failure is wrong, and it is a common thing to leave out."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two ways to find something",
+        "body": "**A search algorithm looks for one value in a list.** The specification names two, and expects you to explain how each works, and to compare them.\n\n**Linear search** starts at the beginning and checks every item in turn until it finds the target or runs out of list. It makes **no assumption** about the order, which is its strength: it works on any list at all.\n\n**Binary search** repeatedly looks at the **middle** item, and throws away the half that cannot contain the target. It is far quicker, but it carries one hard condition:\n\n> **Binary search only works on a list that is already sorted.**\n\nThat condition is the most examined fact in the topic. Everything binary search does depends on it: if the list is not in order, \"everything to the left is smaller\" is false, and discarding half the list throws away the answer.\n\n**Both must be able to fail.** A search for something that is not there has to finish and report that. Linear search finishes when it reaches the end; binary search finishes when the range it is searching becomes empty.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "The two searches",
+              "boxes": [
+                {
+                  "title": "Linear search",
+                  "points": [
+                    "checks every item in turn",
+                    "works on any list"
+                  ]
+                },
+                {
+                  "title": "Binary search",
+                  "points": [
+                    "checks the middle, discards half",
+                    "needs a sorted list"
+                  ]
+                },
+                {
+                  "title": "When it is there",
+                  "points": [
+                    "linear: stops at the item",
+                    "binary: stops at the midpoint"
+                  ]
+                },
+                {
+                  "title": "When it is not",
+                  "points": [
+                    "linear: reaches the end",
+                    "binary: the range becomes empty"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box comparison of linear and binary search, how each works and how each finishes when the value is absent"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which condition does binary search require?",
+          "options": [
+            "The list must already be sorted",
+            "The list must contain only numbers",
+            "The list must have an even number of items",
+            "The list must be shorter than 100 items"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the condition for binary search",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Binary search discards half the list at every step, and that is only safe if the list is **sorted**: otherwise \"everything to the left is smaller\" is not true, and the half thrown away might hold the target.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the list must be sorted"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Binary search, step by step",
+        "body": "**Keep track of the range you are still searching**, as a low position and a high position. The midpoint is the item halfway between them.\n\nAt each step: compare the midpoint with the target. If it matches, stop. If the midpoint is **too small**, the target must be to the **right**, so the low end moves past the midpoint. If it is **too big**, the target is to the **left**, so the high end moves back.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "low",
+                "high",
+                "midpoint position",
+                "value there",
+                "what happens"
+              ],
+              "rows": [
+                [
+                  "0",
+                  "9",
+                  "4",
+                  "16",
+                  "too small, look right"
+                ],
+                [
+                  "5",
+                  "9",
+                  "7",
+                  "56",
+                  "too big, look left"
+                ],
+                [
+                  "5",
+                  "6",
+                  "5",
+                  "23",
+                  "found"
+                ]
+              ],
+              "title": "Searching 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 for 23: three items examined"
+            },
+            "alt": "A table tracing binary search for 23 through the sorted list, showing the low and high positions, the midpoint and the decision at each step"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find 23 in 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 using binary search.",
+            "steps": [
+              {
+                "text": "The list has 10 items, at positions 0 to 9. Start with low = 0 and high = 9",
+                "note": "positions count from 0, as they do for arrays"
+              },
+              {
+                "text": "Midpoint is $(0 + 9) \\div 2 = 4$, rounded down. Position 4 holds **16**",
+                "note": "halve and round down when the range has an even number of items"
+              },
+              {
+                "text": "16 is **smaller** than 23, so 23 must be to the right: low becomes 5",
+                "note": "everything from position 0 to 4 is discarded in one move"
+              },
+              {
+                "text": "Midpoint of 5 and 9 is 7, which holds **56**. Too big, so high becomes 6",
+                "note": "now only positions 5 and 6 are left"
+              },
+              {
+                "text": "Midpoint of 5 and 6 is 5, which holds **23** — found, after **3** items examined",
+                "note": "linear search would have checked 6 items to reach the same value"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Using binary search on 2, 5, 8, 12, 16, 23, 38, 56, 72, 91, how many items are examined to find 91?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "tracing binary search",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The midpoints examined are 16, then 56, then 72, then 91: **4** items. Each step discards the half that cannot hold 91.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "traces the midpoints 16, 56, 72"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "When the value is not there",
+        "body": "**A search must be able to report failure.** This is the half of the algorithm that gets left out of exam answers, and it is where the marks often are.\n\nLinear search is easy: it stops when it reaches the end of the list without a match.\n\nBinary search stops when the **range becomes empty** — when the low position passes the high position. There is nowhere left that the value could be hiding, because every step only discarded items that could not have held it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Search 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 for 40 using binary search.",
+            "steps": [
+              {
+                "text": "low = 0, high = 9. Midpoint 4 holds **16**, which is too small, so low becomes 5",
+                "note": "the same first step as before, because the list has not changed"
+              },
+              {
+                "text": "Midpoint of 5 and 9 is 7, holding **56**. Too big, so high becomes 6",
+                "note": "the same two steps as the successful search, because the list is unchanged"
+              },
+              {
+                "text": "Midpoint of 5 and 6 is 5, holding **23**. Too small, so low becomes 6",
+                "note": "the range is now just position 6"
+              },
+              {
+                "text": "Midpoint of 6 and 6 is 6, holding **38**. Too small, so low becomes 7",
+                "note": "low is now greater than high"
+              },
+              {
+                "text": "The range is **empty**, so 40 is **not in the list** — reported after 4 items examined",
+                "note": "linear search would have checked all 10 before reaching the same conclusion"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "How does binary search know a value is not in the list?",
+          "options": [
+            "The range becomes empty: the low position passes the high position",
+            "It reaches the last item of the list",
+            "It examines the same midpoint twice in a row",
+            "It has halved the list ten times"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "reporting failure",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Each step discards only items that **cannot** hold the target, so when the range is empty there is nowhere left to look. Reaching the end of the list is how **linear** search fails, not binary.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the range becomes empty"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Comparing them",
+        "body": "**The specification asks you to compare and contrast the two, and to explain why one is more efficient.** It also says that **only time efficiency** is examined, and that no formal notation is needed — so the comparison is made in plain words and in counts of items examined.\n\n**Linear search is slower but less demanding.** In the worst case it examines **every** item: for a list of $n$ items, $n$ checks. But it works on **any** list, sorted or not, and needs no preparation.\n\n**Binary search is far quicker but demands a sorted list.** Each step **halves** what is left, so the number of steps grows very slowly:\n\n| items in the list | steps at most |\n| --- | --- |\n| 10 | 4 |\n| 1000 | 10 |\n| 2000 | 11 |\n\n**Look at the last two rows.** Doubling the list from 1000 to 2000 costs binary search **one** extra step, while linear search does **twice** the work. That single comparison is the clearest way to answer an efficiency question.\n\n**When is linear search the better choice?** When the list is **unsorted** and would have to be sorted first, when the list is **very short**, or when items are being added and removed constantly so that keeping it sorted costs more than it saves.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Linear search",
+                "Binary search"
+              ],
+              "rows": [
+                [
+                  "needs a sorted list",
+                  "no",
+                  "yes"
+                ],
+                [
+                  "worst case on n items",
+                  "n checks",
+                  "about log₂ n checks"
+                ],
+                [
+                  "on 1000 items",
+                  "up to 1000",
+                  "at most 10"
+                ],
+                [
+                  "doubling the list",
+                  "doubles the work",
+                  "adds one step"
+                ],
+                [
+                  "best used when",
+                  "the list is short or unsorted",
+                  "the list is long and sorted"
+                ]
+              ],
+              "title": "Only time efficiency is examined, and no formal notation is required"
+            },
+            "alt": "A table comparing linear and binary search on five points, including what happens when the list doubles in size"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "A sorted list of 1000 items grows to 2000. What happens to the maximum number of items binary search examines?",
+          "options": [
+            "It increases by one",
+            "It doubles",
+            "It stays the same",
+            "It increases by ten"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "comparing efficiency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Each step halves the range, so one extra step covers **twice** as many items: 10 steps handles 1000, and 11 handles 2000. Linear search on the same change does **double** the work. That contrast is the answer an efficiency question is looking for.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it increases by one"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "Use the list **2, 5, 8, 12, 16, 23, 38, 56, 72, 91** throughout.\n\n**Part A.**\n\n1. What condition must a list meet before binary search can be used?\n2. How many items does linear search examine to find 8?\n3. Which item does binary search examine first, and why that one?\n\n**Part B.**\n\n4. Trace binary search for 72, listing every item examined.\n5. Trace binary search for 5, listing every item examined.\n6. How does each algorithm know that a value is not in the list?\n\n**Part C.**\n\n7. Explain why binary search cannot be used on an unsorted list. Give an example of what goes wrong.\n8. A sorted list holds 1 000 000 names. Estimate the largest number of items binary search would examine, and explain your reasoning.\n9. Give one situation where linear search is the better choice, and say why.\n\nFor question 8, count how many times you can halve a million before reaching one.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Search for",
+                "Items linear examines",
+                "Items binary examines"
+              ],
+              "rows": [
+                [
+                  "8",
+                  "",
+                  ""
+                ],
+                [
+                  "72",
+                  "",
+                  ""
+                ],
+                [
+                  "5",
+                  "",
+                  ""
+                ],
+                [
+                  "40 (not present)",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill both columns, then say which algorithm wins on each row and by how much"
+            },
+            "alt": "A blank table for counting the items examined by each search for four different targets"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Say why the sorted condition matters, not just that it exists.** Anyone can write *binary search needs a sorted list*. A top answer says what breaks: the algorithm discards a half on the strength of *everything to the left is smaller*, and in an unsorted list that claim is false, so the discarded half may hold the target and the search reports **not found** when the value is there.\n\n**Count items examined, not iterations.** An efficiency question asks how many **comparisons with the target** are made. Finding 23 in the list above takes **3** for binary search and **6** for linear. Answering with the number of loops, or with the length of the list, misses the point being tested.\n\n**Give the doubling comparison.** *Binary search is faster* is worth little. **Doubling the list adds one step to binary search and doubles the work for linear search** is the comparison that earns the marks, and it is exactly what \"compare the efficiency\" is asking for.\n\n**Do not overclaim.** Binary search is not always better. Sorting an unsorted list first costs more than a single linear search, and on a handful of items the difference is nothing. A question asking *which would you use* wants the **condition of the data**, not a blanket answer.\n\n**Handle failure explicitly.** Describe how each search **terminates when the value is absent** — linear at the end of the list, binary when the range empties. An algorithm with no stopping condition loops forever, and the specification asks for the mechanics of the algorithm, which includes this.\n\n**The specification limits the comparison.** It says explicitly that **only time efficiency** is examined and that **formal comparisons are not required**. So there is no need for big-O notation, and no marks for it; counts of items examined and clear English are what is wanted.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students write",
+                "What earns the marks"
+              ],
+              "rows": [
+                [
+                  "the sorted condition",
+                  "it needs a sorted list",
+                  "and why: discarding a half assumes order"
+                ],
+                [
+                  "efficiency",
+                  "binary search is faster",
+                  "doubling adds one step against twice the work"
+                ],
+                [
+                  "counting",
+                  "the number of loops",
+                  "the number of items compared with the target"
+                ],
+                [
+                  "which to use",
+                  "always binary search",
+                  "it depends on whether the list is sorted"
+                ],
+                [
+                  "failure",
+                  "left out entirely",
+                  "linear ends at the list end, binary when the range empties"
+                ],
+                [
+                  "notation",
+                  "reaches for big-O",
+                  "plain words: the spec asks for no formal comparison"
+                ]
+              ],
+              "title": "The second row is the difference between naming the faster algorithm and explaining it"
+            },
+            "alt": "A table of common errors in answering search algorithm questions"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Linear search** checks every item in turn, from the start, until it finds the target or reaches the end.\n- It works on **any** list, sorted or not, and needs no preparation.\n- **Binary search** examines the **middle** item and discards the half that cannot hold the target.\n- **Binary search only works on a sorted list** — the most examined fact in the topic.\n- Why: discarding a half assumes everything to the left is smaller, which is false if unsorted.\n- Each step: compare the midpoint, then move **low** past it or **high** back before it.\n- Finding 23 in 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 takes **3** items by binary search and **6** by linear.\n- **Linear search fails** by reaching the end of the list.\n- **Binary search fails** when the range becomes **empty**, with low past high.\n- Worst case: linear examines **n** items; binary examines about **log₂ n**.\n- 1000 items takes at most **10** steps; 2000 takes **11**.\n- **Doubling the list adds one step to binary and doubles the work for linear.**\n- Linear is the better choice on a **short** or **unsorted** list, or one that changes constantly.\n- Count **items compared with the target**, not loops.\n- The specification examines **time efficiency only**, and asks for **no formal notation**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Linear search",
+                  "every item in turn, from the start"
+                ],
+                [
+                  "Works on",
+                  "any list"
+                ],
+                [
+                  "Binary search",
+                  "middle item, discard half"
+                ],
+                [
+                  "Requires",
+                  "a sorted list"
+                ],
+                [
+                  "Why sorted",
+                  "discarding assumes order"
+                ],
+                [
+                  "Each step",
+                  "compare midpoint, move low or high"
+                ],
+                [
+                  "Finding 23",
+                  "3 by binary, 6 by linear"
+                ],
+                [
+                  "Linear fails",
+                  "at the end of the list"
+                ],
+                [
+                  "Binary fails",
+                  "when the range is empty"
+                ],
+                [
+                  "Worst case",
+                  "n against about log₂ n"
+                ],
+                [
+                  "1000 items",
+                  "at most 10 steps"
+                ],
+                [
+                  "Doubling the list",
+                  "binary +1 step, linear ×2 work"
+                ],
+                [
+                  "Use linear when",
+                  "short, unsorted, or changing"
+                ],
+                [
+                  "Count",
+                  "items compared, not loops"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of linear and binary search, their conditions, mechanics and efficiency"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "How does linear search look for a value?",
+      "options": [
+        "It checks each item in turn from the start",
+        "It checks the middle item first",
+        "It checks the last item first",
+        "It checks items at random until it finds one"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "how linear search works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Linear search starts at the beginning and checks **every item in turn** until it finds the target or reaches the end.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "each item in turn from the start"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which item does binary search examine first?",
+      "options": [
+        "The middle item",
+        "The first item",
+        "The last item",
+        "The smallest item"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "how binary search works",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Binary search starts at the **middle**, then discards whichever half cannot contain the target.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the middle item"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "What must be true of a list before binary search can be used on it?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the condition for binary search",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It must be **sorted**. Every step discards half the list on the assumption that the items are in order.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it must be sorted"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "it must be sorted",
+        "sorted",
+        "in order",
+        "the list must be in order",
+        "it must be in ascending order"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "Using linear search on 2, 5, 8, 12, 16, 23, 38, 56, 72, 91, how many items are examined to find 8?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "tracing linear search",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Linear search checks 2, then 5, then 8: **3** items.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Using binary search on 2, 5, 8, 12, 16, 23, 38, 56, 72, 91, how many items are examined to find 23?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "tracing binary search",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The midpoints are 16 (too small), 56 (too big), then 23 — **3** items. Linear search would have taken 6.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "examines 16 then 56"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "Using binary search on 2, 5, 8, 12, 16, 23, 38, 56, 72, 91, list the items examined to find 72, in order, separated by commas.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "tracing binary search",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Midpoint 16 is too small, so look right. Midpoint 56 is too small, so look right again. Midpoint 72 matches: **16, 56, 72**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "16, 56, 72"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "16, 56, 72",
+        "16 56 72"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "Using linear search on 2, 5, 8, 12, 16, 23, 38, 56, 72, 91, how many items are examined to discover that 40 is not in the list?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reporting failure",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Linear search has no way of stopping early, so it checks **all 10** items before reporting that 40 is absent.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "recognises every item must be checked"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "How does linear search know that a value is not in the list?",
+      "options": [
+        "It reaches the end of the list without a match",
+        "The range it is searching becomes empty",
+        "It finds a value larger than the target",
+        "It has checked half of the items"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reporting failure",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Linear search finishes at the **end of the list**. An empty range is how **binary** search reports failure.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it reaches the end of the list"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "A sorted list has 1000 items. What is the largest number of items binary search examines?",
+      "options": [
+        "10",
+        "100",
+        "500",
+        "1000"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "efficiency of binary search",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each step halves the range, and 1000 can be halved about **10** times before nothing is left: $2^{10} = 1024$. Linear search on the same list could examine all 1000.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "Using binary search on 2, 5, 8, 12, 16, 23, 38, 56, 72, 91, how many items are examined to discover that 40 is not in the list?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reporting failure",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The midpoints are 16, 56, 23 and 38; after that the low position passes the high position, the range is empty, and 40 is reported absent: **4** items.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "traces to an empty range"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Why can binary search not be used on an unsorted list?",
+      "options": [
+        "Discarding half assumes the items are in order, so the target may be thrown away",
+        "An unsorted list has no middle item, so there is nowhere for the search to begin",
+        "The algorithm would run correctly but would take far too long on an unsorted list",
+        "An unsorted list cannot be divided into two halves of equal length to compare"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why the condition matters",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each step throws away a half on the strength of *everything to the left is smaller*. In an unsorted list that claim is false, so the discarded half may hold the target and the search reports **not found** when the value is present.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the discarded half may contain the target"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A sorted list of 1000 names grows to 2000. How does the work change for each search?",
+      "options": [
+        "Binary search takes one more step; linear search does twice the work",
+        "Both take twice as long",
+        "Binary search takes twice as long; linear search takes one more step",
+        "Neither changes, because the list is sorted"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing efficiency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "One extra halving covers **twice** as many items, so binary search goes from 10 steps to 11. Linear search examines every item, so doubling the list **doubles** its work. This contrast is what an efficiency question is asking for.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "binary +1 step, linear doubles"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "When would linear search be the better choice?",
+      "options": [
+        "When the list is unsorted and would have to be sorted first",
+        "When the list is very long and already in order",
+        "When the list contains only numbers rather than text",
+        "When the target is known to be near the middle"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing an algorithm",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sorting a list costs more than a single linear search through it, so for a one-off search of unsorted data linear wins. It is also the sensible choice for a very short list, or one being changed constantly.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "when the list is unsorted"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A sorted list holds 1 000 000 names. What is the largest number of items binary search examines? Give your answer to the nearest whole number.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "efficiency of binary search",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Count the halvings: $2^{20} = 1\\,048\\,576$, which is just over a million, so **20** steps suffice. Linear search could examine all million. That ratio — 20 against 1 000 000 — is the strongest way to make the efficiency point.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "halves repeatedly, or uses powers of 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reaches 2²⁰ just over a million"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A student says \"binary search is always the better algorithm\". Why is that wrong?",
+      "options": [
+        "On an unsorted list, sorting it first costs more than one linear search",
+        "Binary search cannot handle lists longer than 1000 items",
+        "Binary search only works on numbers, not on words",
+        "Linear search examines fewer items on every list"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "evaluating a claim",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Binary search is only better when the list is **already sorted**. For a single search of unsorted data, sorting first is more work than simply looking through it, and on a handful of items the difference is nothing either way.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sorting first costs more than one linear search"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "An exam question asks you to compare the efficiency of the two searches. What does the specification say is examined?",
+      "options": [
+        "Time efficiency only, with no formal notation required",
+        "Both time and memory efficiency, using big-O notation",
+        "Memory efficiency only",
+        "The number of lines of code in each algorithm"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what the comparison requires",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification states that questions **refer only to time efficiency** and that **formal comparisons of algorithmic efficiency are not required**. So counts of items examined and plain English earn the marks; big-O notation earns nothing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "time efficiency only, no formal notation"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Explain how binary search works, why it requires a sorted list, and how it compares with linear search for efficiency.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "search algorithms",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Binary search finds a value in a **sorted** list by repeatedly halving the part of the list still worth searching.\n\nIt keeps track of the range under consideration, as a **low** position and a **high** position, starting at the two ends of the list. At each step it examines the item at the **midpoint** of that range and compares it with the target.\n\nIf the midpoint **matches**, the search is over. If the midpoint is **smaller** than the target, the target can only lie to the **right**, so the low position moves to just past the midpoint. If the midpoint is **larger**, the target can only lie to the **left**, so the high position moves to just before it. Either way, **half of what was left is discarded in a single step**, and the process repeats on the half that remains.\n\nSearching 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 for 23 shows it: the midpoint is 16, which is too small, so everything up to it goes; the new midpoint is 56, too big, so everything from it rightwards goes; the next midpoint is 23 itself. **Three** items examined.\n\nThe search finishes without a match when the **range becomes empty** — when the low position passes the high position. Every step discarded only items that could not have held the target, so if nothing is left, the value was never there.\n\n**The sorted condition is essential, and the reason is worth stating precisely.** Discarding a half rests entirely on the claim that *everything to the left of the midpoint is smaller and everything to the right is larger*. That claim is only true of a **sorted** list. In an unsorted list the target might sit in the half being thrown away, and the algorithm would confidently report that the value is not present when it is. It is not that binary search runs slowly on unsorted data — it returns the **wrong answer**.\n\n**On efficiency**, linear search examines every item in the worst case: $n$ checks for a list of $n$ items. Binary search halves the range each time, so it needs about $\\log_2 n$ checks — at most 10 for 1000 items, and about 20 for a million.\n\nThe sharpest way to put the comparison is what happens when the list **doubles**. Going from 1000 items to 2000 costs binary search a **single extra step**, because one more halving covers twice as much; linear search does **twice the work**. Note, though, that binary search is not always the better choice: if the list is unsorted, sorting it first costs more than one pass of linear search, so for a single search of unordered data linear search wins.",
+      "markScheme": [
+        {
+          "code": "B3",
+          "marks": 3,
+          "description": "the mechanics of binary search"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "why the list must be sorted"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "the efficiency comparison"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Describes the mechanics: examine the middle, compare, discard the half that cannot contain the target, repeat.",
+          "marks": 3
+        },
+        {
+          "text": "Explains why a sorted list is required, in terms of what discarding a half assumes.",
+          "marks": 2
+        },
+        {
+          "text": "Compares efficiency with linear search, using counts of items examined.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "Binary search finds a value in a **sorted** list by repeatedly halving the part of the list still worth searching.\n\nIt keeps track of the range under consideration, as a **low** position and a **high** position, starting at the two ends of the list. At each step it examines the item at the **midpoint** of that range and compares it with the target.\n\nIf the midpoint **matches**, the search is over. If the midpoint is **smaller** than the target, the target can only lie to the **right**, so the low position moves to just past the midpoint. If the midpoint is **larger**, the target can only lie to the **left**, so the high position moves to just before it. Either way, **half of what was left is discarded in a single step**, and the process repeats on the half that remains.\n\nSearching 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 for 23 shows it: the midpoint is 16, which is too small, so everything up to it goes; the new midpoint is 56, too big, so everything from it rightwards goes; the next midpoint is 23 itself. **Three** items examined.\n\nThe search finishes without a match when the **range becomes empty** — when the low position passes the high position. Every step discarded only items that could not have held the target, so if nothing is left, the value was never there.\n\n**The sorted condition is essential, and the reason is worth stating precisely.** Discarding a half rests entirely on the claim that *everything to the left of the midpoint is smaller and everything to the right is larger*. That claim is only true of a **sorted** list. In an unsorted list the target might sit in the half being thrown away, and the algorithm would confidently report that the value is not present when it is. It is not that binary search runs slowly on unsorted data — it returns the **wrong answer**.\n\n**On efficiency**, linear search examines every item in the worst case: $n$ checks for a list of $n$ items. Binary search halves the range each time, so it needs about $\\log_2 n$ checks — at most 10 for 1000 items, and about 20 for a million.\n\nThe sharpest way to put the comparison is what happens when the list **doubles**. Going from 1000 items to 2000 costs binary search a **single extra step**, because one more halving covers twice as much; linear search does **twice the work**. Note, though, that binary search is not always the better choice: if the list is unsorted, sorting it first costs more than one pass of linear search, so for a single search of unordered data linear search wins."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A library system stores 5000 book titles in alphabetical order. Explain which search algorithm should be used and why, including what would change if titles were added and removed constantly without keeping the list in order.",
+      "marks": 7,
+      "gradeBand": "8-9",
+      "skill": "choosing a search algorithm",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The titles are held **in alphabetical order**, which is exactly the condition binary search requires, so **binary search** is the right choice.\n\nThe gain is large. Linear search would examine up to **5000** titles in the worst case, checking each one in turn until it found the match or reached the end. Binary search halves the range at every step, so it needs at most **13** — since $2^{13} = 8192$, which is comfortably more than 5000. Thirteen comparisons against five thousand is the argument for it, and giving those two numbers is what turns *binary search is faster* into an answer worth marks.\n\nIt works because alphabetical order is an order like any other: the algorithm can compare the target with the title at the midpoint and know, with certainty, which half the target must be in. Discarding the other half is safe **only** because of that ordering.\n\n**If titles were added and removed constantly without keeping the list in order, the situation reverses.** Binary search could no longer be used at all — not because it would be slow, but because it would be **wrong**. It would discard a half on the assumption that everything to the left comes earlier alphabetically, and in an unordered list that is false, so a title that is present could be reported as missing.\n\nThe options would then be to **sort the list before searching**, or to **use linear search**. Which is better depends on how often the system searches. Sorting 5000 titles costs far more than a single pass of linear search, so for one lookup, linear search wins outright. But if the system searches many times between changes, sorting once and then using binary search repeatedly would pay for itself.\n\nThe practical answer for a library is to **keep the list sorted as titles are added and removed**, inserting each new title in its correct place rather than at the end. That keeps the cost of maintaining order small and spread out, and preserves the ability to search 5000 titles in 13 comparisons.",
+      "markScheme": [
+        {
+          "code": "B3",
+          "marks": 3,
+          "description": "binary search, justified by efficiency"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "the sorted condition is what allows it"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "what changes when the order is lost"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Chooses binary search for the sorted list and justifies it with counts of items examined.",
+          "marks": 3
+        },
+        {
+          "text": "Explains that the alphabetical order is what makes it possible.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that an unordered list forces linear search, or a sort first, and weighs the cost.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "The titles are held **in alphabetical order**, which is exactly the condition binary search requires, so **binary search** is the right choice.\n\nThe gain is large. Linear search would examine up to **5000** titles in the worst case, checking each one in turn until it found the match or reached the end. Binary search halves the range at every step, so it needs at most **13** — since $2^{13} = 8192$, which is comfortably more than 5000. Thirteen comparisons against five thousand is the argument for it, and giving those two numbers is what turns *binary search is faster* into an answer worth marks.\n\nIt works because alphabetical order is an order like any other: the algorithm can compare the target with the title at the midpoint and know, with certainty, which half the target must be in. Discarding the other half is safe **only** because of that ordering.\n\n**If titles were added and removed constantly without keeping the list in order, the situation reverses.** Binary search could no longer be used at all — not because it would be slow, but because it would be **wrong**. It would discard a half on the assumption that everything to the left comes earlier alphabetically, and in an unordered list that is false, so a title that is present could be reported as missing.\n\nThe options would then be to **sort the list before searching**, or to **use linear search**. Which is better depends on how often the system searches. Sorting 5000 titles costs far more than a single pass of linear search, so for one lookup, linear search wins outright. But if the system searches many times between changes, sorting once and then using binary search repeatedly would pay for itself.\n\nThe practical answer for a library is to **keep the list sorted as titles are added and removed**, inserting each new title in its correct place rather than at the end. That keeps the cost of maintaining order small and spread out, and preserves the ability to search 5000 titles in 13 comparisons."
+    }
+  ],
+  "examTechnique": {
+    "body": "Say **how** the algorithm works, not just what it is called: for binary search, examine the middle, compare, and **discard the half that cannot contain the target**.\n\nThe sorted condition needs its reason attached. For efficiency, count **items compared with the target**, and reach for the doubling comparison — one extra step against twice the work.",
+    "examinerErrors": [
+      "Saying binary search needs a sorted list without saying **why**.",
+      "Answering an efficiency question with *binary search is faster* and nothing more.",
+      "Counting loops rather than items compared with the target.",
+      "Leaving out how each search reports that a value is **absent**.",
+      "Claiming binary search is always better, ignoring the cost of sorting first.",
+      "Reaching for big-O notation, which the specification says is not required.",
+      "Starting binary search at the first item rather than the middle.",
+      "Forgetting that positions count from 0 when tracing."
+    ],
+    "grade9Looks": "A grade 9 answer explains **why** the sorted condition matters — that discarding a half assumes order, so an unsorted list makes the search return the **wrong answer**, not merely a slow one. It counts **items compared**, and makes the efficiency point with the **doubling** comparison rather than a vague claim of speed. It describes how each search **terminates when the value is absent**, and it refuses to say binary search is always better, weighing the cost of sorting against how many searches will follow."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

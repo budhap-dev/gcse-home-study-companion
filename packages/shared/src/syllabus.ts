@@ -360,10 +360,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
   ],
   'computer-science': [
     { year: 9, term: 'Autumn', topics: [
-      { title: 'Problem solving' },
-      { title: 'Decomposition and abstraction' },
-      { title: 'Flow charts and pseudo-code' },
-      { title: 'Linear and binary search' },
+      { title: 'Problem solving', topicId: 'problem-solving-and-algorithms' },
+      { title: 'Decomposition and abstraction', topicId: 'decomposition-and-abstraction' },
+      { title: 'Flow charts and pseudo-code', topicId: 'flow-charts-and-pseudo-code' },
+      { title: 'Linear and binary search', topicId: 'linear-and-binary-search' },
     ] },
     { year: 9, term: 'Spring', topics: [
       { title: 'Data types and operators', topicId: 'data-types-and-operators' },

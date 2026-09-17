@@ -1,0 +1,1213 @@
+{
+  "id": "flow-charts-and-pseudo-code",
+  "subjectId": "computer-science",
+  "unitId": "fundamentals-of-algorithms",
+  "title": "Flow charts and pseudo-code",
+  "specPoints": [
+    "3.1.1"
+  ],
+  "order": 3,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Four symbols, and the shape is the meaning",
+      "body": "A **rounded box** starts or stops. A **rectangle** is a process. A **parallelogram** is input or output. A **diamond** is a decision. The shape carries the meaning, so drawing the wrong one says the wrong thing however good the label is."
+    },
+    {
+      "kind": "check",
+      "title": "Every decision needs two labelled exits",
+      "body": "A diamond with one arrow out is not a decision. Both paths must leave it and both must be **labelled** — usually Yes and No. An unlabelled exit is the most common way to lose a mark on a flowchart question."
+    },
+    {
+      "kind": "spot",
+      "title": "A loop is an arrow going back up",
+      "body": "Iteration in a flowchart is a **decision with an arrow returning to an earlier box**. If you cannot find an arrow pointing upwards, the algorithm has no loop in it, whatever the labels say."
+    },
+    {
+      "kind": "shortcut",
+      "title": "You may answer in any sensible format",
+      "body": "Pseudo-code you are **given** will be AQA's own version, so you must be able to read it. But when pseudo-code is an accepted response, the specification says you **do not have to use AQA pseudo-code** — any clear, consistent notation is accepted."
+    },
+    {
+      "kind": "remember",
+      "title": "Read the question for the form wanted",
+      "body": "The specification says exam questions **indicate the form of response expected** — pseudo-code, program code, or a flowchart. Answering in the wrong form is not a partial answer; it is the wrong answer, and it is entirely avoidable."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Three ways to write an algorithm",
+        "body": "**An algorithm is a sequence of steps that can be followed to complete a task.** The specification is careful to add that **a computer program is an implementation of an algorithm, and an algorithm is not a computer program** — the algorithm is the plan, and the program is one way of carrying it out.\n\nThe specification names **three** ways of representing one:\n\n- **pseudo-code** — code-like text that no computer runs\n- **program code** — a real language, such as Python, C# or VB.NET\n- **a flowchart** — boxes and arrows\n\n**Each suits a different job.** A flowchart shows the *shape* of an algorithm at a glance, especially its branches and loops. Pseudo-code is quicker to write and closer to code. Program code actually runs but ties you to one language.\n\n**Two things about the exam are worth knowing exactly.**\n\n> **Any exam question where students are given pseudo-code will use the AQA standard version.**\n\nSo you must be able to **read** AQA pseudo-code. But:\n\n> **Where pseudo-code is an accepted method of response, students may present their answers in any suitable format and do not need to use the AQA pseudo-code.**\n\nSo you do not have to **write** it. And the specification also says questions **indicate the form of response expected**, so read the question and give the form it asks for.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Representing an algorithm",
+              "boxes": [
+                {
+                  "title": "Pseudo-code",
+                  "points": [
+                    "code-like text, nothing runs it",
+                    "quick to write and to change"
+                  ]
+                },
+                {
+                  "title": "Program code",
+                  "points": [
+                    "a real language that runs",
+                    "ties the answer to one language"
+                  ]
+                },
+                {
+                  "title": "Flowchart",
+                  "points": [
+                    "boxes and arrows",
+                    "shows branches and loops at a glance"
+                  ]
+                },
+                {
+                  "title": "In the exam",
+                  "points": [
+                    "given: always AQA pseudo-code",
+                    "answering: any suitable format"
+                  ]
+                }
+              ]
+            },
+            "alt": "A four-box summary of the three ways to represent an algorithm and what the exam expects of each"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What is the difference between an algorithm and a program?",
+          "options": [
+            "An algorithm is the sequence of steps; a program is one implementation of it",
+            "An algorithm runs on a computer and a program does not",
+            "An algorithm is written in pseudo-code and a program in a flowchart",
+            "There is no difference between the two terms"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "algorithm against program",
+          "calculator": "either",
+          "tags": [],
+          "solution": "An algorithm is **a sequence of steps that can be followed to complete a task**. A program is an **implementation** of one, in a particular language. The same algorithm can be implemented many times over.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the algorithm is the steps; the program implements them"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "The four flowchart symbols",
+        "body": "**A flowchart carries its meaning in the shapes**, so each one has a job:\n\n| Symbol | Shape | Used for |\n| --- | --- | --- |\n| terminal | rounded box | START and STOP |\n| process | rectangle | a calculation or an assignment |\n| input/output | parallelogram | INPUT and OUTPUT |\n| decision | diamond | a question with two answers |\n\n**Arrows join them, and they show the order of the steps.**\n\n**A decision is the one with a rule attached: it must have exactly two exits, and both must be labelled** — normally **Yes** and **No**. A diamond with a single arrow leaving it is not a decision at all, and a pair of unlabelled exits leaves the reader guessing which is which.\n\n**Every flowchart starts and stops with a terminal.** An algorithm that never stops is a fault, not a style.\n\n**Watch the difference between a process and an input/output.** Working something out is a **process** — a rectangle. Getting a value from the user, or showing one to them, is **input/output** — a parallelogram. `n ← n * 2` is a process; `OUTPUT n` is not.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "flowchart",
+            "props": {
+              "nodes": [
+                {
+                  "kind": "terminal",
+                  "text": "START"
+                },
+                {
+                  "kind": "process",
+                  "text": "n ← 1"
+                },
+                {
+                  "kind": "decision",
+                  "text": "n < 50?",
+                  "yes": "Yes",
+                  "no": "No"
+                }
+              ]
+            },
+            "alt": "A short flowchart showing the rounded terminal START, a rectangular process box setting n to 1, and a diamond decision asking whether n is less than 50"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Symbol",
+                "Shape",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "terminal",
+                  "rounded box",
+                  "START, STOP"
+                ],
+                [
+                  "process",
+                  "rectangle",
+                  "n ← n * 2"
+                ],
+                [
+                  "input/output",
+                  "parallelogram",
+                  "INPUT age, OUTPUT total"
+                ],
+                [
+                  "decision",
+                  "diamond",
+                  "n < 50?"
+                ]
+              ],
+              "title": "A decision has exactly two exits and both carry a label"
+            },
+            "alt": "A table of the four flowchart symbols, the shape each takes and an example of what goes inside it"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "Which symbol is used for a decision?",
+          "options": [
+            "A diamond",
+            "A rectangle",
+            "A parallelogram",
+            "A rounded box"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the flowchart symbols",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A **diamond** marks a decision, and it must have **two labelled exits**. A rectangle is a process, a parallelogram input or output, and a rounded box a terminal.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a diamond"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "The same algorithm, both ways",
+        "body": "**A flowchart and pseudo-code can say exactly the same thing.** Being able to move between them is what the specification means by representing algorithms.\n\nThe algorithm below starts at 1, doubles until it reaches 50 or more, and outputs the result. Notice how each part of the flowchart maps onto a line of the pseudo-code.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "flowchart",
+            "props": {
+              "nodes": [
+                {
+                  "kind": "terminal",
+                  "text": "START"
+                },
+                {
+                  "kind": "process",
+                  "text": "n ← 1"
+                },
+                {
+                  "kind": "decision",
+                  "text": "n < 50?",
+                  "yes": "Yes",
+                  "no": "No"
+                },
+                {
+                  "kind": "process",
+                  "text": "n ← n * 2"
+                },
+                {
+                  "kind": "io",
+                  "text": "OUTPUT n"
+                },
+                {
+                  "kind": "terminal",
+                  "text": "STOP"
+                }
+              ],
+              "loop": {
+                "from": 3,
+                "to": 2
+              }
+            },
+            "alt": "A full flowchart: START, set n to 1, a decision asking if n is less than 50; the Yes path doubles n and returns to the decision, and the No path leads past it to OUTPUT n and STOP"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Write the flowchart above as AQA pseudo-code.",
+            "steps": [
+              {
+                "text": "The terminal boxes are not written: pseudo-code simply begins and ends",
+                "note": "START and STOP exist to make a flowchart readable, not as instructions"
+              },
+              {
+                "text": "The first process box becomes an assignment:\n\n```\nn ← 1\n```",
+                "note": "AQA uses a left arrow for assignment, not an equals sign"
+              },
+              {
+                "text": "The decision with a loop back becomes a WHILE:\n\n```\nWHILE n < 50\n   n ← n * 2\nENDWHILE\n```",
+                "note": "a decision whose Yes path returns to an earlier box is indefinite iteration"
+              },
+              {
+                "text": "The parallelogram becomes an output:\n\n```\nOUTPUT n\n```",
+                "note": "the parallelogram is the giveaway that this is output, not a calculation"
+              },
+              {
+                "text": "Putting it together gives the whole algorithm, and it outputs **64**",
+                "note": "the loop stops at the first value that is 50 or more"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "A flowchart has a decision whose Yes path leads back to an earlier box. Which pseudo-code structure does that represent?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "reading a loop in a flowchart",
+          "calculator": "either",
+          "tags": [],
+          "solution": "An arrow going **back** to an earlier box is **iteration** — a loop. Because the decision controls how many times it runs, it is **indefinite** iteration, written as a WHILE.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a loop"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "a loop",
+            "iteration",
+            "while",
+            "a while loop",
+            "indefinite iteration"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Tracing it",
+        "body": "**Tracing is how you work out what an algorithm does, and it is examined directly.** Take one column per variable, plus the condition and any output, and a new row each time a value changes.\n\nNever skip a row. The exam gives marks for the intermediate values, not only the final answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "n",
+                "n < 50",
+                "output"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "True",
+                  ""
+                ],
+                [
+                  "2",
+                  "True",
+                  ""
+                ],
+                [
+                  "4",
+                  "True",
+                  ""
+                ],
+                [
+                  "8",
+                  "True",
+                  ""
+                ],
+                [
+                  "16",
+                  "True",
+                  ""
+                ],
+                [
+                  "32",
+                  "True",
+                  ""
+                ],
+                [
+                  "64",
+                  "False",
+                  "64"
+                ]
+              ],
+              "title": "Doubling from 1 until n reaches 50 or more"
+            },
+            "alt": "A trace table for the doubling algorithm, showing n at each pass, whether the condition still held, and the final output"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Trace the algorithm and give its output.",
+            "steps": [
+              {
+                "text": "n starts at **1**. The condition $1 < 50$ is **True**, so the loop body runs",
+                "note": "check the condition before the body, because WHILE tests first"
+              },
+              {
+                "text": "n doubles to 2, then 4, 8, 16, 32 — each time the condition is still True",
+                "note": "one row per change, even though the step is the same every time"
+              },
+              {
+                "text": "n doubles to **64**. Now $64 < 50$ is **False**",
+                "note": "64 is the first value at or above 50, so the loop ends here"
+              },
+              {
+                "text": "The loop ends and **OUTPUT 64** runs once",
+                "note": "the output is outside the loop, so it happens only after the loop finishes"
+              },
+              {
+                "text": "The answer is **64**, not 32",
+                "note": "the loop body runs one last time before the condition is re-tested, which is where 32 tempts people"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "An algorithm sets n to 1 and doubles it while n < 50, then outputs n. What is output?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "tracing a loop",
+          "calculator": "either",
+          "tags": [],
+          "solution": "n goes 1, 2, 4, 8, 16, 32, then **64**. At 32 the condition is still true, so it doubles once more; at 64 it fails and the loop ends. The output is **64**, not 32.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "doubles past 32"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "64"
+            }
+          ],
+          "discriminators": [],
+          "answer": 64,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Name the four flowchart symbols and say what each is used for.\n2. What shape is used for a decision, and how many exits must it have?\n3. Give the difference between an algorithm and a program.\n\n**Part B.**\n\n4. Draw a flowchart that inputs a number, doubles it, and outputs the result.\n5. Write that algorithm as pseudo-code.\n6. Trace the doubling algorithm from this topic and give its output.\n\n**Part C.**\n\n7. A flowchart has a diamond with one arrow leaving it. Explain what is wrong.\n8. Draw a flowchart for: input a number; if it is 10 or more output \"big\", otherwise output \"small\".\n9. An exam question asks for a flowchart and a student answers in Python. Explain what mark this earns and why.\n\nFor question 8, both paths must rejoin or both must end.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part of the algorithm",
+                "Flowchart symbol",
+                "Pseudo-code"
+              ],
+              "rows": [
+                [
+                  "getting a value from the user",
+                  "",
+                  ""
+                ],
+                [
+                  "working out a new value",
+                  "",
+                  ""
+                ],
+                [
+                  "asking a question",
+                  "",
+                  ""
+                ],
+                [
+                  "showing a result",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Fill both columns for each row"
+            },
+            "alt": "A blank table matching parts of an algorithm to their flowchart symbol and pseudo-code"
+          }
+        ]
+      },
+      {
+        "id": "s6",
+        "kind": "grade-9",
+        "title": "Going deeper",
+        "body": "**Label both exits of every decision.** A diamond with unlabelled arrows is the commonest fault in a drawn flowchart, and it costs a mark every time. Yes and No, or True and False — either is fine, but they must be there.\n\n**Get the shape right, because the shape is the statement.** Putting `OUTPUT total` in a rectangle says it is a calculation. Putting `n ← n * 2` in a parallelogram says the user typed it. The label cannot rescue the wrong shape.\n\n**Answer in the form the question names.** The specification says exam questions **indicate the form of response expected**. A flowchart drawn where pseudo-code was asked for is not a near miss — it does not answer the question.\n\n**Know which way round the two pseudo-code rules go.** Pseudo-code you are **given** is always AQA's version, so reading it is not optional. Pseudo-code you **write** may be in any suitable format — the specification says so explicitly. Students often believe the opposite and waste time worrying about exact syntax.\n\n**An algorithm must terminate.** Every flowchart needs a STOP, and every loop needs something that eventually makes its condition false. A loop whose variable never changes inside it runs forever, and spotting that in someone else's algorithm is a grade 9 observation.\n\n**Trace with a table, not in your head.** One column per variable, plus the condition and the output, and a row for every change. The marks are in the intermediate values, and a wrong final answer with a correct trace still earns most of them.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The trap",
+                "What students do",
+                "What is correct"
+              ],
+              "rows": [
+                [
+                  "decisions",
+                  "one arrow out, or two unlabelled",
+                  "exactly two exits, both labelled"
+                ],
+                [
+                  "symbols",
+                  "a rectangle for OUTPUT",
+                  "a parallelogram for input and output"
+                ],
+                [
+                  "form of answer",
+                  "draws a flowchart when asked for code",
+                  "gives the form the question names"
+                ],
+                [
+                  "AQA pseudo-code",
+                  "thinks they must write it exactly",
+                  "must read it; may answer in any format"
+                ],
+                [
+                  "loops",
+                  "no way for the condition to become false",
+                  "something in the body changes the variable"
+                ],
+                [
+                  "tracing",
+                  "works it out in their head",
+                  "a row for every change, in a table"
+                ]
+              ],
+              "title": "The fourth row is the one that causes needless worry in the exam"
+            },
+            "alt": "A table of common errors in flowchart and pseudo-code questions"
+          }
+        ]
+      },
+      {
+        "id": "s7",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- An **algorithm** is a sequence of steps that completes a task; a **program implements** one.\n- Three representations: **pseudo-code**, **program code**, and a **flowchart**.\n- **Terminal** (rounded box): START and STOP.\n- **Process** (rectangle): a calculation or an assignment.\n- **Input/output** (parallelogram): INPUT and OUTPUT.\n- **Decision** (diamond): a question with **exactly two labelled exits**.\n- Arrows show the order; an arrow **back up** is a loop.\n- Every flowchart **starts and stops** with a terminal.\n- AQA writes assignment with a **left arrow**: `n ← 1`.\n- A decision that loops back is **indefinite iteration**, written **WHILE**.\n- Pseudo-code you are **given** is always **AQA's version** — you must be able to read it.\n- Pseudo-code you **write** may be in **any suitable format**.\n- Questions **indicate the form of response expected**; give that form.\n- **Trace with a table**: one column per variable, a row for every change.\n- A loop needs something in its body that can make the condition **false**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Algorithm",
+                  "a sequence of steps"
+                ],
+                [
+                  "Program",
+                  "an implementation of an algorithm"
+                ],
+                [
+                  "Terminal",
+                  "rounded box: START, STOP"
+                ],
+                [
+                  "Process",
+                  "rectangle: a calculation"
+                ],
+                [
+                  "Input/output",
+                  "parallelogram"
+                ],
+                [
+                  "Decision",
+                  "diamond, two labelled exits"
+                ],
+                [
+                  "Arrow back up",
+                  "a loop"
+                ],
+                [
+                  "Assignment",
+                  "n ← 1"
+                ],
+                [
+                  "Decision that loops",
+                  "WHILE"
+                ],
+                [
+                  "Given pseudo-code",
+                  "always AQA's version"
+                ],
+                [
+                  "Your pseudo-code",
+                  "any suitable format"
+                ],
+                [
+                  "Form of answer",
+                  "the one the question names"
+                ],
+                [
+                  "Tracing",
+                  "a row for every change"
+                ],
+                [
+                  "Every loop needs",
+                  "a way for the condition to fail"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of the flowchart symbols, pseudo-code conventions and what the exam expects"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which flowchart symbol is a rounded box?",
+      "options": [
+        "Terminal, for START and STOP",
+        "Process, for a calculation",
+        "Decision, for a question",
+        "Input/output, for INPUT and OUTPUT"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the flowchart symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **rounded box** is a terminal: it marks where the algorithm **starts and stops**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "terminal"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which symbol would hold `OUTPUT total`?",
+      "options": [
+        "A parallelogram",
+        "A rectangle",
+        "A diamond",
+        "A rounded box"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the flowchart symbols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Input and output use a **parallelogram**. A rectangle would say it was a calculation, which output is not.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a parallelogram"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "How many exits must a decision symbol have?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "decisions in a flowchart",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Exactly **2**, one for each answer to the question, and both must be labelled — normally Yes and No.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "What does an arrow that goes back to an earlier box in a flowchart represent?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a loop",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An arrow going **back** is **iteration** — a loop. It is the only way a flowchart shows something happening more than once.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a loop"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "a loop",
+        "iteration",
+        "repetition",
+        "a while loop"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "What does the specification say about pseudo-code you are **given** in an exam?",
+      "options": [
+        "It will always be the AQA standard version",
+        "It will be in whichever language you have studied",
+        "It will always be Python",
+        "It may be in any format the examiner chooses"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "what the exam expects",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification states that **any exam question where students are given pseudo-code will use the AQA standard version**. So reading AQA pseudo-code is a skill you need.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the AQA standard version"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "When pseudo-code is an accepted response, what does the specification allow?",
+      "options": [
+        "Any suitable format; AQA pseudo-code is not required",
+        "Only AQA pseudo-code, written exactly",
+        "Only the language of the paper you are sitting",
+        "Only a flowchart instead"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "what the exam expects",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification says students **may present their answers in any suitable format and do not need to use the AQA pseudo-code**. You must be able to **read** it; you are not obliged to **write** it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "any suitable format"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "An algorithm sets n to 1 and doubles it while n < 50, then outputs n. What is output?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "tracing a loop",
+      "calculator": "either",
+      "tags": [],
+      "solution": "n takes 1, 2, 4, 8, 16, 32, 64. At 32 the condition is still true so it doubles again; at **64** it fails. The output is 64.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "traces past 32"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "64"
+        }
+      ],
+      "discriminators": [],
+      "answer": 64,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "Write the AQA pseudo-code for assigning the value 1 to a variable called n.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "AQA assignment",
+      "calculator": "either",
+      "tags": [],
+      "solution": "AQA writes assignment with a **left arrow**: `n ← 1`. An equals sign is used for comparison, not for assignment.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n ← 1"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "n ← 1",
+        "n <- 1"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Which is an advantage of a flowchart over pseudo-code?",
+      "options": [
+        "Branches and loops can be seen at a glance",
+        "It can be run directly by a computer",
+        "It is always shorter to produce",
+        "It works for only one programming language"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "comparing representations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A flowchart makes the **shape** of an algorithm visible — where it branches and where it loops. It is not runnable, and it is usually slower to draw than pseudo-code is to write.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "branches and loops are visible at a glance"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "An algorithm sets t to 0, then for each of the numbers 3, 5 and 8 adds it to t. What is t at the end?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "tracing a total",
+      "calculator": "either",
+      "tags": [],
+      "solution": "t goes 0, then 3, then 8, then **16**. A trace table with one row per addition makes this immediate.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds each number in turn"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [],
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A flowchart has a diamond with a single arrow leaving it. What is wrong?",
+      "options": [
+        "A decision must have two exits, one for each answer",
+        "A diamond may not be used for a decision",
+        "The arrow should point upwards instead",
+        "A decision may not follow a process box"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "diagnosing a flowchart fault",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A decision asks a question with **two** possible answers, so it needs **two labelled exits**. With one exit the question has no effect, and the diamond is doing nothing that a rectangle could not do.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a decision needs two labelled exits"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "An exam question says \"draw a flowchart\" and a student writes Python. What mark does this earn?",
+      "options": [
+        "Little or none: the question names the form of response expected",
+        "Full marks, since any suitable format is allowed",
+        "Half marks, because the algorithm is still correct",
+        "Full marks if the Python runs correctly"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "answering in the right form",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification says exam questions **indicate the form of response expected**. The freedom to answer in any suitable format applies **where pseudo-code is an accepted response** — it does not override a question that asks for a flowchart.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "little or none: the form was specified"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "A loop's body never changes the variable in its condition. What happens?",
+      "options": [
+        "The loop never ends, because the condition can never become false",
+        "The loop runs exactly once and then carries on to the next instruction",
+        "The loop is skipped entirely and the algorithm moves past it",
+        "The program reports an error and refuses to run the algorithm"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why a loop terminates",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A WHILE loop re-tests its condition each pass. If nothing inside can change the result, the condition stays true forever and the algorithm **never terminates** — which means it is not a valid algorithm at all.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it never ends"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "short-text",
+      "prompt": "Give one reason a trace table is better than working an algorithm out in your head.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why trace",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A trace table records **every intermediate value**, so a slip is visible and the marks for the working survive even when the final answer is wrong. Held in the head, one wrong step loses everything.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it shows the intermediate values"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "accepted": [
+        "it shows the intermediate values",
+        "marks are given for the working",
+        "it records every change",
+        "you can see where it goes wrong",
+        "it is easier to check"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "Why does putting `OUTPUT total` in a rectangle lose a mark?",
+      "options": [
+        "The shape says it is a calculation, not output",
+        "Rectangles may only hold a single variable",
+        "Output must always be the last box in a flowchart",
+        "A rectangle may not follow a decision"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "symbols carry meaning",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In a flowchart the **shape is the statement**. A rectangle means a process — something being worked out. Output is communication with the user, which is what the **parallelogram** is for, and the label cannot override the shape.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the shape says process, not output"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Which pair correctly describes the exam rules on AQA pseudo-code?",
+      "options": [
+        "You must be able to read it; you may write answers in any suitable format",
+        "You must be able to write it; you will never be given it to read",
+        "You must both read and write it exactly as published",
+        "It is optional to read and forbidden to write"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what the exam expects",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The two rules point in opposite directions and both matter. **Given** pseudo-code is always AQA's version, so reading it is required. **Written** answers may be in any suitable format. Believing you must reproduce AQA syntax exactly causes needless anxiety in the exam.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "read it; write in any suitable format"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "Describe the four flowchart symbols and what each is used for, and explain how a flowchart shows selection and iteration.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "representing algorithms",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A flowchart represents an algorithm as a set of boxes joined by arrows, and **the shape of each box carries its meaning**.\n\nA **terminal** is a rounded box, and it marks where the algorithm **starts and stops**. Every flowchart has one at each end, because an algorithm that never finishes is not a valid algorithm.\n\nA **process** is a rectangle, used for a calculation or an assignment — something the algorithm works out for itself, such as `n ← n * 2`.\n\nAn **input/output** box is a parallelogram, used when a value comes **from** the user or is shown **to** them: `INPUT age`, `OUTPUT total`. The distinction from a process matters, because putting output in a rectangle claims it is a calculation.\n\nA **decision** is a diamond, holding a question with two possible answers, such as `n < 50?`.\n\n**Selection** is shown by the decision symbol. The diamond has **exactly two exits**, and both must be **labelled** — normally Yes and No. Each exit leads to a different sequence of boxes, so the path the algorithm takes depends on the answer to the question. The two paths may later rejoin, or each may run to its own STOP. A diamond with only one exit is not selection at all: the question has no effect on what happens next.\n\n**Iteration** is shown by an **arrow that goes back to an earlier box**. The algorithm reaches a decision, and one of its exits returns to a step that has already been carried out, so that step runs again. The loop ends when the decision takes the other exit. This is the only way a flowchart shows something happening more than once, so if there is no upward arrow, there is no loop.\n\nFor a loop to end, something **inside** it must be able to change the answer to the decision. A loop whose body never touches the variable in its condition runs forever.",
+      "markScheme": [
+        {
+          "code": "B3",
+          "marks": 3,
+          "description": "the four symbols"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "selection"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "iteration"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Names all four symbols with the shape and purpose of each.",
+          "marks": 3
+        },
+        {
+          "text": "Explains selection: a decision with two labelled exits leading to different steps.",
+          "marks": 2
+        },
+        {
+          "text": "Explains iteration: an arrow returning to an earlier box.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "A flowchart represents an algorithm as a set of boxes joined by arrows, and **the shape of each box carries its meaning**.\n\nA **terminal** is a rounded box, and it marks where the algorithm **starts and stops**. Every flowchart has one at each end, because an algorithm that never finishes is not a valid algorithm.\n\nA **process** is a rectangle, used for a calculation or an assignment — something the algorithm works out for itself, such as `n ← n * 2`.\n\nAn **input/output** box is a parallelogram, used when a value comes **from** the user or is shown **to** them: `INPUT age`, `OUTPUT total`. The distinction from a process matters, because putting output in a rectangle claims it is a calculation.\n\nA **decision** is a diamond, holding a question with two possible answers, such as `n < 50?`.\n\n**Selection** is shown by the decision symbol. The diamond has **exactly two exits**, and both must be **labelled** — normally Yes and No. Each exit leads to a different sequence of boxes, so the path the algorithm takes depends on the answer to the question. The two paths may later rejoin, or each may run to its own STOP. A diamond with only one exit is not selection at all: the question has no effect on what happens next.\n\n**Iteration** is shown by an **arrow that goes back to an earlier box**. The algorithm reaches a decision, and one of its exits returns to a step that has already been carried out, so that step runs again. The loop ends when the decision takes the other exit. This is the only way a flowchart shows something happening more than once, so if there is no upward arrow, there is no loop.\n\nFor a loop to end, something **inside** it must be able to change the answer to the decision. A loop whose body never touches the variable in its condition runs forever."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "An algorithm inputs a number, doubles it while it is below 100, and outputs the result. Describe how you would represent this as a flowchart and as pseudo-code, and explain which form you would give in an exam.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "moving between representations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**As a flowchart**, the algorithm has five boxes joined by arrows.\n\nIt opens with a **terminal** — a rounded box holding START. An arrow leads to a **parallelogram** holding `INPUT n`, because the value comes from the user rather than being worked out.\n\nNext comes a **diamond** asking `n < 100?`. This is the decision that controls the loop, and it needs **two labelled exits**. The **Yes** exit leads to a **rectangle** holding `n ← n * 2`, which is a process because the algorithm calculates it. From that rectangle an arrow goes **back up** to the diamond, and that returning arrow is what makes it a loop.\n\nThe **No** exit leads to a **parallelogram** holding `OUTPUT n`, then to a final **terminal** holding STOP.\n\n**As pseudo-code**, the same algorithm is four lines:\n\n```\nn ← INPUT\nWHILE n < 100\n   n ← n * 2\nENDWHILE\nOUTPUT n\n```\n\nThe assignment uses a **left arrow**, which is AQA's notation. The decision-with-a-loop-back becomes a **WHILE**, because the number of repetitions is not known in advance — it depends on the number the user types. The indentation shows what is inside the loop, and `ENDWHILE` closes it.\n\nNotice that the terminals have no equivalent in the pseudo-code. START and STOP exist to make a flowchart readable; the code simply begins at its first line and ends at its last.\n\n**Which form to give in an exam is not a choice.** The specification says questions **indicate the form of response expected** — pseudo-code, program code, or a flowchart — so the answer is whichever the question names. Where pseudo-code **is** the accepted response, there is real freedom: the specification allows any suitable format and does not require AQA's own version. But that freedom is about **notation**, not about substituting a flowchart for code, or code for a flowchart.",
+      "markScheme": [
+        {
+          "code": "B3",
+          "marks": 3,
+          "description": "the flowchart"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the pseudo-code"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "answering in the named form"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Describes the flowchart with the correct symbol for each step.",
+          "marks": 3
+        },
+        {
+          "text": "Gives the pseudo-code with a loop and correct assignment.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that the question names the form expected.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**As a flowchart**, the algorithm has five boxes joined by arrows.\n\nIt opens with a **terminal** — a rounded box holding START. An arrow leads to a **parallelogram** holding `INPUT n`, because the value comes from the user rather than being worked out.\n\nNext comes a **diamond** asking `n < 100?`. This is the decision that controls the loop, and it needs **two labelled exits**. The **Yes** exit leads to a **rectangle** holding `n ← n * 2`, which is a process because the algorithm calculates it. From that rectangle an arrow goes **back up** to the diamond, and that returning arrow is what makes it a loop.\n\nThe **No** exit leads to a **parallelogram** holding `OUTPUT n`, then to a final **terminal** holding STOP.\n\n**As pseudo-code**, the same algorithm is four lines:\n\n```\nn ← INPUT\nWHILE n < 100\n   n ← n * 2\nENDWHILE\nOUTPUT n\n```\n\nThe assignment uses a **left arrow**, which is AQA's notation. The decision-with-a-loop-back becomes a **WHILE**, because the number of repetitions is not known in advance — it depends on the number the user types. The indentation shows what is inside the loop, and `ENDWHILE` closes it.\n\nNotice that the terminals have no equivalent in the pseudo-code. START and STOP exist to make a flowchart readable; the code simply begins at its first line and ends at its last.\n\n**Which form to give in an exam is not a choice.** The specification says questions **indicate the form of response expected** — pseudo-code, program code, or a flowchart — so the answer is whichever the question names. Where pseudo-code **is** the accepted response, there is real freedom: the specification allows any suitable format and does not require AQA's own version. But that freedom is about **notation**, not about substituting a flowchart for code, or code for a flowchart."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Match the shape to the job**: rounded for START and STOP, rectangle for a calculation, parallelogram for input and output, diamond for a decision with **two labelled exits**.\n\nRead the question for the **form of response** it names. You must be able to **read** AQA pseudo-code, but you may **write** your answer in any suitable format.",
+    "examinerErrors": [
+      "A decision with one exit, or two exits left unlabelled.",
+      "Putting `OUTPUT` in a rectangle instead of a parallelogram.",
+      "Answering in a different form from the one the question named.",
+      "Believing AQA pseudo-code must be reproduced exactly when writing an answer.",
+      "Leaving out the STOP terminal.",
+      "Writing assignment with `=` instead of the left arrow `←`.",
+      "A loop whose body cannot change the condition, so it never ends.",
+      "Tracing in the head and losing the marks for the intermediate values."
+    ],
+    "grade9Looks": "A grade 9 answer treats the **shape as the statement**, and never puts output in a process box. Every decision it draws has **two labelled exits**, and every flowchart **stops**. It knows the two pseudo-code rules point in opposite directions — **given** code is always AQA's version, **written** answers may be in any suitable format — and it gives the form the question actually names. When tracing, it builds a **table with a row for every change**, so the working earns marks even if the final value slips."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

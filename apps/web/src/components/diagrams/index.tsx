@@ -47,6 +47,7 @@ import { Cuboid } from './Cuboid.tsx'
 import { BoxPlot } from './BoxPlot.tsx'
 import { CumulativeFrequency } from './CumulativeFrequency.tsx'
 import { FrequencyTree } from './FrequencyTree.tsx'
+import { Flowchart } from './Flowchart.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -102,6 +103,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'box-plot': BoxPlot,
   'cumulative-frequency': CumulativeFrequency,
   'frequency-tree': FrequencyTree,
+  'flowchart': Flowchart,
 }
 
 export const INK = '#1e2330'
