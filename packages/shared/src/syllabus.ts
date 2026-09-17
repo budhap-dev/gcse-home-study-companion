@@ -425,11 +425,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Making marketing decisions', topicId: 'making-marketing-decisions' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Making operational decisions' },
-      { title: 'Making financial decisions' },
+      { title: 'Making operational decisions', topicId: 'making-operational-decisions' },
+      { title: 'Making financial decisions', topicId: 'making-financial-decisions' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Making human resource decisions' },
+      { title: 'Making human resource decisions', topicId: 'making-human-resource-decisions' },
     ] },
   ],
   'french': [
