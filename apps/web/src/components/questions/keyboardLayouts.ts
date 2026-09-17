@@ -26,8 +26,11 @@ const DOWN = { label: '&#8595;', command: 'moveDown', class: 'action', tooltip: 
 
 /** A fraction, entered as a fraction: a bar, a numerator, and a denominator to move down to. */
 const FRACTION = { latex: '\\frac{#0}{#?}', tooltip: 'fraction' } as const
-const POWER = { latex: '#0^{#?}', tooltip: 'to the power of' } as const
-const SQUARED = { latex: '#0^2', tooltip: 'squared' } as const
+// `#@` is the selection or, with nothing selected, the atom before the caret. `#0` is the
+// selection or nothing, so with the caret after a 2 the power key made an empty base and the
+// next digit went into it: pressing 2, xⁿ, 6 produced 26^() rather than 2^6.
+const POWER = { latex: '#@^{#?}', tooltip: 'to the power of' } as const
+const SQUARED = { latex: '#@^2', tooltip: 'squared' } as const
 const ROOT = { latex: '\\sqrt{#0}', tooltip: 'square root' } as const
 const TIMES_TEN = { latex: '\\times 10^{#?}', tooltip: 'times ten to the power of' } as const
 
