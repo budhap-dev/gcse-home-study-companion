@@ -9,6 +9,7 @@ import { StatusIcon } from '../../components/StatusChip.tsx'
 import { emptyState, type ProgressState } from '../../progress/store.ts'
 import { parentSummary, type ParentSummary } from '../../progress/summary.ts'
 import { AssignPanel } from './Assign.tsx'
+import { TopicBreakdown } from './TopicBreakdown.tsx'
 
 export interface Child {
   email: string
@@ -108,6 +109,10 @@ function Shell({ children }: { children: React.ReactNode }) {
 
 export function ChildReport({ child, summary }: { child: Child; summary: ParentSummary }) {
   const s = summary
+  // One topic open at a time, inline: the answer to "how did that go" belongs next to the
+  // row that raised the question, not on a separate screen.
+  const [openTopic, setOpenTopic] = useState<string | null>(null)
+  const toggle = (id: string) => setOpenTopic((cur) => (cur === id ? null : id))
   const goalPct = s.goalMinutes > 0 ? Math.round((100 * s.weekMinutes) / s.goalMinutes) : 0
   const gap = s.daysSinceActive
   return (
@@ -133,12 +138,16 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
         ) : (
           <ul className="flex flex-col gap-1.5">
             {s.stuck.map((x) => (
-              <li key={x.topicId} className="flex items-center justify-between gap-3 rounded-lg border border-rule bg-surface px-3 py-2 text-sm">
-                <Link to={`/subjects/${x.subjectId}/topics/${x.topicId}`} className="inline-block min-w-0 py-1 font-bold text-ink underline">{x.title}</Link>
-                <span className="shrink-0 text-right text-ink-2">
-                  {x.reason === 'low-score' ? <>scored <strong className="tabular-nums text-ink">{x.pct}%</strong></> : 'lesson read, no quiz yet'}
-                  <span className="text-ink-3"> · {x.subjectName}</span>
+              <li key={x.topicId} className="flex flex-col rounded-lg border border-rule bg-surface px-3 py-2 text-sm">
+                <span className="flex items-center justify-between gap-3">
+                  <button type="button" onClick={() => toggle(x.topicId)} aria-expanded={openTopic === x.topicId}
+                    className="min-w-0 py-1 text-left font-bold text-ink underline">{x.title}</button>
+                  <span className="shrink-0 text-right text-ink-2">
+                    {x.reason === 'low-score' ? <>scored <strong className="tabular-nums text-ink">{x.pct}%</strong></> : 'lesson read, no quiz yet'}
+                    <span className="text-ink-3"> · {x.subjectName}</span>
+                  </span>
                 </span>
+                {openTopic === x.topicId && child.state && <TopicBreakdown topicId={x.topicId} state={child.state} />}
               </li>
             ))}
           </ul>
@@ -182,9 +191,16 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
         {s.recent.length === 0 ? <p className="text-sm text-ink-2">Nothing finished yet.</p> : (
           <ul className="flex flex-col gap-1.5">
             {s.recent.map((a) => (
-              <li key={a.id} className="flex items-center justify-between gap-3 rounded-lg border border-rule bg-surface px-3 py-2 text-sm">
-                <span className="min-w-0">{s.subjects.length > 0 && <TopicName topicId={a.topicId} />}<span className="text-ink-2"> · {a.kind === 'quiz' ? 'Quiz' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`} · {day(a.completedAt)}</span></span>
-                <strong className="shrink-0 tabular-nums">{Math.round((100 * a.marksScored) / a.marksAvailable)}%</strong>
+              <li key={a.id} className="flex flex-col rounded-lg border border-rule bg-surface px-3 py-2 text-sm">
+                <span className="flex items-center justify-between gap-3">
+                  <span className="min-w-0">
+                    <button type="button" onClick={() => toggle(a.topicId)} aria-expanded={openTopic === a.topicId}
+                      className="py-1 text-left font-bold text-ink underline">{TOPIC_INDEX.get(a.topicId)?.title ?? a.topicId}</button>
+                    <span className="text-ink-2"> · {a.kind === 'quiz' ? 'Quiz' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`} · {day(a.completedAt)}</span>
+                  </span>
+                  <strong className="shrink-0 tabular-nums">{Math.round((100 * a.marksScored) / a.marksAvailable)}%</strong>
+                </span>
+                {openTopic === a.topicId && child.state && <TopicBreakdown topicId={a.topicId} state={child.state} />}
               </li>
             ))}
           </ul>
@@ -199,11 +215,6 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
   )
 }
 
-function TopicName({ topicId }: { topicId: string }) {
-  const topic = TOPIC_INDEX.get(topicId)
-  if (!topic) return <span>{topicId}</span>
-  return <Link to={`/subjects/${topic.subjectId}/topics/${topicId}`} className="inline-block py-1 font-bold text-ink underline">{topic.title}</Link>
-}
 
 /** The average is over the last ten quizzes, and the trend needs six to mean anything. */
 function quizNote(s: ParentSummary): string {

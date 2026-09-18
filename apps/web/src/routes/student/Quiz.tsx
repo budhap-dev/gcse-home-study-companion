@@ -1,4 +1,4 @@
-import { emojiForScore, getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
+import { describeAnswer, emojiForScore, getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Celebration } from '../../components/Celebration.tsx'
@@ -121,7 +121,7 @@ export function Quiz() {
     const before = getState()
     const previous = before.attempts.filter((a) => a.topicId === topic.id && a.kind === 'quiz').sort((a, b) => b.completedAt.localeCompare(a.completedAt))[0]
     const previousPct = previous ? Math.round((100 * previous.marksScored) / previous.marksAvailable) : undefined
-    const questionResults = results.map(({ q, r }) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct }))
+    const questionResults = results.map(({ q, r }) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct, answer: describeAnswer(q, state.answers[q.id]?.answer) }))
     const xp = xpForQuestions(questionResults)
     recordAttempt({
       id: state.attemptId,
