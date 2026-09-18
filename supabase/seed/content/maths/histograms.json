@@ -30,6 +30,48 @@
       "body": "Write the **class widths** in their own column before working out any density. Every height divides by that number, and having them all written down stops the commonest error of all: dividing by the upper bound instead of by the width of the class."
     }
   ],
+  "why": {
+    "matters": "A histogram looks like a bar chart and is not one. In a bar chart the height is the frequency; in a histogram the **area** is. That single difference is the whole topic.\n\nIt matters because real data almost never arrives in equal groups. Ages, incomes, house prices and waiting times all get reported in bands that are narrow at one end and wide at the other, and the moment the bands are uneven, height stops telling the truth. Frequency density is what puts it back.",
+    "examples": [
+      {
+        "title": "The chart that flatters the wide band",
+        "body": "A report groups 786 people by age: 120 aged under 10, 96 from 10 to 18, 470 from 18 to 65, and 100 over 65.\n\nPlot those as heights and the 18–65 bar towers over everything — 470 against 120. It looks as though the population is overwhelmingly adult in a way the other bars cannot touch.\n\nBut that band is 47 years wide and the first is 10. Divide to get people per year and the ranking reverses: 12 a year under 10, 12 a year for teenagers, and only 10 a year through the whole of adulthood. The crowded years are the early ones.\n\nNothing was made up. The wide bar simply had 47 years to accumulate people in, and drawing frequency as height gave it credit for all of them at once.",
+        "visual": {
+          "type": "diagram",
+          "component": "histogram",
+          "props": {
+            "bars": [
+              {
+                "from": 0,
+                "to": 10,
+                "frequency": 120
+              },
+              {
+                "from": 10,
+                "to": 18,
+                "frequency": 96
+              },
+              {
+                "from": 18,
+                "to": 65,
+                "frequency": 470
+              },
+              {
+                "from": 65,
+                "to": 90,
+                "frequency": 100
+              }
+            ],
+            "xLabel": "age (years)",
+            "yLabel": "people per year",
+            "highlight": 2,
+            "title": "Drawn properly: area is the number of people"
+          },
+          "alt": "A histogram of four age bands of very different widths, drawn with frequency density so the wide adult band is a long low bar and the narrow childhood bands are short but taller"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

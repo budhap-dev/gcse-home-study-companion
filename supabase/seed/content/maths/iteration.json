@@ -30,6 +30,49 @@
       "body": "A formula written $x_{n+1} = \\ldots x_n \\ldots$ is asking you to **iterate**, not to solve. Spotting that subscript means you reach for the **ANS** key and a starting value rather than trying to rearrange, which is where time gets lost on these questions."
     }
   ],
+  "why": {
+    "matters": "Most equations cannot be solved exactly. Not \"are hard to\" — **cannot be**, in the sense that no rearranging will ever isolate $x$, and no formula exists to be looked up.\n\nIteration is what mathematics does instead: guess, improve the guess with a rule, repeat until the answer stops changing. It feels like a poor substitute for solving and it is the opposite. Nearly every number a computer gives you — a square root, a sine, the load on a bridge, tomorrow's weather — arrived this way.",
+    "examples": [
+      {
+        "title": "What your calculator does for a root",
+        "body": "Press the square root button and nothing looks anything up. There is no table inside. The calculator guesses and improves, using a rule that is 2000 years old: to find $\\sqrt{2}$, take a guess $x$ and replace it with the average of $x$ and $\\tfrac{2}{x}$.\n\nStart at 1, which is a bad guess. One step gives 1.500000000. The next gives 1.416666667, then 1.414215686, then 1.414213562 — and that last one is right to every digit the calculator will show you.\n\n4 steps. The reason it converges so fast is worth seeing: if the guess is too small then $\\tfrac{2}{x}$ is too big, so the true root is always trapped between them and averaging closes the gap from both sides at once.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Step",
+              "Guess"
+            ],
+            "rows": [
+              [
+                "0",
+                "1.000000000"
+              ],
+              [
+                "1",
+                "1.500000000"
+              ],
+              [
+                "2",
+                "1.416666667"
+              ],
+              [
+                "3",
+                "1.414215686"
+              ],
+              [
+                "4",
+                "1.414213562"
+              ]
+            ],
+            "title": "Averaging x with 2/x, four times"
+          },
+          "alt": "A table of four iteration steps starting from one, showing the guess settling on one point four one four two one three five six two, the square root of two"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
