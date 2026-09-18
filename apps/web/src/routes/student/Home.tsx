@@ -1,5 +1,6 @@
 import { BADGES, SUBJECTS, factOfTheDay, type SubjectId } from '@study/shared'
 import { SectionLabel } from '../../components/KindChip.tsx'
+import { SetForYou } from '../../components/AssignedTasks.tsx'
 import { useAuth } from '../../auth/useAuth.ts'
 import { useState } from 'react'
 import { levelBySubject, totalXp } from '../../progress/xp.ts'
@@ -57,6 +58,9 @@ export function Home() {
           </p>
         </div>
       </section>
+
+      {/* Above Next up: a task somebody asked for outranks one the app suggested. */}
+      <SetForYou />
 
       {next ? (
         <section className="flex flex-col gap-2">
