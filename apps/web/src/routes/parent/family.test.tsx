@@ -35,11 +35,14 @@ describe('the parent report', () => {
     expect(html).toContain('Across all 2')
   })
 
-  it('names the topic that is going badly and links to it', () => {
+  it('names the topic that is going badly, as a control that opens its breakdown', () => {
     // Two attempts, because a skill needs more than one data point to be called weak.
     const state = { ...emptyState(), attempts: [quiz('surds', 30, '2026-09-14'), quiz('surds', 40, '2026-09-15')] }
     const html = render(state)
-    expect(html).toContain('/subjects/maths/topics/surds')
+    // A button rather than a link: the answer to "how did that go" opens in place, and a
+    // link would have sent the parent to the student's own topic page instead.
+    expect(html).toContain('aria-expanded="false"')
+    expect(html).toContain('Surds')
     expect(html).toContain('40%')
     expect(html).toContain('Weakest skills')
     expect(html).toContain('rationalising denominators')

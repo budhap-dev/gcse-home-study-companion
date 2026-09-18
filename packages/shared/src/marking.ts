@@ -220,3 +220,67 @@ export function mark(question: Question, answer: unknown): MarkResult {
     }
   }
 }
+
+/** The longest answer kept on a record. Enough for any GCSE answer, bounded for storage. */
+const ANSWER_LIMIT = 200
+
+/**
+ * What the student gave, written out so a person can read it back later.
+ *
+ * Stored as **text** rather than as the raw answer. For a multiple choice question the
+ * raw answer is an index into the options, and an index outlives the thing it points at:
+ * if the question is ever re-generated with its options in a different order, a stored
+ * index silently starts describing a different answer, while stored text still says what
+ * was chosen. The same argument applies to an ordering question's items.
+ *
+ * Returns undefined when there is nothing meaningful to keep — an extended answer is
+ * self-assessed against a mark scheme rather than typed in.
+ */
+export function describeAnswer(question: Question, answer: unknown): string | undefined {
+  const clip = (s: string) => (s.length > ANSWER_LIMIT ? `${s.slice(0, ANSWER_LIMIT - 1)}…` : s)
+  switch (question.type) {
+    case 'multiple-choice': {
+      if (!Array.isArray(answer)) return undefined
+      const picked = (answer as number[]).map((i) => question.options[i]).filter((o): o is string => typeof o === 'string')
+      return picked.length ? clip(picked.join(', ')) : undefined
+    }
+    case 'ordering': {
+      if (!Array.isArray(answer)) return undefined
+      const order = (answer as number[]).map((i) => question.items[i]).filter((o): o is string => typeof o === 'string')
+      return order.length ? clip(order.join(' → ')) : undefined
+    }
+    case 'numeric':
+    case 'short-text':
+    case 'labelling': {
+      const text = typeof answer === 'string' ? answer.trim()
+        : Array.isArray(answer) ? answer.filter((x) => typeof x === 'string' || typeof x === 'number').join(', ')
+        : ''
+      return text ? clip(text) : undefined
+    }
+    default:
+      return undefined
+  }
+}
+
+/**
+ * The answer a question was looking for, written out so it can be shown beside what the
+ * student gave. Not the mark scheme and not the worked solution — just the answer, which
+ * is what somebody comparing the two needs first.
+ */
+export function expectedAnswer(question: Question): string | undefined {
+  switch (question.type) {
+    case 'multiple-choice':
+      return question.correct.map((i) => question.options[i]).filter((o): o is string => typeof o === 'string').join(', ') || undefined
+    case 'ordering':
+      return question.items.join(' → ')
+    case 'numeric':
+      return question.units ? `${question.answer} ${question.units}` : String(question.answer)
+    case 'short-text':
+      return question.accepted[0]
+    case 'labelling':
+      return question.labels.map((l) => l.text).join(', ')
+    default:
+      // An extended answer is judged against criteria, so there is no single right answer.
+      return undefined
+  }
+}

@@ -12,6 +12,12 @@ export interface QuestionResult {
   marksScored: number
   marksAvailable: number
   correct: boolean
+  /**
+   * What the student actually answered, written out as text. Absent on attempts made
+   * before this was recorded, and on extended questions, which are self-assessed rather
+   * than typed in, so every reader has to cope with it being missing.
+   */
+  answer?: string
 }
 
 export interface AttemptRecord {

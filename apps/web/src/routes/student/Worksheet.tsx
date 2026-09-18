@@ -1,4 +1,4 @@
-import { getSubject, mark, type MarkResult, type Question, type WorksheetLevel } from '@study/shared'
+import { describeAnswer, getSubject, mark, type MarkResult, type Question, type WorksheetLevel } from '@study/shared'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -179,7 +179,7 @@ export function Worksheet() {
   const finish = () => {
     const finishedAt = new Date().toISOString()
     const before = getState()
-    const questionResults = questions.map((q) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: scored(q), marksAvailable: q.marks, correct: scored(q) === q.marks }))
+    const questionResults = questions.map((q) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: scored(q), marksAvailable: q.marks, correct: scored(q) === q.marks, answer: describeAnswer(q, state.answers[q.id]?.answer) }))
     const extendedCount = questions.filter((q) => q.type === 'extended').length
     const selfMarked = questions.some((q) => (q.type === 'extended' ? true : state.answers[q.id]?.methodMarks !== undefined && !state.answers[q.id]?.result.correct))
     const xp = xpForQuestions(questionResults)

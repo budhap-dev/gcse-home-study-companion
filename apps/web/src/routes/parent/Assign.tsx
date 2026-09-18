@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { SUBJECTS, type SubjectId } from '@study/shared'
 import { SectionLabel } from '../../components/KindChip.tsx'
+import { Choice } from '../../components/Choice.tsx'
 import { AssignedCard } from '../../components/AssignedTasks.tsx'
 import { topicsForSubject, yearsForSubject } from '../../content/index.ts'
 import { TopicPicker, pickableTopics } from './TopicPicker.tsx'
@@ -94,37 +95,16 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
 
       <form onSubmit={(e) => void submit(e)} className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <label className="flex flex-col gap-1 text-sm">
-            <span className="font-bold">Subject</span>
-            <select value={subjectId} onChange={(e) => setSubjectId(e.target.value as SubjectId)} className={field}>
-              {SUBJECTS_WITH_CONTENT.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
-          </label>
-          <label className="flex flex-col gap-1 text-sm">
-            <span className="font-bold">Year</span>
-            <select value={year ?? ''} onChange={(e) => setYear(e.target.value ? Number(e.target.value) : undefined)} className={field}>
-              <option value="">All years</option>
-              {years.map((y) => <option key={y} value={y}>Year {y}</option>)}
-            </select>
-          </label>
+          <Choice label="Subject" value={subjectId} onChange={setSubjectId}
+            options={SUBJECTS_WITH_CONTENT.map((s) => ({ value: s.id, label: s.name }))} />
+          <Choice label="Year" value={year ?? 0} onChange={(y) => setYear(y === 0 ? undefined : y)}
+            options={[{ value: 0, label: 'All years' }, ...years.map((y) => ({ value: y, label: `Year ${y}` }))]} />
           <TopicPicker subjectId={subjectId} state={childState} kind={kind} level={kind === 'worksheet' ? level : undefined} year={year} value={topicId} onChange={setTopicId} />
-          <label className="flex flex-col gap-1 text-sm">
-            <span className="font-bold">Activity</span>
-            <select value={kind} onChange={(e) => setKind(e.target.value as Assignment['kind'])} className={field}>
-              <option value="lesson">Lesson</option>
-              <option value="quiz">Quiz</option>
-              <option value="worksheet">Worksheet</option>
-            </select>
-          </label>
+          <Choice label="Activity" value={kind} onChange={(k) => setKind(k as Assignment['kind'])}
+            options={[{ value: 'lesson', label: 'Lesson' }, { value: 'quiz', label: 'Quiz' }, { value: 'worksheet', label: 'Worksheet' }]} />
           {kind === 'worksheet' && (
-            <label className="flex flex-col gap-1 text-sm">
-              <span className="font-bold">Level</span>
-              <select value={level} onChange={(e) => setLevel(e.target.value as typeof level)} className={field}>
-                <option value="core">Core</option>
-                <option value="higher">Higher</option>
-                <option value="advanced">Advanced</option>
-              </select>
-            </label>
+            <Choice label="Level" value={level} onChange={(l) => setLevel(l as typeof level)}
+              options={[{ value: 'core', label: 'Core' }, { value: 'higher', label: 'Higher' }, { value: 'advanced', label: 'Advanced' }]} />
           )}
           <label className="flex flex-col gap-1 text-sm">
             <span className="font-bold">Start <span className="font-normal text-ink-2">(optional)</span></span>

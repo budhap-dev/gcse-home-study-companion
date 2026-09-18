@@ -27,6 +27,10 @@
   --highlight: color-mix(in srgb, var(--color-status-developing) 38%, var(--color-surface));
 }
 
+/* Declared here as well as by applyTheme, which only runs once the bundle has loaded.
+   Without it the first paint takes the operating system's preference, so a device in dark
+   mode draws light-theme pages with dark native controls until the JS catches up. */
+:root { color-scheme: light; }
 html { background: var(--color-paper); color: var(--color-ink); }
 body { background-image: var(--bg-pattern, none); background-size: var(--bg-size, auto); background-attachment: fixed; }
 body { margin: 0; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
