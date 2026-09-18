@@ -32,6 +32,60 @@
       "body": "If the subject is on the bottom of a fraction or inside a root, deal with that **before** anything else: multiply both sides out, or square both sides. Clearing the awkward structure first turns the rest into ordinary rearranging with no traps left in it."
     }
   ],
+  "why": {
+    "matters": "A formula arrives written for somebody else's question. Rearranging is how you make it answer yours.\n\nThat is the whole of it, and it is worth saying plainly because the topic can feel like moving symbols for the sake of it. **The quantity you can measure is usually not the quantity you want.** You can read a voltage and a current off a meter but not a resistance; you can time a fall but not measure a height directly. Changing the subject is the step between what you can get and what you need.",
+    "examples": [
+      {
+        "title": "The same fact, two ways round",
+        "body": "$C = \\tfrac{5}{9}(F - 32)$ converts Fahrenheit to Celsius, and $F = \\tfrac{9}{5}C + 32$ goes the other way. These are not two facts. They are one relationship with the subject changed, and the second is what you get by rearranging the first.\n\nSo 20°C is 68°F, and 212°F is 100°C, and body temperature is about 37°C. Rearranging is also the quickest route to the odd fact that $-40$ is the one reading the two scales agree on: set $C = F$ and solve, and there is only one answer.\n\nAnyone writing a weather app stores the relationship once and rearranges it as needed. Storing two formulas and hoping they stay consistent is how bugs happen.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              -60,
+              40
+            ],
+            "yRange": [
+              -60,
+              110
+            ],
+            "xStep": 20,
+            "yStep": 20,
+            "grid": true,
+            "xLabel": "degrees C",
+            "yLabel": "degrees F",
+            "lines": [
+              {
+                "m": 1.8,
+                "c": 32,
+                "label": "F = 9C/5 + 32"
+              },
+              {
+                "m": 1,
+                "c": 0,
+                "label": "F = C",
+                "dashed": true
+              }
+            ],
+            "points": [
+              {
+                "x": -40,
+                "y": -40,
+                "label": "both read -40",
+                "labelBelow": true
+              }
+            ]
+          },
+          "alt": "Two straight lines on the same axes, the Fahrenheit conversion and the line where the two scales would be equal, crossing at minus forty degrees where both scales give the same reading"
+        }
+      },
+      {
+        "title": "Measuring what the meter cannot",
+        "body": "A multimeter reads volts and amps easily. Resistance is harder to measure directly, and in a live circuit you often cannot.\n\nBut $V = IR$ relates all three, so rearranging to $R = \\tfrac{V}{I}$ turns two easy measurements into the hard one: 12 V across a component drawing 0.5 A means 24 ohms.\n\nThis is the pattern behind most of the rearranging you will ever do. Nobody rearranges a formula for fun — they do it because the version they were given is the wrong way round for the measurement they can actually take."
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

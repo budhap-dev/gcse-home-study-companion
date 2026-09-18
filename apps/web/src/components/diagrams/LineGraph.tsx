@@ -13,6 +13,12 @@ interface Point {
   x: number
   y: number
   label?: string
+  /**
+   * Put the label under the point rather than over it. A label sits above by default,
+   * which is where the lines usually are at a crossing, so the text ends up with a line
+   * drawn through it. Set this when the clear space is below.
+   */
+  labelBelow?: boolean
 }
 /** y = amplitude x the named function of x, with x measured in degrees. */
 interface Wave {
@@ -295,7 +301,12 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         <g key={`p${i}`}>
           <circle cx={sx(p.x)} cy={sy(p.y)} r="4.5" fill="#fff" stroke={INK} strokeWidth="2" />
           {/* A point in the right half labels to its left, so the text stays inside the chart. */}
-          {p.label && <text x={sx(p.x) + (sx(p.x) > W / 2 ? -8 : 8)} y={clear(sx(p.x) + (sx(p.x) > W / 2 ? -8 : 8), sy(p.y) - 8, p.label, 12, sx(p.x) > W / 2)} textAnchor={sx(p.x) > W / 2 ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>}
+          {p.label && (() => {
+            const left = sx(p.x) > W / 2
+            const lx = sx(p.x) + (left ? -8 : 8)
+            const ly = p.labelBelow ? sy(p.y) + 16 : sy(p.y) - 8
+            return <text x={lx} y={clear(lx, ly, p.label, 12, left)} textAnchor={left ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>
+          })()}
         </g>
       ))}
     </svg>
