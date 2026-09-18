@@ -513,8 +513,8 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Fusion music, including bhangra and reggaeton', topicId: 'fusion-music-bhangra-and-reggaeton' },
     ] },
     { year: 9, term: 'Spring', topics: [
-      { title: 'Classical history' },
-      { title: 'Theme and variations' },
+      { title: 'Classical history', topicId: 'classical-history' },
+      { title: 'Theme and variations', topicId: 'theme-and-variations' },
     ] },
     { year: 9, term: 'Summer', topics: [
       { title: 'Film composition and developing motifs' },
