@@ -1,0 +1,1492 @@
+{
+  "id": "non-linear-graphs",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Non-linear graphs: exponentials, tangents and areas",
+  "specPoints": [
+    "A14",
+    "A15"
+  ],
+  "order": 16,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Every exponential passes through (0, 1)",
+      "body": "For $y = k^x$, putting $x = 0$ gives $k^0 = 1$ whatever $k$ is. So every one of these curves crosses the $y$ axis at exactly $1$ — and for $y = a \\times k^x$ it crosses at $a$. That single point identifies the curve faster than anything else on the page."
+    },
+    {
+      "kind": "spot",
+      "title": "An exponential never reaches the axis",
+      "body": "A decay curve gets closer and closer to the $x$ axis but never touches it: $0.8^x$ is still positive after two hundred steps. The $x$ axis is an **asymptote**. A sketch that lands on the axis and runs along it has stopped being an exponential."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Draw the tangent long, and use a big triangle",
+      "body": "A tangent touches the curve at one point without crossing it. Draw it right across the grid, then take two points on your tangent that are **far apart** and easy to read. A small triangle magnifies every reading error; a large one buries it."
+    },
+    {
+      "kind": "check",
+      "title": "Say whether your area is an over- or under-estimate",
+      "body": "Trapezia join the curve with straight chords. Where the curve bends **upwards**, each chord sits above it, so the estimate is **too big**. Where it bends downwards, the chords sit below and the estimate is **too small**. There is a mark for saying which, and for saying why."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Exponential graphs",
+        "body": "An **exponential** has the variable in the **power**:\n\n$$y = k^x.$$\n\nThat is a different thing from $y = x^k$, and it behaves very differently. In $y = x^2$ the power is fixed and the base changes; in $y = 2^x$ the base is fixed and the power changes.\n\n**Every exponential passes through $(0, 1)$**, because $k^0 = 1$ whatever $k$ is. For $y = 2^x$:\n\n| $x$ | $-2$ | $-1$ | $0$ | $1$ | $2$ | $3$ | $4$ |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| $y$ | $0.25$ | $0.5$ | $1$ | $2$ | $4$ | $8$ | $16$ |\n\nEach step to the right **multiplies** by $2$, rather than adding a fixed amount. That is what makes the curve get steep so quickly.\n\n**Going left, it never gets to zero.** $2^{-1} = 0.5$, $2^{-2} = 0.25$, and so on — always halving, always positive. The $x$ axis is an **asymptote**: the curve approaches it forever and never touches it.\n\n**Two directions.**\n\n- $k > 1$ gives **growth**: the curve rises from left to right.\n- $0 < k < 1$ gives **decay**: the curve falls. $y = 0.8^x$ goes $1, 0.8, 0.64, 0.512, \\ldots$\n\n**With a multiplier in front**, $y = a \\times k^x$ crosses the $y$ axis at $a$ instead of at $1$. A population of $5$ doubling each year is $y = 5 \\times 2^x$: it starts at $5$, and after $3$ years it is $40$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -2,
+                4.2
+              ],
+              "yRange": [
+                0,
+                17
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": 0,
+                  "b": 0,
+                  "c": 0,
+                  "base": 2,
+                  "label": "y = 2ˣ",
+                  "labelX": 3.3
+                }
+              ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": 1,
+                  "label": "(0, 1)"
+                }
+              ],
+              "xLabel": "x",
+              "yLabel": "y"
+            },
+            "alt": "The exponential curve y equals 2 to the power x, passing through 0 comma 1, rising steeply to the right and approaching the x axis to the left without ever touching it"
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                8
+              ],
+              "yRange": [
+                0,
+                110
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": 0,
+                  "b": 0,
+                  "c": 0,
+                  "base": 0.8,
+                  "scale": 100,
+                  "label": "y = 100 x 0.8ˣ",
+                  "labelX": 3
+                }
+              ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": 100
+                },
+                {
+                  "x": 3,
+                  "y": 51.2
+                }
+              ],
+              "xLabel": "x",
+              "yLabel": "y"
+            },
+            "alt": "An exponential decay curve starting at 100 and falling towards the x axis, reaching about 51 after three steps but never reaching zero"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "Crosses the y axis at",
+                "Behaviour"
+              ],
+              "rows": [
+                [
+                  "y = 2ˣ",
+                  "1",
+                  "growth, doubling each step"
+                ],
+                [
+                  "y = 3ˣ",
+                  "1",
+                  "growth, faster still"
+                ],
+                [
+                  "y = 0.8ˣ",
+                  "1",
+                  "decay, falling towards the axis"
+                ],
+                [
+                  "y = 5 x 2ˣ",
+                  "5",
+                  "growth from a starting value of 5"
+                ],
+                [
+                  "y = 100 x 0.8ˣ",
+                  "100",
+                  "decay from a starting value of 100"
+                ]
+              ],
+              "title": "The number in front is where it starts"
+            },
+            "alt": "A table of five exponential equations showing where each crosses the y axis and whether it grows or decays"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Where does the graph of $y = 3^x$ cross the $y$ axis?",
+          "options": [
+            "$(0, 3)$",
+            "$(0, 1)$",
+            "$(0, 0)$",
+            "$(1, 3)$"
+          ],
+          "correct": [
+            1
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "recognising an exponential graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The $y$ axis is where $x = 0$, and $3^0 = 1$. Every graph of the form $y = k^x$ crosses at $(0, 1)$, whatever the base is.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(0, 1)"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Reading an exponential in context",
+        "body": "Growth and decay questions are exponentials wearing everyday clothes. The starting value is the number in front, and the multiplier is the base.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A population starts at 5 and doubles each year. Find it after 3 years, and write the formula.",
+            "steps": [
+              {
+                "text": "Starting value $5$, multiplier $2$",
+                "note": "doubling means multiplying by 2"
+              },
+              {
+                "text": "$P = 5 \\times 2^t$",
+                "note": "t is the number of years"
+              },
+              {
+                "text": "At $t = 3$: $P = 5 \\times 2^3 = 5 \\times 8$",
+                "note": "the power is the number of years"
+              },
+              {
+                "text": "$P = 40$",
+                "note": "and the curve crosses the vertical axis at 5, the starting value"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A car worth £100 000 loses 20% of its value each year. Find its value after 3 years.",
+            "steps": [
+              {
+                "text": "Losing 20% leaves 80%, so the multiplier is $0.8$",
+                "note": "decay, because the multiplier is below 1"
+              },
+              {
+                "text": "$V = 100000 \\times 0.8^t$",
+                "note": "the starting value goes in front"
+              },
+              {
+                "text": "At $t = 3$: $0.8^3 = 0.512$",
+                "note": "0.8 x 0.8 x 0.8"
+              },
+              {
+                "text": "$V = 100000 \\times 0.512 = £51\\,200$",
+                "note": "just over half, after three years of losing a fifth"
+              },
+              {
+                "text": "It never reaches £0",
+                "note": "each year it loses a fifth of a smaller number"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A population is modelled by $P = 5 \\times 2^t$, where $t$ is in years. Work out the population when $t = 3$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "recognising an exponential graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$2^3 = 8$, so $P = 5 \\times 8 = 40$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "2³ = 8"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "40"
+            }
+          ],
+          "discriminators": [],
+          "answer": 40,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The gradient of a curve, at a point",
+        "body": "A straight line has one gradient everywhere. **A curve does not** — it is steeper in some places than in others. So asking for \"the gradient\" only makes sense if you say **where**.\n\n> The gradient of a curve at a point is the gradient of the **tangent** at that point.\n\nA **tangent** is a straight line that touches the curve at that one point without crossing it. On a graph you draw it by eye, and then find its gradient exactly as you would for any straight line.\n\n**The method.**\n\n1. Put your ruler so it touches the curve at the point and matches its direction there.\n2. Draw the tangent **right across the grid**, not as a short stub.\n3. Pick two points on the **tangent** that are far apart and easy to read.\n4. Gradient $= \\dfrac{\\text{change in } y}{\\text{change in } x}$, read off the **axis scales**.\n\n**Use a big triangle.** If your two points are one square apart, misreading by half a square is a 50% error. Twenty squares apart, the same misreading barely shows.\n\n**And read the axes, not the squares.** If one square across is $2$ seconds and one square up is $5$ metres, a triangle of $3$ across and $4$ up is not a gradient of $\\tfrac{4}{3}$.\n\n**Say what it means.** On a distance–time graph the gradient is a **speed**; on a speed–time graph it is an **acceleration**. Give the units.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                5.5
+              ],
+              "yRange": [
+                0,
+                26
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 0,
+                  "c": 0,
+                  "label": "y = x²",
+                  "labelX": 4.4
+                }
+              ],
+              "lines": [
+                {
+                  "m": 6,
+                  "c": -9,
+                  "label": "tangent at x = 3"
+                }
+              ],
+              "points": [
+                {
+                  "x": 3,
+                  "y": 9,
+                  "label": "(3, 9)"
+                }
+              ],
+              "xLabel": "x",
+              "yLabel": "y"
+            },
+            "alt": "The curve y equals x squared with a tangent drawn touching it at the point 3 comma 9, the tangent extending well beyond the point of contact in both directions"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Graph",
+                "What the gradient is",
+                "Units"
+              ],
+              "rows": [
+                [
+                  "distance against time",
+                  "speed",
+                  "m/s"
+                ],
+                [
+                  "speed against time",
+                  "acceleration",
+                  "m/s²"
+                ],
+                [
+                  "volume against time",
+                  "rate of flow",
+                  "litres per second"
+                ],
+                [
+                  "cost against quantity",
+                  "cost per item",
+                  "pounds per item"
+                ]
+              ],
+              "title": "The gradient always means something"
+            },
+            "alt": "A table of four kinds of graph showing what the gradient represents on each and the units it carries"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "To find the gradient of a curve at a point, what should you draw?",
+          "options": [
+            "A chord between two points on the curve",
+            "A tangent touching the curve at that point",
+            "A vertical line at that point",
+            "A line through the origin and that point"
+          ],
+          "correct": [
+            1
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "estimating a gradient with a tangent",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The gradient at a point is the gradient of the **tangent** there — the straight line that touches the curve at that point and matches its direction. A chord joins two separate points and gives an average gradient between them, not the gradient at either one.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a tangent"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Area under a curve, using strips",
+        "body": "The area under a graph means something — usually a total. A curve has no formula for its area at GCSE, so it is estimated by cutting it into strips and treating each as a trapezium.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Estimate the area under $y = x^2$ between $x = 0$ and $x = 4$, using 4 strips.",
+            "steps": [
+              {
+                "text": "Strips of width $h = 1$, so the ordinates are at $x = 0, 1, 2, 3, 4$",
+                "note": "four strips need five heights"
+              },
+              {
+                "text": "Heights: $0, 1, 4, 9, 16$",
+                "note": "just square each x value"
+              },
+              {
+                "text": "Area $\\approx \\dfrac{h}{2}[\\text{first} + \\text{last} + 2(\\text{middle ones})]$",
+                "note": "the trapezium rule"
+              },
+              {
+                "text": "$= \\dfrac{1}{2}[0 + 16 + 2(1 + 4 + 9)]$",
+                "note": "the middle heights are 1, 4 and 9"
+              },
+              {
+                "text": "$= \\dfrac{1}{2}[16 + 28] = 22$",
+                "note": "so the area is about 22 square units"
+              },
+              {
+                "text": "The curve bends **upwards**, so each chord lies above it: this is an **over-estimate**.",
+                "note": "the true area is 21.3, so 22 is indeed a little too big"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A car speeds up. Its speed in m/s at 0, 2, 4, 6 and 8 seconds is 0, 5, 12, 21, 32. Estimate the distance travelled.",
+            "steps": [
+              {
+                "text": "Area under a speed–time graph is **distance**",
+                "note": "say this; there is a mark for it"
+              },
+              {
+                "text": "Strips of width $h = 2$ seconds",
+                "note": "five readings, so four strips"
+              },
+              {
+                "text": "$\\dfrac{2}{2}[0 + 32 + 2(5 + 12 + 21)]$",
+                "note": "first and last, then twice the middle ones"
+              },
+              {
+                "text": "$= 1 \\times [32 + 76] = 108$",
+                "note": "the arithmetic"
+              },
+              {
+                "text": "The distance is about $108$ m.",
+                "note": "and an over-estimate, since the curve bends upwards"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "Using 4 strips of width 1, the heights under a curve at $x = 0, 1, 2, 3, 4$ are $0, 1, 4, 9, 16$. Use the trapezium rule to estimate the area.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "estimating an area under a curve",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Area $\\approx \\dfrac{1}{2}[0 + 16 + 2(1 + 4 + 9)] = \\dfrac{1}{2}[16 + 28] = \\dfrac{44}{2} = 22$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "½[0 + 16 + 2(1 + 4 + 9)]"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "22"
+            }
+          ],
+          "discriminators": [],
+          "answer": 22,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Too big or too small, and why",
+        "body": "An estimate is only half an answer. The other half is knowing **which way it is wrong**, and that comes from the shape of the curve, not the arithmetic.\n\nEach trapezium replaces a piece of curve with a straight **chord** between its two ends. So:\n\n- where the curve bends **upwards** (it sags below the chord), the trapezium includes area that is not there, and the estimate is **too big**;\n- where the curve bends **downwards** (it bulges above the chord), the trapezium misses some area, and the estimate is **too small**.\n\nFor $y = x^2$ from $0$ to $4$, four strips gave $22$. The true area is $21\\tfrac{1}{3}$, so the estimate was indeed a little too big — exactly as the upward bend predicts.\n\n**More strips is closer.** Doubling to eight strips of width $0.5$ gives $21.5$, which is nearer the true value. Narrower strips mean shorter chords, and a short chord hugs the curve more tightly. The estimate is still too big, because the bend has not changed direction — just less so.\n\n> Narrower strips improve the estimate. They do not change whether it is an over- or under-estimate.\n\n**Saying it properly.** \"This is an over-estimate, because the curve bends upwards so each chord lies above it.\" Both halves earn marks: the verdict, and the reason.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Number of strips",
+                "Estimate",
+                "True area",
+                "Error"
+              ],
+              "rows": [
+                [
+                  "4 strips, width 1",
+                  "22",
+                  "21.33",
+                  "+0.67, too big"
+                ],
+                [
+                  "8 strips, width 0.5",
+                  "21.5",
+                  "21.33",
+                  "+0.17, still too big"
+                ]
+              ],
+              "title": "Narrower strips get closer, but stay on the same side"
+            },
+            "alt": "A table comparing a four-strip and an eight-strip estimate of the same area with the true value and the size of each error"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The curve",
+                "The chords lie",
+                "The estimate is"
+              ],
+              "rows": [
+                [
+                  "bends upwards",
+                  "above the curve",
+                  "too big"
+                ],
+                [
+                  "bends downwards",
+                  "below the curve",
+                  "too small"
+                ],
+                [
+                  "is a straight line",
+                  "on the curve",
+                  "exact"
+                ]
+              ],
+              "title": "The bend decides the direction of the error"
+            },
+            "alt": "A table linking the way a curve bends with where the chords sit and whether the trapezium estimate is too big or too small"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Trapezia are used to estimate the area under a curve that bends upwards. Is the estimate too big or too small?",
+          "options": [
+            "Too small, because each chord lies below the curve",
+            "Exact, if the strips are narrow enough",
+            "It cannot be decided without the numbers",
+            "Too big, because each chord lies above the curve"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "estimating an area under a curve",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A curve bending upwards sags below the straight chord joining the ends of each strip, so the trapezium contains area the curve does not. Every strip is therefore slightly too big, and so is the total.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "too big"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A — exponentials.**\n\n1. Where does $y = 5^x$ cross the $y$ axis?\n2. A population is $P = 5 \\times 2^t$. Find $P$ when $t = 3$.\n3. A car worth £100 000 loses 20% each year. Write the formula for its value after $t$ years, and find it after 3 years.\n\n**Part B — gradients.**\n\n4. What line do you draw to find the gradient of a curve at a point?\n5. On a speed–time graph, what does the gradient represent, and in what units?\n\n**Part C — areas.**\n\n6. The heights under a curve at $x = 0, 1, 2, 3, 4$ are $0, 1, 4, 9, 16$. Estimate the area using the trapezium rule.\n7. Is your answer to question 6 an over-estimate or an under-estimate? Give the reason.\n8. A car's speed in m/s at $t = 0, 2, 4, 6, 8$ is $0, 5, 12, 21, 32$. Estimate the distance travelled, and say what the area represents.\n\nFor question 7, the reason matters as much as the verdict.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Working",
+                "Answer",
+                "What it means"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "3",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "6",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "7",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "8",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "The last column is where the marks hide"
+            },
+            "alt": "A blank five-row table with columns for working, the answer and what the answer represents in context"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "A car's speed in m/s at $t = 0, 2, 4, 6, 8$ seconds is $0, 5, 12, 21, 32$. Use the trapezium rule to estimate the distance travelled, in metres.",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "estimating an area under a curve",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The area under a speed–time graph is the distance travelled. With $h = 2$: $\\dfrac{2}{2}[0 + 32 + 2(5 + 12 + 21)] = 32 + 76 = 108$ metres.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "recognises area under a speed-time graph is distance"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "(2/2)[0 + 32 + 2(5 + 12 + 21)]"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "108"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 108,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "m"
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: reading a tangent properly, and what an estimate is worth",
+        "body": "**The commonest way to lose a gradient mark** is to draw the tangent correctly and then measure it wrongly.\n\nSuppose the tangent to a speed–time curve passes through $(2, 6)$ and $(8, 30)$, with time in seconds and speed in m/s.\n\n$$\\text{gradient} = \\frac{30 - 6}{8 - 2} = \\frac{24}{6} = 4.$$\n\nThe units come from the axes: metres per second, per second — that is $4$ m/s². The gradient of a speed–time graph is an **acceleration**, not a speed.\n\n**Count in axis units, not squares.** If one square across is $2$ s and one square up is $5$ m/s, then a triangle spanning $3$ squares across and $4$ up is $6$ s and $20$ m/s, and the gradient is $\\tfrac{20}{6} = 3.3$, not $\\tfrac{4}{3}$.\n\n**Why a symmetric triangle is safest.** On $y = x^2$ at $x = 3$, taking the chord from $x = 2.5$ to $x = 3.5$ gives\n\n$$\\frac{12.25 - 6.25}{1} = 6,$$\n\nwhich is the exact tangent gradient. Taking the chord from $x = 3$ to $x = 4$ instead gives $7$ — noticeably out. Centring your reading on the point of contact is what makes a hand-drawn estimate reliable.\n\n**And an estimate is an estimate.** Mark schemes accept a range, because two people reading the same graph carefully will not agree to three decimal places. Quoting $4.0000$ m/s² from a hand-drawn tangent claims a precision the method does not have; $4$ m/s², or \"about $4$\", is the honest answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                9
+              ],
+              "yRange": [
+                0,
+                36
+              ],
+              "grid": true,
+              "lines": [
+                {
+                  "m": 4,
+                  "c": -2,
+                  "label": "tangent"
+                }
+              ],
+              "points": [
+                {
+                  "x": 2,
+                  "y": 6,
+                  "label": "(2, 6)"
+                },
+                {
+                  "x": 8,
+                  "y": 30,
+                  "label": "(8, 30)"
+                }
+              ],
+              "xLabel": "time (s)",
+              "yLabel": "speed (m/s)"
+            },
+            "alt": "A tangent line on a speed against time graph with two widely separated points marked on it at 2 comma 6 and 8 comma 30, forming a large triangle for reading the gradient"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "A tangent to a speed–time graph passes through $(2, 6)$ and $(8, 30)$, with time in seconds and speed in m/s. Work out the acceleration in m/s².",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "estimating a gradient with a tangent",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Gradient $= \\dfrac{30 - 6}{8 - 2} = \\dfrac{24}{6} = 4$. On a speed–time graph the gradient is the acceleration, so it is $4$ m/s².",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "(30 - 6) / (8 - 2)"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "m/s²"
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- An **exponential** has the variable in the power: $y = k^x$. That is not the same as $y = x^k$.\n- Every $y = k^x$ crosses the $y$ axis at **$(0, 1)$**, because $k^0 = 1$.\n- $y = a \\times k^x$ crosses at **$a$**, the starting value.\n- $k > 1$ grows; $0 < k < 1$ decays.\n- An exponential **never reaches the $x$ axis**. The axis is an asymptote.\n- The **gradient of a curve at a point** is the gradient of the **tangent** there.\n- Draw the tangent **long**, use a **large** triangle, and read off the **axis scales**, not the squares.\n- Give the gradient its meaning and units: speed on a distance–time graph, acceleration on a speed–time graph.\n- **Area under a curve** is estimated with strips: $\\dfrac{h}{2}[\\text{first} + \\text{last} + 2(\\text{middle})]$.\n- Say what the area **means**: distance under a speed–time graph, volume under a flow-rate graph.\n- Curve bending **upwards**: chords sit above it, so the estimate is **too big**. Bending downwards: **too small**.\n- **More strips is closer**, but does not change which side the error is on.\n- An estimate read off a hand-drawn tangent should not be quoted to several decimal places.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "y = kˣ",
+                  "the variable is in the power"
+                ],
+                [
+                  "Crosses the y axis at",
+                  "1, or a for y = a x kˣ"
+                ],
+                [
+                  "k > 1",
+                  "growth"
+                ],
+                [
+                  "0 < k < 1",
+                  "decay"
+                ],
+                [
+                  "The x axis",
+                  "an asymptote, never reached"
+                ],
+                [
+                  "Gradient at a point",
+                  "the gradient of the tangent"
+                ],
+                [
+                  "Drawing a tangent",
+                  "long line, large triangle"
+                ],
+                [
+                  "Reading it",
+                  "off the axis scales, not the squares"
+                ],
+                [
+                  "Gradient of speed against time",
+                  "acceleration, in m/s²"
+                ],
+                [
+                  "Area under a curve",
+                  "(h/2)[first + last + 2 x middle]"
+                ],
+                [
+                  "Area under speed against time",
+                  "distance"
+                ],
+                [
+                  "Curve bending upwards",
+                  "over-estimate"
+                ],
+                [
+                  "More strips",
+                  "closer, but the same side"
+                ]
+              ],
+              "title": "Non-linear graphs at a glance"
+            },
+            "alt": "A summary table pairing each idea in the topic with the fact or method to remember about it"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Where does the graph of $y = 5^x$ cross the $y$ axis?",
+      "options": [
+        "$(0, 5)$",
+        "$(0, 1)$",
+        "$(0, 0)$",
+        "$(1, 5)$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The $y$ axis is where $x = 0$, and $5^0 = 1$. Every graph $y = k^x$ crosses at $(0, 1)$, whatever the base.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(0, 1)"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which of these is an exponential equation?",
+      "options": [
+        "$y = x^2$",
+        "$y = 2x$",
+        "$y = \\dfrac{2}{x}$",
+        "$y = 2^x$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An exponential has the **variable in the power**. In $y = 2^x$ the base is fixed at $2$ and the power changes; in $y = x^2$ it is the other way round, which makes it a quadratic.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = 2ˣ"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Work out the value of $2^3$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2^3 = 2 \\times 2 \\times 2 = 8$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "8"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "A curve is steeper in some places than in others. Which line do you draw to find its gradient at one particular point?",
+      "options": [
+        "A chord between two points",
+        "A tangent at that point",
+        "A vertical line",
+        "A line to the origin"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "estimating a gradient with a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The gradient at a point is the gradient of the **tangent** there — the line that touches the curve at that point and matches its direction.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a tangent"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A population is modelled by $P = 5 \\times 2^t$, where $t$ is in years. Work out the population when $t = 3$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2^3 = 8$, so $P = 5 \\times 8 = 40$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2³ = 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [],
+      "answer": 40,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "On a speed–time graph, what does the gradient represent?",
+      "options": [
+        "Speed, in m/s",
+        "Distance, in m",
+        "Time, in s",
+        "Acceleration, in m/s²"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "estimating a gradient with a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The gradient is the change in speed divided by the change in time, which is how fast the speed is changing: the **acceleration**, measured in m/s². The speed itself is read off the vertical axis, not from the gradient.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "acceleration, m/s²"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "The heights under a curve at $x = 0, 1, 2, 3, 4$ are $0, 1, 4, 9, 16$. Use the trapezium rule with these 4 strips to estimate the area.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "estimating an area under a curve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The strips have width $h = 1$, so the area is about $\\dfrac{1}{2}[0 + 16 + 2(1 + 4 + 9)] = \\dfrac{1}{2}[16 + 28] = 22$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "½[0 + 16 + 2(1 + 4 + 9)]"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "22"
+        }
+      ],
+      "discriminators": [],
+      "answer": 22,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "A car loses 20% of its value each year. What is the multiplier for one year? Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Losing $20\\%$ leaves $80\\%$, so the multiplier is $0.8$. Because it is below $1$, the value decays.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.8"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "0.8"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Trapezia are used to estimate the area under a curve that bends upwards. Is the estimate too big or too small?",
+      "options": [
+        "Too small, since the chords lie below the curve",
+        "Too big, since the chords lie above the curve",
+        "Exact, if the strips are narrow",
+        "It depends on the number of strips used"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "estimating an area under a curve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A curve bending upwards sags below the chord joining the ends of each strip, so each trapezium holds area the curve does not. The total is therefore an over-estimate.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "too big"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Why does the graph of $y = 2^x$ never touch the $x$ axis?",
+      "options": [
+        "The graph stops at $x = 0$",
+        "The axis is not part of the grid",
+        "It does touch it, at $x = 0$",
+        "$2^x$ is always positive, however negative $x$ is"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Going left, the values halve each step: $1, 0.5, 0.25, 0.125, \\ldots$ They get as close to zero as you like but never reach it, so the curve approaches the axis forever without touching. The axis is an **asymptote**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it is always positive"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "A tangent to a speed–time graph passes through $(2, 6)$ and $(8, 30)$, with time in seconds and speed in m/s. Work out the acceleration in m/s².",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "estimating a gradient with a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Gradient $= \\dfrac{30 - 6}{8 - 2} = \\dfrac{24}{6} = 4$, and on a speed–time graph the gradient is the acceleration, so $4$ m/s².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "(30 - 6) / (8 - 2)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s²"
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A car's speed in m/s at $t = 0, 2, 4, 6, 8$ seconds is $0, 5, 12, 21, 32$. Use the trapezium rule to estimate the distance travelled, in metres.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "estimating an area under a curve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The area under a speed–time graph is the distance. With $h = 2$: $\\dfrac{2}{2}[0 + 32 + 2(5 + 12 + 21)] = 32 + 76 = 108$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area under a speed-time graph is distance"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "(2/2)[0 + 32 + 2(5 + 12 + 21)]"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "108"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 108,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A car worth £100 000 loses 20% of its value each year. Work out its value after 3 years, in pounds.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Losing $20\\%$ leaves a multiplier of $0.8$, so $V = 100000 \\times 0.8^t$. At $t = 3$, $0.8^3 = 0.512$, so $V = 100000 \\times 0.512 = 51200$ pounds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplier 0.8"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "100000 x 0.8³"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "51200"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 51200,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A four-strip trapezium estimate gives $22$ and an eight-strip estimate gives $21.5$. The true area is $21.33$. What does this show?",
+      "options": [
+        "Narrower strips turn it into an under-estimate",
+        "The four-strip answer is the more reliable",
+        "The trapezium rule is exact with enough strips",
+        "Narrower strips get closer, but stay an over-estimate"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "estimating an area under a curve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Both estimates are above $21.33$, and the eight-strip one is closer. Shorter chords hug the curve more tightly, so the error shrinks — but the curve still bends upwards, so every chord still lies above it and the estimate stays too big.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "closer, but still too big"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "One square across a graph is $2$ seconds and one square up is $5$ m/s. A tangent triangle spans $3$ squares across and $4$ squares up. What is the gradient?",
+      "options": [
+        "$1.3$ m/s²",
+        "$3.3$ m/s²",
+        "$12$ m/s²",
+        "$0.75$ m/s²"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "estimating a gradient with a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Convert to axis units first: $3$ squares across is $6$ seconds, and $4$ squares up is $20$ m/s. The gradient is $\\dfrac{20}{6} = 3.3$ m/s². Counting squares instead would give $\\tfrac{4}{3} = 1.3$, which is the trap.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3.3 m/s²"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "On $y = x^2$, which chord gives the best estimate of the gradient of the tangent at $x = 3$?",
+      "options": [
+        "From $x = 3$ to $x = 4$",
+        "From $x = 3$ to $x = 3.1$",
+        "From $x = 2.5$ to $x = 3.5$",
+        "From $x = 0$ to $x = 3$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "estimating a gradient with a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A chord centred on the point of contact is the best. From $2.5$ to $3.5$ the gradient is $\\dfrac{12.25 - 6.25}{1} = 6$, which is exactly the tangent gradient. From $3$ to $4$ it is $7$, noticeably out, because the whole chord lies on the steeper side of the point.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "from 2.5 to 3.5"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "The table shows the speed of a car, in m/s, at two-second intervals.\n\n| Time (s) | 0 | 2 | 4 | 6 | 8 |\n| --- | --- | --- | --- | --- | --- |\n| Speed (m/s) | 0 | 5 | 12 | 21 | 32 |\n\n(a) Use the trapezium rule to estimate the distance travelled in the first 8 seconds, and state what the area represents.\n\n(b) Say whether your estimate is too big or too small, giving a reason.\n\n(c) Explain how you would find the acceleration at $t = 4$ from a graph of this data.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "estimating an area under a curve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, the first thing to say is what the area means: under a speed against time graph, the area represents the distance travelled. Now apply the trapezium rule. The readings are two seconds apart, so h is two, and there are five readings giving four strips. The rule is h over two, times the first height plus the last height plus twice all the middle heights. That is two over two, times, bracket, zero plus thirty two, plus two times, bracket, five plus twelve plus twenty one. The middle heights add to thirty eight, so twice that is seventy six. Adding thirty two gives one hundred and eight, and two over two is one, so the estimate is one hundred and eight metres. For part b, this is an over-estimate. The speed readings are rising by five, then seven, then nine, then eleven, so the curve is getting steeper and therefore bends upwards. A curve bending upwards sags below the straight chord that joins the ends of each strip, so every trapezium contains a sliver of area that is not under the curve, and the total comes out too big. For part c, acceleration is the rate at which speed changes, which on this graph is the gradient. Since the graph is a curve rather than a straight line, the gradient differs from point to point, so I would plot the points, draw a smooth curve through them, and then place a ruler so that it touches the curve at t equals four without crossing it. That is the tangent. I would draw it right across the grid, pick two points on the tangent that are far apart and easy to read, and work out the change in speed divided by the change in time, reading both off the axis scales rather than counting squares. That gradient is the acceleration at t equals four, in metres per second squared.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "area = distance"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "(2/2)[0 + 32 + 2(5 + 12 + 21)]"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "108 m"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "over-estimate"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the curve bends upwards so each chord is above it"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "draw a tangent at t = 4 and find its gradient"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "unfamiliar-context"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "States that the area under a speed–time graph is distance",
+          "marks": 1
+        },
+        {
+          "text": "Applies the trapezium rule with h = 2",
+          "marks": 1
+        },
+        {
+          "text": "Reaches 108 m",
+          "marks": 1
+        },
+        {
+          "text": "Says the estimate is too big",
+          "marks": 1
+        },
+        {
+          "text": "Gives the reason: the curve bends upwards, so chords lie above it",
+          "marks": 1
+        },
+        {
+          "text": "Describes drawing a tangent at t = 4 and taking its gradient",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, the first thing to say is what the area means: under a speed against time graph, the area represents the distance travelled. Now apply the trapezium rule. The readings are two seconds apart, so h is two, and there are five readings giving four strips. The rule is h over two, times the first height plus the last height plus twice all the middle heights. That is two over two, times, bracket, zero plus thirty two, plus two times, bracket, five plus twelve plus twenty one. The middle heights add to thirty eight, so twice that is seventy six. Adding thirty two gives one hundred and eight, and two over two is one, so the estimate is one hundred and eight metres. For part b, this is an over-estimate. The speed readings are rising by five, then seven, then nine, then eleven, so the curve is getting steeper and therefore bends upwards. A curve bending upwards sags below the straight chord that joins the ends of each strip, so every trapezium contains a sliver of area that is not under the curve, and the total comes out too big. For part c, acceleration is the rate at which speed changes, which on this graph is the gradient. Since the graph is a curve rather than a straight line, the gradient differs from point to point, so I would plot the points, draw a smooth curve through them, and then place a ruler so that it touches the curve at t equals four without crossing it. That is the tangent. I would draw it right across the grid, pick two points on the tangent that are far apart and easy to read, and work out the change in speed divided by the change in time, reading both off the axis scales rather than counting squares. That gradient is the acceleration at t equals four, in metres per second squared."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A colony of bacteria doubles every hour. There are $5$ bacteria at the start.\n\n(a) Write a formula for the number $N$ after $t$ hours, and use it to find $N$ after $3$ hours.\n\n(b) Sketch the shape of the graph of $N$ against $t$, describing where it crosses the vertical axis and how it behaves for large $t$.\n\n(c) A student says \"after $10$ hours there will be $50$ bacteria, because $5 \\times 10 = 50$.\" Explain what is wrong with this, and give the correct figure.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "recognising an exponential graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, the starting number is five and the multiplier is two, since the colony doubles each hour. So the formula is N equals five times two to the power t, where t is the number of hours. After three hours, two cubed is eight, so N equals five times eight, which is forty bacteria. For part b, the graph crosses the vertical axis at five, because at t equals zero, two to the power zero is one and five times one is five. That is the starting number, which is what the coefficient in front always represents. From there the curve rises, and it rises increasingly steeply: each hour it does not add a fixed amount but multiplies by two, so the steps get bigger and bigger. It is a smooth curve with no straight sections and no maximum, and it never comes back down. For part c, the student has treated the growth as though it were linear, adding the same amount each hour, and has multiplied the starting number by the number of hours. But doubling is multiplication repeated, not addition repeated, so the number of hours belongs in the power, not as a multiplier. The correct calculation is five times two to the power ten. Two to the power ten is one thousand and twenty four, so N equals five times one thousand and twenty four, which is five thousand one hundred and twenty. That is a hundred times the student's figure, which shows how quickly exponential growth outruns linear growth.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "N = 5 x 2^t"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "N = 40"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "crosses at (0, 5)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rises increasingly steeply"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the student multiplied instead of using a power"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5 x 2^10 = 5120"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "evaluate"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Writes N = 5 × 2^t",
+          "marks": 1
+        },
+        {
+          "text": "Finds N = 40 after 3 hours",
+          "marks": 1
+        },
+        {
+          "text": "States the graph crosses the vertical axis at 5",
+          "marks": 1
+        },
+        {
+          "text": "Describes a curve rising ever more steeply",
+          "marks": 1
+        },
+        {
+          "text": "Explains the student has used linear rather than exponential growth",
+          "marks": 1
+        },
+        {
+          "text": "Gives the correct figure of 5120",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, the starting number is five and the multiplier is two, since the colony doubles each hour. So the formula is N equals five times two to the power t, where t is the number of hours. After three hours, two cubed is eight, so N equals five times eight, which is forty bacteria. For part b, the graph crosses the vertical axis at five, because at t equals zero, two to the power zero is one and five times one is five. That is the starting number, which is what the coefficient in front always represents. From there the curve rises, and it rises increasingly steeply: each hour it does not add a fixed amount but multiplies by two, so the steps get bigger and bigger. It is a smooth curve with no straight sections and no maximum, and it never comes back down. For part c, the student has treated the growth as though it were linear, adding the same amount each hour, and has multiplied the starting number by the number of hours. But doubling is multiplication repeated, not addition repeated, so the number of hours belongs in the power, not as a multiplier. The correct calculation is five times two to the power ten. Two to the power ten is one thousand and twenty four, so N equals five times one thousand and twenty four, which is five thousand one hundred and twenty. That is a hundred times the student's figure, which shows how quickly exponential growth outruns linear growth."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Recognise the exponential by its $y$ intercept.** $y = k^x$ crosses at $1$; $y = a \\times k^x$ crosses at $a$. Then check the direction: $k > 1$ grows, $0 < k < 1$ decays.\n\n**Never draw an exponential touching the $x$ axis.** It approaches the axis and stops short of it forever.\n\n**For a gradient at a point**, draw the tangent, then a large right-angled triangle on it. Read the change in $y$ and the change in $x$ off the axes and divide. Show the triangle — the method mark is for the tangent and the triangle, not the number.\n\n**Give the gradient its units and meaning in context.** On a distance–time graph it is a speed in m/s; on a speed–time graph it is an acceleration in m/s².\n\n**For an area, split it into strips.** Use the strip widths the question gives you, form a trapezium for each, and add. The formula is $\\dfrac{h}{2}\\big[\\text{first} + \\text{last} + 2 \\times (\\text{all the middle ones})\\big]$.\n\n**Say what the area means.** Under a speed–time graph it is a distance; under a rate-of-flow graph it is a volume.\n\n**And say whether it is too big or too small.** That comes from the way the curve bends, not from the arithmetic.\n\n**An estimate is expected to be approximate.** Mark schemes allow a range, so a sensible answer read carefully off a graph will be accepted.",
+    "examinerErrors": [
+      "Sketching an exponential through the origin instead of through $(0, 1)$.",
+      "Drawing a decay curve that meets and then follows the $x$ axis.",
+      "Using a chord between two points on the curve instead of a tangent touching at one.",
+      "Drawing the tangent correctly and then reading the triangle off the grid squares rather than the axis scales.",
+      "Using a tiny triangle, so a small misreading becomes a large error in the gradient.",
+      "Giving a gradient with no units, or calling it a speed on a speed–time graph where it is an acceleration.",
+      "Estimating an area and not saying whether it is an over-estimate or an under-estimate."
+    ],
+    "grade9Looks": "A top answer identifies an exponential from its y intercept rather than from its general shape, and knows the curve approaches the axis without ever reaching it. For a gradient it draws a long tangent and a deliberately large triangle, reads both changes off the axis scales, and then says what the number means in context with its units. For an area it uses the strips the question specifies, applies the trapezium rule cleanly, states what the area represents, and says whether the estimate is too big or too small, giving the reason as the direction the curve bends. And it treats an estimate as an estimate, rather than quoting it to four decimal places."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

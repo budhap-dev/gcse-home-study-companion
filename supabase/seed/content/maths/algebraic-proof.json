@@ -1,0 +1,1367 @@
+{
+  "id": "algebraic-proof",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Algebraic proof",
+  "specPoints": [
+    "A6"
+  ],
+  "order": 14,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Learn the four pieces of notation",
+      "body": "Almost every proof starts by writing a number in one of four ways: **any integer** is $n$; **even** is $2n$; **odd** is $2n + 1$; **consecutive** integers are $n$, $n + 1$, $n + 2$. Two *different* numbers need two letters, $m$ and $n$ — using $n$ for both quietly assumes they are equal."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Factor out what you are proving",
+      "body": "To show something is a multiple of $3$, expand, simplify, and then take a $3$ outside a bracket: $3(n + 1)$. To show it is even, reach $2(\\ldots)$. The bracket can hold anything, as long as what is inside is a whole number. That factorised line **is** the proof."
+    },
+    {
+      "kind": "check",
+      "title": "Numbers are not a proof, but they are a check",
+      "body": "Testing $n = 1, 2, 3$ proves nothing — a statement could fail at $n = 100$. But it is still worth a few seconds before you start, because if it fails at $n = 3$ you have been asked to disprove it, not prove it, and you have just found your counter-example."
+    },
+    {
+      "kind": "spot",
+      "title": "One counter-example is a complete answer",
+      "body": "To **disprove** a statement you need exactly one case where it fails, and nothing else. No algebra, no explanation of why it fails in general. Find the number, show the calculation, and say that it disproves the statement. Trying to prove a false statement wrong algebraically wastes the time you have."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Writing numbers with letters",
+        "body": "A proof has to cover **every** case at once, and the only way to do that is with a letter. So the first job in any proof question is translating the words into algebra.\n\nThere are really only four things to know.\n\n- **Any integer** is $n$.\n- **Any even number** is $2n$, because every even number is two times something.\n- **Any odd number** is $2n + 1$, because it is one more than an even number.\n- **Consecutive integers** are $n$, $n + 1$, $n + 2$, and so on.\n\n> Two different numbers need two different letters.\n\n\"The sum of two odd numbers\" is $(2m + 1) + (2n + 1)$, not $(2n + 1) + (2n + 1)$. The second version uses the same odd number twice, so it proves something much smaller than what was asked.\n\n**A warning about $n + 1$.** It is tempting to write an odd number as $n + 1$, but that is only odd when $n$ happens to be even. $2n + 1$ is odd whatever $n$ is, which is exactly what a proof needs.\n\n**And testing numbers is not proving.** Checking that a statement works for $1$, $2$ and $3$ says nothing about $100$. It is still worth doing quickly, because if the statement fails you have been asked to **disprove** it — and you have just found how.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "In words",
+                "In algebra",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "any integer",
+                  "n",
+                  "no restriction at all"
+                ],
+                [
+                  "any even number",
+                  "2n",
+                  "every even number is 2 times something"
+                ],
+                [
+                  "any odd number",
+                  "2n + 1",
+                  "one more than an even number"
+                ],
+                [
+                  "three consecutive integers",
+                  "n, n + 1, n + 2",
+                  "each is one more than the last"
+                ],
+                [
+                  "two different odd numbers",
+                  "2m + 1 and 2n + 1",
+                  "different numbers need different letters"
+                ],
+                [
+                  "three consecutive even numbers",
+                  "2n, 2n + 2, 2n + 4",
+                  "even numbers go up in twos"
+                ]
+              ],
+              "title": "Translating the words into letters"
+            },
+            "alt": "A table pairing the phrases that appear in proof questions with the algebra that represents them and the reason for each"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which expression represents any odd number, for every integer $n$?",
+          "options": [
+            "$n + 1$",
+            "$n^2 + 1$",
+            "$3n$",
+            "$2n + 1$"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "writing numbers algebraically",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$2n$ is always even, so $2n + 1$ is always odd, whatever integer $n$ is. $n + 1$ is only odd when $n$ is even, and $n^2 + 1$ is only odd when $n$ is even too, so neither works for every $n$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2n + 1"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "A first proof, start to finish",
+        "body": "Three moves every time: write the numbers algebraically, expand and simplify, then factorise towards the thing you were asked to show. And then the sentence.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Prove that the sum of three consecutive integers is always a multiple of 3",
+            "steps": [
+              {
+                "text": "Let the integers be $n$, $n + 1$ and $n + 2$",
+                "note": "say what the letter means before using it"
+              },
+              {
+                "text": "Sum $= n + (n + 1) + (n + 2)$",
+                "note": "write the statement as algebra"
+              },
+              {
+                "text": "$= 3n + 3$",
+                "note": "collect the terms"
+              },
+              {
+                "text": "$= 3(n + 1)$",
+                "note": "factorise towards the 3 you are trying to show"
+              },
+              {
+                "text": "Since $n$ is an integer, $n + 1$ is an integer, so the sum is 3 times an integer.",
+                "note": "this sentence is the conclusion, and it carries a mark"
+              },
+              {
+                "text": "Therefore the sum of three consecutive integers is always a multiple of 3.",
+                "note": "answer the question that was asked, in words"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Prove that $n^2 + n$ is always even",
+            "steps": [
+              {
+                "text": "$n^2 + n = n(n + 1)$",
+                "note": "factorise straight away; the expanded form hides the structure"
+              },
+              {
+                "text": "$n$ and $n + 1$ are consecutive integers",
+                "note": "so one of them must be even"
+              },
+              {
+                "text": "An even number times any integer is even",
+                "note": "the product therefore has a factor of 2"
+              },
+              {
+                "text": "So $n^2 + n$ is always even.",
+                "note": "no expansion was needed at all"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "The sum of three consecutive integers simplifies to $3n + 3$. Write this in factorised form.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "constructing an algebraic proof",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Both terms have a factor of $3$, so $3n + 3 = 3(n + 1)$. That factorised form is what shows the sum is a multiple of $3$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3(n+1)"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "3(n+1)"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Proving something is odd, or a multiple of something",
+        "body": "The target decides what you factorise towards.\n\n- To show a result is **even**, reach $2(\\ldots)$.\n- To show it is **odd**, reach $2(\\ldots) + 1$.\n- To show it is a **multiple of $k$**, reach $k(\\ldots)$.\n\n**Example: prove that an odd number squared is always odd.**\n\nAn odd number is $2n + 1$, so its square is\n\n$$(2n + 1)^2 = 4n^2 + 4n + 1.$$\n\nNow aim at $2(\\ldots) + 1$. Both of the first two terms have a factor of $2$:\n\n$$= 2(2n^2 + 2n) + 1.$$\n\nSince $n$ is an integer, $2n^2 + 2n$ is an integer, so this is two times an integer, plus one — which is odd.\n\n**The same expansion, a different target.** If instead you had been asked to show $(2n + 1)^2 - 1$ is a multiple of $8$, you would factorise differently:\n\n$$4n^2 + 4n = 4n(n + 1)$$\n\nand $n(n + 1)$ is the product of two consecutive integers, so it is **even**. An even number times $4$ is a multiple of $8$.\n\nThat last step is the one worth remembering: **$n(n + 1)$ is always even**, because one of any two consecutive integers must be.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "To show the result is",
+                "Factorise towards",
+                "Then say"
+              ],
+              "rows": [
+                [
+                  "even",
+                  "2(...)",
+                  "2 times an integer, so even"
+                ],
+                [
+                  "odd",
+                  "2(...) + 1",
+                  "one more than an even number, so odd"
+                ],
+                [
+                  "a multiple of 3",
+                  "3(...)",
+                  "3 times an integer"
+                ],
+                [
+                  "a multiple of 8",
+                  "8(...)",
+                  "8 times an integer"
+                ],
+                [
+                  "a multiple of 8, the other way",
+                  "4 x an even number",
+                  "4 times even is a multiple of 8"
+                ]
+              ],
+              "title": "The target decides the factorising"
+            },
+            "alt": "A table linking what a proof is asked to show with the form to factorise towards and the concluding sentence for each"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Expanding $(2n + 1)^2$ gives $4n^2 + 4n + 1$. Which form shows it is odd?",
+          "options": [
+            "$4(n^2 + n) + 1$",
+            "$4n(n + 1) + 1$",
+            "$2(2n^2 + 2n) + 1$",
+            "$(2n + 1)(2n + 1)$"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "constructing an algebraic proof",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Odd means two times an integer, plus one, so the form needed is $2(\\ldots) + 1$. Taking $2$ out of the first two terms gives $2(2n^2 + 2n) + 1$. The other forms are all correct algebra, but only this one has the $2$ outside that the conclusion needs.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2(2n² + 2n) + 1"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Differences of squares",
+        "body": "A whole family of proof questions is about the difference between two squares. The expansion is the same each time; only the numbers change.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Prove that the difference between the squares of two consecutive integers is always odd",
+            "steps": [
+              {
+                "text": "Let the integers be $n$ and $n + 1$",
+                "note": "the larger one squared will be the bigger square"
+              },
+              {
+                "text": "Difference $= (n + 1)^2 - n^2$",
+                "note": "larger minus smaller"
+              },
+              {
+                "text": "$= n^2 + 2n + 1 - n^2$",
+                "note": "expand the bracket fully"
+              },
+              {
+                "text": "$= 2n + 1$",
+                "note": "the $n^2$ terms cancel"
+              },
+              {
+                "text": "$2n + 1$ is odd for every integer $n$.",
+                "note": "this is the standard form for an odd number"
+              },
+              {
+                "text": "So the difference is always odd.",
+                "note": "and it is also the sum of the two integers, which is a neat extra"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Prove that the difference between the squares of two consecutive odd numbers is a multiple of 8",
+            "steps": [
+              {
+                "text": "Consecutive odd numbers are $2n + 1$ and $2n + 3$",
+                "note": "odd numbers go up in twos"
+              },
+              {
+                "text": "Difference $= (2n + 3)^2 - (2n + 1)^2$",
+                "note": "larger minus smaller"
+              },
+              {
+                "text": "$= (4n^2 + 12n + 9) - (4n^2 + 4n + 1)$",
+                "note": "expand both, and bracket the second"
+              },
+              {
+                "text": "$= 8n + 8$",
+                "note": "the $4n^2$ terms cancel; $12n - 4n = 8n$ and $9 - 1 = 8$"
+              },
+              {
+                "text": "$= 8(n + 1)$",
+                "note": "factorise towards the 8"
+              },
+              {
+                "text": "Since $n + 1$ is an integer, this is a multiple of 8.",
+                "note": "the conclusion sentence"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "short-text",
+          "prompt": "Simplify $(n + 1)^2 - n^2$ fully.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "constructing an algebraic proof",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$(n + 1)^2 = n^2 + 2n + 1$, so subtracting $n^2$ leaves $2n + 1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2n+1"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "2n+1"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Disproving a statement",
+        "body": "Some questions do not ask you to prove anything. They ask **\"is this always true?\"** — and sometimes the answer is no.\n\n> To disprove a statement you need exactly **one** counter-example, and nothing more.\n\nThat is the whole answer. No algebra, no general argument. Find a number where the statement fails, show the calculation, and say that it disproves the claim.\n\n**Example.** \"$n^2 + n + 41$ is prime for every positive integer $n$.\"\n\nThis is true for $n = 1, 2, 3, \\ldots$ all the way to $39$, which is exactly why testing a few values is not a proof. But at $n = 41$:\n\n$$41^2 + 41 + 41 = 1681 + 82 = 1763 = 41 \\times 43.$$\n\nIt has a factor of $41$, so it is not prime, and the statement is disproved.\n\n**Why it fails is easy to see once you look**: every term has a factor of $41$ when $n = 41$.\n\n**The practical lesson.** Before starting a proof, put two or three small numbers in — including a negative one and zero if they are allowed. If it works, you have lost fifteen seconds. If it fails, you have just written the whole answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Statement",
+                "Try",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "n² is always greater than n",
+                  "n = 1",
+                  "1 is not greater than 1, so false"
+                ],
+                [
+                  "n² + n + 41 is always prime",
+                  "n = 41",
+                  "1763 = 41 x 43, so false"
+                ],
+                [
+                  "the sum of two primes is even",
+                  "2 + 3 = 5",
+                  "odd, so false"
+                ],
+                [
+                  "every odd number is prime",
+                  "n = 9",
+                  "9 = 3 x 3, so false"
+                ]
+              ],
+              "title": "One counter-example is the entire answer"
+            },
+            "alt": "A table of four false statements with a single value that disproves each and the calculation that shows it"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "A student claims that $n^2$ is always greater than $n$. Which value disproves this?",
+          "options": [
+            "$n = 1$",
+            "$n = 2$",
+            "$n = 5$",
+            "No value disproves it"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "disproving a statement",
+          "calculator": "either",
+          "tags": [],
+          "solution": "At $n = 1$, $n^2 = 1$ and $n = 1$, so $n^2$ is **equal** to $n$, not greater. One case where the statement fails is all that is needed. It also fails for $n = 0$ and for any fraction between $0$ and $1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "n = 1"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A — write it algebraically.**\n\n1. Write down expressions for three consecutive even numbers.\n2. Write down expressions for two different odd numbers.\n\n**Part B — prove.**\n\n3. Prove that the sum of three consecutive even numbers is always a multiple of $6$.\n4. Prove that the sum of two odd numbers is always even.\n5. Prove that the product of two consecutive integers is always even.\n6. Prove that the difference between the squares of two integers that differ by $2$ is always a multiple of $4$.\n\n**Part C — decide.**\n\n7. Is this always true? \"The sum of two consecutive integers is a multiple of $2$.\" Prove it or disprove it.\n8. Is this always true? \"$n^2 - n$ is always even.\"\n\nFor question 7, try $n = 1$ before you start any algebra.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Numbers as algebra",
+                "Simplified",
+                "Factorised",
+                "Conclusion"
+              ],
+              "rows": [
+                [
+                  "3",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "4",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "5",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "6",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "7",
+                  "",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "8",
+                  "",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "The conclusion column is the one people leave blank"
+            },
+            "alt": "A blank six-row table with columns for the algebra, the simplification, the factorised form and the concluding sentence"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "The sum of three consecutive even numbers, written as $2n + (2n + 2) + (2n + 4)$, simplifies and factorises to which form?",
+          "options": [
+            "$6n + 6$",
+            "$2(3n + 3)$",
+            "$3(2n + 2)$",
+            "$6(n + 1)$"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "constructing an algebraic proof",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The sum is $6n + 6$. To show it is a multiple of $6$ you need a $6$ outside the bracket, so factorise to $6(n + 1)$. The other forms are correct algebra but show a multiple of $2$ or of $3$, not of $6$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6(n + 1)"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: choosing the letters, and the conclusion that earns the mark",
+        "body": "Two things separate a full-mark proof from a nearly-right one.\n\n**Choosing the algebra well.** The same statement can be written several ways, and one of them makes the proof shorter.\n\nProve that the difference between the squares of two integers that differ by $2$ is a multiple of $4$.\n\nWriting them as $n$ and $n + 2$:\n\n$$(n + 2)^2 - n^2 = n^2 + 4n + 4 - n^2 = 4n + 4 = 4(n + 1).$$\n\nThree lines. Writing them as $n - 1$ and $n + 1$ gives $(n+1)^2 - (n-1)^2 = 4n$, which is even shorter — and shows the result is $4$ times the number **between** them, which is a nicer statement than the question asked for.\n\n**Saying why the bracket is an integer.** $4(n + 1)$ is only a multiple of $4$ because $n + 1$ is a whole number. If $n$ could be $0.5$ the argument collapses. The mark scheme wants:\n\n> Since $n$ is an integer, $n + 1$ is an integer, so $4(n + 1)$ is $4$ times an integer and therefore a multiple of $4$.\n\n**A structural proof, with no expanding at all.** Prove that the product of two consecutive integers is always even.\n\nThe integers are $n$ and $n + 1$. One of any two consecutive integers must be even, because they alternate. An even number multiplied by anything is even. Therefore $n(n + 1)$ is even.\n\nNo algebra beyond naming the numbers — and it is a complete proof. Reaching for expansion when the structure already gives the answer is what makes some of these questions take three times as long as they need to.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Statement",
+                "Best choice of letters",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "two integers differing by 2",
+                  "n − 1 and n + 1",
+                  "4n, four times the middle number"
+                ],
+                [
+                  "three consecutive integers",
+                  "n − 1, n, n + 1",
+                  "sum is 3n, three times the middle one"
+                ],
+                [
+                  "two consecutive odd numbers",
+                  "2n + 1 and 2n + 3",
+                  "difference of squares is 8(n + 1)"
+                ],
+                [
+                  "product of two consecutive integers",
+                  "n and n + 1",
+                  "one is even, so the product is"
+                ]
+              ],
+              "title": "A better starting point makes a shorter proof"
+            },
+            "alt": "A table of four statements with the choice of letters that gives the shortest proof and the result it produces"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "A proof reaches $4(n + 1)$ and stops. What is still missing?",
+          "options": [
+            "Nothing more, the algebra is the whole proof",
+            "A check using three further values of $n$",
+            "A sentence saying it is 4 times an integer",
+            "The full expansion, written out a second time"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "constructing an algebraic proof",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The factorised line shows the structure, but the proof is an argument and has to state its conclusion: since $n$ is an integer, $n + 1$ is an integer, so $4(n + 1)$ is $4$ times an integer and therefore a multiple of $4$. Mark schemes carry a mark for that sentence and it is routinely dropped.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the concluding sentence"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A proof must cover **every** case, so it is written with letters, not numbers.\n- Any integer is $n$; **even** is $2n$; **odd** is $2n + 1$; **consecutive** integers are $n$, $n + 1$, $n + 2$.\n- **Consecutive even** numbers are $2n$, $2n + 2$, $2n + 4$. Consecutive **odd** numbers are $2n + 1$, $2n + 3$.\n- Two different numbers need **two different letters**.\n- Never write an odd number as $n + 1$; that is only odd when $n$ is even.\n- Expand, simplify, then **factorise towards the target**: $2(\\ldots)$ for even, $3(\\ldots)$ for a multiple of $3$, and so on.\n- For odd, aim at $2(\\ldots) + 1$.\n- $n(n + 1)$ is **always even**, because one of two consecutive integers must be.\n- **Finish with a sentence** naming the conclusion, and say the bracket holds an integer.\n- Testing values is **not** a proof, but it is a good check before you start.\n- To **disprove**, one counter-example is the entire answer. Show it and stop.\n- Choosing the letters well shortens the proof: $n - 1$ and $n + 1$ often beat $n$ and $n + 2$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Any integer",
+                  "n"
+                ],
+                [
+                  "Even",
+                  "2n"
+                ],
+                [
+                  "Odd",
+                  "2n + 1"
+                ],
+                [
+                  "Consecutive",
+                  "n, n + 1, n + 2"
+                ],
+                [
+                  "Consecutive even",
+                  "2n, 2n + 2, 2n + 4"
+                ],
+                [
+                  "Consecutive odd",
+                  "2n + 1, 2n + 3"
+                ],
+                [
+                  "Two different numbers",
+                  "two different letters"
+                ],
+                [
+                  "Show it is even",
+                  "reach 2(...)"
+                ],
+                [
+                  "Show it is odd",
+                  "reach 2(...) + 1"
+                ],
+                [
+                  "Show it is a multiple of k",
+                  "reach k(...)"
+                ],
+                [
+                  "n(n + 1)",
+                  "always even"
+                ],
+                [
+                  "Finish with",
+                  "a sentence stating the conclusion"
+                ],
+                [
+                  "To disprove",
+                  "one counter-example, then stop"
+                ]
+              ],
+              "title": "Algebraic proof at a glance"
+            },
+            "alt": "A summary table pairing each phrase used in proof questions with the algebra or the action it calls for"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which expression represents any even number, for every integer $n$?",
+      "options": [
+        "$2n$",
+        "$n + 2$",
+        "$2n + 1$",
+        "$n^2$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "writing numbers algebraically",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Every even number is two times a whole number, so $2n$ is even for every integer $n$. $n + 2$ is only even when $n$ is even, $2n + 1$ is always odd, and $n^2$ is only even when $n$ is.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2n"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which set of expressions represents three consecutive integers?",
+      "options": [
+        "$n$, $n + 2$, $n + 4$",
+        "$n$, $n + 1$, $n + 2$",
+        "$n$, $2n$, $3n$",
+        "$n - 1$, $n$, $n + 2$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "writing numbers algebraically",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Consecutive integers each go up by one, so $n$, $n + 1$, $n + 2$. The second set goes up in twos, which is consecutive **even** or **odd** numbers depending on $n$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n, n + 1, n + 2"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Factorise $3n + 3$ fully.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Both terms have a factor of $3$, so $3n + 3 = 3(n + 1)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3(n+1)"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "3(n+1)"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Why is testing a statement for $n = 1$, $n = 2$ and $n = 3$ not a proof?",
+      "options": [
+        "Three values are not enough, but ten would be",
+        "It could still fail for some larger value",
+        "The values chosen are too small",
+        "It is a proof, as long as all three work"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "disproving a statement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A proof has to cover every case. However many values you test, there are infinitely many you have not, and a statement can hold for the first forty and then fail — $n^2 + n + 41$ is prime for $n$ up to $39$ and not at $41$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it could fail for a larger value"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "The sum of three consecutive even numbers is $2n + (2n + 2) + (2n + 4)$. What does this simplify and factorise to?",
+      "options": [
+        "$6n + 4$",
+        "$2(3n + 2)$",
+        "$6(n + 1)$",
+        "$6n$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Adding gives $6n + 6$, and factorising gives $6(n + 1)$, which shows the sum is always a multiple of $6$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6(n + 1)"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Why must \"the sum of two odd numbers\" be written as $(2m + 1) + (2n + 1)$ rather than $(2n + 1) + (2n + 1)$?",
+      "options": [
+        "The first form is easier to expand",
+        "The two numbers may be different",
+        "The second form is not odd",
+        "Two letters always look better"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "writing numbers algebraically",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Using $n$ twice means the same odd number added to itself, which proves the statement only for that one case. Different numbers need different letters, so the proof covers every pair.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the numbers may differ"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "short-text",
+      "prompt": "Simplify $(2n + 1) + (2m + 1)$ and factorise the result fully.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Adding gives $2n + 2m + 2$. Every term has a factor of $2$, so this is $2(n + m + 1)$, which shows the sum of two odd numbers is always even.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2n + 2m + 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2(n + m + 1)"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "2(n+m+1)",
+        "2(m+n+1)"
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "Expanding $(n + 1)^2 - n^2$ gives which simplified expression?",
+      "options": [
+        "$1$",
+        "$2n$",
+        "$2n^2 + 1$",
+        "$2n + 1$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(n + 1)^2 = n^2 + 2n + 1$, and subtracting $n^2$ leaves $2n + 1$. This is the standard form for an odd number, so the difference between consecutive squares is always odd.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2n + 1"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "A student claims every odd number is prime. Which value disproves this?",
+      "options": [
+        "$7$, since $7$ is prime",
+        "$2$, since $2$ is even",
+        "No value disproves it",
+        "$9$, since $9 = 3 \\times 3$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "disproving a statement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$9$ is odd but not prime, since $9 = 3 \\times 3$. One case where the statement fails disproves it completely. Offering $7$ does the opposite, and $2$ is not odd so it is not a case of the statement at all.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "9 = 3 × 3"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "Why is $n(n + 1)$ always even?",
+      "options": [
+        "Because $n^2$ is always even",
+        "One of two consecutive integers must be even",
+        "Because it factorises",
+        "Because $n + 1$ is always even"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$n$ and $n + 1$ are consecutive, and integers alternate between odd and even, so exactly one of them is even. An even number multiplied by anything is even, so the product always is.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one of them must be even"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Expanding $(2n + 1)^2$ gives $4n^2 + 4n + 1$. Which form proves it is odd?",
+      "options": [
+        "$4(n^2 + n) + 1$",
+        "$4n(n + 1) + 1$",
+        "$2(2n^2 + 2n) + 1$",
+        "$(2n + 1)(2n + 1)$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Odd means two times an integer, plus one, so the proof needs a $2$ outside the bracket: $2(2n^2 + 2n) + 1$. The other forms are all correct algebra but none of them shows the $2$ the conclusion depends on.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2(2n² + 2n) + 1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "Two consecutive odd numbers are $2n + 1$ and $2n + 3$. Simplify $(2n + 3)^2 - (2n + 1)^2$ and factorise the result fully.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(2n + 3)^2 = 4n^2 + 12n + 9$ and $(2n + 1)^2 = 4n^2 + 4n + 1$. Subtracting, the $4n^2$ terms cancel, leaving $8n + 8$, which factorises to $8(n + 1)$. That shows the difference is always a multiple of $8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands to 4n² + 12n + 9 and 4n² + 4n + 1"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8n + 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8(n + 1)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "8(n+1)"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Which choice of letters gives the shortest proof that the difference between the squares of two integers differing by $2$ is a multiple of $4$?",
+      "options": [
+        "$n - 1$ and $n + 1$, giving $4n$",
+        "$n$ and $n + 2$, giving $4n + 4$",
+        "$2n$ and $2n + 2$",
+        "$n$ and $n + 4$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With $n - 1$ and $n + 1$: $(n + 1)^2 - (n - 1)^2 = 4n$ in one line, and it shows the result is four times the number **between** them. Using $n$ and $n + 2$ works too but gives $4n + 4$, which still needs factorising. The last option describes integers differing by $4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n - 1 and n + 1"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A student claims $n^2 + n + 41$ is prime for every positive integer $n$. Find the smallest positive value of $n$ that disproves this.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "disproving a statement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At $n = 41$ every term has a factor of $41$: $41^2 + 41 + 41 = 41(41 + 1 + 1) = 41 \\times 43 = 1763$. Since it has a factor of $41$ it is not prime, so $n = 41$ disproves the claim. It really is prime for every value below that, which is why testing a few numbers proves nothing.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "recognises every term has a factor of 41 when n = 41"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "n = 41"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 41,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A proof reaches $6(n + 1)$ and stops. What is missing?",
+      "options": [
+        "Nothing more, the algebra is the whole proof",
+        "A sentence saying it is 6 times an integer",
+        "A check using three further values of $n$",
+        "The full expansion, written out a second time"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A proof is an argument, and it has to state its conclusion: since $n$ is an integer, $n + 1$ is an integer, so $6(n + 1)$ is $6$ times an integer and therefore a multiple of $6$. There is a mark for that sentence and it is one of the most commonly dropped in the whole topic.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the concluding sentence"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Is the sum of two consecutive integers always a multiple of $2$?",
+      "options": [
+        "Yes: it equals $2n + 1$, which is even",
+        "Yes: it equals $2(n + 1)$",
+        "No: $n + (n + 1) = 2n + 1$, which is odd",
+        "It depends on whether $n$ is odd or even"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "disproving a statement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$n + (n + 1) = 2n + 1$, which is the standard form for an **odd** number, so the sum is never a multiple of $2$. Testing $n = 1$ gives $1 + 2 = 3$, which disproves it immediately. The result is the opposite of the claim, and it holds for every $n$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no, it is 2n + 1, which is odd"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "(a) Prove that the sum of three consecutive integers is always a multiple of $3$.\n\n(b) Prove that the sum of **four** consecutive integers is **never** a multiple of $4$.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, let the three consecutive integers be n, n plus one, and n plus two, where n is an integer. Their sum is n, plus n plus one, plus n plus two, which collects to three n plus three. Factorising gives three times, bracket, n plus one. Since n is an integer, n plus one is also an integer, so the sum is three times an integer and is therefore always a multiple of three. For part b, let the four consecutive integers be n, n plus one, n plus two and n plus three. Their sum is four n plus six. Now four n is a multiple of four, but six is not, so write the sum as four times, bracket, n plus one, close bracket, plus two. That is two more than a multiple of four. A number that is two more than a multiple of four can never itself be a multiple of four, because multiples of four differ by four and this sits exactly two away from one of them. So the sum of four consecutive integers is never a multiple of four. It is worth noticing why the two parts differ: with an odd count of consecutive integers there is a middle one, and the sum is the count times that middle number, but with an even count there is no middle integer to play that role.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n, n + 1, n + 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3n + 3 = 3(n + 1)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "states it is 3 times an integer, so a multiple of 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n, n + 1, n + 2, n + 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4n + 6"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4n + 6 = 4(n + 1) + 2, so it is 2 more than a multiple of 4"
+        }
+      ],
+      "discriminators": [
+        "proof",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Writes three consecutive integers as n, n + 1, n + 2",
+          "marks": 1
+        },
+        {
+          "text": "Simplifies the sum to 3n + 3 and factorises to 3(n + 1)",
+          "marks": 1
+        },
+        {
+          "text": "States the conclusion for part a",
+          "marks": 1
+        },
+        {
+          "text": "Writes four consecutive integers as n, n + 1, n + 2, n + 3",
+          "marks": 1
+        },
+        {
+          "text": "Simplifies the sum to 4n + 6",
+          "marks": 1
+        },
+        {
+          "text": "Explains that 4n + 6 is 2 more than a multiple of 4, so never a multiple of 4",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, let the three consecutive integers be n, n plus one, and n plus two, where n is an integer. Their sum is n, plus n plus one, plus n plus two, which collects to three n plus three. Factorising gives three times, bracket, n plus one. Since n is an integer, n plus one is also an integer, so the sum is three times an integer and is therefore always a multiple of three. For part b, let the four consecutive integers be n, n plus one, n plus two and n plus three. Their sum is four n plus six. Now four n is a multiple of four, but six is not, so write the sum as four times, bracket, n plus one, close bracket, plus two. That is two more than a multiple of four. A number that is two more than a multiple of four can never itself be a multiple of four, because multiples of four differ by four and this sits exactly two away from one of them. So the sum of four consecutive integers is never a multiple of four. It is worth noticing why the two parts differ: with an odd count of consecutive integers there is a middle one, and the sum is the count times that middle number, but with an even count there is no middle integer to play that role."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "(a) Prove that $n^2 - n$ is always even, for every integer $n$.\n\n(b) A student says: \"Therefore $n^2 - n$ is always a multiple of $4$.\" Give a counter-example to show this is wrong, and explain briefly why the student's reasoning fails.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "constructing an algebraic proof",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, factorise rather than expanding. n squared minus n is n times, bracket, n minus one. Now n minus one and n are consecutive integers, and integers alternate between odd and even, so exactly one of the two must be even. An even number multiplied by any integer is even, so the product n times n minus one is always even. Therefore n squared minus n is always even, for every integer n. For part b, the student has gone too far. Take n equal to three. Then n squared minus n is nine minus three, which is six. Six is even, so it agrees with part a, but six is not a multiple of four, because six divided by four is one and a half. So the claim is disproved by a single counter-example. The reason the reasoning fails is that being even only guarantees one factor of two. A multiple of four needs two factors of two, and nothing in the argument in part a provides a second one. The product of two consecutive integers contains exactly one even number, and that even number might itself only be two times an odd number, as it is here.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n² - n = n(n - 1)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n and n - 1 are consecutive"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "one is even, so the product is even"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n = 3 gives 9 - 3 = 6"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6 is even but not a multiple of 4"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "being even only guarantees one factor of 2"
+        }
+      ],
+      "discriminators": [
+        "proof",
+        "evaluate"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Factorises n² − n to n(n − 1)",
+          "marks": 1
+        },
+        {
+          "text": "States that n and n − 1 are consecutive integers",
+          "marks": 1
+        },
+        {
+          "text": "Argues that one of them must be even, so the product is even",
+          "marks": 1
+        },
+        {
+          "text": "Gives a valid counter-example, for example n = 3 giving 6",
+          "marks": 1
+        },
+        {
+          "text": "Shows the counter-example is even but not a multiple of 4",
+          "marks": 1
+        },
+        {
+          "text": "Explains that even does not imply a multiple of 4",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, factorise rather than expanding. n squared minus n is n times, bracket, n minus one. Now n minus one and n are consecutive integers, and integers alternate between odd and even, so exactly one of the two must be even. An even number multiplied by any integer is even, so the product n times n minus one is always even. Therefore n squared minus n is always even, for every integer n. For part b, the student has gone too far. Take n equal to three. Then n squared minus n is nine minus three, which is six. Six is even, so it agrees with part a, but six is not a multiple of four, because six divided by four is one and a half. So the claim is disproved by a single counter-example. The reason the reasoning fails is that being even only guarantees one factor of two. A multiple of four needs two factors of two, and nothing in the argument in part a provides a second one. The product of two consecutive integers contains exactly one even number, and that even number might itself only be two times an odd number, as it is here."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Start by writing the numbers algebraically.** Nearly every mark in the first part of a proof question is for choosing $2n$, $2n + 1$, or $n$ and $n + 1$ correctly. Write down what each letter stands for.\n\n**Use a different letter for a different number.** \"The sum of two odd numbers\" is $(2m + 1) + (2n + 1)$. Writing $(2n + 1) + (2n + 1)$ proves something about *the same* odd number twice.\n\n**Expand and simplify, then factorise towards the thing you want.** Multiple of $3$ means you are heading for $3(\\ldots)$; even means $2(\\ldots)$; multiple of $8$ means $8(\\ldots)$.\n\n**Finish with a sentence.** The algebra is not the whole answer. Write \"so the result is $3$ times an integer, and therefore a multiple of $3$\". Mark schemes award a final mark for the conclusion, and it is routinely dropped.\n\n**Say why the bracket is an integer** when it matters. $3(n + 1)$ is a multiple of $3$ **because $n$ is an integer**, so $n + 1$ is too.\n\n**Read \"show that\" and \"prove\" the same way**, and read \"is it always true?\" differently: that one is inviting a counter-example.\n\n**To disprove, one number is enough.** Show the calculation and stop.",
+    "examinerErrors": [
+      "Testing three values and calling it a proof.",
+      "Using the same letter for two different numbers, so the proof only covers the case where they are equal.",
+      "Writing an odd number as $n + 1$, which is only odd when $n$ is even.",
+      "Expanding correctly and then stopping, without factorising towards what was asked.",
+      "Reaching $3(n + 1)$ and not writing the sentence that says this is therefore a multiple of $3$.",
+      "Trying to prove a false statement and never testing a value that would have disproved it.",
+      "Giving a counter-example and then also attempting a general argument, which cannot exist."
+    ],
+    "grade9Looks": "A top answer states what each letter stands for before it does any algebra, and uses different letters for numbers that are allowed to differ. It expands, simplifies, and then factorises deliberately towards the form the question asked for, rather than stopping at whatever the expansion happened to give. It finishes with a sentence naming the conclusion and saying why the bracket contains an integer. And it tests a couple of values first, so that when a statement is false it writes down the counter-example and stops, instead of trying to prove something that is not true."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

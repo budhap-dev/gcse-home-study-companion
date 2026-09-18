@@ -137,12 +137,12 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Functions', topicId: 'functions' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      // Not linked: the Year 11 Autumn row "Ratio and proportion" already points at that
-      // topic, and one topic twice in a year would list it twice on the same page.
-      { title: 'Direct and inverse proportion' },
-      { title: 'Non-linear graphs' },
-      { title: 'Transformations of graphs' },
-      { title: 'Algebraic proof' },
+      // Its own topic rather than a link to ratio-and-proportion: R13 is the formal
+      // notation, y = kx^n and y = k/x^n, which that Year 10 topic does not reach.
+      { title: 'Direct and inverse proportion', topicId: 'direct-and-inverse-proportion' },
+      { title: 'Non-linear graphs', topicId: 'non-linear-graphs' },
+      { title: 'Transformations of graphs', topicId: 'transformations-of-graphs' },
+      { title: 'Algebraic proof', topicId: 'algebraic-proof' },
       { title: 'Sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
       { title: 'Iteration: approximating solutions', topicId: 'iteration' },
     ] },
