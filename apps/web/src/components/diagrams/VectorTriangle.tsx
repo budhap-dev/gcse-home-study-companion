@@ -33,14 +33,34 @@ export function VectorTriangle({ props, alt }: { props: Record<string, unknown>;
   const fmt = (v: number) => String(Number(v.toFixed(2)))
   const end = pts[pts.length - 1]!
   const size = Math.hypot(end[0], end[1])
+  /**
+   * Which perpendicular side of the line from (x1,y1) to (x2,y2) the chain of vectors is
+   * not on, as +1 or -1. The chain always bulges to one side of the resultant; its labels
+   * are over there, so the resultant's label goes to the other.
+   */
+  const awayFromChain = (x1: number, y1: number, x2: number, y2: number) => {
+    const ang = Math.atan2(y2 - y1, x2 - x1)
+    const nx = -Math.sin(ang), ny = Math.cos(ang)
+    // Any intermediate corner does: they are all on the same side of the resultant.
+    const mid = pts[1]!
+    const side = nx * (sx(mid[0]) - x1) + ny * (sy(mid[1]) - y1)
+    return side > 0 ? -1 : 1
+  }
   const arrow = (a: [number, number], b: [number, number], colour: string, dashed: boolean, label: string | undefined, key: string) => {
     const x1 = sx(a[0]), y1 = sy(a[1]), x2 = sx(b[0]), y2 = sy(b[1])
     const ang = Math.atan2(y2 - y1, x2 - x1)
     const hx = x2 - 10 * Math.cos(ang), hy = y2 - 10 * Math.sin(ang)
     const head = `${x2},${y2} ${hx - 6 * Math.sin(ang)},${hy + 6 * Math.cos(ang)} ${hx + 6 * Math.sin(ang)},${hy - 6 * Math.cos(ang)}`
-    // The label sits just off the midpoint, on the side away from the resultant's interior.
-    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2
-    const off = dashed ? -16 : 14
+    // The label sits just off the midpoint. The resultant's own label is the long one, so
+    // it goes on the side away from the chain of vectors rather than across them: put it
+    // on the chain's side and it lands on top of their labels, which is what a 200 north
+    // and 50 east pair used to do.
+    // Along the line: the vectors label their midpoints, so the resultant labels a point
+    // further along instead. Sharing a height with them is the other half of the
+    // collision, and the perpendicular side alone does not fix it.
+    const t = dashed ? 0.72 : 0.5
+    const mx = x1 + (x2 - x1) * t, my = y1 + (y2 - y1) * t
+    const off = dashed ? 16 * awayFromChain(x1, y1, x2, y2) : 14
     const ox = -off * Math.sin(ang), oy = off * Math.cos(ang)
     // Anchor the text so it grows away from the arrow rather than back across it.
     const anchor = ox > 4 ? 'start' : ox < -4 ? 'end' : 'middle'

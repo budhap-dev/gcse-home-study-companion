@@ -31,6 +31,45 @@
       "body": "Even though we write $x < 24.5$, the **upper bound** is $24.5$: the smallest value the measurement cannot reach. Writing 24.49 to avoid the strict inequality is wrong, because the length can be larger than that."
     }
   ],
+  "why": {
+    "matters": "A rounded number is not a number, it is a **range**. \"5 m\" does not mean 5 m; it means somewhere between 4.95 and 5.05, and that is all anyone can honestly claim.\n\nThat would be a small point if uncertainty stayed small. It does not. The moment you multiply two measurements together, the uncertainties multiply too, and an answer can be far vaguer than either of the numbers that produced it. Bounds are how you find out how vague, before someone finds out the expensive way.",
+    "examples": [
+      {
+        "title": "Ordering flooring for a room",
+        "body": "A room measures 5 m by 4 m, each to the nearest 10 cm. So the area is 20 m² — except that it is not.\n\nThe length is somewhere in $4.95 \\leqslant l < 5.05$ and the width in $3.95 \\leqslant w < 4.05$. Multiply the smallest pair and the largest pair: the area lies between 19.5525 and 20.4525 m².\n\nThat is a spread of 0.9 m² — nearly a square metre — from a centimetre of doubt on each side. Order exactly 20 m² of flooring and you could be 0.45 m² short, which in a real room means one plank too few and a second delivery.\n\nThe lesson is in the sizes. Each measurement was uncertain by 0.1 m, a tenth of the length. Their product is uncertain by 0.9 of 20. Multiplying magnifies doubt, and that is why the upper bound is the number a trade orders to.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Lower bound",
+              "Upper bound"
+            ],
+            "rows": [
+              [
+                "Length",
+                "4.95 m",
+                "5.05 m"
+              ],
+              [
+                "Width",
+                "3.95 m",
+                "4.05 m"
+              ],
+              [
+                "Area",
+                "19.5525 m²",
+                "20.4525 m²"
+              ]
+            ],
+            "title": "Two small doubts, one large one"
+          },
+          "alt": "A table of the lower and upper bounds of a room measured as five metres by four, showing the area could be anywhere from nineteen point five five to twenty point four five square metres"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
