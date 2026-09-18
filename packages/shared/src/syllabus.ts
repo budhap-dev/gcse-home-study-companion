@@ -532,8 +532,8 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Defying Gravity from Wicked', topicId: 'defying-gravity' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Beethoven: Pathétique, first movement' },
-      { title: 'Purcell: Music for a While' },
+      { title: 'Beethoven: Pathétique, first movement', topicId: 'beethoven-pathetique' },
+      { title: 'Purcell: Music for a While', topicId: 'purcell-music-for-a-while' },
     ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Musical dictation' },
