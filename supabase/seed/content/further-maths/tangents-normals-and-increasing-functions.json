@@ -1,0 +1,1520 @@
+{
+  "id": "tangents-normals-and-increasing-functions",
+  "subjectId": "further-maths",
+  "unitId": "calculus",
+  "title": "Tangents, normals, and increasing and decreasing functions",
+  "specPoints": [
+    "4.4",
+    "4.5"
+  ],
+  "order": 2,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "A normal is perpendicular to the tangent",
+      "body": "So its gradient is $-\\frac{1}{m}$, where $m$ is the tangent gradient. Two perpendicular gradients multiply to $-1$, which is a check worth doing: if your two gradients do not multiply to $-1$, one of them is wrong before you have written a single equation."
+    },
+    {
+      "kind": "spot",
+      "title": "You need a gradient and a point, always",
+      "body": "Every tangent and normal question is the same shape. Differentiate and substitute to get the **gradient**; substitute into the original equation to get the **point**. Then $y - y_1 = m(x - x_1)$ does the rest. Missing the second substitution is the usual reason an answer goes wrong."
+    },
+    {
+      "kind": "shortcut",
+      "title": "The sign of the gradient is the whole answer",
+      "body": "A function is **increasing** where $\\frac{dy}{dx} > 0$ and **decreasing** where $\\frac{dy}{dx} < 0$. You never need to plot anything: differentiate, then ask where the result is positive. It is an inequality question wearing a calculus hat."
+    },
+    {
+      "kind": "check",
+      "title": "Substitute into the original, not the derivative",
+      "body": "The $y$ coordinate of the point comes from the **curve**, and the gradient comes from the **gradient function**. Substituting $x$ into $\\frac{dy}{dx}$ to find $y$ is a common and expensive slip, because everything downstream of it is then wrong."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two substitutions, then a straight line",
+        "body": "You can already find the gradient of a curve at a point. This topic turns that into the **equation of the tangent** there — and a tangent is just a straight line, so the work is GCSE coordinate geometry once the calculus has handed you a gradient.\n\nEvery question of this kind has the same three steps.\n\n**1. Find the point.** Substitute the given $x$ into the **original equation** to get $y$.\n\n**2. Find the gradient.** Differentiate, then substitute the same $x$ into the **gradient function**.\n\n**3. Put them together** with $y - y_1 = m(x - x_1)$.\n\n> The point comes from the curve. The gradient comes from the derivative. Two different substitutions into two different expressions.\n\nThat last sentence is worth more than it looks. The commonest way this goes wrong is substituting into the derivative and treating the answer as the $y$ coordinate, and every line after that is then wrong.\n\n**Worked through.** Take $y = x^{2}-4x+5$ and the point where $x = 3$.\n\n**The point:** $y = 3^2 - 4(3) + 5 = 9 - 12 + 5 = 2$. So the point is $(3, 2)$.\n\n**The gradient:** $\\frac{dy}{dx} = 2x-4$, and at $x = 3$ that is $2(3) - 4 = 2$.\n\n**The tangent:** $y - 2 = 2(x - 3)$, which rearranges to $y = 2x - 4$.\n\nThe specification names both $y = mx + c$ and $y - y_1 = m(x - x_1)$, and the second is faster here because you already have a point and a gradient rather than an intercept.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1,
+                6
+              ],
+              "yRange": [
+                -5,
+                10
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": -4,
+                  "c": 5,
+                  "label": "y = x² − 4x + 5"
+                }
+              ],
+              "lines": [
+                {
+                  "m": 2,
+                  "c": -4,
+                  "label": "tangent at (3, 2)"
+                }
+              ],
+              "points": [
+                {
+                  "x": 3,
+                  "y": 2,
+                  "label": "(3, 2)"
+                }
+              ]
+            },
+            "alt": "The parabola y equals x squared minus four x plus five with its tangent drawn at the point three comma two, the tangent having gradient two"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the equation of the tangent to $y = x^{2}-4x+5$ at $x = 3$.",
+            "steps": [
+              {
+                "text": "The point: substitute $x = 3$ into the curve. $9 - 12 + 5 = 2$, so the point is $(3, 2)$.",
+                "note": "Into the original equation, not the derivative. This is the step most often done wrong."
+              },
+              {
+                "text": "The gradient: $\\frac{dy}{dx} = 2x-4$.",
+                "note": "Differentiate first, before substituting anything."
+              },
+              {
+                "text": "At $x = 3$: $2(3) - 4 = 2$. So $m = 2$.",
+                "note": "Now the same x goes into the gradient function."
+              },
+              {
+                "text": "Use $y - y_1 = m(x - x_1)$: $y - 2 = 2(x - 3)$.",
+                "note": "A point and a gradient are exactly what this form wants."
+              },
+              {
+                "text": "Rearranged: $y = 2x - 4$.",
+                "note": "Only rearrange if the question asks for the form y = mx + c."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "The curve $y = x^{2}-4x+5$ passes through the point where $x = 3$. What is the $y$ coordinate of that point?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the equation of a tangent",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Substitute $x = 3$ into the **original equation**: $3^2 - 4(3) + 5 = 9 - 12 + 5 = 2$. The point is $(3, 2)$. Substituting into the derivative instead would give $2$, which is the gradient there, not the height.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "y = 2"
+            }
+          ],
+          "discriminators": [],
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "The normal",
+        "body": "The **normal** at a point on a curve is the line through that point at **right angles to the tangent**.\n\nYou already know what to do with perpendicular gradients from GCSE: if one line has gradient $m$, a line perpendicular to it has gradient\n\n$$-\\frac{1}{m}$$\n\nFlip the fraction and change the sign. And the check is that the two gradients multiply to $-1$.\n\n**So a normal question is a tangent question with one extra line of work.** Find the point. Find the tangent gradient. Turn it into the normal gradient. Then the same $y - y_1 = m(x - x_1)$.\n\n**Continuing the same example.** On $y = x^{2}-4x+5$ at $x = 3$ we had the point $(3, 2)$ and tangent gradient $2$.\n\n**Normal gradient:** $-\\frac{1}{2} = -0.5$.\n\n**Check:** $2 \\times -0.5 = -1$. Good.\n\n**Normal equation:** $y - 2 = -0.5(x - 3)$, which rearranges to $y = -0.5x + 3.5$.\n\n**Keep fractions exact.** A normal gradient of $-\\frac{1}{6}$ stays as $-\\frac{1}{6}$. Paper 1 is non-calculator and an exact answer is what is wanted; a rounded decimal can lose the accuracy mark even when the method is perfect.\n\n**One case to watch.** If the tangent is **horizontal** — gradient $0$ — then $-\\frac{1}{0}$ is undefined, and the normal is a **vertical** line. A vertical line through $x = a$ has equation $x = a$ and no gradient at all. It cannot be written as $y = mx + c$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1,
+                6
+              ],
+              "yRange": [
+                -4,
+                8
+              ],
+              "grid": true,
+              "square": true,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": -4,
+                  "c": 5,
+                  "label": "y = x² − 4x + 5"
+                }
+              ],
+              "lines": [
+                {
+                  "m": 2,
+                  "c": -4,
+                  "label": "tangent"
+                },
+                {
+                  "m": -0.5,
+                  "c": 3.5,
+                  "label": "normal"
+                }
+              ],
+              "points": [
+                {
+                  "x": 3,
+                  "y": 2,
+                  "label": "(3, 2)"
+                }
+              ]
+            },
+            "alt": "The curve with both the tangent and the normal drawn at the point three comma two, meeting at right angles, with the axes at equal scale so the right angle is visible"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Tangent gradient m",
+                "Normal gradient −1/m",
+                "Product"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "−1/2",
+                  "−1"
+                ],
+                [
+                  "3",
+                  "−1/3",
+                  "−1"
+                ],
+                [
+                  "−4",
+                  "1/4",
+                  "−1"
+                ],
+                [
+                  "1/2",
+                  "−2",
+                  "−1"
+                ],
+                [
+                  "0",
+                  "undefined: the normal is vertical",
+                  ""
+                ]
+              ],
+              "title": "Turning a tangent gradient into a normal gradient"
+            },
+            "alt": "A table of five tangent gradients with the corresponding normal gradient and the product of the two, which is minus one in every case"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "The tangent to a curve at a point has gradient $4$. What is the gradient of the normal at that point?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the equation of a normal",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A normal is perpendicular to the tangent, so its gradient is $-\\frac{1}{m} = -\\frac{1}{4}$. Check it: $4 \\times -\\frac{1}{4} = -1$, which is what perpendicular gradients always do.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "-1/4"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "-1/4",
+            "-0.25",
+            "minus a quarter"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "A full tangent and normal question",
+        "body": "Here is the kind of question the paper asks, worked end to end.\n\n> The curve $C$ has equation $y = x^{3}-2x$. Find the equations of the tangent and the normal to $C$ at the point where $x = 1$, giving each in the form $y = mx + c$.\n\nWork it yourself before reading on. The shape is always the same: point, gradient, tangent, normal.\n\nOne feature of this example is worth noticing in advance. The curve is a **cubic**, and the tangent at $x = 1$ crosses the curve again somewhere else. That does not stop it being a tangent — a tangent touches at **its** point, and what it does elsewhere is not the definition's business.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Tangent and normal to $y = x^{3}-2x$ at $x = 1$.",
+            "steps": [
+              {
+                "text": "The point: $1^3 - 2(1) = -1$, so the point is $(1, -1)$.",
+                "note": "Into the original equation."
+              },
+              {
+                "text": "Differentiate: $\\frac{dy}{dx} = 3x^{2}-2$.",
+                "note": "Term by term: $x^3$ gives $3x^2$, and $-2x$ gives $-2$."
+              },
+              {
+                "text": "The gradient at $x = 1$: $3(1)^2 - 2 = 1$.",
+                "note": "So the tangent has gradient 1 there."
+              },
+              {
+                "text": "Tangent: $y - (-1) = 1(x - 1)$, so $y = x - 2$.",
+                "note": "Careful with the double negative: $y + 1 = x - 1$ gives $y = x - 2$."
+              },
+              {
+                "text": "Normal gradient: $-\\frac{1}{1} = -1$.",
+                "note": "Check: $1 \\times -1 = -1$."
+              },
+              {
+                "text": "Normal: $y - (-1) = -1(x - 1)$, so $y = -x + 0$, that is $y = -x$.",
+                "note": "It happens to pass through the origin here, which is a coincidence rather than a rule."
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -2.5,
+                2.5
+              ],
+              "yRange": [
+                -4,
+                4
+              ],
+              "grid": true,
+              "square": true,
+              "curves": [
+                {
+                  "a": 0,
+                  "b": -2,
+                  "c": 0,
+                  "cube": 1,
+                  "label": "y = x³ − 2x"
+                }
+              ],
+              "lines": [
+                {
+                  "m": 1,
+                  "c": -2,
+                  "label": "tangent"
+                },
+                {
+                  "m": -1,
+                  "c": 0,
+                  "label": "normal"
+                }
+              ],
+              "points": [
+                {
+                  "x": 1,
+                  "y": -1,
+                  "label": "(1, −1)"
+                }
+              ]
+            },
+            "alt": "The cubic y equals x cubed minus two x with its tangent and normal at the point one comma minus one, drawn at equal axis scale"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "For $y = x^{3}-2x$, the tangent at $x = 1$ is $y = x - 2$. This line crosses the curve again at another point. Is it still a tangent?",
+          "options": [
+            "No: a tangent must not meet the curve at any other point",
+            "No: a line crossing a curve twice is a chord, not a tangent",
+            "Only if the second crossing is outside the range being considered",
+            "Yes: a tangent touches at its own point, whatever it does elsewhere"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "the equation of a tangent",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A tangent at a point is the line through that point with the same gradient as the curve there. That is a **local** condition. On a cubic a tangent very often crosses the curve somewhere else, and it is still the tangent at its own point. The idea that a tangent may touch only once comes from circles, where it happens to be true.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "yes, because the condition is local to the point"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Increasing and decreasing",
+        "body": "The specification puts this plainly: when the gradient is positive a function is **increasing**, and when the gradient is negative it is **decreasing**.\n\n$$\\frac{dy}{dx} > 0 \\implies \\text{increasing} \\qquad \\frac{dy}{dx} < 0 \\implies \\text{decreasing}$$\n\nSo a question asking where a function increases is an **inequality** question. Differentiate, then solve $\\frac{dy}{dx} > 0$.\n\n**Worked through.** Take $y = x^{3}-3x^{2}$.\n\n**Differentiate:** $\\frac{dy}{dx} = 3x^{2}-6x$.\n\n**Factorise:** $3x^2 - 6x = 3x(x - 2)$. This is the step that makes everything else easy, because it shows the gradient is zero at $x = 0$ and $x = 2$, and those are the only places the sign can change.\n\n**Test a value in each region.** Three regions: below $0$, between $0$ and $2$, above $2$.\n\n- At $x = -1$: $\\frac{dy}{dx} = 9$, so the function is **increasing** there.\n- At $x = 1$: $\\frac{dy}{dx} = -3$, so the function is **decreasing** there.\n- At $x = 3$: $\\frac{dy}{dx} = 9$, so the function is **increasing** there.\n\n**Conclusion:** the function is increasing for $x < 0$ and for $x > 2$, and decreasing for $0 < x < 2$.\n\n**Two things students get wrong.**\n\n**Assuming the signs alternate.** They often do, but not always — a repeated factor can leave the sign unchanged across a root. Test each region rather than assuming.\n\n**Giving one interval when there are two.** \"Increasing for $x < 0$ **and** $x > 2$\" is two separate intervals and both are needed. Writing $x < 0 < x > 2$ means nothing.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1.5,
+                3.5
+              ],
+              "yRange": [
+                -5,
+                5
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": -3,
+                  "b": 0,
+                  "c": 0,
+                  "cube": 1,
+                  "label": "y = x³ − 3x²"
+                }
+              ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "label": "(0, 0)"
+                },
+                {
+                  "x": 2,
+                  "y": -4,
+                  "label": "(2, −4)"
+                }
+              ]
+            },
+            "alt": "The cubic y equals x cubed minus three x squared, rising to a flat point at the origin, falling to a flat point at two comma minus four, then rising again"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Region",
+                "Test value",
+                "dy/dx there",
+                "The function is"
+              ],
+              "rows": [
+                [
+                  "x < 0",
+                  "−1",
+                  "9",
+                  "increasing"
+                ],
+                [
+                  "0 < x < 2",
+                  "1",
+                  "-3",
+                  "decreasing"
+                ],
+                [
+                  "x > 2",
+                  "3",
+                  "9",
+                  "increasing"
+                ]
+              ],
+              "title": "Testing the sign of the gradient in each region"
+            },
+            "alt": "A table of three regions of the x axis with a test value in each, the value of the gradient function there, and whether the function is increasing or decreasing"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "For $y = x^{3}-3x^{2}$, the gradient function is $3x^{2}-6x = 3x(x - 2)$. Where is the function decreasing?",
+          "options": [
+            "For $0 < x < 2$",
+            "For $x < 0$ and $x > 2$",
+            "For $x < 2$ only",
+            "Nowhere: a cubic always increases"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "increasing and decreasing",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Decreasing means $\\frac{dy}{dx} < 0$. Testing a value between the roots, at $x = 1$: $3(1)(1-2) = -3$, which is negative. Outside the roots the gradient is positive — at $x = -1$ it is $9$ and at $x = 3$ it is $9$. So the function decreases only between $0$ and $2$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "between 0 and 2"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Where the tangent is horizontal",
+        "body": "A horizontal tangent has gradient $0$, so finding where a curve is flat means solving\n\n$$\\frac{dy}{dx} = 0$$\n\nThat is worth isolating, because it turns up everywhere: it is the boundary between increasing and decreasing, it is what the next topic is entirely about, and it is a question in its own right.\n\n**Worked through.** On $y = x^{2}-4x+5$, the gradient function is $2x-4$. Setting it to zero:\n\n$$2x - 4 = 0 \\implies x = 2$$\n\nSubstituting back into the **curve**: $y = 4 - 8 + 5 = 1$. So the curve is flat at $(2, 1)$, which is the bottom of the parabola.\n\nThe tangent there is $y = 1$ — a horizontal line.\n\n**And the normal there is vertical.** $-\\frac{1}{0}$ is undefined, so the normal cannot be written as $y = mx + c$. It is the vertical line through $x = 2$, whose equation is simply\n\n$$x = 2$$\n\nThis is the one case where the recipe breaks, and it is worth recognising rather than pushing through. A question that asks for the normal at a stationary point is asking whether you know that.\n\n**On a cubic there can be two flat points.** For $y = x^{3}-3x^{2}$, solving $3x^{2}-6x = 0$ gives $3x(x-2) = 0$, so $x = 0$ or $x = 2$ — the two places the curve levels off, which you can see on the graph in the last step.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Curve",
+                "dy/dx",
+                "Flat where",
+                "At the point"
+              ],
+              "rows": [
+                [
+                  "x^{2}-4x+5",
+                  "2x-4",
+                  "x = 2",
+                  "(2, 1)"
+                ],
+                [
+                  "x^{3}-3x^{2}",
+                  "3x^{2}-6x",
+                  "x = 0 or x = 2",
+                  "(0, 0) and (2, −4)"
+                ],
+                [
+                  "x²",
+                  "2x",
+                  "x = 0",
+                  "(0, 0)"
+                ],
+                [
+                  "x³",
+                  "3x²",
+                  "x = 0",
+                  "(0, 0)"
+                ]
+              ],
+              "title": "Solving dy/dx = 0 to find the flat points"
+            },
+            "alt": "A table of four curves with their gradient functions, where each is flat, and the coordinates of those points"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "short-text",
+          "prompt": "The curve $y = x^{2}-4x+5$ has a horizontal tangent at one point. At what value of $x$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "increasing and decreasing",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Horizontal means gradient zero, so solve $\\frac{dy}{dx} = 0$. Here $2x-4 = 0$ gives $2x = 4$, so $x = 2$. Substituting back into the curve gives $y = 1$, so the flat point is $(2, 1)$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "2",
+            "x = 2"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Reading the sign of the gradient",
+        "body": "Once you are comfortable that the derivative's **sign** carries meaning, a lot of questions become quick.\n\n| What you are told | What it means |\n| --- | --- |\n| $\\frac{dy}{dx} > 0$ | the curve is rising as $x$ increases |\n| $\\frac{dy}{dx} < 0$ | the curve is falling |\n| $\\frac{dy}{dx} = 0$ | the curve is flat at that instant |\n| $\\frac{dy}{dx}$ large and positive | rising steeply |\n| $\\frac{dy}{dx}$ small and positive | rising gently |\n\n**Two facts that fall straight out.**\n\n**A function with $\\frac{dy}{dx}$ always positive is always increasing.** Take $y = x^3 + x$. Its gradient function is $3x^2 + 1$, and $3x^2$ can never be negative, so the gradient is at least $1$ everywhere. The curve rises across its whole length and never levels off.\n\n**A straight line has a constant derivative.** $y = 3x + 2$ gives $\\frac{dy}{dx} = 3$: positive, and the same everywhere, which is exactly what \"increasing at a constant rate\" means.\n\n**In context, the sign has a meaning in the context.** If $h$ is the height of a ball and $t$ is time, then $\\frac{dh}{dt} > 0$ means the ball is going **up**, $\\frac{dh}{dt} < 0$ means it is coming **down**, and $\\frac{dh}{dt} = 0$ is the instant at the very top where it is doing neither.\n\nQuestions often ask you to interpret rather than calculate, and the marks are for saying what the sign means in the words of the question — \"the ball is falling\", not \"the derivative is negative\".",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the sign tells you",
+              "boxes": [
+                {
+                  "title": "Positive",
+                  "body": "The function is increasing: y goes up as x goes up. The curve rises left to right."
+                },
+                {
+                  "title": "Negative",
+                  "body": "The function is decreasing. The curve falls left to right."
+                },
+                {
+                  "title": "Zero",
+                  "body": "Flat at that instant. The boundary between rising and falling, and where stationary points live."
+                },
+                {
+                  "title": "In context",
+                  "body": "Say what it means in the question’s own words: the ball is falling, the tank is emptying, the cost is rising."
+                }
+              ]
+            },
+            "alt": "Four boxes on what the sign of a derivative tells you, including how to express it in context"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Function",
+                "dy/dx",
+                "Always increasing?"
+              ],
+              "rows": [
+                [
+                  "x³ + x",
+                  "3x² + 1",
+                  "yes: 3x² ≥ 0, so the gradient is at least 1"
+                ],
+                [
+                  "3x + 2",
+                  "3",
+                  "yes: constant and positive"
+                ],
+                [
+                  "x²",
+                  "2x",
+                  "no: negative for x < 0"
+                ],
+                [
+                  "x³ − 3x²",
+                  "3x² − 6x",
+                  "no: negative between 0 and 2"
+                ]
+              ],
+              "title": "Deciding whether a function increases everywhere"
+            },
+            "alt": "A table of four functions with their gradient functions and whether each is increasing for every value of x"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A function has $\\frac{dy}{dx} = 3x^2 + 1$. What can you say about it?",
+          "options": [
+            "It is increasing only when $x$ is positive",
+            "It is decreasing when $x$ is negative",
+            "It is increasing for every value of $x$",
+            "It is flat at $x = 0$ and increasing elsewhere"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "increasing and decreasing",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$3x^2$ is never negative, whatever $x$ is, so $3x^2 + 1$ is always at least $1$. The gradient is positive everywhere, so the function increases everywhere and has no flat points at all. At $x = 0$ the gradient is $1$, not $0$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "increasing for all x, since 3x² + 1 is always positive"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: the shapes of these questions",
+        "body": "Almost every tangent, normal and sign question on the paper is one of four shapes. Recognising which you have been given is most of the work.\n\n**Shape 1: given $x$, find the tangent or normal.** The standard. Point from the curve, gradient from the derivative, then $y - y_1 = m(x-x_1)$.\n\n**Shape 2: given the gradient, find the point.** Reversed. \"Find where the tangent has gradient $5$\" means solve $\\frac{dy}{dx} = 5$, which gives the $x$, and then substitute into the curve for the $y$. Students who have only practised Shape 1 freeze here, and there is nothing new in it.\n\n**Shape 3: find where the curve is flat.** Solve $\\frac{dy}{dx} = 0$. A special case of Shape 2 with the gradient set to zero.\n\n**Shape 4: where is it increasing or decreasing?** Solve the inequality $\\frac{dy}{dx} > 0$ or $< 0$. Factorise, find the roots, test each region.\n\n**A worked Shape 2**, since it is the one that surprises people. On $y = x^{2}-4x+5$, where does the tangent have gradient $6$?\n\n$$2x-4 = 6 \\implies 2x = 10 \\implies x = 5$$\n\nThen $y = 25 - 20 + 5 = 10$, so the point is $(5, 10)$.\n\n**Two habits that protect marks.**\n\n**Label your two results.** Write \"point $(3, 2)$\" and \"gradient $2$\" as separate lines before assembling. A question asking for both a tangent and a normal then costs one extra line rather than a whole restart.\n\n**Check perpendicularity.** Multiply your tangent and normal gradients. If the answer is not $-1$, stop and find the error before writing any equations.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "The question says",
+                "What to solve",
+                "Then"
+              ],
+              "rows": [
+                [
+                  "find the tangent at x = a",
+                  "substitute a into dy/dx",
+                  "point from the curve, then y − y₁ = m(x − x₁)"
+                ],
+                [
+                  "find the normal at x = a",
+                  "substitute, then take −1/m",
+                  "same, with the new gradient"
+                ],
+                [
+                  "where does the gradient equal k",
+                  "dy/dx = k",
+                  "solve for x, then substitute into the curve"
+                ],
+                [
+                  "where is the curve flat",
+                  "dy/dx = 0",
+                  "solve for x, then substitute into the curve"
+                ],
+                [
+                  "where is it increasing",
+                  "dy/dx > 0",
+                  "factorise, find roots, test each region"
+                ]
+              ],
+              "title": "The four shapes, and what each one asks you to solve"
+            },
+            "alt": "A table of five question wordings with the equation or inequality each requires and what to do next"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "On the curve $y = x^{2}-4x+5$, find the value of $x$ at which the tangent has gradient $6$.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "putting it together",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Set the gradient function equal to $6$: $2x-4 = 6$. So $2x = 10$ and $x = 5$. (If the question went on to ask for the point, substitute back into the curve: $y = 25 - 20 + 5 = 10$.)",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "sets the gradient function equal to 6 and solves to x = 5"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "Three questions, one of each of the common shapes. Work them fully before checking.\n\n**A.** The curve $y = x^2 + 2x - 3$ passes through the point where $x = 1$. Find the equation of the **tangent** there, in the form $y = mx + c$.\n\n**B.** For the same curve, find the equation of the **normal** at $x = 1$.\n\n**C.** For $y = x^3 - 12x$, find the values of $x$ where the curve is **flat**, and state where the curve is **decreasing**.\n\nFor each, write down the point and the gradient as separate labelled results before assembling anything.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Working",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "A: point",
+                  "y = 1 + 2 − 3 = 0",
+                  "(1, 0)"
+                ],
+                [
+                  "A: gradient",
+                  "dy/dx = 2x + 2, at x = 1 gives 4",
+                  "m = 4"
+                ],
+                [
+                  "A: tangent",
+                  "y − 0 = 4(x − 1)",
+                  "y = 4x − 4"
+                ],
+                [
+                  "B: normal gradient",
+                  "−1/4",
+                  "m = −1/4"
+                ],
+                [
+                  "B: normal",
+                  "y − 0 = −¼(x − 1)",
+                  "y = −x/4 + 1/4"
+                ],
+                [
+                  "C: flat where",
+                  "3x² − 12 = 0, so x² = 4",
+                  "x = −2 and x = 2"
+                ],
+                [
+                  "C: decreasing",
+                  "gradient negative between the roots",
+                  "−2 < x < 2"
+                ]
+              ],
+              "title": "The answers, with the working that produces each"
+            },
+            "alt": "A table giving the working and the answer for each part of the three practice questions"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "In part C, $y = x^3 - 12x$ has $\\frac{dy}{dx} = 3x^2 - 12$. Where is the curve decreasing?",
+          "options": [
+            "For $x < -2$ and $x > 2$",
+            "For $x < 2$ only",
+            "Nowhere, since $3x^2$ is never negative",
+            "For $-2 < x < 2$"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "increasing and decreasing",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Solve $3x^2 - 12 = 0$: $x^2 = 4$, so $x = -2$ and $x = 2$. Test between them, at $x = 0$: $3(0) - 12 = -12$, negative, so the curve is decreasing there. Outside, at $x = 3$: $27 - 12 = 15$, positive. So it decreases exactly between $-2$ and $2$. The last option confuses $3x^2$ with $3x^2 - 12$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "between minus two and two"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- Every tangent or normal question needs **two substitutions**: the **point** from the original equation, the **gradient** from the derivative.\n- Assemble with $y - y_1 = m(x - x_1)$, and rearrange to $y = mx + c$ only if asked.\n- A **normal** is perpendicular to the tangent, so its gradient is $-\\frac{1}{m}$. **Check that the two gradients multiply to $-1$.**\n- If the tangent is **horizontal**, the normal is **vertical** and has equation $x = a$, with no gradient.\n- **Keep fractions exact.** Paper 1 is non-calculator.\n- $\\frac{dy}{dx} > 0$ means **increasing**; $\\frac{dy}{dx} < 0$ means **decreasing**; $\\frac{dy}{dx} = 0$ means **flat**.\n- To find intervals: **factorise** the gradient function, find where it is zero, and **test a value in each region** rather than assuming the signs alternate.\n- Two separate intervals need both stating: \"$x < 0$ and $x > 2$\".\n- Given a gradient instead of a point, **solve $\\frac{dy}{dx} = k$** — the same work, run backwards.\n- In a context, say what the sign **means** in the question's own words.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "A line from a point",
+                  "equation": "y - y1 = m(x - x1)",
+                  "units": "needs one point and one gradient"
+                },
+                {
+                  "name": "The normal",
+                  "equation": "gradient = -1 / m",
+                  "units": "flip it over and change the sign"
+                },
+                {
+                  "name": "The check",
+                  "equation": "m(tangent) x m(normal) = -1",
+                  "units": "perpendicular gradients always do this"
+                },
+                {
+                  "name": "The sign test",
+                  "equation": "dy/dx > 0 rising, dy/dx < 0 falling",
+                  "units": "and zero means flat at that instant"
+                }
+              ]
+            },
+            "alt": "A reference card with the point-gradient form of a line, the normal gradient, the perpendicularity check and the sign test"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Which pair of results do you need before you can write down the equation of a tangent?",
+          "options": [
+            "A point on the curve and the gradient there",
+            "The gradient function and the second derivative",
+            "Two points that the tangent passes through",
+            "The $y$ intercept of the curve and its gradient"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the equation of a tangent",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A straight line is fixed by a **point** and a **gradient**, which is exactly what $y - y_1 = m(x - x_1)$ uses. The point comes from substituting into the curve; the gradient from substituting into the derivative. Two points would also fix a line, but you are only ever given one here.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a point and a gradient"
+            }
+          ],
+          "discriminators": []
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "To find the equation of the tangent to a curve at a given value of $x$, what two things do you need?",
+      "options": [
+        "A point on the curve and the gradient there",
+        "The gradient function and the second derivative",
+        "The $y$ intercept and the gradient of the curve",
+        "Two points through which the tangent passes"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the equation of a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A straight line is fixed by one **point** and a **gradient**. The point comes from substituting $x$ into the original equation; the gradient from substituting the same $x$ into the derivative. Then $y - y_1 = m(x - x_1)$ assembles them.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a point and a gradient"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "The curve $y = x^{2}+2x-3$ is given. Work out the $y$ coordinate of the point where $x = 1$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the equation of a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute into the **original equation**: $1^2 + 2(1) - 3 = 1 + 2 - 3 = 0$. The point is $(1, 0)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = 0"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "The tangent to a curve at a point has gradient $5$. What is the gradient of the normal at that point?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the equation of a normal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The normal is perpendicular to the tangent, so its gradient is $-\\frac{1}{m} = -\\frac{1}{5}$. Checking: $5 \\times -\\frac{1}{5} = -1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-1/5"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "-1/5",
+        "-0.2"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "A function has $\\frac{dy}{dx} = -3$ at a particular point. What is happening to the function there?",
+      "options": [
+        "It is increasing",
+        "It is flat",
+        "It is decreasing",
+        "It is at a maximum"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "increasing and decreasing",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A negative gradient means the function is **decreasing**: $y$ falls as $x$ rises. Increasing would need a positive gradient, and flat would need zero. A maximum is a particular kind of flat point, so it also requires zero.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "decreasing"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "Work out the gradient of the tangent to $y = x^{2}+2x-3$ at the point where $x = 1$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the equation of a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dy}{dx} = 2x+2$. Substitute $x = 1$: $2(1) + 2 = 4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates and substitutes to reach 4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "Find the equation of the tangent to $y = x^{2}+2x-3$ at the point where $x = 1$. Give your answer in the form $y = mx + c$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the equation of a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The point is $(1, 0)$ and the gradient is $4$. Using $y - y_1 = m(x - x_1)$: $y - 0 = 4(x - 1)$, so $y = 4x - 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = 4x - 4"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "y = 4x - 4"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "The tangent to $y = x^{2}+2x-3$ at $x = 1$ has gradient $4$. What is the equation of the **normal** at that point?",
+      "options": [
+        "$y = -\\frac{1}{4}x + \\frac{1}{4}$",
+        "$y = -4x + 4$",
+        "$y = \\frac{1}{4}x - \\frac{1}{4}$",
+        "$y = 4x - 4$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the equation of a normal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The normal gradient is $-\\frac{1}{4}$ and the point is $(1, 0)$. So $y - 0 = -\\frac{1}{4}(x - 1)$, giving $y = -\\frac{1}{4}x + \\frac{1}{4}$. The last option is the tangent, not the normal; the second uses $-m$ rather than $-\\frac{1}{m}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = −x/4 + 1/4"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "The curve $y = 2x^{2}-8x+1$ has a horizontal tangent at one point. Work out the value of $x$ there.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "increasing and decreasing",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Horizontal means the gradient is zero. Differentiate: $\\frac{dy}{dx} = 4x-8$. Set it to zero: $4x - 8 = 0$, so $x = 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets 4x − 8 = 0 and solves to x = 2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Why must the gradient of a tangent and the gradient of the normal at the same point multiply to $-1$?",
+      "options": [
+        "Because the two lines are perpendicular",
+        "Because both lines pass through the same point",
+        "Because the curve is flat where they meet",
+        "Because a normal always has a negative gradient"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the equation of a normal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The normal is defined as being at right angles to the tangent, and perpendicular gradients always multiply to $-1$. Passing through a shared point says nothing about the angle between them, and a normal can perfectly well have a positive gradient — it does whenever the tangent gradient is negative.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "they are perpendicular"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "For $y = x^{3}-12x$, the gradient function is $3x^{2}-12$. Find the two values of $x$ at which the curve is flat.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "increasing and decreasing",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Set the gradient function to zero: $3x^2 - 12 = 0$, so $3x^2 = 12$ and $x^2 = 4$. That gives $x = 2$ **and** $x = -2$. Both are needed: a square root has two solutions and only writing $x = 2$ loses half the answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = -2 and x = 2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = -2 and x = 2",
+        "-2 and 2",
+        "x = ±2",
+        "±2"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A student is asked for the tangent to a curve at $x = 2$. They differentiate, substitute $x = 2$ into the derivative, get $7$, and write the point as $(2, 7)$. What have they done wrong?",
+      "options": [
+        "The $y$ coordinate must come from the curve, not the derivative",
+        "They should have substituted $x = 7$ into the derivative instead",
+        "The gradient is the $y$ coordinate, so the point is correct",
+        "They should have differentiated twice before substituting"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the equation of a tangent",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substituting into the derivative gives the **gradient** at $x = 2$, which is $7$. The **$y$ coordinate** comes from substituting $x = 2$ into the original equation. They have the right number in the wrong role, and every line after this will be wrong.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the y coordinate comes from the original equation"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "At a point on a curve the tangent is horizontal. What is the equation of the normal there?",
+      "options": [
+        "A horizontal line, $y = b$, with gradient zero",
+        "A line with gradient $-1$ through the point",
+        "A vertical line, $x = a$, with no gradient",
+        "There is no normal at a point where the curve is flat"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the equation of a normal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The tangent has gradient $0$, so the normal gradient would be $-\\frac{1}{0}$, which is undefined. Geometrically the normal is at right angles to a horizontal line, so it is **vertical**, and a vertical line through $x = a$ has equation $x = a$. It does have a normal; that normal just cannot be written as $y = mx + c$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a vertical line, x = a"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "On the curve $y = 2x^{2}-8x+1$, find the value of $x$ at which the tangent has gradient $4$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "putting it together",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Set the gradient function equal to the wanted gradient: $4x-8 = 4$. So $4x = 12$ and $x = 3$. This is the standard question run backwards — instead of being given $x$ and finding the gradient, you are given the gradient and find $x$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets 4x − 8 = 4 and solves to x = 3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "For $y = x^{3}-12x$, where is the curve increasing?",
+      "options": [
+        "For $-2 < x < 2$",
+        "For $x > 2$ only",
+        "Everywhere, since it is a cubic",
+        "For $x < -2$ and for $x > 2$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "increasing and decreasing",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The gradient function is $3x^{2}-12$, which is zero at $x = \\pm 2$. Testing: at $x = -3$ it is $27 - 12 = 15$, positive; at $x = 0$ it is $-12$, negative; at $x = 3$ it is $15$, positive. So the curve rises outside $\\pm 2$ and falls between them. Both outer intervals are part of the answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x < −2 and x > 2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "The volume $V$ of water in a tank at time $t$ satisfies $\\frac{dV}{dt} < 0$. What is happening?",
+      "options": [
+        "The tank is emptying",
+        "The tank is filling",
+        "The tank is full and staying full",
+        "The tank is empty and staying empty"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "increasing and decreasing",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A negative rate of change means the quantity is **decreasing**, so the volume is falling and the tank is emptying. A tank staying at a constant level, full or empty, would have $\\frac{dV}{dt} = 0$. Questions like this want the meaning in the context, not \"the derivative is negative\".",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the tank is emptying"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A function has $\\frac{dy}{dx} = x^2 + 4$. Which statement is true?",
+      "options": [
+        "It is flat where $x = -2$ and where $x = 2$",
+        "It is increasing everywhere and has no flat points",
+        "It is decreasing when $x$ is negative",
+        "It is flat at $x = 0$, where the gradient is zero"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "increasing and decreasing",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x^2$ is never negative, so $x^2 + 4$ is always at least $4$. The gradient is positive for every $x$, so the function increases everywhere and never levels off. At $x = 0$ the gradient is $4$, not $0$. Setting $x^2 + 4 = 0$ has no real solutions, which is another way of saying the same thing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "increasing everywhere, since x² + 4 is always positive"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "The curve $C$ has equation $y = 2x^{2}-8x+1$.\n\n(a) Find the equation of the tangent to $C$ at the point where $x = 3$, giving your answer in the form $y = mx + c$.\n\n(b) Find the equation of the normal to $C$ at the same point.\n\n(c) Verify that your two gradients are consistent with the lines being perpendicular.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the equation of a normal",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**(a) The tangent.**\n\n**The point.** Substitute $x = 3$ into the curve:\n\n$$y = 2(3)^2 - 8(3) + 1 = 18 - 24 + 1 = -5$$\n\nSo the point of contact is $(3, -5)$.\n\n**The gradient.** Differentiate:\n\n$$\\frac{dy}{dx} = 4x-8$$\n\nand at $x = 3$ that is $4(3) - 8 = 12 - 8 = 4$.\n\n**Assemble.** Using $y - y_1 = m(x - x_1)$ with the point $(3, -5)$ and $m = 4$:\n\n$$y - (-5) = 4(x - 3)$$\n\n$$y + 5 = 4x - 12$$\n\n$$y = 4x -17$$\n\n**(b) The normal.**\n\nThe normal is perpendicular to the tangent, so its gradient is\n\n$$-\\frac{1}{4} = -0.25$$\n\nThrough the same point $(3, -5)$:\n\n$$y - (-5) = -0.25(x - 3)$$\n\n$$y + 5 = -\\frac{1}{4}x + \\frac{3}{4}$$\n\n$$y = -\\frac{1}{4}x - \\frac{17}{4}$$\n\nAs a decimal that is $y = -0.25x -4.25$, but the fractional form is the one to give on a non-calculator paper.\n\n**(c) The check.**\n\n$$4 \\times \\left(-0.25\\right) = 4 \\times -\\frac{1}{4} = -1$$\n\nPerpendicular gradients multiply to $-1$, and these do, so the two lines are at right angles as required.\n\n**A note on method.** Writing the point and the gradient down as two separate labelled results before assembling anything is what makes part (b) almost free: the point is already known and only the gradient changes. It also makes the commonest error in this topic impossible, which is substituting into the derivative and using the answer as a $y$ coordinate.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes x = 3 into the original equation"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "reaches the point (3, −5)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates to 4x − 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "tangent gradient 4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "tangent y = 4x − 17"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "normal gradient as −1 over the tangent gradient"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "normal equation through the same point"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "verifies the gradients multiply to −1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Finds the point (3, −5) by substituting into the original equation",
+          "marks": 2
+        },
+        {
+          "text": "Differentiates to 4x − 8 and finds the tangent gradient 4",
+          "marks": 2
+        },
+        {
+          "text": "Assembles the tangent equation correctly as y = 4x − 17",
+          "marks": 2
+        },
+        {
+          "text": "Finds the normal gradient as −1/4, gives its equation, and verifies the product is −1",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a) The tangent.**\n\n**The point.** Substitute $x = 3$ into the curve:\n\n$$y = 2(3)^2 - 8(3) + 1 = 18 - 24 + 1 = -5$$\n\nSo the point of contact is $(3, -5)$.\n\n**The gradient.** Differentiate:\n\n$$\\frac{dy}{dx} = 4x-8$$\n\nand at $x = 3$ that is $4(3) - 8 = 12 - 8 = 4$.\n\n**Assemble.** Using $y - y_1 = m(x - x_1)$ with the point $(3, -5)$ and $m = 4$:\n\n$$y - (-5) = 4(x - 3)$$\n\n$$y + 5 = 4x - 12$$\n\n$$y = 4x -17$$\n\n**(b) The normal.**\n\nThe normal is perpendicular to the tangent, so its gradient is\n\n$$-\\frac{1}{4} = -0.25$$\n\nThrough the same point $(3, -5)$:\n\n$$y - (-5) = -0.25(x - 3)$$\n\n$$y + 5 = -\\frac{1}{4}x + \\frac{3}{4}$$\n\n$$y = -\\frac{1}{4}x - \\frac{17}{4}$$\n\nAs a decimal that is $y = -0.25x -4.25$, but the fractional form is the one to give on a non-calculator paper.\n\n**(c) The check.**\n\n$$4 \\times \\left(-0.25\\right) = 4 \\times -\\frac{1}{4} = -1$$\n\nPerpendicular gradients multiply to $-1$, and these do, so the two lines are at right angles as required.\n\n**A note on method.** Writing the point and the gradient down as two separate labelled results before assembling anything is what makes part (b) almost free: the point is already known and only the gradient changes. It also makes the commonest error in this topic impossible, which is substituting into the derivative and using the answer as a $y$ coordinate."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "The curve $C$ has equation $y = x^{3}-12x$.\n\n(a) Find $\\frac{dy}{dx}$ and hence the values of $x$ at which $C$ is flat.\n\n(b) Determine the intervals on which $C$ is increasing and on which it is decreasing, justifying your answer.\n\n(c) A student says \"the curve must be increasing for $x > -2$, because that is where the gradient function stops being zero.\" Explain why this reasoning is wrong.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "increasing and decreasing",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**(a) The gradient function and the flat points.**\n\n$$\\frac{dy}{dx} = 3x^{2}-12$$\n\nFlat means the gradient is zero:\n\n$$3x^2 - 12 = 0 \\implies x^2 = 4 \\implies x = 2 \\text{ or } x = -2$$\n\n**Both** values are needed. Taking the square root of $4$ gives $\\pm 2$, and writing only $x = 2$ throws away half the answer — a slip that costs marks in this topic more than any other.\n\n**(b) Increasing and decreasing.**\n\nThe gradient can only change sign at $x = -2$ and $x = 2$, so those two values divide the line into three regions. Test one value in each.\n\n- **$x < -2$**, test $x = -3$: $3(9) - 12 = 15$. Positive, so **increasing**.\n- **$-2 < x < 2$**, test $x = 0$: $3(0) - 12 = -12$. Negative, so **decreasing**.\n- **$x > 2$**, test $x = 3$: $3(9) - 12 = 15$. Positive, so **increasing**.\n\nSo $C$ is **increasing for $x < -2$ and for $x > 2$**, and **decreasing for $-2 < x < 2$**.\n\nBoth increasing intervals have to be stated. They are separate pieces of the $x$ axis with a decreasing stretch between them, and they cannot be combined into one inequality.\n\n**(c) Why the student's reasoning fails.**\n\nThe student has assumed that once the gradient function has a root, everything beyond it is positive. That is not what a root tells you.\n\nA root of the gradient function is a place where the gradient **may** change sign — nothing more. It says the sign could be different on either side; it does not say which side is which, and it does not say the change is permanent.\n\nHere the reasoning gives the wrong answer immediately. At $x = 0$, which is greater than $-2$, the gradient is $-12$ — firmly negative. So the curve is decreasing at a point the student claims it is increasing.\n\nThe only reliable method is the one used in part (b): find **every** value where the gradient function is zero, and then **test a value in each region** the roots create. Testing is not a formality to be skipped once the roots are known; it is the step that actually determines the answer.\n\nIt is also worth noting that a sign change is not even guaranteed at a root. A repeated factor, such as $(x-1)^2$ in a gradient function, touches zero without crossing it, so the sign is the same on both sides. That is another reason to test rather than to assume the signs alternate.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates to 3x² − 12"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "solves to give both x = 2 and x = −2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tests the sign of the gradient in a region"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "tests all three regions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states both increasing intervals"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states the decreasing interval −2 < x < 2"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "explains that a root is only where the sign may change"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gives a counter-example such as the gradient at x = 0"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "evaluate"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Differentiates to 3x² − 12 and solves to x = ±2, giving both values",
+          "marks": 2
+        },
+        {
+          "text": "Tests the sign of the gradient in each of the three regions",
+          "marks": 2
+        },
+        {
+          "text": "States both increasing intervals and the decreasing interval correctly",
+          "marks": 2
+        },
+        {
+          "text": "Explains that a root is where the sign may change, not where it necessarily becomes positive",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a) The gradient function and the flat points.**\n\n$$\\frac{dy}{dx} = 3x^{2}-12$$\n\nFlat means the gradient is zero:\n\n$$3x^2 - 12 = 0 \\implies x^2 = 4 \\implies x = 2 \\text{ or } x = -2$$\n\n**Both** values are needed. Taking the square root of $4$ gives $\\pm 2$, and writing only $x = 2$ throws away half the answer — a slip that costs marks in this topic more than any other.\n\n**(b) Increasing and decreasing.**\n\nThe gradient can only change sign at $x = -2$ and $x = 2$, so those two values divide the line into three regions. Test one value in each.\n\n- **$x < -2$**, test $x = -3$: $3(9) - 12 = 15$. Positive, so **increasing**.\n- **$-2 < x < 2$**, test $x = 0$: $3(0) - 12 = -12$. Negative, so **decreasing**.\n- **$x > 2$**, test $x = 3$: $3(9) - 12 = 15$. Positive, so **increasing**.\n\nSo $C$ is **increasing for $x < -2$ and for $x > 2$**, and **decreasing for $-2 < x < 2$**.\n\nBoth increasing intervals have to be stated. They are separate pieces of the $x$ axis with a decreasing stretch between them, and they cannot be combined into one inequality.\n\n**(c) Why the student's reasoning fails.**\n\nThe student has assumed that once the gradient function has a root, everything beyond it is positive. That is not what a root tells you.\n\nA root of the gradient function is a place where the gradient **may** change sign — nothing more. It says the sign could be different on either side; it does not say which side is which, and it does not say the change is permanent.\n\nHere the reasoning gives the wrong answer immediately. At $x = 0$, which is greater than $-2$, the gradient is $-12$ — firmly negative. So the curve is decreasing at a point the student claims it is increasing.\n\nThe only reliable method is the one used in part (b): find **every** value where the gradient function is zero, and then **test a value in each region** the roots create. Testing is not a formality to be skipped once the roots are known; it is the step that actually determines the answer.\n\nIt is also worth noting that a sign change is not even guaranteed at a root. A repeated factor, such as $(x-1)^2$ in a gradient function, touches zero without crossing it, so the sign is the same on both sides. That is another reason to test rather than to assume the signs alternate."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Two substitutions, every time.** The point comes from the original equation; the gradient comes from the derivative. Write both down before you reach for the equation of a line.\n\n**Use $y - y_1 = m(x - x_1)$.** The specification names this form explicitly alongside $y = mx + c$, and it is faster here because you already have a point and a gradient. Rearrange at the end if the question wants $y = mx + c$.\n\n**The normal gradient is $-\\frac{1}{m}$.** Flip it and change the sign. Then check: the two gradients should multiply to $-1$.\n\n**Watch a zero gradient.** If the tangent is horizontal, the normal is vertical, and a vertical line is $x = a$ — it has no gradient and cannot be written as $y = mx + c$.\n\n**Increasing means $\\frac{dy}{dx} > 0$**, decreasing means $\\frac{dy}{dx} < 0$. Solve the inequality; do not sketch and guess.\n\n**Factorise the gradient function** when finding intervals. $3x^2 - 6x = 3x(x-2)$ tells you the sign changes at $0$ and at $2$, and then one test value in each region settles it.\n\n**Leave fractions as fractions.** A normal gradient of $-\\frac{1}{6}$ is exact; $-0.1666...$ is not, and Paper 1 is non-calculator.\n\n**Say which is which.** A question asking for \"the tangent and the normal\" wants both labelled. Marks are lost by giving two equations without saying which is which.",
+    "examinerErrors": [
+      "Substituting $x$ into the derivative to find the $y$ coordinate of the point.",
+      "Using the tangent gradient for the normal, or forgetting to change its sign.",
+      "Writing the normal gradient as $-m$ rather than $-\\frac{1}{m}$.",
+      "Leaving the answer as $y - 2 = 2(x - 3)$ when the question asked for the form $y = mx + c$.",
+      "Rounding an exact fractional gradient to a decimal on the non-calculator paper.",
+      "Saying a function is increasing because the graph \"goes up\", without using the sign of the derivative.",
+      "Giving a single interval where the gradient function changes sign more than once."
+    ],
+    "grade9Looks": "A top answer writes down the point and the gradient as two separate labelled results before assembling anything, so neither can be left out. It uses $y - y_1 = m(x - x_1)$ and rearranges only if asked. It checks that the tangent and normal gradients multiply to $-1$. For increasing and decreasing it factorises the gradient function, identifies every value where the sign can change, and tests a value in each region rather than assuming the pattern alternates. And it keeps fractions exact throughout."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

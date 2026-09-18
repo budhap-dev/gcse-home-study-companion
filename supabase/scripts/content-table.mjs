@@ -10,7 +10,7 @@
  *   node supabase/scripts/content-table.mjs           # check, exits 1 if stale
  *   node supabase/scripts/content-table.mjs --write   # rewrite the table
  */
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
+import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -20,10 +20,22 @@ export const DOC = join(ROOT, 'docs/content-order.md')
 
 /** The order the table has always used, and the display name each subject appears under. */
 const SUBJECTS = [
-  ['maths', 'Mathematics'], ['physics', 'Physics'], ['chemistry', 'Chemistry'],
-  ['biology', 'Biology'], ['computer-science', 'Computer Science'],
+  ['maths', 'Mathematics'], ['further-maths', 'Further Maths'], ['physics', 'Physics'],
+  ['chemistry', 'Chemistry'], ['biology', 'Biology'], ['computer-science', 'Computer Science'],
   ['business', 'Business'], ['french', 'French'], ['music', 'Music'],
 ]
+
+/**
+ * A subject whose content directory exists but which nobody added to the list above was
+ * simply left out of the table, and the script still reported the doc as current. Fail
+ * instead: a missing subject is a missing section of the plan, not a formatting detail.
+ */
+function checkSubjectsAreComplete() {
+  const onDisk = readdirSync(CONTENT).filter((n) => statSync(join(CONTENT, n)).isDirectory())
+  const listed = new Set(SUBJECTS.map(([dir]) => dir))
+  const missing = onDisk.filter((dir) => !listed.has(dir))
+  if (missing.length) throw new Error(`content-table.mjs has no entry for: ${missing.join(', ')}`)
+}
 
 const cell = (titles) =>
   titles.length === 0
@@ -31,6 +43,7 @@ const cell = (titles) =>
     : `${titles.length}: ${[...titles].sort((a, b) => a.localeCompare(b, 'en')).join(' · ')}`
 
 export function contentTable() {
+  checkSubjectsAreComplete()
   const rows = SUBJECTS.map(([dir, name]) => {
     let files = []
     try {

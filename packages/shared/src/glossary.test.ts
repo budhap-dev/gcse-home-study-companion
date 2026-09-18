@@ -103,15 +103,18 @@ describe('searchGlossary', () => {
     }
   })
 
-  it('surfaces both sides of a genuine homonym', () => {
+  it('surfaces every side of a genuine homonym', () => {
     // Index is an exponent in Maths and an array position in Computer Science; vector is
-    // a disease carrier in Biology and a quantity in Physics. Both must be reachable.
+    // a disease carrier in Biology and a quantity in Physics. Tangent has three senses,
+    // since Further Maths defines it as the line whose gradient is the curve's gradient.
+    // Each list is checked against the top N hits, where N is its own length, so adding a
+    // subject to a term widens the list here rather than silently pushing one off the end.
     for (const [query, subjects] of [
       ['index', ['computer-science', 'maths']],
       ['vector', ['biology', 'physics']],
-      ['tangent', ['maths', 'physics']],
+      ['tangent', ['further-maths', 'maths', 'physics']],
     ] as const) {
-      const top = searchGlossary(ALL, query).slice(0, 2).map((h) => h.entry.subjectId).sort()
+      const top = searchGlossary(ALL, query).slice(0, subjects.length).map((h) => h.entry.subjectId).sort()
       expect(top, query).toEqual([...subjects].sort())
     }
   })

@@ -17,6 +17,7 @@ export const LEVEL_THRESHOLDS = [0, 60, 150, 300, 500, 800, 1200, 1700, 2400, 32
 /** Subject-themed level names, one per level. */
 export const LEVEL_NAMES: Record<SubjectId, string[]> = {
   maths: ['Counter', 'Adder', 'Multiplier', 'Factoriser', 'Solver', 'Grapher', 'Algebraist', 'Geometer', 'Prover', 'Analyst', 'Mathematician'],
+  'further-maths': ['Integer', 'Surd', 'Polynomial', 'Function', 'Gradient', 'Tangent', 'Derivative', 'Matrix', 'Identity', 'Proof', 'Further mathematician'],
   physics: ['Milli', 'Centi', 'Deci', 'Unit', 'Deca', 'Hecto', 'Kilo', 'Mega', 'Giga', 'Tera', 'Peta'],
   chemistry: ['Hydrogen', 'Helium', 'Lithium', 'Carbon', 'Oxygen', 'Sodium', 'Iron', 'Copper', 'Silver', 'Gold', 'Platinum'],
   biology: ['Cell', 'Tissue', 'Organ', 'System', 'Organism', 'Population', 'Community', 'Ecosystem', 'Biome', 'Biosphere', 'Biologist'],
