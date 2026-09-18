@@ -15,10 +15,12 @@ import { Settings } from '../routes/student/Settings.tsx'
 import { Flashcards } from '../routes/student/Flashcards.tsx'
 import { Search } from '../routes/student/Search.tsx'
 import { Glossary } from '../routes/student/Glossary.tsx'
+import { Family } from '../routes/parent/Family.tsx'
 
 /**
- * URL structure. No accounts: every screen is for the student using this device.
- * Subject routes are wrapped in SubjectTheme so the accent follows the URL.
+ * URL structure. Every screen is the student's own except /family, which is a parent
+ * reading their child's account. Subject routes are wrapped in SubjectTheme so the
+ * accent follows the URL.
  */
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,7 @@ export const router = createBrowserRouter([
       { path: 'search', element: <Search /> },
       { path: 'glossary', element: <Glossary /> },
       { path: 'progress', element: <Progress /> },
+      { path: 'family', element: <Family /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <NotFound /> },
     ],

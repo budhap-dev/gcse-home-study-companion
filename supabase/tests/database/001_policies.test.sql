@@ -2,7 +2,7 @@
 -- Fixtures: family A (parent PA, student SA), family B (parent PB, student SB), editor E.
 
 begin;
-select plan(20);
+select plan(26);
 
 -- Users straight into auth.users; the test role is allowed to.
 insert into auth.users (id, email) values
@@ -93,6 +93,43 @@ select test_as('00000000-0000-0000-0000-0000000000e1');
 select lives_ok(
   $$ select public.publish_topic_version('00000000-0000-0000-0000-0000000000c2') $$,
   'reviewed AI draft publishes');
+
+-- Parents reading their children's progress.
+--
+-- The sign-in allow-list is one family, with no family column, so "my children" means
+-- every student account on the list. These tests pin that down, along with the two
+-- limits that matter: a parent reads students only, never another parent, and a parent
+-- can read a student's progress but never write it.
+reset role;
+insert into public.allowed_emails (email, role, note) values
+  ('pa@test.local', 'parent', 'Parent A'),
+  ('sa@students.test.local', 'student', 'Ana'),
+  ('pb@test.local', 'parent', 'Parent B'),
+  ('sb@students.test.local', 'student', 'Ben');
+insert into public.user_progress (user_id, email, state) values
+  ('00000000-0000-0000-0000-0000000000a2', 'sa@students.test.local', '{"goalMinutes": 180}'),
+  ('00000000-0000-0000-0000-0000000000b2', 'sb@students.test.local', '{"goalMinutes": 90}'),
+  ('00000000-0000-0000-0000-0000000000b1', 'pb@test.local', '{"goalMinutes": 30}');
+
+-- is_allowed() and my_role() read the email claim, which test_as does not set.
+create or replace function test_as_account(uid uuid, mail text) returns void language plpgsql as $$
+begin
+  perform set_config('role', 'authenticated', true);
+  perform set_config('request.jwt.claims', json_build_object('sub', uid, 'email', mail, 'role', 'authenticated')::text, true);
+end $$;
+
+select test_as_account('00000000-0000-0000-0000-0000000000a1', 'pa@test.local');
+select is((select count(*) from public.user_progress), 2::bigint, 'a parent sees both student rows and no parent row');
+select is((select state ->> 'goalMinutes' from public.user_progress where email = 'sa@students.test.local'), '180', 'and reads the student''s state');
+select is((select count(*) from public.user_progress where email = 'pb@test.local'), 0::bigint, 'a parent cannot read another parent''s progress');
+select is((select count(*) from public.user_progress where email = 'pa@test.local'), 0::bigint, 'a parent with no row of their own sees none');
+-- An update a policy forbids removes no rows rather than raising, so count the effect.
+update public.user_progress set state = '{"goalMinutes": 9999}' where email = 'sa@students.test.local';
+reset role;
+select is((select state ->> 'goalMinutes' from public.user_progress where email = 'sa@students.test.local'), '180', 'a parent cannot write a student''s progress');
+
+select test_as_account('00000000-0000-0000-0000-0000000000a2', 'sa@students.test.local');
+select is((select count(*) from public.user_progress), 1::bigint, 'a student sees only their own progress row');
 
 select * from finish();
 rollback;
