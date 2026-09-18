@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation } from 'react-router'
-import { NAV } from './nav.ts'
+import { navFor } from './nav.ts'
 import { APP_BUILT, VERSION_LABEL } from './version.ts'
 import { Logo } from '../components/Logo.tsx'
 import { SearchBox } from '../components/SearchBox.tsx'
@@ -37,7 +37,7 @@ export function AppShell() {
 
       <div className="flex min-h-0 flex-1 md:flex-row">
         <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-60 shrink-0 flex-col gap-4 border-r border-rule bg-surface px-4 py-5 md:flex">
-          <Menu orientation="vertical" />
+          <Menu orientation="vertical" role={auth.role} />
           <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
             <span>{auth.status === 'allowed' ? `Signed in as ${auth.name ?? auth.email}. Progress is saved to your account.` : 'Progress is saved on this device.'}</span>
             <span title={`Built ${APP_BUILT}`}>{VERSION_LABEL}</span>
@@ -52,21 +52,22 @@ export function AppShell() {
       </div>
 
       <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 z-30 border-t border-rule bg-surface pb-[env(safe-area-inset-bottom)] md:hidden">
-        <Menu orientation="horizontal" />
+        <Menu orientation="horizontal" role={auth.role} />
       </nav>
     </div>
   )
 }
 
-function Menu({ orientation }: { orientation: 'vertical' | 'horizontal' }) {
+function Menu({ orientation, role }: { orientation: 'vertical' | 'horizontal'; role?: 'parent' | 'student' }) {
   const vertical = orientation === 'vertical'
+  const items = navFor(role)
   return (
     <ul
       className={vertical ? 'flex flex-col gap-1' : 'grid'}
       // Tailwind cannot see a class name built at runtime, so the column count is a style.
-      style={vertical ? undefined : { gridTemplateColumns: `repeat(${NAV.length}, minmax(0, 1fr))` }}
+      style={vertical ? undefined : { gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
     >
-      {NAV.map(({ to, label, icon: Icon, end }) => (
+      {items.map(({ to, label, icon: Icon, end }) => (
         <li key={to}>
           <NavLink
             to={to}
