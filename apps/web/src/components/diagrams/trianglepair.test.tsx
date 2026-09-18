@@ -69,4 +69,22 @@ describe('triangle-pair', () => {
     // One tick on AB and two on CA, per triangle: six tick lines in all.
     expect((html.match(/stroke-width="2"/g) ?? []).length).toBeGreaterThanOrEqual(6)
   })
+
+  /**
+   * `angles` is how many arcs to draw, not an angle in degrees. A caller thinking in
+   * degrees passed 45, and the component drew forty five concentric arcs across the
+   * whole picture rather than failing or clamping.
+   */
+  it('never draws more than three arcs at a vertex', () => {
+    const arcs = (kind: number | string) =>
+      (renderToStaticMarkup(
+        <TrianglePair alt="" props={{ left: { sides: [3, 4, 5], angles: [kind, 0, 0] } }} />,
+      ).match(/<path /g) ?? []).length
+
+    expect(arcs(1)).toBe(1)
+    expect(arcs(3)).toBe(3)
+    expect(arcs(45)).toBe(3)
+    expect(arcs(-2)).toBe(0)
+    expect(arcs('r')).toBe(1) // a right angle is one path, whatever the number rules say
+  })
 })

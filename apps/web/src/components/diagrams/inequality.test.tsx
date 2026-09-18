@@ -61,4 +61,32 @@ describe('inequality number line', () => {
     expect(at(-3)).toBeLessThan(at(0))
     expect(at(0)).toBeLessThan(at(4))
   })
+
+  /**
+   * `span` was Math.max(1, to - from), which guards a zero span but silently ruins a
+   * fractional one: a 49.9 to 50.1 tolerance band was squashed into the leftmost fifth
+   * of the line, and whole-number ticks left it with a single mark.
+   */
+  describe('a fractional range', () => {
+    const TOL = { from: 49.9, to: 50.1, lower: { value: 49.95, inclusive: true }, upper: { value: 50.05, inclusive: true } }
+    const tickLabels = (html: string) => [...html.matchAll(/font-size="12"[^>]*>([\d.-]+)</g)].map((m) => m[1]!)
+
+    it('spreads the bounds across the line rather than squashing them left', () => {
+      const cs = circles(svg(TOL))
+      expect(cs).toHaveLength(2)
+      // 49.95 and 50.05 sit a quarter and three quarters along a 49.9 to 50.1 line.
+      expect(cs[0]!.cx).toBeGreaterThan(100)
+      expect(cs[1]!.cx).toBeLessThan(320)
+      expect(cs[1]!.cx - cs[0]!.cx).toBeGreaterThan(120)
+    })
+
+    it('labels it in the right steps', () => {
+      expect(tickLabels(svg(TOL))).toEqual(['49.90', '49.95', '50.00', '50.05', '50.10'])
+    })
+
+    it('still marks every whole number on an ordinary line', () => {
+      expect(tickLabels(svg({ from: -5, to: 5, lower: { value: 2, inclusive: true } })))
+        .toEqual(['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5'])
+    })
+  })
 })

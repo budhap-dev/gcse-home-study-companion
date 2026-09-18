@@ -112,7 +112,11 @@ function One({ tri, cx, cy }: { tri: Tri; cx: number; cy: number }) {
       const u2 = { x: Math.cos(a2) * s, y: Math.sin(a2) * s }
       return <path d={`M${v.x + u1.x} ${v.y + u1.y} L${v.x + u1.x + u2.x} ${v.y + u1.y + u2.y} L${v.x + u2.x} ${v.y + u2.y}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" />
     }
-    return Array.from({ length: kind }, (_, i) => {
+    // Clamp: `kind` is how many arcs to draw, not an angle. Given 45 — which is what a
+    // caller thinking in degrees passes — this drew forty five concentric arcs across
+    // the whole picture rather than failing.
+    const arcs = Math.max(0, Math.min(3, Math.round(kind)))
+    return Array.from({ length: arcs }, (_, i) => {
       const r = 14 + i * 5
       const s = { x: v.x + Math.cos(a1) * r, y: v.y + Math.sin(a1) * r }
       const e = { x: v.x + Math.cos(a2) * r, y: v.y + Math.sin(a2) * r }
