@@ -2,7 +2,6 @@ import { getSubject, WORKSHEET_LEVELS } from '@study/shared'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
-import { Visual } from '../../components/Visual.tsx'
 import { termsForTopic } from '../../content/glossary.ts'
 import { StatusChip } from '../../components/StatusChip.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
@@ -94,7 +93,7 @@ export function Topic() {
         ))}
       </section>
 
-      {topic.why && <WhyCard why={topic.why} />}
+      {topic.why && <WhyCard matters={topic.why.matters} />}
 
       <nav aria-label="Topic parts" className="grid grid-cols-1 gap-2 md:grid-cols-2">
         <Part to="lesson" title="Lesson" note={`${topic.lesson.steps.length} steps, one idea each`} action={lesson && !evidence.lessonDone ? 'Resume' : 'Start'} />
@@ -112,6 +111,9 @@ export function Topic() {
         })}
         <Part to="quiz" title="Quiz" note={`${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action="Start" />
         <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
+        {topic.why && topic.why.examples.length > 0 && (
+          <Part to="why" title="Where you meet it" note={topic.why.examples.map((e) => e.title).join(' · ')} action="Read" />
+        )}
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={previewOf(topic.examTechnique.body)} action="Read" />
       </nav>
 
@@ -176,7 +178,7 @@ export function Topic() {
 const TIP_EMOJI: Record<string, string> = { remember: '🧠', spot: '🔍', shortcut: '⚡', check: '✅' }
 const TIP_LABEL: Record<string, string> = { remember: 'Remember it', spot: 'Spot it', shortcut: 'Quicker way', check: 'Check it' }
 
-const PART_EMOJI: Record<string, string> = { Lesson: '📖', 'Core worksheet': '📝', 'Higher worksheet': '📝', 'Advanced worksheet': '🧠', Quiz: '⚡', Flashcards: '🃏', 'Exam technique': '🎓' }
+const PART_EMOJI: Record<string, string> = { Lesson: '📖', 'Core worksheet': '📝', 'Higher worksheet': '📝', 'Advanced worksheet': '🧠', Quiz: '⚡', Flashcards: '🃏', 'Exam technique': '🎓', 'Where you meet it': '🌍' }
 
 function Part({ to, title, note, action }: { to: string; title: string; note: string; action: string }) {
   return (
@@ -192,45 +194,24 @@ function Part({ to, title, note, action }: { to: string; title: string; note: st
 }
 
 /**
- * Why the topic exists, and where the idea is met. Above the activities rather than
- * inside the lesson, because "what is this for" is the question a student has *before*
- * they start, and a lesson step can be skipped or buried.
+ * Why the topic exists. One paragraph, above the activities.
  *
- * The picture leads on a phone and sits beside the text from `sm` up, so three examples
- * stay scannable instead of becoming a column of stacked boxes.
+ * The examples used to sit here too, and the measurement said no: they pushed the Lesson
+ * tile 2.8 screens down a phone, against half a screen without them. They now have their
+ * own page and a tile in the grid, and the pictures have room to be their natural size.
+ * What stays is the framing, because a student who thinks the topic is pointless will not
+ * tap a tile to find out otherwise.
  */
-function WhyCard({ why }: { why: NonNullable<ReturnType<typeof getTopic>>['why'] }) {
-  if (!why) return null
+function WhyCard({ matters }: { matters: string }) {
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-2">
       <h2 className="chip w-fit" style={{ '--chip': 'var(--subject)' } as React.CSSProperties}><Smiley>🌍</Smiley>Why this exists</h2>
       <div
         className="rounded-2xl border border-rule px-4 py-3"
         style={{ background: 'color-mix(in srgb, var(--subject) 6%, var(--color-surface))' }}
       >
-        <RichText source={why.matters} />
+        <RichText source={matters} />
       </div>
-      {why.examples.length > 0 && (
-        <ul className="grid grid-cols-1 gap-2">
-          {why.examples.map((ex, i) => (
-            <li key={i} className="flex flex-col gap-3 rounded-xl border border-rule bg-surface px-4 py-3 sm:flex-row sm:items-start sm:gap-4">
-              {/* No height cap here. One was tried and it did nothing useful: a div's
-                  max-height does not shrink an SVG that sizes itself, so the picture
-                  overflowed by 20px and the title rendered underneath it. Each diagram
-                  component already caps its own width, which caps the height with it. */}
-              {ex.visual && (
-                <div className="w-full shrink-0 sm:w-64">
-                  <Visual visual={ex.visual} />
-                </div>
-              )}
-              <div className="flex min-w-0 flex-col gap-1">
-                <span className="font-bold">{ex.title}</span>
-                <RichText source={ex.body} className="text-sm" />
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
     </section>
   )
 }
