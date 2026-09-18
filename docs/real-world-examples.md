@@ -64,7 +64,15 @@ why: z.object({
 
 **Optional, so the 315 existing topics keep working** while it is rolled out.
 
-**Rendered on the topic page**, above the activities rather than inside the lesson. That is the moment a student asks "what is this for", and a lesson step can be skipped or buried. It should also reach search, so "why do we need calculus" finds something.
+**Split across two places, along the seam between the two halves.**
+
+`matters` renders **on the topic page**, above the activities. It is one paragraph, it is the answer to "what is this for", and a student who thinks the topic is pointless will not tap a tile to find out otherwise.
+
+`examples` live on **their own page**, reached by a tile in the activity grid beside Exam technique — which is the page's existing pattern for prose that deserves its own room.
+
+That split was not the first design. Everything was inline, and the measurement said no: the Lesson tile sat **2.8 screens down** a phone, against half a screen on a topic without the section. A student who came to do the lesson had to scroll past three screens of context first. Moving the examples out brought it back to **1.0 screens**.
+
+It also made the pictures better rather than worse. Inline they were squeezed into a 256px column; on their own page the spanner comparison renders at **520px**, which is its natural width. Room was the thing the section most needed.
 
 **Length:** `matters` around 60 to 100 words; each example 30 to 50. A card, not an essay. If it needs more than that it is probably a lesson step.
 
@@ -129,8 +137,8 @@ A **lesson** diagram shows the mathematics: axes, labels, the quantities in the 
 
 The design is a strip of cards near the top of the topic page, not a wall of prose.
 
-- **One `why` card first**, carrying the subject accent — the same treatment the content blockquote already uses, so it reads as the topic speaking rather than as another paragraph.
-- **Then one card per example.** Picture above the text on a phone; picture beside the text from about 640 px, where a two-column card stops the page becoming a column of stacked boxes.
+- **One `why` card on the topic page**, carrying the subject accent — the same treatment the content blockquote already uses, so it reads as the topic speaking rather than as another paragraph. The examples are a tile away, not below it.
+- **On the examples page, one card each**, picture above the text and full width. The two-column card was tried on the topic page and is what the split replaced: it cramped the pictures to make room for prose that had nowhere to go.
 - **Do not cap the picture's height in CSS.** This was tried and was worse than useless: a `max-height` on the wrapper does not shrink an SVG that sizes itself, so the picture overflowed by 20 px and the card's title rendered *underneath* it. Every automated check passed — no horizontal scroll, no text below the readable floor — and only a screenshot showed it. Each diagram component already caps its own width, which caps its height with it; the tallest of the three on Moments is 240 px, which sits in a card perfectly well.
 - **Head each card with the concrete noun** — *The door handle*, *Salt and sugar*, *The speedometer*. Never *Application 1*, and never *Real-world example*. The heading is part of the hook.
 - **A caption under the picture** where the picture needs one sentence to land, in the same small grey the rest of the pack uses for notes.

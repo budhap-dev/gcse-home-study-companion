@@ -11,6 +11,7 @@ import { Quiz } from '../routes/student/Quiz.tsx'
 import { Worksheet } from '../routes/student/Worksheet.tsx'
 import { WorksheetPrint } from '../routes/student/WorksheetPrint.tsx'
 import { ExamTechnique } from '../routes/student/ExamTechnique.tsx'
+import { WhyItExists } from '../routes/student/WhyItExists.tsx'
 import { Progress } from '../routes/student/Progress.tsx'
 import { Settings } from '../routes/student/Settings.tsx'
 import { Flashcards } from '../routes/student/Flashcards.tsx'
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
       { path: 'subjects/:subjectId', element: <SubjectTheme><TopicMap /></SubjectTheme> },
       { path: 'subjects/:subjectId/exam-technique', element: <SubjectTheme><ExamTechnique /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId', element: <SubjectTheme><Topic /></SubjectTheme> },
+      { path: 'subjects/:subjectId/topics/:topicId/why', element: <SubjectTheme><WhyItExists /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/lesson', element: <SubjectTheme><Lesson /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/quiz', element: <SubjectTheme><Quiz /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/worksheet/:level', element: <SubjectTheme><Worksheet /></SubjectTheme> },
