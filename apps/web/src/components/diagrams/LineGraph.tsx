@@ -25,6 +25,15 @@ interface Wave {
   colour?: string
   dashed?: boolean
 }
+/** A closed shape in graph units, joined in order. Pair it with `square` for true shape. */
+interface Polygon {
+  points: [number, number][]
+  label?: string
+  colour?: string
+  dashed?: boolean
+  /** Wash the inside, for a region rather than an outline. */
+  fill?: boolean
+}
 /** A circle in graph units. Pair it with `square` so it is drawn round, not oval. */
 interface Circle {
   cx: number
@@ -64,7 +73,8 @@ interface Curve {
  * italic x and y), xStep and yStep (tick spacing; chosen automatically when omitted,
  * so small ranges such as 0 to 0.2 still get a scale), waves [{fn, amplitude, label}]
  * for y = sin x, y = cos x and y = tan x with x in degrees, circles [{cx, cy, r}], and
- * square true to give both axes the same unit length so a circle comes out round. A curve
+ * square true to give both axes the same unit length so a circle comes out round, and
+ * polygons [{points, label}] for shapes on the axes. A curve
  * may also carry `base` (with optional `scale`) for the exponential y = scale x base^x.
  */
 export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt: string }) {
@@ -75,6 +85,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const points = (props.points as Point[] | undefined) ?? []
   const waves = (props.waves as Wave[] | undefined) ?? []
   const circles = (props.circles as Circle[] | undefined) ?? []
+  const polygons = (props.polygons as Polygon[] | undefined) ?? []
   const grid = props.grid !== false
   const xLabel = typeof props.xLabel === 'string' ? props.xLabel : undefined
   const yLabel = typeof props.yLabel === 'string' ? props.yLabel : undefined
@@ -256,6 +267,18 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
           <g key={`w${i}`}>
             <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={w.dashed ? '6 5' : undefined} strokeLinecap="round" />
             {w.label && <text x={sx(at) - 4} y={clear(sx(at) - 4, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{w.label}</text>}
+          </g>
+        )
+      })}
+      {polygons.map((g, i) => {
+        const colour = g.colour ?? palette[(lines.length + curves.length + waves.length + i) % palette.length]!
+        const pts = g.points.map(([x, y]) => `${sx(x).toFixed(1)},${sy(y).toFixed(1)}`).join(' ')
+        const cx = g.points.reduce((t, [x]) => t + x, 0) / g.points.length
+        const cy = g.points.reduce((t, [, y]) => t + y, 0) / g.points.length
+        return (
+          <g key={`g${i}`} clipPath={`url(#box-${clip})`}>
+            <polygon points={pts} fill={g.fill ? colour : 'none'} fillOpacity={g.fill ? 0.14 : undefined} stroke={colour} strokeWidth="2.5" strokeDasharray={g.dashed ? '6 5' : undefined} strokeLinejoin="round" />
+            {g.label && <text x={sx(cx)} y={clear(sx(cx), sy(cy) + 4, g.label, 13)} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={colour}>{g.label}</text>}
           </g>
         )
       })}
