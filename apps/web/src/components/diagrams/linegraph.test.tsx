@@ -113,4 +113,22 @@ describe('line graph curves', () => {
     const [ox, oy] = radii(renderToStaticMarkup(<LineGraph alt="" props={props} />))
     expect(ox).toBeGreaterThan(oy + 10)
   })
+
+  /**
+   * At a crossing, the lines are exactly where a label above the point would go, so the
+   * text ends up with a line drawn through it. labelBelow puts it under the point.
+   */
+  it('puts a point label below the point when asked, and above by default', () => {
+    const props = { xRange: [-60, 40], yRange: [-60, 110], lines: [{ m: 1, c: 0 }] }
+    const at = (html: string) => {
+      const circle = /<circle cx="([\d.-]+)" cy="([\d.-]+)"/.exec(html)!
+      const text = /<text x="[\d.-]+" y="([\d.-]+)"[^>]*font-size="12"[^>]*>both<\/text>/.exec(html)!
+      return { point: Number(circle[2]), label: Number(text[1]) }
+    }
+    const above = at(renderToStaticMarkup(<LineGraph alt="" props={{ ...props, points: [{ x: -40, y: -40, label: 'both' }] }} />))
+    const below = at(renderToStaticMarkup(<LineGraph alt="" props={{ ...props, points: [{ x: -40, y: -40, label: 'both', labelBelow: true }] }} />))
+    // SVG y grows downwards, so "below the point" is a larger y than the point itself.
+    expect(above.label).toBeLessThan(above.point)
+    expect(below.label).toBeGreaterThan(below.point)
+  })
 })
