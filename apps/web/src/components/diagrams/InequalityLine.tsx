@@ -27,7 +27,9 @@ export function InequalityLine({ props, alt }: { props: Record<string, unknown>;
   const H = 110
   const padX = 30
   const axisY = 68
-  const span = Math.max(1, to - from)
+  // Not Math.max(1, ...): that guards a zero span but silently ruins a fractional one.
+  // A 49.9 to 50.1 tolerance band was squashed into the leftmost fifth of the line.
+  const span = to > from ? to - from : 1
   const x = (v: number) => padX + ((v - from) / span) * (W - 2 * padX)
 
   // The shaded part runs from the lower bound to the upper one; a missing bound means
@@ -35,8 +37,24 @@ export function InequalityLine({ props, alt }: { props: Record<string, unknown>;
   const shadeFrom = lower ? x(lower.value) : padX
   const shadeTo = upper ? x(upper.value) : W - padX
 
+  /**
+   * Whole-number ticks suit the usual -5 to 5 line and nothing else: over a fractional
+   * range they produce one tick or none, and over a wide one they produce a smear. Step
+   * in 1, 2, 5 or 10 (times a power of ten) for about six labels, whatever the range.
+   */
+  const wholeTicks = Math.floor(to) - Math.ceil(from) + 1
+  const rough = span / 6
+  const power = 10 ** Math.floor(Math.log10(rough))
+  // Whole numbers where whole numbers work — a -5 to 5 line wants every integer marked,
+  // and that is what nearly every one of these diagrams is. Adapt only when they do not.
+  const tickStep = wholeTicks >= 3 && wholeTicks <= 13
+    ? 1
+    : [1, 2, 5, 10].map((m) => m * power).find((t) => t >= rough) ?? 10 * power
+  const decimals = Math.max(0, -Math.floor(Math.log10(tickStep)))
   const ticks: number[] = []
-  for (let v = Math.ceil(from); v <= to; v++) ticks.push(v)
+  for (let v = Math.ceil(from / tickStep) * tickStep; v <= to + tickStep / 1e6; v += tickStep) {
+    ticks.push(Number(v.toFixed(decimals + 1)))
+  }
 
   const circle = (b: Bound) => (
     <circle cx={x(b.value)} cy={axisY} r="6" fill={b.inclusive ? 'var(--subject)' : '#ffffff'} stroke="var(--subject)" strokeWidth="2.5" />
@@ -54,7 +72,7 @@ export function InequalityLine({ props, alt }: { props: Record<string, unknown>;
       {ticks.map((v) => (
         <g key={v}>
           <line x1={x(v)} y1={axisY - 5} x2={x(v)} y2={axisY + 5} stroke={INK_2} strokeWidth="1.5" />
-          <text x={x(v)} y={axisY + 22} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{v}</text>
+          <text x={x(v)} y={axisY + 22} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{v.toFixed(decimals)}</text>
         </g>
       ))}
 
