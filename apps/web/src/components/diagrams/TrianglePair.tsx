@@ -1,5 +1,9 @@
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
 
+/** Width of one character of the 12px length labels, and half their cap height. */
+const LENGTH_CHAR = 6.6
+const LENGTH_HALF_HEIGHT = 6
+
 interface Tri {
   /** Side lengths AB, BC, CA in arbitrary units; the triangle is drawn to scale. */
   sides: [number, number, number]
@@ -66,6 +70,23 @@ function One({ tri, cx, cy }: { tri: Tri; cx: number; cy: number }) {
     const l = Math.hypot(nx, ny) || 1
     return { x: m.x + (nx / l) * d, y: m.y + (ny / l) * d }
   }
+  /**
+   * A flat offset only clears a horizontal side, and pushing a label away from the
+   * centroid clears a steep one by less than it looks: on a thin triangle that ray runs
+   * oblique to the side, so most of the push is spent sliding along the line rather than
+   * away from it. Push along the side's own outward normal instead, far enough that the
+   * whole text box clears it and not merely the point it is anchored at.
+   */
+  const outText = (p: { x: number; y: number }, q: { x: number; y: number }, text: string, d: number) => {
+    const m = { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }
+    const len = Math.hypot(q.x - p.x, q.y - p.y) || 1
+    let nx = -(q.y - p.y) / len, ny = (q.x - p.x) / len
+    // Point it away from the centre of the triangle rather than into it.
+    if (nx * (m.x - centroid.x) + ny * (m.y - centroid.y) < 0) { nx = -nx; ny = -ny }
+    const halfW = (text.length * LENGTH_CHAR) / 2
+    const clear = d + halfW * Math.abs(nx) + LENGTH_HALF_HEIGHT * Math.abs(ny)
+    return { x: m.x + nx * clear, y: m.y + ny * clear }
+  }
   const tickMarks = (p: typeof A, q: typeof B, n: number) => {
     const m = { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }
     const dx = q.x - p.x, dy = q.y - p.y
@@ -105,7 +126,7 @@ function One({ tri, cx, cy }: { tri: Tri; cx: number; cy: number }) {
       {sides.map(([p, q], i) => (
         <g key={i}>
           {tri.ticks?.[i] ? tickMarks(p, q, tri.ticks[i]!) : null}
-          {tri.lengths?.[i] && (() => { const o = out(p, q, 14); return <text x={o.x} y={o.y + 4} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{tri.lengths![i]}</text> })()}
+          {tri.lengths?.[i] && (() => { const o = outText(p, q, tri.lengths![i]!, 10); return <text x={o.x} y={o.y + 4} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{tri.lengths![i]}</text> })()}
         </g>
       ))}
       {verts.map((v, i) => {
