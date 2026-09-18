@@ -37,8 +37,31 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
 /* Rich text from the content pack: markdown with KaTeX. */
 .rich-text p { margin: 0 0 0.6em; }
 .rich-text p:last-child { margin-bottom: 0; }
-.rich-text ul, .rich-text ol { margin: 0.4em 0; padding-left: 1.3em; }
+/* Tailwind's preflight sets list-style: none on every ul and ol, and the padding here is
+   no use without a marker to sit in it: 5444 authored bullet lines across the content
+   pack were rendering as unindented plain lines. The marker has to be put back by hand. */
+.rich-text ul { list-style: disc outside; margin: 0.4em 0; padding-left: 1.3em; }
+.rich-text ol { list-style: decimal outside; margin: 0.4em 0; padding-left: 1.5em; }
+.rich-text ul ul { list-style: circle outside; }
 .rich-text li { margin: 0.2em 0; }
+.rich-text li::marker { color: var(--color-ink-2); }
+/* Content uses a blockquote for the one rule a step turns on, and it was reaching the page
+   with no margin, no border and the same weight as body text, so it read as another
+   paragraph. It is the sentence the student should come away with; it should look it. */
+.rich-text blockquote {
+  margin: 0.7em 0;
+  padding: 0.5em 0.9em;
+  border-left: 3px solid var(--subject, var(--color-ink-2));
+  background: color-mix(in srgb, var(--subject, #1f3a93) 7%, transparent);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-weight: 600;
+}
+.rich-text blockquote p:last-child { margin-bottom: 0; }
+/* Preflight also resets links to `color: inherit; text-decoration: inherit`, which every
+   link in the app survives because it carries its own Tailwind classes. A link written in
+   content markdown carries none, so the six "Learn C#" links in the Computer Science
+   topics were reaching the page looking exactly like the prose around them. */
+.rich-text a { color: var(--subject, #1f3a93); font-weight: 600; text-decoration: underline; text-underline-offset: 0.15em; }
 .rich-text strong { font-weight: 700; }
 .rich-text .katex-display { margin: 0.6em 0; overflow-x: auto; overflow-y: hidden; }
 .rich-text .katex { font-size: 1.05em; }
