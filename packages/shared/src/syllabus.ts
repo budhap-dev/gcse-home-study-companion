@@ -276,11 +276,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Proteins, carbohydrates and DNA', topicId: 'proteins-carbohydrates-and-dna' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Conservation of mass and moles' },
-      { title: 'Reacting masses and limiting reactants' },
-      { title: 'Yield and atom economy' },
-      { title: 'Concentrations and titrations' },
-      { title: 'Gas volumes' },
+      { title: 'Conservation of mass and moles', topicId: 'conservation-of-mass-and-moles' },
+      { title: 'Reacting masses and limiting reactants', topicId: 'reacting-masses-and-limiting-reactants' },
+      { title: 'Yield and atom economy', topicId: 'yield-and-atom-economy' },
+      { title: 'Concentrations and titrations', topicId: 'concentrations-and-titrations' },
+      { title: 'Gas volumes', topicId: 'gas-volumes' },
     ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Potable and waste water' },
