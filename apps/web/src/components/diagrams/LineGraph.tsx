@@ -43,6 +43,9 @@ interface Curve {
   cube?: number
   /** When set, the curve is y = reciprocal / x instead, drawn in two arms either side of the asymptote. */
   reciprocal?: number
+  /** When set, the curve is y = scale x base^x, an exponential. Default scale 1. */
+  base?: number
+  scale?: number
   label?: string
   /**
    * Where along x to put the label, just above the curve. By default it sits at the
@@ -61,7 +64,8 @@ interface Curve {
  * italic x and y), xStep and yStep (tick spacing; chosen automatically when omitted,
  * so small ranges such as 0 to 0.2 still get a scale), waves [{fn, amplitude, label}]
  * for y = sin x, y = cos x and y = tan x with x in degrees, circles [{cx, cy, r}], and
- * square true to give both axes the same unit length so a circle comes out round.
+ * square true to give both axes the same unit length so a circle comes out round. A curve
+ * may also carry `base` (with optional `scale`) for the exponential y = scale x base^x.
  */
 export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const [xMin, xMax] = (props.xRange as [number, number] | undefined) ?? [-5, 5]
@@ -154,7 +158,10 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   // so a parabola whose arms leave the top simply stops at the edge.
   // A reciprocal is infinite at x = 0, which fails the box test in curvePath, so the pen
   // lifts there of its own accord and the two arms draw separately.
-  const yOf = (k: Curve, x: number) => (k.reciprocal !== undefined ? k.reciprocal / x : (k.cube ?? 0) * x * x * x + k.a * x * x + k.b * x + k.c)
+  const yOf = (k: Curve, x: number) =>
+    k.reciprocal !== undefined ? k.reciprocal / x
+    : k.base !== undefined ? (k.scale ?? 1) * k.base ** x
+    : (k.cube ?? 0) * x * x * x + k.a * x * x + k.b * x + k.c
   const curvePath = (k: Curve) => {
     let d = ''
     let pen = false

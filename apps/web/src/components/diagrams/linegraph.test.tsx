@@ -63,6 +63,31 @@ describe('line graph curves', () => {
     expect(paths(html)[0]!.match(/M/g)?.length).toBe(3)
   })
 
+  it('draws y = 2^x through the points an exponential must pass through', () => {
+    const props = { xRange: [-1, 4], yRange: [0, 17], curves: [{ a: 0, b: 0, c: 0, base: 2 }] }
+    const d = paths(renderToStaticMarkup(<LineGraph alt="" props={props} />))[0]!
+    const pts = [...d.matchAll(/[ML]([\d.]+) ([\d.]+)/g)].map((m) => [Number(m[1]), Number(m[2])] as const)
+    // Checked against plotted points, which use the same scales: 2^0 = 1, 2^2 = 4, 2^4 = 16.
+    const marks = [...renderToStaticMarkup(<LineGraph alt="" props={{ ...props, points: [{ x: 0, y: 1 }, { x: 2, y: 4 }, { x: 4, y: 16 }] }} />)
+      .matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])] as const)
+    expect(marks).toHaveLength(3)
+    for (const [mx, my] of marks) {
+      const near = pts.reduce((a, b) => (Math.abs(b[0] - mx) < Math.abs(a[0] - mx) ? b : a))
+      expect(Math.abs(near[1] - my)).toBeLessThan(2)
+    }
+  })
+
+  it('scales an exponential without changing where it sits at x = 0', () => {
+    const html = renderToStaticMarkup(<LineGraph alt="" props={{ xRange: [0, 4], yRange: [0, 50], curves: [{ a: 0, b: 0, c: 0, base: 2, scale: 5 }], points: [{ x: 0, y: 5 }, { x: 3, y: 40 }] }} />)
+    const d = paths(html)[0]!
+    const pts = [...d.matchAll(/[ML]([\d.]+) ([\d.]+)/g)].map((m) => [Number(m[1]), Number(m[2])] as const)
+    const marks = [...html.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])] as const)
+    for (const [mx, my] of marks) {
+      const near = pts.reduce((a, b) => (Math.abs(b[0] - mx) < Math.abs(a[0] - mx) ? b : a))
+      expect(Math.abs(near[1] - my)).toBeLessThan(2)
+    }
+  })
+
   it('draws a circle round when square is set, and oval when it is not', () => {
     const props = { xRange: [-6, 6], yRange: [-6, 6], circles: [{ cx: 0, cy: 0, r: 5 }] }
     const radii = (html: string) => {
