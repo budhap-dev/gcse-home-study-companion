@@ -10,6 +10,11 @@ import { emptyState, type ProgressState } from '../../progress/store.ts'
 import { parentSummary, type ParentSummary } from '../../progress/summary.ts'
 import { AssignPanel } from './Assign.tsx'
 import { TopicBreakdown } from './TopicBreakdown.tsx'
+import { StatusDonut } from '../../components/charts/StatusDonut.tsx'
+import { WeeklyBars } from '../../components/charts/WeeklyBars.tsx'
+import { SkillBars } from '../../components/charts/SkillBars.tsx'
+import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts.ts'
+import { skillStats } from '../../progress/xp.ts'
 
 export interface Child {
   email: string
@@ -154,12 +159,27 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
         )}
       </section>
 
-      {(s.needsWork.length > 0 || s.strengths.length > 0) && (
-        <section className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <Panel title="Doing well" colour="#2e8b57" emoji="💪" empty="Not enough answers yet." rows={s.strengths} />
-          <Panel title="Weakest skills" colour="#c8501f" emoji="📉" empty="Nothing below 60% yet." rows={s.needsWork} />
-        </section>
-      )}
+      <section className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#0f766e" emoji="🍩">Where the topics stand</SectionLabel>
+          <StatusDonut totals={statusTotals(child.state!)} />
+        </div>
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#2e8b57" emoji="📅">Study time by week</SectionLabel>
+          <WeeklyBars weeks={weeklyMinutes(child.state!)} goal={s.goalMinutes} />
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#c8501f" emoji="📉">Needs the most work</SectionLabel>
+          <SkillBars skills={rankedSkills(skillStats(child.state!).all, 6)} empty="Not enough answers yet. A skill needs two questions before it counts." />
+        </div>
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#2e8b57" emoji="💪">Going well</SectionLabel>
+          <SkillBars skills={s.strengths} empty="Nothing above 80% yet." />
+        </div>
+      </section>
 
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#0f766e" emoji="📊">Each subject</SectionLabel>
@@ -235,15 +255,3 @@ function Tile({ label, value, note }: { label: string; value: string; note: stri
   )
 }
 
-function Panel({ title, colour, emoji, rows, empty }: { title: string; colour: string; emoji: string; rows: { skill: string; subjectId: string; pct: number }[]; empty: string }) {
-  return (
-    <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
-      <SectionLabel colour={colour} emoji={emoji}>{title}</SectionLabel>
-      {rows.length === 0 ? <p className="text-sm text-ink-2">{empty}</p> : (
-        <ul className="flex flex-col gap-1 text-sm">
-          {rows.map((x) => <li key={x.subjectId + x.skill} className="flex justify-between gap-2"><span>{x.skill}</span><strong className="tabular-nums">{x.pct}%</strong></li>)}
-        </ul>
-      )}
-    </div>
-  )
-}

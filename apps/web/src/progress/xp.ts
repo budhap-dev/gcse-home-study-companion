@@ -72,7 +72,7 @@ export interface SkillStat {
   pct: number
 }
 
-export function skillStats(state: ProgressState): { strengths: SkillStat[]; weaknesses: SkillStat[] } {
+export function skillStats(state: ProgressState): { all: SkillStat[]; strengths: SkillStat[]; weaknesses: SkillStat[] } {
   const acc = new Map<string, { subjectId: string; scored: number; available: number; n: number }>()
   for (const a of state.attempts) {
     const subjectId = subjectOf.get(a.topicId) ?? ''
@@ -89,6 +89,7 @@ export function skillStats(state: ProgressState): { strengths: SkillStat[]; weak
     .filter(([, v]) => v.n >= 2 && v.available > 0)
     .map(([key, v]) => ({ skill: key.split('|')[1]!, subjectId: v.subjectId, attempts: v.n, pct: Math.round((100 * v.scored) / v.available) }))
   return {
+    all: stats,
     strengths: stats.filter((s) => s.pct >= 80).sort((a, b) => b.pct - a.pct || b.attempts - a.attempts).slice(0, 5),
     weaknesses: stats.filter((s) => s.pct < 60).sort((a, b) => a.pct - b.pct || b.attempts - a.attempts).slice(0, 5),
   }
