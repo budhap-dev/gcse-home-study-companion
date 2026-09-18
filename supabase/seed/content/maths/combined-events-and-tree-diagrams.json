@@ -31,6 +31,81 @@
       "body": "Before multiplying anything, check that **every pair of branches from a node adds to 1**. A tree that fails this has a wrong probability somewhere, and since every path multiplies through it, one bad branch spoils every answer taken from the diagram."
     }
   ],
+  "why": {
+    "matters": "A tree diagram is a way of not getting confused. Once two things happen one after the other, the branches keep track of what has already happened, and the arithmetic is just multiplying along a path.\n\nWhich sounds like bookkeeping until you meet a question where the answer is genuinely surprising — and there are more of those than you would expect. **Probability is the branch of maths where careful working most often contradicts the obvious answer**, and the tree is what makes the careful working possible.",
+    "examples": [
+      {
+        "title": "A test that is right 99% of the time",
+        "body": "A disease affects 1 person in 1000. There is a test that is right 99% of the time, both ways round. You test positive. What are the chances you have it?\n\nNearly everyone says 99%. Follow the branches for 100,000 people instead. 100 of them are ill, and the test catches 99 of those. 99,900 are well, and the test wrongly flags 1% of them, which is 999 people.\n\nSo 1,098 people test positive and only 99 of them are ill. A positive result means about a 9% chance — the false alarms outnumber the real cases ten to one, because there are so many more well people to be wrong about.\n\nThis is why screening programmes retest rather than treat, and it is not a quirk of the numbers. Any rare condition does this.",
+        "visual": {
+          "type": "diagram",
+          "component": "probability-tree",
+          "props": {
+            "tree": {
+              "children": [
+                {
+                  "label": "ill",
+                  "prob": "1/1000",
+                  "children": [
+                    {
+                      "label": "tests positive",
+                      "prob": "99/100"
+                    },
+                    {
+                      "label": "tests negative",
+                      "prob": "1/100"
+                    }
+                  ]
+                },
+                {
+                  "label": "well",
+                  "prob": "999/1000",
+                  "children": [
+                    {
+                      "label": "tests positive",
+                      "prob": "1/100"
+                    },
+                    {
+                      "label": "tests negative",
+                      "prob": "99/100"
+                    }
+                  ]
+                }
+              ]
+            },
+            "outcomeHeader": "outcome"
+          },
+          "alt": "A probability tree branching first into ill and well, then into a positive or negative test result for each, with the probability of each of the four paths worked out at the end"
+        }
+      },
+      {
+        "title": "Why the false alarms win",
+        "body": "The reason is worth seeing on its own, because it is the whole trick. Of the 1,098 positive results, 99 are real and 999 are mistakes.\n\nThe test is not bad. It is wrong only 1 time in 100. But it is applied to 99,900 well people and only 100 ill ones, so 1% of a very large group beats 99% of a very small one.\n\nWhenever you are looking for something rare, the errors come from the big group. That is the thing to remember, and it is worth more than the arithmetic.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Really ill",
+                "value": 99,
+                "display": "99",
+                "note": "caught correctly"
+              },
+              {
+                "label": "False alarms",
+                "value": 999,
+                "display": "999",
+                "note": "well, but flagged"
+              }
+            ],
+            "caption": "Positive results, out of 100,000 people tested"
+          },
+          "alt": "Two bars comparing the ninety nine people correctly identified as ill with the nine hundred and ninety nine well people wrongly flagged, the second bar about ten times the length of the first"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
