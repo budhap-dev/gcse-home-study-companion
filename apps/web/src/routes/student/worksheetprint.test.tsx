@@ -45,6 +45,17 @@ describe('the printable worksheet', () => {
     expect(render(`${sheet}?answers=1`)).toMatch(/[MAB]1/)
   })
 
+  /**
+   * Mark scheme descriptions are authored with LaTeX in them, so printing them as plain
+   * text put "$3\sqrt{5}$ or $2\sqrt{5}$ seen" on the page. Every authored string on
+   * this sheet goes through the renderer.
+   */
+  it('renders the maths in a mark scheme rather than printing the source', () => {
+    const html = render(`${sheet}?answers=1`)
+    expect(html).not.toMatch(/\$[^$<]*\\sqrt/)
+    expect(html).toContain('katex')
+  })
+
   /** The screen-only controls must not reach paper. */
   it('marks its controls as not printable', () => {
     expect(render(sheet)).toContain('no-print')

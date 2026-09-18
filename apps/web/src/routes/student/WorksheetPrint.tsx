@@ -108,8 +108,10 @@ function AnswerBlock({ question }: { question: Question }) {
       <ul className="flex flex-col">
         {question.markScheme.map((m, i) => (
           <li key={i} className="flex gap-2 text-ink-2">
-            <span className="font-bold tabular-nums">{m.code}</span>
-            <span>{m.description}</span>
+            <span className="shrink-0 font-bold tabular-nums">{m.code}</span>
+            {/* Mark scheme descriptions carry LaTeX — "$3\sqrt{5}$ or $2\sqrt{5}$ seen" —
+                so they go through RichText like every other authored string. */}
+            <RichText source={m.description} className="inline text-[14px]" />
             <span className="ml-auto shrink-0">({m.marks})</span>
           </li>
         ))}

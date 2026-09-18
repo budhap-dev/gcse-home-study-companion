@@ -169,6 +169,25 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
    card grows to whichever face is taller. With `position: absolute` the faces were out of
    flow and the card stayed at its min-height, so a question card carrying four options
    spilled its text out over the buttons below it. */
+/* The deck: two cards peeking out behind the live one, so the pile visibly shrinks.
+   Purely decorative, so they are inert and hidden from screen readers. */
+.card-stack { position: absolute; inset: 0; border-radius: 1rem; border: 2px solid var(--color-rule); background: var(--color-surface); }
+/* Enough rotation to read as a pile rather than a shadow. At a degree or two the top
+   card covered them almost completely and the deck looked like one card with a smudge. */
+.card-stack-1 { transform: rotate(-3deg) translate(-6px, 6px); box-shadow: 0 2px 6px rgb(0 0 0 / 0.06); }
+.card-stack-2 { transform: rotate(4.5deg) translate(7px, 11px); opacity: 0.8; box-shadow: 0 2px 6px rgb(0 0 0 / 0.05); }
+
+/* Leaving the deck. Known cards fly off to the right; ones to see again fall back onto
+   the pile, which is the same gesture a person would make with real cards. */
+@keyframes card-away { to { transform: translateX(46%) rotate(9deg); opacity: 0; } }
+@keyframes card-again { 40% { transform: translateY(-6px) rotate(-3deg); } to { transform: translateY(12px) scale(0.96); opacity: 0; } }
+.is-leaving-known { animation: card-away 0.32s ease-in forwards; }
+.is-leaving-again { animation: card-again 0.32s ease-in-out forwards; }
+
+/* A run of right answers earns a little warmth behind the counter. */
+@keyframes streak-glow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+.anim-streak { animation: streak-glow 1.3s ease-in-out infinite; }
+
 .flashcard-inner { display: grid; transition: transform 0.5s; transform-style: preserve-3d; }
 .flashcard-face { grid-area: 1 / 1; }
 .flashcard-inner.is-flipped { transform: rotateY(180deg); }
@@ -219,7 +238,7 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
 .press:active { transform: scale(0.97); }
 [data-motion="off"] .accordion::details-content { transition: none !important; }
 [data-motion="off"] .accordion summary > span:first-child { transition: none !important; }
-[data-motion="off"] .anim-fade-up, [data-motion="off"] .anim-pop, [data-motion="off"] .anim-bounce, [data-motion="off"] .anim-shake, [data-motion="off"] .anim-float, [data-motion="off"] .anim-flicker, [data-motion="off"] .anim-bar, [data-motion="off"] .confetti, [data-motion="off"] .flashcard-inner { animation: none !important; transition: none !important; }
+[data-motion="off"] .anim-fade-up, [data-motion="off"] .anim-pop, [data-motion="off"] .anim-bounce, [data-motion="off"] .anim-shake, [data-motion="off"] .anim-float, [data-motion="off"] .anim-flicker, [data-motion="off"] .anim-bar, [data-motion="off"] .confetti, [data-motion="off"] .flashcard-inner, [data-motion="off"] .is-leaving-known, [data-motion="off"] .is-leaving-again, [data-motion="off"] .anim-streak { animation: none !important; transition: none !important; }
 
 /* Celebration confetti. Reduced motion renders none of these. */
 @keyframes confetti-fall {
