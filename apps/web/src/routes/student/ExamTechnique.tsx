@@ -19,7 +19,7 @@ export function ExamTechnique() {
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-8">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">
-          <Link to={`/subjects/${subject.id}`} className="hover:underline">{subject.name}</Link> · {subject.board}
+          <Link to={`/subjects/${subject.id}`} className="inline-block -my-1 py-1 hover:underline">{subject.name}</Link> · {subject.board}
         </p>
         <h1 className="text-3xl font-bold leading-tight">Exam technique</h1>
         <p className="text-ink-2">How the papers work, what the command words ask for, and what makes an answer a strong one.</p>
@@ -100,7 +100,7 @@ export function ExamTechnique() {
                   <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">What a top answer does</span>
                   <RichText source={t.examTechnique.grade9Looks} className="text-sm" />
                 </div>
-                <Link to={`/subjects/${subject.id}/topics/${t.id}`} className="w-fit text-sm font-bold underline">Open topic</Link>
+                <Link to={`/subjects/${subject.id}/topics/${t.id}`} className="w-fit py-1 text-sm font-bold underline">Open topic</Link>
               </div>
             </details>
           ))}
