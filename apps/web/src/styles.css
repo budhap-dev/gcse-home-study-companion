@@ -38,6 +38,25 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
 :focus-visible { outline: 2px solid var(--subject); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
+/* Printing, for WKS-2. The browser's own Print to PDF is what produces the file, which
+   keeps KaTeX and the SVG diagrams as vectors: a PDF library would rasterise both and add
+   several hundred kilobytes for a worse result. */
+@media print {
+  @page { size: A4; margin: 15mm 14mm; }
+  /* The app's chrome is navigation, and navigation on paper is just wasted ink. */
+  header, aside, nav, .no-print { display: none !important; }
+  html, body { background: #fff !important; }
+  main { padding: 0 !important; }
+  .print-sheet { max-width: none !important; }
+  /* Colour costs ink and adds nothing here; the layout carries the structure. */
+  * { color: #000 !important; background: transparent !important; box-shadow: none !important; }
+  .print-sheet .border-rule, .print-sheet [class*="border"] { border-color: #999 !important; }
+  /* A question split across a page break is much harder to answer than a short page. */
+  .question { break-inside: avoid; page-break-inside: avoid; }
+  svg { max-width: 100% !important; }
+  a[href]::after { content: none !important; }
+}
+
 /* Rich text from the content pack: markdown with KaTeX. */
 .rich-text p { margin: 0 0 0.6em; }
 .rich-text p:last-child { margin-bottom: 0; }

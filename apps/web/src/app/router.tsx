@@ -9,6 +9,7 @@ import { Topic } from '../routes/student/Topic.tsx'
 import { Lesson } from '../routes/student/Lesson.tsx'
 import { Quiz } from '../routes/student/Quiz.tsx'
 import { Worksheet } from '../routes/student/Worksheet.tsx'
+import { WorksheetPrint } from '../routes/student/WorksheetPrint.tsx'
 import { ExamTechnique } from '../routes/student/ExamTechnique.tsx'
 import { Progress } from '../routes/student/Progress.tsx'
 import { Settings } from '../routes/student/Settings.tsx'
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
       { path: 'subjects/:subjectId/topics/:topicId/lesson', element: <SubjectTheme><Lesson /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/quiz', element: <SubjectTheme><Quiz /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/worksheet/:level', element: <SubjectTheme><Worksheet /></SubjectTheme> },
+      { path: 'subjects/:subjectId/topics/:topicId/worksheet/:level/print', element: <SubjectTheme><WorksheetPrint /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/flashcards', element: <SubjectTheme><Flashcards /></SubjectTheme> },
       { path: 'search', element: <Search /> },
       { path: 'glossary', element: <Glossary /> },

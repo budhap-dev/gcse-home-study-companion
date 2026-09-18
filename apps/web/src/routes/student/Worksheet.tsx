@@ -100,6 +100,7 @@ export function Worksheet() {
         <div className="flex flex-col gap-2 sm:flex-row">
           <button type="button" onClick={start} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Start worksheet</button>
           <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
+          <Link to={`${backTo}/worksheet/${level}/print`} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Print or save as PDF</Link>
         </div>
       </article>
     )
