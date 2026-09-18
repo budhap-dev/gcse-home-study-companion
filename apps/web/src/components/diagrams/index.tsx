@@ -48,6 +48,7 @@ import { BoxPlot } from './BoxPlot.tsx'
 import { CumulativeFrequency } from './CumulativeFrequency.tsx'
 import { FrequencyTree } from './FrequencyTree.tsx'
 import { Flowchart } from './Flowchart.tsx'
+import { SizeCompare } from './SizeCompare.tsx'
 import { AngleFigure } from './AngleFigure.tsx'
 
 /**
@@ -106,6 +107,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'cumulative-frequency': CumulativeFrequency,
   'frequency-tree': FrequencyTree,
   'flowchart': Flowchart,
+  'size-compare': SizeCompare,
 }
 
 export const INK = '#1e2330'

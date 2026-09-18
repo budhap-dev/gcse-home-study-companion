@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { Provenance, RichText, Slug } from './common.ts'
 import { ExamTechniqueNote, Lesson, Quiz, Worksheet } from './lesson.ts'
+import { Visual } from './visuals.ts'
 import { Question } from './questions.ts'
 
 /**
@@ -41,6 +42,36 @@ export const Topic = z.object({
         body: RichText,
       }),
     )
+    .optional(),
+  /**
+   * Why the topic exists, and where the idea shows up outside a classroom.
+   *
+   * The pack is good at *how* and was nearly silent on *why*: a student could finish
+   * differentiation able to turn 5x⁴ into 20x³ and not know what a derivative is for.
+   * `matters` answers the question the lesson assumes; `examples` are the two or three
+   * places the idea is met, each with a picture of the situation rather than of the
+   * algebra. Designed in docs/real-world-examples.md.
+   *
+   * Optional, because it is being rolled out across topics written before it existed,
+   * and because some topics — exam technique, dictation — honestly have no everyday
+   * example, and a forced one is worse than none.
+   */
+  why: z
+    .object({
+      matters: RichText,
+      examples: z
+        .array(
+          z.object({
+            /** The concrete noun: "The door handle", never "Application 1". */
+            title: z.string().min(1),
+            body: RichText,
+            /** A picture of the situation. The Visual union, so no new machinery. */
+            visual: Visual.optional(),
+          }),
+        )
+        .max(3)
+        .default([]),
+    })
     .optional(),
   lesson: Lesson,
   questions: z.array(Question).min(1),
