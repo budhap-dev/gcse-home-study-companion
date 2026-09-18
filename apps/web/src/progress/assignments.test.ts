@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { assignedTasks, doneAt, doneBefore, historyFor, outstanding, statusOf, type Assignment } from './assignments.ts'
+import { assignedTasks, doneAt, doneBefore, historyFor, outstanding, statusOf, upcoming, type Assignment } from './assignments.ts'
 import { emptyState, type AttemptRecord, type ProgressState } from './store.ts'
 
 const SET = '2026-09-10T09:00:00.000Z'
@@ -132,6 +132,29 @@ describe('assignedTasks', () => {
     const list = [a({ id: 'one' }), a({ id: 'two', topicId: 'laws-of-indices', kind: 'quiz', level: undefined })]
     const s = state({ attempts: [attempt({ topicId: 'laws-of-indices', kind: 'quiz', level: undefined })] })
     expect(outstanding(assignedTasks(list, s, '2026-09-18'))).toBe(1)
+  })
+
+  /**
+   * A whole term's work set in advance must not read as sixteen things due today. The
+   * parent screen promises a future start date does not count as outstanding, and this is
+   * the code that has to keep that promise.
+   */
+  it('does not count a task that has not started yet', () => {
+    const list = [
+      a({ id: 'live', dueOn: '2026-09-25' }),
+      a({ id: 'later', topicId: 'laws-of-indices', kind: 'quiz', level: undefined, startsOn: '2026-10-05', dueOn: '2026-10-25' }),
+      a({ id: 'later2', topicId: 'standard-form', kind: 'quiz', level: undefined, startsOn: '2026-10-05' }),
+    ]
+    const tasks = assignedTasks(list, emptyState(), '2026-09-18')
+    expect(outstanding(tasks)).toBe(1)
+    expect(upcoming(tasks)).toBe(2)
+  })
+
+  it('counts nothing as upcoming once every start date has passed', () => {
+    const list = [a({ id: 'live', startsOn: '2026-09-10', dueOn: '2026-09-25' })]
+    const tasks = assignedTasks(list, emptyState(), '2026-09-18')
+    expect(upcoming(tasks)).toBe(0)
+    expect(outstanding(tasks)).toBe(1)
   })
 })
 

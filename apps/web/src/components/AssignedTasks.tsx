@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { SectionLabel } from './KindChip.tsx'
-import { assignedTasks, outstanding, type AssignedTask } from '../progress/assignments.ts'
+import { assignedTasks, outstanding, upcoming, type AssignedTask } from '../progress/assignments.ts'
 import { useMyAssignments } from '../auth/assignments.ts'
 import { useProgress } from '../progress/useProgress.ts'
 
@@ -19,9 +19,15 @@ export function SetForYou() {
   if (list.length === 0) return null
   const tasks = assignedTasks(list, progress)
   const todo = outstanding(tasks)
+  const later = upcoming(tasks)
+  // Three different things to say, and "all done" is only one of them: a term's work set
+  // in advance has nothing to do yet and is not finished either.
+  const heading = todo > 0 ? `Set for you · ${todo} to do`
+    : later > 0 ? `Set for you · ${later} coming up`
+    : 'Set for you · all done'
   return (
     <section className="flex flex-col gap-2">
-      <SectionLabel colour="#6B4E9B" emoji="📌">{todo > 0 ? `Set for you · ${todo} to do` : 'Set for you · all done'}</SectionLabel>
+      <SectionLabel colour="#6B4E9B" emoji="📌">{heading}</SectionLabel>
       <ul className="flex flex-col gap-2">
         {tasks.map((t) => <li key={t.assignment.id}><AssignedCard task={t} /></li>)}
       </ul>
