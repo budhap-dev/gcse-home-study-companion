@@ -5,6 +5,7 @@ import { Logo } from '../components/Logo.tsx'
 import { SearchBox } from '../components/SearchBox.tsx'
 import { useAuth } from '../auth/useAuth.ts'
 import { ScrollToTop } from './ScrollToTop.tsx'
+import { useNewBuild } from './useNewBuild.ts'
 
 /**
  * Layout: an app header across the top, a sidebar on wide screens, a bottom bar on
@@ -14,12 +15,21 @@ import { ScrollToTop } from './ScrollToTop.tsx'
 export function AppShell() {
   const { pathname } = useLocation()
   const auth = useAuth()
+  const newBuild = useNewBuild()
   return (
     <div className="flex min-h-dvh flex-col">
       <ScrollToTop />
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
       </a>
+
+      {/* Offered, never forced: a student mid-quiz should not be reloaded out of it. */}
+      {newBuild && (
+        <div role="status" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-b border-rule bg-[#fff4cc] px-4 py-2 text-sm text-[#6b4d00]">
+          <span>A newer version of the app is available.</span>
+          <button type="button" onClick={() => window.location.reload()} className="min-h-8 rounded-lg bg-[#6b4d00] px-3 py-1 font-bold text-[#fff4cc]">Reload</button>
+        </div>
+      )}
 
       <header className="sticky top-0 z-30 border-b border-rule bg-paper">
         {/* One row on desktop: name left, search pushed right and bounded, so it reads
