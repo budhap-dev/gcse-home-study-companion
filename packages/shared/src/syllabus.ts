@@ -498,10 +498,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Role plays', topicId: 'role-plays' },
       { title: 'Your ideal home', topicId: 'your-ideal-home' },
       { title: 'Visiting a town or city', topicId: 'visiting-a-town-or-city' },
-      { title: 'Exam skills practice' },
+      { title: 'Exam skills practice', topicId: 'exam-skills-practice' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Exam skills: listening, reading, writing, speaking and translation' },
+      { title: 'Exam skills: listening, reading, writing, speaking and translation', topicId: 'exam-skills-listening-reading-writing-speaking-and-translation' },
     ] },
   ],
   'music': [
