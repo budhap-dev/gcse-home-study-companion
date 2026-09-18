@@ -19,6 +19,7 @@ The product succeeds when a parent can answer three questions in under a minute:
 ### Goals
 
 - Cover the full Higher-tier specification for eight GCSE subjects, and the AQA Level 2 Certificate in Further Maths as a subject in its own right.
+- Teach **why** each topic exists and **where it is met in the world**, not only how to do it. Designed in [real-world-examples.md](real-world-examples.md); not yet built.
 - Pitch everything at grade 9. Lessons go to the depth a grade 9 answer needs, the top worksheet level is built from grade 9 discriminator questions, and progress reports "grade 9 ready" per topic rather than just "done".
 - Every topic has the same four things: a stepped lesson, worksheets at three levels, an exam technique note, and a recap quiz with full answers and mark schemes.
 - Progress is per topic and per skill, not just "lessons viewed", and is visible to both student and parent.
