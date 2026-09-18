@@ -1,6 +1,6 @@
 /** Subjects from PRD section 4. Phase 1 ships Maths and Physics. */
 export type SubjectId =
-  | 'maths' | 'physics' | 'chemistry' | 'biology'
+  | 'maths' | 'further-maths' | 'physics' | 'chemistry' | 'biology'
   | 'computer-science' | 'business' | 'french' | 'music'
 
 export interface Unit {
@@ -22,6 +22,11 @@ export interface Subject {
 export const SUBJECTS: Subject[] = [
   { id: 'maths', name: 'Mathematics', board: 'Edexcel 1MA1', phase: 1, colour: '#0E7A86',
     units: [{ id: 'number', name: 'Number' }, { id: 'algebra', name: 'Algebra' }, { id: 'ratio-proportion-and-rates-of-change', name: 'Ratio, proportion and rates of change' }, { id: 'geometry-and-measures', name: 'Geometry and measures' }, { id: 'probability', name: 'Probability' }, { id: 'statistics', name: 'Statistics' }] },
+  // Sits next to Mathematics rather than replacing it: AQA describes 8365 as an additional
+  // qualification taken alongside or after GCSE Maths, so its accent shifts from the Maths
+  // teal towards blue — related, and never mistakable for it at a glance.
+  { id: 'further-maths', name: 'Further Maths', board: 'AQA Level 2 (8365)', phase: 2, colour: '#0F5E9C',
+    units: [{ id: 'number', name: 'Number' }, { id: 'algebra', name: 'Algebra' }, { id: 'coordinate-geometry', name: 'Coordinate geometry' }, { id: 'calculus', name: 'Calculus' }, { id: 'matrix-transformations', name: 'Matrix transformations' }, { id: 'geometry', name: 'Geometry' }] },
   { id: 'physics', name: 'Physics', board: 'AQA 8463', phase: 1, colour: '#5A4BD1',
     units: [{ id: 'energy', name: 'Energy' }, { id: 'electricity', name: 'Electricity' }, { id: 'particle-model-of-matter', name: 'Particle model of matter' }, { id: 'atomic-structure', name: 'Atomic structure' }, { id: 'forces', name: 'Forces' }, { id: 'waves', name: 'Waves' }, { id: 'magnetism-and-electromagnetism', name: 'Magnetism and electromagnetism' }, { id: 'space-physics', name: 'Space physics' }] },
   { id: 'chemistry', name: 'Chemistry', board: 'AQA 8462', phase: 2, colour: '#B5451B',

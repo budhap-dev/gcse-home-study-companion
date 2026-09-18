@@ -507,6 +507,49 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Exam skills: listening, reading, writing, speaking and translation', topicId: 'exam-skills-listening-reading-writing-speaking-and-translation' },
     ] },
   ],
+  /**
+   * Further Maths has no school curriculum overview — the other eight subjects are ordered
+   * by one, and the school publishes none for this qualification. The order here is derived
+   * instead from the GCSE topic each row depends on: Year 10 rows are the ones whose Maths
+   * prerequisites the school teaches in Years 9 and 10, and Year 11 rows are the ones that
+   * need Maths content taught in Year 11. See docs/curriculum/further-maths.md.
+   */
+  'further-maths': [
+    { year: 10, term: 'Autumn', topics: [
+      { title: 'Surds and exact calculation' },
+      { title: 'The product rule for counting' },
+      { title: 'Expanding, and the binomial expansion' },
+      { title: 'Factorising at Further Maths level' },
+    ] },
+    { year: 10, term: 'Spring', topics: [
+      { title: 'Completing the square and quadratic equations' },
+      { title: 'Quadratic inequalities and index equations' },
+      { title: 'The factor theorem and cubics' },
+      { title: 'Sequences and limiting values' },
+    ] },
+    { year: 10, term: 'Summer', topics: [
+      { title: 'Gradients, distance and points on a line' },
+      { title: 'Differentiation and the gradient function', topicId: 'differentiation-and-the-gradient-function' },
+      { title: 'Tangents, normals, and increasing and decreasing functions', topicId: 'tangents-normals-and-increasing-functions' },
+      { title: 'Maxima, minima and optimisation', topicId: 'maxima-minima-and-optimisation' },
+    ] },
+    { year: 11, term: 'Autumn', topics: [
+      { title: 'Functions: domain, range, composite and inverse' },
+      { title: 'Algebraic fractions at Further Maths level' },
+      { title: 'Rearranging formulae and algebraic proof' },
+      { title: 'Simultaneous equations, including three unknowns' },
+    ] },
+    { year: 11, term: 'Spring', topics: [
+      { title: 'Circles and the tangent at a point' },
+      { title: 'Matrix multiplication and the identity' },
+      { title: 'Transformations of the unit square' },
+    ] },
+    { year: 11, term: 'Summer', topics: [
+      { title: 'Trigonometry and Pythagoras in 2D and 3D' },
+      { title: 'Trigonometric graphs, identities and equations' },
+      { title: 'Geometrical proof' },
+    ] },
+  ],
   'music': [
     { year: 9, term: 'Autumn', topics: [
       { title: 'Pop music through the decades', topicId: 'pop-music-through-the-decades' },

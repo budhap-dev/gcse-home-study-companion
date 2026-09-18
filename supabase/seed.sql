@@ -3,17 +3,24 @@
 
 insert into public.subjects (id, name, board, phase, colour, sort) values
   ('maths', 'Mathematics', 'Edexcel 1MA1', 1, '#0E7A86', 1),
-  ('physics', 'Physics', 'AQA 8463', 1, '#5A4BD1', 2),
-  ('chemistry', 'Chemistry', 'AQA 8462', 2, '#B5451B', 3),
-  ('biology', 'Biology', 'Edexcel 1BI0', 2, '#2E8B57', 4),
-  ('computer-science', 'Computer Science', 'AQA 8525', 3, '#1F3A93', 5),
-  ('business', 'Business', 'Edexcel 1BS0', 3, '#8A6D1D', 6),
-  ('french', 'French', 'Edexcel 1FR1', 3, '#A83E6B', 7),
-  ('music', 'Music', 'Board to confirm', 3, '#6B4E9B', 8);
+  ('further-maths', 'Further Maths', 'AQA Level 2 (8365)', 2, '#0F5E9C', 2),
+  ('physics', 'Physics', 'AQA 8463', 1, '#5A4BD1', 3),
+  ('chemistry', 'Chemistry', 'AQA 8462', 2, '#B5451B', 4),
+  ('biology', 'Biology', 'Edexcel 1BI0', 2, '#2E8B57', 5),
+  ('computer-science', 'Computer Science', 'AQA 8525', 3, '#1F3A93', 6),
+  ('business', 'Business', 'Edexcel 1BS0', 3, '#8A6D1D', 7),
+  ('french', 'French', 'Edexcel 1FR1', 3, '#A83E6B', 8),
+  ('music', 'Music', 'Edexcel 1MU0', 3, '#6B4E9B', 9);
 
 insert into public.subject_thresholds (subject_id) select id from public.subjects;
 
 insert into public.units (subject_id, id, name, sort) values
+  ('further-maths', 'number', 'Number', 1),
+  ('further-maths', 'algebra', 'Algebra', 2),
+  ('further-maths', 'coordinate-geometry', 'Coordinate geometry', 3),
+  ('further-maths', 'calculus', 'Calculus', 4),
+  ('further-maths', 'matrix-transformations', 'Matrix transformations', 5),
+  ('further-maths', 'geometry', 'Geometry', 6),
   ('maths', 'number', 'Number', 1),
   ('maths', 'algebra', 'Algebra', 2),
   ('maths', 'ratio-proportion-and-rates-of-change', 'Ratio, proportion and rates of change', 3),

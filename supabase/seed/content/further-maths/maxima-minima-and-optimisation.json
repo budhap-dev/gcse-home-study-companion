@@ -1,0 +1,1525 @@
+{
+  "id": "maxima-minima-and-optimisation",
+  "subjectId": "further-maths",
+  "unitId": "calculus",
+  "title": "Maxima, minima and optimisation",
+  "specPoints": [
+    "4.7",
+    "4.8",
+    "4.9"
+  ],
+  "order": 3,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Stationary points are where the gradient is zero",
+      "body": "Every maximum and every minimum on a smooth curve is a point where $\\frac{dy}{dx} = 0$. So the first line of every question in this topic is the same: differentiate, set the result to zero, and solve. Nothing else finds them."
+    },
+    {
+      "kind": "spot",
+      "title": "The second derivative decides which",
+      "body": "At a stationary point, $\\frac{d^2y}{dx^2} < 0$ means a **maximum** and $\\frac{d^2y}{dx^2} > 0$ means a **minimum**. Negative for the top of a hill, positive for the bottom of a valley. Get that pairing the right way round and the whole topic becomes mechanical."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Solving gives x; the question often wants y",
+      "body": "Setting $\\frac{dy}{dx} = 0$ gives the $x$ coordinate. The **value** at the maximum or minimum is the $y$, and that needs substituting back into the **original** function. Answers that stop at $x$ are answering half the question."
+    },
+    {
+      "kind": "check",
+      "title": "In a word problem, get to one variable first",
+      "body": "Optimisation questions give you two variables and a constraint linking them. Use the constraint to eliminate one, so you have a single function of a single variable, and only then differentiate. Trying to differentiate a two-variable expression is where these go wrong."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Stationary points",
+        "body": "A **stationary point** is a point where the curve is flat: where\n\n$$\\frac{dy}{dx} = 0$$\n\nThe two kinds you need are the **maximum**, the top of a hill, and the **minimum**, the bottom of a valley. Both are flat at the instant you pass through them, which is why both come from the same equation.\n\n> Every maximum and every minimum on a smooth curve is a stationary point. So finding them always starts by differentiating and setting the result to zero.\n\n**Worked through.** Take $y = x^{3}-3x^{2}$.\n\n**Differentiate:** $\\frac{dy}{dx} = 3x^{2}-6x$.\n\n**Set to zero and solve:** $3x^2 - 6x = 0$. Factorise: $3x(x - 2) = 0$, so $x = 0$ or $x = 2$.\n\n**Substitute back into the original** to get the $y$ coordinates:\n\n- At $x = 0$: $y = 0$.\n- At $x = 2$: $y = 8 - 12 = -4$.\n\nSo the stationary points are $(0, 0)$ and $(2, -4)$.\n\n**Two things students lose marks on here.**\n\n**Substituting back into the wrong thing.** The $y$ coordinate comes from the **original** function. Putting $x = 2$ into the gradient function gives $0$, which is true and useless — it is what you just solved for.\n\n**Finding only one point.** $3x(x-2) = 0$ has **two** solutions. A cubic usually has two stationary points, and a question asking for \"the stationary points\" wants both.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1.2,
+                3.5
+              ],
+              "yRange": [
+                -5,
+                4
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": -3,
+                  "b": 0,
+                  "c": 0,
+                  "cube": 1,
+                  "label": "y = x³ − 3x²"
+                }
+              ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "label": "(0, 0) max"
+                },
+                {
+                  "x": 2,
+                  "y": -4,
+                  "label": "(2, −4) min"
+                }
+              ]
+            },
+            "alt": "The cubic y equals x cubed minus three x squared, with a maximum marked at the origin and a minimum marked at the point two comma minus four"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Find the stationary points of $y = x^{3}-3x^{2}$.",
+            "steps": [
+              {
+                "text": "Differentiate: $\\frac{dy}{dx} = 3x^{2}-6x$.",
+                "note": "Term by term, as usual."
+              },
+              {
+                "text": "Set the gradient to zero: $3x^2 - 6x = 0$.",
+                "note": "Flat means zero gradient. This is the defining equation of a stationary point."
+              },
+              {
+                "text": "Factorise: $3x(x - 2) = 0$, so $x = 0$ or $x = 2$.",
+                "note": "Factorising rather than using the formula is quicker here and shows both roots plainly."
+              },
+              {
+                "text": "Substitute into the original: $y = 0$ and $y = -4$.",
+                "note": "Into the curve, not the derivative. The derivative gives zero at both, by construction."
+              },
+              {
+                "text": "The stationary points are $(0, 0)$ and $(2, -4)$.",
+                "note": "Both, as coordinates. Which is a maximum and which a minimum comes next."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "short-text",
+          "prompt": "What is true of the gradient at every maximum and every minimum on a smooth curve?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "finding stationary points",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The curve is **flat** at the top of a hill and at the bottom of a valley, so $\\frac{dy}{dx} = 0$ at both. That single fact is why every question in this topic begins by differentiating and setting the result to zero.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it is zero"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "it is zero",
+            "zero",
+            "dy/dx = 0",
+            "the gradient is zero"
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Maximum or minimum?",
+        "body": "Solving $\\frac{dy}{dx} = 0$ finds the flat points but does not say which kind they are. There are two ways to decide, and the specification allows either.\n\n**Method 1: the second derivative.**\n\n$$\\frac{d^2y}{dx^2} < 0 \\implies \\text{maximum} \\qquad \\frac{d^2y}{dx^2} > 0 \\implies \\text{minimum}$$\n\nIt looks backwards until you see why. The second derivative measures how the gradient is changing. At a **maximum** the curve rises, flattens, then falls — the gradient goes from positive to negative, so it is **decreasing**, so the second derivative is negative. At a **minimum** the reverse.\n\n**If you ever forget the direction, think of $y = x^2$.** It has a minimum at the origin, and $\\frac{d^2y}{dx^2} = 2$, which is positive. Positive means minimum.\n\n**Worked through**, on $y = x^{3}-3x^{2}$ with stationary points at $x = 0$ and $x = 2$.\n\n$\\frac{d^2y}{dx^2} = 6x-6$.\n\n- At $x = 0$: $6(0) - 6 = -6$, negative, so a **maximum**.\n- At $x = 2$: $6(2) - 6 = 6$, positive, so a **minimum**.\n\n**Method 2: the sign of the gradient either side.**\n\nTest the gradient just before and just after the stationary point.\n\n- Positive then negative: rising, flat, falling. A **maximum**.\n- Negative then positive: falling, flat, rising. A **minimum**.\n\nFor $x = 0$ above: at $x = -0.5$ the gradient is $3.75$ and at $x = 0.5$ it is $-2.25$. Positive then negative, so a maximum — the same answer.\n\n**Use Method 1 normally.** It is quicker. Use Method 2 when the second derivative comes out **zero**, because then the test gives no answer and you have to look at the gradient instead.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "At a stationary point",
+                "Second derivative",
+                "Gradient before",
+                "Gradient after"
+              ],
+              "rows": [
+                [
+                  "Maximum",
+                  "negative",
+                  "positive",
+                  "negative"
+                ],
+                [
+                  "Minimum",
+                  "positive",
+                  "negative",
+                  "positive"
+                ]
+              ],
+              "title": "Two tests, one answer"
+            },
+            "alt": "A table showing that a maximum has a negative second derivative with the gradient going from positive to negative, and a minimum the reverse"
+          },
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Remembering which way round",
+              "boxes": [
+                {
+                  "title": "Think of y = x²",
+                  "body": "It has a minimum, and its second derivative is +2. Positive means minimum. Every time."
+                },
+                {
+                  "title": "Why it works",
+                  "body": "The second derivative measures how the gradient changes. At a maximum the gradient is falling, so it is negative."
+                },
+                {
+                  "title": "Hill and valley",
+                  "body": "A maximum bends downwards like a hilltop; a minimum bends upwards like a valley floor."
+                },
+                {
+                  "title": "When it fails",
+                  "body": "If the second derivative is zero the test says nothing. Fall back to the sign of the gradient either side."
+                }
+              ]
+            },
+            "alt": "Four boxes on how to remember and justify the second derivative test"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "At a stationary point, $\\frac{d^2y}{dx^2} = -6$. What kind of point is it?",
+          "options": [
+            "A minimum",
+            "Neither, because the value is negative",
+            "It cannot be decided without more information",
+            "A maximum"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "deciding maximum or minimum",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A **negative** second derivative means the gradient is decreasing — rising, then flat, then falling — which is a **maximum**. Check the direction against $y = x^2$: that has a minimum and a second derivative of $+2$, so positive goes with minimum and negative with maximum.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a maximum"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "The full method, on a cubic",
+        "body": "Here is the standard question, worked in the five steps that a mark scheme expects to see.\n\n> Find the coordinates of the stationary points of $y = x^{3}-12x$ and determine the nature of each.\n\nTry it before reading on. The phrase \"determine the nature\" is the examiner asking for the second derivative test explicitly — an answer that finds the points and stops has left marks on the table.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Stationary points of $y = x^{3}-12x$.",
+            "steps": [
+              {
+                "text": "Differentiate: $\\frac{dy}{dx} = 3x^{2}-12$.",
+                "note": "$x^3$ gives $3x^2$, and $-12x$ gives $-12$."
+              },
+              {
+                "text": "Set to zero: $3x^2 - 12 = 0$, so $x^2 = 4$.",
+                "note": "Divide by 3 first; it keeps the numbers small."
+              },
+              {
+                "text": "Solve: $x = -2$ or $x = 2$.",
+                "note": "A square root has two values. Writing only $x = 2$ loses half the question."
+              },
+              {
+                "text": "Substitute into the original: $y = 16$ and $y = -16$.",
+                "note": "At $x = -2$: $-8 + 24 = 16$. At $x = 2$: $8 - 24 = -16$."
+              },
+              {
+                "text": "Second derivative: $\\frac{d^2y}{dx^2} = 6x$.",
+                "note": "Differentiate the gradient function again."
+              },
+              {
+                "text": "At $x = -2$: $-12$, negative, so $(-2, 16)$ is a **maximum**.",
+                "note": "Negative goes with maximum."
+              },
+              {
+                "text": "At $x = 2$: $12$, positive, so $(2, -16)$ is a **minimum**.",
+                "note": "And positive with minimum, as with $y = x^2$."
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -4,
+                4
+              ],
+              "yRange": [
+                -20,
+                20
+              ],
+              "yStep": 5,
+              "grid": true,
+              "curves": [
+                {
+                  "a": 0,
+                  "b": -12,
+                  "c": 0,
+                  "cube": 1,
+                  "label": "y = x³ − 12x"
+                }
+              ],
+              "points": [
+                {
+                  "x": -2,
+                  "y": 16,
+                  "label": "(−2, 16) max"
+                },
+                {
+                  "x": 2,
+                  "y": -16,
+                  "label": "(2, −16) min"
+                }
+              ]
+            },
+            "alt": "The cubic y equals x cubed minus twelve x, with a maximum marked at minus two comma sixteen and a minimum at two comma minus sixteen"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "The curve $y = x^{3}-12x$ has a minimum. Work out the $y$ coordinate at that minimum.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "finding stationary points",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Solving $3x^{2}-12 = 0$ gives $x = \\pm 2$. The second derivative is $6x$, which is positive at $x = 2$, so that is the minimum. Substituting into the **original**: $y = 8 - 24 = -16$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "identifies x = 2 as the minimum and substitutes to reach -16"
+            }
+          ],
+          "discriminators": [],
+          "answer": -16,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Optimisation: getting to one variable",
+        "body": "The specification asks you to \"use calculus to find maxima and minima in simple problems\" — real quantities to be made as large or as small as possible.\n\nThese always arrive with **two variables and a constraint**, and calculus works on one variable. So the first job is never differentiation; it is elimination.\n\n**The shape of every one of these questions.**\n\n1. Write down the **quantity to be optimised**, in whatever variables are natural.\n2. Write down the **constraint** — the fixed length, area or volume.\n3. Use the constraint to **eliminate** one variable.\n4. Differentiate, set to zero, solve.\n5. **Justify** it is the maximum or minimum wanted.\n6. **Answer the question asked** — dimensions, a least cost, a greatest area — with units.\n\n**A worked example.** A farmer has $40$ m of fencing and wants to enclose a rectangular pen against a long wall. The wall forms one side, so only three sides need fencing. What dimensions give the greatest area?\n\n**The quantity:** let the two sides perpendicular to the wall be $x$ and the side parallel to it be $y$. Area $A = xy$.\n\n**The constraint:** the fencing used is $2x + y = 40$.\n\n**Eliminate:** $y = 40 - 2x$, so\n\n$$A = x(40 - 2x) = 40x - 2x^2$$\n\nOne variable. Now the calculus can start.\n\n**Differentiate and solve:** $\\frac{dA}{dx} = 40 - 4x = 0$, so $x = 10$.\n\n**Justify:** $\\frac{d^2A}{dx^2} = -4$, which is negative, so this is a **maximum**. That justification is part of the answer, not an optional extra.\n\n**Answer the question:** $x = 10$ m and $y = 40 - 2(10) = 20$ m, giving an area of $200$ m².\n\nThe question asked for dimensions, so the answer is \"10 m by 20 m\", not \"$x = 10$\".",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "x (m)",
+                "y = 40 − 2x (m)",
+                "Area (m²)"
+              ],
+              "rows": [
+                [
+                  "8",
+                  "24",
+                  "192"
+                ],
+                [
+                  "9",
+                  "22",
+                  "198"
+                ],
+                [
+                  "10",
+                  "20",
+                  "200"
+                ],
+                [
+                  "11",
+                  "18",
+                  "198"
+                ],
+                [
+                  "12",
+                  "16",
+                  "192"
+                ]
+              ],
+              "title": "Areas near the maximum"
+            },
+            "alt": "A table of five widths with the corresponding length and enclosed area, the largest area occurring at x equals ten"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Maximise the area with $40$ m of fence on three sides.",
+            "steps": [
+              {
+                "text": "Quantity: $A = xy$. Constraint: $2x + y = 40$.",
+                "note": "Write both down separately before combining them."
+              },
+              {
+                "text": "Eliminate $y$: $y = 40 - 2x$, so $A = 40x - 2x^2$.",
+                "note": "Now a function of one variable, which is what differentiating needs."
+              },
+              {
+                "text": "Differentiate: $\\frac{dA}{dx} = 40 - 4x$.",
+                "note": "Note the variable is $x$ and the function is $A$, so the notation is $\\frac{dA}{dx}$."
+              },
+              {
+                "text": "Set to zero: $40 - 4x = 0$, so $x = 10$.",
+                "note": "The stationary point."
+              },
+              {
+                "text": "Second derivative is $-4$, negative, so it is a maximum.",
+                "note": "Always justify. A question about a greatest area is not answered until you have shown it is greatest."
+              },
+              {
+                "text": "Dimensions 10 m by 20 m, area $200$ m².",
+                "note": "Answer in the terms the question used, with units."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A rectangular pen is made against a wall using $40$ m of fence on three sides. If the two sides perpendicular to the wall are each $x$ m, the area is $A = 40x - 2x^2$. Work out the value of $x$ that gives the greatest area.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "optimisation problems",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Differentiate: $\\frac{dA}{dx} = 40 - 4x$. Set it to zero: $4x = 40$, so $x = 10$. The second derivative is $-4$, which is negative, confirming a maximum. The pen is then 10 m by 20 m with an area of $200$ m².",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "differentiates and solves to x = 10"
+            }
+          ],
+          "discriminators": [],
+          "answer": 10,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "An optimisation with a negative power",
+        "body": "The fence problem gave a quadratic, which is comfortable. Many optimisation problems give something with a $\\frac{1}{x}$ in it instead, and that is exactly why the negative-power rule was worth learning.\n\n> A closed box has a square base of side $x$ cm and a volume of $27$ cm³. Find the dimensions that use the least material, and state the least surface area.\n\n**Set it up.** Let the height be $h$.\n\n**Quantity:** the surface area is the two square ends plus the four rectangular sides: $S = 2x^2 + 4xh$.\n\n**Constraint:** the volume is fixed: $x^2 h = 27$.\n\n**Eliminate:** $h = \\frac{27}{x^2}$, so\n\n$$S = 2x^2 + 4x \\times \\frac{27}{x^2} = 2x^2 + \\frac{108}{x}$$\n\nNow rewrite the fraction as a negative power, because the rule needs $kx^n$:\n\n$$S = 2x^2 + 108x^{-1}$$\n\nThe rest is below. The answer is worth looking at before you get there: the box that uses the least material turns out to be a **cube**.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Least surface area for a closed box of volume $27$ cm³ with a square base.",
+            "steps": [
+              {
+                "text": "Surface area $S = 2x^2 + 4xh$; volume $x^2h = 27$.",
+                "note": "Two square ends and four sides. Write the constraint on its own line."
+              },
+              {
+                "text": "Eliminate $h = \\frac{27}{x^2}$, giving $S = 2x^2 + 108x^{-1}$.",
+                "note": "Rewriting as a negative power is what lets the differentiation rule apply."
+              },
+              {
+                "text": "Differentiate: $\\frac{dS}{dx} = 4x - 108x^{-2}$.",
+                "note": "The second term: multiply by the power $-1$ to get $-108$, and reduce the power to $-2$."
+              },
+              {
+                "text": "Set to zero: $4x = \\frac{108}{x^2}$, so $4x^3 = 108$.",
+                "note": "Multiply both sides by $x^2$ to clear the fraction."
+              },
+              {
+                "text": "So $x^3 = 27$ and $x = 3$.",
+                "note": "A cube root, and here it is exact. Only the positive root makes sense for a length."
+              },
+              {
+                "text": "Second derivative: $\\frac{d^2S}{dx^2} = 4 + 216x^{-3}$, which at $x = 3$ is $12$.",
+                "note": "Positive, so this is a minimum — which is what \"least material\" needs."
+              },
+              {
+                "text": "Height: $h = \\frac{27}{3^2} = 3$ cm. So the box is 3 by 3 by 3 cm — a cube.",
+                "note": "A satisfying result: of all closed boxes with a given volume, the cube has the least surface area."
+              },
+              {
+                "text": "Least surface area: $S = 2(9) + \\frac{108}{3} = 54$ cm².",
+                "note": "And a cube of side 3 has surface area $6 \\times 9 = 54$, which agrees."
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "x (cm)",
+                "h = 27/x² (cm)",
+                "Surface area (cm²)"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "6.75",
+                  "62"
+                ],
+                [
+                  "2.5",
+                  "4.32",
+                  "55.7"
+                ],
+                [
+                  "3",
+                  "3",
+                  "54"
+                ],
+                [
+                  "3.5",
+                  "2.204082",
+                  "55.357143"
+                ],
+                [
+                  "4",
+                  "1.6875",
+                  "59"
+                ]
+              ],
+              "title": "Surface area either side of the minimum"
+            },
+            "alt": "A table of five base widths with the matching height and surface area, the least value occurring at x equals three"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "A closed box with a square base of side $x$ cm and volume $27$ cm³ has surface area $S = 2x^2 + 108x^{-1}$. Work out the value of $x$ that makes $S$ least.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "optimisation problems",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Differentiate: $\\frac{dS}{dx} = 4x - 108x^{-2}$. Set it to zero: $4x = \\frac{108}{x^2}$, so $4x^3 = 108$ and $x^3 = 27$, giving $x = 3$. The second derivative there is $12$, positive, so it is a minimum. The height works out as $3$ cm too, so the best box is a cube.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "differentiates, clears the fraction and solves to x = 3"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Sketching a curve from what the calculus tells you",
+        "body": "The specification asks you to \"sketch or interpret a curve with known maximum and minimum points\". A handful of facts is enough to draw a recognisable shape without plotting a single table of values.\n\n**What to work out, in order.**\n\n**1. The stationary points**, with coordinates and nature. These fix the turning points.\n\n**2. The $y$ intercept.** Substitute $x = 0$ into the curve. Free, and often forgotten.\n\n**3. The $x$ intercepts**, if they factorise easily. Do not force it — a cubic that will not factorise is not worth the time in a sketch.\n\n**4. What happens at the ends.** For a cubic with a positive $x^3$ term, the curve comes up from the bottom left and goes off to the top right. With a negative $x^3$ term it is the other way round.\n\n**Worked through** on $y = x^{3}-12x$.\n\n- Stationary points: $(-2, 16)$, a maximum; and $(2, -16)$, a minimum.\n- $y$ intercept: at $x = 0$, $y = 0$.\n- $x$ intercepts: $x^3 - 12x = x(x^2 - 12) = 0$, so $x = 0$ and $x = \\pm\\sqrt{12}$, roughly $\\pm 3.5$.\n- Ends: the $x^3$ coefficient is positive, so bottom left to top right.\n\nThat is enough. Mark the two turning points, mark the intercepts, and join them with a smooth curve going the right way at each end.\n\n**A sanity check worth doing.** The maximum here is at $y = 16$ and the minimum at $y = -16$, and the maximum is to the **left** of the minimum. For a positive cubic that is always the case: it rises to the maximum, falls to the minimum, then rises again. If your sketch has them the other way round, something has gone wrong.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "What to find",
+                "How",
+                "For y = x³ − 12x"
+              ],
+              "rows": [
+                [
+                  "Stationary points",
+                  "solve dy/dx = 0",
+                  "(−2, 16) max and (2, −16) min"
+                ],
+                [
+                  "Nature of each",
+                  "the sign of d²y/dx²",
+                  "negative then positive"
+                ],
+                [
+                  "y intercept",
+                  "substitute x = 0",
+                  "(0, 0)"
+                ],
+                [
+                  "x intercepts",
+                  "factorise if it is easy",
+                  "x = 0 and x = ±√12"
+                ],
+                [
+                  "Ends",
+                  "the sign of the x³ term",
+                  "positive: bottom left to top right"
+                ]
+              ],
+              "title": "Five facts, and a sketch follows"
+            },
+            "alt": "A table of five things to work out before sketching a cubic and what each gives for y equals x cubed minus twelve x"
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -4,
+                4
+              ],
+              "yRange": [
+                -20,
+                20
+              ],
+              "yStep": 5,
+              "grid": true,
+              "curves": [
+                {
+                  "a": 0,
+                  "b": -12,
+                  "c": 0,
+                  "cube": 1,
+                  "label": "y = x³ − 12x"
+                }
+              ],
+              "points": [
+                {
+                  "x": -2,
+                  "y": 16
+                },
+                {
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "x": 2,
+                  "y": -16
+                }
+              ]
+            },
+            "alt": "The finished sketch of y equals x cubed minus twelve x, showing the maximum, the origin and the minimum, rising from the bottom left to the top right"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A cubic has a positive $x^3$ term, a maximum at $(-2, 16)$ and a minimum at $(2, -16)$. Which describes its shape?",
+          "options": [
+            "It falls from the top left to the minimum, rises to the maximum, then falls again",
+            "It rises from the bottom left to the maximum, falls to the minimum, then rises again",
+            "It rises throughout, with the two points being points of inflection",
+            "It has two separate branches that do not join to each other"
+          ],
+          "correct": [
+            1
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "sketching from the calculus",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A positive $x^3$ term means the curve comes from the bottom left and goes to the top right. Between those it rises to the maximum at $x = -2$, falls through to the minimum at $x = 2$, then rises again. The maximum is always to the **left** of the minimum for a positive cubic.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "rises, falls between the turning points, then rises"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "explain",
+        "title": "When the second derivative is zero",
+        "body": "The second derivative test has one gap, and a good question will find it.\n\nIf $\\frac{d^2y}{dx^2} = 0$ at a stationary point, **the test tells you nothing**. Not \"it is neither a maximum nor a minimum\" — genuinely nothing. It might be a maximum, a minimum, or something else.\n\n**The something else is a point of inflection**: a flat point that the curve passes straight through, rising before and rising after, like the flat spot in the middle of $y = x^3$.\n\n**Take $y = x^3$.** Differentiating: $\\frac{dy}{dx} = 3x^2$, which is zero at $x = 0$, so the origin is a stationary point. The second derivative is $6x$, which at $x = 0$ is also $0$. The test is silent.\n\nSo use the **other** method. The gradient is $3x^2$, which is positive at $x = -1$ and positive at $x = 1$ — positive on **both** sides. The curve rises, flattens for an instant, and carries on rising. Neither a maximum nor a minimum.\n\n**But zero does not mean it must be an inflection.** Take $y = x^4$. Its gradient is $4x^3$, zero at the origin; its second derivative is $12x^2$, also zero there. Yet testing the gradient gives $-4$ at $x = -1$ and $+4$ at $x = 1$ — negative then positive, which is a **minimum**. And it obviously is: $x^4$ is never negative and is zero only at the origin.\n\n> Two functions, both with a zero second derivative at the origin. One has an inflection, the other a minimum. That is why the test being silent means you must check the gradient either side.\n\nIn an exam this will not come up often, but when it does, it is usually the last part of a question and it is testing exactly this.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Curve",
+                "dy/dx",
+                "d²y/dx² at 0",
+                "Gradient before",
+                "Gradient after",
+                "What it is"
+              ],
+              "rows": [
+                [
+                  "y = x³",
+                  "3x²",
+                  "0",
+                  "positive",
+                  "positive",
+                  "point of inflection"
+                ],
+                [
+                  "y = x⁴",
+                  "4x³",
+                  "0",
+                  "negative",
+                  "positive",
+                  "minimum"
+                ],
+                [
+                  "y = x²",
+                  "2x",
+                  "2",
+                  "negative",
+                  "positive",
+                  "minimum"
+                ],
+                [
+                  "y = −x²",
+                  "−2x",
+                  "−2",
+                  "positive",
+                  "negative",
+                  "maximum"
+                ]
+              ],
+              "title": "A zero second derivative settles nothing"
+            },
+            "alt": "A table of four curves showing that two different kinds of stationary point can both have a second derivative of zero"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "At a stationary point, $\\frac{d^2y}{dx^2} = 0$. What should you conclude?",
+          "options": [
+            "Nothing yet: test the sign of the gradient either side instead",
+            "It is a point of inflection rather than a maximum or minimum",
+            "It is neither a maximum nor a minimum nor an inflection",
+            "There is an error, because that cannot happen at a stationary point"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "deciding maximum or minimum",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The test is **inconclusive**, not negative. $y = x^3$ has a zero second derivative at the origin and an inflection there; $y = x^4$ has a zero second derivative at the origin and a **minimum**. Since both are possible, the only way forward is to test the gradient just before and just after.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the test is inconclusive; check the gradient either side"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: the marks in an optimisation question",
+        "body": "Optimisation questions carry the most marks in this unit and are the most often half-answered. Here is where the marks actually sit.\n\n| Step | Typical marks | What loses them |\n| --- | --- | --- |\n| Write the quantity and the constraint | 1–2 | Starting to differentiate before eliminating |\n| Eliminate to one variable | 1–2 | Algebra slips clearing a fraction |\n| Differentiate | 1 | Not rewriting $\\frac{k}{x}$ as $kx^{-1}$ first |\n| Set to zero and solve | 1–2 | Taking only the positive root, or only one of two |\n| Justify the nature | 1 | Skipping it entirely — the commonest loss |\n| Answer in context | 1 | Giving $x$ rather than the dimensions asked for |\n\n**The justification is not optional.** A question that says \"find the **least** surface area\" is asking you to demonstrate it is least. Finding a stationary point shows only that something happens there. One line — \"$\\frac{d^2S}{dx^2} = 12 > 0$, so this is a minimum\" — is the whole requirement, and students throw the mark away every year.\n\n**Watch which roots make sense.** Lengths cannot be negative, so a negative root is rejected — but **say** you are rejecting it and why. \"$x = 3$ (taking the positive root, since $x$ is a length)\" earns where a silently discarded root does not.\n\n**Read what is being asked for.** The question may want the dimensions, the least area, the greatest volume, or the value of $x$. They are four different answers to the same piece of work, and only one of them is right.\n\n**A check worth thirty seconds.** Try a value either side of your answer and confirm the quantity really is bigger, or smaller, than at your stationary point. On the box: $x = 2$ gives $62$ and $x = 4$ gives $59$, against $54$ at $x = 3$. Both larger, so $54$ really is the least.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "The five lines an optimisation answer needs",
+              "boxes": [
+                {
+                  "title": "Quantity and constraint",
+                  "body": "Both written down separately, in whatever variables are natural, before anything is combined."
+                },
+                {
+                  "title": "One variable",
+                  "body": "Use the constraint to eliminate the other, and rewrite any fraction as a negative power."
+                },
+                {
+                  "title": "Differentiate and solve",
+                  "body": "Set the derivative to zero. Reject roots that make no physical sense, and say why."
+                },
+                {
+                  "title": "Justify and answer",
+                  "body": "Show the nature with the second derivative, then answer the question asked, with units."
+                }
+              ]
+            },
+            "alt": "Four boxes setting out the steps an optimisation answer must contain"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "A question asks for the dimensions of the box with the least surface area. A student correctly finds $x = 3$ and stops. What have they lost?",
+          "options": [
+            "The justification that it is a minimum, and the dimensions themselves",
+            "Nothing: finding the value of $x$ answers the question fully",
+            "Only the units, which can be added to the value of $x$",
+            "The second derivative, which was not needed for this question"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "optimisation problems",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Two things are missing. The **justification** — showing $\\frac{d^2S}{dx^2} > 0$ so the stationary point really is a minimum — and the **answer to the question asked**, which was for the dimensions: $3$ by $3$ by $3$ cm. Finding $x$ is the middle of the work, not the end of it.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the justification and the dimensions"
+            }
+          ],
+          "discriminators": [
+            "evaluate",
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- A **stationary point** is where $\\frac{dy}{dx} = 0$. Every maximum and minimum is one.\n- **The method:** differentiate, set to zero, solve for $x$, substitute into the **original** for $y$, then test the nature.\n- **$\\frac{d^2y}{dx^2} < 0$ is a maximum; $> 0$ is a minimum.** Check the direction against $y = x^2$, which has a minimum and a second derivative of $+2$.\n- **The other test:** the gradient positive then negative is a maximum; negative then positive is a minimum.\n- **If $\\frac{d^2y}{dx^2} = 0$ the test says nothing.** $x^3$ has an inflection there and $x^4$ a minimum. Use the gradient either side.\n- **A cubic usually has two stationary points.** Solving a quadratic gives two roots; give both.\n- **Optimisation:** write the quantity and the constraint, **eliminate one variable**, then differentiate.\n- Rewrite $\\frac{k}{x}$ as $kx^{-1}$ before differentiating.\n- **Justify the nature** — a question asking for the least or greatest is not answered until you have shown it.\n- **Reject impossible roots and say why**, then **answer the question asked**, with units.\n- Of all closed boxes with a given volume, the **cube** uses the least material.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Stationary points",
+                  "equation": "dy/dx = 0",
+                  "units": "true at every maximum and every minimum"
+                },
+                {
+                  "name": "Maximum",
+                  "equation": "d2y/dx2 < 0",
+                  "units": "negative: the top of a hill"
+                },
+                {
+                  "name": "Minimum",
+                  "equation": "d2y/dx2 > 0",
+                  "units": "positive, like y = x^2 at the origin"
+                },
+                {
+                  "name": "Inconclusive",
+                  "equation": "d2y/dx2 = 0",
+                  "units": "test the gradient either side instead"
+                }
+              ]
+            },
+            "alt": "A reference card giving the zero gradient condition for stationary points and the second derivative test for their nature"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "What are the five steps of a stationary point question, in order?",
+          "options": [
+            "Differentiate twice, set to zero, solve, sketch, then check the intercepts",
+            "Substitute into the original, differentiate, set to zero, solve, sketch",
+            "Differentiate, set to zero, solve, substitute into the original, test the nature",
+            "Set the original to zero, solve, differentiate, substitute, test the nature"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "finding stationary points",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Differentiate to get the gradient function; set it to zero because that is what a stationary point means; solve for $x$; substitute into the **original** function to get $y$; then use the second derivative to say whether it is a maximum or a minimum. Setting the original function to zero would find where the curve crosses the axis, which is a different question.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "differentiate, zero, solve, substitute, test"
+            }
+          ],
+          "discriminators": []
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "short-text",
+      "prompt": "What is the value of $\\frac{dy}{dx}$ at a stationary point?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "finding stationary points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A stationary point is a point where the curve is **flat**, so the gradient there is $0$. That is what the word stationary means, and it is why every question of this kind starts by differentiating and setting the result to zero.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "0",
+        "zero",
+        "it is zero"
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "At a stationary point $\\frac{d^2y}{dx^2} = 8$. What kind of point is it?",
+      "options": [
+        "A maximum",
+        "A point of inflection",
+        "A minimum",
+        "It cannot be determined"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "deciding maximum or minimum",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **positive** second derivative goes with a **minimum**. The check to remember is $y = x^2$: it has a minimum, and its second derivative is $+2$. A maximum would need a negative value, and a zero value would leave the test inconclusive.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a minimum"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "After solving $\\frac{dy}{dx} = 0$ to find $x$, where do you substitute to get the $y$ coordinate?",
+      "options": [
+        "Into the gradient function $\\frac{dy}{dx}$",
+        "Into the original equation of the curve",
+        "Into the second derivative $\\frac{d^2y}{dx^2}$",
+        "Into the factorised form of the gradient function"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "finding stationary points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The $y$ coordinate is the height of the **curve**, so it comes from the original equation. Substituting into the gradient function gives $0$ every time — that is exactly what you solved for, so it tells you nothing new.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "into the original equation"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "The curve $y = x^{2}-6x+11$ has one stationary point. Work out the value of $x$ there.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "finding stationary points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dy}{dx} = 2x-6$. Set it to zero: $2x - 6 = 0$, so $x = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets 2x − 6 = 0 and solves to x = 3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "The curve $y = x^{2}-6x+11$ has a minimum. Work out the $y$ coordinate at that minimum.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "finding stationary points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The stationary point is at $x = 3$. Substituting into the **original**: $y = 9 - 18 + 11 = 2$. So the minimum point is $(3, 2)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes x = 3 into the curve to reach 2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "The curve $y = x^{3}-12x$ has two stationary points. Give both values of $x$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "finding stationary points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dy}{dx} = 3x^{2}-12$. Set to zero: $3x^2 = 12$, so $x^2 = 4$ and $x = \\pm 2$. Both roots are needed — a cubic usually has two stationary points and giving only one answers half the question.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = -2 and x = 2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = -2 and x = 2",
+        "-2 and 2",
+        "x = ±2",
+        "±2"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "A student says \"a negative second derivative means the curve is below the $x$ axis\". What is wrong?",
+      "options": [
+        "Nothing: a negative second derivative does put the curve below the axis",
+        "The second derivative describes the gradient, so it means the curve is falling",
+        "The second derivative describes the bending, not the height",
+        "A second derivative cannot be negative at a stationary point"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "deciding maximum or minimum",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The height of the curve is $y$ itself. The **second** derivative says how the gradient is changing — whether the curve bends upwards or downwards. A maximum can sit well above the axis and still have a negative second derivative: $y = x^{3}-12x$ has its maximum at $y = 16$, which is a long way above zero.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it describes the bending, not the height"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A rectangular pen is built against a wall with $40$ m of fence on the other three sides. With the two ends each $x$ m, the area is $A = 40x - 2x^2$. Work out the greatest possible area, in m².",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "optimisation problems",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dA}{dx} = 40 - 4x$. Set to zero: $x = 10$. The second derivative is $-4$, negative, so this is a maximum. Substituting back: $A = 40(10) - 2(10)^2 = 400 - 200 = 200$ m².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds x = 10 and substitutes back to reach 200"
+        }
+      ],
+      "discriminators": [],
+      "answer": 200,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "In an optimisation problem you are given two variables and a constraint linking them. What must you do before differentiating?",
+      "options": [
+        "Differentiate the constraint and the quantity separately",
+        "Use the constraint to eliminate one of the variables",
+        "Set both variables equal to each other and simplify",
+        "Substitute a trial value for one variable and test it"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "optimisation problems",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiation works on a function of **one** variable. The constraint — a fixed length, area or volume — lets you write one variable in terms of the other and substitute it out. Only then is there something to differentiate.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "eliminate one variable using the constraint"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "The curve $y = 2x^{3}-3x^{2}-12x$ has two stationary points. Give both values of $x$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "finding stationary points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dy}{dx} = 6x^{2}-6x-12$. Set to zero and divide by 6: $x^2 - x - 2 = 0$. Factorise: $(x - 2)(x + 1) = 0$, so $x = -1$ or $x = 2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = -1 and x = 2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "x = -1 and x = 2",
+        "-1 and 2",
+        "x = -1, x = 2"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "For $y = 2x^{3}-3x^{2}-12x$, which stationary point is the maximum?",
+      "options": [
+        "$(-1, 7)$",
+        "$(2, -20)$",
+        "$(1, -13)$",
+        "Neither: both are minima"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "deciding maximum or minimum",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The second derivative is $12x-6$. At $x = -1$ it is $-18$, negative, so that is the **maximum**; at $x = 2$ it is $18$, positive, so that is the minimum. Substituting $x = -1$ into the curve gives $y = 7$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(−1, 7)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "The curve $y = -x^{2}+8x-3$ has one stationary point. Work out the $y$ coordinate there.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "finding stationary points",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dy}{dx} = -2x+8$. Set to zero: $-2x + 8 = 0$, so $x = 4$. Substituting into the curve: $y = -16 + 32 - 3 = 13$. The second derivative is $-2$, negative, so it is a maximum.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "solves to x = 4 and substitutes to reach 13"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 13,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "At a stationary point on $y = x^4$, the second derivative is zero. What kind of point is it?",
+      "options": [
+        "A point of inflection, because the second derivative is zero",
+        "A maximum, because $x^4$ grows quickly",
+        "Nothing at all: a zero second derivative means it is not stationary",
+        "A minimum, found by testing the gradient either side"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "deciding maximum or minimum",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The second derivative test is **inconclusive** when it gives zero, so fall back to the gradient. $\\frac{dy}{dx} = 4x^3$ is $-4$ at $x = -1$ and $+4$ at $x = 1$: negative then positive, which is a **minimum**. And obviously so — $x^4$ is never negative and is zero only at the origin. A zero second derivative does **not** imply an inflection; $x^3$ has one there, $x^4$ does not.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a minimum, shown by the gradient changing sign"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A closed box has a square base of side $x$ cm and volume $27$ cm³, so its surface area is $S = 2x^2 + 108x^{-1}$. Work out the least possible surface area, in cm².",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "optimisation problems",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dS}{dx} = 4x - 108x^{-2}$. Set to zero: $4x^3 = 108$, so $x^3 = 27$ and $x = 3$. The second derivative there is $12$, positive, so it is a minimum. Substituting: $S = 2(9) + \\frac{108}{3} = 18 + 36 = 54$ cm². The box is a cube of side 3 cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds x = 3 and substitutes back to reach 54"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 54,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A question asks for the **least** surface area and a student finds a stationary point but never mentions the second derivative. What have they failed to do?",
+      "options": [
+        "Find the value of $x$, which requires the second derivative",
+        "Differentiate the function, which the second derivative provides",
+        "Nothing: a stationary point in such a problem is always a minimum",
+        "Show that the stationary point is a minimum rather than a maximum"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "optimisation problems",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Finding a stationary point shows only that **something** happens there. A question asking for the least value is asking you to demonstrate it is least, and one line — the sign of the second derivative — does it. Stationary points in these problems are not always minima: the fence question has a maximum.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "justify that it is a minimum"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "For a positive cubic with a maximum at $(-1, 7)$ and a minimum at $(2, -20)$, which is the correct shape?",
+      "options": [
+        "Up from the bottom left to the maximum, down to the minimum, then up to the top right",
+        "Down from the top left to the minimum, up to the maximum, then down to the bottom right",
+        "Up throughout, with both points being flat spots it passes straight through",
+        "Down throughout, with both points being flat spots it passes straight through"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "sketching from the calculus",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A positive $x^3$ term sends the curve from the bottom left to the top right. Between the ends it rises to the maximum at $x = -1$, falls to the minimum at $x = 2$, then rises again. The maximum always sits to the **left** of the minimum for a positive cubic, which is a quick way to check a sketch.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rises, falls between the turning points, then rises"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "The curve $C$ has equation $y = 2x^{3}-3x^{2}-12x$.\n\n(a) Find the coordinates of the two stationary points of $C$.\n\n(b) Determine the nature of each, showing your working.\n\n(c) Sketch $C$, marking the stationary points and the $y$ intercept.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "deciding maximum or minimum",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**(a) The stationary points.**\n\nDifferentiate:\n\n$$\\frac{dy}{dx} = 6x^{2}-6x-12$$\n\nSet it to zero. Dividing through by $6$ first keeps the numbers manageable:\n\n$$x^2 - x - 2 = 0$$\n\n$$(x - 2)(x + 1) = 0$$\n\nso $x = -1$ or $x = 2$. Both are needed — a cubic has two stationary points and a quadratic has two roots.\n\nNow substitute each into the **original** equation:\n\n- At $x = -1$: $y = 2(-1)^3 - 3(-1)^2 - 12(-1) = -2 - 3 + 12 = 7$.\n- At $x = 2$: $y = 2(8) - 3(4) - 12(2) = 16 - 12 - 24 = -20$.\n\nThe stationary points are $(-1, 7)$ and $(2, -20)$.\n\n**(b) Their nature.**\n\n$$\\frac{d^2y}{dx^2} = 12x-6$$\n\n- At $x = -1$: $12(-1) - 6 = -18$. **Negative**, so $(-1, 7)$ is a **maximum**.\n- At $x = 2$: $12(2) - 6 = 18$. **Positive**, so $(2, -20)$ is a **minimum**.\n\nIf the direction of the test is ever in doubt, check it against $y = x^2$: that has a minimum and a second derivative of $+2$, so positive goes with minimum.\n\n**(c) The sketch.**\n\nThe facts needed are already almost all here.\n\n- **Turning points:** a maximum at $(-1, 7)$ and a minimum at $(2, -20)$.\n- **$y$ intercept:** substituting $x = 0$ gives $y = 0$, so the curve passes through the origin.\n- **Ends:** the $x^3$ coefficient is $+2$, positive, so the curve comes up from the bottom left and goes off to the top right.\n\nSo the sketch rises steeply from the bottom left, turns over at $(-1, 7)$, falls through the origin, bottoms out at $(2, -20)$, and then rises away to the top right.\n\n**A check on the shape.** The maximum is at $x = -1$ and the minimum at $x = 2$, so the maximum is to the **left**. That is always true for a positive cubic, and it is worth a glance at the end: a sketch with them the other way round has an error somewhere.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates to 6x² − 6x − 12"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "solves to x = −1 and x = 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes into the original equation"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "both coordinate pairs correct"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the second derivative 12x − 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "evaluates it at both points and names both natures"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gives the y intercept as the origin"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sketch has the maximum left of the minimum and rises to the top right"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Differentiates to 6x² − 6x − 12 and solves to x = −1 and x = 2",
+          "marks": 2
+        },
+        {
+          "text": "Substitutes both into the original equation to give both sets of coordinates",
+          "marks": 2
+        },
+        {
+          "text": "Uses the second derivative at each point to determine the nature correctly",
+          "marks": 2
+        },
+        {
+          "text": "Describes a sketch with the maximum left of the minimum, the y intercept, and the correct end behaviour",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a) The stationary points.**\n\nDifferentiate:\n\n$$\\frac{dy}{dx} = 6x^{2}-6x-12$$\n\nSet it to zero. Dividing through by $6$ first keeps the numbers manageable:\n\n$$x^2 - x - 2 = 0$$\n\n$$(x - 2)(x + 1) = 0$$\n\nso $x = -1$ or $x = 2$. Both are needed — a cubic has two stationary points and a quadratic has two roots.\n\nNow substitute each into the **original** equation:\n\n- At $x = -1$: $y = 2(-1)^3 - 3(-1)^2 - 12(-1) = -2 - 3 + 12 = 7$.\n- At $x = 2$: $y = 2(8) - 3(4) - 12(2) = 16 - 12 - 24 = -20$.\n\nThe stationary points are $(-1, 7)$ and $(2, -20)$.\n\n**(b) Their nature.**\n\n$$\\frac{d^2y}{dx^2} = 12x-6$$\n\n- At $x = -1$: $12(-1) - 6 = -18$. **Negative**, so $(-1, 7)$ is a **maximum**.\n- At $x = 2$: $12(2) - 6 = 18$. **Positive**, so $(2, -20)$ is a **minimum**.\n\nIf the direction of the test is ever in doubt, check it against $y = x^2$: that has a minimum and a second derivative of $+2$, so positive goes with minimum.\n\n**(c) The sketch.**\n\nThe facts needed are already almost all here.\n\n- **Turning points:** a maximum at $(-1, 7)$ and a minimum at $(2, -20)$.\n- **$y$ intercept:** substituting $x = 0$ gives $y = 0$, so the curve passes through the origin.\n- **Ends:** the $x^3$ coefficient is $+2$, positive, so the curve comes up from the bottom left and goes off to the top right.\n\nSo the sketch rises steeply from the bottom left, turns over at $(-1, 7)$, falls through the origin, bottoms out at $(2, -20)$, and then rises away to the top right.\n\n**A check on the shape.** The maximum is at $x = -1$ and the minimum at $x = 2$, so the maximum is to the **left**. That is always true for a positive cubic, and it is worth a glance at the end: a sketch with them the other way round has an error somewhere."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "An open-topped tank has a square base of side $x$ metres and a volume of $32$ m³.\n\n(a) Show that the area of metal needed is $A = x^2 + \\frac{128}{x}$.\n\n(b) Use calculus to find the value of $x$ that uses the least metal, justifying that your value gives a minimum.\n\n(c) State the dimensions of the tank and the least area of metal, and explain why the answer differs from the closed box, where the least-material shape is a cube.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "optimisation problems",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**(a) Deriving the formula.**\n\nLet the height be $h$. The tank is **open-topped**, so the metal covers the square base and the four sides but not the top:\n\n$$A = x^2 + 4xh$$\n\nThe volume is fixed at $32$ m³, and for a square base that is\n\n$$x^2 h = 32 \\implies h = \\frac{32}{x^2}$$\n\nSubstituting to eliminate $h$:\n\n$$A = x^2 + 4x \\times \\frac{32}{x^2} = x^2 + \\frac{128}{x}$$\n\nas required. Note that the constraint was used to remove $h$ **before** any calculus — with two variables there is nothing to differentiate.\n\n**(b) The least metal.**\n\nRewrite the fraction as a negative power so the rule applies:\n\n$$A = x^2 + 128x^{-1}$$\n\nDifferentiate:\n\n$$\\frac{dA}{dx} = 2x - 128x^{-2}$$\n\nSet it to zero:\n\n$$2x = \\frac{128}{x^2} \\implies 2x^3 = 128 \\implies x^3 = 64 \\implies x = 4$$\n\nOnly the positive root is taken, since $x$ is a length.\n\n**Justifying the minimum.** Differentiate again:\n\n$$\\frac{d^2A}{dx^2} = 2 + 256x^{-3}$$\n\nAt $x = 4$: $2 + \\frac{256}{64} = 2 + 4 = 6$. **Positive**, so $x = 4$ gives a **minimum**. That line is part of the answer: the question asked for the least metal, so it has to be shown to be least.\n\n**(c) The tank, and why it is not a cube.**\n\n$$h = \\frac{32}{4^2} = \\frac{32}{16} = 2$$\n\nSo the tank is **4 m by 4 m by 2 m**, and the least area of metal is\n\n$$A = 16 + \\frac{128}{4} = 16 + 32 = 48 \\text{ m}^2$$\n\n**Why not a cube.** For a **closed** box the optimum is a cube, because every one of the six faces costs the same and the shape that minimises surface area for a given volume is the most symmetric one available.\n\nHere the top is **free**. That changes the economics: making the tank wider and shallower is now cheaper than the symmetric answer would suggest, because the extra width costs only base area while the height saved would have cost four side walls. The optimum settles at a height of exactly **half** the base edge — $4$ by $4$ by $2$ — rather than at equal sides.\n\nThe general lesson is worth keeping. The optimum shape depends on what is being counted, not only on the volume: change which faces cost something and the answer moves. It is why real drinks cans are not the shape calculus predicts for a plain cylinder — their ends are made of thicker metal, so the costs are not equal either.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "writes A = x² + 4xh and the volume constraint"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "eliminates h to reach A = x² + 128/x"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates, handling the negative power"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "solves to x = 4, taking the positive root"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the second derivative"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "evaluates it as positive and concludes minimum"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gives dimensions 4 by 4 by 2 and area 48 m²"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "explains that the free top changes which shape is optimal"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "show-that"
+      ],
+      "suggestedMinutes": 12,
+      "criteria": [
+        {
+          "text": "Derives A = x² + 128/x from the volume constraint and the open-topped surface",
+          "marks": 2
+        },
+        {
+          "text": "Differentiates correctly, including the negative power, and solves to x = 4",
+          "marks": 2
+        },
+        {
+          "text": "Justifies the minimum with the second derivative",
+          "marks": 2
+        },
+        {
+          "text": "States the dimensions and least area, and explains the difference from the closed box",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a) Deriving the formula.**\n\nLet the height be $h$. The tank is **open-topped**, so the metal covers the square base and the four sides but not the top:\n\n$$A = x^2 + 4xh$$\n\nThe volume is fixed at $32$ m³, and for a square base that is\n\n$$x^2 h = 32 \\implies h = \\frac{32}{x^2}$$\n\nSubstituting to eliminate $h$:\n\n$$A = x^2 + 4x \\times \\frac{32}{x^2} = x^2 + \\frac{128}{x}$$\n\nas required. Note that the constraint was used to remove $h$ **before** any calculus — with two variables there is nothing to differentiate.\n\n**(b) The least metal.**\n\nRewrite the fraction as a negative power so the rule applies:\n\n$$A = x^2 + 128x^{-1}$$\n\nDifferentiate:\n\n$$\\frac{dA}{dx} = 2x - 128x^{-2}$$\n\nSet it to zero:\n\n$$2x = \\frac{128}{x^2} \\implies 2x^3 = 128 \\implies x^3 = 64 \\implies x = 4$$\n\nOnly the positive root is taken, since $x$ is a length.\n\n**Justifying the minimum.** Differentiate again:\n\n$$\\frac{d^2A}{dx^2} = 2 + 256x^{-3}$$\n\nAt $x = 4$: $2 + \\frac{256}{64} = 2 + 4 = 6$. **Positive**, so $x = 4$ gives a **minimum**. That line is part of the answer: the question asked for the least metal, so it has to be shown to be least.\n\n**(c) The tank, and why it is not a cube.**\n\n$$h = \\frac{32}{4^2} = \\frac{32}{16} = 2$$\n\nSo the tank is **4 m by 4 m by 2 m**, and the least area of metal is\n\n$$A = 16 + \\frac{128}{4} = 16 + 32 = 48 \\text{ m}^2$$\n\n**Why not a cube.** For a **closed** box the optimum is a cube, because every one of the six faces costs the same and the shape that minimises surface area for a given volume is the most symmetric one available.\n\nHere the top is **free**. That changes the economics: making the tank wider and shallower is now cheaper than the symmetric answer would suggest, because the extra width costs only base area while the height saved would have cost four side walls. The optimum settles at a height of exactly **half** the base edge — $4$ by $4$ by $2$ — rather than at equal sides.\n\nThe general lesson is worth keeping. The optimum shape depends on what is being counted, not only on the volume: change which faces cost something and the answer moves. It is why real drinks cans are not the shape calculus predicts for a plain cylinder — their ends are made of thicker metal, so the costs are not equal either."
+    }
+  ],
+  "examTechnique": {
+    "body": "**The method never changes.** Differentiate. Set $\\frac{dy}{dx} = 0$. Solve for $x$. Substitute back into the **original** function for $y$. Use $\\frac{d^2y}{dx^2}$ to say which kind of point it is.\n\n**Write all five steps.** Each is worth a mark somewhere, and a question asking you to \"find the coordinates of the stationary points and determine their nature\" is asking for all of them explicitly.\n\n**$\\frac{d^2y}{dx^2} < 0$ is a maximum**, $> 0$ is a minimum. If you are unsure, think of $y = x^2$: it has a minimum, and its second derivative is $+2$.\n\n**The alternative is the sign of the gradient either side.** Positive then negative is a maximum; negative then positive is a minimum. The specification allows either method, and this one still works when the second derivative comes out as zero.\n\n**A cubic usually has two stationary points**, and a question asking for \"the stationary points\" wants both. Solving a quadratic gives two roots; give both.\n\n**In an optimisation problem, use the constraint first.** Write the quantity to be optimised, use the constraint to remove the second variable, then differentiate a function of one variable.\n\n**Justify that it is the maximum or minimum asked for.** A problem asking for the least surface area is not finished until you have shown the stationary point is a minimum.\n\n**Answer in context.** If the question asks for the dimensions of a box, give the dimensions, with units, not just the value of $x$.",
+    "examinerErrors": [
+      "Stopping at the $x$ coordinate when the question asked for the maximum or minimum value.",
+      "Substituting back into the derivative rather than the original function.",
+      "Getting the second derivative test the wrong way round.",
+      "Finding only one stationary point on a cubic when the quadratic has two roots.",
+      "Differentiating an expression that still contains two variables.",
+      "Never justifying that the stationary point is the kind of point the question wanted.",
+      "Giving $x = 3$ as the answer to \"find the dimensions of the box\"."
+    ],
+    "grade9Looks": "A top answer sets out the five steps as five lines, so nothing can be left out under pressure. It knows the second derivative test in the direction that matches $y = x^2$, and it reaches for the sign-either-side method when the second derivative vanishes. On a cubic it expects two stationary points and checks it has found both. In an optimisation problem it writes the constraint and the quantity separately, eliminates a variable explicitly, and says which is which. And it finishes by answering the question that was asked — dimensions with units, or a least cost, rather than a bare value of $x$."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

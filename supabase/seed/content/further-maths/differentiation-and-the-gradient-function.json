@@ -1,0 +1,1501 @@
+{
+  "id": "differentiation-and-the-gradient-function",
+  "subjectId": "further-maths",
+  "unitId": "calculus",
+  "title": "Differentiation and the gradient function",
+  "specPoints": [
+    "4.1",
+    "4.2",
+    "4.3",
+    "4.6"
+  ],
+  "order": 1,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Multiply by the power, then drop it by one",
+      "body": "That is the whole rule for $kx^n$. Multiply the coefficient by the power you already have, then subtract one from that power. $5x^4$ becomes $20x^3$. Say it in that order every single time and you will not reduce the power before you have used it."
+    },
+    {
+      "kind": "spot",
+      "title": "A curve has no single gradient",
+      "body": "A straight line has one gradient everywhere. A curve has a different one at every point, which is why the answer to \"differentiate this\" is a **function**, not a number. You only get a number once you substitute an $x$ into it."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Constants differentiate to nothing",
+      "body": "The graph of $y = 9$ is a flat line, and a flat line has gradient $0$. So the $-7$ at the end of an expression simply disappears when you differentiate. Students lose marks by carrying it through rather than by dropping it."
+    },
+    {
+      "kind": "check",
+      "title": "Tidy the expression before you touch it",
+      "body": "The rule applies to $kx^n$ and nothing else, so a product must be expanded and a quotient divided out **first**. There is no rule at this level for differentiating a bracket times a bracket, and trying to invent one is where the marks go."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "A curve has a different gradient at every point",
+        "body": "You already know how to find the gradient of a **straight line**: pick two points and divide the rise by the run. The answer is the same wherever you pick, which is what makes it a straight line.\n\nA **curve** is not like that. Walk along $y = x^2$ from left to right and it falls steeply, then less steeply, flattens out at the bottom, then climbs, then climbs steeply. The gradient is changing the whole way.\n\nSo \"the gradient of $y = x^2$\" is not a question with an answer. **\"The gradient of $y = x^2$ at $x = 3$\"** is.\n\nThat is the idea the whole of calculus is built on, and it has a neat consequence: since every $x$ has its own gradient, the gradients form a **function** of $x$. Feed it an $x$, get back the gradient there.\n\n> That function is called the **gradient function**, written $\\frac{dy}{dx}$, and finding it is called **differentiating**.\n\nLook at the table below. For $y = x^2$ the gradient at $x$ turns out to be exactly $2x$ every time — at $x = 3$ it is $6$, at $x = -2$ it is $-4$, and at $x = 0$ it is $0$, which is the flat point at the bottom of the curve.\n\nThat is not a coincidence and it is not a pattern to be spotted. It follows from a rule, and the rest of this topic is that rule.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -3.5,
+                3.5
+              ],
+              "yRange": [
+                -1,
+                10
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 0,
+                  "c": 0,
+                  "label": "y = x²"
+                }
+              ],
+              "points": [
+                {
+                  "x": -2,
+                  "y": 4,
+                  "label": "(−2, 4)"
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "label": "(0, 0)"
+                },
+                {
+                  "x": 3,
+                  "y": 9,
+                  "label": "(3, 9)"
+                }
+              ]
+            },
+            "alt": "The parabola y equals x squared with three points marked, showing that the curve is falling at x = −2, flat at x = 0 and rising steeply at x = 3"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "x",
+                "y = x²",
+                "Gradient there"
+              ],
+              "rows": [
+                [
+                  "-3",
+                  "9",
+                  "-6"
+                ],
+                [
+                  "-2",
+                  "4",
+                  "-4"
+                ],
+                [
+                  "-1",
+                  "1",
+                  "-2"
+                ],
+                [
+                  "0",
+                  "0",
+                  "0"
+                ],
+                [
+                  "1",
+                  "1",
+                  "2"
+                ],
+                [
+                  "2",
+                  "4",
+                  "4"
+                ],
+                [
+                  "3",
+                  "9",
+                  "6"
+                ]
+              ],
+              "title": "The gradient of y = x² at seven points"
+            },
+            "alt": "A table of seven x values on the curve y equals x squared, with the value of y and the gradient of the curve at each one"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Why does the question \"what is the gradient of $y = x^2$?\" have no single answer?",
+          "options": [
+            "The curve has no gradient anywhere, because it is not straight",
+            "The gradient depends on which two points you choose to use",
+            "You cannot find the gradient of a curve without a calculator",
+            "The gradient of a curve is different at every point on it"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "what a gradient function is",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A straight line has one gradient everywhere; a curve has a **different gradient at every point**. So a gradient question about a curve has to name the point. The set of all those gradients is the **gradient function**, and finding it is what differentiating does.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the gradient changes from point to point"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "The gradient at a point is the gradient of the tangent",
+        "body": "\"The gradient of the curve at $x = 3$\" still needs pinning down. What does it actually mean to measure the steepness at a single point?\n\n**The answer: draw the tangent there and measure that.** The tangent is the straight line that just touches the curve at that point and runs in the same direction as the curve does. Its gradient is the curve's gradient.\n\n> The gradient of a function at a point **is** the gradient of the tangent at that point.\n\nHere is why that definition is the sensible one. Take two points on $y = x^2$: the one at $x = 3$, and another a little further along at $x = 3 + h$. The straight line through them is a **chord**, and you can find its gradient the ordinary way.\n\nNow slide the second point closer. As $h$ shrinks, the chord swings round until it lies along the curve at that point — it becomes the tangent.\n\nThe numbers below show it happening. The chord gradient comes out as $6 + h$ every time, so as $h$ shrinks towards nothing the gradient closes on **$6$** — which is exactly what the gradient function $2x$ gives at $x = 3$.\n\nYou will not be asked to do this in the exam. It is here because it is the reason the rule in the next step is true rather than magic.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "h",
+                "Second point at x =",
+                "Chord gradient"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "4",
+                  "7"
+                ],
+                [
+                  "0.5",
+                  "3.5",
+                  "6.5"
+                ],
+                [
+                  "0.1",
+                  "3.1",
+                  "6.1"
+                ],
+                [
+                  "0.01",
+                  "3.01",
+                  "6.01"
+                ],
+                [
+                  "0.001",
+                  "3.001",
+                  "6.001"
+                ]
+              ],
+              "title": "Chord gradients on y = x² closing on the tangent at x = 3"
+            },
+            "alt": "A table showing the gradient of the chord from x equals 3 as the second point moves closer, the values approaching 6"
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -0.5,
+                5
+              ],
+              "yRange": [
+                -10,
+                16
+              ],
+              "grid": true,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 0,
+                  "c": 0,
+                  "label": "y = x²"
+                }
+              ],
+              "lines": [
+                {
+                  "m": 6,
+                  "c": -9,
+                  "label": "tangent at (3, 9)"
+                }
+              ],
+              "points": [
+                {
+                  "x": 3,
+                  "y": 9,
+                  "label": "(3, 9)"
+                }
+              ]
+            },
+            "alt": "The curve y equals x squared with its tangent drawn at the point 3 comma 9, the tangent having gradient 6"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "On $y = x^2$, the chord from $x = 3$ to $x = 3 + h$ has gradient $6 + h$. What value does the chord gradient approach as $h$ shrinks towards zero?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "what a gradient function is",
+          "calculator": "either",
+          "tags": [],
+          "solution": "As $h$ shrinks, $6 + h$ closes on **$6$**. That limit is the gradient of the tangent at $x = 3$, and so it is the gradient of the curve there. The gradient function of $y = x^2$ is $2x$, and $2 \\times 3 = 6$, which agrees.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the chord gradient approaches 6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The rule",
+        "body": "Here it is, and it is the only rule you need for this topic.\n\n> To differentiate $kx^n$: **multiply by the power, then reduce the power by one.** The result is $knx^{n-1}$.\n\nSay it in that order every time. Multiply first, reduce second. Doing it the other way round is the single most common error in the subject.\n\n**Three examples, worked slowly.**\n\n- $y = x^2$. Here $k = 1$ and $n = 2$. Multiply: $1 \\times 2 = 2$. Reduce: $2 - 1 = 1$. So $\\frac{dy}{dx} = 2x$.\n- $y = 5x^{2}$. Multiply: $5 \\times 2 = 10$. Reduce: the power becomes $1$. So $\\frac{dy}{dx} = 10x$.\n- $y = x^{3}$. Multiply: $1 \\times 3 = 3$. Reduce: the power becomes $2$. So $\\frac{dy}{dx} = 3x^{2}$.\n\n**Sums differentiate term by term.** An expression with several terms is differentiated by doing each one separately and adding the results. So for $y = 2x^{3}-3x^{2}+4x-7$:\n\n- $2x^3$ gives $6x^2$\n- $-3x^2$ gives $-6x$\n- $4x$ gives $4$\n- $-7$ gives $0$\n\nand $\\frac{dy}{dx} = 6x^{2}-6x+4$.\n\n**Two special cases fall straight out of the rule.**\n\n**A constant differentiates to zero.** $y = 9$ is a flat line, and a flat line has gradient $0$. So the $-7$ above simply vanished.\n\n**A term in $x$ differentiates to its coefficient.** $y = 3x+2$ is a straight line of gradient $3$, and sure enough $\\frac{dy}{dx} = 3$ — the same everywhere, which is what a straight line means.\n\nThat second one is worth noticing. The rule already knew about straight lines.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "The rule",
+                  "equation": "kx^n  ->  knx^(n-1)",
+                  "units": "multiply by the power, then reduce it by one"
+                },
+                {
+                  "name": "A coefficient",
+                  "equation": "5x^2  ->  10x",
+                  "units": "5 times 2 is 10, and the power drops to 1"
+                },
+                {
+                  "name": "A cube",
+                  "equation": "x^3  ->  3x^2",
+                  "units": "1 times 3 is 3, and the power drops to 2"
+                },
+                {
+                  "name": "A constant",
+                  "equation": "9  ->  0",
+                  "units": "a flat line has gradient zero"
+                }
+              ]
+            },
+            "alt": "A reference card giving the differentiation rule for k x to the power n with three worked instances beneath it"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Term",
+                "Multiply by the power",
+                "Reduce the power",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "2x³",
+                  "2 × 3 = 6",
+                  "3 − 1 = 2",
+                  "6x²"
+                ],
+                [
+                  "−3x²",
+                  "−3 × 2 = −6",
+                  "2 − 1 = 1",
+                  "−6x"
+                ],
+                [
+                  "4x",
+                  "4 × 1 = 4",
+                  "1 − 1 = 0",
+                  "4"
+                ],
+                [
+                  "−7",
+                  "no x to work on",
+                  "",
+                  "0"
+                ]
+              ],
+              "title": "Differentiating 2x^{3}-3x^{2}+4x-7 term by term"
+            },
+            "alt": "A table differentiating each term of two x cubed minus three x squared plus four x minus seven, showing the multiply and reduce steps"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "short-text",
+          "prompt": "Differentiate $y = 5x^2$. Give $\\frac{dy}{dx}$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "differentiating kx to the n",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Multiply by the power: $5 \\times 2 = 10$. Reduce the power: $x^2$ becomes $x^1$, which is just $x$. So $\\frac{dy}{dx} = 10x$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "10x"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "10x",
+            "dy/dx = 10x"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Negative powers use the same rule",
+        "body": "The specification says $n$ is **an integer**, and that includes negative ones. So the rule has to work for $\\frac{1}{x}$ as well as for $x^2$, and it does — you just have to write the fraction as a power first.\n\n**Rewrite, differentiate, then convert back if you need to.**\n\nTake $y = \\frac{1}{x}$.\n\n1. Rewrite: $\\frac{1}{x} = x^{-1}$.\n2. Differentiate: multiply by $-1$, reduce the power to $-2$. That gives $-x^{-2}$.\n3. Convert back, if the question used fractions: $-x^{-2} = -\\frac{1}{x^2}$.\n\nNotice the power went **down**, from $-1$ to $-2$. \"Reduce the power by one\" means subtract one, and subtracting one from a negative number makes it more negative. Students who think of it as \"make the power smaller in size\" get this wrong every time.\n\n**A second example.** $y = 4x^{-2}$, that is $\\frac{4}{x^2}$.\n\n1. Rewrite: $\\frac{4}{x^2} = 4x^{-2}$.\n2. Multiply by the power: $4 \\times (-2) = -8$.\n3. Reduce the power: $-2 - 1 = -3$.\n4. So $\\frac{dy}{dx} = -8x^{-3}$, or $-\\frac{8}{x^3}$.\n\n**And they mix freely with positive powers.** For $y = 6x^{2}+3x^{-1}$, differentiate each term as it stands: $6x^2$ gives $12x$, and $3x^{-1}$ gives $-3x^{-2}$. So $\\frac{dy}{dx} = 12x-3x^{-2}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "As written",
+                "As a power",
+                "Differentiated",
+                "Back as a fraction"
+              ],
+              "rows": [
+                [
+                  "1/x",
+                  "x⁻¹",
+                  "−x⁻²",
+                  "−1/x²"
+                ],
+                [
+                  "4/x²",
+                  "4x⁻²",
+                  "−8x⁻³",
+                  "−8/x³"
+                ],
+                [
+                  "1/x³",
+                  "x⁻³",
+                  "−3x⁻⁴",
+                  "−3/x⁴"
+                ],
+                [
+                  "2/x",
+                  "2x⁻¹",
+                  "−2x⁻²",
+                  "−2/x²"
+                ]
+              ],
+              "title": "Fractions become negative powers, and the same rule applies"
+            },
+            "alt": "A table showing four fractions rewritten as negative powers, differentiated, and converted back to fraction form"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Differentiate $y = \\frac{4}{x^2}$.",
+            "steps": [
+              {
+                "text": "Rewrite the fraction as a negative power: $y = 4x^{-2}$.",
+                "note": "The rule works on $kx^n$, so anything not in that form has to be put into it first."
+              },
+              {
+                "text": "Multiply by the power: $4 \\times (-2) = -8$.",
+                "note": "The power is $-2$, so multiplying by it changes the sign. That is where the minus in the answer comes from."
+              },
+              {
+                "text": "Reduce the power by one: $-2 - 1 = -3$.",
+                "note": "Subtracting one from a negative power makes it more negative, not less."
+              },
+              {
+                "text": "So $\\frac{dy}{dx} = -8x^{-3}$, which is $-\\frac{8}{x^3}$.",
+                "note": "Convert back to a fraction only if the question was written with fractions."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Differentiate $y = \\frac{1}{x}$.",
+          "options": [
+            "$x^{-2}$, which is $\\frac{1}{x^2}$",
+            "$-x^{0}$, which is $-1$",
+            "$-x^{-2}$, which is $-\\frac{1}{x^2}$",
+            "$\\frac{1}{2}x^{-2}$"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "differentiating kx to the n",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Write $\\frac{1}{x}$ as $x^{-1}$. Multiply by the power, $-1$, which makes the coefficient negative. Reduce the power: $-1 - 1 = -2$. So the answer is $-x^{-2} = -\\frac{1}{x^2}$. The commonest error is reducing $-1$ to $0$ rather than to $-2$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "minus x to the power minus two"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Tidy it first",
+        "body": "The rule differentiates $kx^n$ and sums of $kx^n$. It does **not** differentiate a bracket times a bracket, and it does not differentiate a fraction with $x$ on the bottom of a whole expression.\n\nThere is no product rule and no quotient rule in this qualification. What there is instead is algebra you already have: **turn the expression into a sum of $kx^n$ terms first**.\n\n**A product: expand it.**\n\n$y = (3x + 1)(x - 2)$\n\nMultiplying out gives $y = 3x^{2}-5x-2$, which is now a sum of the right kind of terms. Differentiating: $\\frac{dy}{dx} = 6x-5$.\n\nA student who differentiates each bracket and multiplies the results gets $3 \\times 1 = 3$, which is wrong, and there is no partial credit for it.\n\n**A quotient over a single term: divide it out.**\n\n$y = \\frac{x^3 + 2x}{x}$\n\nEvery term on the top has an $x$ in it, so divide each one by $x$: $\\frac{x^3}{x} = x^2$ and $\\frac{2x}{x} = 2$. So $y = x^{2}+2$ and $\\frac{dy}{dx} = 2x$.\n\n> This works because the bottom is a single term. $\\frac{x^3 + 2x}{x + 1}$ cannot be split this way and is beyond this specification.\n\n**A fraction with several terms on top: split it.**\n\n$y = \\frac{3x^2 + 5}{x^2}$ becomes $3 + 5x^{-2}$, which differentiates to $-10x^{-3}$.\n\n**The habit to build.** Before you differentiate anything, look at what you have and ask: *is this already a sum of $kx^n$ terms?* If not, the first line of your working is the tidying, not the differentiating. Examiners award marks for that line.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "As given",
+                "Tidied to",
+                "Differentiated"
+              ],
+              "rows": [
+                [
+                  "(3x + 1)(x − 2)",
+                  "3x² − 5x − 2",
+                  "6x − 5"
+                ],
+                [
+                  "(x + 4)²",
+                  "x² + 8x + 16",
+                  "2x + 8"
+                ],
+                [
+                  "(x³ + 2x) / x",
+                  "x² + 2",
+                  "2x"
+                ],
+                [
+                  "(3x² + 5) / x²",
+                  "3 + 5x⁻²",
+                  "−10x⁻³"
+                ],
+                [
+                  "x(x − 3)",
+                  "x² − 3x",
+                  "2x − 3"
+                ]
+              ],
+              "title": "Tidy into a sum of terms, then differentiate"
+            },
+            "alt": "A table of five expressions shown as given, rewritten as a sum of powers of x, and then differentiated"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Differentiate $y = (3x + 1)(x - 2)$.",
+            "steps": [
+              {
+                "text": "There is no product rule here, so expand the brackets first.",
+                "note": "Differentiating each bracket separately and multiplying is wrong and earns nothing."
+              },
+              {
+                "text": "Expanding: $3x^2 - 6x + x - 2 = 3x^{2}-5x-2$.",
+                "note": "Collect the two x terms carefully: $-6x + x = -5x$."
+              },
+              {
+                "text": "Now differentiate term by term: $6x-5$.",
+                "note": "$3x^2$ gives $6x$, $-5x$ gives $-5$, and the constant $-2$ gives nothing."
+              },
+              {
+                "text": "So $\\frac{dy}{dx} = 6x-5$.",
+                "note": "Check: at $x = 0$ this says the gradient is $-5$, and the expanded curve does fall steeply there."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "short-text",
+          "prompt": "Differentiate $y = \\frac{x^3 + 2x}{x}$. Give $\\frac{dy}{dx}$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "simplifying before differentiating",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Divide each term on the top by $x$ first: $\\frac{x^3}{x} = x^2$ and $\\frac{2x}{x} = 2$, so $y = x^{2}+2$. Now differentiate: $x^2$ gives $2x$ and the constant $2$ gives $0$. So $\\frac{dy}{dx} = 2x$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2x"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "2x",
+            "dy/dx = 2x"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Notation, and what a derivative means",
+        "body": "**Two notations, and the question chooses.**\n\nIf the question writes $y = \\dots$, the gradient function is $\\frac{dy}{dx}$, read \"dee y by dee x\".\n\nIf the question writes $f(x) = \\dots$, the gradient function is $f'(x)$, read \"f dashed of x\". And then the gradient at a particular point is written $f'(2)$, which is neat and worth using.\n\nThey mean the same thing. Match whichever the question used.\n\n**$\\frac{dy}{dx}$ is one symbol, not a fraction.** It does not mean $d$ times $y$ divided by $d$ times $x$, and you cannot cancel the $d$s. Think of it as a single piece of notation meaning \"the rate at which $y$ changes as $x$ changes\".\n\n**Which brings us to what it means.** A gradient is a rate of change: how much $y$ moves for a given move in $x$. So the derivative answers \"how fast is this changing?\"\n\n- If $y$ is a distance and $x$ is time, $\\frac{dy}{dx}$ is a **speed**.\n- If $y$ is the volume of water in a tank and $x$ is time, $\\frac{dy}{dx}$ is the **rate of filling**.\n- If $y$ is a cost and $x$ is the number made, $\\frac{dy}{dx}$ is the **cost of making one more**.\n\nThe specification puts it directly: the gradient function \"measures the rate of change of $y$ with respect to $x$\".\n\n**A positive derivative means $y$ is increasing** as $x$ increases; a negative one means it is decreasing; zero means, at that instant, it is doing neither.\n\nThat last case is the whole of the third topic in this unit, so it is worth remembering where it came from.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What dy/dx tells you",
+              "boxes": [
+                {
+                  "title": "The gradient",
+                  "body": "The steepness of the curve at a point, which is the gradient of the tangent there."
+                },
+                {
+                  "title": "A rate of change",
+                  "body": "How fast y changes as x changes. Distance against time gives a speed."
+                },
+                {
+                  "title": "The sign matters",
+                  "body": "Positive means rising, negative means falling, zero means flat at that instant."
+                },
+                {
+                  "title": "It is a function",
+                  "body": "Substitute an x to get a number. Without an x it stays a function of x."
+                }
+              ]
+            },
+            "alt": "Four boxes on what the gradient function tells you: the gradient, a rate of change, what its sign means, and that it is a function"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "If y is",
+                "and x is",
+                "then dy/dx is"
+              ],
+              "rows": [
+                [
+                  "distance",
+                  "time",
+                  "speed"
+                ],
+                [
+                  "volume in a tank",
+                  "time",
+                  "the rate of filling"
+                ],
+                [
+                  "total cost",
+                  "number made",
+                  "the cost of one more"
+                ],
+                [
+                  "temperature",
+                  "time",
+                  "how fast it is heating or cooling"
+                ],
+                [
+                  "height of a curve",
+                  "position along it",
+                  "the steepness of the slope"
+                ]
+              ],
+              "title": "A derivative is always a rate of change"
+            },
+            "alt": "A table giving five pairs of quantities and what the derivative of one with respect to the other represents"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A tank is filling with water. $V$ is the volume in the tank and $t$ is the time. What does $\\frac{dV}{dt}$ represent?",
+          "options": [
+            "The rate at which the tank is filling",
+            "The total volume of water in the tank",
+            "The time taken for the tank to fill completely",
+            "The capacity of the tank when it is full"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "what a gradient function is",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A derivative is a **rate of change**: how much $V$ changes for a given change in $t$. So $\\frac{dV}{dt}$ is the rate of filling, in units of volume per unit time. The total volume is $V$ itself, not its derivative.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the rate at which the volume is changing with time"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "explain",
+        "title": "Differentiating twice",
+        "body": "The gradient function is a function, so it can be differentiated too. Do it and you get the **second derivative**, written $\\frac{d^2y}{dx^2}$ — or $f''(x)$ in function notation.\n\n> $\\frac{d^2y}{dx^2}$ measures the **rate of change of the gradient function**.\n\nThere is nothing new to learn. Differentiate, then differentiate the answer.\n\n**Worked through.** Take $y = 2x^{3}-3x^{2}+4x-7$.\n\n- First: $\\frac{dy}{dx} = 6x^{2}-6x+4$.\n- Again: $\\frac{d^2y}{dx^2} = 12x-6$.\n\n**What it tells you.** The first derivative says whether the curve is going up or down. The second says whether the *going up* is getting steeper or gentler.\n\n- $\\frac{d^2y}{dx^2} > 0$: the gradient is increasing, so the curve bends upwards, like the bottom of a valley.\n- $\\frac{d^2y}{dx^2} < 0$: the gradient is decreasing, so the curve bends downwards, like the top of a hill.\n\nThat is exactly how you will tell a maximum from a minimum in the third topic of this unit, so it is worth getting comfortable with now.\n\n**Two checks worth doing.**\n\nFor $y = x^{3}$: $\\frac{dy}{dx} = 3x^{2}$ and $\\frac{d^2y}{dx^2} = 6x$.\n\nFor $y = x^{2}$: $\\frac{dy}{dx} = 2x$ and $\\frac{d^2y}{dx^2} = 2$ — a constant, because the gradient of a parabola increases at a steady rate.\n\n**Do not confuse it with $\\left(\\frac{dy}{dx}\\right)^2$.** The notation puts the $2$ in two different places for a reason: $\\frac{d^2y}{dx^2}$ means differentiate twice, and squaring the first derivative is something else entirely.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "y",
+                "dy/dx",
+                "d²y/dx²"
+              ],
+              "rows": [
+                [
+                  "x^{2}",
+                  "2x",
+                  "2"
+                ],
+                [
+                  "x^{3}",
+                  "3x^{2}",
+                  "6x"
+                ],
+                [
+                  "2x^{3}-3x^{2}+4x-7",
+                  "6x^{2}-6x+4",
+                  "12x-6"
+                ],
+                [
+                  "3x+2",
+                  "3",
+                  "0"
+                ]
+              ],
+              "title": "Differentiate, then differentiate again"
+            },
+            "alt": "A table of four functions with their first and second derivatives, showing that a straight line has second derivative zero"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "short-text",
+          "prompt": "Given $y = x^{3}$, work out $\\frac{d^2y}{dx^2}$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the second derivative",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Differentiate once: $\\frac{dy}{dx} = 3x^{2}$. Differentiate that: multiply by the power $2$ and reduce it to $1$, giving $6x$. So $\\frac{d^2y}{dx^2} = 6x$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6x"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "6x",
+            "d2y/dx2 = 6x"
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: where the marks actually go",
+        "body": "Every error in this topic is one of a small number of things, and knowing which one you are prone to is worth more than more practice.\n\n| The error | What it produces | The fix |\n| --- | --- | --- |\n| Reducing the power before multiplying | $5x^4 \\to 5x^3$ | Say \"multiply, then reduce\", in that order, out loud |\n| Multiplying by the new power | $5x^4 \\to 15x^3$ | Multiply by the power you started with |\n| Keeping a constant | $\\dots - 7 \\to \\dots - 7$ | A constant is a flat line: gradient zero |\n| Differentiating brackets separately | $(3x+1)(x-2) \\to 3$ | Expand first; there is no product rule here |\n| Making a negative power less negative | $x^{-1} \\to x^{0}$ | Subtract one: $-1 - 1 = -2$ |\n| Answering with a number | \"$\\frac{dy}{dx} = 6$\" with no $x$ given | A function unless a point was named |\n\n**The habit that prevents most of them:** write the expression as a sum of $kx^n$ terms on its own line before you differentiate anything. Expanding, dividing out, and rewriting fractions as negative powers all happen on that line. Then differentiate a tidy expression.\n\n**A check you can do in seconds.** Pick a value of $x$, work out the gradient your answer predicts, and ask whether the curve really does that there. On $y = 3x^{2}-5x-2$ the answer $6x-5$ says the gradient at $x = 0$ is $-5$ — steeply downhill. Substituting $x = 0$ and $x = 0.1$ into the original gives $-2$ and $-2.47$, which is indeed falling at about that rate. It will not prove you are right, but it catches a sign error every time.\n\n**And one thing worth saying properly.** A derivative is a rate of change, so a question that gives you a real-world context is asking about a real-world rate. Read what the variables are before you differentiate, and say what your answer means in those terms.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Before you differentiate",
+              "boxes": [
+                {
+                  "title": "Is it a sum of terms?",
+                  "body": "If there are brackets or a fraction, tidy first. That line earns marks on its own."
+                },
+                {
+                  "title": "Any negative powers?",
+                  "body": "Rewrite fractions as powers now, so the rule can be applied without thinking."
+                },
+                {
+                  "title": "What is being asked?",
+                  "body": "The gradient function, or the gradient at a point? Answer whichever it was."
+                },
+                {
+                  "title": "Which notation?",
+                  "body": "dy/dx if the question used y, f dashed of x if it used f of x."
+                }
+              ]
+            },
+            "alt": "Four boxes on the checks to make before differentiating an expression"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "A student differentiates $y = (x + 4)^2$ and writes $\\frac{dy}{dx} = 2(x + 4)$. Why can they not be given full credit at this level?",
+          "options": [
+            "The bracket has to be expanded first; there is no rule here for differentiating one",
+            "The answer is wrong, because the gradient function should be $x + 4$",
+            "The answer should be $2x + 4$, since only the first term is differentiated",
+            "The expression cannot be differentiated at all in this specification"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "simplifying before differentiating",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The value $2(x+4) = 2x + 8$ happens to be right, but the method is one this specification does not contain — there is no chain rule and no product rule here. The expected working expands to $x^2 + 8x + 16$ and then differentiates term by term to $2x + 8$. An examiner marking a method mark needs to see the expansion.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the bracket must be expanded before differentiating"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- A curve has a **different gradient at every point**, so the answer to \"differentiate\" is a **function**.\n- The gradient of a curve at a point **is the gradient of the tangent** there.\n- **The rule:** to differentiate $kx^n$, **multiply by the power, then reduce the power by one**, giving $knx^{n-1}$.\n- **Sums** differentiate term by term.\n- **A constant differentiates to $0$.** A term $kx$ differentiates to $k$.\n- **Negative powers** obey the same rule. Rewrite $\\frac{1}{x^2}$ as $x^{-2}$ first, and remember $-2 - 1 = -3$.\n- **Tidy before differentiating.** Expand products; divide out a quotient whose bottom is a single term; split a fraction over one term. There is no product or quotient rule in this specification.\n- **Notation:** $\\frac{dy}{dx}$ for $y = \\dots$, and $f'(x)$ for $f(x) = \\dots$. $\\frac{dy}{dx}$ is one symbol, not a fraction.\n- A derivative is a **rate of change**: distance over time is speed, volume over time is a rate of filling.\n- **Differentiate twice** for $\\frac{d^2y}{dx^2}$, which measures how fast the gradient itself is changing.\n- Positive gradient means rising, negative means falling, **zero means flat** — which is where the next topics start.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "The rule",
+                  "equation": "kx^n  ->  knx^(n-1)",
+                  "units": "multiply by the power, then reduce it by one"
+                },
+                {
+                  "name": "A whole expression",
+                  "equation": "2x^3 - 3x^2 + 4x - 7  ->  6x^2 - 6x + 4",
+                  "units": "term by term; the constant vanishes"
+                },
+                {
+                  "name": "Twice",
+                  "equation": "6x^2 - 6x + 4  ->  12x - 6",
+                  "units": "that second result is d2y/dx2"
+                },
+                {
+                  "name": "A negative power",
+                  "equation": "x^-1  ->  -x^-2",
+                  "units": "the power goes down, from -1 to -2"
+                }
+              ]
+            },
+            "alt": "A reference card with the differentiation rule, a worked cubic, its second derivative and the negative power case"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "short-text",
+          "prompt": "Differentiate $y = 2x^{3}-3x^{2}+4x-7$. Give $\\frac{dy}{dx}$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "differentiating kx to the n",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Term by term: $2x^3$ gives $6x^2$; $-3x^2$ gives $-6x$; $4x$ gives $4$; and the constant $-7$ gives $0$. So $\\frac{dy}{dx} = 6x^{2}-6x+4$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6x^2 - 6x + 4"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "6x^2 - 6x + 4",
+            "dy/dx = 6x^2 - 6x + 4"
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What does differentiating a function give you?",
+      "options": [
+        "The gradient of the curve, which is the same everywhere",
+        "The value of $y$ at any chosen value of $x$",
+        "A function that gives the gradient at any value of $x$",
+        "The area enclosed between the curve and the $x$ axis"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "what a gradient function is",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiating gives the **gradient function**. A curve has a different gradient at every point, so the result is a function of $x$: substitute a value and it returns the gradient there. The value of $y$ comes from the original function, not from its derivative.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a function giving the gradient at any x"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "short-text",
+      "prompt": "Differentiate $y = 7x^{2}$. Give $\\frac{dy}{dx}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply by the power: $7 \\times 2 = 14$. Reduce the power: $x^2$ becomes $x$. So $\\frac{dy}{dx} = 14x$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "14x"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "14x",
+        "dy/dx = 14x"
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Differentiate $y = 9$.",
+      "options": [
+        "$\\frac{dy}{dx} = 9$",
+        "$\\frac{dy}{dx} = 9x$",
+        "$\\frac{dy}{dx} = 1$",
+        "$\\frac{dy}{dx} = 0$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The graph of $y = 9$ is a horizontal line, and a horizontal line has gradient $0$ everywhere. So a constant always differentiates to $0$, which is why constant terms simply disappear from a derivative.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "zero"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "Differentiate $y = x^{2}-6x+5$. Give $\\frac{dy}{dx}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Term by term: $x^2$ gives $2x$; $-6x$ gives $-6$; the constant $5$ gives $0$. So $\\frac{dy}{dx} = 2x-6$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2x - 6"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "2x - 6",
+        "dy/dx = 2x - 6"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "The curve $y = x^{2}-6x+5$ is given. Work out the gradient of the curve at $x = 4$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate first: $\\frac{dy}{dx} = 2x-6$. Now substitute $x = 4$: $2 \\times 4 - 6 = 8 - 6 = 2$. The gradient there is $2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates to 2x-6 and substitutes x = 4 to get 2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "short-text",
+      "prompt": "Differentiate $y = 4x^{3}-9x$. Give $\\frac{dy}{dx}$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4x^3$ gives $4 \\times 3 = 12$ with the power reduced to $2$, so $12x^2$. And $-9x$ gives $-9$. So $\\frac{dy}{dx} = 12x^{2}-9$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12x^2 - 9"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "12x^2 - 9",
+        "dy/dx = 12x^2 - 9"
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "Differentiate $y = \\frac{6}{x}$.",
+      "options": [
+        "$-6x^{-2}$",
+        "$6x^{-2}$",
+        "$-6x^{0}$",
+        "$-\\frac{1}{6}x^{-2}$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rewrite as $6x^{-1}$. Multiply by the power: $6 \\times (-1) = -6$. Reduce the power: $-1 - 1 = -2$. So $\\frac{dy}{dx} = -6x^{-2}$, which is $-\\frac{6}{x^2}$. The usual error is taking the power to $0$ rather than to $-2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "minus six x to the power minus two"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "Work out the gradient of the curve $y = 4x^{3}-9x$ at the point where $x = 2$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dy}{dx} = 12x^{2}-9$. Substitute $x = 2$: $12 \\times 2^2 - 9 = 12 \\times 4 - 9 = 48 - 9 = 39$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates and substitutes to reach 39"
+        }
+      ],
+      "discriminators": [],
+      "answer": 39,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "To differentiate $y = (2x + 1)(x + 3)$ in this specification, what must you do first?",
+      "options": [
+        "Differentiate each bracket and multiply the results",
+        "Differentiate the first bracket and leave the second",
+        "Divide the second bracket into the first",
+        "Expand the brackets into a sum of terms"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "simplifying before differentiating",
+      "calculator": "either",
+      "tags": [],
+      "solution": "There is no product rule in this specification, so the brackets are expanded first: $(2x+1)(x+3) = 2x^{2}+7x+3$. Then differentiate term by term to get $4x+7$. Differentiating the brackets separately and multiplying gives $2$, which is wrong.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "expand the brackets first"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "Differentiate $y = 2x^{4}-5x^{2}+11$. Give $\\frac{dy}{dx}$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2x^4$ gives $2 \\times 4 = 8$ with power $3$, so $8x^3$. $-5x^2$ gives $-10x$. The constant $11$ gives $0$. So $\\frac{dy}{dx} = 8x^{3}-10x$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8x^3 - 10x"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "8x^3 - 10x",
+        "dy/dx = 8x^3 - 10x"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A student differentiates $y = 5x^4$ and gets $20x^4$. Which mistake did they make?",
+      "options": [
+        "They reduced the power but did not multiply by it",
+        "They multiplied by the new power instead of the old one",
+        "They multiplied by the power but did not reduce it",
+        "They treated the coefficient 5 as a constant term"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The coefficient is right — $5 \\times 4 = 20$ — so the multiplying was done correctly. The power should then drop from $4$ to $3$, giving $20x^3$. Doing one half of the rule and not the other is the commonest slip in the topic, which is why it is worth saying \"multiply, then reduce\" every time.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the power was not reduced"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Differentiate $y = x-3x^{-2}$, that is $y = x - \\frac{3}{x^2}$.",
+      "options": [
+        "$1 - 6x^{-3}$",
+        "$1 + 6x^{-1}$",
+        "$1 + 6x^{-3}$",
+        "$1 - 3x^{-3}$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rewrite: $y = x - 3x^{-2}$. The $x$ gives $1$. For $-3x^{-2}$: multiply by the power, $-3 \\times (-2) = +6$, and reduce the power, $-2 - 1 = -3$. So $\\frac{dy}{dx} = 1+6x^{-3}$. Two negatives multiplying to a positive is what catches people here.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one plus six x to the power minus three"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "Given $y = 2x^{4}-5x^{2}+11$, work out the value of $\\frac{d^2y}{dx^2}$ when $x = 1$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the second derivative",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate once: $\\frac{dy}{dx} = 8x^{3}-10x$. Differentiate again: $\\frac{d^2y}{dx^2} = 24x^{2}-10$. Substitute $x = 1$: $24 \\times 1 - 10 = 14$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates twice and substitutes to reach 14"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 14,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "The height of a ball, $h$ metres, is given in terms of the time $t$ seconds. What does $\\frac{dh}{dt}$ represent?",
+      "options": [
+        "The speed at which the ball is rising or falling",
+        "The total height the ball reaches at the top",
+        "The total time the ball spends in the air",
+        "The acceleration of the ball due to gravity"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what a gradient function is",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A derivative is a rate of change, so $\\frac{dh}{dt}$ is the rate at which the height changes with time — a **speed**, in metres per second. It is positive while the ball rises and negative while it falls. The **acceleration** would be $\\frac{d^2h}{dt^2}$, the second derivative.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the rate of change of height with time, a speed"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "The curve $y = x^{3}-6x^{2}+9x$ is given. At which of these values of $x$ is the gradient zero?",
+      "options": [
+        "$x = 2$",
+        "$x = 4$",
+        "$x = 6$",
+        "$x = 1$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "differentiating kx to the n",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differentiate: $\\frac{dy}{dx} = 3x^{2}-12x+9$. Substituting $x = 1$ gives $3 - 12 + 9 = 0$, so the gradient is zero there. Substituting $x = 2$ gives $12 - 24 + 9 = -3$; $x = 4$ gives $48 - 48 + 9 = 9$; $x = 6$ gives $108 - 72 + 9 = 45$. Only $x = 1$ works.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "What is the difference between $\\frac{d^2y}{dx^2}$ and $\\left(\\frac{dy}{dx}\\right)^2$?",
+      "options": [
+        "The first differentiates twice; the second squares the first derivative",
+        "They are two ways of writing the same quantity",
+        "The first squares the derivative; the second differentiates twice",
+        "The first applies to curves and the second to straight lines"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the second derivative",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\frac{d^2y}{dx^2}$ means differentiate, then differentiate the result. $\\left(\\frac{dy}{dx}\\right)^2$ means differentiate once and square the answer. For $y = x^{3}$ the first gives $6x$ and the second gives $9x^4$ — not remotely the same. The notation puts the $2$ in different places precisely to distinguish them.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "differentiating twice against squaring the first derivative"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A student is asked to differentiate $y = \\frac{2x^3 - 6x}{x}$ and writes:\n\n> \"$\\frac{dy}{dx} = \\frac{6x^2 - 6}{1} = 6x^2 - 6$\"\n\nExplain what is wrong with this method, work out the correct answer, and describe the habit that would have prevented the error.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "simplifying before differentiating",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**What is wrong.** The student has differentiated the top of the fraction and the bottom of the fraction separately and then written the results as a new fraction. There is no such rule. Differentiating a quotient is not done by differentiating its parts — and in any case this specification contains no quotient rule at all, so any method that looks like one is a sign that something has gone wrong.\n\nIt is worth seeing how badly it fails. Their answer is $6x^2 - 6$; the correct answer, below, is $4x$. At $x = 2$ those give $18$ and $8$. Not close.\n\n**The correct method.** The bottom of the fraction is a **single term**, so every term on the top can be divided by it:\n\n$$y = \\frac{2x^3 - 6x}{x} = \\frac{2x^3}{x} - \\frac{6x}{x} = 2x^2 - 6$$\n\nThat is now a sum of $kx^n$ terms, which is the only form the rule applies to. Differentiating:\n\n- $2x^2$: multiply by the power, $2 \\times 2 = 4$; reduce the power to $1$. That gives $4x$.\n- $-6$ is a constant, so it gives $0$.\n\n$$\\frac{dy}{dx} = 4x$$\n\n**Why the simplification is legitimate.** Dividing each term by $x$ is ordinary algebra, valid for every $x$ except $0$, where the original expression is undefined anyway. Nothing about differentiation is involved — the tidying happens entirely before the calculus starts.\n\n**The habit.** Before differentiating anything, write the expression as a sum of $kx^n$ terms on its own line. Products get expanded, quotients over a single term get divided out, and fractions like $\\frac{3}{x^2}$ get rewritten as $3x^{-2}$. Only once the expression is in that form does the rule get used.\n\nThat habit is worth marks in its own right: examiners award method marks for the simplified line, so a student who shows it has something to be credited even if the differentiation that follows slips.\n\n**A quick check.** The answer $4x$ says the gradient at $x = 0$ is zero. The tidied function $2x^2 - 6$ is a parabola with its lowest point at $x = 0$, which is indeed flat there. The answer and the shape agree.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "identifies that top and bottom were differentiated separately"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "states that this specification has no quotient rule"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides each term on the top by x"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "reaches y = 2x² − 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "differentiates to dy/dx = 4x"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "describes tidying into a sum of kxⁿ terms before differentiating"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Identifies that the top and bottom have been differentiated separately, and that no such rule exists in this specification",
+          "marks": 2
+        },
+        {
+          "text": "Divides through by x correctly to reach 2x² − 6 before differentiating",
+          "marks": 2
+        },
+        {
+          "text": "Differentiates correctly to 4x and describes the tidy-first habit",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**What is wrong.** The student has differentiated the top of the fraction and the bottom of the fraction separately and then written the results as a new fraction. There is no such rule. Differentiating a quotient is not done by differentiating its parts — and in any case this specification contains no quotient rule at all, so any method that looks like one is a sign that something has gone wrong.\n\nIt is worth seeing how badly it fails. Their answer is $6x^2 - 6$; the correct answer, below, is $4x$. At $x = 2$ those give $18$ and $8$. Not close.\n\n**The correct method.** The bottom of the fraction is a **single term**, so every term on the top can be divided by it:\n\n$$y = \\frac{2x^3 - 6x}{x} = \\frac{2x^3}{x} - \\frac{6x}{x} = 2x^2 - 6$$\n\nThat is now a sum of $kx^n$ terms, which is the only form the rule applies to. Differentiating:\n\n- $2x^2$: multiply by the power, $2 \\times 2 = 4$; reduce the power to $1$. That gives $4x$.\n- $-6$ is a constant, so it gives $0$.\n\n$$\\frac{dy}{dx} = 4x$$\n\n**Why the simplification is legitimate.** Dividing each term by $x$ is ordinary algebra, valid for every $x$ except $0$, where the original expression is undefined anyway. Nothing about differentiation is involved — the tidying happens entirely before the calculus starts.\n\n**The habit.** Before differentiating anything, write the expression as a sum of $kx^n$ terms on its own line. Products get expanded, quotients over a single term get divided out, and fractions like $\\frac{3}{x^2}$ get rewritten as $3x^{-2}$. Only once the expression is in that form does the rule get used.\n\nThat habit is worth marks in its own right: examiners award method marks for the simplified line, so a student who shows it has something to be credited even if the differentiation that follows slips.\n\n**A quick check.** The answer $4x$ says the gradient at $x = 0$ is zero. The tidied function $2x^2 - 6$ is a parabola with its lowest point at $x = 0$, which is indeed flat there. The answer and the shape agree."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "A curve has equation $y = x^{3}-6x^{2}+9x$.\n\n(a) Work out $\\frac{dy}{dx}$ and $\\frac{d^2y}{dx^2}$.\n\n(b) Work out the gradient of the curve at $x = 0$ and at $x = 3$.\n\n(c) The curve is flat at $x = 1$ and at $x = 3$. Use your answer to (a) to show that this is true, and explain what the second derivative tells you about the curve at each of those points.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the second derivative",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**(a) The derivatives.**\n\nDifferentiating term by term: $x^3$ gives $3x^2$; $-6x^2$ gives $-12x$; $9x$ gives $9$.\n\n$$\\frac{dy}{dx} = 3x^{2}-12x+9$$\n\nDifferentiating again: $3x^2$ gives $6x$; $-12x$ gives $-12$; the constant $9$ gives $0$.\n\n$$\\frac{d^2y}{dx^2} = 6x-12$$\n\n**(b) The gradient at two points.**\n\nAt $x = 0$: $3(0)^2 - 12(0) + 9 = 9$. The curve is rising steeply there.\n\nAt $x = 3$: $3(9) - 12(3) + 9 = 27 - 36 + 9 = 0$. The curve is flat there.\n\n**(c) Showing the curve is flat at both points.**\n\n\"Flat\" means the gradient is zero, so the thing to show is that $\\frac{dy}{dx} = 0$ at each value.\n\nAt $x = 1$: $3(1)^2 - 12(1) + 9 = 3 - 12 + 9 = 0$. Zero, so the curve is flat.\n\nAt $x = 3$: computed above, also $0$. Zero, so the curve is flat.\n\n**What the second derivative says.** $\\frac{d^2y}{dx^2}$ measures the rate of change of the gradient, so its sign says which way the curve is bending.\n\nAt $x = 1$: $6(1) - 12 = -6$, which is **negative**. The gradient is decreasing — the curve is rising before this point and falling after it — so the curve bends downwards here, like the top of a hill.\n\nAt $x = 3$: $6(3) - 12 = 6$, which is **positive**. The gradient is increasing — falling before, rising after — so the curve bends upwards, like the bottom of a valley.\n\n**Putting it together.** The curve climbs steeply from the left (gradient $9$ at $x = 0$), levels off at $x = 1$ at the top of a hill, falls away, levels off again at $x = 3$ at the bottom of a valley, and then climbs again. The two derivatives between them have described the whole shape without a single value of $y$ being plotted, which is what makes calculus worth having.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "differentiates once, term by term"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "reaches 3x^{2}-12x+9 and 6x-12"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gradient at x = 0 is 9"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gradient at x = 3 is 0"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes x = 1 into the gradient function"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "shows the gradient is zero at both x = 1 and x = 3"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "second derivative negative at x = 1, so the curve bends downwards"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "second derivative positive at x = 3, so the curve bends upwards"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "show-that"
+      ],
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Differentiates correctly to 3x² − 12x + 9 and again to 6x − 12",
+          "marks": 2
+        },
+        {
+          "text": "Evaluates the gradient at x = 0 and x = 3 correctly",
+          "marks": 2
+        },
+        {
+          "text": "Shows the gradient function is zero at both x = 1 and x = 3",
+          "marks": 2
+        },
+        {
+          "text": "Uses the sign of the second derivative to describe the curve at each point",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a) The derivatives.**\n\nDifferentiating term by term: $x^3$ gives $3x^2$; $-6x^2$ gives $-12x$; $9x$ gives $9$.\n\n$$\\frac{dy}{dx} = 3x^{2}-12x+9$$\n\nDifferentiating again: $3x^2$ gives $6x$; $-12x$ gives $-12$; the constant $9$ gives $0$.\n\n$$\\frac{d^2y}{dx^2} = 6x-12$$\n\n**(b) The gradient at two points.**\n\nAt $x = 0$: $3(0)^2 - 12(0) + 9 = 9$. The curve is rising steeply there.\n\nAt $x = 3$: $3(9) - 12(3) + 9 = 27 - 36 + 9 = 0$. The curve is flat there.\n\n**(c) Showing the curve is flat at both points.**\n\n\"Flat\" means the gradient is zero, so the thing to show is that $\\frac{dy}{dx} = 0$ at each value.\n\nAt $x = 1$: $3(1)^2 - 12(1) + 9 = 3 - 12 + 9 = 0$. Zero, so the curve is flat.\n\nAt $x = 3$: computed above, also $0$. Zero, so the curve is flat.\n\n**What the second derivative says.** $\\frac{d^2y}{dx^2}$ measures the rate of change of the gradient, so its sign says which way the curve is bending.\n\nAt $x = 1$: $6(1) - 12 = -6$, which is **negative**. The gradient is decreasing — the curve is rising before this point and falling after it — so the curve bends downwards here, like the top of a hill.\n\nAt $x = 3$: $6(3) - 12 = 6$, which is **positive**. The gradient is increasing — falling before, rising after — so the curve bends upwards, like the bottom of a valley.\n\n**Putting it together.** The curve climbs steeply from the left (gradient $9$ at $x = 0$), levels off at $x = 1$ at the top of a hill, falls away, levels off again at $x = 3$ at the bottom of a valley, and then climbs again. The two derivatives between them have described the whole shape without a single value of $y$ being plotted, which is what makes calculus worth having."
+    }
+  ],
+  "examTechnique": {
+    "body": "**This is the heart of the qualification.** Calculus is one of AQA 8365's six topic areas and appears nowhere in GCSE Maths, so everything here is new and everything here is examinable on both papers.\n\n**Write the rule down before you use it.** Multiply by the power, subtract one from the power. Every error in this topic is a version of doing those two in the wrong order.\n\n**Answer with a function unless a point is given.** $\\frac{dy}{dx} = 6x^2 - 6x + 4$ is a complete answer to \"differentiate\". A number is only a complete answer to \"find the gradient **at** $x = 2$\".\n\n**Simplify first, always.** Expand products. Divide out quotients. Split a fraction over a single term. The rule works on a sum of $kx^n$ terms and on nothing else.\n\n**Negative powers obey the same rule.** $n$ is any integer, so $\\frac{1}{x} = x^{-1}$ differentiates to $-x^{-2}$. Rewrite fractions as negative powers before differentiating, and convert back afterwards if the question used fraction notation.\n\n**Use the notation the question uses.** If it says $y = \\dots$, answer with $\\frac{dy}{dx}$. If it says $f(x) = \\dots$, answer with $f'(x)$.\n\n**Show the differentiated line.** Even where the final answer is a number, the line of working that states the gradient function is usually worth a mark on its own.\n\n**The second derivative is just differentiating twice**, written $\\frac{d^2y}{dx^2}$, and it measures how fast the gradient itself is changing.",
+    "examinerErrors": [
+      "Reducing the power before multiplying by it, so $5x^4$ becomes $5x^3$ or $4x^3$.",
+      "Leaving a constant term in the answer instead of dropping it.",
+      "Trying to differentiate a product bracket by bracket rather than expanding first.",
+      "Forgetting that $n$ can be negative, so $\\frac{1}{x^2}$ is left undifferentiated.",
+      "Giving a number where the question asked for the gradient function, or a function where it asked for the gradient at a point.",
+      "Writing $\\frac{dy}{dx}$ when the question defined $f(x)$, or the reverse.",
+      "Differentiating twice by mistake, or once when the question wanted $\\frac{d^2y}{dx^2}$."
+    ],
+    "grade9Looks": "A top answer tidies the expression into a sum of $kx^n$ terms before differentiating anything, and says so on the page. It handles negative powers without flinching, rewriting $\\frac{4}{x^2}$ as $4x^{-2}$ and back again if the question wants it. It knows the difference between the gradient function and a gradient, and answers whichever was asked. It uses $\\frac{dy}{dx}$ or $f'(x)$ to match the question. And it can say what a derivative **means** — a rate of change — rather than only how to produce one."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

@@ -74,8 +74,21 @@ describe('syllabus', () => {
       SYLLABUS[subjectId].filter((b) => b.year === year).flatMap((b) => b.topics.map((t) => t.topicId))
     expect(inYear('physics', 9)).toContain('stopping-distances')
     expect(inYear('business', 9)).toContain('putting-a-business-idea-into-practice')
-    // Every subject now has a Year 9 block, because the school re-tests Year 9 in all of them.
+    /**
+     * Every GCSE subject has a Year 9 block, because the school re-tests Year 9 in all of
+     * them. Further Maths is not a GCSE and is not one of them: AQA describes 8365 as
+     * taken either alongside or after GCSE Maths, and it assumes the Key Stage 4
+     * programme of study as prior knowledge, so it cannot start in Year 9. The exemption
+     * is named rather than a blanket "unless empty", so a GCSE subject that lost its
+     * Year 9 rows by accident still fails here.
+     */
+    const STARTS_AFTER_YEAR_9: (keyof typeof SYLLABUS)[] = ['further-maths']
     for (const subjectId of Object.keys(SYLLABUS) as (keyof typeof SYLLABUS)[]) {
+      if (STARTS_AFTER_YEAR_9.includes(subjectId)) {
+        expect(SYLLABUS[subjectId].some((b) => b.year === 9), subjectId).toBe(false)
+        expect(SYLLABUS[subjectId].some((b) => b.year === 10), subjectId).toBe(true)
+        continue
+      }
       expect(SYLLABUS[subjectId].some((b) => b.year === 9), subjectId).toBe(true)
     }
   })

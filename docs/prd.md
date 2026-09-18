@@ -18,7 +18,7 @@ The product succeeds when a parent can answer three questions in under a minute:
 
 ### Goals
 
-- Cover the full Higher-tier specification for eight subjects, with Maths extended to the Further Maths level.
+- Cover the full Higher-tier specification for eight GCSE subjects, and the AQA Level 2 Certificate in Further Maths as a subject in its own right.
 - Pitch everything at grade 9. Lessons go to the depth a grade 9 answer needs, the top worksheet level is built from grade 9 discriminator questions, and progress reports "grade 9 ready" per topic rather than just "done".
 - Every topic has the same four things: a stepped lesson, worksheets at three levels, an exam technique note, and a recap quiz with full answers and mark schemes.
 - Progress is per topic and per skill, not just "lessons viewed", and is visible to both student and parent.
@@ -100,13 +100,13 @@ A tutor has their own account type and is linked to individual students, not to 
 
 ## 4. Subject scope
 
-Eight subjects at Higher tier. The table gives the top-level structure the content will follow and the extra levels each subject needs. Paper structure is listed because exam technique and quizzes are organised around it.
+Eight GCSE subjects at Higher tier, plus Further Maths, which is untiered. The table gives the top-level structure the content will follow and the extra levels each subject needs. Paper structure is listed because exam technique and quizzes are organised around it.
 
 **Two further subjects are in scope but deferred.** Added 17 September 2026, after the original eight were agreed:
 
 | Subject | Board | Status |
 |---|---|---|
-| Further Maths | AQA Level 2 Certificate (8365), to confirm | Deferred. Already named in the board list above and covered as a level within Mathematics; needs its own subject and curriculum overview. |
+| Further Maths | AQA Level 2 Certificate (8365) | **Started 18 September 2026**, confirmed as a qualification the student is taking. Its own subject with six units from the specification: Number, Algebra, Coordinate Geometry, Calculus, Matrix Transformations, Geometry. Untiered. Two papers of 1 h 45 and 80 marks, one non-calculator and one calculator, scaled to 160. AO2 is 36 to 44 per cent, a far heavier weighting on reasoning and formal proof than GCSE Maths carries. |
 | English | Open | Deferred. Whether this is English Language, English Literature or both is not yet decided, and no board is chosen. |
 
 Both start only once the eight subjects above have their Years 9, 10 and 11 rows written. Before either is drafted, confirm the qualification and board, and fetch a school curriculum overview as was done for the other subjects.
@@ -650,7 +650,7 @@ Each of these changes the plan materially. They are listed in the order they blo
 1. **Content authoring.** Who writes the content, and what is the review process? This sets the timeline for every phase and decides how much of Epic I is needed early.
 2. **Music exam board — resolved.** Confirmed as **Edexcel 1MU0** on 11 September 2026, matching the eight set works in the school's own curriculum overview. Content has been written to Issue 4 of that specification ever since, and Music completed on 18 September 2026.
 3. **Grade 9 question sourcing.** Grade 9 discriminator questions are the hardest content to write well. Decide whether to write them from scratch, adapt from past-paper patterns, or commission subject specialists. This mostly affects Maths and the sciences.
-4. **"Further" Maths definition.** Confirm AQA Level 2 Further Maths as the target, or specify another qualification.
+4. **"Further" Maths definition — resolved.** Confirmed on 18 September 2026 as the **AQA Level 2 Certificate in Further Mathematics (8365)**, which the student is taking. Content is written to version 1.4 of that specification.
 5. **Illustration and diagrams.** Visual lessons need an illustrator or an illustration system alongside the subject writers. Decide whether diagrams are commissioned, built from a shared component library, or generated and reviewed.
 6. **Pricing and trial.** Tutors add a second pricing question: whether tutor accounts are free when linked by a paying family. Only needed to place the paywall boundary before Phase 1 launches.
 7. **First family.** Is the first user your own family? If so, Phase 1 subjects should be the ones your children are studying now.
