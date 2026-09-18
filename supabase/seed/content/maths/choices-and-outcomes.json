@@ -30,6 +30,50 @@
       "body": "Draw one box per position first, then fill each with how many choices remain. The boxes make repeats visible: with no repeats allowed the numbers fall 10, 9, 8, 7 instead of staying at 10, and the drop is obvious on the page rather than remembered."
     }
   ],
+  "why": {
+    "matters": "The counting principle is one line — if this can happen $m$ ways and then that can happen $n$ ways, together they can happen $mn$ ways — and it is one line that does an enormous amount of work.\n\nWhat makes it worth understanding rather than memorising is **how fast multiplying runs away from you**. Adding a single choice does not add to the total, it multiplies it. Nothing about everyday experience prepares you for how quickly that gets large, which is exactly why it is useful.",
+    "examples": [
+      {
+        "title": "Why a longer password beats a clever one",
+        "body": "A 4-digit PIN has 10 choices in each position, so there are $10^4 = 10,000$ of them. A computer tries all of those in under a second, which is why a phone limits your attempts rather than relying on the number.\n\nNow letters. 4 lowercase letters give $26^4 = 456,976$ — better, still nothing. But 6 letters give 308,915,776, and 8 give 208,827,064,576.\n\nLook at what those two extra letters did: they multiplied the work by $26^2 = 676$, every time. That is the whole argument for length over cleverness. Substituting 3 for an e multiplies your 676s by almost nothing; adding two more characters multiplies them by 676 again.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Password",
+              "Choices each",
+              "Possible passwords"
+            ],
+            "rows": [
+              [
+                "4-digit PIN",
+                "10",
+                "10,000"
+              ],
+              [
+                "4 letters",
+                "26",
+                "456,976"
+              ],
+              [
+                "6 letters",
+                "26",
+                "308,915,776"
+              ],
+              [
+                "8 letters",
+                "26",
+                "208,827,064,576"
+              ]
+            ],
+            "title": "Every extra character multiplies"
+          },
+          "alt": "A table of password lengths against the number of possible passwords, growing from ten thousand for a four digit PIN to over two hundred billion for eight lowercase letters"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
