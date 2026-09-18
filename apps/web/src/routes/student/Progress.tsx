@@ -3,6 +3,10 @@ import { SectionLabel } from '../../components/KindChip.tsx'
 import { BadgeIcon } from '../../components/BadgeIcon.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { levelBySubject, skillStats, totalXp } from '../../progress/xp.ts'
+import { StatusDonut } from '../../components/charts/StatusDonut.tsx'
+import { WeeklyBars } from '../../components/charts/WeeklyBars.tsx'
+import { SkillBars } from '../../components/charts/SkillBars.tsx'
+import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts.ts'
 import { Link } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
@@ -17,8 +21,7 @@ export function Progress() {
   const recent = [...progress.attempts].sort((a, b) => b.completedAt.localeCompare(a.completedAt)).slice(0, 8)
   const titleOf = (id: string) => TOPICS.find((t) => t.id === id)?.title ?? id
   const levels = levelBySubject(progress)
-  const { strengths, weaknesses } = skillStats(progress)
-  const subjectName = (id: string) => SUBJECTS.find((s) => s.id === id)?.name ?? id
+  const { all, strengths } = skillStats(progress)
 
   return (
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-6">
@@ -46,22 +49,27 @@ export function Progress() {
         </div>
       </section>
 
-      {(strengths.length > 0 || weaknesses.length > 0) && (
-        <section className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
-            <SectionLabel colour="#2e8b57" emoji="💪">Strengths</SectionLabel>
-            {strengths.length === 0 ? <p className="text-sm text-ink-2">Not enough answers yet.</p> : (
-              <ul className="flex flex-col gap-1 text-sm">{strengths.map((x) => <li key={x.subjectId + x.skill} className="flex justify-between gap-2"><span>{x.skill} <span className="text-ink-3">· {subjectName(x.subjectId)}</span></span><strong className="tabular-nums">{x.pct}%</strong></li>)}</ul>
-            )}
-          </div>
-          <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
-            <SectionLabel colour="#d25b3b" emoji="🎯">Work on next</SectionLabel>
-            {weaknesses.length === 0 ? <p className="text-sm text-ink-2">Nothing below 60% yet.</p> : (
-              <ul className="flex flex-col gap-1 text-sm">{weaknesses.map((x) => <li key={x.subjectId + x.skill} className="flex justify-between gap-2"><span>{x.skill} <span className="text-ink-3">· {subjectName(x.subjectId)}</span></span><strong className="tabular-nums">{x.pct}%</strong></li>)}</ul>
-            )}
-          </div>
-        </section>
-      )}
+      <section className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#0f766e" emoji="🍩">Where your topics stand</SectionLabel>
+          <StatusDonut totals={statusTotals(progress)} />
+        </div>
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#2e8b57" emoji="📅">Your study time by week</SectionLabel>
+          <WeeklyBars weeks={weeklyMinutes(progress)} goal={progress.goalMinutes} />
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#d25b3b" emoji="🎯">Work on next</SectionLabel>
+          <SkillBars skills={rankedSkills(all, 6)} empty="Not enough answers yet. A skill needs two questions before it counts." />
+        </div>
+        <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+          <SectionLabel colour="#2e8b57" emoji="💪">Strengths</SectionLabel>
+          <SkillBars skills={strengths} empty="Nothing above 80% yet." />
+        </div>
+      </section>
 
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#c8501f" emoji="🏆">{`Badges · ${Object.keys(progress.badges).length} of ${BADGES.length}`}</SectionLabel>

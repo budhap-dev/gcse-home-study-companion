@@ -44,7 +44,7 @@ describe('the parent report', () => {
     expect(html).toContain('aria-expanded="false"')
     expect(html).toContain('Surds')
     expect(html).toContain('40%')
-    expect(html).toContain('Weakest skills')
+    expect(html).toContain('Needs the most work')
     expect(html).toContain('rationalising denominators')
   })
 
