@@ -2,9 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { SUBJECTS, type SubjectId } from '@study/shared'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { AssignedCard } from '../../components/AssignedTasks.tsx'
-import { topicsForSubject } from '../../content/index.ts'
+import { topicsForSubject, yearsForSubject } from '../../content/index.ts'
+import { TopicPicker, pickableTopics } from './TopicPicker.tsx'
 import { createAssignment, deleteAssignment, listAssignments } from '../../auth/assignments.ts'
 import { assignedTasks, type Assignment } from '../../progress/assignments.ts'
+import { emptyState } from '../../progress/store.ts'
 import { useAuth } from '../../auth/useAuth.ts'
 import type { ProgressState } from '../../progress/store.ts'
 
@@ -24,6 +26,7 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
   const [message, setMessage] = useState<string | null>(null)
 
   const [subjectId, setSubjectId] = useState<SubjectId>(SUBJECTS_WITH_CONTENT[0]?.id ?? 'maths')
+  const [year, setYear] = useState<number | undefined>(undefined)
   const [topicId, setTopicId] = useState('')
   const [kind, setKind] = useState<Assignment['kind']>('lesson')
   const [level, setLevel] = useState<'core' | 'higher' | 'advanced'>('core')
@@ -31,8 +34,18 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
   const [dueOn, setDueOn] = useState('')
   const [note, setNote] = useState('')
 
-  const topics = useMemo(() => topicsForSubject(subjectId), [subjectId])
-  useEffect(() => { setTopicId(topics[0]?.id ?? '') }, [topics])
+  // The child's progress, or an empty one when they have never signed in: the form still
+  // has to work for an account with no history.
+  const childState = state ?? emptyState()
+  const topics = useMemo(() => pickableTopics(subjectId, childState, year), [subjectId, childState, year])
+  const years = useMemo(() => yearsForSubject(subjectId), [subjectId])
+  // Changing the subject or the year can leave a topic selected that is no longer on the
+  // list, so the selection falls back to the first one that is.
+  useEffect(() => {
+    if (!topics.some((t) => t.id === topicId)) setTopicId(topics[0]?.id ?? '')
+  }, [topics, topicId])
+  // A year that the new subject does not teach would filter everything away.
+  useEffect(() => { if (year && !years.includes(year)) setYear(undefined) }, [years, year])
 
   const load = () => {
     listAssignments()
@@ -64,7 +77,15 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
     else load()
   }
 
-  const tasks = assignedTasks(list, state ?? { attempts: [], lessons: {}, minutes: {}, goalMinutes: 180, daysOff: [], badges: {} })
+  const again = async (t: (typeof tasks)[number]) => {
+    if (!auth.email) return
+    const a = t.assignment
+    const err = await createAssignment({ studentEmail: email, topicId: a.topicId, kind: a.kind, level: a.level, note: a.note }, auth.email)
+    setMessage(err ?? `Set again: ${t.topicTitle}.`)
+    if (!err) load()
+  }
+
+  const tasks = assignedTasks(list, childState)
   const field = 'h-11 rounded-lg border border-rule bg-surface px-3'
 
   return (
@@ -80,11 +101,13 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
             </select>
           </label>
           <label className="flex flex-col gap-1 text-sm">
-            <span className="font-bold">Topic</span>
-            <select value={topicId} onChange={(e) => setTopicId(e.target.value)} className={field}>
-              {topics.map((t) => <option key={t.id} value={t.id}>{t.title}</option>)}
+            <span className="font-bold">Year</span>
+            <select value={year ?? ''} onChange={(e) => setYear(e.target.value ? Number(e.target.value) : undefined)} className={field}>
+              <option value="">All years</option>
+              {years.map((y) => <option key={y} value={y}>Year {y}</option>)}
             </select>
           </label>
+          <TopicPicker subjectId={subjectId} state={childState} kind={kind} level={kind === 'worksheet' ? level : undefined} year={year} value={topicId} onChange={setTopicId} />
           <label className="flex flex-col gap-1 text-sm">
             <span className="font-bold">Activity</span>
             <select value={kind} onChange={(e) => setKind(e.target.value as Assignment['kind'])} className={field}>
@@ -129,8 +152,16 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
           {tasks.map((t) => (
             <li key={t.assignment.id} className="flex items-start gap-2">
               <div className="min-w-0 flex-1"><AssignedCard task={t} /></div>
-              <button type="button" onClick={() => void remove(t.assignment.id, t.topicTitle)}
-                className="mt-1 h-11 shrink-0 rounded-lg border border-rule px-3 text-xs font-bold text-status-not-secure">Remove</button>
+              <span className="mt-1 flex shrink-0 flex-col gap-1">
+                {/* Finished work can be asked for again: the new task starts from now, so
+                    the attempt that completed the old one does not count towards it. */}
+                {t.status === 'done' && (
+                  <button type="button" onClick={() => void again(t)}
+                    className="h-11 rounded-lg border border-rule px-3 text-xs font-bold text-ink">Set again</button>
+                )}
+                <button type="button" onClick={() => void remove(t.assignment.id, t.topicTitle)}
+                  className="h-11 rounded-lg border border-rule px-3 text-xs font-bold text-status-not-secure">Remove</button>
+              </span>
             </li>
           ))}
         </ul>
