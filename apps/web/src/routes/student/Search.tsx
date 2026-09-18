@@ -71,7 +71,7 @@ export function Search() {
             {terms.slice(0, 8).map((term) => <li key={term.slug}><TermCard term={term} query={trimmed} /></li>)}
           </ul>
           {terms.length > 8 && (
-            <Link to={`/glossary?q=${encodeURIComponent(trimmed)}`} className="w-fit text-sm font-bold underline">
+            <Link to={`/glossary?q=${encodeURIComponent(trimmed)}`} className="w-fit py-1 text-sm font-bold underline">
               {terms.length - 8} more in the glossary →
             </Link>
           )}

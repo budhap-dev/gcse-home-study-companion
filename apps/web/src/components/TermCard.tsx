@@ -35,7 +35,7 @@ export function TermCard({ term, query = '', id }: { term: Term; query?: string;
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-2">
           <span>Taught in</span>
           {term.topics.map((topicId) => (
-            <Link key={topicId} to={`/subjects/${term.subjectId}/topics/${topicId}`} className="font-bold text-ink underline">
+            <Link key={topicId} to={`/subjects/${term.subjectId}/topics/${topicId}`} className="inline-block py-1 font-bold text-ink underline">
               {titleOf(topicId)}
             </Link>
           ))}
@@ -46,7 +46,7 @@ export function TermCard({ term, query = '', id }: { term: Term; query?: string;
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-2">
           <span>See also</span>
           {related.map((r) => (
-            <Link key={r.slug} to={`/glossary?term=${r.slug}`} className="rounded-full border border-rule px-2 py-0.5 font-bold text-ink">
+            <Link key={r.slug} to={`/glossary?term=${r.slug}`} className="rounded-full border border-rule px-2 py-1 font-bold text-ink">
               {r.term}
             </Link>
           ))}

@@ -53,7 +53,7 @@ export function Home() {
           <SectionLabel colour="#2e8b57" emoji="🎯">Weekly goal</SectionLabel>
           <p className="text-lg font-bold">{minutes} of {goal} minutes</p>
           <p className="text-sm text-ink-2">
-            {offToday ? 'Today is a day off.' : minutes >= goal ? 'Goal reached this week.' : `${goal - minutes} minutes to go.`} <Link to="/settings" className="underline">Change goal</Link>
+            {offToday ? 'Today is a day off.' : minutes >= goal ? 'Goal reached this week.' : `${goal - minutes} minutes to go.`} <Link to="/settings" className="inline-block -my-1 py-1 underline">Change goal</Link>
           </p>
         </div>
       </section>
