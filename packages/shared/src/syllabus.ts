@@ -509,8 +509,8 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
   ],
   'music': [
     { year: 9, term: 'Autumn', topics: [
-      { title: 'Pop music through the decades' },
-      { title: 'Fusion music, including bhangra and reggaeton' },
+      { title: 'Pop music through the decades', topicId: 'pop-music-through-the-decades' },
+      { title: 'Fusion music, including bhangra and reggaeton', topicId: 'fusion-music-bhangra-and-reggaeton' },
     ] },
     { year: 9, term: 'Spring', topics: [
       { title: 'Classical history' },
