@@ -41,7 +41,7 @@ async function checkAllowed(userId: string, email: string, profile: Profile = {}
   if (data === true) {
     const { data: role } = await supabase.rpc('my_role')
     set({ status: 'allowed', email, userId, ...profile, role: role === 'parent' ? 'parent' : 'student' })
-    startSync(userId, email)
+    startSync(userId, email, profile.name)
   } else {
     await supabase.auth.signOut()
     set({ status: 'denied', email, message: `${email} is not on the family list.` })

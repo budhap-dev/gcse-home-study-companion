@@ -7,6 +7,7 @@ import { useAuth } from '../../auth/useAuth.ts'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { emptyState, type ProgressState } from '../../progress/store.ts'
+import { firstNameOf, personName } from '../../auth/personName.ts'
 import { parentSummary, type ParentSummary } from '../../progress/summary.ts'
 import { AssignPanel } from './Assign.tsx'
 import { TopicBreakdown } from './TopicBreakdown.tsx'
@@ -48,14 +49,17 @@ export function Family() {
       setLoading(true)
       const list = await supabase!.from('allowed_emails').select('email, note').eq('role', 'student').order('added_at')
       if (list.error) { if (live) { setError(list.error.message); setLoading(false) } return }
-      const rows = await supabase!.from('user_progress').select('email, state, updated_at')
+      // Whole rows rather than a named list of columns: naming display_name would make
+      // this screen fail outright on a deployment that has not had the migration applied
+      // yet, and the row is small enough that asking for all of it costs nothing.
+      const rows = await supabase!.from('user_progress').select('*')
       if (rows.error) { if (live) { setError(rows.error.message); setLoading(false) } return }
       const byEmail = new Map((rows.data ?? []).map((r) => [r.email as string, r]))
       const merged: Child[] = (list.data ?? []).map((r) => {
         const row = byEmail.get(r.email as string)
         return {
           email: r.email as string,
-          name: ((r.note as string | null) ?? '').trim() || (r.email as string).split('@')[0]!,
+          name: personName({ note: r.note as string | null, profile: row?.display_name as string | null, email: r.email as string }),
           state: row ? { ...emptyState(), ...(row.state as Partial<ProgressState>) } : undefined,
           syncedAt: row?.updated_at as string | undefined,
         }
@@ -69,16 +73,17 @@ export function Family() {
   }, [auth.status, auth.role])
 
   if (auth.status === 'disabled') return <Shell><p className="text-ink-2">Family sign-in is not set up on this build, so there is no account to follow. Progress is saved on each device instead.</p></Shell>
-  if (auth.status !== 'allowed') return <Shell><p className="text-ink-2">Sign in with your family account to see how your child is getting on. <Link to="/settings" className="font-bold text-ink underline">Go to Settings</Link>.</p></Shell>
+  if (auth.status !== 'allowed') return <Shell><p className="text-ink-2">Sign in with your family account to see how the work is going. <Link to="/settings" className="font-bold text-ink underline">Go to Settings</Link>.</p></Shell>
   if (auth.role !== 'parent') return <Shell><p className="text-ink-2">This page is for parent accounts. You are signed in as a student, so this shows nothing extra — your own numbers are on <Link to="/progress" className="font-bold text-ink underline">Progress</Link>.</p></Shell>
   if (loading) return <Shell><p className="text-ink-2">Loading…</p></Shell>
   if (error) return <Shell><p className="text-status-not-secure">{error}</p></Shell>
-  if (children.length === 0) return <Shell><p className="text-ink-2">No student accounts on the family list yet. Add one in <Link to="/settings" className="font-bold text-ink underline">Settings</Link>, using the Google address your child signs in with.</p></Shell>
+  if (children.length === 0) return <Shell><p className="text-ink-2">No student accounts on the family list yet. Add one in <Link to="/settings" className="font-bold text-ink underline">Settings</Link>, using the Google address they sign in with.</p></Shell>
 
   const child = children.find((c) => c.email === chosen) ?? children[0]!
+  const first = firstNameOf(child.name)
 
   return (
-    <Shell>
+    <Shell title={child.name} subtitle={`How ${first} is getting on, from their signed-in account.`}>
       {children.length > 1 && (
         <div className="flex flex-wrap gap-2">
           {children.map((c) => (
@@ -89,23 +94,23 @@ export function Family() {
       )}
       {/* Setting tasks does not depend on the child having synced anything yet, so the
           panel sits outside the report and shows even for an account with no history. */}
-      <AssignPanel email={child.email} name={child.name} state={child.state} />
+      <AssignPanel email={child.email} name={first} state={child.state} />
 
       {child.state ? <ChildReport child={child} summary={parentSummary(child.state)} /> : (
         <p className="rounded-2xl border border-rule bg-surface p-4 text-ink-2">
-          <strong className="text-ink">{child.name}</strong> has not signed in yet, so nothing has reached the account. Work done while signed out stays on that device.
+          <strong className="text-ink">{firstNameOf(child.name)}</strong> has not signed in yet, so nothing has reached the account. Work done while signed out stays on that device.
         </p>
       )}
     </Shell>
   )
 }
 
-function Shell({ children }: { children: React.ReactNode }) {
+function Shell({ children, title, subtitle }: { children: React.ReactNode; title?: string; subtitle?: string }) {
   return (
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-6">
       <header className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold leading-tight">Family</h1>
-        <p className="text-ink-2">How your child is getting on, from their signed-in account.</p>
+        <h1 className="text-3xl font-bold leading-tight">{title ?? 'Family'}</h1>
+        <p className="text-ink-2">{subtitle ?? 'How your family is getting on, from their signed-in accounts.'}</p>
       </header>
       {children}
     </article>
@@ -123,7 +128,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
   return (
     <div className="flex flex-col gap-6">
       <p className="text-ink-2">
-        <strong className="text-ink">{child.name}</strong>
+        <strong className="text-ink">{firstNameOf(child.name)}</strong>
         {s.lastActive ? ` last studied ${gap === 0 ? 'today' : gap === 1 ? 'yesterday' : `${gap} days ago, on ${day(s.lastActive)}`}.` : ' has not finished anything yet.'}
         {child.syncedAt && ` Account last updated ${day(child.syncedAt)}.`}
       </p>
@@ -139,7 +144,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#d25b3b" emoji="🎯">Worth a conversation</SectionLabel>
         {s.stuck.length === 0 ? (
-          <p className="rounded-xl border border-rule bg-surface px-4 py-3 text-sm text-ink-2">Nothing is stuck. Every topic {child.name} has worked on has either gone well or is still in progress.</p>
+          <p className="rounded-xl border border-rule bg-surface px-4 py-3 text-sm text-ink-2">Nothing is stuck. Every topic {firstNameOf(child.name)} has worked on has either gone well or is still in progress.</p>
         ) : (
           <ul className="flex flex-col gap-1.5">
             {s.stuck.map((x) => (
@@ -228,8 +233,8 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
       </section>
 
       <p className="rounded-xl bg-panel px-4 py-3 text-xs text-ink-2">
-        This is what has reached {child.name}&rsquo;s account. Work done while signed out, or in a different browser, does not appear here until they sign in on that device.
-        Nothing on this page changes {child.name}&rsquo;s progress — a parent account can read it but not write it.
+        This is what has reached {firstNameOf(child.name)}&rsquo;s account. Work done while signed out, or in a different browser, does not appear here until they sign in on that device.
+        Nothing on this page changes {firstNameOf(child.name)}&rsquo;s progress — a parent account can read it but not write it.
       </p>
     </div>
   )

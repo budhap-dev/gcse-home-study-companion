@@ -11,7 +11,7 @@ let applyingRemote = false
  * the device state are merged (nothing is lost either way) and both are updated;
  * after that every local change is saved a moment later.
  */
-export async function startSync(userId: string, email: string) {
+export async function startSync(userId: string, email: string, displayName?: string) {
   if (!supabase) return
   stopSync()
   const { data } = await supabase.from('user_progress').select('state').eq('user_id', userId).maybeSingle()
@@ -20,17 +20,27 @@ export async function startSync(userId: string, email: string) {
   applyingRemote = true
   replaceState(merged)
   applyingRemote = false
-  await save(userId, email, merged)
+  await save(userId, email, merged, displayName)
   unsubscribe = subscribe(() => {
     if (applyingRemote) return
     if (timer) clearTimeout(timer)
-    timer = setTimeout(() => void save(userId, email, getState()), 1500)
+    timer = setTimeout(() => void save(userId, email, getState(), displayName), 1500)
   })
 }
 
-async function save(userId: string, email: string, state: ProgressState) {
+/**
+ * The display name rides along with the progress. It is how a parent gets to see a name
+ * rather than an email address on the Family screen, and writing it here means nobody
+ * has to type it: whoever signs in supplies their own.
+ */
+async function save(userId: string, email: string, state: ProgressState, displayName?: string) {
   if (!supabase) return
-  await supabase.from('user_progress').upsert({ user_id: userId, email: email.toLowerCase(), state, updated_at: new Date().toISOString() })
+  const row: Record<string, unknown> = { user_id: userId, email: email.toLowerCase(), state, updated_at: new Date().toISOString() }
+  // Only write a name that is actually a name: Supabase falls back to the address when a
+  // provider sends no profile name, and overwriting a good name with an email is worse
+  // than leaving the column alone.
+  if (displayName && displayName.trim() && !displayName.includes('@')) row.display_name = displayName.trim()
+  await supabase.from('user_progress').upsert(row)
 }
 
 export function stopSync() {

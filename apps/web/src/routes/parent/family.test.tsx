@@ -5,10 +5,10 @@ import { ChildReport } from './Family.tsx'
 import { emptyState, type ProgressState } from '../../progress/store.ts'
 import { parentSummary } from '../../progress/summary.ts'
 
-const render = (state: ProgressState, syncedAt?: string) =>
+const render = (state: ProgressState, syncedAt?: string, name = 'Ana') =>
   renderToStaticMarkup(
     <MemoryRouter>
-      <ChildReport child={{ email: 'kid@example.com', name: 'Ana', state, syncedAt }} summary={parentSummary(state, '2026-09-18')} />
+      <ChildReport child={{ email: 'kid@example.com', name, state, syncedAt }} summary={parentSummary(state, '2026-09-18')} />
     </MemoryRouter>,
   )
 
@@ -18,6 +18,20 @@ const quiz = (topicId: string, pct: number, day: string) => ({
 })
 
 describe('the parent report', () => {
+  /**
+   * The screen used to say "abhigyan.pandit1", because the name was the note typed when
+   * the account was added or else the part of the email before the @. It now comes from
+   * the account's own Google profile, and sentences use the first name only: a report
+   * that says "Abhigyan Pandit last studied today" reads like a school letter.
+   */
+  it('calls the student by their first name in its sentences', () => {
+    const state = { ...emptyState(), attempts: [quiz('surds', 80, '2026-09-18')] }
+    const html = render(state, undefined, 'Abhigyan Pandit')
+    expect(html).toContain('<strong class="text-ink">Abhigyan</strong>')
+    expect(html).not.toContain('Abhigyan Pandit')
+    expect(html).not.toContain('abhigyan')
+  })
+
   it('leads with how long it has been, the week, and the quiz average', () => {
     const state = {
       ...emptyState(),
