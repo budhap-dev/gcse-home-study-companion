@@ -51,4 +51,28 @@ describe('cuboid', () => {
       expect(space).toBeGreaterThan(face)
     }
   })
+
+  /**
+   * The drawing hangs off the bottom of a fixed-height box, so a flat cuboid used to
+   * leave most of the picture blank — 1.2 by 0.6 by 0.4 filled the lower third and put
+   * 170px of white above itself on the page.
+   */
+  it('crops the view to the drawing, so a flat box is not mostly white space', () => {
+    const viewBox = (props: Record<string, unknown>) =>
+      /viewBox="([^"]+)"/.exec(renderToStaticMarkup(<Cuboid alt="" props={props} />))![1]!.split(' ').map(Number)
+
+    const [, flatTop, , flatHeight] = viewBox({ w: 1.2, d: 0.6, h: 0.4 })
+    const [, tallTop, , tallHeight] = viewBox({ w: 4, d: 3, h: 12 })
+
+    // A flat box starts its view well down the page and is much shorter than a tall one.
+    expect(flatTop!).toBeGreaterThan(100)
+    expect(flatHeight!).toBeLessThan(tallHeight!)
+    expect(tallTop!).toBeLessThan(20)
+
+    // And the whole drawing still fits: nothing is drawn above the view.
+    const html = renderToStaticMarkup(<Cuboid alt="" props={{ w: 1.2, d: 0.6, h: 0.4 }} />)
+    // The \s matters: without it this also matches the tail of opacity="0.5".
+    const ys = [...html.matchAll(/\sy[12]?="([-\d.]+)"/g)].map((m) => Number(m[1]))
+    expect(Math.min(...ys)).toBeGreaterThanOrEqual(flatTop!)
+  })
 })

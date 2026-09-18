@@ -40,14 +40,24 @@ export function Cuboid({ props, alt }: { props: Record<string, unknown>; alt: st
   const A2 = { x: A.x, y: A.y - bh }
   const B2 = { x: B.x, y: B.y - bh }
   const C2 = { x: C.x, y: C.y - bh }
+  const C2y = C.y - bh // the topmost point anything is drawn at
   const D2 = { x: D.x, y: D.y - bh }
+
+  /**
+   * The drawing is anchored to the bottom of a fixed-height box, so a flat cuboid left
+   * most of the picture empty: a 1.2 by 0.6 by 0.4 box filled the lower third and put
+   * 170px of white space above itself. Nothing is drawn above the back top corner, so
+   * the view starts just above that instead of at zero, and the SVG's own aspect ratio
+   * shrinks the rendered height with it.
+   */
+  const viewTop = Math.max(0, C2y - 26)
 
   const edge = (p: { x: number; y: number }, q: { x: number; y: number }, hidden = false) => (
     <line x1={p.x} y1={p.y} x2={q.x} y2={q.y} stroke={INK} strokeWidth="2" strokeDasharray={hidden ? '5 4' : undefined} opacity={hidden ? 0.5 : 1} />
   )
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.3 }} role="img" aria-label={alt}>
+    <svg viewBox={`0 ${viewTop} ${W} ${H - viewTop}`} width="100%" style={{ maxWidth: W * 1.3 }} role="img" aria-label={alt}>
       {/* hidden edges first, so the visible ones draw over them */}
       {edge(D, C, true)}
       {edge(D, A, true)}
