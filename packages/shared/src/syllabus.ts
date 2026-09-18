@@ -147,14 +147,17 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Iteration: approximating solutions', topicId: 'iteration' },
     ] },
     { year: 11, term: 'Summer', topics: [
-      { title: 'Fractions' },
+      // Revision rows, linked to where each was taught rather than rewritten. Percentages
+      // points at the growth-and-decay topic instead of fractions-decimals-and-percentages
+      // so the Summer card does not list the same topic twice.
+      { title: 'Fractions', topicId: 'fractions-decimals-and-percentages' },
       { title: 'Ratio and proportion', topicId: 'ratio-and-proportion' },
-      { title: 'Percentages' },
-      { title: 'Enlargements, reflections, rotations and translations' },
+      { title: 'Percentages', topicId: 'compound-interest-growth-and-decay' },
+      { title: 'Enlargements, reflections, rotations and translations', topicId: 'transformations' },
       { title: 'Standard form', topicId: 'standard-form' },
-      { title: 'Index form' },
-      { title: 'Properties of angles' },
-      { title: 'Constructions and loci' },
+      { title: 'Index form', topicId: 'laws-of-indices' },
+      { title: 'Properties of angles', topicId: 'properties-of-angles' },
+      { title: 'Constructions and loci', topicId: 'constructions-and-loci' },
     ] },
   ],
   'physics': [

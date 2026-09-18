@@ -88,6 +88,20 @@ describe('line graph curves', () => {
     }
   })
 
+  it('draws a polygon at the coordinates it is given, closed and in order', () => {
+    const props = { xRange: [-1, 7], yRange: [-1, 7], square: true, polygons: [{ points: [[1, 1], [4, 1], [1, 3]], label: 'A' }] }
+    const html = renderToStaticMarkup(<LineGraph alt="" props={props} />)
+    const pts = /<polygon points="([^"]+)"/.exec(html)![1]!.split(' ').map((p) => p.split(',').map(Number) as [number, number])
+    expect(pts).toHaveLength(3)
+    // Checked against plotted points on the same scales, not against computed pixels.
+    const marks = [...renderToStaticMarkup(<LineGraph alt="" props={{ ...props, polygons: [], points: [{ x: 1, y: 1 }, { x: 4, y: 1 }, { x: 1, y: 3 }] }} />)
+      .matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])] as const)
+    for (let i = 0; i < 3; i++) {
+      expect(Math.abs(pts[i]![0] - marks[i]![0])).toBeLessThan(0.6)
+      expect(Math.abs(pts[i]![1] - marks[i]![1])).toBeLessThan(0.6)
+    }
+  })
+
   it('draws a circle round when square is set, and oval when it is not', () => {
     const props = { xRange: [-6, 6], yRange: [-6, 6], circles: [{ cx: 0, cy: 0, r: 5 }] }
     const radii = (html: string) => {
