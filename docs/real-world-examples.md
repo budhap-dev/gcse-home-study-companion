@@ -1,6 +1,6 @@
 # Why it exists, and where you meet it
 
-**Status: draft, not built.** Requested 18 September 2026. This records the design so it can be executed later without re-deciding anything.
+**Status: proved on one topic.** Requested 18 September 2026. Physics *Moments, levers and gears* carries the first `why` block, with three examples and three pictures; everything else is still to be written. The rest of this document is the design, corrected where building it showed the design was wrong.
 
 ## The gap
 
@@ -131,11 +131,20 @@ The design is a strip of cards near the top of the topic page, not a wall of pro
 
 - **One `why` card first**, carrying the subject accent — the same treatment the content blockquote already uses, so it reads as the topic speaking rather than as another paragraph.
 - **Then one card per example.** Picture above the text on a phone; picture beside the text from about 640 px, where a two-column card stops the page becoming a column of stacked boxes.
-- **Cap the picture** at roughly 220 px tall so it sits in the card rather than dominating it, and so three examples are still scannable without scrolling past them.
+- **Do not cap the picture's height in CSS.** This was tried and was worse than useless: a `max-height` on the wrapper does not shrink an SVG that sizes itself, so the picture overflowed by 20 px and the card's title rendered *underneath* it. Every automated check passed — no horizontal scroll, no text below the readable floor — and only a screenshot showed it. Each diagram component already caps its own width, which caps its height with it; the tallest of the three on Moments is 240 px, which sits in a card perfectly well.
 - **Head each card with the concrete noun** — *The door handle*, *Salt and sugar*, *The speedometer*. Never *Application 1*, and never *Real-world example*. The heading is part of the hook.
 - **A caption under the picture** where the picture needs one sentence to land, in the same small grey the rest of the pack uses for notes.
 
 The measure of success is simple: a student scrolling a topic page should stop at this section because it looks like something worth reading, and the pictures are what will do that.
+
+### What the first one cost
+
+Moments took one component, one schema field, one card, and a generator for the content. Two defects turned up on the way and **neither was visible to any automated check** — both needed a screenshot:
+
+- The door's two force labels printed on top of each other, because `beam-moments` centred each label on its arrow and the arrows were closer together than the labels were wide. Labels now measure themselves and a colliding one drops to its own line.
+- A distance label sat on the pivot triangle. Both label rows moved down to clear it.
+
+That is the lesson to carry into the rest: **screenshot every one**. The walk checks that a page works, the scanner checks that nothing overflows, and a diagram can pass both while being unreadable.
 
 ## Verifying it
 
@@ -239,7 +248,7 @@ Written out in full, so the standard is set by example rather than by adjective.
 
 There are 315 rows. Retrofitting all of them at once would produce filler, which is the failure this design is most concerned about.
 
-0. **Build `size-compare` first**, and prove the design on one topic end to end — the words, the pictures, the card layout — before writing a second. A standard set by a finished example is worth more than any amount of this document.
+0. ~~**Build `size-compare` first**, and prove the design on one topic end to end.~~ **Done.** `size-compare` exists, the `why` field is on `Topic`, the card renders on the topic page, and Physics *Moments, levers and gears* is written. Read that one before writing another.
 1. **New topics carry it from the start.** The next Further Maths rows should include it, so the standard is set while the volume is small.
 2. **Then the subjects where the gap is worst.** Maths and Further Maths first — they are the subjects a student is most likely to find pointless, and the ones where the answer is most satisfying. Then the sciences, where the "what is actually happening" version matters more than the application.
 3. **Languages and Music last**, and expect lower coverage. "Where you meet it" is a strange question to ask of a set work; "why does this exist" is not.
