@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { assignedTasks, doneAt, outstanding, statusOf, type Assignment } from './assignments.ts'
+import { assignedTasks, doneAt, doneBefore, historyFor, outstanding, statusOf, type Assignment } from './assignments.ts'
 import { emptyState, type AttemptRecord, type ProgressState } from './store.ts'
 
 const SET = '2026-09-10T09:00:00.000Z'
@@ -132,5 +132,38 @@ describe('assignedTasks', () => {
     const list = [a({ id: 'one' }), a({ id: 'two', topicId: 'laws-of-indices', kind: 'quiz', level: undefined })]
     const s = state({ attempts: [attempt({ topicId: 'laws-of-indices', kind: 'quiz', level: undefined })] })
     expect(outstanding(assignedTasks(list, s, '2026-09-18'))).toBe(1)
+  })
+})
+
+describe('historyFor', () => {
+  it('reports the latest attempt per activity, with no cut-off date', () => {
+    const s = state({
+      attempts: [
+        attempt({ id: 'old', completedAt: '2026-08-01T10:00:00.000Z', marksScored: 4 }),
+        attempt({ id: 'new', completedAt: '2026-09-05T10:00:00.000Z', marksScored: 9 }),
+        attempt({ id: 'q', kind: 'quiz', level: undefined, marksScored: 7, completedAt: '2026-09-02T10:00:00.000Z' }),
+      ],
+      lessons: { surds: { topicId: 'surds', stepIndex: 9, completedAt: '2026-07-01T09:00:00.000Z', updatedAt: '2026-07-01T09:00:00.000Z' } },
+    })
+    const h = historyFor('surds', s)
+    // The later of the two Higher sheets, not the first.
+    expect(h.worksheets.higher).toEqual({ pct: 90, at: '2026-09-05T10:00:00.000Z' })
+    expect(h.quiz?.pct).toBe(70)
+    expect(h.lesson?.at).toBe('2026-07-01T09:00:00.000Z')
+    expect(h.untouched).toBe(false)
+  })
+
+  it('calls a topic untouched only when nothing at all has happened', () => {
+    expect(historyFor('surds', emptyState()).untouched).toBe(true)
+    const part = state({ lessons: { surds: { topicId: 'surds', stepIndex: 2, updatedAt: '2026-09-01T09:00:00.000Z' } } })
+    expect(historyFor('surds', part).untouched).toBe(false)
+  })
+
+  it('picks out the one activity being set', () => {
+    const s = state({ attempts: [attempt({ level: 'core', marksScored: 6 })] })
+    const h = historyFor('surds', s)
+    expect(doneBefore(h, 'worksheet', 'core')?.pct).toBe(60)
+    expect(doneBefore(h, 'worksheet', 'higher')).toBeUndefined()
+    expect(doneBefore(h, 'quiz')).toBeUndefined()
   })
 })

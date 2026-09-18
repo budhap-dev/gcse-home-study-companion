@@ -1,7 +1,7 @@
-import type { WorksheetLevel } from '@study/shared'
+import type { TopicStatus, WorksheetLevel } from '@study/shared'
 import { TOPICS } from '../content/index.ts'
 import { buildTask, type Task } from './recommend.ts'
-import { isoDate, type ProgressState } from './store.ts'
+import { evidenceFor, isoDate, type ProgressState } from './store.ts'
 
 /** One task a parent has set, as stored. */
 export interface Assignment {
@@ -100,6 +100,60 @@ export function assignedTasks(list: Assignment[], state: ProgressState, today = 
         ? (x.assignment.startsOn ?? '9999').localeCompare(y.assignment.startsOn ?? '9999')
         : (x.assignment.dueOn ?? '9999').localeCompare(y.assignment.dueOn ?? '9999'))
       || y.assignment.createdAt.localeCompare(x.assignment.createdAt))
+}
+
+export interface ActivityDone {
+  /** Percentage, absent for a lesson where there is no score. */
+  pct?: number
+  at: string
+}
+
+/**
+ * What this student has already done on a topic, for a parent choosing what to set.
+ *
+ * Unlike an assignment's own completion this looks at the **whole** history, with no
+ * cut-off date: the question here is "have they met this before?", which is exactly the
+ * thing a parent wants to know before asking for it again.
+ */
+export interface TopicHistory {
+  status: TopicStatus
+  lesson?: ActivityDone
+  quiz?: ActivityDone
+  worksheets: Partial<Record<WorksheetLevel, ActivityDone>>
+  /** True when nothing at all has been done on this topic. */
+  untouched: boolean
+}
+
+const latest = (state: ProgressState, topicId: string, kind: 'quiz' | 'worksheet', level?: WorksheetLevel): ActivityDone | undefined => {
+  const hit = state.attempts
+    .filter((a) => a.topicId === topicId && a.kind === kind && (kind !== 'worksheet' || a.level === level))
+    .sort((a, b) => b.completedAt.localeCompare(a.completedAt))[0]
+  return hit ? { pct: hit.marksAvailable > 0 ? Math.round((100 * hit.marksScored) / hit.marksAvailable) : 0, at: hit.completedAt } : undefined
+}
+
+export function historyFor(topicId: string, state: ProgressState): TopicHistory {
+  const lessonAt = state.lessons[topicId]?.completedAt
+  const worksheets: TopicHistory['worksheets'] = {}
+  for (const level of ['core', 'higher', 'advanced'] as const) {
+    const done = latest(state, topicId, 'worksheet', level)
+    if (done) worksheets[level] = done
+  }
+  const quiz = latest(state, topicId, 'quiz')
+  const lesson = lessonAt ? { at: lessonAt } : undefined
+  return {
+    status: evidenceFor(topicId, state).status,
+    lesson,
+    quiz,
+    worksheets,
+    untouched: !lesson && !quiz && Object.keys(worksheets).length === 0 && !state.lessons[topicId],
+  }
+}
+
+/** What the student has already done for one specific activity, or undefined. */
+export function doneBefore(h: TopicHistory, kind: Assignment['kind'], level?: WorksheetLevel): ActivityDone | undefined {
+  if (kind === 'lesson') return h.lesson
+  if (kind === 'quiz') return h.quiz
+  return level ? h.worksheets[level] : undefined
 }
 
 /** How many are still to do, for a count beside a heading. */
