@@ -517,9 +517,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Theme and variations', topicId: 'theme-and-variations' },
     ] },
     { year: 9, term: 'Summer', topics: [
-      { title: 'Film composition and developing motifs' },
-      { title: 'Vocal music' },
-      { title: 'Analysis of an exemplar set work' },
+      { title: 'Film composition and developing motifs', topicId: 'film-composition-and-motifs' },
+      { title: 'Vocal music', topicId: 'singing-and-word-setting' },
+      { title: 'Analysis of an exemplar set work', topicId: 'analysing-a-set-work' },
     ] },
     { year: 10, term: 'Autumn 1 and 2', topics: [
       { title: 'Killer Queen', topicId: 'killer-queen' },
