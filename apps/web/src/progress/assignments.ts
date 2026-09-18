@@ -156,7 +156,20 @@ export function doneBefore(h: TopicHistory, kind: Assignment['kind'], level?: Wo
   return level ? h.worksheets[level] : undefined
 }
 
-/** How many are still to do, for a count beside a heading. */
+/**
+ * How many are live and still to do.
+ *
+ * A task that has not reached its start date is deliberately not counted. The parent
+ * screen promises exactly this — "a start date in the future shows the task but does not
+ * count it as outstanding until then" — and counting them anyway turned a term's work
+ * set in advance into sixteen things apparently due today, which is the nagging the start
+ * date exists to prevent.
+ */
 export function outstanding(tasks: AssignedTask[]): number {
-  return tasks.filter((t) => t.status !== 'done').length
+  return tasks.filter((t) => t.status !== 'done' && t.status !== 'upcoming').length
+}
+
+/** Set, but not started yet. Worth saying, so an empty "to do" does not read as "all done". */
+export function upcoming(tasks: AssignedTask[]): number {
+  return tasks.filter((t) => t.status === 'upcoming').length
 }
