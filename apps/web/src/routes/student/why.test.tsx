@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
@@ -40,6 +41,22 @@ describe('where you meet it', () => {
   it('needs both the subject and the topic to find it', () => {
     expect(getTopic('physics', 'moments-levers-and-gears')).toBeDefined()
     expect(getTopic('chemistry', 'moments-levers-and-gears')).toBeUndefined()
+  })
+})
+
+describe('the tile', () => {
+  /**
+   * The grid reads as a sequence: lesson, worksheets, quiz. A tile for orientation
+   * belongs at the front of it — placed beside Exam technique it implied you read it
+   * last, which is the reverse of what it is for.
+   */
+  it('comes before the lesson, and only where there are examples', () => {
+    const source = readFileSync(new URL('./Topic.tsx', import.meta.url), 'utf8')
+    const why = source.indexOf('title="Where you meet it"')
+    const lesson = source.indexOf('title="Lesson"')
+    expect(why).toBeGreaterThan(-1)
+    expect(why).toBeLessThan(lesson)
+    expect(source).toContain('topic.why && topic.why.examples.length > 0')
   })
 })
 

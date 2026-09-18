@@ -96,6 +96,13 @@ export function Topic() {
       {topic.why && <WhyCard matters={topic.why.matters} />}
 
       <nav aria-label="Topic parts" className="grid grid-cols-1 gap-2 md:grid-cols-2">
+        {/* First, because the grid reads as a sequence and this one is orientation: it is
+            what you read before the lesson, not after the quiz. Beside Exam technique it
+            implied the opposite, which is the reverse of what it is for. A returning
+            student loses nothing — the Lesson tile is one further down and says Resume. */}
+        {topic.why && topic.why.examples.length > 0 && (
+          <Part to="why" title="Where you meet it" note={topic.why.examples.map((e) => e.title).join(' · ')} action="Read" />
+        )}
         <Part to="lesson" title="Lesson" note={`${topic.lesson.steps.length} steps, one idea each`} action={lesson && !evidence.lessonDone ? 'Resume' : 'Start'} />
         {WORKSHEET_LEVELS.map((level) => {
           const sheet = topic.worksheets[level]
@@ -111,9 +118,6 @@ export function Topic() {
         })}
         <Part to="quiz" title="Quiz" note={`${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action="Start" />
         <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
-        {topic.why && topic.why.examples.length > 0 && (
-          <Part to="why" title="Where you meet it" note={topic.why.examples.map((e) => e.title).join(' · ')} action="Read" />
-        )}
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={previewOf(topic.examTechnique.body)} action="Read" />
       </nav>
 
