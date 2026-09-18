@@ -171,7 +171,12 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
    spilled its text out over the buttons below it. */
 /* The deck: two cards peeking out behind the live one, so the pile visibly shrinks.
    Purely decorative, so they are inert and hidden from screen readers. */
-.card-stack { position: absolute; inset: 0; border-radius: 1rem; border: 2px solid var(--color-rule); background: var(--color-surface); }
+/* Inset from the card's own edges, because rotating a tall box makes it wider than the
+   box it came from: at three degrees a 500px card gains about 13px on each side, which
+   is enough to push a 390px phone screen into a horizontal scroll. The inset gives the
+   rotated corners somewhere to go, and a slightly smaller card behind reads as a pile
+   more convincingly than an identical one anyway. */
+.card-stack { position: absolute; inset: 0 14px; border-radius: 1rem; border: 2px solid var(--color-rule); background: var(--color-surface); }
 /* Enough rotation to read as a pile rather than a shadow. At a degree or two the top
    card covered them almost completely and the deck looked like one card with a smudge. */
 .card-stack-1 { transform: rotate(-3deg) translate(-6px, 6px); box-shadow: 0 2px 6px rgb(0 0 0 / 0.06); }
