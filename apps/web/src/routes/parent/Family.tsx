@@ -8,6 +8,7 @@ import { SectionLabel } from '../../components/KindChip.tsx'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { emptyState, type ProgressState } from '../../progress/store.ts'
 import { parentSummary, type ParentSummary } from '../../progress/summary.ts'
+import { AssignPanel } from './Assign.tsx'
 
 export interface Child {
   email: string
@@ -80,6 +81,10 @@ export function Family() {
           ))}
         </div>
       )}
+      {/* Setting tasks does not depend on the child having synced anything yet, so the
+          panel sits outside the report and shows even for an account with no history. */}
+      <AssignPanel email={child.email} name={child.name} state={child.state} />
+
       {child.state ? <ChildReport child={child} summary={parentSummary(child.state)} /> : (
         <p className="rounded-2xl border border-rule bg-surface p-4 text-ink-2">
           <strong className="text-ink">{child.name}</strong> has not signed in yet, so nothing has reached the account. Work done while signed out stays on that device.

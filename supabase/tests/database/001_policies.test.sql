@@ -2,7 +2,7 @@
 -- Fixtures: family A (parent PA, student SA), family B (parent PB, student SB), editor E.
 
 begin;
-select plan(26);
+select plan(35);
 
 -- Users straight into auth.users; the test role is allowed to.
 insert into auth.users (id, email) values
@@ -130,6 +130,45 @@ select is((select state ->> 'goalMinutes' from public.user_progress where email 
 
 select test_as_account('00000000-0000-0000-0000-0000000000a2', 'sa@students.test.local');
 select is((select count(*) from public.user_progress), 1::bigint, 'a student sees only their own progress row');
+
+-- Assignments: a parent sets tasks for a child, and the child can only read them.
+reset role;
+insert into public.assignments (student_email, set_by, topic_id, kind, level) values
+  ('sa@students.test.local', 'pa@test.local', 'laws-of-indices', 'worksheet', 'higher'),
+  ('sb@students.test.local', 'pb@test.local', 'surds', 'quiz', null);
+
+select test_as_account('00000000-0000-0000-0000-0000000000a1', 'pa@test.local');
+select is((select count(*) from public.assignments), 2::bigint, 'a parent sees assignments for every student on the list');
+select lives_ok(
+  $$ insert into public.assignments (student_email, set_by, topic_id, kind) values ('sa@students.test.local', 'pa@test.local', 'surds', 'lesson') $$,
+  'a parent can set a task for a student');
+-- set_by is tied to the signed-in parent, so a row cannot be attributed to someone else.
+select throws_ok(
+  $$ insert into public.assignments (student_email, set_by, topic_id, kind) values ('sa@students.test.local', 'pb@test.local', 'surds', 'lesson') $$,
+  '42501', null, 'a parent cannot attribute a task to another parent');
+select throws_ok(
+  $$ insert into public.assignments (student_email, set_by, topic_id, kind) values ('pb@test.local', 'pa@test.local', 'surds', 'lesson') $$,
+  '42501', null, 'a task cannot be set for a parent account');
+
+select test_as_account('00000000-0000-0000-0000-0000000000a2', 'sa@students.test.local');
+-- Two: the worksheet seeded above, plus the lesson the parent just set.
+select is((select count(*) from public.assignments), 2::bigint, 'a student sees only their own assignments');
+select throws_ok(
+  $$ insert into public.assignments (student_email, set_by, topic_id, kind) values ('sa@students.test.local', 'sa@students.test.local', 'surds', 'lesson') $$,
+  '42501', null, 'a student cannot set themselves a task');
+-- A refused delete removes no rows rather than raising, so count the effect instead.
+delete from public.assignments where topic_id = 'laws-of-indices';
+reset role;
+select is((select count(*) from public.assignments where topic_id = 'laws-of-indices'), 1::bigint, 'a student cannot delete an assignment');
+
+select test_as_account('00000000-0000-0000-0000-0000000000b2', 'sb@students.test.local');
+select is((select count(*) from public.assignments), 1::bigint, 'the other student sees only theirs');
+
+-- A window that closes before it opens is a typo, and the table refuses it.
+reset role;
+select throws_ok(
+  $$ insert into public.assignments (student_email, set_by, topic_id, kind, starts_on, due_on) values ('sa@students.test.local', 'pa@test.local', 'surds', 'quiz', '2026-09-20', '2026-09-18') $$,
+  '23514', null, 'a task cannot be due before it starts');
 
 select * from finish();
 rollback;

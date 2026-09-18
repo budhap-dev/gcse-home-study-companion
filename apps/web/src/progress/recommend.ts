@@ -13,7 +13,12 @@ export interface Task {
   minutes: number
 }
 
-function task(topic: Topic, kind: Task['kind'], reason: string, level?: WorksheetLevel): Task {
+/**
+ * Builds the card a screen renders: title, route and estimated time for one activity.
+ * Exported because an assigned task is the same object with a different reason for
+ * existing, and it should route and be timed identically to a recommended one.
+ */
+export function buildTask(topic: Topic, kind: Task['kind'], reason: string, level?: WorksheetLevel): Task {
   const subject = getSubject(topic.subjectId)
   const base = `/subjects/${topic.subjectId}/topics/${topic.id}`
   const title = kind === 'lesson' ? 'Lesson' : kind === 'quiz' ? 'Quiz' : `${level === 'core' ? 'Core' : level === 'higher' ? 'Higher' : 'Advanced'} worksheet`
@@ -42,7 +47,7 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
 
   // 1. unfinished lessons, most recently touched first
   for (const t of topics.filter((t) => state.lessons[t.id] && !state.lessons[t.id]!.completedAt).sort((a, b) => (state.lessons[b.id]!.updatedAt).localeCompare(state.lessons[a.id]!.updatedAt))) {
-    ranked.push(task(t, 'lesson', `You stopped at step ${state.lessons[t.id]!.stepIndex + 1} of ${t.lesson.steps.length}. Pick it back up.`))
+    ranked.push(buildTask(t, 'lesson', `You stopped at step ${state.lessons[t.id]!.stepIndex + 1} of ${t.lesson.steps.length}. Pick it back up.`))
   }
   // 2. due for recap: Secure or better and untouched for the decay period
   const decayMs = DEFAULT_THRESHOLDS.decayAfterWeeks * 7 * 86400000
@@ -50,7 +55,7 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
     const e = ev.get(t.id)!
     const last = lastActivity(t)
     if ((e.status === 'secure' || e.status === 'grade-9-ready') && last && now.getTime() - last.getTime() > decayMs) {
-      ranked.push(task(t, 'quiz', `Last seen ${Math.round((now.getTime() - last.getTime()) / 86400000 / 7)} weeks ago. A quick quiz keeps it fresh.`))
+      ranked.push(buildTask(t, 'quiz', `Last seen ${Math.round((now.getTime() - last.getTime()) / 86400000 / 7)} weeks ago. A quick quiz keeps it fresh.`))
     }
   }
   // 3. weakest attempted topic, lowest quiz score first
@@ -59,27 +64,27 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
     if (e.status === 'secure') continue
     const pct = Math.round(e.quizPct!)
     if (e.quizPct! >= DEFAULT_THRESHOLDS.secureQuizMin && e.higherPct === undefined) {
-      ranked.push(task(t, 'worksheet', `You understood the quiz. The Higher worksheet is where you use it.`, 'higher'))
+      ranked.push(buildTask(t, 'worksheet', `You understood the quiz. The Higher worksheet is where you use it.`, 'higher'))
     } else if (e.quizPct! >= DEFAULT_THRESHOLDS.secureQuizMin && e.higherPct !== undefined) {
-      ranked.push(task(t, 'worksheet', `Last Higher sheet ${Math.round(e.higherPct)}%. Go back over the working and try again.`, 'higher'))
+      ranked.push(buildTask(t, 'worksheet', `Last Higher sheet ${Math.round(e.higherPct)}%. Go back over the working and try again.`, 'higher'))
     } else {
-      ranked.push(task(t, 'quiz', `Last time ${pct}%. The questions you missed are the ones to learn from.`))
+      ranked.push(buildTask(t, 'quiz', `Last time ${pct}%. The questions you missed are the ones to learn from.`))
     }
   }
   // 4. Secure topics: push through the Advanced worksheet
   for (const t of topics.filter((t) => ev.get(t.id)!.status === 'secure')) {
     const e = ev.get(t.id)!
-    if (e.advancedPct === undefined) ranked.push(task(t, 'worksheet', 'You have the idea. The Advanced worksheet stretches it.', 'advanced'))
-    else if (e.quizPct! < DEFAULT_THRESHOLDS.grade9QuizMin) ranked.push(task(t, 'quiz', 'Advanced sheet done. A quiz will show how much has stuck.'))
-    else ranked.push(task(t, 'worksheet', `Advanced sheet ${Math.round(e.advancedPct)}%. Another go with the solutions beside you.`, 'advanced'))
+    if (e.advancedPct === undefined) ranked.push(buildTask(t, 'worksheet', 'You have the idea. The Advanced worksheet stretches it.', 'advanced'))
+    else if (e.quizPct! < DEFAULT_THRESHOLDS.grade9QuizMin) ranked.push(buildTask(t, 'quiz', 'Advanced sheet done. A quiz will show how much has stuck.'))
+    else ranked.push(buildTask(t, 'worksheet', `Advanced sheet ${Math.round(e.advancedPct)}%. Another go with the solutions beside you.`, 'advanced'))
   }
   // 5. not started, in content order
   for (const t of topics.filter((t) => !state.lessons[t.id] && ev.get(t.id)!.quizPct === undefined)) {
-    ranked.push(task(t, 'lesson', 'New idea. One step at a time.'))
+    ranked.push(buildTask(t, 'lesson', 'New idea. One step at a time.'))
   }
   // 6. lesson done but no quiz
   for (const t of topics.filter((t) => state.lessons[t.id]?.completedAt && ev.get(t.id)!.quizPct === undefined)) {
-    ranked.push(task(t, 'quiz', 'Lesson done. The quiz shows what has stuck.'))
+    ranked.push(buildTask(t, 'quiz', 'Lesson done. The quiz shows what has stuck.'))
   }
 
   const seen = new Set<string>()
