@@ -68,7 +68,9 @@ why: z.object({
 
 `matters` renders **on the topic page**, above the activities. It is one paragraph, it is the answer to "what is this for", and a student who thinks the topic is pointless will not tap a tile to find out otherwise.
 
-`examples` live on **their own page**, reached by a tile in the activity grid beside Exam technique — which is the page's existing pattern for prose that deserves its own room.
+`examples` live on **their own page**, reached by a tile in the activity grid — the page's existing pattern for prose that deserves its own room.
+
+**The tile goes first, before Lesson.** It was put beside Exam technique to begin with, and that was wrong: the grid reads as a sequence — lesson, worksheets, quiz — so seventh of eight implied you read it *last*, which is the reverse of what it is for. A returning student loses nothing by it being first, since the Lesson tile is one further down and already says *Resume*.
 
 That split was not the first design. Everything was inline, and the measurement said no: the Lesson tile sat **2.8 screens down** a phone, against half a screen on a topic without the section. A student who came to do the lesson had to scroll past three screens of context first. Moving the examples out brought it back to **1.0 screens**.
 
