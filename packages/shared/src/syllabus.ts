@@ -539,9 +539,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Purcell: Music for a While', topicId: 'purcell-music-for-a-while' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Musical dictation' },
-      { title: 'Analysing unfamiliar music' },
-      { title: 'Short analysis essays' },
+      { title: 'Musical dictation', topicId: 'musical-dictation' },
+      { title: 'Analysing unfamiliar music', topicId: 'analysing-unfamiliar-music' },
+      { title: 'Short analysis essays', topicId: 'short-analysis-essays' },
     ] },
   ],
 }
