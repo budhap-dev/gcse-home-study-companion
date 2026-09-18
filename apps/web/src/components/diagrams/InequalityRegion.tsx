@@ -68,9 +68,21 @@ export function InequalityRegion({ props, alt }: { props: Record<string, unknown
     ? { x: (top[0][0] + top[top.length - 1][0]) / 2, y: (top[Math.floor(top.length / 2)][1] + bottom[Math.floor(bottom.length / 2)][1]) / 2 }
     : null
 
+  /**
+   * A gridline and a label every whole number is right for the small ranges these
+   * diagrams usually use, and unreadable past about twenty: the labels overlap into a
+   * smear and the grid turns solid. Step in 1, 2, 5 or 10 (times a power of ten) so a
+   * wide range gets roughly a dozen lines, the same way a graph axis would.
+   */
+  const step = (span: number) => {
+    const rough = span / 12
+    const power = 10 ** Math.floor(Math.log10(Math.max(rough, 1e-9)))
+    return [1, 2, 5, 10].map((m) => m * power).find((s) => s >= rough) ?? 10 * power
+  }
   const ticks = (from: number, to: number) => {
+    const s = step(to - from)
     const out: number[] = []
-    for (let v = Math.ceil(from); v <= to; v++) out.push(v)
+    for (let v = Math.ceil(from / s) * s; v <= to + 1e-9; v += s) out.push(Number(v.toFixed(6)))
     return out
   }
 
