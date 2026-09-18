@@ -56,6 +56,8 @@ why: z.object({
   examples: z.array(z.object({
     title: z.string().min(1),
     body: RichText,
+    /** A picture of the situation. The existing Visual union, so no new machinery. */
+    visual: Visual.optional(),
   })).max(3).default([]),
 }).optional()
 ```
@@ -65,6 +67,75 @@ why: z.object({
 **Rendered on the topic page**, above the activities rather than inside the lesson. That is the moment a student asks "what is this for", and a lesson step can be skipped or buried. It should also reach search, so "why do we need calculus" finds something.
 
 **Length:** `matters` around 60 to 100 words; each example 30 to 50. A card, not an essay. If it needs more than that it is probably a lesson step.
+
+## Pictures, not just prose
+
+A paragraph about a door handle is worth less than a picture of one. This section is as much of the design as the words are, because a wall of text is exactly what a student skips.
+
+### Drawn, not photographed
+
+The pack's native picture format is an **SVG component drawn from props** — 51 of them, in `apps/web/src/components/diagrams/`. Every example should use one.
+
+The schema does have an `image` variant, which renders a plain `<img src>`. **Nothing in the pack uses it**, no media bucket is wired up, and no build step copies image files anywhere. Turning it on is not a small decision: every photograph needs a licence that permits redistribution from a public repository, the bundle is already 13 MB before any of them, a bundled photo cannot follow the dark theme, and an externally hosted one breaks offline use and can rot — which is the reason Music bundles no audio.
+
+A drawn component has none of those problems and one further advantage that matters more here: **it is generated from the same numbers as the text**, so a diagram cannot contradict the paragraph beside it. A photograph is unverifiable in exactly the way the rest of this design is trying to avoid.
+
+So: **drawn, not photographed** — but drawn *pictorially*. A recognisable door with a hinge and a handle, not an abstract beam with a triangle under it. That distinction is most of what makes this section attractive rather than merely present.
+
+If a photograph is ever genuinely the only way to carry an idea, it needs its own decision about licensing, bundle size and offline behaviour. It is not a detail to settle inside a content PR.
+
+### Most of it is already drawable
+
+The twelve examples in this document were checked against the existing components. **Ten need no new code at all.**
+
+| Example | Component | New? |
+|---|---|---|
+| Speedometer | `line-graph` — a distance-time curve with the tangent at one point | no |
+| Least-metal can | `line-graph` — surface area against radius, the minimum marked | no |
+| Drug concentration | `line-graph` — the curve with two horizontal threshold lines | no |
+| Salt and sugar | `lattice` twice: `ionic` beside `simple-molecules` | no |
+| The saucepan | `lattice` twice: `metallic` beside `polymer` | no |
+| Pencil and diamond | `lattice` twice: `graphite` beside `giant-covalent` | no |
+| The door handle | `beam-moments` — pivot at one end, two forces at different distances | no |
+| The spanner | `beam-moments` — the same figure, longer handle | no |
+| The wheelbarrow | `beam-moments` — load near the pivot, effort far from it | no |
+| Sound sampling | `line-graph` — a wave with the sample points marked on it | no |
+| Photo against message | a proportional bar comparison | **yes** |
+| Scan against typed page | the same | **yes** |
+
+`lattice` already takes `ionic | metallic | giant-covalent | simple-molecules | polymer | graphite | graphene | fullerene | nanotube | alloy`, which covers every bonding example here. `beam-moments` already draws a beam on a pivot with forces and their distances marked, which is what a door, a spanner and a wheelbarrow all are.
+
+### The one thing missing
+
+**`size-compare`** — two or three labelled bars whose lengths are proportional to their values, with the values printed on them.
+
+It is worth building because it is not only for file sizes. Salt at 801 °C beside sugar at 160 °C is the same picture; so is a long spanner beside a short one, or one cost against another. A single small component serves examples across several subjects, which is the test of whether a new component is worth adding at all.
+
+Optional, and only if the first few examples prove it is wanted: a **pictorial lever** that draws a recognisable door or spanner rather than a schematic beam. `beam-moments` carries the idea correctly today, and a new component is a much larger commitment than a paragraph — so this waits until the schematic version has been seen on a page and judged too dry.
+
+### What an example diagram is for
+
+It is a different job from a lesson diagram, and the difference is worth stating because it is easy to drift back into the familiar one.
+
+A **lesson** diagram shows the mathematics: axes, labels, the quantities in the formula. An **example** diagram shows the **situation**, and lets the reader supply the mathematics themselves.
+
+1. **Label the real object, not the algebra.** "Hinge" and "handle", not "pivot" and $d_1$. The whole point is that this is a door.
+2. **One idea per picture.** If it needs a key, it is doing too much. Two pictures are better than one crowded one.
+3. **Let the picture carry the contrast.** Where the example is a comparison — salt against sugar, long spanner against short — the two things go side by side at the same scale, so the difference is seen before it is read.
+4. **No formulae in the picture.** Diagram props are drawn as plain SVG text, so LaTeX arrives as backslashes; and in any case the formula belongs in the lesson, not here.
+5. **It must survive being small.** These render in a card, not full width. If it is unreadable at 220 px tall it is the wrong picture.
+
+### Making the section attractive
+
+The design is a strip of cards near the top of the topic page, not a wall of prose.
+
+- **One `why` card first**, carrying the subject accent — the same treatment the content blockquote already uses, so it reads as the topic speaking rather than as another paragraph.
+- **Then one card per example.** Picture above the text on a phone; picture beside the text from about 640 px, where a two-column card stops the page becoming a column of stacked boxes.
+- **Cap the picture** at roughly 220 px tall so it sits in the card rather than dominating it, and so three examples are still scannable without scrolling past them.
+- **Head each card with the concrete noun** — *The door handle*, *Salt and sugar*, *The speedometer*. Never *Application 1*, and never *Real-world example*. The heading is part of the hook.
+- **A caption under the picture** where the picture needs one sentence to land, in the same small grey the rest of the pack uses for notes.
+
+The measure of success is simple: a student scrolling a topic page should stop at this section because it looks like something worth reading, and the pictures are what will do that.
 
 ## Verifying it
 
@@ -80,13 +151,21 @@ So:
 - **A lint for the generic-application smell.** Reject `used in`, `important for`, `many careers`, `all around us`, `in the real world`, `plays a vital role`. If a sentence survives with those words removed, it was not an example.
 - **Cross-check against the subject's own content.** An example that contradicts a set work, a spec point or another topic is the same defect as any other contradiction.
 
+And for the pictures, the checks the pack already runs on every diagram:
+
+- **Alt text on every one**, describing what is shown rather than naming the component. The harness already rejects anything under 40 characters.
+- **No LaTeX and no markdown in diagram props.** They are drawn as plain SVG text, so both arrive on the page as literal characters. A four-box label with `\frac` in it did exactly that, and only the browser walk caught it.
+- **Every number in a picture comes from the same constant as the number in the prose.** A bar labelled 801 °C and a sentence saying 801 °C must not be two separate typings of it.
+- **Walk it in a browser at 390 and 1280.** A diagram that looks right in the source and breaks the page is a failure this pack has had before.
+
 ## Coverage
 
 "Wherever possible" is the instruction, and some topics genuinely have no everyday application.
 
 - **`matters` should be near-universal.** Even a topic with no application has a reason to exist. Algebraic proof: *checking a few cases is not the same as knowing, and the difference matters when the thing you are wrong about is a bridge.* Musical dictation: *writing down what you hear is how anything gets from a performance to a page.*
 - **`examples` is genuinely optional.** Exam-technique topics, dictation, and some pure-algebra rows will have none, and forcing them produces exactly the filler this design is trying to avoid.
-- **A test reports coverage per subject** so gaps are visible rather than silent — the same argument as showing unwritten rows as *Coming soon* instead of hiding them.
+- **A picture is wanted but not mandatory.** An example with no honest picture is better than one with a decorative box drawn next to it. The rule is the same as for the words: missing beats padded.
+- **A test reports coverage per subject** — how many topics have `matters`, how many have examples, how many of those examples have a picture — so gaps are visible rather than silent. The same argument as showing unwritten rows as *Coming soon* instead of hiding them.
 
 ## Four worked samples
 
@@ -98,9 +177,15 @@ Written out in full, so the standard is set by example rather than by adjective.
 
 **The speedometer.** A car's odometer measures distance travelled. The speedometer shows how fast that distance is changing — the derivative of what the odometer says. The push you feel into the seat when accelerating is the derivative of *that*.
 
+> *Picture:* `line-graph` — a distance-time curve with the tangent drawn at one point, that point labelled *this moment* and the tangent labelled *what the speedometer reads*.
+
 **Packaging.** A drinks can holds a fixed volume and the manufacturer wants the least aluminium. That is a stationary point question: write the surface area in terms of one dimension, differentiate, set it to zero. The answer for a plain cylinder is a height equal to the diameter — and real cans are taller and thinner, because the ends are thicker metal than the sides, which changes what is being minimised.
 
+> *Picture:* `line-graph` — metal used against radius, with the lowest point marked. The curve rising on both sides of it is the argument.
+
 **Anything that peaks.** A drug's concentration in the blood rises after a dose and then falls. Choosing how often to take it is choosing where the troughs and peaks of that curve land.
+
+> *Picture:* `line-graph` — the concentration curve with two horizontal lines across it, one labelled *too much* and one *not enough*, and the peaks sitting between them.
 
 ### Bonding — Chemistry
 
@@ -108,9 +193,15 @@ Written out in full, so the standard is set by example rather than by adjective.
 
 **Salt and sugar.** Both are white crystals on the same shelf. Salt is an ionic lattice held by strong forces in every direction, so it melts at 801 °C. Sugar is molecules with weak forces between them, so it caramelises in a pan at around 160 °C. The difference you can see in a kitchen is the difference in the bonding.
 
+> *Picture:* `lattice` `ionic` beside `lattice` `simple-molecules`, at the same scale — then `size-compare` with the two temperatures, so the five-fold gap is seen rather than read.
+
 **The saucepan.** Metal base, plastic handle. Metals have delocalised electrons free to move, so they carry heat and electricity; the handle is covalent molecules with no free electrons, so it does neither. The pan is a bonding decision made twice.
 
+> *Picture:* `lattice` `metallic` labelled *the base* beside `lattice` `polymer` labelled *the handle*. The free electrons in one and their absence in the other is the entire explanation, and it is visible.
+
 **Pencil and diamond.** The same element. Graphite is layers held to each other by weak forces, so they slide off onto paper. Diamond is a rigid three-dimensional covalent network, which is why it is the hardest natural substance. Carbon, arranged two ways.
+
+> *Picture:* `lattice` `graphite` beside `lattice` `giant-covalent`, captioned *both of these are carbon*. The caption is doing as much work as the drawing.
 
 ### Moments — Physics
 
@@ -118,9 +209,15 @@ Written out in full, so the standard is set by example rather than by adjective.
 
 **The door handle.** Always on the edge furthest from the hinges. Push near the hinge and the door barely moves; push at the handle and the same force turns it easily, because the moment is the force multiplied by the distance from the pivot.
 
+> *Picture:* `beam-moments` — the door seen from above, pivot at the hinge, the **same** force arrow drawn twice, once near the hinge and once at the handle, with the two distances marked. Identical arrows at different distances is the whole idea.
+
 **The spanner.** A long spanner shifts a bolt that a short one cannot, with the same hand doing the pushing. Double the handle length and you double the moment for no extra effort.
 
+> *Picture:* two `beam-moments` figures at the same scale, one twice the length of the other, each with the same force arrow and the resulting moment printed underneath.
+
 **The wheelbarrow.** The load sits close to the wheel and your hands are far from it. The wheel is the pivot, so a small lift at the handles balances a heavy load near the front — which is why the same barrow is unmanageable if you load it at the back.
+
+> *Picture:* `beam-moments` — pivot at the wheel, a long downward arrow for the load close to it, a short upward arrow for the hands far from it. Then the same figure with the load moved back, and the arrow that has to grow.
 
 ### Representing data in binary — Computer Science
 
@@ -128,17 +225,24 @@ Written out in full, so the standard is set by example rather than by adjective.
 
 **Why a photo is bigger than a message.** A text message stores one number per character. A photo stores three numbers per pixel, and there are millions of pixels. The file sizes are not arbitrary; they follow from what is being written down.
 
+> *Picture:* `size-compare` — two bars, the message and the photo, drawn to true proportion. The message bar will be almost invisible, and that is the point.
+
 **Why a scan of a page is bigger than the typed page.** Typed, it is a few thousand characters. Scanned, the computer has no idea there are letters in the image — it is storing colours, and so it stores the white paper as carefully as the ink.
 
+> *Picture:* `size-compare`, the two versions of the same page side by side, captioned *the same words, both times*.
+
 **Why sound files vary.** A recording is a number for the air pressure, taken tens of thousands of times a second. Take more samples or store each one more precisely and the file grows. That trade is what the quality setting on a download is choosing.
+
+> *Picture:* `line-graph` — one smooth wave with sample points marked sparsely, and the same wave with them marked densely. The second is closer to the curve, and larger.
 
 ## Rolling it out
 
 There are 315 rows. Retrofitting all of them at once would produce filler, which is the failure this design is most concerned about.
 
+0. **Build `size-compare` first**, and prove the design on one topic end to end — the words, the pictures, the card layout — before writing a second. A standard set by a finished example is worth more than any amount of this document.
 1. **New topics carry it from the start.** The next Further Maths rows should include it, so the standard is set while the volume is small.
 2. **Then the subjects where the gap is worst.** Maths and Further Maths first — they are the subjects a student is most likely to find pointless, and the ones where the answer is most satisfying. Then the sciences, where the "what is actually happening" version matters more than the application.
 3. **Languages and Music last**, and expect lower coverage. "Where you meet it" is a strange question to ask of a set work; "why does this exist" is not.
 4. **Write them in the topic's own generator**, with the numbers asserted, exactly like the rest of the content. Not as a separate pass over finished JSON, which is how filler gets written.
 
-A reasonable target is `matters` on every topic and `examples` on perhaps two thirds. Missing is better than padded.
+A reasonable target is `matters` on every topic, `examples` on perhaps two thirds, and a picture on most of those — ten of the twelve samples here need no new component, so the pictures are far cheaper than they look. Missing is better than padded, in words and in drawings alike.
