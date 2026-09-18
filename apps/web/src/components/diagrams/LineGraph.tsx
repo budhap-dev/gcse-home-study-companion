@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 
 interface Line {
@@ -12,6 +13,26 @@ interface Point {
   x: number
   y: number
   label?: string
+}
+/** y = amplitude x the named function of x, with x measured in degrees. */
+interface Wave {
+  fn: 'sin' | 'cos' | 'tan'
+  /** Height of the peaks. Default 1, so y = sin x. */
+  amplitude?: number
+  label?: string
+  /** Where along x to put the label. Defaults to the last visible point. */
+  labelX?: number
+  colour?: string
+  dashed?: boolean
+}
+/** A circle in graph units. Pair it with `square` so it is drawn round, not oval. */
+interface Circle {
+  cx: number
+  cy: number
+  r: number
+  label?: string
+  colour?: string
+  dashed?: boolean
 }
 interface Curve {
   /** y = a x² + b x + c, plus cube·x³ when a cubic is wanted */
@@ -38,7 +59,9 @@ interface Curve {
  * yRange [min, max], lines [{m, c, label}], curves [{a, b, c, label}], points
  * [{x, y, label}], grid true or false, xLabel and yLabel (axis captions; default to
  * italic x and y), xStep and yStep (tick spacing; chosen automatically when omitted,
- * so small ranges such as 0 to 0.2 still get a scale).
+ * so small ranges such as 0 to 0.2 still get a scale), waves [{fn, amplitude, label}]
+ * for y = sin x, y = cos x and y = tan x with x in degrees, circles [{cx, cy, r}], and
+ * square true to give both axes the same unit length so a circle comes out round.
  */
 export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const [xMin, xMax] = (props.xRange as [number, number] | undefined) ?? [-5, 5]
@@ -46,6 +69,8 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const lines = (props.lines as Line[] | undefined) ?? []
   const curves = (props.curves as Curve[] | undefined) ?? []
   const points = (props.points as Point[] | undefined) ?? []
+  const waves = (props.waves as Wave[] | undefined) ?? []
+  const circles = (props.circles as Circle[] | undefined) ?? []
   const grid = props.grid !== false
   const xLabel = typeof props.xLabel === 'string' ? props.xLabel : undefined
   const yLabel = typeof props.yLabel === 'string' ? props.yLabel : undefined
@@ -59,7 +84,6 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
    */
   const captionBand = xLabel ? 16 : 0
   const totalH = H + captionBand
-  const sy = (y: number) => H - pad - ((y - yMin) / (yMax - yMin)) * (H - 2 * pad)
   const palette = [ACCENT, '#d25b3b', '#2e8b57', '#1f3a93']
 
   /**
@@ -104,7 +128,18 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const fmt = (v: number) => String(Number(v.toFixed(4)))
   // The left margin grows with the widest y label, so a 20 000 axis is not clipped.
   const padL = Math.max(pad, 12 + 6.2 * Math.max(...yTicks.map((v) => fmt(v).length)))
-  const sx = (x: number) => padL + ((x - xMin) / (xMax - xMin)) * (W - padL - pad)
+  /**
+   * With `square` set, one graph unit is the same length on both axes, so a circle is
+   * drawn round and a right angle looks like one. The plot takes the smaller of the two
+   * scales and what is drawn is centred in the box left over. Without it the axes are
+   * stretched independently to fill the box, which is what every other chart here wants.
+   */
+  const boxW = W - padL - pad, boxH = H - 2 * pad
+  const same = props.square === true ? Math.min(boxW / (xMax - xMin), boxH / (yMax - yMin)) : 0
+  const kx = same || boxW / (xMax - xMin), ky = same || boxH / (yMax - yMin)
+  const sx = (x: number) => padL + (boxW - kx * (xMax - xMin)) / 2 + (x - xMin) * kx
+  const sy = (y: number) => H - pad - (boxH - ky * (yMax - yMin)) / 2 - (y - yMin) * ky
+  const left = sx(xMin), right = sx(xMax), top = sy(yMax), bottom = sy(yMin)
   // clip each line to the visible box by sampling its ends
   const segment = (l: Line) => {
     const pts: [number, number][] = []
@@ -135,12 +170,40 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     }
     return { d, last }
   }
+  /**
+   * A wave is sampled every half degree. The pen lifts where the value leaves the box —
+   * which is what draws tan as separate branches — and also where it jumps more than
+   * half the visible height in one step, so the two branches either side of an asymptote
+   * are never joined by a near-vertical line that is not part of the graph.
+   */
+  const wavePath = (w: Wave) => {
+    const amp = w.amplitude ?? 1
+    const f = w.fn === 'sin' ? Math.sin : w.fn === 'cos' ? Math.cos : Math.tan
+    const steps = Math.max(240, Math.round((xMax - xMin) * 2))
+    let d = '', pen = false, last: [number, number] | null = null, prev: number | null = null
+    for (let i = 0; i <= steps; i++) {
+      const x = xMin + ((xMax - xMin) * i) / steps
+      const y = amp * f((x * Math.PI) / 180)
+      const jump = prev !== null && Math.abs(y - prev) > (yMax - yMin) / 2
+      if (Number.isFinite(y) && y >= yMin && y <= yMax && !jump) {
+        d += `${pen ? 'L' : 'M'}${sx(x).toFixed(1)} ${sy(y).toFixed(1)} `
+        pen = true
+        last = [x, y]
+      } else pen = false
+      prev = y
+    }
+    return { d, last }
+  }
+  // Circles are clipped to the plot box, and two charts on one page must not share a
+  // clip path, so the id comes from React rather than being a constant.
+  const clip = useId().replace(/[^\w-]/g, '')
   return (
     <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
-      {grid && xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={pad} x2={sx(v)} y2={H - pad} stroke={RULE} />)}
-      {grid && yTicks.map((v) => <line key={`gy${v}`} x1={padL} y1={sy(v)} x2={W - pad} y2={sy(v)} stroke={RULE} />)}
-      {yMin <= 0 && yMax >= 0 && <line x1={padL} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
-      {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={pad} x2={sx(0)} y2={H - pad} stroke={INK} strokeWidth="1.5" />}
+      <defs><clipPath id={`box-${clip}`}><rect x={left} y={top} width={right - left} height={bottom - top} /></clipPath></defs>
+      {grid && xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={top} x2={sx(v)} y2={bottom} stroke={RULE} />)}
+      {grid && yTicks.map((v) => <line key={`gy${v}`} x1={left} y1={sy(v)} x2={right} y2={sy(v)} stroke={RULE} />)}
+      {yMin <= 0 && yMax >= 0 && <line x1={left} y1={sy(0)} x2={right} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
+      {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={top} x2={sx(0)} y2={bottom} stroke={INK} strokeWidth="1.5" />}
       {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={reserve(sx(v) - String(fmt(v)).length * 3, sy(Math.max(yMin, Math.min(0, yMax))) + 14, fmt(v))} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
       {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={reserve(sx(Math.max(xMin, Math.min(0, xMax))) - 6, sy(v) + 4, fmt(v), 11, true)} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
       {xLabel
@@ -173,6 +236,28 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
             {k.label && (typeof k.labelX === 'number'
               ? <text x={sx(k.labelX) + 6} y={clear(sx(k.labelX) + 6, sy(yOf(k, k.labelX)) - 8, k.label, 12)} textAnchor="start" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>
               : <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>)}
+          </g>
+        )
+      })}
+      {waves.map((w, i) => {
+        const { d, last } = wavePath(w)
+        if (!last) return null
+        const colour = w.colour ?? palette[(lines.length + curves.length + i) % palette.length]!
+        const at = typeof w.labelX === 'number' ? w.labelX : last[0]
+        const y = (w.amplitude ?? 1) * (w.fn === 'sin' ? Math.sin : w.fn === 'cos' ? Math.cos : Math.tan)((at * Math.PI) / 180)
+        return (
+          <g key={`w${i}`}>
+            <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={w.dashed ? '6 5' : undefined} strokeLinecap="round" />
+            {w.label && <text x={sx(at) - 4} y={clear(sx(at) - 4, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{w.label}</text>}
+          </g>
+        )
+      })}
+      {circles.map((c, i) => {
+        const colour = c.colour ?? palette[(lines.length + curves.length + waves.length + i) % palette.length]!
+        return (
+          <g key={`c${i}`}>
+            <ellipse cx={sx(c.cx)} cy={sy(c.cy)} rx={Math.abs(c.r) * kx} ry={Math.abs(c.r) * ky} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} clipPath={`url(#box-${clip})`} />
+            {c.label && <text x={sx(c.cx)} y={clear(sx(c.cx), sy(c.cy + Math.abs(c.r)) - 8, c.label, 12)} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{c.label}</text>}
           </g>
         )
       })}
