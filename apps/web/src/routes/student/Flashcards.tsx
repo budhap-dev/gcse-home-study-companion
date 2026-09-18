@@ -2,7 +2,23 @@ import { getSubject, seededShuffle, type Question } from '@study/shared'
 import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
+import { Smiley } from '../../components/Smiley.tsx'
+import { Confetti } from '../../components/Confetti.tsx'
+import { usePref } from '../../theme/prefs.ts'
 import { getTopic } from '../../content/index.ts'
+
+/**
+ * What to say at the end. Keyed to how the deck actually went rather than always
+ * congratulating: a student who needed three passes knows they needed three passes, and
+ * being told "perfect!" anyway is how an app stops being believed.
+ */
+export function wellDone(cards: number, turns: number): { emoji: string; line: string } {
+  const extra = turns - cards
+  if (extra === 0) return { emoji: '\u{1F31F}', line: 'Every card first time. That is the whole deck known.' }
+  if (extra <= 2) return { emoji: '\u{1F389}', line: 'Nearly clean — only a couple came back round.' }
+  if (extra <= cards) return { emoji: '\u{1F4AA}', line: 'You worked for that one. The cards that came back are the ones worth another look.' }
+  return { emoji: '\u{1F9E0}', line: 'A hard deck. Worth running again tomorrow rather than now.' }
+}
 
 export interface Card {
   id: string
@@ -87,23 +103,39 @@ export function Flashcards() {
   const [flipped, setFlipped] = useState(false)
   const [known, setKnown] = useState(0)
   const [seen, setSeen] = useState(0)
+  const [run, setRun] = useState(0)
+  const [leaving, setLeaving] = useState<'known' | 'again' | null>(null)
+  const motion = usePref('motion')
   if (!subject || !topic) return <p>Unknown topic.</p>
   const backTo = `/subjects/${subject.id}/topics/${topic.id}`
   const card = queue[0]
 
   const answer = (knew: boolean) => {
+    if (leaving) return
     setSeen((n) => n + 1)
     if (knew) setKnown((n) => n + 1)
-    setFlipped(false)
-    setQueue((q) => (knew ? q.slice(1) : [...q.slice(1), q[0]!]))
+    setRun((n) => (knew ? n + 1 : 0))
+    const advance = () => {
+      setFlipped(false)
+      setLeaving(null)
+      setQueue((q) => (knew ? q.slice(1) : [...q.slice(1), q[0]!]))
+    }
+    // With motion off there is no animation to wait for, so the card must not sit there.
+    if (!motion) { advance(); return }
+    setLeaving(knew ? 'known' : 'again')
+    setTimeout(advance, 320)
   }
-  const restart = () => { setQueue(deck); setKnown(0); setSeen(0); setFlipped(false) }
+  const restart = () => { setQueue(deck); setKnown(0); setSeen(0); setRun(0); setFlipped(false); setLeaving(null) }
 
   if (!card) {
+    const praise = wellDone(deck.length, seen)
     return (
       <article className="mx-auto flex w-full max-w-xl flex-col gap-5 py-6 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Flashcards done</p>
+        <Confetti />
+        <p className="text-6xl leading-none"><Smiley bounce>{praise.emoji}</Smiley></p>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Deck finished</p>
         <h1 className="text-3xl font-bold">{topic.title}</h1>
+        <p className="text-lg font-bold">{praise.line}</p>
         <p className="text-ink-2">{deck.length} cards, {seen} turns. {seen > deck.length ? `${seen - deck.length} came back round before you knew them.` : 'Every card known first time.'}</p>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
           <button type="button" onClick={restart} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Go again</button>
@@ -124,20 +156,41 @@ export function Flashcards() {
           <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · Flashcards</span>
           <span className="font-bold">{topic.title}</span>
         </div>
-        <span className="shrink-0 whitespace-nowrap text-sm text-ink-2 tabular-nums">{known} known · {queue.length} left</span>
+        <span className="flex shrink-0 items-center gap-2 whitespace-nowrap text-sm text-ink-2 tabular-nums">
+          {run >= 3 && (
+            <span className="anim-streak rounded-full bg-[#ffe9dc] px-2 py-0.5 text-xs font-bold text-[#8a3b12]">
+              <Smiley>🔥</Smiley> {run} in a row
+            </span>
+          )}
+          {known} known · {queue.length} left
+        </span>
       </header>
 
+      {/* How far through the deck, which a shrinking pile alone does not make precise. */}
+      <div className="flex items-center gap-2">
+        <span className="h-2 flex-1 overflow-hidden rounded-full bg-panel">
+          <span className="block h-full rounded-full bg-[color:var(--subject)] transition-[width] duration-300"
+            style={{ width: `${Math.round((100 * known) / Math.max(1, deck.length))}%` }} />
+        </span>
+        <span className="shrink-0 text-xs tabular-nums text-ink-3">{known} of {deck.length}</span>
+      </div>
+
+      <div className="relative">
+        {/* The rest of the pile, so the deck visibly shrinks as it is worked through. */}
+        {queue.length > 1 && <span aria-hidden className="card-stack card-stack-1" />}
+        {queue.length > 2 && <span aria-hidden className="card-stack card-stack-2" />}
       <button
         type="button"
         onClick={() => setFlipped((f) => !f)}
         aria-pressed={flipped}
-        className="flashcard relative min-h-72 w-full rounded-2xl text-left [perspective:1200px]"
+        className={`flashcard relative block min-h-72 w-full rounded-2xl text-left [perspective:1200px] ${leaving === 'known' ? 'is-leaving-known' : leaving === 'again' ? 'is-leaving-again' : ''}`}
       >
         <div className={`flashcard-inner relative min-h-72 w-full ${flipped ? 'is-flipped' : ''}`}>
-          <div className="flashcard-face flex flex-col gap-3 rounded-2xl border-2 border-[color:var(--subject)] bg-surface p-5">
+          <div className="flashcard-face flex flex-col gap-3 rounded-2xl border-2 border-[color:var(--subject)] bg-surface p-5"
+            style={{ backgroundImage: 'linear-gradient(160deg, color-mix(in srgb, var(--subject) 9%, transparent), transparent 55%)' }}>
             <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{card.kind === 'question' ? 'Question' : 'Recall'}</span>
             <RichText source={card.front} className="text-[17px] leading-relaxed" />
-            <span className="mt-auto text-xs text-ink-2">Tap to flip</span>
+            <span className="mt-auto flex items-center gap-1.5 text-xs text-ink-2"><Smiley>👆</Smiley> Tap to flip</span>
           </div>
           <div className="flashcard-face flashcard-back flex flex-col gap-3 rounded-2xl border-2 border-rule bg-panel p-5">
             <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Answer</span>
@@ -145,10 +198,15 @@ export function Flashcards() {
           </div>
         </div>
       </button>
+      </div>
 
       <div className="grid grid-cols-2 gap-2">
-        <button type="button" onClick={() => answer(false)} disabled={!flipped} className="h-12 rounded-xl border border-rule bg-surface font-bold disabled:opacity-40">Again</button>
-        <button type="button" onClick={() => answer(true)} disabled={!flipped} className="h-12 rounded-xl bg-[color:var(--subject)] font-bold text-white disabled:opacity-40">Got it</button>
+        <button type="button" onClick={() => answer(false)} disabled={!flipped || Boolean(leaving)} className="flex h-12 items-center justify-center gap-2 rounded-xl border border-rule bg-surface font-bold disabled:opacity-40">
+          <Smiley>🔁</Smiley> Again
+        </button>
+        <button type="button" onClick={() => answer(true)} disabled={!flipped || Boolean(leaving)} className="flex h-12 items-center justify-center gap-2 rounded-xl bg-[color:var(--subject)] font-bold text-white disabled:opacity-40">
+          <Smiley>✅</Smiley> Got it
+        </button>
       </div>
     </article>
   )
