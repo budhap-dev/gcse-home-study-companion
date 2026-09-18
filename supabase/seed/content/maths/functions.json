@@ -1,0 +1,1417 @@
+{
+  "id": "functions",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Functions: notation, composite and inverse",
+  "specPoints": [
+    "A7"
+  ],
+  "order": 13,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "f(3) is an instruction, not a multiplication",
+      "body": "$f(3)$ does **not** mean $f \\times 3$. It means \"put $3$ in wherever $x$ appears\". For $f(x) = 3x - 2$, $f(3) = 3 \\times 3 - 2 = 7$. The bracket holds the input, exactly like the bracket on a calculator key."
+    },
+    {
+      "kind": "spot",
+      "title": "In fg(x) the inner one goes first",
+      "body": "Read $fg(x)$ from the inside out: $g$ acts on $x$, then $f$ acts on the result. It is $f(g(x))$, so $g$ runs first even though $f$ is written first. Nearly every composite function mark lost is lost right here."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Find an inverse by rearranging",
+      "body": "Write $y = f(x)$, swap the letters so it reads $x = f(y)$, then make $y$ the subject. That last step is ordinary rearranging, which you already know. For $f(x) = 3x - 2$: $x = 3y - 2$, so $y = \\dfrac{x + 2}{3}$, and that is $f^{-1}(x)$."
+    },
+    {
+      "kind": "check",
+      "title": "Test an inverse by undoing",
+      "body": "An inverse should take you straight back where you started, so $f^{-1}(f(4))$ must be $4$. Pick any number, run it through $f$, run the answer through $f^{-1}$, and see whether you land on what you began with. It takes ten seconds and catches a sign error every time."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "A function is a machine",
+        "body": "A **function** takes a number in, does something to it, and gives a number out. The notation is a way of naming that machine.\n\n$$f(x) = 3x - 2$$\n\nreads as: the function called $f$ takes an input, multiplies it by $3$, then subtracts $2$.\n\n> $f(3)$ does **not** mean $f \\times 3$.\n\nIt means **put $3$ in wherever $x$ appears**. So $f(3) = 3 \\times 3 - 2 = 7$, and $f(4) = 3 \\times 4 - 2 = 10$.\n\n**Negatives need brackets.** For $f(x) = 3x - 2$, $f(-2) = 3 \\times (-2) - 2 = -6 - 2 = -8$. Write the bracket in; it costs nothing and it prevents a sign error.\n\n**A different kind of question.** $f(x) = 13$ does not ask you to substitute anything — it gives you the **output** and asks for the **input**. That makes it an equation:\n\n$$3x - 2 = 13, \\quad 3x = 15, \\quad x = 5.$$\n\nSo the two look alike and ask opposite things. $f(5)$ asks \"what comes out when $5$ goes in?\" and $f(x) = 13$ asks \"what went in to give $13$?\"",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "flowchart",
+            "props": {
+              "nodes": [
+                {
+                  "kind": "io",
+                  "text": "Input: x"
+                },
+                {
+                  "kind": "process",
+                  "text": "Multiply by 3"
+                },
+                {
+                  "kind": "process",
+                  "text": "Subtract 2"
+                },
+                {
+                  "kind": "io",
+                  "text": "Output: 3x − 2"
+                }
+              ]
+            },
+            "alt": "A function machine for f of x equals 3x minus 2, showing the input x passing through a multiply by three step and a subtract two step to give the output"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "What is written",
+                "What it asks",
+                "Answer for f(x) = 3x − 2"
+              ],
+              "rows": [
+                [
+                  "f(4)",
+                  "what comes out when 4 goes in",
+                  "10"
+                ],
+                [
+                  "f(−2)",
+                  "what comes out when −2 goes in",
+                  "−8"
+                ],
+                [
+                  "f(0)",
+                  "what comes out when 0 goes in",
+                  "−2"
+                ],
+                [
+                  "f(x) = 13",
+                  "what went in to give 13",
+                  "x = 5"
+                ]
+              ],
+              "title": "Two questions that look alike"
+            },
+            "alt": "A table contrasting substituting a value into a function with solving for the input that produces a given output"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "For $f(x) = 3x - 2$, what is $f(4)$?",
+          "options": [
+            "$12$",
+            "$14$",
+            "$4$",
+            "$10$"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "function notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Put $4$ in wherever $x$ appears: $f(4) = 3 \\times 4 - 2 = 12 - 2 = 10$. The bracket holds the input; it is not a multiplication by $f$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "10"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Substituting, and working backwards",
+        "body": "The two directions, side by side. Notice how differently they start, even though the questions look similar on the page.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "For $g(x) = x^2 + 1$, find $g(3)$ and $g(-4)$",
+            "steps": [
+              {
+                "text": "$g(3) = 3^2 + 1$",
+                "note": "put 3 in wherever x appears"
+              },
+              {
+                "text": "$= 9 + 1 = 10$",
+                "note": "square first, then add"
+              },
+              {
+                "text": "$g(-4) = (-4)^2 + 1$",
+                "note": "bracket the negative before squaring"
+              },
+              {
+                "text": "$= 16 + 1 = 17$",
+                "note": "a negative squared is positive"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "For $f(x) = 3x - 2$, solve $f(x) = 13$",
+            "steps": [
+              {
+                "text": "This gives the output, so it is an equation",
+                "note": "not a substitution"
+              },
+              {
+                "text": "$3x - 2 = 13$",
+                "note": "write the expression equal to the output"
+              },
+              {
+                "text": "$3x = 15$",
+                "note": "add 2 to both sides"
+              },
+              {
+                "text": "$x = 5$",
+                "note": "divide by 3"
+              },
+              {
+                "text": "Check: $f(5) = 15 - 2 = 13$",
+                "note": "always worth the one line"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "For $g(x) = x^2 + 1$, work out $g(3)$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "function notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$g(3) = 3^2 + 1 = 9 + 1 = 10$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "10"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "10"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Composite functions: the inner one goes first",
+        "body": "Two machines can be joined so the output of one becomes the input of the next. That is a **composite function**, and it is written by putting the two letters together.\n\n$$fg(x) \\text{ means } f(g(x)).$$\n\n> Read it from the **inside out**. $g$ acts on $x$ first, and then $f$ acts on whatever $g$ produced.\n\nThat feels backwards, because $f$ is written first but happens second. It is the single most common error in this topic, and the cure is to rewrite $fg(x)$ as $f(g(x))$ before doing anything at all.\n\nWith $f(x) = 3x - 2$ and $g(x) = x^2 + 1$:\n\n$$fg(2) = f(g(2)) = f(2^2 + 1) = f(5) = 3 \\times 5 - 2 = 13.$$\n\nNow the other way round:\n\n$$gf(2) = g(f(2)) = g(3 \\times 2 - 2) = g(4) = 4^2 + 1 = 17.$$\n\n**Different answers from the same two functions and the same input.** That is the normal situation: $fg$ and $gf$ are different functions, and a question asking for both is expecting two different answers.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "flowchart",
+            "props": {
+              "nodes": [
+                {
+                  "kind": "io",
+                  "text": "Input: x = 2"
+                },
+                {
+                  "kind": "process",
+                  "text": "g first: square, add 1"
+                },
+                {
+                  "kind": "process",
+                  "text": "gives 5"
+                },
+                {
+                  "kind": "process",
+                  "text": "f next: times 3, minus 2"
+                },
+                {
+                  "kind": "io",
+                  "text": "Output: fg(2) = 13"
+                }
+              ]
+            },
+            "alt": "A two-stage function machine showing the input 2 passing through g to give 5 and then through f to give 13, which is the composite f g of 2"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Written",
+                "Means",
+                "At x = 2"
+              ],
+              "rows": [
+                [
+                  "fg(x)",
+                  "f(g(x)), so g first",
+                  "13"
+                ],
+                [
+                  "gf(x)",
+                  "g(f(x)), so f first",
+                  "17"
+                ],
+                [
+                  "ff(x)",
+                  "f(f(x)), f twice",
+                  "10"
+                ],
+                [
+                  "gg(x)",
+                  "g(g(x)), g twice",
+                  "26"
+                ]
+              ],
+              "title": "The order is inside out"
+            },
+            "alt": "A table of four composite functions showing which function acts first in each and the value each gives at x equals 2"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "In the composite function $fg(x)$, which function acts on $x$ first?",
+          "options": [
+            "$f$",
+            "$g$",
+            "They act at the same time",
+            "It depends on the functions"
+          ],
+          "correct": [
+            1
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "composite functions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$fg(x)$ is shorthand for $f(g(x))$. The inner bracket is worked out first, so $g$ acts on $x$ and then $f$ acts on the result. The one written first happens second.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "g"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Composites as expressions",
+        "body": "Substituting a whole function rather than a number works exactly the same way, as long as the inner function keeps its bracket the whole way through.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "For $f(x) = 3x - 2$ and $g(x) = x^2 + 1$, find $fg(x)$",
+            "steps": [
+              {
+                "text": "$fg(x) = f(g(x))$",
+                "note": "rewrite it inside out before anything else"
+              },
+              {
+                "text": "$= f(x^2 + 1)$",
+                "note": "that is what g produces"
+              },
+              {
+                "text": "$= 3(x^2 + 1) - 2$",
+                "note": "put the whole of $g(x)$ in where x was in f, with brackets"
+              },
+              {
+                "text": "$= 3x^2 + 3 - 2$",
+                "note": "expand"
+              },
+              {
+                "text": "$= 3x^2 + 1$",
+                "note": "and tidy"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "For the same two functions, find $gf(x)$",
+            "steps": [
+              {
+                "text": "$gf(x) = g(f(x)) = g(3x - 2)$",
+                "note": "this time f goes first"
+              },
+              {
+                "text": "$= (3x - 2)^2 + 1$",
+                "note": "the bracket matters; it is being squared as a whole"
+              },
+              {
+                "text": "$(3x - 2)^2 = 9x^2 - 12x + 4$",
+                "note": "expand carefully — the middle term is the one that gets lost"
+              },
+              {
+                "text": "$= 9x^2 - 12x + 4 + 1$",
+                "note": "now add the 1"
+              },
+              {
+                "text": "$= 9x^2 - 12x + 5$",
+                "note": "completely different from $3x^2 + 1$"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "For $m(x) = 4x - 1$ and $n(x) = x + 3$, what is $mn(x)$?",
+          "options": [
+            "$4x + 2$",
+            "$4x + 3$",
+            "$4x - 4$",
+            "$4x + 11$"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "composite functions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$mn(x) = m(n(x)) = m(x + 3) = 4(x + 3) - 1 = 4x + 12 - 1 = 4x + 11$. Doing them the other way gives $nm(x) = 4x - 1 + 3 = 4x + 2$, which is different.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4x + 11"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Inverse functions: running the machine backwards",
+        "body": "The **inverse** of $f$ undoes it. If $f$ turns $5$ into $13$, then $f^{-1}$ turns $13$ back into $5$.\n\n> $f^{-1}(x)$ is the **inverse function**. It does not mean $\\dfrac{1}{f(x)}$.\n\nTo find it, rearrange in three steps.\n\n1. Write $y = f(x)$.\n2. **Swap** $x$ and $y$.\n3. Make $y$ the subject.\n\nFor $f(x) = 3x - 2$:\n\n$$y = 3x - 2 \\quad \\to \\quad x = 3y - 2 \\quad \\to \\quad x + 2 = 3y \\quad \\to \\quad y = \\frac{x + 2}{3}$$\n\nSo $f^{-1}(x) = \\dfrac{x + 2}{3}$. Write it in that form, not as $y = \\ldots$.\n\n**Now check it**, which takes seconds. $f(5) = 13$, and $f^{-1}(13) = \\dfrac{13 + 2}{3} = \\dfrac{15}{3} = 5$. Back where we started, so the inverse is right.\n\n**Think of it as undoing the machine in reverse order.** $f$ multiplies by $3$ and then subtracts $2$. To undo that you add $2$ **first**, then divide by $3$ — the opposite operations, in the opposite order. That is exactly what $\\dfrac{x + 2}{3}$ says.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "flowchart",
+            "props": {
+              "nodes": [
+                {
+                  "kind": "io",
+                  "text": "Input: x"
+                },
+                {
+                  "kind": "process",
+                  "text": "Add 2 (undoes subtract 2)"
+                },
+                {
+                  "kind": "process",
+                  "text": "Divide by 3 (undoes times 3)"
+                },
+                {
+                  "kind": "io",
+                  "text": "Output: (x + 2) / 3"
+                }
+              ]
+            },
+            "alt": "A function machine for the inverse, showing the input passing through an add two step and then a divide by three step, the opposite operations in the opposite order"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Function",
+                "Inverse",
+                "Check"
+              ],
+              "rows": [
+                [
+                  "f(x) = 3x − 2",
+                  "(x + 2) / 3",
+                  "f(5) = 13 and f⁻¹(13) = 5"
+                ],
+                [
+                  "p(x) = 2x + 7",
+                  "(x − 7) / 2",
+                  "p(4) = 15 and p⁻¹(15) = 4"
+                ],
+                [
+                  "h(x) = 2x − 7",
+                  "(x + 7) / 2",
+                  "h(6) = 5 and h⁻¹(5) = 6"
+                ],
+                [
+                  "q(x) = x³",
+                  "the cube root of x",
+                  "q(2) = 8 and q⁻¹(8) = 2"
+                ]
+              ],
+              "title": "Every inverse checked by undoing"
+            },
+            "alt": "A table of four functions with their inverses and a numerical check for each showing the inverse returns the original input"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "short-text",
+          "prompt": "For $p(x) = 2x + 7$, find $p^{-1}(x)$. Give your answer as a fraction in its simplest form.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "inverse functions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Write $y = 2x + 7$, swap to get $x = 2y + 7$, then rearrange: $x - 7 = 2y$, so $y = \\dfrac{x - 7}{2}$. Therefore $p^{-1}(x) = \\dfrac{x - 7}{2}$. Check: $p(4) = 15$ and $p^{-1}(15) = \\tfrac{8}{2} = 4$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "x = 2y + 7"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "(x - 7)/2"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "(x-7)/2"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "Throughout, $f(x) = 3x - 2$ and $g(x) = x^2 + 1$.\n\n**Part A — substituting.**\n\n1. Work out $f(4)$.\n2. Work out $g(-4)$.\n3. Solve $f(x) = 13$.\n\n**Part B — composites.**\n\n4. Work out $fg(2)$ and $gf(2)$, and say why they are different.\n5. Find $fg(x)$ as a simplified expression.\n6. Find $gf(x)$ as a simplified expression.\n\n**Part C — inverses.**\n\n7. Find $f^{-1}(x)$, and check it by running $5$ through $f$ and the answer back through $f^{-1}$.\n8. Solve $fg(x) = 49$.\n\nFor question 6, keep the bracket round $3x - 2$ until you expand the square. The middle term is the one that disappears if you do not.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Working",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "",
+                  ""
+                ],
+                [
+                  "2",
+                  "",
+                  ""
+                ],
+                [
+                  "3",
+                  "",
+                  ""
+                ],
+                [
+                  "4",
+                  "",
+                  ""
+                ],
+                [
+                  "5",
+                  "",
+                  ""
+                ],
+                [
+                  "6",
+                  "",
+                  ""
+                ],
+                [
+                  "7",
+                  "",
+                  ""
+                ],
+                [
+                  "8",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Write fg(x) as f(g(x)) before you start"
+            },
+            "alt": "A blank eight-row table with a column for working and a column for the answer"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "For $f(x) = 3x - 2$, solve $f(x) = 13$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "function notation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "This gives the output and asks for the input, so it is an equation: $3x - 2 = 13$, then $3x = 15$, so $x = 5$. Check: $f(5) = 15 - 2 = 13$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "3x - 2 = 13"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "x = 5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: composites in equations, and a function that is its own inverse",
+        "body": "**Solving a composite equation.** Once you have $fg(x)$ as an expression, an equation in it is an ordinary equation.\n\nWith $fg(x) = 3x^2 + 1$, solve $fg(x) = 49$:\n\n$$3x^2 + 1 = 49, \\quad 3x^2 = 48, \\quad x^2 = 16, \\quad x = \\pm 4.$$\n\n**Two answers, and both count.** A squared term almost always produces a pair, and dropping the negative is a lost mark. Check: $g(-4) = 17$ and $f(17) = 49$. It works.\n\n**Where $f$ and its inverse agree.** Take $h(x) = 2x - 7$. Rearranging gives $h^{-1}(x) = \\dfrac{x + 7}{2}$.\n\nNow solve $h(x) = h^{-1}(x)$:\n\n$$2x - 7 = \\frac{x + 7}{2}$$\n$$4x - 14 = x + 7$$\n$$3x = 21, \\quad x = 7.$$\n\nCheck both sides: $h(7) = 14 - 7 = 7$, and $h^{-1}(7) = \\dfrac{14}{2} = 7$. They agree, and the value is the one that $h$ leaves unchanged.\n\n**One more piece of notation.** $ff^{-1}(x) = x$ for **every** $x$, because doing a thing and then undoing it changes nothing. So $ff^{-1}(7) = 7$ without any calculation at all, whatever $f$ happens to be. A question that looks like it needs three lines of work sometimes needs none.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "What to notice",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "Solve fg(x) = 49 where fg(x) = 3x² + 1",
+                  "a squared term gives a pair",
+                  "x = 4 and x = −4"
+                ],
+                [
+                  "Solve h(x) = h⁻¹(x) for h(x) = 2x − 7",
+                  "set the two expressions equal",
+                  "x = 7"
+                ],
+                [
+                  "Work out ff⁻¹(7)",
+                  "doing and undoing changes nothing",
+                  "7"
+                ],
+                [
+                  "Work out f⁻¹f(−3)",
+                  "the same argument, the other way round",
+                  "−3"
+                ]
+              ],
+              "title": "Three questions that look harder than they are"
+            },
+            "alt": "A table of four composite and inverse function questions with the key observation and the answer for each"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "For any function $f$, what is $ff^{-1}(7)$?",
+          "options": [
+            "$7$",
+            "$1$",
+            "$\\tfrac{1}{7}$",
+            "It depends on what $f$ is"
+          ],
+          "correct": [
+            0
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "inverse functions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$f^{-1}$ undoes $f$, so applying one and then the other returns the input untouched. $ff^{-1}(x) = x$ for every $x$ and every function $f$, so $ff^{-1}(7) = 7$ with no calculation needed.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- $f(x)$ names a machine. $f(3)$ means **put $3$ in wherever $x$ appears** — it is not $f \\times 3$.\n- Bracket a negative input before squaring it: $g(-4) = (-4)^2 + 1 = 17$.\n- $f(x) = k$ is an **equation**: it gives the output and asks for the input.\n- $fg(x)$ means $f(g(x))$, so **$g$ goes first**. Rewrite it inside out before you start.\n- Keep the bracket round the inner function when you substitute it.\n- $(3x - 2)^2 = 9x^2 - 12x + 4$. The middle term is the one people lose.\n- $fg(x)$ and $gf(x)$ are **different functions**. Expect different answers.\n- $f^{-1}(x)$ is the **inverse**, not $\\dfrac{1}{f(x)}$.\n- To find it: $y = f(x)$, swap $x$ and $y$, make $y$ the subject.\n- An inverse undoes the operations in the **opposite order**, each replaced by its opposite.\n- Check an inverse by running a number through both ways.\n- $ff^{-1}(x) = x$ always, so questions like $ff^{-1}(7)$ need no working.\n- Write the answer as $f^{-1}(x) = \\ldots$, not as $y = \\ldots$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "f(3)",
+                  "substitute 3 for x"
+                ],
+                [
+                  "f(x) = k",
+                  "solve for the input"
+                ],
+                [
+                  "Negative input",
+                  "bracket it before squaring"
+                ],
+                [
+                  "fg(x)",
+                  "means f(g(x)), so g first"
+                ],
+                [
+                  "Substituting a function",
+                  "keep its bracket"
+                ],
+                [
+                  "(3x − 2)²",
+                  "9x² − 12x + 4, middle term included"
+                ],
+                [
+                  "fg and gf",
+                  "different functions"
+                ],
+                [
+                  "f⁻¹(x)",
+                  "the inverse, not one over f(x)"
+                ],
+                [
+                  "Finding an inverse",
+                  "y = f(x), swap, make y the subject"
+                ],
+                [
+                  "What an inverse does",
+                  "opposite operations, opposite order"
+                ],
+                [
+                  "Checking one",
+                  "run a number through both ways"
+                ],
+                [
+                  "ff⁻¹(x)",
+                  "equals x, always"
+                ]
+              ],
+              "title": "Functions at a glance"
+            },
+            "alt": "A summary table pairing each piece of function notation with what it means and what to remember"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "For $f(x) = 3x - 2$, what is $f(4)$?",
+      "options": [
+        "$12$",
+        "$10$",
+        "$14$",
+        "$4$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "function notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$f(4) = 3 \\times 4 - 2 = 12 - 2 = 10$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "For $f(x) = 3x - 2$, what is $f(-2)$?",
+      "options": [
+        "$-4$",
+        "$-8$",
+        "$4$",
+        "$8$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "function notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$f(-2) = 3 \\times (-2) - 2 = -6 - 2 = -8$. Bracketing the negative before multiplying is what keeps the signs straight.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-8"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "For $g(x) = x^2 + 1$, work out $g(3)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "function notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$g(3) = 3^2 + 1 = 9 + 1 = 10$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "10"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What does the notation $f(5)$ mean?",
+      "options": [
+        "Multiply $f$ by $5$",
+        "Substitute $5$ in place of $x$",
+        "The fifth value of $f$",
+        "Divide $f$ by $5$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "function notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The bracket holds the **input** to the function, so $f(5)$ means put $5$ in wherever $x$ appears in the rule for $f$. It is never a multiplication.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "substitute 5 for x"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "For $f(x) = 3x - 2$, solve $f(x) = 13$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "function notation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "This gives the output and asks for the input, so solve $3x - 2 = 13$. Adding $2$ gives $3x = 15$, so $x = 5$. Check: $f(5) = 15 - 2 = 13$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3x - 2 = 13"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "For $f(x) = 3x - 2$ and $g(x) = x^2 + 1$, what is $fg(2)$?",
+      "options": [
+        "$17$",
+        "$10$",
+        "$26$",
+        "$13$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$fg(2) = f(g(2))$, so $g$ acts first: $g(2) = 2^2 + 1 = 5$. Then $f(5) = 3 \\times 5 - 2 = 13$. Doing them the other way round gives $17$, which is a different question.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "13"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "Which function acts on $x$ first in the composite $gf(x)$?",
+      "options": [
+        "$g$",
+        "$f$",
+        "Neither, they act together",
+        "It depends on the value of $x$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$gf(x)$ is shorthand for $g(f(x))$, and the inner bracket is worked out first. So $f$ acts on $x$ and $g$ acts on the result — the function written second happens first.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "f"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "For $m(x) = 4x - 1$ and $n(x) = x + 3$, what is $mn(x)$?",
+      "options": [
+        "$4x + 2$",
+        "$4x + 11$",
+        "$4x + 12$",
+        "$4x - 4$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$mn(x) = m(n(x)) = m(x + 3) = 4(x + 3) - 1 = 4x + 12 - 1 = 4x + 11$. The answer $4x + 2$ is $nm(x)$, the other order.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4x + 11"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q9",
+      "type": "short-text",
+      "prompt": "For $p(x) = 2x + 7$, find $p^{-1}(x)$. Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "inverse functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Write $y = 2x + 7$, swap the letters to get $x = 2y + 7$, then rearrange: $x - 7 = 2y$, so $y = \\dfrac{x - 7}{2}$. Hence $p^{-1}(x) = \\dfrac{x - 7}{2}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x = 2y + 7"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(x - 7)/2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "(x-7)/2"
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "For $f(x) = 3x - 2$, what is $f^{-1}(x)$?",
+      "options": [
+        "$\\dfrac{x - 2}{3}$",
+        "$\\dfrac{x + 2}{3}$",
+        "$\\dfrac{1}{3x - 2}$",
+        "$3x + 2$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "inverse functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Swap and rearrange: $x = 3y - 2$, so $x + 2 = 3y$ and $y = \\dfrac{x + 2}{3}$. Check: $f(5) = 13$ and $\\dfrac{13 + 2}{3} = 5$. The third option is $\\dfrac{1}{f(x)}$, which is a different thing entirely.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(x + 2)/3"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "For $f(x) = 3x - 2$ and $g(x) = x^2 + 1$, what is $fg(x)$?",
+      "options": [
+        "$3x^2 - 1$",
+        "$3x^2 + 1$",
+        "$9x^2 - 12x + 5$",
+        "$3x^2 + 3$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$fg(x) = f(g(x)) = f(x^2 + 1) = 3(x^2 + 1) - 2 = 3x^2 + 3 - 2 = 3x^2 + 1$. The answer $9x^2 - 12x + 5$ is $gf(x)$, the other order.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3x² + 1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "For $f(x) = 3x - 2$ and $g(x) = x^2 + 1$, find $gf(x)$, giving your answer in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$gf(x) = g(f(x)) = g(3x - 2) = (3x - 2)^2 + 1$. Expanding the square gives $9x^2 - 12x + 4$, and adding the $1$ gives $9x^2 - 12x + 5$. The middle term $-12x$ is the one that disappears if the bracket is dropped.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "g(3x - 2) = (3x - 2)² + 1"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "(3x - 2)² = 9x² - 12x + 4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9x² - 12x + 5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "9x^2-12x+5"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "For $m(x) = 4x - 1$ and $n(x) = x + 3$, which statement is true?",
+      "options": [
+        "$mn(x)$ and $nm(x)$ are both $4x + 11$",
+        "$mn(x) = 4x + 11$ and $nm(x) = 4x + 2$",
+        "$mn(x) = 4x + 2$ and $nm(x) = 4x + 11$",
+        "$mn(x)$ and $nm(x)$ are both $4x + 2$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$mn(x) = m(x + 3) = 4(x + 3) - 1 = 4x + 11$, while $nm(x) = n(4x - 1) = 4x - 1 + 3 = 4x + 2$. They are different functions, which is the normal situation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "mn = 4x + 11 and nm = 4x + 2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A function $f$ has an inverse $f^{-1}$. What is $ff^{-1}(7)$?",
+      "options": [
+        "$1$",
+        "$7$",
+        "$0$",
+        "It cannot be found without knowing $f$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "inverse functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The inverse undoes the function, so applying one after the other leaves the input unchanged. $ff^{-1}(x) = x$ for every $x$ and every $f$, so the answer is $7$ with no calculation at all.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "For $f(x) = 3x - 2$ and $g(x) = x^2 + 1$, $fg(x) = 3x^2 + 1$. Solve $fg(x) = 49$, giving the positive value of $x$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Set $3x^2 + 1 = 49$, so $3x^2 = 48$ and $x^2 = 16$. That gives $x = 4$ or $x = -4$, and the question asks for the positive one, so $x = 4$. Check: $g(4) = 17$ and $f(17) = 49$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3x² + 1 = 49"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x² = 16"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "For $q(x) = x^3$, what is $q^{-1}(x)$?",
+      "options": [
+        "$\\sqrt[3]{x}$",
+        "$\\dfrac{1}{x^3}$",
+        "$3x$",
+        "$x^{-3}$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "inverse functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Cubing is undone by taking the cube root, so $q^{-1}(x) = \\sqrt[3]{x}$. Check: $q(2) = 8$ and $\\sqrt[3]{8} = 2$. The option $\\dfrac{1}{x^3}$ is the reciprocal, which is what $f^{-1}$ does **not** mean.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the cube root of x"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "$f(x) = 3x - 2$ and $g(x) = x^2 + 1$.\n\n(a) Find $fg(x)$, giving your answer in its simplest form.\n\n(b) Find $gf(x)$, giving your answer in its simplest form.\n\n(c) Solve $fg(x) = 49$.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "composite functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, f g of x means f of g of x, so g acts first. That gives f of, bracket, x squared plus one. Now substitute the whole of that bracket into f, which multiplies its input by three and subtracts two: three times, bracket, x squared plus one, bracket, minus two. Expanding gives three x squared plus three minus two, which simplifies to three x squared plus one. For part b, g f of x means g of f of x, so this time f acts first, giving g of, bracket, three x minus two. The function g squares its input and adds one, so this is, bracket, three x minus two, bracket, squared, plus one. Expanding the square gives nine x squared minus twelve x plus four; the middle term of minus twelve x comes from two lots of three x times minus two, and it is the term most often lost. Adding the one gives nine x squared minus twelve x plus five. Notice this is completely different from the answer to part a, which is normal. For part c, use the answer to part a. Setting three x squared plus one equal to forty nine and subtracting one gives three x squared equals forty eight, so x squared equals sixteen. Taking the square root gives x equals four or x equals minus four, and both are solutions because both square to sixteen.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "f(x² + 1) = 3(x² + 1) - 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "fg(x) = 3x² + 1"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "g(3x - 2) = (3x - 2)² + 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "gf(x) = 9x² - 12x + 5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3x² + 1 = 49 leading to x² = 16"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 4 and x = -4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Writes fg(x) as f(x² + 1) and substitutes",
+          "marks": 1
+        },
+        {
+          "text": "Simplifies fg(x) to 3x² + 1",
+          "marks": 1
+        },
+        {
+          "text": "Writes gf(x) as (3x − 2)² + 1",
+          "marks": 1
+        },
+        {
+          "text": "Expands the square correctly, including the −12x term",
+          "marks": 1
+        },
+        {
+          "text": "Forms and solves 3x² + 1 = 49 to reach x² = 16",
+          "marks": 1
+        },
+        {
+          "text": "Gives both x = 4 and x = −4",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, f g of x means f of g of x, so g acts first. That gives f of, bracket, x squared plus one. Now substitute the whole of that bracket into f, which multiplies its input by three and subtracts two: three times, bracket, x squared plus one, bracket, minus two. Expanding gives three x squared plus three minus two, which simplifies to three x squared plus one. For part b, g f of x means g of f of x, so this time f acts first, giving g of, bracket, three x minus two. The function g squares its input and adds one, so this is, bracket, three x minus two, bracket, squared, plus one. Expanding the square gives nine x squared minus twelve x plus four; the middle term of minus twelve x comes from two lots of three x times minus two, and it is the term most often lost. Adding the one gives nine x squared minus twelve x plus five. Notice this is completely different from the answer to part a, which is normal. For part c, use the answer to part a. Setting three x squared plus one equal to forty nine and subtracting one gives three x squared equals forty eight, so x squared equals sixteen. Taking the square root gives x equals four or x equals minus four, and both are solutions because both square to sixteen."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "$h(x) = 2x - 7$.\n\n(a) Find $h^{-1}(x)$.\n\n(b) Verify your answer by showing that $h^{-1}(h(6)) = 6$.\n\n(c) Solve $h(x) = h^{-1}(x)$.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "inverse functions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, start by writing y equals two x minus seven. Swap the letters so it reads x equals two y minus seven, then make y the subject. Adding seven to both sides gives x plus seven equals two y, and dividing by two gives y equals x plus seven, all over two. So h inverse of x is x plus seven over two. It helps to see why: h multiplies by two and then subtracts seven, so the inverse adds seven first and then divides by two, the opposite operations in the opposite order. For part b, work out h of six first. Two times six is twelve, minus seven is five, so h of six is five. Now put five into the inverse: five plus seven is twelve, and twelve over two is six. That returns the original input of six, which confirms the inverse is correct. For part c, set the two expressions equal to each other: two x minus seven equals x plus seven, all over two. Multiply every term by two to clear the fraction, giving four x minus fourteen equals x plus seven. Subtracting x from both sides gives three x minus fourteen equals seven, and adding fourteen gives three x equals twenty one, so x equals seven. Checking, h of seven is fourteen minus seven, which is seven, and h inverse of seven is fourteen over two, which is also seven, so the two functions do agree there.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x = 2y - 7"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "h⁻¹(x) = (x + 7)/2"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "h(6) = 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "h⁻¹(5) = 6"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4x - 14 = x + 7"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "show-that"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Writes y = 2x − 7 and swaps the letters",
+          "marks": 1
+        },
+        {
+          "text": "Rearranges to reach h⁻¹(x) = (x + 7)/2",
+          "marks": 1
+        },
+        {
+          "text": "Works out h(6) = 5",
+          "marks": 1
+        },
+        {
+          "text": "Shows h⁻¹(5) = 6, completing the verification",
+          "marks": 1
+        },
+        {
+          "text": "Forms the equation 2x − 7 = (x + 7)/2 and clears the fraction",
+          "marks": 1
+        },
+        {
+          "text": "Solves to x = 7",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, start by writing y equals two x minus seven. Swap the letters so it reads x equals two y minus seven, then make y the subject. Adding seven to both sides gives x plus seven equals two y, and dividing by two gives y equals x plus seven, all over two. So h inverse of x is x plus seven over two. It helps to see why: h multiplies by two and then subtracts seven, so the inverse adds seven first and then divides by two, the opposite operations in the opposite order. For part b, work out h of six first. Two times six is twelve, minus seven is five, so h of six is five. Now put five into the inverse: five plus seven is twelve, and twelve over two is six. That returns the original input of six, which confirms the inverse is correct. For part c, set the two expressions equal to each other: two x minus seven equals x plus seven, all over two. Multiply every term by two to clear the fraction, giving four x minus fourteen equals x plus seven. Subtracting x from both sides gives three x minus fourteen equals seven, and adding fourteen gives three x equals twenty one, so x equals seven. Checking, h of seven is fourteen minus seven, which is seven, and h inverse of seven is fourteen over two, which is also seven, so the two functions do agree there."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Substitute carefully, and bracket the negatives.** For $f(x) = x^2 - 3x$, $f(-2)$ is $(-2)^2 - 3(-2) = 4 + 6 = 10$. Without the brackets it is easy to produce $-4 - 6$.\n\n**$f(x) = k$ is an equation to solve**, not a substitution. It gives you the output and asks for the input, so set the expression equal to $k$ and solve for $x$.\n\n**$fg(x)$ means do $g$ first.** Write $f(g(x))$ out in full before you touch anything. Substitute the whole of $g(x)$ into $f$, brackets and all.\n\n**$fg(x)$ and $gf(x)$ are almost never the same.** If a question asks for both, expect different answers — getting the same one twice usually means the order was applied the same way both times.\n\n**For an inverse, rearrange.** $y = f(x)$, swap to $x = f(y)$, make $y$ the subject. Finish by writing the answer as $f^{-1}(x) = \\ldots$, not as $y = \\ldots$.\n\n**Check your inverse.** Run a number through $f$ and then through $f^{-1}$. If it comes back, the inverse is right.\n\n**Watch the notation.** $f^{-1}(x)$ means the inverse function. It does **not** mean $\\dfrac{1}{f(x)}$.",
+    "examinerErrors": [
+      "Reading $f(3)$ as $f \\times 3$.",
+      "Doing $f$ before $g$ in $fg(x)$.",
+      "Losing a bracket in $g(f(x))$, so $(3x - 2)^2$ becomes $3x^2 - 2$ or $9x^2 + 4$.",
+      "Squaring $(3x - 2)$ as $9x^2 + 4$, forgetting the middle term $-12x$.",
+      "Treating $f^{-1}(x)$ as $\\dfrac{1}{f(x)}$.",
+      "Leaving the inverse written as $y = \\ldots$ rather than $f^{-1}(x) = \\ldots$.",
+      "Substituting into $f(x) = k$ instead of solving it."
+    ],
+    "grade9Looks": "A top answer writes the composite out as f of g of x before substituting anything, and keeps the bracket round the inner function all the way through the expansion, so the middle term of a square is never lost. It finds an inverse by rearranging rather than by guessing, states the result in the f to the minus one of x form, and then checks it by running a number through both ways. It knows that f g of x and g f of x are different functions and does not expect them to agree, and it never reads f to the minus one as a reciprocal."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

@@ -1,0 +1,1418 @@
+{
+  "id": "equation-of-a-circle",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "The equation of a circle",
+  "specPoints": [
+    "A16",
+    "A9"
+  ],
+  "order": 11,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "The number on the right is r squared",
+      "body": "In $x^2 + y^2 = 25$ the radius is $5$, not $25$. The equation is Pythagoras written down, so the right-hand side is always the radius **squared**. Reading $x^2 + y^2 = 20$ as radius $20$ instead of $\\sqrt{20} = 2\\sqrt{5}$ is the most common single error in this topic."
+    },
+    {
+      "kind": "shortcut",
+      "title": "The tangent at (a, b) is ax + by = r²",
+      "body": "For a circle centred on the origin, the tangent where it touches $(a, b)$ is $ax + by = r^2$. At $(3, 4)$ on $x^2 + y^2 = 25$ it is $3x + 4y = 25$. Derive it once from perpendicular gradients so you understand it, then use it — it turns four lines of working into one."
+    },
+    {
+      "kind": "spot",
+      "title": "Radius and tangent are perpendicular",
+      "body": "Every tangent question rests on this. Find the gradient of the radius from the origin to the point, which is just $\\tfrac{b}{a}$, then flip it and change its sign for the tangent: $-\\tfrac{a}{b}$. The two gradients multiply to $-1$, which is what perpendicular means."
+    },
+    {
+      "kind": "check",
+      "title": "Substitute to see how a line meets a circle",
+      "body": "Put the line into the circle and you get a quadratic. Two solutions means the line cuts through, one repeated solution means it is a tangent, and no solutions means it misses. You can answer \"how many times\" from the discriminant alone, without solving anything."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "A circle is Pythagoras in disguise",
+        "body": "Take any point $(x, y)$ on a circle of radius $r$ centred on the **origin**. Drop a vertical line from it to the $x$ axis and you have a right-angled triangle with short sides $x$ and $y$ and hypotenuse $r$.\n\nPythagoras gives\n\n$$x^2 + y^2 = r^2$$\n\nand that is the whole equation. Every point on the circle satisfies it, and no other point does.\n\nSo $x^2 + y^2 = 25$ is the circle of radius $\\sqrt{25} = 5$.\n\n> The number on the right is $r^2$, **not** $r$.\n\nThat is worth saying twice, because it is the error this topic is built around. $x^2 + y^2 = 20$ is a circle of radius $\\sqrt{20} = 2\\sqrt{5} \\approx 4.47$, not $20$ and not $10$.\n\n**Testing a point** is the same calculation. Work out $x^2 + y^2$ and compare it with $r^2$:\n\n- smaller than $r^2$ — the point is **inside**,\n- equal to $r^2$ — the point is **on** the circle,\n- larger than $r^2$ — the point is **outside**.\n\nFor $x^2 + y^2 = 25$: the point $(3, 4)$ gives $9 + 16 = 25$, so it is on the circle. The point $(2, 2)$ gives $8$, so it is inside. The point $(5, 1)$ gives $26$, so it is just outside.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -6.5,
+                6.5
+              ],
+              "yRange": [
+                -6.5,
+                6.5
+              ],
+              "square": true,
+              "circles": [
+                {
+                  "cx": 0,
+                  "cy": 0,
+                  "r": 5,
+                  "label": "x² + y² = 25"
+                }
+              ],
+              "points": [
+                {
+                  "x": 3,
+                  "y": 4,
+                  "label": "(3, 4)"
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "label": "inside"
+                },
+                {
+                  "x": 5,
+                  "y": 1,
+                  "label": "outside"
+                }
+              ],
+              "grid": true
+            },
+            "alt": "A circle of radius 5 centred on the origin, with the point 3 comma 4 marked on it, a point inside at 2 comma 2 and a point just outside at 5 comma 1"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "r squared",
+                "Radius"
+              ],
+              "rows": [
+                [
+                  "x² + y² = 25",
+                  "25",
+                  "5"
+                ],
+                [
+                  "x² + y² = 49",
+                  "49",
+                  "7"
+                ],
+                [
+                  "x² + y² = 20",
+                  "20",
+                  "√20 = 2√5"
+                ],
+                [
+                  "x² + y² = 1",
+                  "1",
+                  "1"
+                ]
+              ],
+              "title": "The right-hand side is the radius squared"
+            },
+            "alt": "A table of four circle equations showing the value of r squared and the radius itself, including one that stays as a surd"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What is the radius of the circle $x^2 + y^2 = 36$?",
+          "options": [
+            "$36$",
+            "$18$",
+            "$6$",
+            "$\\sqrt{6}$"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the equation of a circle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The equation is $x^2 + y^2 = r^2$, so $r^2 = 36$ and $r = \\sqrt{36} = 6$. The number in the equation is the radius **squared**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Writing the equation, and testing a point",
+        "body": "Two questions that come up constantly, and both are one line of working once you know what the equation means.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Write the equation of the circle with centre the origin and radius 7",
+            "steps": [
+              {
+                "text": "The form is $x^2 + y^2 = r^2$",
+                "note": "centre the origin, so there is nothing else to fit"
+              },
+              {
+                "text": "$r = 7$, so $r^2 = 49$",
+                "note": "square the radius"
+              },
+              {
+                "text": "$x^2 + y^2 = 49$",
+                "note": "that is the answer; do not write 7 on the right"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Show that $(6, 8)$ lies on the circle $x^2 + y^2 = 100$",
+            "steps": [
+              {
+                "text": "$x^2 + y^2 = 6^2 + 8^2$",
+                "note": "substitute the coordinates"
+              },
+              {
+                "text": "$= 36 + 64$",
+                "note": "square each one"
+              },
+              {
+                "text": "$= 100$",
+                "note": "and the circle has $r^2 = 100$"
+              },
+              {
+                "text": "The two are equal, so $(6, 8)$ is on the circle.",
+                "note": "say so; a show-that needs the conclusion written down"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "Write the equation of the circle with centre the origin and radius $9$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the equation of a circle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$r = 9$, so $r^2 = 81$, and the equation is $x^2 + y^2 = 81$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x^2+y^2=81"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "x^2+y^2=81"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The tangent: perpendicular to the radius",
+        "body": "A **tangent** touches a circle at exactly one point. The fact that makes every tangent question work is this:\n\n> The tangent at a point is **perpendicular to the radius** drawn to that point.\n\nSo finding a tangent is really two steps of straight-line work you already know.\n\n**Step 1 — the gradient of the radius.** From the origin $(0, 0)$ to the point $(a, b)$, the gradient is $\\dfrac{b - 0}{a - 0} = \\dfrac{b}{a}$.\n\n**Step 2 — flip it and change its sign.** Perpendicular gradients multiply to $-1$, so the tangent has gradient $-\\dfrac{a}{b}$.\n\nAt $(3, 4)$ on $x^2 + y^2 = 25$: the radius has gradient $\\tfrac{4}{3}$, so the tangent has gradient $-\\tfrac{3}{4}$. Check: $\\tfrac{4}{3} \\times -\\tfrac{3}{4} = -1$. \n\nThen use $y - b = m(x - a)$ through the point of contact:\n\n$$y - 4 = -\\tfrac{3}{4}(x - 3)$$\n\nMultiply through by $4$ and tidy: $4y - 16 = -3x + 9$, so $3x + 4y = 25$.\n\n**Look at that answer.** The point was $(3, 4)$ and the circle was $x^2 + y^2 = 25$, and the tangent came out as $3x + 4y = 25$. That is not a coincidence.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -6.5,
+                8.5
+              ],
+              "yRange": [
+                -6.5,
+                8.5
+              ],
+              "square": true,
+              "circles": [
+                {
+                  "cx": 0,
+                  "cy": 0,
+                  "r": 5
+                }
+              ],
+              "lines": [
+                {
+                  "m": -0.75,
+                  "c": 6.25,
+                  "label": "3x + 4y = 25"
+                }
+              ],
+              "points": [
+                {
+                  "x": 3,
+                  "y": 4,
+                  "label": "(3, 4)"
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "label": "O"
+                }
+              ],
+              "grid": true
+            },
+            "alt": "A circle of radius 5 with the tangent 3x plus 4y equals 25 touching it at the point 3 comma 4, and the origin marked"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "The radius from the origin to a point on a circle has gradient $\\tfrac{2}{5}$. What is the gradient of the tangent at that point?",
+          "options": [
+            "$\\tfrac{5}{2}$",
+            "$-\\tfrac{2}{5}$",
+            "$-\\tfrac{5}{2}$",
+            "$\\tfrac{2}{5}$"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the tangent to a circle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Perpendicular gradients multiply to $-1$. Flip $\\tfrac{2}{5}$ to get $\\tfrac{5}{2}$, then change the sign: $-\\tfrac{5}{2}$. Check: $\\tfrac{2}{5} \\times -\\tfrac{5}{2} = -1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "-5/2"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "The shortcut, and where it comes from",
+        "body": "Doing the perpendicular working once shows why the short form is true. After that you can quote it — unless the question says \"show that\", when the examiner wants the working.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the tangent to $x^2 + y^2 = 25$ at the point $(-4, 3)$",
+            "steps": [
+              {
+                "text": "Gradient of the radius: $\\dfrac{3}{-4} = -\\tfrac{3}{4}$",
+                "note": "from the origin to $(-4, 3)$"
+              },
+              {
+                "text": "Gradient of the tangent: $\\tfrac{4}{3}$",
+                "note": "flip it and change the sign"
+              },
+              {
+                "text": "$y - 3 = \\tfrac{4}{3}(x + 4)$",
+                "note": "through the point of contact; $x - (-4)$ is $x + 4$"
+              },
+              {
+                "text": "$3y - 9 = 4x + 16$",
+                "note": "multiply by 3"
+              },
+              {
+                "text": "$3y - 4x = 25$",
+                "note": "and this is $-4x + 3y = 25$, which is $ax + by = r^2$"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Circle",
+                "Point of contact",
+                "Tangent"
+              ],
+              "rows": [
+                [
+                  "x² + y² = 25",
+                  "(3, 4)",
+                  "3x + 4y = 25"
+                ],
+                [
+                  "x² + y² = 25",
+                  "(−4, 3)",
+                  "−4x + 3y = 25"
+                ],
+                [
+                  "x² + y² = 50",
+                  "(5, 5)",
+                  "5x + 5y = 50, so x + y = 10"
+                ],
+                [
+                  "x² + y² = 50",
+                  "(1, 7)",
+                  "x + 7y = 50"
+                ]
+              ],
+              "title": "The tangent at (a, b) is ax + by = r squared"
+            },
+            "alt": "A table of four circles and points of contact with the tangent at each, showing the a x plus b y equals r squared pattern"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "What is the equation of the tangent to $x^2 + y^2 = 50$ at the point $(1, 7)$?",
+          "options": [
+            "$7x + y = 50$",
+            "$x + 7y = 50^2$",
+            "$x + 7y = 50$",
+            "$x - 7y = 50$"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the tangent to a circle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Check the point first: $1^2 + 7^2 = 1 + 49 = 50$, so it is on the circle. The tangent at $(a, b)$ is $ax + by = r^2$, so here it is $1x + 7y = 50$, that is $x + 7y = 50$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x + 7y = 50"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Where a line meets a circle",
+        "body": "**Substitute the line into the circle.** The line gives $y$ in terms of $x$, so putting it into $x^2 + y^2 = r^2$ leaves an equation in $x$ alone — and it is always a quadratic.\n\nWhere does $y = x + 1$ meet $x^2 + y^2 = 25$?\n\n$$x^2 + (x + 1)^2 = 25$$\n$$x^2 + x^2 + 2x + 1 = 25$$\n$$2x^2 + 2x - 24 = 0$$\n$$x^2 + x - 12 = 0$$\n$$(x + 4)(x - 3) = 0$$\n\nSo $x = -4$ or $x = 3$.\n\n**Now find the $y$ values from the line**, not from the circle. The line gives one answer each: $y = -4 + 1 = -3$, and $y = 3 + 1 = 4$. The circle would give two $y$ values for each $x$, and you would not know which to keep.\n\nThe line meets the circle at $(-4, -3)$ and $(3, 4)$.\n\n**How many times?** You do not have to solve anything to answer that. The quadratic's **discriminant** $b^2 - 4ac$ decides it:\n\n- $b^2 - 4ac > 0$: two points, the line cuts through,\n- $b^2 - 4ac = 0$: one point, the line is a **tangent**,\n- $b^2 - 4ac < 0$: no points, the line misses.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -7.5,
+                7.5
+              ],
+              "yRange": [
+                -7.5,
+                7.5
+              ],
+              "square": true,
+              "circles": [
+                {
+                  "cx": 0,
+                  "cy": 0,
+                  "r": 5
+                }
+              ],
+              "lines": [
+                {
+                  "m": 1,
+                  "c": 1,
+                  "label": "y = x + 1"
+                }
+              ],
+              "points": [
+                {
+                  "x": 3,
+                  "y": 4,
+                  "label": "(3, 4)"
+                },
+                {
+                  "x": -4,
+                  "y": -3,
+                  "label": "(−4, −3)"
+                }
+              ],
+              "grid": true
+            },
+            "alt": "A circle of radius 5 cut by the line y equals x plus 1, crossing it at the points 3 comma 4 and minus 4 comma minus 3"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Discriminant",
+                "What it means",
+                "The line is"
+              ],
+              "rows": [
+                [
+                  "b² − 4ac > 0",
+                  "two solutions",
+                  "a chord, cutting through"
+                ],
+                [
+                  "b² − 4ac = 0",
+                  "one repeated solution",
+                  "a tangent, touching once"
+                ],
+                [
+                  "b² − 4ac < 0",
+                  "no real solutions",
+                  "missing the circle entirely"
+                ]
+              ],
+              "title": "Counting intersections without solving"
+            },
+            "alt": "A table linking the sign of the discriminant to the number of intersection points and to whether the line cuts, touches or misses"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Substituting $y = x + 8$ into $x^2 + y^2 = 25$ gives $2x^2 + 16x + 39 = 0$, whose discriminant is $-56$. How many times does the line meet the circle?",
+          "options": [
+            "Once, as a tangent",
+            "It does not meet it at all",
+            "Twice",
+            "It cannot be decided from the discriminant"
+          ],
+          "correct": [
+            1
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "where a line meets a circle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A negative discriminant means the quadratic has no real solutions, so there is no value of $x$ at which the line and the circle share a point. The line misses the circle completely.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "not at all"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A — the equation.**\n\n1. Write the equation of the circle with centre the origin and radius $11$.\n2. What is the radius of $x^2 + y^2 = 45$? Leave your answer as a surd in its simplest form.\n3. Is the point $(5, 1)$ inside, on, or outside $x^2 + y^2 = 25$? Show the calculation.\n\n**Part B — tangents.**\n\n4. Show that $(5, 12)$ lies on $x^2 + y^2 = 169$.\n5. Find the gradient of the radius to $(5, 12)$, and hence the gradient of the tangent there.\n6. Write the equation of that tangent, and check it against $ax + by = r^2$.\n\n**Part C — meeting.**\n\n7. Find the two points where $y = x + 1$ meets $x^2 + y^2 = 25$.\n8. Find the length of the chord joining them, leaving your answer as a surd.\n\nQuestion 8 is the one worth thinking hardest about: you have two points and you need a distance.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Working",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "",
+                  ""
+                ],
+                [
+                  "2",
+                  "",
+                  ""
+                ],
+                [
+                  "3",
+                  "",
+                  ""
+                ],
+                [
+                  "4",
+                  "",
+                  ""
+                ],
+                [
+                  "5",
+                  "",
+                  ""
+                ],
+                [
+                  "6",
+                  "",
+                  ""
+                ],
+                [
+                  "7",
+                  "",
+                  ""
+                ],
+                [
+                  "8",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Write the radius down before anything else"
+            },
+            "alt": "A blank eight-row table with a column for working and a column for the answer"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "The circle $x^2 + y^2 = 169$ passes through the point $(5, k)$, where $k$ is positive. Work out $k$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "points on, inside and outside a circle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Substitute: $5^2 + k^2 = 169$, so $25 + k^2 = 169$ and $k^2 = 144$. Therefore $k = 12$, taking the positive root as the question asks.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "25 + k² = 169"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "k = 12"
+            }
+          ],
+          "discriminators": [],
+          "answer": 12,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: finding the value that makes a tangent",
+        "body": "The discriminant runs backwards as well as forwards. If a question tells you a line **is** a tangent, that is the same as telling you the discriminant is **zero** — and that gives you an equation to solve.\n\nFor what values of $k$ is $y = x + k$ a tangent to $x^2 + y^2 = 25$?\n\nSubstitute as usual:\n\n$$x^2 + (x + k)^2 = 25$$\n$$2x^2 + 2kx + k^2 - 25 = 0$$\n\nHere $a = 2$, $b = 2k$ and $c = k^2 - 25$. Tangent means one repeated root, so\n\n$$b^2 - 4ac = 0$$\n$$(2k)^2 - 4(2)(k^2 - 25) = 0$$\n$$4k^2 - 8k^2 + 200 = 0$$\n$$-4k^2 = -200, \\quad k^2 = 50$$\n$$k = \\pm\\sqrt{50} = \\pm 5\\sqrt{2}$$\n\n**Two answers, and both are right.** One tangent sits above the circle and one below, and a sketch shows immediately why there must be a pair. Losing the negative one is the usual slip.\n\n**A chord's length** is the other thing that comes up here. Once you have the two points, it is just the distance between them, which is Pythagoras again: from $(-4, -3)$ to $(3, 4)$ the differences are $7$ and $7$, so the length is $\\sqrt{7^2 + 7^2} = \\sqrt{98} = 7\\sqrt{2}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -9.5,
+                9.5
+              ],
+              "yRange": [
+                -9.5,
+                9.5
+              ],
+              "square": true,
+              "circles": [
+                {
+                  "cx": 0,
+                  "cy": 0,
+                  "r": 5
+                }
+              ],
+              "lines": [
+                {
+                  "m": 1,
+                  "c": 7.071,
+                  "label": "k = 5√2"
+                },
+                {
+                  "m": 1,
+                  "c": -7.071,
+                  "label": "k = −5√2"
+                }
+              ],
+              "grid": true
+            },
+            "alt": "A circle of radius 5 with two parallel tangents of gradient 1, one above the circle and one below, showing why there are two values of k"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "A line meets a circle where $2x^2 + 2kx + k^2 - 25 = 0$. What condition on the discriminant makes the line a tangent?",
+          "options": [
+            "$b^2 - 4ac > 0$",
+            "$b^2 - 4ac < 0$",
+            "$b^2 - 4ac = 1$",
+            "$b^2 - 4ac = 0$"
+          ],
+          "correct": [
+            3
+          ],
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "where a line meets a circle",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A tangent touches at exactly one point, so the quadratic has exactly one solution, which is a repeated root. That happens precisely when $b^2 - 4ac = 0$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "b² - 4ac = 0"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A circle with centre the **origin** and radius $r$ has equation $x^2 + y^2 = r^2$.\n- It is Pythagoras: $x$ and $y$ are the short sides and $r$ is the hypotenuse.\n- The number on the right is $r^2$, **not** $r$. For $x^2 + y^2 = 20$ the radius is $\\sqrt{20} = 2\\sqrt{5}$.\n- **Testing a point:** work out $x^2 + y^2$. Less than $r^2$ is inside, equal is on, more is outside.\n- The **tangent is perpendicular to the radius** at the point of contact.\n- Gradient of the radius to $(a, b)$ is $\\tfrac{b}{a}$; gradient of the tangent is $-\\tfrac{a}{b}$.\n- The tangent at $(a, b)$ is $ax + by = r^2$. Derive it if the question says *show that*.\n- **Line meets circle:** substitute the line into the circle to get a quadratic in $x$.\n- Put each $x$ back into the **line** to find $y$, never into the circle.\n- **How many intersections:** the discriminant. Positive two, zero one (a tangent), negative none.\n- **Told it is a tangent?** Set the discriminant to zero and solve for the unknown. Expect two answers.\n- **Chord length** is the distance between the two points: Pythagoras on the differences.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Equation",
+                  "x² + y² = r², centre the origin"
+                ],
+                [
+                  "Radius",
+                  "the square root of the right-hand side"
+                ],
+                [
+                  "Point test",
+                  "compare x² + y² with r²"
+                ],
+                [
+                  "Tangent and radius",
+                  "perpendicular at the point of contact"
+                ],
+                [
+                  "Gradient of radius",
+                  "b over a"
+                ],
+                [
+                  "Gradient of tangent",
+                  "minus a over b"
+                ],
+                [
+                  "Tangent equation",
+                  "ax + by = r²"
+                ],
+                [
+                  "Line meets circle",
+                  "substitute, then solve the quadratic"
+                ],
+                [
+                  "Finding y",
+                  "put x back into the line"
+                ],
+                [
+                  "How many times",
+                  "the discriminant decides"
+                ],
+                [
+                  "Is a tangent",
+                  "discriminant = 0, and expect two answers"
+                ],
+                [
+                  "Chord length",
+                  "Pythagoras on the differences"
+                ]
+              ],
+              "title": "The equation of a circle at a glance"
+            },
+            "alt": "A summary table pairing each part of the topic with the one thing to remember about it"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is the radius of the circle $x^2 + y^2 = 36$?",
+      "options": [
+        "$6$",
+        "$36$",
+        "$18$",
+        "$1296$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the equation of a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$r^2 = 36$, so $r = \\sqrt{36} = 6$. The number in the equation is the radius squared.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "What is the equation of the circle with centre the origin and radius $7$?",
+      "options": [
+        "$x^2 + y^2 = 7$",
+        "$x^2 + y^2 = 49$",
+        "$x^2 + y^2 = 14$",
+        "$x + y = 7$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the equation of a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The form is $x^2 + y^2 = r^2$, and $r = 7$ gives $r^2 = 49$, so the equation is $x^2 + y^2 = 49$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x² + y² = 49"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Does the point $(6, 8)$ lie on the circle $x^2 + y^2 = 100$? Answer yes or no.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "points on, inside and outside a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$6^2 + 8^2 = 36 + 64 = 100$, which equals $r^2$, so **yes**, the point lies on the circle.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "yes"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "yes"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "What is the radius of the circle $x^2 + y^2 = 20$? Give your answer in its simplest surd form.",
+      "options": [
+        "$20$",
+        "$10$",
+        "$2\\sqrt{5}$",
+        "$4\\sqrt{5}$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the equation of a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$r = \\sqrt{20}$. Since $20 = 4 \\times 5$ and $\\sqrt{4} = 2$, this simplifies to $2\\sqrt{5} \\approx 4.47$. It is not $10$; halving is not square rooting.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2√5"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "Which of these points lies on the circle $x^2 + y^2 = 25$?",
+      "options": [
+        "$(-3, 4)$",
+        "$(2, 4)$",
+        "$(5, 5)$",
+        "$(1, 5)$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "points on, inside and outside a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(-3)^2 + 4^2 = 9 + 16 = 25$, which matches. The others give $20$, $50$ and $26$, so they are inside, outside and outside.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(-3, 4)"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Is the point $(5, 1)$ inside, on, or outside the circle $x^2 + y^2 = 25$?",
+      "options": [
+        "On the circle",
+        "Inside",
+        "Outside",
+        "It cannot be decided"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "points on, inside and outside a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5^2 + 1^2 = 25 + 1 = 26$, which is larger than $r^2 = 25$, so the point is **outside** the circle — only just, but outside.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "outside"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "The circle $x^2 + y^2 = 169$ passes through the point $(5, k)$, where $k$ is positive. Work out $k$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "points on, inside and outside a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute: $25 + k^2 = 169$, so $k^2 = 144$ and $k = 12$, taking the positive root as asked.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "25 + k² = 169"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "k = 12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "A radius runs from the origin to the point $(3, 4)$ on a circle. What is the gradient of that radius? Give your answer as a fraction.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the tangent to a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Gradient is the change in $y$ over the change in $x$, from $(0, 0)$ to $(3, 4)$: $\\dfrac{4 - 0}{3 - 0} = \\dfrac{4}{3}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4/3"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "4/3"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What is the gradient of the tangent to $x^2 + y^2 = 25$ at the point $(3, 4)$?",
+      "options": [
+        "$\\tfrac{4}{3}$",
+        "$-\\tfrac{4}{3}$",
+        "$-\\tfrac{3}{4}$",
+        "$\\tfrac{3}{4}$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the tangent to a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The radius has gradient $\\tfrac{4}{3}$. The tangent is perpendicular to it, so flip and change the sign: $-\\tfrac{3}{4}$. Check: $\\tfrac{4}{3} \\times -\\tfrac{3}{4} = -1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-3/4"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "What is the equation of the tangent to $x^2 + y^2 = 25$ at the point $(3, 4)$?",
+      "options": [
+        "$4x + 3y = 25$",
+        "$3x + 4y = 5$",
+        "$3x + 4y = 25$",
+        "$3x - 4y = 25$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the tangent to a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Gradient of the tangent is $-\\tfrac{3}{4}$, through $(3, 4)$: $y - 4 = -\\tfrac{3}{4}(x - 3)$. Multiplying by $4$ gives $4y - 16 = -3x + 9$, so $3x + 4y = 25$. This matches $ax + by = r^2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3x + 4y = 25"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "What is the equation of the tangent to $x^2 + y^2 = 25$ at the point $(-4, 3)$?",
+      "options": [
+        "$-4x + 3y = 25$",
+        "$4x + 3y = 25$",
+        "$-4x + 3y = 5$",
+        "$3x - 4y = 25$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the tangent to a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "First check the point: $(-4)^2 + 3^2 = 16 + 9 = 25$. The tangent at $(a, b)$ is $ax + by = r^2$, so it is $-4x + 3y = 25$, which can also be written $3y - 4x = 25$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-4x + 3y = 25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "The line $y = x + 1$ meets the circle $x^2 + y^2 = 25$ at two points. Give the point with the larger $x$ value, as a coordinate pair.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "where a line meets a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substituting gives $x^2 + (x + 1)^2 = 25$, so $2x^2 + 2x - 24 = 0$ and then $x^2 + x - 12 = 0$, which factorises to $(x + 4)(x - 3) = 0$. So $x = -4$ or $x = 3$. The larger is $x = 3$, and the **line** gives $y = 3 + 1 = 4$, so the point is $(3, 4)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x² + (x + 1)² = 25 leading to x² + x - 12 = 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(3, 4)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "(3,4)"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Substituting $y = x + 8$ into $x^2 + y^2 = 25$ gives $2x^2 + 16x + 39 = 0$. How many times does the line meet the circle?",
+      "options": [
+        "Once",
+        "Twice",
+        "Infinitely many times",
+        "Not at all"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "where a line meets a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The discriminant is $16^2 - 4 \\times 2 \\times 39 = 256 - 312 = -56$. It is negative, so the quadratic has no real solutions and the line misses the circle entirely.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "not at all"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "What is the equation of the tangent to $x^2 + y^2 = 50$ at the point $(5, 5)$, in its simplest form?",
+      "options": [
+        "$5x + 5y = 5$",
+        "$x + y = 50$",
+        "$x - y = 10$",
+        "$x + y = 10$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the tangent to a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Check the point: $5^2 + 5^2 = 50$. The tangent is $5x + 5y = 50$, and dividing through by $5$ gives $x + y = 10$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x + y = 10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A circle has equation $x^2 + y^2 = 50$. Which of these points lies on it, and has a tangent there of $x + 7y = 50$?",
+      "options": [
+        "$(7, 1)$",
+        "$(5, 5)$",
+        "$(1, 49)$",
+        "$(1, 7)$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the tangent to a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The tangent at $(a, b)$ is $ax + by = r^2$, so $x + 7y = 50$ means $a = 1$ and $b = 7$. Check the point is on the circle: $1^2 + 7^2 = 1 + 49 = 50$. It is, so the point is $(1, 7)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(1, 7)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "For which values of $k$ is the line $y = x + k$ a tangent to the circle $x^2 + y^2 = 25$?",
+      "options": [
+        "$k = 5\\sqrt{2}$ only",
+        "$k = \\pm 5$",
+        "$k = \\pm 5\\sqrt{2}$",
+        "$k = \\pm 50$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "where a line meets a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substituting gives $2x^2 + 2kx + k^2 - 25 = 0$. A tangent means one repeated root, so $b^2 - 4ac = 0$: $(2k)^2 - 8(k^2 - 25) = 0$, giving $-4k^2 + 200 = 0$ and $k^2 = 50$. So $k = \\pm\\sqrt{50} = \\pm 5\\sqrt{2}$. There are two, one tangent above the circle and one below.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "k = ±5√2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "The point $P(5, 12)$ lies on the circle $x^2 + y^2 = 169$.\n\n(a) Show that $P$ lies on the circle.\n\n(b) Find the equation of the tangent to the circle at $P$, showing how you use the gradient of the radius.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "the tangent to a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, substitute the coordinates of P into the left-hand side of the circle's equation. Five squared is twenty five and twelve squared is one hundred and forty four, and twenty five plus one hundred and forty four is one hundred and sixty nine. That is exactly the right-hand side of the equation, so P lies on the circle. For part b, the tangent is perpendicular to the radius drawn to the point of contact, so start with the radius. It runs from the origin to the point five, twelve, so its gradient is twelve minus zero over five minus zero, which is twelve over five. Perpendicular gradients multiply to minus one, so the gradient of the tangent is the negative reciprocal, minus five over twelve. Now use the straight line through the point of contact: y minus twelve equals minus five over twelve, times x minus five. Multiplying every term by twelve gives twelve y minus one hundred and forty four equals minus five x plus twenty five. Collecting gives five x plus twelve y equals one hundred and sixty nine. Notice this matches the pattern a x plus b y equals r squared, with a equal to five, b equal to twelve and r squared equal to one hundred and sixty nine.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5² + 12² = 25 + 144 = 169, so P is on the circle"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gradient of radius = 12/5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "gradient of tangent = -5/12"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "y - 12 = -5/12 (x - 5)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies through by 12"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5x + 12y = 169"
+        }
+      ],
+      "discriminators": [
+        "show-that",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Substitutes to get 25 + 144 = 169 and states the conclusion",
+          "marks": 1
+        },
+        {
+          "text": "Gradient of the radius is 12/5",
+          "marks": 1
+        },
+        {
+          "text": "Uses perpendicular gradients to get -5/12",
+          "marks": 1
+        },
+        {
+          "text": "Writes the line through P, for example y - 12 = -5/12 (x - 5)",
+          "marks": 1
+        },
+        {
+          "text": "Clears the fraction correctly",
+          "marks": 1
+        },
+        {
+          "text": "Reaches 5x + 12y = 169",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, substitute the coordinates of P into the left-hand side of the circle's equation. Five squared is twenty five and twelve squared is one hundred and forty four, and twenty five plus one hundred and forty four is one hundred and sixty nine. That is exactly the right-hand side of the equation, so P lies on the circle. For part b, the tangent is perpendicular to the radius drawn to the point of contact, so start with the radius. It runs from the origin to the point five, twelve, so its gradient is twelve minus zero over five minus zero, which is twelve over five. Perpendicular gradients multiply to minus one, so the gradient of the tangent is the negative reciprocal, minus five over twelve. Now use the straight line through the point of contact: y minus twelve equals minus five over twelve, times x minus five. Multiplying every term by twelve gives twelve y minus one hundred and forty four equals minus five x plus twenty five. Collecting gives five x plus twelve y equals one hundred and sixty nine. Notice this matches the pattern a x plus b y equals r squared, with a equal to five, b equal to twelve and r squared equal to one hundred and sixty nine."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "The line $y = x + 1$ crosses the circle $x^2 + y^2 = 25$ at two points, $A$ and $B$.\n\n(a) Find the coordinates of $A$ and $B$.\n\n(b) Work out the length of the chord $AB$, leaving your answer as a surd in its simplest form.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "where a line meets a circle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, substitute the line into the circle. Replacing y with x plus one gives x squared plus, bracket, x plus one, bracket, squared, equals twenty five. Expanding the bracket gives x squared plus x squared plus two x plus one equals twenty five, which collects to two x squared plus two x minus twenty four equals zero. Dividing every term by two gives x squared plus x minus twelve equals zero. Two numbers multiplying to minus twelve and adding to plus one are plus four and minus three, so this factorises to x plus four, times x minus three, equals zero, giving x equals minus four or x equals three. Now find the y values from the line, not from the circle, because the line gives exactly one y for each x. When x is minus four, y is minus three; when x is three, y is four. So A is minus four, minus three and B is three, four. For part b, the length of the chord is the distance between those two points. The difference in x is three minus minus four, which is seven, and the difference in y is four minus minus three, which is also seven. By Pythagoras the length is the square root of seven squared plus seven squared, which is the square root of ninety eight. Since ninety eight is forty nine times two, and the square root of forty nine is seven, this simplifies to seven root two.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x² + (x + 1)² = 25"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2x² + 2x - 24 = 0, so x² + x - 12 = 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = -4 and x = 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(-4, -3) and (3, 4)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "√(7² + 7²) = √98"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7√2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Substitutes the line into the circle",
+          "marks": 1
+        },
+        {
+          "text": "Reaches the quadratic x² + x - 12 = 0",
+          "marks": 1
+        },
+        {
+          "text": "Solves to x = -4 and x = 3",
+          "marks": 1
+        },
+        {
+          "text": "Uses the line to get both y values, giving (-4, -3) and (3, 4)",
+          "marks": 1
+        },
+        {
+          "text": "Applies Pythagoras to the differences 7 and 7",
+          "marks": 1
+        },
+        {
+          "text": "Simplifies the surd to 7√2",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, substitute the line into the circle. Replacing y with x plus one gives x squared plus, bracket, x plus one, bracket, squared, equals twenty five. Expanding the bracket gives x squared plus x squared plus two x plus one equals twenty five, which collects to two x squared plus two x minus twenty four equals zero. Dividing every term by two gives x squared plus x minus twelve equals zero. Two numbers multiplying to minus twelve and adding to plus one are plus four and minus three, so this factorises to x plus four, times x minus three, equals zero, giving x equals minus four or x equals three. Now find the y values from the line, not from the circle, because the line gives exactly one y for each x. When x is minus four, y is minus three; when x is three, y is four. So A is minus four, minus three and B is three, four. For part b, the length of the chord is the distance between those two points. The difference in x is three minus minus four, which is seven, and the difference in y is four minus minus three, which is also seven. By Pythagoras the length is the square root of seven squared plus seven squared, which is the square root of ninety eight. Since ninety eight is forty nine times two, and the square root of forty nine is seven, this simplifies to seven root two."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Read the radius correctly.** $x^2 + y^2 = k$ has radius $\\sqrt{k}$. Write the radius down before anything else, and leave it as a surd if it is not a whole number.\n\n**To test a point**, work out $x^2 + y^2$ and compare it with $r^2$. Smaller means inside, equal means on, larger means outside. This is one line of working and it is often a whole mark.\n\n**For a tangent**, the examiner wants to see the two gradients. Gradient of the radius $= \\tfrac{b}{a}$; gradient of the tangent $= -\\tfrac{a}{b}$; then use $y - b = m(x - a)$. Quote $ax + by = r^2$ if you are confident, but show the perpendicular step if the question says \"show that\".\n\n**For a line meeting a circle**, substitute the line into the circle, collect into a quadratic, and solve. Each $x$ you find has to be put back into the **line** to get its $y$ — the line is easier and gives one answer, where the circle gives two.\n\n**\"How many points of intersection?\"** is a discriminant question. $b^2 - 4ac > 0$ two, $= 0$ one, $< 0$ none. Do not solve.\n\n**Always give a point as a coordinate pair.** A question asking where a line meets a circle wants $(3, 4)$ and $(-4, -3)$, not a list of $x$ values.",
+    "examinerErrors": [
+      "Reading $x^2 + y^2 = 25$ as a circle of radius $25$.",
+      "Giving the radius of $x^2 + y^2 = 20$ as $10$, by halving instead of square rooting.",
+      "Using the gradient of the radius as the gradient of the tangent, without flipping it.",
+      "Flipping the gradient but forgetting to change its sign.",
+      "Finding the $x$ values where a line meets a circle and stopping, without the $y$ values.",
+      "Substituting an $x$ value back into the circle rather than the line, and then not knowing which of the two $y$ values to keep.",
+      "Solving a quadratic to count intersections when the discriminant alone was asked for."
+    ],
+    "grade9Looks": "A top answer writes the radius down first, as a surd where it has to be, and never confuses it with the number in the equation. It knows the tangent at a point is ax + by = r² and can derive it from perpendicular gradients when a \"show that\" demands the derivation. Asked how many times a line meets a circle, it reaches for the discriminant rather than solving. And when it substitutes an x value back, it uses the line, not the circle, because the line gives one y and the circle gives two."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

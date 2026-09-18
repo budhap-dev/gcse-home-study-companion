@@ -1,0 +1,1488 @@
+{
+  "id": "trigonometric-graphs",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Graphs of sin, cos and tan",
+  "specPoints": [
+    "A12",
+    "G21"
+  ],
+  "order": 12,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Sine starts at zero, cosine starts at one",
+      "body": "That single fact tells the two waves apart, and everything else follows from it. $\\sin 0° = 0$ and the curve climbs to $1$ at $90°$; $\\cos 0° = 1$ and the curve falls to $0$ at $90°$. If you can sketch one of them you can sketch the other by sliding it $90°$ sideways."
+    },
+    {
+      "kind": "shortcut",
+      "title": "One solution always gives a second",
+      "body": "Your calculator returns one angle. The graph gives the rest. Between $0°$ and $360°$: for sine the partner is $180° - x$, for cosine it is $360° - x$, and for tangent it is $x + 180°$. Learn the three, and check each against the shape of its own graph."
+    },
+    {
+      "kind": "spot",
+      "title": "Tangent is not a wave",
+      "body": "Sine and cosine are smooth waves trapped between $-1$ and $1$. Tangent is neither: it repeats every $180°$, not $360°$, it takes every value there is, and it breaks at $90°$ and $270°$, where it shoots off to infinity. Drawing tan with rounded tops is the giveaway of a sketch done from memory."
+    },
+    {
+      "kind": "check",
+      "title": "Count the crossings before you answer",
+      "body": "Asked how many solutions an equation has in a range, draw the horizontal line $y = k$ across your sketch and count where it cuts the curve. For sine and cosine a value between $-1$ and $1$ gives two per $360°$, and a value outside that range gives none at all."
+    }
+  ],
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Three graphs, and what makes each one different",
+        "body": "Until now trigonometry has been about triangles, where angles run from $0°$ to $90°$. The graphs carry on past that, and they keep going forever in both directions.\n\n**$y = \\sin x$** starts at the origin, climbs to $1$ at $90°$, comes back to $0$ at $180°$, drops to $-1$ at $270°$, and returns to $0$ at $360°$. Then the whole thing repeats. It is a smooth wave that never leaves the band between $-1$ and $1$.\n\n**$y = \\cos x$** is the same wave **shifted $90°$ to the left**. It starts at $1$, falls to $0$ at $90°$, reaches $-1$ at $180°$, is back to $0$ at $270°$ and back to $1$ at $360°$.\n\n> Sine starts at zero. Cosine starts at one. That one sentence separates them.\n\n**$y = \\tan x$** is a different animal entirely.\n\n- It repeats every $180°$, not $360°$.\n- It is **not** trapped between $-1$ and $1$ — it takes every value there is.\n- At $90°$ and $270°$ it does not exist. The curve shoots up towards infinity on one side and comes back from minus infinity on the other. Those gaps are called **asymptotes**.\n\nSo tan is drawn as separate branches, never as a wave with rounded tops.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xLabel": "x (degrees)",
+              "xStep": 90,
+              "yStep": 0.5,
+              "grid": true,
+              "xRange": [
+                0,
+                360
+              ],
+              "yRange": [
+                -1.4,
+                1.4
+              ],
+              "waves": [
+                {
+                  "fn": "sin",
+                  "label": "y = sin x",
+                  "labelX": 75
+                }
+              ]
+            },
+            "alt": "The graph of y equals sine x from 0 to 360 degrees, starting at the origin, peaking at 1 when x is 90, crossing zero at 180 and reaching minus 1 at 270"
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xLabel": "x (degrees)",
+              "xStep": 90,
+              "yStep": 0.5,
+              "grid": true,
+              "xRange": [
+                0,
+                360
+              ],
+              "yRange": [
+                -1.4,
+                1.4
+              ],
+              "waves": [
+                {
+                  "fn": "cos",
+                  "label": "y = cos x",
+                  "labelX": 20
+                }
+              ]
+            },
+            "alt": "The graph of y equals cosine x from 0 to 360 degrees, starting at 1, falling through zero at 90, reaching minus 1 at 180 and returning to 1 at 360"
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xLabel": "x (degrees)",
+              "xStep": 90,
+              "grid": true,
+              "xRange": [
+                0,
+                360
+              ],
+              "yRange": [
+                -4,
+                4
+              ],
+              "waves": [
+                {
+                  "fn": "tan",
+                  "label": "y = tan x",
+                  "labelX": 40
+                }
+              ]
+            },
+            "alt": "The graph of y equals tangent x from 0 to 360 degrees, drawn as separate branches with vertical gaps at 90 and 270 degrees where the curve runs off to infinity"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "y = sin x",
+                "y = cos x",
+                "y = tan x"
+              ],
+              "rows": [
+                [
+                  "Value at 0°",
+                  "0",
+                  "1",
+                  "0"
+                ],
+                [
+                  "Repeats every",
+                  "360°",
+                  "360°",
+                  "180°"
+                ],
+                [
+                  "Largest value",
+                  "1",
+                  "1",
+                  "no largest value"
+                ],
+                [
+                  "Smallest value",
+                  "−1",
+                  "−1",
+                  "no smallest value"
+                ],
+                [
+                  "Breaks at",
+                  "nowhere",
+                  "nowhere",
+                  "90° and 270°"
+                ]
+              ],
+              "title": "The three graphs side by side"
+            },
+            "alt": "A comparison table of sine, cosine and tangent showing their value at zero, their period, their largest and smallest values and where tangent breaks"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which of these graphs passes through the point $(0, 1)$?",
+          "options": [
+            "$y = \\sin x$",
+            "$y = \\tan x$",
+            "$y = \\cos x$",
+            "All three of them"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the shapes of the trigonometric graphs",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\cos 0° = 1$, so the cosine graph starts at a height of $1$. Both $\\sin 0°$ and $\\tan 0°$ are $0$, so those two pass through the origin instead.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "y = cos x"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Reading values straight off the graph",
+        "body": "Several marks a year come from simply knowing where these curves are at the quarter-turns. No calculator is needed for any of them.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Write down the value of $\\sin 180°$ and of $\\cos 180°$",
+            "steps": [
+              {
+                "text": "Sine: the curve is back at the axis at $180°$",
+                "note": "it climbed to 1 at 90° and came back down"
+              },
+              {
+                "text": "$\\sin 180° = 0$",
+                "note": "one of the three places sine crosses zero in a full turn"
+              },
+              {
+                "text": "Cosine: the curve is at its lowest at $180°$",
+                "note": "it started at 1 and has fallen all the way"
+              },
+              {
+                "text": "$\\cos 180° = -1$",
+                "note": "the minimum of the cosine graph"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Explain why $\\sin x = 1.4$ has no solutions",
+            "steps": [
+              {
+                "text": "The sine graph lies between $-1$ and $1$",
+                "note": "it never rises above the line y = 1"
+              },
+              {
+                "text": "Draw the line $y = 1.4$ across the sketch",
+                "note": "it sits above the whole curve"
+              },
+              {
+                "text": "The line and the curve never meet",
+                "note": "so there is no angle whose sine is 1.4"
+              },
+              {
+                "text": "There are no solutions.",
+                "note": "say so; the same argument works for any value outside −1 to 1"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "short-text",
+          "prompt": "Write down the value of $\\cos 0°$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading values off a trigonometric graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The cosine graph starts at its highest point, so $\\cos 0° = 1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "1"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "1"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "One solution is never the whole answer",
+        "body": "Type $\\sin^{-1} 0.5$ into a calculator and it gives $30°$. That is true — but between $0°$ and $360°$ it is only **half** the answer.\n\nDraw the line $y = 0.5$ across the sine graph and you can see why: it cuts the curve **twice**, once on the way up and once on the way down.\n\nThe second crossing is at $150°$, and $150 = 180 - 30$. That is not a coincidence — the sine graph is symmetrical about $x = 90°$, so every height on the way up is matched on the way down.\n\nEach graph has its own rule, and each comes straight from its own symmetry.\n\n- **Sine:** the second solution is $180° - x$.\n- **Cosine:** the second solution is $360° - x$.\n- **Tangent:** the next solution is $x + 180°$.\n\nSo if $\\cos x = 0.5$ gives $x = 60°$ on the calculator, the other solution in range is $360 - 60 = 300°$. And if $\\tan x = 1$ gives $45°$, the other is $45 + 180 = 225°$.\n\n**Do not mix the rules up.** Using $360° - x$ on a sine question is one of the most common errors on this topic, and a sketch catches it instantly: $360 - 30 = 330°$, and the sine graph at $330°$ is clearly **below** the axis, not at $+0.5$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xLabel": "x (degrees)",
+              "xStep": 90,
+              "yStep": 0.5,
+              "grid": true,
+              "xRange": [
+                0,
+                360
+              ],
+              "yRange": [
+                -1.4,
+                1.4
+              ],
+              "waves": [
+                {
+                  "fn": "sin"
+                }
+              ],
+              "lines": [
+                {
+                  "m": 0,
+                  "c": 0.5,
+                  "label": "y = 0.5"
+                }
+              ],
+              "points": [
+                {
+                  "x": 30,
+                  "y": 0.5,
+                  "label": "30°"
+                },
+                {
+                  "x": 150,
+                  "y": 0.5,
+                  "label": "150°"
+                }
+              ]
+            },
+            "alt": "The sine curve cut by the horizontal line y equals 0.5, crossing it at 30 degrees and again at 150 degrees"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Graph",
+                "Second solution",
+                "Because"
+              ],
+              "rows": [
+                [
+                  "y = sin x",
+                  "180° − x",
+                  "symmetrical about x = 90°"
+                ],
+                [
+                  "y = cos x",
+                  "360° − x",
+                  "symmetrical about x = 180°"
+                ],
+                [
+                  "y = tan x",
+                  "x + 180°",
+                  "it repeats every 180°"
+                ]
+              ],
+              "title": "Finding the partner solution between 0 and 360"
+            },
+            "alt": "A table giving the rule for the second solution on each of the three graphs, with the symmetry that produces it"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "One solution of $\\sin x = 0.5$ is $x = 30°$. What is the other solution between $0°$ and $360°$? Give your answer in degrees.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "solving a trigonometric equation from the graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "For sine the partner solution is $180° - x$, so it is $180 - 30 = 150$ degrees. The graph confirms it: the line $y = 0.5$ cuts the curve on the way up at $30°$ and on the way down at $150°$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "150"
+            }
+          ],
+          "discriminators": [],
+          "answer": 150,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "degrees"
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Solving an equation over a given range",
+        "body": "The routine is the same every time: calculator for the first angle, graph for the rest, then check every answer is inside the range you were given.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $\\cos x = 0.5$ for $0° \\le x \\le 360°$",
+            "steps": [
+              {
+                "text": "$\\cos^{-1} 0.5 = 60°$",
+                "note": "the calculator gives one angle"
+              },
+              {
+                "text": "Cosine rule: the partner is $360° - x$",
+                "note": "the cosine graph is symmetrical about 180°"
+              },
+              {
+                "text": "$360 - 60 = 300°$",
+                "note": "the second solution"
+              },
+              {
+                "text": "$x = 60°$ and $x = 300°$",
+                "note": "both lie in the range, so both are kept"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $\\sin x = -0.5$ for $0° \\le x \\le 360°$",
+            "steps": [
+              {
+                "text": "Ignore the minus sign for a moment: $\\sin^{-1} 0.5 = 30°$",
+                "note": "find the angle for the positive value first"
+              },
+              {
+                "text": "The graph is below the axis between $180°$ and $360°$",
+                "note": "so both solutions live in that half"
+              },
+              {
+                "text": "First: $180 + 30 = 210°$",
+                "note": "the same 30° past the crossing at 180°"
+              },
+              {
+                "text": "Second: $360 - 30 = 330°$",
+                "note": "the same 30° before the crossing at 360°"
+              },
+              {
+                "text": "$x = 210°$ and $x = 330°$",
+                "note": "check on a sketch that both are below the axis"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "short-text",
+          "prompt": "Solve $\\cos x = 0.5$ for $0° \\le x \\le 360°$. Give both answers in degrees, separated by a comma.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "solving a trigonometric equation from the graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\cos^{-1} 0.5 = 60°$, and the cosine partner is $360 - 60 = 300°$. So $x = 60°$ and $x = 300°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "cos⁻¹ 0.5 = 60"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "60 and 300"
+            }
+          ],
+          "discriminators": [],
+          "accepted": [
+            "60, 300",
+            "300, 60"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Counting solutions without solving",
+        "body": "A question that asks **how many** solutions there are does not want you to find them. Draw the line and count the crossings.\n\nOn $y = \\sin x$ between $0°$ and $360°$:\n\n- any $k$ strictly between $-1$ and $1$ gives **two** crossings,\n- $k = 1$ gives exactly **one**, at the single peak $x = 90°$,\n- $k = -1$ gives exactly **one**, at the trough $x = 270°$,\n- any $k$ outside $-1$ to $1$ gives **none**, because the curve never gets there.\n\nCosine behaves the same way, with its one-crossing values at $k = 1$ (at $x = 0°$ and $360°$, the two ends) and $k = -1$ (at $x = 180°$).\n\n**Tangent is different again.** It takes every value, so $\\tan x = k$ always has solutions — and because the period is $180°$, there are **two** of them in $0°$ to $360°$ whatever $k$ is. Even $\\tan x = 1000$ has two.\n\n**A wider range just repeats.** Everything on $y = \\sin x$ and $y = \\cos x$ repeats after $360°$, so a range of $0°$ to $720°$ contains **twice** as many solutions: each one you find in the first turn has a partner $360°$ later.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xLabel": "x (degrees)",
+              "xStep": 90,
+              "yStep": 0.5,
+              "grid": true,
+              "xRange": [
+                0,
+                720
+              ],
+              "yRange": [
+                -1.4,
+                1.4
+              ],
+              "waves": [
+                {
+                  "fn": "cos"
+                }
+              ],
+              "lines": [
+                {
+                  "m": 0,
+                  "c": 0.643,
+                  "label": "y = 0.643"
+                }
+              ],
+              "points": [
+                {
+                  "x": 50,
+                  "y": 0.643
+                },
+                {
+                  "x": 310,
+                  "y": 0.643
+                },
+                {
+                  "x": 410,
+                  "y": 0.643
+                },
+                {
+                  "x": 670,
+                  "y": 0.643
+                }
+              ]
+            },
+            "alt": "Two full cycles of the cosine curve from 0 to 720 degrees cut by a horizontal line, showing four crossing points rather than two"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "How many solutions does $\\sin x = 1.4$ have for $0° \\le x \\le 360°$?",
+          "options": [
+            "One",
+            "None",
+            "Two",
+            "Four"
+          ],
+          "correct": [
+            1
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "solving a trigonometric equation from the graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The sine graph never rises above $1$, so the line $y = 1.4$ sits entirely above the curve and they never meet. There are no solutions.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "none"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A — from the graphs.**\n\n1. Write down the value of $\\sin 270°$.\n2. Write down the value of $\\cos 90°$.\n3. At which two angles between $0°$ and $360°$ does $y = \\tan x$ break?\n\n**Part B — solving.**\n\n4. Solve $\\sin x = 0.5$ for $0° \\le x \\le 360°$.\n5. Solve $\\tan x = 1$ for $0° \\le x \\le 360°$.\n6. Solve $\\cos x = -0.5$ for $0° \\le x \\le 360°$.\n\n**Part C — the ones worth thinking hardest about.**\n\n7. How many solutions does $\\sin x = 1$ have between $0°$ and $360°$? Explain your answer with a sketch.\n8. Given that $\\cos 50° = 0.643$, solve $\\cos x = 0.643$ for $0° \\le x \\le 720°$.\n\nFor question 6, find the angle for $+0.5$ first, then use the graph to see where cosine is negative.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Sketch drawn?",
+                "First solution",
+                "All solutions"
+              ],
+              "rows": [
+                [
+                  "4",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "5",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "6",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "7",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "8",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Sketch first, then solve"
+            },
+            "alt": "A blank five-row table with columns for whether a sketch was drawn, the first solution and the full list of solutions"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "short-text",
+          "prompt": "Solve $\\tan x = 1$ for $0° \\le x \\le 360°$. Give both answers in degrees, separated by a comma.",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "solving a trigonometric equation from the graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\tan^{-1} 1 = 45°$. The tangent graph repeats every $180°$, so the next solution is $45 + 180 = 225°$. Adding another $180°$ gives $405°$, which is outside the range. So $x = 45°$ and $x = 225°$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "tan⁻¹ 1 = 45"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "45 and 225"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "45, 225",
+            "225, 45"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: negative values and wider ranges",
+        "body": "Two things separate a top answer here, and neither needs any new formula.\n\n**Negative values.** $\\sin x = -0.5$ is not a different kind of problem. Find the angle for $+0.5$, which is $30°$, then ask the graph where sine is **below** the axis: between $180°$ and $360°$. The two solutions sit symmetrically in that dip, $30°$ past $180°$ and $30°$ before $360°$:\n\n$$x = 180 + 30 = 210°, \\qquad x = 360 - 30 = 330°$$\n\nThe same reasoning on cosine gives a different pair. $\\cos x = -0.5$: the angle for $+0.5$ is $60°$, cosine is below the axis between $90°$ and $270°$, and the solutions are $180 - 60 = 120°$ and $180 + 60 = 240°$.\n\nNotice you did not need a fourth rule for either. You needed the sketch.\n\n**Wider ranges.** Sine and cosine repeat every $360°$, so a range of $0°$ to $720°$ holds exactly twice as many solutions. Solve it in the first turn, then add $360°$ to each answer:\n\n$\\cos x = 0.643$ with $\\cos 50° = 0.643$ gives $50°$ and $360 - 50 = 310°$ in the first turn, then $50 + 360 = 410°$ and $310 + 360 = 670°$ in the second. Four solutions: $50°$, $310°$, $410°$, $670°$.\n\n**One more thing about tangent.** Because its period is $180°$, its solutions in $0°$ to $720°$ come in fours as well, but spaced $180°$ apart rather than $360°$: $x$, $x + 180$, $x + 360$, $x + 540$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xLabel": "x (degrees)",
+              "xStep": 90,
+              "yStep": 0.5,
+              "grid": true,
+              "xRange": [
+                0,
+                360
+              ],
+              "yRange": [
+                -1.4,
+                1.4
+              ],
+              "waves": [
+                {
+                  "fn": "sin"
+                }
+              ],
+              "lines": [
+                {
+                  "m": 0,
+                  "c": -0.5,
+                  "label": "y = −0.5"
+                }
+              ],
+              "points": [
+                {
+                  "x": 210,
+                  "y": -0.5,
+                  "label": "210°"
+                },
+                {
+                  "x": 330,
+                  "y": -0.5,
+                  "label": "330°"
+                }
+              ]
+            },
+            "alt": "The sine curve cut by the horizontal line y equals minus 0.5, crossing it at 210 degrees and 330 degrees, both below the x axis"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "Angle for the positive value",
+                "Solutions in 0° to 360°"
+              ],
+              "rows": [
+                [
+                  "sin x = 0.5",
+                  "30°",
+                  "30° and 150°"
+                ],
+                [
+                  "sin x = −0.5",
+                  "30°",
+                  "210° and 330°"
+                ],
+                [
+                  "cos x = 0.5",
+                  "60°",
+                  "60° and 300°"
+                ],
+                [
+                  "cos x = −0.5",
+                  "60°",
+                  "120° and 240°"
+                ]
+              ],
+              "title": "The same angle, read off a different part of the graph"
+            },
+            "alt": "A table of four equations showing that the positive and negative versions share an angle but have solutions in different parts of the range"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "short-text",
+          "prompt": "Solve $\\cos x = -0.5$ for $0° \\le x \\le 360°$. Give both answers in degrees, separated by a comma.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "solving a trigonometric equation from the graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The angle for $+0.5$ is $60°$. Cosine is negative between $90°$ and $270°$, and the two solutions sit symmetrically about $180°$: $180 - 60 = 120°$ and $180 + 60 = 240°$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "120, 240"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "accepted": [
+            "120, 240",
+            "240, 120"
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **$y = \\sin x$**: starts at $0$, peak $1$ at $90°$, zero at $180°$, trough $-1$ at $270°$, zero at $360°$.\n- **$y = \\cos x$**: starts at $1$, zero at $90°$, trough $-1$ at $180°$, zero at $270°$, back to $1$ at $360°$.\n- Both are waves between $-1$ and $1$, repeating every $360°$.\n- **$y = \\tan x$**: repeats every $180°$, has **no** largest or smallest value, and breaks at $90°$ and $270°$.\n- Sine starts at zero, cosine starts at one. That is how you tell them apart.\n- A calculator gives **one** solution. The graph gives the rest.\n- Second solution between $0°$ and $360°$: sine $180° - x$, cosine $360° - x$, tangent $x + 180°$.\n- **Negative values** use the same angle, read off the part of the graph below the axis.\n- **How many solutions:** draw $y = k$ and count the crossings.\n- For sine and cosine, $k$ between $-1$ and $1$ gives two per turn; $k = \\pm 1$ gives one; outside that, none.\n- For tangent, every value of $k$ gives two solutions in $0°$ to $360°$.\n- **Doubling the range doubles the solutions**: add $360°$ to each for sine and cosine.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "sin starts at",
+                  "0, rising to 1 at 90°"
+                ],
+                [
+                  "cos starts at",
+                  "1, falling to 0 at 90°"
+                ],
+                [
+                  "Period of sin and cos",
+                  "360°"
+                ],
+                [
+                  "Period of tan",
+                  "180°"
+                ],
+                [
+                  "Range of sin and cos",
+                  "−1 to 1"
+                ],
+                [
+                  "Range of tan",
+                  "every value"
+                ],
+                [
+                  "tan breaks at",
+                  "90° and 270°"
+                ],
+                [
+                  "Second solution, sin",
+                  "180° − x"
+                ],
+                [
+                  "Second solution, cos",
+                  "360° − x"
+                ],
+                [
+                  "Next solution, tan",
+                  "x + 180°"
+                ],
+                [
+                  "Negative value",
+                  "same angle, below the axis"
+                ],
+                [
+                  "Counting solutions",
+                  "draw y = k and count crossings"
+                ]
+              ],
+              "title": "The three graphs at a glance"
+            },
+            "alt": "A summary table pairing each fact about the three trigonometric graphs with what to remember about it"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is the largest value that $y = \\sin x$ ever takes?",
+      "options": [
+        "$1$",
+        "$90$",
+        "$360$",
+        "There is no largest value"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the shapes of the trigonometric graphs",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sine graph is a wave trapped between $-1$ and $1$. Its highest point is $1$, reached at $x = 90°$. The $90$ is the angle, not the value.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "After how many degrees does the graph of $y = \\sin x$ start repeating itself?",
+      "options": [
+        "$180°$",
+        "$360°$",
+        "$90°$",
+        "$720°$"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the shapes of the trigonometric graphs",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A full cycle of the sine graph takes $360°$: up to $1$, down through zero to $-1$, and back to zero. After that it repeats exactly.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "360°"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q3",
+      "type": "short-text",
+      "prompt": "Write down the value of $\\cos 180°$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading values off a trigonometric graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The cosine graph starts at $1$ and falls to its lowest point at $180°$, so $\\cos 180° = -1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-1"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "-1"
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Which of these graphs passes through the origin?",
+      "options": [
+        "$y = \\cos x$ only",
+        "$y = \\sin x$ only",
+        "All three of them",
+        "$y = \\sin x$ and $y = \\tan x$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the shapes of the trigonometric graphs",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\sin 0° = 0$ and $\\tan 0° = 0$, so both of those pass through $(0, 0)$. But $\\cos 0° = 1$, so the cosine graph starts a whole unit higher.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sin and tan"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "What is the value of $\\sin 180°$?",
+      "options": [
+        "$1$",
+        "$-1$",
+        "$180$",
+        "$0$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading values off a trigonometric graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sine graph rises to $1$ at $90°$ and comes back down to the axis at $180°$, so $\\sin 180° = 0$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "At which angles between $0°$ and $360°$ does the graph of $y = \\tan x$ have asymptotes?",
+      "options": [
+        "$180°$ and $360°$",
+        "$0°$ and $180°$",
+        "$45°$ and $225°$",
+        "$90°$ and $270°$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the shapes of the trigonometric graphs",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At $90°$ and $270°$ the tangent is undefined: the curve runs off towards infinity on one side of each and comes back from minus infinity on the other. The graph has a vertical break at each.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "90° and 270°"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "One solution of $\\sin x = 0.5$ is $x = 30°$. What is the other solution between $0°$ and $360°$? Give your answer in degrees.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For sine, the partner solution is $180° - x$, so the other one is $180 - 30 = 150$ degrees.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "150"
+        }
+      ],
+      "discriminators": [],
+      "answer": 150,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "degrees"
+    },
+    {
+      "id": "q8",
+      "type": "short-text",
+      "prompt": "Solve $\\cos x = 0.5$ for $0° \\le x \\le 360°$. Give both answers in degrees, separated by a comma.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The calculator gives $\\cos^{-1} 0.5 = 60°$. For cosine the partner is $360° - x$, so the second solution is $360 - 60 = 300°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cos⁻¹ 0.5 = 60"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60 and 300"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "60, 300",
+        "300, 60"
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What is the value of $\\cos 270°$?",
+      "options": [
+        "$-1$",
+        "$1$",
+        "$0$",
+        "$270$"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading values off a trigonometric graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The cosine graph crosses the axis twice in a full turn, at $90°$ and at $270°$. So $\\cos 270° = 0$. Its minimum of $-1$ is at $180°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "How many solutions does $\\sin x = 0.3$ have for $0° \\le x \\le 360°$?",
+      "options": [
+        "One",
+        "Two",
+        "Four",
+        "None"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Draw the line $y = 0.3$ across one cycle of the sine graph. Since $0.3$ lies between $-1$ and $1$, the line cuts the curve twice: once on the way up and once on the way down.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "two"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Solve $\\sin x = -0.5$ for $0° \\le x \\le 360°$.",
+      "options": [
+        "$x = 30°$ and $x = 150°$",
+        "$x = 120°$ and $x = 240°$",
+        "$x = -30°$ and $x = -150°$",
+        "$x = 210°$ and $x = 330°$"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The angle whose sine is $+0.5$ is $30°$. Sine is below the axis between $180°$ and $360°$, and the two solutions sit symmetrically in that dip: $180 + 30 = 210°$ and $360 - 30 = 330°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "210° and 330°"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "short-text",
+      "prompt": "Solve $\\tan x = 1$ for $0° \\le x \\le 360°$. Give both answers in degrees, separated by a comma.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\tan^{-1} 1 = 45°$. The tangent graph repeats every $180°$, not $360°$, so the next solution is $45 + 180 = 225°$. The one after that, $405°$, is outside the range.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tan⁻¹ 1 = 45"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "45 and 225"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "45, 225",
+        "225, 45"
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Solve $\\cos x = -0.5$ for $0° \\le x \\le 360°$.",
+      "options": [
+        "$x = 120°$ and $x = 240°$",
+        "$x = 60°$ and $x = 300°$",
+        "$x = 210°$ and $x = 330°$",
+        "$x = 150°$ and $x = 210°$"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The angle whose cosine is $+0.5$ is $60°$. Cosine is negative between $90°$ and $270°$, and the solutions sit symmetrically about $180°$: $180 - 60 = 120°$ and $180 + 60 = 240°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "120° and 240°"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "How many solutions does $\\tan x = 20$ have for $0° \\le x \\le 360°$?",
+      "options": [
+        "None, since 20 is too large",
+        "One",
+        "Four",
+        "Two"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Unlike sine and cosine, the tangent graph takes **every** value, so no value of $k$ is ever too large. Its period is $180°$, so a range of $360°$ contains two solutions whatever $k$ is.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "two"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "How many solutions does $\\sin x = 1$ have for $0° \\le x \\le 360°$?",
+      "options": [
+        "Two",
+        "None",
+        "One",
+        "Three"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The line $y = 1$ just touches the very top of the sine curve rather than cutting across it, and the curve reaches that height only once in a full turn, at $x = 90°$. So there is exactly one solution. Every value strictly between $-1$ and $1$ gives two.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Given that $\\sin 20° = 0.342$, solve $\\sin x = 0.342$ for $0° \\le x \\le 360°$.",
+      "options": [
+        "$x = 20°$ and $x = 340°$",
+        "$x = 20°$ and $x = 160°$",
+        "$x = 20°$ and $x = 200°$",
+        "$x = 20°$ only"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For sine the partner solution is $180° - x$, so the second one is $180 - 20 = 160°$. The answer $340°$ comes from using the cosine rule by mistake, and at $340°$ the sine graph is below the axis.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "20° and 160°"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "(a) Sketch the graph of $y = \\sin x$ for $0° \\le x \\le 360°$, labelling where it crosses the $x$ axis and its highest and lowest points.\n\n(b) Use your sketch to solve $\\sin x = 0.5$ for $0° \\le x \\le 360°$, explaining how the sketch gives you both answers.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, the sine graph is a smooth wave that starts at the origin. It rises to a maximum of one when x is ninety degrees, falls back to cross the x axis at one hundred and eighty degrees, continues down to a minimum of minus one at two hundred and seventy degrees, and returns to the axis at three hundred and sixty degrees. So it crosses the x axis at zero, one hundred and eighty and three hundred and sixty degrees, its highest point is ninety comma one, and its lowest point is two hundred and seventy comma minus one. For part b, draw the horizontal line y equals nought point five across the sketch. Because nought point five lies between minus one and one, the line cuts the curve twice, once while it is rising and once while it is falling. The calculator gives the rising one: inverse sine of nought point five is thirty degrees. The sine graph is symmetrical about the line x equals ninety, so the falling crossing is the same distance the other side of ninety. That is one hundred and eighty minus thirty, which is one hundred and fifty degrees. So the solutions are x equals thirty degrees and x equals one hundred and fifty degrees, and the sketch shows there are no others in this range.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "smooth wave from the origin"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "crossings at 0, 180 and 360"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "maximum (90, 1) and minimum (270, -1)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "draws y = 0.5 and sees two intersections"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 30"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 150, from 180 - 30"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Draws a smooth wave starting at the origin",
+          "marks": 1
+        },
+        {
+          "text": "Marks the crossings at 0°, 180° and 360°",
+          "marks": 1
+        },
+        {
+          "text": "Marks the maximum at (90, 1) and the minimum at (270, −1)",
+          "marks": 1
+        },
+        {
+          "text": "Draws the line y = 0.5 and identifies two crossings",
+          "marks": 1
+        },
+        {
+          "text": "Gives the first solution as 30°",
+          "marks": 1
+        },
+        {
+          "text": "Gives the second as 150°, justified by the symmetry about x = 90°",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, the sine graph is a smooth wave that starts at the origin. It rises to a maximum of one when x is ninety degrees, falls back to cross the x axis at one hundred and eighty degrees, continues down to a minimum of minus one at two hundred and seventy degrees, and returns to the axis at three hundred and sixty degrees. So it crosses the x axis at zero, one hundred and eighty and three hundred and sixty degrees, its highest point is ninety comma one, and its lowest point is two hundred and seventy comma minus one. For part b, draw the horizontal line y equals nought point five across the sketch. Because nought point five lies between minus one and one, the line cuts the curve twice, once while it is rising and once while it is falling. The calculator gives the rising one: inverse sine of nought point five is thirty degrees. The sine graph is symmetrical about the line x equals ninety, so the falling crossing is the same distance the other side of ninety. That is one hundred and eighty minus thirty, which is one hundred and fifty degrees. So the solutions are x equals thirty degrees and x equals one hundred and fifty degrees, and the sketch shows there are no others in this range."
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "You are given that $\\cos 50° = 0.643$.\n\n(a) Solve $\\cos x = 0.643$ for $0° \\le x \\le 360°$.\n\n(b) Hence write down all the solutions of $\\cos x = 0.643$ for $0° \\le x \\le 720°$, explaining why there are more of them.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "solving a trigonometric equation from the graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For part a, we are told that the cosine of fifty degrees is nought point six four three, so fifty degrees is the first solution. The cosine graph is symmetrical about x equals one hundred and eighty degrees, so the partner solution between zero and three hundred and sixty is three hundred and sixty minus the first one. That is three hundred and sixty minus fifty, which is three hundred and ten degrees. So in the range zero to three hundred and sixty the solutions are fifty degrees and three hundred and ten degrees. For part b, the cosine graph repeats itself exactly every three hundred and sixty degrees, so the range zero to seven hundred and twenty contains two complete cycles rather than one. Every solution in the first cycle therefore has a matching solution three hundred and sixty degrees later. Adding three hundred and sixty to fifty gives four hundred and ten, and adding three hundred and sixty to three hundred and ten gives six hundred and seventy. So all the solutions are fifty degrees, three hundred and ten degrees, four hundred and ten degrees and six hundred and seventy degrees, four in total, which is twice as many as in the single turn.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 50"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 360 - x for cosine"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 310"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "states that cosine repeats every 360°"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds 360 to each of the first two"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50, 310, 410 and 670"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "unfamiliar-context"
+      ],
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "States 50° as the first solution",
+          "marks": 1
+        },
+        {
+          "text": "Uses the cosine rule 360° − x",
+          "marks": 1
+        },
+        {
+          "text": "Gives 310° as the second solution",
+          "marks": 1
+        },
+        {
+          "text": "Explains that the graph repeats every 360°",
+          "marks": 1
+        },
+        {
+          "text": "Adds 360° to each solution",
+          "marks": 1
+        },
+        {
+          "text": "Gives all four: 50°, 310°, 410°, 670°",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "For part a, we are told that the cosine of fifty degrees is nought point six four three, so fifty degrees is the first solution. The cosine graph is symmetrical about x equals one hundred and eighty degrees, so the partner solution between zero and three hundred and sixty is three hundred and sixty minus the first one. That is three hundred and sixty minus fifty, which is three hundred and ten degrees. So in the range zero to three hundred and sixty the solutions are fifty degrees and three hundred and ten degrees. For part b, the cosine graph repeats itself exactly every three hundred and sixty degrees, so the range zero to seven hundred and twenty contains two complete cycles rather than one. Every solution in the first cycle therefore has a matching solution three hundred and sixty degrees later. Adding three hundred and sixty to fifty gives four hundred and ten, and adding three hundred and sixty to three hundred and ten gives six hundred and seventy. So all the solutions are fifty degrees, three hundred and ten degrees, four hundred and ten degrees and six hundred and seventy degrees, four in total, which is twice as many as in the single turn."
+    }
+  ],
+  "examTechnique": {
+    "body": "**Sketch first, always.** These questions are graph questions wearing a trigonometry costume. A quick sketch with the axis marked at $90°$, $180°$, $270°$ and $360°$ turns \"how many solutions\" and \"find the other one\" into counting exercises.\n\n**Label the key points.** Sine: $(0, 0)$, $(90, 1)$, $(180, 0)$, $(270, -1)$, $(360, 0)$. Cosine: $(0, 1)$, $(90, 0)$, $(180, -1)$, $(270, 0)$, $(360, 1)$. These earn marks in a *sketch the graph* question on their own.\n\n**Use your calculator for the first solution, and the graph for the rest.** The calculator only ever returns one angle, and it is never the complete answer to a question that gives you a range.\n\n**Watch the range you are given.** $0°$ to $360°$ usually gives two solutions; $0°$ to $720°$ gives four, because everything repeats after $360°$; a range like $-180°$ to $180°$ needs a sketch, not a rule.\n\n**A negative value is not a problem.** $\\sin x = -0.5$ is solved exactly like $\\sin x = 0.5$: find the angle whose sine is $0.5$, then read off where the graph is *below* the axis instead of above it.\n\n**For tangent, remember the period is $180°$**, so its solutions are $180°$ apart, not $360°$. And it has no maximum, so \"the largest value of $\\tan x$\" is a trick question.",
+    "examinerErrors": [
+      "Giving only the calculator answer when the range asks for every solution.",
+      "Using the cosine rule $360° - x$ on a sine question, or the other way round.",
+      "Sketching $y = \\tan x$ as a wave with rounded peaks instead of branches with asymptotes.",
+      "Saying $\\tan x$ has a maximum value, or that it lies between $-1$ and $1$.",
+      "Giving two solutions when the range runs to $720°$ and there are four.",
+      "Claiming $\\sin x = 1.4$ has solutions; the sine graph never rises above $1$.",
+      "Starting the cosine graph at the origin, which is where the sine graph starts."
+    ],
+    "grade9Looks": "A top answer sketches before it calculates, and marks the axis at ninety, one hundred and eighty, two hundred and seventy and three hundred and sixty so the crossings can be counted. It treats the calculator as giving one solution out of several and uses the symmetry of the right graph to find the others. It knows tangent behaves differently from the other two — period one hundred and eighty, no maximum, asymptotes at ninety and two hundred and seventy — and never sketches it as a wave. And when a value lies outside the range of sine or cosine it says there are no solutions, rather than producing one anyway."
+  },
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

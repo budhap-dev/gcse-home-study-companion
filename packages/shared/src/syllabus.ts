@@ -124,17 +124,17 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Rate of change and real-life graphs', topicId: 'rate-of-change-and-real-life-graphs' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Algebraic fractions' },
+      { title: 'Algebraic fractions', topicId: 'algebraic-fractions' },
       { title: 'Rearranging formulae', topicId: 'identities-and-rearranging-formulae' },
       // Box plots are a topic of their own; this row links to the curve topic, which
       // teaches reading the five-number summary off a cumulative frequency graph.
       { title: 'Cumulative frequency curves and box plots', topicId: 'grouped-and-cumulative-frequency' },
       { title: 'Simultaneous equations', topicId: 'simultaneous-equations' },
       { title: 'Surds', topicId: 'surds' },
-      { title: 'Equation of a circle' },
+      { title: 'Equation of a circle', topicId: 'equation-of-a-circle' },
       { title: 'Exact trigonometric values', topicId: 'exact-trigonometric-values' },
-      { title: 'Trigonometric graphs' },
-      { title: 'Functions' },
+      { title: 'Trigonometric graphs', topicId: 'trigonometric-graphs' },
+      { title: 'Functions', topicId: 'functions' },
     ] },
     { year: 11, term: 'Spring', topics: [
       // Not linked: the Year 11 Autumn row "Ratio and proportion" already points at that
