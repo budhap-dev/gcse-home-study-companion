@@ -36,6 +36,106 @@
       "body": "Two linear equations are two straight lines, and the solution is where they **cross**. That is why there is normally exactly one answer, and it makes a graph a fair way to find an approximate solution when a question asks for one."
     }
   ],
+  "why": {
+    "matters": "One equation with two unknowns does not have an answer. It has a **line** of them — swap a pound off the coffee onto the tea and the bill still comes to the same total.\n\nA second equation, as long as it is genuinely new information rather than the first one rescaled, cuts that line down to a single point. That is the whole idea, and it is why the method is worth more than the algebra: **two unknowns need two independent measurements**, three need three, and no amount of cleverness gets round it.\n\nOnce you see that shape you start seeing it everywhere. Almost anything described as \"working out what we cannot measure directly, from several things we can\" is this.",
+    "examples": [
+      {
+        "title": "The prices nobody put on the bill",
+        "body": "Two rounds at the same café. The first was 3 coffees and 2 teas for £11.40. The second was 2 coffees and 3 teas for £10.60.\n\nNeither receipt shows a single price. You can still work both out.\n\nScale the first by 3 and the second by 2, so both have 6 teas: £34.20 and £21.20. Subtract, and every tea cancels: 5 coffees cost £13.00, so a coffee is £2.60 and a tea is £1.80.\n\nWhat happened there is worth more than the answer. Two numbers you could never observe were recovered from two numbers you could, and the trick was arranging for one unknown to cancel. Stock control, splitting a shared bill, working out a unit cost from invoices and reading a utility bill backwards from two months of totals are all the same move.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Coffees",
+              "Teas",
+              "Total"
+            ],
+            "rows": [
+              [
+                "First round",
+                "3",
+                "2",
+                "£11.40"
+              ],
+              [
+                "Second round",
+                "2",
+                "3",
+                "£10.60"
+              ],
+              [
+                "First round x 3",
+                "9",
+                "6",
+                "£34.20"
+              ],
+              [
+                "Second round x 2",
+                "4",
+                "6",
+                "£21.20"
+              ],
+              [
+                "Subtract",
+                "5",
+                "0",
+                "£13.00"
+              ]
+            ],
+            "title": "Scaling until the teas match, then subtracting"
+          },
+          "alt": "A table showing two cafe rounds scaled so that both contain six teas and then subtracted, leaving five coffees costing thirteen pounds"
+        }
+      },
+      {
+        "title": "How a phone knows where it is",
+        "body": "A satellite tells your phone one thing: how far away it is. One distance puts you somewhere on a sphere around it, which is no use. Two distances narrow it to a circle of possible places. Three cut that down to a point.\n\nDraw it flat and it is easy to see. Each station gives a circle of places you could be. Two circles cross at **two** points, so two measurements still leave a genuine wrong answer on the table. The third circle is what throws it away.\n\nThat is simultaneous equations with the same rule as the café bill: one equation for each unknown. Position on a map is two unknowns, so it takes three distances rather than two, because these equations are circles and circles meet twice.\n\nSatellite navigation needs 4, not 3. The fourth is there because your phone's clock is not accurate enough, so the time is a fourth unknown — and a fourth unknown needs a fourth equation.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              -9,
+              11
+            ],
+            "yRange": [
+              -9,
+              11
+            ],
+            "square": true,
+            "grid": true,
+            "circles": [
+              {
+                "cx": -3,
+                "cy": 0,
+                "r": 5.099019513592785
+              },
+              {
+                "cx": 5,
+                "cy": 4,
+                "r": 4.242640687119286
+              },
+              {
+                "cx": 0,
+                "cy": -4,
+                "r": 5.385164807134505
+              }
+            ],
+            "points": [
+              {
+                "x": 2,
+                "y": 1,
+                "label": "the only point on all three"
+              }
+            ]
+          },
+          "alt": "Three circles of different sizes drawn about three different centres, all three passing through one single marked point, with any two of them also crossing somewhere else"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -1112,20 +1212,6 @@
       "modelAnswer": "First, **define the letters** in writing. Let $c$ be the cost of a coffee in pounds, and $t$ the cost of a tea in pounds. This is worth doing explicitly — it is worth a mark, and everything that follows is unreadable without it.\n\nNow **translate one sentence at a time**. Three coffees and two teas cost £11 gives\n\n$$3c + 2t = 11$$\n\nand one coffee and two teas cost £7 gives\n\n$$c + 2t = 7$$\n\nThe $t$ terms are **$+2t$ in both** — matching coefficients with the **same sign** — so the equations are **subtracted**:\n\n$$(3c - c) + (2t - 2t) = 11 - 7$$\n\nwhich gives $2c = 4$, so $c = 2$.\n\n**Substitute back** into the simpler equation: $2 + 2t = 7$, so $2t = 5$ and $t = 2.5$.\n\n**Interpret the answer in the units the question used.** A coffee costs **£2** and a tea costs **£2.50**. Stopping at *c = 2, t = 2.5* has completed the algebra but not answered a question about money, and that final translation carries a mark of its own.\n\nFor the **check**, there are two things worth doing, and they are not the same. Substituting into the equation I did not use tests the algebra: $3(2) + 2(2.5) = 6 + 5 = 11$ ✓.\n\nBut the more valuable check is against the **original words**: three coffees at £2 and two teas at £2.50 come to £6 + £5 = **£11**, and one coffee and two teas come to £2 + £5 = **£7**. Both sentences are satisfied.\n\nThat second check matters because it tests something the first cannot. Substituting into my **own** equations only confirms my arithmetic — if I had translated the sentences wrongly, my answer would fit those wrong equations perfectly and the check would still pass. Only going back to the situation itself can catch a mistranslation."
     }
   ],
-  "examTechnique": {
-    "body": "The method is short and the errors are predictable. Match a coefficient, apply **same signs subtract, opposite signs add**, solve, substitute back, and check in the **other** equation.\n\nWhen scaling, multiply **every** term. When the question is in words, **define the letters**, write one equation per sentence, and finish by saying what the answer means in the units asked for.",
-    "examinerErrors": [
-      "Adding when the signs **match**, or subtracting when they are **opposite**.",
-      "Scaling an equation but leaving the **number on the right** unchanged.",
-      "Checking in the equation just used, which is guaranteed to balance.",
-      "Treating $0 = 7$ as an arithmetic slip rather than as **no solution**.",
-      "Forgetting to **define the letters** in a worded problem.",
-      "Leaving a worded answer as *x = 2* rather than **£2**.",
-      "Losing a sign when subtracting: $-4y - (-4y)$ is $0$, not $-8y$.",
-      "Solving for one letter and forgetting to find the other."
-    ],
-    "grade9Looks": "A grade 9 answer states the sign rule **before** using it, and says which equation it is checking in and why the other one would prove nothing. It scales by multiplying **every** term, and picks whichever letter needs the **smaller** multipliers rather than defaulting to $x$. It recognises $0 = 7$ as **parallel lines with no solution** and $0 = 0$ as the same line twice, instead of assuming a mistake. On a worded problem it **defines the letters**, **interprets** the answer in the right units, and checks against the **original sentences** — knowing that a check against its own equations would pass even if the translation were wrong."
-  },
   "worksheets": {
     "core": {
       "level": "core",
@@ -1163,6 +1249,20 @@
       ],
       "suggestedMinutes": 45
     }
+  },
+  "examTechnique": {
+    "body": "The method is short and the errors are predictable. Match a coefficient, apply **same signs subtract, opposite signs add**, solve, substitute back, and check in the **other** equation.\n\nWhen scaling, multiply **every** term. When the question is in words, **define the letters**, write one equation per sentence, and finish by saying what the answer means in the units asked for.",
+    "examinerErrors": [
+      "Adding when the signs **match**, or subtracting when they are **opposite**.",
+      "Scaling an equation but leaving the **number on the right** unchanged.",
+      "Checking in the equation just used, which is guaranteed to balance.",
+      "Treating $0 = 7$ as an arithmetic slip rather than as **no solution**.",
+      "Forgetting to **define the letters** in a worded problem.",
+      "Leaving a worded answer as *x = 2* rather than **£2**.",
+      "Losing a sign when subtracting: $-4y - (-4y)$ is $0$, not $-8y$.",
+      "Solving for one letter and forgetting to find the other."
+    ],
+    "grade9Looks": "A grade 9 answer states the sign rule **before** using it, and says which equation it is checking in and why the other one would prove nothing. It scales by multiplying **every** term, and picks whichever letter needs the **smaller** multipliers rather than defaulting to $x$. It recognises $0 = 7$ as **parallel lines with no solution** and $0 = 0$ as the same line twice, instead of assuming a mistake. On a worded problem it **defines the letters**, **interprets** the answer in the right units, and checks against the **original sentences** — knowing that a check against its own equations would pass even if the translation were wrong."
   },
   "quiz": {
     "questionIds": [

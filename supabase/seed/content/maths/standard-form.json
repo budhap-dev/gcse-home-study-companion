@@ -35,6 +35,83 @@
       "body": "Before writing the answer, ask roughly how big it should be. $3 \\times 10^5$ is a few hundred thousand; if your answer comes out as a few hundred, a power has been lost. The order of magnitude is easier to check than the digits."
     }
   ],
+  "why": {
+    "matters": "Some of the most useful numbers in the world are unreadable written out. The distance to a star, the mass of an atom, the number of bytes on a drive — written in full they are a wall of zeros that nobody can compare by eye.\n\nStandard form splits a number into the two things you actually want separately: **how big it is**, which is the power of ten, and **what it is precisely**, which is the digits in front. Comparing two numbers then means comparing two small whole numbers, and multiplying them means adding those whole numbers.\n\nThat is why every calculator, every computer and every scientific instrument stores numbers this way. It is not a notation for writing things down. It is the notation for getting things done.",
+    "examples": [
+      {
+        "title": "A million seconds and a billion seconds",
+        "body": "A million and a billion are used almost interchangeably in conversation, and they are nothing like each other.\n\nA thousand seconds is 16.7 minutes — a coffee break. A million seconds is 11.6 days — a fortnight's holiday. A billion seconds is 31.7 years — most of a career. Each step is the same multiplication by a thousand, and only the last one feels like one.\n\nWritten out, the two differ by three easily-missed zeros in the middle of a row of them. In standard form they are $10^6$ and $10^9$, and the gap is the whole story: a factor of 1000.\n\nThis is the everyday use of the notation. Any claim about money, population or data that mixes millions and billions is asking you to compare two exponents, and the digits in front barely matter.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Seconds",
+              "In standard form",
+              "Is about"
+            ],
+            "rows": [
+              [
+                "A thousand",
+                "10^3",
+                "16.7 minutes"
+              ],
+              [
+                "A million",
+                "10^6",
+                "11.6 days"
+              ],
+              [
+                "A billion",
+                "10^9",
+                "31.7 years"
+              ]
+            ],
+            "title": "Three steps of a thousand, in time"
+          },
+          "alt": "A table of a thousand, a million and a billion seconds, each three powers of ten apart, coming to about seventeen minutes, twelve days and thirty two years"
+        }
+      },
+      {
+        "title": "How far light gets in a year",
+        "body": "Light travels 299,792,458 metres every second, and that figure is exact rather than measured — the metre is defined by fixing it. A year of 365.25 days is 31,557,600 seconds.\n\nMultiplying those two written out in full is miserable. In standard form it is one line: $3 \\times 10^8$ metres per second times $3 \\times 10^7$ seconds is $9 \\times 10^{15}$ metres, and that is arithmetic you can do without writing anything down. Add the powers, multiply the digits.\n\nThe exact answer is $9.46 \\times 10^{15}$ m, so the head estimate was within a twentieth of it. That is the real skill the notation buys: not the exact figure, but knowing **what size** the answer has to be before you reach for a calculator, so a wrong one is obvious.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Written out",
+              "In standard form"
+            ],
+            "rows": [
+              [
+                "Speed of light",
+                "299 792 458 m/s",
+                "3.0 x 10^8 m/s"
+              ],
+              [
+                "Seconds in a year",
+                "31 557 600 s",
+                "3.2 x 10^7 s"
+              ],
+              [
+                "One light year",
+                "9 460 730 472 580 800 m",
+                "9.46 x 10^15 m"
+              ]
+            ],
+            "title": "The same three numbers, twice"
+          },
+          "alt": "A table of the speed of light, the seconds in a year and a light year, each written out in full and then in standard form, showing the full forms are unreadable and the standard forms are not"
+        }
+      },
+      {
+        "title": "The Sun against the Earth",
+        "body": "The Sun has a mass of about $1.989 \\times 10^{30}$ kg and the Earth about $5.972 \\times 10^{24}$ kg. How many Earths would it take?\n\nIn standard form the division is two separate, easy jobs. Divide the digits: $1.989 \\div 5.972 = 0.333$. Subtract the powers: $30 - 24 = 6$. That gives $0.333 \\times 10^{6}$, which tidies to $3.33 \\times 10^{5}$ — about 333,000 Earths.\n\nNotice what never happened. Nobody wrote down a number with thirty digits, and nobody lined up decimal points. The size of the answer came from the exponents and the precision came from the digits, and the two were handled separately.\n\nThat separation is the reason the notation exists, and it is why a scientist quoting a result quotes an exponent first."
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -1109,20 +1186,6 @@
       "modelAnswer": "When two numbers in standard form are **multiplied**, the powers are **added**. That follows from how indices work: $10^3 \\times 10^5$ means three tens multiplied together times five tens multiplied together, which is eight tens multiplied together, or $10^8$. The rule is a consequence of the index law, not a convention.\n\n**Adding is a different operation entirely, and no such rule applies.** $(3 \\times 10^5) + (4 \\times 10^4)$ is not $7 \\times 10^9$, and it is not $7 \\times 10^5$ either. The reason is that the two numbers are of **different sizes**: one is three hundred thousand and the other is forty thousand. Front numbers can only be added when they are counting the **same thing** — the same power of ten — and here they are not.\n\nThe first correct method is to **make the powers match**. Rewrite the smaller number with the larger number's power: $4 \\times 10^4 = 0.4 \\times 10^5$. Now both are counting hundreds of thousands, so the fronts can be added: $3 + 0.4 = 3.4$, giving $3.4 \\times 10^5$. Note that $0.4$ is temporarily outside the allowed range for $A$, which is fine mid-calculation — only the **final answer** has to be in standard form, and $3.4$ is.\n\nThe second method is to **convert both to ordinary numbers**, add them, and convert back: $300\\,000 + 40\\,000 = 340\\,000 = 3.4 \\times 10^5$. On a calculator paper this is often quicker and harder to get wrong, and it doubles as a **check** on the first method. No marks depend on which route is taken.\n\nThe same reasoning applies to subtraction. And it is worth noticing what the two methods have in common: both work by making the two numbers **comparable** before combining them, which is precisely the step that multiplication does not need."
     }
   ],
-  "examTechnique": {
-    "body": "Two habits carry this topic. First, **finish the job**: after multiplying or dividing, check the front number is still between 1 and 10 and fix it if not. Second, **count places, not zeros** when converting.\n\nWatch for the operation. Powers **add** when multiplying and **subtract** when dividing, but adding and subtracting need the **powers made equal first** — or the numbers written out in full, which is often quicker.",
-    "examinerErrors": [
-      "Leaving an answer as $12 \\times 10^5$, which is the right size but **not standard form**.",
-      "Counting **zeros** instead of the places the decimal point moves.",
-      "**Multiplying** the powers instead of adding them.",
-      "Adding the powers when the question is an **addition**.",
-      "Treating a **negative power** as a negative number.",
-      "Comparing the **front numbers** first instead of the powers.",
-      "Subtracting the powers in the wrong order when dividing.",
-      "Forgetting to adjust the **power** after fixing the front number."
-    ],
-    "grade9Looks": "A grade 9 answer explains **why** $1 \\le A < 10$ matters: it makes the form **unique**, which is what allows two numbers to be compared by their **powers alone**. It treats a standard form calculation as **two steps** — the arithmetic, then the normalising — and never leaves the second undone. It knows that adding requires the powers to be **made equal first**, and can say why: front numbers can only be added when they count the same power of ten. And it checks its work by **order of magnitude**, because a dropped power is far easier to spot in the size of an answer than in its digits."
-  },
   "worksheets": {
     "core": {
       "level": "core",
@@ -1160,6 +1223,20 @@
       ],
       "suggestedMinutes": 45
     }
+  },
+  "examTechnique": {
+    "body": "Two habits carry this topic. First, **finish the job**: after multiplying or dividing, check the front number is still between 1 and 10 and fix it if not. Second, **count places, not zeros** when converting.\n\nWatch for the operation. Powers **add** when multiplying and **subtract** when dividing, but adding and subtracting need the **powers made equal first** — or the numbers written out in full, which is often quicker.",
+    "examinerErrors": [
+      "Leaving an answer as $12 \\times 10^5$, which is the right size but **not standard form**.",
+      "Counting **zeros** instead of the places the decimal point moves.",
+      "**Multiplying** the powers instead of adding them.",
+      "Adding the powers when the question is an **addition**.",
+      "Treating a **negative power** as a negative number.",
+      "Comparing the **front numbers** first instead of the powers.",
+      "Subtracting the powers in the wrong order when dividing.",
+      "Forgetting to adjust the **power** after fixing the front number."
+    ],
+    "grade9Looks": "A grade 9 answer explains **why** $1 \\le A < 10$ matters: it makes the form **unique**, which is what allows two numbers to be compared by their **powers alone**. It treats a standard form calculation as **two steps** — the arithmetic, then the normalising — and never leaves the second undone. It knows that adding requires the powers to be **made equal first**, and can say why: front numbers can only be added when they count the same power of ten. And it checks its work by **order of magnitude**, because a dropped power is far easier to spot in the size of an answer than in its digits."
   },
   "quiz": {
     "questionIds": [

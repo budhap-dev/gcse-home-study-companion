@@ -36,6 +36,143 @@
       "body": "A grouped table hides the individual values, so the mean, median and quartiles found from it are **estimates**, and saying so is worth a mark. The only thing you can state exactly is the **modal class**."
     }
   ],
+  "why": {
+    "matters": "Grouping data is a trade. You get a table somebody can read, and you give up the individual values — once heights are in bands of 5 cm, nobody's actual height survives. Every statistic you calculate afterwards is therefore an **estimate**, and knowing that is half the topic.\n\nThe cumulative frequency curve is how you get some of it back. Plot the running total and you can read off how many are below any value you like, and read it backwards to find the value that a given fraction falls below.\n\nThat backwards reading is the useful one, and it has a name outside maths: a **percentile**. It is how a growth chart places a child, how a service target is written, and how almost any \"typical\" figure about a population is actually produced.",
+    "examples": [
+      {
+        "title": "What a centile on a growth chart means",
+        "body": "Take the heights of 200 children of the same age, grouped into 5 cm bands. Running the totals up gives a curve.\n\nHalf of 200 is 100, so reading across at that height and down to the axis gives the median: 139.6 cm. Reading across at 150 instead — three quarters of them — gives 144.3 cm.\n\nThat second number is what a red book calls the **75th centile**. It does not mean a child is 75% of something. It means 150 of these 200 children are shorter and 50 are taller.\n\nEvery chart that places one person inside a population is this reading, run backwards from a fraction to a value. A health visitor with a ruler is taking a reading off a cumulative frequency curve, and the curve is why a single measurement can be turned into a position.",
+        "visual": {
+          "type": "diagram",
+          "component": "cumulative-frequency",
+          "props": {
+            "points": [
+              {
+                "x": 125,
+                "y": 4
+              },
+              {
+                "x": 130,
+                "y": 18
+              },
+              {
+                "x": 135,
+                "y": 52
+              },
+              {
+                "x": 140,
+                "y": 104
+              },
+              {
+                "x": 145,
+                "y": 158
+              },
+              {
+                "x": 150,
+                "y": 188
+              },
+              {
+                "x": 155,
+                "y": 200
+              }
+            ],
+            "xLabel": "height (cm)",
+            "title": "Heights of 200 children of the same age",
+            "readings": [
+              {
+                "y": 100,
+                "label": "median"
+              },
+              {
+                "y": 150,
+                "label": "75th centile"
+              }
+            ]
+          },
+          "alt": "A cumulative frequency curve of the heights of two hundred children, with lines drawn across at one hundred and at one hundred and fifty and down to the axis to read off the median and the seventy fifth centile"
+        }
+      },
+      {
+        "title": "The wait that the average hides",
+        "body": "A call centre handles 500 calls and records how long each caller waited.\n\nThe estimated mean wait is 28.2 seconds, and quoted on its own that sounds fine. Now read the curve at 90% of 500: nine callers in ten are answered within 52.5 seconds, which means 50 people waited longer than that, some of them up to 120 seconds.\n\nThis is why service targets are almost never written as averages. \"Answered in 28.2 seconds on average\" and \"90% answered within 52.5 seconds\" describe the same 500 calls, and only the second one tells you anything about the bad days.\n\nAn average can be dragged down by the easy cases. A percentile cannot, because it is a position in the queue rather than a total shared out — which is exactly what the cumulative curve is built to give you.",
+        "visual": {
+          "type": "diagram",
+          "component": "cumulative-frequency",
+          "props": {
+            "points": [
+              {
+                "x": 10,
+                "y": 60
+              },
+              {
+                "x": 20,
+                "y": 180
+              },
+              {
+                "x": 30,
+                "y": 330
+              },
+              {
+                "x": 45,
+                "y": 430
+              },
+              {
+                "x": 60,
+                "y": 470
+              },
+              {
+                "x": 90,
+                "y": 495
+              },
+              {
+                "x": 120,
+                "y": 500
+              }
+            ],
+            "xLabel": "wait (seconds)",
+            "title": "How long 500 callers waited",
+            "readings": [
+              {
+                "y": 450,
+                "label": "90% answered by"
+              }
+            ]
+          },
+          "alt": "A cumulative frequency curve of five hundred call waiting times, with a line across at four hundred and fifty and down to the axis showing that ninety per cent were answered within about fifty two seconds"
+        }
+      },
+      {
+        "title": "How wrong the estimated mean can be",
+        "body": "The mean from a grouped table is an estimate because it assumes everybody sits at the middle of their class. Nobody checks that assumption, and it is worth knowing it can be checked.\n\nPut everybody at the **bottom** of their class instead and the same 500 calls give a mean of 21.9 seconds. Put everybody at the **top** and it gives 34.5. The truth has to be somewhere between those, because every value really is somewhere between the two bounds of its class.\n\nSo the honest statement is not \"the mean is 28.2 seconds\". It is \"the mean is between 21.9 and 34.5 seconds, and 28.2 is the best guess\" — the midpoint estimate sits exactly halfway between the two extremes, which is what makes it the sensible guess rather than an arbitrary one.\n\nThat gap is the price of grouping, and it is the reason a wide top class makes an estimate worse. Anyone publishing grouped data chooses those class widths, and the choice decides how much you can trust the mean they print.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Where you assume everybody sits",
+              "Mean wait"
+            ],
+            "rows": [
+              [
+                "At the bottom of their class",
+                "21.9 s"
+              ],
+              [
+                "At the middle (the usual estimate)",
+                "28.2 s"
+              ],
+              [
+                "At the top of their class",
+                "34.5 s"
+              ]
+            ],
+            "title": "The same table, three assumptions"
+          },
+          "alt": "A table showing the mean wait computed three ways from the same grouped data, twenty one point nine seconds at the bottom of each class, twenty eight point two at the middle and thirty four point five at the top"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -1199,20 +1336,6 @@
       "modelAnswer": "To **estimate the mean**, I assume every value sits at the **midpoint** of its class: 5, 15, 25, 35 and 45 minutes. Multiplying each midpoint by its frequency gives $4 \\times 5 = 20$, $10 \\times 15 = 150$, $16 \\times 25 = 400$, $8 \\times 35 = 280$ and $2 \\times 45 = 90$, which add to $\\sum fx = 940$. This is the estimated total of all forty times. Dividing by the total frequency — 40, the number of students, not 5, the number of classes — gives\n\n$$\\frac{940}{40} = 23.5 \\text{ minutes}$$\n\nThis is an **estimate**, because the grouping has hidden the actual times; the midpoint assumption is the best available, but it is an assumption. A quick check: 23.5 sits inside the modal class 20–30, which holds the most students, so it is plausible.\n\nTo find how many students took **longer than 35 minutes**, I would use the **cumulative frequency graph**, plotted at the upper bounds: (10, 4), (20, 14), (30, 30), (40, 38), (50, 40), starting from (0, 0).\n\nThis time the known value is on the **horizontal** axis. I read **up** from 35 minutes to the curve, then **across** to the cumulative frequency axis. Between (30, 30) and (40, 38) the curve rises by 8 over 10 minutes, and 35 is halfway, so the reading is about $30 + 4 = 34$.\n\nHere is the step students most often miss. That 34 is the number of students who took **35 minutes or less**, because a cumulative frequency always counts values **up to** a point. The question asks for **longer** than 35, which is everyone else:\n\n$$40 - 34 = 6 \\text{ students}$$\n\nHanding over 34 answers the opposite question and loses the final mark, even though the graph has been read correctly. Whenever the question says *more than*, *longer than* or *at least*, the reading has to be subtracted from $n$.\n\nAs with the mean, the answer is an estimate: the curve assumes the eight students in the 30–40 class are spread evenly through it, and the true number over 35 could be anywhere from 2 to 10. Six is the best estimate the graph can give."
     }
   ],
-  "examTechnique": {
-    "body": "**Midpoints for the mean, upper bounds for the graph.** Build the running total, check it ends at $n$, and plot each value at the end of its class.\n\nRead the median across from $\\frac{n}{2}$ and the quartiles from $\\frac{n}{4}$ and $\\frac{3n}{4}$. For a *more than* question, read the graph and **subtract from $n$**. Call every result an **estimate**.",
-    "examinerErrors": [
-      "Plotting cumulative frequencies at the **midpoints** instead of the upper bounds.",
-      "Reading the median across from $\\frac{n+1}{2}$ rather than $\\frac{n}{2}$.",
-      "Giving the graph reading for a *more than* question without subtracting from $n$.",
-      "Dividing $\\sum fx$ by the number of **classes** instead of by $n$.",
-      "Using upper bounds, not midpoints, when estimating the mean.",
-      "A running total that does not end at $n$, left unchecked.",
-      "Stating the estimated mean as if it were exact.",
-      "Giving the frequency instead of the class when asked for the modal class."
-    ],
-    "grade9Looks": "A grade 9 answer keeps **midpoints** and **upper bounds** for their separate jobs without hesitation, and checks the running total ends at $n$ before plotting anything. It reads the median from $\\frac{n}{2}$ and can say why the $n + 1$ version does not apply to a continuous curve. On a *more than* question it reads the graph and **subtracts from $n$**, saying what the reading counted. It calls every grouped result an **estimate** and knows the modal class is the exception, and it can turn the curve into a **box plot** by reading off the five-number summary."
-  },
   "worksheets": {
     "core": {
       "level": "core",
@@ -1250,6 +1373,20 @@
       ],
       "suggestedMinutes": 45
     }
+  },
+  "examTechnique": {
+    "body": "**Midpoints for the mean, upper bounds for the graph.** Build the running total, check it ends at $n$, and plot each value at the end of its class.\n\nRead the median across from $\\frac{n}{2}$ and the quartiles from $\\frac{n}{4}$ and $\\frac{3n}{4}$. For a *more than* question, read the graph and **subtract from $n$**. Call every result an **estimate**.",
+    "examinerErrors": [
+      "Plotting cumulative frequencies at the **midpoints** instead of the upper bounds.",
+      "Reading the median across from $\\frac{n+1}{2}$ rather than $\\frac{n}{2}$.",
+      "Giving the graph reading for a *more than* question without subtracting from $n$.",
+      "Dividing $\\sum fx$ by the number of **classes** instead of by $n$.",
+      "Using upper bounds, not midpoints, when estimating the mean.",
+      "A running total that does not end at $n$, left unchecked.",
+      "Stating the estimated mean as if it were exact.",
+      "Giving the frequency instead of the class when asked for the modal class."
+    ],
+    "grade9Looks": "A grade 9 answer keeps **midpoints** and **upper bounds** for their separate jobs without hesitation, and checks the running total ends at $n$ before plotting anything. It reads the median from $\\frac{n}{2}$ and can say why the $n + 1$ version does not apply to a continuous curve. On a *more than* question it reads the graph and **subtracts from $n$**, saying what the reading counted. It calls every grouped result an **estimate** and knows the modal class is the exception, and it can turn the curve into a **box plot** by reading off the five-number summary."
   },
   "quiz": {
     "questionIds": [

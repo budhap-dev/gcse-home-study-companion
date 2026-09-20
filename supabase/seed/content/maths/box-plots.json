@@ -35,6 +35,65 @@
       "body": "The **range** uses the two most extreme values, so one unusual result changes it completely. The **interquartile range** ignores the top and bottom quarters, so it is not thrown by an outlier. That is why comparisons of spread normally use the IQR."
     }
   ],
+  "why": {
+    "matters": "A box plot throws almost everything away. Out of a hundred numbers it keeps five, and draws them.\n\nThat is not a weakness, it is the design. A box plot exists to be put **beside another one**. Two histograms side by side are hard work; two box plots on one scale answer \"which is typically higher\", \"which is more spread out\" and \"which has something odd at the end\" in a single glance, and those three questions are most of what comparing two sets of data ever means.\n\nThe five numbers are chosen so that a single freak value cannot move them. That is why the middle line is the median rather than the mean, and why the box is the middle half rather than the whole range.",
+    "examples": [
+      {
+        "title": "Two routes, and the one you take",
+        "body": "The same journey, two ways: the motorway, or the shorter run through town. A month of each, drawn on one scale.\n\nThe town route has the lower median — 27 minutes against 28. On a typical day it is quicker, and if the median were all you looked at you would take it every time.\n\nNow look at the boxes. The motorway's interquartile range is 4 minutes; the town's is 14. A quarter of town journeys take more than 36 minutes, which is worse than the motorway's **worst** day of 34. At its worst the town route took 58 minutes — 24 minutes longer than anything the motorway ever did.\n\nSo the answer depends on the question. Going to see a friend, take the town route: it is usually quicker. Catching a flight, take the motorway, because you are not buying the typical journey, you are buying the bad one. A box plot is the shape that makes that difference visible, and an average is the shape that hides it.",
+        "visual": {
+          "type": "diagram",
+          "component": "box-plot",
+          "props": {
+            "plots": [
+              {
+                "label": "Motorway",
+                "min": 22,
+                "q1": 26,
+                "median": 28,
+                "q3": 30,
+                "max": 34
+              },
+              {
+                "label": "Through town",
+                "min": 18,
+                "q1": 22,
+                "median": 27,
+                "q3": 36,
+                "max": 58
+              }
+            ],
+            "xLabel": "journey time (minutes)",
+            "title": "A month of journeys, each way"
+          },
+          "alt": "Two box plots on one scale for the same journey by motorway and through town, the motorway box narrow and the town box more than three times as wide with a long tail to the right"
+        }
+      },
+      {
+        "title": "The street with one mansion on it",
+        "body": "Eleven houses on one street. Ten of them sold for between £250k and £400k, and one — a converted rectory at the end — went for £3,200k.\n\nThe mean price is £583.6k. That figure is higher than 10 of the 11 houses. As a description of the street it is not slightly off, it is useless: no house on it is worth anything like that, and nobody looking to move there would be helped by it.\n\nThe median is £325k, which is an actual house on the street. Take the rectory out of the list altogether and the median shifts by £7.5k, to £317.5k. The mean shifts by £261.6k, from £583.6k down to £322k. One of those two statistics noticed the mansion; the other was defined by it.\n\nThe range tells the same story: £2,950k, against an interquartile range of £95k — 31 times bigger. This is why house prices, salaries and waiting times are reported as medians and quartiles, and it is why a box plot draws the whiskers separately from the box instead of stretching the box to fit.",
+        "visual": {
+          "type": "diagram",
+          "component": "box-plot",
+          "props": {
+            "plots": [
+              {
+                "label": "The street",
+                "min": 250,
+                "q1": 285,
+                "median": 325,
+                "q3": 380,
+                "max": 3200
+              }
+            ],
+            "xLabel": "sale price (£000s)",
+            "title": "Eleven houses, one of them a rectory"
+          },
+          "alt": "A single box plot of eleven house prices where the box is squeezed into the left hand end of the scale and one whisker stretches all the way across to three thousand two hundred thousand pounds"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -1146,20 +1205,6 @@
       "modelAnswer": "A comparison of two distributions needs two things: a statement about **average** and a statement about **spread**, each interpreted in the context of the question.\n\n**Average.** Class B’s median is 25 and Class A’s is 22. B’s median is **higher**, so **on average, Class B scored better on the test**. Simply writing that B’s median is 25 would be a reading, not a comparison, and would earn nothing; the mark is for saying what the difference means.\n\n**Spread.** Class B’s interquartile range is 7.5 and Class A’s is 12. B’s IQR is **smaller**, so the middle half of B’s marks are bunched more tightly together: **Class B’s marks were more consistent**. It is important to say *more consistent* rather than *better*. A smaller spread is not a good thing in itself — it means the class performed more uniformly, which may or may not be what a teacher wants. Here it means fewer very low marks in B, but also fewer very high ones relative to their median.\n\nPutting the two together: Class B did better on average and more consistently than Class A.\n\n**What a box plot could tell you about scoring over 30.** A box plot is drawn from the five-number summary, and each section of it holds a **quarter of the data**. So if 30 happened to be one of the plotted values — say Class A’s upper quartile — the plot would say that **25% of Class A** scored above 30. It would also show whether **anyone** in each class scored over 30 at all, from where the maximum whisker ends. Those are statements about **proportions**.\n\n**What it could not tell you** is **how many** students that is. The plot has no scale for the number of values; two classes of 12 and 120 could produce identical plots. To turn 25% into a count you would need to know the **size of the class**, which is not on the diagram. Nor could it tell you how many scored over 30 if 30 fell somewhere inside a section, because within a quarter the individual values are not shown at all.\n\nSo from the plots alone the honest claim is that *a larger proportion* of one class scored over 30, never that *more students* did."
     }
   ],
-  "examTechnique": {
-    "body": "**Sort the data, find the median, then take the median of each half** — leaving the median out of both halves when the count is odd.\n\nA *compare* question wants **two** sentences: **medians** for average and **IQRs** for spread, each saying what it means **in context**. Reading a number off is not a comparison, and a smaller IQR means **more consistent**, not better.",
-    "examinerErrors": [
-      "Finding the median of the list **as given**, without sorting it.",
-      "Including the median in both halves when the count is **odd**.",
-      "Reading off two numbers instead of **comparing** them.",
-      "Comparing without saying what it means **in context**.",
-      "Calling a smaller IQR \"better\" rather than **more consistent**.",
-      "Claiming **how many** people from a plot that shows only **proportions**.",
-      "Using the range when an **outlier** makes the IQR the right choice.",
-      "Confusing the **box width** (IQR) with the whisker span (range)."
-    ],
-    "grade9Looks": "A grade 9 answer **sorts first**, handles the **odd/even** difference correctly, and gives quartiles as decimals when that is what the halves produce. On a *compare* question it writes exactly **two interpreted sentences** — average from the medians, spread from the IQRs — and says *more consistent* rather than *better*. It knows the plot shows **proportions, not counts**, so it claims a *larger proportion* rather than *more people* unless the group size is given. It prefers the **IQR** when an outlier is possible and can say why, and it reads **skew** from where the median sits in its box."
-  },
   "worksheets": {
     "core": {
       "level": "core",
@@ -1197,6 +1242,20 @@
       ],
       "suggestedMinutes": 45
     }
+  },
+  "examTechnique": {
+    "body": "**Sort the data, find the median, then take the median of each half** — leaving the median out of both halves when the count is odd.\n\nA *compare* question wants **two** sentences: **medians** for average and **IQRs** for spread, each saying what it means **in context**. Reading a number off is not a comparison, and a smaller IQR means **more consistent**, not better.",
+    "examinerErrors": [
+      "Finding the median of the list **as given**, without sorting it.",
+      "Including the median in both halves when the count is **odd**.",
+      "Reading off two numbers instead of **comparing** them.",
+      "Comparing without saying what it means **in context**.",
+      "Calling a smaller IQR \"better\" rather than **more consistent**.",
+      "Claiming **how many** people from a plot that shows only **proportions**.",
+      "Using the range when an **outlier** makes the IQR the right choice.",
+      "Confusing the **box width** (IQR) with the whisker span (range)."
+    ],
+    "grade9Looks": "A grade 9 answer **sorts first**, handles the **odd/even** difference correctly, and gives quartiles as decimals when that is what the halves produce. On a *compare* question it writes exactly **two interpreted sentences** — average from the medians, spread from the IQRs — and says *more consistent* rather than *better*. It knows the plot shows **proportions, not counts**, so it claims a *larger proportion* rather than *more people* unless the group size is given. It prefers the **IQR** when an outlier is possible and can say why, and it reads **skew** from where the median sits in its box."
   },
   "quiz": {
     "questionIds": [
