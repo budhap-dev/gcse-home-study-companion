@@ -114,18 +114,44 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
    * upwards if there is room above and downwards otherwise, so a chart can never print
    * one label over another. Positions are approximate because SVG cannot measure text
    * here; the browser check is what confirms the result.
+   *
+   * `anchor` has to match the `textAnchor` the caller draws with, because it decides
+   * which side of x the text occupies. A centred label registered as if it started at x
+   * reserves the wrong half of the line: two concentric circles labelled on the y-axis
+   * came out with "lane 1" printed over the 40 tick, and every check passed.
    */
   const placed: { x: number; y: number; w: number }[] = []
-  const clear = (x: number, y: number, text: string, size = 12, anchorEnd = false) => {
+  const clear = (x: number, y: number, text: string, size = 12, anchor: 'start' | 'middle' | 'end' = 'start') => {
     const w = text.length * size * 0.55
-    const left = anchorEnd ? x - w : x
+    const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x
     const hits = (at: number) => placed.some((q) => Math.abs(q.y - at) < size + 2 && left < q.x + q.w && q.x < left + w)
-    let out = y
-    for (let step = 0; step < 8 && hits(out); step++) out = y - (step + 1) * (size + 4)
-    if (hits(out)) { out = y; for (let step = 0; step < 8 && hits(out); step++) out = y + (step + 1) * (size + 4) }
+    /*
+     * The nudge has to stay on the canvas. A label starts no further out than the edge,
+     * because one whose natural spot is already past it — a tan curve's label, clamped to
+     * the top of the plot — would otherwise walk further out with every step; a position
+     * outside counts as blocked, so the other direction gets its turn; and if both
+     * directions fail it goes back to the edge. An overlap is a defect. Invisible is
+     * worse, and invisible is what twelve labels were.
+     */
+    const top = size + 2
+    const bottom = totalH - size * 0.3
+    const from = Math.min(Math.max(y, top), bottom)
+    const inside = (at: number) => at >= top && at <= bottom
+    const blocked = (at: number) => hits(at) || !inside(at)
+    let out = from
+    for (let step = 0; step < 8 && blocked(out); step++) out = from - (step + 1) * (size + 4)
+    if (blocked(out)) { out = from; for (let step = 0; step < 8 && blocked(out); step++) out = from + (step + 1) * (size + 4) }
+    if (!inside(out)) out = from
     placed.push({ x: left, y: out, w })
     return out
   }
+  /**
+   * Which side of a chosen x a label reads from. It normally runs rightwards, but one
+   * asked for near the right-hand edge would run off it — y = f(x − 3) had its last
+   * characters outside the canvas — so there it reads back towards the left instead,
+   * the way a plotted point's label already does.
+   */
+  const sideAt = (atX: number, text: string, size = 12) => (atX + 6 + text.length * size * 0.55 > W ? 'end' : 'start') as 'end' | 'start'
   /** Register a label that must not move, so movable ones are nudged clear of it. */
   const reserve = (x: number, y: number, text: string, size = 11, anchorEnd = false) => {
     const w = text.length * size * 0.55
@@ -246,7 +272,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={i}>
             <line x1={sx(x1)} y1={sy(y1)} x2={sx(x2)} y2={sy(y2)} stroke={colour} strokeWidth="2.5" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {l.label && <text x={sx(x2) - 4} y={clear(sx(x2) - 4, sy(y2) + (y2 > y1 ? -8 : 16), l.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{l.label}</text>}
+            {l.label && <text x={sx(x2) - 4} y={clear(sx(x2) - 4, sy(y2) + (y2 > y1 ? -8 : 16), l.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{l.label}</text>}
           </g>
         )
       })}
@@ -258,8 +284,12 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
           <g key={`k${i}`}>
             <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={k.dashed ? '6 5' : undefined} strokeLinecap="round" />
             {k.label && (typeof k.labelX === 'number'
-              ? <text x={sx(k.labelX) + 6} y={clear(sx(k.labelX) + 6, sy(yOf(k, k.labelX)) - 8, k.label, 12)} textAnchor="start" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>
-              : <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>)}
+              ? (() => {
+                  const side = sideAt(sx(k.labelX), k.label)
+                  const lx = sx(k.labelX) + (side === 'end' ? -6 : 6)
+                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(yOf(k, k.labelX), yMax))) - 8, k.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>
+                })()
+              : <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>)}
           </g>
         )
       })}
@@ -272,7 +302,20 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={`w${i}`}>
             <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={w.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {w.label && <text x={sx(at) - 4} y={clear(sx(at) - 4, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, true)} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{w.label}</text>}
+            {/*
+              * A wave labelled at its last visible point reads back towards the curve, so
+              * the text ends there. One labelled at a chosen x reads forwards from it, the
+              * way a curve's labelX already does: ending at that x instead drags the text
+              * left across the y-axis numbers, and y = tan x spent every nudge trying to
+              * get out from under them.
+              */}
+            {w.label && (typeof w.labelX === 'number'
+              ? (() => {
+                  const side = sideAt(sx(at), w.label)
+                  const lx = sx(at) + (side === 'end' ? -6 : 6)
+                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{w.label}</text>
+                })()
+              : <text x={sx(at) - 4} y={clear(sx(at) - 4, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{w.label}</text>)}
           </g>
         )
       })}
@@ -284,7 +327,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={`g${i}`} clipPath={`url(#box-${clip})`}>
             <polygon points={pts} fill={g.fill ? colour : 'none'} fillOpacity={g.fill ? 0.14 : undefined} stroke={colour} strokeWidth="2.5" strokeDasharray={g.dashed ? '6 5' : undefined} strokeLinejoin="round" />
-            {g.label && <text x={sx(cx)} y={clear(sx(cx), sy(cy) + 4, g.label, 13)} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={colour}>{g.label}</text>}
+            {g.label && <text x={sx(cx)} y={clear(sx(cx), sy(cy) + 4, g.label, 13, 'middle')} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={colour}>{g.label}</text>}
           </g>
         )
       })}
@@ -293,7 +336,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={`c${i}`}>
             <ellipse cx={sx(c.cx)} cy={sy(c.cy)} rx={Math.abs(c.r) * kx} ry={Math.abs(c.r) * ky} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} clipPath={`url(#box-${clip})`} />
-            {c.label && <text x={sx(c.cx)} y={clear(sx(c.cx), sy(c.cy + Math.abs(c.r)) - 8, c.label, 12)} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{c.label}</text>}
+            {c.label && <text x={sx(c.cx)} y={clear(sx(c.cx), sy(c.cy + Math.abs(c.r)) - 8, c.label, 12, 'middle')} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{c.label}</text>}
           </g>
         )
       })}
@@ -305,7 +348,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
             const left = sx(p.x) > W / 2
             const lx = sx(p.x) + (left ? -8 : 8)
             const ly = p.labelBelow ? sy(p.y) + 16 : sy(p.y) - 8
-            return <text x={lx} y={clear(lx, ly, p.label, 12, left)} textAnchor={left ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>
+            return <text x={lx} y={clear(lx, ly, p.label, 12, left ? 'end' : 'start')} textAnchor={left ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>
           })()}
         </g>
       ))}
