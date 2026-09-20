@@ -31,6 +31,118 @@
       "body": "Asked how many solutions an equation has in a range, draw the horizontal line $y = k$ across your sketch and count where it cuts the curve. For sine and cosine a value between $-1$ and $1$ gives two per $360°$, and a value outside that range gives none at all."
     }
   ],
+  "why": {
+    "matters": "In a triangle an angle stops at $180°$, and a ratio was a number you looked up for one. The graphs let go of the triangle: they give $\\sin$, $\\cos$ and $\\tan$ a value for **every** angle, and what appears is a shape that repeats for ever.\n\nThat repetition is the point. Anything that goes round or goes back and forth — a wheel, a tide, an alternating current, a note — is described by one of these curves, and the questions you ask of it are questions about the graph. It is also the honest answer to why $\\sin x = 0.5$ has more than one solution: the graph shows where the others are, and how many fall in the range you were given.",
+    "examples": [
+      {
+        "title": "The socket that says 230 volts and reaches 325",
+        "body": "Mains electricity is a sine wave. In the United Kingdom it goes through 50 complete cycles a second, so one cycle lasts 20 milliseconds, and the voltage is at zero twice in each of them — 100 times a second the supply is at nothing at all.\n\nThe 230 on the label is not the peak. It is the **root mean square**: the steady voltage that would deliver the same power, and for a sine wave that is the peak divided by $\\sqrt{2}$. So the peak is $230\\sqrt{2} = 325$ volts, and the wave swings from $+325$ to $-325$.\n\nInsulation has to survive 325 V even though nothing in the house is ever described that way. The gap between the number on the label and the number on the graph is the difference between an average and a maximum, and it is the graph that keeps track of it.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "What the label says",
+                "value": 230,
+                "display": "230 V",
+                "note": "the root mean square"
+              },
+              {
+                "label": "What the wave reaches",
+                "value": 325.3,
+                "display": "325 V",
+                "note": "the peak, each way"
+              }
+            ],
+            "caption": "One supply, two honest numbers"
+          },
+          "alt": "Two bars comparing the two hundred and thirty volts printed on a mains supply with the three hundred and twenty five volts the sine wave actually reaches at its peak"
+        }
+      },
+      {
+        "title": "The valve on your bicycle wheel",
+        "body": "Watch the valve as somebody rides past. Its height above the axle is $r\\cos\\theta$, where $\\theta$ is how far the wheel has turned since the valve was at the top, so it traces a cosine — top of the wheel, level with the axle, bottom, level again, top. A wheel with its tyre is about 0.67 m across, so the valve swings 34 cm either side of the axle and touches the road once a turn.\n\nThe period is one turn of the wheel, which is 2.10 m of road. At 20 km/h — that is 5.56 m/s — the wheel turns 2.6 times a second, so the valve completes 2.6 cycles a second.\n\nThis is what a **period** is, in a form you can watch go past: one full cycle of the curve is one whole turn of a real wheel, and nothing about it changes however long the ride. Everything else that repeats — a piston, a pendulum, a tide — is read the same way.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              720
+            ],
+            "yRange": [
+              -0.45,
+              0.45
+            ],
+            "xStep": 180,
+            "yStep": 0.2,
+            "grid": true,
+            "xLabel": "degrees the wheel has turned",
+            "yLabel": "valve height above the axle (m)",
+            "waves": [
+              {
+                "fn": "cos",
+                "amplitude": 0.335,
+                "labelX": 300
+              }
+            ]
+          },
+          "alt": "A cosine curve over two full turns of a bicycle wheel, showing the valve rising and falling thirty four centimetres either side of the axle once per turn"
+        }
+      },
+      {
+        "title": "The tide, and the hours a boat can leave",
+        "body": "Take a simple model of the water in a harbour: a depth of 5 m on average, swinging 3 m either way, once every 12 hours. In symbols, $d = 5 + 3\\sin(30t°)$ with $t$ in hours from mid-water on a rising tide.\n\nA boat needing 6 m has to solve $5 + 3\\sin(30t) = 6$, so $\\sin(30t) = \\tfrac{1}{3}$. The calculator gives $30t = 19.5°$ and therefore $t = 0.65$ hours. Take that as the answer and you have the moment the water becomes deep enough and no idea when it stops being so.\n\nThe graph supplies the other one. Sine takes each value twice a cycle, and the partner of $19.5°$ is $180° - 19.5° = 160.5°$, which is $t = 5.35$ hours. The window is the gap between them: 4 hours and 42 minutes. Missing the second solution does not cost you a mark here; it costs you the tide.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              360
+            ],
+            "yRange": [
+              -4,
+              4
+            ],
+            "xStep": 90,
+            "yStep": 1,
+            "grid": true,
+            "xLabel": "degrees of the cycle, at 30° an hour",
+            "yLabel": "depth above the average (m)",
+            "lines": [
+              {
+                "m": 0,
+                "c": 1,
+                "dashed": true
+              }
+            ],
+            "points": [
+              {
+                "x": 19.5,
+                "y": 1,
+                "label": "0.65 h",
+                "labelBelow": true
+              },
+              {
+                "x": 160.5,
+                "y": 1,
+                "label": "5.35 h"
+              }
+            ],
+            "waves": [
+              {
+                "fn": "sin",
+                "amplitude": 3
+              }
+            ]
+          },
+          "alt": "A sine curve of tide height over twelve hours with a dashed line at the depth a boat needs, crossing it twice, and both crossing times marked to show the window between them"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

@@ -31,6 +31,131 @@
       "body": "Put the line into the circle and you get a quadratic. Two solutions means the line cuts through, one repeated solution means it is a tangent, and no solutions means it misses. You can answer \"how many times\" from the discriminant alone, without solving anything."
     }
   ],
+  "why": {
+    "matters": "Coordinate geometry exists to turn a shape into an equation, so that questions about it become arithmetic instead of drawing. A straight line became $y = mx + c$. A circle becomes $x^2 + y^2 = r^2$, which is not a new idea at all — it is Pythagoras applied to every point at once.\n\nWhat that buys is exactness. Is this point inside? Where does this line cross? What is the tangent here? Each of those is a compass-and-ruler job you can only estimate, and each becomes algebra with a definite answer. It is also the first time a curve is handled the way lines have been all along.",
+    "examples": [
+      {
+        "title": "The shop that delivers within three miles",
+        "body": "Put the shop at the origin and the rule \"within 3 miles\" is the circle $x^2 + y^2 = 9$. Inside the circle is a delivery; outside it is not.\n\nAn address 2.1 miles east and 2 north gives $2.1^2 + 2^2 = 8.41$, which is under 9, so it is in — 2.90 miles away. Move a tenth of a mile east and a tenth north, to 2.2 and 2.1, and it gives 9.25, which is over, so it is out at 3.04 miles.\n\nNotice what was not done: no square root. Comparing $x^2 + y^2$ with $r^2$ answers the question, and a square root is the slowest thing a computer does here. Software that checks ranges — a delivery area, a geofence, whether two things have collided — compares squared distances for exactly that reason, and the equation of a circle is the reason it is allowed to.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Within 3 miles means x² + y² under 9",
+            "columns": [
+              "Address",
+              "x² + y²",
+              "Against 9",
+              "Distance",
+              "Delivered?"
+            ],
+            "rows": [
+              [
+                "2.1 east, 2 north",
+                "8.41",
+                "under",
+                "2.90 miles",
+                "yes"
+              ],
+              [
+                "2.2 east, 2.1 north",
+                "9.25",
+                "over",
+                "3.04 miles",
+                "no"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A table of two addresses a seventh of a mile apart, one giving eight point four one against a limit of nine and one giving nine point two five, so the squared distances decide the answer without a square root"
+        }
+      },
+      {
+        "title": "Letting go of the string",
+        "body": "Swing a conker on a string and let go. It does not fly outwards away from your hand, which is what everybody expects. It leaves along the **tangent** — at right angles to the string at the moment you released it — and then travels in a straight line.\n\nThat right angle is the fact the topic turns on: a tangent meets the radius at $90°$. It makes the tangent's gradient the negative reciprocal of the radius's, so on the circle $x^2 + y^2 = 9$ the point $(2.12, 2.12)$ has a radius of gradient $1$ and a tangent of gradient $-1$. No calculus is needed and none is allowed yet; the perpendicular is enough.\n\nIt is also the check that the tangent really is one. Substitute that line into the circle and the quadratic you get has a discriminant of exactly zero — one repeated root, one point of contact. A line that cut the circle would give two, and a line that missed would give none.",
+        "visual": {
+          "type": "diagram",
+          "component": "circle-theorem",
+          "props": {
+            "points": {
+              "A": 45
+            },
+            "centre": true,
+            "segments": [
+              [
+                "O",
+                "A"
+              ]
+            ],
+            "tangentAt": [
+              "A"
+            ],
+            "angles": [
+              {
+                "at": "A",
+                "from": "O",
+                "to": "A2",
+                "kind": "r"
+              }
+            ]
+          },
+          "alt": "A circle with a radius drawn to a point on it and the tangent at that point, the right angle between them marked, which is the direction a released stone travels in"
+        }
+      },
+      {
+        "title": "Does the path clip the pond?",
+        "body": "A circular pond of radius 5 m sits at the origin, and a straight path is to be laid. Whether it clips the water is a question about how many points the line and the circle share, and substituting one into the other turns it into a quadratic.\n\nFor the path $y = x + 6$: $x^2 + (x + 6)^2 = 25$ becomes $2x^2 + 12x + 11 = 0$, whose discriminant is 56. Positive, so two crossings — it goes through the water, entering at $x = -4.87$ and leaving at $x = -1.13$. Shift it to $y = x + 8$ and the discriminant is -56: negative, no crossings, the path is clear.\n\nBetween those two is the one that just grazes it, where the discriminant is zero. Solving for that gives $c^2 = 2r^2$, so $c = 5\\sqrt{2} \\approx 7.07$ — an exact answer for the closest a path of that direction can come without getting wet, which no amount of careful drawing would give you.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              -9,
+              5
+            ],
+            "yRange": [
+              -7,
+              7
+            ],
+            "xStep": 4,
+            "yStep": 4,
+            "square": true,
+            "grid": true,
+            "xLabel": "metres",
+            "yLabel": "metres",
+            "circles": [
+              {
+                "cx": 0,
+                "cy": 0,
+                "r": 5
+              }
+            ],
+            "lines": [
+              {
+                "m": 1,
+                "c": 6
+              },
+              {
+                "m": 1,
+                "c": 8
+              }
+            ],
+            "points": [
+              {
+                "x": -4.87,
+                "y": 1.13
+              },
+              {
+                "x": -1.13,
+                "y": 4.87
+              }
+            ]
+          },
+          "alt": "A circular pond of radius five with two parallel paths drawn across the plane, the nearer one cutting the water at two points and the further one passing clear of it"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
