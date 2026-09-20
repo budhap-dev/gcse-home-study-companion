@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import { everyVisual } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
@@ -27,15 +28,10 @@ describe('diagram registry', () => {
     // than a description, such as "Graphite: layers of hexagons".
     const thin: string[] = []
     for (const f of jsonFiles(ROOT)) {
-      const topic = JSON.parse(readFileSync(f, 'utf8')) as {
-        id: string
-        lesson: { steps: { id: string; visuals: { type: string; alt?: string }[] }[] }
-      }
-      for (const step of topic.lesson.steps) {
-        for (const v of step.visuals) {
-          if (v.type !== 'diagram') continue
-          if ((v.alt ?? '').length < 40) thin.push(`${topic.id} ${step.id}: ${JSON.stringify(v.alt)}`)
-        }
+      const topic = JSON.parse(readFileSync(f, 'utf8')) as { id: string }
+      for (const { visual, where } of everyVisual(topic)) {
+        if (visual.type !== 'diagram') continue
+        if ((visual.alt ?? '').length < 40) thin.push(`${topic.id} ${where}: ${JSON.stringify(visual.alt)}`)
       }
     }
     expect(thin).toEqual([])

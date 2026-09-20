@@ -46,3 +46,43 @@ const Interactive = z.object({
 
 export const Visual = z.discriminatedUnion('type', [Image, Diagram, Animation, WorkedExample, Interactive])
 export type Visual = z.infer<typeof Visual>
+
+/** A visual together with where in the topic it was found, for use in an assertion message. */
+export interface PlacedVisual {
+  visual: Visual
+  /** Human-readable location within the topic, such as `step-3` or `why[1] The door handle`. */
+  where: string
+}
+
+/**
+ * Every visual in a topic, wherever it lives.
+ *
+ * The scanners that hold the diagram library to its rules — props the component actually
+ * reads, alt text that could replace the picture, tables that fit their columns, no
+ * Markdown in a prop — each walked `lesson.steps` and stopped there. That was the whole
+ * of the content when they were written. `why.examples` then added 93 diagrams that no
+ * scanner looked at, and one of them passed `outcomeHeader` to a component that has never
+ * read it, so the prop was silently dropped exactly as those tests exist to prevent.
+ *
+ * So the list of places a visual can appear is written down once, here, beside the schema
+ * that defines them. A scanner that walks this cannot miss a location, and the next field
+ * to carry a Visual is added in one place rather than five.
+ */
+export function everyVisual(topic: unknown): PlacedVisual[] {
+  const t = topic as {
+    why?: { examples?: { title?: string; visual?: Visual }[] }
+    lesson?: { steps?: { id?: string; visuals?: Visual[] }[] }
+    questions?: { id?: string; visual?: Visual }[]
+  }
+  const out: PlacedVisual[] = []
+  for (const [i, example] of (t.why?.examples ?? []).entries()) {
+    if (example?.visual) out.push({ visual: example.visual, where: `why[${i}] ${example.title ?? ''}`.trim() })
+  }
+  for (const step of t.lesson?.steps ?? []) {
+    for (const visual of step?.visuals ?? []) out.push({ visual, where: step.id ?? 'step' })
+  }
+  for (const question of t.questions ?? []) {
+    if (question?.visual) out.push({ visual: question.visual, where: question.id ?? 'question' })
+  }
+  return out
+}

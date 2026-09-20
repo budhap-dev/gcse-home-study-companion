@@ -2,6 +2,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Topic } from './topic.ts'
+import { everyVisual } from './visuals.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
 function jsonFiles(dir: string): string[] {
@@ -28,21 +29,19 @@ describe('diagram props are plain text', () => {
   it('has no Markdown emphasis in any diagram prop', () => {
     const bad: string[] = []
     for (const { file, topic } of topics) {
-      for (const step of topic.lesson?.steps ?? []) {
-        for (const visual of step.visuals ?? []) {
-          if (visual.type !== 'diagram') continue
-          const walk = (value: unknown, path: string): void => {
-            if (typeof value === 'string') {
-              // Bold or italic markers, but not the ___ used as an answer blank.
-              if (/\*\*|(^|\s)\*\S/.test(value)) bad.push(`${file} ${step.id} ${path}: ${value.slice(0, 60)}`)
-            } else if (Array.isArray(value)) {
-              value.forEach((item, i) => walk(item, `${path}[${i}]`))
-            } else if (value && typeof value === 'object') {
-              for (const [key, item] of Object.entries(value)) walk(item, `${path}.${key}`)
-            }
+      for (const { visual, where } of everyVisual(topic)) {
+        if (visual.type !== 'diagram') continue
+        const walk = (value: unknown, path: string): void => {
+          if (typeof value === 'string') {
+            // Bold or italic markers, but not the ___ used as an answer blank.
+            if (/\*\*|(^|\s)\*\S/.test(value)) bad.push(`${file} ${where} ${path}: ${value.slice(0, 60)}`)
+          } else if (Array.isArray(value)) {
+            value.forEach((item, i) => walk(item, `${path}[${i}]`))
+          } else if (value && typeof value === 'object') {
+            for (const [key, item] of Object.entries(value)) walk(item, `${path}.${key}`)
           }
-          walk(visual.props, 'props')
         }
+        walk(visual.props, 'props')
       }
     }
     expect(bad).toEqual([])

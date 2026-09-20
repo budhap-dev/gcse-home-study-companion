@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import { everyVisual } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { FULL_ROW, MAX_TABLE_WIDTH, MIN_TEXT_PX, TEXT_PX, charBudget, columnWidths, naturalWidth, rowHeight, wrapCell } from './tableLayout.ts'
 
@@ -62,8 +63,7 @@ describe('every table in the content pack fits its columns', () => {
   for (const file of jsonFiles(ROOT)) {
     const topic = JSON.parse(readFileSync(file, 'utf8'))
     const at = file.split('/content/')[1]
-    for (const step of topic.lesson.steps) for (const visual of step.visuals) check(visual, `${at} ${step.id}`)
-    for (const q of topic.questions) if (q.visual) check(q.visual, `${at} ${q.id}`)
+    for (const { visual, where } of everyVisual(topic)) check(visual, `${at} ${where}`)
   }
 
   it('finds the tables to check', () => {
@@ -91,11 +91,10 @@ describe('every table in the content pack', () => {
   const tables: { file: string; step: string; columns: string[]; rows: string[][] }[] = []
   for (const file of jsonFiles(CONTENT)) {
     const topic = JSON.parse(readFileSync(file, 'utf8'))
-    for (const step of topic.lesson?.steps ?? []) {
-      for (const v of step.visuals ?? []) {
-        if (v.component !== 'trace-table') continue
-        tables.push({ file: file.split('/').pop()!, step: step.id, columns: v.props?.columns ?? [], rows: v.props?.rows ?? [] })
-      }
+    for (const { visual, where } of everyVisual(topic)) {
+      if (visual.type !== 'diagram' || visual.component !== 'trace-table') continue
+      const props = visual.props as { columns?: string[]; rows?: string[][] }
+      tables.push({ file: file.split('/').pop()!, step: where, columns: props?.columns ?? [], rows: props?.rows ?? [] })
     }
   }
 

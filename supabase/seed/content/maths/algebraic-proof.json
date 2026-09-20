@@ -30,6 +30,122 @@
       "body": "To **disprove** a statement you need exactly one case where it fails, and nothing else. No algebra, no explanation of why it fails in general. Find the number, show the calculation, and say that it disproves the statement. Trying to prove a false statement wrong algebraically wastes the time you have."
     }
   ],
+  "why": {
+    "matters": "Trying a statement on six numbers and finding that it works is not the same as knowing that it works, and the distance between those two is what proof is for. Writing \"any even number\" as $2n$ turns a claim about infinitely many cases into one line of algebra that covers all of them at once.\n\nIt runs the other way as well, and more cheaply: a single counter-example destroys a claim outright, with no algebra at all. Knowing which of the two jobs you are doing — proving, which needs letters, or disproving, which needs one number — is most of getting the marks and all of getting it right.",
+    "examples": [
+      {
+        "title": "The formula that makes primes until it does not",
+        "body": "Try $n^2 + n + 41$. At $n = 0$ it gives 41, a prime. At $n = 1$, 43. At $n = 2$, 47. Keep going and it is still giving primes at $n = 10$, at $n = 25$, at $n = 39$, where it produces 1601 — prime again. Forty tries, forty primes.\n\nAt $n = 40$ it gives 1681, which is $41 \\times 41$.\n\nForty consecutive successes is far more evidence than anybody checks by hand, and it was worth nothing. The algebra says where it had to fail: at $n = 41$ every term has a factor of 41 in it, so the answer must be a multiple of 41 — and it breaks just before, for a reason the pattern of results could never have shown you. That is the case for proof in one example.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "n² + n + 41",
+            "columns": [
+              "n",
+              "The answer",
+              "Prime?"
+            ],
+            "rows": [
+              [
+                "0",
+                "41",
+                "yes"
+              ],
+              [
+                "1",
+                "43",
+                "yes"
+              ],
+              [
+                "2",
+                "47",
+                "yes"
+              ],
+              [
+                "39",
+                "1601",
+                "yes"
+              ],
+              [
+                "40",
+                "1681",
+                "no — it is 41 × 41"
+              ]
+            ],
+            "highlight": 4
+          },
+          "alt": "A table of the formula n squared plus n plus forty one, giving a prime for every n from zero to thirty nine and failing at forty where it gives forty one squared"
+        }
+      },
+      {
+        "title": "Why adding up the digits tests for 3",
+        "body": "Everyone is taught that a number divides by 3 when its digits add to a multiple of 3. Almost nobody is shown why, and it is four lines.\n\nA three-digit number is $100a + 10b + c$. Split each hundred into $99 + 1$ and each ten into $9 + 1$, and it becomes $99a + 9b + (a + b + c)$. The first two terms are multiples of 3 whatever $a$ and $b$ are, so the whole number is a multiple of 3 exactly when the leftover, $a + b + c$, is — and $a + b + c$ is the digit sum.\n\nTake 573: the multiple-of-3 part is 558 and the digit sum is 15, which is $3 \\times 5$, so 573 divides. Take 574: the same 558, but a digit sum of 16, which does not — so 574 does not either. The proof also tells you the test works for 9 and fails for 7, which no amount of trying examples would.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "100a + 10b + c = 99a + 9b + (a + b + c)",
+            "columns": [
+              "Number",
+              "99a + 9b",
+              "Digit sum",
+              "Adds back to",
+              "Divides by 3?"
+            ],
+            "rows": [
+              [
+                "573",
+                "558",
+                "15",
+                "573",
+                "yes"
+              ],
+              [
+                "574",
+                "558",
+                "16",
+                "574",
+                "no"
+              ]
+            ],
+            "highlight": 0
+          },
+          "alt": "A table splitting two three-digit numbers into a part that is always a multiple of three and the digit sum, showing that only the digit sum decides whether the number divides by three"
+        }
+      },
+      {
+        "title": "Every odd number is the gap between two squares",
+        "body": "Write down the squares: 0, 1, 4, 9, 16, 25. The gaps between them are 1, 3, 5, 7, 9 — the odd numbers, in order, for ever. One line of algebra says why and says it for all of them at once: $(n + 1)^2 - n^2 = n^2 + 2n + 1 - n^2 = 2n + 1$, which is the general odd number.\n\nIt is not only tidy. It is a way to square things: $41^2$ is $40^2$ plus the odd number $2 \\times 40 + 1 = 81$, so 1600 + 81 = 1681 with no multiplication at all. Knowing one square gets you its neighbour.\n\nAnd the proof is doing something no list of cases could. Checking the first fifty gaps tells you about fifty gaps; $2n + 1$ tells you about every gap there will ever be, including ones far larger than anything you would write out.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "(n + 1)² − n²\nis always\n2n + 1",
+            "boxes": [
+              {
+                "title": "40² = 1600",
+                "body": "the square you know"
+              },
+              {
+                "title": "2 × 40 + 1 = 81",
+                "body": "the odd number in the gap"
+              },
+              {
+                "title": "1600 + 81 = 1681",
+                "body": "so 41² without multiplying"
+              },
+              {
+                "title": "1, 3, 5, 7, 9, …",
+                "body": "the gaps between 0, 1, 4, 9, 16, 25"
+              }
+            ]
+          },
+          "alt": "Four boxes around the identity that the gap between consecutive squares is the odd number two n plus one, worked through for forty and forty one"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

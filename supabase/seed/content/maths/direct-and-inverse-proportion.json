@@ -31,6 +31,109 @@
       "body": "Given a table and asked which kind of proportion it shows, work out $y \\div x$ for each column and then $x \\times y$ for each. A constant $y \\div x$ means **direct**; a constant $x \\times y$ means **inverse**. If neither is constant, it is neither."
     }
   ],
+  "why": {
+    "matters": "Proportion is a stronger claim than \"one goes up with the other\". It says the **ratio** is fixed, and that is what lets you scale: if $y \\propto x$ then doubling $x$ doubles $y$, and one pair of values determines every other pair.\n\nMost things that rise together are not proportional, and the difference is the whole topic. When $y \\propto x^2$, or $y \\propto 1/x$, or $y \\propto 1/x^2$, scaling by eye gives an answer that looks reasonable and is wrong — usually badly wrong, and usually in the same direction every time.",
+    "examples": [
+      {
+        "title": "Why the bigger pizza is always better value",
+        "body": "A pizza is sold by the number across it, and what you eat is the area. Diameter is one dimension and area is two, so the food goes up with the **square**: a 12 inch pizza is not half as much again as an 8 inch one, it is $\\left(\\tfrac{12}{8}\\right)^2 = 2.25$ times as much.\n\nIn numbers, 50.3 square inches against 113.1. Price rarely keeps up: at £8 and £12 you are paying 1.5 times as much for 2.25 times the pizza, which is 6.3 square inches a pound against 9.4 — 50% better.\n\nThe same square catches people everywhere a size is quoted as one length: a 6 inch cake tin holds well under half what a 9 inch one does, and two of the small ones still do not fill the big one. Whenever the label is a length and the thing you want is an area, the ratio you want is squared.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "8 inch pizza",
+                "value": 50.3,
+                "display": "50 sq in",
+                "note": "£8"
+              },
+              {
+                "label": "12 inch pizza",
+                "value": 113.1,
+                "display": "113 sq in",
+                "note": "£12"
+              }
+            ],
+            "caption": "Half as much again across, twice as much to eat"
+          },
+          "alt": "Two bars for the area of an eight inch and a twelve inch pizza, fifty against one hundred and thirteen square inches, a ratio of two and a quarter from a diameter only half as much again"
+        }
+      },
+      {
+        "title": "The last bit of a bicycle pump",
+        "body": "Air in a sealed pump obeys a clean inverse proportion: squeeze it into half the space and the pressure doubles. In symbols $p \\propto \\tfrac{1}{V}$, or $pV$ is constant, which for 500 ml of air at 1 bar makes that constant 500.\n\nSo at 250 ml it is 2 bar, at 125 ml it is 4 bar, and at 100 ml it is 5. The stroke that takes you from 500 to 250 adds one bar; the much shorter one from 125 to 100 adds another whole bar.\n\nThat is why the end of the stroke is the hard part, and it is the signature of an inverse proportion rather than a decreasing straight line: **halving the volume doubles the pressure wherever you already are**, so the last centimetre costs as much as the first ten.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              600
+            ],
+            "yRange": [
+              0,
+              6
+            ],
+            "xStep": 100,
+            "yStep": 1,
+            "grid": true,
+            "xLabel": "volume left (ml)",
+            "yLabel": "pressure (bar)",
+            "curves": [
+              {
+                "a": 0,
+                "b": 0,
+                "c": 0,
+                "reciprocal": 500
+              }
+            ]
+          },
+          "alt": "A reciprocal curve of pressure against the volume of air left in a pump, gentle at the start of the stroke and climbing steeply as the last hundred millilitres are squeezed"
+        }
+      },
+      {
+        "title": "Why a torch is useless across a field",
+        "body": "Light spreads out over a sphere, and a sphere's area goes with the square of its radius. So the light landing on any one thing falls as $1/d^2$ — an inverse **square**, which fades far faster than people expect.\n\nStep from 1 m to 2 m from a lamp and you have a quarter of the light, not a half. At 3 m it is a ninth, about 11% — 89% of it gone for two paces backwards. At 10 m it is 1%.\n\nIt cuts the other way too, and that is the practical half: moving a reading lamp from arm's length to half that gives four times the light for no more electricity. The same law is why a camera flash lights a room badly and a face well, and why a phone torch cannot light a field however bright it looks in your hand.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Share of the light, by distance",
+            "columns": [
+              "Distance",
+              "As a fraction",
+              "Share of the light"
+            ],
+            "rows": [
+              [
+                "1 m",
+                "all of it",
+                "100%"
+              ],
+              [
+                "2 m",
+                "1 over 4",
+                "25%"
+              ],
+              [
+                "3 m",
+                "1 over 9",
+                "11%"
+              ],
+              [
+                "10 m",
+                "1 over 100",
+                "1%"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A table of how much of a lamp reaches you at one, two, three and ten metres, falling to a quarter, a ninth and a hundredth because the light spreads over the square of the distance"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
