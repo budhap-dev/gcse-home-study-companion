@@ -37,6 +37,130 @@
       "body": "To factorise, find the **highest common factor** and take it outside. Always check by **expanding back**: $4(3x + 5) = 12x + 20$. If it does not return the original, the factor taken out was not the highest, or a sign is wrong."
     }
   ],
+  "why": {
+    "matters": "Two expressions can look nothing like each other and be the same thing: $2(x + 3)$ and $2x + 6$ give the same answer for every value of $x$. Expanding and simplifying are the two directions of travel between such forms, and what makes them worth anything is the rule that the value never changes — only the appearance does.\n\nThat matters because the appearance is what you can see. One arrangement hides the answer, another makes it obvious, and only one of them can be solved. Rewriting an expression while being sure you have not altered it is the move every later piece of algebra stands on.",
+    "examples": [
+      {
+        "title": "The trick that always ends on 1",
+        "body": "Think of a number. Add 3. Double it. Take away 4. Halve it. Now subtract the number you first thought of. You have 1, and so has everyone else in the room.\n\nTry it with 7 and you get 1. Try it with 2.5 and you get 1. That is evidence, and evidence cannot tell you whether some number somewhere breaks it. Expanding can: $2(n + 3) - 4 = 2n + 2$, halved is $n + 1$, and $n + 1 - n = 1$.\n\nThe $n$ cancels, so the number you started with was never in the answer — which is why the trick cannot fail. Every one of these is built the same way, as a chain of operations arranged to make the variable disappear, and expanding the chain is how you both see through one and design one.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "The same six instructions, three times",
+            "columns": [
+              "Instruction",
+              "Starting at 7",
+              "Starting at 2.5",
+              "Starting at n"
+            ],
+            "rows": [
+              [
+                "Think of a number",
+                "7",
+                "2.5",
+                "n"
+              ],
+              [
+                "Add 3",
+                "10",
+                "5.5",
+                "n + 3"
+              ],
+              [
+                "Double it",
+                "20",
+                "11",
+                "2n + 6"
+              ],
+              [
+                "Take away 4",
+                "16",
+                "7",
+                "2n + 2"
+              ],
+              [
+                "Halve it",
+                "8",
+                "3.5",
+                "n + 1"
+              ],
+              [
+                "Subtract your number",
+                "1",
+                "1",
+                "1"
+              ]
+            ],
+            "highlight": 5
+          },
+          "alt": "A table running the number trick with seven, with two point five and with n, where the algebra column ends at one because the n cancels out"
+        }
+      },
+      {
+        "title": "A rise and a fall that do not cancel",
+        "body": "A price goes up by 10% and later comes down by 10%. Most people expect to be back where they started. Multiply instead: $\\times 1.1$ then $\\times 0.9$ is $\\times 0.99$. A penny in the pound has gone, and it goes in whichever order the two changes happen.\n\nThe general case is a two-bracket expansion, and it is the one worth knowing on sight: $(1 + r)(1 - r) = 1 - r^2$. The middle terms $+r$ and $-r$ cancel. The $r^2$ does not, and that leftover square **is** the loss.\n\nBecause it is a square it grows fast. Up and down 10% costs 1p in the pound. Up and down 20% costs 4p. Up and down 50% — a half-price sale after a half-price rise — costs 25p, a quarter of the money, from two changes that sound as though they undo each other.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Up and down 10%",
+                "value": 1,
+                "display": "1p in the pound",
+                "note": "£1 becomes £0.99"
+              },
+              {
+                "label": "Up and down 20%",
+                "value": 4,
+                "display": "4p",
+                "note": "£1 becomes £0.96"
+              },
+              {
+                "label": "Up and down 50%",
+                "value": 25,
+                "display": "25p",
+                "note": "£1 becomes £0.75"
+              }
+            ],
+            "caption": "What is left behind by two changes that look as if they cancel"
+          },
+          "alt": "Three bars for the money lost when a price rises and falls by the same percentage, one penny in the pound at ten per cent, four pence at twenty per cent and twenty five pence at fifty"
+        }
+      },
+      {
+        "title": "Squaring in your head",
+        "body": "$97^2$ looks like a job for a calculator. Written as $(100 - 3)^2$ it is not: expanding gives $100^2 - 2 \\times 100 \\times 3 + 3^2 = 10\\,000 - 600 + 9 = 9409$, and every one of those is a step you can take while walking.\n\nThe same move handles a product. $32 \\times 28$ is $(30 + 2)(30 - 2)$, the middle terms cancel exactly as before, and what is left is $900 - 4 = 896$. $19 \\times 7$ is $20 \\times 7 - 7 = 133$, which is the same idea with one bracket.\n\nExpanding brackets is taught as something done to an algebraic expression. It is older and more ordinary than that: it is the rule that lets you swap an awkward number for a convenient one and a correction.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "(100 − 3)²\nadds up to\n9409",
+            "boxes": [
+              {
+                "title": "100 × 100",
+                "body": "10,000"
+              },
+              {
+                "title": "100 × (−3)",
+                "body": "-300"
+              },
+              {
+                "title": "(−3) × 100",
+                "body": "-300"
+              },
+              {
+                "title": "(−3) × (−3)",
+                "body": "9"
+              }
+            ]
+          },
+          "alt": "The four products made by multiplying one hundred minus three by itself, ten thousand, minus three hundred twice and nine, which add to nine thousand four hundred and nine"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

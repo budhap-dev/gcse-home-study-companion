@@ -21,35 +21,109 @@ interface Tri {
   rotate?: number
 }
 
+/** Width of one character of the 11px angle labels, and half their cap height. */
+const ANGLE_CHAR = 6
+const ANGLE_HALF_HEIGHT = 5.5
+
+type Pt = { x: number; y: number }
+
+/** Is a point inside the triangle, by the sign of the three cross products? */
+function inside(p: Pt, tri: Pt[]) {
+  let positive = false
+  let negative = false
+  for (let i = 0; i < 3; i++) {
+    const a = tri[i]!
+    const b = tri[(i + 1) % 3]!
+    const cross = (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x)
+    if (cross > 0) positive = true
+    if (cross < 0) negative = true
+  }
+  return !(positive && negative)
+}
+
+/**
+ * Where an angle's text goes: along the internal bisector, at the first distance from the
+ * vertex where the whole text box fits inside the triangle.
+ *
+ * It used to sit at a flat 30px along the vertex-to-centroid line, which is fine for a
+ * fat vertex and wrong for a sharp one: at 30° the triangle is only a few pixels tall
+ * that far in, so "30°" was painted across both of its own sides. Nothing caught it —
+ * the label was inside the picture, above the readable floor and clear of every other
+ * label — until the drawn lines were tested against the label boxes in a browser.
+ *
+ * If no distance fits, the text goes outside the vertex instead, which is legible even
+ * though it is not where an angle label belongs.
+ */
+function anglePlace(v: Pt, p: Pt, q: Pt, tri: Pt[], text: string): Pt {
+  const unit = (t: Pt) => { const l = Math.hypot(t.x - v.x, t.y - v.y) || 1; return { x: (t.x - v.x) / l, y: (t.y - v.y) / l } }
+  const u1 = unit(p)
+  const u2 = unit(q)
+  let bx = u1.x + u2.x
+  let by = u1.y + u2.y
+  const bl = Math.hypot(bx, by)
+  // A straight vertex has no bisector; nothing sensible can be drawn inside it anyway.
+  if (bl < 1e-6) return { x: v.x, y: v.y }
+  bx /= bl
+  by /= bl
+  const halfW = (text.length * ANGLE_CHAR) / 2
+  for (let d = 16; d <= 120; d += 2) {
+    const c = { x: v.x + bx * d, y: v.y + by * d }
+    const corners = [
+      { x: c.x - halfW, y: c.y - ANGLE_HALF_HEIGHT },
+      { x: c.x + halfW, y: c.y - ANGLE_HALF_HEIGHT },
+      { x: c.x - halfW, y: c.y + ANGLE_HALF_HEIGHT },
+      { x: c.x + halfW, y: c.y + ANGLE_HALF_HEIGHT },
+    ]
+    if (corners.every((corner) => inside(corner, tri))) return c
+  }
+  const back = halfW + ANGLE_HALF_HEIGHT + 8
+  return { x: v.x - bx * back, y: v.y - by * back }
+}
+
+/** The apex of a triangle placed with AB along x, in the triangle's own units. */
+function apex(tri: Tri) {
+  const [ab, bc, ca] = tri.sides
+  const x = (ca * ca - bc * bc + ab * ab) / (2 * ab)
+  return { ab, x, y: Math.sqrt(Math.max(0, ca * ca - x * x)) }
+}
+
 /**
  * Two triangles side by side with tick marks and angle arcs, for congruence and
- * similarity. Props: { left: Tri, right: Tri }.
+ * similarity. Props: { left: Tri, right: Tri, sameScale?: boolean }.
+ *
+ * Each triangle is drawn 150px wide by default, whatever its sides say, which is right
+ * for congruence and similarity — the question there is the shape, and a similar pair
+ * drawn to true size would put one of them in the corner. It is wrong for a comparison
+ * of sizes: an escalator needing 8.66 m of floor beside one needing 7.14 m came out with
+ * both floors drawn the same length, which is the opposite of what the example said.
+ * `sameScale` makes the pair share one scale, so the reader sees the difference before
+ * reading it.
  */
 export function TrianglePair({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const left = props.left as Tri
   const right = props.right as Tri | undefined
   const W = right ? 520 : 280
   const H = 220
+  const extent = (tri: Tri) => { const a = apex(tri); return Math.max(a.ab, a.x, 1) }
+  const shared = props.sameScale && right ? 150 / Math.max(extent(left), extent(right)) : undefined
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.1 }} role="img" aria-label={alt}>
-      <One tri={left} cx={140} cy={120} />
-      {right && <One tri={right} cx={380} cy={120} />}
+      <One tri={left} cx={140} cy={120} scale={shared} />
+      {right && <One tri={right} cx={380} cy={120} scale={shared} />}
     </svg>
   )
 }
 
-function One({ tri, cx, cy }: { tri: Tri; cx: number; cy: number }) {
-  const [ab, bc, ca] = tri.sides
+function One({ tri, cx, cy, scale: given }: { tri: Tri; cx: number; cy: number; scale?: number }) {
+  const { ab, x, y } = apex(tri)
   // place A at origin, B along x, C above
-  const x = (ca * ca - bc * bc + ab * ab) / (2 * ab)
-  const y = Math.sqrt(Math.max(0, ca * ca - x * x))
   let pts = [
     { x: 0, y: 0 },
     { x: ab, y: 0 },
     { x, y },
   ]
   // scale to fit ~150px wide, centre
-  const scale = 150 / Math.max(ab, x, 1)
+  const scale = given ?? 150 / Math.max(ab, x, 1)
   pts = pts.map((p) => ({ x: p.x * scale, y: -p.y * scale }))
   const mx = (pts[0]!.x + pts[1]!.x + pts[2]!.x) / 3
   const my = (pts[0]!.y + pts[1]!.y + pts[2]!.y) / 3
@@ -145,7 +219,7 @@ function One({ tri, cx, cy }: { tri: Tri; cx: number; cy: number }) {
           <g key={i}>
             {kind ? angleMark(v, p, q, kind) : null}
             <text x={lp.x} y={lp.y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>{names[i]}</text>
-            {tri.angleText?.[i] && (() => { const ip = { x: v.x - (away.x / l) * 30, y: v.y - (away.y / l) * 30 }; return <text x={ip.x} y={ip.y + 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{tri.angleText![i]}</text> })()}
+            {tri.angleText?.[i] && (() => { const ip = anglePlace(v, p, q, pts, tri.angleText![i]!); return <text x={ip.x} y={ip.y + 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{tri.angleText![i]}</text> })()}
           </g>
         )
       })}
