@@ -71,6 +71,74 @@ describe('triangle-pair', () => {
   })
 
   /**
+   * A sharp vertex has almost no room in it. "30°" was drawn a flat 30px in from the
+   * corner of a 30° vertex, where the triangle is a few pixels tall, so the label was
+   * painted across both of the sides it sat between. Every existing check passed: the
+   * text was inside the picture, above the readable floor and clear of every other
+   * label. Only measuring the drawn lines against the label boxes in a browser found it.
+   */
+  it('never draws a side through an angle label, however sharp the vertex', () => {
+    const ANGLE_CHAR = 6 // matches the component
+
+    /** Does the segment pq cross the axis-aligned box, or lie inside it? */
+    const crosses = (p: { x: number; y: number }, q: { x: number; y: number }, box: { x0: number; x1: number; y0: number; y1: number }) => {
+      const steps = 400
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps
+        const x = p.x + (q.x - p.x) * t
+        const y = p.y + (q.y - p.y) * t
+        if (x >= box.x0 && x <= box.x1 && y >= box.y0 && y <= box.y1) return true
+      }
+      return false
+    }
+
+    // A 30-60-90 triangle with room for its labels, and one far too thin to hold any.
+    for (const sides of [[8.66, 5, 10], [12, 1.2, 12.05]] as [number, number, number][]) {
+      const html = renderToStaticMarkup(
+        <TrianglePair alt="" props={{ left: { sides, angles: [1, 'r', 1], angleText: ['30°', '90°', '60°'], labels: ['', '', ''] } }} />,
+      )
+      const tri = corners(html)
+      const labels = texts(html).filter((t) => t.text.endsWith('°'))
+      expect(labels).toHaveLength(3)
+      for (const label of labels) {
+        const halfW = (label.text.length * ANGLE_CHAR) / 2
+        // y is the baseline, which the component draws 4px below the centre it chose.
+        const cy = label.y - 4
+        const box = { x0: label.x - halfW, x1: label.x + halfW, y0: cy - 5.5, y1: cy + 5.5 }
+        for (let i = 0; i < 3; i++) {
+          expect(crosses(tri[i]!, tri[(i + 1) % 3]!, box), `${sides}: side ${i} runs through "${label.text}"`).toBe(false)
+        }
+      }
+    }
+  })
+
+  /**
+   * Each triangle is drawn 150px wide by default, which is right for congruence and
+   * similarity and wrong for a comparison of sizes: two escalators needing 8.66 m and
+   * 7.14 m of floor came out with both floors the same length on the page, which is the
+   * opposite of what the example said. `sameScale` makes the pair share one scale.
+   */
+  it('draws a pair to one scale when asked, and to its own otherwise', () => {
+    const pair = { left: { sides: [8.66, 5, 10] }, right: { sides: [7.14, 5, 8.72] } }
+    const baseOf = (html: string, which: 0 | 1) => {
+      const polygons = [...html.matchAll(/points="([^"]+)"/g)].map((m) => m[1]!)
+      const [A, B] = polygons[which]!.split(' ').slice(0, 2).map((p) => {
+        const [x, y] = p.split(',').map(Number)
+        return { x: x!, y: y! }
+      })
+      return Math.hypot(B!.x - A!.x, B!.y - A!.y)
+    }
+
+    const apart = renderToStaticMarkup(<TrianglePair alt="" props={pair} />)
+    expect(baseOf(apart, 0) / baseOf(apart, 1)).toBeCloseTo(1, 2)
+
+    const together = renderToStaticMarkup(<TrianglePair alt="" props={{ ...pair, sameScale: true }} />)
+    // The shorter run has to come out shorter, and in the ratio the numbers give.
+    expect(baseOf(together, 1) / baseOf(together, 0)).toBeCloseTo(7.14 / 8.66, 2)
+    expect(baseOf(together, 0) / 150).toBeCloseTo(1, 2)
+  })
+
+  /**
    * `angles` is how many arcs to draw, not an angle in degrees. A caller thinking in
    * degrees passed 45, and the component drew forty five concentric arcs across the
    * whole picture rather than failing or clamping.

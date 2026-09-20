@@ -35,6 +35,147 @@
       "body": "If the unknown is on **top**, multiply: $O = H \\sin\\theta$. If it is on the **bottom**, divide: $H = \\frac{O}{\\sin\\theta}$. Multiplying when you should divide is the most common slip, and it always makes the answer too small."
     }
   ],
+  "why": {
+    "matters": "Pythagoras needs two sides. Very often what you have instead is one side and an angle: the pitch of a roof, the height of the sun, how steep a path is. A trigonometric ratio is the exchange rate between the two — a single number, fixed by the angle alone, that turns one length into another.\n\nIt can be a single number because shape does not depend on size. Every right-angled triangle with a 35° angle has its sides in the same proportion, whether it is a roof truss or a triangle on a map, so $\\sin 35°$ is worth working out once and using for all of them.",
+    "examples": [
+      {
+        "title": "The shelf that shades a window in June and not in December",
+        "body": "A south-facing window gets the summer sun you do not want and the winter sun you do. A plain horizontal shelf above the glass can sort out both at once, and the whole design is one tangent.\n\nIn the north of England, near 53.7° north, the noon sun stands $90° - 53.7° + 23.4° = 59.7°$ above the horizon at midsummer and $90° - 53.7° - 23.4° = 12.9°$ at midwinter. A shelf projecting 60 cm casts a shadow down the wall of $60 \\times \\tan(\\text{elevation})$, so it covers 103 cm of window in June, 44 cm at the equinox and 14 cm in December.\n\nNothing moves and nothing is switched on. The same piece of timber shades the glass when the sun is high and steps out of the way when it is low, because tangent changes much faster than the angle feeding it does.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Midsummer noon",
+                "value": 102.7,
+                "display": "103 cm",
+                "note": "sun 59.7° up"
+              },
+              {
+                "label": "Equinox noon",
+                "value": 44.1,
+                "display": "44 cm",
+                "note": "sun 36.3° up"
+              },
+              {
+                "label": "Midwinter noon",
+                "value": 13.7,
+                "display": "14 cm",
+                "note": "sun 12.9° up"
+              }
+            ],
+            "caption": "Window shaded by the same 60 cm shelf"
+          },
+          "alt": "Three bars showing the depth of window shaded by one sixty centimetre shelf at midsummer, equinox and midwinter noon, one hundred and three centimetres against forty four and fourteen"
+        }
+      },
+      {
+        "title": "The escalator and the floor it costs",
+        "body": "Escalators are built at 30° to the horizontal. The standard allows a steeper 35°, but only for short rises and at a lower speed, and the reason the angle is argued over at all is that it decides how much of the building the machine eats.\n\nTake a 5 m climb between floors. At 30° the horizontal run is $5 \\div \\tan 30° = 8.66$ m, and the truss carrying it is $5 \\div \\sin 30° = 10$ m exactly — the rise is half the slope, which is precisely what $\\sin 30° = \\tfrac{1}{2}$ says. Steepen it to 35° and the run falls to 7.14 m and the truss to 8.72 m.\n\nThat is 1.5 m of shop floor bought back by five degrees. The climb did not change; only the shape did, and the shape is the only thing the ratio knows about.",
+        "visual": {
+          "type": "diagram",
+          "component": "triangle-pair",
+          "props": {
+            "sameScale": true,
+            "left": {
+              "sides": [
+                8.66,
+                5,
+                10
+              ],
+              "angles": [
+                1,
+                "r",
+                0
+              ],
+              "angleText": [
+                "30°",
+                "",
+                ""
+              ],
+              "lengths": [
+                "8.66 m of floor",
+                "5 m",
+                "10 m"
+              ],
+              "labels": [
+                "",
+                "",
+                ""
+              ]
+            },
+            "right": {
+              "sides": [
+                7.14,
+                5,
+                8.72
+              ],
+              "angles": [
+                1,
+                "r",
+                0
+              ],
+              "angleText": [
+                "35°",
+                "",
+                ""
+              ],
+              "lengths": [
+                "7.14 m of floor",
+                "5 m",
+                "8.72 m"
+              ],
+              "labels": [
+                "",
+                "",
+                ""
+              ]
+            }
+          },
+          "alt": "Two escalators drawn as right-angled triangles climbing the same five metres, one at thirty degrees taking eight point six six metres of floor and one at thirty five degrees taking seven point one four"
+        }
+      },
+      {
+        "title": "Why a ramp rule is a ratio and not an angle",
+        "body": "The rules for a wheelchair ramp are written as gradients. The steepest one allowed is 1 in 12, and it is never written as 4.8°, although $\\tan^{-1}\\left(\\tfrac{1}{12}\\right) = 4.8°$ and the two say exactly the same thing. Longer rises get gentler gradients — 1 in 15, 1 in 20 — and those are gradients too.\n\nThe ratio is the useful form because it is free of size. At 1 in 12 the run is 12 times the rise whatever is being got over: a 100 mm doorstep needs 1.2 m, a 200 mm step needs 2.4 m, and 600 mm — three steps — needs 7.2 m, longer than a car. A real ramp that tall would be gentler than 1 in 12 and longer still. The angle is identical down the whole column, which is exactly why quoting it would tell a builder nothing they could act on.\n\nAnd a builder on site has a tape and no protractor. A ratio can be checked with the tape that made it; 4.8° cannot be checked with anything in the van. That is the practical reason gradients, not angles, are what regulations and road signs are written in.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "A ramp at 1 in 12, the steepest allowed",
+            "columns": [
+              "What is being got over",
+              "Rise",
+              "Run needed",
+              "Angle"
+            ],
+            "rows": [
+              [
+                "A doorstep",
+                "100 mm",
+                "1.2 m",
+                "4.8°"
+              ],
+              [
+                "A single step",
+                "200 mm",
+                "2.4 m",
+                "4.8°"
+              ],
+              [
+                "Three steps",
+                "600 mm",
+                "7.2 m",
+                "4.8°"
+              ]
+            ]
+          },
+          "alt": "A table of three ramps at a gradient of one in twelve, with rises of one hundred, two hundred and six hundred millimetres needing one point two, two point four and seven point two metres of run, every one of them at the same angle"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

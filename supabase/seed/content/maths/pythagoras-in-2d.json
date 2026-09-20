@@ -35,6 +35,112 @@
       "body": "The gap between $(2, 3)$ and $(7, 9)$ is the hypotenuse of a triangle with legs $5$ **across** and $6$ **up**. Sketch the right angle, and it becomes an ordinary Pythagoras question."
     }
   ],
+  "why": {
+    "matters": "A tape measure only works on a length you can lay a tape along. A great many lengths are not like that — the height of a wall from the ground, the diagonal of a room full of furniture, the gap between two points on a map — and reading one off a scale drawing gives you an estimate rather than an answer.\n\nPythagoras turns two lengths you **can** measure into one you cannot, exactly. It also runs backwards: comparing the three sides is the only way to test a corner for squareness without a set square as big as the corner. Every distance formula later in the course is this one rule in different clothes.",
+    "examples": [
+      {
+        "title": "The corner that is not square",
+        "body": "A builder setting out a foundation has no tool that can guarantee a right angle across several metres. What they have is a tape and Pythagoras run backwards: mark 3 m along one wall line and 4 m along the other, and the diagonal between those two marks has to come to exactly 5 m, because $3^2 + 4^2 = 5^2$. Any other reading and the corner is wrong.\n\nThe check matters because it is far more forgiving than the thing it checks. Suppose the diagonal reads 5.10 m — 10 cm out on a 5 m tape, easy to shrug at. The corner is then 92.4°, and by the far end of a 6 m wall that 2.4° has carried the brickwork 25 cm off line.\n\nA small error where you measure becomes a large one where you build, which is why the diagonal is checked before anything is laid rather than after.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Error in the diagonal",
+                "value": 10,
+                "display": "10 cm",
+                "note": "measured at the 3, 4, 5 marks"
+              },
+              {
+                "label": "Wall out of line",
+                "value": 25.2,
+                "display": "25 cm",
+                "note": "6 m from the corner"
+              }
+            ],
+            "caption": "One mistake, measured in two places"
+          },
+          "alt": "Two bars comparing a ten centimetre error in the diagonal of a three four five squareness check with the twenty five centimetres by which the far end of a six metre wall is then out of line"
+        }
+      },
+      {
+        "title": "The television sold by its diagonal",
+        "body": "A screen is advertised by one number, the length of its diagonal — and a diagonal does not fix a rectangle. Two shapes have been common: the old 4:3 television and the 16:9 one that replaced it. Both can be 32 inches.\n\nPythagoras settles what each of them actually is. For 16:9 the sides are in the ratio 16 : 9, and $16^2 + 9^2 = 337$, so the diagonal is $\\sqrt{337}$ parts long. Scaled to 32 inches the screen is 27.9 in by 15.7 in, which is 438 square inches of picture. The 4:3 screen is a 3, 4, 5 triangle scaled by 6.4: 25.6 in by 19.2 in, and 492 square inches.\n\nSame advertised size, and the older shape has about 12% more picture. To match it with a widescreen you have to buy 33.9 inches. Area does not follow the diagonal unless the shape is held still, and the number on the box says nothing about the shape.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Three screens, two shapes",
+            "columns": [
+              "Sold as",
+              "Shape",
+              "Width",
+              "Height",
+              "Picture area"
+            ],
+            "rows": [
+              [
+                "32 in",
+                "16:9",
+                "27.9 in",
+                "15.7 in",
+                "438 sq in"
+              ],
+              [
+                "32 in",
+                "4:3",
+                "25.6 in",
+                "19.2 in",
+                "492 sq in"
+              ],
+              [
+                "33.9 in",
+                "16:9",
+                "29.6 in",
+                "16.6 in",
+                "492 sq in"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A table of three screens showing that a thirty two inch four by three set carries more picture area than a thirty two inch widescreen, and that a widescreen needs a thirty three point nine inch diagonal to match it"
+        }
+      },
+      {
+        "title": "How far you can see",
+        "body": "Stand on a beach and the sea stops at a line. That line is where your line of sight grazes the water, and a line that grazes a circle meets the radius at the point of contact at a right angle. So your eye, the centre of the Earth and the horizon make a right-angled triangle, with the hypotenuse running from the centre of the Earth up to your eye.\n\nTake the Earth's radius as 6,371 km. With your eyes 1.6 m above the water the horizon is 4.5 km away. Climb a 30 m cliff and it is 19.6 km — more than four times as far, for a two-minute walk uphill.\n\nThe shape of that bargain is in the algebra. Your height is tiny beside the Earth's radius, so $d^2 = 2Rh + h^2$ is very nearly $2Rh$, and the distance goes with the **square root** of the height. Seeing twice as far costs four times the climb: 1.6 m gives 4.5 km, and 9.0 km needs 6.4 m.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Standing on a beach",
+                "value": 4.52,
+                "display": "4.5 km",
+                "note": "eyes 1.6 m up"
+              },
+              {
+                "label": "Four times the height",
+                "value": 9.03,
+                "display": "9.0 km",
+                "note": "eyes 6.4 m up"
+              },
+              {
+                "label": "On a 30 m cliff",
+                "value": 19.55,
+                "display": "19.6 km",
+                "note": "eyes 30 m up"
+              }
+            ],
+            "caption": "How far the horizon is, from three heights"
+          },
+          "alt": "Three bars for the distance to the horizon from one point six metres, six point four metres and thirty metres above the sea, four and a half, nine and nineteen and a half kilometres"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
