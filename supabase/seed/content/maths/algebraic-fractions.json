@@ -31,6 +31,119 @@
       "body": "Solving an equation with fractions ends with a check, not a full stop. Put each answer back into the original denominators: a value making one of them zero is not a solution, however correctly you found it, and the mark scheme expects you to say so."
     }
   ],
+  "why": {
+    "matters": "Every rule you learned for fractions of numbers still holds when the top and the bottom are expressions. What changes is that the bottom now depends on a letter, so it can be zero — and $x^2 - 9$ over $x + 3$ is $x - 3$ everywhere **except** at $x = -3$, where the original means nothing at all.\n\nThat is the whole craft of the topic: rewriting a formula into a form you can work with, without quietly changing what it is allowed to do. And the fractions worth rewriting are the ones with the unknown underneath — rates, concentrations, times — where doubling the input does not double the output and intuition is no guide.",
+    "examples": [
+      {
+        "title": "There and back",
+        "body": "Drive 60 km out at 40 km/h and the same 60 km back at 60 km/h. The average speed for the round trip is not 50 km/h.\n\nSpeeds do not add; **times** do, and a time is a fraction with the speed underneath. Out takes $\\tfrac{60}{40}$ hours, which is 90 minutes, and back takes $\\tfrac{60}{60}$, which is 60. So the whole trip is 120 km in 150 minutes, and that is 48 km/h.\n\nAdding the two fractions in letters explains why it is always low rather than sometimes low: the answer comes out as $\\tfrac{2ab}{a + b}$, never more than $\\tfrac{a + b}{2}$. The reason is visible in the times — you spend 90 minutes at the slow speed and only 60 at the fast one, so the slow half gets more of a say.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Out, at 40 km/h",
+                "value": 90,
+                "display": "90 min",
+                "note": "60 km"
+              },
+              {
+                "label": "Back, at 60 km/h",
+                "value": 60,
+                "display": "60 min",
+                "note": "60 km"
+              }
+            ],
+            "caption": "The same distance, and where the time goes"
+          },
+          "alt": "Two bars for the time taken on each leg of a round trip of equal distances, ninety minutes at the slower speed against sixty at the faster, showing that more of the journey is spent going slowly"
+        }
+      },
+      {
+        "title": "Watering it down",
+        "body": "A 500 ml drink holds 60 g of sugar — 12 g in every 100 ml, which is what a label calls 12%. Add $x$ ml of water and the same 60 g is spread through $500 + x$, so the strength is $\\tfrac{60}{500 + x}$ grams a millilitre, with the thing you are changing on the **bottom**.\n\nThat is why watering down feels like it stops working. The first 500 ml halves it, from 12% to 6%. The next 500 ml takes it only from 6% to 4%, and the one after that to 3%. Each glass of water does less than the one before, because it is a smaller share of a bigger total.\n\nThe algebra says exactly how much you need: halving the strength means doubling the volume, whatever the volume already is. So the cost of each halving is the whole drink again — 500 ml, then 1000 ml, then 2000 ml.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "As it comes",
+                "value": 12,
+                "display": "12%",
+                "note": "500 ml"
+              },
+              {
+                "label": "Plus 500 ml",
+                "value": 6,
+                "display": "6%",
+                "note": "1000 ml"
+              },
+              {
+                "label": "Plus 500 ml again",
+                "value": 4,
+                "display": "4%",
+                "note": "1500 ml"
+              }
+            ],
+            "caption": "Sugar by weight, after each glass of water"
+          },
+          "alt": "Three bars for the sugar strength of a drink after adding water twice, twelve per cent falling to six and then only to four, because the amount added is on the bottom of the fraction"
+        }
+      },
+      {
+        "title": "How far a lens has to move",
+        "body": "A camera lens has a fixed focal length — call it 50 mm — and focusing is moving the glass towards or away from the sensor. What decides the distance is $\\tfrac{1}{f} = \\tfrac{1}{u} + \\tfrac{1}{v}$, where $u$ is how far away the subject is and $v$ how far the image forms behind the lens.\n\nRearranged over a common denominator, $v = \\tfrac{uf}{u - f}$. For anything far away the image sits at 50 mm, and a subject a metre off pushes it to 52.6 — all of 2.6 mm of travel. Bringing that subject in to 200 mm is a much smaller step, and it moves the glass another 14.0 mm.\n\nAnd the bottom warns you where it stops. As $u$ falls towards 50 mm, $u - f$ falls towards zero and $v$ runs away: at 100 mm the image is 100 mm back, at 60 mm it is 300 mm. At exactly 50 mm there is no image at all. That excluded value is not a technicality — it is why a lens has a closest focusing distance printed on it.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "A 50 mm lens, focusing closer",
+            "columns": [
+              "Subject at",
+              "Image forms at",
+              "Lens has moved"
+            ],
+            "rows": [
+              [
+                "far away",
+                "50.0 mm",
+                "—"
+              ],
+              [
+                "1000 mm",
+                "52.6 mm",
+                "2.6 mm"
+              ],
+              [
+                "200 mm",
+                "66.7 mm",
+                "16.7 mm"
+              ],
+              [
+                "100 mm",
+                "100 mm",
+                "50.0 mm"
+              ],
+              [
+                "60 mm",
+                "300 mm",
+                "250.0 mm"
+              ],
+              [
+                "50 mm",
+                "no image",
+                "the bottom is zero"
+              ]
+            ],
+            "highlight": 5
+          },
+          "alt": "A table of where a fifty millimetre lens forms its image as the subject comes closer, the distance running away from fifty two millimetres to three hundred and then failing altogether at fifty"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

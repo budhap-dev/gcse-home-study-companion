@@ -30,6 +30,122 @@
       "body": "An inverse should take you straight back where you started, so $f^{-1}(f(4))$ must be $4$. Pick any number, run it through $f$, run the answer through $f^{-1}$, and see whether you land on what you began with. It takes ten seconds and catches a sign error every time."
     }
   ],
+  "why": {
+    "matters": "A function is a rule with a promise attached: one input, one output, every time. That promise is small and it is what everything else rests on. Because a function is single-valued you can feed it into another and be sure of the result, and because it is a named thing — $f$, not \"the rule where you double and add one\" — you can talk about it without writing it out.\n\nThe two operations that follow are the useful ones. **Composing** is doing one after another, and the order changes the answer. **Inverting** is undoing, which some functions allow and some do not. Between them they cover most of what is done to a number between it being typed in and being shown on a screen.",
+    "examples": [
+      {
+        "title": "The voucher and the ten per cent",
+        "body": "A shop has 10% off and you also hold a £5 voucher. Which comes first? Call the discount $f(x) = 0.9x$ and the voucher $g(x) = x - 5$, and the two orders are two different composites.\n\nOn a £50 basket, taking the percentage first costs £40.00 and handing over the voucher first costs £40.50. On £80 it is £67.00 against £67.50. The gap is 50p both times, and the algebra says why. The voucher first is $fg(x) = 0.9(x - 5) = 0.9x - 4.50$; the percentage first is $gf(x) = 0.9x - 5$. The difference is 50p for **every** basket, because it is a constant.\n\nTaking the percentage first is the better order, because the voucher then comes off in full instead of being discounted along with everything else. This is why the terms and conditions specify an order rather than leaving it to the till — $fg$ and $gf$ are different functions, and here the difference is money.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Two orders, two answers",
+            "columns": [
+              "Order",
+              "£50 basket",
+              "£80 basket",
+              "In general"
+            ],
+            "rows": [
+              [
+                "10% off, then the voucher",
+                "£40.00",
+                "£67.00",
+                "0.9x − 5"
+              ],
+              [
+                "The voucher, then 10% off",
+                "£40.50",
+                "£67.50",
+                "0.9x − 4.50"
+              ]
+            ],
+            "highlight": 0
+          },
+          "alt": "A table of two baskets put through a discount and a voucher in each order, showing the same fifty pence difference on both and the two general expressions that explain it"
+        }
+      },
+      {
+        "title": "The one temperature that reads the same on both scales",
+        "body": "Celsius to Fahrenheit is $f(x) = 1.8x + 32$, and going back is its inverse, $f^{-1}(x) = \\tfrac{x - 32}{1.8}$. Every pair you know sits on it: 32°F for freezing, 212°F for boiling.\n\nNow ask where the two scales agree — where $f(x) = x$. That is $1.8x + 32 = x$, so $0.8x = -32$ and $x = -40$. Minus forty degrees Celsius **is** minus forty degrees Fahrenheit, which is why the phrase is quoted without a unit.\n\nIt happens once and only once, and the reason is that both rules are straight lines: two lines that are not parallel cross exactly once. A function and its inverse always meet on the line $y = x$ if they meet at all, and here the crossing has a name people use.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              -60,
+              20
+            ],
+            "yRange": [
+              -80,
+              80
+            ],
+            "xStep": 30,
+            "yStep": 40,
+            "grid": true,
+            "xLabel": "degrees Celsius",
+            "yLabel": "degrees Fahrenheit",
+            "lines": [
+              {
+                "m": 1.8,
+                "c": 32
+              },
+              {
+                "m": 1,
+                "c": 0,
+                "label": "F = C",
+                "dashed": true
+              }
+            ],
+            "points": [
+              {
+                "x": -40,
+                "y": -40,
+                "label": "−40, −40",
+                "labelBelow": true
+              }
+            ]
+          },
+          "alt": "The Celsius to Fahrenheit line crossing the line where the two scales are equal, at minus forty on both axes, the single point where a temperature reads the same in either scale"
+        }
+      },
+      {
+        "title": "Rounding cannot be undone",
+        "body": "£4.51, £5.00 and £5.49 all round to £5. Three inputs, one output — which is allowed, because a function only promises one output per input, not one input per output.\n\nWhat is lost is the way back. Handed £5 you cannot say which it came from, so rounding has no inverse, and no amount of cleverness supplies one. The most any line can be out by is 49p, in either direction.\n\nThat is the test for an inverse, and it is worth carrying: a function can be undone exactly when no two inputs share an output. Squaring fails it, because 3 and −3 both give 9 — which is why $\\sqrt{\\ }$ is defined as the positive root and why a square-rooted equation needs both signs putting back by hand.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Round to the nearest pound",
+            "columns": [
+              "Amount",
+              "Rounds to",
+              "And back again?"
+            ],
+            "rows": [
+              [
+                "£4.51",
+                "£5",
+                "which one?"
+              ],
+              [
+                "£5.00",
+                "£5",
+                "which one?"
+              ],
+              [
+                "£5.49",
+                "£5",
+                "which one?"
+              ]
+            ]
+          },
+          "alt": "A table of three different amounts that all round to the same five pounds, with the return journey unanswerable, which is what it means for a function to have no inverse"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
