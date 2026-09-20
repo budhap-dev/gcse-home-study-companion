@@ -30,6 +30,199 @@
       "body": "Once a region is shaded, pick a point well inside it and check it against **every** condition in the question. Then pick one just outside and check that it fails at least one. Ten seconds, and it catches a region shaded on the wrong side."
     }
   ],
+  "why": {
+    "matters": "A locus is the answer to \"where could it be?\", turned into something you can draw. Each condition in a question — within 5 m of the gate, nearer this wall than that one — is a boundary, and the answer is the region where all of them overlap.\n\nThe constructions matter for a separate reason: compasses give an **exact** right angle or an exact half of an angle, with nothing measured. That is why the marks are for the arcs. A bisector drawn by measuring is a guess that happens to be close, and the arcs are the evidence that it was not.",
+    "examples": [
+      {
+        "title": "How a phone is found from three masts",
+        "body": "A mast can tell how far away a phone is without having any idea of the direction. One distance therefore puts the phone somewhere on a **circle** — a locus, exactly as the topic defines it.\n\nTwo masts narrow that to where their circles cross, which is two points, not one. In the picture, masts A and B are both 5 km from the phone, and their circles meet at $(5, 4)$ and at $(5, -2)$ — the second is as good an answer as the first on that evidence alone. The third mast, 4 km away, passes through one and not the other, and the ambiguity is gone.\n\nThat is why three is the number. GPS does the same thing with spheres instead of circles, and needs one satellite more for the same reason.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "square": true,
+            "grid": true,
+            "xLabel": "km",
+            "yLabel": "km",
+            "xRange": [
+              -5,
+              14
+            ],
+            "yRange": [
+              -4,
+              13
+            ],
+            "circles": [
+              {
+                "cx": 1,
+                "cy": 1,
+                "r": 5,
+                "label": "5 km"
+              },
+              {
+                "cx": 9,
+                "cy": 1,
+                "r": 5,
+                "label": "5 km"
+              },
+              {
+                "cx": 5,
+                "cy": 8,
+                "r": 4,
+                "label": "4 km"
+              }
+            ],
+            "points": [
+              {
+                "x": 1,
+                "y": 1,
+                "label": "A"
+              },
+              {
+                "x": 9,
+                "y": 1,
+                "label": "B"
+              },
+              {
+                "x": 5,
+                "y": 8,
+                "label": "C"
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "label": "the phone"
+              },
+              {
+                "x": 5,
+                "y": -2,
+                "label": "ruled out by C",
+                "labelBelow": true
+              }
+            ]
+          },
+          "alt": "Three circles centred on three masts, two of radius five kilometres and one of four, all passing through a single point marked as the phone, with the two larger circles also crossing at a second point lower down that the third circle rules out"
+        }
+      },
+      {
+        "title": "Why the lanes on a running track start apart",
+        "body": "Runners in a one-lap race begin at staggered positions, and the stagger is a locus calculation. A lane's inside edge is the set of points a fixed distance from the line down the middle of the field — two straights with a **semicircle** at each end, the racetrack shape rather than a rectangle.\n\nThe straights are the same length in every lane, so the whole difference is in the bends. Two semicircles make one circle, and a lane one width further out has a radius bigger by that width. A circle's circumference is $2\\pi r$, so the extra is $2\\pi \\times 1.22 = 7.7$ m a lane, whatever the radius happens to be.\n\nOver eight lanes that is 54 m, which is why lane 8 starts most of a straight ahead of lane 1. The stagger is not a handicap; it is the amount that makes the lap lengths equal.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "A lap, if every lane started level",
+            "columns": [
+              "Lane",
+              "Extra radius",
+              "Lap length",
+              "Behind lane 1 by"
+            ],
+            "rows": [
+              [
+                "1",
+                "0.00 m",
+                "400.0 m",
+                "—"
+              ],
+              [
+                "2",
+                "1.22 m",
+                "407.7 m",
+                "7.7 m"
+              ],
+              [
+                "3",
+                "2.44 m",
+                "415.3 m",
+                "15.3 m"
+              ],
+              [
+                "4",
+                "3.66 m",
+                "423.0 m",
+                "23.0 m"
+              ],
+              [
+                "5",
+                "4.88 m",
+                "430.7 m",
+                "30.7 m"
+              ],
+              [
+                "6",
+                "6.10 m",
+                "438.3 m",
+                "38.3 m"
+              ],
+              [
+                "7",
+                "7.32 m",
+                "446.0 m",
+                "46.0 m"
+              ],
+              [
+                "8",
+                "8.54 m",
+                "453.7 m",
+                "53.7 m"
+              ]
+            ],
+            "highlight": 7
+          },
+          "alt": "A table of eight running lanes showing that each one further out adds about seven point seven metres to the lap, so lane eight would run four hundred and fifty three point seven metres against lane one's four hundred"
+        }
+      },
+      {
+        "title": "Which recycling centre you are sent to",
+        "body": "A council with two tips sends each household to the nearer one, and the boundary between the two areas on the map is a **perpendicular bisector**. Every point on it is the same distance from both, which is the definition the construction is built to produce.\n\nWith tips at $(3.5, 8)$ and $(6.5, 2)$, the line joining them has gradient $-2$, so the bisector has gradient $0.5$ and passes through the midpoint $(5, 5)$: $y = 0.5x + 2.5$. A house at $(2, 6)$ sits above that line, and checking it directly agrees — $2.50$ km to the first tip against $6.02$ to the second.\n\nAdd a third tip and you get another two bisectors and a three-way junction where they meet. Carry on and the map fills with straight-sided cells, one per tip. The same picture decides mobile phone cells, school catchments and which shop's delivery van comes to your door.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "square": true,
+            "grid": true,
+            "xLabel": "km",
+            "yLabel": "km",
+            "xRange": [
+              0,
+              10
+            ],
+            "yRange": [
+              0,
+              10
+            ],
+            "lines": [
+              {
+                "m": 0.5,
+                "c": 2.5,
+                "label": "same distance to both",
+                "colour": "#d25b3b"
+              }
+            ],
+            "points": [
+              {
+                "x": 3.5,
+                "y": 8,
+                "label": "tip 1"
+              },
+              {
+                "x": 6.5,
+                "y": 2,
+                "label": "tip 2"
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "label": "this house"
+              }
+            ]
+          },
+          "alt": "Two recycling tips plotted with the perpendicular bisector of the line joining them drawn right across the map, and a house marked on the upper left side of it, nearer the first tip"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
