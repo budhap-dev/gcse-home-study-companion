@@ -36,6 +36,81 @@
       "body": "\"A boy is chosen at random\" means the denominator is the **boys** count, 70. \"A student who walks is chosen\" means the denominator is the **walks** total, 77 — a number that appears **nowhere on the tree** until you add the two walking boxes together."
     }
   ],
+  "why": {
+    "matters": "A frequency tree is a probability tree with the probabilities taken out and replaced by **whole numbers of things**. That sounds like a downgrade and it is the opposite.\n\nPercentages are slippery because each one is a percentage of something different, and the sentence rarely says which. Counts are not slippery. Two hundred customers is two hundred customers, and every branch has to add back up to the one above it — so a tree either balances or it does not.\n\nThat is what makes it worth drawing before you calculate anything. It turns a claim made of percentages into a claim made of people, where a mistake has nowhere to hide.",
+    "examples": [
+      {
+        "title": "Two big percentages, one small number",
+        "body": "A company reports: **75% of our customers renewed, and 40% of those upgraded.**\n\nBoth figures sound strong, and the sentence is arranged so they feel like they add up to something. Put 200 customers through a tree instead.\n\n150 renewed, and 60 of those upgraded. So 60 customers out of 200 upgraded — 30%. The other 140 either stayed on the same plan or left altogether, and that number appears nowhere in the sentence.\n\nThe reason is that the second percentage is a percentage of the **first branch**, not of everybody, so the two multiply rather than combine. Drawing it in counts makes that unmissable, and it is the single most common way a true sentence is used to leave a false impression.",
+        "visual": {
+          "type": "diagram",
+          "component": "frequency-tree",
+          "props": {
+            "root": {
+              "label": "200 customers",
+              "count": 200,
+              "children": [
+                {
+                  "label": "renewed",
+                  "count": 150,
+                  "children": [
+                    {
+                      "label": "upgraded",
+                      "count": 60
+                    },
+                    {
+                      "label": "same plan",
+                      "count": 90
+                    }
+                  ]
+                },
+                {
+                  "label": "did not renew",
+                  "count": 50
+                }
+              ]
+            }
+          },
+          "alt": "A frequency tree of two hundred customers splitting into one hundred and fifty who renewed and fifty who did not, with the renewers splitting again into sixty who upgraded and ninety who stayed on the same plan"
+        }
+      },
+      {
+        "title": "The prospectus that cannot be right",
+        "body": "A school with 300 pupils makes three claims in the same paragraph: 80% study a language, 3 in 4 of those also study music, and half the school studies music.\n\nEach one is believable on its own. Put them in a tree and one of them has to go.\n\n80% of 300 is 240, and 3 quarters of 240 is 180. So 180 pupils study a language **and** music. But half the school is only 150, and those 180 are all music pupils. A part cannot be 30 bigger than the whole it sits inside.\n\nNothing here needed probability. It needed the branches to add up, which percentages let you skip and counts do not. Checking a set of figures against each other before using any of them is most of what auditing is, and a frequency tree is the smallest tool that does it.",
+        "visual": {
+          "type": "diagram",
+          "component": "frequency-tree",
+          "props": {
+            "root": {
+              "label": "300 pupils",
+              "count": 300,
+              "children": [
+                {
+                  "label": "language",
+                  "count": 240,
+                  "children": [
+                    {
+                      "label": "and music",
+                      "count": 180
+                    },
+                    {
+                      "label": "no music",
+                      "count": 60
+                    }
+                  ]
+                },
+                {
+                  "label": "no language",
+                  "count": 60
+                }
+              ]
+            }
+          },
+          "alt": "A frequency tree of three hundred pupils splitting into two hundred and forty who study a language and sixty who do not, with the language group splitting into one hundred and eighty who also study music and sixty who do not"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -1124,20 +1199,6 @@
       "modelAnswer": "First I fill in the counts the question leaves out. Girls: $120 - 70 = 50$. Boys who walk: 60% of the boys is $0.6 \\times 70 = 42$, so $70 - 42 = 28$ do not. Girls who walk: 35, so $50 - 35 = 15$ do not. Check: $42 + 28 + 35 + 15 = 120$ ✓.\n\nThe question chooses **a student who walks**. So the group being chosen from is the **walkers**, and that is the denominator. Walkers are spread across two end boxes — 42 boys and 35 girls — so the total is\n\n$$42 + 35 = 77$$\n\nOf those 77, the girls are 35. So\n\n$$P(\\text{girl} \\mid \\text{walks}) = \\frac{35}{77} = \\frac{5}{11}$$\n\ndividing top and bottom by 7.\n\n**Why not $\\frac{35}{50}$.** That fraction has the right number on top but the wrong group on the bottom. 50 is the number of **girls**, so $\\frac{35}{50}$ answers a different question: *a girl is chosen at random; what is the probability she walks?* It chooses from the girls and asks about walking. The question asked chooses from the **walkers** and asks about being a girl. Both use the same box, the 35 girls who walk, which is why they are easy to confuse — but the denominator is always the group the choice was made from, and the question names it: *a student who walks*.\n\nThe two answers are also numerically different, $\\frac{7}{10}$ against $\\frac{5}{11}$, so it is not a matter of writing the same thing two ways.\n\n**How a two-way table helps.** Laid out with rows for boys and girls and columns for walks and does not walk, the table has a **totals row** along the bottom: 77 walk and 43 do not. The denominator I needed is printed there directly. On the frequency tree, which splits by sex first, the walkers are in two separate boxes on opposite sides and their total appears nowhere — it has to be added up, and forgetting to is how $\\frac{35}{42}$ turns up as a wrong answer. Whenever a question chooses from a category on the **second** split, the table shows the denominator and the tree does not, so the table is the better view for that kind of question."
     }
   ],
-  "examTechnique": {
-    "body": "**Counts in the boxes, categories on the branches, and each pair of branches adds to its parent.** Fill blanks by subtraction, take a percentage **of the parent box**, and check the end boxes add to the root.\n\nFor a probability, the denominator is the group the question **chooses from**: everyone, one branch, or a second-split total you have to **add up** because it is not on the tree.",
-    "examinerErrors": [
-      "Using 120 as the denominator when a **boy** was chosen.",
-      "Using a single box, 42, as the denominator when a **walker** was chosen.",
-      "Taking \"60% of the boys\" as 60% of the **total**.",
-      "Leaving a box blank instead of subtracting from its parent.",
-      "Not checking that the end boxes add to the root.",
-      "Giving $\\frac{35}{50}$ for a question that chose from the walkers.",
-      "Putting probabilities on the branches of a frequency tree.",
-      "Forgetting to simplify a fraction when lowest terms are asked for."
-    ],
-    "grade9Looks": "A grade 9 answer fills the tree from the root outwards, takes each percentage **of its parent box**, and checks the end boxes add to the root before reading anything off. It names the **group chosen from** before writing a fraction, and adds two boxes together when the question chooses from a second-split category. It can say why $\\frac{35}{50}$ and $\\frac{35}{77}$ answer different questions, and it reaches for a **two-way table** when the denominator it needs is a total the tree does not show."
-  },
   "worksheets": {
     "core": {
       "level": "core",
@@ -1175,6 +1236,20 @@
       ],
       "suggestedMinutes": 45
     }
+  },
+  "examTechnique": {
+    "body": "**Counts in the boxes, categories on the branches, and each pair of branches adds to its parent.** Fill blanks by subtraction, take a percentage **of the parent box**, and check the end boxes add to the root.\n\nFor a probability, the denominator is the group the question **chooses from**: everyone, one branch, or a second-split total you have to **add up** because it is not on the tree.",
+    "examinerErrors": [
+      "Using 120 as the denominator when a **boy** was chosen.",
+      "Using a single box, 42, as the denominator when a **walker** was chosen.",
+      "Taking \"60% of the boys\" as 60% of the **total**.",
+      "Leaving a box blank instead of subtracting from its parent.",
+      "Not checking that the end boxes add to the root.",
+      "Giving $\\frac{35}{50}$ for a question that chose from the walkers.",
+      "Putting probabilities on the branches of a frequency tree.",
+      "Forgetting to simplify a fraction when lowest terms are asked for."
+    ],
+    "grade9Looks": "A grade 9 answer fills the tree from the root outwards, takes each percentage **of its parent box**, and checks the end boxes add to the root before reading anything off. It names the **group chosen from** before writing a fraction, and adds two boxes together when the question chooses from a second-split category. It can say why $\\frac{35}{50}$ and $\\frac{35}{77}$ answer different questions, and it reaches for a **two-way table** when the denominator it needs is a total the tree does not show."
   },
   "quiz": {
     "questionIds": [

@@ -51,4 +51,27 @@ describe('cumulative frequency graph', () => {
   it('falls back to the alt text rather than crashing when given too few points', () => {
     expect(renderToStaticMarkup(<CumulativeFrequency alt="a cumulative frequency graph" props={{ points: [{ x: 0, y: 0 }] }} />)).toContain('a cumulative frequency graph')
   })
+
+  /**
+   * Two readings taken close together used to print their labels on the same line just
+   * above the axis, one over the other. A median beside a quartile is the commonest pair
+   * a question asks for, so this is the normal case rather than an odd one.
+   */
+  it('stacks two reading labels that would otherwise be printed on top of each other', () => {
+    const close = [[125, 4], [130, 18], [135, 52], [140, 104], [145, 158], [150, 188], [155, 200]].map(([x, y]) => ({ x, y }))
+    const html = renderToStaticMarkup(<CumulativeFrequency alt="" props={{
+      points: close, readings: [{ y: 100, label: 'median' }, { y: 150, label: '75th centile' }],
+    }} />)
+    const ys = [...html.matchAll(/<text x="[\d.]+" y="([\d.]+)"[^>]*>([^<]*(?:median|centile)[^<]*)</g)].map((m) => Number(m[1]))
+    expect(ys).toHaveLength(2)
+    // Different rows, far enough apart that 11px text cannot touch.
+    expect(Math.abs(ys[0]! - ys[1]!)).toBeGreaterThanOrEqual(12)
+  })
+
+  it('leaves two readings on one line when they are far enough apart to fit', () => {
+    const html = renderToStaticMarkup(<CumulativeFrequency alt="" props={{ points: POINTS, readings: [{ y: 10, label: 'LQ' }, { y: 30, label: 'UQ' }] }} />)
+    const ys = [...html.matchAll(/<text x="[\d.]+" y="([\d.]+)"[^>]*>([^<]*Q ≈[^<]*)</g)].map((m) => Number(m[1]))
+    expect(ys).toHaveLength(2)
+    expect(ys[0]).toBe(ys[1])
+  })
 })

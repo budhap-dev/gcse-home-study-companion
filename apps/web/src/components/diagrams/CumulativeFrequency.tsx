@@ -73,19 +73,47 @@ export function CumulativeFrequency({ props, alt }: { props: Record<string, unkn
           </text>
         </g>
       ))}
-      {readings.map((r, i) => {
-        const x = readX(r.y)
-        if (x === undefined) return null
+      {(() => {
+        /*
+         * Two things about reading labels, both learned from a median and a quartile taken
+         * close together — the commonest pair a question asks for.
+         *
+         * They used to share one line just above the axis, so two close readings printed
+         * one label on top of the other. Each now takes the lowest free row.
+         *
+         * And every dashed line is drawn before any label, rather than each reading
+         * drawing its own line and then its own label. Otherwise the second reading's drop
+         * line is painted over the first reading's text, which is what happened here: the
+         * line went through the digits. The halo is the same one the other diagrams use.
+         */
+        const placed: { left: number; right: number; row: number }[] = []
+        const marks = readings.flatMap((r, i) => {
+          const x = readX(r.y)
+          if (x === undefined) return []
+          const text = `${r.label} ≈ ${fmt(x)}`
+          const tx = sx(x) + 5
+          const box = { left: tx, right: tx + text.length * 11 * 0.55 }
+          let row = 0
+          while (placed.some((q) => q.row === row && box.left < q.right + 4 && q.left < box.right + 4)) row++
+          placed.push({ ...box, row })
+          return [{ i, r, x, text, tx, row }]
+        })
         return (
-          <g key={`r${i}`}>
-            <line x1={left} y1={sy(r.y)} x2={sx(x)} y2={sy(r.y)} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
-            <line x1={sx(x)} y1={sy(r.y)} x2={sx(x)} y2={H - bottom} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
-            <text x={sx(x) + 5} y={H - bottom - 6} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK}>
-              {r.label} ≈ {fmt(x)}
-            </text>
-          </g>
+          <>
+            {marks.map(({ i, r, x }) => (
+              <g key={`rl${i}`}>
+                <line x1={left} y1={sy(r.y)} x2={sx(x)} y2={sy(r.y)} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
+                <line x1={sx(x)} y1={sy(r.y)} x2={sx(x)} y2={H - bottom} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
+              </g>
+            ))}
+            {marks.map(({ i, text, tx, row }) => (
+              <text key={`rt${i}`} x={tx} y={H - bottom - 6 - row * 15} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK} stroke="#ffffff" strokeWidth="3.5" paintOrder="stroke">
+                {text}
+              </text>
+            ))}
+          </>
         )
-      })}
+      })()}
       <path d={path} fill="none" stroke={ACCENT} strokeWidth="2.5" strokeLinejoin="round" />
       {points.map((p, i) => (
         <circle key={`p${i}`} cx={sx(p.x)} cy={sy(p.y)} r="3.5" fill={ACCENT} />
