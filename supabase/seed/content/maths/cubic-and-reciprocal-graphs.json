@@ -35,6 +35,106 @@
       "body": "To draw a graph, make a table of values, plot the points, and **look at the shape** you expect before joining them. A cubic is one smooth S. If a point sits off that S, the arithmetic for it is wrong — check it rather than drawing a kink."
     }
   ],
+  "why": {
+    "matters": "Straight lines and parabolas cover a lot, and two very ordinary situations are neither.\n\nWhen two quantities trade off so that their **product** stays fixed — speed and journey time, people and hours, miles per gallon and gallons per mile — you get $y = \\tfrac{k}{x}$: two separate arms, steep near one axis and flattening along the other. Its most useful feature is the one beginners report as a mistake. It never reaches either axis, and that is a claim about the world, not about the drawing. No car uses no fuel, and no crowd finishes a job in no time.\n\nWhen something grows with a **volume**, or with three lengths multiplied together, you get a cubic, which can turn twice — so its best value can sit in the middle rather than at an end.\n\nRecognising which shape a situation has, before any algebra, tells you what the answer is allowed to look like.",
+    "examples": [
+      {
+        "title": "Ten more miles per gallon, twice over",
+        "body": "Two drivers each gain 10 miles per gallon. One goes from 10 mpg to 20, the other from 40 mpg to 50. Over 10,000 miles, who saves more fuel?\n\nThe same amount, surely — the same improvement. Not close. Fuel used is $\\tfrac{10000}{m}$, a reciprocal, and a reciprocal is steep on the left and nearly flat on the right.\n\nAt 10 mpg that is 1000 gallons and at 20 mpg it is 500, a saving of 500 gallons. At 40 mpg it is 250 and at 50 mpg it is 200, a saving of 50. The first driver saves 10 times as much fuel from the same 10 mpg.\n\nThis is why much of the world prints fuel use as litres per 100 km rather than miles per gallon. That figure is the reciprocal, so it is proportional to what you actually buy, and equal steps along it mean equal savings.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              60
+            ],
+            "yRange": [
+              0,
+              1200
+            ],
+            "xStep": 10,
+            "yStep": 200,
+            "grid": true,
+            "xLabel": "miles per gallon",
+            "yLabel": "gallons per 10,000 miles",
+            "curves": [
+              {
+                "a": 0,
+                "b": 0,
+                "c": 0,
+                "reciprocal": 10000
+              }
+            ],
+            "points": [
+              {
+                "x": 10,
+                "y": 1000,
+                "label": "10 mpg"
+              },
+              {
+                "x": 20,
+                "y": 500,
+                "label": "20 mpg"
+              },
+              {
+                "x": 40,
+                "y": 250,
+                "label": "40 mpg",
+                "labelBelow": true
+              },
+              {
+                "x": 50,
+                "y": 200,
+                "label": "50 mpg",
+                "labelBelow": true
+              }
+            ]
+          },
+          "alt": "A reciprocal curve of gallons used against miles per gallon, dropping steeply from ten to twenty miles per gallon and almost levelling off between forty and fifty"
+        }
+      },
+      {
+        "title": "The tray cut from a square of card",
+        "body": "Take a 20 cm square of card, cut an equal square from each corner, fold the flaps up and tape them. How big should the corner squares be for the tray to hold the most?\n\nCut $x$ from each corner and the tray is $x$ deep on a base of $(20 - 2x)$ by $(20 - 2x)$, so the volume is $x(20 - 2x)^2$ — three lengths multiplied, which multiplies out to the cubic $4x^3 - 80x^2 + 400x$.\n\nBoth extremes are useless. Cut nothing and there is no depth; cut 10 and there is no base left. In between, the graph rises to a single hump whose top is at $x = 3.3$ cm, holding 593 cm³. Cutting 2 cm gives 512 cm³ and cutting 5 cm gives 500 cm³ — both worse, and on opposite sides of the answer.\n\nEvery tray, box and carton stamped out of flat sheet is this question. The cubic is what says the best answer lies somewhere in the middle, and where.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              10
+            ],
+            "yRange": [
+              0,
+              700
+            ],
+            "xStep": 1,
+            "yStep": 100,
+            "grid": true,
+            "xLabel": "corner square cut, x (cm)",
+            "yLabel": "volume (cm cubed)",
+            "curves": [
+              {
+                "cube": 4,
+                "a": -80,
+                "b": 400,
+                "c": 0
+              }
+            ],
+            "points": [
+              {
+                "x": 3.3,
+                "y": 593,
+                "label": "best cut"
+              }
+            ]
+          },
+          "alt": "A cubic curve of tray volume against the size of the corner square cut out, starting at zero, rising to a peak of about five hundred and ninety three at three point three centimetres, and falling back to zero at ten"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -1215,20 +1315,6 @@
       "modelAnswer": "First the **table of values**. Cubing each integer from $-2$ to $2$:\n\n| $x$ | −2 | −1 | 0 | 1 | 2 |\n| --- | --- | --- | --- | --- | --- |\n| $x^3$ | −8 | −1 | 0 | 1 | 8 |\n\nThe negative entries need care: $(-2)^3 = -2 \\times -2 \\times -2 = -8$, because three negatives multiplied together give a negative. Writing 8 instead is the commonest error, and it produces a point that sits off the curve.\n\nPlotting the five points and joining them with a **smooth curve** gives an **S shape**: the curve falls steeply towards the bottom-left, flattens out as it passes through the origin, and rises steeply towards the top-right. It has **rotational symmetry** about the origin, since $(-x)^3 = -x^3$ — every point on the left is the point on the right turned through a half-turn.\n\n**Telling it from a quadratic.** A quadratic such as $y = x^2$ is a U: both ends go **the same way**, upwards. A cubic's two ends go in **opposite directions** — down on the left, up on the right — because for large $x$ the $x^3$ term has the sign of $x$ itself. So a sketch whose ends both go up is not a cubic, whatever it is labelled. The cubic also passes **through** the origin from one side to the other, where the parabola turns back at it.\n\n**Telling it from $y = -x^3$.** The minus sign makes every $y$-value the negative of before, which **reflects** the whole curve in the $x$-axis. $y = -x^3$ is still an S, but it runs from **top-left to bottom-right**. Checking one point settles it: at $x = 2$, $y = x^3$ gives 8 and $y = -x^3$ gives $-8$.\n\n**Solving $x^3 = -8$ from the graph.** The solutions of $x^3 = -8$ are the $x$-values where the curve $y = x^3$ has height $-8$. So I find $-8$ on the $y$-axis, read **across** to the curve, and **down** to the $x$-axis, landing at $x = -2$. Checking: $(-2)^3 = -8$ ✓.\n\nThere is exactly **one** solution, and the graph shows why: the cubic climbs through every $y$-value **once**, so the horizontal line $y = -8$ meets it only once. That is different from a quadratic, where a horizontal line can cut the U twice, and it is the graphical reason every number — negative ones included — has exactly one cube root."
     }
   ],
-  "examTechnique": {
-    "body": "**Family from the highest power, direction from the sign, position from the constant.** That reads any of these equations into a sketch, and any sketch back into its equation.\n\nA cubic's ends go **opposite ways**; a reciprocal is **two arms that never touch the axes**. Cube negatives carefully — $(-2)^3 = -8$ — and if a plotted point sits off the smooth shape, the arithmetic is wrong, not the shape.",
-    "examinerErrors": [
-      "Writing $(-2)^3 = 8$, and plotting a point off the curve.",
-      "Sketching a cubic with both ends going the same way.",
-      "Joining the two arms of $y = \\frac{1}{x}$ through the origin.",
-      "Letting a reciprocal arm touch or cross an axis.",
-      "Ignoring a minus sign in front and drawing the shape the wrong way round.",
-      "Matching a graph by its constant term before checking its family.",
-      "Drawing a kink to reach a wrongly calculated point.",
-      "Giving two solutions to $x^3 = k$."
-    ],
-    "grade9Looks": "A grade 9 answer names the **family from the highest power** and the **direction from the sign** without hesitation, and uses the constant only to pin down which of two similar curves it is. It cubes negatives correctly and treats a stray point as an **arithmetic error**. Its sketch of a cubic leaves in **opposite directions**, and its sketch of a reciprocal shows **two separate arms** approaching both **asymptotes** without touching. It reads $x^3 = k$ off a graph as a **single** solution and can say why, and it can explain the reciprocal's gap and its missing intercepts from the two facts about division that cause them."
-  },
   "worksheets": {
     "core": {
       "level": "core",
@@ -1266,6 +1352,20 @@
       ],
       "suggestedMinutes": 45
     }
+  },
+  "examTechnique": {
+    "body": "**Family from the highest power, direction from the sign, position from the constant.** That reads any of these equations into a sketch, and any sketch back into its equation.\n\nA cubic's ends go **opposite ways**; a reciprocal is **two arms that never touch the axes**. Cube negatives carefully — $(-2)^3 = -8$ — and if a plotted point sits off the smooth shape, the arithmetic is wrong, not the shape.",
+    "examinerErrors": [
+      "Writing $(-2)^3 = 8$, and plotting a point off the curve.",
+      "Sketching a cubic with both ends going the same way.",
+      "Joining the two arms of $y = \\frac{1}{x}$ through the origin.",
+      "Letting a reciprocal arm touch or cross an axis.",
+      "Ignoring a minus sign in front and drawing the shape the wrong way round.",
+      "Matching a graph by its constant term before checking its family.",
+      "Drawing a kink to reach a wrongly calculated point.",
+      "Giving two solutions to $x^3 = k$."
+    ],
+    "grade9Looks": "A grade 9 answer names the **family from the highest power** and the **direction from the sign** without hesitation, and uses the constant only to pin down which of two similar curves it is. It cubes negatives correctly and treats a stray point as an **arithmetic error**. Its sketch of a cubic leaves in **opposite directions**, and its sketch of a reciprocal shows **two separate arms** approaching both **asymptotes** without touching. It reads $x^3 = k$ off a graph as a **single** solution and can say why, and it can explain the reciprocal's gap and its missing intercepts from the two facts about division that cause them."
   },
   "quiz": {
     "questionIds": [

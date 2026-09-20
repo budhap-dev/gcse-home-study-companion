@@ -35,6 +35,80 @@
       "body": "The formulas use the **radius**. If a question gives a **diameter**, halve it first. Using the diameter makes an arc twice as long and an area **four times** too big."
     }
   ],
+  "why": {
+    "matters": "A ruler measures anything straight. Nothing in that toolkit measures a curve, and the circumference formula answers only for the whole circle — all the way round and back to the start.\n\nA sector is the way in. Once a sector is understood as a **fraction of a circle**, and the fraction is $\\tfrac{\\theta}{360}$, every part of a circle opens up: the length of a bend, the glass a wiper clears, the metal in a curved bracket. It is also the first formula that takes an angle in and gives a **length** out, rather than another angle.",
+    "examples": [
+      {
+        "title": "Why lane 8 starts so far ahead",
+        "body": "A standard 400 m running track is built to one plan: two straights of 84.39 m, and two bends that are semicircles of radius 36.8 m measured round the inside lane. Put the two bends together and they make one whole circle, so a lap is $2 \\times 84.39 + 2\\pi \\times 36.8$, and that lands on 400 m to within 2 millimetres. The odd-looking straight is chosen to make it come out round.\n\nNow step one lane outwards. The straights are unchanged. The bends are not: their radius grows by the lane width, 1.22 m, so the lap grows by $2\\pi \\times 1.22 = 7.7$ m. Every lane costs another 7.7 m.\n\nLane 8 is 7 lanes out, so its lap is 53.7 m longer — nearly two thirds of the home straight. That is what the staggered start is paying back, and it is why the stagger is the same at every track built to that plan. It is not a judgement. It is an arc length.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              -62,
+              62
+            ],
+            "yRange": [
+              -62,
+              62
+            ],
+            "xStep": 20,
+            "yStep": 20,
+            "square": true,
+            "grid": false,
+            "xLabel": "metres",
+            "yLabel": "metres",
+            "circles": [
+              {
+                "cx": 0,
+                "cy": 0,
+                "r": 36.8,
+                "label": "lane 1"
+              },
+              {
+                "cx": 0,
+                "cy": 0,
+                "r": 45.34,
+                "label": "lane 8"
+              }
+            ]
+          },
+          "alt": "Two circles drawn about the same centre, the inner one the radius of the inside lane bends and the outer one seven lane widths further out, showing how much further round the outside lane goes"
+        }
+      },
+      {
+        "title": "The half of the wiper that does the work",
+        "body": "A windscreen wiper is a strip of rubber on a pivoted arm, and the rubber does not reach the pivot. Take a blade running from 20 cm out to 60 cm out, swinging through 120°.\n\nWhat it clears is a sector with a sector removed from the middle: $\\tfrac{120}{360}\\pi(60^2 - 20^2)$, which is 3351 cm² of glass.\n\nNow cut the blade in half, at 40 cm. The inner half clears 1257 cm². The outer half clears 2094 cm² — five thirds of it, about 1.7 times, from the same length of rubber.\n\nThe arc is longer further out, so equal lengths of blade do very unequal amounts of work. It is also why the swept area is a curved band rather than a rectangle, and why the corners of a windscreen stay dry.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Inner half",
+                "value": 1257,
+                "display": "1,257 cm²",
+                "note": "20 cm to 40 cm from the pivot"
+              },
+              {
+                "label": "Outer half",
+                "value": 2094,
+                "display": "2,094 cm²",
+                "note": "40 cm to 60 cm from the pivot"
+              }
+            ],
+            "caption": "Glass cleared by each half of the same blade"
+          },
+          "alt": "Two bars comparing the glass cleared by the inner and outer halves of a wiper blade, one thousand two hundred and fifty seven square centimetres against two thousand and ninety four"
+        }
+      },
+      {
+        "title": "Cutting a cone out of a flat sheet",
+        "body": "Roll a sector of paper round until its two straight edges meet and you have a cone. The **radius** of the sector has become the slant of the cone, and the **arc** has become the rim at the bottom. That is the design method for everything conical made from flat material: a funnel, a lampshade, a paper cup, a road cone.\n\nSuppose the cone needs a base of radius 12 cm. The rim must be $2\\pi \\times 12 = 75.4$ cm, so the arc must be 75.4 cm. Cut it from a circle of radius 20 cm and the angle needed is that arc as a fraction of the full circumference, which comes to 216°.\n\nThere is a shortcut hiding in the algebra. The angle is $\\tfrac{12}{20} \\times 360$ — base radius over slant — so any cone whose base is three fifths of its slant comes from a 216° sector, whatever its size. Pythagoras finishes the job: this one stands 16 cm tall."
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -1178,20 +1252,6 @@
       "id": "q19"
     }
   ],
-  "examTechnique": {
-    "body": "Write $\\frac{\\theta}{360}$ down first — it is the same fraction for the arc and for the area, and it gives you an instant check on the size of the answer.\n\nRead **arc** or **perimeter** carefully: a perimeter adds the **two radii**. Halve any **diameter** before using it, and leave $\\pi$ in when exact form is asked for.",
-    "examinerErrors": [
-      "Giving the arc length when the **perimeter** was asked for.",
-      "Using a **diameter** as the radius, making an area four times too big.",
-      "Writing a decimal when the question said **in terms of $\\pi$**.",
-      "Using the area formula for the arc, or the other way round.",
-      "Rounding $\\pi$ to 3.14 partway through the working.",
-      "Forgetting the straight diameter in the perimeter of a semicircle.",
-      "Counting internal edges in the perimeter of a compound shape.",
-      "Giving an area in cm rather than cm²."
-    ],
-    "grade9Looks": "A grade 9 answer writes the **fraction $\\frac{\\theta}{360}$ first** and uses it to sanity-check the result — a 90° sector really is a quarter of the circle. It reads **arc** against **perimeter** deliberately and adds the **two radii** when the perimeter is wanted. It keeps answers **in terms of $\\pi$** when asked, and notices that in a backwards question the $\\pi$ **cancels**, so exact form is quicker as well as more accurate. It halves a **diameter** without prompting, and for a compound shape traces the **outside** edges rather than adding up every side."
-  },
   "worksheets": {
     "core": {
       "level": "core",
@@ -1230,6 +1290,20 @@
       ],
       "suggestedMinutes": 45
     }
+  },
+  "examTechnique": {
+    "body": "Write $\\frac{\\theta}{360}$ down first — it is the same fraction for the arc and for the area, and it gives you an instant check on the size of the answer.\n\nRead **arc** or **perimeter** carefully: a perimeter adds the **two radii**. Halve any **diameter** before using it, and leave $\\pi$ in when exact form is asked for.",
+    "examinerErrors": [
+      "Giving the arc length when the **perimeter** was asked for.",
+      "Using a **diameter** as the radius, making an area four times too big.",
+      "Writing a decimal when the question said **in terms of $\\pi$**.",
+      "Using the area formula for the arc, or the other way round.",
+      "Rounding $\\pi$ to 3.14 partway through the working.",
+      "Forgetting the straight diameter in the perimeter of a semicircle.",
+      "Counting internal edges in the perimeter of a compound shape.",
+      "Giving an area in cm rather than cm²."
+    ],
+    "grade9Looks": "A grade 9 answer writes the **fraction $\\frac{\\theta}{360}$ first** and uses it to sanity-check the result — a 90° sector really is a quarter of the circle. It reads **arc** against **perimeter** deliberately and adds the **two radii** when the perimeter is wanted. It keeps answers **in terms of $\\pi$** when asked, and notices that in a backwards question the $\\pi$ **cancels**, so exact form is quicker as well as more accurate. It halves a **diameter** without prompting, and for a compound shape traces the **outside** edges rather than adding up every side."
   },
   "quiz": {
     "questionIds": [
