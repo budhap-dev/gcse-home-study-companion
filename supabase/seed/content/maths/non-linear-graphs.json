@@ -31,6 +31,193 @@
       "body": "Trapezia join the curve with straight chords. Where the curve bends **upwards**, each chord sits above it, so the estimate is **too big**. Where it bends downwards, the chords sit below and the estimate is **too small**. There is a mark for saying which, and for saying why."
     }
   ],
+  "why": {
+    "matters": "A straight line has one gradient and you can read it anywhere on the graph. A curve has a different gradient at every point, and that changes what the graph is **for**: it stops being a lookup table and becomes a record of how fast something is changing and how much of it has happened in total.\n\nThe two tools here are the only ones you have for that before calculus. A **tangent** gets you the rate at one instant; the **area** underneath gets you the total. And the exponential is worth its own name because it is the shape of everything whose growth is proportional to its own size — money, populations, a cooling cup, a fading signal.",
+    "examples": [
+      {
+        "title": "Why debt runs away, and the rule of 72",
+        "body": "A card charging 24% a year does not add 24% of the original each year. It adds 24% of whatever is there now, which is the definition of exponential growth. £2,000 left alone becomes £5863 in five years.\n\nBecause the growth is proportional to the size, the **doubling time** does not depend on the amount — £200 and £10,000 take exactly as long to double. That single number is what the shape gives you, and the shortcut for it is the rule of 72: divide 72 by the rate. At 24% that says 3 years and the truth is 3.2.\n\nThe rule is worth carrying because it stays close across the whole useful range: 3% gives 24 against 23.4, and 12% gives 6 against 6.1. It is the same fact as a half-life, running upwards.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "How long the money takes to double",
+            "columns": [
+              "Rate a year",
+              "72 divided by the rate",
+              "The true doubling time"
+            ],
+            "rows": [
+              [
+                "3%",
+                "24 years",
+                "23.4 years"
+              ],
+              [
+                "6%",
+                "12 years",
+                "11.9 years"
+              ],
+              [
+                "12%",
+                "6 years",
+                "6.1 years"
+              ],
+              [
+                "24%",
+                "3 years",
+                "3.2 years"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A table of four interest rates with the rule of seventy two beside the true doubling time, three per cent taking twenty three point four years and twenty four per cent taking three point two"
+        }
+      },
+      {
+        "title": "The distance hiding under a speed graph",
+        "body": "Plot a car's speed against time and the **area** underneath is the distance travelled — because a thin strip is a speed multiplied by a short time, which is a small distance, and the strips add up.\n\nTake a car whose speed in metres a second is $t^2/2$, so after ten seconds it is doing 50 m/s. Split the ten seconds into 5 strips 2 seconds wide, treat each as a trapezium, and the strips total 170 m. The exact answer is 166.7 m, so the estimate is about 2% high.\n\nIt is high rather than low for a reason you can see: the curve bends **upward**, so the straight top of each trapezium lies above it and every strip claims a little too much. A curve bending the other way would give an estimate that was too small. Knowing which way you are wrong is often worth more than the estimate.",
+        "visual": {
+          "type": "diagram",
+          "component": "motion-graph",
+          "props": {
+            "kind": "velocity-time",
+            "points": [
+              {
+                "t": 0,
+                "y": 0
+              },
+              {
+                "t": 0.5,
+                "y": 0.125
+              },
+              {
+                "t": 1,
+                "y": 0.5
+              },
+              {
+                "t": 1.5,
+                "y": 1.125
+              },
+              {
+                "t": 2,
+                "y": 2
+              },
+              {
+                "t": 2.5,
+                "y": 3.125
+              },
+              {
+                "t": 3,
+                "y": 4.5
+              },
+              {
+                "t": 3.5,
+                "y": 6.125
+              },
+              {
+                "t": 4,
+                "y": 8
+              },
+              {
+                "t": 4.5,
+                "y": 10.125
+              },
+              {
+                "t": 5,
+                "y": 12.5
+              },
+              {
+                "t": 5.5,
+                "y": 15.125
+              },
+              {
+                "t": 6,
+                "y": 18
+              },
+              {
+                "t": 6.5,
+                "y": 21.125
+              },
+              {
+                "t": 7,
+                "y": 24.5
+              },
+              {
+                "t": 7.5,
+                "y": 28.125
+              },
+              {
+                "t": 8,
+                "y": 32
+              },
+              {
+                "t": 8.5,
+                "y": 36.125
+              },
+              {
+                "t": 9,
+                "y": 40.5
+              },
+              {
+                "t": 9.5,
+                "y": 45.125
+              },
+              {
+                "t": 10,
+                "y": 50
+              }
+            ],
+            "shade": [
+              {
+                "from": 0,
+                "to": 10,
+                "label": "the distance"
+              }
+            ],
+            "xMax": 10,
+            "yMax": 55,
+            "xLabel": "seconds",
+            "yLabel": "speed (m/s)"
+          },
+          "alt": "A speed-time curve rising steeply over ten seconds with the area beneath it shaded, which is the distance the car has travelled"
+        }
+      },
+      {
+        "title": "A cup of tea, and a tangent that flattens",
+        "body": "Tea cools quickly at first and then seems to give up. The reason is that it loses heat in proportion to how much **hotter than the room** it is, so as the gap closes the cooling slows — and the graph of temperature against time is an exponential approaching room temperature rather than a straight line to it.\n\nTake a cup at 90°C in a 20°C room, and a model where the 70°C excess halves every 20 minutes. After 20 minutes it is 55°C, after 40 it is 37.5°C, after 60 it is 28.8°C.\n\nThe first 20 minutes cost it 35°C and the third cost 8.8°C — 4 times less, from the same length of time. That falling rate **is** the gradient of the tangent, and it is why adding cold milk at the start keeps tea warmer for longer than adding it at the end.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              80
+            ],
+            "yRange": [
+              0,
+              80
+            ],
+            "xStep": 20,
+            "yStep": 20,
+            "grid": true,
+            "xLabel": "minutes",
+            "yLabel": "degrees above the room",
+            "curves": [
+              {
+                "a": 0,
+                "b": 0,
+                "c": 0,
+                "base": 0.965936,
+                "scale": 70
+              }
+            ]
+          },
+          "alt": "A falling exponential curve of how far a cup of tea is above room temperature, dropping seventy degrees of excess to half every twenty minutes and flattening as it goes"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

@@ -30,6 +30,127 @@
       "body": "After sketching, look at where the turning point ended up and ask whether the rule says that. $f(x) + 2$ must lift it by exactly $2$ with its $x$ unchanged; $f(-x)$ must keep its height and flip its $x$. If the turning point is wrong, the whole sketch is."
     }
   ],
+  "why": {
+    "matters": "Once you know one curve you know a family of them. $f(x) + a$, $f(x + a)$, $-f(x)$ and $f(-x)$ are the same shape moved or flipped, so $y = (x - 3)^2 + 2$ can be sketched from $y = x^2$ without a single calculated point.\n\nThe reason it is worth more than a sketching trick is that real formulas are usually a standard shape with an offset attached — a starting value, a delay, a reference point. Reading which number does which tells you what the formula is saying, and tells you that changing it moves the picture without changing its shape.",
+    "examples": [
+      {
+        "title": "What noise-cancelling headphones actually do",
+        "body": "A microphone on the outside of the earcup measures the noise arriving as a wave. The headphone then plays **the reflection of that wave in the x-axis** — $-f(x)$ — into your ear. Where the noise pushes, the played sound pulls by the same amount, and the two add to nothing.\n\nIt has to be $-f(x)$ and not something merely quiet, because a quieter copy of the noise is still noise. And the timing has to be right to a fraction of a cycle: get it half a cycle late on a 100 Hz drone — 5 thousandths of a second — and the reflection is back in step with the noise, so instead of cancelling it you **double** it.\n\nThat is also why it works far better on the steady hum of an engine than on speech. A drone repeats, so the next cycle is predictable and the reflection can be ready in time; a voice does not.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              720
+            ],
+            "yRange": [
+              -1.5,
+              1.5
+            ],
+            "xStep": 180,
+            "yStep": 1,
+            "grid": true,
+            "xLabel": "degrees through the cycle",
+            "yLabel": "pressure",
+            "waves": [
+              {
+                "fn": "sin",
+                "amplitude": 1,
+                "label": "the noise",
+                "labelX": 90
+              },
+              {
+                "fn": "sin",
+                "amplitude": -1,
+                "label": "what the headphone plays",
+                "labelX": 270
+              }
+            ]
+          },
+          "alt": "Two sine waves that are reflections of each other in the horizontal axis, the outside noise and the sound the headphone plays, which add to nothing at every point"
+        }
+      },
+      {
+        "title": "Why a tide table gives one number for a whole harbour",
+        "body": "A tide table prints a full day of times for a handful of **standard ports** and then gives every other harbour as a single offset — \"high water Port A is 35 minutes after the standard port\". One number, not another table.\n\nThat works because the tide at a nearby harbour is the same curve horizontally translated: $f(t + a)$. If high water at the standard port is 07:12, then Port A is at 07:47 and Port B, which is 48 minutes **before**, is at 06:24.\n\nAnd the offset holds for the next tide too: the standard port's next high water is 19:37, so Port A's is 20:12. A translation shifts the whole curve, not one point on it, which is exactly the property that lets the book be thin.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "One curve, three harbours",
+            "columns": [
+              "Harbour",
+              "Offset",
+              "Morning high water",
+              "Evening high water"
+            ],
+            "rows": [
+              [
+                "Standard port",
+                "—",
+                "07:12",
+                "19:37"
+              ],
+              [
+                "Port A",
+                "+35 min",
+                "07:47",
+                "20:12"
+              ],
+              [
+                "Port B",
+                "-48 min",
+                "06:24",
+                "18:49"
+              ]
+            ]
+          },
+          "alt": "A table of high water times at a standard port and two harbours given as offsets from it, the same offset applying to the morning and the evening tide"
+        }
+      },
+      {
+        "title": "The same hill, two heights",
+        "body": "A hill is 520 m on the map and the village at its foot is 180 m. Ask a walker how high the hill is and you may well be told 340 m, because they are measuring from the valley floor rather than from the sea.\n\nNeither is wrong. Both are the same profile with a different zero, which is $f(x) - 180$: a vertical translation. Every height drops by the same amount, so every **difference** survives untouched — the climb is still 340 m, every gradient is unchanged, and a contour map drawn from either set of numbers has the contours in exactly the same places.\n\nThat is the useful half of the idea. A vertical translation changes what the numbers are and nothing about the shape, so it is safe to move the zero to wherever makes the arithmetic easiest — which is why heights on British maps are all measured from one agreed sea level rather than from wherever the surveyor was standing.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              -30,
+              30
+            ],
+            "yRange": [
+              -60,
+              600
+            ],
+            "xStep": 15,
+            "yStep": 150,
+            "grid": true,
+            "xLabel": "metres along the ridge",
+            "yLabel": "height (m)",
+            "curves": [
+              {
+                "a": -0.3778,
+                "b": 0,
+                "c": 520,
+                "label": "above the sea",
+                "labelX": 0
+              },
+              {
+                "a": -0.3778,
+                "b": 0,
+                "c": 340,
+                "label": "above the village",
+                "labelX": 0
+              }
+            ]
+          },
+          "alt": "Two identical hill profiles drawn one above the other, the same shape measured from sea level and from the valley floor, showing that a vertical shift changes every height and no difference"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

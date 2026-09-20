@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { everyVisual } from '@study/shared'
 import { DIAGRAMS } from './index.tsx'
 
 const HERE = import.meta.dirname
@@ -58,15 +59,12 @@ function jsonFiles(dir: string): string[] {
   })
 }
 
-interface Visual { type?: string; component?: string; props?: Record<string, unknown> }
 const used: { file: string; step: string; component: string; keys: string[]; props?: Record<string, unknown> }[] = []
 for (const file of jsonFiles(CONTENT)) {
   const topic = JSON.parse(readFileSync(file, 'utf8'))
-  for (const step of topic.lesson?.steps ?? []) {
-    for (const v of (step.visuals ?? []) as Visual[]) {
-      if (v.type !== 'diagram' || !v.component) continue
-      used.push({ file: file.split('/').pop()!, step: step.id, component: v.component, keys: Object.keys(v.props ?? {}), props: v.props })
-    }
+  for (const { visual, where } of everyVisual(topic)) {
+    if (visual.type !== 'diagram') continue
+    used.push({ file: file.split('/').pop()!, step: where, component: visual.component, keys: Object.keys(visual.props ?? {}), props: visual.props })
   }
 }
 
