@@ -132,3 +132,52 @@ describe('line graph curves', () => {
     expect(below.label).toBeGreaterThan(below.point)
   })
 })
+
+/**
+ * Every label is nudged clear of the ones already placed, but only if it registers the
+ * part of the line it actually covers. A centred label used to register the half-width
+ * to the right of its anchor, so a circle labelled on the y-axis reserved empty space
+ * and printed over the tick number beside it — and every existing check passed.
+ */
+describe('centred labels and the boxes they reserve', () => {
+  const texts = (html: string) => [...html.matchAll(/<text x="([-\d.]+)" y="([-\d.]+)"([^>]*)>([^<]*)</g)]
+    .map((m) => ({ x: Number(m[1]), y: Number(m[2]), anchor: /text-anchor="(\w+)"/.exec(m[3]!)?.[1] ?? 'start', size: Number(/font-size="([\d.]+)"/.exec(m[3]!)?.[1] ?? 12), text: m[4]! }))
+  const find = (html: string, t: string) => texts(html).find((e) => e.text === t)
+  /** The stretch of x a label really covers, which depends on how it is anchored. */
+  const span = (e: { x: number; anchor: string; size: number; text: string }) => {
+    const w = e.text.length * e.size * 0.55
+    return e.anchor === 'end' ? [e.x - w, e.x] : e.anchor === 'middle' ? [e.x - w / 2, e.x + w / 2] : [e.x, e.x + w]
+  }
+  const overlap = (a: ReturnType<typeof texts>[number], b: ReturnType<typeof texts>[number]) => {
+    const [a1, a2] = span(a), [b1, b2] = span(b)
+    return Math.abs(a.y - b.y) < Math.max(a.size, b.size) && a1! < b2! && b1! < a2!
+  }
+
+  const track = {
+    xRange: [-50, 50], yRange: [-50, 50], square: true, grid: false,
+    circles: [{ cx: 0, cy: 0, r: 36.8, label: 'lane 1' }, { cx: 0, cy: 0, r: 45.34, label: 'lane 8' }],
+  }
+
+  it('never prints two labels on top of each other, whatever their anchors', () => {
+    const all = texts(renderToStaticMarkup(<LineGraph alt="" props={track} />))
+    expect(all.length).toBeGreaterThan(8)
+    for (const a of all) for (const b of all) {
+      if (a === b) continue
+      expect(overlap(a, b), `"${a.text}" and "${b.text}" overlap`).toBe(false)
+    }
+  })
+
+  it('keeps every label inside the canvas rather than nudging one off the top', () => {
+    const all = texts(renderToStaticMarkup(<LineGraph alt="" props={track} />))
+    for (const e of all) expect(e.y, `"${e.text}" is drawn at y = ${e.y}`).toBeGreaterThanOrEqual(0)
+  })
+
+  it('leaves a centred polygon label alone when nothing is near it', () => {
+    const props = { xRange: [-1, 7], yRange: [-1, 7], square: true, polygons: [{ points: [[1, 1], [4, 1], [1, 3]], label: 'A' }] }
+    const label = find(renderToStaticMarkup(<LineGraph alt="" props={props} />), 'A')
+    expect(label).toBeDefined()
+    // Pinned at the value HEAD produced, so a later collision fix cannot quietly start
+    // moving labels that were already sitting where they were asked to.
+    expect(label!.y).toBeCloseTo(194.67, 1)
+  })
+})
