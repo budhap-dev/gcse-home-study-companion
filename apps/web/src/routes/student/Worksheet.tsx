@@ -240,7 +240,7 @@ export function Worksheet() {
           <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
           {answered && typed && (
             <p className="text-sm font-bold" style={{ color: answered.result.correct ? 'var(--color-status-secure)' : 'var(--color-status-not-secure)' }}>
-              {answered.result.correct ? `Final answer correct: ${question.marks} of ${question.marks}` : 'Final answer not matched. Reveal the solution and award your method marks.'}
+              {markedLine(question.marks, answered.result.correct)}
             </p>
           )}
           {answered && typed && !revealed && (
@@ -286,4 +286,17 @@ export function Worksheet() {
       </div>
     </article>
   )
+}
+
+/**
+ * The line under a marked answer.
+ *
+ * A correct final answer scores the whole question, so the old wording, "Final answer
+ * correct: 1 of 1", printed a fraction whose two halves could never differ — and on a
+ * one-mark multiple choice that tautology was the entire line. What is worth saying is
+ * how many marks the answer just earned.
+ */
+export function markedLine(marks: number, correct: boolean): string {
+  if (!correct) return 'Final answer not matched. Reveal the solution and award your method marks.'
+  return marks === 1 ? 'Correct · 1 mark' : `Correct · all ${marks} marks`
 }
