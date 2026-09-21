@@ -77,6 +77,23 @@ describe('line graph labels across the whole pack', () => {
     expect(escaped).toEqual([])
   })
 
+  /**
+   * A curve crosses the axes, and the tick numbers sit against them, so every sine wave
+   * in the pack had a line drawn through its 180 and its 360. The numbers are painted on
+   * a white halo so they survive it; the series labels are placed clear of each other
+   * instead, and are not haloed.
+   */
+  it('draws the axis tick numbers on a white halo', () => {
+    const markup = renderToStaticMarkup(
+      <LineGraph props={{ xRange: [0, 360], yRange: [-1.4, 1.4], xStep: 90, waves: [{ fn: 'sin' }] }} alt="a sine wave" />,
+    )
+    for (const tick of ['90', '180', '270']) {
+      const text = new RegExp(`<text[^>]*>${tick}</text>`).exec(markup)
+      expect(text, tick).not.toBeNull()
+      expect(text![0], tick).toContain('paint-order="stroke"')
+    }
+  })
+
   it('never prints one label over another', () => {
     const clashes: string[] = []
     for (const { where, props } of graphs) {

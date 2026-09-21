@@ -37,6 +37,99 @@
       "body": "The specification is explicit: lower case **b** means a **bit**, capital **B** means a **byte**. So 8 b = 1 B, and a \"100 Mb\" connection is eight times slower than a \"100 MB\" one sounds."
     }
   ],
+  "why": {
+    "matters": "A computer has no way to store a letter, a colour or a sound. It has switches that are **on or off**, and everything else is a decision about how to write something real as those switches.\n\nThat is why this topic comes first. Binary is not a quirky way of counting — it is the only thing the hardware can do, and every file size, every limit and every \"unsupported character\" further on is a consequence of the encoding somebody chose.",
+    "examples": [
+      {
+        "title": "Why a photo is bigger than a message",
+        "body": "A text message of 160 characters stores **one byte a character**: about 160 bytes. A photograph stores **three bytes a pixel**, and there are 4000 × 3000 of them — **36 MB**.\n\nThe file sizes are not arbitrary and they are not a property of photographs. They follow from what is being written down: a few hundred characters against twelve million colour values. Once you can count what a file contains, you can predict its size before you save it.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "caption": "Drawn to true proportion. The message is there.",
+            "bars": [
+              {
+                "label": "A photograph",
+                "value": 36000000,
+                "display": "36 MB"
+              },
+              {
+                "label": "A text message",
+                "value": 160,
+                "display": "160 B"
+              }
+            ]
+          },
+          "alt": "Two bars drawn to true proportion: a thirty-six megabyte photograph against a one hundred and sixty byte text message, which is too small to see at the same scale"
+        }
+      },
+      {
+        "title": "Why a scan of a page is bigger than the page",
+        "body": "Type a page and it is about 3000 characters — **3000 bytes**. Scan the same page and it is **26 MB**, about **8,700 times** as much, and it says exactly the same thing.\n\nThe scanner has no idea there are letters in the image. It is storing **colours**, so it records the white paper as carefully as the ink, pixel by pixel. That is also why a scanned page cannot be searched until software has looked at the picture and worked out what the letters were.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "caption": "The same words, both times",
+            "bars": [
+              {
+                "label": "Scanned",
+                "value": 26099520,
+                "display": "26 MB",
+                "note": "stored as colours"
+              },
+              {
+                "label": "Typed",
+                "value": 3000,
+                "display": "3 kB",
+                "note": "stored as characters"
+              }
+            ]
+          },
+          "alt": "Two bars in proportion for the same page of words: twenty-six megabytes when scanned as an image against three kilobytes when typed as characters"
+        }
+      },
+      {
+        "title": "Why the phone says 128 GB and you have less",
+        "body": "The specification is explicit about the prefixes, and so is the industry that sells you the storage: **1 kB = 1,000 B**, and a megabyte is 1,000 of those. A \"128 GB\" phone holds 128 **billion** bytes.\n\nSome operating systems then report that space using 1024 instead of 1,000 at every step, so the same chip reads as about 119. Nothing is missing and nobody is cheating; two conventions are being used for one number. AQA asks for the decimal one, which is also what is printed on the box.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Unit",
+              "Is",
+              "In bytes"
+            ],
+            "rows": [
+              [
+                "bit (b)",
+                "a single 0 or 1",
+                "—"
+              ],
+              [
+                "byte (B)",
+                "8 bits",
+                "1"
+              ],
+              [
+                "kilobyte (kB)",
+                "1 000 bytes",
+                "1 000"
+              ],
+              [
+                "megabyte (MB)",
+                "1 000 kB",
+                "1 000 000"
+              ]
+            ]
+          },
+          "alt": "A table of the units of information: a bit is a single nought or one, a byte is eight bits, a kilobyte is a thousand bytes and a megabyte is a thousand kilobytes, using the decimal prefixes the specification gives"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
