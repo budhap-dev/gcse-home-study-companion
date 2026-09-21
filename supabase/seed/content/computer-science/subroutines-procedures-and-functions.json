@@ -38,6 +38,126 @@
       "body": "Some books distinguish an argument in the call from a parameter in the header. AQA states that in examinable material it uses **parameter** for both, so do not lose time on a distinction the board does not examine."
     }
   ],
+  "why": {
+    "matters": "A subroutine is a block of code with a **name**, and naming something is what lets you stop thinking about it. Once `is_even(n)` exists and works, the rest of the program can use it without anyone reading it again.\n\nThat is how a program gets big enough to be useful without getting too big to hold in your head. It also decides where a change goes: one definition, one place to edit, one place to test. The exam calls this **structured programming**, and the two words to keep apart are *procedure*, which does a job, and *function*, which hands a value back.",
+    "examples": [
+      {
+        "title": "Why the pass mark should live in one place",
+        "body": "A program that checks a pass mark in 14 places has the number 50 written 14 times. The day the pass mark moves to 45, 13 of them get changed and the last one is found in November by somebody who was told they failed.\n\nWritten as a subroutine — one `has_passed(mark)` that everything calls — the change is a single line, and every part of the program that uses it is right from the moment it is saved. That is the argument worth making in an answer, and it is worth more than *it makes the code tidy*.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Written out",
+              "As a subroutine"
+            ],
+            "rows": [
+              [
+                "Places it appears",
+                "14",
+                "1"
+              ],
+              [
+                "Places to edit",
+                "14",
+                "1"
+              ],
+              [
+                "Places to test",
+                "14",
+                "1"
+              ],
+              [
+                "If one is missed",
+                "two pass marks",
+                "impossible"
+              ]
+            ]
+          },
+          "alt": "A table comparing a pass mark written out fourteen times with the same rule written once as a subroutine: fourteen places to edit and test against one, and a program that can end up with two different rules at once"
+        }
+      },
+      {
+        "title": "Why a function is a machine you hand a value to",
+        "body": "`is_even(7)` is not a set of instructions at the point where you use it. It **is** `False`. A call becomes its returned value, which is why it can go straight into an `IF`, be stored in a variable, or be output.\n\nThe names in the header are **parameters** and the values handed in are **arguments**: `SUBROUTINE is_even(n)` has the parameter `n`, and `is_even(7)` passes the argument 7. Inside, `n` is 7 for that call only. The next call can pass 8 and get True, with nothing left over from this one.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Tracing is_even(7)",
+            "columns": [
+              "Line",
+              "n",
+              "n MOD 2",
+              "Returns"
+            ],
+            "rows": [
+              [
+                "is_even(7) called",
+                "7",
+                "",
+                ""
+              ],
+              [
+                "IF n MOD 2 = 0",
+                "7",
+                "1",
+                ""
+              ],
+              [
+                "ELSE RETURN False",
+                "7",
+                "1",
+                "False"
+              ]
+            ],
+            "highlight": 2
+          },
+          "alt": "A trace of a call to is_even with the argument seven: the parameter n holds seven, seven MOD two is one so the IF is not taken, and the ELSE branch returns False"
+        }
+      },
+      {
+        "title": "Why two subroutines can both use i",
+        "body": "A variable made inside a subroutine is **local**: it exists while that subroutine is running and is gone afterwards, and nothing outside can see it. So every subroutine can have its own `i`, its own `total`, its own `temp`, and none of them collide.\n\nA **global** is the opposite — visible everywhere, changeable from anywhere — which sounds convenient right up to the afternoon a value is wrong and nine different parts of the program could have done it. *Where can this be changed from?* is the question that makes the difference obvious.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Local",
+              "Global"
+            ],
+            "rows": [
+              [
+                "Made",
+                "in a subroutine",
+                "outside them all"
+              ],
+              [
+                "Lasts",
+                "one call",
+                "the whole run"
+              ],
+              [
+                "Seen by",
+                "that subroutine",
+                "every part"
+              ],
+              [
+                "If wrong",
+                "one place to look",
+                "anywhere"
+              ]
+            ]
+          },
+          "alt": "A table comparing local and global variables: a local is made inside a subroutine, lasts only while that call runs and is seen by that subroutine alone, while a global is made outside, lasts for the whole program and can be changed anywhere"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

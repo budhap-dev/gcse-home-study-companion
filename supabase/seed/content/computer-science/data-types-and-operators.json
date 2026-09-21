@@ -43,6 +43,128 @@
       "body": "Write `(a MOD b) * 2` rather than trusting precedence. AQA's pseudo-code does not fix whether MOD binds tighter than `*`, and the three exam languages disagree, so brackets cost nothing and settle it."
     }
   ],
+  "why": {
+    "matters": "A program has to decide what **kind** of thing a value is before it can do anything with it, and that is not a formality. The type fixes how much memory the value takes, what you are allowed to do to it, and what the operators even mean: `7 + 3` is 10 for integers and `73` for strings. Same symbols, different answer.\n\nSo the examinable skill is justification. Not *what type is a phone number* but *why* — and the reason is always about what the value is **for**, never about what it looks like.",
+    "examples": [
+      {
+        "title": "Why a phone number is a string",
+        "body": "Store 07700 900123 as an integer and two things happen. The leading zero disappears, because `07700900123` and `7700900123` are the same number. And the value becomes something you could add up, which nobody has ever wanted to do to two phone numbers.\n\nA value is stored as a number when arithmetic on it means something: a price, a mark, a count. A phone number, a postcode and a sort code are **labels that happen to be written in digits**, so they are strings. That sentence is what a *justify the data type* question is paying for.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Value",
+              "Type",
+              "Because"
+            ],
+            "rows": [
+              [
+                "A mark",
+                "integer",
+                "you average them"
+              ],
+              [
+                "A price",
+                "real",
+                "it has a decimal part"
+              ],
+              [
+                "07700 900123",
+                "string",
+                "the leading zero matters"
+              ],
+              [
+                "Has paid?",
+                "Boolean",
+                "only two answers"
+              ],
+              [
+                "A grade",
+                "character",
+                "one letter"
+              ]
+            ],
+            "highlight": 2
+          },
+          "alt": "A table justifying a data type for five values: a mark is an integer, a price is real, a phone number is a string because the leading zero matters and arithmetic on it means nothing, a yes or no is Boolean and a grade is a character"
+        }
+      },
+      {
+        "title": "Why 3725 seconds is one hour, two minutes and five",
+        "body": "Integer division does both halves of that. `DIV` gives the whole units and `MOD` gives what is left: 3725 DIV 3600 is 1 hour, 3725 MOD 3600 is 125 seconds left over, and running the same pair on 125 with 60 gives 2 minutes and 5 seconds.\n\nEvery clock, countdown, page number and progress bar is doing this. `MOD` is the half people forget and the more useful one — the remainder is also how a program tells an even number from an odd one, and how anything that wraps round gets back to the start.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "3725 seconds, split with DIV and MOD",
+            "columns": [
+              "Expression",
+              "Value",
+              "Means"
+            ],
+            "rows": [
+              [
+                "3725 DIV 3600",
+                "1",
+                "whole hours"
+              ],
+              [
+                "3725 MOD 3600",
+                "125",
+                "seconds left"
+              ],
+              [
+                "125 DIV 60",
+                "2",
+                "whole minutes"
+              ],
+              [
+                "125 MOD 60",
+                "5",
+                "seconds left"
+              ]
+            ]
+          },
+          "alt": "A table splitting three thousand seven hundred and twenty-five seconds with DIV and MOD: one whole hour, one hundred and twenty-five seconds left, then two whole minutes and five seconds left"
+        }
+      },
+      {
+        "title": "Why a free bus pass at 65 is a one-character bug",
+        "body": "A council writes `IF age > 65 THEN pass ← True`. Everyone aged 66 and over gets one. Everyone who is exactly 65 — the people the rule was written for — does not.\n\nRelational operators come in pairs that disagree about exactly one value, and that value is always the number in the condition. `>` leaves it out, `≥` takes it in. AQA prints them as `≠`, `≤` and `≥`, not the two-character versions a programming language uses, and asks what a condition does at the edge. Saying it out loud — *more than* against *at least* — catches most of them.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "age",
+              "age > 65",
+              "age ≥ 65"
+            ],
+            "rows": [
+              [
+                "64",
+                "False",
+                "False"
+              ],
+              [
+                "65",
+                "False",
+                "True"
+              ],
+              [
+                "66",
+                "True",
+                "True"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A table of three ages against two conditions: at sixty-four both are false and at sixty-six both are true, but at sixty-five greater than is false while greater than or equal to is true"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
