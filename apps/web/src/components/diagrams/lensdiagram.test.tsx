@@ -97,3 +97,31 @@ describe('the lens symbol', () => {
     expect(bottom.tip).toBeLessThan(bottom.base)  // the lower head points up, inwards
   })
 })
+
+describe('labels near the focus', () => {
+  /**
+   * A distant object images at the focus. The image label used to sit under a tiny
+   * arrow, straight across the F label, and the arrow itself ran through the F.
+   */
+  it('puts a short image label beside its arrow and steps the F label aside', () => {
+    const html = renderToStaticMarkup(
+      <LensDiagram props={{ kind: 'convex', focalLength: 4, objectDistance: 100, objectHeight: 3 }} alt="a very distant object imaged at the principal focus of a convex lens" />,
+    )
+    const image = html.match(/<text x="([\d.]+)" y="([\d.]+)" text-anchor="middle"[^>]*>image<\/text>/)
+    expect(image).not.toBeNull()
+    const fs = [...html.matchAll(/<text x="([\d.]+)" y="([\d.]+)" text-anchor="(end|middle)"[^>]*>F<\/text>/g)]
+    expect(fs).toHaveLength(2)
+    const covered = fs.find((m) => m[3] === 'end')
+    expect(covered).toBeDefined()
+    // The axis is at H/2 - 10 = 140: the covered F sits above it, the image label well below.
+    expect(Number(covered![2])).toBeLessThan(140)
+    expect(Number(image![2])).toBeGreaterThanOrEqual(140 + 34)
+  })
+
+  it('leaves a tall image labelled under its arrow as before', () => {
+    const html = renderToStaticMarkup(
+      <LensDiagram props={{ kind: 'convex', focalLength: 4, objectDistance: 12, objectHeight: 3 }} alt="an object beyond twice the focal length of a convex lens" />,
+    )
+    expect(html).toMatch(/text-anchor="middle"[^>]*>image<\/text>/)
+  })
+})
