@@ -35,6 +35,110 @@
       "body": "Series: the **pds must sum to the supply**. Parallel: the **branch currents must sum to the total**. Both are free checks that catch nearly every arithmetic slip in this topic."
     }
   ],
+    "why": {
+      "matters": "Any circuit, however tangled, is series pieces and parallel pieces, and each kind obeys three rules. Reducing a wiring diagram to one equivalent resistance is what lets you say what current a supply will have to give, whether a fuse will hold, and why a meter must go where it goes.\n\nEvery fault an electrician finds and every circuit question in the exam is the same six rules, applied from the inside out.",
+      "examples": [
+        {
+          "title": "Why an ammeter must never go across the battery",
+          "body": "The two meters are opposites, and the rules say why. A **voltmeter** measures pd, so it goes across a component, and to leave the circuit alone it has a very high resistance. An **ammeter** measures current, so it goes in the path, and to leave the circuit alone it has a very low resistance.\n\nThat low resistance is the trap. Put an ammeter across a supply, as if it were a voltmeter, and it is a near-short circuit: $I = V \\div R$ with a tiny $R$ gives a huge current, and the meter's fuse blows. A voltmeter in series just stops the circuit.",
+          "visual": {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Two meters, two resistances, two mistakes",
+              "columns": [
+                "Meter",
+                "Resistance",
+                "Right place",
+                "Wrong place"
+              ],
+              "rows": [
+                [
+                  "ammeter",
+                  "very low",
+                  "in series",
+                  "across the supply: fuse blows"
+                ],
+                [
+                  "voltmeter",
+                  "very high",
+                  "across a component",
+                  "in series: circuit stops"
+                ]
+              ]
+            },
+            "alt": "A table contrasting an ammeter, with very low resistance, which reads current in series and short-circuits a supply if put across it, with a voltmeter, with very high resistance, which reads pd across a component and stops the circuit if put in series"
+          }
+        },
+        {
+          "title": "The lines on the rear window",
+          "body": "The demister on a car's back window is a set of thin heating strips, and every strip is its own branch across the 12 V battery: **parallel**. With, say, 3 strips of 12 Ω, each has the full 12 V across it and draws $12 \\div 12 = 1$ A, so the battery supplies 3 A.\n\nScratch one strip through and only that branch goes cold; the others keep their 12 V and their 1 A, and the battery supplies 2 A. Wired in series, one scratch would kill the whole window. The parallel grid also has a lower resistance than any one strip, 4 Ω here.",
+          "visual": {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "props": {
+              "supply": {
+                "pd": 12,
+                "label": "car battery"
+              },
+              "arrangement": "parallel",
+              "parts": [
+                {
+                  "kind": "resistor",
+                  "label": "strip 1",
+                  "resistance": 12
+                },
+                {
+                  "kind": "resistor",
+                  "label": "strip 2",
+                  "resistance": 12
+                },
+                {
+                  "kind": "resistor",
+                  "label": "strip 3",
+                  "resistance": 12
+                }
+              ]
+            },
+            "alt": "A parallel circuit of three twelve ohm heating strips across a twelve volt car battery, each with the full twelve volts and one amp, the currents adding to three amps"
+          }
+        },
+        {
+          "title": "Why an amplifier says \"minimum 4 Ω\"",
+          "body": "A speaker is printed with its resistance, usually 8 Ω, and the back of an amplifier says the least it will drive, often *4 Ω*. Those two numbers are the parallel rule.\n\nPlug a second 8 Ω speaker into the same output and the pair are in parallel: total resistance $8 \\div 2 = 4$ Ω, less than either, so the amplifier has to supply **twice** the current for the same pd. A third takes it to 2.7 Ω and three times the current. The amplifier's output transistors are built for a certain current, and past it they overheat. *Minimum 4 Ω* means *two speakers, not three*.",
+          "visual": {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "8 Ω speakers on one output",
+              "columns": [
+                "Speakers",
+                "Total resistance",
+                "Current from the amplifier"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "8 Ω",
+                  "1 times"
+                ],
+                [
+                  "2",
+                  "4 Ω",
+                  "2 times"
+                ],
+                [
+                  "3",
+                  "2.67 Ω",
+                  "3 times"
+                ]
+              ]
+            },
+            "alt": "A table showing one, two and three eight ohm speakers in parallel giving eight, four and about two point seven ohms, so the amplifier supplies one, two and three times the current"
+          }
+        }
+      ]
+    },
   "lesson": {
     "steps": [
       {
