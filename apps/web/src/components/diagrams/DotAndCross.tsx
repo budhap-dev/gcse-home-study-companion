@@ -26,9 +26,19 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
   const r = 44
   const gap = kind === 'ionic' ? 170 : 2 * r - 22
   const W = 2 * r + gap + 120
-  const H = 160
+  /**
+   * An ionic diagram needs a band of its own above and below the two atoms. Both of its
+   * annotations are wider than the space they were drawn in: "1 electron transferred"
+   * sat between the atoms, where only 62px separates the two boxes, so it printed across
+   * both of them; and "outer electrons given away" sat under the symbol, which is inside
+   * the circle it was describing. Neither is visible to a test that only compares labels
+   * with each other, because what they collided with was a box and a circle.
+   */
+  const topBand = kind === 'ionic' ? 22 : 0
+  const bottomBand = kind === 'ionic' ? 22 : 0
+  const H = kind === 'ionic' ? 160 + topBand + bottomBand : 160
   const cx = [60 + r, 60 + r + gap]
-  const cy = 70
+  const cy = 70 + topBand
   const mark = (x: number, y: number, m: 'dot' | 'cross') =>
     m === 'dot' ? <circle cx={x} cy={y} r="3.5" fill={INK} /> : <g stroke={INK} strokeWidth="2"><line x1={x - 3.5} y1={y - 3.5} x2={x + 3.5} y2={y + 3.5} /><line x1={x - 3.5} y1={y + 3.5} x2={x + 3.5} y2={y - 3.5} /></g>
   // place n electrons round a ring, avoiding the angle range facing the other atom when `avoid` is set
@@ -115,12 +125,12 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
               {ring(cx[i]!, own, at.mark, null)}
               {gained > 0 && ring(cx[i]!, own + gained, a.mark, null).slice(own)}
               <text x={cx[i]! + r + 14} y={cy - r + 2} textAnchor="middle" fontFamily={DISPLAY} fontSize="16" fontWeight="700" fill="#d25b3b">{at.charge ?? (i === 0 ? `${transfer > 1 ? transfer : ''}+` : `${transfer > 1 ? transfer : ''}−`)}</text>
-              {n === 0 && <text x={cx[i]} y={cy + 24} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>outer electrons given away</text>}
+              {n === 0 && <text x={cx[i]} y={cy + r + 26} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>outer electrons given away</text>}
             </g>
           )
         })}
         <path d={`M${cx[0]! + r + 20} ${cy} C ${cx[0]! + r + 50} ${cy - 30}, ${cx[1]! - r - 50} ${cy - 30}, ${cx[1]! - r - 20} ${cy}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" markerEnd="url(#dc-arrow)" />
-        <text x={(cx[0]! + cx[1]!) / 2} y={cy - 26} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{transfer} electron{transfer > 1 ? 's' : ''} transferred</text>
+        <text x={(cx[0]! + cx[1]!) / 2} y={14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{transfer} electron{transfer > 1 ? 's' : ''} transferred</text>
         <defs><marker id="dc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#d25b3b" /></marker></defs>
         <text x={W / 2} y={H - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{a.symbol} loses, {b.symbol} gains: both end with full outer shells</text>
       </svg>
