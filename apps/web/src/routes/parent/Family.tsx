@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import { STATUS_COLOUR, STATUS_LABEL, TOPIC_STATUSES } from '@study/shared'
 import { supabase } from '../../auth/client.ts'
 import { TOPICS } from '../../content/index.ts'
@@ -24,6 +24,12 @@ export interface Child {
   syncedAt?: string
 }
 
+export type FamilyTab = 'dashboard' | 'tasks'
+const TABS: { id: FamilyTab; label: string }[] = [
+  { id: 'dashboard', label: 'Dashboard' },
+  { id: 'tasks', label: 'Tasks' },
+]
+
 const TOPIC_INDEX = new Map(TOPICS.map((t) => [t.id, t]))
 const day = (iso: string) => new Date(iso.length > 10 ? iso : iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 
@@ -34,9 +40,17 @@ const day = (iso: string) => new Date(iso.length > 10 ? iso : iso + 'T12:00:00')
  *
  * It answers three questions in order — is the work happening, is it going in, and where
  * is it going wrong — because those are the ones that lead to a useful conversation.
+ *
+ * Reading the week and setting the next task are separate jobs, done at different times,
+ * so they are separate tabs rather than one long scroll.
  */
 export function Family() {
   const auth = useAuth()
+  const [params, setParams] = useSearchParams()
+  // The tab is in the URL, so a refresh, a bookmark or a link sent to the other parent
+  // all land back on the one that was open. Dashboard is the plain /family address.
+  const tab: FamilyTab = params.get('tab') === 'tasks' ? 'tasks' : 'dashboard'
+  const setTab = (t: FamilyTab) => setParams(t === 'dashboard' ? {} : { tab: t }, { replace: true })
   const [children, setChildren] = useState<Child[]>([])
   const [chosen, setChosen] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -83,7 +97,7 @@ export function Family() {
   const first = firstNameOf(child.name)
 
   return (
-    <Shell title={child.name} subtitle={`How ${first} is getting on, from their signed-in account.`}>
+    <Shell title={child.name} subtitle={tab === 'tasks' ? `What ${first} has been set, and how it is going.` : `How ${first} is getting on, from their signed-in account.`}>
       {children.length > 1 && (
         <div className="flex flex-wrap gap-2">
           {children.map((c) => (
@@ -92,17 +106,76 @@ export function Family() {
           ))}
         </div>
       )}
-      {/* Setting tasks does not depend on the child having synced anything yet, so the
-          panel sits outside the report and shows even for an account with no history. */}
-      <AssignPanel email={child.email} name={first} state={child.state} />
-
-      {child.state ? <ChildReport child={child} summary={parentSummary(child.state)} /> : (
-        <p className="rounded-2xl border border-rule bg-surface p-4 text-ink-2">
-          <strong className="text-ink">{firstNameOf(child.name)}</strong> has not signed in yet, so nothing has reached the account. Work done while signed out stays on that device.
-        </p>
-      )}
+      <FamilyBody child={child} tab={tab} onTab={setTab} />
     </Shell>
   )
+}
+
+/**
+ * The tab bar and whichever tab is open. Kept separate from the loading and sign-in
+ * states above so it can be rendered, and tested, from a child record alone.
+ */
+export function FamilyBody({ child, tab, onTab }: { child: Child; tab: FamilyTab; onTab: (t: FamilyTab) => void }) {
+  const first = firstNameOf(child.name)
+  return (
+    <>
+      <FamilyTabs tab={tab} onTab={onTab} />
+      {tab === 'dashboard' ? (
+        <TabPanel tab="dashboard">
+          {child.state ? <ChildReport child={child} summary={parentSummary(child.state)} /> : (
+            <p className="rounded-2xl border border-rule bg-surface p-4 text-ink-2">
+              <strong className="text-ink">{first}</strong> has not signed in yet, so nothing has reached the account. Work done while signed out stays on that device.
+              Tasks can still be set on the <button type="button" onClick={() => onTab('tasks')} className="font-bold text-ink underline">Tasks</button> tab.
+            </p>
+          )}
+        </TabPanel>
+      ) : (
+        <TabPanel tab="tasks">
+          {/* Setting tasks does not depend on the child having synced anything yet, so
+              this tab works the same for an account with no history. */}
+          <AssignPanel email={child.email} name={first} state={child.state} />
+        </TabPanel>
+      )}
+    </>
+  )
+}
+
+/** Arrow keys move along a tab list, which is what a keyboard user expects of one. */
+const STEP: Record<string, (i: number) => number> = {
+  ArrowRight: (i) => i + 1,
+  ArrowLeft: (i) => i - 1,
+  Home: () => 0,
+  End: () => TABS.length - 1,
+}
+
+export function FamilyTabs({ tab, onTab }: { tab: FamilyTab; onTab: (t: FamilyTab) => void }) {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const step = STEP[e.key]
+    if (!step) return
+    e.preventDefault()
+    const at = TABS.findIndex((t) => t.id === tab)
+    const next = TABS[(step(at) + TABS.length) % TABS.length]!
+    onTab(next.id)
+    document.getElementById(`familytab-${next.id}`)?.focus()
+  }
+  return (
+    <div role="tablist" aria-label="Family view" onKeyDown={onKeyDown} className="flex gap-1 border-b border-rule">
+      {TABS.map((t) => {
+        const on = t.id === tab
+        return (
+          <button key={t.id} type="button" role="tab" id={`familytab-${t.id}`} aria-controls={`familypanel-${t.id}`}
+            aria-selected={on} tabIndex={on ? 0 : -1} onClick={() => onTab(t.id)}
+            className={`-mb-px min-h-11 border-b-2 px-4 font-bold ${on ? 'border-ink text-ink' : 'border-transparent text-ink-2'}`}>
+            {t.label}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+function TabPanel({ tab, children }: { tab: FamilyTab; children: React.ReactNode }) {
+  return <div role="tabpanel" id={`familypanel-${tab}`} aria-labelledby={`familytab-${tab}`} tabIndex={0} className="flex flex-col gap-6">{children}</div>
 }
 
 function Shell({ children, title, subtitle }: { children: React.ReactNode; title?: string; subtitle?: string }) {

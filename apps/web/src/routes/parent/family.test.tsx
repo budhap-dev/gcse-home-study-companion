@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
-import { ChildReport } from './Family.tsx'
+import { ChildReport, FamilyBody } from './Family.tsx'
 import { emptyState, type ProgressState } from '../../progress/store.ts'
 import { parentSummary } from '../../progress/summary.ts'
 
@@ -80,5 +80,61 @@ describe('the parent report', () => {
     const html = render(emptyState())
     expect(html).toContain('does not appear here until they sign in')
     expect(html).toContain('read it but not write it')
+  })
+})
+
+const body = (tab: 'dashboard' | 'tasks', state?: ProgressState) =>
+  renderToStaticMarkup(
+    <MemoryRouter>
+      <FamilyBody child={{ email: 'kid@example.com', name: 'Ana Pandit', state }} tab={tab} onTab={() => {}} />
+    </MemoryRouter>,
+  )
+
+/**
+ * Reading the week and setting the next task are done at different moments, so they are
+ * two tabs rather than one scroll. The form used to sit above the report, which meant a
+ * parent opening the page to see how the week went met a subject picker first.
+ */
+describe('the family tabs', () => {
+  const state = { ...emptyState(), attempts: [quiz('surds', 80, '2026-09-18')] }
+
+  it('offers exactly Dashboard and Tasks, with one selected', () => {
+    const html = body('dashboard', state)
+    const tabs = [...html.matchAll(/role="tab"[^>]*>([^<]+)</g)].map((m) => m[1])
+    expect(tabs).toEqual(['Dashboard', 'Tasks'])
+    expect(html).toContain('role="tablist"')
+    expect((html.match(/aria-selected="true"/g) ?? [])).toHaveLength(1)
+  })
+
+  it('shows the report on Dashboard and the task form on Tasks, never both at once', () => {
+    const dashboard = body('dashboard', state)
+    expect(dashboard).toContain('Worth a conversation')
+    expect(dashboard).not.toContain('Set task')
+
+    const tasks = body('tasks', state)
+    expect(tasks).toContain('Set task')
+    expect(tasks).toContain('Tasks for Ana')
+    expect(tasks).not.toContain('Worth a conversation')
+  })
+
+  /** A tab has to say which panel it drives, or a screen reader announces two headings. */
+  it('ties each tab to its panel', () => {
+    const html = body('tasks', state)
+    expect(html).toContain('id="familytab-tasks"')
+    expect(html).toContain('aria-controls="familypanel-tasks"')
+    expect(html).toContain('id="familypanel-tasks" aria-labelledby="familytab-tasks"')
+    // Only the selected tab is in the tab order; the arrows reach the other one.
+    expect(html).toMatch(/aria-selected="false" tabindex="-1"/)
+  })
+
+  /**
+   * A child who has never signed in has no report, but tasks can still be set for them —
+   * so the empty dashboard points at the tab that does work rather than dead-ending.
+   */
+  it('sends a parent with no synced child to the Tasks tab', () => {
+    const html = body('dashboard', undefined)
+    expect(html).toContain('has not signed in yet')
+    expect(html).toContain('Tasks</button> tab')
+    expect(body('tasks', undefined)).toContain('Set task')
   })
 })
