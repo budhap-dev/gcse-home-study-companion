@@ -39,6 +39,129 @@
       "body": "In a nested pair, the inner loop completes **every** time the outer loop goes round once. An outer loop of 3 with an inner of 4 runs the inner body $3 \\times 4 = 12$ times."
     }
   ],
+  "why": {
+    "matters": "Without **selection** a program does the same thing whatever happens, and without **iteration** it does everything exactly once. Those two are the whole difference between a list of instructions and something that responds.\n\nThey also cause the errors that are hardest to see. A wrong condition, or a loop that goes round one time too many, still runs perfectly happily and quietly returns the wrong answer — nothing crashes and nothing is reported. That is why the exam makes you **trace**: a table filled in one row at a time is the only way to find out what code does rather than what you assumed it does.",
+    "examples": [
+      {
+        "title": "Why the order of the grade boundaries matters",
+        "body": "Grades are a chain of conditions, and an `ELSE IF` chain stops at the **first** test that is True. Written from the top down — 70 for an A, then 50 for a B — a mark of 85 meets the first test and gets its A.\n\nTurn the chain round and test 50 first: 85 is still 50 or more, so it comes out a B, and **nobody in the class can ever get an A**. Both versions run. Neither reports an error. A mark of 60 agrees either way, which is exactly why it goes unnoticed until someone puts a high mark through both.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "The same marks through both chains",
+            "columns": [
+              "Mark",
+              "70 first",
+              "50 first"
+            ],
+            "rows": [
+              [
+                "85",
+                "A",
+                "B"
+              ],
+              [
+                "60",
+                "B",
+                "B"
+              ],
+              [
+                "20",
+                "C",
+                "C"
+              ]
+            ],
+            "highlight": 0
+          },
+          "alt": "A table of three marks through two orderings of the same grade conditions: eighty-five is an A when seventy is tested first but a B when fifty is, while sixty and twenty come out the same either way"
+        }
+      },
+      {
+        "title": "Why a microwave counts and a kettle waits",
+        "body": "A microwave is told thirty seconds, so before it starts it knows exactly how many times it goes round: **definite** iteration, a `FOR` loop. A kettle has no idea. It heats, checks the temperature, heats again, and stops when the water boils: **indefinite** iteration, a `WHILE`.\n\nSo the question to ask a problem is whether the number of repeats is known when the loop begins. Adding up ten marks: `FOR`. Asking for a password until it is right: `REPEAT UNTIL`, which runs the body before it tests, because you have to ask once before there is anything to check.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "The job",
+              "Count known?",
+              "Loop"
+            ],
+            "rows": [
+              [
+                "Heat for 30 seconds",
+                "yes, 30",
+                "FOR"
+              ],
+              [
+                "Add up ten marks",
+                "yes, 10",
+                "FOR"
+              ],
+              [
+                "Boil until 100 °C",
+                "no",
+                "WHILE"
+              ],
+              [
+                "Keep asking for the password",
+                "no",
+                "REPEAT UNTIL"
+              ]
+            ]
+          },
+          "alt": "A table choosing a loop from the job: heating for thirty seconds and adding ten marks have a known count and take a FOR loop, boiling until a temperature takes a WHILE, and asking until a password is right takes a REPEAT UNTIL because the body has to run once first"
+        }
+      },
+      {
+        "title": "Why one character changes the total",
+        "body": "`i ← 1` and `WHILE i < 5` adds 1, 2, 3 and 4, then stops: the total is **10**. `WHILE i ≤ 5` takes the 5 as well and gives **15**. The loop that was meant to add the numbers up to five did not, and nothing complained.\n\nOff-by-one is the commonest logic error there is, and the trace table is what finds it: one column per variable, one row per change, and the condition written down every time round. Four passes where you expected five is visible on paper, before the code has been run once.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Tracing i ← 1, WHILE i < 5",
+            "columns": [
+              "i",
+              "i < 5",
+              "total"
+            ],
+            "rows": [
+              [
+                "1",
+                "True",
+                "1"
+              ],
+              [
+                "2",
+                "True",
+                "3"
+              ],
+              [
+                "3",
+                "True",
+                "6"
+              ],
+              [
+                "4",
+                "True",
+                "10"
+              ],
+              [
+                "5",
+                "False",
+                "10"
+              ]
+            ],
+            "highlight": 4
+          },
+          "alt": "A trace table of a while loop starting at one with the condition i less than five: four passes adding one, two, three and four to give a running total of ten, then a fifth row where the condition is false and the total stays at ten"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

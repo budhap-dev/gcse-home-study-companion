@@ -38,6 +38,126 @@
       "body": "A two-dimensional array is `a[row][column]` in that order. Write the row loop outside and the column loop inside, matching the order in the brackets, and the nesting writes itself."
     }
   ],
+  "why": {
+    "matters": "Thirty marks in thirty variables cannot be looped over, searched, sorted or counted, because as far as the program is concerned `mark1` and `mark2` have nothing to do with each other. Put them in an array and the index is a **number**, so one loop reaches all thirty.\n\nThat is what a data structure buys: not storage, but the ability to treat many values as one thing. An **array** holds many of the same type; a **record** holds one each of several types; and almost every real collection of data is one of those inside the other.",
+    "examples": [
+      {
+        "title": "Why the thirty-first mark is not a problem",
+        "body": "With thirty named variables, a thirty-first student means editing every part of the program that touches the marks. With an array, nothing changes: the loop runs from `0` to `LEN(marks) - 1`, so it handles whatever length the array happens to be.\n\nThat is the difference worth writing down. An array is not a tidier way of keeping thirty variables — it is what makes the code independent of **how many there are**. Totalling, averaging, searching and sorting are written once and then work on a list of any length.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "The job",
+              "Thirty variables",
+              "One array"
+            ],
+            "rows": [
+              [
+                "Add them all up",
+                "thirty lines",
+                "one loop"
+              ],
+              [
+                "Add one more",
+                "edit everywhere",
+                "no change"
+              ],
+              [
+                "Find the biggest",
+                "by hand",
+                "one loop"
+              ],
+              [
+                "Put them in order",
+                "barely possible",
+                "one algorithm"
+              ]
+            ]
+          },
+          "alt": "A table comparing thirty separate variables with one array: totalling takes thirty lines or one loop, adding a thirty-first value means editing everywhere or nothing at all, and sorting is barely possible until the values share one name"
+        }
+      },
+      {
+        "title": "Why a seating plan needs two indexes",
+        "body": "One row of a cinema is an array. The whole auditorium is an array **of rows** — a 2D array — and `seats[row][column]` picks a seat, both counted from 0.\n\nSpreadsheets, chessboards and every grid of pixels are stored this way. Going through one takes a loop inside a loop: the outer one walks the rows, the inner one walks the seats in that row, and the inner loop runs completely for each single pass of the outer. That is why nested loops and 2D arrays turn up in the same question.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "grid ← [[3, 8, 1], [9, 2, 7]]",
+            "columns": [
+              "Expression",
+              "Value"
+            ],
+            "rows": [
+              [
+                "grid[0]",
+                "[3, 8, 1]"
+              ],
+              [
+                "grid[0][1]",
+                "8"
+              ],
+              [
+                "grid[1][0]",
+                "9"
+              ],
+              [
+                "grid[1][2]",
+                "7"
+              ],
+              [
+                "LEN(grid)",
+                "2"
+              ]
+            ]
+          },
+          "alt": "A table of lookups into a two-dimensional array of two rows of three numbers: the first row on its own, then single values picked out by row and column with both indexes counted from zero, and the length of the outer array"
+        }
+      },
+      {
+        "title": "Why a student is not three arrays",
+        "body": "Names in one array, ages in another, grades in a third: that works only as long as all three stay in the same order. Remove one student from two of them and the data quietly belongs to the wrong people, with nothing to say so.\n\nA **record** holds different types together under one name — `name` a string, `age` an integer, `grade` a character — so a student is one thing that moves as one thing. An array of records is then a table: one record per row, one field per column, which is exactly how a database holds it.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "One student record, four fields",
+            "columns": [
+              "Field",
+              "Type",
+              "Example"
+            ],
+            "rows": [
+              [
+                "name",
+                "string",
+                "Ana Okafor"
+              ],
+              [
+                "age",
+                "integer",
+                "15"
+              ],
+              [
+                "grade",
+                "character",
+                "A"
+              ],
+              [
+                "has_paid",
+                "Boolean",
+                "True"
+              ]
+            ]
+          },
+          "alt": "A table of one student record with four fields of different types: a name held as a string, an age as an integer, a grade as a single character and whether they have paid as a Boolean"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
