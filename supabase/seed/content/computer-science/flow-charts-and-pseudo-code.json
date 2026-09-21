@@ -35,6 +35,121 @@
       "body": "The specification says exam questions **indicate the form of response expected** — pseudo-code, program code, or a flowchart. Answering in the wrong form is not a partial answer; it is the wrong answer, and it is entirely avoidable."
     }
   ],
+  "why": {
+    "matters": "An algorithm has to be written down before it can be checked, argued about or handed to somebody else — and writing it in a programming language brings in punctuation and rules that have nothing to do with whether the **idea** is right.\n\nSo there are two notations that deliberately are not programming languages. A flow chart shows the shape of the control at a glance; AQA pseudo-code writes the steps precisely without committing to Python, C# or VB.NET. Both exist so the thinking can be separated from the typing.",
+    "examples": [
+      {
+        "title": "Why a diamond is a different shape from a rectangle",
+        "body": "A flow chart has four symbols and AQA names all four, because the **shape is the information**. You can see the branches and the loops in a chart from across a room, which is exactly what is hard to see in a page of code.\n\nThat is what it is for. A flow chart is poor at detail — no variable names, no exact conditions — and unbeatable at structure. Use it to check that the logic goes where you meant, then write the detail in pseudo-code.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Symbol",
+              "Shape",
+              "Means"
+            ],
+            "rows": [
+              [
+                "Terminal",
+                "a rounded box",
+                "start and stop"
+              ],
+              [
+                "Process",
+                "a rectangle",
+                "a step that does something"
+              ],
+              [
+                "Input/output",
+                "a parallelogram",
+                "a value in or out"
+              ],
+              [
+                "Decision",
+                "a diamond",
+                "a question with branches"
+              ]
+            ]
+          },
+          "alt": "A table of the four flow chart symbols AQA names: a rounded terminal box for start and stop, a rectangle for a process, a parallelogram for input or output, and a diamond for a decision"
+        }
+      },
+      {
+        "title": "Why the exam has three languages and one pseudo-code",
+        "body": "AQA sets the same paper three ways — Python, C# and VB.NET — because schools teach different languages and the **algorithm** is what is being examined, not the punctuation of any one of them.\n\n**AQA pseudo-code** is how a question can show you an algorithm without picking a side. It looks like code and is not: there is no compiler for it, and nobody ever ran it. What matters is that everybody reads it the same way — which is also why its rules are worth knowing exactly.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "A flow chart",
+              "Pseudo-code",
+              "A program"
+            ],
+            "rows": [
+              [
+                "Shows",
+                "the structure",
+                "the steps",
+                "everything"
+              ],
+              [
+                "Runs?",
+                "no",
+                "no",
+                "yes"
+              ],
+              [
+                "Good for",
+                "seeing the shape",
+                "agreeing the logic",
+                "doing the job"
+              ]
+            ]
+          },
+          "alt": "A table comparing a flow chart, pseudo-code and a program: the chart shows the structure, pseudo-code shows the steps precisely without running, and only the program actually runs"
+        }
+      },
+      {
+        "title": "Why a loop is drawn as an arrow going back",
+        "body": "A flow chart shows repetition as a line returning to a decision, and that picture makes two things obvious that are easy to miss in text: **what the condition is**, and **where the loop lets go**.\n\nAn arrow that goes back to a decision with no route out is an infinite loop, and you can see it. In code the same mistake is a condition that never becomes false, which looks perfectly reasonable on the page. This is the case for drawing the chart before writing anything: the commonest structural bug has a shape.",
+        "visual": {
+          "type": "diagram",
+          "component": "flowchart",
+          "props": {
+            "nodes": [
+              {
+                "kind": "terminal",
+                "text": "Start"
+              },
+              {
+                "kind": "decision",
+                "text": "More questions left?",
+                "yes": "yes",
+                "no": "no"
+              },
+              {
+                "kind": "process",
+                "text": "Ask one and mark it"
+              },
+              {
+                "kind": "terminal",
+                "text": "Show the score"
+              }
+            ],
+            "loop": {
+              "from": 2,
+              "to": 1
+            }
+          },
+          "alt": "A flow chart with a loop: a decision asks whether any questions are left, the body asks and marks one and the arrow returns to the decision, and the no branch leaves the loop to show the score"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
