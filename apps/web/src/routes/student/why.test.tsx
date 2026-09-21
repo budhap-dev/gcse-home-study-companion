@@ -17,14 +17,16 @@ const render = (subjectId: string, topicId: string) =>
   )
 
 describe('where you meet it', () => {
-  it('shows every example, its picture and the framing', () => {
+  it('shows every example and its picture, and not the paragraph the topic page already has', () => {
     const topic = getTopic('physics', 'moments-levers-and-gears')!
     const html = render('physics', topic.id)
     expect(topic.why).toBeDefined()
     for (const ex of topic.why!.examples) expect(html).toContain(ex.title)
-    // Three diagrams, one per example, and the framing paragraph repeated for context.
+    // Three diagrams, one per example.
     expect(html.match(/role="img"/g)).toHaveLength(topic.why!.examples.length)
-    expect(html).toContain('a force on its own says nothing about turning')
+    // "Why this exists" used to be repeated at the top of this page. It is the same text
+    // as the card on the topic page, one tap back, and showing it twice read as padding.
+    expect(html).not.toContain('a force on its own says nothing about turning')
     expect(html).toContain('Start the lesson')
   })
 
