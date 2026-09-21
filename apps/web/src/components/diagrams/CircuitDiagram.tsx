@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { wrapCell } from './tableLayout.ts'
 
 interface Part {
   kind: 'resistor' | 'lamp' | 'switch' | 'diode' | 'thermistor' | 'ldr' | 'ammeter' | 'voltmeter' | 'motor'
@@ -151,11 +152,18 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
           {pd} V
         </text>
       )}
-      {supply.label && (
-        <text x={cx + 24} y={cy - 18} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
-          {supply.label}
-        </text>
-      )}
+      {/*
+       * The label sits to the right of the cell, starting clear of the plates, and wraps
+       * to short lines stacked upwards. Centred at cx + 24 it straddled the wire for any
+       * label longer than "cell": "car battery" drew with the wire through its first
+       * letter, which no test saw until a walk sampled the wire against the text box.
+       */}
+      {supply.label &&
+        wrapCell(supply.label, 11).map((line, i, lines) => (
+          <text key={i} x={cx + 22} y={cy - 18 - (lines.length - 1 - i) * 14} textAnchor="start" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
+            {line}
+          </text>
+        ))}
     </g>
   )
 
