@@ -94,6 +94,30 @@ describe('line graph labels across the whole pack', () => {
     }
   })
 
+  /**
+   * A series label sits just above the thing it names, so the curve it belongs to — or
+   * the one next to it — runs through the text. Two shipped Maths diagrams did exactly
+   * that. In-plot labels are painted on a halo like the tick numbers; the axis captions
+   * outside the plot are left alone.
+   */
+  it('draws series and point labels on a white halo', () => {
+    const markup = renderToStaticMarkup(
+      <LineGraph
+        props={{
+          xRange: [0, 360], yRange: [-4, 4], xStep: 90,
+          waves: [{ fn: 'sin', amplitude: 3, label: 'the tide' }],
+          points: [{ x: 160, y: 1, label: 'the moment' }],
+        }}
+        alt="a tide curve"
+      />,
+    )
+    for (const label of ['the tide', 'the moment']) {
+      const text = new RegExp(`<text[^>]*>${label}</text>`).exec(markup)
+      expect(text, label).not.toBeNull()
+      expect(text![0], label).toContain('paint-order="stroke"')
+    }
+  })
+
   it('never prints one label over another', () => {
     const clashes: string[] = []
     for (const { where, props } of graphs) {
