@@ -58,4 +58,27 @@ describe('curve graph', () => {
     expect(sizes.length).toBeGreaterThan(0)
     expect(Math.min(...sizes)).toBeGreaterThanOrEqual(11)
   })
+
+  /**
+   * A curve's label sits just above the curve at the right-hand edge — which, for a curve
+   * that has levelled off, is exactly where the top gridline runs, so the label had a line
+   * through it. Both it and a marker's label are drawn on a white halo now, the same way
+   * `ReactionProfile` draws text that has to sit over the picture.
+   */
+  it('draws a curve label on a white halo', () => {
+    const label = /<text[^>]*>more carbon dioxide<\/text>/.exec(svg({ curves: [{ kind: 'saturating', label: 'more carbon dioxide' }] }))![0]
+    expect(label).toContain('paint-order="stroke"')
+    expect(label).toContain('stroke="#ffffff"')
+  })
+
+  it('draws a marker label on a white halo too', () => {
+    const label = /<text[^>]*>37 °C<\/text>/.exec(svg({ curves: [{ kind: 'optimum' }], markers: [{ x: 3.7, label: '37 °C' }] }))![0]
+    expect(label).toContain('paint-order="stroke"')
+  })
+
+  it('still puts a curve label at the right-hand end unless labelX says otherwise', () => {
+    const at = (props: Record<string, unknown>) => Number(/<text x="([\d.]+)"[^>]*>named<\/text>/.exec(svg(props))![1])
+    expect(at({ curves: [{ kind: 'linear', label: 'named' }] })).toBeGreaterThan(300)
+    expect(at({ curves: [{ kind: 'linear', label: 'named', labelX: 2 }] })).toBeLessThan(200)
+  })
 })

@@ -55,7 +55,7 @@ export function CurveGraph({ props, alt }: { props: Record<string, unknown>; alt
       {markers.map((m, i) => (
         <g key={`m${i}`}>
           <line x1={sx(m.x)} y1={pad} x2={sx(m.x)} y2={H - pad} stroke={INK_2} strokeDasharray="4 4" />
-          <text x={sx(m.x) + 4} y={pad + 12} fontFamily={FONT} fontSize="11" fill={INK_2}>{m.label}</text>
+          <text x={sx(m.x) + 4} y={pad + 12} fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3.5" paintOrder="stroke">{m.label}</text>
         </g>
       ))}
       {curves.map((c, i) => {
@@ -67,7 +67,21 @@ export function CurveGraph({ props, alt }: { props: Record<string, unknown>; alt
         return (
           <g key={i}>
             <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {c.label && <text x={at.x} y={at.y} textAnchor={at.anchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}>{c.label}</text>}
+            {c.label && (
+              /*
+               * On a white halo, as ReactionProfile draws its labels. A curve's label sits
+               * just above the curve at the right-hand edge, which for a curve that has
+               * levelled off is also where a gridline runs, so the label had a line through
+               * it. Painting the stroke first keeps it readable over anything behind it.
+               */
+              <text
+                x={at.x} y={at.y} textAnchor={at.anchor}
+                fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}
+                stroke="#ffffff" strokeWidth="3.5" paintOrder="stroke"
+              >
+                {c.label}
+              </text>
+            )}
           </g>
         )
       })}
