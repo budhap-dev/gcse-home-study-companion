@@ -154,3 +154,22 @@ describe('parallel branch spacing', () => {
     }
   })
 })
+
+describe('the supply label', () => {
+  /**
+   * "car battery" used to be centred 24 units right of the left-hand wire, so the wire
+   * ran through its first letter. The label now starts clear of the cell's plates.
+   */
+  it('starts to the right of the wire, never across it', () => {
+    const html = renderToStaticMarkup(
+      <CircuitDiagram
+        props={{ supply: { pd: 12, label: 'car battery' }, arrangement: 'parallel', parts: [{ kind: 'lamp', resistance: 2.4 }, { kind: 'resistor', resistance: 1.2 }] }}
+        alt="a parallel circuit on a labelled car battery with two branches"
+      />,
+    )
+    const label = html.match(/<text x="(\d+)" y="[\d.]+" text-anchor="start"[^>]*>car battery<\/text>/)
+    expect(label).not.toBeNull()
+    // The left wire is at x = 46 and the cell's top plate ends at 46 + 16.
+    expect(Number(label![1])).toBeGreaterThan(46 + 16)
+  })
+})

@@ -35,6 +35,106 @@
       "body": "The spec says so explicitly. Know it is **less than the smallest branch** and be able to explain **why** — another path means more current for the same pd. If you are deriving a formula, you have misread the question."
     }
   ],
+    "why": {
+      "matters": "There are only two ways to join things up, and everything electrical in a house, a car or a phone is one, the other, or a mix. In **series** there is one path, so the current is the same everywhere and the supply's pd is shared out. In **parallel** there is a path per branch, so each gets the full pd and the currents add.\n\nThe six rules are one decision made at the wiring stage, and you can read it off any circuit by asking: does the charge have a choice?",
+      "examples": [
+        {
+          "title": "Why the car's lights and heater each work on their own",
+          "body": "Everything in a car hangs off one 12 V battery, and every one of them is wired **in parallel** across it. Each gets the full 12 V, so the radio does not dim when the heater comes on, and one blown headlamp leaves the other lit.\n\nThe price is current. A headlamp of 2.4 Ω draws $12 \\div 2.4 = 5$ A, the heater fan at 1.2 Ω draws 10 A, and the battery has to supply the sum: 20 A with both lamps and the fan on. That is why the cable from the battery is as thick as a finger while the wire to one lamp is not.",
+          "visual": {
+            "type": "diagram",
+            "component": "circuit-diagram",
+            "props": {
+              "supply": {
+                "pd": 12,
+                "label": "car battery"
+              },
+              "arrangement": "parallel",
+              "parts": [
+                {
+                  "kind": "lamp",
+                  "label": "headlamp",
+                  "resistance": 2.4
+                },
+                {
+                  "kind": "lamp",
+                  "label": "headlamp",
+                  "resistance": 2.4
+                },
+                {
+                  "kind": "resistor",
+                  "label": "heater fan",
+                  "resistance": 1.2
+                }
+              ]
+            },
+            "alt": "A parallel circuit on a twelve volt car battery with two headlamps of two point four ohms and a heater fan of one point two ohms, each with the full twelve volts across it and the currents of five, five and ten amps adding to twenty"
+          }
+        },
+        {
+          "title": "Why fairy lights get dimmer as you add more",
+          "body": "Cheap fairy lights are wired **in series**: one loop through every lamp. Each lamp adds its resistance to the loop, and the supply has to push the current through all of them.\n\nWith three 2 Ω lamps on 12 V the loop is 6 Ω, the current 2 A, and each lamp gets 4 V. Join a second set of three on the end and the loop is 12 Ω, the current 1 A, and each lamp gets 2 V: every lamp, old and new, is dimmer. The supply's pd is shared, and more lamps means a smaller share each.",
+          "visual": {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Identical 2 Ω lamps in series on 12 V",
+              "columns": [
+                "Lamps in the loop",
+                "Total resistance",
+                "Current",
+                "Each lamp gets"
+              ],
+              "rows": [
+                [
+                  "3",
+                  "6 Ω",
+                  "2 A",
+                  "4 V"
+                ],
+                [
+                  "6",
+                  "12 Ω",
+                  "1 A",
+                  "2 V"
+                ]
+              ]
+            },
+            "alt": "A table showing three two ohm lamps in series on twelve volts taking two amps with four volts each, and six lamps taking one amp with two volts each, so every lamp is dimmer"
+          }
+        },
+        {
+          "title": "One dead bulb, two different outcomes",
+          "body": "Old strings of Christmas lights were wired in series so that 20 small bulbs could share the mains: $230 \\div 20 = 11.5$ V each, which a small bulb can take. The catch is the series rule: one path, so one dead bulb breaks the loop and every bulb goes out, and you find the culprit by trying each in turn.\n\nA house is wired the other way. Every light and socket is its own branch in parallel, with the full 230 V across it, so a bulb blowing in the kitchen leaves the landing lit. Series shares the pd; parallel shares nothing but the supply.",
+          "visual": {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "One bulb blows",
+              "boxes": [
+                {
+                  "title": "Christmas lights, in series",
+                  "body": "One loop. The broken bulb breaks the only path, and the whole string goes dark."
+                },
+                {
+                  "title": "What each bulb got",
+                  "body": "A share of the mains: 230 V over 20 bulbs is 11.5 V each."
+                },
+                {
+                  "title": "The house, in parallel",
+                  "body": "One branch per light. The broken bulb takes out its own branch and nothing else."
+                },
+                {
+                  "title": "What each light gets",
+                  "body": "The full 230 V, because every branch sits straight across the supply."
+                }
+              ]
+            },
+            "alt": "Four boxes contrasting series Christmas lights, where one dead bulb breaks the single loop and each bulb shares the mains, with house lighting in parallel, where a dead bulb affects only its own branch and each gets the full supply"
+          }
+        }
+      ]
+    },
   "lesson": {
     "steps": [
       {
