@@ -264,12 +264,12 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={reserve(sx(Math.max(xMin, Math.min(0, xMax))) - 6, sy(v) + 4, fmt(v), 11, true)} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{fmt(v)}</text>)}
       {xLabel
         ? <text x={W / 2} y={totalH - 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
-        : <text x={W - pad} y={sy(Math.max(yMin, Math.min(0, yMax))) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>x</text>}
+        : <text x={W - pad} y={sy(Math.max(yMin, Math.min(0, yMax))) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">x</text>}
       {yLabel
         ? <text x={padL} y={pad - 10} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
         : // Above the plot rather than inside it: a steep line's own label is drawn at the
           // top of the axis and used to land on this letter.
-          <text x={sx(Math.max(xMin, Math.min(0, xMax))) + 8} y={clear(sx(Math.max(xMin, Math.min(0, xMax))) + 8, pad - 8, 'y')} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>y</text>}
+          <text x={sx(Math.max(xMin, Math.min(0, xMax))) + 8} y={clear(sx(Math.max(xMin, Math.min(0, xMax))) + 8, pad - 8, 'y')} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">y</text>}
       {lines.map((l, i) => {
         const seg = segment(l)
         if (!seg) return null
@@ -293,7 +293,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
               ? (() => {
                   const side = sideAt(sx(k.labelX), k.label)
                   const lx = sx(k.labelX) + (side === 'end' ? -6 : 6)
-                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(yOf(k, k.labelX), yMax))) - 8, k.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>
+                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(yOf(k, k.labelX), yMax))) - 8, k.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{k.label}</text>
                 })()
               : <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>)}
           </g>
@@ -319,9 +319,9 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
               ? (() => {
                   const side = sideAt(sx(at), w.label)
                   const lx = sx(at) + (side === 'end' ? -6 : 6)
-                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{w.label}</text>
+                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{w.label}</text>
                 })()
-              : <text x={sx(at) - 4} y={clear(sx(at) - 4, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{w.label}</text>)}
+              : <text x={sx(at) - 4} y={clear(sx(at) - 4, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{w.label}</text>)}
           </g>
         )
       })}
@@ -342,7 +342,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={`c${i}`}>
             <ellipse cx={sx(c.cx)} cy={sy(c.cy)} rx={Math.abs(c.r) * kx} ry={Math.abs(c.r) * ky} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} clipPath={`url(#box-${clip})`} />
-            {c.label && <text x={sx(c.cx)} y={clear(sx(c.cx), sy(c.cy + Math.abs(c.r)) - 8, c.label, 12, 'middle')} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{c.label}</text>}
+            {c.label && <text x={sx(c.cx)} y={clear(sx(c.cx), sy(c.cy + Math.abs(c.r)) - 8, c.label, 12, 'middle')} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{c.label}</text>}
           </g>
         )
       })}
@@ -354,7 +354,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
             const left = sx(p.x) > W / 2
             const lx = sx(p.x) + (left ? -8 : 8)
             const ly = p.labelBelow ? sy(p.y) + 16 : sy(p.y) - 8
-            return <text x={lx} y={clear(lx, ly, p.label, 12, left ? 'end' : 'start')} textAnchor={left ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK}>{p.label}</text>
+            return <text x={lx} y={clear(lx, ly, p.label, 12, left ? 'end' : 'start')} textAnchor={left ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{p.label}</text>
           })()}
         </g>
       ))}
