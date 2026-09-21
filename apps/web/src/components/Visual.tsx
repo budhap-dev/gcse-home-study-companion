@@ -13,7 +13,9 @@ import { KindChip } from './KindChip.tsx'
  * the subject tint a light version for fills.
  */
 export const LIGHT_CANVAS = {
-  background: '#ffffff',
+  // backgroundColor, not the `background` shorthand: the shorthand resets
+  // background-image, and that is where styles.css draws the scroll shadow.
+  backgroundColor: '#ffffff',
   '--color-surface': '#ffffff',
   '--color-panel': '#f0ede4',
   '--subject-soft': 'color-mix(in srgb, var(--subject) 14%, #ffffff)',
@@ -23,6 +25,11 @@ export const LIGHT_CANVAS = {
 function DiagramFigure({ component, children }: { component: string; children: React.ReactNode }) {
   const ref = useFitSvgText<HTMLElement>()
   return (
+    // overflow-x-auto, and no justify-center: below its natural width the drawing stops
+    // shrinking (see stopShrinkingBelowNaturalWidth) and this is what it scrolls inside.
+    // The centring moved onto the svg's own auto margins, because justify-content puts a
+    // wider-than-container item's left edge somewhere scrolling cannot reach.
+    //
     // items-center, not the default stretch: an svg with a viewBox and width:100% has
     // no intrinsic height, so a stretching flex parent pulls it to the height of the
     // tallest thing in the grid row and the drawing floats in a sea of whitespace.
@@ -30,7 +37,7 @@ function DiagramFigure({ component, children }: { component: string; children: R
     // stretched, so a short verb table still sat in a box sized to the vocabulary list
     // beside it. The grid in Lesson.tsx now uses items-start, so the figure takes its
     // own height and this keeps the drawing centred within it.
-    <figure ref={ref} className="flex items-center justify-center rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={component}>
+    <figure ref={ref} className="flex items-center overflow-x-auto rounded-xl border border-rule p-3" style={LIGHT_CANVAS} data-diagram={component}>
       {children}
     </figure>
   )

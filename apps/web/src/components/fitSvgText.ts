@@ -64,6 +64,35 @@ export function fitTextInsideViewBox(svg: SVGSVGElement): void {
 }
 
 /**
+ * A drawing scaled into a narrow card takes its text down with it. `width="100%"` fits
+ * the whole viewBox to the box it is given, so a 520-unit table in the 298px card a
+ * 390px phone leaves for it renders its 12px labels at **6.9px**. Measured across the
+ * pack on 20 September 2026: 97 of 120 example diagrams were under 10px on a phone and
+ * the worst was 6.2. Nothing was looking for it, because `getComputedStyle` on SVG text
+ * reports the font-size inside the viewBox rather than the size the eye gets.
+ *
+ * So below its natural width the drawing stops shrinking and the card scrolls sideways
+ * instead. `min-width` is the whole mechanism: it beats the inline `max-width`, and above
+ * the natural width `width="100%"` still governs, so a wide screen is unaffected.
+ *
+ * Read the viewBox as it stands rather than as declared, because fitTextInsideViewBox
+ * may just have widened it to hold an overhanging label; matching that keeps the scale
+ * at exactly 1.
+ */
+export function stopShrinkingBelowNaturalWidth(svg: SVGSVGElement): void {
+  const vw = Number(svg.getAttribute('viewBox')?.split(/[\s,]+/)[2])
+  if (!Number.isFinite(vw) || vw <= 0) return
+  svg.style.minWidth = `${Math.round(vw)}px`
+  /*
+   * Centre with auto margins rather than the parent's justify-content. A centred flex
+   * item that overflows its scroll container puts its own left edge before the scroll
+   * origin, and no amount of scrolling reaches it. Auto margins collapse to zero when
+   * there is no free space, so the drawing starts at the left edge and scrolls right.
+   */
+  svg.style.marginInline = 'auto'
+}
+
+/**
  * Fits every SVG inside the returned ref once it is laid out, again after each render
  * (a slider graph redraws its labels as the student drags), and again when the webfont
  * lands, since text measured in the fallback face measures differently.
@@ -76,7 +105,10 @@ export function useFitSvgText<T extends HTMLElement>() {
     let live = true
     const fit = () => {
       if (!live) return
-      for (const svg of host.querySelectorAll('svg')) fitTextInsideViewBox(svg)
+      for (const svg of host.querySelectorAll('svg')) {
+        fitTextInsideViewBox(svg)
+        stopShrinkingBelowNaturalWidth(svg)
+      }
     }
     fit()
     void document.fonts?.ready.then(fit).catch(() => {})
