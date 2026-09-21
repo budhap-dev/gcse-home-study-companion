@@ -39,13 +39,17 @@ const SUP: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2', '³': '3
 
 /**
  * One species: an optional multiplier, a formula with subscripts and bracket groups, and
- * an optional charge. Charges are written both ways in the content — `Cu²⁺` in prose and
+ * an optional charge. A bracket group may hold **several** elements — Mg(OH)₂, Ca(NO₃)₂ —
+ * which the group used to disallow, so the first such equation written, an antacid in a
+ * `why` example, was silently torn in half: the matcher skipped the species it could not
+ * read and balanced what was left, reporting `2HCl → MgCl₂ + 2H₂O` as unbalanced.
+ * `parseSpecies` below has always expanded any bracket group, so only the finder was narrow. Charges are written both ways in the content — `Cu²⁺` in prose and
  * `Cu2+` in the accepted lists, because that is what a student types — so both are read.
  * A free electron is `e⁻`, `e-`, or the bare `e` a student types. An ASCII charge may be
  * followed by punctuation — an equation often ends a sentence — so the lookahead allows it;
  * requiring whitespace made `Cl^-}$.` read as a neutral chlorine atom.
  */
-const TERM = String.raw`\d*\s*(?:e(?![a-z])[⁻-]?|[A-Z][a-z]?(?:[₀-₉0-9]|\([A-Z][a-z]?[₀-₉0-9]*\)[₀-₉0-9]*|[A-Z][a-z]?)*(?:[⁰¹²³⁴⁵⁶⁷⁸⁹]*[⁺⁻]|\d*[+-](?=[\s.,;:)\]]|$|→))?)(?:\s*\((?:s|l|g|aq)\))?`
+const TERM = String.raw`\d*\s*(?:e(?![a-z])[⁻-]?|[A-Z][a-z]?(?:[₀-₉0-9]|\((?:[A-Z][a-z]?[₀-₉0-9]*)+\)[₀-₉0-9]*|[A-Z][a-z]?)*(?:[⁰¹²³⁴⁵⁶⁷⁸⁹]*[⁺⁻]|\d*[+-](?=[\s.,;:)\]]|$|→))?)(?:\s*\((?:s|l|g|aq)\))?`
 const SIDE = String.raw`${TERM}(?:[ \t]*[+\-][ \t]*${TERM})*`
 const EQUATION = new RegExp(String.raw`${SIDE}[ \t]*→[ \t]*${SIDE}`, 'g')
 
@@ -201,5 +205,27 @@ describe('chemical equations asserted as correct', () => {
     // nothing: when it read only the Unicode arrow it passed while skipping every
     // equation written as LaTeX. Raise this as Chemistry grows; never lower it.
     expect(checked).toBeGreaterThan(170)
+  })
+
+  /**
+   * The finder has to read a species whose bracket group holds more than one element, or
+   * an equation containing one is quietly cut short and the remains judged on their own.
+   */
+  it('reads a bracket group holding more than one element', () => {
+    const read = (text: string) => {
+      EQUATION.lastIndex = 0
+      const match = EQUATION.exec(fromLatex(text))
+      if (!match) return null
+      const [left, right] = match[0].split('→')
+      return { whole: match[0].trim(), from: sumSide(left), to: sumSide(right) }
+    }
+    const balanced = read('Mg(OH)₂ + 2HCl → MgCl₂ + 2H₂O')!
+    expect(balanced.whole.startsWith('Mg(OH)₂')).toBe(true)
+    expect(balanced.from.atoms).toEqual(balanced.to.atoms)
+    expect(balanced.from.atoms).toEqual({ Mg: 1, O: 2, H: 4, Cl: 2 })
+
+    // And it must still fail an equation with a bracket group that does not balance.
+    const wrong = read('Ca(OH)₂ + HCl → CaCl₂ + 2H₂O')!
+    expect(wrong.from.atoms).not.toEqual(wrong.to.atoms)
   })
 })
