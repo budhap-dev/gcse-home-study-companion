@@ -54,7 +54,34 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
   /* A question split across a page break is much harder to answer than a short page. */
   .question { break-inside: avoid; page-break-inside: avoid; }
   svg { max-width: 100% !important; }
+  /* On screen a diagram stops shrinking at its natural width and its card scrolls
+     sideways instead, so the text stays readable on a phone. Paper cannot be scrolled,
+     so on paper the drawing goes back to fitting the page. */
+  figure[data-diagram] { overflow: visible !important; background-image: none !important; }
+  figure[data-diagram] > svg { min-width: 0 !important; }
   a[href]::after { content: none !important; }
+}
+
+/* A diagram stops shrinking at its natural width and scrolls sideways inside its card
+   instead (see stopShrinkingBelowNaturalWidth), which keeps its text at the size it was
+   drawn at. Cut off with no cue, though, a picture just looks broken: the guitar
+   comparison showed two bars with their numbers off the right-hand edge.
+
+   So the card carries the classic CSS-only scroll shadow. The two `local` layers are
+   painted in the card's own white and scroll with the content, covering the shadow
+   beneath them; at either end of the scroll they slide away and the `scroll` layer
+   under them shows. No JavaScript and no scroll listener: the shadow appears exactly
+   when there is more to see, on the side there is more to see it. */
+figure[data-diagram] {
+  background-image:
+    linear-gradient(to right, #fff, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, #fff, rgba(255, 255, 255, 0)),
+    linear-gradient(to right, rgba(20, 20, 25, 0.18), rgba(20, 20, 25, 0)),
+    linear-gradient(to left, rgba(20, 20, 25, 0.18), rgba(20, 20, 25, 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-size: 30px 100%, 30px 100%, 16px 100%, 16px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 /* Rich text from the content pack: markdown with KaTeX. */
