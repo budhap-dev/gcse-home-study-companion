@@ -35,6 +35,109 @@
       "body": "The specification says so in as many words. If a textbook or a video covers them, that is time you could spend on three-input truth tables, which are examined."
     }
   ],
+  "why": {
+    "matters": "Underneath every program there is no arithmetic and no text — only wires that are on or off, and gates that decide what an on or an off leads to. Boolean logic is that layer written down.\n\nIt is worth learning for two quite separate reasons. It is how the hardware actually works, so it explains what a processor is made of. And it is the same logic as the conditions in an `IF`, so getting `AND` and `OR` exactly right on paper is the same skill as getting a condition right in code — where being nearly right lets every wrong case through.",
+    "examples": [
+      {
+        "title": "Why a microwave will not start with the door open",
+        "body": "Two things have to be true at once: the door is shut **and** the start button is pressed. Either one on its own does nothing. That is an `AND` gate, and it is wired into the machine rather than written in software, because a safety rule you can reprogram is not a safety rule.\n\nThe truth table is the whole specification of the behaviour: four rows, one output that is 1, and no argument possible about the other three. That is why an exam asks for the table rather than a description — a table cannot be vague.",
+        "visual": {
+          "type": "diagram",
+          "component": "logic-circuit",
+          "props": {
+            "expression": {
+              "op": "AND",
+              "inputs": [
+                "D",
+                "S"
+              ]
+            },
+            "show": "both",
+            "label": "D = door shut, S = start pressed"
+          },
+          "alt": "An AND gate with two inputs, the door being shut and the start button being pressed, and its truth table showing the output is 1 on only one of the four rows, when both inputs are 1"
+        }
+      },
+      {
+        "title": "Why OR and XOR only disagree once",
+        "body": "\"Tea or coffee?\" means one of them. `OR` in logic means **at least** one, including both — and that single difference is where the marks are.\n\nThe two gates agree on three of their four rows. They part company only when both inputs are 1: `OR` gives 1, `XOR` gives 0. Nearly every question that looks like it is about XOR is really about that one row, so if you check it first you can tell which gate a table describes without reading the rest.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "A",
+              "B",
+              "A OR B",
+              "A XOR B"
+            ],
+            "rows": [
+              [
+                "0",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "1",
+                "1",
+                "1"
+              ],
+              [
+                "1",
+                "0",
+                "1",
+                "1"
+              ],
+              [
+                "1",
+                "1",
+                "1",
+                "0"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A truth table with OR and XOR side by side for two inputs: the two columns match on the first three rows and differ only on the last, where both inputs are 1 and OR gives 1 while XOR gives 0"
+        }
+      },
+      {
+        "title": "Why three inputs mean eight rows and not six",
+        "body": "Each input can be 0 or 1, so adding an input **doubles** the number of combinations: 2 rows for one input, 4 for two, 8 for three, 16 for four. Two to the power of the inputs, every time.\n\nKnowing the count before you start is how you avoid the commonest lost mark: a table with a row missing. Write them out counting up in binary — 000, 001, 010 — and the order does the remembering for you, because every combination appears exactly once.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Inputs",
+              "Rows"
+            ],
+            "rows": [
+              [
+                "1",
+                "2"
+              ],
+              [
+                "2",
+                "4"
+              ],
+              [
+                "3",
+                "8"
+              ],
+              [
+                "4",
+                "16"
+              ]
+            ],
+            "highlight": 2
+          },
+          "alt": "A table of how many rows a truth table needs: two rows for one input, four for two, eight for three and sixteen for four, doubling each time because each input can be 0 or 1"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

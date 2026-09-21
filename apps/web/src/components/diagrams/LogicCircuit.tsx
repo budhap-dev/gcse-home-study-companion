@@ -72,7 +72,10 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
   const depth = (n: Node): number => (typeof n === 'string' ? 0 : 1 + Math.max(...n.inputs.map(depth)))
   const levels = depth(expr)
   const GATE_W = 56, GATE_H = 34, COL = 96
-  const W = 120 + levels * COL + 60
+  // The last gate's centre sits at 120 + levels * COL, so the right margin has to hold
+  // half a gate, the output wire and the Q. At 60 it held 28 of gate and left a two-pixel
+  // wire, which drew as a speck between the gate and the letter rather than as a wire.
+  const W = 120 + levels * COL + 90
   const H = Math.max(120, 40 + variables.length * 46)
   const inputY = (i: number) => 44 + i * 46
 

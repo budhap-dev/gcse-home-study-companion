@@ -30,6 +30,119 @@
       "body": "\"It outputs max\" repeats the code and earns nothing. \"It outputs the largest value in the list\" is the purpose. Name the input, the processing and what the output **means**."
     }
   ],
+  "why": {
+    "matters": "Almost all the code anybody works on was written by somebody else — or by you, six months ago, which amounts to the same thing. It has no comments, the names are `x` and `temp`, and before you can change a line of it you have to work out what it is for.\n\nThe exam tests exactly that: here is a short algorithm, nobody will tell you its name, say what it does. You are not meant to recognise it. You are meant to **trace** it, one row at a time, and let the table tell you — which is the same thing a professional does, on a bigger scale and with worse names.",
+    "examples": [
+      {
+        "title": "Why the variable names are deliberately useless",
+        "body": "`count ← 0`, then `WHILE x ≥ y` take `y` off `x` and add one to `count`. Nothing in that tells you anything. Trace it with x = 17 and y = 5 and the table says `count` finishes at **3** with **2** left over in `x`.\n\nNow it is obvious: 17 ÷ 5 is 3 remainder 2. The algorithm is integer division done by repeated subtraction, which is how a processor with no divide instruction does it. The names were hiding it, and the trace found it in six rows.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Tracing with x = 17, y = 5",
+            "columns": [
+              "count",
+              "x"
+            ],
+            "rows": [
+              [
+                "0",
+                "17"
+              ],
+              [
+                "1",
+                "12"
+              ],
+              [
+                "2",
+                "7"
+              ],
+              [
+                "3",
+                "2"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A trace table of an unnamed algorithm that subtracts five from seventeen while it can, counting as it goes: the count reaches three and two is left over, which is seventeen divided by five with its remainder"
+        }
+      },
+      {
+        "title": "Why the last line is where the purpose hides",
+        "body": "A loop adds every item of an array to `total`. Traced over **4, 8, 6** it reaches 18, and if the algorithm ended there it would be *adds up the array*.\n\nBut the last line is `OUTPUT total / LEN(a)`, which makes the answer **6** and the purpose *finds the mean*. Everything before the output is machinery. So trace to the end, then read the final line and ask what the number it prints actually means — that is the sentence the mark scheme is looking for.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "a = 4, 8, 6",
+            "columns": [
+              "i",
+              "a[i]",
+              "total"
+            ],
+            "rows": [
+              [
+                "0",
+                "4",
+                "4"
+              ],
+              [
+                "1",
+                "8",
+                "12"
+              ],
+              [
+                "2",
+                "6",
+                "18"
+              ],
+              [
+                "output",
+                "total / LEN(a)",
+                "6"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A trace table of a loop totalling three numbers to eighteen, with a final row showing the output line dividing by the length of the array to give six, which is the mean and the real purpose of the algorithm"
+        }
+      },
+      {
+        "title": "Why a handful of patterns cover most of them",
+        "body": "Exam algorithms are short, so they are nearly always one of a few shapes. A variable that starts at 0 and goes up by one is **counting**. One that starts at the first item and is replaced when something beats it is finding the **largest**. A string built up in a loop that runs backwards is a **reversal**.\n\nRecognising the shape tells you the purpose in seconds — and then you trace it anyway, because the shape is a guess and the trace is the evidence. Guess first, check second, and you have both the speed and the marks.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "The shape",
+              "It is"
+            ],
+            "rows": [
+              [
+                "Starts at 0, goes up by 1",
+                "a counter"
+              ],
+              [
+                "Starts at 0, adds each item",
+                "a total"
+              ],
+              [
+                "Starts at the first item, replaced",
+                "a largest or smallest"
+              ],
+              [
+                "A string built in a backwards loop",
+                "a reversal"
+              ]
+            ]
+          },
+          "alt": "A table of four shapes to recognise in an unfamiliar algorithm: a variable going up by one is a counter, one adding each item is a total, one replaced when beaten is a largest or smallest, and a string built backwards is a reversal"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

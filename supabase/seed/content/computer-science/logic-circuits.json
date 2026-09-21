@@ -35,6 +35,145 @@
       "body": "A circuit that looks right can still be wired wrongly. Build the truth table and check a row or two against the expression. It takes a minute and it is the only real check available."
     }
   ],
+  "why": {
+    "matters": "A Boolean expression says what the logic is. A circuit diagram says how it is **built**: inputs on the left, gates wired between them, one output on the right. They are two notations for the same thing, and the exam asks you to go both ways.\n\nDrawing it is not decoration. A circuit makes the order of the operations visible — which gate feeds which — and that order is exactly what an expression hides behind brackets. Getting it wrong is not a drawing mistake; it is a different circuit, doing a different job.",
+    "examples": [
+      {
+        "title": "Why the same three gates make two different circuits",
+        "body": "Take an AND and an OR. Wire the OR first and feed its output into the AND and you get `A AND (B OR C)`. Wire the AND first and feed *its* output into the OR and you get `(A AND B) OR C`. Same gates, same inputs, and the two disagree on **2 of the eight rows**.\n\nWith A = 0, B = 0, C = 1 the first gives 0 and the second gives 1. So a question that asks you to draw a circuit is asking about the **wiring**, and the brackets in the expression are the instructions for it.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "A",
+              "B",
+              "C",
+              "A AND (B OR C)",
+              "(A AND B) OR C"
+            ],
+            "rows": [
+              [
+                "0",
+                "0",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "0",
+                "1",
+                "0",
+                "1"
+              ],
+              [
+                "0",
+                "1",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "0",
+                "1",
+                "1",
+                "0",
+                "1"
+              ],
+              [
+                "1",
+                "0",
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "1",
+                "0",
+                "1",
+                "1",
+                "1"
+              ],
+              [
+                "1",
+                "1",
+                "0",
+                "1",
+                "1"
+              ],
+              [
+                "1",
+                "1",
+                "1",
+                "1",
+                "1"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A truth table of eight rows comparing two circuits built from the same AND and OR gates wired in different orders, which give different outputs on three of the eight rows"
+        }
+      },
+      {
+        "title": "Why the last operation is the gate nearest the output",
+        "body": "Converting an expression into a circuit looks hard until you find the operation that happens **last** — the one joining the main parts. That gate is the one whose output is Q, and everything else feeds into it.\n\nIn `(A AND B) OR (NOT C)` the last operation is the OR, so the OR is drawn at the right and the AND and the NOT are drawn behind it. Work backwards from there and the diagram builds itself, in the same order the brackets are resolved.",
+        "visual": {
+          "type": "diagram",
+          "component": "logic-circuit",
+          "props": {
+            "expression": {
+              "op": "OR",
+              "inputs": [
+                {
+                  "op": "AND",
+                  "inputs": [
+                    "A",
+                    "B"
+                  ]
+                },
+                {
+                  "op": "NOT",
+                  "inputs": [
+                    "C"
+                  ]
+                }
+              ]
+            },
+            "show": "circuit",
+            "label": "Q = (A AND B) OR (NOT C)"
+          },
+          "alt": "A logic circuit for A AND B, OR NOT C: the AND gate and the NOT gate sit on the left and both feed the OR gate, which is the last operation and so the one whose output is Q"
+        }
+      },
+      {
+        "title": "Why a burglar alarm is a circuit you can draw",
+        "body": "The rule is: sound the alarm if the system is armed **and** either the door or the window opens. Written down that is `A AND (D OR W)`, and it is three inputs, two gates and a picture a fitter can wire.\n\nRead the table and the behaviour is all there: nothing happens while it is unarmed, however many windows open, and once armed either sensor is enough. That is what a circuit diagram is for — turning a sentence somebody said into something with exactly one meaning.",
+        "visual": {
+          "type": "diagram",
+          "component": "logic-circuit",
+          "props": {
+            "expression": {
+              "op": "AND",
+              "inputs": [
+                "A",
+                {
+                  "op": "OR",
+                  "inputs": [
+                    "D",
+                    "W"
+                  ]
+                }
+              ]
+            },
+            "show": "both",
+            "label": "A = armed, D = door, W = window"
+          },
+          "alt": "A logic circuit for a burglar alarm: the door and window sensors feed an OR gate whose output goes into an AND gate with the armed switch, with a truth table showing the alarm sounds only when armed and a sensor is triggered"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

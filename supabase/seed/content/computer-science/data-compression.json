@@ -30,6 +30,116 @@
       "body": "The decoder cannot read the bits without the tree or code table, so it is stored alongside the data. That overhead is why Huffman pays off on long files and barely helps on short ones. It is usually the evaluation mark."
     }
   ],
+  "why": {
+    "matters": "Every file that moves anywhere costs time to send and space to keep, and the two methods on this specification make files smaller **without losing anything** — the original can be rebuilt exactly.\n\nThat last part is the bit worth holding on to. Compression is not the same as making a picture blurrier. It is finding the waste in how the data was written down: a run of identical values written out one by one, or a common letter given the same number of bits as a rare one. Both methods are just those two kinds of waste, removed.",
+    "examples": [
+      {
+        "title": "Why a row of sky compresses and a row of crowd does not",
+        "body": "Run length encoding looks for **runs** and writes each as a how-many and a what. A row reading `wwwwwwbbbwww` — 12 characters — becomes `6w3b3w`, which is 6.\n\nSky, snow and a blank page are long runs of one value, so they shrink a lot. A crowd, or a photograph of leaves, changes almost every pixel, and there are no runs to find. That is why the method is judged by the **data**, not by how clever it is: the same algorithm is excellent and useless on two files the same size.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "wwwwwwbbbwww becomes 6w3b3w",
+            "columns": [
+              "Run",
+              "Written as"
+            ],
+            "rows": [
+              [
+                "wwwwww",
+                "6w"
+              ],
+              [
+                "bbb",
+                "3b"
+              ],
+              [
+                "www",
+                "3w"
+              ],
+              [
+                "total",
+                "12 characters becomes 6"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A table of run length encoding on a row of twelve pixels: each run of the same colour is written as a count followed by the colour, and the twelve characters come out as eight"
+        }
+      },
+      {
+        "title": "Why run length encoding can make a file bigger",
+        "body": "Give it `abcabc`. Every run is one character long, so every character becomes a pair: `1a1b1c1a1b1c`. 6 characters have turned into 12 — the file has **doubled**.\n\nThis is the part exam questions are built on, because it is the part that shows you understand the method rather than the recipe. Run length encoding wins on runs and loses on variety, and text is mostly variety, which is why nothing compresses a novel this way.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "caption": "Encoding abcabc with run length encoding",
+            "bars": [
+              {
+                "label": "Original",
+                "value": 6,
+                "display": "6 characters"
+              },
+              {
+                "label": "Encoded",
+                "value": 12,
+                "display": "12 characters",
+                "note": "every run is one long"
+              }
+            ]
+          },
+          "alt": "Two bars in proportion for run length encoding a string with no repeats: six characters going in and twelve coming out, because each single character becomes a count and a character"
+        }
+      },
+      {
+        "title": "Why e should not cost the same as z",
+        "body": "ASCII gives every character 7 bits, whether it turns up constantly or almost never. Huffman coding gives the commonest characters the **shortest** codes. In `banana`, a appears 3 times and gets the one-bit code 0, while b appears once and gets 10.\n\nThe whole word comes to **9 bits** instead of 42. And no code is the start of another, which is what lets the bits be read back with no gaps between them. The catch worth knowing: the code table has to travel with the file, so on a very short file it is not worth it.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "banana in ASCII and in Huffman",
+            "columns": [
+              "Letter",
+              "Times",
+              "Code",
+              "Bits"
+            ],
+            "rows": [
+              [
+                "a",
+                "3",
+                "0",
+                "3"
+              ],
+              [
+                "b",
+                "1",
+                "10",
+                "2"
+              ],
+              [
+                "n",
+                "2",
+                "11",
+                "4"
+              ],
+              [
+                "all six",
+                "6",
+                "",
+                "9 not 42"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A table of Huffman coding the word banana: the letter a appears three times and takes a single bit, b and n take two bits each, and the whole word comes to nine bits where ASCII would take forty-two"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
