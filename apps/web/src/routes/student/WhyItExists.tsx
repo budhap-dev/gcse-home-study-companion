@@ -36,15 +36,8 @@ export function WhyItExists() {
         <p className="text-ink-2">This topic does not have this section yet.</p>
       ) : (
         <>
-          {/* Repeated from the topic page so this one stands on its own: a student who
-              arrives here from search has had no framing otherwise. */}
-          <div
-            className="rounded-2xl border border-rule px-4 py-3"
-            style={{ background: 'color-mix(in srgb, var(--subject) 6%, var(--color-surface))' }}
-          >
-            <RichText source={why.matters} />
-          </div>
-
+          {/* The "why this exists" paragraph is not repeated here. It is one field shown on
+              the topic page, one tap back, and showing it twice read as padding. */}
           {why.examples.map((ex, i) => (
             <section key={i} className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface px-4 py-4">
               <h2 className="text-xl font-bold leading-tight">{ex.title}</h2>
