@@ -41,18 +41,30 @@ export function LensDiagram({ props, alt }: { props: Record<string, unknown>; al
   const maxH = Math.max(h, Math.abs(imageHeight))
   const sy = (y: number) => axisY - (y / maxH) * 70
 
-  const arrow = (x: number, top: number, colour: string, label: string, key: string) => (
-    <g key={key}>
-      <line x1={x} y1={axisY} x2={x} y2={top} stroke={colour} strokeWidth={2.4} />
-      <polygon
-        points={`${x},${top} ${x - 5},${top + (top < axisY ? 9 : -9)} ${x + 5},${top + (top < axisY ? 9 : -9)}`}
-        fill={colour}
-      />
-      <text x={x} y={top < axisY ? top - 8 : top + 18} textAnchor="middle" fill={colour} style={{ font: DISPLAY, fontSize: 12, fontWeight: 700 }}>
-        {label}
-      </text>
-    </g>
-  )
+  /**
+   * A short arrow gets its label beside it rather than under it. A distant object, which
+   * is what a camera and a burning glass both look at, gives a tiny image at the focus,
+   * and a label under a tiny arrow printed straight across the F mark beneath the axis.
+   */
+  const arrow = (x: number, top: number, colour: string, label: string, key: string) => {
+    const short = Math.abs(top - axisY) < 30
+    const lx = x
+    // Under the arrow as usual, but never in the band the F labels occupy just below
+    // the axis, and never in the band just above it where a short upright arrow sits.
+    const ly = short ? (top < axisY ? Math.min(top - 8, axisY - 24) : Math.max(top + 18, axisY + 34)) : top < axisY ? top - 8 : top + 18
+    return (
+      <g key={key}>
+        <line x1={x} y1={axisY} x2={x} y2={top} stroke={colour} strokeWidth={2.4} />
+        <polygon
+          points={`${x},${top} ${x - 5},${top + (top < axisY ? 9 : -9)} ${x + 5},${top + (top < axisY ? 9 : -9)}`}
+          fill={colour}
+        />
+        <text x={lx} y={ly} textAnchor="middle" fill={colour} style={{ font: DISPLAY, fontSize: 12, fontWeight: 700 }}>
+          {label}
+        </text>
+      </g>
+    )
+  }
 
   const ray = (pts: [number, number][], dashed: boolean, key: string) => (
     <polyline
@@ -109,12 +121,18 @@ export function LensDiagram({ props, alt }: { props: Record<string, unknown>; al
         return <polygon key={i} points={`${lensX},${tipY} ${lensX - 7},${baseY} ${lensX + 7},${baseY}`} fill={ACCENT} />
       })}
       {rays}
-      {[fFar, fNear].map((x, i) => (
-        <g key={`f${i}`}>
-          <circle cx={x} cy={axisY} r={3} fill={INK} />
-          <text x={x} y={axisY + 18} textAnchor="middle" fill={INK} style={{ font: DISPLAY, fontSize: 12, fontWeight: 700 }}>F</text>
-        </g>
-      ))}
+      {[fFar, fNear].map((x, i) => {
+        // An image that lands on a focus has its arrow and its label where the F label
+        // goes, and the ray through the centre grazes that band too, so the F label steps
+        // to the upper left of the mark, where no ray of a real image runs.
+        const covered = Math.abs(imgX - x) < 12
+        return (
+          <g key={`f${i}`}>
+            <circle cx={x} cy={axisY} r={3} fill={INK} />
+            <text x={covered ? x - 6 : x} y={covered ? axisY - 8 : axisY + 18} textAnchor={covered ? 'end' : 'middle'} fill={INK} style={{ font: DISPLAY, fontSize: 12, fontWeight: 700 }}>F</text>
+          </g>
+        )
+      })}
       {arrow(objX, objTop, INK, 'object', 'obj')}
       {arrow(imgX, imgTop, '#2e8b57', 'image', 'img')}
       <text x={W / 2} y={16} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
