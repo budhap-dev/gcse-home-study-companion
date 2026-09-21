@@ -37,6 +37,127 @@
       "body": "AQA does not examine file handling, and there is no file syntax in its pseudo-code. Learn it for the programming project; do not spend revision time on it for the paper."
     }
   ],
+  "why": {
+    "matters": "Most of what a program is handed is **text**, and text is not numbers. The characters `50` typed into a box are a string, so adding them to `10` joins them instead of adding them — and the program does not complain, it just gives an answer that is wrong by a mile.\n\nSo this topic is two habits. Convert deliberately, because nothing else will. And treat a string as what it is: an indexed sequence you can measure, search and cut. Files are here too, for the Year 10 project — AQA does not examine them, and the lesson says so plainly.",
+    "examples": [
+      {
+        "title": "Why 50 plus 10 can come out as 5010",
+        "body": "`USERINPUT` always hands back a **string**, whatever the person typed. So `'50' + '10'` is `'5010'` — the `+` joined two pieces of text — while `50 + 10` is `60`.\n\nThe operator did not change. What it does depends on the **type** of the things either side of it, and that is why `STRING_TO_INT` exists and why an exam question about a total from two typed numbers is really a question about conversion. A total four digits long where you expected two is the shape of this bug in the wild.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Expression",
+              "Gives",
+              "Because"
+            ],
+            "rows": [
+              [
+                "'50' + '10'",
+                "'5010'",
+                "two strings, joined"
+              ],
+              [
+                "50 + 10",
+                "60",
+                "two integers, added"
+              ],
+              [
+                "STRING_TO_INT('50')",
+                "50",
+                "now a number"
+              ],
+              [
+                "INT_TO_STRING(60)",
+                "'60'",
+                "now text again"
+              ]
+            ],
+            "highlight": 0
+          },
+          "alt": "A table showing the same two values added as text and as numbers: as strings fifty and ten join to make five thousand and ten, as integers they add to sixty, and the two conversion operations turn each into the other"
+        }
+      },
+      {
+        "title": "Why finding the @ comes before splitting the address",
+        "body": "Take `ana@school.uk`. To pull out the name and the domain you first need to know **where the @ is**: `POSITION(text, '@')` gives 3. Everything before it is `SUBSTRING(0, 2, text)` and everything after it is `SUBSTRING(4, 12, text)`.\n\nThat is the shape of nearly every string question: find a landmark, then cut relative to it, because the cut is never in the same place twice. Note that AQA's `SUBSTRING` includes **both** ends, so the character before the @ is at 2, and the last character of a string of 13 is at 12.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "text ← 'ana@school.uk'",
+            "columns": [
+              "Expression",
+              "Gives",
+              "Means"
+            ],
+            "rows": [
+              [
+                "LEN(text)",
+                "13",
+                "how many characters"
+              ],
+              [
+                "POSITION(text, '@')",
+                "3",
+                "where the landmark is"
+              ],
+              [
+                "SUBSTRING(0, 2, text)",
+                "ana",
+                "everything before it"
+              ],
+              [
+                "SUBSTRING(4, 12, text)",
+                "school.uk",
+                "everything after it"
+              ]
+            ]
+          },
+          "alt": "A table of AQA string operations on an email address: its length, the position of the at sign, and two substrings that cut the name off the front and the domain off the back using that position"
+        }
+      },
+      {
+        "title": "Why the high score is gone when you close the game",
+        "body": "Every variable a program made disappears when it stops. Nothing is kept unless the program deliberately writes it somewhere that outlives it, and a **file** is the ordinary way to do that: open it, write the lines, close it.\n\nWorth knowing where the line is, though. Files are not in the 8525 specification and AQA pseudo-code has no syntax for them, so an exam will not ask you to write to one. The Year 10 programming project will, which is why the pattern sits in this lesson rather than in the exam technique.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "A variable",
+              "A file"
+            ],
+            "rows": [
+              [
+                "Lives in",
+                "memory",
+                "storage"
+              ],
+              [
+                "Survives the program ending",
+                "no",
+                "yes"
+              ],
+              [
+                "On the exam",
+                "yes",
+                "no"
+              ],
+              [
+                "In your project",
+                "yes",
+                "yes"
+              ]
+            ]
+          },
+          "alt": "A table comparing a variable with a file: a variable lives in memory and is gone when the program ends, a file lives in storage and survives, and only the variable is examined while both appear in the programming project"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

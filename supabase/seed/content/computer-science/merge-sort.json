@@ -31,6 +31,126 @@
       "body": "Most answers stop at \"merge sort is faster\". The mark that separates them is **memory**: merge sort builds new lists as it merges, so it needs extra space, while bubble sort swaps in place."
     }
   ],
+  "why": {
+    "matters": "Merge sort is the second of the two sorts AQA names, and it is here for contrast: it solves the same problem by a completely different route, and the route is the point.\n\nRather than walking the list again and again, it **splits** until every piece is one item — and a one-item list is already sorted, for free — then builds the answer back up by merging pairs. That pattern, divide and conquer, turns up far beyond sorting, and the reason it wins is that the merging is cheap while the splitting halves the problem every time.",
+    "examples": [
+      {
+        "title": "Why splitting stops at one",
+        "body": "Halve **6, 2, 9, 4, 1, 7, 3**, halve the halves, and keep going: after 3 rounds you have 7 lists of one item each. There is nothing to do to them. **A list of one item is already in order**, which is the base case the whole algorithm rests on.\n\nAn odd number is not a problem — one half is simply one shorter, and the 3 on the end waits for a partner. The splitting does no sorting whatever; it exists to reach the point where sorting is free.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Splitting 6, 2, 9, 4, 1, 7, 3",
+            "columns": [
+              "Round",
+              "The lists"
+            ],
+            "rows": [
+              [
+                "0",
+                "6 2 9 4 1 7 3"
+              ],
+              [
+                "1",
+                "6 2 9  |  4 1 7 3"
+              ],
+              [
+                "2",
+                "6  |  2 9  |  4 1  |  7 3"
+              ],
+              [
+                "3",
+                "6  |  2  |  9  |  4  |  1  |  7  |  3"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A table of the splitting stage of a merge sort on seven numbers: each round halves every list from the row above until every list holds a single item, with the odd one simply waiting for a partner"
+        }
+      },
+      {
+        "title": "Why merging only ever looks at the fronts",
+        "body": "Two sorted lists, **1 4 6** and **2 3 9**. Compare the front of one with the front of the other, take the smaller, and repeat. When one list runs out, the rest of the other goes straight on the end.\n\nIt works because each list is already in order, so the smallest item left is certain to be at the front of one of them — nothing further along can beat it. That is why merging is quick, and why the exam tests the merge rather than the split: the merge is where the sorting actually happens.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Merging 1 4 6 with 2 3 9",
+            "columns": [
+              "Fronts",
+              "Take",
+              "So far"
+            ],
+            "rows": [
+              [
+                "1 and 2",
+                "1",
+                "1"
+              ],
+              [
+                "4 and 2",
+                "2",
+                "1 2"
+              ],
+              [
+                "4 and 3",
+                "3",
+                "1 2 3"
+              ],
+              [
+                "4 and 9",
+                "4",
+                "1 2 3 4"
+              ],
+              [
+                "6 and 9",
+                "6",
+                "1 2 3 4 6"
+              ],
+              [
+                "one list is empty",
+                "the rest",
+                "1 2 3 4 6 9"
+              ]
+            ],
+            "highlight": 5
+          },
+          "alt": "A table tracing the merge of two sorted lists of three numbers: at each step the two front items are compared and the smaller is taken, and when one list empties the remainder of the other is added to the end"
+        }
+      },
+      {
+        "title": "Why two people sort a pile of paper faster than one",
+        "body": "Split the pile, hand half to somebody else, and you both sort a smaller pile. The only new work is putting the two sorted halves together at the end, and that part is easy: look at the top sheet of each, take the earlier one.\n\nThat is merge sort, and it is why the algorithm is everywhere that the data is large or the work is shared out — the pieces can be sorted independently, in any order, and merged whenever they are ready. Bubble sort cannot be divided up like that at all, because every pass depends on the one before it.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "one unsorted pile",
+            "boxes": [
+              {
+                "title": "Split it",
+                "body": "Two piles, neither sorted."
+              },
+              {
+                "title": "Sort each",
+                "body": "Separately, and at the same time."
+              },
+              {
+                "title": "Compare the tops",
+                "body": "Take whichever comes first."
+              },
+              {
+                "title": "One pile again",
+                "body": "Sorted, and never fully re-read."
+              }
+            ]
+          },
+          "alt": "Four boxes round a centre reading one unsorted pile: split it into two piles, sort each separately and at the same time, compare the top sheets and take whichever comes first, and finish with one sorted pile"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

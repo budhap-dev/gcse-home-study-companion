@@ -37,6 +37,118 @@
       "body": "AQA recognises **syntax** errors, where the code breaks the language's rules, and **logic** errors, where it runs but does the wrong thing. Dividing by zero counts as a logic error; there is no third category to name."
     }
   ],
+  "why": {
+    "matters": "A program that works is one that works when somebody does the thing you did not think of: typing a word where a number goes, leaving the box empty, entering an age of 400. Code that only handles the sensible case is not finished, it is half tested.\n\nThat is what **robust** means, and it is examined as three separate skills — validating input before you trust it, authenticating the person, and testing with data chosen to break things. The programming question near the end of the paper gives marks for each of them, whether or not the question uses the word.",
+    "examples": [
+      {
+        "title": "Why an IF is not enough to check an age",
+        "body": "An `IF` looks once. If the age is wrong it prints a message — and then the program carries straight on with the wrong age, which is worse than not checking at all, because now it looks as though it did.\n\nA `WHILE` keeps asking until the answer passes, so every line after the loop can **trust** the value. The condition describes the **bad** input and joins the halves with `OR`: `WHILE age < 11 OR age > 18`. Getting that round the right way is most of the marks, because a condition that describes the good input lets every wrong answer through.",
+        "visual": {
+          "type": "diagram",
+          "component": "flowchart",
+          "props": {
+            "nodes": [
+              {
+                "kind": "io",
+                "text": "Ask for the age"
+              },
+              {
+                "kind": "decision",
+                "text": "Below 11 or above 18?",
+                "yes": "yes",
+                "no": "no"
+              },
+              {
+                "kind": "process",
+                "text": "Say so, and ask again"
+              },
+              {
+                "kind": "terminal",
+                "text": "Now the age can be trusted"
+              }
+            ],
+            "loop": {
+              "from": 2,
+              "to": 1
+            }
+          },
+          "alt": "A flow chart of a validation loop: the age is read, a decision asks whether it is below eleven or above eighteen, the yes branch says so and asks again and returns to the decision, and only the no branch leaves the loop"
+        }
+      },
+      {
+        "title": "Why a login says \"wrong username or password\"",
+        "body": "It looks unhelpful, and it is deliberate. A message that says *no account with that name* has just told whoever typed it that the name is free — and a message that says *wrong password* has told them the opposite, which is worth far more.\n\nOne message for both mistakes gives nothing away. It sits alongside two other habits the specification names: **limit the attempts** before locking out, so guessing cannot simply be repeated, and never keep the password itself — store a **hash** and compare hashes, so the stored list is worth nothing if it is taken.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Message",
+              "To the user",
+              "To an attacker"
+            ],
+            "rows": [
+              [
+                "Wrong username or password",
+                "try again",
+                "nothing"
+              ],
+              [
+                "No account with that name",
+                "a little",
+                "the name is free"
+              ],
+              [
+                "Wrong password",
+                "a little",
+                "the name exists"
+              ]
+            ],
+            "highlight": 0
+          },
+          "alt": "A table of three login failure messages: the vague one tells the user to try again and an attacker nothing, while naming which half was wrong tells an attacker whether an account with that name exists"
+        }
+      },
+      {
+        "title": "Why the program that runs is the dangerous one",
+        "body": "AQA names exactly **two** kinds of error. A **syntax error** breaks the rules of the language — a missing bracket, a misspelt keyword — and the program will not run at all. The computer finds it for you, and it is the easy kind.\n\nA **logic error** breaks nothing. The program runs, finishes and gives an answer, and the answer is wrong. Nothing will tell you: no message, no crash, no red underline. The only thing that finds a logic error is testing it with data whose right answer you worked out beforehand.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Syntax error",
+              "Logic error"
+            ],
+            "rows": [
+              [
+                "Breaks",
+                "the rules",
+                "nothing"
+              ],
+              [
+                "Program runs?",
+                "no",
+                "yes"
+              ],
+              [
+                "Example",
+                "a missing bracket",
+                "plus where minus was meant"
+              ],
+              [
+                "Found by",
+                "the computer",
+                "testing"
+              ]
+            ]
+          },
+          "alt": "A table of the two kinds of error: a syntax error breaks the rules of the language so the program will not run and the computer reports it, while a logic error runs happily and gives a wrong answer that only testing finds"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
