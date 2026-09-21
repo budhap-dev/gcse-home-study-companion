@@ -36,6 +36,106 @@
       "body": "Linear search stops at the **end of the list**. Binary search stops when the **range is empty** — when the low end passes the high end. An algorithm that never reports failure is wrong, and it is a common thing to leave out."
     }
   ],
+  "why": {
+    "matters": "Two algorithms that do exactly the same job, and one of them is unimaginably faster on a large list. That is the whole point of comparing them: **how** an algorithm works decides what it can be used on.\n\nIt also introduces the one trade that never goes away. Binary search is faster and needs the list **sorted** first; linear search works on anything. Which is better depends on how often you search and how often the list changes, and that is a question about the situation rather than the code.",
+    "examples": [
+      {
+        "title": "Why a phone book never needed an index",
+        "body": "Looking for a name in a sorted book  nobody starts at page one. You open it in the middle  see which half the name is in  and throw the other half away — and then do it again.\n\nEach step halves what is left  so a list of 1 000 takes about **10** checks instead of 1 000. A list of a million takes **20**  and a billion takes **30**. Multiplying the list by a thousand adds **ten** checks  which is why binary search is the reason searching enormous collections feels instant.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Items",
+              "Linear, worst case",
+              "Binary, worst case"
+            ],
+            "rows": [
+              [
+                "1 000",
+                "1 000",
+                "10"
+              ],
+              [
+                "1 000 000",
+                "1 000 000",
+                "20"
+              ],
+              [
+                "1 000 000 000",
+                "1 000 000 000",
+                "30"
+              ]
+            ]
+          },
+          "alt": "A table of the worst case for each search: a thousand items needs a thousand checks by linear search and ten by binary, a million needs a million or twenty, and a billion needs a billion or thirty"
+        }
+      },
+      {
+        "title": "Why the faster one is not always the right one",
+        "body": "Binary search only works on a **sorted** list, and sorting is not free. If the list arrives unsorted and you search it once, sorting it first costs far more than simply looking through it.\n\nThe sums change completely if you search it a thousand times, or if it is already sorted because it is kept that way. So the question is never *which algorithm is faster* — it is what the list is like and what you are going to do with it. That is the reasoning an exam question about choosing an algorithm wants to see.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Linear",
+              "Binary"
+            ],
+            "rows": [
+              [
+                "Needs sorting first",
+                "no",
+                "yes"
+              ],
+              [
+                "On a small list",
+                "fine",
+                "fine"
+              ],
+              [
+                "On a huge list",
+                "slow",
+                "fast"
+              ],
+              [
+                "Searched once, unsorted",
+                "use this",
+                "sorting costs more"
+              ]
+            ]
+          },
+          "alt": "A table comparing linear and binary search: linear needs no sorting and is slow on a huge list, binary needs a sorted list and is fast, so an unsorted list searched once is a case for linear search"
+        }
+      },
+      {
+        "title": "Why halving beats speeding up",
+        "body": "A faster computer makes linear search faster by whatever factor the machine improved. It does not change the **shape** of the problem: ten times the list still takes ten times as long.\n\nBinary search changes the shape. Ten times the list adds about three checks, and a thousand times adds ten. That is why choosing the algorithm matters more than buying hardware, and it is the first case in the course of something that happens repeatedly: the way a method scales beats how fast each step is.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "caption": "Worst-case checks in a list of a million",
+            "bars": [
+              {
+                "label": "Linear search",
+                "value": 1000000,
+                "display": "1 000 000"
+              },
+              {
+                "label": "Binary search",
+                "value": 20,
+                "display": "20"
+              }
+            ]
+          },
+          "alt": "Two bars in proportion for searching a list of a million items: a million checks in the worst case for linear search against twenty for binary search, which is too small to see at the same scale"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
