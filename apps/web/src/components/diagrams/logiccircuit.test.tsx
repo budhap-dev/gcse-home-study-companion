@@ -63,6 +63,32 @@ describe('logic circuit', () => {
     expect((xor.match(/<path/g) ?? []).length).toBe((or.match(/<path/g) ?? []).length + 1)
   })
 
+  /**
+   * The output wire was two pixels long, so every circuit in the pack had a speck between
+   * its last gate and the Q instead of a wire leaving it. Nothing failed: the gates were
+   * right, the table was right, and the alt text described a wire that was not drawn.
+   */
+  it('draws a visible wire from the last gate to the Q', () => {
+    for (const expr of [
+      { op: 'AND', inputs: ['A', 'B'] },
+      { op: 'AND', inputs: ['A', { op: 'OR', inputs: ['D', 'W'] }] },
+      { op: 'OR', inputs: [{ op: 'AND', inputs: ['A', 'B'] }, { op: 'NOT', inputs: ['C'] }] },
+    ]) {
+      const markup = svg({ expression: expr, show: 'circuit' })
+      const width = Number(/viewBox="0 0 ([\d.]+)/.exec(markup)![1])
+      const q = /<text x="([\d.]+)"[^>]*>Q</.exec(markup)
+      expect(q, 'the output is labelled Q').not.toBeNull()
+      const qx = Number(q![1])
+      const horizontal = [...markup.matchAll(/<line x1="([\d.]+)" y1="([\d.]+)" x2="([\d.]+)" y2="([\d.]+)"/g)]
+        .filter((m) => m[2] === m[4])
+        .map((m) => ({ x1: Number(m[1]), x2: Number(m[3]) }))
+      const output = horizontal.find((l) => l.x2 > qx - 20 && l.x2 <= qx)
+      expect(output, 'a wire runs into the Q').toBeDefined()
+      expect(output!.x2 - output!.x1).toBeGreaterThanOrEqual(20)
+      expect(qx).toBeLessThan(width)
+    }
+  })
+
   it('falls back to the alt text with no expression', () => {
     expect(svg({})).toContain('a logic circuit')
   })
