@@ -36,6 +36,144 @@
       "body": "The specification's wording: a sample is **a measure of amplitude at a point in time**. Sampling **rate** is how many are taken each second, in hertz; sample **resolution** is how many **bits** each one uses."
     }
   ],
+  "why": {
+    "matters": "A picture and a sound are both continuous, and a computer can only store numbers. So each has to be **sampled**: chopped into pieces small enough that the pieces are not noticeable, and each piece written down as a number.\n\nEvery quality setting you have ever changed is that trade, made explicit. More samples and more precision give something closer to the original and a bigger file, and the two formulae in this topic are how you work out exactly how much bigger.",
+    "examples": [
+      {
+        "title": "Why more megapixels means a bigger file",
+        "body": "An image is a grid of pixels and each pixel is a number, so the size follows from the formula and nothing else: **size in bits = width × height × colour depth**. For a 4000 × 3000 photo at 24 bits a pixel that is 288 000 000 bits, or **36 MB**.\n\nTwo things follow that are worth knowing before you change a setting. Doubling the **resolution** in each direction gives **four times** the pixels, not twice. And the colour depth multiplies all of it: 8-bit colour is a third the size of 24-bit, at the cost of the shades in between.",
+        "visual": {
+          "type": "diagram",
+          "component": "equation-card",
+          "props": {
+            "equations": [
+              {
+                "name": "An image",
+                "equation": "size in bits = W × H × D",
+                "units": "pixels across, pixels down, bits per pixel"
+              },
+              {
+                "name": "A sound",
+                "equation": "size in bits = rate × res × secs",
+                "units": "samples per second, bits per sample, seconds"
+              }
+            ]
+          },
+          "alt": "The two file size formulae: an image is width times height times colour depth in bits, and a sound is the sample rate times the resolution times the number of seconds"
+        }
+      },
+      {
+        "title": "What a sample actually is",
+        "body": "Sound is a wave — air pressure going up and down continuously — and there is no way to store a continuous thing. So the pressure is **measured at points in time**, thousands of times a second, and each measurement is stored as a number.\n\nThe sample rate is how often you measure; the resolution is how precisely you write each measurement down. Take samples too rarely and the recorded wave is a different shape from the real one, and it sounds like it — which is why a low-rate recording sounds muffled rather than quiet.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              360
+            ],
+            "yRange": [
+              -1.4,
+              1.4
+            ],
+            "xLabel": "time",
+            "yLabel": "air pressure",
+            "grid": false,
+            "xStep": 90,
+            "waves": [
+              {
+                "fn": "sin",
+                "amplitude": 1,
+                "label": "the real sound"
+              }
+            ],
+            "points": [
+              {
+                "x": 0,
+                "y": 0.0
+              },
+              {
+                "x": 30,
+                "y": 0.5
+              },
+              {
+                "x": 60,
+                "y": 0.866
+              },
+              {
+                "x": 90,
+                "y": 1.0
+              },
+              {
+                "x": 120,
+                "y": 0.866
+              },
+              {
+                "x": 150,
+                "y": 0.5
+              },
+              {
+                "x": 180,
+                "y": 0.0
+              },
+              {
+                "x": 210,
+                "y": -0.5
+              },
+              {
+                "x": 240,
+                "y": -0.866
+              },
+              {
+                "x": 270,
+                "y": -1.0
+              },
+              {
+                "x": 300,
+                "y": -0.866
+              },
+              {
+                "x": 330,
+                "y": -0.5
+              },
+              {
+                "x": 360,
+                "y": -0.0
+              }
+            ]
+          },
+          "alt": "A smooth sound wave with sample points marked along it at regular intervals, each one a measurement of the air pressure at that moment, which is what a recording actually stores"
+        }
+      },
+      {
+        "title": "Why the quality setting changes the file size",
+        "body": "Three minutes of sound at the usual rate is 44 100 samples a second at 16 bits each: **15.9 MB**, straight out of the formula.\n\nHalve the sample rate and you halve the file, because every term in that product is a straight multiplication — there is nothing clever about it. That is what a quality setting on a download is choosing, and knowing the formula tells you what you are giving up rather than leaving it as a word like *medium*.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "caption": "Three minutes of sound, at 16 bits a sample, one channel",
+            "bars": [
+              {
+                "label": "44 kHz",
+                "value": 15876000,
+                "display": "15.9 MB",
+                "note": "the usual rate"
+              },
+              {
+                "label": "22 kHz",
+                "value": 7938000,
+                "display": "7.9 MB",
+                "note": "half the samples"
+              }
+            ]
+          },
+          "alt": "Two bars in proportion for three minutes of sound: fifteen point nine megabytes at the full sample rate against half that at half the rate, since the size is a straight multiplication"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

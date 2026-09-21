@@ -35,6 +35,115 @@
       "body": "AQA asks for the **logical** shift only: bits move, **zeros come in** at the empty end, and whatever falls off the other end is lost. You do not need arithmetic shifts, and you do not need fractions."
     }
   ],
+  "why": {
+    "matters": "A processor cannot multiply, divide or compare in any direct sense. It can **add**, and it can **shift bits sideways**, and everything else is built out of those two — which is why they are worth doing by hand once.\n\nIt is also where the limits of a machine come from. Eight bits hold 0 to 255 and no more, so a sum that goes past it has nowhere to put the answer. That is not a mistake in the arithmetic; it is **overflow**, and real systems have failed because of it.",
+    "examples": [
+      {
+        "title": "Why a counter can go round to zero",
+        "body": "Eight bits reach **255** and stop. Add 200 and 100 in eight bits and the answer needs a ninth, and there is no ninth column to put it in.\n\nThe carry is simply lost, and the stored answer is wrong — quietly, with no error message. That is **overflow**, and it is why a game score can wrap back to zero, and why the number of bits a program uses for a value is a design decision rather than a detail.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Bits",
+              "Largest value",
+              "Add one more"
+            ],
+            "rows": [
+              [
+                "4",
+                "15",
+                "back to 0"
+              ],
+              [
+                "8",
+                "255",
+                "back to 0"
+              ],
+              [
+                "16",
+                "65 535",
+                "back to 0"
+              ]
+            ]
+          },
+          "alt": "A table of how far a fixed number of bits can count: four bits reach fifteen, eight reach two hundred and fifty-five and sixteen reach sixty-five thousand five hundred and thirty-five, and one more sends each back to zero"
+        }
+      },
+      {
+        "title": "Why shifting left is multiplying",
+        "body": "Move every bit one place to the left, put a zero in at the right, and the value **doubles**: 23 becomes 46. Shift right and it **halves**: 23 becomes 11.\n\nIt works for the same reason moving a decimal digit left multiplies by ten — each place is worth twice the one to its right. A processor can shift far more cheaply than it can multiply, so multiplying by a power of two is done this way wherever speed matters. And notice what the right shift cost: the odd 1 fell off the end and is gone for good.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Binary",
+              "Decimal"
+            ],
+            "rows": [
+              [
+                "Start",
+                "0001 0111",
+                "23"
+              ],
+              [
+                "Shift left 1",
+                "0010 1110",
+                "46"
+              ],
+              [
+                "Shift right 1",
+                "0000 1011",
+                "11"
+              ]
+            ]
+          },
+          "alt": "A table showing a logical shift: twenty-three in binary shifted one place left becomes forty-six, and shifted one place right becomes eleven, the odd bit falling off the end"
+        }
+      },
+      {
+        "title": "Why you check by converting",
+        "body": "Binary addition has only four column sums to learn, and every one of them is easy. The marks are lost in the **carries**, which is a bookkeeping problem rather than an understanding one.\n\nSo there is a check that costs ten seconds and needs no confidence: convert both numbers to decimal, add them there, convert your binary answer back, and see whether the two agree. It catches a dropped carry without your knowing where it was — which is the best kind of check, and the same trick as the mass check in a chemical equation.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Column sum",
+              "Write",
+              "Carry"
+            ],
+            "rows": [
+              [
+                "0 + 0",
+                "0",
+                "—"
+              ],
+              [
+                "0 + 1",
+                "1",
+                "—"
+              ],
+              [
+                "1 + 1",
+                "0",
+                "1"
+              ],
+              [
+                "1 + 1 + 1",
+                "1",
+                "1"
+              ]
+            ]
+          },
+          "alt": "A table of the four binary column sums: nought plus nought is nought, nought plus one is one, one plus one writes nought and carries one, and one plus one plus one writes one and carries one"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

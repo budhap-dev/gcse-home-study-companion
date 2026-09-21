@@ -35,6 +35,106 @@
       "body": "The first **128** Unicode codes are **identical** to ASCII. That is why old ASCII text still opens correctly today, and it is the point to make when asked about the advantages of Unicode."
     }
   ],
+  "why": {
+    "matters": "There is no such thing as the letter A inside a computer. There is a **number** that everybody has agreed means A, and a character set is that agreement written down.\n\nWhich makes the whole topic a lesson in what a standard is for. Two programs can only exchange text if they use the same table, and every piece of mojibake you have ever seen — the black diamonds, the Â before a pound sign — is two programs disagreeing about which table this file was written with.",
+    "examples": [
+      {
+        "title": "Why \"a\" is 32 more than \"A\"",
+        "body": "In ASCII, **A** is 65 and **a** is 97. Every capital letter is exactly **32** less than its lower-case version, because the codes were laid out in two runs on purpose.\n\nThat is why changing case is arithmetic rather than a lookup: add 32 to go down, subtract 32 to go up. The same design makes sorting alphabetically almost free, and lets a program check whether a character is a digit by asking whether its code lies between the codes for 0 and 9.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Character",
+              "ASCII code"
+            ],
+            "rows": [
+              [
+                "A",
+                "65"
+              ],
+              [
+                "B",
+                "66"
+              ],
+              [
+                "a",
+                "97"
+              ],
+              [
+                "b",
+                "98"
+              ]
+            ]
+          },
+          "alt": "A table of ASCII codes showing that A is sixty-five and B sixty-six, while a is ninety-seven and b ninety-eight, so each lower-case letter is thirty-two more than its capital"
+        }
+      },
+      {
+        "title": "Why seven bits was not enough",
+        "body": "ASCII uses **7 bits**, which gives **128** codes. That is ample for the English alphabet twice over, the digits, punctuation and some control codes — and hopeless for a world with Greek, Arabic, Chinese and emoji.\n\n**Unicode** was the answer: far more bits, so far more characters, and room to keep adding. The decision that made it work was deciding that its first **128** codes would be **exactly ASCII's**. Every file and program written before it carried on working, which is why the change happened at all.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "caption": "Codes available, at 7 bits and at 16",
+            "bars": [
+              {
+                "label": "Unicode, 16 bits",
+                "value": 65536,
+                "display": "65 536"
+              },
+              {
+                "label": "ASCII, 7 bits",
+                "value": 128,
+                "display": "128"
+              }
+            ]
+          },
+          "alt": "Two bars in proportion comparing the number of codes available: one hundred and twenty-eight from seven-bit ASCII against sixty-five thousand five hundred and thirty-six from sixteen bits of Unicode"
+        }
+      },
+      {
+        "title": "Why a file opened in the wrong program shows nonsense",
+        "body": "Text on disk is only numbers. Nothing in the file says which agreement those numbers were written under, so a program opening it has to **assume** one — and if it assumes wrongly, every character comes out as the wrong letter.\n\nBelow 128 the assumption rarely matters, because Unicode agrees with ASCII there. Above it the tables disagree, which is exactly where accented letters, currency symbols and everything non-English live. That is why the mangled characters in an email are almost never the plain English words.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Code",
+              "In ASCII",
+              "In Unicode"
+            ],
+            "rows": [
+              [
+                "65",
+                "A",
+                "A"
+              ],
+              [
+                "97",
+                "a",
+                "a"
+              ],
+              [
+                "127",
+                "the last one",
+                "the same"
+              ],
+              [
+                "163",
+                "not defined",
+                "£"
+              ]
+            ]
+          },
+          "alt": "A table comparing ASCII and Unicode: the codes agree up to one hundred and twenty-seven, and above that ASCII has nothing defined while Unicode continues, which is where a file read with the wrong assumption goes wrong"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

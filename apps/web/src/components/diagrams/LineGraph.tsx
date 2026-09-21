@@ -254,8 +254,14 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       {grid && yTicks.map((v) => <line key={`gy${v}`} x1={left} y1={sy(v)} x2={right} y2={sy(v)} stroke={RULE} />)}
       {yMin <= 0 && yMax >= 0 && <line x1={left} y1={sy(0)} x2={right} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
       {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={top} x2={sx(0)} y2={bottom} stroke={INK} strokeWidth="1.5" />}
-      {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={reserve(sx(v) - String(fmt(v)).length * 3, sy(Math.max(yMin, Math.min(0, yMax))) + 14, fmt(v))} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
-      {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={reserve(sx(Math.max(xMin, Math.min(0, xMax))) - 6, sy(v) + 4, fmt(v), 11, true)} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
+      {/*
+        * The tick numbers sit against the axes, which is exactly where a curve crosses
+        * them: every sine wave in the pack had its 180 and 360 struck through. They are
+        * drawn on a white halo, as ReactionProfile and CurveGraph draw text that has to
+        * sit over a picture, so a line passing over one leaves it readable.
+        */}
+      {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={reserve(sx(v) - String(fmt(v)).length * 3, sy(Math.max(yMin, Math.min(0, yMax))) + 14, fmt(v))} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{fmt(v)}</text>)}
+      {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={reserve(sx(Math.max(xMin, Math.min(0, xMax))) - 6, sy(v) + 4, fmt(v), 11, true)} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{fmt(v)}</text>)}
       {xLabel
         ? <text x={W / 2} y={totalH - 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
         : <text x={W - pad} y={sy(Math.max(yMin, Math.min(0, yMax))) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK}>x</text>}
