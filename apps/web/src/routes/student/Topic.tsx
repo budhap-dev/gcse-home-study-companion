@@ -74,7 +74,10 @@ export function Topic() {
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">
           <Link to={`/subjects/${subject.id}`} className="inline-block -my-1 py-1 hover:underline">{subject.name}</Link> · {subject.units.find((u) => u.id === topic.unitId)?.name}
         </p>
-        <h1 className="text-3xl font-bold leading-tight">{topic.title}</h1>
+        <h1 className="text-3xl font-bold leading-tight">
+          {topic.specCode && <span className="text-ink-3">{topic.specCode} </span>}
+          {topic.title}
+        </h1>
         <StatusChip status={evidence.status} />
       </header>
 

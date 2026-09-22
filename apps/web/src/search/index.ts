@@ -68,7 +68,7 @@ export function searchIndex(): SearchRecord[] {
 
     records.push({
       ...common, key: topic.id, kind: 'topic', heading: unit, to: base, words: blank,
-      text: plain([topic.title, unit, topic.specPoints.join(' '), topic.lesson.steps.map((s) => s.title).join('. ')].join('. ')),
+      text: plain([topic.title, unit, topic.specCode ?? '', topic.specPoints.join(' '), topic.lesson.steps.map((s) => s.title).join('. ')].join('. ')),
     })
 
     topic.lesson.steps.forEach((step, i) => {
