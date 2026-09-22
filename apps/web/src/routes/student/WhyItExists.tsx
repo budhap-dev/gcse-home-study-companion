@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { getTopic } from '../../content/index.ts'
+import { useRecordActivity } from '../../progress/useRecordActivity.ts'
 
 /**
  * Where the idea is met outside a classroom.
@@ -20,6 +21,8 @@ export function WhyItExists() {
   const { subjectId, topicId } = useParams()
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const subject = subjectId ? getSubject(subjectId) : undefined
+  // Before the early return: a hook cannot be called conditionally.
+  useRecordActivity(topic && { subjectId: topic.subjectId, topicId: topic.id }, 'why')
   if (!topic || !subject) return <p>Unknown topic.</p>
   const why = topic.why
 

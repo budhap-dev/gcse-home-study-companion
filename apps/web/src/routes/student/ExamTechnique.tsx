@@ -3,6 +3,7 @@ import { SectionLabel } from '../../components/KindChip.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { getGuide, topicsForSubject } from '../../content/index.ts'
+import { useRecordActivity } from '../../progress/useRecordActivity.ts'
 
 /**
  * Two layers, as the PRD describes: the subject guide (papers, command words,
@@ -13,6 +14,8 @@ export function ExamTechnique() {
   const subject = subjectId ? getSubject(subjectId) : undefined
   const guide = subjectId ? getGuide(subjectId) : undefined
   const topics = subjectId ? topicsForSubject(subjectId) : []
+  // No topicId: this is one page per subject, reached from every topic in it.
+  useRecordActivity(subject && { subjectId: subject.id }, 'exam-technique')
   if (!subject) return <p>Unknown subject.</p>
 
   return (

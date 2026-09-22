@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { STATUS_COLOUR, STATUS_LABEL, TOPIC_STATUSES } from '@study/shared'
 import { supabase } from '../../auth/client.ts'
-import { TOPICS } from '../../content/index.ts'
 import { useAuth } from '../../auth/useAuth.ts'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { emptyState, type ProgressState } from '../../progress/store.ts'
 import { firstNameOf, personName } from '../../auth/personName.ts'
-import { parentSummary, type ParentSummary } from '../../progress/summary.ts'
+import { parentSummary, type ActivityEntry, type ParentSummary } from '../../progress/summary.ts'
 import { AssignPanel } from './Assign.tsx'
 import { TopicBreakdown } from './TopicBreakdown.tsx'
 import { StatusDonut } from '../../components/charts/StatusDonut.tsx'
@@ -30,7 +29,12 @@ const TABS: { id: FamilyTab; label: string }[] = [
   { id: 'tasks', label: 'Tasks' },
 ]
 
-const TOPIC_INDEX = new Map(TOPICS.map((t) => [t.id, t]))
+/** One glyph per kind, so the feed can be skimmed down the left edge. */
+const ACTIVITY_EMOJI: Record<ActivityEntry['kind'], string> = {
+  quiz: '⚡', worksheet: '📝', lesson: '📖', flashcards: '🃏',
+  'cheat-sheet': '📋', why: '🌍', 'exam-technique': '🎓',
+}
+
 const day = (iso: string) => new Date(iso.length > 10 ? iso : iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 
 /**
@@ -286,19 +290,36 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
 
       <section className="flex flex-col gap-2">
         <SectionLabel colour="#c27a00" emoji="🕒">Recent work</SectionLabel>
-        {s.recent.length === 0 ? <p className="text-sm text-ink-2">Nothing finished yet.</p> : (
+        {s.recent.length === 0 ? <p className="text-sm text-ink-2">Nothing done yet.</p> : (
           <ul className="flex flex-col gap-1.5">
             {s.recent.map((a) => (
-              <li key={a.id} className="flex flex-col rounded-lg border border-rule bg-surface px-3 py-2 text-sm">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="min-w-0">
-                    <button type="button" onClick={() => toggle(a.topicId)} aria-expanded={openTopic === a.topicId}
-                      className="py-1 text-left font-bold text-ink underline">{TOPIC_INDEX.get(a.topicId)?.title ?? a.topicId}</button>
-                    <span className="text-ink-2"> · {a.kind === 'quiz' ? 'Quiz' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`} · {day(a.completedAt)}</span>
+              <li key={a.id} className="flex flex-col rounded-lg border border-rule bg-surface px-3 py-2 text-sm"
+                style={{ '--subject': a.subjectColour } as React.CSSProperties}>
+                <span className="flex items-baseline justify-between gap-3">
+                  <span className="flex min-w-0 items-baseline gap-2">
+                    <span aria-hidden className="shrink-0">{ACTIVITY_EMOJI[a.kind]}</span>
+                    {/* Only a topic has a breakdown to open; the subject-wide exam technique
+                        page is named but not a button, so nothing invites a tap that would
+                        do nothing. */}
+                    {a.topicId ? (
+                      <button type="button" onClick={() => toggle(a.topicId!)} aria-expanded={openTopic === a.topicId}
+                        className="min-w-0 py-1 text-left font-bold text-ink underline">{a.title}</button>
+                    ) : <span className="min-w-0 py-1 font-bold text-ink">{a.title}</span>}
                   </span>
-                  <strong className="shrink-0 tabular-nums">{Math.round((100 * a.marksScored) / a.marksAvailable)}%</strong>
+                  {/* A percentage where the work was marked; the kind's own phrase where it
+                      was not, so a deck of flashcards is not shown as a score it never had. */}
+                  <strong className="shrink-0 tabular-nums">{a.pct !== undefined ? `${a.pct}%` : ''}</strong>
                 </span>
-                {openTopic === a.topicId && child.state && <TopicBreakdown topicId={a.topicId} state={child.state} />}
+                {/* One meta line rather than a tail on the title: at phone width the title
+                    wraps, and a trailing " · Flashcards · 17 Sept" then began the next line
+                    with a stray separator. The subject is dropped where the title is already
+                    the subject, which is every exam technique row. */}
+                <span className="pl-6 text-xs text-ink-2">
+                  {a.topicId ? `${a.subjectName} · ` : ''}
+                  <span className="accent-ink font-bold">{a.label}</span>
+                  {' · '}{day(a.at)}{' · '}{a.detail}
+                </span>
+                {a.topicId && openTopic === a.topicId && child.state && <TopicBreakdown topicId={a.topicId} state={child.state} />}
               </li>
             ))}
           </ul>
