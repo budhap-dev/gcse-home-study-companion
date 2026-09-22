@@ -38,8 +38,10 @@ export function Home() {
         </div>
         <span className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-nowrap">
         <Link to="/progress" className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#e3c26a] bg-[#fff4cc] px-3 py-1.5 text-sm font-bold text-[#6b4d00]" title="XP and badges">
-          <span className="text-ink-2">XP</span>{totalXp(progress)}
-          <span className="ml-1 text-ink-2">·</span>{badgeCount}/{BADGES.length}
+          {/* opacity, not text-ink-2: the pill pins its own colour against a fixed cream,
+              and a themed ink inside it turns near-white on the dark themes. */}
+          <span className="opacity-70">XP</span>{totalXp(progress)}
+          <span className="ml-1 opacity-70">·</span>{badgeCount}/{BADGES.length}
         </Link>
         <span className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#f2b08a] bg-[#ffe9dc] px-3 py-1.5 text-sm font-bold text-[#8a3b12]" title="Days in a row with something finished">
           <span className={streak > 0 ? 'anim-flicker' : ''}><Smiley>🔥</Smiley></span>
@@ -94,7 +96,7 @@ export function Home() {
           <span className="pointer-events-none absolute -right-4 -top-6 text-[7rem] opacity-15" aria-hidden><Smiley>💡</Smiley></span>
           <div className="flex items-center gap-2">
             <span className="chip" style={{ '--chip': 'var(--subject)' } as React.CSSProperties}><Smiley>💡</Smiley>Did you know</span>
-            <span className="text-xs font-bold text-[color:var(--subject)]">{SUBJECTS.find((s) => s.id === fact.subjectId)?.name}</span>
+            <span className="text-xs font-bold accent-ink">{SUBJECTS.find((s) => s.id === fact.subjectId)?.name}</span>
           </div>
           <p className="relative text-[15px] leading-relaxed">{fact.text}</p>
           <button type="button" onClick={() => setFactOffset((n) => n + 1)} className="press relative w-fit rounded-full bg-[color:var(--subject)] px-4 py-1.5 text-sm font-bold text-white">
@@ -115,7 +117,7 @@ export function Home() {
               <span className="flex items-center gap-3">
                 <span className="h-3 w-3 rounded-sm" style={{ background: s.colour }} aria-hidden />
                 <span className="flex flex-grow flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} mastered</span></span>
-                <span className="text-right text-xs"><span className="block font-bold" style={{ color: s.colour }}>{level ? level.name : 'Level 1'}</span><span className="text-ink-2">{level ? `${level.into} / ${level.span} XP` : 'no XP yet'}</span></span>
+                <span className="text-right text-xs"><span className="block font-bold accent-ink">{level ? level.name : 'Level 1'}</span><span className="text-ink-2">{level ? `${level.into} / ${level.span} XP` : 'no XP yet'}</span></span>
               </span>
               <span className="h-1.5 overflow-hidden rounded-full bg-panel"><span className="anim-bar block h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></span>
             </Link>
@@ -134,18 +136,20 @@ function TaskCard({ task, primary = false }: { task: Task; primary?: boolean }) 
     return (
       <Link to={task.to} style={style} className="press flex flex-col gap-3 rounded-2xl bg-[color:var(--subject)] p-5 text-white">
         <div className="flex items-center gap-2 text-xs">
-          <span className="rounded-md bg-white/20 px-2 py-0.5 font-bold uppercase tracking-[0.06em]">{task.subjectName}</span>
+          {/* black/20, not white/20: this pill lightens the accent under it and the label on
+              it is white, which on the lighter accents left the two too close together. */}
+          <span className="rounded-md bg-black/20 px-2 py-0.5 font-bold uppercase tracking-[0.06em]">{task.subjectName}</span>
           <span className="opacity-90">{task.title} · about {task.minutes} min</span>
         </div>
         <span className="text-2xl font-bold leading-tight">{task.topic.title}</span>
         <span className="text-sm leading-snug opacity-95">{task.reason}</span>
-        <span className="mt-1 flex h-12 items-center justify-center rounded-xl bg-white font-bold text-[color:var(--subject)]">Start</span>
+        <span className="light-ground mt-1 flex h-12 items-center justify-center rounded-xl bg-white font-bold accent-ink">Start</span>
       </Link>
     )
   }
   return (
     <Link to={task.to} style={style} className="flex min-h-24 flex-col gap-1.5 rounded-xl border border-rule bg-surface p-3 hover:border-[color:var(--subject)]">
-      <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{task.subjectName} · {task.title}</span>
+      <span className="text-[11px] font-bold uppercase tracking-[0.06em] accent-ink">{task.subjectName} · {task.title}</span>
       <span className="font-bold leading-snug">{task.topic.title}</span>
       <span className="text-xs text-ink-2">{task.reason}</span>
     </Link>

@@ -31,7 +31,7 @@ export function CheatSheet() {
   return (
     <article className="print-sheet mx-auto flex w-full max-w-4xl flex-col gap-5">
       <header className="flex flex-col gap-2">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">
           <Link to={`/subjects/${subject.id}`} className="inline-block -my-1 py-1 hover:underline">{subject.name}</Link>
           {' · '}
           <Link to={backTo} className="inline-block -my-1 py-1 hover:underline">{sheet.specCode ? `${sheet.specCode} ` : ''}{sheet.title}</Link>
@@ -60,7 +60,7 @@ export function CheatSheet() {
           <ul className="flex flex-col divide-y divide-rule rounded-xl border border-rule bg-surface">
             {sheet.formulae.map((f) => (
               <li key={`${f.name}|${f.equation}`} className="break-inside-avoid flex flex-col gap-0.5 px-4 py-2.5 sm:flex-row sm:items-baseline sm:gap-4">
-                {f.name && <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--subject)] sm:w-44 sm:shrink-0">{f.name}</span>}
+                {f.name && <span className="text-xs font-bold uppercase tracking-[0.06em] accent-ink sm:w-44 sm:shrink-0">{f.name}</span>}
                 <span className="font-display text-lg font-bold leading-snug" style={{ overflowWrap: 'anywhere' }}>{f.equation}</span>
                 {f.units && <span className="text-sm text-ink-2 sm:ml-auto sm:shrink-0 sm:text-right">{f.units}</span>}
               </li>

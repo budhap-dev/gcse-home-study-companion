@@ -151,7 +151,7 @@ export function Quiz() {
           {/* The title is clamped and the counter fixed, as in the lesson header: a long
               topic name otherwise wraps to three lines on a phone and squeezes the count. */}
           <div className="flex justify-between gap-2 text-xs text-ink-2">
-            <span className="line-clamp-1 font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · {topic.title} · Quiz</span>
+            <span className="line-clamp-1 font-bold uppercase tracking-[0.06em] accent-ink">{subject.name} · {topic.title} · Quiz</span>
             <span className="shrink-0 whitespace-nowrap">Question {state.index + 1} of {questions.length}</span>
           </div>
           <div className="grid gap-0.5" style={{ gridTemplateColumns: `repeat(${questions.length}, minmax(0, 1fr))` }} role="progressbar" aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={state.index + 1}>
@@ -187,7 +187,7 @@ export function Quiz() {
 function Intro({ subjectName, title, count, pool, minutes, onStart, backTo }: { subjectName: string; title: string; count: number; pool: number; minutes: number; onStart: () => void; backTo: string }) {
   return (
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
-      <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{subjectName} · Quiz</p>
+      <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subjectName} · Quiz</p>
       <h1 className="text-3xl font-bold leading-tight">{title}</h1>
       <ul className="flex flex-col gap-1 text-ink-2">
         <li>{count} questions drawn from a pool of {pool}, so a retake is different.</li>
@@ -217,7 +217,7 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
   return (
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Quiz finished</p>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">Quiz finished</p>
         <h1 className="text-3xl font-bold leading-tight">{topicTitle}</h1>
       </header>
       <section className="grid grid-cols-3 gap-2">
@@ -231,7 +231,7 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
           {previous !== undefined && <span>Previous score: <strong className="text-ink">{previous}%</strong></span>}
           <span>{previous !== undefined ? 'Current' : 'Score'}: <strong className="text-ink">{pct}%</strong></span>
           {delta !== undefined && <span>Improvement: <strong style={{ color: delta >= 0 ? 'var(--color-status-secure)' : 'var(--color-status-not-secure)' }}>{delta >= 0 ? '+' : ''}{delta}%</strong></span>}
-          {earned && <span className="relative">XP earned: <strong className="text-ink">+{earned.xp}</strong><span aria-hidden className="anim-float absolute -top-5 left-1/2 font-bold text-status-secure">+{earned.xp}</span></span>}
+          {earned && <span className="relative">XP earned: <strong className="text-ink">+{earned.xp}</strong><span aria-hidden className="anim-float absolute -top-5 left-1/2 font-bold text-[color:var(--status-secure-ink)]">+{earned.xp}</span></span>}
         </div>
         {earned && earned.badges.length > 0 && <p className="text-sm">New badge{earned.badges.length > 1 ? 's' : ''}: <strong>{earned.badges.join(', ')}</strong></p>}
         {earned?.levelUp && <p className="text-sm">Level up: <strong>{earned.levelUp}</strong></p>}

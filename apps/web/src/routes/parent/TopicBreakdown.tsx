@@ -75,8 +75,8 @@ function QuestionRow({ n, result, question }: { n: number; result: QuestionResul
           {question ? <RichText source={question.prompt} className="inline text-sm" /> : <span className="text-ink-2">Question {result.id}</span>}
         </span>
         <span className="shrink-0 whitespace-nowrap text-xs font-bold">
-          {right ? <span className="text-status-secure">✓ {result.marksScored}/{result.marksAvailable}</span>
-            : <span className={part ? 'text-[#8a6d1d]' : 'text-status-not-secure'}>{part ? '~' : '✗'} {result.marksScored}/{result.marksAvailable}</span>}
+          {right ? <span className="text-[color:var(--status-secure-ink)]">✓ {result.marksScored}/{result.marksAvailable}</span>
+            : <span className={part ? 'text-[#8a6d1d]' : 'text-[color:var(--status-not-secure-ink)]'}>{part ? '~' : '✗'} {result.marksScored}/{result.marksAvailable}</span>}
         </span>
       </span>
       {!right && (

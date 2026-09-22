@@ -135,7 +135,7 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
                 >
                   <span className="text-sm font-bold"><Highlight text={hit.record.topicTitle} query={trimmed} /></span>
                   <span className="line-clamp-1 text-xs text-ink-2">
-                    <span style={{ color: hit.record.subjectColour }}>{hit.record.subjectName}</span>
+                    <span className="accent-ink" style={{ '--subject': hit.record.subjectColour } as React.CSSProperties}>{hit.record.subjectName}</span>
                     {hit.record.heading ? ` · ${hit.record.heading}` : ''}
                   </span>
                 </button>
@@ -145,7 +145,7 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
 
           {rows.length > 0 && (
             <li role="option" aria-selected={false} className="border-t border-rule">
-              <button type="button" onMouseDown={(e) => { e.preventDefault(); seeAll() }} className="w-full px-3 py-2 text-left text-sm font-bold text-[color:var(--subject)]">
+              <button type="button" onMouseDown={(e) => { e.preventDefault(); seeAll() }} className="w-full px-3 py-2 text-left text-sm font-bold accent-ink">
                 See all results for “{trimmed}” →
               </button>
             </li>

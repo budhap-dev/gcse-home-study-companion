@@ -101,13 +101,13 @@ export function Lesson() {
             onDone={() => setCelebration(null)}
           />
         )}
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Lesson done</p>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">Lesson done</p>
         <h1 className="text-3xl font-bold">{topic.title}</h1>
         <p className="text-ink-2">All {steps.length} steps finished, +{steps.length * XP.lessonStep + XP.lessonComplete} XP. The quiz is where you find out what has stuck.</p>
         <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4 text-left">
-          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-status-secure">What you learned</h2>
+          <h2 className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--status-secure-ink)]">What you learned</h2>
           <ul className="flex flex-col gap-1 text-sm">
-            {steps.filter((s) => s.kind !== 'summary').map((s) => <li key={s.id} className="flex gap-2"><span className="text-status-secure" aria-hidden>✓</span>{s.title.replace(/^(Your turn|Going deeper): /, '')}</li>)}
+            {steps.filter((s) => s.kind !== 'summary').map((s) => <li key={s.id} className="flex gap-2"><span className="text-[color:var(--status-secure-ink)]" aria-hidden>✓</span>{s.title.replace(/^(Your turn|Going deeper): /, '')}</li>)}
           </ul>
         </section>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
@@ -126,7 +126,7 @@ export function Lesson() {
         </button>
         <div className="flex flex-grow flex-col gap-1.5">
           <div className="flex justify-between gap-2 text-xs text-ink-2">
-            <span className="line-clamp-1 font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · {topic.title}</span>
+            <span className="line-clamp-1 font-bold uppercase tracking-[0.06em] accent-ink">{subject.name} · {topic.title}</span>
             <span className="shrink-0 whitespace-nowrap">Step {index + 1} of {steps.length}</span>
           </div>
           <div className="grid gap-0.5" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }} role="progressbar" aria-valuemin={1} aria-valuemax={steps.length} aria-valuenow={index + 1}>

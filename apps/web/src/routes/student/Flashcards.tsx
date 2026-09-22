@@ -133,7 +133,7 @@ export function Flashcards() {
       <article className="mx-auto flex w-full max-w-xl flex-col gap-5 py-6 text-center">
         <Confetti />
         <p className="text-6xl leading-none"><Smiley bounce>{praise.emoji}</Smiley></p>
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Deck finished</p>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">Deck finished</p>
         <h1 className="text-3xl font-bold">{topic.title}</h1>
         <p className="text-lg font-bold">{praise.line}</p>
         <p className="text-ink-2">{deck.length} cards, {seen} turns. {seen > deck.length ? `${seen - deck.length} came back round before you knew them.` : 'Every card known first time.'}</p>
@@ -153,7 +153,7 @@ export function Flashcards() {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M15 6l-6 6 6 6" /></svg>
         </Link>
         <div className="flex flex-grow flex-col">
-          <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · Flashcards</span>
+          <span className="text-xs font-bold uppercase tracking-[0.06em] accent-ink">{subject.name} · Flashcards</span>
           <span className="font-bold">{topic.title}</span>
         </div>
         <span className="flex shrink-0 items-center gap-2 whitespace-nowrap text-sm text-ink-2 tabular-nums">

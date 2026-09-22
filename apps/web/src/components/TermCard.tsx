@@ -21,7 +21,7 @@ export function TermCard({ term, query = '', id }: { term: Term; query?: string;
     <div id={id} className="flex scroll-mt-20 flex-col gap-2 rounded-xl border border-rule bg-surface p-4" style={{ '--subject': subject?.colour } as React.CSSProperties}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
         <h3 className="text-lg font-bold leading-tight"><Highlight text={term.term} query={query} /></h3>
-        <span className="text-xs font-bold" style={{ color: subject?.colour }}>{subject?.name ?? term.subjectId}</span>
+        <span className="text-xs font-bold accent-ink">{subject?.name ?? term.subjectId}</span>
       </div>
 
       <RichText source={term.definition} className="text-sm" />

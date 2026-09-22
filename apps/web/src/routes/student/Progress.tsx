@@ -38,7 +38,7 @@ export function Progress() {
             return (
               <div key={s.id} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                  <span className="font-bold" style={{ color: s.colour }}>{s.name}</span>
+                  <span className="font-bold accent-ink" style={{ '--subject': s.colour } as React.CSSProperties}>{s.name}</span>
                   <span className="whitespace-nowrap text-sm"><strong>{level ? level.name : LEVEL_NAMES[s.id][0]}</strong> <span className="text-ink-2">· level {level?.level ?? 1}</span></span>
                 </div>
                 <div className="h-2 overflow-hidden rounded-full bg-panel"><div className="h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></div>
@@ -117,7 +117,7 @@ export function Progress() {
           const counts = TOPIC_STATUSES.map((st) => topics.filter((t) => evidenceFor(t.id, progress).status === st).length)
           return (
             <Link key={s.id} to={`/subjects/${s.id}`} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
-              <div className="flex items-center justify-between"><span className="font-bold" style={{ color: s.colour }}>{s.name}</span><span className="text-xs text-ink-2">{counts[3]} of {topics.length} mastered</span></div>
+              <div className="flex items-center justify-between"><span className="font-bold accent-ink" style={{ '--subject': s.colour } as React.CSSProperties}>{s.name}</span><span className="text-xs text-ink-2">{counts[3]} of {topics.length} mastered</span></div>
               <div className="flex h-3 overflow-hidden rounded-full bg-panel">
                 {[3, 2, 1, 0].map((i) => (
                   <span key={i} style={{ width: `${(100 * counts[i]!) / topics.length}%`, background: STATUS_COLOUR[TOPIC_STATUSES[i]!] }} />

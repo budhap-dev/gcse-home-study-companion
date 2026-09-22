@@ -139,7 +139,7 @@ export function TopicPicker({
                     {t.topicTitle && <span className="text-ink-3"> · {t.topicTitle}</span>}
                   </span>
                   {before
-                    ? <span className="shrink-0 text-xs font-bold text-status-secure">✓{before.pct === undefined ? '' : ` ${before.pct}%`}</span>
+                    ? <span className="shrink-0 text-xs font-bold text-[color:var(--status-secure-ink)]">✓{before.pct === undefined ? '' : ` ${before.pct}%`}</span>
                     : t.history.untouched
                       ? <span className="shrink-0 text-xs text-ink-3">new</span>
                       : <span className="shrink-0 text-xs text-ink-2">started</span>}
@@ -165,7 +165,7 @@ function TopicDone({ history, kind, level }: { history: TopicHistory; kind: Assi
   if (before) {
     return (
       <p className="text-xs text-ink-2">
-        <span className="font-bold text-status-secure">Already done</span>
+        <span className="font-bold text-[color:var(--status-secure-ink)]">Already done</span>
         {' '}on {WHEN(before.at)}{before.pct === undefined ? '' : `, scoring ${before.pct}%`}. Setting it again asks for another go.
       </p>
     )
