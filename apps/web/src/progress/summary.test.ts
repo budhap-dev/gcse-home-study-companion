@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { activeDates, parentSummary } from './summary.ts'
-import { emptyState, type AttemptRecord, type ProgressState } from './store.ts'
+import { activeDates, parentSummary, recentActivity } from './summary.ts'
+import { emptyState, type ActivityRecord, type AttemptRecord, type ProgressState } from './store.ts'
 
 const q = (skill: string, correct: boolean) => ({ id: skill, skill, gradeBand: '6-7' as const, correct, marksScored: correct ? 2 : 0, marksAvailable: 2 })
 const quiz = (topicId: string, pct: number, day: string, questions = [q('s', pct >= 50)]): AttemptRecord => ({
@@ -17,6 +17,79 @@ describe('activeDates', () => {
       minutes: { '2026-09-03': 20, '2026-09-04': 0 },
     })
     expect(activeDates(s)).toEqual(['2026-09-01', '2026-09-02', '2026-09-03'])
+  })
+
+  /** An evening of flashcards is a day the student worked, and used to count as nothing. */
+  it('counts a day spent on unmarked revision', () => {
+    const s = state({ activities: [{ id: 'x', topicId: 'surds', subjectId: 'maths', kind: 'flashcards', at: '2026-09-07T20:00:00.000Z' }] })
+    expect(activeDates(s)).toEqual(['2026-09-07'])
+  })
+})
+
+const KGPE = 'kinetic-and-gravitational-potential-energy'
+const act = (kind: ActivityRecord['kind'], day: string, over: Partial<ActivityRecord> = {}): ActivityRecord => ({
+  id: `${KGPE}:${kind}:${day}`, topicId: KGPE, subjectId: 'physics', kind, at: `${day}T11:00:00.000Z`, ...over,
+})
+
+/**
+ * Recent work used to read `state.attempts` alone, so three of the seven things a topic
+ * offers left no trace and the fourth was recorded but never shown. A parent could open
+ * this page after an evening of lessons and flashcards and read "Nothing done yet."
+ */
+describe('recentActivity', () => {
+  it('shows every kind of work, not only the marked ones', () => {
+    const s = state({
+      attempts: [quiz(KGPE, 80, '2026-09-01')],
+      lessons: { [KGPE]: lesson(KGPE, '2026-09-02') },
+      activities: [act('flashcards', '2026-09-03', { cards: 12, turns: 15 }), act('cheat-sheet', '2026-09-04'), act('why', '2026-09-05')],
+    })
+    expect(recentActivity(s).map((e) => e.kind)).toEqual(['why', 'cheat-sheet', 'flashcards', 'lesson', 'quiz'])
+  })
+
+  it('scores what was marked and leaves the rest without a percentage', () => {
+    const s = state({ attempts: [quiz(KGPE, 80, '2026-09-01')], activities: [act('cheat-sheet', '2026-09-02')] })
+    const [sheet, marked] = recentActivity(s)
+    expect(sheet!.pct).toBeUndefined()
+    expect(sheet!.detail).toBe('Opened')
+    expect(marked!.pct).toBe(80)
+    expect(marked!.detail).toBe('80 of 100 marks')
+  })
+
+  it('says how far through an unfinished lesson is, and names the finished one as finished', () => {
+    const open = state({ lessons: { [KGPE]: lesson(KGPE, '2026-09-02', false) } })
+    // stepIndex 5 is the sixth step, of the eight this topic has.
+    expect(recentActivity(open)[0]!.detail).toBe('Step 6 of 8')
+    const done = state({ lessons: { [KGPE]: lesson(KGPE, '2026-09-02') } })
+    expect(recentActivity(done)[0]!.detail).toBe('Finished')
+  })
+
+  it('reports a flashcard deck by its size, and says when every card was known first time', () => {
+    const hard = state({ activities: [act('flashcards', '2026-09-03', { cards: 12, turns: 15 })] })
+    expect(recentActivity(hard)[0]!.detail).toBe('12 cards, 15 turns')
+    const clean = state({ activities: [act('flashcards', '2026-09-03', { cards: 12, turns: 12 })] })
+    expect(recentActivity(clean)[0]!.detail).toBe('12 cards, all known first time')
+  })
+
+  /** Exam technique is one page per subject, so it carries the subject and no topic. */
+  it('titles a subject-wide page by its subject and gives it no topic to expand', () => {
+    const s = state({ activities: [{ id: 'physics:exam-technique:2026-09-06', subjectId: 'physics', kind: 'exam-technique', at: '2026-09-06T11:00:00.000Z' }] })
+    const [entry] = recentActivity(s)
+    expect(entry!.topicId).toBeUndefined()
+    expect(entry!.title).toBe('Physics')
+    expect(entry!.label).toBe('Exam technique')
+  })
+
+  it('ignores a record whose topic is no longer in the pack', () => {
+    const s = state({ activities: [act('why', '2026-09-03', { id: 'gone:why:2026-09-03', topicId: 'a-deleted-topic' })] })
+    expect(recentActivity(s)).toEqual([])
+  })
+
+  it('keeps the feed short and newest first', () => {
+    const days = Array.from({ length: 20 }, (_, i) => `2026-09-${String(i + 1).padStart(2, '0')}`)
+    const s = state({ attempts: days.map((d, i) => quiz(KGPE, 50 + i, d)) })
+    const feed = recentActivity(s)
+    expect(feed).toHaveLength(12)
+    expect(feed[0]!.at.slice(0, 10)).toBe('2026-09-20')
   })
 })
 

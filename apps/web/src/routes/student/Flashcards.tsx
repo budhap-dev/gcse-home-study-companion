@@ -1,11 +1,12 @@
 import { getSubject, seededShuffle, type Question } from '@study/shared'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Confetti } from '../../components/Confetti.tsx'
 import { usePref } from '../../theme/prefs.ts'
 import { getTopic } from '../../content/index.ts'
+import { recordActivity } from '../../progress/store.ts'
 
 /**
  * What to say at the end. Keyed to how the deck actually went rather than always
@@ -106,6 +107,25 @@ export function Flashcards() {
   const [run, setRun] = useState(0)
   const [leaving, setLeaving] = useState<'known' | 'again' | null>(null)
   const motion = usePref('motion')
+
+  /**
+   * A finished deck is the one thing here worth recording: it is real revision, and until
+   * now it left no trace at all, so an evening of flashcards showed up on the parent's
+   * Recent work as nothing.
+   *
+   * On the queue emptying rather than in `answer`, so "Go again" records the second run
+   * too; the store keeps one entry per topic per day and takes the fuller run of them. The
+   * ref stops React's development double-mount writing the same finish twice.
+   */
+  const recorded = useRef('')
+  useEffect(() => {
+    if (!topic || deck.length === 0 || queue.length > 0) return
+    const run = `${topic.id}:${deck.length}:${seen}`
+    if (recorded.current === run) return
+    recorded.current = run
+    recordActivity({ subjectId: topic.subjectId, topicId: topic.id }, 'flashcards', { cards: deck.length, turns: seen })
+  }, [topic, deck.length, queue.length, seen])
+
   if (!subject || !topic) return <p>Unknown topic.</p>
   const backTo = `/subjects/${subject.id}/topics/${topic.id}`
   const card = queue[0]

@@ -27,4 +27,25 @@ describe('mergeProgress', () => {
     expect(m.daysOff).toEqual(['2026-09-05', '2026-09-06'])
     expect(m.badges).toEqual({ a: '2026-09-01T00:00:00Z', b: '2026-09-04T00:00:00Z' })
   })
+
+  /**
+   * The same revision done on two devices in one day is one entry, because the id is
+   * topic:kind:day. The fuller run wins rather than the later write: a deck finished on a
+   * phone and then glanced at on a laptop should still read as the full deck.
+   */
+  it('unites activities by id and keeps the fuller deck run', () => {
+    const phone = { activities: [{ id: 'surds:flashcards:2026-09-07', topicId: 'surds', subjectId: 'maths', kind: 'flashcards' as const, at: '2026-09-07T20:00:00.000Z', cards: 14, turns: 18 }] }
+    const laptop = { activities: [{ id: 'surds:flashcards:2026-09-07', topicId: 'surds', subjectId: 'maths', kind: 'flashcards' as const, at: '2026-09-07T21:00:00.000Z', cards: 2, turns: 2 }] }
+    const out = mergeProgress(phone, laptop)
+    expect(out.activities).toHaveLength(1)
+    expect(out.activities[0]!.cards).toBe(14)
+    expect(out.activities[0]!.turns).toBe(18)
+    expect(out.activities[0]!.at).toBe('2026-09-07T21:00:00.000Z')
+  })
+
+  it('keeps activities from both sides when they are different days', () => {
+    const a = { activities: [{ id: 'surds:why:2026-09-06', topicId: 'surds', subjectId: 'maths', kind: 'why' as const, at: '2026-09-06T10:00:00.000Z' }] }
+    const b = { activities: [{ id: 'surds:why:2026-09-07', topicId: 'surds', subjectId: 'maths', kind: 'why' as const, at: '2026-09-07T10:00:00.000Z' }] }
+    expect(mergeProgress(a, b).activities.map((x) => x.id)).toEqual(['surds:why:2026-09-06', 'surds:why:2026-09-07'])
+  })
 })

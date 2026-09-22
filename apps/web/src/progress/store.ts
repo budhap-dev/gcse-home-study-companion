@@ -45,9 +45,36 @@ export interface LessonRecord {
   updatedAt: string
 }
 
+/**
+ * The parts of a topic that produce no attempt and no lesson position.
+ *
+ * A quiz and a worksheet leave an AttemptRecord because they are marked; a lesson leaves a
+ * LessonRecord because it has a place in it. Flashcards, the cheat sheet, the why page and
+ * the exam technique page left nothing at all, so a parent looking at Recent work saw an
+ * empty list for an evening the student had spent revising. These are that evidence: no
+ * score, because there is nothing to score, but a record that it happened.
+ */
+export interface ActivityRecord {
+  id: string
+  /**
+   * Absent for exam technique, which is one page per subject rather than per topic. It is
+   * reached from a topic tile, so a student meets it as part of a topic, but attributing it
+   * to whichever topic they happened to come from would be inventing a fact.
+   */
+  topicId?: string
+  subjectId: string
+  kind: 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
+  at: string
+  /** Flashcards only: cards in the deck, and how many turns it took to know them all. */
+  cards?: number
+  turns?: number
+}
+
 export interface ProgressState {
   attempts: AttemptRecord[]
   lessons: Record<string, LessonRecord>
+  /** Revision that produces no mark: flashcards, cheat sheet, why, exam technique. */
+  activities: ActivityRecord[]
   /** Study minutes per calendar day, ISO date keys. */
   minutes: Record<string, number>
   /** Weekly goal in minutes. */
@@ -61,7 +88,7 @@ export interface ProgressState {
 export const DEFAULT_GOAL_MINUTES = 180
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, minutes: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {} }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -69,7 +96,11 @@ const KEY = 'study-companion.progress.v1'
 function read(): ProgressState {
   try {
     const raw = localStorage.getItem(KEY)
-    if (raw) return { ...emptyState(), ...(JSON.parse(raw) as Partial<ProgressState>) }
+    if (raw) {
+      const stored = JSON.parse(raw) as Partial<ProgressState>
+      // A state written before `activities` existed has none, and every reader iterates it.
+      return { ...emptyState(), ...stored, activities: stored.activities ?? [] }
+    }
   } catch {
     // storage unavailable or corrupt: start clean
   }
@@ -98,6 +129,34 @@ export function getState(): ProgressState {
 export function recordAttempt(attempt: AttemptRecord) {
   const state = read()
   state.attempts = [...state.attempts.filter((a) => a.id !== attempt.id), attempt]
+  write(state)
+}
+
+/**
+ * Records a piece of unmarked revision, at most once per topic, kind and day.
+ *
+ * Without the collapse a student flicking back to a cheat sheet four times in an evening
+ * would push everything else out of a ten-item feed. A parent wants to know the sheet was
+ * used that day, not how many times the tab was reopened.
+ */
+export function recordActivity(
+  where: { subjectId: string; topicId?: string },
+  kind: ActivityRecord['kind'],
+  extra: { cards?: number; turns?: number } = {},
+) {
+  const state = read()
+  const id = `${where.topicId ?? where.subjectId}:${kind}:${isoDate()}`
+  const existing = state.activities.find((a) => a.id === id)
+  state.activities = [
+    ...state.activities.filter((a) => a.id !== id),
+    // Keep the largest deck run of the day rather than the last, so a full run is not
+    // hidden by a two-card glance at it afterwards.
+    {
+      id, topicId: where.topicId, subjectId: where.subjectId, kind, at: new Date().toISOString(),
+      cards: Math.max(extra.cards ?? 0, existing?.cards ?? 0) || undefined,
+      turns: Math.max(extra.turns ?? 0, existing?.turns ?? 0) || undefined,
+    },
+  ]
   write(state)
 }
 
@@ -133,7 +192,8 @@ export function clearProgress() {
 }
 
 /**
- * The state with the given topics forgotten: their attempts and their place in the lesson.
+ * The state with the given topics forgotten: their attempts, their place in the lesson, and
+ * the revision recorded against them.
  *
  * Study minutes, the weekly goal, days off and badges are deliberately untouched. None of
  * them belongs to a topic — the minutes were still studied and the streak was still kept —
@@ -148,6 +208,8 @@ export function withoutTopics(state: ProgressState, topicIds: string[]): Progres
     ...state,
     attempts: state.attempts.filter((a) => !wanted.has(a.topicId)),
     lessons: Object.fromEntries(Object.entries(state.lessons).filter(([id]) => !wanted.has(id))),
+    // A subject-wide activity has no topic and survives: resetting one topic did not undo it.
+    activities: state.activities.filter((a) => !a.topicId || !wanted.has(a.topicId)),
   }
 }
 

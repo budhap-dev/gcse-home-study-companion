@@ -72,7 +72,7 @@ describe('the parent report', () => {
   it('survives an empty account', () => {
     const html = render(emptyState())
     expect(html).toContain('has not finished anything yet')
-    expect(html).toContain('Nothing finished yet')
+    expect(html).toContain('Nothing done yet')
     expect(html).not.toContain('NaN')
   })
 
@@ -136,5 +136,40 @@ describe('the family tabs', () => {
     expect(html).toContain('has not signed in yet')
     expect(html).toContain('Tasks</button> tab')
     expect(body('tasks', undefined)).toContain('Set task')
+  })
+
+  /**
+   * The point of the change: a parent who opens this after an evening of lessons,
+   * flashcards and a cheat sheet should see that evening, not "Nothing done yet."
+   */
+  it('lists work of every kind in Recent work, marked or not', () => {
+    const state: ProgressState = {
+      ...emptyState(),
+      attempts: [quiz('kinetic-and-gravitational-potential-energy', 80, '2026-09-14')],
+      lessons: { 'kinetic-and-gravitational-potential-energy': { topicId: 'kinetic-and-gravitational-potential-energy', stepIndex: 3, updatedAt: '2026-09-15T09:00:00.000Z' } },
+      activities: [
+        { id: 'a1', topicId: 'kinetic-and-gravitational-potential-energy', subjectId: 'physics', kind: 'flashcards', at: '2026-09-16T19:00:00.000Z', cards: 12, turns: 15 },
+        { id: 'a2', topicId: 'kinetic-and-gravitational-potential-energy', subjectId: 'physics', kind: 'cheat-sheet', at: '2026-09-17T19:30:00.000Z' },
+        { id: 'a3', subjectId: 'physics', kind: 'exam-technique', at: '2026-09-18T20:00:00.000Z' },
+      ],
+    }
+    const html = render(state)
+    for (const label of ['Quiz', 'Lesson', 'Flashcards', 'Cheat sheet', 'Exam technique']) {
+      expect(html, label).toContain(`>${label}</span>`)
+    }
+    expect(html).toContain('12 cards, 15 turns')
+    expect(html).toContain('Step 4 of 8')
+    expect(html).not.toContain('Nothing done yet')
+  })
+
+  /** Only a marked piece of work gets a percentage; a deck of cards never had one. */
+  it('puts no score against work that was never marked', () => {
+    const state: ProgressState = {
+      ...emptyState(),
+      activities: [{ id: 'a1', topicId: 'kinetic-and-gravitational-potential-energy', subjectId: 'physics', kind: 'flashcards', at: '2026-09-16T19:00:00.000Z', cards: 12, turns: 12 }],
+    }
+    const html = render(state)
+    expect(html).toContain('12 cards, all known first time')
+    expect(html).not.toMatch(/<strong class="shrink-0 tabular-nums">\d/)
   })
 })
