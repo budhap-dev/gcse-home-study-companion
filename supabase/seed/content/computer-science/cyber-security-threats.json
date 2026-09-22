@@ -37,6 +37,113 @@
       "body": "Testing **with** knowledge or credentials simulates a **malicious insider**. Testing **without** any simulates an **external attack**. Say which attacker each one imitates and the mark is secured."
     }
   ],
+  "why": {
+    "matters": "Every system worth attacking is attacked, constantly and mostly automatically, and the specification is precise about what defending it means: the **processes, practices and technologies** designed to protect networks, computers, programs and data from attack, damage or unauthorised access.\n\nThree words, not one. Technology is only a third of it, and the list of threats makes that obvious — several of them involve nothing being broken into at all. A default password, an access right nobody revoked, an update nobody installed.",
+    "examples": [
+      {
+        "title": "Why a USB stick walks straight past the firewall",
+        "body": "A firewall inspects what crosses the network. Removable media never crosses it: somebody carries the data through the front door in a pocket and plugs it in on the inside, where everything trusts everything.\n\nThat is why it is on the list of threats in its own right. It is also why the defences against it are rules about people rather than more equipment, and why an organisation that has spent heavily on its network can still be undone by a stick found in a car park.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "The way in",
+              "Crosses the network?",
+              "Firewall sees it?"
+            ],
+            "rows": [
+              [
+                "A downloaded file",
+                "yes",
+                "yes"
+              ],
+              [
+                "An email attachment",
+                "yes",
+                "yes"
+              ],
+              [
+                "A USB stick",
+                "no",
+                "no"
+              ]
+            ],
+            "highlight": 2
+          },
+          "alt": "A table of three ways malware arrives: a download and an email attachment both cross the network where a firewall can inspect them, while a USB stick does not cross it at all"
+        }
+      },
+      {
+        "title": "Why a trojan does not have to break anything",
+        "body": "Malware is an umbrella term, and the three forms the specification names differ in **how they arrive**. A virus attaches to a file and travels when that file is opened or shared. A trojan is disguised as something useful, so the user installs it willingly — the defences are not broken, they are walked through.\n\nSpyware is the quiet one: it records what is typed and sends it back, which is why encryption on the connection does not help. The password is captured before it is ever encrypted.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Form",
+              "What it is",
+              "How it gets in"
+            ],
+            "rows": [
+              [
+                "Virus",
+                "attaches to a file",
+                "the file is opened"
+              ],
+              [
+                "Trojan",
+                "looks like something useful",
+                "the user installs it"
+              ],
+              [
+                "Spyware",
+                "records what you do",
+                "it is already there"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A table of the three forms of malware: a virus attaches to a file and spreads when it is opened, a trojan is disguised so the user installs it, and spyware records what the user does"
+        }
+      },
+      {
+        "title": "Why a published patch makes an unpatched machine easier to attack",
+        "body": "A patch is an announcement. It says what the flaw was and roughly where, so the day it is published the flaw stops being a secret — and every machine that has not installed it becomes a **known** target rather than a guess.\n\nSo \"unpatched and outdated software\" is a threat that grows over time, which is the opposite of how people treat it. It is also why automatic updates are one of the five measures the specification names: the gap between a patch existing and a patch being installed is the whole window.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Before the patch",
+              "After it"
+            ],
+            "rows": [
+              [
+                "The flaw is",
+                "unknown",
+                "public"
+              ],
+              [
+                "Finding it takes",
+                "skill",
+                "reading"
+              ],
+              [
+                "An unpatched machine is",
+                "a guess",
+                "a known target"
+              ]
+            ],
+            "highlight": 2
+          },
+          "alt": "A table of what a published patch changes: before it the flaw is unknown and finding it takes skill, after it the flaw is public and any machine without the patch is a known target"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

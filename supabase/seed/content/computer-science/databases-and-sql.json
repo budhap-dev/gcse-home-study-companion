@@ -36,6 +36,125 @@
       "body": "**Redundancy** is storing the same thing **more than once**. **Inconsistency** is what happens when one of those copies is **changed and the others are not**. Redundancy is the cause; inconsistency is the damage."
     }
   ],
+  "why": {
+    "matters": "An array disappears when the program stops and can hold one kind of thing. A database is an organised, **persistent** collection, structured so it can be searched and updated efficiently — and a **relational** one stores it in linked tables.\n\nThe linking is the whole idea. Splitting data across tables and joining them on a key is how the same fact stops being stored in twenty places, and `SQL` is how you ask questions of the result. Nearly every application with more than a screenful of data is doing this underneath.",
+    "examples": [
+      {
+        "title": "Why the club name is stored 3 times and not 5",
+        "body": "Put everything in one table and \"Drama\" is written once for every student in it — 5 club names for 5 students. Split the clubs into their own table and there are 3, one per club, with each student holding only the `ClubID` that points at it.\n\nThe saving is not the point. **Data redundancy** is the same fact stored more than once; **data inconsistency** is what happens next, when one copy is corrected and the others are not, and the database now disagrees with itself. Removing the redundancy removes the possibility.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "The Club table: each name stored exactly once",
+            "columns": [
+              "ClubID",
+              "ClubName",
+              "Students in it"
+            ],
+            "rows": [
+              [
+                "1",
+                "Chess",
+                "2"
+              ],
+              [
+                "2",
+                "Drama",
+                "2"
+              ],
+              [
+                "3",
+                "Robotics",
+                "1"
+              ]
+            ]
+          },
+          "alt": "The Club table with three rows, each club name stored exactly once, and a column counting how many students belong to each, which is how many times the name would otherwise be repeated"
+        }
+      },
+      {
+        "title": "Why a question in SQL is four words long",
+        "body": "*Which Year 11s are there, in alphabetical order?* becomes `SELECT Name FROM Student WHERE YearGroup = 11 ORDER BY Name ASC`, and the answer is **Amara, Chloe, Elif**.\n\nFour keywords, each doing one thing: which fields, which table, which rows, what order. The two traps are both about quotes — text needs them and numbers must not have them, so `YearGroup = 11` and `ClubName = 'Drama'` — and the `WHERE` on a `DELETE` or an `UPDATE`, because without it every record in the table is changed.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "WHERE YearGroup = 11 ORDER BY Name ASC",
+            "columns": [
+              "Name",
+              "YearGroup"
+            ],
+            "rows": [
+              [
+                "Amara",
+                "11"
+              ],
+              [
+                "Chloe",
+                "11"
+              ],
+              [
+                "Elif",
+                "11"
+              ]
+            ]
+          },
+          "alt": "The result of a SQL query selecting the name and year group of every Year 11 student ordered by name, giving three rows in alphabetical order"
+        }
+      },
+      {
+        "title": "Why two tables need the join written down",
+        "body": "*Who is in Drama?* needs both tables: the name of the club is in `Club`, the students are in `Student`, and nothing connects them until you say so. The line that says so is `WHERE Student.ClubID = Club.ClubID` — the foreign key matched to the primary key it points at.\n\nAdd `AND Club.ClubName = 'Drama'` to filter, and the answer is **Amara and Elif**. Leave the join out and every student is paired with every club, which is where the marks go: the join condition is not decoration, it is the sentence that makes the two tables one.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Matching Student.ClubID to Club.ClubID",
+            "columns": [
+              "Name",
+              "ClubID",
+              "Club it points at",
+              "In Drama?"
+            ],
+            "rows": [
+              [
+                "Amara",
+                "2",
+                "Drama",
+                "yes"
+              ],
+              [
+                "Ben",
+                "1",
+                "Chess",
+                ""
+              ],
+              [
+                "Chloe",
+                "1",
+                "Chess",
+                ""
+              ],
+              [
+                "Dev",
+                "3",
+                "Robotics",
+                ""
+              ],
+              [
+                "Elif",
+                "2",
+                "Drama",
+                "yes"
+              ]
+            ]
+          },
+          "alt": "A table showing each student, the ClubID they hold, the club that key points at once the two tables are joined, and which of them are therefore in the Drama club"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
