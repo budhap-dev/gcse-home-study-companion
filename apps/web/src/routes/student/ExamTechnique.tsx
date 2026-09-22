@@ -18,7 +18,7 @@ export function ExamTechnique() {
   return (
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">
           <Link to={`/subjects/${subject.id}`} className="inline-block -my-1 py-1 hover:underline">{subject.name}</Link> · {subject.board}
         </p>
         <h1 className="text-3xl font-bold leading-tight">Exam technique</h1>

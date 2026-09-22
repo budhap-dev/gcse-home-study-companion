@@ -90,7 +90,7 @@ export function Worksheet() {
   if (!state) {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{subject.name} · {topic.title}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · {topic.title}</p>
         <h1 className="text-3xl font-bold leading-tight">{LEVEL_LABEL[level]} worksheet</h1>
         <ul className="flex flex-col gap-1 text-ink-2">
           <li>{questions.length} questions · {marksAvailable} marks · about {sheet.suggestedMinutes} minutes.</li>
@@ -128,7 +128,7 @@ export function Worksheet() {
           />
         )}
         <header className="flex flex-col gap-2">
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">Worksheet finished</p>
+          <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">Worksheet finished</p>
           <h1 className="text-3xl font-bold leading-tight">{topic.title} · {LEVEL_LABEL[level]}</h1>
         </header>
         <section className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -214,7 +214,7 @@ export function Worksheet() {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 6l12 12M18 6L6 18" /></svg>
         </Link>
         <div className="flex flex-col">
-          <span className="text-xs font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">{subject.name} · {LEVEL_LABEL[level]} worksheet</span>
+          <span className="text-xs font-bold uppercase tracking-[0.06em] accent-ink">{subject.name} · {LEVEL_LABEL[level]} worksheet</span>
           <span className="font-bold">{topic.title}</span>
         </div>
         <nav aria-label="Questions" className="ml-auto flex flex-wrap gap-1.5">

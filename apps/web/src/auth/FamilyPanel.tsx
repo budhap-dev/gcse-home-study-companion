@@ -73,7 +73,7 @@ export function FamilyPanel() {
               <span className="flex shrink-0 gap-1">
                 <button type="button" onClick={() => { setEditing(r.email); setDraft(r.note ?? '') }} className="rounded-lg border border-rule px-3 py-1 text-xs font-bold">Name</button>
                 {r.email !== auth.email && (
-                  <button type="button" onClick={() => void remove(r.email)} className="rounded-lg border border-rule px-3 py-1 text-xs font-bold text-status-not-secure">Remove</button>
+                  <button type="button" onClick={() => void remove(r.email)} className="rounded-lg border border-rule px-3 py-1 text-xs font-bold text-[color:var(--status-not-secure-ink)]">Remove</button>
                 )}
               </span>
             </span>

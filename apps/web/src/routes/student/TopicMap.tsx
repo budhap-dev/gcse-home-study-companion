@@ -36,7 +36,7 @@ export function TopicMap() {
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{subject.board}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.board}</p>
         <h1 className="text-3xl font-bold leading-tight">{subject.name}</h1>
         <p className="text-ink-2">
           <strong className="text-ink">{ready} of {written.length}</strong> written topics mastered
@@ -82,7 +82,7 @@ export function TopicMap() {
                 {YEAR_NOTE[year] && <p className="text-sm text-ink-3">{YEAR_NOTE[year]}</p>}
                 {inYear.map((block) => (
                   <div key={`${year}-${block.term}`} className="flex flex-col gap-1.5">
-                    <h3 className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">{block.term}</h3>
+                    <h3 className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{block.term}</h3>
                     <ul className="flex flex-col">
                       {block.topics.map((entry) =>
                         entry.topicId ? (

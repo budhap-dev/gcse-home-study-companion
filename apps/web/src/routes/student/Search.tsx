@@ -86,7 +86,7 @@ export function Search() {
               <li key={hit.record.key}>
                 <Link to={hit.record.to} className="flex flex-col gap-1 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-[color:var(--subject)]">
                   <span className="flex flex-wrap items-baseline gap-x-2 text-xs">
-                    <span className="font-bold" style={{ color: hit.record.subjectColour }}>{hit.record.subjectName}</span>
+                    <span className="font-bold accent-ink" style={{ '--subject': hit.record.subjectColour } as React.CSSProperties}>{hit.record.subjectName}</span>
                     <span className="rounded bg-panel px-1.5 py-0.5 text-[11px] text-ink-2">{KIND_LABEL[hit.record.kind]}</span>
                   </span>
                   <span className="font-bold leading-snug"><Highlight text={hit.record.topicTitle} query={trimmed} /></span>

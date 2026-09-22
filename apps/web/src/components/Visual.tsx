@@ -19,6 +19,11 @@ export const LIGHT_CANVAS = {
   '--color-surface': '#ffffff',
   '--color-panel': '#f0ede4',
   '--subject-soft': 'color-mix(in srgb, var(--subject) 14%, #ffffff)',
+  // The accent lightness clamp too: a dark theme lifts accents so they read on a dark
+  // page, and this ground is white whatever the theme. Without these two the dark
+  // themes' pale periwinkle would be drawn on white.
+  '--accent-l-min': '0',
+  '--accent-l-max': '0.47',
 } as React.CSSProperties
 
 /** The diagram canvas, fitted so a label wider than the drawing is not cut off. */

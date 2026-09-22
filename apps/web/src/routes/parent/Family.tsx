@@ -90,7 +90,7 @@ export function Family() {
   if (auth.status !== 'allowed') return <Shell><p className="text-ink-2">Sign in with your family account to see how the work is going. <Link to="/settings" className="font-bold text-ink underline">Go to Settings</Link>.</p></Shell>
   if (auth.role !== 'parent') return <Shell><p className="text-ink-2">This page is for parent accounts. You are signed in as a student, so this shows nothing extra — your own numbers are on <Link to="/progress" className="font-bold text-ink underline">Progress</Link>.</p></Shell>
   if (loading) return <Shell><p className="text-ink-2">Loading…</p></Shell>
-  if (error) return <Shell><p className="text-status-not-secure">{error}</p></Shell>
+  if (error) return <Shell><p className="text-[color:var(--status-not-secure-ink)]">{error}</p></Shell>
   if (children.length === 0) return <Shell><p className="text-ink-2">No student accounts on the family list yet. Add one in <Link to="/settings" className="font-bold text-ink underline">Settings</Link>, using the Google address they sign in with.</p></Shell>
 
   const child = children.find((c) => c.email === chosen) ?? children[0]!
@@ -269,7 +269,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
           {s.subjects.map((sub) => (
             <div key={sub.id} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                <Link to={`/subjects/${sub.id}`} className="font-bold underline" style={{ color: sub.colour }}>{sub.name}</Link>
+                <Link to={`/subjects/${sub.id}`} className="font-bold underline accent-ink" style={{ '--subject': sub.colour } as React.CSSProperties}>{sub.name}</Link>
                 <span className="text-xs text-ink-2">{sub.started} of {sub.total} started{sub.lastActive ? ` · last opened ${day(sub.lastActive)}` : ''}</span>
               </div>
               {/* Untouched topics are left as the bar's own background, so a subject not

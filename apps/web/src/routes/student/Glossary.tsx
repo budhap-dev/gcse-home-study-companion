@@ -164,8 +164,11 @@ function Chip({ on, colour, onClick, children }: { on: boolean; colour?: string;
       type="button"
       onClick={onClick}
       aria-pressed={on}
-      className={`min-h-9 rounded-full border px-3 text-sm font-bold ${on ? 'border-transparent text-white' : 'border-rule bg-surface text-ink-2'}`}
-      style={on ? { background: colour ?? 'var(--color-ink)' } : undefined}
+      className={`min-h-9 rounded-full border px-3 text-sm font-bold ${on ? 'border-transparent' : 'border-rule bg-surface text-ink-2'}`}
+      // A subject accent is a mid-dark colour and takes white. The fallback is the theme's
+      // own ink, which is near-white on a dark theme, so that one takes the surface
+      // instead -- pinning white on both put white on white.
+      style={on ? { background: colour ?? 'var(--color-ink)', color: colour ? '#fff' : 'var(--color-surface)' } : undefined}
     >
       {children}
     </button>

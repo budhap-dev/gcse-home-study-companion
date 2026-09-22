@@ -9,7 +9,11 @@
   --color-surface: #ffffff;
   --color-ink: #1e2330;
   --color-ink-2: #5a6070;
-  --color-ink-3: #8a90a0;
+  /* Deepened from #8a90a0, which read at 2.9:1 on Paper. It labels things a student has
+     to read -- EXAMPLE, ANSWER, AVAILABLE, the date under a progress bar -- not decoration.
+     Checked against --color-panel as well as the surface and the paper: several themes make
+     the panel the lightest of the three, and that is what the EXAMPLE label sits on. */
+  --color-ink-3: #636978;
   --color-rule: #e3e0d8;
   --color-panel: #f0ede4;
 
@@ -32,11 +36,66 @@
      safe; a whole card of body text cannot pin one without fighting every theme. */
   --hook-card: color-mix(in srgb, var(--color-status-developing) 14%, var(--color-surface));
   --hook-card-rule: color-mix(in srgb, var(--color-status-developing) 45%, var(--color-surface));
+
+  /* How light an accent is allowed to be when it is *text*.
+     The subject accents and the chip colours are authored for a light page, and every one
+     of them is a mid-dark colour: Computer Science's navy came out at 1.47:1 on Forest,
+     Physics at 2.38:1, the "worked example" chip at 1.42:1. A whole class of labels on the
+     dark themes was effectively invisible.
+     Light themes cap an accent's lightness, dark themes raise it, and because only the
+     OKLCH lightness moves, the hue and the saturation survive: navy stays navy, it just
+     stops being navy-on-black. Mixing towards the ink instead would have needed a 50% mix
+     to clear AA, which washes every subject's identity out.
+     These two are the whole per-theme story; the derived tokens below need no per-theme
+     table to keep in step with them. */
+  --accent-l-min: 0;
+  /* 0.47, not 0.5: a chip paints its accent on its own 14% tint of that accent, over a
+     .tint panel, over the paper, and that stack is lighter than the surface alone. At 0.5
+     the worst chip measured 4.24:1 on Paper. */
+  --accent-l-max: 0.47;
+
+  /* --subject stays the authored colour: it is also painted as a *background* under white
+     text, where lightening it makes things worse. The status colours get an adjusted form
+     here because --color-status-* is the same on every element; the subject accent cannot,
+     see .accent-ink below. */
+  --status-secure-ink: var(--color-status-secure);
+  --status-not-secure-ink: var(--color-status-not-secure);
+  --status-developing-ink: var(--color-status-developing);
+  --status-grade-9-ink: var(--color-status-grade-9);
 }
 
 /* Declared here as well as by applyTheme, which only runs once the bundle has loaded.
    Without it the first paint takes the operating system's preference, so a device in dark
    mode draws light-theme pages with dark native controls until the JS catches up. */
+/* Anything painted on a pinned white ground keeps the light-theme accent, because that
+   ground does not follow the theme. Without it a dark theme's lifted accent -- chosen to
+   read on a near-black page -- lands on white: the Home "Start" button measured 2.01:1. */
+/**
+ * The subject accent, as text.
+ *
+ * A class rather than a --subject-ink token on :root, because a custom property substitutes
+ * its var()s on the element that *declares* it. Declared once at the root, --subject-ink
+ * resolved against the root's default --subject and every subject inherited that one grey:
+ * the contrast was fine and Maths, Physics and Chemistry all came out the same colour.
+ * Declared here, it resolves on each element against the --subject it has actually
+ * inherited -- and against the --accent-l-* of any .light-ground it sits in.
+ */
+.accent-ink { color: var(--subject); }
+
+.light-ground { --accent-l-min: 0; --accent-l-max: 0.47; }
+
+/* Relative colour syntax: Chrome 119, Safari 16.4, Firefox 128. Without it the fallbacks
+   above stand and the themes look as they did, rather than the custom property going
+   invalid at computed-value time and taking the element's colour with it. */
+@supports (color: oklch(from red l c h)) {
+  :root {
+    --status-secure-ink: oklch(from var(--color-status-secure) clamp(var(--accent-l-min), l, var(--accent-l-max)) c h);
+    --status-not-secure-ink: oklch(from var(--color-status-not-secure) clamp(var(--accent-l-min), l, var(--accent-l-max)) c h);
+    --status-developing-ink: oklch(from var(--color-status-developing) clamp(var(--accent-l-min), l, var(--accent-l-max)) c h);
+    --status-grade-9-ink: oklch(from var(--color-status-grade-9) clamp(var(--accent-l-min), l, var(--accent-l-max)) c h);
+  }
+}
+
 :root { color-scheme: light; }
 html { background: var(--color-paper); color: var(--color-ink); }
 body { background-image: var(--bg-pattern, none); background-size: var(--bg-size, auto); background-attachment: fixed; }
@@ -307,7 +366,14 @@ figure[data-diagram] {
 /* Colour markers: bold terms in lesson text read like a highlighter pen. */
 .rich-text strong { background: color-mix(in srgb, var(--subject, #c8501f) 16%, transparent); border-radius: 0.3em; padding: 0 0.2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 /* Coloured label chips for sections and step kinds. */
-.chip { width: fit-content; display: inline-flex; align-items: center; gap: 0.35rem; border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--chip, var(--subject)); background: color-mix(in srgb, var(--chip, var(--subject)) 14%, transparent); }
+/* A chip is handed a raw accent -- the subject's, or one of the five fixed hexes the cheat
+   sheet and the lesson pass as --chip -- so it adjusts what it is given rather than trusting
+   the caller to have picked something that works on a dark page. */
+.chip { width: fit-content; display: inline-flex; align-items: center; gap: 0.35rem; border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; --chip-ink: var(--chip, var(--subject)); color: var(--chip-ink); background: color-mix(in srgb, var(--chip-ink) 14%, transparent); }
+@supports (color: oklch(from red l c h)) {
+  .chip { --chip-ink: oklch(from var(--chip, var(--subject)) clamp(var(--accent-l-min), l, var(--accent-l-max)) c h); }
+  .accent-ink { color: oklch(from var(--subject) clamp(var(--accent-l-min), l, var(--accent-l-max)) c h); }
+}
 .tint { background: color-mix(in srgb, var(--subject) 8%, var(--color-surface)); }
 /* Sits clear of the phone's bottom navigation bar, and low down when there is none. */
 .bottom-nav-clear { bottom: calc(5.5rem + env(safe-area-inset-bottom)); }

@@ -44,7 +44,7 @@ export function AssignedCard({ task }: { task: AssignedTask }) {
   const inner = (
     <>
       <span className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
-        <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[color:var(--subject)]">
+        <span className="text-[11px] font-bold uppercase tracking-[0.06em] accent-ink">
           {card ? `${card.subjectName} · ${card.title}` : 'Task'}
         </span>
         <Due status={status} startsOn={a.startsOn} dueOn={a.dueOn} doneAt={task.doneAt} />
@@ -71,11 +71,11 @@ export function AssignedCard({ task }: { task: AssignedTask }) {
 
 function Due({ status, startsOn, dueOn, doneAt }: { status: AssignedTask['status']; startsOn?: string; dueOn?: string; doneAt?: string }) {
   if (status === 'done') {
-    return <span className="whitespace-nowrap text-xs font-bold text-status-secure">✓ Done{doneAt ? ` ${DUE(doneAt.slice(0, 10))}` : ''}</span>
+    return <span className="whitespace-nowrap text-xs font-bold text-[color:var(--status-secure-ink)]">✓ Done{doneAt ? ` ${DUE(doneAt.slice(0, 10))}` : ''}</span>
   }
   // Not started yet: the date that matters is when it opens, not when it closes.
   if (status === 'upcoming') return <span className="whitespace-nowrap text-xs font-bold text-ink-2">Starts {DUE(startsOn!)}</span>
-  if (status === 'overdue') return <span className="whitespace-nowrap text-xs font-bold text-status-not-secure">Was due {DUE(dueOn!)}</span>
+  if (status === 'overdue') return <span className="whitespace-nowrap text-xs font-bold text-[color:var(--status-not-secure-ink)]">Was due {DUE(dueOn!)}</span>
   if (status === 'due-today') return <span className="whitespace-nowrap text-xs font-bold text-[#8a6d1d]">Due today</span>
   if (dueOn) return <span className="whitespace-nowrap text-xs text-ink-2">Due {DUE(dueOn)}</span>
   if (startsOn) return <span className="whitespace-nowrap text-xs text-ink-2">From {DUE(startsOn)}</span>

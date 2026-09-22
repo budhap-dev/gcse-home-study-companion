@@ -140,7 +140,7 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
                     className="h-11 rounded-lg border border-rule px-3 text-xs font-bold text-ink">Set again</button>
                 )}
                 <button type="button" onClick={() => void remove(t.assignment.id, t.topicTitle)}
-                  className="h-11 rounded-lg border border-rule px-3 text-xs font-bold text-status-not-secure">Remove</button>
+                  className="h-11 rounded-lg border border-rule px-3 text-xs font-bold text-[color:var(--status-not-secure-ink)]">Remove</button>
               </span>
             </li>
           ))}

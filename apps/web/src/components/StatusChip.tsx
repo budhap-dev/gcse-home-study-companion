@@ -1,8 +1,8 @@
 import { STATUS_COLOUR, STATUS_LABEL, type TopicStatus } from '@study/shared'
 
 /** Status by shape as well as colour, so colour is never the only carrier of meaning. */
-export function StatusIcon({ status, size = 14 }: { status: TopicStatus; size?: number }) {
-  const c = STATUS_COLOUR[status]
+export function StatusIcon({ status, size = 14, colour }: { status: TopicStatus; size?: number; colour?: string }) {
+  const c = colour ?? STATUS_COLOUR[status]
   switch (status) {
     case 'not-secure':
       return <svg width={size} height={size} viewBox="0 0 14 14" aria-hidden><circle cx="7" cy="7" r="5" fill="none" stroke={c} strokeWidth="2" /></svg>
@@ -25,10 +25,25 @@ export function StatusIcon({ status, size = 14 }: { status: TopicStatus; size?: 
   }
 }
 
+/**
+ * The themed form of each status colour.
+ *
+ * STATUS_COLOUR holds the palette as authored, which is what the donut and the progress
+ * bars paint. As *text* those same colours were down at 2.98:1 ("Secure") and 3.26:1
+ * ("Not secure"), so the chip reads them through the tokens styles.css clamps per theme.
+ */
+const STATUS_INK: Record<TopicStatus, string> = {
+  'not-secure': 'var(--status-not-secure-ink)',
+  developing: 'var(--status-developing-ink)',
+  secure: 'var(--status-secure-ink)',
+  'grade-9-ready': 'var(--status-grade-9-ink)',
+}
+
 export function StatusChip({ status }: { status: TopicStatus }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-bold" style={{ color: STATUS_COLOUR[status] }}>
-      <StatusIcon status={status} size={12} />
+    // currentColor on the icon, so the shape stays the same colour as its label.
+    <span className="inline-flex items-center gap-1.5 text-xs font-bold" style={{ color: STATUS_INK[status] }}>
+      <StatusIcon status={status} size={12} colour="currentColor" />
       {STATUS_LABEL[status]}
     </span>
   )

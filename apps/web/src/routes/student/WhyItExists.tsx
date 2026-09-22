@@ -26,7 +26,7 @@ export function WhyItExists() {
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] text-[color:var(--subject)]">
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">
           <Link to={`/subjects/${subject.id}/topics/${topic.id}`} className="inline-block -my-1 py-1 hover:underline">{topic.title}</Link>
         </p>
         <h1 className="text-3xl font-bold leading-tight">Where you meet it</h1>
