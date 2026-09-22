@@ -36,6 +36,132 @@
       "body": "Defragmentation, backup, compression, anti-malware and encryption are one idea, not five facts: they **maintain the system** rather than doing a task for the user. That is why they are all system software."
     }
   ],
+  "why": {
+    "matters": "A computer is hardware plus software, and the software half splits in two — not by how big or clever a program is, but by **who it is for**. Application software does a job for the person using the machine. System software manages the machine itself, and acts as a **platform** for everything else.\n\nThat word platform is the whole topic. It explains why applications can be written at all by people who know nothing about your printer, your memory or the other four programs you have open, and it is worth learning in the specification's own words.",
+    "examples": [
+      {
+        "title": "Why a word processor does not know what printer you own",
+        "body": "It never finds out. It asks the operating system to print, and the operating system deals with the printer — which is why the same word processor works with a printer bought years after it was written.\n\nWithout an operating system every application would need its own code for every model of printer, its own way of finding free memory, and its own scheme for sharing the processor. Every application would need all of it, and they would fight each other over it. The operating system does those jobs **once, centrally**, and offers them as services.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "The job",
+              "With no OS",
+              "With an OS"
+            ],
+            "rows": [
+              [
+                "Printing",
+                "code per printer",
+                "ask the OS"
+              ],
+              [
+                "Finding memory",
+                "everyone guesses",
+                "the OS allocates"
+              ],
+              [
+                "Sharing the CPU",
+                "they fight",
+                "the OS decides"
+              ],
+              [
+                "One program crashes",
+                "all of them do",
+                "the rest carry on"
+              ]
+            ]
+          },
+          "alt": "A table of four jobs done with and without an operating system: printing, finding memory and sharing the processor each need code in every application without one, and a crash takes the whole machine down"
+        }
+      },
+      {
+        "title": "Which kind is it? Ask who it is for",
+        "body": "Classification questions look like memory tests and are not. One question sorts every example: **does this manage the computer, or does it do something for me?**\n\nA browser, a game and a word processor are all doing something for the person. An operating system manages the machine. So do **utility programs** — defragmentation, compression, backup, anti-malware — which is the group people get wrong, because anti-malware feels like an app. It is maintenance on the system, so it is system software.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Software",
+              "Kind",
+              "Because"
+            ],
+            "rows": [
+              [
+                "Operating system",
+                "system",
+                "it manages the machine"
+              ],
+              [
+                "Anti-malware",
+                "system",
+                "maintenance, not for you"
+              ],
+              [
+                "Backup",
+                "system",
+                "keeps the system well"
+              ],
+              [
+                "Web browser",
+                "application",
+                "it does a job for you"
+              ],
+              [
+                "Game",
+                "application",
+                "a job for you, too"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A table classifying five pieces of software: the operating system, anti-malware and backup manage or maintain the system, while a browser and a game do a job for the person using the machine"
+        }
+      },
+      {
+        "title": "Why security is on the operating system’s list",
+        "body": "The specification names **5** things the operating system manages, and security is the one people leave out. It looks like a different sort of thing from memory and printers.\n\nIt belongs there because the operating system is the only software in a position to do it. It already decides which program runs, where its data goes and which devices it may touch — so it is the only thing that can say what a program is **not** allowed to do. Anything above it is just another program asking permission.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "The 5 the specification asks for",
+            "columns": [
+              "It manages",
+              "Which means"
+            ],
+            "rows": [
+              [
+                "the processor",
+                "which program runs next, and for how long"
+              ],
+              [
+                "memory",
+                "where each program goes, and keeping them apart"
+              ],
+              [
+                "input and output",
+                "the keyboard, screen, printer and disks"
+              ],
+              [
+                "applications",
+                "starting them, stopping them, serving them"
+              ],
+              [
+                "security",
+                "accounts, passwords, who may do what"
+              ]
+            ],
+            "highlight": 4
+          },
+          "alt": "A table of the five things an operating system manages: the processor, memory, input and output devices, applications and security, with one line saying what each one amounts to"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

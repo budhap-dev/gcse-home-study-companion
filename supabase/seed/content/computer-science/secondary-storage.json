@@ -35,6 +35,127 @@
       "body": "An **embedded** system is built into a device to do **one dedicated task** — a washing machine, a microwave. A **non-embedded** system, such as a laptop, is **general purpose** and runs whatever you install."
     }
   ],
+  "why": {
+    "matters": "RAM is volatile, small and expensive, so a computer that had nothing else would lose everything the moment it was switched off and could not hold much while it was on. Secondary storage is the answer to both.\n\nThe specification defines it in two halves, and both are examined: it is **non-volatile**, and it is **not directly accessible by the CPU**. The second half is the one that gets left out, and it is the one that explains why a program has to be loaded before it runs.",
+    "examples": [
+      {
+        "title": "Why a program has to load before it runs",
+        "body": "The processor cannot reach a file on a disk. It reads and writes main memory directly and nothing else, so anything it is going to work on has to be **copied into RAM first** — which is what a loading screen is, and why opening a large file takes a moment while using it afterwards does not.\n\nThat is the half of the definition people drop. Secondary storage is non-volatile *and* not directly accessible by the CPU, and the dividing line is that accessibility, not speed and not size.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "Main memory",
+              "Secondary storage"
+            ],
+            "rows": [
+              [
+                "Reached by the CPU",
+                "directly",
+                "not directly"
+              ],
+              [
+                "Power off",
+                "lost",
+                "kept"
+              ],
+              [
+                "Holds",
+                "what is running now",
+                "everything else"
+              ],
+              [
+                "To use a file",
+                "it is already here",
+                "copy it here first"
+              ]
+            ],
+            "highlight": 0
+          },
+          "alt": "A table comparing main memory with secondary storage: the processor reaches main memory directly but not secondary storage, main memory is lost when the power goes, and a file has to be copied into memory before it is used"
+        }
+      },
+      {
+        "title": "Why a dropped laptop is the argument for solid state",
+        "body": "The three types differ by **mechanism**, and the mechanism decides everything else. Magnetic storage is a head floating over a spinning platter, so a knock at the wrong moment is a scratch. Solid state has no moving parts at all, so there is nothing to jolt.\n\nAnswer a comparison question from the mechanism and the rest follows: no moving parts also means quieter, cooler and faster to reach any point, while the spinning platter is still much cheaper per gigabyte. Optical is a laser reading pits in a surface — cheap to make and post, slow, and mostly overtaken.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Type",
+              "The mechanism",
+              "So"
+            ],
+            "rows": [
+              [
+                "Solid state",
+                "no moving parts",
+                "survives a drop"
+              ],
+              [
+                "Magnetic",
+                "a head on a spinning disc",
+                "cheap, and breakable"
+              ],
+              [
+                "Optical",
+                "a laser reading pits",
+                "slow, and postable"
+              ]
+            ],
+            "highlight": 0
+          },
+          "alt": "A table of the three types of secondary storage and their mechanisms: solid state has no moving parts, magnetic uses a head over a spinning platter, and optical uses a laser reading pits and lands"
+        }
+      },
+      {
+        "title": "Why cloud storage is somebody else’s computer",
+        "body": "Nothing new happens in the cloud. The files are on ordinary secondary storage in a building somewhere else, and what changes is that you reach them over a **network** instead of over a cable inside the case.\n\nThat single change is the whole trade. The same file is reachable from any device and somebody else does the backups — and nothing works without a connection, the speed is the network's rather than the disk's, and the data is on hardware you do not control. An exam answer that says *it is stored remotely and accessed over a network* has the definition; the marks are in the consequences.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "On your device",
+              "In the cloud"
+            ],
+            "rows": [
+              [
+                "Where the disk is",
+                "in the case",
+                "somewhere else"
+              ],
+              [
+                "Reached over",
+                "a cable inside",
+                "a network"
+              ],
+              [
+                "With no connection",
+                "fine",
+                "nothing"
+              ],
+              [
+                "Backed up by",
+                "you",
+                "them"
+              ],
+              [
+                "Controlled by",
+                "you",
+                "them"
+              ]
+            ]
+          },
+          "alt": "A table comparing storage on your own device with cloud storage: the cloud disk is in another building reached over a network, so it needs a connection, and the backups and the control belong to whoever owns it"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
