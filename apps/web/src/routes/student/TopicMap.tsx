@@ -2,6 +2,7 @@ import { getSubject, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/share
 import type { SyllabusBlock } from '@study/shared'
 import { Link, useParams } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
+import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { topicsForSubject } from '../../content/index.ts'
 import { evidenceFor } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
@@ -29,6 +30,8 @@ export function TopicMap() {
   /** Has the student done anything on any of these topics? Drives whether a reset is offered. */
   const studied = (ids: string[]) => ids.some((id) => progress.attempts.some((a) => a.topicId === id) || Boolean(progress.lessons[id]))
   const subjectTopicIds = written.map((t) => t.id)
+  // Where the board numbers its sections, the number goes in front of the title.
+  const specCodes = new Map(written.map((t) => [t.id, t.specCode]))
 
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
@@ -89,6 +92,7 @@ export function TopicMap() {
                               className="flex min-h-11 items-center gap-3 rounded-lg px-2 py-2 text-sm hover:bg-panel"
                             >
                               <StatusIcon status={evidenceFor(entry.topicId, progress).status} />
+                              <SpecNumber code={specCodes.get(entry.topicId)} />
                               <span>{entry.title}</span>
                             </Link>
                           </li>

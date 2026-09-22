@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { KindChip } from '../../components/KindChip.tsx'
+import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { getTopic } from '../../content/index.ts'
@@ -137,7 +138,10 @@ export function Lesson() {
       </header>
 
       <div className="flex flex-col gap-1">
-        <KindChip kind={step.kind} />
+        <span className="flex items-center gap-2">
+          <KindChip kind={step.kind} />
+          <SpecNumber code={step.specPoint} className="text-xs" />
+        </span>
         <h1 className="text-2xl font-bold leading-tight">{step.title}</h1>
       </div>
 

@@ -17,6 +17,14 @@ export const LessonStep = z.object({
   body: RichText,
   visuals: z.array(Visual).min(1, 'every step needs at least one visual'),
   check: Question.optional(),
+  /**
+   * The specification point this step teaches, in the board's own numbering, such as
+   * "1.4.2". A step that belongs to no single point — a recap, a practice task, the
+   * summary — leaves it out, which is why it is optional.
+   *
+   * It has to be one of the topic's own `specPoints`; `spec-numbering.test.ts` holds that.
+   */
+  specPoint: z.string().min(1).optional(),
 })
 export type LessonStep = z.infer<typeof LessonStep>
 
