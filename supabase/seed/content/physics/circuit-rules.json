@@ -193,13 +193,13 @@
           "type": "multiple-choice",
           "prompt": "In a series circuit, what is true of the current?",
           "options": [
-            "It is the same through every component",
             "It is shared between the components",
+            "It is the same through every component",
             "It is largest through the biggest resistor",
             "It is different in each part of the circuit"
           ],
           "correct": [
-            0
+            1
           ],
           "marks": 1,
           "gradeBand": "4-5",
@@ -267,13 +267,13 @@
           "type": "multiple-choice",
           "prompt": "Why does adding a resistor in parallel decrease the total resistance?",
           "options": [
-            "It gives the current an extra path, so more current flows in total",
-            "It reduces the potential difference across the circuit",
             "It uses up some of the current before it reaches the others",
+            "It reduces the potential difference across the circuit",
+            "It gives the current an extra path, so more current flows in total",
             "It shares the resistance equally between the branches"
           ],
           "correct": [
-            0
+            2
           ],
           "marks": 1,
           "gradeBand": "6-7",
@@ -673,6 +673,30 @@
         "visuals": [
           {
             "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Resistance from readings",
+                  "equation": "R = V ÷ I",
+                  "units": "ohms, V, A"
+                },
+                {
+                  "name": "Total resistance in series",
+                  "equation": "R total = R₁ + R₂",
+                  "units": "ohms"
+                },
+                {
+                  "name": "Current from the supply",
+                  "equation": "I = V ÷ R total",
+                  "units": "A, V, ohms"
+                }
+              ]
+            },
+            "alt": "A card of the circuit rules: resistance equals potential difference divided by current, resistances in series add, and the current from the supply equals the supply potential difference divided by the total resistance"
+          },
+          {
+            "type": "diagram",
             "component": "trace-table",
             "props": {
               "columns": [
@@ -874,7 +898,7 @@
     {
       "id": "q6",
       "type": "numeric",
-      "prompt": "In that series circuit the current is 1 A. What is the potential difference across the 8 Ω resistor, in volts?",
+      "prompt": "A 12 V supply is in series with a 4 Ω and an 8 Ω resistor, and the current is 1 A. What is the potential difference across the 8 Ω resistor, in volts?",
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "series potential difference",
@@ -982,7 +1006,11 @@
         "the supply potential difference",
         "the potential difference of the supply",
         "the total supply pd",
-        "the supply voltage"
+        "the supply voltage",
+        "the supply pd",
+        "supply pd",
+        "supply potential difference",
+        "supply voltage"
       ]
     },
     {
@@ -1031,7 +1059,7 @@
       "skill": "a common calculation error",
       "calculator": "either",
       "tags": [],
-      "solution": "The current is opposed by **everything** in the single path, so $I = V_{supply} \\div R_{total}$. Dividing by one resistor alone gives a current far too large — here 3 A instead of 1 A — and it usually goes unnoticed because the number still looks reasonable.",
+      "solution": "The current is opposed by **everything** in the single path, so $I = V_{supply} \\div R_{total}$. Dividing by one resistor alone gives a current far too large — with 12 V across 4 Ω and 8 Ω in series, 3 A instead of the true 1 A — and it usually goes unnoticed because the number still looks reasonable.",
       "markScheme": [
         {
           "code": "B1",
