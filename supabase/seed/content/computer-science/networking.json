@@ -35,6 +35,128 @@
       "body": "A **LAN** covers a **small geographical area** and is usually **owned and managed by one person or organisation**. A **WAN** covers a **wide area** under **collective or distributed** ownership — and the **internet is the biggest WAN**."
     }
   ],
+  "why": {
+    "matters": "A computer on its own is a calculator with a screen. Connected to others it can share files and hardware, be backed up centrally and send a message across the world — and in exchange it can be reached by anyone else who is connected.\n\nThe topic is mostly about how that is made to work between machines that were never designed together. The answer is **agreed rules** — protocols — and dividing the job into **layers** so that one part can change without the rest being rewritten. Both ideas are bigger than networking.",
+    "examples": [
+      {
+        "title": "Why a LAN is not simply a small WAN",
+        "body": "Size is half the difference and the half everyone gives. A LAN covers a small geographical area — one site, one building — and a WAN covers a wide one.\n\nThe other half is **ownership**. A LAN is usually owned by a single organisation, which owns the cabling and the equipment and can do as it likes with them. A WAN is not: it runs over infrastructure belonging to other people, which is why it is leased, slower and out of your control when it breaks. Both halves, every time — the mark scheme wants the ownership.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "LAN",
+              "WAN"
+            ],
+            "rows": [
+              [
+                "Area",
+                "one site",
+                "wide"
+              ],
+              [
+                "Owned by",
+                "one organisation",
+                "many"
+              ],
+              [
+                "The cabling",
+                "yours",
+                "leased"
+              ],
+              [
+                "When it breaks",
+                "you fix it",
+                "you wait"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A table comparing a LAN and a WAN on both halves of the difference: a LAN covers one site and is owned by a single organisation, a WAN is wide and runs over infrastructure belonging to others"
+        }
+      },
+      {
+        "title": "Why both ends have to agree first",
+        "body": "A protocol is a set of **rules for how devices communicate**. Without one, the receiving machine has bits and no idea where the message starts, which part is the address, or what to do when something is missing — the data is not corrupted, it is meaningless.\n\nThat is why there are so many of them, each for one job. `IP` addresses and routes. `TCP` makes sure everything arrives, in order. `HTTP` asks for a web page and `HTTPS` is the same thing encrypted — which is the precise answer, rather than \"it is more secure\".",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Protocol",
+              "Its one job"
+            ],
+            "rows": [
+              [
+                "IP",
+                "address and route the packets"
+              ],
+              [
+                "TCP",
+                "everything arrives, in order"
+              ],
+              [
+                "UDP",
+                "speed, with no guarantee"
+              ],
+              [
+                "HTTP",
+                "ask for a web page"
+              ],
+              [
+                "HTTPS",
+                "the same, encrypted"
+              ]
+            ],
+            "highlight": 4
+          },
+          "alt": "A table of five protocols and the single job of each: IP addresses and routes packets, TCP guarantees arrival in order, UDP trades that for speed, HTTP requests a web page and HTTPS is the encrypted version"
+        }
+      },
+      {
+        "title": "Why Wi-Fi arriving did not break the web",
+        "body": "The internet was designed before wireless existed, and nothing above the bottom layer had to be rewritten when it arrived. That is what layering buys: each layer deals with one thing and talks only to its neighbours, so the **hardware layer can change completely** while the browser above it carries on.\n\nThat is the answer worth giving about layers — not \"it makes it simpler\", but that one layer can be replaced without touching the others. The four, top down, are Application, Transport, Internet and Link.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Top to bottom",
+            "columns": [
+              "Layer",
+              "Deals with",
+              "Protocols"
+            ],
+            "rows": [
+              [
+                "Application",
+                "browsers and email programs",
+                "HTTP, HTTPS, SMTP"
+              ],
+              [
+                "Transport",
+                "sets up the conversation",
+                "TCP, UDP"
+              ],
+              [
+                "Internet",
+                "addresses and routes packets",
+                "IP"
+              ],
+              [
+                "Link",
+                "hardware and drivers",
+                "the network card"
+              ]
+            ],
+            "highlight": 3
+          },
+          "alt": "A table of the four TCP/IP layers from the top down: Application where browsers and email work, Transport which sets up the conversation, Internet which addresses and routes, and Link which is the hardware and its drivers"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
