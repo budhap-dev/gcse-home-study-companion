@@ -74,6 +74,25 @@ describe('the cheat sheet page', () => {
   it('says so plainly for a topic that does not exist', () => {
     expect(render('physics', 'not-a-topic')).toContain('Unknown topic')
   })
+
+  /**
+   * The memory-hook card used to paint itself a fixed cream, `bg-[#fff8e6]`. Under a dark
+   * theme that cream stayed cream while the text followed `--color-ink` to near-white, and
+   * the card a student opens the night before a test was unreadable. Its warmth has to come
+   * from a token mixed into `--color-surface`, so the themes carry it.
+   *
+   * The small warm chips elsewhere (the XP pill, the offline banner) pin their own text
+   * colour alongside their background and are safe; a card of body text cannot.
+   */
+  it('takes the memory-hook card colour from a theme token, not a fixed light hex', () => {
+    const source = readFileSync(new URL('./CheatSheet.tsx', import.meta.url), 'utf8')
+    expect(source).not.toMatch(/bg-\[#[0-9a-fA-F]{3,8}\]/)
+    expect(source).toContain('bg-[color:var(--hook-card)]')
+    const css = readFileSync(new URL('../../styles.css', import.meta.url), 'utf8')
+    // Mixed into the surface, so every theme's own background carries through.
+    expect(css).toMatch(/--hook-card:\s*color-mix\(in srgb,[^;]*var\(--color-surface\)\)/)
+    expect(css).toMatch(/--hook-card-rule:\s*color-mix\(in srgb,[^;]*var\(--color-surface\)\)/)
+  })
 })
 
 describe('the tile', () => {

@@ -132,7 +132,7 @@ const TIP_LABEL: Record<CheatTip['kind'], string> = { remember: 'Remember it', s
 function TipCard({ tip, lead = false }: { tip: CheatTip; lead?: boolean }) {
   return (
     <li
-      className={`break-inside-avoid flex flex-col gap-1 rounded-xl border px-4 py-3 ${lead ? 'border-[#e5c37a] bg-[#fff8e6]' : 'border-rule bg-surface'}`}
+      className={`break-inside-avoid flex flex-col gap-1 rounded-xl border px-4 py-3 ${lead ? 'border-[color:var(--hook-card-rule)] bg-[color:var(--hook-card)]' : 'border-rule bg-surface'}`}
     >
       {!lead && (
         <span className="flex items-center gap-2">
