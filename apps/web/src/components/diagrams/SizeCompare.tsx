@@ -1,5 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
-import { CHAR_WIDTH, wrapCell } from './tableLayout.ts'
+import { wrapCell } from './tableLayout.ts'
 
 interface Bar {
   label: string
@@ -23,54 +23,85 @@ interface Bar {
  * is information, not a layout problem. The only concession is a one-pixel floor, so a
  * value that rounds to nothing still shows it exists.
  *
+ * The drawing is narrower than a phone card. It used to be 460 units wide with the label
+ * beside the bar, and since a diagram stops shrinking at its natural width and scrolls
+ * sideways instead (see stopShrinkingBelowNaturalWidth), a 390px phone showed the first
+ * 298 of those units: the value printed at the end of the longest bar — the number the
+ * picture exists to show — sat in the hidden strip on every phone, for all 97 of them.
+ * The label now sits above its bar, so the bar takes the full width and the whole thing
+ * fits in 296 units. Long captions wrap for the same reason.
+ *
  * Props: { bars: Bar[] (two or three), caption?: string }
  */
+const W = 296
+const PAD = 4
+const TRACK_W = W - 2 * PAD
+const BAR_H = 22
+/** Roughly how wide a character is, for the bold display face and the body face. */
+const DISPLAY_RATIO = 0.58
+const BODY_RATIO = 0.52
+const LABEL_PX = 13
+const NOTE_PX = 11
+const VALUE_PX = 12
+const CAPTION_PX = 11
+const LINE = 15
+
 export function SizeCompare({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const bars = ((props.bars as Bar[] | undefined) ?? []).slice(0, 3)
   const caption = String(props.caption ?? '')
-  const W = 460
-  const labelW = 150
-  const trackX = labelW + 10
-  const trackW = W - trackX - 12
-  const rowH = 46
-  const barH = 22
-  const top = 10
-  const H = top + bars.length * rowH + (caption ? 26 : 6)
-
   const max = Math.max(1, ...bars.map((b) => Math.abs(b.value)))
   // Linear, so the comparison the reader makes by eye is the comparison in the numbers.
-  const widthOf = (v: number) => (Math.abs(v) <= 0 ? 0 : Math.max(1, (Math.abs(v) / max) * trackW))
+  const widthOf = (v: number) => (Math.abs(v) <= 0 ? 0 : Math.max(1, (Math.abs(v) / max) * TRACK_W))
+
+  const labelBudget = Math.floor(TRACK_W / (LABEL_PX * DISPLAY_RATIO))
+  const noteBudget = Math.floor(TRACK_W / (NOTE_PX * BODY_RATIO))
+  const rows = bars.map((b) => {
+    const label = wrapCell(b.label, labelBudget).slice(0, 2)
+    const note = b.note ? wrapCell(b.note, noteBudget).slice(0, 2) : []
+    const barTop = label.length * LINE + note.length * (NOTE_PX + 3) + 4
+    return { ...b, label, note, barTop, height: barTop + BAR_H + 10 }
+  })
+  const captionLines = caption ? wrapCell(caption, Math.floor(TRACK_W / (CAPTION_PX * BODY_RATIO))) : []
+
+  const tops: number[] = []
+  let y = 8
+  for (const r of rows) { tops.push(y); y += r.height }
+  const captionTop = y
+  const H = captionTop + captionLines.length * (CAPTION_PX + 3) + (captionLines.length ? 6 : 0)
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 520 }} role="img" aria-label={alt}>
-      {bars.map((b, i) => {
-        const y = top + i * rowH
-        const w = widthOf(b.value)
-        const text = b.display ?? String(b.value)
-        // The value sits inside the bar when it fits and just outside when it does not,
-        // which is what keeps a very small bar's number readable.
-        const inside = w > text.length * CHAR_WIDTH + 16
-        const label = wrapCell(b.label, Math.floor(labelW / CHAR_WIDTH))
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 380 }} role="img" aria-label={alt}>
+      {rows.map((r, i) => {
+        const top = tops[i]!
+        const w = widthOf(r.value)
+        const text = r.display ?? String(r.value)
+        const textW = text.length * VALUE_PX * DISPLAY_RATIO
+        // The value sits inside the bar when it fits, just outside when it does not, and
+        // at the end of the track when even that would run off the drawing — so it can
+        // never be cut off, which is the defect this layout replaced.
+        const inside = w > textW + 16
+        const outsideFits = PAD + w + 8 + textW <= W - PAD
+        const barY = top + r.barTop
         return (
           <g key={i}>
-            {label.slice(0, 2).map((line, j) => (
-              <text key={j} x={0} y={y + 16 + j * 13} fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
+            {r.label.map((line, j) => (
+              <text key={`l${j}`} x={PAD} y={top + LABEL_PX + j * LINE} fontFamily={DISPLAY} fontSize={LABEL_PX} fontWeight="700" fill={INK}>
                 {line}
               </text>
             ))}
-            {b.note && (
-              <text x={0} y={y + 16 + Math.min(label.length, 2) * 13} fontFamily={FONT} fontSize="11" fill={INK_2}>
-                {b.note}
+            {r.note.map((line, j) => (
+              <text key={`n${j}`} x={PAD} y={top + r.label.length * LINE + NOTE_PX + j * (NOTE_PX + 3)} fontFamily={FONT} fontSize={NOTE_PX} fill={INK_2}>
+                {line}
               </text>
-            )}
-            <rect x={trackX} y={y + 2} width={trackW} height={barH} rx="4" fill="var(--subject-soft)" stroke={RULE} />
-            <rect x={trackX} y={y + 2} width={w} height={barH} rx="4" fill="var(--subject, #1f3a93)" />
+            ))}
+            <rect x={PAD} y={barY} width={TRACK_W} height={BAR_H} rx="4" fill="var(--subject-soft)" stroke={RULE} />
+            <rect x={PAD} y={barY} width={w} height={BAR_H} rx="4" fill="var(--subject, #1f3a93)" />
             <text
-              x={inside ? trackX + w - 8 : trackX + w + 8}
-              y={y + 18}
-              textAnchor={inside ? 'end' : 'start'}
+              x={inside ? PAD + w - 8 : outsideFits ? PAD + w + 8 : W - PAD}
+              y={barY + 16}
+              textAnchor={inside || !outsideFits ? 'end' : 'start'}
               fontFamily={DISPLAY}
-              fontSize="12"
+              fontSize={VALUE_PX}
               fontWeight="700"
               fill={inside ? '#ffffff' : ACCENT}
             >
@@ -79,11 +110,11 @@ export function SizeCompare({ props, alt }: { props: Record<string, unknown>; al
           </g>
         )
       })}
-      {caption && (
-        <text x={0} y={H - 8} fontFamily={FONT} fontSize="11" fill={INK_2}>
-          {caption}
+      {captionLines.map((line, j) => (
+        <text key={`c${j}`} x={PAD} y={captionTop + CAPTION_PX + j * (CAPTION_PX + 3)} fontFamily={FONT} fontSize={CAPTION_PX} fill={INK_2}>
+          {line}
         </text>
-      )}
+      ))}
     </svg>
   )
 }
