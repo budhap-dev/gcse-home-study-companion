@@ -135,6 +135,19 @@ As a student or parent, I want a target grade per subject, defaulting to 9, so t
 - The Grade 9 ready status and its thresholds are relabelled and rescaled if a lower target is set.
 - Changing the target does not alter stored attempts.
 
+### LRN-8 · Read a topic's cheat sheet
+
+**Priority:** Should
+
+As a student, I want one page per topic with the memory hooks, the formulae, the key points, the tactics and the examiner traps, so that I can revise a topic in a few minutes the night before a test without walking the whole lesson again.
+
+**Acceptance criteria**
+
+- The sheet is built from what the topic already holds (its `remember` tips, its equation cards, its summary step, its other tips and its exam technique note), so it needs no separate authoring and cannot drift from the lesson.
+- The memory hooks come first; every section is omitted when it is empty, and every topic in the pack has a non-empty sheet.
+- It prints on A4 with the app's chrome and colour stripped, and no card is split across a page.
+- It is reached from a tile on the topic page beside Flashcards, and links on to the flashcards and the quiz.
+
 ## Epic C · Worksheets
 
 ### WKS-1 · Open a worksheet at a chosen level

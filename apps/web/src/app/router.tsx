@@ -15,6 +15,7 @@ import { WhyItExists } from '../routes/student/WhyItExists.tsx'
 import { Progress } from '../routes/student/Progress.tsx'
 import { Settings } from '../routes/student/Settings.tsx'
 import { Flashcards } from '../routes/student/Flashcards.tsx'
+import { CheatSheet } from '../routes/student/CheatSheet.tsx'
 import { Search } from '../routes/student/Search.tsx'
 import { Glossary } from '../routes/student/Glossary.tsx'
 import { Family } from '../routes/parent/Family.tsx'
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
       { path: 'subjects/:subjectId/topics/:topicId/worksheet/:level', element: <SubjectTheme><Worksheet /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/worksheet/:level/print', element: <SubjectTheme><WorksheetPrint /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/flashcards', element: <SubjectTheme><Flashcards /></SubjectTheme> },
+      { path: 'subjects/:subjectId/topics/:topicId/cheatsheet', element: <SubjectTheme><CheatSheet /></SubjectTheme> },
       { path: 'search', element: <Search /> },
       { path: 'glossary', element: <Glossary /> },
       { path: 'progress', element: <Progress /> },

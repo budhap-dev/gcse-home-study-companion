@@ -121,6 +121,7 @@ export function Topic() {
         })}
         <Part to="quiz" title="Quiz" note={`${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action="Start" />
         <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
+        <Part to="cheatsheet" title="Cheat sheet" note="The whole topic on one page: memory hooks, formulae, key points and traps. Prints." action="Read" />
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={previewOf(topic.examTechnique.body)} action="Read" />
       </nav>
 
@@ -185,7 +186,7 @@ export function Topic() {
 const TIP_EMOJI: Record<string, string> = { remember: '🧠', spot: '🔍', shortcut: '⚡', check: '✅' }
 const TIP_LABEL: Record<string, string> = { remember: 'Remember it', spot: 'Spot it', shortcut: 'Quicker way', check: 'Check it' }
 
-const PART_EMOJI: Record<string, string> = { Lesson: '📖', 'Core worksheet': '📝', 'Higher worksheet': '📝', 'Advanced worksheet': '🧠', Quiz: '⚡', Flashcards: '🃏', 'Exam technique': '🎓', 'Where you meet it': '🌍' }
+const PART_EMOJI: Record<string, string> = { Lesson: '📖', 'Core worksheet': '📝', 'Higher worksheet': '📝', 'Advanced worksheet': '🧠', Quiz: '⚡', Flashcards: '🃏', 'Cheat sheet': '📋', 'Exam technique': '🎓', 'Where you meet it': '🌍' }
 
 function Part({ to, title, note, action }: { to: string; title: string; note: string; action: string }) {
   return (
