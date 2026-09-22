@@ -32,7 +32,7 @@ Board: AQA 8463, named on every overview. The school starts GCSE content in Year
 |---|---|---|
 | 1 | Resistance and Ohm's law · Circuit rules · Mains electricity | Stepping stones on resistance of components and the nuclear model |
 | 2 | The model of the atom · Radiation and nuclear power | Mock on Years 9 and 10 plus electrical circuits |
-| 3 | Electromagnetic devices · Stars and galaxies | Stepping stones on nuclear physics, stars and galaxies |
+| 3 | Magnets and magnetic fields · Electromagnetic devices · Stars and galaxies | Stepping stones on nuclear physics, stars and galaxies |
 | 4 | The Big Bang | Mock on Years 9 and 10 plus circuits, radiation, nuclear power |
 | 5 | Revision · Required practical methods | Stepping stones on required practical methods |
 | 6 | Revision | Final exams, Paper 1 and Paper 2 |
@@ -47,7 +47,7 @@ Board: AQA 8463, named on every overview. The school starts GCSE content in Year
 | `waves` | Wave properties, light, sound (Year 9); electromagnetic waves (Year 10 term 4) | Year 10 term 4 |
 | `electricity` | Static electricity, building circuits (Year 10 terms 5 and 6); resistance, circuit rules, mains (Year 11 term 1) | Year 10 term 5 |
 | `atomic-structure` | Model of the atom, radiation and nuclear power | Year 11 terms 1 and 2 |
-| `magnetism-and-electromagnetism` | Electromagnetic devices | Year 11 term 3 |
+| `magnetism-and-electromagnetism` | Magnets and magnetic fields · Electromagnetic devices | Year 11 term 3 |
 | `space-physics` | Stars and galaxies, the Big Bang | Year 11 terms 3 and 4 |
 
 Authoring note: the sample topic, kinetic and gravitational potential energy, is Year 9 material for this student, so it serves as recap. The first Year 10 topic to write is Hooke's law, then moments, momentum, and pressure in fluids. The Year 10 term 2 Milestone also re-tests all of Year 9, so Year 9 Forces topics (motion graphs, resultant forces, Newton's laws, stopping distances) are worth writing early as well.
