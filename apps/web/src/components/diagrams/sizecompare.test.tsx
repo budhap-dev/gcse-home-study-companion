@@ -50,6 +50,35 @@ describe('size-compare', () => {
     expect(anchors).toEqual(['end', 'start'])
   })
 
+  /**
+   * A 390px phone leaves a diagram card 298px wide, and below its natural width a drawing
+   * scrolls rather than shrinks. At 460 units wide this component put the value on its
+   * longest bar in the hidden strip on every phone. The drawing now has to fit.
+   */
+  it('is no wider than a phone card, so nothing is hidden behind a sideways scroll', () => {
+    const html = renderToStaticMarkup(
+      <SizeCompare alt="" props={{ caption: 'Harbour Lights, one year', bars: [
+        { label: 'Sales revenue', value: 480000, display: '£480,000' },
+        { label: 'Gross profit', value: 288000, display: '£288,000', note: '60% of revenue' },
+        { label: 'Net profit', value: 72000, display: '£72,000', note: '15% of revenue' },
+      ] }} />,
+    )
+    const w = Number(html.match(/viewBox="0 0 (\d+) (\d+)"/)![1])
+    expect(w).toBeLessThanOrEqual(298)
+    // The longest bar's value is drawn inside the drawing, right-anchored at the bar's end.
+    const xs = [...html.matchAll(/<text x="([\d.]+)"/g)].map((m) => Number(m[1]))
+    expect(Math.max(...xs)).toBeLessThanOrEqual(w)
+    expect(html).toContain('£480,000')
+  })
+
+  it('wraps a long caption rather than running it off the edge', () => {
+    const caption = 'what each source could raise towards the £2,000,000 factory, from retained profit to a full stock market flotation'
+    const html = renderToStaticMarkup(<SizeCompare alt="" props={{ caption, bars: [{ label: 'A', value: 2 }, { label: 'B', value: 1 }] }} />)
+    expect(html).not.toContain(caption)
+    expect(html).toContain('what each source could raise')
+    expect(html).toContain('flotation')
+  })
+
   it('caps at three bars and keeps every label and caption', () => {
     const html = renderToStaticMarkup(
       <SizeCompare alt="" props={{ caption: 'the same words, both times', bars: [
