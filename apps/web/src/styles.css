@@ -45,6 +45,9 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
   @page { size: A4; margin: 15mm 14mm; }
   /* The app's chrome is navigation, and navigation on paper is just wasted ink. */
   header, aside, nav, .no-print { display: none !important; }
+  /* But a printable page's own heading is not chrome: the worksheet's title and name line,
+     the cheat sheet's topic. Without this the rule above took those off the paper too. */
+  .print-sheet header { display: block !important; }
   html, body { background: #fff !important; }
   main { padding: 0 !important; }
   .print-sheet { max-width: none !important; }
