@@ -35,6 +35,117 @@
       "body": "A processor executes **machine code only**. So all high-level **and** assembly code must be translated before it can run. Assembly is low-level but it still is not machine code."
     }
   ],
+  "why": {
+    "matters": "A processor understands exactly one thing: **machine code**, in binary. Every language above that is a convenience for people, and everything written in one has to be translated before anything runs.\n\nSo this topic is about a trade that is made every time software is written. Closer to the hardware means more control and more speed, and code that works on one kind of processor only. Further away means readable, portable, far quicker to write — and one step removed from the machine. Almost everything is written high-level, and the exam wants the reason, not the fact.",
+    "examples": [
+      {
+        "title": "Why everything ends up as binary anyway",
+        "body": "Nothing a processor is given is ever anything but machine code. Python, C# and assembly are all notations for people; each is turned into machine code before it can be executed, and only machine code needs no translation.\n\nWorth being exact about two words that get swapped. **Machine code** is the binary the processor runs. **Assembly** is a human-readable version of it — mnemonics like `ADD` and `LDA`, one instruction each — and it still has to go through an assembler. Both are low-level, and they are not the same thing.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Written in",
+              "Level",
+              "Runs directly?"
+            ],
+            "rows": [
+              [
+                "Python, C#, VB.NET",
+                "high-level",
+                "no, it is translated"
+              ],
+              [
+                "Assembly",
+                "low-level",
+                "no, it is assembled"
+              ],
+              [
+                "Machine code",
+                "low-level",
+                "yes, this is the one"
+              ]
+            ],
+            "highlight": 2
+          },
+          "alt": "A table of three ways of writing a program: high-level languages and assembly both have to be translated first, and only machine code is what the processor actually runs"
+        }
+      },
+      {
+        "title": "Why almost nobody writes assembly any more",
+        "body": "One line of a high-level language does the work of many machine instructions, and it says what it means. It also runs on any processor with a translator for it, while assembly is written for **one** instruction set and has to be rewritten for another.\n\nLow-level has not gone away, though: where the exact instructions matter — a device driver, an embedded system with very little memory — the control is worth the cost. That is the shape of the answer an exam wants. Not *high-level is better*, but what each buys and what each costs.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "",
+              "High-level",
+              "Low-level"
+            ],
+            "rows": [
+              [
+                "To write and read",
+                "easier",
+                "harder"
+              ],
+              [
+                "Another processor",
+                "works",
+                "rewrite it"
+              ],
+              [
+                "Hardware control",
+                "less",
+                "complete"
+              ],
+              [
+                "Used for",
+                "almost all of it",
+                "drivers, embedded"
+              ]
+            ]
+          },
+          "alt": "A table comparing high-level and low-level languages: high-level is easier to write and portable between processors, low-level gives complete control of the hardware but must be rewritten for another instruction set"
+        }
+      },
+      {
+        "title": "Why an interpreter never leaves anything behind",
+        "body": "A compiler translates the whole program in advance and produces machine code you can keep, run again, and give to somebody without the source. An interpreter translates and runs **one statement at a time**, and produces no machine code at all — nothing is kept, so it starts again from the source every run.\n\nThat last sentence is the detail that separates a full answer. It also explains the trade: interpreted code is slower to run and far quicker to test, because there is nothing to rebuild between one change and the next.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Translator",
+              "Takes",
+              "Produces"
+            ],
+            "rows": [
+              [
+                "Assembler",
+                "assembly",
+                "machine code"
+              ],
+              [
+                "Compiler",
+                "high-level",
+                "machine code"
+              ],
+              [
+                "Interpreter",
+                "high-level",
+                "nothing kept"
+              ]
+            ],
+            "highlight": 2
+          },
+          "alt": "A table of the three translators: an assembler turns assembly into machine code, a compiler turns a high-level language into machine code, and an interpreter runs a high-level language a statement at a time and keeps nothing"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {

@@ -35,6 +35,117 @@
       "body": "Extra cores only help if the work can be **split between them**. Software that cannot be divided runs at much the same speed on four cores as on one — a favourite examiner point."
     }
   ],
+  "why": {
+    "matters": "Underneath every program there is one part actually doing the work, and it is doing something much simpler than you would guess: fetching an instruction, working out what it means, carrying it out, and starting again. Billions of times a second, and never anything cleverer than that.\n\nKnowing the cycle makes the rest of the topic follow. Why memory is arranged in layers, why a faster clock helps, why more cores sometimes do not — all of it is about keeping that one loop fed.",
+    "examples": [
+      {
+        "title": "Why the processor never stops",
+        "body": "The cycle has three stages and no end. **Fetch** the next instruction from main memory, **decode** it to work out what is wanted, **execute** it — then fetch the next one. There is no idle state in the design; a processor with nothing to do is running instructions that amount to waiting.\n\nTwo things are worth saying in an answer: the stages in order, and that the fetch comes **from main memory**. That is where memory enters the story, and it is why the speed of memory matters as much as the speed of the processor.",
+        "visual": {
+          "type": "diagram",
+          "component": "flowchart",
+          "props": {
+            "nodes": [
+              {
+                "kind": "io",
+                "text": "Fetch from main memory"
+              },
+              {
+                "kind": "process",
+                "text": "Decode: what is wanted?"
+              },
+              {
+                "kind": "process",
+                "text": "Execute it"
+              }
+            ],
+            "loop": {
+              "from": 2,
+              "to": 0
+            }
+          },
+          "alt": "A flow chart of the fetch-execute cycle as a loop: fetch the next instruction from main memory, decode it to work out what is wanted, execute it, and return to the fetch"
+        }
+      },
+      {
+        "title": "Why two processors at the same clock speed are not the same speed",
+        "body": "Clock speed is how many cycles a second, so a faster clock makes every instruction quicker. It is only one of three things the specification names, and on its own it settles nothing.\n\n**Cores** let several instructions run at once — but only for work that can be split up, which is why four cores rarely means four times faster. **Cache** is a small fast memory holding what the processor is likely to need next, so it waits for main memory less often. A comparison question usually gives you all three and expects each to be weighed.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "What",
+              "Is",
+              "Helps because"
+            ],
+            "rows": [
+              [
+                "Clock speed",
+                "cycles a second",
+                "each step is quicker"
+              ],
+              [
+                "Cores",
+                "how many at once",
+                "only if the work splits"
+              ],
+              [
+                "Cache size",
+                "what is kept close",
+                "fewer waits for RAM"
+              ]
+            ]
+          },
+          "alt": "A table of the three things that affect processor performance: clock speed is cycles a second, cores are how many instructions run at once and only help work that splits, and cache size is how much is kept close to the processor"
+        }
+      },
+      {
+        "title": "Why one kind of memory would not do",
+        "body": "The fastest memory is tiny and the roomiest is slow, so a computer uses **4** kinds arranged by how close to the processor they are. A register holds one value inside the CPU. Cache holds what is probably needed next. RAM holds what is running. Each step out is bigger and slower.\n\nROM is the odd one, and the reason is timing: it is **non-volatile**, so it still holds the start-up instructions when the power comes back — which is exactly what is needed before anything else has been loaded. Everything else in the list is empty at that moment.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Memory",
+              "Where",
+              "Power off",
+              "Holds"
+            ],
+            "rows": [
+              [
+                "RAM",
+                "outside",
+                "volatile",
+                "what is running"
+              ],
+              [
+                "ROM",
+                "outside",
+                "non-volatile",
+                "how to start up"
+              ],
+              [
+                "Cache",
+                "near",
+                "volatile",
+                "what is needed next"
+              ],
+              [
+                "Register",
+                "inside",
+                "volatile",
+                "one value"
+              ]
+            ],
+            "highlight": 1
+          },
+          "alt": "A table of the four kinds of memory: RAM and ROM sit outside the processor, cache near it and a register inside it, and only ROM keeps its contents when the power is removed, which is why it holds the start-up instructions"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
