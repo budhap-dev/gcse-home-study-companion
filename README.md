@@ -74,11 +74,11 @@ for how terms are authored.
 
 The app version is the `version` field in `apps/web/package.json`, shown in the menu footer with the short commit hash. The number follows semantic versioning and must move with every release:
 
-- **Patch** (0.2.0 → 0.2.1): fixes to content or code with no new topics or features.
-- **Minor** (0.2.0 → 0.3.0): a new subject block (for example a half-term of Chemistry), a new feature, or a new diagram or interactive kind.
-- **Major** (0.x → 1.0.0, then 2.0.0): a milestone the family will notice. 1.0.0 is planned for when every subject has its Autumn 1 content and the app is in daily use; the next major is Google sign-in with progress sync.
+- **Patch** (7.1.0 → 7.1.1): fixes to content or code with no new topics or features.
+- **Minor** (7.1.0 → 7.2.0): new topics, a new feature, or a new diagram or interactive kind.
+- **Major** (7.x → 8.0.0): a subject is complete — every row of the school's plan for it, Years 9 to 11, links to a written topic. Computer Science took the app to 1.0.0 and Music to 7.0.0.
 
-Bump the version in the same PR as the change, so the footer always says which release is deployed.
+Bump the version in the same PR as the change, so the footer always says which release is deployed. CI enforces it: the *Version bumped* check fails a pull request that changes anything outside `docs/`, `.github/` and Markdown files without raising the version above the base branch's.
 
 
 ## Family sign-in (Google)
