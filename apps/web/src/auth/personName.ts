@@ -16,15 +16,25 @@
  */
 export function personName({ note, profile, email }: { note?: string | null; profile?: string | null; email: string }): string {
   const typed = (note ?? '').trim()
-  if (typed) return typed
+  if (typed && !isRoleLabel(typed)) return typed
   const fromProfile = (profile ?? '').trim()
   // A Supabase profile with no name falls back to the email, so a profile that is just
   // the address is no better than no profile at all.
-  if (fromProfile && !fromProfile.includes('@') && fromProfile.toLowerCase() !== localPart(email)) return fromProfile
+  if (fromProfile && !fromProfile.includes('@') && fromProfile.toLowerCase() !== localPart(email) && !isRoleLabel(fromProfile)) return fromProfile
   return fromEmail(email)
 }
 
 const localPart = (email: string) => email.split('@')[0]!.toLowerCase()
+
+/**
+ * Words that say what an account is, not who. Until 18 September 2026 the note beside an
+ * address was labelled "Name or note" and shown as a tag after the role, so a family could
+ * reasonably have typed "Student" there. When the note became the name, that tag became
+ * what the parent's screen called the child. A Google profile set up for a child can carry
+ * the same kind of placeholder. Neither is a name, so both fall through to the next source.
+ */
+const ROLE_LABELS = new Set(['student', 'parent', 'pupil', 'child', 'user', 'account'])
+export const isRoleLabel = (s: string) => ROLE_LABELS.has(s.trim().toLowerCase().replace(/[^a-z]/g, ''))
 
 /** "abhigyan.pandit1@gmail.com" to "Abhigyan Pandit". */
 export function fromEmail(email: string): string {
