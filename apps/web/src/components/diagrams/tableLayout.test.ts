@@ -2,7 +2,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { everyVisual } from '@study/shared'
 import { describe, expect, it } from 'vitest'
-import { FULL_ROW, MAX_TABLE_WIDTH, MIN_TEXT_PX, TEXT_PX, charBudget, columnWidths, naturalWidth, rowHeight, wrapCell } from './tableLayout.ts'
+import { CHAR_WIDTH, CELL_PADDING, FULL_ROW, MAX_TABLE_WIDTH, MIN_TEXT_PX, TEXT_PX, charBudget, columnWidths, fitColumns, naturalWidth, rowHeight, wrapCell } from './tableLayout.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
 const CONTENT = ROOT
@@ -121,5 +121,39 @@ describe('every table in the content pack', () => {
   it('has a readable floor above 12px only when it fits', () => {
     expect(MIN_TEXT_PX).toBeLessThan(TEXT_PX)
     expect(MAX_TABLE_WIDTH).toBe(Math.floor((FULL_ROW * TEXT_PX) / MIN_TEXT_PX))
+  })
+})
+
+describe('fitColumns', () => {
+  const columns = ['Step', 'What happens there', 'Why it matters']
+  const rows = [
+    ['1', 'blood at high pressure forces small molecules out into the capsule', 'this is filtration'],
+    ['2', 'the last of the water the body needs is taken back', 'ADH controls how much'],
+  ]
+  const sum = (w: number[]) => w.reduce((a, b) => a + b, 0)
+
+  it('leaves a table that already fits exactly as it was', () => {
+    expect(fitColumns(columns, rows, 5000)).toEqual(columnWidths(columns, rows))
+    expect(fitColumns(columns, rows, Infinity)).toEqual(columnWidths(columns, rows))
+  })
+
+  it('fits a phone card by wrapping the wide columns, not the narrow one', () => {
+    const natural = columnWidths(columns, rows)
+    const fitted = fitColumns(columns, rows, 330)
+    expect(sum(natural) + 2).toBeGreaterThan(330)
+    expect(sum(fitted) + 2).toBeLessThanOrEqual(330)
+    expect(fitted[0]).toBe(natural[0])
+    expect(fitted[1]).toBeLessThan(natural[1]!)
+  })
+
+  it('never makes a column narrower than its longest word', () => {
+    const fitted = fitColumns(['Word', 'Text'], [['photosynthesising', 'a b c d e f g h i j k l m n o p q r s t u v w x y z']], 120)
+    expect(fitted[0]).toBeGreaterThanOrEqual(CHAR_WIDTH * 'photosynthesising'.length + CELL_PADDING)
+    for (const [i, w] of fitted.entries()) {
+      const budget = charBudget(w)
+      for (const line of wrapCell([['Word', 'Text'][i]!, ['photosynthesising', 'a b c d e f g h i j k l m n o p q r s t u v w x y z'][i]!].join(' '), budget)) {
+        if (line.includes(' ')) expect(line.length).toBeLessThanOrEqual(budget)
+      }
+    }
   })
 })

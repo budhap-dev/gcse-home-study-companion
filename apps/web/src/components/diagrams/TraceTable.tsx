@@ -1,5 +1,7 @@
+import { useLayoutEffect, useRef, useState } from 'react'
+import { REFIT } from '../fitSvgText.ts'
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
-import { LINE_HEIGHT, charBudget, columnWidths, rowHeight, wrapCell } from './tableLayout.ts'
+import { CHAR_WIDTH, LINE_HEIGHT, charBudget, fitColumns, rowHeight, wrapCell } from './tableLayout.ts'
 
 /**
  * A table: one column per variable (plus an optional output column), one row per step.
@@ -7,13 +9,19 @@ import { LINE_HEIGHT, charBudget, columnWidths, rowHeight, wrapCell } from './ta
  * Props: { columns: string[], rows: string[][], title?: string, highlight?: number }.
  * Empty strings leave a cell blank, which is how a trace table shows an unchanged value.
  * Long cells wrap and their row grows, so text never overlaps a neighbour or is clipped.
+ *
+ * The table measures the box it is drawn in and lays its columns out to that width (see
+ * fitColumns), so on a phone the prose columns wrap onto more lines instead of the whole
+ * table scrolling sideways with its last column out of sight.
  */
 export function TraceTable({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const columns = (props.columns as string[] | undefined) ?? []
   const rows = (props.rows as string[][] | undefined) ?? []
   const highlight = typeof props.highlight === 'number' ? props.highlight : -1
 
-  const widths = columnWidths(columns, rows)
+  const svg = useRef<SVGSVGElement>(null)
+  const available = useAvailableWidth(svg)
+  const widths = fitColumns(columns, rows, available ?? Infinity)
   const budgets = widths.map(charBudget)
   const xs = widths.reduce<number[]>((acc, w) => [...acc, (acc[acc.length - 1] ?? 1) + w], [1]).slice(0, -1)
   const W = widths.reduce((a, b) => a + b, 0) + 2
@@ -23,12 +31,19 @@ export function TraceTable({ props, alt }: { props: Record<string, unknown>; alt
   const headH = rowHeight(Math.max(1, ...header.map((l) => l.length)))
   const bodyH = body.map((cells) => rowHeight(Math.max(1, ...cells.map((l) => l.length))))
 
-  const top = props.title ? 22 : 0
+  // The title wraps to the table's width too: an unwrapped title wider than the table
+  // made the fitter widen the drawing and put it back into a sideways scroll.
+  const title = props.title ? wrapCell(String(props.title), Math.max(1, Math.floor((W - 2) / TITLE_CHAR))) : []
+  const top = title.length ? title.length * LINE_HEIGHT + 7 : 0
   const bodyTop = top + 1 + headH
   // Each row starts where the one above it ends.
   const rowTops: number[] = []
   bodyH.reduce((y, h) => { rowTops.push(y); return y + h }, bodyTop)
   const H = bodyTop + bodyH.reduce((a, b) => a + b, 0) + 1
+  // The figure fitted this drawing at its first size; a new size needs a new fit.
+  useLayoutEffect(() => {
+    svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
+  }, [W, H])
 
   // Lines are centred as a block inside their row; 12 is the baseline offset for 12px text.
   const cell = (lines: string[], cx: number, rowTop: number, h: number, key: string, font: string, weight: number, fill: string) => (
@@ -40,8 +55,12 @@ export function TraceTable({ props, alt }: { props: Record<string, unknown>; alt
   )
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.1 }} role="img" aria-label={alt}>
-      {props.title ? <text x={1} y={14} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{String(props.title)}</text> : null}
+    <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.1 }} role="img" aria-label={alt}>
+      {title.length ? (
+        <text x={1} y={14} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>
+          {title.map((l, k) => <tspan key={k} x={1} dy={k === 0 ? 0 : LINE_HEIGHT}>{l}</tspan>)}
+        </text>
+      ) : null}
       <rect x={1} y={top + 1} width={W - 2} height={headH} fill="var(--subject-soft)" stroke={RULE} />
       {header.map((lines, i) => cell(lines, xs[i]! + widths[i]! / 2, top + 1, headH, `h${i}`, DISPLAY, 700, INK))}
       {body.map((cells, j) => (
@@ -53,4 +72,30 @@ export function TraceTable({ props, alt }: { props: Record<string, unknown>; alt
       {columns.map((_, i) => i > 0 && <line key={`v${i}`} x1={xs[i]} y1={top + 1} x2={xs[i]} y2={H - 1} stroke={RULE} />)}
     </svg>
   )
+}
+
+/** The bold display face runs wider than the body text CHAR_WIDTH was measured on. */
+const TITLE_CHAR = CHAR_WIDTH + 0.6
+
+/**
+ * The content width of the box the table sits in, kept current as it resizes. Undefined
+ * until measured, and where there is no layout to measure (tests, the server), in which
+ * case the table takes its natural width exactly as it always did.
+ */
+function useAvailableWidth(svg: React.RefObject<SVGSVGElement | null>): number | undefined {
+  const [width, setWidth] = useState<number>()
+  useLayoutEffect(() => {
+    const box = svg.current?.parentElement
+    if (!box || typeof ResizeObserver === 'undefined') return
+    const measure = () => {
+      const style = getComputedStyle(box)
+      const inner = box.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+      if (inner > 0) setWidth(Math.floor(inner))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(box)
+    return () => observer.disconnect()
+  }, [svg])
+  return width
 }

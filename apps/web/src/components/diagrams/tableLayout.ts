@@ -78,3 +78,42 @@ export const MIN_TEXT_PX = 10
  * under; the browser measurement in the scratchpad is the final word.
  */
 export const MAX_TABLE_WIDTH = Math.floor((FULL_ROW * TEXT_PX) / MIN_TEXT_PX)
+
+/** The width a column needs so its longest single word never has to break. */
+function wordFloor(columns: string[], rows: string[][], i: number): number {
+  const words = [columns[i] ?? '', ...rows.map((r) => r[i] ?? '')].flatMap((t) => t.split(' '))
+  return Math.max(MIN_COLUMN, CHAR_WIDTH * Math.max(0, ...words.map((w) => w.length)) + CELL_PADDING)
+}
+
+/**
+ * Column widths for a table that has `available` units to fill, as it has on a phone.
+ *
+ * Laid out from its content alone, a comparison table of three wordy columns wants 700
+ * units, and a phone card has about 330: the drawing will not shrink below its natural
+ * width (that would take its text under 10px), so it scrolled, and the last column sat
+ * off to the right where a student reading down the table never saw it. In Biology alone
+ * 155 tables did this by more than 150px.
+ *
+ * So the table reflows instead. The widest columns give way first, all of them down to a
+ * common cap, so a narrow column of short values keeps its width and the long prose
+ * columns wrap onto more lines. No column goes below its longest word, since a word is
+ * never split; a table that still cannot fit at that point takes its narrowest layout and
+ * scrolls the remainder. A table that already fits is returned exactly as before.
+ */
+export function fitColumns(columns: string[], rows: string[][], available: number): number[] {
+  const natural = columnWidths(columns, rows)
+  const target = available - 2
+  if (natural.reduce((a, b) => a + b, 0) <= target) return natural
+  const floors = natural.map((w, i) => Math.min(w, wordFloor(columns, rows, i)))
+  const at = (cap: number) => natural.map((w, i) => Math.max(floors[i]!, Math.min(w, cap)))
+  const total = (cap: number) => at(cap).reduce((a, b) => a + b, 0)
+  if (total(0) >= target) return floors
+  let lo = 0
+  let hi = Math.max(...natural)
+  while (hi - lo > 0.5) {
+    const mid = (lo + hi) / 2
+    if (total(mid) > target) hi = mid
+    else lo = mid
+  }
+  return at(lo).map(Math.floor)
+}
