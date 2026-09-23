@@ -119,6 +119,10 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // The sign may sit either side of the symbol.
   s = s.replace(/^([-+]?)\s*[£$€]\s*/, '$1').replace(/^[£$€]\s*([-+]?)\s*/, '$1')
   if (units) s = s.replace(units.toLowerCase(), '').trim()
+  // A magnification is written ×400 or x400, and sometimes 400×: the sign says "times"
+  // and is not part of the number. Only a sign against the digits at either end counts,
+  // so 1.8 × 10^5 in the middle is still standard form.
+  s = s.replace(/^[x×]\s*(?=\d)/, '').replace(/(?<=\d)\s*×$/, '')
   s = standardForm(s)
   s = s.replace(/[a-z°%/ ]+$/i, '').trim()
   // Brackets round the parts of a fraction: (3)/(4). Students write it, and it is what a
@@ -241,6 +245,31 @@ function sameListAnyOrder(rawGiven: string, rawAccepted: string, prompt: string)
 }
 
 /**
+ * A genotype is the one place where capital and small letters are the answer: Bb is
+ * heterozygous, BB and bb are the two homozygotes. Everything else here is compared with
+ * case folded away, which marked "BB" right for "Bb". A genotype is recognised as a word
+ * made of letter pairs, each pair one letter twice, at least one pair mixing the cases
+ * (Bb, BbTt). Names, SQL and French sentences mix cases too, but never in that shape.
+ * A homozygote (BB, bb) has the same shape as any doubled letter, so it only counts as a
+ * genotype when the prompt says the answer is one.
+ * Every genotype in the accepted answer must appear in the typed one with its case intact.
+ */
+function genotypes(s: string, prompt: string): string[] {
+  const asked = /genotype|homozygous|heterozygous|allele/i.test(prompt)
+  return s.split(/[^A-Za-z]+/).filter((w) => {
+    if (w.length < 2 || w.length % 2 !== 0) return false
+    const pairs = w.match(/../g)!
+    if (!pairs.every((p) => p[0]!.toLowerCase() === p[1]!.toLowerCase())) return false
+    return asked || pairs.some((p) => p[0] !== p[1])
+  })
+}
+
+function genotypesMatch(rawGiven: string, rawAccepted: string, prompt: string): boolean {
+  const words = new Set(rawGiven.split(/[^A-Za-z]+/))
+  return genotypes(rawAccepted, prompt).every((g) => words.has(g))
+}
+
+/**
  * Marks an auto-markable answer. Extended responses are self-assessed and return
  * whatever marks the student awarded themselves, capped at the marks available.
  * `answer` shapes: multiple-choice number[]; numeric string; short-text string;
@@ -265,6 +294,7 @@ export function mark(question: Question, answer: unknown): MarkResult {
       const raw = String(answer ?? '')
       const given = normaliseText(raw)
       return result(given.length > 0 && question.accepted.some((a) => {
+        if (!genotypesMatch(raw, a, question.prompt)) return false
         const accepted = normaliseText(a)
         if (matchesAccepted(given, accepted)) return true
         const bare = withoutArticle(raw, a)
