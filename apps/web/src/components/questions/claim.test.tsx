@@ -6,7 +6,10 @@ import { Feedback } from './Feedback.tsx'
 import { TopicBreakdown } from '../../routes/parent/TopicBreakdown.tsx'
 import { emptyState } from '../../progress/store.ts'
 
-const base = { id: 'q1', prompt: 'How is the rate measured?', marks: 1, gradeBand: '6-7', skill: 's', calculator: 'either', tags: [], solution: 'Time how long the cross takes to disappear.', markScheme: [], discriminators: [] } as const
+const base = {
+  id: 'q1', prompt: 'How is the rate measured?', marks: 1, gradeBand: '6-7' as const, skill: 's', calculator: 'either' as const,
+  tags: [] as string[], solution: 'Time how long the cross takes to disappear.', markScheme: [], discriminators: [],
+}
 const typed: Question = { ...base, type: 'short-text', accepted: ['time for the cross to disappear'] }
 const choice: Question = { ...base, type: 'multiple-choice', options: ['a', 'b'], correct: [0] }
 const wrong = { correct: false, marksScored: 0, marksAvailable: 1 }
