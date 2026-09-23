@@ -1,0 +1,1558 @@
+{
+  "id": "sampling-and-populations",
+  "subjectId": "maths",
+  "unitId": "statistics",
+  "title": "Sampling and populations",
+  "specPoints": [
+    "S1",
+    "S5"
+  ],
+  "order": 3,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Taste the soup, but stir it first",
+      "body": "Nobody drinks the whole pot to check the seasoning. One spoonful is a **sample** of the **population** in the pot.\n\n**Stir first** and the spoonful tastes like the rest: that is a **random** sample. Skim the top of an unstirred pot and a bigger spoon does not help: that is **bias**."
+    },
+    {
+      "kind": "remember",
+      "title": "Names in a hat: an equal chance each",
+      "body": "**Random** means every member of the population has the **same chance** of being chosen. Picture every name in a hat.\n\nIn practice: number everyone on a list, then let a random number generator pick. Anyone who **chooses themselves**, or is chosen for being **handy**, breaks the rule."
+    },
+    {
+      "kind": "spot",
+      "title": "Who, where, when, who replied",
+      "body": "Ask four things of any sampling method. **Who** could be chosen? **Where and when** was it done? Did people **choose themselves**? Who **did not reply**?\n\nIf an answer leaves out part of the population, the sample is biased. Then say **which way** it pushes the result."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Scale up by population over sample size",
+      "body": "To estimate a total, multiply the sample count by $\\dfrac{\\text{population}}{\\text{sample size}}$.\n\n26 walkers in a sample of 80 from 1200: $1200 \\div 80 = 15$, and $26 \\times 15 = 390$."
+    },
+    {
+      "kind": "check",
+      "title": "Is the estimate the same share?",
+      "body": "The estimate should be the **same fraction** of the population as the count was of the sample. 26 out of 80 is about a third, and 390 is about a third of 1200.\n\nAn estimate bigger than the population means the division went the wrong way."
+    }
+  ],
+  "why": {
+    "matters": "Almost nothing about a large group is known by asking every member of it. A government does not weigh every child, a factory does not test every fuse to destruction, and an ecologist cannot count every daisy in a meadow. They take a **sample**, measure it, and scale the answer up to the **population** they actually care about.\n\nThat step from the few to the many is where the mathematics is easy and the judgement is hard. A sample can be large and still wrong, because the way it was chosen leaves part of the population out. Most of this topic is learning to tell a sample that can be trusted from one that cannot, and to say how far an estimate from it should be believed.",
+    "examples": [
+      {
+        "title": "The fuse you cannot test twice",
+        "body": "A factory makes **20 000** fuses a day. The only way to be sure a fuse blows at the right current is to blow it, which destroys it. Testing every fuse would leave none to sell.\n\nSo the factory tests a **random sample** of **80**. If **2** of them fail, the estimate for the day is\n\n$$\\dfrac{2}{80} \\times 20\\,000 = 500$$\n\nfaulty fuses, and the batch can be held back before it ships. The bars make the point at a glance: the sample is a sliver of the population, and it is still enough to act on, **if** it was chosen at random.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Fuses made in a day",
+                "value": 20000,
+                "display": "20 000",
+                "note": "the population"
+              },
+              {
+                "label": "Fuses tested",
+                "value": 80,
+                "display": "80",
+                "note": "the sample, destroyed by the test"
+              }
+            ],
+            "caption": "2 of the 80 tested fail, so about 500 of the 20 000 are estimated to be faulty"
+          },
+          "alt": "Two bars drawn to scale: 20 000 fuses made in a day fill the width, and the 80 fuses tested are a bar so thin it barely shows. 2 of the tested fuses fail, giving an estimate of 500 faulty fuses in the day."
+        }
+      },
+      {
+        "title": "The poll that asked over two million people and got it wrong",
+        "body": "In **1936** the American magazine *Literary Digest* ran a postal poll on the presidential election and received **more than two million** replies. It predicted that Alf Landon would beat Franklin Roosevelt.\n\nRoosevelt won by a landslide, carrying **46 of the 48** states.\n\nThe replies were not too few; they came from the wrong people, and two causes are usually given.\n\n- **The list.** Ballots went to names from the magazine's own **subscribers**, **telephone directories** and **car registrations**. In the Depression those lists leaned towards better-off voters.\n- **Who replied.** About ten million ballots went out and fewer than a quarter came back. The people who **chose** to reply were a self-selected group, and they may have been keener to vote against Roosevelt.\n\nLater studies suggest the second cause may have mattered more than the first, though historians still weigh the two differently. Either way, a **huge biased sample** is still biased. Making it bigger only makes the wrong answer more confident.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Why a big sample still failed",
+            "columns": [
+              "What happened",
+              "The sampling flaw"
+            ],
+            "rows": [
+              [
+                "subscriber names",
+                "few poorer voters"
+              ],
+              [
+                "phone book names",
+                "few poorer voters"
+              ],
+              [
+                "car owner names",
+                "few poorer voters"
+              ],
+              [
+                "only some replied",
+                "self-selected"
+              ],
+              [
+                "2 million replies",
+                "size cannot fix bias"
+              ]
+            ]
+          },
+          "alt": "A table of the 1936 Literary Digest poll: names came from subscribers, telephone books and car registrations, which held few poorer voters; only some people chose to reply, a self-selected group; and more than two million replies could not cancel out the bias"
+        }
+      },
+      {
+        "title": "Counting daisies without counting daisies",
+        "body": "An ecologist wants to know how many daisies grow in a field **50 m** by **20 m**. Counting them all would take days.\n\nInstead she throws a 1 m by 1 m square frame, a **quadrat**, at **random** points in the field ten times and counts the daisies inside it each time. The ten counts have a mean of **6.4** daisies per square metre.\n\nThe field is $50 \\times 20 = 1000$ square metres, so the estimate is\n\n$$6.4 \\times 1000 = 6400$$\n\ndaisies. This is S5 in action: a **statistic from a sample**, the mean, used to **describe the whole population**.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Daisies in ten random quadrats",
+            "columns": [
+              "Quadrat",
+              "Daisies"
+            ],
+            "rows": [
+              [
+                "1",
+                "6"
+              ],
+              [
+                "2",
+                "9"
+              ],
+              [
+                "3",
+                "4"
+              ],
+              [
+                "4",
+                "7"
+              ],
+              [
+                "5",
+                "5"
+              ],
+              [
+                "6",
+                "8"
+              ],
+              [
+                "7",
+                "6"
+              ],
+              [
+                "8",
+                "3"
+              ],
+              [
+                "9",
+                "7"
+              ],
+              [
+                "10",
+                "9"
+              ],
+              [
+                "mean",
+                "6.4"
+              ]
+            ]
+          },
+          "alt": "A table of daisy counts in ten random one-metre quadrats: 6, 9, 4, 7, 5, 8, 6, 3, 7, 9, with a mean of 6.4 daisies per square metre"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Population, sample and census",
+        "body": "A head teacher wants to know how the **1200** students at her school travel in. She does not ask all of them; she asks **80**.\n\n- The **population** is the whole group she wants to know about: all 1200 students.\n- The **sample** is the part she actually collects data from: the 80 she asks.\n- Asking **every** member of the population is a **census**.\n\nThe population is fixed by the **question**, not by who is easy to reach. If the question is about students at this school, the population is this school's students, even if she only ever speaks to Year 10.\n\nThe whole point of a sample is to **infer** something about the population: to say what is probably true of all 1200 from what is true of 80.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Three words to keep apart",
+              "columns": [
+                "Word",
+                "What it means"
+              ],
+              "rows": [
+                [
+                  "population",
+                  "everyone you want to study"
+                ],
+                [
+                  "sample",
+                  "the part you collect data from"
+                ],
+                [
+                  "census",
+                  "data from every member"
+                ]
+              ]
+            },
+            "alt": "A table of three words: the population is everyone you want to study, the sample is the part you collect data from, and a census collects data from every member"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "A head teacher wants to know how the 1200 students at her school travel to school. She asks 80 of them. What is the population?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "population and sample",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The population is **all 1200 students at her school**: everyone the question is about. The 80 she asks are the sample.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "all 1200 students at the school"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The students who walk to school",
+            "The 80 students she asks",
+            "All 1200 students at her school",
+            "Every school student in the country"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Why take a sample at all?",
+        "body": "A census gives the exact answer, so why would anyone settle for a sample? Four reasons come up again and again.\n\n- **Cost.** Every extra person asked or item measured costs money.\n- **Time.** A sample can be done this week; a census of a big population may take months, and the answer may be out of date when it arrives.\n- **Practicality.** You may not be able to find everyone: every fish in a lake, every voter in a country.\n- **Destruction.** Some tests use up what they test. Testing how long a battery lasts, or whether a firework goes off, leaves nothing to sell.\n\nThe price of a sample is that it gives an **estimate**, not the exact value. A different sample would give a slightly different answer. The rest of this topic is about keeping that estimate as close to the truth as possible.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Why sample?",
+              "boxes": [
+                {
+                  "title": "Cost",
+                  "points": [
+                    "each extra person costs money"
+                  ]
+                },
+                {
+                  "title": "Time",
+                  "points": [
+                    "a sample is quicker",
+                    "the answer is still fresh"
+                  ]
+                },
+                {
+                  "title": "Practicality",
+                  "points": [
+                    "you cannot reach everyone"
+                  ]
+                },
+                {
+                  "title": "Destruction",
+                  "points": [
+                    "the test uses up the item"
+                  ]
+                }
+              ]
+            },
+            "alt": "Four boxes around the question \"Why sample?\": cost, because each extra person costs money; time, because a sample is quicker and its answer is still fresh; practicality, because you cannot reach everyone; and destruction, because the test uses up the item"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "A company wants to know what percentage of its fireworks go off properly. Why does it test a sample rather than every firework?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "why sample",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Testing a firework **uses it up, so none would be left** to sell. That is destructive testing. A sample gives an estimate, not the exact percentage.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the test destroys the item"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A sample gives the exact percentage for the whole batch",
+            "Testing a firework uses it up, so none would be left",
+            "Fireworks are too small to be counted one by one",
+            "The law says a sample must be used for testing"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Random samples, and the ways a sample is biased",
+        "body": "A sample is only useful if it is **like the population**. The way to make that likely is to choose it **at random**.\n\n**A random sample** is one in which **every member of the population has an equal chance of being chosen**. To take one:\n\n1. List every member of the population and number them, 1 to 1200.\n2. Use a random number generator to pick numbers.\n3. Ignore repeats and numbers outside the list, until you have enough.\n\n**A biased sample** is one that is systematically unlike the population, so the estimate is pushed one way. The common causes:\n\n- **Only part of the population can be chosen.** Asking about exercise at a gym.\n- **People choose themselves.** An online poll that anyone can answer draws people with strong views.\n- **Where and when.** A weekday 11 am street survey misses most people at work.\n- **Non-response.** The people who do not reply may differ from those who do.\n- **Too small.** Not bias, but a handful of people can be unrepresentative by bad luck.\n\nWhen you describe a bias, say **which way** it pushes the result. That is the part that shows you understand it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "How a sample goes wrong",
+              "columns": [
+                "The method",
+                "The problem"
+              ],
+              "rows": [
+                [
+                  "survey at a gym",
+                  "mostly fit people"
+                ],
+                [
+                  "online poll",
+                  "people choose themselves"
+                ],
+                [
+                  "street, 11 am",
+                  "misses workers"
+                ],
+                [
+                  "half never reply",
+                  "repliers may differ"
+                ],
+                [
+                  "five friends",
+                  "too few, too alike"
+                ]
+              ]
+            },
+            "alt": "A table of five flawed methods: a survey at a gym reaches mostly fit people, an online poll lets people choose themselves, an 11 am street survey misses workers, a survey half of whom never reply may hear from a different kind of person, and five friends are too few and too alike"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "To estimate how much exercise adults in a town do, Jo asks 100 people leaving a sports centre. Why is her sample biased?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "bias",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**People at a sports centre probably exercise more than most** adults, so her estimate will be **too high**. Only part of the population could be chosen.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the sample over-represents people who exercise"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A sample of 100 people is always far too small to use",
+            "People at a sports centre probably exercise more than most",
+            "She should have asked people at a sports centre on a Monday",
+            "Adults cannot be asked questions about their own exercise"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Sample size: bigger helps, but only a random sample",
+        "body": "Two random samples from the same population rarely give exactly the same answer. The question is how far apart they can be, and that depends on **size**.\n\nIn the school, 390 of the 1200 students walk, a proportion of 0.325. The table shows three random samples of each size, and the proportion of walkers each one found.\n\n- Samples of **10** swing widely: they could easily mislead.\n- Samples of **160** sit close together, and close to 0.325.\n\nSo **a larger random sample gives a more reliable estimate**. It is still an estimate: even a large sample will not usually hit the exact value.\n\n**But size does not cure bias.** A biased method gives the wrong answer however many people it reaches, and a bigger sample only makes the wrong answer look more certain. The choice is not size **or** randomness: a good sample needs both, and randomness comes first.\n\nThe cost is the reason not to go on growing a sample for ever. Past a point, each extra person barely changes the estimate.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Proportion who walk, three random samples of each size",
+              "columns": [
+                "Sample size",
+                "Proportions found"
+              ],
+              "rows": [
+                [
+                  "10",
+                  "0.4, 0.2, 0.5"
+                ],
+                [
+                  "40",
+                  "0.3, 0.4, 0.225"
+                ],
+                [
+                  "160",
+                  "0.325, 0.3625, 0.3125"
+                ]
+              ]
+            },
+            "alt": "A table of three random samples at each of three sizes from a school where the true proportion who walk is 0.325: samples of 10 gave 0.4, 0.2, 0.5, samples of 40 gave 0.3, 0.4, 0.225, and samples of 160 gave 0.325, 0.3625, 0.3125, which are much closer together"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Which of these samples is likely to give the most reliable estimate of the views of the adults in a town?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "sample size",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**A random sample of 200 adults**: it is random, so it is not biased, and it is larger than the other random one. The online replies are self-selected, and one street is not like the whole town.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a random sample of 200"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The first 200 adults to reply online",
+            "A random sample of 20 adults",
+            "A random sample of 200 adults",
+            "The 20 adults living in one street"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Worked examples: from a sample to the population",
+        "body": "Two kinds of estimate come up. From a **count** in the sample, estimate a **count** in the population. From a **mean** of the sample, estimate a **total** for the population. Both rest on the same assumption: the sample is **representative**, so what is true of it is roughly true of everyone.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A random sample of 80 of the 1200 students at a school found that 26 walk to school. Estimate the number of students at the school who walk.",
+            "steps": [
+              {
+                "text": "The proportion of the sample who walk is $\\dfrac{26}{80} = 0.325$."
+              },
+              {
+                "text": "Assume the same proportion of the whole school walks, because the sample is random."
+              },
+              {
+                "text": "$0.325 \\times 1200 = 390$ students.",
+                "note": "Or scale up: $1200 \\div 80 = 15$, and $26 \\times 15 = 390$."
+              },
+              {
+                "text": "Check the share: 26 out of 80 is about a third, and 390 is about a third of 1200."
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A farmer has 1500 apples. He weighs a random sample of 12 and records these masses in grams: 148, 155, 160, 139, 151, 157, 146, 162, 150, 149, 154, 153. Estimate the total mass of all 1500 apples, in kilograms.",
+            "steps": [
+              {
+                "text": "The sample mean is $\\dfrac{1824}{12} = 152$ g."
+              },
+              {
+                "text": "Use it to describe the population: a typical apple has a mass of about 152 g."
+              },
+              {
+                "text": "Total: $1500 \\times 152 = 228\\,000$ g."
+              },
+              {
+                "text": "$228\\,000 \\div 1000 = 228$ kg.",
+                "note": "The same sample can describe the population in other ways: the proportion over 150 g, the median, the range."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "A random sample of 50 of the 800 people at a concert found that 12 had travelled by train. Estimate how many of the 800 people travelled by train.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "estimating from a sample",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\dfrac{12}{50} \\times 800 = 192$ people.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "12/50 × 800, or 800 ÷ 50 × 12"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "192"
+            }
+          ],
+          "discriminators": [],
+          "answer": 192,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**1.** A council wants to know how residents of a town feel about a new car park. Name the population.\n\n**2.** A random sample of 40 of the 2000 trees in a forest finds that 6 have a disease. Estimate the number of diseased trees in the forest.\n\n**3.** A radio station asks listeners to phone in and say whether they like its new presenter. Give one reason the sample is biased, and say which way it might push the result.\n\n**4.** In the farmer's random sample of 12 apples, 7 weigh more than 150 g. Estimate how many of all 1500 apples weigh more than 150 g.\n\n**Answers.** 1. **All the residents of the town**, not only those who drive or who reply. 2. $\\dfrac{6}{40} \\times 2000 = 300$. 3. The callers **choose themselves**: people with strong feelings, for or against, are the ones who ring, so the result may be more extreme than the listeners' real views. 4. $\\dfrac{7}{12} \\times 1500 = 875$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Check yourself against these",
+              "columns": [
+                "Question",
+                "What to look for"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "all the town residents"
+                ],
+                [
+                  "2",
+                  "300, from 6/40 of 2000"
+                ],
+                [
+                  "3",
+                  "self-selected, and which way"
+                ],
+                [
+                  "4",
+                  "875, from 7/12 of 1500"
+                ]
+              ]
+            },
+            "alt": "A table of answers to the four practice questions: all the residents of the town; 300 diseased trees; a self-selected phone-in and the direction of the bias; and 875 apples over 150 grams"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "A random sample of 40 of the 2000 trees in a forest finds that 6 have a disease. Estimate the number of diseased trees in the forest.",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "estimating from a sample",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\dfrac{6}{40} \\times 2000 = 300$ trees.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "6/40 × 2000"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "300"
+            }
+          ],
+          "discriminators": [],
+          "answer": 300,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: judging a method, and estimates in more than one step",
+        "body": "**Evaluating a method in a context you have not seen.** A council wants to know how many of the 30 000 adults in a town use the library at least once a month. It asks 200 people leaving the library on a Saturday morning, and 170 say yes, so it estimates $\\dfrac{170}{200} \\times 30\\,000 = 25\\,500$ adults.\n\nA full evaluation has three parts:\n\n1. **What is wrong.** Every person asked was at the library, so non-users could not be chosen.\n2. **Which way it pushes.** The estimate is almost certainly **far too high**.\n3. **How to fix it.** Take a random sample from a list of all the town's adults, such as the electoral register.\n\n**Combining two samples.** Two random samples from a town of 4500: 12 of 40 said yes, and 21 of 60. Do **not** average the two proportions: that treats a sample of 40 as worth as much as one of 60. Put them together as one sample of 100:\n\n$$\\dfrac{12 + 21}{40 + 60} = \\dfrac{33}{100} = 0.33, \\quad 0.33 \\times 4500 = 1485$$\n\nAveraging would give $0.325 \\times 4500 = 1462.5$, which is a different answer, and a wrong one.\n\n**Running an estimate backwards.** If 18 of a random sample of 75 own a dog, and the estimated number of dog owners in the town is 2400, then the town's population is about $2400 \\div \\dfrac{18}{75} = 10\\,000$.\n\n**What a sample cannot tell you.** The apples in the sample ranged from 139 g to 162 g, a range of 23 g. The range of all 1500 apples is **at least** 23 g, because the sample's lightest and heaviest are also in the population, and it is **probably more**, since the extremes of a big population are rarely in a small sample. A sample range tends to **underestimate** the spread.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Combine the counts, not the proportions",
+              "columns": [
+                "Sample",
+                "Asked",
+                "Said yes"
+              ],
+              "rows": [
+                [
+                  "A",
+                  "40",
+                  "12"
+                ],
+                [
+                  "B",
+                  "60",
+                  "21"
+                ],
+                [
+                  "together",
+                  "100",
+                  "33"
+                ]
+              ]
+            },
+            "alt": "A table combining two samples: sample A asked 40 and 12 said yes, sample B asked 60 and 21 said yes, so together 100 were asked and 33 said yes"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "Two random samples are taken from the 6000 adults in a town. In the first, 9 of 30 people cycle to work. In the second, 14 of 70 people cycle to work. Use both samples together to estimate the number of adults in the town who cycle to work.",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "estimating from a sample",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Combine the samples: $\\dfrac{9 + 14}{30 + 70} = \\dfrac{23}{100} = 0.23$, and $0.23 \\times 6000 = 1380$ adults. Averaging the two proportions would wrongly give 1500.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "combines the samples: 23/100"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "multiplies by 6000"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "1380"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 1380,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "explain",
+        "title": "Extension: two methods beyond the 1MA1 specification",
+        "body": "**This step goes beyond the Edexcel 1MA1 specification**, which does not name either method. Both are ratio and proportion put to work on a sample, so they are good practice, and you may meet them in science or later statistics courses.\n\n**Stratified sampling.** When a population splits into groups, a stratified sample takes from each group in **proportion to its size**. In a school of 1200 with 300 in Year 7, a sample of 60 takes $\\dfrac{300}{1200} \\times 60 = 15$ from Year 7, and so on down the years, choosing at random **within** each year.\n\n**Capture–recapture.** To estimate the fish in a pond, catch 40, mark them and release them. Later catch 50; if 8 of those are marked, assume the marked fraction of the second catch matches the marked fraction of the pond:\n\n$$\\dfrac{8}{50} = \\dfrac{40}{N} \\quad\\Rightarrow\\quad N = \\dfrac{40 \\times 50}{8} = 250$$\n\nIt assumes the population does not change between catches, the marks stay on, and marked fish mix back in and are as likely to be caught as any other.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "A stratified sample of 60 from 1200",
+              "columns": [
+                "Year",
+                "Students",
+                "In sample"
+              ],
+              "rows": [
+                [
+                  "Year 7",
+                  "300",
+                  "15"
+                ],
+                [
+                  "Year 8",
+                  "240",
+                  "12"
+                ],
+                [
+                  "Year 9",
+                  "240",
+                  "12"
+                ],
+                [
+                  "Year 10",
+                  "220",
+                  "11"
+                ],
+                [
+                  "Year 11",
+                  "200",
+                  "10"
+                ],
+                [
+                  "total",
+                  "1200",
+                  "60"
+                ]
+              ]
+            },
+            "alt": "A table of a stratified sample of 60 from 1200 students: Year 7 has 300 students and gives 15; Year 8 has 240 students and gives 12; Year 9 has 240 students and gives 12; Year 10 has 220 students and gives 11; Year 11 has 200 students and gives 10"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- The **population** is everyone the question is about; the **sample** is the part you collect data from; a **census** asks everyone.\n- Sample to save **cost** and **time**, when you **cannot reach everyone**, or when the test **destroys** the item.\n- A sample gives an **estimate**, not the exact value.\n- **Random**: every member has an **equal chance** of being chosen. Number a list and use a random number generator.\n- **Biased**: systematically unlike the population. Only part can be chosen, people choose themselves, the time or place leaves people out, or people do not reply.\n- Say **which way** a bias pushes the result.\n- A **larger random** sample is more reliable. **Size does not cure bias.**\n- Estimate a count: **sample proportion × population**. 26 of 80, from 1200, gives 390.\n- Estimate a total: **sample mean × population size**.\n- Combine two samples by adding the **counts**, not by averaging the proportions.\n- A sample's range **tends to underestimate** the population's range: it can never be bigger.\n- Stratified sampling and capture–recapture are **extensions**, not named in 1MA1.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The whole topic on one card",
+              "columns": [
+                "Idea",
+                "In a line"
+              ],
+              "rows": [
+                [
+                  "population",
+                  "everyone the question means"
+                ],
+                [
+                  "random sample",
+                  "equal chance for all"
+                ],
+                [
+                  "bias",
+                  "a part is left out"
+                ],
+                [
+                  "bigger sample",
+                  "more reliable, if random"
+                ],
+                [
+                  "estimate",
+                  "proportion times population"
+                ]
+              ]
+            },
+            "alt": "A summary table: the population is everyone the question is about, a random sample gives everyone an equal chance, bias leaves part out and pushes the result one way, a bigger sample is more reliable only if it is random, and an estimate is the sample proportion times the population"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Which of these describes a random sample?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "random sampling",
+          "calculator": "either",
+          "tags": [],
+          "solution": "In a random sample **every member of the population has an equal chance** of being chosen. The others are convenience or self-selected samples, which are biased.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "every member has an equal chance of being chosen"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Every member of the population has an equal chance",
+            "The people nearest to hand are the ones chosen",
+            "Anyone who wants to take part is included in it",
+            "The people most likely to reply are the ones chosen"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "In statistics, what is meant by the population?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "population and sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The population is **the whole group you want to find out about**, fixed by the question. The people who answer are the sample.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the whole group being studied"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The people who answer the questions you ask",
+        "The whole group you want to find out about",
+        "Every person living in the country at the time",
+        "The number of people in the sample you choose"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which of these is a random sample of 50 students from a school of 1000?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "random sampling",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Number all 1000 and pick 50 numbers at random**, ignoring repeats. Then every student has an equal chance. Early arrivals, volunteers and two tutor groups are not random.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "number the population and choose at random"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Number all 1000 and pick 50 numbers at random",
+        "Ask the first 50 students to arrive at school",
+        "Ask for 50 volunteers in a school assembly",
+        "Choose the 50 students in two tutor groups"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "A company makes batteries and wants to know how long they last. Why does it test a sample of batteries rather than all of them?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "why sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Finding how long a battery lasts means running it flat. **Testing runs a battery flat, so none would be left** to sell. The sample gives an estimate, not an exact figure.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the test uses up the battery"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Batteries are all the same, so one test is enough",
+        "A sample always gives the exact figure for all of them",
+        "Testing runs a battery flat, so none would be left",
+        "Only a sample can be tested at the same temperature"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "In a random sample of 40 people, 12 said they had been to the cinema in the last month. What proportion of the sample is that? Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "estimating from a sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{12}{40} = 0.3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.3,
+      "tolerance": 0.001,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "A school has 1200 students. A random sample of 80 of them is asked how they travel to school, and 26 say they walk. Estimate the number of students at the school who walk.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "estimating from a sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{26}{80} \\times 1200 = 390$ students. Or $1200 \\div 80 = 15$ and $26 \\times 15 = 390$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "26/80 × 1200"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "390"
+        }
+      ],
+      "discriminators": [],
+      "answer": 390,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "To find out how adults in a city travel to work, a researcher asks people on a train platform at 8 am. Why is the sample biased?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Everyone asked is at a station, so **everyone asked travels by train, so train use is overstated**. Drivers, cyclists and walkers could not be chosen.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "only train users can be chosen, so the estimate is too high"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Everyone asked travels by train, so train use is overstated",
+        "People at 8 am are too busy to give an honest answer",
+        "The sample should have included people from every city in the UK",
+        "A train platform is too noisy to carry out a survey"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A farmer has 1500 apples. He weighs a random sample of 12 of them. Their masses, in grams, are 148, 155, 160, 139, 151, 157, 146, 162, 150, 149, 154, 153. Use the sample to estimate the total mass of the 1500 apples, in kilograms.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "describing a population",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sample mean $= \\dfrac{1824}{12} = 152$ g. Total $= 1500 \\times 152 = 228\\,000$ g $= 228$ kg.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the sample mean, 152 g"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies by 1500"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "228 kg"
+        }
+      ],
+      "discriminators": [],
+      "answer": 228,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kg"
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "A random sample of 30 shoppers is used to estimate how much shoppers spend. Which change would most improve the reliability of the estimate?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "sample size",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Take a larger random sample of shoppers.** A larger random sample varies less from the true value. The other changes introduce bias or add no new information.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a larger random sample"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Ask shoppers who volunteer to take part",
+        "Ask only the shoppers who spend the most",
+        "Ask the same 30 shoppers a second time",
+        "Take a larger random sample of shoppers"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "A factory makes a batch of 4000 light bulbs. A random sample of 60 bulbs is tested and 3 are faulty. Estimate the number of faulty bulbs in the batch.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "estimating from a sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{3}{60} \\times 4000 = 200$ bulbs.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3/60 × 4000"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "200"
+        }
+      ],
+      "discriminators": [],
+      "answer": 200,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "What name is given to a survey that collects data from every member of a population?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "population and sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **census**. A survey of only part of the population is a sample.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "census"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "census",
+        "a census"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A news website asks its readers to vote online on whether a new law is a good idea. Why might the result be biased?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Readers choose to vote, and those who feel strongly vote most.** It is a self-selected sample, and it only reaches that website's readers.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "self-selected: people with strong views are more likely to take part"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Readers choose to vote, and those who feel strongly vote most",
+        "Online votes are always counted less accurately than paper",
+        "The website should have asked every person in the country",
+        "Too many people take part for the result to be reliable"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "Two random samples are taken from the 4500 people in a town. In the first, 12 of 40 people say they would use a new swimming pool. In the second, 21 of 60 people say they would. Use both samples together to estimate the number of people in the town who would use the pool.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "estimating from a sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Combine the counts: $\\dfrac{12 + 21}{40 + 60} = \\dfrac{33}{100} = 0.33$. Then $0.33 \\times 4500 = 1485$ people. Averaging the two proportions would give 1462.5, which wrongly treats both samples as the same size.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "combines the samples: 33/100"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies by 4500"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1485"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 1485,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Two random samples ask the same question: 12 of 40 people say yes in one, and 21 of 60 in the other. A student estimates the proportion saying yes as the mean of 0.3 and 0.35. What is wrong with this?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "estimating from a sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**It weights a sample of 40 the same as a sample of 60.** Combine the counts instead: $\\dfrac{33}{100} = 0.33$, not 0.325.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "averaging ignores the different sample sizes"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Nothing: the mean of the two is 0.325, which is right",
+        "Proportions from two samples can never be combined",
+        "It should use the larger proportion, as it is safer",
+        "It weights a sample of 40 the same as a sample of 60"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A council wants to know how many of the 30 000 adults in a town use the library each month. It asks 200 people leaving the library on a Saturday and estimates 25 500 users. Which is the best evaluation?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Too high: only library users could be asked.** Non-users had no chance of being chosen, so the proportion who use it is overstated. A random sample from a list of all adults would fix it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "biased upwards, because non-users cannot be chosen"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ],
+      "options": [
+        "Too low: Saturday is a quiet day at a library",
+        "Too high: only library users could be asked",
+        "Reliable, because 200 people is a large sample",
+        "Reliable, because every person was asked the same"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "In a random sample of 75 people from a town, 18 own a dog. From this sample, the number of dog owners in the town is estimated to be 2400. Estimate the number of people living in the town.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "estimating from a sample",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sample proportion is $\\dfrac{18}{75}$, so $\\dfrac{18}{75} \\times N = 2400$ and $N = 2400 \\times \\dfrac{75}{18} = 10\\,000$ people.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets up 18/75 × N = 2400"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2400 × 75 ÷ 18"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10 000"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 10000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "The masses of a random sample of 12 apples from a crop of 1500 range from 139 g to 162 g. What can be said about the range of the masses of all 1500 apples?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "describing a population",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sample's lightest and heaviest apples are part of the crop, so the crop's range is **at least 23 g, and probably more**: its extremes are unlikely to be in a sample of 12.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "at least 23 g"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Nothing, since a range cannot be estimated",
+        "It is exactly 23 g, the same as the sample",
+        "It is at most 23 g, and probably less",
+        "It is at least 23 g, and probably more"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "An ecologist places a 1 m by 1 m quadrat at 8 random points in a field 30 m by 40 m. The numbers of daisies in the quadrats are 4, 7, 3, 6, 5, 8, 2, 9. Estimate the number of daisies in the whole field.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "describing a population",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Mean per square metre $= \\dfrac{44}{8} = 5.5$. Area $= 30 \\times 40 = 1200$ m². Estimate $= 5.5 \\times 1200 = 6600$ daisies.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "mean of the counts, 5.5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area of the field, 1200"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6600"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "unfamiliar-context"
+      ],
+      "answer": 6600,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "multiple-choice",
+      "prompt": "Maya wants to know how many hours of sleep Year 10 students at her school get. She asks her five closest friends. Which is the best evaluation of her method?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Too small, and her friends may have similar habits.** Five is too few to be reliable, and friends are not a random sample: other Year 10 students had no chance of being chosen.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "both too small and not random"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Biased only because five is an odd number to ask",
+        "Fine, as long as all five friends tell the truth",
+        "Too small, and her friends may have similar habits",
+        "Fine, because friends are chosen without a plan"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q19",
+      "type": "extended",
+      "prompt": "A gym owner wants to know how many hours a week the 24 000 adults in her town spend exercising. She asks the first 30 people who come into her gym on a Monday morning. Their mean is 6 hours a week. She concludes that the adults in the town exercise for 144 000 hours a week in total. Evaluate her method and her conclusion.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Her arithmetic is right: 24 000 × 6 = 144 000. The problem is the sample the 6 came from.\n\nEveryone she asked was at her gym, so adults who do not use a gym had no chance of being chosen. Gym users almost certainly exercise more than the average adult, so her mean of 6 hours is likely to be **too high**, and the total of 144 000 hours with it.\n\nThe time adds a second bias. On a Monday morning most working adults are at work, so the people in the gym then are a particular group, such as retired people or shift workers, and not typical of the town.\n\nThe first 30 people through the door is not a random sample either, and 30 is small, so even without the bias the estimate would be unreliable.\n\nTo improve it she should take a larger random sample from a list of all the adults in the town, such as the electoral register, so that every adult has an equal chance of being asked.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "checks the arithmetic: 24 000 × 6 = 144 000"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "identifies that only gym users could be chosen"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states the estimate is likely to be too high"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "notes the time and day, Monday morning, leave out people at work"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "notes the first 30 people is not random, and 30 is a small sample"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "suggests a random sample from a list of all adults in the town"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ],
+      "criteria": [
+        {
+          "text": "Checks that 24 000 × 6 = 144 000, so the arithmetic is right",
+          "marks": 1
+        },
+        {
+          "text": "Says only people who use her gym could be chosen",
+          "marks": 1
+        },
+        {
+          "text": "Concludes the estimate is likely to be too high",
+          "marks": 1
+        },
+        {
+          "text": "Notes that Monday morning leaves out many working adults",
+          "marks": 1
+        },
+        {
+          "text": "Notes that the first 30 is not random, and 30 is a small sample",
+          "marks": 1
+        },
+        {
+          "text": "Suggests a random sample drawn from a list of all the town's adults",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Her arithmetic is right: 24 000 × 6 = 144 000. The problem is the sample the 6 came from.\n\nEveryone she asked was at her gym, so adults who do not use a gym had no chance of being chosen. Gym users almost certainly exercise more than the average adult, so her mean of 6 hours is likely to be **too high**, and the total of 144 000 hours with it.\n\nThe time adds a second bias. On a Monday morning most working adults are at work, so the people in the gym then are a particular group, such as retired people or shift workers, and not typical of the town.\n\nThe first 30 people through the door is not a random sample either, and 30 is small, so even without the bias the estimate would be unreliable.\n\nTo improve it she should take a larger random sample from a list of all the adults in the town, such as the electoral register, so that every adult has an equal chance of being asked.",
+      "suggestedMinutes": 6
+    },
+    {
+      "id": "q20",
+      "type": "extended",
+      "prompt": "A school has 900 students. The head of Year 11 wants to estimate how many of them have a part-time job. Describe how she could take a random sample of 50 students. In her sample, 14 students have a part-time job. Estimate the number of students at the school with a part-time job, and state the assumption your estimate depends on.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "random sampling",
+      "calculator": "either",
+      "tags": [],
+      "solution": "She should get a list of all 900 students and number them from 1 to 900. Then she uses a random number generator to pick numbers between 1 and 900, ignoring any repeats, until she has 50 different students. Every student then has an equal chance of being chosen.\n\nIn the sample, 14 out of 50 have a part-time job, so the estimate is\n\n$\\dfrac{14}{50} \\times 900 = 252$ students.\n\nThis assumes that the sample is representative of the whole school: that the proportion with a job in the sample is about the same as in the school. A different random sample would give a slightly different estimate, and the older students are more likely to have jobs, so a sample that by chance held mostly Year 11 students would give too high a figure.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "lists and numbers all 900 students"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "uses a random number generator to choose 50, ignoring repeats"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "14/50 × 900"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "252"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "assumes the sample is representative of the whole school"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "evaluate"
+      ],
+      "criteria": [
+        {
+          "text": "Lists and numbers all 900 students",
+          "marks": 1
+        },
+        {
+          "text": "Chooses 50 with a random number generator, ignoring repeats",
+          "marks": 1
+        },
+        {
+          "text": "Works out 14/50 × 900",
+          "marks": 1
+        },
+        {
+          "text": "Gets 252 students",
+          "marks": 1
+        },
+        {
+          "text": "States that the sample is assumed to be representative of the school",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "She should get a list of all 900 students and number them from 1 to 900. Then she uses a random number generator to pick numbers between 1 and 900, ignoring any repeats, until she has 50 different students. Every student then has an equal chance of being chosen.\n\nIn the sample, 14 out of 50 have a part-time job, so the estimate is\n\n$\\dfrac{14}{50} \\times 900 = 252$ students.\n\nThis assumes that the sample is representative of the whole school: that the proportion with a job in the sample is about the same as in the school. A different random sample would give a slightly different estimate, and the older students are more likely to have jobs, so a sample that by chance held mostly Year 11 students would give too high a figure.",
+      "suggestedMinutes": 6
+    },
+    {
+      "id": "q21",
+      "type": "numeric",
+      "prompt": "Extension, beyond the 1MA1 specification. To estimate the number of fish in a lake, 60 fish are caught, marked and released. A week later 45 fish are caught, and 9 of them are marked. Estimate the number of fish in the lake.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "capture-recapture (extension)",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Assume the marked fraction of the second catch matches the lake: $\\dfrac{9}{45} = \\dfrac{60}{N}$, so $N = \\dfrac{60 \\times 45}{9} = 300$ fish.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "9/45 = 60/N, or equivalent"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "60 × 45 ÷ 9"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "300"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "unfamiliar-context"
+      ],
+      "answer": 300,
+      "tolerance": 0,
+      "unitsRequired": false
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q10"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q11"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Read the question for the **population** before anything else. It decides who should have had a chance of being chosen, and so whether a method is biased.\n\nWhen asked to criticise a sampling method, name the flaw **in the context**. \"It is biased\" alone says very little; \"only people already at the library could be asked, so the estimate will be too high\" says what is wrong and which way it pushes the result.\n\nFor a random sample, give the steps: list and number the population, pick numbers with a random number generator, ignore repeats. \"Pick people at random\" does not say how.\n\nIn an estimate, write the **proportion** first, then multiply by the population. Showing $\\dfrac{26}{80} \\times 1200$ makes the method visible even if the arithmetic slips. Then check the answer is the same share of the population as the count was of the sample.\n\nWhen two samples are given, add the counts before dividing. Averaging two proportions is only right when the samples are the same size.",
+    "examinerErrors": [
+      "Naming the sample when the question asks for the population.",
+      "Saying a sample is \"biased\" without saying who is left out or which way it pushes the result.",
+      "Describing a random sample as \"picking people at random\" without saying how.",
+      "Believing that a very large sample cannot be biased.",
+      "Dividing the wrong way when scaling up, so the estimate is smaller than the sample count.",
+      "Averaging the proportions from two samples of different sizes.",
+      "Stating an estimate as if it were exact, with no mention of the assumption that the sample is representative."
+    ],
+    "grade9Looks": "A top answer treats every estimate as conditional on the sample. It names the population, then asks who could and could not have been chosen, and turns each flaw into a direction: this method leaves out non-users, so the estimate is too high. It separates bias from size, knowing that a larger random sample is more reliable and that no size of biased sample is. In calculations it works from the proportion, combines samples by their counts rather than their rates, and can run an estimate backwards to find a population. And it knows what a sample cannot show: the range of a sample understates the spread of the population, because the extremes of a large group are rarely in a small one."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

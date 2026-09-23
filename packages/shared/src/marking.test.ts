@@ -222,6 +222,35 @@ describe('sentence punctuation', () => {
     expect(mark(q(['3x']), '3*x').correct).toBe(true)
   })
 
+  it('keeps a times sign between two numbers, so a product of primes cannot run together', () => {
+    const product = q(['2^2 × 3 × 7'])
+    expect(mark(product, '2^2 × 3 × 7').correct).toBe(true)
+    expect(mark(product, '2^2*3*7').correct).toBe(true)
+    expect(mark(product, '2^23 × 7').correct).toBe(false)
+    expect(mark(product, '2^2 × 37').correct).toBe(false)
+    const standard = q(['7.3 × 10^4'])
+    expect(mark(standard, '7.3 × 10^4').correct).toBe(true)
+    expect(mark(standard, '7.31 × 0^4').correct).toBe(false)
+  })
+
+  it('takes a unit typed without its superscript', () => {
+    const area = { id: 'q', type: 'numeric', prompt: 'p', answer: 0.68, tolerance: 0.001, units: 'm²', marks: 1 } as unknown as Question
+    for (const typed of ['0.68 m²', '0.68 m2', '0.68m^2', '0.68']) expect(mark(area, typed).correct, typed).toBe(true)
+    const density = { id: 'q', type: 'numeric', prompt: 'p', answer: 1300, tolerance: 0.5, units: 'kg/m³', marks: 1 } as unknown as Question
+    for (const typed of ['1300 kg/m³', '1300 kg/m3', '1300 kg/m^3']) expect(mark(density, typed).correct, typed).toBe(true)
+  })
+
+  it('reads a mixed number as whole and fraction, not as digits run together', () => {
+    const mixed = q(['2 1/3'])
+    expect(mark(mixed, '2 1/3').correct).toBe(true)
+    // What the maths field sends for two and a third.
+    expect(mark(mixed, '2(1)/(3)').correct).toBe(true)
+    expect(mark(mixed, '21/3').correct).toBe(false)
+    expect(parseNumber('2(1)/(3)')).toBeCloseTo(7 / 3, 10)
+    expect(parseNumber('-1(1)/(2)')).toBeCloseTo(-1.5, 10)
+    expect(parseNumber('(7)/(3)')).toBeCloseTo(7 / 3, 10)
+  })
+
   it('keeps the two quote marks apart outside SQL', () => {
     const output = q(['"c"'])
     expect(mark(output, '"c"').correct).toBe(true)

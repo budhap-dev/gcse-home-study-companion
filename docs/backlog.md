@@ -20,11 +20,22 @@ Agreed with the owner on 23 September 2026:
 Computer Science and Business have no known content gaps.
 
 ### Maths (Pearson 1MA1)
-- [ ] S1: infer properties of a population from a sample
-- [ ] S2: pie charts, frequency polygons, two-way tables
-- [ ] S5: apply statistics to describe a population
-- [ ] P2, P3, P5: randomness and fairness, relative frequency, empirical against theoretical
-- [ ] G13: plans and elevations of 3D shapes
+All 97 specification codes were checked against the pack on 23 September 2026.
+Ten topics were written for everything that was taught nowhere (PR #256):
+
+- [x] N4: factors, multiples and primes
+- [x] N1, N2: calculating with fractions and negative numbers
+- [x] R3–R6, N11: ratio notation, simplifying and sharing
+- [x] N13, N14, R1, G14: converting units and estimating
+- [x] G4: properties of triangles and quadrilaterals
+- [x] S4 (ungrouped data): averages and range
+- [x] S2: charts and diagrams for data (pie, bar, dual bar, pictogram, vertical line, time series)
+- [x] S1, S5: sampling and populations
+- [x] P2, P3, P5: relative frequency and expected outcomes
+- [x] G12, G13: 3D shapes, plans and elevations
+
+Codes declared where they were already taught: R2, G19 and R15. A2 (substitution) and A8
+(coordinates) are used throughout the pack and have no topic of their own.
 
 ### Physics (AQA 8463)
 - [ ] Required practicals 2, 9 and 10
@@ -117,6 +128,15 @@ One PR per subject.
   doubles a guesser's score. Rebalance the options, and add a collection test with a
   per-topic cap, as `answers.test.ts` does for answer positions.
 - [ ] Chemistry: 15 diagrams scroll at desktop width. Recheck after the diagrams PR.
+- [ ] **Components too wide for a phone:** `venn-diagram` (440), `cuboid` (380) and
+  `triangle-pair`. The new Maths topics use all three.
+- [ ] **LineGraph options:** a joined line through points for time series (today it is a
+  polygon traced out and back), and `axes: false` for pictures of shapes (today the axes
+  are hidden with out-of-range ticks).
+- [ ] **Stacked (composite) bar charts:** no component draws them, so S2 teaches them in
+  words only.
+- [ ] **Walk false positive:** a multiple-choice check whose options are pure LaTeX is
+  reported "not marked Correct", because the walk's text match cannot find the option.
 
 ## 3. Product features
 

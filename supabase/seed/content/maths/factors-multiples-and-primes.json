@@ -1,0 +1,1747 @@
+{
+  "id": "factors-multiples-and-primes",
+  "subjectId": "maths",
+  "unitId": "number",
+  "title": "Factors, multiples and primes",
+  "specPoints": [
+    "N4"
+  ],
+  "order": 1,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Factors are few, multiples are many",
+      "body": "**Factors fit into** a number, so there are only a few of them and none is bigger than the number: 36 has nine. **Multiples come out of** the times table, so they go on for ever and none is smaller than the number.\n\nFew and inside: factors. Many and outside: multiples."
+    },
+    {
+      "kind": "remember",
+      "title": "Middle for the HCF, the lot for the LCM",
+      "body": "Put the prime factors of both numbers in a Venn diagram, shared primes in the overlap.\n\nThe **HCF** is the **middle** multiplied together. The **LCM** is **everything in the picture** multiplied together, each prime counted once where it sits."
+    },
+    {
+      "kind": "spot",
+      "title": "Together again, or shared out equally?",
+      "body": "\"Next at the same time\", \"together again\", \"the smallest number of packs\": the answer grows, so it is the **LCM**.\n\n\"The largest number of bags\", \"the longest equal pieces\", \"the biggest square tile\": the answer divides both, so it is the **HCF**."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Test primes only up to the square root",
+      "body": "Factors come in pairs, and one of each pair is at most the square root. So to test 97, try 2, 3, 5 and 7 only: $11^2 = 121$ is already past 97. None divides it, so 97 is prime."
+    },
+    {
+      "kind": "check",
+      "title": "Two numbers: HCF times LCM is their product",
+      "body": "For **two** numbers, $\\text{HCF} \\times \\text{LCM}$ equals the two numbers multiplied. For 12 and 18: $6 \\times 36 = 216 = 12 \\times 18$. If yours does not, one of them is wrong.\n\nFor three numbers it does not hold in general (4, 6, 8: $2 \\times 24 = 48$, not 192), so use it only as a check on a pair."
+    }
+  ],
+  "why": {
+    "matters": "Every whole number bigger than 1 is built by multiplying primes, and each is built in **exactly one way**. That is the unique factorisation theorem, and it makes primes the atoms of arithmetic: once you know a number's primes, you know all its factors, and comparing two numbers becomes comparing two lists of ingredients.\n\nThat is why this topic sits under so much else. Adding fractions needs a common denominator, which is an LCM. Simplifying a fraction divides by the HCF. Outside the classroom the same two ideas decide when repeating cycles line up again, how gears are designed to wear evenly, and how the locks on internet traffic are built.",
+    "examples": [
+      {
+        "title": "Cicadas that count in primes",
+        "body": "In parts of North America, periodical cicadas spend years underground and then come up all at once. Some broods do it every **13** years, others every **17**, and both numbers are prime.\n\nTwo broods on those cycles come up in the same year only once every **LCM(13, 17) = 221** years. It happened in 2024 with one 13-year and one 17-year brood in the United States, for the first time since 1803, and $1803 + 221 = 2024$.\n\nOne explanation biologists have proposed is about predators. A predator whose numbers peak every 4 years would meet a 12-year brood at **every** emergence, because 12 is a multiple of 4: LCM(12, 4) = 12. Against a 13-year brood the LCM is **52** years. A prime cycle shares no factor with the short cycles, so the two line up as rarely as possible.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "12-year cycle, 4-year predator",
+                "value": 12,
+                "display": "every 12 years",
+                "note": "LCM(12, 4): 12 is a multiple of 4"
+              },
+              {
+                "label": "13-year cycle, 4-year predator",
+                "value": 52,
+                "display": "every 52 years",
+                "note": "LCM(13, 4): no common factor"
+              }
+            ],
+            "caption": "How often the insects and a predator peak in the same year"
+          },
+          "alt": "Two bars comparing how often an insect brood meets a predator that peaks every four years: every 12 years for a twelve-year cycle, and every 52 years for a thirteen-year cycle"
+        }
+      },
+      {
+        "title": "Gear teeth that share the wear",
+        "body": "Two meshing gears press one tooth against another at every step. If a small gear has 12 teeth and a large one has 18, follow one tooth on the small gear: it only ever meets **3 of the 18** teeth on the other. The same few pairs grind together again and again, and a chipped tooth keeps hitting the same partners.\n\nThe number of partners is $18 \\div \\text{HCF}(12, 18) = 18 \\div 6 = 3$. Make the tooth counts share **no** common factor, 12 and 19, and the HCF is 1: each tooth meets **all 19** teeth in turn before any pair repeats, which takes LCM(12, 19) = 228 teeth, or 19 turns of the small gear.\n\nGear designers call the extra tooth that makes the counts share no factor a **hunting tooth**, and it spreads the wear across every tooth.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Which teeth meet, for three pairs of gears",
+            "columns": [
+              "Gears (teeth)",
+              "Each tooth meets"
+            ],
+            "rows": [
+              [
+                "12 and 18",
+                "only 3 of the 18"
+              ],
+              [
+                "12 and 16",
+                "only 4 of the 16"
+              ],
+              [
+                "12 and 19",
+                "all 19, in turn"
+              ]
+            ]
+          },
+          "alt": "A table of three pairs of gears: with 12 and 18 teeth each tooth meets only 3 of the 18, with 12 and 16 only 4 of the 16, and with 12 and 19, which share no factor, each tooth meets all 19"
+        }
+      },
+      {
+        "title": "A lock made of two primes",
+        "body": "Multiplying two primes is quick: $101 \\times 113 = 11413$. Going backwards is not. Given only 11413, the straightforward way to find its primes is to try dividing by 2, 3, 5, 7 and so on, and the first one that works here is 101, the **26th** prime tried.\n\nThe RSA method, widely used to protect data sent over the internet, rests on that difference. Anyone may be given the product; only the holder of the two primes can undo the lock. With primes hundreds of digits long, the multiplying still takes a computer a moment, while no known method finds the primes from the product in any useful time.\n\nIt also leans on the unique factorisation theorem: the product has **exactly one** pair of prime factors, so there is exactly one key to find.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Easy one way, hard the other",
+            "columns": [
+              "Task",
+              "Work needed"
+            ],
+            "rows": [
+              [
+                "multiply 101 × 113",
+                "one sum: 11413"
+              ],
+              [
+                "split 11413",
+                "try 26 primes"
+              ],
+              [
+                "real keys",
+                "primes of 300+ digits"
+              ]
+            ]
+          },
+          "alt": "A table contrasting multiplying 101 by 113, one calculation giving 11413, with splitting 11413 back into primes, which takes 26 trial divisions, and noting that real keys use primes hundreds of digits long"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Factors, multiples and primes",
+        "body": "Three words, and everything in the topic is built from them.\n\n- A **factor** (or **divisor**) of a number divides into it exactly, with nothing left over. The factors of 12 are 1, 2, 3, 4, 6 and 12.\n- A **multiple** of a number is in its times table: the multiples of 12 are 12, 24, 36, 48 and on for ever.\n- A **prime number** has **exactly two** factors: 1 and itself. 2, 3, 5, 7, 11 and 13 are the first six.\n\nThe safest way to find every factor is in **pairs**: start at 1 and work up, writing down the partner each time, and stop when the pairs meet. The factors of 36 are 1, 2, 3, 4, 6, 9, 12, 18 and 36, and the table shows them found in pairs.\n\nTwo facts that catch people out:\n\n- **1 is not prime.** It has only one factor, itself, not two.\n- **2 is the only even prime.** Every other even number has 2 as a factor as well as 1 and itself.\n\nThe primes below 50 are 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47: 15 of them.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The factors of 36, found in pairs",
+              "columns": [
+                "Factor",
+                "Partner",
+                "Check"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "36",
+                  "1 × 36 = 36"
+                ],
+                [
+                  "2",
+                  "18",
+                  "2 × 18 = 36"
+                ],
+                [
+                  "3",
+                  "12",
+                  "3 × 12 = 36"
+                ],
+                [
+                  "4",
+                  "9",
+                  "4 × 9 = 36"
+                ],
+                [
+                  "6",
+                  "6",
+                  "6 × 6 = 36"
+                ]
+              ]
+            },
+            "alt": "A table of the five factor pairs of 36: 1 and 36, 2 and 18, 3 and 12, 4 and 9, and 6 and 6, where the pairs meet"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "Which of these numbers is prime?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "primes",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**53** is prime: 2, 3, 5 and 7 do not divide it, and $11^2 = 121$ is past 53. The others only look prime: $51 = 3 \\times 17$, $57 = 3 \\times 19$ and $91 = 7 \\times 13$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "53"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "51",
+            "53",
+            "57",
+            "91"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Testing whether a number is prime",
+        "body": "To decide whether a number is prime, try dividing it by the **primes** in turn: 2, 3, 5, 7, 11 and so on.\n\n**You can stop at the square root.** Factors come in pairs, and in every pair one of the two is no bigger than the square root. If nothing up to the square root divides the number, nothing above it can either, because its partner would have been found already.\n\n**Is 97 prime?** $\\sqrt{97}$ is a little under 10, so only 2, 3, 5 and 7 need trying.\n\n- 97 is odd, so 2 does not divide it.\n- $9 + 7 = 16$ is not a multiple of 3, so 3 does not.\n- It does not end in 0 or 5, so 5 does not.\n- $7 \\times 14 = 98$, one too many, so 7 does not.\n\nSo **97 is prime**. Compare **91**: it looks just as prime, but $91 = 7 \\times 13$. Numbers like 51, 57, 87 and 91 are the usual traps, and the divisibility tests catch them quickly.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Is 97 prime? Only the primes up to its square root",
+              "columns": [
+                "Try",
+                "Divides 97?"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "no: 97 is odd"
+                ],
+                [
+                  "3",
+                  "no: 9 + 7 = 16"
+                ],
+                [
+                  "5",
+                  "no: ends in 7"
+                ],
+                [
+                  "7",
+                  "no: 7 × 14 = 98"
+                ],
+                [
+                  "11",
+                  "no need: 11 × 11 = 121"
+                ]
+              ]
+            },
+            "alt": "A table testing 97 against the primes 2, 3, 5 and 7, none of which divides it, and noting that 11 need not be tried because 11 squared is 121"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "To test whether 113 is prime, which numbers do you need to try dividing by?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "primes",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Only **2, 3, 5 and 7**, the primes up to $\\sqrt{113}$, which is between 10 and 11. If 11 or any bigger number were a factor, its partner would be below 11, because $11^2 = 121$ is already past 113. So any factor would show up among 2, 3, 5 and 7, and none of them divides 113. It is prime.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2, 3, 5 and 7"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Only 2, 3 and 5",
+            "2, 3, 5, 7 and 11",
+            "Every number up to 56",
+            "2, 3, 5 and 7 only"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Prime factorisation, and why there is only one",
+        "body": "**Prime factorisation** writes a number as a product of primes. Divide by the smallest prime that goes, keep going until you reach 1, and the primes you divided by are the answer.\n\nThe specification asks for **product notation**: write the number as a product of primes, $2 \\times 2 \\times 2 \\times 3 \\times 3 \\times 5$, usually then in **index form**, with repeated primes as powers and the smallest prime first.\n\n**The unique factorisation theorem** says every whole number above 1 has **exactly one** prime factorisation, apart from the order of the primes. A factor tree for 360 might start $36 \\times 10$ or $8 \\times 45$, and both end at the same primes: $36 \\times 10 = (2 \\times 2 \\times 3 \\times 3) \\times (2 \\times 5)$, and $8 \\times 45 = (2 \\times 2 \\times 2) \\times (3 \\times 3 \\times 5)$. Different routes, one answer. That is why 1 is left out of the primes: if it counted, $360 = 1 \\times 1 \\times 2^3 \\times \\ldots$ would give endless factorisations.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Write 360 as a product of its prime factors, in index form.",
+            "steps": [
+              {
+                "text": "$360 \\div 2 = 180$",
+                "note": "even, so start with 2"
+              },
+              {
+                "text": "$180 \\div 2 = 90$, then $90 \\div 2 = 45$",
+                "note": "keep dividing by 2 while it goes"
+              },
+              {
+                "text": "$45 \\div 3 = 15$, then $15 \\div 3 = 5$",
+                "note": "45 is odd; its digits add to 9, so 3 goes"
+              },
+              {
+                "text": "$5 \\div 5 = 1$",
+                "note": "stop at 1"
+              },
+              {
+                "text": "$360 = 2 \\times 2 \\times 2 \\times 3 \\times 3 \\times 5 = 2^{3} \\times 3^{2} \\times 5$",
+                "note": "check: $8 \\times 9 \\times 5 = 360$"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The division ladder for 360",
+              "columns": [
+                "Divide by",
+                "Leaves"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "180"
+                ],
+                [
+                  "2",
+                  "90"
+                ],
+                [
+                  "2",
+                  "45"
+                ],
+                [
+                  "3",
+                  "15"
+                ],
+                [
+                  "3",
+                  "5"
+                ],
+                [
+                  "5",
+                  "1"
+                ]
+              ]
+            },
+            "alt": "A division ladder for 360: dividing by 2 three times gives 180, 90 and 45, then by 3 twice gives 15 and 5, then by 5 gives 1"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Which of these is 84 written as a product of its prime factors?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "prime factorisation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$2^{2} \\times 3 \\times 7$: $84 = 2 \\times 42 = 2 \\times 2 \\times 21 = 2 \\times 2 \\times 3 \\times 7$. $4 \\times 3 \\times 7$ and $2 \\times 3 \\times 14$ multiply to 84, but 4 and 14 are not prime; $2 \\times 3^2 \\times 7$ is 126.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$2^{2} \\times 3 \\times 7$"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$2^{2} \\times 3 \\times 7$",
+            "$4 \\times 3 \\times 7$",
+            "$2 \\times 3 \\times 14$",
+            "$2 \\times 3^{2} \\times 7$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Highest common factor and lowest common multiple",
+        "body": "Two numbers can share factors and share multiples.\n\n- The **highest common factor (HCF)** is the biggest number that divides into **both**.\n- The **lowest common multiple (LCM)** is the smallest number that **both** divide into.\n\nFor small numbers, list them. The factors of 12 are 1, 2, 3, 4, 6, 12; the factors of 18 are 1, 2, 3, 6, 9, 18. The common factors are 1, 2, 3, 6, so the **HCF is 6**.\n\nThe multiples of 12 are 12, 24, 36, 48, 60, 72 and so on; the multiples of 18 are 18, 36, 54, 72 and so on. The first number in both lists is 36, so the **LCM is 36**.\n\n**The classic slip:** $12 \\times 18 = 216$ is a common multiple, but not the **lowest** one. Multiplying the two numbers only gives the LCM when they share no factor other than 1.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Listing, for 12 and 18",
+              "columns": [
+                "",
+                "12",
+                "18"
+              ],
+              "rows": [
+                [
+                  "factors",
+                  "1 2 3 4 6 12",
+                  "1 2 3 6 9 18"
+                ],
+                [
+                  "multiples",
+                  "12 24 36 48 60",
+                  "18 36 54"
+                ],
+                [
+                  "HCF",
+                  "6",
+                  "6"
+                ],
+                [
+                  "LCM",
+                  "36",
+                  "36"
+                ]
+              ]
+            },
+            "alt": "A table listing the factors and first multiples of 12 and 18, showing the highest common factor is 6 and the lowest common multiple is 36"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "What is the highest common factor of 16 and 24?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "HCF",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Factors of 16: 1, 2, 4, 8, 16. Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24. The biggest in both lists is **8**.",
+          "markScheme": [
+            {
+              "code": "B2",
+              "marks": 2,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "HCF and LCM from prime factors: the Venn diagram",
+        "body": "Listing breaks down for bigger numbers. Prime factors do not.\n\nWrite both numbers as products of primes, then sort the primes into a **Venn diagram**: primes the two numbers **share** go in the overlap, one copy for each time they are shared, and the rest go in their own number's circle.\n\n- The **HCF** is the product of the primes in the **overlap**.\n- The **LCM** is the product of **every prime in the diagram**.\n\nThe same rule in index form: for the HCF take each **shared** prime to its **lowest** power; for the LCM take **every** prime to its **highest** power.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the HCF and the LCM of 84 and 90.",
+            "steps": [
+              {
+                "text": "$84 = 2^{2} \\times 3 \\times 7$ and $90 = 2 \\times 3^{2} \\times 5$",
+                "note": "prime factorisations first"
+              },
+              {
+                "text": "Shared: one 2 and one 3. They go in the overlap.",
+                "note": "84 has two 2s and 90 has one, so only one 2 is shared"
+              },
+              {
+                "text": "Left over: 2 and 7 for 84; 3 and 5 for 90.",
+                "note": "each circle must multiply back to its number"
+              },
+              {
+                "text": "HCF $= 2 \\times 3 = 6$",
+                "note": "the overlap only"
+              },
+              {
+                "text": "LCM $= 2 \\times 7 \\times 2 \\times 3 \\times 3 \\times 5 = 1260$",
+                "note": "everything; in index form $2^{2} \\times 3^{2} \\times 5 \\times 7$"
+              },
+              {
+                "text": "Check: $6 \\times 1260 = 7560 = 84 \\times 90$ ✓",
+                "note": "true for any two numbers"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "venn-diagram",
+            "props": {
+              "labels": [
+                "84",
+                "90"
+              ],
+              "values": {
+                "A": "2, 7",
+                "AB": "2, 3",
+                "B": "3, 5"
+              }
+            },
+            "alt": "A Venn diagram of the prime factors of 84 and 90: 2 and 7 in the 84 only region, 2 and 3 in the overlap, and 3 and 5 in the 90 only region"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The same Venn diagram, region by region",
+              "columns": [
+                "Region",
+                "Primes",
+                "Product"
+              ],
+              "rows": [
+                [
+                  "84 only",
+                  "2, 7",
+                  "14"
+                ],
+                [
+                  "both",
+                  "2, 3",
+                  "HCF = 6"
+                ],
+                [
+                  "90 only",
+                  "3, 5",
+                  "15"
+                ],
+                [
+                  "all of it",
+                  "2, 7, 2, 3, 3, 5",
+                  "LCM = 1260"
+                ]
+              ]
+            },
+            "alt": "A table reading the Venn diagram: 2 and 7 in 84 only, 2 and 3 shared making the HCF of 6, 3 and 5 in 90 only, and all six primes multiplying to the LCM of 1260"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "$20 = 2^{2} \\times 5$ and $30 = 2 \\times 3 \\times 5$. Use the prime factors to find the lowest common multiple of 20 and 30.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "LCM",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Every prime to its highest power: $2^{2} \\times 3 \\times 5 = 60$. Not $20 \\times 30 = 600$, which counts the shared 2 and 5 twice.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "takes each prime to its highest power, or lists multiples"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "60"
+            }
+          ],
+          "discriminators": [],
+          "answer": 60,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "HCF or LCM? Reading the question",
+        "body": "HCF and LCM questions are often set as word problems, and the first job is deciding which one is wanted.\n\n**LCM questions** are about things that **repeat** and **line up again**: buses, lights, alarms, packs that must match. The answer is **at least as big as the larger number**: LCM(4, 12) is 12 itself.\n\n**HCF questions** are about **splitting** things **equally** into the biggest possible groups, pieces or tiles. The answer is **no bigger than the smaller number**, and divides into each: HCF(6, 12) is 6 itself.\n\n**Worked example.** Two buses leave the station together at 9:00 am. Route 1 leaves every 12 minutes and Route 2 every 18 minutes. When do they next leave together?\n\nThey repeat and must line up, so it is the LCM. LCM(12, 18) = 36, so they next leave together **36 minutes later, at 9:36 am**.\n\n**Another.** 36 pencils and 48 rubbers are shared into identical party bags with nothing left over. What is the largest number of bags? Sharing equally, so the HCF: HCF(36, 48) = 12 bags, each with 3 pencils and 4 rubbers.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Minutes after 9:00 am, and which bus leaves",
+              "columns": [
+                "Minutes",
+                "Route 1",
+                "Route 2"
+              ],
+              "rows": [
+                [
+                  "12",
+                  "leaves",
+                  ""
+                ],
+                [
+                  "18",
+                  "",
+                  "leaves"
+                ],
+                [
+                  "24",
+                  "leaves",
+                  ""
+                ],
+                [
+                  "30",
+                  "",
+                  ""
+                ],
+                [
+                  "36",
+                  "leaves",
+                  "leaves"
+                ]
+              ],
+              "highlight": 4
+            },
+            "alt": "A timetable from 12 to 36 minutes after nine: Route 1 leaves at 12, 24 and 36 minutes and Route 2 at 18 and 36, so both leave at 36 minutes"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "Two buses leave together at 9:00 am. One leaves every 12 minutes and the other every 18 minutes. At what time do they next leave together?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "LCM in context",
+          "calculator": "either",
+          "tags": [],
+          "solution": "They repeat and line up again, so find the LCM: LCM(12, 18) = 36 minutes, which is **9:36 am**. Multiplying, $12 \\times 18 = 216$ minutes, gives a later time when they also coincide, but not the next one.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "9:36 am"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "9:06 am",
+            "12:36 pm",
+            "9:36 am",
+            "9:54 am"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**1.** List all the factors of 48.\n\n**2.** Write 150 as a product of its prime factors in index form.\n\n**3.** $42 = 2 \\times 3 \\times 7$ and $56 = 2^{3} \\times 7$. Find the HCF and the LCM of 42 and 56.\n\n**4.** Hot dogs come in packs of 6 and buns in packs of 8. What is the smallest number of each pack to buy so there are the same number of hot dogs as buns?\n\n**Answers.** 1. 1, 2, 3, 4, 6, 8, 12, 16, 24, 48: 10 factors, in five pairs. 2. $150 = 2 \\times 3 \\times 5^{2}$. 3. HCF $= 2 \\times 7 = 14$; LCM $= 2^{3} \\times 3 \\times 7 = 168$. 4. LCM(6, 8) = 24, so **4 packs of hot dogs and 3 packs of buns**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Check yourself against these",
+              "columns": [
+                "Question",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "10 factors, 1 to 48"
+                ],
+                [
+                  "2",
+                  "2 × 3 × 5²"
+                ],
+                [
+                  "3",
+                  "HCF 14, LCM 168"
+                ],
+                [
+                  "4",
+                  "4 of hot dogs, 3 of buns"
+                ]
+              ]
+            },
+            "alt": "A table of the answers to the four practice questions"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "What is the highest common factor of 45 and 60?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "HCF",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$45 = 3^{2} \\times 5$ and $60 = 2^{2} \\times 3 \\times 5$. They share one 3 and one 5, so the HCF is $3 \\times 5 = 15$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "prime factors or lists of factors of both"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "15"
+            }
+          ],
+          "discriminators": [],
+          "answer": 15,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: index form, unknowns, squares and cubes",
+        "body": "**HCF and LCM straight from index form.** Numbers at the top grades are often given as products of primes, too large to list. Read the powers.\n\n$A = 2^{4} \\times 3^{2} \\times 5$ and $B = 2^{2} \\times 3^{5} \\times 7$.\n\n- HCF: only primes in **both**, each at its **lower** power: $2^{2} \\times 3^{2} = 36$.\n- LCM: **every** prime, each at its **higher** power: $2^{4} \\times 3^{5} \\times 5 \\times 7$.\n\nThe usual slip is to **add** the powers, which multiplies the two numbers instead.\n\n**Finding an unknown.** For two numbers, $\\text{HCF} \\times \\text{LCM} = $ the product of the numbers, because the overlap is counted once in the HCF and once in the LCM, exactly as in the two numbers themselves. So if the HCF of 24 and $n$ is 8 and the LCM is 120, then $24n = 8 \\times 120$ and $n = 40$. Check: HCF(24, 40) = 8 ✓, LCM = 120 ✓. For **three** numbers it does not hold in general: 4, 6 and 8 have HCF 2 and LCM 24, and $2 \\times 24 = 48$, not 192.\n\n**Squares and cubes.** A number is a **perfect square** when every prime in its factorisation has an **even** power, and a **cube** when every power is a multiple of 3. $360 = 2^{3} \\times 3^{2} \\times 5$. To make it a square, the 2 and the 5 each need one more, so multiply by $2 \\times 5 = 10$: $360 \\times 10 = 3600 = 60^{2}$.\n\n**Counting factors.** Every factor of 360 is $2^a \\times 3^b \\times 5^c$ with $a$ from 0 to 3, $b$ from 0 to 2 and $c$ from 0 to 1. That is $4 \\times 3 \\times 2 = 24$ factors, with no listing.\n\n**Primes never run out.** Multiply any list of primes and add 1: $2 \\times 3 \\times 5 \\times 7 + 1 = 211$. Dividing by any prime on the list leaves remainder 1, so the new number's prime factors are all **new** primes. The number itself need not be prime: $2 \\times 3 \\times 5 \\times 7 \\times 11 \\times 13 + 1 = 30031 = 59 \\times 509$. But 59 and 509 are not on the list either. However long the list, there is always another prime. That is Euclid's proof.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "venn-diagram",
+            "props": {
+              "labels": [
+                "A",
+                "B"
+              ],
+              "values": {
+                "A": "2², 5",
+                "AB": "2², 3²",
+                "B": "3³, 7"
+              }
+            },
+            "alt": "A Venn diagram for A equals 2 to the 4 times 3 squared times 5 and B equals 2 squared times 3 to the 5 times 7: the overlap holds 2 squared and 3 squared, A only holds a further 2 squared and 5, and B only holds a further 3 cubed and 7"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Index form: lowest power for the HCF, highest for the LCM",
+              "columns": [
+                "Prime",
+                "In A",
+                "In B",
+                "HCF",
+                "LCM"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "2⁴",
+                  "2²",
+                  "2²",
+                  "2⁴"
+                ],
+                [
+                  "3",
+                  "3²",
+                  "3⁵",
+                  "3²",
+                  "3⁵"
+                ],
+                [
+                  "5",
+                  "5",
+                  "none",
+                  "none",
+                  "5"
+                ],
+                [
+                  "7",
+                  "none",
+                  "7",
+                  "none",
+                  "7"
+                ]
+              ]
+            },
+            "alt": "A table comparing the powers of 2, 3, 5 and 7 in A and B: the HCF takes the lower power of each shared prime, 2 squared and 3 squared, and the LCM takes the higher power of every prime, 2 to the 4, 3 to the 5, 5 and 7"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "numeric",
+          "prompt": "The highest common factor of 18 and a number $n$ is 6. Their lowest common multiple is 90. Find $n$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "HCF and LCM",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "For two numbers, HCF × LCM = the product: $18n = 6 \\times 90 = 540$, so $n = 30$. Check: HCF(18, 30) = 6 and LCM(18, 30) = 90 ✓.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "uses 18n = 6 × 90"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "30"
+            }
+          ],
+          "discriminators": [],
+          "answer": 30,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **factor** divides exactly into a number; a **multiple** is in its times table.\n- A **prime** has exactly two factors. **1 is not prime**; **2 is the only even prime**.\n- Find factors **in pairs**, and stop when the pairs meet.\n- To test for a prime, try the primes up to the **square root**.\n- **Prime factorisation**: divide by primes until you reach 1, and write the answer in **index form**, such as $360 = 2^{3} \\times 3^{2} \\times 5$.\n- **Unique factorisation**: every whole number above 1 has exactly one prime factorisation.\n- **HCF**: the biggest number dividing both. **LCM**: the smallest number both divide.\n- In a **Venn diagram** of prime factors, the HCF is the **overlap**, and the LCM is **everything**.\n- In index form: HCF takes **shared** primes at the **lowest** power; LCM takes **all** primes at the **highest**.\n- Multiplying the two numbers does **not** give the LCM unless they share no factor.\n- **Repeat and line up**: LCM. **Share equally**: HCF.\n- For two numbers, $\\text{HCF} \\times \\text{LCM}$ = their product. For three numbers it does not hold in general.\n- A **square** has every prime to an even power; a **cube**, every power a multiple of 3.\n- There is **no largest prime**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The topic on one card",
+              "columns": [
+                "Idea",
+                "In one line"
+              ],
+              "rows": [
+                [
+                  "factor",
+                  "divides in exactly"
+                ],
+                [
+                  "multiple",
+                  "in the times table"
+                ],
+                [
+                  "prime",
+                  "exactly two factors"
+                ],
+                [
+                  "HCF",
+                  "overlap; lowest powers"
+                ],
+                [
+                  "LCM",
+                  "everything; highest powers"
+                ],
+                [
+                  "lines up again",
+                  "LCM"
+                ],
+                [
+                  "shared equally",
+                  "HCF"
+                ],
+                [
+                  "HCF × LCM",
+                  "product, for two numbers"
+                ]
+              ]
+            },
+            "alt": "A summary table: a factor divides exactly, a multiple is in the times table, a prime has exactly two factors, the HCF is the overlap with lowest powers, the LCM is everything with highest powers, lining up again needs the LCM, sharing equally needs the HCF, and HCF times LCM is the product of two numbers"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Which of these questions is answered by finding a lowest common multiple?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "HCF or LCM",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**When will the two lights next flash together?** Flashing repeats and has to line up again, so it is an LCM. The other three share something out equally into the biggest possible parts, which is an HCF.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the lights flashing together"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "When will the two lights next flash together?",
+            "What is the largest number of equal bags?",
+            "What is the longest length each piece can be?",
+            "What is the biggest square tile that fits?"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which of these numbers is a multiple of 6 **and** a factor of 72?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "factors and multiples",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**12**: it is $6 \\times 2$, and $72 \\div 12 = 6$. 9 is a factor of 72 but not a multiple of 6; 42 is a multiple of 6 but does not divide 72; 32 is neither.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "32",
+        "9",
+        "42",
+        "12"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Why is 1 not a prime number?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "primes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A prime has **exactly two factors, and 1 has only one**. The definition does the work. It also keeps prime factorisation unique: if 1 counted, $6 = 2 \\times 3 = 1 \\times 2 \\times 3$ would be two different answers.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a prime has exactly two factors; 1 has one"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "1 is a factor of every number, so it is left out",
+        "A prime must be bigger than every one of its own factors",
+        "A prime has exactly two factors, and 1 has only one",
+        "1 has no factors at all, so it cannot be divided"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "Which of these numbers is prime?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "primes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**89**: none of 2, 3, 5 or 7 divides it, and $11^2 = 121$ is past 89. $87 = 3 \\times 29$ and $93 = 3 \\times 31$ (their digits add to a multiple of 3), and $91 = 7 \\times 13$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "89"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "87",
+        "89",
+        "91",
+        "93"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "What is the highest common factor of 24 and 36?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "HCF",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Factors of 24: 1, 2, 3, 4, 6, 8, **12**, 24. Factors of 36: 1, 2, 3, 4, 6, 9, **12**, 18, 36. The highest in both lists is **12**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lists factors of both, or uses prime factors"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "What is the lowest common multiple of 9 and 12?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "LCM",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiples of 9: 9, 18, 27, **36**. Multiples of 12: 12, 24, **36**. The first in both is **36**. Not $9 \\times 12 = 108$, because 9 and 12 share the factor 3.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lists multiples of both, or uses prime factors"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36"
+        }
+      ],
+      "discriminators": [],
+      "answer": 36,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Which of these is 60 written as a product of its prime factors?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "prime factorisation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2^{2} \\times 3 \\times 5$, since $60 = 2 \\times 30 = 2 \\times 2 \\times 15 = 2 \\times 2 \\times 3 \\times 5$. $2 \\times 3 \\times 10$ and $3 \\times 4 \\times 5$ multiply to 60, but 10 and 4 are not prime; $2^3 \\times 3 \\times 5$ is 120.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2² × 3 × 5"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "$2^{2} \\times 3 \\times 5$",
+        "$2 \\times 3 \\times 10$",
+        "$3 \\times 4 \\times 5$",
+        "$2^{3} \\times 3 \\times 5$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "multiple-choice",
+      "prompt": "Which of these is 360 written as a product of its prime factors?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "prime factorisation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2^{3} \\times 3^{2} \\times 5$: dividing by 2 three times gives 45, then by 3 twice gives 5. Swapping the powers of 2 and 3 gives 540, not 360; 10 and 15 are not prime.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2³ × 3² × 5"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "$2^{2} \\times 3^{2} \\times 10$",
+        "$2^{2} \\times 3^{3} \\times 5$",
+        "$2^{3} \\times 3^{2} \\times 5$",
+        "$2^{3} \\times 3 \\times 15$"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "$120 = 2^{3} \\times 3 \\times 5$ and $126 = 2 \\times 3^{2} \\times 7$. Find the highest common factor of 120 and 126.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "HCF",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The shared primes, each at its lower power: one 2 and one 3. HCF $= 2 \\times 3 = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the shared primes 2 and 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "$120 = 2^{3} \\times 3 \\times 5$ and $126 = 2 \\times 3^{2} \\times 7$. Find the lowest common multiple of 120 and 126.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "LCM",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Every prime, each at its higher power: $2^{3} \\times 3^{2} \\times 5 \\times 7 = 2520$. Check: $6 \\times 2520 = 15120 = 120 \\times 126$ ✓.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "takes every prime at its highest power"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2520"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2520,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "Two buses leave a bus station together at 7:30 am. One leaves every 14 minutes and the other every 21 minutes. How many minutes later do they next leave the station together?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "LCM in context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "They repeat and must line up, so find the LCM. $14 = 2 \\times 7$ and $21 = 3 \\times 7$, so LCM $= 2 \\times 3 \\times 7 = 42$ minutes, at 8:12 am. Not $14 \\times 21 = 294$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "recognises an LCM, or lists multiples of 14 and 21"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "42"
+        }
+      ],
+      "discriminators": [],
+      "answer": 42,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "minutes"
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "A teacher has 36 pencils and 48 rubbers. She puts them all into identical party bags, with nothing left over. What is the largest number of bags she can make?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "HCF in context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Shared equally into the biggest number of groups, so find the HCF. HCF(36, 48) = **12** bags, each holding 3 pencils and 4 rubbers.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "recognises an HCF, or lists common factors"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "bags"
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "Hot dogs are sold in packs of 8 and buns in packs of 10. Sam wants exactly the same number of hot dogs as buns. What is the smallest number of packs of hot dogs he can buy?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "LCM in context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The totals must line up, so find LCM(8, 10) = 40. That is $40 \\div 8 = 5$ packs of hot dogs (and $40 \\div 10 = 4$ packs of buns). The answer is **5**, not 40, which is the number of hot dogs.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds LCM(8, 10) = 40"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "packs"
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A rectangular floor measures 360 cm by 84 cm. It is to be covered with identical square tiles, with no gaps and no cutting. What is the side length of the largest tile that can be used?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "HCF in context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The side must divide both 360 and 84 exactly, and be as big as possible, so it is the HCF. $360 = 2^{3} \\times 3^{2} \\times 5$ and $84 = 2^{2} \\times 3 \\times 7$ share $2^{2} \\times 3 = 12$. So **12 cm** tiles: 30 along one side and 7 along the other.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "recognises an HCF of 360 and 84"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "$A = 2^{4} \\times 3^{2} \\times 5$ and $B = 2^{2} \\times 3^{5} \\times 7$. Find the highest common factor of $A$ and $B$, as an ordinary number.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "HCF",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Only the primes in both, each at its lower power: $2^{2} \\times 3^{2} = 4 \\times 9 = 36$. 5 and 7 are each in only one number, so they are left out.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "takes 2 and 3 at their lower powers"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 36,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "$A = 2^{4} \\times 3^{2} \\times 5$ and $B = 2^{2} \\times 3^{5} \\times 7$. Which is the lowest common multiple of $A$ and $B$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "LCM",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Every prime, each at its **higher** power: $2^{4} \\times 3^{5} \\times 5 \\times 7$. Taking the lower powers gives a number that is not a multiple of $A$; adding the powers gives $A \\times B$, a common multiple but not the lowest; and leaving out the 7 gives a number that $B$ does not divide.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$2^{4} \\times 3^{5} \\times 5 \\times 7$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "options": [
+        "$2^{2} \\times 3^{2} \\times 5 \\times 7$",
+        "$2^{4} \\times 3^{5} \\times 5 \\times 7$",
+        "$2^{6} \\times 3^{7} \\times 5 \\times 7$",
+        "$2^{4} \\times 3^{5} \\times 5$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "The highest common factor of 24 and a number $n$ is 8. The lowest common multiple of 24 and $n$ is 120. Find $n$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "HCF and LCM",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "For two numbers, HCF × LCM equals their product: $24n = 8 \\times 120 = 960$, so $n = 40$. Check: $24 = 2^{3} \\times 3$ and $40 = 2^{3} \\times 5$, with HCF 8 and LCM 120 ✓.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 24n = 8 × 120, or builds n from the prime factors"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [],
+      "answer": 40,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "$x = 2^{a} \\times 3 \\times 5^{b}$, where $a$ and $b$ are whole numbers, and $y = 2^{3} \\times 3^{2} \\times 5$. The highest common factor of $x$ and $y$ is 60, and their lowest common multiple is 1800. Find the value of $x$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "HCF and LCM",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$60 = 2^{2} \\times 3 \\times 5$ and $1800 = 2^{3} \\times 3^{2} \\times 5^{2}$. The HCF has $2^{2}$ but $y$ has $2^{3}$, so $a = 2$. The LCM has $5^{2}$ but $y$ has only $5$, so $b = 2$. So $x = 2^{2} \\times 3 \\times 5^{2} = 300$. Check: $300 \\times 360 = 108000 = 60 \\times 1800$ ✓.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds a = 2 from the HCF"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds b = 2 from the LCM"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "300"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 300,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "$360 = 2^{3} \\times 3^{2} \\times 5$. Find the smallest positive whole number $k$ such that $360k$ is a cube number.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "prime factorisation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A cube has every prime to a power that is a multiple of 3. $2^{3}$ is already fine; $3^{2}$ needs one more 3; $5$ needs two more 5s. So $k = 3 \\times 5^{2} = 75$, and $360 \\times 75 = 27000 = 30^{3}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "powers must be multiples of 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 75,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "type": "numeric",
+      "prompt": "$360 = 2^{3} \\times 3^{2} \\times 5$. How many factors does 360 have, including 1 and 360?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "prime factorisation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Each factor is $2^a \\times 3^b \\times 5^c$, with 4 choices for $a$ (0 to 3), 3 for $b$ (0 to 2) and 2 for $c$ (0 or 1). That gives $4 \\times 3 \\times 2 = 24$ factors.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "counts the choices of power for each prime"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "type": "numeric",
+      "prompt": "Two lighthouse lamps flash at the same moment. One then flashes every 20 seconds and the other every 45 seconds. In the next 10 minutes, how many more times do they flash at the same moment?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "LCM in context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "They flash together every LCM(20, 45) = 180 seconds. 10 minutes is 600 seconds, and the multiples of 180 up to 600 are 180, 360 and 540. That is **3** more times.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds LCM(20, 45) = 180 seconds"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "converts 10 minutes to 600 seconds"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "type": "multiple-choice",
+      "prompt": "Ali says that the HCF multiplied by the LCM always equals the numbers multiplied together. He tests it on 4, 6 and 8. What does he find?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "HCF and LCM",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**It fails: 2 × 24 = 48, but 4 × 6 × 8 = 192.** The HCF of 4, 6 and 8 is 2 and the LCM is 24. The rule always holds for **two** numbers, where the shared primes are counted once in the HCF and once in the LCM, just as in the two numbers. For three it does not hold in general: it breaks when a prime is shared.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it fails: 48 is not 192"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It fails: 2 × 24 = 48, but 4 × 6 × 8 = 192",
+        "It works: 2 × 24 = 48, which is 4 × 6 × 8",
+        "It works, as it holds for any set of numbers",
+        "It fails, since the HCF of 4, 6 and 8 is 4"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q22",
+      "type": "multiple-choice",
+      "prompt": "$2 \\times 3 \\times 5 \\times 7 \\times 11 \\times 13 + 1 = 30031$, and $30031 = 59 \\times 509$. What does this show about Euclid’s method of multiplying primes and adding 1?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "primes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**The new number need not be prime, but its primes are new ones.** 30031 leaves remainder 1 when divided by each of 2, 3, 5, 7, 11 and 13, so none of them is a factor. Its prime factors, 59 and 509, are primes not on the list, which is all the proof needs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the number need not be prime, but its prime factors are new"
+        }
+      ],
+      "discriminators": [
+        "proof",
+        "evaluate"
+      ],
+      "options": [
+        "59 and 509 must already be in the list 2, 3, 5, 7, 11, 13",
+        "The method fails, because 30031 turns out not to be prime",
+        "There must be a largest prime somewhere below 30031",
+        "The new number need not be prime, but its primes are new ones"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q23",
+      "type": "extended",
+      "prompt": "Prove that there is no largest prime number.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "primes",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Suppose there is a largest prime, $p$. Then every prime is on the finite list $2, 3, 5, \\ldots, p$.\n\nLet $N = 2 \\times 3 \\times 5 \\times \\cdots \\times p + 1$.\n\nDividing $N$ by any prime on the list leaves remainder 1, because that prime divides the product exactly and the extra 1 is left over. So no prime on the list is a factor of $N$.\n\nBut $N$ is bigger than 1, so either it is prime itself or it has a prime factor. Either way there is a prime that is **not** on the list. That contradicts the list holding every prime, so there is no largest prime.\n\n$N$ need not be prime itself: $2 \\times 3 \\times 5 \\times 7 \\times 11 \\times 13 + 1 = 30031 = 59 \\times 509$. Its prime factors are new, and that is all the argument needs.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "supposes there is a finite list of all the primes"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "forms N, the product of every prime on the list, plus 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "shows N leaves remainder 1 when divided by each listed prime"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states N is prime or has a prime factor, which cannot be on the list"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "concludes the list was not complete, so there is no largest prime"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "criteria": [
+        {
+          "text": "Supposes that the primes can all be listed, with a largest one",
+          "marks": 1
+        },
+        {
+          "text": "Forms the number N = (product of all the listed primes) + 1",
+          "marks": 1
+        },
+        {
+          "text": "Shows each listed prime leaves remainder 1 when it divides N",
+          "marks": 1
+        },
+        {
+          "text": "States that N is prime or has a prime factor, which cannot be on the list",
+          "marks": 1
+        },
+        {
+          "text": "Concludes the list is incomplete, so there is no largest prime",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Suppose there is a largest prime, $p$. Then every prime is on the finite list $2, 3, 5, \\ldots, p$.\n\nLet $N = 2 \\times 3 \\times 5 \\times \\cdots \\times p + 1$.\n\nDividing $N$ by any prime on the list leaves remainder 1, because that prime divides the product exactly and the extra 1 is left over. So no prime on the list is a factor of $N$.\n\nBut $N$ is bigger than 1, so either it is prime itself or it has a prime factor. Either way there is a prime that is **not** on the list. That contradicts the list holding every prime, so there is no largest prime.\n\n$N$ need not be prime itself: $2 \\times 3 \\times 5 \\times 7 \\times 11 \\times 13 + 1 = 30031 = 59 \\times 509$. Its prime factors are new, and that is all the argument needs.",
+      "suggestedMinutes": 6
+    },
+    {
+      "id": "q24",
+      "type": "extended",
+      "prompt": "$84 = 2^{2} \\times 3 \\times 7$ and $90 = 2 \\times 3^{2} \\times 5$.\n\n(a) Use the prime factorisations to find the HCF and the LCM of 84 and 90.\n\n(b) Show that HCF × LCM $= 84 \\times 90$, and explain, using the prime factors, why this works for any two numbers.\n\n(c) Show that it need not work for three numbers, using 4, 6 and 8 as an example, and explain what makes it break.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "HCF and LCM",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "(a) The shared primes are one 2 and one 3, so HCF $= 2 \\times 3 = 6$. The LCM takes every prime at its highest power: $2^{2} \\times 3^{2} \\times 5 \\times 7 = 1260$.\n\n(b) $6 \\times 1260 = 7560$ and $84 \\times 90 = 7560$, so they are equal.\n\nIn a Venn diagram of the prime factors, the overlap holds the shared primes and each circle holds the rest of its number. Multiplying the two numbers uses the overlap **twice** (once in each number) and each outer region once. HCF × LCM also uses the overlap twice (once as the HCF, once inside the LCM) and each outer region once. The same primes, the same number of times, so the products are equal for any two numbers.\n\n(c) For 4, 6 and 8 the HCF is 2 and the LCM is 24, so HCF × LCM = 48, but $4 \\times 6 \\times 8 = 192$. Here the prime 2 is shared: $4 = 2^{2}$, $6 = 2 \\times 3$ and $8 = 2^{3}$ hold $2 + 1 + 3 = 6$ twos between them, but HCF × LCM $= 2 \\times (2^{3} \\times 3)$ holds only $1 + 3 = 4$. With three numbers, the HCF and LCM keep only the lowest and highest power of each prime, so any prime in two or more of the numbers is undercounted and the identity breaks. It can still hold when no prime is shared: for 2, 3 and 5, HCF × LCM $= 1 \\times 30 = 30 = 2 \\times 3 \\times 5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "HCF = 6"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "LCM = 1260"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6 × 1260 = 7560 = 84 × 90"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains that the shared primes appear once in the HCF and once in the LCM, and the rest once in the LCM, matching the two numbers"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "for 4, 6 and 8: HCF 2, LCM 24, 2 × 24 = 48 but 4 × 6 × 8 = 192"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains that a prime shared by two or more of the three numbers is undercounted"
+        }
+      ],
+      "discriminators": [
+        "show-that",
+        "evaluate"
+      ],
+      "criteria": [
+        {
+          "text": "Finds the HCF, 6",
+          "marks": 1
+        },
+        {
+          "text": "Finds the LCM, 1260",
+          "marks": 1
+        },
+        {
+          "text": "Shows 6 × 1260 = 7560 = 84 × 90",
+          "marks": 1
+        },
+        {
+          "text": "Explains why the shared primes make it work for any two numbers",
+          "marks": 1
+        },
+        {
+          "text": "Works out HCF 2 and LCM 24 for 4, 6 and 8, and shows 48 is not 192",
+          "marks": 1
+        },
+        {
+          "text": "Explains that a shared prime is undercounted, so it breaks",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "(a) The shared primes are one 2 and one 3, so HCF $= 2 \\times 3 = 6$. The LCM takes every prime at its highest power: $2^{2} \\times 3^{2} \\times 5 \\times 7 = 1260$.\n\n(b) $6 \\times 1260 = 7560$ and $84 \\times 90 = 7560$, so they are equal.\n\nIn a Venn diagram of the prime factors, the overlap holds the shared primes and each circle holds the rest of its number. Multiplying the two numbers uses the overlap **twice** (once in each number) and each outer region once. HCF × LCM also uses the overlap twice (once as the HCF, once inside the LCM) and each outer region once. The same primes, the same number of times, so the products are equal for any two numbers.\n\n(c) For 4, 6 and 8 the HCF is 2 and the LCM is 24, so HCF × LCM = 48, but $4 \\times 6 \\times 8 = 192$. Here the prime 2 is shared: $4 = 2^{2}$, $6 = 2 \\times 3$ and $8 = 2^{3}$ hold $2 + 1 + 3 = 6$ twos between them, but HCF × LCM $= 2 \\times (2^{3} \\times 3)$ holds only $1 + 3 = 4$. With three numbers, the HCF and LCM keep only the lowest and highest power of each prime, so any prime in two or more of the numbers is undercounted and the identity breaks. It can still hold when no prime is shared: for 2, 3 and 5, HCF × LCM $= 1 \\times 30 = 30 = 2 \\times 3 \\times 5$.",
+      "suggestedMinutes": 8
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "suggestedMinutes": 12
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q16"
+      ],
+      "suggestedMinutes": 22
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q14",
+        "q15",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24"
+      ],
+      "suggestedMinutes": 50
+    }
+  },
+  "examTechnique": {
+    "body": "Show the prime factorisation as a division ladder or a factor tree, and write the answer as a product in index form, smallest prime first. A list of primes, or a tree with no product written out, is not the answer the question asked for.\n\nBefore any HCF or LCM word problem, decide which it is and write it down: things that repeat and line up again want the LCM; sharing equally into the biggest groups wants the HCF. Then answer the question actually asked, which may be a time of day or a number of packs rather than the LCM itself.\n\nWhen the numbers are given in index form, do not multiply them out. Read the powers: lowest power of each shared prime for the HCF, highest power of every prime for the LCM.\n\nCheck a pair with HCF × LCM = the product of the two numbers. For an HCF, check it divides both; for an LCM, check both divide it.",
+    "examinerErrors": [
+      "Giving $2, 2, 2, 3, 3, 5$ as the prime factorisation of 360 instead of writing it as a product.",
+      "Leaving a number that is not prime, such as 9 or 15, in a prime factorisation.",
+      "Multiplying the two numbers and calling the result the LCM.",
+      "Confusing the HCF with the LCM in a word problem.",
+      "Giving the LCM itself when the question asks how many packs, or at what time.",
+      "Adding the powers of index-form numbers to find the LCM.",
+      "Including a prime that is in only one of the numbers in the HCF.",
+      "Counting 1 as a prime number."
+    ],
+    "grade9Looks": "A top answer reads HCF and LCM straight from index form without multiplying out, taking the lower power of each shared prime and the higher power of every prime. It works backwards with the same fluency: given an HCF and an LCM it recovers an unknown number, and checks it with HCF × LCM = the product of the two numbers, knowing that the identity is guaranteed only for two numbers. It uses prime factorisation as a tool beyond HCF and LCM: making a number square or cube by evening out the powers, and counting factors from the powers. And it can explain why a result holds, not just use it: why the Venn diagram gives the HCF and LCM, and why Euclid's argument shows the primes never run out."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q18",
+      "q19",
+      "q20",
+      "q21",
+      "q22"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

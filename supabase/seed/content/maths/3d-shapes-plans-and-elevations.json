@@ -1,0 +1,1913 @@
+{
+  "id": "3d-shapes-plans-and-elevations",
+  "subjectId": "maths",
+  "unitId": "geometry-and-measures",
+  "title": "3D shapes: faces, edges, plans and elevations",
+  "specPoints": [
+    "G12",
+    "G13"
+  ],
+  "order": 3,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "A room is a cuboid from the inside",
+      "body": "Stand in a room. The walls, floor and ceiling are its **faces**, the line where two walls meet is an **edge**, and a corner where three meet is a **vertex**. A box-shaped room has 6 faces, 12 edges and 8 vertices, exactly like a cuboid."
+    },
+    {
+      "kind": "remember",
+      "title": "The plan is what a plane sees",
+      "body": "The **plan** is the view from a **plane** flying straight overhead. The **elevations** are what you see standing at eye level: the **front elevation** from the front, and the **side elevation** from the side. Plan down, elevations across."
+    },
+    {
+      "kind": "spot",
+      "title": "A line inside a view marks a step",
+      "body": "Inside a plan or an elevation, draw a line only where the surface **steps** nearer or further away. Two cube faces side by side at the same depth look like one flat face from that direction, so no line goes between them."
+    },
+    {
+      "kind": "check",
+      "title": "Euler's check for prisms and pyramids",
+      "body": "For a polyhedron without holes, such as every prism and pyramid, **faces + vertices − edges = 2**. A cube: 6 + 8 − 12 = 2. It is not in the specification, so it is not required knowledge, but it catches a miscount in seconds. It is not for curved solids: a cylinder gives 3 + 0 − 2 = 1."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Count one end, then use the pattern",
+      "body": "A **prism** whose end has *n* sides has **n + 2** faces, **3n** edges and **2n** vertices. A **pyramid** on an *n*-sided base has **n + 1** faces, **2n** edges and **n + 1** vertices. A hexagonal prism: 8, 18 and 12."
+    }
+  ],
+  "why": {
+    "matters": "A drawing on flat paper cannot show a solid object directly, so people who design and build things use two tools. The first is a count of its parts: how many faces to cut, how many edges to join and how many corners to fix. The second is a set of flat views from fixed directions: the plan from above and the elevations from the front and side. Together the views pin down the shape, and each one can be drawn to scale and measured.\n\nThat is how a house, a machine part or a piece of flat-pack furniture gets from a designer to a builder. In this topic you learn to count the parts of the standard solids, to draw the three views of a solid, and to work backwards from the views to the solid, including the cubes the views cannot show.",
+    "examples": [
+      {
+        "title": "Drawings for a house extension",
+        "body": "Architects draw buildings as **plans** and **elevations**, and these are among the drawings sent with a planning application. Here is a model: a house **6 m** wide, **6 m** deep and **6 m** high, with a one-storey extension **3 m** deep along the whole front. Each cube in the model stands for 3 m.\n\n- The **plan** is a 6 m by 9 m rectangle, with a line across it **3 m from the front**. That line is where the roof steps down from the house to the extension.\n- The **front elevation** is a 6 m by 6 m square with a line across the middle. The lower half is the extension wall, which is nearer to you than the house wall above it.\n- The **side elevation** is an **L**: the house is 6 m tall and the extension 3 m, with no lines inside, because the whole side is one flat wall.\n\nThe drawings cannot show everything: the two ground-floor cubes at the back are hidden from all three directions, so the same views fit a model of 8, 9 or 10 cubes. Assuming the house is solid, it is 10 cubes of $3 \\times 3 \\times 3 = 27$ m³, which is **270 m³**.",
+        "visual": {
+          "type": "diagram",
+          "component": "plan-elevation",
+          "props": {
+            "cubes": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                1,
+                2,
+                0
+              ]
+            ]
+          },
+          "alt": "A model house of ten cubes: a block two cubes wide, two deep and two high, with a one-storey extension one cube deep along the whole front, drawn in 3D with its plan, front elevation and side elevation beneath"
+        }
+      },
+      {
+        "title": "Building a climbing frame",
+        "body": "A climbing frame is a cuboid **2 m** long, **1 m** wide and **1.5 m** tall, with one metal bar along every **edge** and a joint at every **vertex**.\n\nA cuboid has **12 edges**, 4 of each length, so the frame needs $4 \\times (2 + 1 + 1.5) = 18$ m of bar. It has **8 vertices**, and each joint holds **3** bar ends: $8 \\times 3 = 24$ ends, which is exactly 2 for each of the 12 bars.\n\nThe **faces** are the open panels between the bars: 6 of them. And the check works: $6 + 8 - 12 = 2$.",
+        "visual": {
+          "type": "diagram",
+          "component": "cuboid",
+          "props": {
+            "w": 2,
+            "d": 1,
+            "h": 1.5,
+            "show": "none",
+            "unit": "m"
+          },
+          "alt": "A cuboid climbing frame 2 metres long, 1 metre wide and 1.5 metres tall, with its hidden edges dashed"
+        }
+      },
+      {
+        "title": "Why a tin rolls straight and a cone rolls round",
+        "body": "A solid can roll only on a **curved surface**, and the shape of that surface decides how.\n\n- A **tin** is a cylinder. Its curved surface is straight along its length, so it rolls in a **straight line**.\n- A **ball** is a sphere, with one curved surface and no edges, so it rolls in **any direction**.\n- A **cone** rolls in a **circle**, with its tip (the vertex) staying still. The circle's radius is the cone's sloping length.\n\nTake a cone with a sloping length of **10 cm** and a base radius of **4 cm**. Each lap is a circle of circumference $2\\pi \\times 10 \\approx 62.8$ cm. Each turn of the cone covers its base circumference, $2\\pi \\times 4 \\approx 25.1$ cm. So the cone turns $10 \\div 4 = 2.5$ times in every lap.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Curved solids, and how they roll",
+            "columns": [
+              "Solid",
+              "Curved",
+              "Rolls"
+            ],
+            "rows": [
+              [
+                "cylinder",
+                "1",
+                "in a line"
+              ],
+              [
+                "sphere",
+                "1",
+                "any way"
+              ],
+              [
+                "cone",
+                "1",
+                "in a circle"
+              ]
+            ]
+          },
+          "alt": "A table: a cylinder has one curved surface and rolls in a straight line; a sphere has one curved surface and rolls in any direction; a cone has one curved surface and rolls in a circle round its tip"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Faces, surfaces, edges and vertices",
+        "body": "A **3D shape**, or solid, is described by four kinds of part.\n\n- A **face** is a **flat** surface. A cube has 6 square faces.\n- A **surface** is any outside part, **flat or curved**. A cylinder has 2 flat surfaces, its ends, and 1 curved surface.\n- An **edge** is where two surfaces **meet**. On a cube every edge is straight, but an edge can be curved: the rim of a tin is an edge.\n- A **vertex** (plural **vertices**) is a **corner**, where edges meet, or a point where a surface comes to a tip, as at the top of a cone.\n\nA solid whose faces are all flat polygons is a **polyhedron**. Cubes, cuboids, prisms and pyramids are polyhedra; cylinders, cones and spheres are not.\n\n**Counting a cuboid.** 6 faces: top, bottom, front, back, left, right. 12 edges: 4 round the top, 4 round the bottom and 4 upright. 8 vertices: 4 at the top and 4 at the bottom. On the drawing, the hidden edges at the back are dashed. They still count.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "cuboid",
+            "props": {
+              "w": 5,
+              "d": 3,
+              "h": 2,
+              "show": "none",
+              "unit": "cm"
+            },
+            "alt": "A cuboid 5 centimetres long, 3 deep and 2 tall, with its three hidden edges at the back drawn dashed"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "How many vertices does a cuboid have?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "faces, edges and vertices",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A cuboid has **8** vertices: 4 round the top and 4 round the bottom. 6 is the number of faces and 12 is the number of edges.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "6",
+            "8",
+            "12",
+            "4"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Prisms and pyramids",
+        "body": "**A prism** has the same cross-section all the way through. It has two identical ends joined by rectangular faces. It is named after its end: a **triangular prism**, a **hexagonal prism**. A cuboid is a prism with a rectangular end.\n\n**A pyramid** has a polygon for a base and triangular faces rising to a single point, the **apex**. It is named after its base: a **square-based pyramid**. A pyramid on a triangular base is a **tetrahedron**.\n\n**Counting without miscounting.** Count one end, then use the structure.\n\n- A prism whose end has $n$ sides has the 2 ends plus $n$ rectangles: $n + 2$ faces. It has $n$ edges round each end plus $n$ running along: $3n$ edges. It has $n$ vertices at each end: $2n$ vertices.\n- A pyramid on an $n$-sided base has the base plus $n$ triangles: $n + 1$ faces. It has $n$ edges round the base plus $n$ up to the apex: $2n$ edges. It has $n$ base corners plus the apex: $n + 1$ vertices.\n\nA hexagonal prism, $n = 6$: 8 faces, 18 edges, 12 vertices. A square-based pyramid, $n = 4$: 5 faces, 8 edges, 5 vertices.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Faces, edges and vertices of flat-faced solids",
+              "columns": [
+                "Solid",
+                "Faces",
+                "Edges",
+                "Vertices"
+              ],
+              "rows": [
+                [
+                  "cube",
+                  "6",
+                  "12",
+                  "8"
+                ],
+                [
+                  "cuboid",
+                  "6",
+                  "12",
+                  "8"
+                ],
+                [
+                  "triangular prism",
+                  "5",
+                  "9",
+                  "6"
+                ],
+                [
+                  "hexagonal prism",
+                  "8",
+                  "18",
+                  "12"
+                ],
+                [
+                  "square pyramid",
+                  "5",
+                  "8",
+                  "5"
+                ],
+                [
+                  "tetrahedron",
+                  "4",
+                  "6",
+                  "4"
+                ]
+              ]
+            },
+            "alt": "A table of faces, edges and vertices. Cube and cuboid: 6 faces, 12 edges, 8 vertices. Triangular prism: 5, 9, 6. Hexagonal prism: 8, 18, 12. Square-based pyramid: 5, 8, 5. Tetrahedron, a triangle-based pyramid: 4, 6, 4."
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The patterns, for an end or base with n sides",
+              "columns": [
+                "Solid",
+                "Faces",
+                "Edges",
+                "Vertices"
+              ],
+              "rows": [
+                [
+                  "prism",
+                  "n + 2",
+                  "3n",
+                  "2n"
+                ],
+                [
+                  "pyramid",
+                  "n + 1",
+                  "2n",
+                  "n + 1"
+                ]
+              ]
+            },
+            "alt": "A table of the patterns: a prism whose end has n sides has n plus 2 faces, 3n edges and 2n vertices; a pyramid on an n-sided base has n plus 1 faces, 2n edges and n plus 1 vertices"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "How many edges does a hexagonal pyramid have? (Its base is a hexagon, with 6 sides.)",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "prisms and pyramids",
+          "calculator": "either",
+          "tags": [],
+          "solution": "6 edges round the base and 6 running up to the apex: $2 \\times 6 = 12$ edges.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "12"
+            }
+          ],
+          "discriminators": [],
+          "answer": 12,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Cylinders, cones and spheres",
+        "body": "Solids with curved surfaces are counted with the same definitions. The only change is that surfaces and edges may be curved.\n\n- A **cylinder** has **3 surfaces**: 2 flat circles and 1 curved surface. It has **2 edges**, the circles where the curved surface meets each end, and **no vertices**, because nothing comes to a point.\n- A **cone** has **2 surfaces**: 1 flat circle and 1 curved surface. It has **1 edge**, round the base, and **1 vertex**, its tip.\n- A **sphere** has **1 curved surface**, and no edges or vertices at all.\n\nA **hemisphere**, half a sphere, has 1 flat surface, 1 curved surface, 1 edge and no vertices.\n\n**Watch the word *face*.** A face is flat, so a cylinder has 2 faces, its ends, but 3 surfaces in all. Read which word a question uses, and count to match.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Surfaces, edges and vertices of curved solids",
+              "columns": [
+                "Solid",
+                "Flat",
+                "Curved",
+                "Edges",
+                "Vertices"
+              ],
+              "rows": [
+                [
+                  "cylinder",
+                  "2",
+                  "1",
+                  "2",
+                  "0"
+                ],
+                [
+                  "cone",
+                  "1",
+                  "1",
+                  "1",
+                  "1"
+                ],
+                [
+                  "sphere",
+                  "0",
+                  "1",
+                  "0",
+                  "0"
+                ]
+              ]
+            },
+            "alt": "A table of curved solids. Cylinder: 2 flat surfaces, 1 curved surface, 2 edges, no vertices. Cone: 1 flat, 1 curved, 1 edge, 1 vertex at its tip. Sphere: 1 curved surface and no edges or vertices."
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "How many vertices does a cylinder have?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "curved solids",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**0**. A cylinder has 2 edges, the circles at each end, but no point where edges meet or a surface comes to a tip.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "0"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "1",
+            "2",
+            "0",
+            "3"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Plans and elevations",
+        "body": "A solid can be drawn as three flat views, each looking straight at it from one direction.\n\n- The **plan** is the view from **directly above**.\n- The **front elevation** is the view from the **front**.\n- The **side elevation** is the view from the **side**. In this app it is always seen from the **right**, so the front of the solid is on the left of the side elevation. When a question names a side, or marks it with an arrow, use that side.\n\nEach view shows only what can be seen from that direction, drawn flat and to scale. No perspective is used, so a cube's face is always a square.\n\n**Simple solids.** A cuboid gives three rectangles. A cylinder standing on its end has a **circle** for its plan and **rectangles** for its elevations. A cone on its base has a **circle with a dot** at the centre for its plan, the dot being the tip, and a **triangle** for its front elevation. A square-based pyramid has a **square with both diagonals** for its plan, because its four sloping edges run up to the apex in the middle.\n\n**Reading measurements.** A view shows true lengths in the directions it faces. The width of a cylinder's front elevation is its **diameter**, not its radius.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "plan-elevation",
+            "props": {
+              "cubes": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  1,
+                  0
+                ]
+              ]
+            },
+            "alt": "A cuboid made of six cubes, three long, two deep and one high, with its plan, a 3 by 2 rectangle, its front elevation, a 3 by 1 rectangle, and its side elevation, a 2 by 1 rectangle"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "What each view of a simple solid looks like",
+              "columns": [
+                "Solid",
+                "Plan",
+                "Front"
+              ],
+              "rows": [
+                [
+                  "cylinder",
+                  "circle",
+                  "rectangle"
+                ],
+                [
+                  "cone",
+                  "circle and dot",
+                  "triangle"
+                ],
+                [
+                  "sphere",
+                  "circle",
+                  "circle"
+                ],
+                [
+                  "pyramid",
+                  "square, diagonals",
+                  "triangle"
+                ],
+                [
+                  "tri. prism",
+                  "rectangle, line",
+                  "triangle"
+                ]
+              ]
+            },
+            "alt": "A table of views. A cylinder on its end: plan a circle, front elevation a rectangle. A cone on its base: plan a circle with a dot at the centre, front a triangle. A sphere: a circle both ways. A square-based pyramid: plan a square with both diagonals, front a triangle. A triangular prism lying on a rectangular face with its triangular end facing you: plan a rectangle with a line down the middle, front a triangle."
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "A cone stands on its circular base. What is its plan?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "plans and elevations",
+          "calculator": "either",
+          "tags": [],
+          "solution": "From above you see the round base with the tip in the middle: **a circle with a dot at its centre**. The triangle is the front elevation.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a circle with a dot at the centre"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A triangle with a dot at the top",
+            "A circle with a dot at its centre",
+            "A plain circle with no marks inside",
+            "A triangle standing on its base"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Worked example: the three views of a solid made of cubes",
+        "body": "Solids made of cubes are the usual way this is tested, because every view is drawn on a grid. There is one rule to get right. **Draw a line inside a view only where the depth changes**: where a nearer surface meets one further away. Two faces side by side at the same depth are one flat face from that direction, so no line goes between them.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "plan-elevation",
+            "props": {
+              "cubes": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  1,
+                  0
+                ]
+              ]
+            },
+            "alt": "A solid of six cubes: a tower two cubes tall and two cubes deep on the left, with a row of two single cubes running to the right along the front, with its plan, front elevation and side elevation beneath"
+          },
+          {
+            "type": "worked-example",
+            "problem": "A solid is made of six cubes. On the left is a tower two cubes tall and two cubes deep. Along the front, a row of two single cubes runs to the right from the tower. Draw its plan, front elevation and side elevation.",
+            "steps": [
+              {
+                "text": "**Plan, from above.** You see an **L of 4 squares**: 3 along the front and 1 behind the left-hand end."
+              },
+              {
+                "text": "The two left-hand squares are the top of the tower, both 2 cubes high, so there is **no line** between them. The square next to the tower is only 1 cube high, so there **is a line** between it and the tower.",
+                "note": "From above, the tower top is nearer to you than the top of the row."
+              },
+              {
+                "text": "**Front elevation.** You see an **L of 4 squares**: a column of 2 on the left and a row of 3 along the bottom."
+              },
+              {
+                "text": "Every face you see is on the front of the solid, at the same depth, so there are **no lines inside**."
+              },
+              {
+                "text": "**Side elevation, from the right.** You see a **2 by 2 square**, with the front of the solid on the left."
+              },
+              {
+                "text": "The bottom-left square is the end of the row, which is **two cubes nearer** to you than the tower behind it. So **lines mark off** that square from the other three, which are all the side of the tower.",
+                "note": "The three tower squares are at the same depth, so there are no lines between them."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "A solid is made of four cubes: three in a row along the front, and one on top of the right-hand cube. How many squares are there in its front elevation?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "plans and elevations",
+          "calculator": "either",
+          "tags": [],
+          "solution": "From the front you see the row of 3 and the cube on top of the right-hand end: **4** squares, making an L.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Working back from the views",
+        "body": "*Interpreting* the views means reading the solid back from them.\n\n**Simple solids.** Put the clues together. A circle plan with a triangle elevation is a **cone**. A circle plan with a rectangle elevation is a **cylinder**. A rectangle plan with a triangle front elevation and a rectangle side elevation is a **triangular prism** lying on one of its rectangular faces.\n\n**Solids made of cubes.** The plan tells you where the columns stand. The elevations tell you how tall they are.\n\n1. Draw the plan and mark each square.\n2. From the front elevation, read the height of each column of squares, left to right.\n3. From the side elevation, read the height of each row, front to back.\n4. A column can be no taller than **both** views allow.\n\n**Views do not always pin the solid down.** A cube tucked behind and underneath others may be invisible from all three directions. That is why questions ask for the **least** number of cubes the solid could contain. The same views may fit a solid with more cubes hidden inside.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "plan-elevation",
+            "props": {
+              "cubes": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  1
+                ]
+              ],
+              "show": "views"
+            },
+            "alt": "The plan, front elevation and side elevation of a solid of four cubes: the plan is a row of three squares with lines either side of the middle one, the front elevation is an upside-down T of four squares, and the side elevation is a column of two squares with a line between them"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A solid has a rectangle for its plan, a triangle for its front elevation and a rectangle for its side elevation. What is it?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "plans and elevations",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A triangle seen from the front and a rectangle from above and from the side is **a triangular prism** lying on one of its rectangular faces. A square-based pyramid would have a triangle for its side elevation too, and a cylinder on its side would show a circle.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "triangular prism"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A square-based pyramid",
+            "A triangular prism",
+            "A tetrahedron",
+            "A cylinder on its side"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**1.** How many faces, edges and vertices does a pentagonal prism have? (Its end has 5 sides.)\n\n**2.** A solid has a circle for its plan and a triangle for its front elevation. What is it?\n\n**3.** Three cubes stand in a row along the front, and a fourth cube sits on top of the middle one. How many squares are in the plan, the front elevation and the side elevation?\n\n**4.** A cylinder standing on its end has a circle of diameter 8 cm for its plan and an 8 cm by 5 cm rectangle for its front elevation. What are its radius and its height?\n\n**Answers.** 1. **7 faces, 15 edges and 10 vertices**: $n + 2$, $3n$ and $2n$ with $n = 5$. 2. A **cone**. 3. Plan **3**, front **4**, side **2**. In the plan, lines separate the taller middle square from its neighbours; the side elevation has a line between its two squares, because the top cube is further away than the end of the row. 4. Radius **4 cm**, half the 8 cm width, and height **5 cm**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Check yourself against these",
+              "columns": [
+                "Question",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "7, 15, 10"
+                ],
+                [
+                  "2",
+                  "cone"
+                ],
+                [
+                  "3",
+                  "3, 4, 2"
+                ],
+                [
+                  "4",
+                  "radius 4, height 5"
+                ]
+              ]
+            },
+            "alt": "A table of the answers to the four practice questions: 7 faces, 15 edges and 10 vertices; a cone; 3, 4 and 2 squares; and radius 4 cm with height 5 cm"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "Which solid has exactly 2 edges and no vertices?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "curved solids",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**A cylinder**: its 2 edges are the circles at each end. A cone and a hemisphere have 1 edge each, and a sphere has none.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "cylinder"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A cylinder",
+            "A cone",
+            "A sphere",
+            "A hemisphere"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: hidden cubes, Euler's check, and measuring from views",
+        "body": "**The fewest cubes.** A 2 by 2 by 2 block of 8 cubes has a square with no inner lines for its plan, its front elevation and its side elevation. Take away the cube at the **back, left, bottom** and nothing changes. It is covered from above, from the front and from the right. So those three views fit a solid of **7** cubes as well as one of 8. When a question asks for the least number of cubes, look for the positions that no view can see.\n\n**Euler's check.** For a polyhedron without holes, such as every prism and pyramid, $F + V - E = 2$. It is **not in the specification**, so you do not need to learn it, but it is a fast check on a count. A pentagonal pyramid: $6 + 6 - 10 = 2$. It can also run backwards: a prism or pyramid with 12 vertices and 18 edges has $F = 2 - 12 + 18 = 8$ faces. A solid with a hole through it, such as a square picture frame, gives 0 instead, so the check is only for solids without holes. It is not meant for curved solids, and it can fail for them: a cylinder gives $3 + 0 - 2 = 1$, because it is not a polyhedron.\n\n**Measuring from views.** The views are scale drawings, so they give lengths directly.\n\n- A prism's **volume** is the area of its cross-section times its length. If the front elevation shows the cross-section, the plan gives the length.\n- For a cylinder, the width of the front elevation is the **diameter**. Halve it before using $\\pi r^2 h$.\n- For a solid made of 1 cm cubes, count the cubes for the volume. For the surface area, count the faces that are not touching another cube.\n\n**Proving the patterns.** In a prism with an $n$-sided end, each of the $2n$ vertices belongs to exactly 3 edges, and each edge has 2 ends. So there are $\\dfrac{3 \\times 2n}{2} = 3n$ edges. That argument is a proof, and it works for every $n$ at once.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "plan-elevation",
+            "props": {
+              "cubes": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1,
+                  1
+                ]
+              ]
+            },
+            "alt": "A 2 by 2 by 2 block of eight cubes, whose plan, front elevation and side elevation are each a 2 by 2 square with no lines inside"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "numeric",
+          "prompt": "The plan, front elevation and side elevation of a solid made of cubes are each a 2 by 2 square with no lines inside it. What is the least number of cubes the solid could contain?",
+          "marks": 2,
+          "gradeBand": "8-9",
+          "skill": "plans and elevations",
+          "calculator": "either",
+          "tags": [],
+          "solution": "All four columns are 2 cubes tall (from the plan and elevations), so the 4 top cubes are there. The bottom cubes at the front and on the right are seen in the elevations. The cube at the back, left, bottom cannot be seen from any of the three directions, so it may be missing: at least **7** cubes.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "identifies a cube hidden from all three views"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [
+            "unfamiliar-context"
+          ],
+          "answer": 7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- A **face** is a flat surface; a **surface** may be flat or curved.\n- An **edge** is where two surfaces meet, and it may be curved. A **vertex** is a corner or a tip.\n- Cube and cuboid: **6 faces, 12 edges, 8 vertices**.\n- Prism with an $n$-sided end: $n + 2$ faces, $3n$ edges, $2n$ vertices.\n- Pyramid on an $n$-sided base: $n + 1$ faces, $2n$ edges, $n + 1$ vertices.\n- **Cylinder**: 3 surfaces, 2 edges, 0 vertices. **Cone**: 2 surfaces, 1 edge, 1 vertex. **Sphere**: 1 surface, no edges or vertices.\n- Euler's $F + V - E = 2$ is a **check** for polyhedra without holes, such as prisms and pyramids, not required knowledge. It need not hold for curved solids.\n- The **plan** is the view from above. The **front elevation** is from the front, and the **side elevation** from the side.\n- Inside a view, draw a line **only where the depth changes**.\n- Views can hide cubes, so ask for the **least** number that fits.\n- Views are to scale. A cylinder's elevation is its **diameter** wide.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "plan-elevation",
+            "props": {
+              "cubes": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  1,
+                  0
+                ]
+              ]
+            },
+            "alt": "A solid of six cubes: a tower two cubes tall and two cubes deep on the left, with a row of two single cubes running to the right along the front, with its plan, front elevation and side elevation beneath"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "When is a line drawn inside a plan or elevation of a solid made of cubes?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "plans and elevations",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Only where the surface steps nearer or further.** Faces side by side at the same depth form one flat face from that direction, so no line goes between them.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "only where the depth changes"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Along every single edge of every cube in the solid",
+            "Between every pair of cubes that touch",
+            "Never: a view shows only its outline",
+            "Only where the surface steps nearer or further"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "How many edges does a cube have?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "faces, edges and vertices",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A cube has **12** edges: 4 round the top, 4 round the bottom and 4 upright. 8 is the number of vertices, 6 the number of faces, and 24 counts every edge twice.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "24",
+        "8",
+        "6",
+        "12"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which solid has 1 flat surface, 1 curved surface, 1 edge and 1 vertex?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "curved solids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**A cone**: a flat circular base, a curved side, the edge round the base and a vertex at the tip. A hemisphere has the same surfaces and edge but no vertex.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "cone"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A hemisphere",
+        "A cylinder",
+        "A cone",
+        "A sphere"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "What is the plan of a solid?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The plan is **the view from directly above**. The views from the front and the side are the elevations.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the view from above"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The view from directly above",
+        "The view from directly in front",
+        "The view from the right-hand side",
+        "A net that folds up into the solid"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "How many faces does a triangular prism have?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "prisms and pyramids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "2 triangular ends and 3 rectangles joining them: **5** faces.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "A solid has a circle for its plan and a rectangle for its front elevation. What is it?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Round from above and rectangular from the front: **a cylinder** standing on its end. A hemisphere on its flat face would give a semicircle from the front, and a sphere a circle.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "cylinder"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A sphere",
+        "A hemisphere",
+        "A cylinder",
+        "A cuboid"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "How many edges does a square-based pyramid have?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "prisms and pyramids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "4 edges round the square base and 4 sloping up to the apex: **8** edges.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "How many edges does a hexagonal prism have? (Its end is a hexagon, with 6 sides.)",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "prisms and pyramids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "6 edges round each hexagonal end and 6 running along the prism: $6 + 6 + 6 = 18$ edges, which is $3n$ with $n = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "counts the edges round both ends and along the length"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "18"
+        }
+      ],
+      "discriminators": [],
+      "answer": 18,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "How many vertices does a pentagonal pyramid have? (Its base is a pentagon, with 5 sides.)",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "prisms and pyramids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "5 corners round the base and 1 apex: **6** vertices.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "A student works out the edges of a cube as 6 faces × 4 edges = 24. What has gone wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "faces, edges and vertices",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Each edge is on two faces, so it is counted twice.** Halving corrects it: $24 \\div 2 = 12$ edges.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "each edge is shared by two faces"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Each edge is on two faces, so it is counted twice",
+        "Each face of a cube has only three of its own edges",
+        "A cube has only four faces that have any edges",
+        "Nothing: a cube does have 24 edges in total"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A solid is made of five cubes: four in a row along the front, and a fifth cube on top of the left-hand end of the row. How many squares are there in its plan?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "From above you see the tops of the 4 columns: **4** squares in a row. The cube on top does not add a square, because it sits over one already counted. A line separates the left-hand square, which is 2 cubes high, from its neighbour.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "visual": {
+        "type": "diagram",
+        "component": "plan-elevation",
+        "props": {
+          "cubes": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "show": "shape"
+        },
+        "alt": "A solid of five cubes: four in a row along the front, and one more on top of the left-hand cube"
+      }
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A solid has a square with both diagonals drawn for its plan, and a triangle for its front elevation. What is it?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**A square-based pyramid**: the square base seen from above, with its four sloping edges meeting at the apex in the middle, which draws the diagonals. From the front it is a triangle.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "square-based pyramid"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A cube with a sloping top",
+        "A triangular prism",
+        "A triangle-based pyramid",
+        "A square-based pyramid"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A solid is made of six cubes. On the left is a tower two cubes tall and two cubes deep. Along the front, a row of two single cubes runs to the right from the tower. Each cube has edges of 2 cm. Work out the area of the front elevation, in cm².",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The front elevation is an L of 4 squares: a column of 2 on the left and a row of 3 along the bottom, sharing a corner square. Each square is $2 \\times 2 = 4$ cm², so the area is $4 \\times 4 = 16$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4 squares in the front elevation"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [],
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²",
+      "visual": {
+        "type": "diagram",
+        "component": "plan-elevation",
+        "props": {
+          "cubes": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              2,
+              1,
+              0
+            ]
+          ],
+          "show": "shape"
+        },
+        "alt": "A solid of six cubes: a tower two cubes tall and two cubes deep on the left, with a row of two single cubes running to the right along the front"
+      }
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A prism has a front elevation that is an L-shape: a rectangle 6 cm wide and 2 cm tall along the bottom, with a rectangle 2 cm wide and 3 cm tall standing on its left-hand end. Its plan is a rectangle 6 cm by 4 cm, with a line across it 2 cm from the left-hand end. Work out the volume of the prism, in cm³.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The front elevation is the cross-section. Its area is $6 \\times 2 + 2 \\times 3 = 18$ cm². The plan shows the prism is 4 cm deep. Volume $= 18 \\times 4 = 72$ cm³. (Multiplying $6 \\times 5 \\times 4$ would count the empty space above the step.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area of the L cross-section: 12 + 6"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies the area by the depth 4 from the plan"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "72"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 72,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "The plan, front elevation and side elevation of a solid made of cubes are each a 2 by 2 square. The side elevation is seen from the right. In each view, lines inside the square mark off one corner square: in the plan it is the front-right square, in the front elevation the top-right square, and in the side elevation the top-left square. What is the least number of cubes the solid could contain?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The marked squares show that the top front-right position is empty: it is lower in the plan, and further away in both elevations. Every other column is 2 high, so the other three top cubes are there. On the bottom layer the front cubes are seen from the front, and the right-hand cubes from the side. The cube at the back, left, bottom is hidden from all three directions. So the least number is **6**. (The solid could also have 7, with the hidden cube in place.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the empty top front-right position"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the back-left bottom cube as hidden from every view"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "visual": {
+        "type": "diagram",
+        "component": "plan-elevation",
+        "props": {
+          "cubes": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "show": "views"
+        },
+        "alt": "The plan, front elevation and side elevation of a solid made of cubes, each a 2 by 2 square with one corner square marked off by lines: front-right in the plan, top-right in the front elevation and top-left in the side elevation"
+      }
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "For a polyhedron without holes, such as every prism and pyramid, Euler's formula says $F + V - E = 2$, where $F$ is the number of faces, $V$ the vertices and $E$ the edges. A polyhedron without holes has 12 vertices and 18 edges. How many faces does it have?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "faces, edges and vertices",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$F = 2 - V + E = 2 - 12 + 18 = 8$. (A hexagonal prism fits: 8 faces, 18 edges and 12 vertices.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "F = 2 - 12 + 18"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A pyramid has 10 edges. How many faces does it have?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "prisms and pyramids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A pyramid on an $n$-sided base has $2n$ edges, so $2n = 10$ and $n = 5$: it is a pentagonal pyramid. It has $n + 1 = 6$ faces, the base and 5 triangles.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2n = 10, so the base has 5 sides"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "A prism has 24 edges. How many vertices does it have?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "prisms and pyramids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A prism with an $n$-sided end has $3n$ edges, so $3n = 24$ and $n = 8$: it is an octagonal prism. It has $2n = 16$ vertices, 8 at each end.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3n = 24, so the end has 8 sides"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "A solid is made of five cubes: four in a row along the front, and a fifth cube on top of the left-hand end of the row. Each cube has edges of 1 cm. Work out the total surface area of the solid, in cm².",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "faces, edges and vertices",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Five separate cubes would have $5 \\times 6 = 30$ faces. Each place where two cubes touch hides 2 faces, and there are 4 such places: 3 along the row and 1 under the top cube. So $30 - 2 \\times 4 = 22$ faces are showing, and the surface area is **22 cm²**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5 × 6 = 30 faces in total"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts 2 for each of the 4 joins"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "22"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 22,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²",
+      "visual": {
+        "type": "diagram",
+        "component": "plan-elevation",
+        "props": {
+          "cubes": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "show": "shape"
+        },
+        "alt": "A solid of five cubes: four in a row along the front, and one more on top of the left-hand cube"
+      }
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "Ali says: \"Euler's formula F + V − E = 2 is wrong, because for a cylinder 3 + 0 − 2 = 1.\" What is the best reply?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "faces, edges and vertices",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**The formula is only for polyhedra, with flat faces**, and only for those without holes. A cylinder has a curved surface, so it is not a polyhedron, and getting 1 says nothing against the formula. Ali's counts of 3 surfaces, no vertices and 2 edges are right.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it only applies to polyhedra"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "He should count 2 vertices, one on each end",
+        "The formula is only for polyhedra, with flat faces",
+        "He should count 4 edges, two round the rim of each end",
+        "The formula gives 1 for every solid there is"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "multiple-choice",
+      "prompt": "The front elevation and the side elevation of a solid are identical squares. Sam says the solid must be a cube. Which reply is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**No: a cylinder as tall as it is wide looks the same** from the front and the side, two identical squares. Only the plan tells them apart: a square for the cube, a circle for the cylinder. A square-based pyramid would give triangles.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no; a cylinder with equal height and diameter"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "No: a cylinder as tall as it is wide looks the same",
+        "Yes: only a cube has two square elevations",
+        "Yes: the plan of a solid always matches its elevations",
+        "No: a square-based pyramid also gives two squares"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q21",
+      "type": "extended",
+      "prompt": "A prism has an end with $n$ sides. Show that it has $n + 2$ faces, $3n$ edges and $2n$ vertices, and hence show that $F + V - E = 2$ for every prism.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "prisms and pyramids",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Faces.** The prism has 2 identical ends. Each of the $n$ sides of an end is joined to the matching side of the other end by a rectangle, so there are $n$ rectangles. That makes $n + 2$ faces.\n\n**Edges.** Each end has $n$ edges round it, which is $2n$. Each of the $n$ corners of one end is joined to the matching corner of the other by an edge along the prism, which is $n$ more. That makes $3n$ edges.\n\n**Vertices.** The only corners are those of the two ends, $n$ each, so there are $2n$ vertices.\n\n**Euler.** $F + V - E = (n + 2) + 2n - 3n = 2$. The $n$ terms cancel, so this is true whatever the value of $n$: $F + V - E = 2$ for every prism.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "faces: 2 ends and n rectangles, n + 2"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "edges: n round each end and n along the length, 3n"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "vertices: n at each end, 2n"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes: (n + 2) + 2n - 3n"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "simplifies to 2 for every n, with a conclusion"
+        }
+      ],
+      "discriminators": [
+        "show-that",
+        "proof"
+      ],
+      "criteria": [
+        {
+          "text": "Faces: the 2 ends plus $n$ rectangles, one for each side of the end, giving $n + 2$",
+          "marks": 1
+        },
+        {
+          "text": "Edges: $n$ round each end and $n$ joining them, giving $3n$",
+          "marks": 1
+        },
+        {
+          "text": "Vertices: $n$ at each end, giving $2n$",
+          "marks": 1
+        },
+        {
+          "text": "Substitutes into $F + V - E$ to get $(n + 2) + 2n - 3n$",
+          "marks": 1
+        },
+        {
+          "text": "Simplifies to $2$ and states that this holds for every prism",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Faces.** The prism has 2 identical ends. Each of the $n$ sides of an end is joined to the matching side of the other end by a rectangle, so there are $n$ rectangles. That makes $n + 2$ faces.\n\n**Edges.** Each end has $n$ edges round it, which is $2n$. Each of the $n$ corners of one end is joined to the matching corner of the other by an edge along the prism, which is $n$ more. That makes $3n$ edges.\n\n**Vertices.** The only corners are those of the two ends, $n$ each, so there are $2n$ vertices.\n\n**Euler.** $F + V - E = (n + 2) + 2n - 3n = 2$. The $n$ terms cancel, so this is true whatever the value of $n$: $F + V - E = 2$ for every prism.",
+      "suggestedMinutes": 6
+    },
+    {
+      "id": "q22",
+      "type": "extended",
+      "prompt": "A solid is made of five cubes. Three cubes stand in a row along the back. A fourth cube stands in front of the left-hand end of that row, and a fifth sits on top of the right-hand end. Draw its plan, its front elevation and its side elevation seen from the right, on squared paper, with one square for each cube face.",
+      "marks": 6,
+      "gradeBand": "6-7",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Plan.** From above you see the tops of 4 columns: 3 along the back and 1 in front of the left-hand end, an **L of 4 squares**. The right-hand back column is 2 cubes high and its neighbour 1, so a **line** separates them. The other tops are all 1 cube high, so there are no other lines.\n\n**Front elevation.** You see 3 squares along the bottom and 1 on top of the right-hand end. The left-hand bottom square is the front face of the cube standing in front, nearer to you than the back row, so a **line** separates it from the square beside it. The other three squares are all at the back, at the same depth, so there are no other lines.\n\n**Side elevation, from the right.** The front of the solid is on the left. You see 2 squares along the bottom and 1 on top of the right-hand one, which is at the back. The bottom-right and top squares are the right-hand end of the back row, the part of the solid nearest to you. The bottom-left square is the side of the front cube, which is two cubes further away. So a **line** separates the two bottom squares, and there is no line between the two right-hand squares.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "plan: an L of 4 squares, 3 across the back and 1 in front of the left-hand end"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "plan: a line between the right-hand back square and its neighbour, and no other inner line"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "front elevation: a row of 3 with 1 square on top of the right-hand end"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "front elevation: a line between the left-hand bottom square and its neighbour only"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "side elevation: a row of 2 with 1 square on top of the right-hand (back) square"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "side elevation: a line between the two bottom squares only"
+        }
+      ],
+      "discriminators": [],
+      "criteria": [
+        {
+          "text": "Plan: an L of 4 squares, 3 along the back with 1 in front of the left-hand end",
+          "marks": 1
+        },
+        {
+          "text": "Plan: one line inside, between the right-hand back square (2 cubes high) and the square next to it",
+          "marks": 1
+        },
+        {
+          "text": "Front elevation: 3 squares along the bottom with 1 on top of the right-hand square",
+          "marks": 1
+        },
+        {
+          "text": "Front elevation: one line inside, between the left-hand bottom square (the nearer cube) and the square next to it",
+          "marks": 1
+        },
+        {
+          "text": "Side elevation: 2 squares along the bottom with 1 on top of the right-hand square, which is the back",
+          "marks": 1
+        },
+        {
+          "text": "Side elevation: one line inside, between the two bottom squares",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**Plan.** From above you see the tops of 4 columns: 3 along the back and 1 in front of the left-hand end, an **L of 4 squares**. The right-hand back column is 2 cubes high and its neighbour 1, so a **line** separates them. The other tops are all 1 cube high, so there are no other lines.\n\n**Front elevation.** You see 3 squares along the bottom and 1 on top of the right-hand end. The left-hand bottom square is the front face of the cube standing in front, nearer to you than the back row, so a **line** separates it from the square beside it. The other three squares are all at the back, at the same depth, so there are no other lines.\n\n**Side elevation, from the right.** The front of the solid is on the left. You see 2 squares along the bottom and 1 on top of the right-hand one, which is at the back. The bottom-right and top squares are the right-hand end of the back row, the part of the solid nearest to you. The bottom-left square is the side of the front cube, which is two cubes further away. So a **line** separates the two bottom squares, and there is no line between the two right-hand squares.",
+      "suggestedMinutes": 10,
+      "visual": {
+        "type": "diagram",
+        "component": "plan-elevation",
+        "props": {
+          "cubes": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              2,
+              0,
+              1
+            ]
+          ],
+          "show": "shape"
+        },
+        "alt": "A solid of five cubes: three in a row along the back, one in front of the left-hand end, and one on top of the right-hand end"
+      }
+    },
+    {
+      "id": "q23",
+      "type": "numeric",
+      "prompt": "A cylinder stands on its end. Its plan is a circle, and its front elevation is a rectangle 6 cm wide and 10 cm tall. Work out the volume of the cylinder, in cm³, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "plans and elevations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The width of the front elevation is the **diameter**, so the radius is $6 \\div 2 = 3$ cm. The height is 10 cm. Volume $= \\pi r^2 h = \\pi \\times 3^2 \\times 10 = 90\\pi \\approx 282.7$ cm³. (Using 6 as the radius gives about 1131 cm³, four times too much.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "radius 3 from the width of 6"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "π × 3² × 10"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "282.7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 282.7,
+      "tolerance": 0.05,
+      "unitsRequired": false,
+      "units": "cm³"
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q22"
+      ],
+      "suggestedMinutes": 25
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q23"
+      ],
+      "suggestedMinutes": 40
+    }
+  },
+  "examTechnique": {
+    "body": "Count faces, edges and vertices in a system, not by pointing: faces top, bottom and round the sides; edges round each end, then those joining the ends; vertices at each end, then the apex. For a prism or pyramid, check the total with $F + V - E = 2$.\n\nRead whether a question says *faces* or *surfaces*. A cylinder has 2 flat faces but 3 surfaces.\n\nWhen drawing a plan or elevation, use the grid: one square for each cube face, and no perspective. Draw the outline first. Then add a line inside only where the depth changes, and check each line by asking which cube is nearer on each side of it.\n\nMake sure you know which direction each view is from: the plan from above, the front elevation from the front, and the side elevation from the side the question names. Check which side the question's arrow names for the side elevation.\n\nWhen a question asks for the least number of cubes, look for positions that no view can see. When measuring from a view, remember it shows true lengths: the width of a cylinder is its diameter.",
+    "examinerErrors": [
+      "Counting the edges of a cube as 24 by counting each face separately, so every edge is counted twice.",
+      "Giving a cylinder 2 vertices, one for each end, when it has none.",
+      "Drawing a line between every pair of cubes in a view, instead of only where the depth changes.",
+      "Leaving out the line where a nearer cube meets one further back.",
+      "Drawing a plan or elevation in perspective, with sloping lines, instead of flat and to scale.",
+      "Mixing up the front and side elevations, or drawing the side elevation from the wrong side.",
+      "Counting only the visible cubes when the question asks for the least number that fits the views, or forgetting that hidden cubes can be missing.",
+      "Using the width of a cylinder's elevation as its radius."
+    ],
+    "grade9Looks": "A top answer counts by structure and checks by structure: it gets a prism's edges as 3n by counting the ends and the joins, and confirms with Euler's check where the solid is a polyhedron without holes. It knows the check is only for polyhedra, and that a cylinder breaks it. It draws every view flat, on the grid and from the stated direction, with lines inside only where a nearer surface meets a further one. It can say which cube each line belongs to. Working backwards, it reads column heights from the elevations, checks each column against both of them, and gives the least number of cubes by finding the positions no view can see. It takes true lengths straight from the views, including a cylinder's diameter."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q18",
+      "q19",
+      "q20",
+      "q23"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

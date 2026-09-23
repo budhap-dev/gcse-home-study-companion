@@ -82,7 +82,12 @@ export function keypadFor(question: Extract<Question, { type: 'numeric' | 'short
   // A prompt that asks for an exact form wants the maths field, whatever the answer
   // type: nobody should be typing √130 or 12π on a phone's text keyboard. The prompt is
   // in front of the student already, so reading it gives nothing away.
-  if (question.type === 'short-text') return /in terms of|surd|exact|standard form|as a power|single power|as a fraction|simplest form/i.test(question.prompt) ? 'algebra' : undefined
+  // Except a ratio: the maths keypad has no colon, so "3 : 10 in simplest form" could not
+  // be typed on it at all.
+  if (question.type === 'short-text') {
+    if (question.accepted.some((a) => a.includes(':'))) return undefined
+    return /in terms of|surd|exact|standard form|as a power|single power|as a fraction|simplest form/i.test(question.prompt) ? 'algebra' : undefined
+  }
   // Physics and Chemistry write their larger values in standard form.
   if (subjectId === 'physics' || subjectId === 'chemistry') return 'number-plus'
   if (subjectId === 'maths') return 'number-plus'

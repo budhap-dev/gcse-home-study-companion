@@ -58,6 +58,10 @@ export function normaliseText(s: string): string {
   // charge in "2e- -> Cu" stays on the electron instead of running into the arrow. An
   // equals sign is left alone, because in maths it is not an arrow.
   out = out.replace(/\s*(?:[→⟶⇒]|-{1,2}>|=>)\s*/g, ' -> ')
+  // A mixed number keeps a mark between its whole part and its fraction. Joined, "2 1/3"
+  // became 21/3, so a student who typed twenty-one thirds was marked right for two and a
+  // third. The maths field sends the same number as 2(1)/(3).
+  out = out.replace(/(\d)\s*\((\d+)\)\s*\/\s*\((\d+)\)/g, '$1&$2/$3').replace(/(\d)\s+(?=\d+\s*\/\s*\d)/g, '$1&')
   return out
     .replace(/\s+/g, '')
     .replace(/[−–—]/g, '-')
@@ -79,8 +83,10 @@ export function normaliseText(s: string): string {
     .replace(/root/g, 'sqrt')
     .replace(/sqrt\(([^)]+)\)/g, 'sqrt$1')
     // A times sign is dropped, so 3*x is 3x. In SQL the star is the whole column list:
-    // dropping it would pass SELECT FROM Student for SELECT * FROM Student.
-    .replace(/\*/g, (star, _at: number, whole: string) => (/^(select|insert|update|delete)/.test(whole) ? star : ''))
+    // dropping it would pass SELECT FROM Student for SELECT * FROM Student. Between two
+    // numbers it stays too: dropped, 2^2 × 3 × 7 and the wrong 2^23 × 7 were one answer.
+    .replace(/\*/g, (star, at: number, whole: string) =>
+      /^(select|insert|update|delete)/.test(whole) || (/\d/.test(whole[at - 1] ?? '') && /\d/.test(whole[at + 1] ?? '')) ? star : '')
     .replace(/[{}]/g, '')
     .replace(/\^\(([^)]+)\)/g, '^$1')
     .replace(/^y=/, '')
@@ -125,7 +131,15 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // "£500" and "-£700" themselves, so a student copying that format must be accepted.
   // The sign may sit either side of the symbol.
   s = s.replace(/^([-+]?)\s*[£$€]\s*/, '$1').replace(/^[£$€]\s*([-+]?)\s*/, '$1')
-  if (units) s = s.replace(units.toLowerCase(), '').trim()
+  // A keyboard has no ² or ³, so the unit arrives as m2 or m^2 as often as m². Every
+  // spelling is tried, longest first, so kg/m^3 is taken whole rather than leaving a 3
+  // behind to be read as part of the number.
+  if (units) {
+    const u = units.toLowerCase()
+    const spellings = [u, u.replace(/²/g, '^2').replace(/³/g, '^3'), u.replace(/²/g, '2').replace(/³/g, '3')].sort((a, b) => b.length - a.length)
+    const found = spellings.find((v) => s.includes(v))
+    if (found) s = s.replace(found, '').trim()
+  }
   // A magnification is written ×400 or x400, and sometimes 400×: the sign says "times"
   // and is not part of the number. Only a sign against the digits at either end counts,
   // so 1.8 × 10^5 in the middle is still standard form.
@@ -135,6 +149,9 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // Brackets round the parts of a fraction: (3)/(4). Students write it, and it is what a
   // WYSIWYG maths editor produces, so it has to read as three quarters rather than as
   // nothing at all.
+  // The maths field sends two and a third as 2(1)/(3); stripping the brackets first made
+  // it 21/3. Read as a mixed number, it is caught by the rule below.
+  s = s.replace(/^(-?\d+)\s*\((\d+)\)\s*\/\s*\((\d+)\)$/, '$1 $2/$3')
   s = s.replace(/\((-?\d+(?:\.\d+)?)\)/g, '$1')
   // A mixed number, before the rule below joins digits across a space. "1 1/2" is one and
   // a half; joining first turned it into 11/2 and marked the student as meaning 5.5 — a

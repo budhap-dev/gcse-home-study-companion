@@ -1,0 +1,1555 @@
+{
+  "id": "relative-frequency-and-expected-outcomes",
+  "subjectId": "maths",
+  "unitId": "probability",
+  "title": "Relative frequency and expected outcomes",
+  "specPoints": [
+    "P2",
+    "P3",
+    "P5"
+  ],
+  "order": 7,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "A scoreboard: times it happened out of goes",
+      "body": "Relative frequency is a **scoreboard**: the number of times it happened, out of the number of goes.\n\nA penalty taker who scores 7 of 10 has a record of 0.7. A pin that lands point up 31 times in 50 throws has a relative frequency of $\\dfrac{31}{50} = 0.62$."
+    },
+    {
+      "kind": "remember",
+      "title": "A dice has no memory",
+      "body": "A fair dice does not know it has gone ten rolls without a six. **Every roll is $\\frac{1}{6}$**, whatever came before.\n\nThe relative frequency settles in the long run because of the **many rolls still to come**, which swamp the early ones. It is not because the dice catches up."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Expected number: probability times trials",
+      "body": "Multiply the probability by the number of goes. $\\frac{1}{6}$ of 300 is $300 \\div 6 = 50$.\n\nIt is a **long-run average**, not a promise: 46 or 55 sixes would not be surprising, and an expected number need not be a whole number."
+    },
+    {
+      "kind": "spot",
+      "title": "Theory or experiment?",
+      "body": "If the outcomes are **equally likely**, as on a fair dice or spinner, work the probability out from the outcomes.\n\nIf they are not, or you cannot tell, as with a drawing pin or a dice that may be biased, you **need an experiment**, and the relative frequency is your estimate."
+    },
+    {
+      "kind": "check",
+      "title": "Between 0 and 1, and adding to 1",
+      "body": "Every probability and every relative frequency lies **between 0 and 1**.\n\nThe relative frequencies of all the outcomes of one experiment **add to 1**, because their counts add to the number of trials. If yours do not, a count has been misread."
+    }
+  ],
+  "why": {
+    "matters": "For a fair dice you can work a probability out before rolling anything. For almost everything else you cannot. There is no symmetry to reason from for a drawing pin, a new medicine, a car on a wet road or a footballer taking a penalty. The only way to know how likely something is, is to **watch it happen many times and count**, and relative frequency is the name for that count.\n\nThe other half of the topic runs the same idea forwards. Once a probability is known, the **expected number** of times something happens in many trials is what a game designer, an insurer or a hospital uses to plan. And the whole thing rests on one fact the specification asks you to understand: the more trials there are, the closer the relative frequency tends to settle on the true probability.",
+    "examples": [
+      {
+        "title": "Ten thousand coin tosses in an internment camp",
+        "body": "During the Second World War the mathematician **John Kerrich** was interned in Denmark, and he used the time to toss a coin **10 000** times. He got **5 067** heads.\n\nThe relative frequency of heads was $\\dfrac{5067}{10\\,000} = 0.5067$, very close to the theoretical $0.5$.\n\nNotice what did **not** happen. The count of heads did not land on exactly 5000; it finished **67 above** it. Over many tosses the **number** of extra heads can wander, while the **proportion** closes in on one half. That is the specification's point exactly: an unbiased sample tends towards the theoretical probability as it grows.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Heads",
+                "value": 5067,
+                "display": "5 067",
+                "note": "relative frequency 0.5067"
+              },
+              {
+                "label": "Tails",
+                "value": 4933,
+                "display": "4 933",
+                "note": "relative frequency 0.4933"
+              }
+            ],
+            "caption": "10 000 tosses of one coin: two bars almost the same length"
+          },
+          "alt": "Two bars drawn to scale for Kerrich's 10 000 coin tosses: 5 067 heads and 4 933 tails, almost exactly the same length, with relative frequencies 0.5067 and 0.4933"
+        }
+      },
+      {
+        "title": "The bottle flip, where there is no theory to use",
+        "body": "A half-full water bottle is flipped and either lands upright or falls over. There is no way to work out the probability from the shape of the bottle: the two outcomes are **not equally likely**, and nothing about them is symmetrical.\n\nSo the only route is an experiment. Say a class flips a bottle **200** times and it lands upright **46** times. The relative frequency is\n\n$$\\dfrac{46}{200} = 0.23$$\n\nwhich is the class's **estimate** of the probability. Another 200 flips would give a slightly different figure; 1000 flips would give a more reliable one. That is how probabilities are found for anything without a symmetry, from a drawing pin to the chance that a part fails in a machine.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "One bottle, flipped by a class",
+            "columns": [
+              "Flips",
+              "Upright",
+              "Relative freq."
+            ],
+            "rows": [
+              [
+                "200",
+                "46",
+                "0.23"
+              ]
+            ]
+          },
+          "alt": "A table of a bottle-flip experiment: 200 flips, 46 landed upright, a relative frequency of 0.23"
+        }
+      },
+      {
+        "title": "Pricing a game at the school fair",
+        "body": "A stall at a school fair charges **£1** a go to spin a fair spinner with **8** equal sections. One section wins a **£5** prize.\n\nThe organisers expect about **200** goes in the afternoon. The probability of a win is $\\frac{1}{8}$, so the **expected number of wins** is\n\n$$200 \\times \\frac{1}{8} = 25$$\n\nThat is **£125** in prizes against **£200** taken, an expected profit of **£75**. On the day it will not be exactly that, because 25 is a long-run average, but it is how the stall decides the prize is safe to offer. A game where the expected payout equals the takings is called **fair**; this one is not.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "bars": [
+              {
+                "label": "Money taken",
+                "value": 200,
+                "display": "£200",
+                "note": "200 goes at £1"
+              },
+              {
+                "label": "Prizes expected",
+                "value": 125,
+                "display": "£125",
+                "note": "25 expected wins at £5"
+              }
+            ],
+            "caption": "Expected profit over 200 goes: £75"
+          },
+          "alt": "Two bars drawn to scale: £200 taken from 200 goes, and a shorter bar of £125 paid out in prizes for the 25 expected wins, leaving an expected profit of £75"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "The probability scale, and the words that go with it",
+        "body": "A probability measures how likely something is, on a scale from **0** to **1**.\n\n- **0** means **impossible**: rolling a 7 on an ordinary dice.\n- **1** means **certain**: rolling a number less than 7.\n- **0.5**, or $\\frac{1}{2}$, means an **even chance**: a head on a fair coin.\n- Below 0.5 is **unlikely**; above 0.5 is **likely**. Close to 0 is **very unlikely**; close to 1 is **very likely**.\n\nA probability can be written as a **fraction**, a **decimal** or a **percentage**: $\\frac{1}{4}$, 0.25 and 25% are the same. Do not give it as a ratio, or in words like \"1 in 4\", as a final answer. And it can **never** be negative or bigger than 1. A probability of 1.2 is a sign that something has gone wrong.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The 0 to 1 scale in words",
+              "columns": [
+                "Value",
+                "Word",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "0",
+                  "impossible",
+                  "a 7 on a dice"
+                ],
+                [
+                  "near 0",
+                  "very unlikely",
+                  "a double six"
+                ],
+                [
+                  "0.5",
+                  "even chance",
+                  "a head"
+                ],
+                [
+                  "near 1",
+                  "very likely",
+                  "not a six"
+                ],
+                [
+                  "1",
+                  "certain",
+                  "less than 7"
+                ]
+              ]
+            },
+            "alt": "A table matching probabilities to words: 0 is impossible, such as a 7 on a dice; near 0 is very unlikely, such as a double six with two dice; 0.5 is an even chance, such as a head; near 1 is very likely, such as not rolling a six; and 1 is certain, such as rolling less than 7"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "An event has a probability of 0.5. Which word describes it?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "probability scale",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A probability of 0.5 is halfway along the scale: an **even chance**. Likely is above 0.5, unlikely below it, and almost certain is close to 1.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "even chance"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Unlikely",
+            "Likely",
+            "Almost certain",
+            "Even chance"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Randomness, fairness and equally likely outcomes",
+        "body": "Three words from the specification carry this topic.\n\n- **Random.** You cannot predict the outcome of any **one** trial. A coin toss is random; which way it lands is not decided in advance.\n- **Equally likely.** Every outcome has the **same chance**. On a fair dice, each of the six faces is equally likely.\n- **Fair.** A fair dice, coin or spinner is one whose outcomes **are** equally likely. One that favours some outcomes is **biased**.\n\nWhen the outcomes are equally likely, the probability can be worked out before anything is done, from the outcomes alone. This is the **theoretical probability**:\n\n$$P(\\text{event}) = \\dfrac{\\text{number of outcomes in the event}}{\\text{total number of outcomes}}$$\n\nA fair spinner has five equal sections numbered 1 to 5. Two of the five numbers, 4 and 5, are greater than 3, so $P(\\text{greater than 3}) = \\frac{2}{5}$.\n\nThat formula needs the outcomes to be **equally likely**. On a biased spinner it gives the wrong answer, and there is no formula to replace it; you have to experiment.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Three words, and what they mean",
+              "columns": [
+                "Word",
+                "Meaning"
+              ],
+              "rows": [
+                [
+                  "random",
+                  "one go cannot be predicted"
+                ],
+                [
+                  "equally likely",
+                  "each outcome as likely"
+                ],
+                [
+                  "fair",
+                  "outcomes equally likely"
+                ],
+                [
+                  "biased",
+                  "some outcomes favoured"
+                ]
+              ]
+            },
+            "alt": "A table of four words: random means the result of one go cannot be predicted, equally likely means each outcome is as likely as any other, fair means the outcomes are equally likely, and biased means some outcomes are favoured"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "A fair spinner has five equal sections numbered 1, 2, 3, 4 and 5. It is spun once. What is the probability that it lands on a number greater than 3? Give your answer as a fraction or a decimal.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "theoretical probability",
+          "calculator": "either",
+          "tags": [],
+          "solution": "4 and 5 are greater than 3: two of the five equally likely outcomes, so the probability is $\\frac{2}{5} = 0.4$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2/5 or 0.4"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.4,
+          "tolerance": 0.001,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Relative frequency: probability from an experiment",
+        "body": "A drawing pin can land **point up** or **point down**, but the two are not equally likely and there is no way to work the probability out. So you **experiment**: throw it many times and count.\n\n$$\\text{relative frequency} = \\dfrac{\\text{number of times the outcome happens}}{\\text{total number of trials}}$$\n\nThe relative frequency is an **experimental probability**: an **estimate** of the true probability.\n\nOne pin was thrown 200 times, and the count of point-up landings was noted along the way:\n\n- after **20** throws: 14 point up, so $\\dfrac{14}{20} = 0.7$\n- after **50** throws: 31, so $\\dfrac{31}{50} = 0.62$\n- after **200** throws: 118, so $\\dfrac{118}{200} = 0.59$\n\nThe three estimates differ, and the one to trust most is the one from the **most trials**: 0.59. It is still an estimate, but the fewer the throws, the more a run of luck can move it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "One drawing pin, counted as it went",
+              "columns": [
+                "Throws",
+                "Point up",
+                "Relative freq."
+              ],
+              "rows": [
+                [
+                  "20",
+                  "14",
+                  "0.7"
+                ],
+                [
+                  "50",
+                  "31",
+                  "0.62"
+                ],
+                [
+                  "200",
+                  "118",
+                  "0.59"
+                ]
+              ]
+            },
+            "alt": "A table of one drawing-pin experiment: after 20 throws, 14 point up, relative frequency 0.7; after 50 throws, 31 point up, relative frequency 0.62; after 200 throws, 118 point up, relative frequency 0.59"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "A coin is flipped 40 times and lands heads 17 times. What is the relative frequency of heads? Give your answer as a decimal.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "relative frequency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\dfrac{17}{40} = 0.425$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "0.425"
+            }
+          ],
+          "discriminators": [],
+          "answer": 0.425,
+          "tolerance": 0.001,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Worked examples: expected outcomes",
+        "body": "Run the idea forwards. If you know the probability of something, or have a good estimate of it, you can say how many times it should happen in many trials:\n\n$$\\text{expected frequency} = \\text{probability} \\times \\text{number of trials}$$\n\nThe probability can come from theory, from a relative frequency, or be given in the question. The method is the same.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A fair six-sided dice is rolled 300 times. How many times would you expect it to land on 4?",
+            "steps": [
+              {
+                "text": "The dice is fair, so the six faces are equally likely and $P(4) = \\frac{1}{6}$."
+              },
+              {
+                "text": "$\\frac{1}{6} \\times 300 = 50$.",
+                "note": "One sixth of 300 is 300 ÷ 6."
+              },
+              {
+                "text": "Expect about **50** fours. The actual count will probably be near 50, not exactly 50."
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A biased spinner lands on red with probability 0.35. It is spun 80 times. How many reds would you expect?",
+            "steps": [
+              {
+                "text": "$0.35 \\times 80 = 28$."
+              },
+              {
+                "text": "Expect about **28** reds.",
+                "note": "The spinner being biased does not change the method, only where the probability comes from."
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "The drawing pin landed point up 118 times in 200 throws. Estimate how many times it will land point up in 500 throws.",
+            "steps": [
+              {
+                "text": "Use the relative frequency from the most throws as the probability: $\\dfrac{118}{200} = 0.59$."
+              },
+              {
+                "text": "$0.59 \\times 500 = 295$."
+              },
+              {
+                "text": "Expect about **295** point-up landings."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A fair coin is flipped 250 times. How many heads would you expect?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "expected frequency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\frac{1}{2} \\times 250 = 125$ heads.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "125"
+            }
+          ],
+          "discriminators": [],
+          "answer": 125,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "More trials, a better estimate",
+        "body": "The specification puts it this way: *empirical unbiased samples tend towards theoretical probability distributions, with increasing sample size*. In plain words: **the more times a fair experiment is repeated, the closer the relative frequency tends to get to the true probability**.\n\nThe graph shows one fair dice being rolled 600 times, with the relative frequency of a six worked out along the way. The counts of sixes were:\n\n| Rolls | Sixes | Relative frequency |\n| --- | --- | --- |\n| 10 | 3 | 0.3 |\n| 30 | 4 | 0.133 |\n| 50 | 11 | 0.22 |\n| 100 | 15 | 0.15 |\n| 200 | 31 | 0.155 |\n| 400 | 69 | 0.172 |\n| 600 | 99 | 0.165 |\n\n- After a few rolls it **jumps about**: 0.3 after 10 rolls, 0.133 after 30.\n- After a few hundred rolls it **settles** close to the dashed line at $\\frac{1}{6} \\approx 0.167$.\n\nTwo things this does **not** say:\n\n- It does not say the relative frequency gets closer with **every** roll. It wobbles, but the wobbles get smaller.\n- It does not say the **count** of sixes becomes exactly one sixth of the rolls. After 600 rolls there were 99 sixes, not 100.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                700
+              ],
+              "yRange": [
+                0,
+                0.4
+              ],
+              "xStep": 100,
+              "yStep": 0.1,
+              "xLabel": "Number of rolls",
+              "yLabel": "Relative frequency of a six",
+              "points": [
+                {
+                  "x": 10,
+                  "y": 0.3
+                },
+                {
+                  "x": 20,
+                  "y": 0.2
+                },
+                {
+                  "x": 30,
+                  "y": 0.1333
+                },
+                {
+                  "x": 40,
+                  "y": 0.2
+                },
+                {
+                  "x": 50,
+                  "y": 0.22
+                },
+                {
+                  "x": 100,
+                  "y": 0.15
+                },
+                {
+                  "x": 150,
+                  "y": 0.18
+                },
+                {
+                  "x": 200,
+                  "y": 0.155
+                },
+                {
+                  "x": 300,
+                  "y": 0.1733
+                },
+                {
+                  "x": 400,
+                  "y": 0.1725
+                },
+                {
+                  "x": 500,
+                  "y": 0.168
+                },
+                {
+                  "x": 600,
+                  "y": 0.165
+                }
+              ],
+              "lines": [
+                {
+                  "m": 0,
+                  "c": 0.1667,
+                  "label": "1/6",
+                  "dashed": true
+                }
+              ]
+            },
+            "alt": "A graph of the relative frequency of a six against the number of rolls of a fair dice, up to 600 rolls. The early points jump about, from 0.3 after 10 rolls to 0.133 after 30; after 300 rolls they settle close to a dashed horizontal line at one sixth, ending at 0.165 after 600 rolls."
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "A fair dice is rolled many times. What happens to the relative frequency of sixes as the number of rolls increases?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "more trials",
+          "calculator": "either",
+          "tags": [],
+          "solution": "It **tends to settle close to one sixth**. It still wobbles, and it need not get closer on every single roll, but the wobbles shrink as the rolls add up.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it tends towards the theoretical probability"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "It tends to settle close to one sixth",
+            "It moves closer to one sixth on every roll",
+            "It becomes exactly one sixth after 60 rolls",
+            "It stays the same whatever the number of rolls"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Is the dice fair? Judging bias from data",
+        "body": "To judge whether a dice is biased, compare what happened with what a **fair** dice would be expected to do.\n\nA dice is rolled **600** times. A fair dice would be expected to give each face $\\frac{1}{6} \\times 600 = 100$ times.\n\nThe six came up **162** times: a relative frequency of $\\dfrac{162}{600} = 0.27$, against the $\\frac{1}{6} \\approx 0.167$ a fair dice would tend towards. Every other face came up fewer than 100 times. With **600 rolls**, a gap that size is very unlikely to be luck, so the dice is **probably biased towards six**.\n\nNow a second dice, rolled only **30** times, gives **8** sixes: a relative frequency of $\\dfrac{8}{30} \\approx 0.267$, almost the same as the first. But 30 rolls is far too few to judge. A fair dice gives 8 or more sixes in 30 rolls roughly one time in ten, so this is **not enough evidence** either way. The fix is to roll it many more times.\n\nThe same relative frequency, two different conclusions. **The number of trials decides how much the data can tell you.** And note the careful words: *probably* biased, *not enough evidence*. An experiment never proves a dice fair or biased; it gives evidence.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "600 rolls against a fair dice",
+              "columns": [
+                "Face",
+                "Rolled",
+                "Expected"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "86",
+                  "100"
+                ],
+                [
+                  "2",
+                  "88",
+                  "100"
+                ],
+                [
+                  "3",
+                  "90",
+                  "100"
+                ],
+                [
+                  "4",
+                  "84",
+                  "100"
+                ],
+                [
+                  "5",
+                  "90",
+                  "100"
+                ],
+                [
+                  "6",
+                  "162",
+                  "100"
+                ]
+              ]
+            },
+            "alt": "A table of 600 rolls of a dice against the 100 of each face a fair dice would be expected to give: face 1 came up 86 times, face 2 came up 88 times, face 3 came up 90 times, face 4 came up 84 times, face 5 came up 90 times, face 6 came up 162 times"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A spinner has four equal sections, one of them red. It is spun 20 times and lands on red 8 times. Ben says this proves the spinner is biased towards red. Which is the best response?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "fairness and bias",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Too few spins to tell: a fair spinner can do this.** A fair spinner is expected to land on red $\\frac{1}{4} \\times 20 = 5$ times, but in only 20 spins a fair spinner lands on red 8 or more times roughly one time in ten. Spin it many more times before judging.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "too few trials to conclude"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "Too few spins to tell: a fair spinner can do this",
+            "He is right: 8 is well above the expected 5",
+            "He is right: any count other than 5 shows bias",
+            "It proves the spinner is fair, as 8 is below 10"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**1.** Which word describes a probability of 0.9?\n\n**2.** A bottle top is thrown 50 times and lands upside down 38 times. Find the relative frequency of landing upside down.\n\n**3.** A fair spinner has 4 equal sections, one of them blue. It is spun 120 times. How many times would you expect it to land on blue?\n\n**4.** A dice is rolled 600 times and a 1 comes up 102 times. Is that evidence that the dice is biased?\n\n**Answers.** 1. **Very likely.** 2. $\\dfrac{38}{50} = 0.76$. 3. $\\frac{1}{4} \\times 120 = 30$. 4. **No.** A fair dice is expected to give $\\frac{1}{6} \\times 600 = 100$ ones; 102 is very close to that, a relative frequency of 0.17 against 0.167.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Check yourself against these",
+              "columns": [
+                "Question",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "very likely"
+                ],
+                [
+                  "2",
+                  "0.76"
+                ],
+                [
+                  "3",
+                  "30"
+                ],
+                [
+                  "4",
+                  "no: 102 is close to 100"
+                ]
+              ]
+            },
+            "alt": "A table of answers to the four practice questions: very likely; 0.76; 30; and no, because 102 is close to the 100 expected"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "numeric",
+          "prompt": "A fair spinner has 4 equal sections, one of them blue. It is spun 120 times. How many times would you expect it to land on blue?",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "expected frequency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$\\frac{1}{4} \\times 120 = 30$ times.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "1/4 × 120"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "30"
+            }
+          ],
+          "discriminators": [],
+          "answer": 30,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: expected outcomes with earlier ideas, and claims to test",
+        "body": "**Expected outcomes of combined events.** Two fair dice are rolled together 180 times. A double six is one of the 36 equally likely pairs, so $P(\\text{double six}) = \\frac{1}{36}$ and the expected number is $\\frac{1}{36} \\times 180 = 5$.\n\n**A missing probability first.** A biased spinner lands on red, blue, green or yellow. $P(\\text{red}) = 0.32$, $P(\\text{blue}) = 0.26$ and $P(\\text{green}) = 0.14$. The four probabilities add to 1, so $P(\\text{yellow}) = 1 - 0.32 - 0.26 - 0.14 = 0.28$, and in 400 spins expect $0.28 \\times 400 = 112$ yellows.\n\n**Pooling experiments.** Amir throws a pin 20 times and gets 13 point up; Beth throws it 80 times and gets 48. The best estimate uses **all 100 throws**: $\\dfrac{61}{100} = 0.61$. Averaging their two relative frequencies gives 0.625, which wrongly counts Amir's 20 throws as much as Beth's 80.\n\n**Claims to test.** Three statements come up again and again. Each is wrong, and saying why is the mark:\n\n- *\"There hasn't been a six for ten rolls, so one is due.\"* The dice has **no memory**; the next roll is still $\\frac{1}{6}$.\n- *\"$P(\\text{six}) = \\frac{1}{6}$, so six rolls will give exactly one six.\"* Expected frequency is a **long-run average**. Six rolls can give none, or three.\n- *\"It came up heads 7 times in 10, so $P(\\text{head}) = 0.7$.\"* That is a relative frequency from **very few** trials. For a coin you have reason to think is fair, 0.5 is the better figure until far more tosses say otherwise.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A school fair stall charges £1 a go to spin a fair spinner with 8 equal sections. One section wins a £5 prize. Work out the expected profit from 200 goes.",
+            "steps": [
+              {
+                "text": "$P(\\text{win}) = \\frac{1}{8}$, so expected wins $= \\frac{1}{8} \\times 200 = 25$."
+              },
+              {
+                "text": "Expected prizes paid: $25 \\times £5 = £125$."
+              },
+              {
+                "text": "Money taken: $200 \\times £1 = £200$."
+              },
+              {
+                "text": "Expected profit: $£200 - £125 = £75$.",
+                "note": "Per go, the stall expects to keep £1 − £5 × 1/8 = £0.375, or 37.5p. A fair game would keep nothing."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "numeric",
+          "prompt": "A biased spinner lands on red, blue, green or yellow. P(red) = 0.15, P(blue) = 0.4 and P(green) = 0.25. The spinner is spun 250 times. How many times would you expect it to land on yellow?",
+          "marks": 3,
+          "gradeBand": "8-9",
+          "skill": "expected frequency",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$P(\\text{yellow}) = 1 - 0.15 - 0.4 - 0.25 = 0.2$. Then $0.2 \\times 250 = 50$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "P(yellow) = 0.2"
+            },
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "0.2 × 250"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "50"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "answer": 50,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- Probability runs from **0** (impossible) to **1** (certain); **0.5** is an even chance. Never negative, never above 1.\n- **Random**: one result cannot be predicted. **Fair**: all outcomes equally likely. **Biased**: some are favoured.\n- For equally likely outcomes, **theoretical probability** = outcomes in the event ÷ total outcomes.\n- **Relative frequency** = times it happened ÷ number of trials. It is an **estimate** of the probability.\n- Trust the relative frequency from the **most trials**, and pool experiments by adding their counts.\n- **Expected frequency** = probability × number of trials. It is a long-run average, not a promise.\n- As the number of trials grows, the relative frequency of a fair experiment **tends to settle** near the theoretical probability. It still wobbles; the wobbles shrink.\n- To judge fairness, compare with what a **fair** version is expected to do, and weigh **how many trials** there were.\n- A dice has **no memory**. Nothing is ever \"due\".",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Three formulas on one card",
+              "columns": [
+                "Find",
+                "Use"
+              ],
+              "rows": [
+                [
+                  "theoretical P",
+                  "event outcomes ÷ all"
+                ],
+                [
+                  "relative frequency",
+                  "times ÷ trials"
+                ],
+                [
+                  "expected number",
+                  "P × trials"
+                ]
+              ]
+            },
+            "alt": "A summary table of three formulas: theoretical probability is the number of outcomes in the event divided by all outcomes, relative frequency is the number of times divided by the number of trials, and the expected number is the probability times the number of trials"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Which of these could not be a probability?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "probability scale",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$1.2$ is **greater than 1**, and no probability can be. 0 is impossible, 0.95 is very likely and $\\frac{3}{7}$ is a little below an even chance.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "1.2"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$0$",
+            "$1.2$",
+            "$0.95$",
+            "$\\frac{3}{7}$"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "Which word best describes an event with a probability of 0.05?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "probability scale",
+      "calculator": "either",
+      "tags": [],
+      "solution": "0.05 is close to 0 but not 0, so the event is **very unlikely**. Impossible would be exactly 0.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "very unlikely"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Very unlikely",
+        "Even chance",
+        "Almost certain",
+        "Impossible"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "Which of these values could not be the probability of an event?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "probability scale",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$-0.3$ is **negative**, and a probability can never be below 0. 1 is allowed: it means certain.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "-0.3"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "$0.03$",
+        "$-0.3$",
+        "$\\frac{1}{3}$",
+        "$1$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "A bottle top is thrown 50 times. It lands upside down 38 times. Work out the relative frequency of landing upside down. Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "relative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{38}{50} = 0.76$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.76"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.76,
+      "tolerance": 0.001,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "A fair six-sided dice is rolled 300 times. How many times would you expect it to land on 4?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\frac{1}{6} \\times 300 = 50$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1/6 × 300"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [],
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "The probability that a biased spinner lands on red is 0.35. The spinner is spun 80 times. How many times would you expect it to land on red?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.35 \\times 80 = 28$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.35 × 80"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28"
+        }
+      ],
+      "discriminators": [],
+      "answer": 28,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A bag holds red, blue and green counters. A counter is taken at random, its colour noted, and it is put back. This is done 80 times: red 22 times, blue 44 times and green 14 times. Estimate the probability that the next counter taken is blue. Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "relative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{44}{80} = 0.55$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "44/80"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.55"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.55,
+      "tolerance": 0.001,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A drawing pin is thrown 200 times. After 20 throws it has landed point up 14 times, after 50 throws 31 times, and after 200 throws 118 times. Use the best estimate of the probability to predict how many times it would land point up in 500 throws.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The best estimate comes from the most throws: $\\dfrac{118}{200} = 0.59$. Then $0.59 \\times 500 = 295$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses 118/200"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "× 500"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "295"
+        }
+      ],
+      "discriminators": [],
+      "answer": 295,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "multiple-choice",
+      "prompt": "A drawing pin is thrown 200 times. After 20 throws it has landed point up 14 times, after 50 throws 31 times, and after 200 throws 118 times. Which is the best estimate of the probability that it lands point up?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "relative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**118/200, from the most throws**, which is 0.59. It already includes the earlier throws. The pin's two outcomes are not equally likely, so 1/2 has no basis.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the relative frequency from the most trials"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "14/20, from the first throws",
+        "118/200, from the most throws",
+        "1/2, as there are two ways to land",
+        "The mean of the three relative frequencies"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "What does it mean to say that a dice is fair?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "fairness and bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Each of the six faces is equally likely.** It does not mean each face appears once in every six rolls; that is a long-run average, not a rule.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "every outcome is equally likely"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It has never been used in a game before",
+        "It lands on each face once in six rolls",
+        "Each of the six faces is equally likely",
+        "It lands on six less often than the rest"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "short-text",
+      "prompt": "What name is given to the number of times an outcome happens divided by the total number of trials?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "relative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The **relative frequency**, also called the experimental probability. It estimates the true probability.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "relative frequency"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "relative frequency",
+        "the relative frequency",
+        "relative frequencies",
+        "relative freq",
+        "experimental probability",
+        "the experimental probability"
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "Sam says: \"The probability of rolling a six on a fair dice is 1/6, so if I roll it 6 times I will get exactly one six.\" Which is the best response?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Wrong: one in six is a long-run rate, not a rule.** In six rolls he could get no sixes, or two or three. One is only what he would expect on average.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "expected frequency is an average, not a guarantee"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Right, but only if the dice is completely fair",
+        "Right: that is what a probability of 1/6 means",
+        "Wrong: he will get exactly one six in 36 rolls",
+        "Wrong: one in six is a long-run rate, not a rule"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "A dice is rolled 600 times. The results are 1: 86, 2: 88, 3: 90, 4: 84, 5: 90, 6: 162. Which is the best conclusion?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "fairness and bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Probably biased towards six: 162 is far above 100**, the number of sixes a fair dice would be expected to give. The relative frequency of six is $\\dfrac{162}{600} = 0.27$ against about 0.167, and with 600 rolls a gap that size is very unlikely to be chance.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "biased towards six, with a reason from the data"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Fair: 600 rolls is too few to judge a dice",
+        "Fair: every one of the faces came up at least 80 times",
+        "Probably biased towards six: 162 is far above 100",
+        "Biased: a fair dice gives exactly 100 of each"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "A dice is rolled 30 times and lands on six 8 times. Priya says this proves the dice is biased. Which is the best response?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "fairness and bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Too few rolls to tell: a fair dice can do this.** 30 rolls is too few to judge; a fair dice gives 8 or more sixes in 30 rolls roughly one time in ten. Roll it many more times.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "too few trials to conclude"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "She is right: any dice that is not exact is biased",
+        "She is right: 8 is much more than the expected 5",
+        "Too few rolls to tell: a fair dice can do this",
+        "It proves the dice is fair, as 8 is less than 10"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "Two fair six-sided dice are rolled together 180 times. How many times would you expect to get a double six?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A double six is 1 of the 36 equally likely pairs, so $P = \\frac{1}{36}$. Then $\\frac{1}{36} \\times 180 = 5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P(double six) = 1/36"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "A school fair stall charges £1 a go to spin a fair spinner with 8 equal sections. One section wins a £5 prize. The game is played 200 times. Work out the expected profit for the stall, in pounds.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Expected wins $= \\frac{1}{8} \\times 200 = 25$. Prizes $= 25 \\times £5 = £125$. Takings $= 200 \\times £1 = £200$. Profit $= £200 - £125 = £75$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expected wins, 25"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "takings 200 minus prizes 125"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic",
+        "unfamiliar-context"
+      ],
+      "answer": 75,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "A biased spinner lands on red, blue, green or yellow. P(red) = 0.32, P(blue) = 0.26 and P(green) = 0.14. The spinner is spun 400 times. How many times would you expect it to land on yellow?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P(\\text{yellow}) = 1 - 0.32 - 0.26 - 0.14 = 0.28$. Then $0.28 \\times 400 = 112$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P(yellow) = 0.28"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.28 × 400"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "112"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 112,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "multiple-choice",
+      "prompt": "A fair dice has not landed on six in the last ten rolls. Jamie says a six is now more likely than usual on the next roll. Which is the best response?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "randomness",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Wrong: a dice has no memory, so it is still 1/6** on the next roll. The long-run rate settles because of the many rolls to come, not because the dice makes up for missing sixes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "each roll is independent of earlier ones"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Wrong: a six is now less likely, as the dice avoids it",
+        "Right: sixes must catch up so the rate reaches 1/6",
+        "Right: after ten rolls without one, a six is certain",
+        "Wrong: a dice has no memory, so it is still 1/6"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "Amir throws a drawing pin 20 times and it lands point up 13 times. Beth throws the same pin 80 times and it lands point up 48 times. Using all their results, work out the best estimate of the probability that the pin lands point up. Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "relative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Pool the throws: $\\dfrac{13 + 48}{20 + 80} = \\dfrac{61}{100} = 0.61$. Averaging 0.65 and 0.6 would give 0.625, which wrongly treats 20 throws as worth as much as 80.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "61/100"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.61"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.61,
+      "tolerance": 0.001,
+      "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "Which statement about the relative frequency of heads, as a fair coin is tossed more and more times, is true?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "more trials",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**It tends to settle near 0.5, though it still wobbles.** It need not get closer after every toss, and the count of heads need not be exactly half: John Kerrich got 5 067 heads in 10 000 tosses.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it tends towards the theoretical probability"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It tends to settle near 0.5, though it still wobbles",
+        "It gets closer to 0.5 after every single toss",
+        "The number of heads becomes exactly half the tosses",
+        "It moves away from 0.5 as more tosses are made"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "extended",
+      "prompt": "A dice is rolled 600 times. The results are 1: 86, 2: 88, 3: 90, 4: 84, 5: 90, 6: 162. Kai says the dice is fair. Use relative frequencies and expected frequencies to evaluate Kai's claim.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "fairness and bias",
+      "calculator": "either",
+      "tags": [],
+      "solution": "If the dice were fair, each face would have probability $\\frac{1}{6}$, so in 600 rolls each would be expected about $\\frac{1}{6} \\times 600 = 100$ times.\n\nThe six came up 162 times. Its relative frequency is $\\dfrac{162}{600} = 0.27$, compared with $\\frac{1}{6} \\approx 0.167$ for a fair dice. Every other face came up fewer than 100 times, between 84 and 90, which is what happens when one face takes more than its share.\n\nSome variation from 100 is normal, but 600 is a large number of rolls, and relative frequency tends to settle near the true probability as the number of trials grows. A relative frequency of 0.27 after 600 rolls is very unlikely to happen with a fair dice.\n\nSo the evidence suggests the dice is **biased towards six**, and Kai is probably wrong. The data cannot prove it, but rolling it even more times would make the conclusion more certain still.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expected frequency for a fair dice: 1/6 × 600 = 100 for each face"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "relative frequency of six: 162/600 = 0.27"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "compares 0.27 with 1/6, about 0.167"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "notes every other face came up fewer than 100 times"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "600 is a large number of trials, so the gap is unlikely to be chance"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "concludes Kai is probably wrong: the dice appears biased towards six"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "criteria": [
+        {
+          "text": "Works out the expected frequency, 100 for each face",
+          "marks": 1
+        },
+        {
+          "text": "Works out the relative frequency of six, 0.27",
+          "marks": 1
+        },
+        {
+          "text": "Compares 0.27 with the theoretical 1/6, about 0.167",
+          "marks": 1
+        },
+        {
+          "text": "Notes that every other face came up fewer than 100 times",
+          "marks": 1
+        },
+        {
+          "text": "Uses the large number of rolls to argue the gap is unlikely to be chance",
+          "marks": 1
+        },
+        {
+          "text": "Concludes the dice is probably biased towards six, so Kai is probably wrong",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "If the dice were fair, each face would have probability $\\frac{1}{6}$, so in 600 rolls each would be expected about $\\frac{1}{6} \\times 600 = 100$ times.\n\nThe six came up 162 times. Its relative frequency is $\\dfrac{162}{600} = 0.27$, compared with $\\frac{1}{6} \\approx 0.167$ for a fair dice. Every other face came up fewer than 100 times, between 84 and 90, which is what happens when one face takes more than its share.\n\nSome variation from 100 is normal, but 600 is a large number of rolls, and relative frequency tends to settle near the true probability as the number of trials grows. A relative frequency of 0.27 after 600 rolls is very unlikely to happen with a fair dice.\n\nSo the evidence suggests the dice is **biased towards six**, and Kai is probably wrong. The data cannot prove it, but rolling it even more times would make the conclusion more certain still.",
+      "suggestedMinutes": 6
+    },
+    {
+      "id": "q21",
+      "type": "extended",
+      "prompt": "A spinner has five equal sections, one of which is red. Leo spins it 20 times and gets red 8 times. He says the probability of red is 0.4, so in 500 spins he expects 200 reds. Evaluate Leo's reasoning.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "expected frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Leo's arithmetic is correct: the relative frequency of red is $\\dfrac{8}{20} = 0.4$, and $0.4 \\times 500 = 200$.\n\nIf the spinner is fair, the five sections are equally likely and $P(\\text{red}) = \\frac{1}{5} = 0.2$, so the expected number of reds in 500 spins is $0.2 \\times 500 = 100$, half of Leo's figure.\n\nA fair spinner would be expected to give $\\dfrac{1}{5} \\times 20 = 4$ reds in 20 spins, and it gives 8 or more only about 3% of the time. So Leo's result is **some evidence** that the spinner may be biased towards red. It is not enough to rely on: 20 spins is few, relative frequency only settles near the true probability over many trials, and results this far out do happen by chance.\n\nLeo should spin it many more times, a few hundred at least, and use the relative frequency from all of those spins. If that settles near 0.2, expect about 100 reds; if it stays near 0.4, his figure of 200 becomes reasonable.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "agrees the relative frequency is 8/20 = 0.4, and 0.4 × 500 = 200"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "notes that 8 reds in 20 is some evidence of bias, since a fair spinner rarely does it, but 20 spins is too few to rely on 0.4"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "if the spinner is fair, P(red) = 1/5 = 0.2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "so the expected number is 0.2 × 500 = 100"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "recommends many more spins before relying on 0.4"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "criteria": [
+        {
+          "text": "Accepts the arithmetic: 8/20 = 0.4 and 0.4 × 500 = 200",
+          "marks": 1
+        },
+        {
+          "text": "Says 8 reds in 20 is some evidence of bias, but 20 spins is too few to rely on 0.4",
+          "marks": 1
+        },
+        {
+          "text": "Gives the theoretical probability for a fair spinner, 0.2",
+          "marks": 1
+        },
+        {
+          "text": "Works out the expected number for a fair spinner, 100",
+          "marks": 1
+        },
+        {
+          "text": "Recommends many more spins before trusting a relative frequency of 0.4",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Leo's arithmetic is correct: the relative frequency of red is $\\dfrac{8}{20} = 0.4$, and $0.4 \\times 500 = 200$.\n\nIf the spinner is fair, the five sections are equally likely and $P(\\text{red}) = \\frac{1}{5} = 0.2$, so the expected number of reds in 500 spins is $0.2 \\times 500 = 100$, half of Leo's figure.\n\nA fair spinner would be expected to give $\\dfrac{1}{5} \\times 20 = 4$ reds in 20 spins, and it gives 8 or more only about 3% of the time. So Leo's result is **some evidence** that the spinner may be biased towards red. It is not enough to rely on: 20 spins is few, relative frequency only settles near the true probability over many trials, and results this far out do happen by chance.\n\nLeo should spin it many more times, a few hundred at least, and use the relative frequency from all of those spins. If that settles near 0.2, expect about 100 reds; if it stays near 0.4, his figure of 200 becomes reasonable.",
+      "suggestedMinutes": 5
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q11"
+      ],
+      "suggestedMinutes": 15
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21"
+      ],
+      "suggestedMinutes": 40
+    }
+  },
+  "examTechnique": {
+    "body": "Write probabilities as fractions, decimals or percentages. A ratio or \"1 in 4\" as a final answer may not be accepted.\n\nFor a relative frequency, write the fraction first: $\\frac{38}{50}$, then the decimal. The fraction shows the method even if the division slips.\n\nFor an expected frequency, write probability × trials, then the answer. If the probability has to be found first, from a missing value or from an experiment, show that step on its own line.\n\nWhen several experiments are given, use the one with the **most trials**, or pool them all by adding the counts. Say why: more trials give a more reliable estimate.\n\nWhen asked whether a dice or spinner is fair, compare the data with what a fair one would be **expected** to give, and mention the number of trials. Use careful words: *probably* biased, or *not enough evidence*. An experiment gives evidence, not proof.",
+    "examinerErrors": [
+      "Writing a probability as a ratio, such as 3 : 5, or in words such as \"3 in 8\".",
+      "Giving a probability greater than 1, and not noticing that it cannot be right.",
+      "Using the relative frequency from the fewest trials, or averaging relative frequencies from experiments of different sizes.",
+      "Treating an expected frequency as a guarantee, so six rolls \"must\" give one six.",
+      "Believing an outcome is \"due\" after a run without it.",
+      "Deciding a dice is biased, or fair, from a handful of rolls.",
+      "Using equally likely outcomes to find a probability for something whose outcomes are not equally likely, such as a drawing pin."
+    ],
+    "grade9Looks": "A top answer knows where each probability comes from and says so: from equally likely outcomes when the dice or spinner is fair, and from a relative frequency when it is not. It trusts the estimate from the most trials, pools experiments by adding counts rather than averaging rates, and treats an expected frequency as a long-run average rather than a promise. Asked whether something is biased, it compares the data with what a fair version would be expected to give, weighs the number of trials, and concludes in measured language. It chains ideas without prompting: a missing probability from the sum-to-one rule, or a double six from a possibility space, then an expected number, then a profit."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q18",
+      "q19"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}
