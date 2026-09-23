@@ -95,6 +95,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Choices and outcomes', topicId: 'choices-and-outcomes' },
       { title: 'Sets and set notation', topicId: 'sets-and-set-notation' },
       { title: 'Histograms', topicId: 'histograms' },
+      { title: 'Scatter graphs and correlation', topicId: 'scatter-graphs-and-correlation' },
       { title: 'Linear, quadratic and geometric sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
       { title: 'Iteration', topicId: 'iteration' },
     ] },
