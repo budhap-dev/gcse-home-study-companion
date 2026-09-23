@@ -9,6 +9,7 @@ A web app where a student self-studies eight GCSE subjects to a grade 9 target, 
 | [docs/prd.md](docs/prd.md) | Product requirements document, Draft 4 (2 September 2026). Scope, users, content and progress models, motivation design, non-functional requirements, delivery phases, technical approach, open decisions. |
 | [docs/prd.html](docs/prd.html) | The same PRD as a formatted page. Open in a browser. |
 | [docs/stories.md](docs/stories.md) | The full user story backlog: 44 stories across 9 epics with MoSCoW priorities and acceptance criteria. |
+| [docs/backlog.md](docs/backlog.md) | **What is left to do, with checkboxes:** subject review passes, pack-wide quality fixes, specification gaps, and every story's missing parts, checked against the code. Tick items in the PR that finishes them. |
 | [docs/plan.md](docs/plan.md) | Delivery plan for Phase 1: gating decisions, ten workstreams, seven milestones, content track, data model outline, risks, five build approaches, first two weeks. |
 | [docs/plan.html](docs/plan.html) | The same plan as a formatted page. Open in a browser. |
 | [docs/tech-spec.md](docs/tech-spec.md) | Technical specification: hosting, environments, build, deployment pipeline, scheduled jobs, backup, security, cost. |
