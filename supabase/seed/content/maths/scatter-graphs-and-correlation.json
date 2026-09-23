@@ -1,0 +1,1582 @@
+{
+  "id": "scatter-graphs-and-correlation",
+  "subjectId": "maths",
+  "unitId": "statistics",
+  "title": "Scatter graphs and correlation",
+  "specPoints": [
+    "S6"
+  ],
+  "order": 2,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Correlation is not cause",
+      "body": "Two things moving together does not mean one makes the other happen. Ice cream sales and drowning both rise in summer; neither causes the other, and the **hot weather** behind both is called a third factor.\n\nThe exam asks this as *\"does this prove that…?\"* The answer is always **no**, followed by a reason: the data shows a **relationship**, not a **cause**."
+    },
+    {
+      "kind": "remember",
+      "title": "Inside is safe, outside is not",
+      "body": "**Interpolating** means reading inside the range of the data you have. It is reasonably safe, because the pattern was measured there.\n\n**Extrapolating** means reading beyond the end of the data. It assumes the trend carries on, and there is no evidence that it does.\n\nIn, safe. Out, risky."
+    },
+    {
+      "kind": "spot",
+      "title": "Read the question for which variable is which",
+      "body": "The thing that is **changed or chosen** goes on the **x-axis**, and the thing that is **measured** goes on the y-axis. Hours revised is chosen; the mark follows.\n\nGet them the wrong way round and every reading is wrong, even though the graph looks fine."
+    },
+    {
+      "kind": "check",
+      "title": "Does your line have points either side?",
+      "body": "A line of best fit is drawn **by eye**, following the trend, with **roughly as many points above it as below**. It does **not** have to pass through the origin, and it does **not** join the first and last points.\n\nIf every point sits on one side of your line, it is in the wrong place."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Name the correlation in two words",
+      "body": "Strength then direction: **strong positive**, **weak negative**, or **no correlation**. Two words earn the mark where \"it goes up\" does not.\n\nAnd in context: *the more hours revised, the higher the mark* says the same thing in the language of the question, which is what an *interpret* question wants."
+    }
+  ],
+  "why": {
+    "matters": "Almost every claim you meet outside a classroom is really a claim about two things moving together: screen time and sleep, exercise and blood pressure, a fertiliser and a crop. A scatter graph is how that kind of claim is drawn, and the line of best fit is how a prediction is squeezed out of it.\n\nIt is also where the most common misreading in public life lives. Two things rising together is evidence of a relationship and nothing more, and most of the work in this topic is learning to say exactly that, and to know how far a line can be trusted before it starts inventing numbers.",
+    "examples": [
+      {
+        "title": "The revision graph, and the trap in it",
+        "body": "Twelve students recorded their revision hours and their test mark. The points climb from left to right: more revision, higher mark, which is **positive correlation**.\n\nThe line of best fit rises about **5 marks for every extra hour**, and meets the mark axis near **31** — roughly what someone scores with no revision at all.\n\nNow the trap. Follow the line out to **20 hours** and it predicts **131 marks** on a paper marked out of **100**. Nothing has gone wrong with the arithmetic; the line has simply been used outside the data it was drawn from. That is extrapolation, and this is why the specification asks you to know its dangers.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              14
+            ],
+            "yRange": [
+              0,
+              100
+            ],
+            "xStep": 2,
+            "yStep": 20,
+            "xLabel": "Hours of revision",
+            "yLabel": "Test mark",
+            "points": [
+              {
+                "x": 2,
+                "y": 41
+              },
+              {
+                "x": 3,
+                "y": 48
+              },
+              {
+                "x": 4,
+                "y": 52
+              },
+              {
+                "x": 5,
+                "y": 57
+              },
+              {
+                "x": 5,
+                "y": 49
+              },
+              {
+                "x": 6,
+                "y": 63
+              },
+              {
+                "x": 7,
+                "y": 66
+              },
+              {
+                "x": 8,
+                "y": 71
+              },
+              {
+                "x": 9,
+                "y": 78
+              },
+              {
+                "x": 10,
+                "y": 82
+              },
+              {
+                "x": 11,
+                "y": 86
+              },
+              {
+                "x": 12,
+                "y": 91
+              }
+            ],
+            "lines": [
+              {
+                "m": 5,
+                "c": 31,
+                "label": "line of best fit"
+              }
+            ]
+          },
+          "alt": "The same scatter graph of test mark against hours of revision, with a straight line of best fit drawn through the points, rising about 5 marks for each extra hour and meeting the mark axis near 31"
+        }
+      },
+      {
+        "title": "Two things that rise together, and one that does not cause the other",
+        "body": "Across a summer, ice cream sales and the number of people who drown both rise. Plot one against the other and you get a convincing positive correlation.\n\nNo one thinks ice cream causes drowning. **Hot weather** causes both: more ice cream sold, and more people swimming. A cause behind both is what makes the correlation appear.\n\nThat is the whole shape of the exam question. You are shown a real correlation and asked whether it proves a cause. It never does, and the mark is for saying why: something else could be behind both.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "title": "Correlation, and what it does and does not show",
+            "columns": [
+              "The claim",
+              "What the data shows"
+            ],
+            "rows": [
+              [
+                "ice cream and drowning rise together",
+                "a real correlation"
+              ],
+              [
+                "so ice cream causes drowning",
+                "no: a third factor, the weather"
+              ],
+              [
+                "taller people have larger feet",
+                "a real correlation"
+              ],
+              [
+                "so big feet make you tall",
+                "no: growth affects both"
+              ]
+            ]
+          },
+          "alt": "A table of two correlations and the wrong causal claim made from each: ice cream and drowning rise together because of hot weather, and height and foot size rise together because growth affects both"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two measurements on the same thing",
+        "body": "Everything in this topic starts with **bivariate data**: **two** measurements taken from each member of a group.\n\nTwelve students, and for each one the hours they revised **and** the mark they got. Each student becomes one **point**: hours across, mark up.\n\nThe variable that is chosen or set goes on the **x-axis**, and the one that is measured goes on the **y-axis**. Here, hours revised is chosen and the mark follows, so hours is x.\n\nOnce plotted, the useful question is no longer about any one student. It is about the **shape of the whole cloud of points**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                14
+              ],
+              "yRange": [
+                0,
+                100
+              ],
+              "xStep": 2,
+              "yStep": 20,
+              "xLabel": "Hours of revision",
+              "yLabel": "Test mark",
+              "points": [
+                {
+                  "x": 2,
+                  "y": 41
+                },
+                {
+                  "x": 3,
+                  "y": 48
+                },
+                {
+                  "x": 4,
+                  "y": 52
+                },
+                {
+                  "x": 5,
+                  "y": 57
+                },
+                {
+                  "x": 5,
+                  "y": 49
+                },
+                {
+                  "x": 6,
+                  "y": 63
+                },
+                {
+                  "x": 7,
+                  "y": 66
+                },
+                {
+                  "x": 8,
+                  "y": 71
+                },
+                {
+                  "x": 9,
+                  "y": 78
+                },
+                {
+                  "x": 10,
+                  "y": 82
+                },
+                {
+                  "x": 11,
+                  "y": 86
+                },
+                {
+                  "x": 12,
+                  "y": 91
+                }
+              ]
+            },
+            "alt": "A scatter graph of test mark against hours of revision for twelve students, the points rising from about 41 marks at two hours to about 91 marks at twelve, with one student at five hours scoring lower than the trend"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "On a scatter graph of test mark against hours of revision, what does a single point represent?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "scatter graphs",
+          "calculator": "either",
+          "tags": [],
+          "solution": "One **student**, with both of their measurements: the hours they revised and the mark they got.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "one student, with both measurements"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The average mark of the whole class",
+            "One student, with both of their measurements",
+            "The total number of hours the class revised",
+            "One of the two variables being measured"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Naming the correlation",
+        "body": "**Correlation** is the word for a relationship between the two variables, and it is described in **two words**: strength, then direction.\n\n- **Positive correlation** — as one goes up, so does the other. The cloud slopes **up** to the right.\n- **Negative correlation** — as one goes up, the other goes down. The cloud slopes **down** to the right.\n- **No correlation** — no slope worth speaking of. The points are scattered with no trend.\n\nAnd the strength:\n\n- **Strong** — the points sit close to a line.\n- **Weak** — there is a trend, but the points are spread widely around it.\n\nThe revision graph is **strong positive** correlation.\n\n**Say it in context too.** *The more hours a student revised, the higher their mark* is what an *interpret* question wants; “it goes up” is not.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "The three pictures, and the words for them",
+              "columns": [
+                "The cloud",
+                "The words"
+              ],
+              "rows": [
+                [
+                  "slopes up to the right",
+                  "positive correlation"
+                ],
+                [
+                  "slopes down to the right",
+                  "negative correlation"
+                ],
+                [
+                  "no slope, just scatter",
+                  "no correlation"
+                ],
+                [
+                  "points hug a line",
+                  "strong"
+                ],
+                [
+                  "points spread widely",
+                  "weak"
+                ]
+              ]
+            },
+            "alt": "A table matching what a scatter graph looks like to the words for it: sloping up is positive, sloping down is negative, no slope is no correlation, points close to a line is strong and points spread widely is weak"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "A scatter graph of a car’s value against its age slopes downwards, with the points lying close to a line. How is that described?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "correlation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Downwards is **negative**; close to a line is **strong**. So **strong negative correlation** — the older the car, the lower its value.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "strong negative correlation"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Strong negative correlation",
+            "Weak positive correlation",
+            "Strong positive correlation",
+            "No correlation at all"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "The line of best fit",
+        "body": "A **line of best fit** is a single straight line drawn **by eye** through the trend. The specification calls it an *estimated* line, and that word is doing work: there is no calculation, and two sensible people will draw slightly different lines.\n\nWhat makes a line right:\n\n- It follows the **direction of the trend**.\n- It has **roughly as many points above it as below**.\n- It is a **single straight line**, drawn with a ruler, across the range of the data.\n\nWhat loses marks:\n\n- **Joining the first and last points.** That uses two of the twelve and ignores the rest.\n- **Forcing it through the origin.** Only do that if the context demands it — here it would mean no revision gives no marks, which the data says is false.\n- **Drawing a curve**, or a line that zigzags between points.\n\nFor the revision data a reasonable line rises about **5 marks per hour** and crosses the mark axis near **31**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                14
+              ],
+              "yRange": [
+                0,
+                100
+              ],
+              "xStep": 2,
+              "yStep": 20,
+              "xLabel": "Hours of revision",
+              "yLabel": "Test mark",
+              "points": [
+                {
+                  "x": 2,
+                  "y": 41
+                },
+                {
+                  "x": 3,
+                  "y": 48
+                },
+                {
+                  "x": 4,
+                  "y": 52
+                },
+                {
+                  "x": 5,
+                  "y": 57
+                },
+                {
+                  "x": 5,
+                  "y": 49
+                },
+                {
+                  "x": 6,
+                  "y": 63
+                },
+                {
+                  "x": 7,
+                  "y": 66
+                },
+                {
+                  "x": 8,
+                  "y": 71
+                },
+                {
+                  "x": 9,
+                  "y": 78
+                },
+                {
+                  "x": 10,
+                  "y": 82
+                },
+                {
+                  "x": 11,
+                  "y": 86
+                },
+                {
+                  "x": 12,
+                  "y": 91
+                }
+              ],
+              "lines": [
+                {
+                  "m": 5,
+                  "c": 31,
+                  "label": "line of best fit"
+                }
+              ]
+            },
+            "alt": "The same scatter graph of test mark against hours of revision, with a straight line of best fit drawn through the points, rising about 5 marks for each extra hour and meeting the mark axis near 31"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "Which of these is the best description of how to draw a line of best fit?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "line of best fit",
+          "calculator": "either",
+          "tags": [],
+          "solution": "By eye, following the trend, with **roughly as many points above as below**. Not through the first and last points, and not forced through the origin.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a straight line following the trend with roughly equal points either side"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "A straight line through the trend, with about as many points each side",
+            "Join the first point to the last point with a ruler",
+            "Start at the origin and pass through as many points as you can",
+            "A curve bending through the middle of every one of the points"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Worked example: using the line to predict",
+        "body": "The line is only useful once you read something off it. The method is the same every time, and the last step is the one that earns the marks.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Using the line of best fit on the revision graph, estimate the mark of a student who revised for 6 hours. Then say how much confidence to place in the estimate.",
+            "steps": [
+              {
+                "text": "Find 6 on the **hours** axis and go straight up to the line."
+              },
+              {
+                "text": "From the line, go straight across to the **mark** axis and read the value."
+              },
+              {
+                "text": "The reading is about **61 marks**.",
+                "note": "From the line y = 5x + 31: 5 × 6 + 31 = 61."
+              },
+              {
+                "text": "6 hours is **inside** the range of the data, which runs from 2 to 12 hours.",
+                "note": "Reading inside the data is called interpolation."
+              },
+              {
+                "text": "So the estimate is **reasonably reliable** — though it is still an estimate, because the points are scattered about the line rather than on it."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "A line of best fit has equation y = 5x + 31, where x is hours revised and y is the test mark. Use it to estimate the mark of a student who revised for 8 hours.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "line of best fit",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$5 \\times 8 + 31 = 71$ marks.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "substitutes 8 into y = 5x + 31"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "71"
+            }
+          ],
+          "discriminators": [],
+          "answer": 71,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "marks"
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Interpolation, extrapolation, and the danger",
+        "body": "The specification asks you to *interpolate and extrapolate apparent trends while knowing the dangers of so doing*. Both words, and the danger.\n\n**Interpolation** is reading **inside** the range of the data. The revision data runs from 2 to 12 hours, so any reading between those is interpolation, and reasonably safe: the trend was actually measured there.\n\n**Extrapolation** is reading **beyond** the data. It assumes the trend keeps going, and nothing in the data says it does.\n\nThe revision line makes the danger obvious. Extend it to **20 hours** and it predicts **131 marks** on a paper marked out of **100**. The arithmetic is right; the line has been asked a question the data cannot answer.\n\n> A prediction is only as good as the range it came from, and a line does not know where its data stopped.\n\nReal trends flatten, bend or reverse outside the range that was measured. Revision has diminishing returns; a plant stops growing however much fertiliser it is given.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Which kind of reading, and how far to trust it",
+              "columns": [
+                "The reading",
+                "Which, and how safe"
+              ],
+              "rows": [
+                [
+                  "4 hours, data covers 2 to 12",
+                  "interpolation: reasonably safe"
+                ],
+                [
+                  "11 hours, data covers 2 to 12",
+                  "interpolation: reasonably safe"
+                ],
+                [
+                  "20 hours, data covers 2 to 12",
+                  "extrapolation: unreliable"
+                ],
+                [
+                  "0 hours, data covers 2 to 12",
+                  "extrapolation: outside the data"
+                ]
+              ]
+            },
+            "alt": "A table of four readings from a line of best fit, showing that readings between two and twelve hours are interpolation and reasonably safe, while readings at twenty or zero hours are extrapolation and unreliable"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Data was collected for between 2 and 12 hours of revision. Why is it unreliable to use the line to predict the mark for 20 hours?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "interpolation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "20 hours is **outside the range of the data**, so it assumes a trend continues where nothing was measured. Here it predicts a mark above the maximum available.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "it is outside the range of the data collected"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Because the line of best fit was drawn by eye, not calculated",
+            "Because the correlation is positive rather than negative",
+            "Because there were only twelve students in the sample",
+            "Because 20 hours is outside the range of the data collected"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Correlation is not causation",
+        "body": "This is the sentence the specification names, and it is worth having word for word: **correlation does not indicate causation**.\n\nA correlation says the two things **move together**. It does not say one **makes** the other happen. Three things could be going on:\n\n- **A causes B.** More revision really does raise the mark.\n- **B causes A.** The arrow points the other way from the one assumed.\n- **A third factor causes both.** Ice cream sales and drownings rise together because of the **weather**.\n\nAnd with a small sample, a fourth: **coincidence**.\n\n**How the question is asked.** *“A newspaper says this proves that owning more books makes children cleverer. Comment on this.”* The answer has two halves, and both are needed:\n\n1. Say what the data **does** show: a positive correlation.\n2. Say what it **does not** show: that one causes the other, because a third factor — here a home with more books may also be one with more help and time to read — could explain both.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Four things a correlation could mean",
+              "columns": [
+                "Possibility",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "A causes B",
+                  "revision raises the mark"
+                ],
+                [
+                  "B causes A",
+                  "the arrow points the other way"
+                ],
+                [
+                  "a third factor causes both",
+                  "hot weather: ice cream and drowning"
+                ],
+                [
+                  "coincidence",
+                  "a small sample, and bad luck"
+                ]
+              ]
+            },
+            "alt": "A table of the four explanations for a correlation: A causes B, B causes A, a third factor causes both, or coincidence in a small sample"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "A study finds a strong positive correlation between the number of firefighters sent to a fire and the damage the fire causes. What is the best conclusion?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "causation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A third factor — the **size of the fire** — causes both. Bigger fires get more firefighters **and** do more damage. The correlation is real; the causal claim is not.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a third factor, the size of the fire, explains both"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "Sending firefighters to a fire causes more damage to be done",
+            "Damage to a building causes more firefighters to be sent out",
+            "The correlation must have arisen entirely by pure chance",
+            "A third factor, the size of the fire, explains both of them"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**1.** A scatter graph of a car's mileage against its price slopes down, with the points quite spread out. Describe the correlation in two words, and then in context.\n\n**2.** A line of best fit has equation y = 5x + 31. Estimate y when x = 4.\n\n**3.** The data behind that line covers x from 2 to 12. A student uses it to find y when x = 25. Name what they have done and say why the answer should not be trusted.\n\n**4.** A report says that towns with more libraries have lower crime. Explain why this does not show that libraries reduce crime.\n\n**Answers.** 1. **Weak negative** correlation: the higher the mileage, the lower the price, but the points are spread so the relationship is not tight. 2. $5 \\times 4 + 31 = 51$. 3. **Extrapolation** — reading beyond the range of the data, so it assumes a trend that was never measured there. 4. It shows a **correlation**, not a cause. A **third factor**, such as the size or wealth of the town, could affect both the number of libraries and the crime rate.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Check yourself against these",
+              "columns": [
+                "Question",
+                "What the mark scheme wants"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "weak negative, then in context"
+                ],
+                [
+                  "2",
+                  "51, from substituting x = 4"
+                ],
+                [
+                  "3",
+                  "extrapolation; outside the data"
+                ],
+                [
+                  "4",
+                  "correlation not cause; a third factor"
+                ]
+              ]
+            },
+            "alt": "A table giving, for each of the four practice questions, the words the mark scheme is looking for"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "Points are spread widely around a line that slopes downwards. What is the correlation?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "correlation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Spread widely is **weak**; sloping down is **negative**. So **weak negative**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "weak negative"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Strong negative correlation",
+            "Weak positive correlation",
+            "Weak negative correlation",
+            "Strong positive correlation"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: outliers, and what a line cannot tell you",
+        "body": "**Outliers.** One point well away from the trend is an **outlier**. On the revision graph, the student who revised for 5 hours and scored 49 sits below the others at that point.\n\nYou are not allowed to delete it because it is inconvenient. What you can say is:\n\n- it may be a **recording error**, worth checking; or\n- it may be **genuine** — that student was ill, or had studied the wrong thing.\n\nA single outlier **pulls a by-eye line towards it**, so it is worth noticing before drawing.\n\n**What the line cannot tell you.** Even a strong correlation with a tidy line leaves three things unsaid:\n\n- **Nothing about any individual.** The line gives the trend; a particular student may sit far off it.\n- **Nothing outside the range.** See extrapolation.\n- **Nothing about cause.** See above, and expect to be asked.\n\n**The mean point.** A line of best fit should pass through the point $(\\bar{x}, \\bar{y})$ — the mean of the x values and the mean of the y values. For the revision data that is about $(7, 65)$. Plotting it first and drawing the line through it is the quickest way to get a by-eye line in a defensible place.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "What an outlier is, and is not",
+              "columns": [
+                "",
+                "What to do"
+              ],
+              "rows": [
+                [
+                  "a point far off the trend",
+                  "call it an outlier"
+                ],
+                [
+                  "it may be a recording error",
+                  "say so, and check it"
+                ],
+                [
+                  "it may be genuine",
+                  "say what could explain it"
+                ],
+                [
+                  "it is inconvenient",
+                  "that is not a reason to delete it"
+                ],
+                [
+                  "a by-eye line",
+                  "is pulled towards it, so notice it first"
+                ]
+              ]
+            },
+            "alt": "A table on handling an outlier: name it, consider whether it is a recording error or genuine, never delete it for being inconvenient, and notice it before drawing a line because a by-eye line is pulled towards it"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "A scatter graph has one point far from the trend. What should be done with it?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "outliers",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Identify it as an **outlier** and comment on it. It might be an error worth checking, or genuine — but it is not deleted for being inconvenient.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "identify it as an outlier and comment, rather than delete it"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "Delete it, because it spoils the correlation being shown",
+            "Move the line of best fit so that it passes through it",
+            "Identify it as an outlier and say what might explain it",
+            "Ignore it completely and make no mention of it at all"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Bivariate data** is two measurements from each member of a group; each becomes one **point**.\n- The variable **chosen** goes on the **x-axis**, the one **measured** on the y-axis.\n- **Correlation** is described in two words: **strength** then **direction**.\n- **Positive** slopes up, **negative** slopes down, **no correlation** has no trend.\n- **Strong** means the points hug a line; **weak** means they are spread around it.\n- Say it **in context** as well: *the more x, the higher y*.\n- A **line of best fit** is drawn **by eye**, straight, following the trend, with **roughly as many points above as below**.\n- Do **not** join the first and last points, and do **not** force it through the origin.\n- It should pass through the **mean point** $(\\bar{x}, \\bar{y})$.\n- **Interpolation** reads **inside** the data: reasonably reliable.\n- **Extrapolation** reads **outside** it: unreliable, because the trend is assumed, not measured.\n- On this data, 20 hours predicts **131 marks** out of 100 — the danger, in one number.\n- **Correlation does not indicate causation.** A third factor may cause both.\n- An **outlier** is noticed and explained, not deleted.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                14
+              ],
+              "yRange": [
+                0,
+                100
+              ],
+              "xStep": 2,
+              "yStep": 20,
+              "xLabel": "Hours of revision",
+              "yLabel": "Test mark",
+              "points": [
+                {
+                  "x": 2,
+                  "y": 41
+                },
+                {
+                  "x": 3,
+                  "y": 48
+                },
+                {
+                  "x": 4,
+                  "y": 52
+                },
+                {
+                  "x": 5,
+                  "y": 57
+                },
+                {
+                  "x": 5,
+                  "y": 49
+                },
+                {
+                  "x": 6,
+                  "y": 63
+                },
+                {
+                  "x": 7,
+                  "y": 66
+                },
+                {
+                  "x": 8,
+                  "y": 71
+                },
+                {
+                  "x": 9,
+                  "y": 78
+                },
+                {
+                  "x": 10,
+                  "y": 82
+                },
+                {
+                  "x": 11,
+                  "y": 86
+                },
+                {
+                  "x": 12,
+                  "y": 91
+                }
+              ],
+              "lines": [
+                {
+                  "m": 5,
+                  "c": 31,
+                  "label": "line of best fit"
+                }
+              ]
+            },
+            "alt": "The same scatter graph of test mark against hours of revision, with a straight line of best fit drawn through the points, rising about 5 marks for each extra hour and meeting the mark axis near 31"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Reading a value from a line of best fit inside the range of the data is called what?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "interpolation",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**Interpolation**. Reading beyond the data is extrapolation, and is unreliable.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "interpolation"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Extrapolation",
+            "Interpolation",
+            "Correlation",
+            "Estimation"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "multiple-choice",
+      "prompt": "What is bivariate data?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "scatter graphs",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each member of the group contributes **two** measurements, and so becomes one point on the scatter graph.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "two measurements from each member"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Two measurements taken from each member of a group",
+        "Data that has been collected on two separate days",
+        "Any set of data that contains exactly two values",
+        "Data shown on two different graphs side by side"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "multiple-choice",
+      "prompt": "A scatter graph of points slopes upwards to the right. What kind of correlation is this?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "correlation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Up to the right means that as one variable increases so does the other: **positive** correlation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "positive correlation"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Negative correlation",
+        "Positive correlation",
+        "No correlation at all",
+        "Inverse correlation"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q3",
+      "type": "multiple-choice",
+      "prompt": "On a scatter graph of test mark against hours of revision, what goes on the x-axis?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "scatter graphs",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The variable **chosen or set** goes across; the one **measured** goes up. Hours are chosen and the mark follows.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "hours of revision"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Hours of revision, the variable that is chosen",
+        "The test mark, because it is the larger number",
+        "Whichever of the two has the smaller range",
+        "The number of students in the whole group"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "The points on a scatter graph lie very close to a straight line. How is that described?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "correlation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Closeness to a line is **strength**. Hugging the line is strong; spread out is weak.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "strong correlation"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "A strong correlation between the variables",
+        "A weak correlation between the variables",
+        "No correlation between the variables",
+        "A causal link between the variables"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "Which of these is the correct way to draw a line of best fit?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Straight, by eye, following the trend, with **roughly as many points above as below**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a straight line following the trend"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Join the first and the last point with a ruler",
+        "A curve that passes through every single point",
+        "A straight line through the trend, points either side",
+        "A line from the origin to the highest point plotted"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "multiple-choice",
+      "prompt": "Why should a line of best fit usually not be forced through the origin?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Only force it through the origin if the context says zero of one means zero of the other. On the revision data, no revision still scores marks.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "only if zero x really gives zero y"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Because the origin is never part of the data collected",
+        "Because a line through the origin cannot have a gradient",
+        "Because it only fits if zero x really does give zero y",
+        "Because the origin always counts as an outlying point"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A line of best fit for twelve students has equation y = 5x + 31, where x is hours of revision and y is the test mark out of 100. The data collected covered 2 to 12 hours. Use the line to estimate the mark of a student who revised for 4 hours.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5 \\times 4 + 31 = 51$ marks.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes x = 4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "51"
+        }
+      ],
+      "discriminators": [],
+      "answer": 51,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "marks"
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "A line of best fit for twelve students has equation y = 5x + 31, where x is hours of revision and y is the test mark out of 100. The data collected covered 2 to 12 hours. Use the line to estimate the mark of a student who revised for 10 hours.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5 \\times 10 + 31 = 81$ marks.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes x = 10"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "81"
+        }
+      ],
+      "discriminators": [],
+      "answer": 81,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "marks"
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "Reading a value from a line of best fit within the range of the data is called what?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "interpolation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Interpolation** is inside the data and reasonably safe. Extrapolation is outside it and is not.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "interpolation"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Interpolation",
+        "Extrapolation",
+        "Estimation",
+        "Correlation"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "multiple-choice",
+      "prompt": "A car loses value as its mileage rises, and the points lie close to a line. Describe the correlation.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "correlation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "One rises as the other falls, so **negative**; the points hug a line, so **strong**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "strong negative correlation"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Strong positive correlation",
+        "Weak negative correlation",
+        "Strong negative correlation",
+        "No correlation at all"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "A line of best fit for twelve students has equation y = 5x + 31, where x is hours of revision and y is the test mark out of 100. The data collected covered 2 to 12 hours. A student uses it to estimate the mark for 20 hours of revision. What mark does the line give?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "interpolation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5 \\times 20 + 31 = 131$ — which is impossible on a paper marked out of 100, and is exactly why extrapolating this far is unreliable.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes x = 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "131"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 131,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "marks"
+    },
+    {
+      "id": "q12",
+      "type": "multiple-choice",
+      "prompt": "Why is the estimate for 20 hours of revision unreliable, when the data covered only 2 to 12 hours?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "interpolation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It is **extrapolation**: beyond the data, the trend is assumed rather than measured. Here it predicts a mark above the maximum available.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it goes beyond the range of the data"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Because twelve students is too small a sample to use",
+        "Because the correlation is positive rather than negative",
+        "Because the line of best fit was drawn by eye, not calculated",
+        "Because it extrapolates beyond the range that was measured"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Ice cream sales and the number of drownings both rise over the summer. What does this show?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "causation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A real **correlation**, with a **third factor** — hot weather — behind both. Correlation does not indicate causation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a correlation explained by a third factor"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "That buying ice cream makes drowning more likely to happen",
+        "That there is no real relationship between the two at all",
+        "That the data must have been collected incorrectly",
+        "A correlation, probably explained by the hot weather"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A newspaper reports that children with more books at home score higher in tests, and concludes that buying books raises scores. What is wrong with the conclusion?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "causation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The data shows the two move together. It does not show one **causes** the other: a home with more books may also give more time and help with reading.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it treats correlation as causation"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Nothing at all: the correlation does prove the claim made",
+        "It treats a correlation as proof of cause, ignoring third factors",
+        "The two variables should have been plotted the other way round",
+        "A scatter graph cannot be used for this kind of data at all"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "multiple-choice",
+      "prompt": "A point on a scatter graph lies well away from the trend. What is it called, and what should be done?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "outliers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An **outlier**. It might be a recording error or genuine, and either way it is commented on rather than quietly deleted.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "an outlier, identified and commented on"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "An anomaly, which is always deleted before drawing a line",
+        "An outlier, which is identified and commented on, not removed",
+        "A mean point, through which the line of best fit must pass",
+        "An error, which means the whole data set must be collected again"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "A line of best fit should pass through which particular point?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Through $(\\bar{x}, \\bar{y})$, the **mean point**. Plotting it first is the quickest way to place a by-eye line defensibly.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the mean point"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "The point where both values are at their very largest",
+        "The very first point that was plotted on the scatter graph",
+        "The origin, where both of the variables are equal to zero",
+        "The mean point, the mean of x against the mean of y"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "extended",
+      "prompt": "A gardener records the amount of fertiliser given to 15 tomato plants and the mass of tomatoes each plant produced. The scatter graph shows strong positive correlation for amounts between 10 g and 50 g of fertiliser. The gardener concludes that giving 200 g of fertiliser will produce an enormous crop, and that fertiliser causes growth. Comment on both conclusions.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "causation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first conclusion extrapolates. The data covers 10 g to 50 g of fertiliser, and 200 g is far outside that range, so the prediction assumes the trend continues where nothing was measured. Real trends rarely continue indefinitely: the yield is likely to flatten off, and too much fertiliser can damage a plant, so the crop could be smaller rather than enormous.\n\nThe second conclusion confuses correlation with causation. The graph shows that the amount of fertiliser and the mass of tomatoes rise together, which is a correlation. It does not on its own show that the fertiliser causes the growth. A third factor could be behind both: the plants that were given more fertiliser may also have been the better-tended ones, getting more water and more light as well.\n\nTo support the causal claim the gardener would need a controlled experiment, keeping water, light and soil the same and varying only the fertiliser.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "identifies the 200 g prediction as extrapolation"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states it is outside the 10 g to 50 g range that was measured"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "explains the trend is assumed, and real trends flatten or reverse (too much fertiliser can harm a plant)"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states the graph shows correlation"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "states correlation does not indicate causation"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "gives a possible third factor, such as better-tended plants getting both more fertiliser and more water or light"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "criteria": [
+        {
+          "text": "Identifies the 200 g prediction as extrapolation",
+          "marks": 1
+        },
+        {
+          "text": "Says it lies outside the 10 g to 50 g range of the data",
+          "marks": 1
+        },
+        {
+          "text": "Explains that the trend is assumed and may flatten or reverse",
+          "marks": 1
+        },
+        {
+          "text": "States that the graph shows a correlation",
+          "marks": 1
+        },
+        {
+          "text": "States that correlation does not indicate causation",
+          "marks": 1
+        },
+        {
+          "text": "Offers a plausible third factor that could explain both",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The first conclusion extrapolates. The data covers 10 g to 50 g of fertiliser, and 200 g is far outside that range, so the prediction assumes the trend continues where nothing was measured. Real trends rarely continue indefinitely: the yield is likely to flatten off, and too much fertiliser can damage a plant, so the crop could be smaller rather than enormous.\n\nThe second conclusion confuses correlation with causation. The graph shows that the amount of fertiliser and the mass of tomatoes rise together, which is a correlation. It does not on its own show that the fertiliser causes the growth. A third factor could be behind both: the plants that were given more fertiliser may also have been the better-tended ones, getting more water and more light as well.\n\nTo support the causal claim the gardener would need a controlled experiment, keeping water, light and soil the same and varying only the fertiliser.",
+      "suggestedMinutes": 6
+    },
+    {
+      "id": "q18",
+      "type": "extended",
+      "prompt": "Twelve students recorded their hours of revision, from 2 to 12 hours, and their mark out of 100. A line of best fit has equation y = 5x + 31. Explain what the gradient and the intercept of this line mean in the context of the data, and explain why the intercept should be treated with caution.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The gradient of the line is 5, and on this graph y is the mark and x is the hours of revision. So the gradient is the change in mark for each extra hour: on average, a student who revises for one hour longer scores about 5 marks more.\n\nThe intercept is 31, which is the value of y when x is zero. In context that is the mark the line predicts for a student who did no revision at all: about 31 out of 100.\n\nThat second figure needs caution. The data collected covers 2 to 12 hours, so x = 0 lies outside it: no student in the sample did no revision. Reading the line there is extrapolation, and it assumes the straight-line trend continues below 2 hours when nothing was measured to show that it does. The intercept is a property of the line, not a finding about students who do not revise.",
+      "markScheme": [
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the gradient 5 is the change in mark per extra hour"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states about 5 extra marks for each extra hour of revision"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the intercept 31 is the value of y when x = 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "states about 31 marks for a student who did no revision"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "notes x = 0 lies outside the data, which began at 2 hours"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "so the intercept is an extrapolation and is not supported by the data"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "criteria": [
+        {
+          "text": "Identifies the gradient as the change in mark per extra hour",
+          "marks": 1
+        },
+        {
+          "text": "Interprets it as about 5 marks for each extra hour",
+          "marks": 1
+        },
+        {
+          "text": "Identifies the intercept as the mark when x is zero",
+          "marks": 1
+        },
+        {
+          "text": "Interprets it as about 31 marks with no revision",
+          "marks": 1
+        },
+        {
+          "text": "Notes that zero hours is outside the range of the data",
+          "marks": 1
+        },
+        {
+          "text": "Concludes that the intercept is an extrapolation and not supported",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The gradient of the line is 5, and on this graph y is the mark and x is the hours of revision. So the gradient is the change in mark for each extra hour: on average, a student who revises for one hour longer scores about 5 marks more.\n\nThe intercept is 31, which is the value of y when x is zero. In context that is the mark the line predicts for a student who did no revision at all: about 31 out of 100.\n\nThat second figure needs caution. The data collected covers 2 to 12 hours, so x = 0 lies outside it: no student in the sample did no revision. Reading the line there is extrapolation, and it assumes the straight-line trend continues below 2 hours when nothing was measured to show that it does. The intercept is a property of the line, not a finding about students who do not revise.",
+      "suggestedMinutes": 6
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 18
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "Describe correlation in two words, strength then direction, and then say it again in the words of the question. “Strong positive” earns the first mark; “the more hours revised, the higher the mark” earns the interpretation mark.\n\nDraw a line of best fit with a ruler, straight, following the trend, with roughly as many points above it as below. Do not join the first and last points, and do not force it through the origin unless the context says zero gives zero.\n\nWhen reading a value off the line, draw the lines on the graph. Examiners give method marks for the construction lines even when the reading is slightly out.\n\nName interpolation and extrapolation when asked how reliable a prediction is, and say which range the data covered. A prediction outside that range is unreliable because the trend is assumed rather than measured.\n\nFor any “does this prove” question, answer in two halves: what the data does show (a correlation) and what it does not (a cause), then offer a third factor that could explain both.",
+    "examinerErrors": [
+      "Giving only the direction — “positive” — when the question asks you to describe the correlation, which wants the strength too.",
+      "Describing the correlation but never putting it in the context of the question.",
+      "Joining the first and last points instead of drawing a line of best fit through the trend.",
+      "Forcing the line through the origin when the data does not go there.",
+      "Reading from the points rather than from the line of best fit.",
+      "Using the line far outside the range of the data and not saying that this is unreliable.",
+      "Concluding that one variable causes the other from a correlation alone.",
+      "Deleting an outlier rather than identifying it and commenting on what might explain it."
+    ],
+    "grade9Looks": "A top answer treats the line of best fit as an estimate and says so: it gives a prediction, then says how far it can be trusted and why, naming interpolation or extrapolation and the range the data actually covered. Asked to interpret a gradient or an intercept, it puts both into the units of the question — marks per hour, and the mark at zero hours — and notices when the intercept is itself an extrapolation. On any claim about cause it answers in two halves, stating what the correlation does show before saying what it does not, and it names a plausible third factor rather than asserting that none exists. It notices an outlier before drawing the line, because a by-eye line is pulled towards one, and it comments on the outlier rather than removing it."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

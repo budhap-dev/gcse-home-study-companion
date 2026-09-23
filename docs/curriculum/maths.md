@@ -21,7 +21,7 @@ Board: not named in the overview. The PRD assumes Edexcel 1MA1 Higher. Homework 
 |---|---|---|
 | 1 | Indices: laws of indices, powers and roots, surds · Coordinate geometry: equations of lines, parallel and perpendicular lines · Constructing triangles · Congruency | Topic tests on powers, roots and surds, and on coordinate geometry |
 | 2 | Circle theorems · Algebraic manipulation: expanding and factorising quadratics, identities and equivalence, rearranging formulae · Solving quadratic equations | Topic test on circle theorems; synoptic test on everything since Year 9 |
-| 3 | Probability: combined events, tree diagrams, sample space diagrams, Venn diagrams, choices and outcomes · Sets and set notation · Histograms · Sequences: linear, quadratic, geometric, iteration | Topic tests on probability, and on ratio and proportion |
+| 3 | Probability: combined events, tree diagrams, sample space diagrams, Venn diagrams, choices and outcomes · Sets and set notation · Histograms · Scatter graphs and correlation · Sequences: linear, quadratic, geometric, iteration | Topic tests on probability, and on ratio and proportion |
 | 4 | Ratio and proportion · Similarity: linear scale factors · Trigonometry: exact values, sine rule, cosine rule, area of a triangle · Scale drawings and bearings | Topic tests on trigonometric ratios and exact values, and on sine rule, cosine rule, scale drawings and bearings; synoptic test since Year 9 |
 | 5 | Quadratic curves: turning points and intercepts · Inequalities: number line, regions, quadratic inequalities · Area and volume scale factors · Pythagoras in 3D · Trigonometry in 3D | Topic tests on quadratic curves and inequalities; synoptic assessment since Year 9 |
 | 6 | Limits of accuracy: rounding, upper and lower bounds · Surface areas and volumes · Vectors: arithmetic and geometry · Compound measures: speed, pressure, density, hourly pay, compound interest, growth and decay, rate of change, real-life graphs | Topic tests on vectors, and on compound measures and real-life graphs |
@@ -46,6 +46,6 @@ Board: not named in the overview. The PRD assumes Edexcel 1MA1 Higher. Homework 
 | `ratio-proportion-and-rates-of-change` | Ratio and proportion, similarity and scale factors, compound measures, growth and decay, direct and inverse proportion | Year 10 term 4 |
 | `geometry-and-measures` | Constructing triangles, congruency, circle theorems, trigonometry, bearings, 3D Pythagoras and trigonometry, surface area and volume, vectors, angles, constructions and loci | Year 10 term 1 |
 | `probability` | Combined events, tree diagrams, sample spaces, Venn diagrams, sets | Year 10 term 3 |
-| `statistics` | Histograms, cumulative frequency, box plots | Year 10 term 3 |
+| `statistics` | Histograms, cumulative frequency, box plots, scatter graphs and correlation | Year 10 term 3 |
 
 Authoring note: Year 10 term 1 needs topics from three units at once (indices in Number, straight lines in Algebra, constructions and congruency in Geometry). Write laws of indices first (done), then powers, roots and surds, then equations of straight lines.
