@@ -7,6 +7,7 @@ import { Confetti } from '../../components/Confetti.tsx'
 import { usePref } from '../../theme/prefs.ts'
 import { getTopic } from '../../content/index.ts'
 import { recordActivity } from '../../progress/store.ts'
+import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 /**
  * What to say at the end. Keyed to how the deck actually went rather than always
@@ -107,6 +108,8 @@ export function Flashcards() {
   const [run, setRun] = useState(0)
   const [leaving, setLeaving] = useState<'known' | 'again' | null>(null)
   const motion = usePref('motion')
+  // Only while cards are left: the well-done screen at the end is not revision.
+  useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'flashcards' }, queue.length > 0)
 
   /**
    * A finished deck is the one thing here worth recording: it is real revision, and until

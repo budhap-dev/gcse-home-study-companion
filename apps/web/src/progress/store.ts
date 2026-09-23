@@ -70,6 +70,33 @@ export interface ActivityRecord {
   turns?: number
 }
 
+/** Every kind of study screen, for time spent. The marked ones and the unmarked ones together. */
+export type StudyKind = 'lesson' | 'quiz' | 'worksheet' | 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
+
+/** Where a minute of study was spent. `topicId` is absent on the subject-wide exam technique page. */
+export interface StudyPlace {
+  subjectId: string
+  topicId?: string
+  kind: StudyKind
+}
+
+/**
+ * The key a minute is filed under in `time`: day, subject, topic and kind, joined by `|`.
+ *
+ * A flat map of numbers rather than a list of sessions, for the same reason `minutes` is one:
+ * two devices merge by taking the larger count per key, which cannot double a session that
+ * both copies already hold. None of the four parts can contain a `|` — days are ISO dates,
+ * ids are kebab case and kinds are fixed words.
+ */
+export function timeKey(day: string, place: StudyPlace): string {
+  return `${day}|${place.subjectId}|${place.topicId ?? ''}|${place.kind}`
+}
+
+export function parseTimeKey(key: string): StudyPlace & { day: string } {
+  const [day = '', subjectId = '', topicId = '', kind = ''] = key.split('|')
+  return { day, subjectId, topicId: topicId || undefined, kind: kind as StudyKind }
+}
+
 export interface ProgressState {
   attempts: AttemptRecord[]
   lessons: Record<string, LessonRecord>
@@ -77,6 +104,13 @@ export interface ProgressState {
   activities: ActivityRecord[]
   /** Study minutes per calendar day, ISO date keys. */
   minutes: Record<string, number>
+  /**
+   * The same minutes, filed by where they were spent: see `timeKey`. Recorded since 23
+   * September 2026, so a day before that has minutes and no `time`, and every reader has to
+   * treat the difference as study that was not split rather than as study that did not
+   * happen.
+   */
+  time: Record<string, number>
   /** Weekly goal in minutes. */
   goalMinutes: number
   /** ISO dates marked as days off; they do not break the streak. */
@@ -88,7 +122,7 @@ export interface ProgressState {
 export const DEFAULT_GOAL_MINUTES = 180
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, activities: [], minutes: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {} }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -99,7 +133,7 @@ function read(): ProgressState {
     if (raw) {
       const stored = JSON.parse(raw) as Partial<ProgressState>
       // A state written before `activities` existed has none, and every reader iterates it.
-      return { ...emptyState(), ...stored, activities: stored.activities ?? [] }
+      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {} }
     }
   } catch {
     // storage unavailable or corrupt: start clean
@@ -225,9 +259,18 @@ export function isoDate(d = new Date()): string {
   return new Date(d.getTime() - off).toISOString().slice(0, 10)
 }
 
-export function addStudyMinutes(minutes: number, day = isoDate()) {
+/**
+ * Adds study time to the day, and, when the screen knows where it is, to that place too.
+ * The daily total is still kept on its own because the weekly goal and every chart read it,
+ * and because minutes recorded before places existed are only in it.
+ */
+export function addStudyMinutes(minutes: number, day = isoDate(), place?: StudyPlace) {
   const state = read()
   state.minutes[day] = (state.minutes[day] ?? 0) + minutes
+  if (place) {
+    const key = timeKey(day, place)
+    state.time[key] = (state.time[key] ?? 0) + minutes
+  }
   write(state)
 }
 

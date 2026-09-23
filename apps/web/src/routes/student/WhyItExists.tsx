@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { getTopic } from '../../content/index.ts'
+import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useRecordActivity } from '../../progress/useRecordActivity.ts'
 
 /**
@@ -23,6 +24,7 @@ export function WhyItExists() {
   const subject = subjectId ? getSubject(subjectId) : undefined
   // Before the early return: a hook cannot be called conditionally.
   useRecordActivity(topic && { subjectId: topic.subjectId, topicId: topic.id }, 'why')
+  useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'why' })
   if (!topic || !subject) return <p>Unknown topic.</p>
   const why = topic.why
 

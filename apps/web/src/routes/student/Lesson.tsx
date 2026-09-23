@@ -53,7 +53,7 @@ export function Lesson() {
   const [result, setResult] = useState<MarkResult | null>(null)
   const [done, setDone] = useState(false)
   const [celebration, setCelebration] = useState<Settlement | null>(null)
-  useActivityTimer(!done)
+  useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'lesson' }, !done)
 
   useEffect(() => {
     if (topic && !done) saveLessonPosition(topic.id, index)
