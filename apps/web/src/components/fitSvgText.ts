@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState, type RefObject } from 'react'
 
 /**
  * Diagrams size their own viewBox from the shapes they draw, which cannot account for
@@ -133,4 +133,27 @@ export function useFitSvgText<T extends HTMLElement>() {
     }
   })
   return ref
+}
+
+/**
+ * The content width of the box a diagram sits in, kept current as it resizes. Undefined
+ * until measured, and where there is no layout to measure (tests, the server), in which
+ * case the diagram takes its natural width exactly as it always did.
+ */
+export function useAvailableWidth(svg: RefObject<SVGSVGElement | null>): number | undefined {
+  const [width, setWidth] = useState<number>()
+  useLayoutEffect(() => {
+    const box = svg.current?.parentElement
+    if (!box || typeof ResizeObserver === 'undefined') return
+    const measure = () => {
+      const style = getComputedStyle(box)
+      const inner = box.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+      if (inner > 0) setWidth(Math.floor(inner))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(box)
+    return () => observer.disconnect()
+  }, [svg])
+  return width
 }
