@@ -46,8 +46,8 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 - [ ] Alternator against dynamo: slip rings, commutator, pd–time graphs
 
 ### Chemistry (AQA 8462)
-- [ ] Haber process: how conditions change rate and yield, with graphs (4.10.4.1, HT)
-- [ ] 4.1.1.1: symbols and naming compounds, only partly taught
+- [x] Haber process: how conditions change rate and yield, with graphs (4.10.4.1, HT)
+- [x] 4.1.1.1: symbols and naming compounds, only partly taught
 
 ### Biology (Edexcel 1BI0)
 - [ ] Year 9 bridging units: five rows unwritten (microbes, immune system, nervous system,
