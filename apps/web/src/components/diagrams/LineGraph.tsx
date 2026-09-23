@@ -1,4 +1,5 @@
-import { useId } from 'react'
+import { useId, useLayoutEffect, useRef } from 'react'
+import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 
 interface Line {
@@ -83,6 +84,10 @@ interface Curve {
  * polygons [{points, label}] for shapes on the axes. A curve
  * may also carry `base` (with optional `scale`) for the exponential y = scale x base^x.
  */
+/** The graph's width with room to spare, and the least it narrows to on a phone. */
+const WIDE = 360
+const NARROWEST = 280
+
 export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const [xMin, xMax] = (props.xRange as [number, number] | undefined) ?? [-5, 5]
   const [yMin, yMax] = (props.yRange as [number, number] | undefined) ?? [-5, 5]
@@ -95,7 +100,11 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const grid = props.grid !== false
   const xLabel = typeof props.xLabel === 'string' ? props.xLabel : undefined
   const yLabel = typeof props.yLabel === 'string' ? props.yLabel : undefined
-  const W = 360
+  const svg = useRef<SVGSVGElement>(null)
+  const available = useAvailableWidth(svg)
+  useLayoutEffect(() => {
+    svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
+  }, [available])
   const H = 300
   const pad = 28
   /**
@@ -176,6 +185,15 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   // The left margin grows with the widest y label, so a 20 000 axis is not clipped.
   const padL = Math.max(pad, 12 + 6.2 * Math.max(...yTicks.map((v) => fmt(v).length)))
   /**
+   * 360 wide where there is room. A phone's narrowest card has about 298, and a graph
+   * that will not shrink below its drawn width scrolled 62px there with the right-hand
+   * end of the curve out of sight. So the plot narrows to the card, but never so far that
+   * two x tick numbers would run into each other.
+   */
+  const xTickChars = Math.max(1, ...xTicks.map((v) => fmt(v).length))
+  const least = Math.max(NARROWEST, Math.ceil(padL + pad + (xTicks.length - 1) * (7 * xTickChars + 8)))
+  const W = Math.max(least, Math.min(WIDE, available ?? WIDE))
+  /**
    * With `square` set, one graph unit is the same length on both axes, so a circle is
    * drawn round and a right angle looks like one. The plot takes the smaller of the two
    * scales and what is drawn is centred in the box left over. Without it the axes are
@@ -248,7 +266,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   // clip path, so the id comes from React rather than being a constant.
   const clip = useId().replace(/[^\w-]/g, '')
   return (
-    <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
+    <svg ref={svg} viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
       <defs><clipPath id={`box-${clip}`}><rect x={left} y={top} width={right - left} height={bottom - top} /></clipPath></defs>
       {grid && xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={top} x2={sx(v)} y2={bottom} stroke={RULE} />)}
       {grid && yTicks.map((v) => <line key={`gy${v}`} x1={left} y1={sy(v)} x2={right} y2={sy(v)} stroke={RULE} />)}

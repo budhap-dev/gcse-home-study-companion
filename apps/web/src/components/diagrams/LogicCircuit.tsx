@@ -1,4 +1,9 @@
+import { useLayoutEffect, useRef } from 'react'
+import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+
+/** Where the input wires start, just right of the input letters. */
+const WIRE_START = 28
 
 type Node = string | { op: 'NOT' | 'AND' | 'OR' | 'XOR'; inputs: Node[] }
 
@@ -18,6 +23,12 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
   const expr = props.expression as Node | undefined
   const show = (props.show as string) ?? 'both'
   const label = typeof props.label === 'string' ? props.label : undefined
+  const svg = useRef<SVGSVGElement>(null)
+  const available = useAvailableWidth(svg)
+  // A new width is a new layout, and the figure fitted the old one.
+  useLayoutEffect(() => {
+    svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
+  }, [available])
   if (!expr) return <p style={{ color: INK_2, font: FONT }}>{alt}</p>
 
   const variables = (() => {
@@ -71,20 +82,27 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
   // Lay the gates out by depth, so inputs are on the left and the output on the right.
   const depth = (n: Node): number => (typeof n === 'string' ? 0 : 1 + Math.max(...n.inputs.map(depth)))
   const levels = depth(expr)
-  const GATE_W = 56, GATE_H = 34, COL = 96
-  // The last gate's centre sits at 120 + levels * COL, so the right margin has to hold
-  // half a gate, the output wire and the Q. At 60 it held 28 of gate and left a two-pixel
-  // wire, which drew as a speck between the gate and the letter rather than as a wire.
-  const W = 120 + levels * COL + 90
+  // Gate centres sit at X0 + depth * COL. The first column starts far enough in that a
+  // wire from an input to a second-level gate turns before it reaches a first-level gate.
+  // COL is 96 where there is room; on a phone the columns close up (and the gates narrow
+  // with them) so a three-level circuit fits a 330-unit card instead of scrolling 166px
+  // with its output out of sight.
+  const X0 = 68
+  // The right margin holds half a gate, the output wire and the Q. At 60 it held 28 of
+  // gate and left a two-pixel wire, which drew as a speck between the gate and the letter.
+  const RIGHT = 84
+  const COL = Math.max(60, Math.min(96, Math.floor(((available ?? Infinity) - X0 - RIGHT) / levels)))
+  const GATE_W = Math.min(56, COL - 16), GATE_H = 34
+  const W = X0 + levels * COL + RIGHT
   const H = Math.max(120, 40 + variables.length * 46)
   const inputY = (i: number) => 44 + i * 46
 
   const placed: { x: number; y: number; node: Node }[] = []
   const place = (n: Node, level: number): { x: number; y: number } => {
-    if (typeof n === 'string') return { x: 96, y: inputY(variables.indexOf(n)) }
+    if (typeof n === 'string') return { x: WIRE_START, y: inputY(variables.indexOf(n)) }
     const kids = n.inputs.map((i) => place(i, level - 1))
     const y = kids.reduce((s, k) => s + k.y, 0) / kids.length
-    const x = 120 + depth(n) * COL
+    const x = X0 + depth(n) * COL
     placed.push({ x, y, node: n })
     return { x, y }
   }
@@ -120,9 +138,9 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
       : <polyline key={key} points={`${x1},${y1} ${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`} fill="none" stroke={INK} strokeWidth={1.5} />
 
   const circuit = (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
+    <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
       {variables.map((v, i) => (
-        <text key={v} x={20} y={inputY(i) + 5} fill={INK} style={{ font: DISPLAY, fontSize: 15, fontWeight: 700 }}>{v}</text>
+        <text key={v} x={12} y={inputY(i) + 5} fill={INK} style={{ font: DISPLAY, fontSize: 15, fontWeight: 700 }}>{v}</text>
       ))}
       {placed.flatMap((p) => {
         const gate = p.node as { op: string; inputs: Node[] }
@@ -131,7 +149,7 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
           // into the same gate stay apart.
           const spread = (k - (gate.inputs.length - 1) / 2) * 12
           const from = typeof child === 'string'
-            ? { x: 36, y: inputY(variables.indexOf(child)) }
+            ? { x: WIRE_START, y: inputY(variables.indexOf(child)) }
             : { x: placed.find((q) => q.node === child)!.x + GATE_W / 2, y: placed.find((q) => q.node === child)!.y }
           return wire(from.x, from.y, p.x - GATE_W / 2, p.y + spread, `w${p.x}-${p.y}-${k}`)
         })
@@ -174,7 +192,9 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
   )
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+    // Full width, so the circuit can measure the card it has to fit (its own box would
+    // otherwise shrink to the drawing and report the drawing's width back).
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, width: '100%' }}>
       {show !== 'table' && circuit}
       {show !== 'circuit' && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>

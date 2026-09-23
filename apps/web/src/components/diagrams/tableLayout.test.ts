@@ -2,7 +2,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { everyVisual } from '@study/shared'
 import { describe, expect, it } from 'vitest'
-import { CHAR_WIDTH, CELL_PADDING, FULL_ROW, MAX_TABLE_WIDTH, MIN_TEXT_PX, TEXT_PX, charBudget, columnWidths, fitColumns, naturalWidth, rowHeight, wrapCell } from './tableLayout.ts'
+import { CHAR_WIDTH, FULL_ROW, TIGHT_PADDING, MAX_TABLE_WIDTH, MIN_TEXT_PX, TEXT_PX, charBudget, columnWidths, fitColumns, naturalWidth, rowHeight, wrapCell } from './tableLayout.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
 const CONTENT = ROOT
@@ -148,12 +148,32 @@ describe('fitColumns', () => {
 
   it('never makes a column narrower than its longest word', () => {
     const fitted = fitColumns(['Word', 'Text'], [['photosynthesising', 'a b c d e f g h i j k l m n o p q r s t u v w x y z']], 120)
-    expect(fitted[0]).toBeGreaterThanOrEqual(CHAR_WIDTH * 'photosynthesising'.length + CELL_PADDING)
+    expect(fitted[0]).toBeGreaterThanOrEqual(CHAR_WIDTH * 'photosynthesising'.length + TIGHT_PADDING)
     for (const [i, w] of fitted.entries()) {
       const budget = charBudget(w)
       for (const line of wrapCell([['Word', 'Text'][i]!, ['photosynthesising', 'a b c d e f g h i j k l m n o p q r s t u v w x y z'][i]!].join(' '), budget)) {
         if (line.includes(' ')) expect(line.length).toBeLessThanOrEqual(budget)
       }
     }
+  })
+
+  it('closes up the padding when many short columns cannot fit at their word floors', () => {
+    const places = ['', '128', '64', '32', '16', '8', '4', '2', '1']
+    const byte = [['58', '0', '0', '1', '1', '1', '0', '1', '0'], ['Sum', '0', '1', '0', '1', '0', '0', '0', '0']]
+    expect(fitColumns(places, byte, 1000)).toEqual(columnWidths(places, byte))
+    const fitted = fitColumns(places, byte, 330)
+    expect(sum(fitted) + 2).toBeLessThanOrEqual(330)
+    // Loose enough still to keep a gap round each value, not packed to the glyphs.
+    expect(sum(fitted) + 2).toBeGreaterThan(300)
+    for (const [i, w] of fitted.entries()) {
+      const longest = Math.max(places[i]!.length, ...byte.map((r) => r[i]!.length))
+      expect(w).toBeGreaterThanOrEqual(CHAR_WIDTH * longest + TIGHT_PADDING)
+    }
+  })
+
+  it('stops closing up at the tight floor and lets the rest scroll', () => {
+    const cols = Array.from({ length: 20 }, (_, i) => `c${i}`)
+    const fitted = fitColumns(cols, [cols.map(() => 'word')], 330)
+    for (const w of fitted) expect(w).toBe(CHAR_WIDTH * 4 + TIGHT_PADDING)
   })
 })

@@ -1,4 +1,7 @@
+import { useLayoutEffect, useRef } from 'react'
+import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { wrapCell } from './tableLayout.ts'
 
 interface Node {
   /** AQA names four symbols, and each has its own shape. */
@@ -17,9 +20,18 @@ interface Loop {
   to: number
 }
 
-const W = 460
+/** The width the chart is drawn at when it has the room. */
+const WIDE = 460
 const NODE_W = 210
 const GAP = 26
+/** An 11px label's average character, a little generous so a label is never short of room. */
+const LABEL_CHAR = 6.2
+const LABEL_LINE = 13
+/** The loop's lanes: the left carries the decision's exit and its label, the right the "back" arrow. */
+const LOOP_LEFT = 36
+const LOOP_RIGHT = 48
+/** A lane with nothing in it. */
+const BARE = 8
 
 /** A decision is taller than the rest, because a diamond needs the room. */
 const heightOf = (n: Node) => (n.kind === 'decision' ? 76 : 48)
@@ -34,12 +46,35 @@ const heightOf = (n: Node) => (n.kind === 'decision' ? 76 : 48)
  * exit back up to an earlier node, which is how iteration is shown. That covers sequence,
  * selection and iteration, which is all the specification asks a student to read or draw.
  *
+ * The boxes are 210 units wide and the chart 460, the rest being lanes down each side.
+ * A phone card has about 300, so the lanes close up to what the loop lines and labels
+ * need, and a long side label wraps, rather than the chart scrolling sideways with its
+ * exits out of sight.
+ *
  * Props: { nodes: Node[], loop?: { from, to } }
  */
 export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const nodes = (props.nodes as Node[] | undefined) ?? []
-  if (nodes.length === 0) return <p>{alt}</p>
   const loop = props.loop as Loop | undefined
+  const svg = useRef<SVGSVGElement>(null)
+  const available = useAvailableWidth(svg)
+
+  // Without a loop, a decision's side exit is only a label to the right of the diamond.
+  const sideLabels = loop ? [] : nodes.flatMap((n) => (n.kind === 'decision' && n.no ? [n.no] : []))
+  const longest = Math.max(0, ...sideLabels.map((l) => l.length))
+  const room = Math.min(WIDE, available ?? WIDE)
+  const labelChars = Math.max(6, Math.min(longest, Math.floor((room - NODE_W - BARE - 14) / LABEL_CHAR)))
+  const leftNeed = loop ? LOOP_LEFT : BARE
+  const rightNeed = loop ? LOOP_RIGHT : longest ? 14 + Math.ceil(labelChars * LABEL_CHAR) : BARE
+  const W = Math.max(NODE_W + leftNeed + rightNeed, room)
+  const extra = (W - NODE_W - leftNeed - rightNeed) / 2
+  const cx = leftNeed + extra + NODE_W / 2
+
+  useLayoutEffect(() => {
+    svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
+  }, [W])
+
+  if (nodes.length === 0) return <p>{alt}</p>
 
   // Lay the nodes out down the page, keeping each one's top edge.
   const tops: number[] = []
@@ -49,9 +84,6 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
     y += heightOf(n) + GAP
   }
   const H = y
-  // Room down each side when there is a loop: the body returns up the right, and the
-  // decision's other exit comes down the left, past the body, to the node after it.
-  const cx = loop ? W / 2 : W / 2
   const centre = (i: number) => tops[i]! + heightOf(nodes[i]!) / 2
 
   const shape = (n: Node, i: number) => {
@@ -70,7 +102,7 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
   }
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 500 }} role="img" aria-label={alt}>
+    <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 500 }} role="img" aria-label={alt}>
       <defs>
         <marker id="fc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M 0 0 L 10 5 L 0 10 z" fill={INK_2} />
@@ -96,8 +128,10 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
           exit comes down the left, past the body, to whatever follows it. */}
       {loop && (() => {
         const decision = nodes[loop.to]!
-        const right = W - 18
-        const left = 18
+        // Room down each side: the body returns up the right, and the decision's other
+        // exit comes down the left, past the body, to the node after it.
+        const right = cx + NODE_W / 2 + LOOP_RIGHT - 6 + extra / 2
+        const left = cx - NODE_W / 2 - LOOP_LEFT + 6 - extra / 2
         const after = loop.from + 1
         const bodyBottom = tops[loop.from]! + heightOf(nodes[loop.from]!)
         return (
@@ -136,11 +170,16 @@ export function Flowchart({ props, alt }: { props: Record<string, unknown>; alt:
       ))}
 
       {/* A decision with no loop still labels the exit that leaves sideways. */}
-      {!loop && nodes.map((n, i) => (
-        n.kind === 'decision' && n.no
-          ? <text key={`no${i}`} x={cx + NODE_W / 2 + 6} y={centre(i) + 4} fontFamily={FONT} fontSize="11" fill={INK_2}>{n.no}</text>
-          : null
-      ))}
+      {!loop && nodes.map((n, i) => {
+        if (n.kind !== 'decision' || !n.no) return null
+        const lines = wrapCell(n.no, labelChars)
+        const first = centre(i) + 4 - ((lines.length - 1) * LABEL_LINE) / 2
+        return (
+          <text key={`no${i}`} x={cx + NODE_W / 2 + 6} y={first} fontFamily={FONT} fontSize="11" fill={INK_2}>
+            {lines.map((l, k) => <tspan key={k} x={cx + NODE_W / 2 + 6} dy={k === 0 ? 0 : LABEL_LINE}>{l}</tspan>)}
+          </text>
+        )
+      })}
     </svg>
   )
 }
