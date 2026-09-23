@@ -16,6 +16,7 @@ interface Row { email: string; role: 'parent' | 'student'; note: string | null; 
 export function FamilyPanel() {
   const auth = useAuth()
   const [rows, setRows] = useState<Row[]>([])
+  const [profiles, setProfiles] = useState<Record<string, string>>({})
   const [email, setEmail] = useState('')
   const [role, setRole] = useState<'parent' | 'student'>('student')
   const [note, setNote] = useState('')
@@ -29,6 +30,11 @@ export function FamilyPanel() {
     const { data, error } = await supabase.from('allowed_emails').select('email, role, note, added_at').order('added_at')
     if (error) setMessage(error.message)
     else setRows((data ?? []) as Row[])
+    // The Google names, so this list calls people what the Family screen calls them. It
+    // used to read the note and the email only, and so could show a different name from
+    // the dashboard for the same child. Names are a nicety: a failure leaves the list as is.
+    const names = await supabase.from('user_progress').select('email, display_name')
+    if (!names.error) setProfiles(Object.fromEntries((names.data ?? []).flatMap((r) => (r.display_name ? [[r.email as string, r.display_name as string]] : []))))
   }
   useEffect(() => { if (auth.status === 'allowed') void load() }, [auth.status])
 
@@ -67,7 +73,7 @@ export function FamilyPanel() {
               <span className="flex min-w-0 flex-col">
                 {/* The name leads, because that is who this row is. The address is how
                     they sign in, which matters far less once the account exists. */}
-                <span className="truncate font-bold">{personName({ note: r.note, email: r.email })}{r.email === auth.email && <span className="ml-2 text-xs font-normal text-ink-2">(you)</span>}</span>
+                <span className="truncate font-bold">{personName({ note: r.note, profile: profiles[r.email], email: r.email })}{r.email === auth.email && <span className="ml-2 text-xs font-normal text-ink-2">(you)</span>}</span>
                 <span className="truncate text-xs text-ink-2">{r.role} · {r.email}</span>
               </span>
               <span className="flex shrink-0 gap-1">

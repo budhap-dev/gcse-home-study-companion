@@ -7,6 +7,18 @@ describe('personName', () => {
     expect(personName({ note: '  Abhi  ', email: 'a@b.com' })).toBe('Abhi')
   })
 
+  /**
+   * The note field used to read "Name or note", and a note of "Student" typed then became
+   * what the parent's dashboard called the child once the note started to mean the name.
+   */
+  it('passes over a note or profile that only names the role', () => {
+    expect(personName({ note: 'Student', profile: 'Abhigyan Pandit', email: 'abhigyan.pandit1@gmail.com' })).toBe('Abhigyan Pandit')
+    expect(personName({ note: ' student ', email: 'abhigyan.pandit1@gmail.com' })).toBe('Abhigyan Pandit')
+    expect(personName({ note: 'Parent', profile: 'Student', email: 'abhigyan.pandit1@gmail.com' })).toBe('Abhigyan Pandit')
+    // A real name that merely contains the word is still a name.
+    expect(personName({ note: 'Student Abhi', email: 'x@y.com' })).toBe('Student Abhi')
+  })
+
   it('falls back to the profile name from the account', () => {
     expect(personName({ note: null, profile: 'Abhigyan Pandit', email: 'abhigyan.pandit1@gmail.com' })).toBe('Abhigyan Pandit')
     expect(personName({ note: '   ', profile: 'Abhigyan Pandit', email: 'x@y.com' })).toBe('Abhigyan Pandit')
