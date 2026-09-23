@@ -1,0 +1,1670 @@
+{
+  "id": "averages-and-range",
+  "subjectId": "maths",
+  "unitId": "statistics",
+  "title": "Averages and range",
+  "specPoints": [
+    "S4"
+  ],
+  "order": 28,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Hey diddle diddle, the median is the middle",
+      "body": "*Hey diddle diddle, the **median**’s the middle;*\n*you add and divide for the **mean**;*\n*the **mode** is the one that appears the most,*\n*and the **range** is the difference between.*\n\nFour lines, four measures, and each one tells you how to find it."
+    },
+    {
+      "kind": "spot",
+      "title": "Sort first, then count in from both ends",
+      "body": "The median is the middle of the **sorted** list. With an **even** number of values there are two in the middle, and the median is **halfway between them**: for 1, 3, 4, **5, 8**, 10, 10, 15 it is 6.5, a value that is not in the list at all."
+    },
+    {
+      "kind": "check",
+      "title": "The mean must sit inside the data",
+      "body": "A mean is always between the smallest and the largest value. If goals range from 0 to 4 and your mean is 5, you divided by the **number of rows** instead of the **total frequency**. From a table, divide by the sum of the frequency column."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Total = mean × how many",
+      "body": "Every *work backwards* mean question turns on one line: **total = mean × number of values**. Find the total before and the total after, and the difference is the value that was added or taken away. Two means are combined the same way: add the totals, not the means."
+    },
+    {
+      "kind": "remember",
+      "title": "One average, one spread, one context",
+      "body": "A full comparison comes in pairs. Picture a **see-saw and a ruler**: the see-saw is the average (which is higher?), the ruler is the spread (which varies more?). Then say what each means in the words of the question: *quicker on average*, *more consistent*."
+    }
+  ],
+  "why": {
+    "matters": "A single number that stands for a whole list is one of the most useful things in mathematics, and one of the most abused. \"The average\" can mean three different things, and they can give three very different answers from the same data. Choosing which one to quote is where most misleading headlines are made.\n\nAn average on its own is also only half a description. Two sets of data can share an average and still behave completely differently, and the difference is the **spread**: how far the values wander. Deciding between two train services, two batteries or two players is almost always a question of average **and** spread together.",
+    "examples": [
+      {
+        "title": "The average pay that nobody earns",
+        "body": "A small firm has six people. Five earn between £22 000 and £29 000, and the owner earns £115 000.\n\nThe **mean** pay is £40 000: add all six and divide by six. It is true, and five of the six people earn less than it. The owner's pay alone has dragged it upwards.\n\nThe **median** is £25 000, halfway between the two middle salaries, and it describes a typical worker far better. A job advert quoting the mean and a union quoting the median would both be telling the truth about the same six people.\n\nThat is the whole reason the median exists: one extreme value, an **outlier**, moves the mean a long way and the median hardly at all.",
+        "visual": {
+          "type": "diagram",
+          "component": "bar-chart",
+          "props": {
+            "categories": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "values": [
+              22,
+              24,
+              24,
+              26,
+              29,
+              115
+            ],
+            "xLabel": "Person",
+            "yLabel": "Pay (£ thousand)",
+            "yStep": 20
+          },
+          "alt": "A bar chart of the pay of six people at a small firm, in thousands of pounds: five bars between 22 and 29, and one bar at 115 for the owner, four times as tall as the rest"
+        }
+      },
+      {
+        "title": "The battery that lasts longer, on average",
+        "body": "Two brands of battery were each tested five times. Brand P lasted 11, 12, 12, 13, 12 hours; brand Q lasted 8, 17, 10, 16, 14 hours.\n\nOn **average**, Q wins: a mean of 13 hours against 12.\n\nBut look at the **range**. P's results span only 2 hours, so it is very predictable. Q's span 9 hours, and one of its runs lasted just 8 hours, less than any run of P.\n\nFor a torch in a drawer, Q's higher average might be what matters. For a medical device that must not run out mid-shift, P's consistency is worth more than an extra hour on average. Neither number decides alone.",
+        "visual": {
+          "type": "diagram",
+          "component": "bar-chart",
+          "props": {
+            "categories": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "values": [
+              11,
+              12,
+              12,
+              13,
+              12
+            ],
+            "values2": [
+              8,
+              17,
+              10,
+              16,
+              14
+            ],
+            "names": [
+              "Brand P",
+              "Brand Q"
+            ],
+            "xLabel": "Test",
+            "yLabel": "Hours",
+            "yStep": 5
+          },
+          "alt": "A dual bar chart of five test runs for two battery brands: brand P lasts between 11 and 13 hours every time, brand Q between 8 and 17 hours"
+        }
+      },
+      {
+        "title": "The shoe size that does not exist",
+        "body": "A shoe shop sold 45 pairs in a week, in sizes 4 to 9. The **mean** size works out at about 6.7, which is not a shoe size anyone makes.\n\nWhat the shop needs to know is which size to order most of, and that is the **mode**: size 7, which sold 14 pairs.\n\nThe mode is the only average that works for **categories** too: the most popular colour, the most common way to travel. You cannot add up colours and divide, but you can always count which one appears most often.",
+        "visual": {
+          "type": "diagram",
+          "component": "bar-chart",
+          "props": {
+            "categories": [
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9"
+            ],
+            "values": [
+              3,
+              6,
+              9,
+              14,
+              8,
+              5
+            ],
+            "style": "line",
+            "xLabel": "Shoe size",
+            "yLabel": "Pairs sold",
+            "yStep": 2
+          },
+          "alt": "A vertical line chart of shoe sizes sold in a week, from size 4 to size 9; the tallest line is size 7 with 14 pairs"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Three averages and a spread",
+        "body": "An **average** is one number that stands for a whole set of data. There are three, and each answers a slightly different question.\n\nEight buses were late by these numbers of minutes: **10, 3, 15, 5, 1, 10, 8, 4**.\n\n- The **mean** shares the total out equally. Add all the values and divide by how many there are: $10 + 3 + 15 + 5 + 1 + 10 + 8 + 4 = 56$, and $56 \\div 8 = 7$ minutes.\n- The **median** is the middle value once the list is **sorted**. Here it is 6.5 minutes, found in the next step.\n- The **mode** is the value that occurs **most often**: 10 minutes, which appears twice. A set can have two modes, or none.\n\nAnd one measure of **spread**:\n\n- The **range** is the largest value minus the smallest: $15 - 1 = 14$ minutes. It says how far apart the extremes are.\n\nAn average says where the data **sits**. The range says how **spread out** it is. The rest of this topic is about knowing which to use, and saying what each one means.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Measure",
+                "How to find it",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "Mean",
+                  "total ÷ how many",
+                  "7"
+                ],
+                [
+                  "Median",
+                  "sort, then middle",
+                  "6.5"
+                ],
+                [
+                  "Mode",
+                  "most common",
+                  "10"
+                ],
+                [
+                  "Range",
+                  "largest − smallest",
+                  "14"
+                ]
+              ],
+              "title": "Minutes late: the four measures"
+            },
+            "alt": "A table of the four measures for eight buses' minutes late: mean 7, median 6.5, mode 10 and range 14, with how each is found"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "Find the mean of 4, 7, 7, 9, 13.",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "averages",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Add them: $4 + 7 + 7 + 9 + 13 = 40$. There are 5 values, so the mean is $40 \\div 5 = 8$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "adds to 40 and divides by 5"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "The median of an even number of values",
+        "body": "The median is the middle of the **sorted** list, and the trap is not sorting. With an odd number of values there is one middle value. With an **even** number there are two, and the median is **halfway between them**.\n\nThe position of the median is $\\dfrac{n + 1}{2}$. For 8 values that is position 4.5: halfway between the 4th and the 5th.\n\nNotice that the **mode**, 10, is nowhere near the middle. The mode is the most **common** value, not the central one, and here it sits near the top of the list.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Eight buses were late by 10, 3, 15, 5, 1, 10, 8, 4 minutes. Find the median.",
+            "steps": [
+              {
+                "text": "Sort the values: **1, 3, 4, 5, 8, 10, 10, 15**.",
+                "note": "Nothing about the median works until the list is in order."
+              },
+              {
+                "text": "Count them: $n = 8$, so the median is at position $\\dfrac{8 + 1}{2} = 4.5$.",
+                "note": "Position 4.5 means halfway between the 4th and 5th values."
+              },
+              {
+                "text": "The 4th value is 5 and the 5th is 8."
+              },
+              {
+                "text": "Median $= \\dfrac{5 + 8}{2} = 6.5$ minutes.",
+                "note": "The median does not have to be one of the values in the list."
+              },
+              {
+                "text": "Check the trap: the middle two of the **unsorted** list are 5 and 1, giving 3. That is not the median."
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Position",
+                "Minutes late"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "1"
+                ],
+                [
+                  "2",
+                  "3"
+                ],
+                [
+                  "3",
+                  "4"
+                ],
+                [
+                  "4 (middle)",
+                  "5"
+                ],
+                [
+                  "5 (middle)",
+                  "8"
+                ],
+                [
+                  "6",
+                  "10"
+                ],
+                [
+                  "7",
+                  "10"
+                ],
+                [
+                  "8",
+                  "15"
+                ]
+              ],
+              "title": "Sorted, the middle falls between two"
+            },
+            "alt": "A table of the eight bus times in order, positions 1 to 8, with positions 4 and 5 marked as the middle pair, holding 5 and 8"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Find the median of 12, 7, 3, 9, 15, 4.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "median",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Sort first: 3, 4, 7, 9, 12, 15. Six values, so the median is halfway between the 3rd and 4th: $\\dfrac{7 + 9}{2} = 8$. Taking the middle of the unsorted list gives 6, which is wrong.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "orders the values"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Averages from a frequency table",
+        "body": "A **frequency table** is a list written compactly. \"0 goals, frequency 9\" means the value 0 appears nine times.\n\nThe values have not been grouped, so every average is **exact**. (When values are grouped into classes, the mode becomes the **modal class**, the class with the highest frequency, and the mean can only be estimated; that is the topic on grouped frequency.)\n\n- **Mean.** Add a column of *value × frequency*. Its total is the total of all the values. Divide by the **total frequency**, not by the number of rows.\n- **Median.** The median is at position $\\dfrac{n + 1}{2}$. Add up the frequencies down the table until the running total reaches that position.\n- **Mode.** The value with the **highest frequency**. The answer is the value, never the frequency itself.\n- **Range.** Largest value minus smallest value that actually occurs.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Goals",
+                "Frequency",
+                "Goals × frequency"
+              ],
+              "rows": [
+                [
+                  "0",
+                  "9",
+                  "0"
+                ],
+                [
+                  "1",
+                  "7",
+                  "7"
+                ],
+                [
+                  "2",
+                  "5",
+                  "10"
+                ],
+                [
+                  "3",
+                  "3",
+                  "9"
+                ],
+                [
+                  "4",
+                  "1",
+                  "4"
+                ],
+                [
+                  "Total",
+                  "25",
+                  "30"
+                ]
+              ],
+              "title": "Goals scored in 25 matches"
+            },
+            "alt": "A frequency table of goals scored in 25 matches: 0 goals 9 times, 1 goal 7 times, 2 goals 5 times, 3 goals 3 times and 4 goals once, with a goals times frequency column totalling 30"
+          },
+          {
+            "type": "worked-example",
+            "problem": "The table shows the goals a team scored in each of 25 matches. Find the mean, median, mode and range.",
+            "steps": [
+              {
+                "text": "Goals × frequency: 0, 7, 10, 9, 4. Total: **30** goals.",
+                "note": "This is the total number of goals scored in all the matches."
+              },
+              {
+                "text": "Mean $= 30 \\div 25 = 1.2$ goals per match.",
+                "note": "Divide by 25 matches, not by the 5 rows. 30 ÷ 5 = 6 is more than the maximum of 4, which is impossible for a mean."
+              },
+              {
+                "text": "Median: position $\\dfrac{25 + 1}{2} = 13$. Running totals: 9, then 16. The 13th value is past 9 but within 16, so it is **1 goal**.",
+                "note": "The middle row of the table (2 goals) is not the median."
+              },
+              {
+                "text": "Mode: **0 goals**, with the highest frequency, 9.",
+                "note": "Not 9: that is how often, not what."
+              },
+              {
+                "text": "Range: $4 - 0 = 4$ goals."
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "bar-chart",
+            "props": {
+              "categories": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4"
+              ],
+              "values": [
+                9,
+                7,
+                5,
+                3,
+                1
+              ],
+              "style": "line",
+              "xLabel": "Goals scored",
+              "yLabel": "Frequency",
+              "yStep": 2
+            },
+            "alt": "A vertical line chart of goals scored in 25 matches, the tallest line at 0 goals with frequency 9, falling to 1 at 4 goals"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "multiple-choice",
+          "prompt": "A frequency table shows the goals a team scored in 25 matches. The goals × frequency column adds up to 30. What is the mean number of goals per match?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "mean from a table",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Divide the total number of goals by the **total frequency**, the number of matches: $30 \\div 25 = 1.2$. Dividing the 30 goals by the 5 rows gives 6; dividing the 25 matches by the 5 rows gives 5; and 0.83 is $25 \\div 30$, the wrong way round.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "30 ÷ 25 = 1.2"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "6",
+            "5",
+            "1.2",
+            "0.83"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Which average, and what an outlier does",
+        "body": "Six friends get £6, £8, £8, £10, £12, £40 a week. One value, £40, is far from the rest: an **outlier**.\n\nWorked out for the first five friends, and then for all six:\n\n- the **mean** jumps from £8.80 to £14, higher than five of the six friends get;\n- the **median** moves only from £8 to £9;\n- the **range** leaps from £6 to £34.\n\nThe mean uses every value, so one extreme value pulls it a long way. The median only cares about the **order**, so it hardly moves. The range uses **only** the two extremes, so an outlier changes it the most.\n\n**Choosing an average.**\n\n- **Mode**: the only one for categories (colours, ways to travel), and the right one for \"which is most popular?\".\n- **Median**: when there is an outlier, or a few very large or very small values.\n- **Mean**: when the values are fairly close together, because it uses all of them.\n\n**Don't simply delete an outlier.** Check it is not a mistake, then say what effect it has. A genuine £40 is still real data.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Five friends",
+                "All six"
+              ],
+              "rows": [
+                [
+                  "Mean",
+                  "£8.80",
+                  "£14"
+                ],
+                [
+                  "Median",
+                  "£8",
+                  "£9"
+                ],
+                [
+                  "Mode",
+                  "£8",
+                  "£8"
+                ],
+                [
+                  "Range",
+                  "£6",
+                  "£34"
+                ]
+              ],
+              "title": "One value of £40"
+            },
+            "alt": "A table comparing five friends' pocket money with all six: the mean rises from £8.80 to £14 and the range from £6 to £34, while the median moves only from £8 to £9 and the mode stays £8"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Average",
+                "Use it when"
+              ],
+              "rows": [
+                [
+                  "Mode",
+                  "categories, or the most popular"
+                ],
+                [
+                  "Median",
+                  "there is an outlier"
+                ],
+                [
+                  "Mean",
+                  "values are close, no outlier"
+                ]
+              ],
+              "title": "Which average, and when"
+            },
+            "alt": "A table on choosing an average: the mode for categories or the most popular choice, the median when there is an outlier, and the mean when the values are close together with no outlier"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "multiple-choice",
+          "prompt": "Six friends get this much pocket money a week: £6, £8, £8, £10, £12, £40. Which average best represents a typical amount?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "choosing an average",
+          "calculator": "either",
+          "tags": [],
+          "solution": "**The median**, £9. The £40 is an outlier, and it drags the mean up to £14, more than five of the six friends get. The mode, £8, is not far off, but it rests on only **two** of the six friends happening to get the same amount; if one of them got £9 instead, there would be no mode at all. The range is a spread, not an average.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the median, because of the outlier"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The mean, because it uses every value",
+            "The median, as the £40 barely moves it",
+            "The mode, as £8 appears most often",
+            "The range, since the values vary a lot"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Comparing two sets of data",
+        "body": "Two bus routes into town were timed on the same five days.\n\n- Route A: 24, 26, 25, 27, 23 minutes. Mean **25**, range **4**.\n- Route B: 15, 31, 18, 29, 17 minutes. Mean **22**, range **16**.\n\nA *compare* question wants **two** comparisons, each **in context**:\n\n1. **An average.** Route B has the lower mean, so **route B is quicker on average than route A**.\n2. **A spread.** Route A has the smaller range, so **route A's journey times are more consistent than route B's**.\n\nEach sentence names both routes, says which is higher or lower, and says what that **means** for a passenger. \"B's mean is 22\" is a reading, not a comparison. \"B's mean is lower\" is a comparison, but it does not say what it means.\n\nNotice that neither route is simply *better*. Someone with a train to catch might choose A: its slowest day was 27 minutes, while B took longer than that on 2 of the 5 days.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "bar-chart",
+            "props": {
+              "categories": [
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri"
+              ],
+              "values": [
+                24,
+                26,
+                25,
+                27,
+                23
+              ],
+              "values2": [
+                15,
+                31,
+                18,
+                29,
+                17
+              ],
+              "names": [
+                "Route A",
+                "Route B"
+              ],
+              "yLabel": "Minutes",
+              "yStep": 5
+            },
+            "alt": "A dual bar chart of journey times on route A and route B over five days: route A's bars are all between 23 and 27 minutes, while route B's jump between 15 and 31 minutes"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                "Route A",
+                "Route B"
+              ],
+              "rows": [
+                [
+                  "Mean (minutes)",
+                  "25",
+                  "22"
+                ],
+                [
+                  "Range (minutes)",
+                  "4",
+                  "16"
+                ]
+              ],
+              "title": "Average and spread, side by side"
+            },
+            "alt": "A table of the mean and range for each route: route A mean 25 and range 4; route B mean 22 and range 16"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "multiple-choice",
+          "prompt": "Route A has a mean journey time of 25 minutes and a range of 4 minutes. Route B has a mean of 22 minutes and a range of 16 minutes. Which is a full comparison?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "comparing distributions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "*B is quicker on average; A is more consistent* compares an average **and** a spread, and says what each means for a passenger. Quoting which number is lower is not an interpretation, and one statement alone is half an answer.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "compares average and spread, both in context"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "A is better, as its range is the smaller of the two",
+            "B has the lower mean and A has the lower range",
+            "B is quicker on average; A is more consistent",
+            "B is quicker on average, so B is the better route"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "worked-example",
+        "title": "Working backwards from a mean",
+        "body": "The mean hides the total, but it does not lose it: **total = mean × number of values**. That one line opens every question that gives you a mean and asks for something else.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "The mean of 5 numbers is 8. A sixth number is added, and the mean of all six is 9. Find the sixth number.",
+            "steps": [
+              {
+                "text": "Total of the first 5: $5 \\times 8 = 40$."
+              },
+              {
+                "text": "Total of all 6: $6 \\times 9 = 54$."
+              },
+              {
+                "text": "The sixth number is the difference: $54 - 40 = 14$.",
+                "note": "Check: $40 + 14 = 54$, and $54 \\div 6 = 9$."
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "A class of 10 students has a mean test mark of 60. Another class of 30 students has a mean of 80. Find the mean mark of all 40 students.",
+            "steps": [
+              {
+                "text": "Total for the first class: $10 \\times 60 = 600$."
+              },
+              {
+                "text": "Total for the second class: $30 \\times 80 = 2400$."
+              },
+              {
+                "text": "Combined mean $= \\dfrac{600 + 2400}{40} = 75$.",
+                "note": "Not $\\dfrac{60 + 80}{2} = 70$: the larger class counts three times as much."
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "The mean of four numbers is 12. Three of them are 9, 15, 11. Find the fourth.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "reverse mean",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Total of all four: $4 \\times 12 = 48$. The three known add to $9 + 15 + 11 = 35$. The fourth is $48 - 35 = 13$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "total 4 × 12 = 48"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "13"
+            }
+          ],
+          "discriminators": [],
+          "answer": 13,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**1.** Find the mean, median, mode and range of 9, 4, 12, 6, 4, 11.\n\n**2.** Ten people each had a number of pets: 0 pets, frequency 3; 1 pet, frequency 4; 2 pets, frequency 2; 3 pets, frequency 1. Find the mean number of pets.\n\n**3.** The mean of 6 numbers is 10. One number is removed and the mean of the other 5 is 9. What number was removed?\n\n**4.** Two players' scores have means 18 and 15, and ranges 22 and 4. Write one comparison of average and one of spread.\n\n**Answers.** 1. Mean $46 \\div 6 \\approx 7.67$; median 7.5; mode 4; range 8. 2. $(0 + 4 + 4 + 3) \\div 10 = 1.1$ pets. 3. $60 - 45 = 15$. 4. The first player scores more **on average**; the second player's scores are **more consistent**.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "mean 7.67, median 7.5"
+                ],
+                [
+                  "",
+                  "mode 4, range 8"
+                ],
+                [
+                  "2",
+                  "1.1 pets"
+                ],
+                [
+                  "3",
+                  "15"
+                ],
+                [
+                  "4",
+                  "average and spread, in context"
+                ]
+              ],
+              "title": "Check yourself against these"
+            },
+            "alt": "A table of answers to the four practice questions: the four measures for the list, a mean of 1.1 pets, a removed number of 15, and a comparison of average and spread in context"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "type": "multiple-choice",
+          "prompt": "What is the median of 9, 4, 12, 6, 4, 11?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "median",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Sorted: 4, 4, 6, 9, 11, 12. The two middle values are 6 and 9, so the median is 7.5. 9 comes from not sorting, 4 is the mode and 7.67 is the mean, rounded.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7.5"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "7.5",
+            "9",
+            "4",
+            "7.67"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: averages as tools",
+        "body": "**Changing every value.** If every value goes **up by 5**, the mean, median and mode all go up by 5, but the **range does not change**: the whole set slides along without stretching. If every value is **multiplied by 3**, the averages **and** the range are all multiplied by 3. The bus data (mean 7, range 14) becomes mean 21, range 42 when tripled.\n\n**Building a set from its averages.** *Five positive whole numbers have mode 3, median 4, mean 5 and range 7.* Write five blanks in order. The median fills the middle: ?, ?, **4**, ?, ?. The mode is 3, and it must appear more than once, so the first two are **3, 3**. The range is 7, so the last is $3 + 7 = 10$. The mean is 5, so the total is 25, and the missing value is $25 - 3 - 3 - 4 - 10 = 5$. The set is **3, 3, 4, 5, 10**, and it is the only one.\n\n**An unknown frequency.** A table has values 0, 1, 2, 3 with frequencies 4, 7, $x$, 2, and the mean is 1.5. Total = $7 + 2x + 6 = 13 + 2x$; frequency = $13 + x$. So $13 + 2x = 1.5(13 + x)$, which gives $0.5x = 6.5$ and $x = 13$.\n\n**A mean does not have to be possible.** The goals mean was 1.2, and no team scores 1.2 goals. The mean is a share-out, not an observation, and it is still the right answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Change",
+                "Mean",
+                "Range"
+              ],
+              "rows": [
+                [
+                  "+ 5 to each",
+                  "+ 5",
+                  "same"
+                ],
+                [
+                  "× 3 each",
+                  "× 3",
+                  "× 3"
+                ],
+                [
+                  "an outlier",
+                  "moves a lot",
+                  "grows most"
+                ]
+              ],
+              "title": "What a change does to each measure"
+            },
+            "alt": "A table of how the averages and the range respond: adding 5 to every value moves the averages by 5 but leaves the range, multiplying by 3 multiplies both, and adding an outlier moves the mean most and stretches the range"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "Every value in a data set is increased by 5. What happens to the mean and the range?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "transforming data",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Every value moves up by 5, so the centre moves with them: **the mean goes up by 5**. The largest and smallest both move by 5, so the gap between them, **the range, is unchanged**.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "mean + 5, range unchanged"
+            }
+          ],
+          "discriminators": [
+            "unfamiliar-context"
+          ],
+          "options": [
+            "The mean goes up by 5; the range is unchanged",
+            "Both the mean and the range go up by 5",
+            "The mean is unchanged; the range goes up by 5",
+            "Neither changes, since every value moved"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Mean**: add the values, divide by how many.\n- **Median**: **sort**, then take the middle; with an even count, halfway between the middle two.\n- **Mode**: the value that appears most often; for grouped data, the **modal class**.\n- **Range**: largest minus smallest. It measures **spread**, not average.\n- From a frequency table: add a **value × frequency** column, total it, and divide by the **total frequency**.\n- For the median, run down the frequencies to position $\\dfrac{n + 1}{2}$.\n- The mode is the **value**, never its frequency.\n- An **outlier** drags the mean and stretches the range; the median barely moves.\n- **Mode** for categories and \"most popular\", **median** with outliers, **mean** when values are close.\n- Compare with **one average and one spread**, each **in context**.\n- **Total = mean × number of values**, forwards and backwards.\n- Combine two means through their **totals**, never by averaging the means.\n- Adding a constant moves the averages, not the range; multiplying scales both.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Measure",
+                "How to find it",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "Mean",
+                  "total ÷ how many",
+                  "7"
+                ],
+                [
+                  "Median",
+                  "sort, then middle",
+                  "6.5"
+                ],
+                [
+                  "Mode",
+                  "most common",
+                  "10"
+                ],
+                [
+                  "Range",
+                  "largest − smallest",
+                  "14"
+                ]
+              ],
+              "title": "The four measures, once more"
+            },
+            "alt": "A table of the four measures for eight buses' minutes late: mean 7, median 6.5, mode 10 and range 14, with how each is found"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Which average is the only one that can be found for data such as favourite colours?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "choosing an average",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Only **the mode**: colours can be counted but not added up or put in number order. The range is a spread, not an average.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the mode"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The mean",
+            "The mode",
+            "The median",
+            "The range"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "Find the range of 14, 9, 22, 17, 11.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "range",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Largest minus smallest: $22 - 9 = 13$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "13"
+        }
+      ],
+      "discriminators": [],
+      "answer": 13,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Find the median of 21, 16, 30, 18, 25, 16, 27, 19.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "median",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sort: 16, 16, 18, 19, 21, 25, 27, 30. Eight values, so the median is halfway between the 4th and 5th: $\\dfrac{19 + 21}{2} = 20$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "orders the values"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Write down the mode of 21, 16, 30, 18, 25, 16, 27, 19.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "mode",
+      "calculator": "either",
+      "tags": [],
+      "solution": "16 appears twice and every other value once, so the mode is **16**. It is the most common value, and it is not in the middle of the list.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [],
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "type": "short-text",
+      "prompt": "In a class survey of eye colour, 12 students have brown eyes, 8 students have blue eyes, 4 students have green eyes and 6 have hazel eyes. What is the modal eye colour?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "mode",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The mode is the category with the highest frequency: **brown**, with 12 students. The answer is the colour, not the 12.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "brown"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "brown",
+        "brown eyes"
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "A survey records each student’s favourite sport. Which average can be found for this data?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing an average",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sports are **categories**: they cannot be added (no mean) or put in number order (no median). They can be counted, so **the mode only**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the mode only"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "All three averages",
+        "The mean only",
+        "The median only",
+        "The mode only"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "A survey of 20 households recorded how many people live in each. 1 person: frequency 4; 2 people: frequency 9; 3 people: frequency 5; 4 people: frequency 1; 5 people: frequency 1. Find the mean number of people per household.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "mean from a table",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Value × frequency: 4, 18, 15, 4, 5, total 46. Mean $= 46 \\div 20 = 2.3$ people. Dividing by 5, the number of rows, would give 9.2, more than the largest household.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the total 46"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2.3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "A survey of 20 households recorded how many people live in each. 1 person: frequency 4; 2 people: frequency 9; 3 people: frequency 5; 4 people: frequency 1; 5 people: frequency 1. Find the median number of people per household.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "median from a table",
+      "calculator": "either",
+      "tags": [],
+      "solution": "There are 20 values, so the median is halfway between the 10th and the 11th. Running totals: 4, then 13. The 10th and 11th values both lie in the second row, so the median is **2** people. The middle row of the table, 3, is not the median.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses running totals to locate the 10th and 11th values"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "The mean of 5 numbers is 8. A sixth number is added and the mean of all six numbers becomes 9. Find the sixth number.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reverse mean",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Totals: $5 \\times 8 = 40$ and $6 \\times 9 = 54$. The sixth number is $54 - 40 = 14$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds 40 or 54"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14"
+        }
+      ],
+      "discriminators": [],
+      "answer": 14,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "type": "multiple-choice",
+      "prompt": "One very large value is added to a set of data. Which measure changes the least?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "outliers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**The median** depends only on the order, so one new value shifts it by at most half a place in the sorted list. The mean shares the large value among everyone, and the range and the maximum change by a lot.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the median"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The median",
+        "The mean",
+        "The range",
+        "The maximum"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "A class of 20 students has a mean test mark of 64. A class of 30 students has a mean of 74. Find the mean mark of all 50 students.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "combined mean",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Totals: $20 \\times 64 = 1280$ and $30 \\times 74 = 2220$. Mean $= \\dfrac{1280 + 2220}{50} = \\dfrac{3500}{50} = 70$. Averaging the two means gives 69, which ignores the larger class being larger.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds both totals"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the totals and divides by 50"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "70"
+        }
+      ],
+      "discriminators": [],
+      "answer": 70,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "A shoe shop wants to know which single size to order the most of. Which average should it use?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "choosing an average",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**The mode** is the size sold most often, which is exactly what the shop needs. The mean may not even be a real size.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the mode"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The median",
+        "The mean",
+        "The mode",
+        "The range"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "Five positive whole numbers have a mode of 3, a median of 4, a mean of 5 and a range of 7. Find the largest of the five numbers.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "averages from clues",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In order: ?, ?, 4, ?, ?. The mode 3 must appear at least twice, so the first two are 3 and 3. Range 7 makes the largest $3 + 7 = 10$. (The total must be $5 \\times 5 = 25$, so the fourth is $25 - 3 - 3 - 4 - 10 = 5$, giving 3, 3, 4, 5, 10.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "places the median in the middle and the mode 3, 3 at the start"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses the range from the smallest value"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "A frequency table has values 0, 1, 2 and 3 with frequencies 4, 7, $x$ and 2. The mean of the data is 1.5. Find $x$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "mean from a table",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Total $= 0 \\times 4 + 1 \\times 7 + 2x + 3 \\times 2 = 13 + 2x$. Total frequency $= 13 + x$. So $13 + 2x = 1.5(13 + x) = 19.5 + 1.5x$, giving $0.5x = 6.5$ and $x = 13$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total of values 13 + 2x"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "forms 13 + 2x = 1.5(13 + x)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 13,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "Route A's journey times have a mean of 25 minutes and a range of 4 minutes. Route B's have a mean of 22 minutes and a range of 16 minutes. Someone must not be late for an interview. Which route should they take?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing distributions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Route A**. It is slower on average by 3 minutes, but its range of 4 means its worst day is close to its typical day. Route B's range of 16 means some trips take much longer than its mean, which is the risk that matters here.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "route A, because it is more consistent"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Either: both means are within a few minutes",
+        "Route B: it has the lower mean journey time",
+        "Route B: its bigger range gives more quick trips",
+        "Route A: slower on average, far more predictable"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "The mean of four numbers is 15. One of the numbers is removed, and the mean of the remaining three is 13. What number was removed?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "reverse mean",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Totals: $4 \\times 15 = 60$ and $3 \\times 13 = 39$. The removed number is $60 - 39 = 21$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds 60 and 39"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "21"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 21,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Seven houses on a street sold for £210 000, £215 000, £220 000, £225 000, £230 000, £235 000 and £870 000. An estate agent advertises that the average house price on the street is £315 000. Why is this misleading?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "outliers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The figure is **the mean, pulled up by one outlier**: £870 000. Six of the seven houses sold for less than £315 000. The median, £225 000, describes a typical house on the street far better.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the mean is distorted by the outlier; the median is typical"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The mean has been calculated incorrectly",
+        "It is the mean, pulled up by one outlier",
+        "Average prices should always use the mode",
+        "The range should be quoted as the average"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "Eight buses were late by 10, 3, 15, 5, 1, 10, 8, 4 minutes. The range is 14 minutes. Each value is multiplied by 3 and then 2 is added. What is the range of the new values?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "transforming data",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiplying by 3 triples the range: $3 \\times 14 = 42$. Adding 2 to every value moves them all together, so the range stays 42. (Check: the largest becomes $3 \\times 15 + 2 = 47$ and the smallest $3 \\times 1 + 2 = 5$, and $47 - 5 = 42$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies the range by 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "42, with the + 2 having no effect"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 42,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "multiple-choice",
+      "prompt": "A team scored 0, 1, 2, 3 and 4 goals with frequencies 9, 7, 5, 3 and 1, a total of 30 goals in 25 matches. A student says the mean of 1.2 goals must be wrong, because no team can score 1.2 goals. Which is right?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "mean from a table",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**The mean is 1.2**, a share-out of 30 goals over 25 matches, not a score any match produced. A mean can be a value that never occurs. Rounding it throws away accuracy, and dividing by 5 rows gives 6, above the largest score.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the mean is 1.2 and need not be a possible value"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "The mean is 6: divide by the number of rows",
+        "The student is right: a mean must be a whole number",
+        "The mean should be rounded down to 1 goal",
+        "The mean is 1.2: it is a share-out, not a score"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q19",
+      "type": "extended",
+      "prompt": "Ali's points in five basketball games were 14, 16, 15, 17, 13. Ben's points in five games were 6, 28, 10, 25, 21. Compare the two players' scores, and say which player you would pick for a match where the team needs a steady contribution. Give a reason.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "comparing distributions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Ali's mean is $75 \\div 5 = 15$ points and his range is $17 - 13 = 4$. Ben's mean is $90 \\div 5 = 18$ points and his range is $28 - 6 = 22$.\n\nBen scores more points on average, since his mean is higher. Ali's scores are much more consistent, since his range is far smaller.\n\nFor a match where the team needs a steady contribution I would pick Ali. His worst game was 13 points, while Ben's worst was 6, and Ali's small range means the team can rely on getting close to 15 points from him. Ben might score more, but he might also score very few.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "mean for Ali, 15"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "mean for Ben, 18"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "ranges 4 and 22"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "Ben scores more on average, in context"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "Ali's scores are more consistent, in context"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "picks Ali, using consistency as the reason"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "criteria": [
+        {
+          "text": "Finds Ali's mean, 15 points",
+          "marks": 1
+        },
+        {
+          "text": "Finds Ben's mean, 18 points",
+          "marks": 1
+        },
+        {
+          "text": "Finds the ranges, 4 and 22",
+          "marks": 1
+        },
+        {
+          "text": "Compares the averages in context",
+          "marks": 1
+        },
+        {
+          "text": "Compares the spreads in context",
+          "marks": 1
+        },
+        {
+          "text": "Chooses Ali for a steady contribution, with the reason",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Ali's mean is $75 \\div 5 = 15$ points and his range is $17 - 13 = 4$. Ben's mean is $90 \\div 5 = 18$ points and his range is $28 - 6 = 22$.\n\nBen scores more points on average, since his mean is higher. Ali's scores are much more consistent, since his range is far smaller.\n\nFor a match where the team needs a steady contribution I would pick Ali. His worst game was 13 points, while Ben's worst was 6, and Ali's small range means the team can rely on getting close to 15 points from him. Ben might score more, but he might also score very few.",
+      "suggestedMinutes": 8
+    },
+    {
+      "id": "q20",
+      "type": "extended",
+      "prompt": "Six people work at a small firm. They earn £22 000, £24 000, £24 000, £26 000, £29 000 and £115 000. Find the mean, median and mode of the pay. Say which average best describes what a typical person earns, and explain why the other two are less suitable.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "choosing an average",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The total pay is £240 000, so the mean is $240\\,000 \\div 6 = 40\\,000$, that is £40 000. In order, the two middle values are £24 000 and £26 000, so the median is £25 000. The mode is £24 000, the only value that appears twice.\n\nThe median best describes a typical person's pay. The mean is pulled upwards by the one very large salary, £115 000, which is an outlier: five of the six people earn less than the mean, so it describes almost nobody. The mode is simply the salary that two people happen to share. It sits near the bottom of the list and would change completely if one of them had a small pay rise, so it is not a fair summary of all six.",
+      "markScheme": [
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "mean £40 000"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "median £25 000"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "mode £24 000"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "chooses the median"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the mean is pulled up by the outlier £115 000"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the mode is just two equal salaries at the low end"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "criteria": [
+        {
+          "text": "Mean £40 000",
+          "marks": 1
+        },
+        {
+          "text": "Median £25 000",
+          "marks": 1
+        },
+        {
+          "text": "Mode £24 000",
+          "marks": 1
+        },
+        {
+          "text": "Chooses the median as the typical pay",
+          "marks": 1
+        },
+        {
+          "text": "Explains that one outlier drags the mean above five of the six",
+          "marks": 1
+        },
+        {
+          "text": "Explains that the mode only reflects two people who happen to earn the same",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "The total pay is £240 000, so the mean is $240\\,000 \\div 6 = 40\\,000$, that is £40 000. In order, the two middle values are £24 000 and £26 000, so the median is £25 000. The mode is £24 000, the only value that appears twice.\n\nThe median best describes a typical person's pay. The mean is pulled upwards by the one very large salary, £115 000, which is an outlier: five of the six people earn less than the mean, so it describes almost nobody. The mode is simply the salary that two people happen to share. It sits near the bottom of the list and would change completely if one of them had a small pay rise, so it is not a fair summary of all six.",
+      "suggestedMinutes": 8
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11"
+      ],
+      "suggestedMinutes": 20
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "**Sort before you do anything to a list.** Write the ordered list down: the median and the mode are both far easier to find, and a value missed or copied twice shows up when you count.\n\n**Count, then find the middle.** With $n$ values the median is at position $\\dfrac{n + 1}{2}$. If that is a half, the median is halfway between two values, and it need not be one of them.\n\n**From a frequency table, divide by the total frequency.** Add a value × frequency column, total it, and divide by the sum of the frequencies. Check the mean lies between the smallest and largest values.\n\n**Give the value, not the frequency**, when asked for the mode or median of a table.\n\n**Compare in pairs.** One statement about an average and one about the spread, each naming both groups and saying what the difference means in the context of the question.\n\n**Mean questions that look hard are total questions.** Turn every mean into a total with total = mean × number of values, work with the totals, and turn back at the end.",
+    "examinerErrors": [
+      "Finding the median without sorting the list first.",
+      "Taking one of the two middle values as the median of an even-sized list, instead of the value halfway between them.",
+      "Dividing by the number of rows of a frequency table instead of the total frequency.",
+      "Giving the highest frequency as the mode instead of the value it belongs to.",
+      "Giving the range as a pair of numbers, such as \"1 to 15\", instead of the difference.",
+      "Comparing only the averages, or only the spreads, when both are asked for.",
+      "Stating which number is bigger without saying what it means in context.",
+      "Averaging two means from groups of different sizes instead of combining the totals."
+    ],
+    "grade9Looks": "A top answer treats each measure as a tool with a job. It sorts before looking for a median, handles an even count by going halfway between the middle pair, and divides a frequency table's total by the total frequency. Asked which average to use, it names one and gives the reason from the data: an outlier for the median, categories for the mode, values close together for the mean. When it compares two sets, it makes one comparison of average and one of spread, names both groups each time, and interprets each in the language of the question, then goes on to make the decision the question asks for. Faced with an unfamiliar mean problem, it converts means to totals, combines or subtracts the totals, and only then divides."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

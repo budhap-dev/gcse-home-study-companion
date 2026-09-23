@@ -31,6 +31,17 @@ export interface SyllabusBlock {
  */
 export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
   'maths': [
+    // The groundwork Pearson 1MA1 assumes and the school teaches before Year 9, so its
+    // overview does not list it. Written from the specification (docs/curriculum/maths.md).
+    { year: 9, term: 'Groundwork from Years 7 and 8', topics: [
+      { title: 'Factors, multiples and primes', topicId: 'factors-multiples-and-primes' },
+      { title: 'Calculating with fractions and negative numbers', topicId: 'calculating-with-fractions-and-negatives' },
+      { title: 'Ratio notation, simplifying and sharing', topicId: 'ratio-notation-and-sharing' },
+      { title: 'Converting units and estimating', topicId: 'units-conversion-and-estimation' },
+      { title: 'Properties of triangles and quadrilaterals', topicId: 'properties-of-2d-shapes' },
+      { title: 'Averages and range', topicId: 'averages-and-range' },
+      { title: 'Charts and diagrams for data', topicId: 'charts-and-diagrams-for-data' },
+    ] },
     { year: 9, term: 'Autumn', topics: [
       { title: 'Arithmetic and quadratic sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
       { title: 'Graphs of rates of change', topicId: 'rate-of-change-and-real-life-graphs' },
@@ -58,6 +69,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Simultaneous equations', topicId: 'simultaneous-equations' },
       { title: 'Inequalities', topicId: 'inequalities-on-a-number-line' },
       { title: 'Frequency trees', topicId: 'frequency-trees' },
+      { title: 'Relative frequency and expected outcomes', topicId: 'relative-frequency-and-expected-outcomes' },
       { title: 'Tree diagrams', topicId: 'combined-events-and-tree-diagrams' },
     ] },
     { year: 9, term: 'Summer', topics: [
@@ -96,6 +108,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Sets and set notation', topicId: 'sets-and-set-notation' },
       { title: 'Histograms', topicId: 'histograms' },
       { title: 'Scatter graphs and correlation', topicId: 'scatter-graphs-and-correlation' },
+      { title: 'Sampling and populations', topicId: 'sampling-and-populations' },
       { title: 'Linear, quadratic and geometric sequences', topicId: 'linear-quadratic-and-geometric-sequences' },
       { title: 'Iteration', topicId: 'iteration' },
     ] },
@@ -118,6 +131,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     { year: 10, term: 'Summer 2', topics: [
       { title: 'Limits of accuracy and bounds', topicId: 'limits-of-accuracy-and-bounds' },
       { title: 'Surface areas and volumes', topicId: 'surface-areas-and-volumes' },
+      { title: '3D shapes: faces, edges, plans and elevations', topicId: '3d-shapes-plans-and-elevations' },
       { title: 'Vector arithmetic', topicId: 'vector-arithmetic' },
       { title: 'Vector geometry', topicId: 'vector-geometry' },
       { title: 'Compound measures', topicId: 'compound-measures' },

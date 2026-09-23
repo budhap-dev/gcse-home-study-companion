@@ -52,6 +52,10 @@ import { Flowchart } from './Flowchart.tsx'
 import { SizeCompare } from './SizeCompare.tsx'
 import { AngleFigure } from './AngleFigure.tsx'
 import { NetworkTopology } from './NetworkTopology.tsx'
+import { PieChart } from './PieChart.tsx'
+import { BarChart } from './BarChart.tsx'
+import { Pictogram } from './Pictogram.tsx'
+import { PlanElevation } from './PlanElevation.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -112,6 +116,10 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'flowchart': Flowchart,
   'size-compare': SizeCompare,
   'network-topology': NetworkTopology,
+  'pie-chart': PieChart,
+  'bar-chart': BarChart,
+  'pictogram': Pictogram,
+  'plan-elevation': PlanElevation,
 }
 
 export const INK = '#1e2330'
