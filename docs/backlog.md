@@ -105,9 +105,13 @@ One PR per subject.
 - [ ] A second pass over any subject that gained topics after its review
 
 **Pack-wide quality**
-- [ ] **Diagrams fit a phone.** Flowcharts, logic circuits, Huffman trees, line graphs and
-  many-column tables are narrower now. Built on the `diagrams-fit-a-phone` branch, which
-  still needs its full before-and-after check and a PR.
+- [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
+  byte tables** (PR #255). Scrolling at 390: 47, 96, 9, 1 and 131 dropped to 0, 0, 0, 0 and 23.
+- [ ] **Diagrams fit a phone: the rest.** 124 diagrams still scroll sideways at 390 on
+  lesson and why pages. The largest groups are tables with long words (23), Chemistry
+  displayed formulae (16), circuit diagrams (13), French verb tables (10), then ray, curve,
+  reaction-profile, lens, lattice and electric-field diagrams. Measure with a before-and-after
+  run of every page at 390 against `main`.
 - [ ] **The correct option is too often the longest.** In 1757 of 3841 multiple-choice
   questions (46%) the right answer is the only longest option, so "pick the longest" nearly
   doubles a guesser's score. Rebalance the options, and add a collection test with a

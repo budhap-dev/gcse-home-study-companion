@@ -1,3 +1,5 @@
+import { useLayoutEffect, useRef } from 'react'
+import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 
 interface Node {
@@ -28,6 +30,11 @@ export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; al
   const tree = props.tree as Node | undefined
   const caption = props.caption as string | undefined
   const hideCodes = props.hideCodes === true
+  const svg = useRef<SVGSVGElement>(null)
+  const available = useAvailableWidth(svg)
+  useLayoutEffect(() => {
+    svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
+  }, [available])
   if (!tree) return <p>{alt}</p>
 
   // Leaves are spread evenly left to right in the order they appear; every other
@@ -55,17 +62,20 @@ export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; al
   walk(tree, 0, '')
 
   const leafCount = nextLeaf
-  const colW = 96
+  // Leaves are 96 apart where there is room. On a phone they close up, to no less than
+  // 62 (a 20-unit gap between two leaf boxes), so a four-leaf tree fits a 330-unit card
+  // instead of scrolling with its last code out of sight.
+  const padX = available !== undefined && available < 380 ? 30 : 46
+  const colW = Math.max(62, Math.min(96, Math.floor(((available ?? Infinity) - 2 * padX) / Math.max(leafCount - 1, 1))))
   const rowH = 74
-  const padX = 46
   const padY = 30
-  const W = Math.max(2 * padX + Math.max(leafCount - 1, 1) * colW, 320)
+  const W = Math.max(2 * padX + Math.max(leafCount - 1, 1) * colW, Math.min(320, available ?? 320))
   const H = 2 * padY + maxDepth * rowH + 46
   const sx = (x: number) => padX + x * colW
   const sy = (y: number) => padY + y * rowH
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.max(W, 340) }} role="img" aria-label={alt}>
+    <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.max(W, 340) }} role="img" aria-label={alt}>
       {edges.map((e, i) => {
         const x1 = sx(e.from.x), y1 = sy(e.from.y), x2 = sx(e.to.x), y2 = sy(e.to.y)
         return (

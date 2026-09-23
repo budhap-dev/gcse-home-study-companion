@@ -79,10 +79,14 @@ export const MIN_TEXT_PX = 10
  */
 export const MAX_TABLE_WIDTH = Math.floor((FULL_ROW * TEXT_PX) / MIN_TEXT_PX)
 
+/** The padding and the narrowest column a table closes up to when nothing else fits. */
+export const TIGHT_PADDING = 10
+export const TIGHT_COLUMN = 24
+
 /** The width a column needs so its longest single word never has to break. */
-function wordFloor(columns: string[], rows: string[][], i: number): number {
+function wordFloor(columns: string[], rows: string[][], i: number, padding = CELL_PADDING, least = MIN_COLUMN): number {
   const words = [columns[i] ?? '', ...rows.map((r) => r[i] ?? '')].flatMap((t) => t.split(' '))
-  return Math.max(MIN_COLUMN, CHAR_WIDTH * Math.max(0, ...words.map((w) => w.length)) + CELL_PADDING)
+  return Math.max(least, CHAR_WIDTH * Math.max(0, ...words.map((w) => w.length)) + padding)
 }
 
 /**
@@ -97,8 +101,14 @@ function wordFloor(columns: string[], rows: string[][], i: number): number {
  * So the table reflows instead. The widest columns give way first, all of them down to a
  * common cap, so a narrow column of short values keeps its width and the long prose
  * columns wrap onto more lines. No column goes below its longest word, since a word is
- * never split; a table that still cannot fit at that point takes its narrowest layout and
- * scrolls the remainder. A table that already fits is returned exactly as before.
+ * never split. A table that already fits is returned exactly as before.
+ *
+ * A table of many short columns has no prose to wrap: a byte's place values are nine
+ * columns of one to three characters, and at MIN_COLUMN each they wanted 504 units and
+ * scrolled 175px on a phone with the low bits out of sight. So when the word floors
+ * still do not fit, the padding round each word gives way too, down to TIGHT_PADDING
+ * and TIGHT_COLUMN. Cell text is centred, so the gap shrinks evenly on both sides. Only
+ * a table that cannot fit even then takes its tightest layout and scrolls the rest.
  */
 export function fitColumns(columns: string[], rows: string[][], available: number): number[] {
   const natural = columnWidths(columns, rows)
@@ -107,7 +117,14 @@ export function fitColumns(columns: string[], rows: string[][], available: numbe
   const floors = natural.map((w, i) => Math.min(w, wordFloor(columns, rows, i)))
   const at = (cap: number) => natural.map((w, i) => Math.max(floors[i]!, Math.min(w, cap)))
   const total = (cap: number) => at(cap).reduce((a, b) => a + b, 0)
-  if (total(0) >= target) return floors
+  if (total(0) >= target) {
+    // Every column is at its longest word; close the padding up, all columns by the same
+    // share of what each can give, until the table fits or nothing is left to give.
+    const tight = floors.map((w, i) => Math.min(w, wordFloor(columns, rows, i, TIGHT_PADDING, TIGHT_COLUMN)))
+    const give = total(0) - tight.reduce((a, b) => a + b, 0)
+    const share = give > 0 ? Math.min(1, (total(0) - target) / give) : 0
+    return floors.map((w, i) => Math.floor(w - share * (w - tight[i]!)))
+  }
   let lo = 0
   let hi = Math.max(...natural)
   while (hi - lo > 0.5) {
