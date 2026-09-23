@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router'
+import { Link, useNavigationType, useSearchParams } from 'react-router'
 import { STATUS_COLOUR, STATUS_LABEL, TOPIC_STATUSES } from '@study/shared'
 import { supabase } from '../../auth/client.ts'
 import { useAuth } from '../../auth/useAuth.ts'
@@ -10,11 +10,13 @@ import { firstNameOf, personName } from '../../auth/personName.ts'
 import { parentSummary, type ActivityEntry, type ParentSummary } from '../../progress/summary.ts'
 import { AssignPanel } from './Assign.tsx'
 import { TopicBreakdown } from './TopicBreakdown.tsx'
+import { STUDY_EMOJI, SubjectDetail, formatMinutes } from './SubjectDetail.tsx'
 import { StatusDonut } from '../../components/charts/StatusDonut.tsx'
 import { WeeklyBars } from '../../components/charts/WeeklyBars.tsx'
 import { SkillBars } from '../../components/charts/SkillBars.tsx'
 import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts.ts'
 import { skillStats } from '../../progress/xp.ts'
+import { minutesBySubject } from '../../progress/subjectDetail.ts'
 
 export interface Child {
   email: string
@@ -30,10 +32,7 @@ const TABS: { id: FamilyTab; label: string }[] = [
 ]
 
 /** One glyph per kind, so the feed can be skimmed down the left edge. */
-const ACTIVITY_EMOJI: Record<ActivityEntry['kind'], string> = {
-  quiz: '⚡', worksheet: '📝', lesson: '📖', flashcards: '🃏',
-  'cheat-sheet': '📋', why: '🌍', 'exam-technique': '🎓',
-}
+const ACTIVITY_EMOJI: Record<ActivityEntry['kind'], string> = STUDY_EMOJI
 
 const day = (iso: string) => new Date(iso.length > 10 ? iso : iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 
@@ -55,6 +54,15 @@ export function Family() {
   // all land back on the one that was open. Dashboard is the plain /family address.
   const tab: FamilyTab = params.get('tab') === 'tasks' ? 'tasks' : 'dashboard'
   const setTab = (t: FamilyTab) => setParams(t === 'dashboard' ? {} : { tab: t }, { replace: true })
+  // An open subject is in the URL too, as ?subject=, and is pushed rather than replaced so
+  // the browser's back button closes it again.
+  const subjectId = params.get('subject') ?? undefined
+  // The app scrolls to the top on a new path, and this is the same path with a new query,
+  // so it does it itself; going back is left alone, like everywhere else.
+  const navigationType = useNavigationType()
+  useEffect(() => {
+    if (navigationType !== 'POP') window.scrollTo({ top: 0, left: 0 })
+  }, [subjectId, navigationType])
   const [children, setChildren] = useState<Child[]>([])
   const [chosen, setChosen] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -110,7 +118,7 @@ export function Family() {
           ))}
         </div>
       )}
-      <FamilyBody child={child} tab={tab} onTab={setTab} />
+      <FamilyBody child={child} tab={tab} onTab={setTab} subjectId={subjectId} />
     </Shell>
   )
 }
@@ -119,14 +127,15 @@ export function Family() {
  * The tab bar and whichever tab is open. Kept separate from the loading and sign-in
  * states above so it can be rendered, and tested, from a child record alone.
  */
-export function FamilyBody({ child, tab, onTab }: { child: Child; tab: FamilyTab; onTab: (t: FamilyTab) => void }) {
+export function FamilyBody({ child, tab, onTab, subjectId }: { child: Child; tab: FamilyTab; onTab: (t: FamilyTab) => void; subjectId?: string }) {
   const first = firstNameOf(child.name)
   return (
     <>
       <FamilyTabs tab={tab} onTab={onTab} />
       {tab === 'dashboard' ? (
         <TabPanel tab="dashboard">
-          {child.state ? <ChildReport child={child} summary={parentSummary(child.state)} /> : (
+          {child.state && subjectId ? <SubjectDetail state={child.state} subjectId={subjectId} first={first} />
+            : child.state ? <ChildReport child={child} summary={parentSummary(child.state)} /> : (
             <p className="rounded-2xl border border-rule bg-surface p-4 text-ink-2">
               <strong className="text-ink">{first}</strong> has not signed in yet, so nothing has reached the account. Work done while signed out stays on that device.
               Tasks can still be set on the <button type="button" onClick={() => onTab('tasks')} className="font-bold text-ink underline">Tasks</button> tab.
@@ -202,6 +211,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
   const toggle = (id: string) => setOpenTopic((cur) => (cur === id ? null : id))
   const goalPct = s.goalMinutes > 0 ? Math.round((100 * s.weekMinutes) / s.goalMinutes) : 0
   const gap = s.daysSinceActive
+  const subjectMinutes = minutesBySubject(child.state!)
   return (
     <div className="flex flex-col gap-6">
       <p className="text-ink-2">
@@ -265,16 +275,28 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
 
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#0f766e" emoji="📊">Each subject</SectionLabel>
+        <p className="text-sm text-ink-2">Tap a subject to see each topic, what was done on it and how long it took.</p>
         <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-2">
           {TOPIC_STATUSES.map((st) => <li key={st} className="flex items-center gap-1.5"><StatusIcon status={st} size={12} />{STATUS_LABEL[st]}</li>)}
           <li className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-panel ring-1 ring-rule" aria-hidden />Not started</li>
         </ul>
         <div className="flex flex-col gap-2">
           {s.subjects.map((sub) => (
-            <div key={sub.id} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
+            // The whole row is the link: on a phone the name alone is a small target, and the
+            // row is what a parent reads as "this subject". It opens the subject's detail
+            // here rather than the student's own subject page, which shows no progress.
+            <Link key={sub.id} to={`/family?subject=${sub.id}`}
+              className="group flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-ink">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                <Link to={`/subjects/${sub.id}`} className="font-bold underline accent-ink" style={{ '--subject': sub.colour } as React.CSSProperties}>{sub.name}</Link>
-                <span className="text-xs text-ink-2">{sub.started} of {sub.total} started{sub.lastActive ? ` · last opened ${day(sub.lastActive)}` : ''}</span>
+                <span className="flex items-baseline gap-2">
+                  <span className="font-bold underline accent-ink" style={{ '--subject': sub.colour } as React.CSSProperties}>{sub.name}</span>
+                  <span aria-hidden className="text-ink-3 group-hover:text-ink">›</span>
+                </span>
+                <span className="text-xs text-ink-2">
+                  {sub.started} of {sub.total} started
+                  {subjectMinutes[sub.id] ? ` · ${formatMinutes(subjectMinutes[sub.id]!)}` : ''}
+                  {sub.lastActive ? ` · last opened ${day(sub.lastActive)}` : ''}
+                </span>
               </div>
               {/* Untouched topics are left as the bar's own background, so a subject not
                   yet begun reads as empty rather than as a wall of the failing colour. */}
@@ -283,7 +305,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
                   <span key={st} style={{ width: `${(100 * sub.counts[st]) / sub.total}%`, background: STATUS_COLOUR[st] }} />
                 ))}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

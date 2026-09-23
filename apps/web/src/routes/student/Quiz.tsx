@@ -65,7 +65,7 @@ export function Quiz() {
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const [state, setState] = useState<QuizState | null>(() => (topic ? load(topic.id) : null))
   const [celebration, setCelebration] = useState<Settlement | null>(null)
-  useActivityTimer(Boolean(state && !state.finishedAt))
+  useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'quiz' }, Boolean(state && !state.finishedAt))
 
   useEffect(() => {
     if (topic) save(topic.id, state)

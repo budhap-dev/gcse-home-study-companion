@@ -69,7 +69,7 @@ export function Worksheet() {
   const level = (['core', 'higher', 'advanced'] as const).find((l) => l === levelParam)
   const [state, setState] = useState<SheetState | null>(() => (topic && level ? load(topic.id, level) : null))
   const [celebration, setCelebration] = useState<Settlement | null>(null)
-  useActivityTimer(Boolean(state && !state.finishedAt))
+  useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'worksheet' }, Boolean(state && !state.finishedAt))
 
   useEffect(() => {
     if (topic && level) save(topic.id, level, state)

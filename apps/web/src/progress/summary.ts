@@ -1,6 +1,6 @@
 import { DEFAULT_THRESHOLDS, SUBJECTS, TOPIC_STATUSES, type SubjectId, type TopicStatus } from '@study/shared'
 import { TOPICS, topicsForSubject } from '../content/index.ts'
-import { evidenceFor, isoDate, streakDays, weekDays, weekMinutes, type AttemptRecord, type ProgressState } from './store.ts'
+import { evidenceFor, isoDate, parseTimeKey, streakDays, weekDays, weekMinutes, type AttemptRecord, type ProgressState } from './store.ts'
 import { skillStats, type SkillStat } from './xp.ts'
 
 /**
@@ -214,6 +214,9 @@ export function parentSummary(state: ProgressState, today = isoDate()): ParentSu
     ...state.attempts.map((a) => a.topicId),
     ...Object.keys(state.lessons),
     ...state.activities.flatMap((a) => (a.topicId ? [a.topicId] : [])),
+    // Time alone counts: ten minutes on a deck that was never finished leaves no activity
+    // record, and the subject's own page already calls that topic started.
+    ...Object.keys(state.time ?? {}).flatMap((k) => parseTimeKey(k).topicId ?? []),
   ])
   const subjects: SubjectSummary[] = SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
     const topics = topicsForSubject(s.id)
@@ -225,6 +228,7 @@ export function parentSummary(state: ProgressState, today = isoDate()): ParentSu
       ...state.attempts.filter((a) => ids.has(a.topicId)).map((a) => a.completedAt.slice(0, 10)),
       ...Object.values(state.lessons).filter((l) => ids.has(l.topicId)).map((l) => l.updatedAt.slice(0, 10)),
       ...state.activities.filter((a) => a.subjectId === s.id).map((a) => a.at.slice(0, 10)),
+      ...Object.keys(state.time ?? {}).map(parseTimeKey).filter((p) => p.subjectId === s.id).map((p) => p.day),
     ].sort()
     return {
       id: s.id as SubjectId,

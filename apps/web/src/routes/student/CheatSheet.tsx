@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { getTopic } from '../../content/index.ts'
+import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useRecordActivity } from '../../progress/useRecordActivity.ts'
 
 /**
@@ -27,6 +28,7 @@ export function CheatSheet() {
   const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   // Before the early return: a hook cannot be called conditionally.
   useRecordActivity(topic && { subjectId: topic.subjectId, topicId: topic.id }, 'cheat-sheet')
+  useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'cheat-sheet' })
   if (!subject || !topic) return <p>Unknown topic.</p>
   const sheet = cheatSheetOf(topic)
   const backTo = `/subjects/${subject.id}/topics/${topic.id}`

@@ -3,6 +3,7 @@ import { SectionLabel } from '../../components/KindChip.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { getGuide, topicsForSubject } from '../../content/index.ts'
+import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useRecordActivity } from '../../progress/useRecordActivity.ts'
 
 /**
@@ -16,6 +17,7 @@ export function ExamTechnique() {
   const topics = subjectId ? topicsForSubject(subjectId) : []
   // No topicId: this is one page per subject, reached from every topic in it.
   useRecordActivity(subject && { subjectId: subject.id }, 'exam-technique')
+  useActivityTimer(subject && { subjectId: subject.id, kind: 'exam-technique' })
   if (!subject) return <p>Unknown subject.</p>
 
   return (

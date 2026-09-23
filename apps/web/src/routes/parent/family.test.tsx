@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import { ChildReport, FamilyBody } from './Family.tsx'
-import { emptyState, type ProgressState } from '../../progress/store.ts'
+import { emptyState, timeKey, type ProgressState } from '../../progress/store.ts'
 import { parentSummary } from '../../progress/summary.ts'
 
 const render = (state: ProgressState, syncedAt?: string, name = 'Ana') =>
@@ -171,5 +171,80 @@ describe('the family tabs', () => {
     const html = render(state)
     expect(html).toContain('12 cards, all known first time')
     expect(html).not.toMatch(/<strong class="shrink-0 tabular-nums">\d/)
+  })
+})
+
+/**
+ * A parent asked to see, per subject, what exactly the time went on — flashcards against
+ * quizzes, topic by topic. The dashboard counts topics across everything; this is the
+ * subject opened up.
+ */
+describe('a subject opened from the dashboard', () => {
+  const KE = 'kinetic-and-gravitational-potential-energy'
+  const state: ProgressState = {
+    ...emptyState(),
+    attempts: [quiz(KE, 70, '2026-09-22')],
+    lessons: { [KE]: { topicId: KE, stepIndex: 3, updatedAt: '2026-09-22T09:00:00.000Z' } },
+    activities: [{ id: 'a1', topicId: KE, subjectId: 'physics', kind: 'flashcards', at: '2026-09-22T19:00:00.000Z', cards: 12, turns: 15 }],
+    minutes: { '2026-09-19': 15, '2026-09-22': 38 },
+    time: {
+      [timeKey('2026-09-22', { subjectId: 'physics', topicId: KE, kind: 'quiz' })]: 9,
+      [timeKey('2026-09-22', { subjectId: 'physics', topicId: KE, kind: 'lesson' })]: 22,
+      [timeKey('2026-09-22', { subjectId: 'physics', topicId: KE, kind: 'flashcards' })]: 7,
+    },
+  }
+
+  it('makes each subject row a link to its own detail, with its minutes', () => {
+    const html = render(state)
+    expect(html).toContain('href="/family?subject=physics"')
+    expect(html).toContain('38 min')
+    expect(html).toContain('1 of 34 started')
+    // The row no longer sends a parent to the student's subject page, which has no progress on it.
+    expect(html).not.toContain('href="/subjects/physics"')
+  })
+
+  it('shows the time by kind and what was done on each topic', () => {
+    const html = renderToStaticMarkup(
+      <MemoryRouter>
+        <FamilyBody child={{ email: 'kid@example.com', name: 'Ana Pandit', state }} tab="dashboard" onTab={() => {}} subjectId="physics" />
+      </MemoryRouter>,
+    )
+    expect(html).toContain('Physics')
+    expect(html).toContain('Where the time went')
+    expect(html).toContain('38 min')
+    expect(html).toContain('Lesson, step 4 of 8')
+    expect(html).toContain('1 quiz, 70%')
+    expect(html).toContain('Flashcards on 1 day, 12 cards')
+    expect(html).toContain('Lesson 22 min · Quiz 9 min · Flashcards 7 min')
+    // The 15 minutes on the 19th predate places, and the page says so rather than losing them.
+    expect(html).toContain('15 min studied before that')
+    expect(html).toContain('Not started yet')
+    expect(html).toContain('href="/family"')
+    expect(html).not.toContain('Worth a conversation')
+    expect(html).not.toContain('NaN')
+  })
+
+  it('shows a subject with nothing done without inventing any', () => {
+    const html = renderToStaticMarkup(
+      <MemoryRouter>
+        <FamilyBody child={{ email: 'kid@example.com', name: 'Ana Pandit', state: emptyState() }} tab="dashboard" onTab={() => {}} subjectId="music" />
+      </MemoryRouter>,
+    )
+    expect(html).toContain('Ana has not started Music yet')
+    expect(html).toContain('No time recorded on Music yet')
+    expect(html).not.toContain('NaN')
+  })
+})
+
+/** Minutes on an unfinished deck leave no other record, and still mean the topic was begun. */
+describe('a topic with only time on it', () => {
+  it('counts as started on the dashboard, as it does on the subject page', () => {
+    const state: ProgressState = {
+      ...emptyState(),
+      minutes: { '2026-09-18': 12 },
+      time: { [timeKey('2026-09-18', { subjectId: 'maths', topicId: 'surds', kind: 'flashcards' })]: 12 },
+    }
+    const html = render(state)
+    expect(html).toMatch(/1 of \d+ started · 12 min · last opened 18 Sept/)
   })
 })
