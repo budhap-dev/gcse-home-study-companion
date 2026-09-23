@@ -63,6 +63,11 @@ export function normaliseText(s: string): string {
     .replace(/[−–—]/g, '-')
     // French answers are full of apostrophes, and phones type a curly one.
     .replace(/[\u2018\u2019\u02bc`´]/g, "'")
+    .replace(/[\u201c\u201d]/g, '"')
+    // "solid-state" and "solid state" are one answer, and so are "sub-problems" and
+    // "subproblems". Only between words: a hyphen after a single letter or a digit is a
+    // minus sign or part of a name, as in x-y or carbon-12.
+    .replace(/(?<=\p{L}{2})-(?=\p{L}{2})/gu, '')
     // A student without a pi key types "pi", and the content writes "π". Folding the
     // symbol to the letters rather than the other way round is what makes this safe:
     // going the other way would rewrite "pitch" and "capital" in every word answer.
@@ -73,7 +78,9 @@ export function normaliseText(s: string): string {
     .replace(/√/g, 'sqrt')
     .replace(/root/g, 'sqrt')
     .replace(/sqrt\(([^)]+)\)/g, 'sqrt$1')
-    .replace(/\*/g, '')
+    // A times sign is dropped, so 3*x is 3x. In SQL the star is the whole column list:
+    // dropping it would pass SELECT FROM Student for SELECT * FROM Student.
+    .replace(/\*/g, (star, _at: number, whole: string) => (/^(select|insert|update|delete)/.test(whole) ? star : ''))
     .replace(/[{}]/g, '')
     .replace(/\^\(([^)]+)\)/g, '^$1')
     .replace(/^y=/, '')
@@ -171,10 +178,27 @@ function stripProseCommas(s: string): string {
  * required: when a program prints "Hi Amy!", the exclamation mark is part of the output.
  * Both arguments are already normalised.
  */
+/**
+ * The letters of an answer word by word, case kept: what `matchCase` compares. A
+ * `matchCase` answer is exact program output, where "Hi Amy!" and "HiAmy!" differ as
+ * much as T and t do, so the breaks between words count too. Normalising drops every
+ * space, which is right for "3 x" and "3x" but passed "Fail Pass" for "FailPass".
+ */
+function lettersByWord(s: string): string {
+  return s.trim().split(/\s+/).map((w) => w.replace(/[^\p{L}]/gu, '')).filter(Boolean).join(' ')
+}
+
 function matchesAccepted(given: string, accepted: string): boolean {
   if (given === accepted) return true
   let lenient = given
-  if (!/[.!?]$/.test(accepted)) lenient = lenient.replace(/[.!?]+$/, '')
+  // A statement terminator counts as closing punctuation: SQL is often typed with one.
+  if (!/[.!?;]$/.test(accepted)) lenient = lenient.replace(/[.!?;]+$/, '')
+  // SQL takes a text value in either kind of quote. Only SQL: in pseudo-code and program
+  // output the two quote marks are different things.
+  if (/^(select|insert|update|delete)/.test(accepted)) lenient = lenient.replace(/"/g, "'")
+  // Quotes round the whole answer mark it as a string; they are not part of it unless the
+  // accepted answer has them too, as when a program prints the quote marks.
+  if (!/^["']/.test(accepted)) lenient = lenient.replace(/^(["'])(.+)\1$/, '$2')
   if (stripProseCommas(accepted) === accepted) lenient = stripProseCommas(lenient)
   return lenient === accepted
 }
@@ -295,6 +319,7 @@ export function mark(question: Question, answer: unknown): MarkResult {
       const given = normaliseText(raw)
       return result(given.length > 0 && question.accepted.some((a) => {
         if (!genotypesMatch(raw, a, question.prompt)) return false
+        if (question.matchCase && lettersByWord(raw) !== lettersByWord(a)) return false
         const accepted = normaliseText(a)
         if (matchesAccepted(given, accepted)) return true
         const bare = withoutArticle(raw, a)

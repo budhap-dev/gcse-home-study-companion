@@ -111,10 +111,14 @@
               [
                 "LEN(grid)",
                 "2"
+              ],
+              [
+                "LEN(grid[0])",
+                "3"
               ]
             ]
           },
-          "alt": "A table of lookups into a two-dimensional array of two rows of three numbers: the first row on its own, then single values picked out by row and column with both indexes counted from zero, and the length of the outer array"
+          "alt": "A table of lookups into a two-dimensional array of two rows of three numbers: the first row on its own, then single values picked out by row and column with both indexes counted from zero, the length of the outer array, which counts the rows, and the length of the first row, which counts the columns"
         }
       },
       {
@@ -400,7 +404,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Two-dimensional arrays",
-        "body": "A **2D array** is a grid: an array of arrays. `grid[row][column]`, both from 0.\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```\n\nOutput: `7` then `8`. To visit every cell, use **nested loops**: the outer loop picks the row, the inner loop walks along it. For 2 rows and 3 columns the inner loop runs 3 times for each of 2 rows: 6 cells.",
+        "body": "A **2D array** is a grid: an array of arrays. `grid[row][column]`, both from 0.\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```\n\nOutput: `7` then `8`. `LEN(grid)` is the number of rows, 2, and `LEN(grid[0])` is the length of the first row, 3, which is the number of columns. A cell is updated the same way it is read: `grid[1][1] ← 9` changes the 2 to a 9 and leaves every other cell alone.\n\nTo visit every cell, use **nested loops**: the outer loop picks the row, the inner loop walks along it. For 2 rows and 3 columns the inner loop runs 3 times for each of 2 rows: 6 cells.",
         "visuals": [
           {
             "type": "diagram",
@@ -435,10 +439,10 @@
             "problem": "Output every cell of grid, row by row",
             "steps": [
               {
-                "text": "```\nFOR r ← 0 TO 1\n   FOR c ← 0 TO 2\n      OUTPUT grid[r][c]\n   ENDFOR\nENDFOR\n```"
+                "text": "```\nFOR r ← 0 TO LEN(grid) - 1\n   FOR c ← 0 TO LEN(grid[0]) - 1\n      OUTPUT grid[r][c]\n   ENDFOR\nENDFOR\n```"
               },
               {
-                "text": "Outer loop: rows. Inner loop: columns"
+                "text": "Outer loop: rows, up to LEN(grid) − 1. Inner loop: columns, up to LEN(grid[0]) − 1, so the same code works for a grid of any size"
               },
               {
                 "text": "Output order: 3, 8, 1, 5, 2, 7"
@@ -640,7 +644,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- An array holds values of one type, indexed from 0. LEN gives the count; the last index is LEN − 1.\n- Traverse with FOR i ← 0 TO LEN(a) − 1. Total, count and biggest all use this loop with a variable set up before it.\n- 2D arrays are grids: a[row][col]; nested loops visit row by row.\n- Records group fields of different types; arrays of records store many of them. Reach a field with a dot: pupils[2].name.\n- Watch the off-by-one trap and the counter in search loops.",
+        "body": "- An array holds values of one type, indexed from 0. LEN gives the count; the last index is LEN − 1.\n- Traverse with FOR i ← 0 TO LEN(a) − 1. Total, count and biggest all use this loop with a variable set up before it.\n- 2D arrays are grids: a[row][col]; nested loops visit row by row. LEN(a) counts the rows and LEN(a[0]) the columns.\n- Records group fields of different types; arrays of records store many of them. Reach a field with a dot: pupils[2].name.\n- Watch the off-by-one trap and the counter in search loops.",
         "visuals": [
           {
             "type": "diagram",
@@ -665,7 +669,7 @@
                 [
                   "biggest",
                   "biggest ← a[0]",
-                  "IF a[i] > biggest: swap"
+                  "IF bigger: biggest ← a[i]"
                 ],
                 [
                   "search",
@@ -812,7 +816,7 @@
     {
       "id": "q6",
       "type": "short-text",
-      "prompt": "What is output by this program?\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```",
+      "prompt": "What is output by this program? Give both values in the order they are output, separated by a comma.\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```",
       "marks": 1,
       "gradeBand": "6-7",
       "skill": "2D arrays",
@@ -828,7 +832,6 @@
       ],
       "discriminators": [],
       "accepted": [
-        "7 8",
         "7, 8",
         "7 then 8",
         "7 and 8"
@@ -843,41 +846,41 @@
       "skill": "writing array code",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Using LEN is what makes it work for any length. A loop hard-coded to 4 only works for that one array, and the question asks for any length.",
+      "solution": "Using LEN, or `FOR name IN names`, is what makes it work for any length. A loop hard-coded to 4 only works for that one array, and the question asks for any length.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "Loop bounded by LEN"
+          "description": "Loop over every item, bounded by LEN or written FOR name IN names"
         },
         {
           "code": "B1",
           "marks": 1,
-          "description": "names[i] output inside the loop"
+          "description": "Each item output inside the loop"
         },
         {
           "code": "B1",
           "marks": 1,
-          "description": "Correct syntax and 0 start"
+          "description": "Correct syntax, and any index starts at 0"
         }
       ],
       "discriminators": [],
       "suggestedMinutes": 4,
       "criteria": [
         {
-          "text": "A FOR loop from 0 to LEN(names) − 1, or a loop that uses LEN so it works for any length",
+          "text": "A loop that visits every item whatever the length: FOR i ← 0 TO LEN(names) − 1, or FOR name IN names",
           "marks": 1
         },
         {
-          "text": "OUTPUT names[i] inside the loop, using the loop variable as the index",
+          "text": "Outputs each item inside the loop (names[i], or the FOR-IN loop variable)",
           "marks": 1
         },
         {
-          "text": "Correct structure: ENDFOR, index starting at 0",
+          "text": "Correct structure: ENDFOR, and an index, if used, starting at 0",
           "marks": 1
         }
       ],
-      "modelAnswer": "```\nFOR i ← 0 TO LEN(names) - 1\n   OUTPUT names[i]\nENDFOR\n```"
+      "modelAnswer": "```\nFOR i ← 0 TO LEN(names) - 1\n   OUTPUT names[i]\nENDFOR\n```\n\nThis earns the same marks:\n\n```\nFOR name IN names\n   OUTPUT name\nENDFOR\n```"
     },
     {
       "id": "q8",
@@ -960,12 +963,12 @@
         {
           "code": "B1",
           "marks": 1,
-          "description": "Loop bounded by LEN"
+          "description": "Loop over every item (LEN(nums) − 1 or FOR n IN nums)"
         },
         {
           "code": "B1",
           "marks": 1,
-          "description": "Adds nums[i]"
+          "description": "Adds each item to the total"
         },
         {
           "code": "B1",
@@ -992,11 +995,11 @@
           "marks": 1
         },
         {
-          "text": "A loop over every index, bounded by LEN(nums)",
+          "text": "A loop over every item (indexed to LEN(nums) − 1, or FOR n IN nums)",
           "marks": 1
         },
         {
-          "text": "Adds nums[i] to the total inside the loop",
+          "text": "Adds each item to the total inside the loop",
           "marks": 1
         },
         {
@@ -1008,7 +1011,7 @@
           "marks": 1
         }
       ],
-      "modelAnswer": "```\nSUBROUTINE average(nums)\n   total ← 0\n   FOR i ← 0 TO LEN(nums) - 1\n      total ← total + nums[i]\n   ENDFOR\n   RETURN total / LEN(nums)\nENDSUBROUTINE\n```"
+      "modelAnswer": "```\nSUBROUTINE average(nums)\n   total ← 0\n   FOR i ← 0 TO LEN(nums) - 1\n      total ← total + nums[i]\n   ENDFOR\n   RETURN total / LEN(nums)\nENDSUBROUTINE\n```\n\nA loop written `FOR n IN nums` with `total ← total + n` inside earns the same marks."
     },
     {
       "id": "q11",
@@ -1174,6 +1177,239 @@
         "shelf[2].pages",
         "shelf(2).pages"
       ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "What is the purpose of this algorithm? `a` is an array of integers.\n\n```\nresult ← 0\nFOR i ← 0 TO LEN(a) - 1\n   IF a[i] < 0 THEN\n      result ← result + 1\n   ENDIF\nENDFOR\nOUTPUT result\n```",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "determining the purpose of an algorithm",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`result` starts at 0 and goes up by **1**, not by `a[i]`, each time the IF is true, so it is a counter: the algorithm counts how many of the values in a are negative. For `[3, -2, 0, -5]` it outputs 2. Adding `a[i]` instead of 1 would make it a total of the negative values, and a finder for the smallest value would start at `a[0]` and replace it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Counts how many values are negative"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It adds up all of the negative values in a",
+        "It finds the smallest value that is stored in a",
+        "It counts how many of the values in a are negative",
+        "It outputs the index of the first negative value"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\ngrid ← [[4, 1, 6],\n        [2, 5, 3]]\ngrid[1][0] ← grid[0][2] + 1\ntotal ← 0\nFOR r ← 0 TO LEN(grid) - 1\n   FOR c ← 0 TO LEN(grid[0]) - 1\n      total ← total + grid[r][c]\n   ENDFOR\nENDFOR\nOUTPUT total\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "2D array traversal",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`grid[0][2]` is 6, so `grid[1][0]` becomes 6 + 1 = 7 and the grid is now [[4, 1, 6], [7, 5, 3]]. `LEN(grid)` is 2 rows and `LEN(grid[0])` is 3 columns, so the loops add all 6 cells: 4 + 1 + 6 = 11 and 7 + 5 + 3 = 15, which is **26**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "grid[1][0] becomes 7 before the loops run"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "26"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 26,
+      "tolerance": 0
+    },
+    {
+      "id": "q18",
+      "type": "multiple-choice",
+      "prompt": "`grid ← [[3, 8, 1], [5, 2, 7]]`. What do `LEN(grid)` and `LEN(grid[0])` return?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "2D arrays",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`grid` is an array of 2 rows, so `LEN(grid)` is 2. `grid[0]` is the first row, [3, 8, 1], which holds 3 items, so `LEN(grid[0])` is 3, the number of columns. The answer is 2 and 3.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2 and 3"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "3 and 2, because LEN counts the columns first",
+        "6 and 3, because LEN counts every cell in the grid",
+        "2 and 3: two rows, then three items in row 0",
+        "1 and 2, because LEN gives the last index used"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "A program declares this record and creates a variable:\n\n```\nRECORD Car\n   make : String\n   model : String\n   doors : Integer\nENDRECORD\n\nmyCar ← Car('Ford', 'Focus', 5)\n```\n\nWhich line changes the model to `'Fiesta'` and leaves the other fields as they are?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "records",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A field is reached through the variable, a dot and the field name, so the line is `myCar.model ← 'Fiesta'`. `Car` is the name of the record type, not a variable, so `Car.model` names no particular car. Fields are reached by name, not by a number in brackets, and `model` on its own would be a new, separate variable.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "myCar.model ← 'Fiesta'"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "`Car.model ← 'Fiesta'`",
+        "`myCar.model ← 'Fiesta'`",
+        "`myCar[1] ← 'Fiesta'`",
+        "`model ← 'Fiesta'`"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "extended",
+      "prompt": "A library program stores each book as a record with a title (text), an author (text), a number of pages (a whole number) and a price in pounds (a decimal number).\n\nWrite, in AQA pseudo-code or a language you know:\n\n1. a record declaration called `Book` for these four fields, with a suitable data type for each;\n2. a line that creates a variable `b` holding the book *River Song* by A. Patel, 272 pages, costing 7.99;\n3. a line that outputs the number of pages in `b`.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "writing a record",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Declare the record type once with a type for each field, create a variable from it with the values in the declared order, then reach a field with a dot.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Record declaration with four named fields (RECORD, or a class, struct or Structure)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Suitable types for all four fields"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Variable created with values in field order"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "OUTPUT b.pages"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "A record declaration with the four fields named: RECORD Book … ENDRECORD, or the equivalent in the language used (a Python class or dataclass, a C# struct or class, a VB.NET Structure)",
+          "marks": 1
+        },
+        {
+          "text": "A suitable type for each: title and author String (str, string), pages Integer (int), price Real (float, double or decimal)",
+          "marks": 1
+        },
+        {
+          "text": "Creates the variable with the values in the declared order: b ← Book('River Song', 'A. Patel', 272, 7.99), or b = Book(…) or new Book(…) in a real language",
+          "marks": 1
+        },
+        {
+          "text": "Outputs the field with a dot: OUTPUT b.pages, or print(b.pages), Console.WriteLine(b.pages)",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nRECORD Book\n   title : String\n   author : String\n   pages : Integer\n   price : Real\nENDRECORD\n\nb ← Book('River Song', 'A. Patel', 272, 7.99)\nOUTPUT b.pages\n```\n\nThe price has a decimal part, so it is a Real; the number of pages is a whole number, so it is an Integer. The values go in the same order as the fields were declared. In Python the same thing is a dataclass with `title: str`, `author: str`, `pages: int` and `price: float`, then `b = Book(\"River Song\", \"A. Patel\", 272, 7.99)` and `print(b.pages)`; a C# `struct` or VB.NET `Structure` with the same four fields earns the same marks."
+    },
+    {
+      "id": "q21",
+      "type": "extended",
+      "prompt": "Write a subroutine `gridTotal(grid)` that returns the total of every number in the two-dimensional array of integers `grid`. It must work for a grid with any number of rows and columns; you may assume every row has the same length.",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "writing 2D array code",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A total set to 0, a loop over the rows, a loop over the columns inside it, add each cell, and return the total after both loops. Bounding the loops with LEN(grid) and LEN(grid[0]), or using FOR-IN, is what makes it work for any size.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Header with parameter; total ← 0 before the loops"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Outer loop over every row"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Inner loop over every column"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Adds each cell to the total"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RETURN total after both loops, no OUTPUT"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 7,
+      "criteria": [
+        {
+          "text": "SUBROUTINE header with the grid as a parameter, and a total set to 0 before the loops",
+          "marks": 1
+        },
+        {
+          "text": "An outer loop over every row: FOR r ← 0 TO LEN(grid) − 1, or FOR row IN grid",
+          "marks": 1
+        },
+        {
+          "text": "An inner loop over every column: FOR c ← 0 TO LEN(grid[0]) − 1 (or LEN(grid[r]) − 1), or FOR x IN row",
+          "marks": 1
+        },
+        {
+          "text": "Adds grid[r][c], or the FOR-IN item, to the total inside the inner loop",
+          "marks": 1
+        },
+        {
+          "text": "RETURN total after both loops have ended, inside SUBROUTINE … ENDSUBROUTINE, with no OUTPUT",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nSUBROUTINE gridTotal(grid)\n   total ← 0\n   FOR r ← 0 TO LEN(grid) - 1\n      FOR c ← 0 TO LEN(grid[0]) - 1\n         total ← total + grid[r][c]\n      ENDFOR\n   ENDFOR\n   RETURN total\nENDSUBROUTINE\n```\n\nThis version earns the same marks:\n\n```\nSUBROUTINE gridTotal(grid)\n   total ← 0\n   FOR row IN grid\n      FOR x IN row\n         total ← total + x\n      ENDFOR\n   ENDFOR\n   RETURN total\nENDSUBROUTINE\n```"
     }
   ],
   "worksheets": {
@@ -1193,9 +1429,12 @@
         "q5",
         "q6",
         "q7",
-        "q8"
+        "q8",
+        "q16",
+        "q18",
+        "q19"
       ],
-      "suggestedMinutes": 14
+      "suggestedMinutes": 20
     },
     "advanced": {
       "level": "advanced",
@@ -1206,13 +1445,16 @@
         "q12",
         "q13",
         "q14",
-        "q15"
+        "q15",
+        "q17",
+        "q20",
+        "q21"
       ],
-      "suggestedMinutes": 40
+      "suggestedMinutes": 55
     }
   },
   "examTechnique": {
-    "body": "Array questions on Paper 1 are traces (what is output), completions (fill in the missing line), and writing tasks (total, count, find, search). Use LEN in loop bounds, start at 0, and set up the result variable before the loop. For 2D arrays, say row then column. Records appear as \"state a suitable data structure and explain why\".",
+    "body": "Array questions on Paper 1 are traces (what is output), completions (fill in the missing line), and writing tasks (total, count, find, search). Use LEN in loop bounds, start at 0, and set up the result variable before the loop. For 2D arrays, say row then column. Records can appear as \"state a suitable data structure and explain why\".",
     "examinerErrors": [
       "Starting the index at 1, or looping to LEN instead of LEN − 1.",
       "Forgetting to set total or count to 0 before the loop.",
@@ -1235,7 +1477,11 @@
       "q11",
       "q12",
       "q14",
-      "q15"
+      "q15",
+      "q16",
+      "q17",
+      "q18",
+      "q19"
     ],
     "sampleSize": 10
   },

@@ -35,7 +35,7 @@
     {
       "kind": "check",
       "title": "Convert before you calculate",
-      "body": "`USERINPUT` always arrives as a **string**. Adding to it joins text instead of doing arithmetic, so wrap it in `STRING_TO_INT` or `STRING_TO_REAL` first. This is the single most common runtime surprise in the topic."
+      "body": "In Python, C# and VB.NET, keyboard input arrives as text, so convert it with `int(...)`, `Convert.ToInt32(...)` or `STRING_TO_INT` before doing arithmetic. AQA's pseudo-code does not say what type `USERINPUT` returns, so writing the conversion is always safe and makes your intention clear. Without it, `age + 1` can crash the program or join the text instead of adding."
     },
     {
       "kind": "shortcut",
@@ -48,7 +48,7 @@
     "examples": [
       {
         "title": "Why a phone number is a string",
-        "body": "Store 07700 900123 as an integer and two things happen. The leading zero disappears, because `07700900123` and `7700900123` are the same number. And the value becomes something you could add up, which nobody has ever wanted to do to two phone numbers.\n\nA value is stored as a number when arithmetic on it means something: a price, a mark, a count. A phone number, a postcode and a sort code are **labels that happen to be written in digits**, so they are strings. That sentence is what a *justify the data type* question is paying for.",
+        "body": "Store 07700 900123 as an integer and two things happen. The leading zero disappears, because `07700900123` and `7700900123` are the same number. And the value becomes something you could add up, which nobody has ever wanted to do to two phone numbers.\n\nA value is stored as a number when arithmetic on it means something: a price, a mark, a count. A phone number, a postcode and a sort code are **labels that happen to be written in digits**, so they are strings. That sentence is the answer to a *justify the data type* question.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -131,7 +131,7 @@
       },
       {
         "title": "Why a free bus pass at 65 is a one-character bug",
-        "body": "A council writes `IF age > 65 THEN pass ← True`. Everyone aged 66 and over gets one. Everyone who is exactly 65 — the people the rule was written for — does not.\n\nRelational operators come in pairs that disagree about exactly one value, and that value is always the number in the condition. `>` leaves it out, `≥` takes it in. AQA prints them as `≠`, `≤` and `≥`, not the two-character versions a programming language uses, and asks what a condition does at the edge. Saying it out loud — *more than* against *at least* — catches most of them.",
+        "body": "A council writes `IF age > 65 THEN pass ← True`. Everyone aged 66 and over gets one. Everyone who is exactly 65 — the people the rule was written for — does not.\n\nRelational operators come in pairs that disagree about exactly one value, and that value is always the number in the condition. `>` leaves it out, `≥` takes it in. AQA prints them as `≠`, `≤` and `≥`, not the two-character versions a programming language uses, and the edge is where a condition is worth checking. Saying it out loud — *more than* against *at least* — catches most of them.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -247,7 +247,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Variables, constants and assignment",
-        "body": "A **variable** is a named space in memory whose value can change. In AQA pseudo-code a variable is created by assigning to it with the arrow:\n\n```\nscore ← 0\nname ← 'Amy'\n```\n\nThe arrow means *becomes*, and it works **right to left**: evaluate the right-hand side, then store it on the left. So `score ← score + 1` takes the current score, adds 1, and stores the result back. It is not an equation.\n\nA **constant** is a value that must not change while the program runs, declared with `CONSTANT` and named in capitals: `CONSTANT VAT ← 0.2`. Using a constant instead of typing 0.2 everywhere means one change updates the whole program, and the name says what the number is.",
+        "body": "A **variable** is a named space in memory whose value can change. In AQA pseudo-code a variable is created by assigning to it with the arrow:\n\n```\nscore ← 0\nname ← 'Amy'\n```\n\nThe arrow means *becomes*, and it works **right to left**: evaluate the right-hand side, then store it on the left. So `score ← score + 1` takes the current score, adds 1, and stores the result back. It is not an equation.\n\nA **constant** is a value that must not change while the program runs, declared with `CONSTANT` and named in capitals: `CONSTANT VAT ← 0.2`. Using a constant instead of typing 0.2 everywhere means one change updates the whole program, and the name says what the number is.\n\n**Why name values at all?** A **variable** gives a changing value a name, so the program can store it, update it and use it later; a named constant does the same for a fixed value.\n\n**Choose meaningful identifier names** for variables, constants and subroutines. `totalCost`, `attempts` and `VAT` explain themselves; `x`, `t` and `n2` do not. Meaningful names make code easier to read, check and change, and the specification expects them whenever you write a program in the exam.",
         "visuals": [
           {
             "type": "diagram",
@@ -303,7 +303,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Arithmetic: /, DIV and MOD",
-        "body": "The usual `+`, `-`, `*` and `/`, plus two that do integer division:\n\n- `/` is real division: `9 / 2` is `4.5`.\n- `DIV` is **integer division**: how many whole times. `9 DIV 2` is `4`.\n- `MOD` is the **remainder**: `9 MOD 2` is `1`.\n\nTogether they take numbers apart. `23 DIV 10` is 2 (the tens digit) and `23 MOD 10` is 3 (the units digit). `n MOD 2 = 0` tests whether `n` is even. `minutes DIV 60` gives hours and `minutes MOD 60` the minutes left over.\n\n**Precedence** is as in maths: brackets, then `*`, `/`, `DIV`, `MOD`, then `+` and `-`, working left to right among equals. `2 * 3 + 4` is 10; `2 * (3 + 4)` is 14.",
+        "body": "The usual `+`, `-`, `*` and `/`, plus two that do integer division:\n\n- `/` is real division: `9 / 2` is `4.5`.\n- `DIV` is **integer division**: how many whole times. `9 DIV 2` is `4`.\n- `MOD` is the **remainder**: `9 MOD 2` is `1`.\n\nTogether they take numbers apart. `23 DIV 10` is 2 (the tens digit) and `23 MOD 10` is 3 (the units digit). `n MOD 2 = 0` tests whether `n` is even. `minutes DIV 60` gives hours and `minutes MOD 60` the minutes left over.\n\n**Precedence**: `*` and `/` come before `+` and `-`, as in maths, and brackets come first of all. `2 * 3 + 4` is 10; `2 * (3 + 4)` is 14. AQA does not rank `DIV` and `MOD` against `*` and `/`, so bracket any line that mixes them: `(a MOD b) * 2`.",
         "visuals": [
           {
             "type": "diagram",
@@ -459,7 +459,7 @@
         "id": "s5",
         "kind": "worked-example",
         "title": "Evaluating an expression step by step",
-        "body": "Work from the inside out: brackets, then arithmetic, then comparisons, then NOT, AND, OR. Write each intermediate value down; the exam gives marks for the working.",
+        "body": "Work from the inside out: brackets, then arithmetic, then comparisons, then NOT, AND, OR. Write each intermediate value down, so a slip shows.",
         "visuals": [
           {
             "type": "worked-example",
@@ -499,15 +499,15 @@
           },
           {
             "type": "worked-example",
-            "problem": "`8 MOD 3 * 2 + 8 DIV 3`",
+            "problem": "`(8 MOD 3) * 2 + (8 DIV 3)`",
             "steps": [
               {
                 "text": "`8 MOD 3` is 2; `2 * 2` is 4",
-                "note": "left to right among *, DIV, MOD"
+                "note": "the brackets settle the order"
               },
               {
                 "text": "`8 DIV 3` is 2",
-                "note": "then the DIV, which ranks alongside it"
+                "note": "the second bracket"
               },
               {
                 "text": "`4 + 2` is **6**",
@@ -543,7 +543,7 @@
         "id": "s6",
         "kind": "explain",
         "title": "Input, output and random numbers",
-        "body": "Three built-ins you will use in every program.\n\n**Output**: `OUTPUT 'Hello'`, `OUTPUT score`. To join text and a number, convert the number first: `OUTPUT 'Score: ' + INT_TO_STRING(score)`.\n\n**Input**: `name ← USERINPUT`. Whatever the user types arrives as a **string**, so a number must be converted before arithmetic: `age ← STRING_TO_INT(USERINPUT)`. Forgetting this is the classic type error.\n\n**Random numbers**: `dice ← RANDOM_INT(1, 6)` gives a whole number from 1 to 6 inclusive. Both limits are included, which matters when the question asks how many different values are possible.",
+        "body": "Three built-ins you will use in every program.\n\n**Output**: `OUTPUT 'Hello'`, `OUTPUT score`. To join text and a number, convert the number first: `OUTPUT 'Score: ' + INT_TO_STRING(score)`.\n\n**Input**: `name ← USERINPUT`. In Python, C# and VB.NET keyboard input arrives as **text**, so a number must be converted before arithmetic: `int(input())` in Python, or `age ← STRING_TO_INT(USERINPUT)` in pseudo-code. AQA's pseudo-code does not say what type `USERINPUT` returns, so writing the conversion is always safe and makes your intention clear. Leave it out in Python, C# or VB.NET and the program cannot do arithmetic on text.\n\n**Random numbers**: `dice ← RANDOM_INT(1, 6)` gives a whole number from 1 to 6 inclusive. Both limits are included, which matters when the question asks how many different values are possible.",
         "visuals": [
           {
             "type": "diagram",
@@ -563,7 +563,7 @@
                 [
                   "USERINPUT",
                   "name ← USERINPUT",
-                  "a string, always"
+                  "what was typed"
                 ],
                 [
                   "STRING_TO_INT",
@@ -587,22 +587,22 @@
           },
           {
             "type": "worked-example",
-            "problem": "`age ← USERINPUT` then `OUTPUT 'Next year: ' + INT_TO_STRING(age + 1)`, with the user typing 14",
+            "problem": "`age = input()` then `print('Next year: ' + str(age + 1))` in Python, with the user typing 14",
             "steps": [
               {
-                "text": "USERINPUT gives the string `'14'`, so `age` holds text, not a number",
-                "note": "input is always a string"
+                "text": "`input()` gives the text `'14'`, so `age` holds text, not a number",
+                "note": "Python, C# and VB.NET all read the keyboard as text"
               },
               {
-                "text": "`age + 1` tries to add 1 to a string, which is the type error the exam is testing",
+                "text": "`age + 1` tries to add 1 to text, so the program cannot do the arithmetic and crashes",
                 "note": "the missing conversion"
               },
               {
-                "text": "Fix the input: `age ← STRING_TO_INT(USERINPUT)`, so `age` is the integer 14",
-                "note": "convert on the way in"
+                "text": "Fix the input: `age = int(input())`, so `age` is the integer 14; in AQA pseudo-code, `age ← STRING_TO_INT(USERINPUT)`",
+                "note": "convert on the way in; in pseudo-code it also makes the intention clear"
               },
               {
-                "text": "`age + 1` is 15, and `INT_TO_STRING(15)` gives `'15'` to join to the text",
+                "text": "`age + 1` is 15, and `str(15)` gives `'15'` to join to the text (`INT_TO_STRING` in pseudo-code)",
                 "note": "convert back on the way out"
               },
               {
@@ -645,7 +645,7 @@
         "id": "s7",
         "kind": "your-turn",
         "title": "Your turn: predict the output",
-        "body": "Work out what each snippet outputs before revealing. Write a value for every line; a trace table with one column per variable is the exam method, and it is faster than trying to hold it in your head.\n\nThen type two of them into our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site and run them. Watch what C# does with `9 / 2` when both sides are `int`: it behaves like `DIV`, which is the trap the exam sets.",
+        "body": "Work out what each snippet outputs before revealing. Write a value for every line; a trace table with one column per variable is the reliable method, and it is faster than trying to hold it in your head.\n\nThen type two of them into our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site and run them. Watch what C# does with `9 / 2` when both sides are `int`: it behaves like `DIV`, which is an easy trap.",
         "visuals": [
           {
             "type": "worked-example",
@@ -711,7 +711,7 @@
         "id": "s8",
         "kind": "grade-9",
         "title": "Going deeper: types are decisions, and precedence is a trap",
-        "body": "**Justify the type.** The top-band question is *why* a phone number is a string, *why* a flag is Boolean, *why* money is often stored as an integer number of pence: leading zeros, no spelling mistakes, no rounding errors. One reason each.\n\n**USERINPUT is always a string.** Every program that reads a number converts it with `STRING_TO_INT` or `STRING_TO_REAL`, and the exam asks you to spot the missing conversion.\n\n**Bracket a mixed line.** AQA's pseudo-code does not fix whether `MOD` binds tighter than `*`, and the exam languages disagree, so write `(a MOD b) * 2` when you mean it.\n\n**`/` against `DIV`.** `9 / 2` is 4.5, `9 DIV 2` is 4. In C#, dividing two integers with `/` behaves like DIV; in Python `/` always gives a real. Know your paper's language.\n\n**Precedence.** `NOT a OR b` is `(NOT a) OR b`; `a MOD b * 2` is `(a MOD b) * 2`. Bracket anything you are not sure of, in the exam and in your own code.\n\n**MOD is a tool, not a curiosity.** Even or odd, digit extraction, wrapping round (`(i + 1) MOD 7` for days of the week), checking divisibility.",
+        "body": "**Justify the type.** The harder question is *why* a phone number is a string, *why* a flag is Boolean, *why* money is often stored as an integer number of pence: leading zeros, no spelling mistakes, no rounding errors. One reason each.\n\n**Convert keyboard input.** In Python, C# and VB.NET, keyboard input arrives as text, so convert it with `int(...)`, `Convert.ToInt32(...)` or `STRING_TO_INT` before doing arithmetic. AQA's pseudo-code does not say what type `USERINPUT` returns, so writing the conversion is always safe and makes your intention clear.\n\n**Bracket a mixed line.** AQA's pseudo-code does not fix whether `MOD` binds tighter than `*`, and the exam languages disagree, so write `(a MOD b) * 2` when you mean it.\n\n**`/` against `DIV`.** `9 / 2` is 4.5, `9 DIV 2` is 4. In C#, dividing two integers with `/` behaves like DIV; in Python `/` always gives a real. Know your paper's language.\n\n**Precedence.** `NOT a OR b` is `(NOT a) OR b`. Bracket anything you are not sure of, in the exam and in your own code.\n\n**MOD is a tool, not a curiosity.** Even or odd, digit extraction, wrapping round (`(i + 1) MOD 7` for days of the week), checking divisibility.",
         "visuals": [
           {
             "type": "diagram",
@@ -728,7 +728,7 @@
                 ],
                 [
                   "age ← USERINPUT",
-                  "age ← STRING_TO_INT(USERINPUT), because USERINPUT is a string"
+                  "age ← STRING_TO_INT(USERINPUT): convert before arithmetic"
                 ],
                 [
                   "9 / 2 is 4",
@@ -743,7 +743,7 @@
                   "n MOD 2 = 0"
                 ]
               ],
-              "title": "What the marks are for"
+              "title": "Weak and strong answers"
             },
             "alt": "A table contrasting weak answers with grade 9 answers on data types and operators"
           }
@@ -783,7 +783,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Five types**: integer, real, Boolean, character, string. Choose by what the value is *for*: phone numbers are strings, flags are Booleans.\n- **Assignment** `x ← 5` works right to left; `CONSTANT NAME ← value` for values that never change.\n- **Arithmetic**: `/` real division; `DIV` whole times; `MOD` remainder. `n MOD 2 = 0` means even; `DIV 10` and `MOD 10` split off digits.\n- **Relational**: `= ≠ < ≤ > ≥` give Booleans. **Boolean**: `AND`, `OR`, `NOT`, evaluated NOT, AND, OR.\n- **Built-ins**: `OUTPUT`, `USERINPUT` (always a string), `STRING_TO_INT`, `INT_TO_STRING`, `RANDOM_INT(a, b)` inclusive.\n- **Trace** with a column per variable, one row per change.",
+        "body": "- **Five types**: integer, real, Boolean, character, string. Choose by what the value is *for*: phone numbers are strings, flags are Booleans.\n- **Assignment** `x ← 5` works right to left; `CONSTANT NAME ← value` for values that never change.\n- **Arithmetic**: `/` real division; `DIV` whole times; `MOD` remainder. `n MOD 2 = 0` means even; `DIV 10` and `MOD 10` split off digits.\n- **Relational**: `= ≠ < ≤ > ≥` give Booleans. **Boolean**: `AND`, `OR`, `NOT`, evaluated NOT, AND, OR.\n- **Built-ins**: `OUTPUT`, `USERINPUT` (convert typed numbers before arithmetic), `STRING_TO_INT`, `INT_TO_STRING`, `RANDOM_INT(a, b)` inclusive.\n- **Trace** with a column per variable, one row per change.",
         "visuals": [
           {
             "type": "diagram",
@@ -932,12 +932,12 @@
       "discriminators": [],
       "options": [
         "integer",
-        "real",
         "string",
+        "real",
         "Boolean"
       ],
       "correct": [
-        1
+        2
       ]
     },
     {
@@ -971,7 +971,7 @@
       "skill": "assignment",
       "calculator": "either",
       "tags": [],
-      "solution": "Assignment works **right to left**: work out the right-hand side using the current value, then store it in the variable on the left. It is the standard way to count.",
+      "solution": "It **adds 1 to score and stores the result back in score**. Assignment works **right to left**: work out the right-hand side using the current value, then store it in the variable on the left. It is the standard way to count.",
       "markScheme": [
         {
           "code": "B1",
@@ -981,7 +981,7 @@
       ],
       "discriminators": [],
       "options": [
-        "Adds 1 to the current value of score and stores the result back in score",
+        "Adds 1 to score and stores the result back in score",
         "Creates a second variable called score + 1",
         "Checks whether score is equal to score plus 1",
         "Outputs the value of score plus 1"
@@ -1021,7 +1021,7 @@
     {
       "id": "q8",
       "type": "numeric",
-      "prompt": "What is output?\n\n```\nx ← 23\nOUTPUT x DIV 10 + x MOD 10\n```",
+      "prompt": "What is output?\n\n```\nx ← 23\nOUTPUT (x DIV 10) + (x MOD 10)\n```",
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "DIV and MOD together",
@@ -1098,7 +1098,7 @@
     {
       "id": "q11",
       "type": "numeric",
-      "prompt": "What is output?\n\n```\ntotal ← 0\nn ← 100\ntotal ← n DIV 7\ntotal ← total + n MOD 7\nOUTPUT total\n```",
+      "prompt": "What is output?\n\n```\ntotal ← 0\nn ← 100\ntotal ← n DIV 7\ntotal ← total + (n MOD 7)\nOUTPUT total\n```",
       "marks": 2,
       "gradeBand": "8-9",
       "skill": "tracing arithmetic",
@@ -1145,13 +1145,13 @@
         "unfamiliar-context"
       ],
       "options": [
-        "integer, but with a larger range",
-        "string, because it keeps every character including a leading zero",
+        "integer, but one with a larger range of values",
         "Boolean, because the number is either valid or not",
-        "real, because it can hold longer numbers"
+        "real, because it can hold much longer numbers",
+        "string: it keeps every character, including a leading 0"
       ],
       "correct": [
-        1
+        3
       ]
     },
     {
@@ -1181,7 +1181,7 @@
     {
       "id": "q14",
       "type": "numeric",
-      "prompt": "What is output?\n\n```\na ← 8\nb ← 3\nc ← (a MOD b) * 2\nOUTPUT c + a DIV b\n```",
+      "prompt": "What is output?\n\n```\na ← 8\nb ← 3\nc ← (a MOD b) * 2\nOUTPUT c + (a DIV b)\n```",
       "marks": 3,
       "gradeBand": "8-9",
       "skill": "precedence with DIV and MOD",
@@ -1215,28 +1215,28 @@
     {
       "id": "q15",
       "type": "extended",
-      "prompt": "A program asks the user for their age and then compares it with 18. Explain why `age ← USERINPUT` on its own would cause a problem, and write the corrected line.",
+      "prompt": "In Python, a program reads the user's age with `age = input()` and then tests `if age > 17:`. Explain why this causes a problem, and write the corrected line.",
       "marks": 3,
       "gradeBand": "8-9",
       "skill": "input and casting",
       "calculator": "either",
       "tags": [],
-      "solution": "USERINPUT returns a **string**, so comparing it with the integer 18 is a type error, or in some languages a wrong comparison. Convert it: `age ← STRING_TO_INT(USERINPUT)`.",
+      "solution": "In Python, `input()` returns **text**, even when the user types digits. Python cannot order text against a number, so `age > 17` stops the program with a TypeError: it crashes at that line. (An `==` test would not crash, but it would always be False.) Convert it on the way in: `age = int(input())`. The same line in AQA pseudo-code is `age ← STRING_TO_INT(USERINPUT)`.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "USERINPUT gives a string"
+          "description": "input() gives text (a string), even when digits are typed"
         },
         {
           "code": "B1",
           "marks": 1,
-          "description": "a string cannot be compared with, or used in arithmetic with, an integer"
+          "description": "text cannot be compared with the number 17 using >, so the program crashes (TypeError)"
         },
         {
           "code": "B1",
           "marks": 1,
-          "description": "age ← STRING_TO_INT(USERINPUT)"
+          "description": "age = int(input()), or int(age) on a separate line before the comparison"
         }
       ],
       "discriminators": [
@@ -1245,19 +1245,19 @@
       "suggestedMinutes": 4,
       "criteria": [
         {
-          "text": "USERINPUT returns a string",
+          "text": "input() gives text, even when the user types digits",
           "marks": 1
         },
         {
-          "text": "So comparing it with the integer 18 is a type mismatch",
+          "text": "So age > 17 compares text with a number, and the program crashes (TypeError)",
           "marks": 1
         },
         {
-          "text": "Corrected: age ← STRING_TO_INT(USERINPUT)",
+          "text": "Corrected: age = int(input()), or age = int(age) before the comparison",
           "marks": 1
         }
       ],
-      "modelAnswer": "USERINPUT always gives a string, even if the user types digits. A string cannot be compared with the integer 18 or used in arithmetic, so the program would fail or give the wrong result. The input must be converted: `age ← STRING_TO_INT(USERINPUT)`."
+      "modelAnswer": "In Python, `input()` always returns text, even if the user types digits. `age > 17` then compares text with a number, which Python does not allow, so the program crashes with a TypeError at that line. The input must be converted: `age = int(input())`."
     },
     {
       "id": "q16",
@@ -1348,7 +1348,7 @@
     {
       "id": "q18",
       "type": "numeric",
-      "prompt": "`RANDOM_INT(1, 6)` is called and the result is multiplied by 10, then `MOD 7` is applied. If the random number was 5, what is output?",
+      "prompt": "`RANDOM_INT(1, 6)` is called and the result is multiplied by 10, then `MOD 7` is applied and the result is output. If the random number was 5, what is output?",
       "marks": 2,
       "gradeBand": "8-9",
       "skill": "tracing with MOD",
@@ -1373,6 +1373,119 @@
       "answer": 1,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "A program stores the single key a user pressed, such as `'y'`. Which data type is the best fit?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "data types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "One symbol is a **character**. `'y'` is not a number, so integer and real do not fit, and a Boolean holds only True or False, not a letter.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "character"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Boolean",
+        "integer",
+        "character",
+        "real"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "numeric",
+      "prompt": "What is output?\n\n```\ncount ← 0\nFOR i ← 1 TO 6\n   IF (i MOD 3) ≠ 0 THEN\n      count ← count + 1\n   ENDIF\nENDFOR\nOUTPUT count\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "relational operators",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`≠` means *is not equal to*. For i = 1 to 6, `i MOD 3` is 1, 2, 0, 1, 2, 0, so the test is True for i = 1, 2, 4 and 5 and False for 3 and 6: count is **4**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "i MOD 3 gives 1, 2, 0, 1, 2, 0, so the test fails only at 3 and 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "type": "multiple-choice",
+      "prompt": "Why write `CONSTANT VAT ← 0.2` rather than typing 0.2 each time it is needed?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "constants",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A named constant means **one edit updates every use, and the name explains it**: `VAT` says what 0.2 is for. A constant cannot be changed while the program runs, and it is no faster or smaller than the number.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "one change updates every use; the name says what the value means"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "It lets the program change the value as it runs",
+        "The program runs faster than with the number",
+        "One edit updates every use, and the name explains it",
+        "A constant takes less memory than a number"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q22",
+      "type": "multiple-choice",
+      "prompt": "Two lines do the same job:\n\n```\nx ← y * 0.2\nvat ← price * VAT_RATE\n```\n\nWhy is the second line better?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "meaningful identifiers",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Meaningful identifier names mean the line **says what each value is, so it is easier to check** and to change: anyone can see a VAT amount being worked out from a price, where `x` and `y` could be anything. The names make no difference to speed or memory, and a variable can still be changed.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "meaningful names make the code explain itself, so it is easier to check and maintain"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "It runs faster, because the names are longer",
+        "It uses less memory for each of the values",
+        "It stops the values from being changed later",
+        "It says what each value is, so it is easier to check"
+      ],
+      "correct": [
+        3
+      ]
     }
   ],
   "worksheets": {
@@ -1382,9 +1495,10 @@
         "q1",
         "q2",
         "q3",
-        "q4"
+        "q4",
+        "q19"
       ],
-      "suggestedMinutes": 6
+      "suggestedMinutes": 8
     },
     "higher": {
       "level": "higher",
@@ -1394,9 +1508,11 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q20",
+        "q21"
       ],
-      "suggestedMinutes": 12
+      "suggestedMinutes": 16
     },
     "advanced": {
       "level": "advanced",
@@ -1408,16 +1524,17 @@
         "q16",
         "q18",
         "q15",
-        "q17"
+        "q17",
+        "q22"
       ],
-      "suggestedMinutes": 35
+      "suggestedMinutes": 37
     }
   },
   "examTechnique": {
-    "body": "Data types and operators are tested on Paper 1 in short questions: state a type and justify it, work out DIV and MOD, evaluate a Boolean expression, spot a missing conversion. They also sit inside every trace question, because a trace is nothing but evaluating expressions line by line. The marks are for working: write intermediate values, keep a column per variable, and bracket precedence you are unsure of.\n\nJustify every data-type choice with a reason about how the value is used, not what it looks like. Remember that USERINPUT gives a string and must be converted, that `/` and DIV differ, and that the exam expects AQA pseudo-code in the question and your paper's language in coded answers.",
+    "body": "Data types and operators are tested on Paper 1 in short questions: state a type and justify it, work out DIV and MOD, evaluate a Boolean expression, spot a missing conversion. They also sit inside every trace question, because a trace is nothing but evaluating expressions line by line. Show the working: write intermediate values, keep a column per variable, and bracket precedence you are unsure of.\n\nJustify every data-type choice with a reason about how the value is used, not what it looks like. Remember that keyboard input arrives as text in Python, C# and VB.NET and must be converted before arithmetic, that `/` and DIV differ, and that the exam expects AQA pseudo-code in the question and your paper's language in coded answers.",
     "examinerErrors": [
       "Storing a phone number or a postcode as an integer, losing the leading zero.",
-      "Using USERINPUT in arithmetic without STRING_TO_INT.",
+      "Doing arithmetic on keyboard input in Python, C# or VB.NET without converting it first.",
       "Treating DIV as ordinary division, or MOD as division.",
       "Reading NOT a OR b as NOT (a OR b).",
       "Assuming RANDOM_INT(1, 6) excludes one of the limits.",
@@ -1442,7 +1559,11 @@
       "q13",
       "q14",
       "q16",
-      "q18"
+      "q18",
+      "q19",
+      "q20",
+      "q21",
+      "q22"
     ],
     "sampleSize": 10
   },

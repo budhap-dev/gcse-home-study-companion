@@ -38,7 +38,7 @@
     }
   ],
   "why": {
-    "matters": "A program that works is one that works when somebody does the thing you did not think of: typing a word where a number goes, leaving the box empty, entering an age of 400. Code that only handles the sensible case is not finished, it is half tested.\n\nThat is what **robust** means, and it is examined as three separate skills — validating input before you trust it, authenticating the person, and testing with data chosen to break things. The programming question near the end of the paper gives marks for each of them, whether or not the question uses the word.",
+    "matters": "A program that works is one that works when somebody does the thing you did not think of: typing a word where a number goes, leaving the box empty, entering an age of 400. Code that only handles the sensible case is not finished, it is half tested.\n\nThat is what **robust** means, and the specification treats it as three skills — validating input before you trust it, authenticating the person, and testing with data chosen to break things. Each can be examined, including inside a longer programming question that asks for validated input.",
     "examples": [
       {
         "title": "Why an IF is not enough to check an age",
@@ -77,7 +77,7 @@
       },
       {
         "title": "Why a login says \"wrong username or password\"",
-        "body": "It looks unhelpful, and it is deliberate. A message that says *no account with that name* has just told whoever typed it that the name is free — and a message that says *wrong password* has told them the opposite, which is worth far more.\n\nOne message for both mistakes gives nothing away. It sits alongside two other habits the specification names: **limit the attempts** before locking out, so guessing cannot simply be repeated, and never keep the password itself — store a **hash** and compare hashes, so the stored list is worth nothing if it is taken.",
+        "body": "It looks unhelpful, and it is deliberate. A message that says *no account with that name* has just told whoever typed it that the name is free — and a message that says *wrong password* has told them the opposite, which is worth far more.\n\nOne message for both mistakes gives nothing away. It sits alongside two other good habits, beyond what the specification requires: **limit the attempts** before locking out, so guessing cannot simply be repeated, and store a **hash** of the password rather than the password itself, so a stolen list does not reveal the passwords directly. The specification only asks you to write routines that check a plain-text username and password.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -111,7 +111,7 @@
       },
       {
         "title": "Why the program that runs is the dangerous one",
-        "body": "AQA names exactly **two** kinds of error. A **syntax error** breaks the rules of the language — a missing bracket, a misspelt keyword — and the program will not run at all. The computer finds it for you, and it is the easy kind.\n\nA **logic error** breaks nothing. The program runs, finishes and gives an answer, and the answer is wrong. Nothing will tell you: no message, no crash, no red underline. The only thing that finds a logic error is testing it with data whose right answer you worked out beforehand.",
+        "body": "AQA names exactly **two** kinds of error. A **syntax error** breaks the rules of the language — a missing bracket, a misspelt keyword. A compiler will not produce a program at all; an interpreter stops when it reaches the line. Either way the program cannot run past it, the translator reports it for you, and it is the easy kind.\n\nA **logic error** breaks nothing. The program runs, finishes and gives an answer, and the answer is wrong. Nothing will tell you: no message, no crash, no red underline. The only thing that finds a logic error is testing it with data whose right answer you worked out beforehand.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -129,7 +129,7 @@
               ],
               [
                 "Program runs?",
-                "no",
+                "not past it",
                 "yes"
               ],
               [
@@ -139,12 +139,12 @@
               ],
               [
                 "Found by",
-                "the computer",
+                "the translator",
                 "testing"
               ]
             ]
           },
-          "alt": "A table of the two kinds of error: a syntax error breaks the rules of the language so the program will not run and the computer reports it, while a logic error runs happily and gives a wrong answer that only testing finds"
+          "alt": "A table of the two kinds of error: a syntax error breaks the rules of the language so the program cannot run past it and the translator reports it, while a logic error runs happily and gives a wrong answer that only testing finds"
         }
       }
     ]
@@ -209,7 +209,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Validation in code: a loop, not an IF",
-        "body": "An IF can spot bad input once. A **WHILE loop** keeps asking until the input passes, so the code after it can trust the value.\n\n```\nage ← STRING_TO_INT(USERINPUT)\nWHILE age < 11 OR age > 18\n   OUTPUT 'Enter an age between 11 and 18'\n   age ← STRING_TO_INT(USERINPUT)\nENDWHILE\n```\n\nThe condition describes the **bad** input, joined with `OR`: too low **or** too high. The loop body prints a message and reads again.",
+        "body": "An IF can spot bad input once. A **WHILE loop** keeps asking until the input passes, so the code after it can trust the value.\n\n```\nage ← STRING_TO_INT(USERINPUT)\nWHILE age < 11 OR age > 18\n   OUTPUT 'Enter an age between 11 and 18'\n   age ← STRING_TO_INT(USERINPUT)\nENDWHILE\n```\n\nThe condition describes the **bad** input, joined with `OR`: too low **or** too high. The loop body prints a message and reads again.\n\nThe same loop shape checks **length** and **presence**, the other two checks the specification gives as examples:\n\n```\nname ← USERINPUT\nWHILE name = '' OR LEN(name) < 5\n   OUTPUT 'Enter a username of at least 5 characters'\n   name ← USERINPUT\nENDWHILE\n```\n\n`name = ''` is the presence check and `LEN(name) < 5` the length check. An empty name has length 0, so the length check alone would also catch it, but writing both makes each check visible.",
         "visuals": [
           {
             "type": "diagram",
@@ -244,6 +244,24 @@
               "title": "inputs 9, 25, 14"
             },
             "alt": "Trace of the age validation loop with inputs 9 then 25 then 14"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Trace the username loop when the user presses Enter without typing, then types Al, then Alexa",
+            "steps": [
+              {
+                "text": "Nothing typed: name = '' is True, so the message is output and the loop asks again"
+              },
+              {
+                "text": "Al: not empty, but LEN is 2 and 2 < 5 is True, so the message is output again"
+              },
+              {
+                "text": "Alexa: not empty, and LEN is 5, so 5 < 5 is False and the loop ends"
+              },
+              {
+                "text": "The message was output 2 times, and name now holds Alexa"
+              }
+            ]
           }
         ],
         "check": {
@@ -327,7 +345,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Authentication: who are you?",
-        "body": "**Authentication** checks the **person**, usually with a username and password. Good practice:\n\n- Compare the entered password with the stored one and give the same message for a wrong username as for a wrong password, so an attacker learns nothing.\n- **Limit attempts**, then lock out, to stop guessing.\n- Never store passwords as plain text: store a **hash** and compare hashes.\n\n```\nattempts ← 0\nOUTPUT 'Password?'\nentered ← USERINPUT\nWHILE entered ≠ stored AND attempts < 2\n   attempts ← attempts + 1\n   OUTPUT 'Wrong, try again'\n   entered ← USERINPUT\nENDWHILE\nIF entered = stored THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```\n\nThe user gets three tries: one before the loop and two inside it.",
+        "body": "**Authentication** checks the **person**, usually with a username and password. Good practice, some of it beyond what the specification asks you to write:\n\n- Compare the entered password with the stored one and give the same message for a wrong username as for a wrong password, so an attacker learns nothing.\n- **Limit attempts**, then lock out, to stop guessing.\n- Real systems do not store passwords as plain text: they store a **hash** and compare hashes. The specification only asks you to write routines with plain-text usernames and passwords.\n\n```\nattempts ← 0\nOUTPUT 'Password?'\nentered ← USERINPUT\nWHILE entered ≠ stored AND attempts < 2\n   attempts ← attempts + 1\n   OUTPUT 'Wrong, try again'\n   entered ← USERINPUT\nENDWHILE\nIF entered = stored THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```\n\nThe user gets three tries: one before the loop and two inside it.",
         "visuals": [
           {
             "type": "diagram",
@@ -509,7 +527,7 @@
         "id": "s6",
         "kind": "explain",
         "title": "Syntax errors and logic errors",
-        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. The program will not run at all.\n- A **logic error** lets the program run but gives the **wrong answer**: `<` instead of `≤`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.\n- Some faults stop a running program: dividing by zero, reading past the end of an array. Textbooks call these **runtime errors**, but AQA only asks you to sort errors into **syntax** or **logic**, and a fault like this counts as a logic error because the code obeys the language rules.",
+        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. A compiler will not produce a program at all; an interpreter stops when it reaches the line. Either way the program cannot run past it.\n- A **logic error** lets the program run but gives the **wrong answer**: `<` instead of `≤`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.\n- Some faults make a running program crash: dividing by zero, reading past the end of an array. AQA sorts errors into only two types, **syntax** and **logic**, and a fault like this counts as a logic error because the code obeys the language's rules.",
         "visuals": [
           {
             "type": "worked-example",
@@ -519,7 +537,7 @@
                 "text": "OUTPUT 'Hello  (missing quote): syntax error"
               },
               {
-                "text": "total / count when count is 0: logic error — the code is legal, the reasoning is wrong (some textbooks call this a runtime error)"
+                "text": "total / count when count is 0: logic error — the code is legal, the reasoning is wrong, and the program crashes at that line"
               },
               {
                 "text": "A discount applied before tax instead of after: logic error"
@@ -546,7 +564,7 @@
           ],
           "discriminators": [],
           "options": [
-            "Runtime error",
+            "Erroneous data",
             "Logic error",
             "Syntax error",
             "Not an error, because it ran"
@@ -570,7 +588,7 @@
                 "text": "```\ntickets ← STRING_TO_INT(USERINPUT)\nWHILE tickets < 1 OR tickets > 6\n   OUTPUT 'Choose from 1 to 6'\n   tickets ← STRING_TO_INT(USERINPUT)\nENDWHILE\n```"
               },
               {
-                "text": "Normal: 3. Boundary: 1 and 6 accepted, 0 and 7 rejected. Erroneous: 20, −1, \"six\""
+                "text": "Normal: 3. Boundary: 1 and 6 accepted, 0 and 7 rejected. Erroneous: 20, −1, \"six\". This loop only checks the range: for \"six\" to be rejected rather than crash the program, a type check is needed before STRING_TO_INT (in C#, int.TryParse)"
               }
             ]
           }
@@ -602,7 +620,7 @@
         "id": "s8",
         "kind": "grade-9",
         "title": "Going deeper: writing the whole thing",
-        "body": "The 8 to 12 mark programming question usually asks for input **with validation**, some processing, and output, and the mark scheme rewards each part separately. Structure first: a subroutine that returns validated input, a loop or calculation, then output. Say what each test in your plan is **for**, and give the boundary values on **both** sides of the edge. When asked about security, name the practice and the attack it stops: attempt limits stop brute force; hashing stops stolen passwords being read.",
+        "body": "Longer programming questions often ask for input **with validation**, some processing, and output. Structure first: a subroutine that returns validated input, a loop or calculation, then output. Say what each test in your plan is **for**, and give the boundary values on **both** sides of the edge. When asked about security, name the practice and the attack it stops: attempt limits stop brute-force guessing; storing hashes means a stolen list does not reveal the passwords directly.",
         "visuals": [
           {
             "type": "worked-example",
@@ -653,7 +671,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- Validation checks data is sensible: range, length, presence, type, format. Use a WHILE loop with the bad-input condition joined by OR.\n- Authentication checks identity: compare passwords, limit attempts, store hashes.\n- Test with normal, boundary and erroneous data, each with an expected result written first.\n- Syntax errors stop the program running; logic errors let it run and give the wrong answer, and are found by testing and trace tables. AQA examines these two types.\n- In a big programming question, structure first: validated input, processing, output.",
+        "body": "- Validation checks data is sensible: range, length, presence, type, format. Use a WHILE loop with the bad-input condition joined by OR.\n- Authentication checks identity: compare the username and password with the stored ones. Limiting attempts and storing hashes are good habits beyond what the specification asks you to code.\n- Test with normal, boundary and erroneous data, each with an expected result written first.\n- Syntax errors stop the program being translated, or running past that line; logic errors let it run and give the wrong answer, and are found by testing and trace tables. AQA examines these two types.\n- In a big programming question, structure first: validated input, processing, output.",
         "visuals": [
           {
             "type": "diagram",
@@ -693,7 +711,7 @@
               ],
               "title": "Validation checks"
             },
-            "alt": "A reference table of validation checks, giving for each the question it asks and an example: range, length, presence, format and look-up"
+            "alt": "A reference table of validation checks, giving for each the question it asks and an example: range, length, presence, type and format"
           }
         ]
       }
@@ -916,7 +934,7 @@
       "skill": "errors",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Syntax errors are caught before the program runs. Logic errors run but give wrong results.",
+      "solution": "A syntax error is code that breaks the rules of the language, so it cannot be translated and run: a compiler will not produce a program, and an interpreter stops when it reaches the line. A logic error runs but gives the wrong result.",
       "markScheme": [
         {
           "code": "B1",
@@ -929,7 +947,7 @@
         "A program that runs all the way through but produces the wrong answer because of a mistake",
         "A test that fails because the tester typed erroneous data instead of normal data",
         "A program that stops part way through because it runs out of memory while it is executing",
-        "A mistake in the rules of the language, such as a missing bracket, that stops the program running"
+        "Code that breaks the language's rules, such as a missing bracket, so it cannot be translated and run"
       ],
       "correct": [
         3
@@ -938,7 +956,7 @@
     {
       "id": "q9",
       "type": "extended",
-      "prompt": "A program asks for a whole number of tickets between 1 and 6. Give one example each of normal, boundary and erroneous test data, and for each say what the program should do.",
+      "prompt": "A program asks for a whole number of tickets between 1 and 6. Give one example of normal data, a pair of boundary values (one on each side of a limit) and one example of erroneous data, and for each say what the program should do.",
       "marks": 4,
       "gradeBand": "8-9",
       "skill": "test data",
@@ -1125,7 +1143,7 @@
       "skill": "errors",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "AQA's specification names two types of error: syntax and logic. This code is legal, so it starts running; the fault is in the reasoning, which makes it a logic error. Some textbooks call a fault that stops a running program a runtime error, but AQA does not examine a third category.",
+      "solution": "AQA's specification names two types of error: syntax and logic. This code is legal, so it starts running; the fault is in the reasoning, which makes it a logic error. The program crashes at the last line, but AQA sorts errors into only two types, and this one is a logic error.",
       "markScheme": [
         {
           "code": "B1",
@@ -1202,7 +1220,7 @@
       "skill": "secure programming",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Hashing means even someone who steals the file cannot read the passwords. The others are readable or reversible. AQA only requires you to write authentication with plain text usernames and passwords, so you will never have to code a hash, but you may be asked why storing a hash is safer than storing the password itself.",
+      "solution": "Storing a hash means someone who steals the file does not get the passwords directly. The others are readable or reversible. AQA only requires you to write authentication with plain text usernames and passwords, so you will not have to code a hash; knowing why a stored hash is safer than the password itself is useful background beyond the specification.",
       "markScheme": [
         {
           "code": "B1",
@@ -1282,19 +1300,228 @@
       "suggestedMinutes": 4,
       "criteria": [
         {
-          "text": "A named item of test data, such as a 7-character password",
+          "text": "A named item of test data, such as a password of exactly 8 characters or of 7 characters",
           "marks": 1
         },
         {
-          "text": "Its type identified: boundary, being one character below the shortest allowed",
+          "text": "Its type identified: boundary — exactly 8 characters (the shortest accepted) or 7 (just below, rejected)",
           "marks": 1
         },
         {
-          "text": "The justification: it checks the program rejects everything just below the limit, which is where an off-by-one mistake in the length check would show up",
+          "text": "The justification: it checks the program accepts or rejects correctly right at the limit, which is where an off-by-one mistake in the length check would show up",
           "marks": 1
         }
       ],
-      "modelAnswer": "A password of exactly 7 characters, such as \"abcdefg\". It is boundary data, one character below the shortest allowed length. It checks that the program rejects a password just under the limit, which is exactly where an off-by-one error in the length check (using < 7 instead of < 8) would let a bad password through."
+      "modelAnswer": "A password of exactly 7 characters, such as \"abcdefg\". It is boundary data, one character below the shortest allowed length. It checks that the program rejects a password just under the limit, which is exactly where an off-by-one error in the length check (using < 7 instead of < 8) would let a bad password through. A password of exactly 8 characters is boundary data too: it checks that the shortest allowed password is accepted."
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "The user types `cat`, then `letmein`, then `letmein1` into this program. How many times is `Too short` output?\n\n```\npwd ← USERINPUT\nWHILE LEN(pwd) < 8\n   OUTPUT 'Too short'\n   pwd ← USERINPUT\nENDWHILE\nOUTPUT 'Saved'\n```",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "tracing validation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "cat has 3 characters and letmein has 7, so both make `LEN(pwd) < 8` True and each is followed by the message. letmein1 has 8 characters, 8 < 8 is False, and the loop ends. `Too short` is output **2** times.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "A program accepts a username only if it has at least 5 characters. Which pair of usernames is boundary test data for this check?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "test data",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Boundary data sits at the limit and just the other side of it: usernames of 4 and 5 characters. The shortest allowed username has 5 characters and should be accepted; 4 characters is just below it and should be rejected. An empty username is erroneous data, and usernames of 8, 10 or 50 characters are normal data for this check.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Usernames of 4 and 5 characters"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Usernames of 1 and 50 characters",
+        "Usernames of 4 and 5 characters",
+        "An empty username and one of 8 characters",
+        "Usernames of 5 and 10 characters"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "multiple-choice",
+      "prompt": "A login is written like this:\n\n```\nuser ← USERINPUT\npass ← USERINPUT\nIF user = storedUser OR pass = storedPass THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Login failed'\nENDIF\n```\n\nWhat is wrong with it?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "authentication",
+      "calculator": "either",
+      "tags": [],
+      "solution": "OR is True when either side is True, so someone who knows only the username or only the password gets in: the right username with any password at all gives Welcome. Both must match, so the condition needs AND: `IF user = storedUser AND pass = storedPass THEN`. A user who types both correctly is still let in, which is why testing only with the right details would never find this logic error.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "OR lets in someone who knows only one of the two"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Nothing is wrong: OR checks both the username and the password",
+        "It turns away a user who types both of them correctly",
+        "Someone who knows only the username or only the password gets in",
+        "USERINPUT cannot be compared with a value that is stored"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q21",
+      "type": "extended",
+      "prompt": "Write an algorithm that keeps asking the user for a username until it is not empty and has at least 5 characters. Output a message each time a username is rejected, then output `Username saved` once one is accepted.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "writing validation code",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Read once before the loop, loop while the input is bad, re-read inside the loop, and only output once the loop has ended. A REPEAT … UNTIL loop whose condition describes the good input works as well.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Input read before the loop"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Condition describes the bad input"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Message and fresh input inside the loop"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Output after the loop, correct structure"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Reads the username with USERINPUT before the loop (not needed with REPEAT … UNTIL, which reads inside)",
+          "marks": 1
+        },
+        {
+          "text": "A loop condition that rejects both faults: WHILE name = '' OR LEN(name) < 5 (LEN(name) < 5 alone also catches an empty name), or REPEAT … UNTIL name ≠ '' AND LEN(name) ≥ 5",
+          "marks": 1
+        },
+        {
+          "text": "Inside the loop, a message saying the username was rejected and a fresh USERINPUT",
+          "marks": 1
+        },
+        {
+          "text": "After the loop, outputs Username saved; correct structure with ENDWHILE or UNTIL",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nname ← USERINPUT\nWHILE name = '' OR LEN(name) < 5\n   OUTPUT 'Enter a username of at least 5 characters'\n   name ← USERINPUT\nENDWHILE\nOUTPUT 'Username saved'\n```\n\n`name = ''` is the presence check and `LEN(name) < 5` the length check. The condition describes the **bad** input and joins the two with OR, so the loop only ends when the name passes both."
+    },
+    {
+      "id": "q22",
+      "type": "extended",
+      "prompt": "The correct username is held in `storedUser` and the correct password in `storedPass`, both as plain text. Write an authentication routine that asks for a username and a password, allows up to three attempts, outputs `Welcome` as soon as both match, and outputs `Locked out` after three failed attempts.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "writing authentication code",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A counter and a flag before the loop; inside it, read both values and check them together with AND; count each failure; stop on a match or after three failures; then output the result once.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Counter (and flag) set up before the loop"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Both values read inside the loop"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Both checked together with AND"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Counter increased for each failed attempt"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Loop ends on a match or after three failures"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Welcome or Locked out output correctly"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "An attempt counter set to 0 before the loop, and a flag such as loggedIn ← False if one is used",
+          "marks": 1
+        },
+        {
+          "text": "Asks for the username and the password with USERINPUT inside the loop, so every attempt reads both again (a first read before the loop is fine)",
+          "marks": 1
+        },
+        {
+          "text": "Checks both at once: user = storedUser AND pass = storedPass, or the same test inverted in a loop condition: user ≠ storedUser OR pass ≠ storedPass",
+          "marks": 1
+        },
+        {
+          "text": "Adds 1 to the counter for each failed attempt (or for each attempt)",
+          "marks": 1
+        },
+        {
+          "text": "The loop stops after a match or after three attempts: WHILE attempts < 3 AND NOT loggedIn, REPEAT … UNTIL loggedIn OR attempts = 3, or, after one read before the loop, WHILE (user ≠ storedUser OR pass ≠ storedPass) AND attempts < 2",
+          "marks": 1
+        },
+        {
+          "text": "Outputs Welcome after a match and Locked out only after three failures, with correct structure",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "```\nattempts ← 0\nloggedIn ← False\nWHILE attempts < 3 AND NOT loggedIn\n   OUTPUT 'Username?'\n   user ← USERINPUT\n   OUTPUT 'Password?'\n   pass ← USERINPUT\n   IF user = storedUser AND pass = storedPass THEN\n      loggedIn ← True\n   ELSE\n      attempts ← attempts + 1\n      OUTPUT 'Wrong username or password'\n   ENDIF\nENDWHILE\nIF loggedIn THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```\n\nThree wrong attempts make `attempts` 3 and the loop ends with `loggedIn` still False, so the output is Locked out. A match on the second attempt sets `loggedIn` to True and the loop ends straight away, so the output is Welcome.\n\nThe lesson's pattern earns the same marks:\n\n```\nattempts ← 0\nuser ← USERINPUT\npass ← USERINPUT\nWHILE (user ≠ storedUser OR pass ≠ storedPass) AND attempts < 2\n   attempts ← attempts + 1\n   OUTPUT 'Wrong username or password'\n   user ← USERINPUT\n   pass ← USERINPUT\nENDWHILE\nIF user = storedUser AND pass = storedPass THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```"
     }
   ],
   "worksheets": {
@@ -1315,9 +1542,11 @@
         "q6",
         "q7",
         "q8",
-        "q16"
+        "q16",
+        "q18",
+        "q19"
       ],
-      "suggestedMinutes": 14
+      "suggestedMinutes": 17
     },
     "advanced": {
       "level": "advanced",
@@ -1329,13 +1558,16 @@
         "q13",
         "q14",
         "q15",
-        "q17"
+        "q17",
+        "q20",
+        "q21",
+        "q22"
       ],
-      "suggestedMinutes": 46
+      "suggestedMinutes": 60
     }
   },
   "examTechnique": {
-    "body": "These ideas appear in three places: short definitions (validation, authentication, the two error types), test-plan questions (normal, boundary, erroneous with expected results), and inside the long programming question, where a validation loop earns its own marks. Use the specification words and give the boundary values on both sides of the edge.",
+    "body": "These ideas appear in three places: short definitions (validation, authentication, the two error types), test-plan questions (normal, boundary, erroneous with expected results), and inside a longer programming question that asks for validated input. Use the specification words and give the boundary values on both sides of the edge.",
     "examinerErrors": [
       "Confusing validation (is the data sensible?) with authentication (is this the right person?).",
       "Writing a validation condition with AND when it needs OR.",
@@ -1358,7 +1590,10 @@
       "q12",
       "q13",
       "q15",
-      "q16"
+      "q16",
+      "q18",
+      "q19",
+      "q20"
     ],
     "sampleSize": 10
   },

@@ -21,17 +21,17 @@
     {
       "kind": "remember",
       "title": "FOR knows the count, WHILE does not",
-      "body": "Use **FOR** when you know how many times in advance, which is definite iteration. Use **WHILE** when you are waiting for a condition, which is indefinite. That one distinction answers most of the vocabulary questions."
+      "body": "Use **FOR** when you know how many times in advance, which is definite iteration. Use **WHILE** when you are waiting for a condition, which is indefinite. The question to ask is whether the number of repeats is known when the loop begins."
     },
     {
       "kind": "spot",
       "title": "WHILE tests before, REPEAT tests after",
-      "body": "A `WHILE` loop can run **zero** times, because the condition is checked first. A `REPEAT UNTIL` always runs **at least once**. Questions are set on exactly that difference."
+      "body": "A `WHILE` loop can run **zero** times, because the condition is checked first. A `REPEAT UNTIL` always runs **at least once**. That difference is worth knowing exactly."
     },
     {
       "kind": "check",
       "title": "Trace one row past the end",
-      "body": "When tracing a loop, work out the pass where the condition finally fails and write that row down. Stopping one row early is the commonest tracing error, and it changes the final value."
+      "body": "When tracing a loop, work out the pass where the condition finally fails and write that row down. Stopping one row early is an easy slip, and it changes the final value."
     },
     {
       "kind": "shortcut",
@@ -40,7 +40,7 @@
     }
   ],
   "why": {
-    "matters": "Without **selection** a program does the same thing whatever happens, and without **iteration** it does everything exactly once. Those two are the whole difference between a list of instructions and something that responds.\n\nThey also cause the errors that are hardest to see. A wrong condition, or a loop that goes round one time too many, still runs perfectly happily and quietly returns the wrong answer — nothing crashes and nothing is reported. That is why the exam makes you **trace**: a table filled in one row at a time is the only way to find out what code does rather than what you assumed it does.",
+    "matters": "Without **selection** a program does the same thing whatever happens, and without **iteration** it does everything exactly once. Those two are the whole difference between a list of instructions and something that responds.\n\nThey also cause the errors that are hardest to see. A wrong condition, or a loop that goes round one time too many, still runs perfectly happily and quietly returns the wrong answer — nothing crashes and nothing is reported. That is why you **trace**: a table filled in one row at a time is the surest way to find out what code does rather than what you assumed it does.",
     "examples": [
       {
         "title": "Why the order of the grade boundaries matters",
@@ -117,7 +117,7 @@
       },
       {
         "title": "Why one character changes the total",
-        "body": "`i ← 1` and `WHILE i < 5` adds 1, 2, 3 and 4, then stops: the total is **10**. `WHILE i ≤ 5` takes the 5 as well and gives **15**. The loop that was meant to add the numbers up to five did not, and nothing complained.\n\nOff-by-one is the commonest logic error there is, and the trace table is what finds it: one column per variable, one row per change, and the condition written down every time round. Four passes where you expected five is visible on paper, before the code has been run once.",
+        "body": "`i ← 1` and `WHILE i < 5` adds 1, 2, 3 and 4, then stops: the total is **10**. `WHILE i ≤ 5` takes the 5 as well and gives **15**. The loop that was meant to add the numbers up to five did not, and nothing complained.\n\nOff-by-one is one of the commonest logic errors, and the trace table is what finds it: one column per variable, one row per change, and the condition written down every time round. Four passes where you expected five is visible on paper, before the code has been run once.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -168,7 +168,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Selection: IF, ELSE IF, ELSE",
-        "body": "**Selection** chooses between paths. AQA pseudo-code:\n\n```\nIF mark ≥ 70 THEN\n   OUTPUT 'A'\nELSE IF mark ≥ 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```\n\nThe conditions are tested **in order**, and **only the first True branch runs**; the rest are skipped, even if they would also be True. So a mark of 85 outputs `A` only, never `B` as well. The order therefore matters: test the most demanding condition first.\n\n**Nested** selection is an IF inside an IF. It is easiest to trace by indenting, and by remembering that the inner IF is only reached when the outer condition was True.",
+        "body": "Every program is built from three **combining principles**: **sequence** (steps run one after another, in order), **selection** (a condition chooses which steps run) and **iteration** (steps repeat). The specification calls them basic to all high-level imperative languages. This topic is about the last two.\n\n**Selection** chooses between paths. AQA pseudo-code:\n\n```\nIF mark ≥ 70 THEN\n   OUTPUT 'A'\nELSE IF mark ≥ 50 THEN\n   OUTPUT 'B'\nELSE\n   OUTPUT 'C'\nENDIF\n```\n\nThe conditions are tested **in order**, and **only the first True branch runs**; the rest are skipped, even if they would also be True. So a mark of 85 outputs `A` only, never `B` as well. The order therefore matters: test the most demanding condition first.\n\n**Nested** selection is an IF inside an IF. It is easiest to trace by indenting, and by remembering that the inner IF is only reached when the outer condition was True.",
         "visuals": [
           {
             "type": "diagram",
@@ -256,10 +256,9 @@
           ],
           "discriminators": [],
           "accepted": [
-            "B",
-            "'B'",
-            "\"B\""
-          ]
+            "B"
+          ],
+          "matchCase": true
         }
       },
       {
@@ -334,7 +333,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Indefinite iteration: WHILE and REPEAT UNTIL",
-        "body": "When you do not know how many times, the loop runs **until something changes**: **indefinite** iteration.\n\n**WHILE** tests **before** each pass and continues while the condition is True:\n\n```\nn ← 1\nWHILE n < 20\n   n ← n * 3\nENDWHILE\nOUTPUT n\n```\n\nn goes 1, 3, 9, 27; at 27 the test fails and the loop stops. If the condition is False at the start, the body never runs.\n\n**REPEAT … UNTIL** tests **after** each pass and stops when the condition becomes True:\n\n```\ncount ← 0\nREPEAT\n   count ← count + 2\nUNTIL count ≥ 7\n```\n\nThe body always runs **at least once**, which makes REPEAT the natural loop for *ask, then check*: input validation and password attempts.",
+        "body": "When you do not know how many times, the loop runs **until something changes**: **indefinite** iteration.\n\n**WHILE** tests **before** each pass and continues while the condition is True:\n\n```\nn ← 1\nWHILE n < 20\n   n ← n * 3\nENDWHILE\nOUTPUT n\n```\n\nn goes 1, 3, 9, 27; at 27 the test fails and the loop stops. If the condition is False at the start, the body never runs.\n\n**REPEAT … UNTIL** tests **after** each pass and stops when the condition becomes True:\n\n```\ncount ← 0\nREPEAT\n   count ← count + 2\nUNTIL count ≥ 7\n```\n\nThe body always runs **at least once**, which makes REPEAT the natural loop for *ask, then check*: input validation and password attempts.\n\n**DO … WHILE** is a condition-at-the-end loop that some languages have: C# has `do … while`, Python has none. It is not an AQA pseudo-code keyword, but the specification names it as an example. `DO … WHILE cond` also tests **after** the body and runs at least once, but it **continues while** the condition is True, where REPEAT **stops when** it becomes True. So `REPEAT … UNTIL Solved` and `DO … WHILE NotSolved` do the same job.",
         "visuals": [
           {
             "type": "diagram",
@@ -431,7 +430,7 @@
         "id": "s4",
         "kind": "worked-example",
         "title": "Tracing: one column per variable, one row per change",
-        "body": "A **trace table** is how the exam tests loops. Columns for every variable, plus the condition and the output; a new row each time something changes. Never skip a row, even when a value repeats.",
+        "body": "A **trace table** is how you test a loop on paper. Columns for every variable, plus the condition and the output; a new row each time something changes. Never skip a row, even when a value repeats.",
         "visuals": [
           {
             "type": "diagram",
@@ -514,7 +513,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Nested loops",
-        "body": "A loop inside a loop: the **inner** loop runs completely for **each** pass of the outer one.\n\n```\nFOR i ← 1 TO 2\n   FOR j ← 1 TO 3\n      OUTPUT i * j\n   ENDFOR\nENDFOR\n```\n\nThe outer loop runs 2 times and the inner 3 times each, so the body runs $2 \\times 3 = 6$ times, outputting 1, 2, 3, then 2, 4, 6. The inner counter resets to 1 every time the outer counter moves on.\n\nIn a trace table give the inner counter its own column and watch it restart. The commonest slip is to run the inner loop only once.",
+        "body": "A loop inside a loop: the **inner** loop runs completely for **each** pass of the outer one.\n\n```\nFOR i ← 1 TO 2\n   FOR j ← 1 TO 3\n      OUTPUT i * j\n   ENDFOR\nENDFOR\n```\n\nThe outer loop runs 2 times and the inner 3 times each, so the body runs $2 \\times 3 = 6$ times, outputting 1, 2, 3, then 2, 4, 6. The inner counter resets to 1 every time the outer counter moves on.\n\nIn a trace table give the inner counter its own column and watch it restart. A common slip is to run the inner loop only once.",
         "visuals": [
           {
             "type": "diagram",
@@ -589,7 +588,7 @@
         "id": "s6",
         "kind": "explain",
         "title": "The errors loops invite",
-        "body": "Three logic errors account for most lost marks.\n\n**Off-by-one.** `WHILE i < 10` stops before 10; `FOR i ← 1 TO 10` includes it. Decide whether the limit is meant to be included, then choose `<` or `≤`, and check the first and last values in a trace.\n\n**The infinite loop.** A WHILE whose condition can never become False, usually because the body forgets to change the variable in the condition: `WHILE n < 20` with no line that changes n. In a trace it shows as a column that never moves.\n\n**The inverted condition.** `UNTIL valid = False` when the loop should stop once the input is valid. Say the condition out loud: REPEAT *until* it is right.\n\nAll three are **logic errors** in AQA's terms: the code runs, but does the wrong thing. A **syntax error** would be a missing ENDFOR, which stops it running at all.",
+        "body": "Three logic errors come up again and again.\n\n**Off-by-one.** `WHILE i < 10` stops before 10; `FOR i ← 1 TO 10` includes it. Decide whether the limit is meant to be included, then choose `<` or `≤`, and check the first and last values in a trace.\n\n**The infinite loop.** A WHILE whose condition can never become False, usually because the body forgets to change the variable in the condition: `WHILE n < 20` with no line that changes n. In a trace it shows as a column that never moves.\n\n**The inverted condition.** `UNTIL valid = False` when the loop should stop once the input is valid. Say the condition out loud: REPEAT *until* it is right.\n\nAll three are **logic errors** in AQA's terms: the code runs, but does the wrong thing. A **syntax error** would be a missing ENDFOR, which stops it running at all.",
         "visuals": [
           {
             "type": "diagram",
@@ -631,7 +630,7 @@
           "skill": "infinite loops",
           "calculator": "either",
           "tags": [],
-          "solution": "Nothing in the body changes n, so `n < 100` stays True for ever.",
+          "solution": "**n never changes, so it loops forever**: nothing in the body changes n, so `n < 100` stays True. It is a logic error, not a syntax error: the code runs.",
           "markScheme": [
             {
               "code": "B1",
@@ -641,10 +640,10 @@
           ],
           "discriminators": [],
           "options": [
-            "It should be REPEAT UNTIL",
-            "OUTPUT cannot be used in a loop",
-            "It is a syntax error",
-            "n never changes, so the loop is infinite"
+            "It should be a REPEAT … UNTIL loop",
+            "OUTPUT cannot be used inside a loop",
+            "It is a syntax error, so it will not run",
+            "n never changes, so it loops forever"
           ],
           "correct": [
             3
@@ -715,7 +714,7 @@
         "id": "s8",
         "kind": "grade-9",
         "title": "Going deeper: choose the loop, convert between loops, explain the purpose",
-        "body": "**Choose the loop from the problem.** A known count (10 inputs, every array element): FOR. Until a limit is reached: WHILE. Ask then check: REPEAT UNTIL. Saying *why* is a mark.\n\n**Convert between them.** Any FOR is a WHILE with a counter you manage yourself: initialise before, test at the top, increment at the bottom. Exams ask for this to see whether you understand what FOR hides.\n\n**Trace with a condition column.** Write the test result every time; the row where it flips is where the marks are.\n\n**Explain what an algorithm does.** Read the loop, find what changes, find what stops it, then say the purpose in one sentence: *counts the odd numbers from 1 to 9*, *finds the largest of ten inputs*, *allows three password attempts*.\n\n**Write algorithms with the structure closed.** ENDIF, ENDFOR, ENDWHILE, and the output **after** the loop, not inside it.",
+        "body": "**Choose the loop from the problem.** A known count (10 inputs, every array element): FOR. Until a limit is reached: WHILE. Ask then check: REPEAT UNTIL. Say *why* as well.\n\n**Convert between them.** Any FOR is a WHILE with a counter you manage yourself: initialise before, test at the top, increment at the bottom. Writing it out shows you understand what FOR hides.\n\n**Trace with a condition column.** Write the test result every time; the row where it flips is where the answer usually is.\n\n**Explain what an algorithm does.** Read the loop, find what changes, find what stops it, then say the purpose in one sentence: *counts the odd numbers from 1 to 9*, *finds the largest of ten inputs*, *allows three password attempts*.\n\n**Write algorithms with the structure closed.** ENDIF, ENDFOR, ENDWHILE, and the output **after** the loop, not inside it.",
         "visuals": [
           {
             "type": "worked-example",
@@ -773,7 +772,7 @@
                   "REPEAT UNTIL, because it must ask at least once"
                 ]
               ],
-              "title": "What the marks are for"
+              "title": "Weak and strong answers"
             },
             "alt": "A table contrasting weak answers with grade 9 answers on selection, iteration and tracing"
           }
@@ -813,7 +812,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Selection**: IF … ELSE IF … ELSE … ENDIF; conditions tested in order, only the first True branch runs.\n- **FOR** (definite): both limits included, $b - a + 1$ passes; STEP for other counts; FOR … IN for arrays.\n- **WHILE** tests before, may run zero times; **REPEAT … UNTIL** tests after, runs at least once and stops when the condition becomes True.\n- **Nested loops**: the inner loop runs fully for each outer pass; passes multiply.\n- **Trace tables**: a column per variable plus the condition and output; a row per change; the value that fails the test is the one left.\n- **Errors**: off-by-one, infinite loop, inverted condition; all logic errors.\n- **Choose and convert**: FOR for a known count, WHILE for a limit, REPEAT for ask-then-check; any FOR can be written as a WHILE.",
+        "body": "- **Sequence, selection and iteration** are the three combining principles every program is built from.\n- **Selection**: IF … ELSE IF … ELSE … ENDIF; conditions tested in order, only the first True branch runs.\n- **FOR** (definite): both limits included, $b - a + 1$ passes; STEP for other counts; FOR … IN for arrays.\n- **WHILE** tests before, may run zero times; **REPEAT … UNTIL** tests after, runs at least once and stops when the condition becomes True; **DO … WHILE**, in some languages, tests after and continues while it is True.\n- **Nested loops**: the inner loop runs fully for each outer pass; passes multiply.\n- **Trace tables**: a column per variable plus the condition and output; a row per change; the value that fails the test is the one left.\n- **Errors**: off-by-one, infinite loop, inverted condition; all logic errors.\n- **Choose and convert**: FOR for a known count, WHILE for a limit, REPEAT for ask-then-check; any FOR can be written as a WHILE.",
         "visuals": [
           {
             "type": "diagram",
@@ -928,10 +927,9 @@
       ],
       "discriminators": [],
       "accepted": [
-        "B",
-        "'B'",
-        "\"B\""
-      ]
+        "B"
+      ],
+      "matchCase": true
     },
     {
       "id": "q4",
@@ -1045,7 +1043,7 @@
     {
       "id": "q8",
       "type": "short-text",
-      "prompt": "What is output?\n\n```\nFOR i ← 2 TO 10 STEP 4\n   OUTPUT i\nENDFOR\n```",
+      "prompt": "What is output?\n\n```\nFOR i ← 2 TO 10 STEP 4\n   OUTPUT i\nENDFOR\n```\n\nGive the values in order, separated by commas.",
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "STEP",
@@ -1066,10 +1064,8 @@
       ],
       "discriminators": [],
       "accepted": [
-        "2 6 10",
         "2, 6, 10",
         "2 then 6 then 10",
-        "2 6 10.",
         "2, 6 and 10"
       ]
     },
@@ -1160,7 +1156,7 @@
     {
       "id": "q12",
       "type": "short-text",
-      "prompt": "What is output?\n\n```\nn ← 5\nREPEAT\n   n ← n - 1\n   OUTPUT n\nUNTIL n = 2\n```",
+      "prompt": "What is output?\n\n```\nn ← 5\nREPEAT\n   n ← n - 1\n   OUTPUT n\nUNTIL n = 2\n```\n\nGive the values in order, separated by commas.",
       "marks": 2,
       "gradeBand": "8-9",
       "skill": "tracing REPEAT UNTIL with output inside",
@@ -1183,7 +1179,6 @@
         "multi-topic"
       ],
       "accepted": [
-        "4 3 2",
         "4, 3, 2",
         "4 then 3 then 2",
         "4, 3 and 2"
@@ -1198,7 +1193,7 @@
       "skill": "writing an algorithm with a loop",
       "calculator": "either",
       "tags": [],
-      "solution": "A FOR loop of 10 inputs, each converted with STRING_TO_INT, a `largest` variable initialised from the first input, an IF that replaces it when a bigger number arrives, and one OUTPUT after the loop.",
+      "solution": "A FOR loop of 10 inputs (converting each with STRING_TO_INT makes the type clear, and Python, C# and VB.NET need it), a `largest` variable initialised from the first input, an IF that replaces it when a bigger number arrives, and one OUTPUT after the loop.",
       "markScheme": [
         {
           "code": "B1",
@@ -1208,7 +1203,7 @@
         {
           "code": "B1",
           "marks": 1,
-          "description": "input converted with STRING_TO_INT inside the loop"
+          "description": "each number is input inside the loop (converting it is needed in Python, C# and VB.NET, optional in pseudo-code)"
         },
         {
           "code": "B1",
@@ -1241,7 +1236,7 @@
           "marks": 1
         },
         {
-          "text": "Each number input and converted to an integer",
+          "text": "Each number input inside the loop (conversion needed in Python, C# and VB.NET, optional in pseudo-code)",
           "marks": 1
         },
         {
@@ -1272,7 +1267,7 @@
       "skill": "off-by-one errors",
       "calculator": "either",
       "tags": [],
-      "solution": "The loop stops when i reaches 10, so 10 is never output: an **off-by-one** error, the commonest logic error in loops. `i ≤ 10` includes it.",
+      "solution": "The loop stops when i reaches 10, so 10 is never output: an **off-by-one** error, a common logic error in loops. `i ≤ 10` includes it.",
       "markScheme": [
         {
           "code": "B1",
@@ -1428,6 +1423,36 @@
       "answer": 6,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "Some languages have a condition-at-the-end loop written `DO … WHILE cond`. How does it differ from AQA's `REPEAT … UNTIL cond`?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "loop types",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Both test last, but DO … WHILE goes on while cond is True**: it runs the body at least once and repeats while the condition holds, where REPEAT … UNTIL repeats until the condition becomes True. So `DO … WHILE NotSolved` does the same job as `REPEAT … UNTIL Solved`.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "both test after the body; DO … WHILE continues while True, REPEAT stops when True"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "options": [
+        "DO … WHILE tests first, so it may run zero times",
+        "They are the same: both stop once cond is True",
+        "Both test last, but DO … WHILE goes on while cond is True",
+        "DO … WHILE runs a fixed number of times, like FOR"
+      ],
+      "correct": [
+        2
+      ]
     }
   ],
   "worksheets": {
@@ -1463,13 +1488,14 @@
         "q17",
         "q18",
         "q16",
-        "q13"
+        "q13",
+        "q19"
       ],
-      "suggestedMinutes": 40
+      "suggestedMinutes": 42
     }
   },
   "examTechnique": {
-    "body": "Paper 1 tests iteration and selection almost entirely through tracing and writing. For tracing, draw the table before you start: one column per variable, a column for the condition, a column for output, and a row every time a value changes. Include the row where the condition fails, because the value in that row is usually the answer. For nested loops give the inner counter its own column and let it restart.\n\nFor writing, choose the loop from the problem and say why if asked, keep the output outside the loop when a single result is wanted, and close every structure. Check boundaries: FOR includes both limits, WHILE with < excludes the limit. When a question asks what an algorithm does, name its purpose in one sentence rather than narrating the lines.",
+    "body": "Paper 1 tests iteration and selection through tracing and writing. For tracing, draw the table before you start: one column per variable, a column for the condition, a column for output, and a row every time a value changes. Include the row where the condition fails, because the value in that row is usually the answer. For nested loops give the inner counter its own column and let it restart.\n\nFor writing, choose the loop from the problem and say why if asked, keep the output outside the loop when a single result is wanted, and close every structure. Check boundaries: FOR includes both limits, WHILE with < excludes the limit. When a question asks what an algorithm does, name its purpose in one sentence rather than narrating the lines.",
     "examinerErrors": [
       "Tracing a WHILE loop as if it stopped exactly at the limit rather than at the first value that fails the test.",
       "Running the inner loop of a nested pair only once.",
@@ -1497,7 +1523,8 @@
       "q14",
       "q15",
       "q17",
-      "q18"
+      "q18",
+      "q19"
     ],
     "sampleSize": 10
   },

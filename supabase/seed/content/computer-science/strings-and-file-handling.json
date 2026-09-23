@@ -23,8 +23,8 @@
     },
     {
       "kind": "spot",
-      "title": "A number read in is a string",
-      "body": "Anything from `USERINPUT` or from a file is text. Convert with `STRING_TO_INT` before arithmetic, and convert back with `INT_TO_STRING` before joining it to other text."
+      "title": "A number typed in is usually text",
+      "body": "In Python, C# and VB.NET, keyboard input and anything read from a file arrive as text. Convert with `STRING_TO_INT` before arithmetic, and back with `INT_TO_STRING` before joining it to other text. AQA pseudo-code does not say what `USERINPUT` gives, so writing the conversion is always safe."
     },
     {
       "kind": "check",
@@ -38,11 +38,11 @@
     }
   ],
   "why": {
-    "matters": "Most of what a program is handed is **text**, and text is not numbers. The characters `50` typed into a box are a string, so adding them to `10` joins them instead of adding them — and the program does not complain, it just gives an answer that is wrong by a mile.\n\nSo this topic is two habits. Convert deliberately, because nothing else will. And treat a string as what it is: an indexed sequence you can measure, search and cut. Files are here too, for the Year 10 project — AQA does not examine them, and the lesson says so plainly.",
+    "matters": "Most of what a program is handed is **text**, and text is not numbers. The characters `50` typed into a box usually arrive as a string, so adding another typed `10` to them joins the two instead of adding them — and the program does not complain, it just gives an answer that is wrong by a mile.\n\nSo this topic is two habits. Convert deliberately, because nothing else will. And treat a string as what it is: an indexed sequence you can measure, search and cut. Files are here too, for the Year 10 project — AQA does not examine them, and the lesson says so plainly.",
     "examples": [
       {
         "title": "Why 50 plus 10 can come out as 5010",
-        "body": "`USERINPUT` always hands back a **string**, whatever the person typed. So `'50' + '10'` is `'5010'` — the `+` joined two pieces of text — while `50 + 10` is `60`.\n\nThe operator did not change. What it does depends on the **type** of the things either side of it, and that is why `STRING_TO_INT` exists and why an exam question about a total from two typed numbers is really a question about conversion. A total four digits long where you expected two is the shape of this bug in the wild.",
+        "body": "In Python, C# and VB.NET, keyboard input arrives as a **string**, whatever the person typed. So `'50' + '10'` is `'5010'` — the `+` joined two pieces of text — while `50 + 10` is `60`. AQA pseudo-code does not say what type `USERINPUT` gives, so writing the conversion is always safe and makes the intention clear.\n\nThe operator did not change. What it does depends on the **type** of the things either side of it, and that is why `STRING_TO_INT` exists and why an exam question about a total from two typed numbers is really a question about conversion. A total four digits long where you expected two is the shape of this bug in the wild.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -164,7 +164,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Strings are sequences of characters",
-        "body": "A **string** is text: a sequence of characters, each with an **index** starting at 0, just like an array. AQA gives you four built-in operations:\n\n- `LEN(s)`: the number of characters.\n- `SUBSTRING(start, end, s)`: the characters from index `start` to index `end`, **both included**.\n- `POSITION(s, c)`: the index of the first `c` in `s`. AQA does not say what it gives back when the character is not there, so in an exam say in words what you are checking, or use the value your language returns (−1 in Python and C#, 0 in VB.NET).\n- `+`: **concatenation**, joining two strings.\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```\n\nOutput: `8`, `com`, `3`.",
+        "body": "A **string** is text: a sequence of characters, each with an **index** starting at 0, just like an array. AQA gives you four built-in operations:\n\n- `LEN(s)`: the number of characters.\n- `SUBSTRING(start, end, s)`: the characters from index `start` to index `end`, **both included**.\n- `POSITION(s, c)`: the index of the first `c` in `s`. AQA does not say what it gives back when the character is not there, so in an exam say in words what you are checking, or use the value your language returns (Python's `find` and the `IndexOf` method in C# and VB.NET return −1; VB's older `InStr` returns 0 because it counts from 1).\n- `+`: **concatenation**, joining two strings.\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```\n\nOutput: `8`, `com`, `3`.",
         "visuals": [
           {
             "type": "diagram",
@@ -247,7 +247,8 @@
             "ut",
             "'ut'",
             "\"ut\""
-          ]
+          ],
+          "matchCase": true
         }
       },
       {
@@ -299,20 +300,20 @@
         "id": "s3",
         "kind": "explain",
         "title": "Converting between types",
-        "body": "Numbers and text look alike but behave differently. `12 + 3` is 15; `'12' + '3'` is `'123'`. Four conversions:\n\n- `STRING_TO_INT('12')` gives the whole number 12, and `STRING_TO_REAL('12.5')` gives the decimal 12.5.\n- `INT_TO_STRING(12)` gives the text `'12'`, and `REAL_TO_STRING(12.5)` gives the text `'12.5'`.\n- `CHAR_TO_CODE('A')` gives the character code, 65.\n- `CODE_TO_CHAR(66)` gives `'B'`.\n\n```\nOUTPUT CHAR_TO_CODE('A')\nOUTPUT CODE_TO_CHAR(66)\nOUTPUT STRING_TO_INT('12') + 3\nOUTPUT INT_TO_STRING(12) + '3'\n```\n\nOutput: `65`, `B`, `15`, `123`. Everything typed with `USERINPUT` and everything read from a file is a **string**, so convert before doing maths.",
+        "body": "Numbers and text look alike but behave differently. `12 + 3` is 15; `'12' + '3'` is `'123'`. Four conversions:\n\n- `STRING_TO_INT('12')` gives the whole number 12, and `STRING_TO_REAL('12.5')` gives the decimal 12.5.\n- `INT_TO_STRING(12)` gives the text `'12'`, and `REAL_TO_STRING(12.5)` gives the text `'12.5'`.\n- `CHAR_TO_CODE('A')` gives the character code, 65.\n- `CODE_TO_CHAR(66)` gives `'B'`.\n\n```\nOUTPUT CHAR_TO_CODE('A')\nOUTPUT CODE_TO_CHAR(66)\nOUTPUT STRING_TO_INT('12') + 3\nOUTPUT INT_TO_STRING(12) + '3'\n```\n\nOutput: `65`, `B`, `15`, `123`. In Python, C# and VB.NET, keyboard input and anything read from a file arrive as text, so convert before doing maths. AQA pseudo-code does not say what `USERINPUT` returns, so writing `STRING_TO_INT(USERINPUT)` is always safe and makes the intention clear.",
         "visuals": [
           {
             "type": "worked-example",
-            "problem": "A student writes total ← USERINPUT + 5 and gets an error",
+            "problem": "In Python, a student writes total = input() + 5 and the program crashes",
             "steps": [
               {
-                "text": "USERINPUT returns a string, and a string cannot be added to 5"
+                "text": "In Python, input() gives text, and text cannot be added to the number 5"
               },
               {
-                "text": "Convert first: total ← STRING_TO_INT(USERINPUT) + 5"
+                "text": "Convert first: total = int(input()) + 5, which in AQA pseudo-code is total ← STRING_TO_INT(USERINPUT) + 5"
               },
               {
-                "text": "Now the input 10 gives 15, not '105' or a crash"
+                "text": "Now typing 10 gives 15 instead of a crash"
               }
             ]
           }
@@ -445,7 +446,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Files: saving data between runs",
-        "body": "Variables vanish when a program ends. To keep data, write it to a **file**. AQA does not examine file handling: it is not in the 8525 specification and there is no file syntax in AQA pseudo-code. Your Year 10 programming project uses files, though, so here is the pattern most textbooks use:\n\n1. **Open** the file for writing or reading.\n2. **Write** lines, or **read** lines until `endOfFile()`.\n3. **Close** the file, so the data is saved and the file is released.\n\n```\nmyFile ← openWrite('scores.txt')\nmyFile.writeLine('Sam,42')\nmyFile.writeLine('Ali,37')\nmyFile.close()\n\nmyFile ← openRead('scores.txt')\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   OUTPUT line\nENDWHILE\nmyFile.close()\n```\n\nOutput: `Sam,42` then `Ali,37`. Everything read back is a **string**; the 42 has to be converted before it is used as a number.",
+        "body": "Variables vanish when a program ends. To keep data, write it to a **file**. AQA does not examine file handling: it is not in the 8525 specification and there is no file syntax in AQA pseudo-code. Your Year 10 programming project uses files, though, so here is a typical pattern:\n\n1. **Open** the file for writing or reading.\n2. **Write** lines, or **read** lines until `endOfFile()`.\n3. **Close** the file, so the data is saved and the file is released.\n\n```\nmyFile ← openWrite('scores.txt')\nmyFile.writeLine('Sam,42')\nmyFile.writeLine('Ali,37')\nmyFile.close()\n\nmyFile ← openRead('scores.txt')\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   OUTPUT line\nENDWHILE\nmyFile.close()\n```\n\nOutput: `Sam,42` then `Ali,37`. Everything read back is a **string**; the 42 has to be converted before it is used as a number.",
         "visuals": [
           {
             "type": "worked-example",
@@ -539,7 +540,8 @@
             "pots",
             "'pots'",
             "\"pots\""
-          ]
+          ],
+          "matchCase": true
         }
       },
       {
@@ -591,7 +593,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- Strings are indexed from 0. LEN, SUBSTRING(start, end, s) with both ends included, POSITION, and + for joining.\n- Convert between types: STRING_TO_INT, INT_TO_STRING, CHAR_TO_CODE, CODE_TO_CHAR. Input and file data are strings.\n- Loop over a string with SUBSTRING(i, i, s) to count, reverse or check characters.\n- Files: open, read with WHILE NOT endOfFile or write lines, then close.\n- Chain them: read, POSITION, SUBSTRING, STRING_TO_INT, use.",
+        "body": "- Strings are indexed from 0. LEN, SUBSTRING(start, end, s) with both ends included, POSITION, and + for joining.\n- Convert between types: STRING_TO_INT, STRING_TO_REAL, INT_TO_STRING, REAL_TO_STRING, CHAR_TO_CODE, CODE_TO_CHAR. Keyboard input and file data usually arrive as text, so convert before arithmetic.\n- Loop over a string with SUBSTRING(i, i, s) to count, reverse or check characters.\n- Files: open, read with WHILE NOT endOfFile or write lines, then close.\n- Chain them: read, POSITION, SUBSTRING, STRING_TO_INT, use.",
         "visuals": [
           {
             "type": "diagram",
@@ -680,7 +682,8 @@
         "sunset",
         "'sunset'",
         "\"sunset\""
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q3",
@@ -691,7 +694,7 @@
       "skill": "type conversion",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Input arrives as a string. STRING_TO_INT converts it before you add to it.",
+      "solution": "Keyboard input usually arrives as text. STRING_TO_INT converts it to a whole number before you add to it.",
       "markScheme": [
         {
           "code": "B1",
@@ -760,7 +763,8 @@
         "com",
         "'com'",
         "\"com\""
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q6",
@@ -1040,7 +1044,8 @@
         "c",
         "'c'",
         "\"c\""
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q14",
@@ -1121,12 +1126,12 @@
       "skill": "type conversion",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Everything typed at the keyboard arrives as text.",
+      "solution": "In Python, C# and VB.NET, keyboard input arrives as text even when the user types digits, so it has to be converted (STRING_TO_INT, or int() in Python) before arithmetic. AQA pseudo-code does not say what USERINPUT returns, so writing the conversion is always safe and makes the intention clear.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "Input is a string"
+          "description": "Keyboard input usually arrives as text"
         }
       ],
       "discriminators": [
@@ -1134,7 +1139,7 @@
       ],
       "options": [
         "USERINPUT returns a real number, and STRING_TO_INT rounds it to the nearest whole number before arithmetic",
-        "USERINPUT always returns a string, even when the user types digits, so it must be converted before it can be used as a number",
+        "Keyboard input usually arrives as text, even when digits are typed, so it has to be converted first",
         "Arithmetic only works on strings, so the number has to be converted into text before it can be added",
         "STRING_TO_INT removes the spaces and punctuation from the input so that the arithmetic does not fail"
       ],
@@ -1169,6 +1174,83 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "What does `POSITION('keyboard', 'b')` return? Indexes count from 0.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "position",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "k is at index 0, e at 1, y at 2 and b at **3**. POSITION gives the index of the first match.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0
+    },
+    {
+      "id": "q18",
+      "type": "multiple-choice",
+      "prompt": "What is the value of `REAL_TO_STRING(2.5) + 'kg'`?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "type conversion",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`REAL_TO_STRING(2.5)` turns the real number into the text `'2.5'`, so `+` joins two strings and the value is `'2.5kg'`. `+` never adds a space, the conversion keeps the decimal part, and because the number has been converted first, joining it to text is not a problem.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "'2.5kg'"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "`'2.5 kg'`, because + puts a space between the parts",
+        "An error, because a number cannot be joined to text",
+        "`'2kg'`, because the decimal part is lost in the conversion",
+        "`'2.5kg'`, the text 2.5 joined to kg with no space"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q19",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\nline ← 'Tom,57'\np ← POSITION(line, ',')\nscore ← STRING_TO_INT(SUBSTRING(p + 1, LEN(line) - 1, line))\nOUTPUT score * 2\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "string operations",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "`POSITION(line, ',')` is 3: T is 0, o is 1, m is 2 and the comma is 3. `LEN(line)` is 6, so the cut is `SUBSTRING(4, 5, line)`, both ends included, which is `'57'`. `STRING_TO_INT` makes it the number 57, and 57 × 2 = **114**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "SUBSTRING(4, 5, line) is '57'"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "114"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 114,
+      "tolerance": 0
     }
   ],
   "worksheets": {
@@ -1178,9 +1260,10 @@
         "q1",
         "q2",
         "q3",
-        "q4"
+        "q4",
+        "q17"
       ],
-      "suggestedMinutes": 6
+      "suggestedMinutes": 7
     },
     "higher": {
       "level": "higher",
@@ -1189,9 +1272,10 @@
         "q6",
         "q7",
         "q8",
-        "q16"
+        "q16",
+        "q18"
       ],
-      "suggestedMinutes": 14
+      "suggestedMinutes": 16
     },
     "advanced": {
       "level": "advanced",
@@ -1202,9 +1286,10 @@
         "q12",
         "q13",
         "q14",
-        "q15"
+        "q15",
+        "q19"
       ],
-      "suggestedMinutes": 42
+      "suggestedMinutes": 45
     }
   },
   "examTechnique": {
@@ -1214,12 +1299,11 @@
       "Adding a number to USERINPUT or to a value read from a file without converting it first.",
       "Forgetting the space when joining a first name and a surname.",
       "Using s[i] to read a character. AQA pseudo-code has no index notation: use SUBSTRING(i, i, s).",
-      "Forgetting to close a file after opening it.",
       "Using LEN on a number rather than on a string.",
       "Writing STRING_TO_INT where INT_TO_STRING is needed, or the reverse.",
       "Assuming the first character is at index 1. It is at index 0."
     ],
-    "grade9Looks": "A grade 9 answer reads characters with SUBSTRING, counting from 0 without slipping, converts types at the right moment, chains POSITION, SUBSTRING and STRING_TO_INT to pull a number out of a line of text, and keeps file work for the project, since AQA does not examine it and a counter set up before the loop."
+    "grade9Looks": "A grade 9 answer reads characters with SUBSTRING, counting from 0 without slipping, sets up counters before the loop, converts types at the right moment, and chains POSITION, SUBSTRING and STRING_TO_INT to pull a number out of a line of text. File work is for the project, since AQA does not examine it."
   },
   "quiz": {
     "questionIds": [
@@ -1235,7 +1319,10 @@
       "q12",
       "q13",
       "q15",
-      "q16"
+      "q16",
+      "q17",
+      "q18",
+      "q19"
     ],
     "sampleSize": 10
   },

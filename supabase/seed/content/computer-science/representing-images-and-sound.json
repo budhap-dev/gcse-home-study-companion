@@ -23,7 +23,7 @@
     {
       "kind": "spot",
       "title": "The answer is in bits until you divide",
-      "body": "Both formulae produce **bits**. A question asking for **bytes** needs ÷ 8, and one asking for **kB** needs ÷ 8 ÷ 1000. Forgetting the divide is the single most common way to lose the last mark here."
+      "body": "Both formulae produce **bits**. A question asking for **bytes** needs ÷ 8, and one asking for **kB** needs ÷ 8 ÷ 1000. Forgetting the divide leaves a right number in the wrong unit."
     },
     {
       "kind": "check",
@@ -148,7 +148,7 @@
       },
       {
         "title": "Why the quality setting changes the file size",
-        "body": "Three minutes of sound at the usual rate is 44 100 samples a second at 16 bits each: **15.9 MB**, straight out of the formula.\n\nHalve the sample rate and you halve the file, because every term in that product is a straight multiplication — there is nothing clever about it. That is what a quality setting on a download is choosing, and knowing the formula tells you what you are giving up rather than leaving it as a word like *medium*.",
+        "body": "Three minutes of one channel of sound at the usual rate is 44 100 samples a second at 16 bits each: **15.9 MB**, straight out of the formula.\n\nHalve the sample rate and you halve the file, because every term in that product is a straight multiplication — there is nothing clever about it. That is what a quality setting on a download is choosing, and knowing the formula tells you what you are giving up rather than leaving it as a word like *medium*.",
         "visual": {
           "type": "diagram",
           "component": "size-compare",
@@ -345,7 +345,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Binary and the picture",
-        "body": "**You may be given a bit pattern and asked to draw the image, or given an image and asked to write the pattern.**\n\nWith a colour depth of **1 bit**, each pixel is a single 0 or 1 — two colours, so say black and white. The bits are read **across each row in turn**, top row first.\n\nThis 4 × 4 pattern:\n\n`1001` `0110` `0110` `1001`\n\nreads as four rows of four pixels. Taking **1 as black**, the black pixels sit at the four corners and at the four middle squares — a cross from corner to corner.\n\n**Check the count.** 4 × 4 × 1 = **16 bits**, and the pattern has exactly 16 digits. If your pattern is longer or shorter than $W \\times H \\times D$, you have mis-read the width.\n\n**Going the other way** is the same process reversed: take the top row, write a bit for each pixel, then the next row, and so on. The width has to be known — the same 16 bits would make a completely different picture as 2 × 8 or 8 × 2.\n\n**Which value means which colour is a convention**, and a question will tell you. Do not assume 1 is black; read the key given.",
+        "body": "**You may be given a bit pattern and asked to draw the image, or given an image and asked to write the pattern.**\n\nWith a colour depth of **1 bit**, each pixel is a single 0 or 1 — two colours, so say black and white. The bits are read **across each row in turn**, top row first.\n\nThis 4 × 4 pattern:\n\n`1001` `0110` `0110` `1001`\n\nreads as four rows of four pixels. Taking **1 as black**, the black pixels sit at the four corners and at the four middle squares — a cross from corner to corner.\n\n**Check the count.** 4 × 4 × 1 = **16 bits**, and the pattern has exactly 16 digits. If your pattern is longer or shorter than $W \\times H \\times D$, you have mis-read the width.\n\n**Going the other way** is the same process reversed: take the top row, write a bit for each pixel, then the next row, and so on. The width has to be known — the same 16 bits would make a completely different picture as 2 × 8 or 8 × 2.\n\n**With a colour depth of 2 bits**, each pixel takes **two** bits, so $2^2 = 4$ colours are possible and a key says which is which. With the key 00 = white, 01 = red, 10 = blue and 11 = black, a row 4 pixels wide stored as `01011100` splits into pairs, `01` `01` `11` `00`, and reads red, red, black, white. Split the bits into groups of $D$ before reading any colour.\n\n**Which value means which colour is a convention**, and a question will tell you. Do not assume 1 is black; read the key given.",
         "visuals": [
           {
             "type": "diagram",
@@ -381,6 +381,36 @@
               "title": "16 bits in total: 4 × 4 × 1"
             },
             "alt": "A table converting a 4 by 4 one-bit bitmap pattern into a picture, forming a cross"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Bits",
+                "Colour"
+              ],
+              "rows": [
+                [
+                  "00",
+                  "white"
+                ],
+                [
+                  "01",
+                  "red"
+                ],
+                [
+                  "10",
+                  "blue"
+                ],
+                [
+                  "11",
+                  "black"
+                ]
+              ],
+              "title": "A 2-bit key: two bits a pixel, four colours"
+            },
+            "alt": "A colour key for an image with a colour depth of two bits: 00 is white, 01 is red, 10 is blue and 11 is black, giving four colours from two bits per pixel"
           }
         ],
         "check": {
@@ -514,7 +544,7 @@
         "id": "s6",
         "kind": "grade-9",
         "title": "Going deeper",
-        "body": "**Write the formula before the numbers.** $W \\times H \\times D$ and $\\text{rate} \\times \\text{res} \\times \\text{secs}$. Both are given in the specification, both are plain multiplications, and writing them first earns the method mark even if the arithmetic then slips.\n\n**Both formulae give bits.** Check the unit the question asks for. Bytes needs ÷ 8; kilobytes needs ÷ 8 then ÷ 1000. A right number in the wrong unit loses the final mark, and this is the most common way it goes here.\n\n**Colour depth is bits per pixel, and $2^D$ is the number of colours.** A question may give you either and ask for the other. If a question says \"256 colours\", the depth to put in the formula is **8**, not 256 — substituting 256 is a large and very visible error.\n\n**Reason about changes rather than recalculating.** Every factor is **linear**: double the rate, the resolution or the duration and the file doubles. For an image, doubling **both** width and height multiplies the size by **four**, because both appear in the formula. Saying \"four times, because both dimensions doubled\" is a better answer than a page of arithmetic.\n\n**Use the specification's wording for a sample**: *a measure of amplitude at a point in time*. Not \"a bit of the sound\".\n\n**Explain why digital sound is approximate.** The original wave is **continuous** — it has a value at every instant. Sampling records it only at **intervals**, and between two samples nothing is stored. The digital version is therefore always an approximation; a higher rate makes it closer but never exact. That reasoning is what an \"explain\" question is looking for, rather than \"it loses quality\".\n\n**Know the width before drawing a bitmap.** The same bits make a different picture at a different width, and the bit count must equal $W \\times H \\times D$ — a free check on whether you have read the pattern correctly.\n\n**Do not invent extra terms.** The specification says to use **only** colour depth and the number of pixels. Adding an allowance for a file header is not wanted here and will not match the mark scheme.",
+        "body": "**Write the formula before the numbers.** $W \\times H \\times D$ and $\\text{rate} \\times \\text{res} \\times \\text{secs}$. Both are given in the specification, both are plain multiplications, and writing them first shows your method even if the arithmetic then slips.\n\n**Both formulae give bits.** Check the unit the question asks for. Bytes needs ÷ 8; kilobytes needs ÷ 8 then ÷ 1000. A right number in the wrong unit is still a wrong answer.\n\n**Colour depth is bits per pixel, and $2^D$ is the number of colours.** A question may give you either and ask for the other. If a question says \"256 colours\", the depth to put in the formula is **8**, not 256 — substituting 256 is a large and very visible error.\n\n**Reason about changes rather than recalculating.** Every factor is **linear**: double the rate, the resolution or the duration and the file doubles. For an image, doubling **both** width and height multiplies the size by **four**, because both appear in the formula. Saying \"four times, because both dimensions doubled\" is a better answer than a page of arithmetic.\n\n**Use the specification's wording for a sample**: *a measure of amplitude at a point in time*. Not \"a bit of the sound\".\n\n**Explain why digital sound is approximate.** The original wave is **continuous** — it has a value at every instant. Sampling records it only at **intervals**, and between two samples nothing is stored. The digital version is therefore always an approximation; a higher rate makes it closer but never exact. That reasoning is what an \"explain\" question is looking for, rather than \"it loses quality\".\n\n**Know the width before drawing a bitmap.** The same bits make a different picture at a different width, and the bit count must equal $W \\times H \\times D$ — a free check on whether you have read the pattern correctly.\n\n**Do not invent extra terms.** The specification says to use **only** colour depth and the number of pixels. Adding an allowance for a file header is not wanted here.",
         "visuals": [
           {
             "type": "diagram",
@@ -562,7 +592,7 @@
                   "only pixels and colour depth"
                 ]
               ],
-              "title": "The first row loses more marks than the other six together"
+              "title": "Common traps, and what to write instead"
             },
             "alt": "A table of common errors in image and sound file size questions"
           }
@@ -664,7 +694,8 @@
       ],
       "discriminators": [],
       "accepted": [
-        "picture element"
+        "picture element",
+        "picture elements"
       ]
     },
     {
@@ -956,7 +987,7 @@
       "skill": "colours against colour depth",
       "calculator": "either",
       "tags": [],
-      "solution": "$D$ is the **bits per pixel**, and $2^8 = 256$, so $D = $ **8**. Putting 256 into the formula makes the answer 32 times too large — a very visible error, and a common one.",
+      "solution": "$D$ is the **bits per pixel**, and $2^8 = 256$, so $D = $ **8**. Putting 256 into the formula makes the answer 32 times too large — a very visible error.",
       "markScheme": [
         {
           "code": "B1",
@@ -1050,7 +1081,7 @@
       "skill": "width and bitmap interpretation",
       "calculator": "either",
       "tags": [],
-      "solution": "The bits are the same but the **rows break in different places**, so the picture is completely different: 16 bits make a 4 × 4 image or an 8 × 2 one. This is why the width must be known, and why checking the bit count against $W \\times H \\times D$ is worth doing.",
+      "solution": "The bits are the same but the **rows break in different places**, so the picture is completely different: 16 bits make a 4 × 4 image or a 2 × 8 one. This is why the width must be known, and why checking the bit count against $W \\times H \\times D$ is worth doing.",
       "markScheme": [
         {
           "code": "B1",
@@ -1102,7 +1133,7 @@
       "skill": "bitmap representation",
       "calculator": "either",
       "tags": [],
-      "solution": "A **pixel** — short for **picture element** — is a **single point** in an image. A bitmap image is a grid of pixels, and the computer stores a binary code for each one recording its colour. There is nothing else in a bitmap: no shapes or lines, just the colour of every point, which is why zooming far enough into one shows the squares.\n\nTwo properties describe it. **Image size** is measured **in pixels**, written **width × height**, so a 100 × 50 image holds 5,000 pixels. **Colour depth** is the number of **bits used to represent each pixel**. It is a count of bits, not of colours: the number of colours available is $2^D$, so a depth of 1 bit gives 2 colours, 8 bits gives 256, and 24 bits gives over 16 million.\n\n**The file size formula** given in the specification is:\n\n$$\\text{Size (bits)} = W \\times H \\times D \\qquad \\text{Size (bytes)} = \\frac{W \\times H \\times D}{8}$$\n\nFor an image 100 pixels wide and 50 high at 8-bit depth: $100 \\times 50 \\times 8 = 40\\,000$ bits, which is $40\\,000 \\div 8 = 5\\,000$ bytes, or **5 kB**. The formula produces **bits**, so the division by 8 is essential whenever bytes are asked for — leaving the answer in bits is the commonest way to lose the final mark.\n\n**Both factors increase the file size**, because every pixel is stored and every pixel costs the same number of bits. More pixels means more of them; a greater colour depth means each one is more expensive. Both act **linearly**, so doubling the colour depth doubles the file. Doubling **both** the width and the height multiplies it by **four**, since both appear in the formula — a point worth making in this form rather than by recalculating.\n\n**Both also improve quality.** More pixels give more detail, because the image is sampled at more points; too few and it looks blocky, with the individual squares visible. A greater colour depth allows finer shading between similar colours; too little and a smooth gradient, such as a sky, breaks into visible bands.\n\nSo the choice is a trade-off. Higher values give a better image and a larger file, and the right setting depends on what the image is for — a photograph to be printed needs far more of both than an icon on a web page.",
+      "solution": "A **pixel** — short for **picture element** — is a **single point** in an image. A bitmap image is a grid of pixels, and the computer stores a binary code for each one recording its colour. There is nothing else in a bitmap: no shapes or lines, just the colour of every point, which is why zooming far enough into one shows the squares.\n\nTwo properties describe it. **Image size** is measured **in pixels**, written **width × height**, so a 100 × 50 image holds 5,000 pixels. **Colour depth** is the number of **bits used to represent each pixel**. It is a count of bits, not of colours: the number of colours available is $2^D$, so a depth of 1 bit gives 2 colours, 8 bits gives 256, and 24 bits gives over 16 million.\n\n**The file size formula** given in the specification is:\n\n$$\\text{Size (bits)} = W \\times H \\times D \\qquad \\text{Size (bytes)} = \\frac{W \\times H \\times D}{8}$$\n\nFor an image 100 pixels wide and 50 high at 8-bit depth: $100 \\times 50 \\times 8 = 40\\,000$ bits, which is $40\\,000 \\div 8 = 5\\,000$ bytes, or **5 kB**. The formula produces **bits**, so the division by 8 is essential whenever bytes are asked for — leaving the answer in bits gives the right number in the wrong unit.\n\n**Both factors increase the file size**, because every pixel is stored and every pixel costs the same number of bits. More pixels means more of them; a greater colour depth means each one is more expensive. Both act **linearly**, so doubling the colour depth doubles the file. Doubling **both** the width and the height multiplies it by **four**, since both appear in the formula — a point worth making in this form rather than by recalculating.\n\n**Both also improve quality.** More pixels give more detail, because the image is sampled at more points; too few and it looks blocky, with the individual squares visible. A greater colour depth allows finer shading between similar colours; too little and a smooth gradient, such as a sky, breaks into visible bands.\n\nSo the choice is a trade-off. Higher values give a better image and a larger file, and the right setting depends on what the image is for — a photograph to be printed needs far more of both than an icon on a web page.",
       "markScheme": [
         {
           "code": "B2",
@@ -1138,7 +1169,7 @@
           "marks": 2
         }
       ],
-      "modelAnswer": "A **pixel** — short for **picture element** — is a **single point** in an image. A bitmap image is a grid of pixels, and the computer stores a binary code for each one recording its colour. There is nothing else in a bitmap: no shapes or lines, just the colour of every point, which is why zooming far enough into one shows the squares.\n\nTwo properties describe it. **Image size** is measured **in pixels**, written **width × height**, so a 100 × 50 image holds 5,000 pixels. **Colour depth** is the number of **bits used to represent each pixel**. It is a count of bits, not of colours: the number of colours available is $2^D$, so a depth of 1 bit gives 2 colours, 8 bits gives 256, and 24 bits gives over 16 million.\n\n**The file size formula** given in the specification is:\n\n$$\\text{Size (bits)} = W \\times H \\times D \\qquad \\text{Size (bytes)} = \\frac{W \\times H \\times D}{8}$$\n\nFor an image 100 pixels wide and 50 high at 8-bit depth: $100 \\times 50 \\times 8 = 40\\,000$ bits, which is $40\\,000 \\div 8 = 5\\,000$ bytes, or **5 kB**. The formula produces **bits**, so the division by 8 is essential whenever bytes are asked for — leaving the answer in bits is the commonest way to lose the final mark.\n\n**Both factors increase the file size**, because every pixel is stored and every pixel costs the same number of bits. More pixels means more of them; a greater colour depth means each one is more expensive. Both act **linearly**, so doubling the colour depth doubles the file. Doubling **both** the width and the height multiplies it by **four**, since both appear in the formula — a point worth making in this form rather than by recalculating.\n\n**Both also improve quality.** More pixels give more detail, because the image is sampled at more points; too few and it looks blocky, with the individual squares visible. A greater colour depth allows finer shading between similar colours; too little and a smooth gradient, such as a sky, breaks into visible bands.\n\nSo the choice is a trade-off. Higher values give a better image and a larger file, and the right setting depends on what the image is for — a photograph to be printed needs far more of both than an icon on a web page."
+      "modelAnswer": "A **pixel** — short for **picture element** — is a **single point** in an image. A bitmap image is a grid of pixels, and the computer stores a binary code for each one recording its colour. There is nothing else in a bitmap: no shapes or lines, just the colour of every point, which is why zooming far enough into one shows the squares.\n\nTwo properties describe it. **Image size** is measured **in pixels**, written **width × height**, so a 100 × 50 image holds 5,000 pixels. **Colour depth** is the number of **bits used to represent each pixel**. It is a count of bits, not of colours: the number of colours available is $2^D$, so a depth of 1 bit gives 2 colours, 8 bits gives 256, and 24 bits gives over 16 million.\n\n**The file size formula** given in the specification is:\n\n$$\\text{Size (bits)} = W \\times H \\times D \\qquad \\text{Size (bytes)} = \\frac{W \\times H \\times D}{8}$$\n\nFor an image 100 pixels wide and 50 high at 8-bit depth: $100 \\times 50 \\times 8 = 40\\,000$ bits, which is $40\\,000 \\div 8 = 5\\,000$ bytes, or **5 kB**. The formula produces **bits**, so the division by 8 is essential whenever bytes are asked for — leaving the answer in bits gives the right number in the wrong unit.\n\n**Both factors increase the file size**, because every pixel is stored and every pixel costs the same number of bits. More pixels means more of them; a greater colour depth means each one is more expensive. Both act **linearly**, so doubling the colour depth doubles the file. Doubling **both** the width and the height multiplies it by **four**, since both appear in the formula — a point worth making in this form rather than by recalculating.\n\n**Both also improve quality.** More pixels give more detail, because the image is sampled at more points; too few and it looks blocky, with the individual squares visible. A greater colour depth allows finer shading between similar colours; too little and a smooth gradient, such as a sky, breaks into visible bands.\n\nSo the choice is a trade-off. Higher values give a better image and a larger file, and the right setting depends on what the image is for — a photograph to be printed needs far more of both than an icon on a web page."
     },
     {
       "id": "q18",
@@ -1186,6 +1217,92 @@
         }
       ],
       "modelAnswer": "**Sound is analogue.** A real sound wave varies **continuously**: it has a value at every instant and those values change smoothly. A computer can only store **discrete** binary numbers, so the wave has to be converted into a digital form before it can be stored or processed.\n\nThat conversion is **sampling**. The height of the wave is measured at regular intervals and each measurement is stored as a binary number. The specification defines a **sample** as **a measure of amplitude at a point in time** — the height of the wave at that instant.\n\nTwo properties describe the result. **Sampling rate** is the **number of samples taken in one second**, measured in **hertz**, where 1 Hz is one sample per second. **Sample resolution** is the **number of bits used for each sample**; more bits allow each amplitude to be recorded more precisely.\n\nThe file size follows from multiplying everything involved:\n\n$$\\text{File size (bits)} = \\text{rate} \\times \\text{res} \\times \\text{secs}$$\n\nA recording at 8,000 Hz with 8-bit resolution for 10 seconds is $8000 \\times 8 \\times 10 = 640\\,000$ bits, which is 80,000 bytes, or **80 kB**. Each of the three factors is **linear**, so doubling the rate, the resolution or the duration doubles the file — and raising the rate and the resolution together raises quality and size at the same time.\n\n**The digital version can never be exact**, and the reason is in the method itself. The original wave is **continuous**, so it has a value at every one of infinitely many instants. Sampling records it only at **intervals**, and whatever the wave did **between** two samples is never captured — the computer simply has no record of it, and reconstructing the sound means assuming something about the gap.\n\nThe **resolution** adds a second approximation. Each amplitude must be rounded to one of the $2^{res}$ values the available bits can express, so even the samples that were taken are stored slightly wrong.\n\nRaising either setting reduces the error. A higher rate leaves smaller gaps; a higher resolution makes each stored value closer to the true one. But neither closes the gap entirely, because a continuous wave cannot be captured by a finite number of measurements however many are taken. The digital recording is an **approximation** that can be made as close as is worth paying for in file size — which is exactly the trade-off that decides settings such as CD quality."
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "A 1-bit bitmap is 3 pixels wide and 3 pixels high, with 1 = black and 0 = white. Its bits, read across each row in turn from the top, are 010 111 010. What does the image show?",
+      "options": [
+        "A black border round a white centre pixel",
+        "A black plus sign through the centre",
+        "A black X from corner to corner",
+        "A black square in the top-left corner"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "binary to bitmap",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Split the 9 bits into rows of 3: `010`, `111`, `010`. The top and bottom rows have only their middle pixel black, and the middle row is all black, so the image is **a black plus sign through the centre**. A border would be `111 101 111`, and an X would be `101 010 101`.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a plus sign through the centre"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q20",
+      "type": "multiple-choice",
+      "prompt": "A 1-bit bitmap is 3 pixels wide and 3 pixels high, with 1 = black and 0 = white. Every pixel round the edge is black and the centre pixel is white. Reading across each row in turn from the top, which bit pattern stores it?",
+      "options": [
+        "000 010 000",
+        "101 010 101",
+        "111 101 111",
+        "111 000 111"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bitmap to binary",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Write one bit for each pixel, row by row. The top row is all black, `111`. The middle row is black, white, black, `101`. The bottom row is all black, `111`. So **111 101 111**. `000 010 000` uses the key the wrong way round, and `111 000 111` makes the whole middle row white.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "111 101 111"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q21",
+      "type": "multiple-choice",
+      "prompt": "An image has a colour depth of 2 bits, with this key: 00 = white, 01 = red, 10 = blue, 11 = black. One row of the image is 4 pixels wide and is stored as 11000110. Which colours does the row show, from left to right?",
+      "options": [
+        "black, black, white, white",
+        "white, black, red, blue",
+        "black, white, blue, red",
+        "black, white, red, blue"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "bitmap with a colour key",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At 2 bits a pixel, split the 8 bits into pairs: `11`, `00`, `01`, `10`. By the key that is **black, white, red, blue**. The row holds $4 \\times 2 = 8$ bits, which confirms two bits each; reading one bit a pixel would give 8 pixels, not 4, and swapping 01 and 10 swaps red and blue.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "black, white, red, blue"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ]
     }
   ],
   "examTechnique": {
@@ -1221,7 +1338,9 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q19",
+        "q20"
       ],
       "suggestedMinutes": 18
     },
@@ -1235,7 +1354,8 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q21"
       ],
       "suggestedMinutes": 45
     }
@@ -1257,7 +1377,10 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q19",
+      "q20",
+      "q21"
     ],
     "sampleSize": 10
   },

@@ -49,6 +49,13 @@ const ShortText = z.object({
   type: z.literal('short-text'),
   /** Accepted answers, compared case- and whitespace-insensitively. */
   accepted: z.array(z.string().min(1)).min(1),
+  /**
+   * Letter case is part of the answer: a character code or a program's output, where
+   * 'T' (84) and 't' (116) are different answers. The marker otherwise folds case, which
+   * marked a student typing "t" right on a question about telling the two apart. The
+   * breaks between words count as well, since "Hi Amy!" and "HiAmy!" are different output.
+   */
+  matchCase: z.boolean().optional(),
 })
 
 const Ordering = z.object({

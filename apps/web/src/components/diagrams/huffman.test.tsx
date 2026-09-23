@@ -27,6 +27,15 @@ describe('huffman tree', () => {
     }
   })
 
+  it('leaves the codes off when a question asks the student to read them off the branches', () => {
+    const html = renderToStaticMarkup(<HuffmanTree alt="" props={{ tree: BANANA, hideCodes: true }} />)
+    const long = Object.values(codes(BANANA)).filter((c) => c.length > 1)
+    expect(long.length).toBeGreaterThan(0)
+    // A one-digit code is also a branch label, so the longer codes are the ones to check.
+    for (const code of long) expect(html, code).not.toContain(`>${code}<`)
+    for (const char of Object.keys(codes(BANANA))) expect(html, char).toContain(`>${char}<`)
+  })
+
   it('shows each leaf its frequency and each branch its weight', () => {
     const html = renderToStaticMarkup(<HuffmanTree alt="" props={{ tree: BANANA }} />)
     expect(html).toContain('>6<')

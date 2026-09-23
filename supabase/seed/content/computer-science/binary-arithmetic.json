@@ -12,7 +12,7 @@
     {
       "kind": "remember",
       "title": "There are only four sums to learn",
-      "body": "**0+0 = 0**, **0+1 = 1**, **1+1 = 10** (write 0, carry 1), **1+1+1 = 11** (write 1, carry 1). That is the whole of binary addition. The last one only comes up when you are adding three numbers, which is exactly when it is needed."
+      "body": "**0+0 = 0**, **0+1 = 1**, **1+1 = 10** (write 0, carry 1), **1+1+1 = 11** (write 1, carry 1). That is the whole of binary addition. The last one comes up when a carry lands in a column that already holds two 1s, or when three numbers are added."
     },
     {
       "kind": "shortcut",
@@ -22,7 +22,7 @@
     {
       "kind": "spot",
       "title": "A ninth bit means overflow",
-      "body": "The specification keeps answers to **8 bits**. If a carry comes out of the leftmost column there is nowhere to put it, and that is an **overflow error** — the result is too large for the space available. Say the words \"overflow error\"; \"it goes wrong\" earns nothing."
+      "body": "The specification keeps answers to **8 bits**. If a carry comes out of the leftmost column there is nowhere to put it, and that is an **overflow error** — the result is too large for the space available. Name it as an overflow error and say the result needs more bits than are available; \"it goes wrong\" says neither."
     },
     {
       "kind": "check",
@@ -36,11 +36,11 @@
     }
   ],
   "why": {
-    "matters": "A processor cannot multiply, divide or compare in any direct sense. It can **add**, and it can **shift bits sideways**, and everything else is built out of those two — which is why they are worth doing by hand once.\n\nIt is also where the limits of a machine come from. Eight bits hold 0 to 255 and no more, so a sum that goes past it has nowhere to put the answer. That is not a mistake in the arithmetic; it is **overflow**, and real systems have failed because of it.",
+    "matters": "Much of a processor's arithmetic can be built from two simple operations, **adding** and **shifting bits sideways**, which is why they are worth doing by hand once.\n\nIt is also where the limits of a machine come from. Eight bits hold 0 to 255 and no more, so a sum that goes past it has nowhere to put the answer. That is not a mistake in the arithmetic; it is **overflow**, and real systems have failed because of it.",
     "examples": [
       {
         "title": "Why a counter can go round to zero",
-        "body": "Eight bits reach **255** and stop. Add 200 and 100 in eight bits and the answer needs a ninth, and there is no ninth column to put it in.\n\nThe carry is simply lost, and the stored answer is wrong — quietly, with no error message. That is **overflow**, and it is why a game score can wrap back to zero, and why the number of bits a program uses for a value is a design decision rather than a detail.",
+        "body": "Eight bits reach **255** and stop. Add 200 and 100 in eight bits and the answer needs a ninth, and there is no ninth column to put it in.\n\nThe carry is lost, and the stored answer is wrong. Unless the program checks for overflow, nothing stops it carrying on with that value. That is **overflow**, and it is why a game score can wrap back to zero, and why the number of bits a program uses for a value is a design decision rather than a detail.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -106,7 +106,7 @@
       },
       {
         "title": "Why you check by converting",
-        "body": "Binary addition has only four column sums to learn, and every one of them is easy. The marks are lost in the **carries**, which is a bookkeeping problem rather than an understanding one.\n\nSo there is a check that costs ten seconds and needs no confidence: convert both numbers to decimal, add them there, convert your binary answer back, and see whether the two agree. It catches a dropped carry without your knowing where it was — which is the best kind of check, and the same trick as the mass check in a chemical equation.",
+        "body": "Binary addition has only four column sums to learn, and every one of them is easy. The slips happen in the **carries**, which is a bookkeeping problem rather than an understanding one.\n\nSo there is a check that costs ten seconds and needs no confidence: convert both numbers to decimal, add them there, convert your binary answer back, and see whether the two agree. It catches a dropped carry without your knowing where it was — which is the best kind of check, and the same trick as the mass check in a chemical equation.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -150,7 +150,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Adding binary numbers",
-        "body": "**Binary addition works exactly like decimal addition — start at the right, carry when a column overflows.** The only difference is that a column overflows at 2 rather than at 10.\n\n**The four sums:**\n\n| Column | Write | Carry |\n| --- | --- | --- |\n| 0 + 0 | 0 | – |\n| 0 + 1 | 1 | – |\n| **1 + 1** | **0** | **1** |\n| **1 + 1 + 1** | **1** | **1** |\n\nThe third is the one that catches people: 1 + 1 is **10** in binary, so you write 0 and carry 1 — just as 5 + 5 makes you write 0 and carry 1 in decimal.\n\nThe fourth only appears when adding **three** numbers. 1 + 1 + 1 is **11** in binary, which is 3, so you write 1 and carry 1.\n\n**What the specification limits you to:**\n\n- adding up to **three** binary numbers\n- a maximum of **8 bits** per number\n- at most **three 1s in a single column**\n- answers of at most **8 bits**, with no carry past the eighth\n\nSo you will never be asked to add four numbers, and a correct answer will always fit in a byte.",
+        "body": "**Binary addition works exactly like decimal addition — start at the right, carry when a column overflows.** The only difference is that a column overflows at 2 rather than at 10.\n\n**The four sums:**\n\n| Column | Write | Carry |\n| --- | --- | --- |\n| 0 + 0 | 0 | – |\n| 0 + 1 | 1 | – |\n| **1 + 1** | **0** | **1** |\n| **1 + 1 + 1** | **1** | **1** |\n\nThe third is the one that catches people: 1 + 1 is **10** in binary, so you write 0 and carry 1 — just as 5 + 5 makes you write 0 and carry 1 in decimal.\n\nThe fourth appears when a carry joins a column that already has two 1s, or when adding **three** numbers. 1 + 1 + 1 is **11** in binary, which is 3, so you write 1 and carry 1.\n\n**What the specification limits you to:**\n\n- adding up to **three** binary numbers\n- a maximum of **8 bits** per number\n- at most **three 1s in a single column**\n- answers of at most **8 bits**, with no carry past the eighth\n\nSo you will never be asked to add four numbers, and a correct answer will always fit in a byte.",
         "visuals": [
           {
             "type": "diagram",
@@ -247,7 +247,7 @@
                 "note": "three carries in a row is normal, not a sign of a mistake"
               },
               {
-                "text": "Next: 1 + 1 plus the carried 1 = **11**, write 1 and carry 1. The remaining columns give the final 1",
+                "text": "Next: 1 + 1 plus the carried 1 = **11**, write 1 and carry 1. Next: 1 + 0 plus the carried 1 = **10**, write 0, carry 1. Then 0 + 0 plus the carry = **1**",
                 "note": "this is the 1 + 1 + 1 case, reached through a carry rather than a third number"
               },
               {
@@ -342,7 +342,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Adding three numbers, and overflow",
-        "body": "**Adding three numbers brings in the fourth column sum.** When three 1s land in one column, 1 + 1 + 1 = **11** in binary, so you **write 1 and carry 1**.\n\nAdding `00001111`, `00000011`, `00000101`:\n\nThe units column has **three 1s** — write 1, carry 1. Working the rest through gives `00010111`, and the check confirms it: 15 + 3 + 5 = **23**, and `00010111` = 16 + 4 + 2 + 1 = 23.\n\nThe specification says you will never meet **more** than three 1s in a column, so those four sums are all you ever need.\n\n**Overflow.** Eight bits hold 0 to 255. If a carry comes out of the leftmost column there is **nowhere to put it**, because the byte has no ninth bit:\n\n`11111111` + `00000001` would need `100000000` — **9 bits**.\n\nThat is an **overflow error**: the result is too large for the space available. The name is what earns the mark. In a real computer the ninth bit is simply lost, so the stored answer comes out as 0 — right arithmetic, wrong answer, which is why overflow matters.\n\nIn the exam, the specification promises answers will **not** carry beyond the eighth bit, so overflow is something you explain rather than something you have to work around.",
+        "body": "**Adding three numbers brings in the fourth column sum.** When three 1s land in one column, 1 + 1 + 1 = **11** in binary, so you **write 1 and carry 1**.\n\nAdding `00001111`, `00000011`, `00000101`:\n\nThe units column has **three 1s** — write 1, carry 1. Working the rest through gives `00010111`, and the check confirms it: 15 + 3 + 5 = **23**, and `00010111` = 16 + 4 + 2 + 1 = 23.\n\nThe specification says you will never meet **more** than three 1s in a column, so those four sums are all you ever need.\n\n**Overflow.** Eight bits hold 0 to 255. If a carry comes out of the leftmost column there is **nowhere to put it**, because the byte has no ninth bit:\n\n`11111111` + `00000001` would need `100000000` — **9 bits**.\n\nThat is an **overflow error**: the result is too large for the space available. Name it, and say why: the result needs more bits than are available. In a real computer the ninth bit is simply lost, so the stored answer comes out as 0 — right arithmetic, wrong answer, which is why overflow matters.\n\nIn the exam, the specification promises answers will **not** carry beyond the eighth bit, so overflow is something you explain rather than something you have to work around.",
         "visuals": [
           {
             "type": "diagram",
@@ -485,13 +485,13 @@
           "type": "multiple-choice",
           "prompt": "What is the effect of shifting a binary number two places to the left?",
           "options": [
-            "It multiplies the number by 4",
             "It multiplies the number by 2",
+            "It multiplies the number by 4",
             "It divides the number by 4",
             "It adds 2 to the number"
           ],
           "correct": [
-            0
+            1
           ],
           "marks": 1,
           "gradeBand": "6-7",
@@ -575,7 +575,7 @@
         "id": "s6",
         "kind": "grade-9",
         "title": "Going deeper",
-        "body": "**Always check by converting.** Add the two decimal values, convert your binary answer back, and see that they agree. Carry errors are the main way marks are lost here, and this catches nearly all of them in under a minute.\n\n**Work right to left, and write the carries down.** A carry held in your head is a carry that gets dropped, usually three columns later.\n\n**Name the error: \"overflow\".** A question asking what happens when a result needs a ninth bit wants the words **overflow error** — the result is too large for the number of bits available. *It goes wrong* or *the answer is too big* will not do. It is worth adding what actually happens: the extra bit is **lost**, so `11111111` + 1 stores as `00000000`, which looks like 0.\n\n**Be exact about shifts.** A left shift of $n$ places multiplies by $2^n$; a right shift divides by $2^n$. *Doubles it* is only true for one place, and a question usually asks for two or three.\n\n**Say what falls off.** The full answer on a right shift of an odd number is that the 1 in the units column is **pushed out and lost**, so `00010111` (23) becomes 11 and not 11.5. A right shift is integer division: the remainder is discarded. The specification says fractional representations are not required, so this is intended behaviour.\n\n**Remember a left shift can lose data too.** Push a 1 off the top of the byte and the result is no longer the multiplication you wanted. Most students only mention loss on right shifts.\n\n**Know why shifts are used.** They are a much cheaper operation than a general multiply or divide, so a computer uses a shift whenever it is multiplying or dividing by a power of 2.\n\n**Only the logical shift is examined.** Bits move, **zeros** enter the vacated end, what falls off is gone. Arithmetic shifts and fractions are outside the specification.",
+        "body": "**Always check by converting.** Add the two decimal values, convert your binary answer back, and see that they agree. Carry errors are easy to make, and this catches nearly all of them in under a minute.\n\n**Work right to left, and write the carries down.** A carry held in your head is a carry that gets dropped, usually three columns later.\n\n**Name the error: \"overflow\".** When a result needs a ninth bit, the safe answer does two things: it names it as an **overflow error**, and it says the result needs more bits than are available. *It goes wrong* does neither. It is worth adding what actually happens: the extra bit is **lost**, so `11111111` + 1 stores as `00000000`, which looks like 0.\n\n**Be exact about shifts.** A left shift of $n$ places multiplies by $2^n$; a right shift divides by $2^n$. *Doubles it* is only true for one place, and a question may ask for two or three.\n\n**Say what falls off.** The full answer on a right shift of an odd number is that the 1 in the units column is **pushed out and lost**, so `00010111` (23) becomes 11 and not 11.5. A right shift is integer division: the remainder is discarded. The specification says fractional representations are not required, so this is intended behaviour.\n\n**Remember a left shift can lose data too.** Push a 1 off the top of the byte and the result is no longer the multiplication you wanted. Loss on a left shift is the easier one to forget.\n\n**Know why shifts are used.** They are a much cheaper operation than a general multiply or divide, so a computer uses a shift whenever it is multiplying or dividing by a power of 2.\n\n**Only the logical shift is examined.** Bits move, **zeros** enter the vacated end, what falls off is gone. Arithmetic shifts and fractions are outside the specification.",
         "visuals": [
           {
             "type": "diagram",
@@ -600,7 +600,7 @@
                 [
                   "a ninth bit",
                   "\"it goes wrong\"",
-                  "\"an overflow error\""
+                  "overflow: needs more bits"
                 ],
                 [
                   "shift by 2",
@@ -623,7 +623,7 @@
                   "only the logical shift is examined"
                 ]
               ],
-              "title": "The third row is a whole mark that depends on one word"
+              "title": "Common traps, and what to write instead"
             },
             "alt": "A table of common errors in binary addition and shifts"
           }
@@ -757,13 +757,13 @@
       "type": "multiple-choice",
       "prompt": "What fills the empty end when a logical shift is applied?",
       "options": [
-        "Zeros",
         "Ones",
         "The bits that fell off the other end",
-        "Nothing — the number gets shorter"
+        "Nothing — the number gets shorter",
+        "Zeros"
       ],
       "correct": [
-        0
+        3
       ],
       "marks": 1,
       "gradeBand": "4-5",
@@ -915,7 +915,7 @@
       "skill": "the limits of the specification",
       "calculator": "either",
       "tags": [],
-      "solution": "You add at most **three** numbers, so a column holds at most **three** 1s — which is why 1 + 1 + 1 = 11 is the last column sum you need.",
+      "solution": "The specification sets a separate limit: at most **three** 1s in any single column, which is why 1 + 1 + 1 = 11 is the last column sum you need. It is a limit of its own, because three numbers plus a carry could otherwise put four 1s in a column.",
       "markScheme": [
         {
           "code": "B1",
@@ -930,13 +930,13 @@
       "type": "multiple-choice",
       "prompt": "Why might a computer use a binary shift instead of a multiplication?",
       "options": [
-        "A shift is a much cheaper operation than a general multiply",
         "A shift can multiply by any number, unlike multiplication",
         "Multiplication is not possible in binary",
-        "A shift never loses any data, unlike multiplication"
+        "A shift never loses any data, unlike multiplication",
+        "A shift is a much cheaper operation than a general multiply"
       ],
       "correct": [
-        0
+        3
       ],
       "marks": 1,
       "gradeBand": "6-7",
@@ -1001,7 +1001,7 @@
       "skill": "loss in a left shift",
       "calculator": "either",
       "tags": [],
-      "solution": "Yes. The byte does not grow, so a 1 pushed off the **left** end is lost just as surely as one pushed off the right, and the result is then no longer the multiplication intended. Most students only mention loss on right shifts.",
+      "solution": "Yes. The byte does not grow, so a 1 pushed off the **left** end is lost just as surely as one pushed off the right, and the result is then no longer the multiplication intended. Loss on a left shift is the easier one to forget.",
       "markScheme": [
         {
           "code": "B1",
@@ -1142,7 +1142,7 @@
       "skill": "binary addition and overflow",
       "calculator": "either",
       "tags": [],
-      "solution": "Binary addition works in the same way as decimal addition: you line the numbers up, start at the **right-hand column**, and carry into the next column whenever the total is too large for one digit. The only difference is that a binary column overflows at **2** rather than at 10.\n\nThere are only four column sums to know. **0 + 0** writes 0. **0 + 1** writes 1. **1 + 1** is **10** in binary, so you write **0 and carry 1** — exactly as 5 + 5 makes you write 0 and carry 1 in decimal. A carry coming in from the right joins its column like any other 1.\n\n**Three 1s in a column** happens when three numbers are added, or when a carry lands in a column that already has two 1s. 1 + 1 + 1 is **11** in binary, which is 3, so you **write 1 and carry 1**. The specification limits questions to three numbers of at most eight bits each, so three 1s is the most that can ever appear in one column and those four sums are all that is needed.\n\nAdding `00111010` and `00010110` gives `01010000`, which can be checked by converting: $58 + 22 = 80$, and `01010000` is $64 + 16 = 80$. That conversion check takes under a minute and catches almost every carry mistake.\n\nAn **overflow error** occurs when the result of a calculation is **too large for the number of bits available**. In an eight-bit system the largest value is 255, so adding 1 to `11111111` gives 256, which is `100000000` — **nine** bits. There is no ninth bit in a byte, so the extra bit is **lost** and `00000000` is stored. The arithmetic was carried out correctly and the stored answer is nevertheless 0, which is precisely why overflow is a problem worth naming: the computer gives no warning, and a program that does not check for it carries on with a wrong value.\n\nIn this specification, exam additions are promised not to carry beyond the eighth bit, so overflow is something to **explain** rather than to work around. If an answer needs nine bits, a mistake has been made earlier.",
+      "solution": "Binary addition works in the same way as decimal addition: you line the numbers up, start at the **right-hand column**, and carry into the next column whenever the total is too large for one digit. The only difference is that a binary column overflows at **2** rather than at 10.\n\nThere are only four column sums to know. **0 + 0** writes 0. **0 + 1** writes 1. **1 + 1** is **10** in binary, so you write **0 and carry 1** — exactly as 5 + 5 makes you write 0 and carry 1 in decimal. A carry coming in from the right joins its column like any other 1.\n\n**Three 1s in a column** happens when three numbers are added, or when a carry lands in a column that already has two 1s. 1 + 1 + 1 is **11** in binary, which is 3, so you **write 1 and carry 1**. The specification also promises that no column will ever hold more than three 1s, so those four sums are all that is needed.\n\nAdding `00111010` and `00010110` gives `01010000`, which can be checked by converting: $58 + 22 = 80$, and `01010000` is $64 + 16 = 80$. That conversion check takes under a minute and catches almost every carry mistake.\n\nAn **overflow error** occurs when the result of a calculation is **too large for the number of bits available**. In an eight-bit system the largest value is 255, so adding 1 to `11111111` gives 256, which is `100000000` — **nine** bits. There is no ninth bit in a byte, so the extra bit is **lost** and `00000000` is stored. The arithmetic was carried out correctly and the stored answer is nevertheless 0, which is precisely why overflow is a problem worth naming: unless the program checks for overflow, it carries on with a wrong value.\n\nIn this specification, exam additions are promised not to carry beyond the eighth bit, so overflow is something to **explain** rather than to work around. If an answer needs nine bits, a mistake has been made earlier.",
       "markScheme": [
         {
           "code": "B2",
@@ -1178,7 +1178,7 @@
           "marks": 2
         }
       ],
-      "modelAnswer": "Binary addition works in the same way as decimal addition: you line the numbers up, start at the **right-hand column**, and carry into the next column whenever the total is too large for one digit. The only difference is that a binary column overflows at **2** rather than at 10.\n\nThere are only four column sums to know. **0 + 0** writes 0. **0 + 1** writes 1. **1 + 1** is **10** in binary, so you write **0 and carry 1** — exactly as 5 + 5 makes you write 0 and carry 1 in decimal. A carry coming in from the right joins its column like any other 1.\n\n**Three 1s in a column** happens when three numbers are added, or when a carry lands in a column that already has two 1s. 1 + 1 + 1 is **11** in binary, which is 3, so you **write 1 and carry 1**. The specification limits questions to three numbers of at most eight bits each, so three 1s is the most that can ever appear in one column and those four sums are all that is needed.\n\nAdding `00111010` and `00010110` gives `01010000`, which can be checked by converting: $58 + 22 = 80$, and `01010000` is $64 + 16 = 80$. That conversion check takes under a minute and catches almost every carry mistake.\n\nAn **overflow error** occurs when the result of a calculation is **too large for the number of bits available**. In an eight-bit system the largest value is 255, so adding 1 to `11111111` gives 256, which is `100000000` — **nine** bits. There is no ninth bit in a byte, so the extra bit is **lost** and `00000000` is stored. The arithmetic was carried out correctly and the stored answer is nevertheless 0, which is precisely why overflow is a problem worth naming: the computer gives no warning, and a program that does not check for it carries on with a wrong value.\n\nIn this specification, exam additions are promised not to carry beyond the eighth bit, so overflow is something to **explain** rather than to work around. If an answer needs nine bits, a mistake has been made earlier."
+      "modelAnswer": "Binary addition works in the same way as decimal addition: you line the numbers up, start at the **right-hand column**, and carry into the next column whenever the total is too large for one digit. The only difference is that a binary column overflows at **2** rather than at 10.\n\nThere are only four column sums to know. **0 + 0** writes 0. **0 + 1** writes 1. **1 + 1** is **10** in binary, so you write **0 and carry 1** — exactly as 5 + 5 makes you write 0 and carry 1 in decimal. A carry coming in from the right joins its column like any other 1.\n\n**Three 1s in a column** happens when three numbers are added, or when a carry lands in a column that already has two 1s. 1 + 1 + 1 is **11** in binary, which is 3, so you **write 1 and carry 1**. The specification also promises that no column will ever hold more than three 1s, so those four sums are all that is needed.\n\nAdding `00111010` and `00010110` gives `01010000`, which can be checked by converting: $58 + 22 = 80$, and `01010000` is $64 + 16 = 80$. That conversion check takes under a minute and catches almost every carry mistake.\n\nAn **overflow error** occurs when the result of a calculation is **too large for the number of bits available**. In an eight-bit system the largest value is 255, so adding 1 to `11111111` gives 256, which is `100000000` — **nine** bits. There is no ninth bit in a byte, so the extra bit is **lost** and `00000000` is stored. The arithmetic was carried out correctly and the stored answer is nevertheless 0, which is precisely why overflow is a problem worth naming: unless the program checks for overflow, it carries on with a wrong value.\n\nIn this specification, exam additions are promised not to carry beyond the eighth bit, so overflow is something to **explain** rather than to work around. If an answer needs nine bits, a mistake has been made earlier."
     },
     {
       "id": "q18",
@@ -1189,7 +1189,7 @@
       "skill": "binary shifts",
       "calculator": "either",
       "tags": [],
-      "solution": "A **logical binary shift** moves every bit in a number the same number of places, either left or right. **Zeros** fill the positions vacated at the end the bits moved away from, and any bit pushed off the opposite end is **lost**. The number of bits stays the same throughout — the byte does not grow to make room. AQA examines the logical shift only; arithmetic shifts and fractional representations are not required.\n\n**The effect on the value** follows from the place values doubling at each step. A shift **left** of $n$ places **multiplies** the number by $2^n$, and a shift **right** of $n$ places **divides** it by $2^n$. So `00010110` is 22, and shifting it two places left gives `01011000` = 88, which is $22 \\times 4$. Shifting it one place right gives `00001011` = 11, which is $22 \\div 2$. It is worth being precise here: *it doubles it* is only true for a shift of **one** place, and questions usually ask for two or three.\n\nThis is why shifts are used at all. A shift is a very **cheap** operation for the hardware, much cheaper than a general multiply or divide, so a computer performs multiplication and division by a **power of 2** with a shift wherever it can. It only works for powers of 2, which is the limitation.\n\n**Data can be lost in both directions**, and this is where most answers stop half way.\n\nShifting **right** loses the bits that fall off the right-hand end. This matters for an **odd** number, which has a 1 in the units column. `00010111` is 23; shifted right once it becomes `00001011` = **11**, not 11.5. A right shift is therefore **integer division**: the remainder is discarded and cannot be recovered.\n\nShifting **left** can lose data too. If a 1 is pushed off the **left-hand** end of the byte it is gone, and the result is no longer the multiplication that was intended — the value comes out far smaller than it should. Because of this, shifts are **not reversible**: shifting 23 right twice gives 5, and shifting that back left twice gives 20, not 23. A shift can only be undone when nothing was lost in the first place.",
+      "solution": "A **logical binary shift** moves every bit in a number the same number of places, either left or right. **Zeros** fill the positions vacated at the end the bits moved away from, and any bit pushed off the opposite end is **lost**. The number of bits stays the same throughout — the byte does not grow to make room. AQA examines the logical shift only; arithmetic shifts and fractional representations are not required.\n\n**The effect on the value** follows from the place values doubling at each step. A shift **left** of $n$ places **multiplies** the number by $2^n$, and a shift **right** of $n$ places **divides** it by $2^n$. So `00010110` is 22, and shifting it two places left gives `01011000` = 88, which is $22 \\times 4$. Shifting it one place right gives `00001011` = 11, which is $22 \\div 2$. It is worth being precise here: *it doubles it* is only true for a shift of **one** place, and a question may ask for two or three.\n\nThis is why shifts are used at all. A shift is a very **cheap** operation for the hardware, much cheaper than a general multiply or divide, so a computer performs multiplication and division by a **power of 2** with a shift wherever it can. It only works for powers of 2, which is the limitation.\n\n**Data can be lost in both directions**, and both are worth saying.\n\nShifting **right** loses the bits that fall off the right-hand end. This matters for an **odd** number, which has a 1 in the units column. `00010111` is 23; shifted right once it becomes `00001011` = **11**, not 11.5. A right shift is therefore **integer division**: the remainder is discarded and cannot be recovered.\n\nShifting **left** can lose data too. If a 1 is pushed off the **left-hand** end of the byte it is gone, and the result is no longer the multiplication that was intended — the value comes out far smaller than it should. Because of this, shifts are **not reversible**: shifting 23 right twice gives 5, and shifting that back left twice gives 20, not 23. A shift can only be undone when nothing was lost in the first place.",
       "markScheme": [
         {
           "code": "B2",
@@ -1225,7 +1225,59 @@
           "marks": 2
         }
       ],
-      "modelAnswer": "A **logical binary shift** moves every bit in a number the same number of places, either left or right. **Zeros** fill the positions vacated at the end the bits moved away from, and any bit pushed off the opposite end is **lost**. The number of bits stays the same throughout — the byte does not grow to make room. AQA examines the logical shift only; arithmetic shifts and fractional representations are not required.\n\n**The effect on the value** follows from the place values doubling at each step. A shift **left** of $n$ places **multiplies** the number by $2^n$, and a shift **right** of $n$ places **divides** it by $2^n$. So `00010110` is 22, and shifting it two places left gives `01011000` = 88, which is $22 \\times 4$. Shifting it one place right gives `00001011` = 11, which is $22 \\div 2$. It is worth being precise here: *it doubles it* is only true for a shift of **one** place, and questions usually ask for two or three.\n\nThis is why shifts are used at all. A shift is a very **cheap** operation for the hardware, much cheaper than a general multiply or divide, so a computer performs multiplication and division by a **power of 2** with a shift wherever it can. It only works for powers of 2, which is the limitation.\n\n**Data can be lost in both directions**, and this is where most answers stop half way.\n\nShifting **right** loses the bits that fall off the right-hand end. This matters for an **odd** number, which has a 1 in the units column. `00010111` is 23; shifted right once it becomes `00001011` = **11**, not 11.5. A right shift is therefore **integer division**: the remainder is discarded and cannot be recovered.\n\nShifting **left** can lose data too. If a 1 is pushed off the **left-hand** end of the byte it is gone, and the result is no longer the multiplication that was intended — the value comes out far smaller than it should. Because of this, shifts are **not reversible**: shifting 23 right twice gives 5, and shifting that back left twice gives 20, not 23. A shift can only be undone when nothing was lost in the first place."
+      "modelAnswer": "A **logical binary shift** moves every bit in a number the same number of places, either left or right. **Zeros** fill the positions vacated at the end the bits moved away from, and any bit pushed off the opposite end is **lost**. The number of bits stays the same throughout — the byte does not grow to make room. AQA examines the logical shift only; arithmetic shifts and fractional representations are not required.\n\n**The effect on the value** follows from the place values doubling at each step. A shift **left** of $n$ places **multiplies** the number by $2^n$, and a shift **right** of $n$ places **divides** it by $2^n$. So `00010110` is 22, and shifting it two places left gives `01011000` = 88, which is $22 \\times 4$. Shifting it one place right gives `00001011` = 11, which is $22 \\div 2$. It is worth being precise here: *it doubles it* is only true for a shift of **one** place, and a question may ask for two or three.\n\nThis is why shifts are used at all. A shift is a very **cheap** operation for the hardware, much cheaper than a general multiply or divide, so a computer performs multiplication and division by a **power of 2** with a shift wherever it can. It only works for powers of 2, which is the limitation.\n\n**Data can be lost in both directions**, and both are worth saying.\n\nShifting **right** loses the bits that fall off the right-hand end. This matters for an **odd** number, which has a 1 in the units column. `00010111` is 23; shifted right once it becomes `00001011` = **11**, not 11.5. A right shift is therefore **integer division**: the remainder is discarded and cannot be recovered.\n\nShifting **left** can lose data too. If a 1 is pushed off the **left-hand** end of the byte it is gone, and the result is no longer the multiplication that was intended — the value comes out far smaller than it should. Because of this, shifts are **not reversible**: shifting 23 right twice gives 5, and shifting that back left twice gives 20, not 23. A shift can only be undone when nothing was lost in the first place."
+    },
+    {
+      "id": "q19",
+      "type": "short-text",
+      "prompt": "Shift the binary number 01101000 three places to the right. Give your answer in eight bits.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "shifting right",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Every bit moves three places right, zeros come in on the left, and the three 0s at the right-hand end fall off: **00001101**. In decimal `01101000` is $64 + 32 + 8 = 104$, and three places right divides by $2^3 = 8$: $104 \\div 8 = 13$, which is `00001101` $= 8 + 4 + 1$ ✓. Nothing was lost, because only 0s fell off.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "00001101"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "00001101"
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "multiple-choice",
+      "prompt": "A program must divide the 8-bit value 11001000 (200 in decimal) by 4. Which single logical shift does this, and what result is stored?",
+      "options": [
+        "Four places right, giving 00001100 (12)",
+        "Two places left, giving 00100000 (32)",
+        "Two places right, giving 00110010 (50)",
+        "One place right, giving 01100100 (100)"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "shifts used for division",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Dividing by 4 is dividing by $2^2$, so the shift is **two places right**: `11001000` becomes **00110010**, which is $32 + 16 + 2 = 50$, and $200 \\div 4 = 50$ ✓. Four places right divides by $2^4 = 16$; a shift to the left multiplies, and here pushes 1s off the top; one place right only halves.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "two places right, giving 00110010 (50)"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ]
     }
   ],
   "examTechnique": {
@@ -1261,7 +1313,8 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q19"
       ],
       "suggestedMinutes": 18
     },
@@ -1275,7 +1328,8 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q20"
       ],
       "suggestedMinutes": 45
     }
@@ -1297,7 +1351,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q19",
+      "q20"
     ],
     "sampleSize": 10
   },

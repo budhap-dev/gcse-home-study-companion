@@ -206,6 +206,46 @@ describe('sentence punctuation', () => {
     expect(mark(greeting, 'Hello Ada').correct).toBe(false)
   })
 
+  it('forgives the semicolon that ends an SQL statement, and either quote round a text value', () => {
+    const insert = q(["INSERT INTO Club (ClubID, ClubName) VALUES (4, 'Debating')"])
+    expect(mark(insert, "INSERT INTO Club (ClubID, ClubName) VALUES (4, 'Debating');").correct).toBe(true)
+    expect(mark(insert, 'INSERT INTO Club (ClubID, ClubName) VALUES (4, "Debating");').correct).toBe(true)
+    expect(mark(insert, 'INSERT INTO Club (ClubID, ClubName) VALUES (4, Debating)').correct).toBe(false)
+  })
+
+  it('keeps the star in SQL, where it is the column list and not a times sign', () => {
+    const all = q(['SELECT * FROM Student'])
+    expect(mark(all, 'select * from Student;').correct).toBe(true)
+    expect(mark(all, 'SELECT FROM Student').correct).toBe(false)
+    expect(mark(q(['DELETE FROM Student WHERE StudentID = 2']), 'DELETE * FROM Student WHERE StudentID = 2').correct).toBe(false)
+    // Outside SQL it is still a times sign.
+    expect(mark(q(['3x']), '3*x').correct).toBe(true)
+  })
+
+  it('keeps the two quote marks apart outside SQL', () => {
+    const output = q(['"c"'])
+    expect(mark(output, '"c"').correct).toBe(true)
+    expect(mark(output, "'c'").correct).toBe(false)
+  })
+
+  it('takes a hyphen between words as the space it stands for', () => {
+    const drives = q(['solid state, magnetic, optical'])
+    expect(mark(drives, 'solid-state, magnetic, optical').correct).toBe(true)
+    // Not after a single letter or next to a digit, where it is a minus sign or a name.
+    const difference = q(['x-y'])
+    expect(mark(difference, 'xy').correct).toBe(false)
+    expect(normaliseText('carbon-12')).toBe('carbon-12')
+  })
+
+  it('reads quotes round the whole answer as marking a string', () => {
+    const output = q(['maerts'])
+    expect(mark(output, "'maerts'").correct).toBe(true)
+    expect(mark(output, '“maerts”').correct).toBe(true)
+    // Unless the accepted answer prints them itself.
+    const quoted = q(['"sunset"'])
+    expect(mark(quoted, 'sunset').correct).toBe(false)
+  })
+
   it('treats a comma between digits as part of the answer', () => {
     const point = q(['(3,5)'])
     expect(mark(point, '(3, 5)').correct).toBe(true)
@@ -373,5 +413,32 @@ describe('magnification', () => {
     expect(parseNumber('400×')).toBe(400)
     expect(parseNumber('400x')).toBe(400)
     expect(parseNumber('1.8 × 10^5')).toBe(180000)
+  })
+})
+
+describe('matching case', () => {
+  const q = (accepted: string[], matchCase: boolean): Question => ({
+    id: 'q', type: 'short-text', prompt: 'Which character has the code 84?', marks: 1, gradeBand: '4-5', skill: 's',
+    calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }],
+    discriminators: [], accepted, matchCase,
+  })
+
+  it('refuses the other case when the question says case is the answer', () => {
+    expect(mark(q(['T'], true), 'T').correct).toBe(true)
+    expect(mark(q(['T'], true), 't').correct).toBe(false)
+    expect(mark(q(['c'], true), "'c'").correct).toBe(true)
+    expect(mark(q(['c'], true), "'C'").correct).toBe(false)
+  })
+
+  it('counts the break between words, since exact output is what is marked', () => {
+    expect(mark(q(['Hi Amy!'], true), 'Hi Amy!').correct).toBe(true)
+    expect(mark(q(['Hi Amy!'], true), "'Hi  Amy!'").correct).toBe(true)
+    expect(mark(q(['Hi Amy!'], true), 'HiAmy!').correct).toBe(false)
+    expect(mark(q(['FailPass'], true), 'Fail Pass').correct).toBe(false)
+    expect(mark(q(['FailPass'], true), 'Fail, Pass').correct).toBe(false)
+  })
+
+  it('folds case everywhere else', () => {
+    expect(mark(q(['T'], false), 't').correct).toBe(true)
   })
 })
