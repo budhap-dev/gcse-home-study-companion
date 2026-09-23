@@ -1,3 +1,5 @@
+import { useLayoutEffect, useRef } from 'react'
+import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 
 interface Pt { t: number; y: number }
@@ -41,7 +43,12 @@ function niceStep(range: number): number {
  * Props: kind ('distance-time' | 'velocity-time', sets axis captions), points [{t, y}]
  * or series [{label, points, colour, dashed}], gradient {from, to, label}, shade
  * [{from, to, label}], markers [{t, label}] as dashed verticals, labels [{t, y, text}],
- * xMax, yMax, xLabel, yLabel.
+ * xMax, yMax, xLabel, yLabel, and axisAtBottom.
+ *
+ * The time axis is drawn at y = 0, which is right for velocity below zero. A heating
+ * curve that starts below 0 °C is different: its melting plateau lies at 0, and drawn
+ * there it looks like the line running along the axis. `axisAtBottom` puts the time
+ * axis along the foot of the plot instead, as a temperature–time graph is drawn.
  */
 export function MotionGraph({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   // Built inside the component: index.tsx imports this file, so a module-level use of ACCENT runs before it exists.
@@ -52,6 +59,12 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
   const shades = (props.shade as Shade[] | undefined) ?? []
   const markers = (props.markers as Marker[] | undefined) ?? []
   const labels = (props.labels as Label[] | undefined) ?? []
+  const axisAtBottom = props.axisAtBottom === true
+  const svg = useRef<SVGSVGElement>(null)
+  const available = useAvailableWidth(svg)
+  useLayoutEffect(() => {
+    svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
+  }, [available])
   const xLabel = typeof props.xLabel === 'string' ? props.xLabel : 'time (s)'
   const yLabel = typeof props.yLabel === 'string' ? props.yLabel : kind === 'velocity-time' ? 'velocity (m/s)' : 'distance (m)'
   const all = series.flatMap((s) => s.points)
@@ -64,7 +77,7 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
   // A little headroom, so a line that reaches the data maximum does not run along the top edge.
   const yMax = typeof props.yMax === 'number' ? props.yMax : Math.ceil((dataYMax * 1.08) / yStep) * yStep
   const yMin = Math.floor(dataYMin / yStep) * yStep
-  const W = 400, H = 300, padT = 20, padR = 20, padB = 44
+  const H = 300, padT = 20, padR = 20, padB = 44
   const fmt = (v: number) => String(Number(v.toFixed(4)))
 
   /**
@@ -89,6 +102,15 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
   const xTicks: number[] = []
   for (let v = 0; v <= xMax + 1e-9; v += xStep) xTicks.push(Number(v.toFixed(6)))
   const padL = Math.max(44, 14 + 6.5 * Math.max(...yTicks.map((v) => fmt(v).length)))
+  /*
+   * Drawn 400 wide, the graph stopped shrinking at 400 and scrolled sideways inside a
+   * phone's 334-pixel card, cutting off the right-hand end of every journey. It now takes
+   * the width it is given, as LineGraph does, down to the least that keeps the time
+   * ticks apart; unmeasured (on the server, in tests) it is the old 400.
+   */
+  const tickChars = Math.max(...xTicks.map((v) => fmt(v).length))
+  const least = Math.max(280, Math.ceil(padL + padR + (xTicks.length - 1) * (7 * tickChars + 8)))
+  const W = Math.max(least, Math.min(400, available ?? 400))
   const sx = (t: number) => padL + (t / xMax) * (W - padL - padR)
   const sy = (y: number) => H - padB - ((y - yMin) / (yMax - yMin)) * (H - padT - padB)
   const path = (pts: Pt[]) => pts.map((p, i) => `${i ? 'L' : 'M'}${sx(p.t).toFixed(1)} ${sy(p.y).toFixed(1)}`).join(' ')
@@ -97,7 +119,7 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
   const free = PALETTE.filter((c) => !chosen.has(c))
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 480 }} role="img" aria-label={alt}>
+    <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 480 }} role="img" aria-label={alt}>
       {yTicks.map((v) => <line key={`gy${v}`} x1={padL} y1={sy(v)} x2={W - padR} y2={sy(v)} stroke={RULE} />)}
       {xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={padT} x2={sx(v)} y2={H - padB} stroke={RULE} />)}
       {shades.map((s, i) => {
@@ -112,7 +134,7 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
           </g>
         )
       })}
-      <line x1={padL} y1={sy(0)} x2={W - padR} y2={sy(0)} stroke={INK} strokeWidth="1.5" />
+      <line x1={padL} y1={sy(axisAtBottom ? yMin : 0)} x2={W - padR} y2={sy(axisAtBottom ? yMin : 0)} stroke={INK} strokeWidth="1.5" />
       <line x1={padL} y1={padT} x2={padL} y2={H - padB} stroke={INK} strokeWidth="1.5" />
       {yTicks.map((v) => <text key={`ty${v}`} x={padL - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
       {xTicks.map((v) => <text key={`tx${v}`} x={sx(v)} y={H - padB + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}

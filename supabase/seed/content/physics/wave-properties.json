@@ -344,7 +344,7 @@
           ],
           "discriminators": [],
           "answer": 0.004,
-          "tolerance": 0.000001,
+          "tolerance": 1e-06,
           "unitsRequired": false,
           "units": "s"
         }
@@ -435,7 +435,7 @@
           ],
           "discriminators": [],
           "answer": 2,
-          "tolerance": 0.000001,
+          "tolerance": 1e-06,
           "unitsRequired": false,
           "units": "m"
         }
@@ -508,6 +508,97 @@
             "alt": "A table of the two speed-measuring methods required by the specification"
           }
         ]
+      },
+      {
+        "id": "s5b",
+        "kind": "worked-example",
+        "title": "Waves in a solid: a string on a vibration generator",
+        "body": "Required practical 8 has **two** halves: waves in a **ripple tank**, above, and waves **in a solid**. The solid is a **stretched string**.\n\n**Apparatus.** A **vibration generator** driven by a **signal generator**, with a string tied to it. The string runs over a **wooden bridge** and a **pulley**, and a **hanger with masses** keeps it tight.\n\n**Method.**\n\n1. Switch on the vibration generator, and the string starts to vibrate.\n2. Adjust the **tension** (add or remove masses) or move the **bridge** until you see a clear pattern of loops that **look as if they are not moving**.\n3. **Frequency**: read it from the **signal generator**. The string vibrates at the frequency it is driven at, so no counting is needed.\n4. **Wavelength**: with a metre ruler, measure across **as many loops as possible**, and divide by the number of loops. **One loop is half a wavelength**, so multiply by two.\n5. **Speed**: $v = f\\lambda$.\n6. Repeat at different frequencies.\n\n**The trap is the loop.** A loop is **half** a wavelength. Forgetting to double it halves your wavelength and your speed, just as forgetting \"there and back\" does in the echo method.\n\n**What the results show.** AQA's own sample data, with the string at the same tension:\n\n- 5.0 Hz, 3.38 m, so $v = 16.9$ m/s\n- 10.0 Hz, 1.68 m, so $v = 16.8$ m/s\n- 15.0 Hz, 1.12 m, so $v = 16.8$ m/s\n\n**The speed stays the same.** Doubling the frequency **halves** the wavelength. The speed is set by the string and its tension, not by how fast you shake it.\n\n**Why this apparatus suits the job.** The signal generator gives the frequency directly, which is more precise than counting. The pattern stands still, so the ruler can be laid along it. A **stroboscope** at the same frequency makes a moving wave appear frozen too. Measuring across many loops cuts the **percentage** error, exactly as ten wavelengths does in the ripple tank.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A string vibrates at 40 Hz. 4 loops span 0.84 m. Find the speed of the waves on the string.",
+            "steps": [
+              {
+                "text": "One loop: $0.84 \\div 4 = 0.21$ m",
+                "note": "measure across all the loops, then divide"
+              },
+              {
+                "text": "Wavelength: $2 \\times 0.21 = 0.42$ m",
+                "note": "a loop is half a wavelength"
+              },
+              {
+                "text": "Frequency: 40 Hz",
+                "note": "read from the signal generator"
+              },
+              {
+                "text": "$v = f\\lambda = 40 \\times 0.42 = 16.8$",
+                "note": "multiply"
+              },
+              {
+                "text": "$v = 16.8$ m/s",
+                "note": "the same speed as AQA's data, as the same string should give"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Frequency (Hz)",
+                "Wavelength (m)",
+                "Speed (m/s)"
+              ],
+              "rows": [
+                [
+                  "5.0",
+                  "3.38",
+                  "16.9"
+                ],
+                [
+                  "10.0",
+                  "1.68",
+                  "16.8"
+                ],
+                [
+                  "15.0",
+                  "1.12",
+                  "16.8"
+                ]
+              ],
+              "title": "Frequency up, wavelength down, speed the same"
+            },
+            "alt": "AQA's sample results for waves on a string: at 5, 10 and 15 Hz the wavelength falls from 3.38 m to 1.12 m and the speed stays at about 16.8 m/s"
+          }
+        ],
+        "check": {
+          "id": "c5b",
+          "type": "numeric",
+          "prompt": "A string vibrates at 42 Hz. 5 loops span 1.00 m. Calculate the speed of the waves on the string, in m/s.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "required practical 8",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "One loop is $1.00 \\div 5 = 0.20$ m, so $\\lambda = 2 \\times 0.20 = 0.40$ m. Then $v = f\\lambda = 42 \\times 0.40 = $ **16.8 m/s**.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "λ = 0.40 m (a loop is half a wavelength)"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "16.8"
+            }
+          ],
+          "discriminators": [],
+          "answer": 16.8,
+          "tolerance": 0.1,
+          "unitsRequired": false
+        }
       },
       {
         "id": "s6",
@@ -604,7 +695,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- A wave transfers **energy without transferring matter**.\n- The **evidence**: a floating cork **bobs up and down** but does not travel to the shore.\n- **Transverse**: vibration at **right angles** to travel. Peaks and troughs. Water ripples, all electromagnetic waves.\n- **Longitudinal**: vibration **along** the direction of travel. Compressions and rarefactions. **Sound in air.**\n- Longitudinal waves **need a medium**, so sound cannot cross a vacuum.\n- **Amplitude**: maximum displacement from the **undisturbed position** — not trough to peak.\n- **Wavelength** (λ): a point to the **equivalent point** on the next wave, in metres.\n- **Frequency** (f): waves passing a point **each second**, in hertz.\n- **Period** (T): the time for **one** wave to pass, in seconds.\n- $T = \\dfrac{1}{f}$ — **given** on the equation sheet.\n- $v = f\\lambda$ — and you must **recall** this one.\n- Rearranged: $f = \\dfrac{v}{\\lambda}$ and $\\lambda = \\dfrac{v}{f}$.\n- **Ripple tank**: count waves for **f**, measure **ten** wavelengths and divide for λ, then $v = f\\lambda$.\n- **Echo method**: $v = \\dfrac{2d}{t}$ — the sound goes **there and back**.\n- **Measure many and divide** to cut the percentage error; **repeat and take a mean**.\n- Crossing a boundary, **frequency is fixed by the source**, so speed and wavelength change together.",
+        "body": "- A wave transfers **energy without transferring matter**.\n- The **evidence**: a floating cork **bobs up and down** but does not travel to the shore.\n- **Transverse**: vibration at **right angles** to travel. Peaks and troughs. Water ripples, all electromagnetic waves.\n- **Longitudinal**: vibration **along** the direction of travel. Compressions and rarefactions. **Sound in air.**\n- Longitudinal waves **need a medium**, so sound cannot cross a vacuum.\n- **Amplitude**: maximum displacement from the **undisturbed position** — not trough to peak.\n- **Wavelength** (λ): a point to the **equivalent point** on the next wave, in metres.\n- **Frequency** (f): waves passing a point **each second**, in hertz.\n- **Period** (T): the time for **one** wave to pass, in seconds.\n- $T = \\dfrac{1}{f}$ — **given** on the equation sheet.\n- $v = f\\lambda$ — and you must **recall** this one.\n- Rearranged: $f = \\dfrac{v}{\\lambda}$ and $\\lambda = \\dfrac{v}{f}$.\n- **Ripple tank**: count waves for **f**, measure **ten** wavelengths and divide for λ, then $v = f\\lambda$.\n- **Echo method**: $v = \\dfrac{2d}{t}$ — the sound goes **there and back**.\n- **String on a vibration generator**: f from the **signal generator**; measure across many loops, and **one loop is half a wavelength**. At one tension the speed stays the same.\n- **Measure many and divide** to cut the percentage error; **repeat and take a mean**.\n- Crossing a boundary, **frequency is fixed by the source**, so speed and wavelength change together.",
         "visuals": [
           {
             "type": "diagram",
@@ -681,6 +772,10 @@
                 [
                   "Echo method",
                   "v = 2d / t, because the sound goes there and back"
+                ],
+                [
+                  "String",
+                  "f from the signal generator; one loop is half a wavelength"
                 ],
                 [
                   "Across a boundary",
@@ -800,7 +895,7 @@
       ],
       "discriminators": [],
       "answer": 2,
-      "tolerance": 0.000001,
+      "tolerance": 1e-06,
       "unitsRequired": false,
       "units": "m/s"
     },
@@ -828,7 +923,7 @@
       ],
       "discriminators": [],
       "answer": 50,
-      "tolerance": 0.000001,
+      "tolerance": 1e-06,
       "unitsRequired": false,
       "units": "Hz"
     },
@@ -861,7 +956,7 @@
       ],
       "discriminators": [],
       "answer": 3,
-      "tolerance": 0.000001,
+      "tolerance": 1e-06,
       "unitsRequired": false,
       "units": "m"
     },
@@ -1369,6 +1464,63 @@
         }
       ],
       "modelAnswer": "**The confusion** is between the movement of the **wave** and the movement of the **water**. The wave pattern travels towards the shore; the water does not travel with it. Each part of the surface **oscillates about its own undisturbed position** and returns to where it started.\n\n**The evidence.** Float a **cork** on the surface and send ripples past it. The cork **bobs up and down but stays in the same place**. If the water were travelling shorewards, the cork would go with it.\n\n**A second example.** When someone speaks across a room, the air does not travel from speaker to listener — if it did there would be a **draught**. Only the disturbance passes through.\n\n**What the student may really be seeing** is waves **breaking** in shallow water, which does carry water up the beach. That is an extra effect of the shallows, not what the wave itself does — and noticing it is what separates a good answer from a full one."
+    },
+    {
+      "id": "q20",
+      "type": "numeric",
+      "prompt": "In the waves-on-a-string practical, 3 loops span 0.90 m and the signal generator is set at 28 Hz. Calculate the wave speed, in m/s.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "required practical 8",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "One loop is $0.90 \\div 3 = 0.30$ m, so $\\lambda = 0.60$ m. Then $v = f\\lambda = 28 \\times 0.60 = $ **16.8 m/s**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "λ = 0.60 m"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16.8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 16.8,
+      "tolerance": 0.1,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "type": "multiple-choice",
+      "prompt": "In the waves-on-a-string practical, a student counts 4 loops across 1.00 m and records the wavelength as 0.25 m. What is wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "required practical 8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$1.00 \\div 4 = 0.25$ m is the length of **one loop**, and a loop is **half** a wavelength. So $\\lambda = 2 \\times 0.25 = $ **0.50 m**. Measuring across all four loops, as the student did, is right: it cuts the percentage error.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a loop is half a wavelength; 0.50 m"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Nothing, because the length divided by the loops is λ",
+        "One loop is half a wavelength, so λ should be 0.50 m",
+        "The student should have measured only one single loop",
+        "The wavelength should be 4.0 m, because it is 4 × 1.00"
+      ],
+      "correct": [
+        1
+      ]
     }
   ],
   "worksheets": {
@@ -1390,7 +1542,8 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q20"
       ],
       "suggestedMinutes": 18
     },
@@ -1405,13 +1558,14 @@
         "q16",
         "q17",
         "q18",
-        "q19"
+        "q19",
+        "q21"
       ],
       "suggestedMinutes": 50
     }
   },
   "examTechnique": {
-    "body": "State that a wave transfers energy without transferring matter, and give the cork as evidence when evidence is asked for.\n\nMeasure amplitude from the undisturbed position, not from trough to peak.\n\nRecall v = f lambda, and expect T = 1/f to be printed on the equation sheet.\n\nConvert centimetres to metres before substituting into the wave equation.\n\nIn the echo method, double the distance because the sound travels there and back.\n\nMeasure ten wavelengths and divide by ten, and say that this reduces the percentage uncertainty.\n\nWhen a wave crosses a boundary, say that the frequency is fixed by the source, so the speed and wavelength change together.",
+    "body": "State that a wave transfers energy without transferring matter, and give the cork as evidence when evidence is asked for.\n\nMeasure amplitude from the undisturbed position, not from trough to peak.\n\nRecall v = f lambda, and expect T = 1/f to be printed on the equation sheet.\n\nConvert centimetres to metres before substituting into the wave equation.\n\nIn the echo method, double the distance because the sound travels there and back.\n\nMeasure ten wavelengths and divide by ten, and say that this reduces the percentage uncertainty.\n\nWhen a wave crosses a boundary, say that the frequency is fixed by the source, so the speed and wavelength change together.\n\nFor waves on a string, take the frequency from the signal generator, measure across as many loops as you can, and **double** the length of one loop to get the wavelength.",
     "examinerErrors": [
       "Writing that the water moves across the pond.",
       "Measuring amplitude from trough to peak, which is twice its value.",

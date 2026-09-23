@@ -45,6 +45,15 @@ describe('motion graph', () => {
     expect(html).toContain('>3 s<')
     expect(html).toContain('>6<')
   })
+  it('puts the time axis along the foot of the plot when asked, not through a plateau at 0', () => {
+    // A heating curve from -20 °C: its melting plateau is at 0, where the axis normally goes.
+    const points = [{ t: 0, y: -20 }, { t: 20, y: 0 }, { t: 180, y: 0 }, { t: 400, y: 100 }]
+    // The axes are the only lines drawn 1.5 wide; the horizontal one has equal y1 and y2.
+    const axisY = (html: string) => [...html.matchAll(/<line x1="[\d.]+" y1="([\d.]+)" x2="[\d.]+" y2="([\d.]+)" stroke="[^"]+" stroke-width="1.5"/g)].find((m) => m[1] === m[2])?.[1]
+    const bottom = String(300 - 44)
+    expect(axisY(renderToStaticMarkup(<MotionGraph alt="" props={{ points, yMax: 120, axisAtBottom: true }} />))).toBe(bottom)
+    expect(axisY(renderToStaticMarkup(<MotionGraph alt="" props={{ points, yMax: 120 }} />))).not.toBe(bottom)
+  })
 })
 
 describe('vector triangle', () => {
