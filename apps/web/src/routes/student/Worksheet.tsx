@@ -1,4 +1,4 @@
-import { describeAnswer, getSubject, mark, type MarkResult, type Question, type WorksheetLevel } from '@study/shared'
+import { claimAnswer, describeAnswer, getSubject, mark, type MarkResult, type Question, type WorksheetLevel } from '@study/shared'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -173,6 +173,7 @@ export function Worksheet() {
   const methodTotal = Math.min(methodLines.reduce((s, l) => s + l.marks, 0), question.marks - 1)
 
   const submit = (answer: Answer) => setState({ ...state, answers: { ...state.answers, [question.id]: { answer, result: mark(question, answer) } } })
+  const claim = () => answered && setState({ ...state, answers: { ...state.answers, [question.id]: { ...answered, methodMarks: undefined, result: claimAnswer(answered.result) } } })
   const reveal = () => setState({ ...state, revealed: { ...state.revealed, [question.id]: true } })
   const setMethod = (n: number) => answered && setState({ ...state, answers: { ...state.answers, [question.id]: { ...answered, methodMarks: n } } })
   const setStrokes = (strokes: Stroke[]) => setState({ ...state, canvases: { ...state.canvases, [question.id]: strokes } })
@@ -180,9 +181,9 @@ export function Worksheet() {
   const finish = () => {
     const finishedAt = new Date().toISOString()
     const before = getState()
-    const questionResults = questions.map((q) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: scored(q), marksAvailable: q.marks, correct: scored(q) === q.marks, answer: describeAnswer(q, state.answers[q.id]?.answer) }))
+    const questionResults = questions.map((q) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: scored(q), marksAvailable: q.marks, correct: scored(q) === q.marks, answer: describeAnswer(q, state.answers[q.id]?.answer), ...(state.answers[q.id]?.result.claimed ? { claimed: true } : {}) }))
     const extendedCount = questions.filter((q) => q.type === 'extended').length
-    const selfMarked = questions.some((q) => (q.type === 'extended' ? true : state.answers[q.id]?.methodMarks !== undefined && !state.answers[q.id]?.result.correct))
+    const selfMarked = questions.some((q) => (q.type === 'extended' ? true : state.answers[q.id]?.result.claimed || (state.answers[q.id]?.methodMarks !== undefined && !state.answers[q.id]?.result.correct)))
     const xp = xpForQuestions(questionResults)
     recordAttempt({
       id: state.attemptId,
@@ -248,7 +249,7 @@ export function Worksheet() {
           )}
           {answered && (revealed || !typed) && (
             <div className="flex flex-col gap-3">
-              <Feedback question={question} result={answered.result} />
+              <Feedback question={question} result={answered.result} onClaim={claim} />
               {typed && !answered.result.correct && methodTotal > 0 && (
                 <div className="flex flex-col gap-2 rounded-xl bg-panel p-3">
                   <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Method marks you earned</p>

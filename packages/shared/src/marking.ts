@@ -4,9 +4,24 @@ export interface MarkResult {
   correct: boolean
   marksScored: number
   marksAvailable: number
+  /**
+   * The marker said no and the student said their answer meant the same as the model
+   * answer. Counted as right, and recorded as self-marked so a parent can see it was.
+   */
+  claimed?: boolean
+}
+
+/**
+ * The student's overrule of a typed answer the marker rejected. A typed answer is matched
+ * against a short list of wordings, and a correct explanation in the student's own words
+ * matches none of them; this is the same trust an extended answer already gets.
+ */
+export function claimAnswer(result: MarkResult): MarkResult {
+  return { correct: true, marksScored: result.marksAvailable, marksAvailable: result.marksAvailable, claimed: true }
 }
 
 const SUPERSCRIPTS: Record<string, string> = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '-', '⁺': '+' }
+const SUBSCRIPTS = '₀₁₂₃₄₅₆₇₈₉'
 
 /**
  * Superscript digits and signs to caret form, so x⁸ and x^8 compare equal. Also:
@@ -32,7 +47,17 @@ function dropRedundantBrackets(s: string): string {
 
 export function normaliseText(s: string): string {
   let out = s.toLowerCase()
-  out = out.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, (run) => '^' + [...run].map((c) => SUPERSCRIPTS[c] ?? c).join(''))
+  // A run ending in a sign is an ionic charge, not a power: Fe³⁺ is typed Fe3+ on a phone,
+  // and a caret between them would make the two differ. A power keeps its caret, so x² is
+  // still x^2 and x⁻¹ is still x^-1.
+  out = out.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, (run) => (/[⁻⁺]$/.test(run) ? '' : '^') + [...run].map((c) => SUPERSCRIPTS[c] ?? c).join(''))
+  // Subscripts are only ever counts in a formula: CO₂ and CO2 are the same answer.
+  out = out.replace(/[₀-₉]/g, (c) => String(SUBSCRIPTS.indexOf(c)))
+  // One arrow for a reaction, however it was typed: the content prints →, a keyboard gives
+  // -> or -->, and some students write =>. Done while the spaces are still there, so the
+  // charge in "2e- -> Cu" stays on the electron instead of running into the arrow. An
+  // equals sign is left alone, because in maths it is not an arrow.
+  out = out.replace(/\s*(?:[→⟶⇒]|-{1,2}>|=>)\s*/g, ' -> ')
   return out
     .replace(/\s+/g, '')
     .replace(/[−–—]/g, '-')
@@ -176,6 +201,46 @@ function withoutArticle(rawGiven: string, rawAccepted: string): [string, string]
 }
 
 /**
+ * The parts of a list answer: "nitrogen, phosphorus and potassium" is three parts. Split on
+ * commas, semicolons, "and" and "&" between words, never inside a number such as 1,000.
+ * Returns the normalised parts, or null when the text is not a list of two or more.
+ */
+function listParts(raw: string): string[] | null {
+  const parts = raw
+    .replace(/[.!]+\s*$/, '')
+    .split(/\s*(?:,(?!\d)|;|&|\band\b)\s*/i)
+    .map((p) => normaliseText(p.replace(/^\s*(the|an?)\s+/i, '')))
+    .filter(Boolean)
+  return parts.length >= 2 ? parts : null
+}
+
+/**
+ * A list typed in a different order: "potassium, nitrogen, phosphorus" for the accepted
+ * "nitrogen, phosphorus and potassium", or "Fe3+ and Fe2+". Only when the accepted answer
+ * is itself a list of short items, at most three words each, and the two lists hold
+ * exactly the same items. Four kinds of list keep their order, because in them the order
+ * is the answer:
+ *
+ * - an equation, whose two sides must not swap (an arrow, = or an inequality);
+ * - anything whose items start with a number: a sorted list, a vector, a coordinate, a
+ *   ratio, or run-length pairs like "4a, 3b, 1c";
+ * - a question that asks for the items in order, like the fetch-decode-execute cycle;
+ * - a fill-in-the-blanks question, where each word belongs in its own gap.
+ */
+function sameListAnyOrder(rawGiven: string, rawAccepted: string, prompt: string): boolean {
+  if (/->|→|=|[<>]/.test(rawAccepted)) return false
+  if (/\bin order\b|_{3,}/i.test(prompt)) return false
+  const accepted = listParts(rawAccepted)
+  if (!accepted) return false
+  const items = rawAccepted.replace(/[.!]+\s*$/, '').split(/\s*(?:,(?!\d)|;|&|\band\b)\s*/i).map((p) => p.trim()).filter(Boolean)
+  if (items.some((p) => p.split(/\s+/).length > 3 || /^[-−(\[]?\d/.test(p))) return false
+  const given = listParts(rawGiven)
+  if (!given || given.length !== accepted.length) return false
+  const a = [...accepted].sort(), g = [...given].sort()
+  return a.every((x, i) => x === g[i])
+}
+
+/**
  * Marks an auto-markable answer. Extended responses are self-assessed and return
  * whatever marks the student awarded themselves, capped at the marks available.
  * `answer` shapes: multiple-choice number[]; numeric string; short-text string;
@@ -203,7 +268,8 @@ export function mark(question: Question, answer: unknown): MarkResult {
         const accepted = normaliseText(a)
         if (matchesAccepted(given, accepted)) return true
         const bare = withoutArticle(raw, a)
-        return bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]))
+        if (bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]))) return true
+        return sameListAnyOrder(raw, a, question.prompt)
       }))
     }
     case 'ordering': {

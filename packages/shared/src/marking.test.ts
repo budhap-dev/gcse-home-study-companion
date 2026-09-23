@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { mark, normaliseText, parseNumber } from './marking.ts'
+import { claimAnswer, mark, normaliseText, parseNumber } from './marking.ts'
 import type { Question } from './content/questions.ts'
 
 const base = { id: 'q', prompt: 'p', marks: 2, gradeBand: '6-7' as const, skill: 's', calculator: 'either' as const, tags: [], solution: 's', markScheme: [{ code: 'M1', marks: 2, description: 'd' }], discriminators: [] }
@@ -265,5 +265,78 @@ describe('negative coordinates', () => {
     expect(mark(point, '(0,−2)').correct).toBe(true)
     expect(mark(point, '(0-2)').correct).toBe(false)
     expect(mark(point, '(0 -2)').correct).toBe(false)
+  })
+})
+
+/**
+ * Found reviewing Chemistry on 23 September 2026: the content prints equations with →,
+ * subscripts and superscript charges, and a student typing on a phone gives ->, 2 and +.
+ * The accepted lists had tried to spell out every combination by hand — 213 entries across
+ * eight topics — and still missed some, so a correct equation typed exactly as the lesson
+ * printed it could be marked wrong.
+ */
+describe('chemical equations', () => {
+  const eq = (accepted: string[], prompt = 'Write the equation.'): Question => ({ ...base, prompt, type: 'short-text', accepted })
+
+  it('reads every way of typing an arrow as the same arrow', () => {
+    const q = eq(['2Na + Cl2 -> 2NaCl'])
+    for (const typed of ['2Na + Cl₂ → 2NaCl', '2Na + Cl2 --> 2NaCl', '2Na + Cl2 => 2NaCl', '2Na+Cl2⟶2NaCl']) {
+      expect(mark(q, typed).correct, typed).toBe(true)
+    }
+    // An equals sign is not folded into an arrow: in maths it means something else.
+    expect(normaliseText('a = b')).toBe('a=b')
+  })
+
+  it('treats subscript counts as plain digits', () => {
+    expect(normaliseText('C₆H₁₂O₆')).toBe(normaliseText('C6H12O6'))
+    expect(mark(eq(['CO2']), 'CO₂').correct).toBe(true)
+  })
+
+  it('reads a superscript charge as a charge, and a superscript power as a power', () => {
+    expect(normaliseText('Fe³⁺')).toBe('fe3+')
+    expect(normaliseText('OH⁻')).toBe('oh-')
+    expect(normaliseText('Cu²⁺ + 2e⁻ → Cu')).toBe(normaliseText('Cu2+ + 2e- -> Cu'))
+    expect(normaliseText('x²')).toBe('x^2')
+    expect(normaliseText('x⁻¹')).toBe('x^-1')
+  })
+})
+
+describe('lists in any order', () => {
+  const list = (accepted: string[], prompt = 'Name them.'): Question => ({ ...base, prompt, type: 'short-text', accepted })
+
+  it('accepts the same items in a different order and with different joins', () => {
+    const q = list(['nitrogen, phosphorus and potassium'])
+    for (const typed of ['potassium, nitrogen, phosphorus', 'phosphorus and potassium and nitrogen', 'Nitrogen; potassium; phosphorus.']) {
+      expect(mark(q, typed).correct, typed).toBe(true)
+    }
+    expect(mark(list(['Fe2+ and Fe3+']), 'Fe³⁺ and Fe²⁺').correct).toBe(true)
+    expect(mark(list(['sand, sodium carbonate and limestone']), 'sand, limestone, sodium carbonate').correct).toBe(true)
+  })
+
+  it('still needs every item, and no extra ones', () => {
+    const q = list(['nitrogen, phosphorus and potassium'])
+    expect(mark(q, 'nitrogen and potassium').correct).toBe(false)
+    expect(mark(q, 'nitrogen, phosphorus, potassium and calcium').correct).toBe(false)
+  })
+
+  it('keeps the order where the order is the answer', () => {
+    // Items that start with a number: a sort, a vector, run-length pairs.
+    expect(mark(list(['3, 6, 1, 9']), '9, 1, 6, 3').correct).toBe(false)
+    expect(mark(list(['4, 5']), '5, 4').correct).toBe(false)
+    expect(mark(list(['4a, 3b, 1c']), '3b, 4a, 1c').correct).toBe(false)
+    // A question that asks for them in order.
+    expect(mark(list(['fetch, decode, execute'], 'Name the three stages, in order.'), 'decode, fetch, execute').correct).toBe(false)
+    // Blanks to fill, each word in its own gap.
+    expect(mark(list(['plus, que'], 'Il fait ______ chaud ______ dans le nord.'), 'que, plus').correct).toBe(false)
+    // An equation's two sides.
+    expect(mark(list(['glucose + oxygen -> carbon dioxide + water']), 'carbon dioxide + water -> glucose + oxygen').correct).toBe(false)
+    // An item longer than three words is a phrase, not a list entry.
+    expect(mark(list(['it is not in the equation and it speeds things up']), 'it speeds things up and it is not in the equation').correct).toBe(false)
+  })
+})
+
+describe('claiming a typed answer', () => {
+  it('gives full marks and records that the student claimed them', () => {
+    expect(claimAnswer({ correct: false, marksScored: 0, marksAvailable: 2 })).toEqual({ correct: true, marksScored: 2, marksAvailable: 2, claimed: true })
   })
 })

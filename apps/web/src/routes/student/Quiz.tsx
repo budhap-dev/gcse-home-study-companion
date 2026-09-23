@@ -1,4 +1,4 @@
-import { describeAnswer, emojiForScore, getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
+import { claimAnswer, describeAnswer, emojiForScore, getSubject, mark, messageForScore, sampleQuestions, type MarkResult, type Question } from '@study/shared'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Celebration } from '../../components/Celebration.tsx'
@@ -109,6 +109,7 @@ export function Quiz() {
     const result = mark(question, answer)
     setState({ ...state, answers: { ...state.answers, [question.id]: { answer, result } } })
   }
+  const claim = () => answered && setState({ ...state, answers: { ...state.answers, [question.id]: { ...answered, result: claimAnswer(answered.result) } } })
   const next = () => {
     if (!last) {
       setState({ ...state, index: state.index + 1 })
@@ -117,11 +118,12 @@ export function Quiz() {
     }
     const finishedAt = new Date().toISOString()
     const results = questions.map((q) => ({ q, r: state.answers[q.id]?.result ?? { correct: false, marksScored: 0, marksAvailable: q.marks } }))
-    const extended = questions.filter((q) => q.type === 'extended').length
+    // Claimed typed answers were marked by the student, like extended ones.
+    const extended = questions.filter((q) => q.type === 'extended' || state.answers[q.id]?.result.claimed).length
     const before = getState()
     const previous = before.attempts.filter((a) => a.topicId === topic.id && a.kind === 'quiz').sort((a, b) => b.completedAt.localeCompare(a.completedAt))[0]
     const previousPct = previous ? Math.round((100 * previous.marksScored) / previous.marksAvailable) : undefined
-    const questionResults = results.map(({ q, r }) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct, answer: describeAnswer(q, state.answers[q.id]?.answer) }))
+    const questionResults = results.map(({ q, r }) => ({ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct, answer: describeAnswer(q, state.answers[q.id]?.answer), ...(r.claimed ? { claimed: true } : {}) }))
     const xp = xpForQuestions(questionResults)
     recordAttempt({
       id: state.attemptId,
@@ -172,7 +174,7 @@ export function Quiz() {
         {question.visual && <Visual visual={question.visual} />}
         <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
         <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
-        {answered && <Feedback question={question} result={answered.result} />}
+        {answered && <Feedback question={question} result={answered.result} onClaim={claim} />}
       </section>
 
       {answered && (
