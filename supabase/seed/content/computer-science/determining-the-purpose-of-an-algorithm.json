@@ -12,7 +12,7 @@
     {
       "kind": "shortcut",
       "title": "Draw the table before you read on",
-      "body": "One column per variable, one row per pass, and a row for the starting values. Most lost marks come from trying to hold three variables in your head when a table takes fifteen seconds."
+      "body": "One column per variable, one row per pass, and a row for the starting values. Holding three variables in your head is where slips happen, and a table takes fifteen seconds."
     },
     {
       "kind": "spot",
@@ -22,12 +22,12 @@
     {
       "kind": "check",
       "title": "Read the line after the loop",
-      "body": "Questions are written so that stopping at the end of the loop gives the wrong purpose. A running total divided by the length on the next line is a **mean average**, not a sum."
+      "body": "Stopping at the end of the loop can give the wrong purpose. A running total divided by the length on the next line is a **mean average**, not a sum."
     },
     {
       "kind": "remember",
       "title": "Say what the output means",
-      "body": "\"It outputs max\" repeats the code and earns nothing. \"It outputs the largest value in the list\" is the purpose. Name the input, the processing and what the output **means**."
+      "body": "\"It outputs max\" just repeats the code. \"It outputs the largest value in the list\" is the purpose. Name the input, the processing and what the output **means**."
     }
   ],
   "why": {
@@ -35,7 +35,7 @@
     "examples": [
       {
         "title": "Why the variable names are deliberately useless",
-        "body": "`count ← 0`, then `WHILE x ≥ y` take `y` off `x` and add one to `count`. Nothing in that tells you anything. Trace it with x = 17 and y = 5 and the table says `count` finishes at **3** with **2** left over in `x`.\n\nNow it is obvious: 17 ÷ 5 is 3 remainder 2. The algorithm is integer division done by repeated subtraction, which is how a processor with no divide instruction does it. The names were hiding it, and the trace found it in six rows.",
+        "body": "`count ← 0`, then `WHILE x ≥ y` take `y` off `x` and add one to `count`. Nothing in that tells you anything. Trace it with x = 17 and y = 5 and the table says `count` finishes at **3** with **2** left over in `x`.\n\nNow it is obvious: 17 ÷ 5 is 3 remainder 2. The algorithm is integer division done by repeated subtraction, the simplest way to divide without a divide instruction. The names were hiding it, and the trace found it in four rows.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -70,7 +70,7 @@
       },
       {
         "title": "Why the last line is where the purpose hides",
-        "body": "A loop adds every item of an array to `total`. Traced over **4, 8, 6** it reaches 18, and if the algorithm ended there it would be *adds up the array*.\n\nBut the last line is `OUTPUT total / LEN(a)`, which makes the answer **6** and the purpose *finds the mean*. Everything before the output is machinery. So trace to the end, then read the final line and ask what the number it prints actually means — that is the sentence the mark scheme is looking for.",
+        "body": "A loop adds every item of an array to `total`. Traced over **4, 8, 6** it reaches 18, and if the algorithm ended there it would be *adds up the array*.\n\nBut the last line is `OUTPUT total / LEN(a)`, which makes the answer **6** and the purpose *finds the mean*. Everything before the output is machinery. So trace to the end, then read the final line and ask what the number it prints actually means — that sentence is the purpose.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -110,7 +110,7 @@
       },
       {
         "title": "Why a handful of patterns cover most of them",
-        "body": "Exam algorithms are short, so they are nearly always one of a few shapes. A variable that starts at 0 and goes up by one is **counting**. One that starts at the first item and is replaced when something beats it is finding the **largest**. A string built up in a loop that runs backwards is a **reversal**.\n\nRecognising the shape tells you the purpose in seconds — and then you trace it anyway, because the shape is a guess and the trace is the evidence. Guess first, check second, and you have both the speed and the marks.",
+        "body": "Exam algorithms are short, so they are nearly always one of a few shapes. A variable that starts at 0 and goes up by one is **counting**. One that starts at the first item and is replaced when something beats it is finding the **largest**. A string built up in a loop that runs backwards is a **reversal**.\n\nRecognising the shape tells you the purpose in seconds — and then you trace it anyway, because the shape is a guess and the trace is the evidence. Guess first, check second, and you have both the speed and the evidence.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -149,7 +149,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Reading an algorithm you have never seen",
-        "body": "An exam will hand you a short algorithm with no name and ask **what it does**. You are not expected to recognise it. You are expected to **trace** it: run it by hand, a line at a time, writing down what every variable holds.\n\nThe way to describe what you find has three parts, and the mark scheme usually wants all three:\n\n- **Input** — what goes in. A list, a number, a string.\n- **Processing** — what is done to it. Added up, compared, counted, reversed.\n- **Output** — what comes out, and *what it means*.\n\nThe last part is the one worth marks. \"It outputs max\" repeats the code back. \"It outputs the largest value in the list\" says what the algorithm is **for**.",
+        "body": "An exam will hand you a short algorithm with no name and ask **what it does**. You are not expected to recognise it. You are expected to **trace** it: run it by hand, a line at a time, writing down what every variable holds.\n\nThe way to describe what you find has three parts:\n\n- **Input** — what goes in. A list, a number, a string.\n- **Processing** — what is done to it. Added up, compared, counted, reversed.\n- **Output** — what comes out, and *what it means*.\n\nThe last part is the one that states the purpose. \"It outputs max\" repeats the code back. \"It outputs the largest value in the list\" says what the algorithm is **for**.",
         "visuals": [
           {
             "type": "diagram",
@@ -461,7 +461,7 @@
               },
               {
                 "text": "The output line divides by `LEN(a)`, which is 4",
-                "note": "this is the part students skip"
+                "note": "this is the easy part to miss"
               },
               {
                 "text": "56 ÷ 4 = **14**",
@@ -665,7 +665,8 @@
           "discriminators": [],
           "accepted": [
             "maerts"
-          ]
+          ],
+          "matchCase": true
         }
       },
       {
@@ -762,7 +763,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- To work out what an unfamiliar algorithm does, **trace it**: one column per variable, one row per pass of the loop.\n- Describe it as **input**, **processing** and **output**, and say what the output *means*.\n- Naming the variable is not a purpose. \"It outputs the largest value in the list\" earns the mark; \"it outputs max\" does not.\n- Look at the **starting value** and the **one line inside the loop**: 0 with `+ a[i]` is a total, 0 with `+ 1` is a counter, the first item is a largest or smallest finder.\n- Read the **line after the loop**. Dividing the total by the length turns a sum into a **mean average**.\n- Repeated subtraction with a counter is **whole-number division**: the counter is the quotient, what is left is the remainder.\n- Test an awkward input. A list of negatives breaks a largest-finder that starts at 0.",
+        "body": "- To work out what an unfamiliar algorithm does, **trace it**: one column per variable, one row per pass of the loop.\n- Describe it as **input**, **processing** and **output**, and say what the output *means*.\n- Naming the variable is not a purpose. \"It outputs the largest value in the list\" is a purpose; \"it outputs max\" is not.\n- Look at the **starting value** and the **one line inside the loop**: 0 with `+ a[i]` is a total, 0 with `+ 1` is a counter, the first item is a largest or smallest finder.\n- Read the **line after the loop**. Dividing the total by the length turns a sum into a **mean average**.\n- Repeated subtraction with a counter is **whole-number division**: the counter is the quotient, what is left is the remainder.\n- Test an awkward input. A list of negatives breaks a largest-finder that starts at 0.",
         "visuals": [
           {
             "type": "diagram",
@@ -912,7 +913,8 @@
         "a list",
         "the list",
         "list of numbers",
-        "a list of numbers"
+        "a list of numbers",
+        "numbers"
       ]
     },
     {
@@ -1037,7 +1039,11 @@
         "reverses it",
         "reverse",
         "it reverses it",
-        "reverses the string"
+        "reverses the string",
+        "reversed",
+        "reversal",
+        "reversing",
+        "it reverses the string"
       ]
     },
     {
@@ -1119,12 +1125,12 @@
       ],
       "options": [
         "Counting down from x to zero",
-        "Whole-number division, giving the answer and the remainder",
         "Finding the larger of the two numbers",
+        "Whole-number division with remainder",
         "Multiplying the two numbers together"
       ],
       "correct": [
-        1
+        2
       ]
     },
     {
@@ -1154,7 +1160,8 @@
       ],
       "accepted": [
         "maerts"
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q14",
@@ -1411,6 +1418,59 @@
         }
       ],
       "modelAnswer": "**What it is meant to do.** The input is a list of exam marks. Each mark is compared with the largest found so far, and `best` is replaced whenever a larger mark appears, so the algorithm is intended to **output the highest mark in the list**.\n\n**Does it always work?** For ordinary exam marks, yes. Marks cannot be negative, so any real mark above zero will replace the starting value and the trace comes out right.\n\n**But it is unsafe as written.** `best` starts at **0** rather than at the first item. Give it a list where every value is negative and nothing ever beats 0, so it outputs **0**, a value that is not in the list at all. A list of all zeroes returns 0, which is correct only by accident.\n\n**The fix** is `best ← a[0]` before the loop, with the comparison starting at the second item. That guarantees the output is a value that genuinely appears in the list. An **empty list** should also be rejected, because there is no highest mark to report."
+    },
+    {
+      "id": "q20",
+      "type": "numeric",
+      "prompt": "Here is an algorithm with its lines numbered.\n\n```\n1  total ← 0\n2  n ← STRING_TO_INT(USERINPUT)\n3  FOR i ← 1 TO n\n4     total ← total + i\n5  ENDFOR\n6  OUTPUT total\n```\n\nWhich line number takes the input?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "inputs, processing and outputs",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Line **2** is the input: `USERINPUT` reads what the user types, and `STRING_TO_INT` turns it into a whole number. Line 1 only sets a starting value, lines 3 to 5 are the processing, and line 6 is the output.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "type": "multiple-choice",
+      "prompt": "Here is an algorithm with its lines numbered.\n\n```\n1  total ← 0\n2  n ← STRING_TO_INT(USERINPUT)\n3  FOR i ← 1 TO n\n4     total ← total + i\n5  ENDFOR\n6  OUTPUT total\n```\n\nThe user types 4. Which statement gives the input, the processing and the output correctly?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "inputs, processing and outputs",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Trace it with n = 4: total goes 0 → 1 → 3 → 6 → **10**. So the input is the **4** typed at line 2, the processing **adds 1, 2, 3 and 4 to total**, and the output is **10, their sum**. `total ← 0` on line 1 is a starting value, not an input.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "input 4; adds 1, 2, 3 and 4; output 10, their sum"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "options": [
+        "Input 4; it adds 4 to total four times; output 16, which is 4 squared",
+        "Input 0; it counts from 1 up to 4; output 4, the numbers counted",
+        "Input 4; it adds 1, 2, 3 and 4 to total; output 10, their sum",
+        "Input 4; it adds 1 to total four times; output 4, the number typed"
+      ],
+      "correct": [
+        2
+      ]
     }
   ],
   "worksheets": {
@@ -1420,7 +1480,8 @@
         "q1",
         "q2",
         "q3",
-        "q4"
+        "q4",
+        "q20"
       ],
       "suggestedMinutes": 8
     },
@@ -1447,13 +1508,14 @@
         "q16",
         "q17",
         "q18",
-        "q19"
+        "q19",
+        "q21"
       ],
       "suggestedMinutes": 45
     }
   },
   "examTechnique": {
-    "body": "Draw the trace table before you do anything else. One column per variable, one row per pass of the loop, and write the starting values on a row of their own. Most lost marks come from trying to hold three variables in your head.\n\nWatch the loop bounds. `FOR i ← 1 TO LEN(a) − 1` on a list of 6 runs five times, from 1 to 5, and a loop that reads `a[i + 1]` must stop one place earlier still.\n\nRead the line **after** the loop. A running total is a sum until the last line divides it, and then it is an average. Questions are written so that stopping at the end of the loop gives the wrong purpose.\n\nWhen asked what the algorithm does, answer in one plain sentence about the **output's meaning**. Do not narrate the code line by line: that is a description of how, and the question asked what for.",
+    "body": "Draw the trace table before you do anything else. One column per variable, one row per pass of the loop, and write the starting values on a row of their own. Holding three variables in your head is where slips happen.\n\nWatch the loop bounds. `FOR i ← 1 TO LEN(a) − 1` on a list of 6 runs five times, from 1 to 5, and a loop that reads `a[i + 1]` must stop one place earlier still.\n\nRead the line **after** the loop. A running total is a sum until the last line divides it, and then it is an average. Stopping at the end of the loop can give the wrong purpose.\n\nWhen asked what the algorithm does, answer in one plain sentence about the **output's meaning**. Do not narrate the code line by line: that is a description of how, and the question asked what for.",
     "examinerErrors": [
       "Describing an algorithm line by line instead of stating its purpose in one sentence.",
       "Saying \"it outputs max\" or \"it outputs total\". Naming the variable is not a purpose.",
@@ -1483,7 +1545,9 @@
       "q14",
       "q15",
       "q16",
-      "q17"
+      "q17",
+      "q20",
+      "q21"
     ],
     "sampleSize": 10
   },

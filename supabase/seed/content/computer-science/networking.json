@@ -40,7 +40,7 @@
     "examples": [
       {
         "title": "Why a LAN is not simply a small WAN",
-        "body": "Size is half the difference and the half everyone gives. A LAN covers a small geographical area — one site, one building — and a WAN covers a wide one.\n\nThe other half is **ownership**. A LAN is usually owned by a single organisation, which owns the cabling and the equipment and can do as it likes with them. A WAN is not: it runs over infrastructure belonging to other people, which is why it is leased, slower and out of your control when it breaks. Both halves, every time — the mark scheme wants the ownership.",
+        "body": "Size is half the difference and the half everyone gives. A LAN covers a small geographical area — one site, one building — and a WAN covers a wide one.\n\nThe other half is **ownership**. A LAN is usually owned by a single organisation, which owns the cabling and the equipment and can do as it likes with them. A WAN is not: it runs over infrastructure belonging to other people, which is why it is leased, slower and out of your control when it breaks. Both halves, every time: the specification names ownership as well as area.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -117,7 +117,7 @@
       },
       {
         "title": "Why Wi-Fi arriving did not break the web",
-        "body": "The internet was designed before wireless existed, and nothing above the bottom layer had to be rewritten when it arrived. That is what layering buys: each layer deals with one thing and talks only to its neighbours, so the **hardware layer can change completely** while the browser above it carries on.\n\nThat is the answer worth giving about layers — not \"it makes it simpler\", but that one layer can be replaced without touching the others. The four, top down, are Application, Transport, Internet and Link.",
+        "body": "The internet's protocols were designed long before Wi-Fi existed, and nothing above the bottom layer had to be rewritten when it arrived. That is what layering buys: each layer deals with one thing and talks only to its neighbours, so the **hardware layer can change completely** while the browser above it carries on.\n\nThat is the answer worth giving about layers — not \"it makes it simpler\", but that one layer can be replaced without touching the others. The four, top down, are Application, Transport, Internet and Link.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -147,7 +147,7 @@
               [
                 "Link",
                 "hardware and drivers",
-                "the network card"
+                "Ethernet, Wi-Fi"
               ]
             ],
             "highlight": 3
@@ -229,8 +229,42 @@
         "id": "s2",
         "kind": "explain",
         "title": "Wired, wireless and topologies",
-        "body": "**Networks can be wired or wireless**, and the specification asks you to compare them.\n\n**Wireless advantages**: no cabling to install, devices can **move around**, cheaper and quicker to set up, easy to add devices.\n\n**Wireless disadvantages**: generally **slower**, a **shorter range** that walls reduce, more prone to **interference**, and **less secure** — the signal travels beyond the building, so anyone nearby can attempt to receive it.\n\n**Wired networks** use different cables. **Copper** is cheaper and fine over short distances. **Fibre** carries data faster and much further with less signal loss, so it suits **long distances** and **backbone** links — at a higher cost.\n\n**Two LAN topologies** are named, and you may be asked to **draw** them and to **choose** between them.\n\n**Star**: every device has its **own cable** to a central **switch**. With 6 devices that is **6** cables. If one cable fails only **that device** is cut off, and performance holds up well because devices do not compete for one shared line. It costs more in cable, and **if the central switch fails the whole network goes down**.\n\n**Bus**: every device connects to a **single shared backbone** cable. It uses the **least cable** and is cheap, but the devices **share** it, so it slows as traffic rises, and **a break in the backbone splits the network**.",
+        "body": "**Networks can be wired or wireless**, and the specification asks you to compare them.\n\n**Wireless advantages**: no cabling to install, devices can **move around**, cheaper and quicker to set up, easy to add devices.\n\n**Wireless disadvantages**: generally **slower**, a **shorter range** that walls reduce, more prone to **interference**, and **less secure** — the signal travels beyond the building, so anyone nearby can attempt to receive it.\n\n**Wired networks** use different cables. **Copper** is cheaper and fine over short distances. **Fibre** carries data faster and much further with less signal loss, so it suits **long distances** and **backbone** links — at a higher cost.\n\n**Two LAN topologies** are named, and you may be asked to **draw** them and to **choose** between them.\n\n**Star**: every device has its **own cable** to a central **switch**. With 6 devices that is **6** cables. If one cable fails only **that device** is cut off, and performance holds up well because devices do not compete for one shared line. It costs more in cable, and **if the central switch fails the whole network goes down**.\n\n**Bus**: every device connects to a **single shared backbone** cable. It uses the **least cable** and is cheap, but the devices **share** it, so it slows as traffic rises, and **a break in the backbone brings the whole network down**. Each end of the backbone is closed by a **terminator**, which stops signals bouncing back along the cable. A break leaves two open ends, signals reflect back from them and garble everything else on the cable, so no device can communicate — the network does not carry on as two working halves.",
         "visuals": [
+          {
+            "type": "diagram",
+            "component": "network-topology",
+            "props": {
+              "layout": "star",
+              "devices": [
+                "PC 1",
+                "PC 2",
+                "PC 3",
+                "Laptop",
+                "Printer",
+                "Server"
+              ],
+              "centre": "Switch",
+              "caption": "Star: six devices, six cables, one central switch"
+            },
+            "alt": "A star network: six devices, labelled PC 1, PC 2, PC 3, Laptop, Printer and Server, each on its own cable to a switch in the centre"
+          },
+          {
+            "type": "diagram",
+            "component": "network-topology",
+            "props": {
+              "layout": "bus",
+              "devices": [
+                "PC 1",
+                "PC 2",
+                "PC 3",
+                "Laptop",
+                "Printer"
+              ],
+              "caption": "Bus: one shared backbone, a terminator at each end"
+            },
+            "alt": "A bus network: five devices, each on a short drop cable to one shared backbone cable, with a terminator closing each end of the backbone"
+          },
           {
             "type": "diagram",
             "component": "trace-table",
@@ -254,7 +288,7 @@
                 [
                   "If one cable breaks",
                   "only that device is lost",
-                  "the network is split in two"
+                  "the whole network goes down"
                 ],
                 [
                   "Single point of failure",
@@ -290,7 +324,7 @@
           "skill": "star topology",
           "calculator": "either",
           "tags": [],
-          "solution": "Each device has **its own** cable to the switch, so only **that device** is affected. The whole network failing is what happens if the **central switch** fails, and splitting in two is a **bus** failure.",
+          "solution": "Each device has **its own** cable to the switch, so only **that device** is affected. The whole network stops only if the **central switch** fails. Splitting into two working halves is not how either topology fails: a break in a **bus** backbone stops the whole network.",
           "markScheme": [
             {
               "code": "B1",
@@ -392,6 +426,77 @@
         }
       },
       {
+        "id": "s8",
+        "kind": "explain",
+        "title": "Network security",
+        "body": "**Why networks need securing.** The connection that lets computers share files and hardware also lets anyone who reaches the network try to read data as it travels, use resources they have no right to, or plant malware. The specification names **four methods**, and expects you to say what each is, when it would be used, and how they work together.\n\n**Authentication** — proving **who the user is** before letting them in, most often with a **username and password**. Use it wherever access should be limited to known people: logging on to a school network, or reaching a company's files.\n\n**Encryption** — scrambling data with a key so that anyone who intercepts it **cannot read it**; only someone with the right key can turn it back. Use it wherever data could be intercepted: on **wireless** networks, whose signal leaves the building, and for web transactions, which is what **HTTPS** adds to HTTP.\n\n**Firewall** — in the specification's words, *a network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic based on a defined set of security rules*. It usually sits where the network meets the **internet**, and can, for example, block connections from outside that nobody inside asked for while still letting staff browse the web.\n\n**MAC address filtering** — in the specification's words, it *allows devices to access, or be blocked from accessing a network based on their physical address embedded within the device's network adapter*. The network keeps a list of allowed (or banned) **MAC addresses**, so it suits a network where every device is known in advance, such as a small office or a home Wi-Fi. On its own it is weak, because a device's MAC address can be read and copied.\n\n**How they work together.** Each method checks something different: MAC filtering checks the **device**, authentication the **person**, the firewall the **traffic**, and encryption protects the **data** itself if the others are got past. A stolen office laptop has an allowed MAC address, but the thief still needs a login; a visitor who learns a password still cannot join from their own phone. An attacker has to get past every layer, not just one, which is why they are used together.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "title": "Each method checks something different, so they stack",
+              "columns": [
+                "Checks",
+                "Method",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "device",
+                  "MAC filtering",
+                  "own laptops only"
+                ],
+                [
+                  "person",
+                  "authentication",
+                  "staff log in"
+                ],
+                [
+                  "traffic",
+                  "firewall",
+                  "internet link"
+                ],
+                [
+                  "data",
+                  "encryption",
+                  "Wi-Fi traffic"
+                ]
+              ]
+            },
+            "alt": "A table of the four network security methods and what each checks: MAC address filtering checks the device, authentication the person, a firewall the traffic at the internet link, and encryption protects the data, such as Wi-Fi traffic"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "Which network security method decides whether to allow or block traffic using a defined set of security rules?",
+          "options": [
+            "MAC address filtering",
+            "Encryption",
+            "A firewall",
+            "Authentication"
+          ],
+          "correct": [
+            2
+          ],
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "network security methods",
+          "calculator": "either",
+          "tags": [],
+          "solution": "A **firewall** monitors incoming and outgoing traffic and allows or blocks it by its **security rules**. MAC address filtering decides by the **device's physical address**, authentication checks **who the user is**, and encryption makes intercepted data unreadable.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "a firewall"
+            }
+          ],
+          "discriminators": []
+        }
+      },
+      {
         "id": "s4",
         "kind": "worked-example",
         "title": "The four layer TCP/IP model",
@@ -415,7 +520,7 @@
               },
               {
                 "text": "**Link layer** — where the network hardware such as the NIC sits, along with device drivers",
-                "note": "the specification names no protocol at this layer; it is where the hardware sits"
+                "note": "Ethernet and Wi-Fi work here, but the specification does not ask you to place them; it names this as where the hardware sits"
               },
               {
                 "text": "Sending goes **down** the layers; receiving goes back **up** them",
@@ -455,10 +560,10 @@
                 [
                   "Link",
                   "where the network hardware such as the NIC sits, along with device drivers",
-                  "— (hardware and drivers)"
+                  "Ethernet, Wi-Fi (the spec does not ask you to place them)"
                 ]
               ],
-              "title": "Ten protocols, four layers, and every one has a fixed home"
+              "title": "Eight of the ten protocols have a layer the specification names"
             },
             "alt": "A table of the four TCP/IP layers, the function of each and the protocols that operate there"
           }
@@ -535,7 +640,7 @@
         "id": "s6",
         "kind": "grade-9",
         "title": "Going deeper",
-        "body": "**Give both halves of the LAN/WAN difference.** **Geographical area** *and* **ownership** — a LAN is usually owned by a **single** organisation, a WAN is under **collective or distributed** ownership. Size alone is a half answer.\n\n**Learn which layer each protocol sits on.** HTTP, HTTPS, SMTP, IMAP and FTP are **application**; TCP and UDP are **transport**; IP is **internet**. The specification states this directly and questions ask for it directly.\n\n**Say \"encrypted\" about HTTPS.** *More secure* names the effect without the mechanism. HTTPS provides an **encrypted** version of HTTP, so anything intercepted in transit **cannot be read**.\n\n**Remember Ethernet and Wi-Fi are families**, not single protocols — and that **Wi-Fi is a trademark** while the generic term is **WLAN**. Both points are stated explicitly in the specification, which usually means they are examined.\n\n**Distinguish TCP from UDP by what is traded.** TCP guarantees packets **arrive and are reassembled in order**, at the cost of extra overhead. UDP drops those guarantees to go **faster**. Neither is simply better: the choice depends on whether a lost packet matters more than a delay.\n\n**Be exact about topology failures.** In a **star**, one broken cable loses **one device**, but the **central switch** is a single point of failure for everything. In a **bus**, a break in the **backbone splits the network**, and heavy traffic slows everyone because the cable is **shared**. Naming *which* failure belongs to *which* topology is where marks are won and lost.\n\n**Give a real reason for layering.** Each layer handles **one job**, so a layer can be **changed or replaced without rewriting the others** — which is why moving from a cable to Wi-Fi changes nothing about the web page you are reading. It also makes faults easier to isolate. *It makes it simpler* is not an explanation.\n\n**On wireless security, be concrete.** The signal **travels beyond the building**, so anyone within range can attempt to receive it — which is why encryption matters more on wireless than on a cable someone would have to physically reach.",
+        "body": "**Give both halves of the LAN/WAN difference.** **Geographical area** *and* **ownership** — a LAN is usually owned by a **single** organisation, a WAN is under **collective or distributed** ownership. Size alone is a half answer.\n\n**Learn which layer each protocol sits on.** HTTP, HTTPS, SMTP, IMAP and FTP are **application**; TCP and UDP are **transport**; IP is **internet**. The specification states this directly and questions ask for it directly.\n\n**Say \"encrypted\" about HTTPS.** *More secure* names the effect without the mechanism. HTTPS provides an **encrypted** version of HTTP, so anything intercepted in transit **cannot be read**.\n\n**Remember Ethernet and Wi-Fi are families**, not single protocols — and that **Wi-Fi is a trademark** while the generic term is **WLAN**. Both points are stated explicitly in the specification, which usually means they are examined.\n\n**Distinguish TCP from UDP by what is traded.** TCP guarantees packets **arrive and are reassembled in order**, at the cost of extra overhead. UDP drops those guarantees to go **faster**. Neither is simply better: the choice depends on whether a lost packet matters more than a delay.\n\n**Be exact about topology failures.** In a **star**, one broken cable loses **one device**, but the **central switch** is a single point of failure for everything. In a **bus**, a break in the **backbone brings the whole network down**, and heavy traffic slows everyone because the cable is **shared**. Naming *which* failure belongs to *which* topology is what a precise answer does.\n\n**Give a real reason for layering.** Each layer handles **one job**, so a layer can be **changed or replaced without rewriting the others** — which is why moving from a cable to Wi-Fi changes nothing about the web page you are reading. It also makes faults easier to isolate. *It makes it simpler* is not an explanation.\n\n**Say what each security method checks.** MAC address filtering checks the **device**, authentication the **person**, a firewall the **traffic**, and encryption protects the **data**. Saying that shows why they are layered: each one covers a gap another leaves.\n\n**On wireless security, be concrete.** The signal **travels beyond the building**, so anyone within range can attempt to receive it — which is why encryption matters more on wireless than on a cable someone would have to physically reach.",
         "visuals": [
           {
             "type": "diagram",
@@ -598,7 +703,7 @@
         "id": "s7",
         "kind": "summary",
         "title": "Summary",
-        "body": "- A **network** is computers connected to communicate and share resources.\n- Advantages: share files and hardware, communicate, central backup and management.\n- Disadvantages: cost, expertise needed, malware spread, central failure affects all.\n- **PAN** — around one person; only **Bluetooth** is needed.\n- **LAN** — small area, **single** owner.\n- **WAN** — wide area, **collective or distributed** ownership; the **internet** is the biggest.\n- **Wireless**: mobile and cheap to set up, but slower, shorter range and **less secure**.\n- **Fibre** carries data further and faster than **copper**, at greater cost.\n- **Star**: one cable per device to a switch; one break loses **one device**; the **switch** is the weak point.\n- **Bus**: one shared backbone; least cable; a break **splits** the network; shared traffic slows it.\n- A **protocol** is a set of rules for communication.\n- **Ethernet** and **Wi-Fi** are **families**; Wi-Fi is a **trademark**, the generic term is **WLAN**.\n- **TCP** guarantees ordered delivery; **UDP** is faster without guarantees; **IP** addresses and routes.\n- **HTTPS** is **encrypted** HTTP. **SMTP** sends mail, **IMAP** retrieves it, **FTP** transfers files.\n- The four layers: **Application → Transport → Internet → Link**.",
+        "body": "- A **network** is computers connected to communicate and share resources.\n- Advantages: share files and hardware, communicate, central backup and management.\n- Disadvantages: cost, expertise needed, malware spread, central failure affects all.\n- **PAN** — around one person; only **Bluetooth** is needed.\n- **LAN** — small area, **single** owner.\n- **WAN** — wide area, **collective or distributed** ownership; the **internet** is the biggest.\n- **Wireless**: mobile and cheap to set up, but slower, shorter range and **less secure**.\n- **Fibre** carries data further and faster than **copper**, at greater cost.\n- **Star**: one cable per device to a switch; one break loses **one device**; the **switch** is the weak point.\n- **Bus**: one shared backbone; least cable; a break in the backbone **stops the whole network**; shared traffic slows it.\n- A **protocol** is a set of rules for communication.\n- **Ethernet** and **Wi-Fi** are **families**; Wi-Fi is a **trademark**, the generic term is **WLAN**.\n- **TCP** guarantees ordered delivery; **UDP** is faster without guarantees; **IP** addresses and routes.\n- **HTTPS** is **encrypted** HTTP. **SMTP** sends mail, **IMAP** retrieves it, **FTP** transfers files.\n- **Network security**: **authentication** (the person), **encryption** (the data), a **firewall** (the traffic), **MAC address filtering** (the device) — used together.\n- The four layers: **Application → Transport → Internet → Link**.",
         "visuals": [
           {
             "type": "diagram",
@@ -627,7 +732,7 @@
                 ],
                 [
                   "Bus",
-                  "one shared backbone; a break splits it"
+                  "one shared backbone; a break stops it all"
                 ],
                 [
                   "Protocol",
@@ -652,6 +757,10 @@
                 [
                   "HTTPS",
                   "HTTP, encrypted"
+                ],
+                [
+                  "Security",
+                  "authentication, encryption, firewall, MAC filtering"
                 ],
                 [
                   "Layers",
@@ -686,7 +795,8 @@
       ],
       "discriminators": [],
       "accepted": [
-        "application, transport, internet, link"
+        "application, transport, internet, link",
+        "application layer, transport layer, internet layer, link layer"
       ]
     },
     {
@@ -736,7 +846,9 @@
       ],
       "discriminators": [],
       "accepted": [
-        "SMTP"
+        "SMTP",
+        "Simple Mail Transfer Protocol",
+        "SMTP (Simple Mail Transfer Protocol)"
       ]
     },
     {
@@ -800,10 +912,10 @@
       "type": "multiple-choice",
       "prompt": "What happens to a bus network if the backbone cable is broken in the middle?",
       "options": [
-        "The network is split into two parts that cannot communicate",
-        "Only the device nearest the break is disconnected",
-        "The network continues at a slightly reduced speed",
-        "Traffic is automatically rerouted around the break"
+        "The whole network stops working, not just the part near the break",
+        "Only the device nearest the break loses its connection to the rest",
+        "The network carries on working at a slightly reduced speed",
+        "Traffic is automatically rerouted around the break in the cable"
       ],
       "correct": [
         0
@@ -813,12 +925,12 @@
       "skill": "bus topology",
       "calculator": "either",
       "tags": [],
-      "solution": "Every device shares the **single backbone**, so a break in it **splits the network in two**. Losing one device only is a **star** failure.",
+      "solution": "Every device shares the **single backbone**, which is closed by a **terminator** at each end. A break leaves two open ends, signals reflect back from them, and **the whole network stops working** — it does not split into two working halves. Losing one device only is a **star** failure.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "the network is split in two"
+          "description": "the whole network stops working"
         }
       ],
       "discriminators": []
@@ -1027,9 +1139,9 @@
       "type": "multiple-choice",
       "prompt": "Why is the TCP/IP model divided into layers?",
       "options": [
-        "It allows four protocols to run at the same time",
-        "It makes the network run measurably faster",
-        "Each layer does one job, so one can change without rewriting the others",
+        "It lets four protocols run at exactly the same time",
+        "It makes the network run measurably faster overall",
+        "Each layer does one job, so it can change on its own",
         "Each layer encrypts the data passed down to it"
       ],
       "correct": [
@@ -1170,7 +1282,7 @@
       "skill": "designing a network",
       "calculator": "either",
       "tags": [],
-      "solution": "**Wireless** would be quick and cheap to install, since there is **no cabling** to run through a new office, and staff could **move around** freely with laptops and phones. Adding a new device needs no work at all.\n\nAgainst that, wireless is generally **slower**, has a **shorter range** that walls and floors reduce further, and is more prone to **interference**. The security concern is the significant one: the signal **travels beyond the building**, so an attacker only needs to be **within range** rather than gain physical access to a cable. That makes strong **encryption** and **authentication** essential rather than optional.\n\n**Wired** connections are **faster**, more **reliable**, and more secure, because reaching the data means physically reaching the cable. The costs are the **installation work** and the loss of mobility. Within the wiring, **copper** is cheaper and perfectly adequate over the short runs inside one office, while **fibre** carries data faster and further with less signal loss and would suit a **backbone** link between floors, or the connection out to the internet.\n\n**On topology**, a **bus** network uses a **single shared backbone** and therefore the **least cable**, making it the cheaper option. But the devices **share** that cable, so performance degrades as traffic rises, and a **break in the backbone splits the network in two** — a fault that stops much of the office working and can be hard to locate.\n\nA **star** gives every device **its own cable to a central switch**. With six devices that is six cables, so it costs more. In return, a broken cable takes out **only that one device**, and performance holds up much better under load because machines are not competing for one line. Its own weakness is the **central switch**: everything connects through it, so if the switch fails, **nothing** can communicate.\n\n**Recommendation.** I would use a **wired star** network as the backbone of the office, with **Wi-Fi** added for laptops, phones and visitors.\n\nThe star is worth its extra cabling cost because a small business cannot afford a single cable fault stopping everyone, and because it scales better as the company grows. Bus topologies save money that is quickly lost to downtime. Wired connections for the fixed desktops give the speed, reliability and security the business needs for its day-to-day work.\n\nAdding **wireless alongside** rather than instead keeps the flexibility staff actually want, without the whole network depending on it. The one weakness this leaves is the **central switch**, so I would recommend keeping a **spare switch** on site — it is a cheap way to turn a day of downtime into an hour.",
+      "solution": "**Wireless** would be quick and cheap to install, since there is **no cabling** to run through a new office, and staff could **move around** freely with laptops and phones. Adding a new device needs no work at all.\n\nAgainst that, wireless is generally **slower**, has a **shorter range** that walls and floors reduce further, and is more prone to **interference**. The security concern is the significant one: the signal **travels beyond the building**, so an attacker only needs to be **within range** rather than gain physical access to a cable. That makes strong **encryption** and **authentication** essential rather than optional.\n\n**Wired** connections are **faster**, more **reliable**, and more secure, because reaching the data means physically reaching the cable. The costs are the **installation work** and the loss of mobility. Within the wiring, **copper** is cheaper and perfectly adequate over the short runs inside one office, while **fibre** carries data faster and further with less signal loss and would suit a **backbone** link between floors, or the connection out to the internet.\n\n**On topology**, a **bus** network uses a **single shared backbone** and therefore the **least cable**, making it the cheaper option. But the devices **share** that cable, so performance degrades as traffic rises, and a **break anywhere in the backbone brings the whole network down** — a fault that stops the entire office working and can be hard to locate.\n\nA **star** gives every device **its own cable to a central switch**. With six devices that is six cables, so it costs more. In return, a broken cable takes out **only that one device**, and performance holds up much better under load because machines are not competing for one line. Its own weakness is the **central switch**: everything connects through it, so if the switch fails, **nothing** can communicate.\n\n**Recommendation.** I would use a **wired star** network as the backbone of the office, with **Wi-Fi** added for laptops, phones and visitors.\n\nThe star is worth its extra cabling cost because a small business cannot afford a single cable fault stopping everyone, and because it scales better as the company grows. Bus topologies save money that is quickly lost to downtime. Wired connections for the fixed desktops give the speed, reliability and security the business needs for its day-to-day work.\n\nAdding **wireless alongside** rather than instead keeps the flexibility staff actually want, without the whole network depending on it. The one weakness this leaves is the **central switch**, so I would recommend keeping a **spare switch** on site — it is a cheap way to turn a day of downtime into an hour.",
       "markScheme": [
         {
           "code": "B2",
@@ -1207,11 +1319,434 @@
           "marks": 2
         }
       ],
-      "modelAnswer": "**Wireless** would be quick and cheap to install, since there is **no cabling** to run through a new office, and staff could **move around** freely with laptops and phones. Adding a new device needs no work at all.\n\nAgainst that, wireless is generally **slower**, has a **shorter range** that walls and floors reduce further, and is more prone to **interference**. The security concern is the significant one: the signal **travels beyond the building**, so an attacker only needs to be **within range** rather than gain physical access to a cable. That makes strong **encryption** and **authentication** essential rather than optional.\n\n**Wired** connections are **faster**, more **reliable**, and more secure, because reaching the data means physically reaching the cable. The costs are the **installation work** and the loss of mobility. Within the wiring, **copper** is cheaper and perfectly adequate over the short runs inside one office, while **fibre** carries data faster and further with less signal loss and would suit a **backbone** link between floors, or the connection out to the internet.\n\n**On topology**, a **bus** network uses a **single shared backbone** and therefore the **least cable**, making it the cheaper option. But the devices **share** that cable, so performance degrades as traffic rises, and a **break in the backbone splits the network in two** — a fault that stops much of the office working and can be hard to locate.\n\nA **star** gives every device **its own cable to a central switch**. With six devices that is six cables, so it costs more. In return, a broken cable takes out **only that one device**, and performance holds up much better under load because machines are not competing for one line. Its own weakness is the **central switch**: everything connects through it, so if the switch fails, **nothing** can communicate.\n\n**Recommendation.** I would use a **wired star** network as the backbone of the office, with **Wi-Fi** added for laptops, phones and visitors.\n\nThe star is worth its extra cabling cost because a small business cannot afford a single cable fault stopping everyone, and because it scales better as the company grows. Bus topologies save money that is quickly lost to downtime. Wired connections for the fixed desktops give the speed, reliability and security the business needs for its day-to-day work.\n\nAdding **wireless alongside** rather than instead keeps the flexibility staff actually want, without the whole network depending on it. The one weakness this leaves is the **central switch**, so I would recommend keeping a **spare switch** on site — it is a cheap way to turn a day of downtime into an hour."
+      "modelAnswer": "**Wireless** would be quick and cheap to install, since there is **no cabling** to run through a new office, and staff could **move around** freely with laptops and phones. Adding a new device needs no work at all.\n\nAgainst that, wireless is generally **slower**, has a **shorter range** that walls and floors reduce further, and is more prone to **interference**. The security concern is the significant one: the signal **travels beyond the building**, so an attacker only needs to be **within range** rather than gain physical access to a cable. That makes strong **encryption** and **authentication** essential rather than optional.\n\n**Wired** connections are **faster**, more **reliable**, and more secure, because reaching the data means physically reaching the cable. The costs are the **installation work** and the loss of mobility. Within the wiring, **copper** is cheaper and perfectly adequate over the short runs inside one office, while **fibre** carries data faster and further with less signal loss and would suit a **backbone** link between floors, or the connection out to the internet.\n\n**On topology**, a **bus** network uses a **single shared backbone** and therefore the **least cable**, making it the cheaper option. But the devices **share** that cable, so performance degrades as traffic rises, and a **break anywhere in the backbone brings the whole network down** — a fault that stops the entire office working and can be hard to locate.\n\nA **star** gives every device **its own cable to a central switch**. With six devices that is six cables, so it costs more. In return, a broken cable takes out **only that one device**, and performance holds up much better under load because machines are not competing for one line. Its own weakness is the **central switch**: everything connects through it, so if the switch fails, **nothing** can communicate.\n\n**Recommendation.** I would use a **wired star** network as the backbone of the office, with **Wi-Fi** added for laptops, phones and visitors.\n\nThe star is worth its extra cabling cost because a small business cannot afford a single cable fault stopping everyone, and because it scales better as the company grows. Bus topologies save money that is quickly lost to downtime. Wired connections for the fixed desktops give the speed, reliability and security the business needs for its day-to-day work.\n\nAdding **wireless alongside** rather than instead keeps the flexibility staff actually want, without the whole network depending on it. The one weakness this leaves is the **central switch**, so I would recommend keeping a **spare switch** on site — it is a cheap way to turn a day of downtime into an hour."
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "A school wants only its own students and staff to use its network, each through their own account. Which network security method does this describe?",
+      "options": [
+        "Encryption of every message sent across it",
+        "Authentication, such as a username and password",
+        "A firewall on the link to the internet",
+        "MAC address filtering of each device"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "authentication",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Authentication** checks **who the user is**, usually with a username and password, before letting them on. MAC address filtering checks the **device**, not the person; encryption makes intercepted data unreadable; a firewall filters **traffic** by its rules.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "authentication"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q20",
+      "type": "multiple-choice",
+      "prompt": "What does encryption do to protect data sent across a network?",
+      "options": [
+        "It stops unknown devices from joining the network",
+        "It checks each user's identity before they log in",
+        "It blocks traffic that breaks a set of security rules",
+        "It makes intercepted data unreadable without the key"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "encryption",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Encryption** scrambles the data with a key, so anyone who intercepts it **cannot read it**. Stopping unknown devices is **MAC address filtering**, checking identity is **authentication**, and blocking traffic by rules is a **firewall**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "intercepted data cannot be read"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q21",
+      "type": "multiple-choice",
+      "prompt": "A company wants to stop computers on the internet opening connections into its network, while staff can still browse the web. Which method fits best?",
+      "options": [
+        "A firewall with rules for the traffic in and out",
+        "MAC address filtering on the whole office network",
+        "Encrypting every file that is stored on the server",
+        "Asking every member of staff for their password"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "firewalls",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **firewall** is a network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic based on a defined set of security rules. Its rules can block incoming connections nobody asked for and still allow the web traffic staff start. MAC filtering controls which **devices** join the office network, not what arrives from the internet.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a firewall"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q22",
+      "type": "multiple-choice",
+      "prompt": "What does MAC address filtering use to decide whether a device may join a network?",
+      "options": [
+        "The username and password typed in by the user",
+        "The rules set for incoming and outgoing traffic",
+        "The physical address in its network adapter",
+        "The key used to scramble the data being sent"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "MAC address filtering",
+      "calculator": "either",
+      "tags": [],
+      "solution": "MAC address filtering allows devices to access, or be blocked from accessing a network based on their physical address embedded within the device's network adapter. A username and password is **authentication**, traffic rules are a **firewall**, and a key that scrambles data is **encryption**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the device's physical (MAC) address"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q23",
+      "type": "multiple-choice",
+      "prompt": "What is the IMAP protocol used for?",
+      "options": [
+        "Sending email on to a mail server",
+        "Retrieving email from a mail server",
+        "Transferring web pages to a browser",
+        "Transferring files between computers"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "email protocols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**IMAP** **retrieves** email from a server, leaving it there so several devices stay in step. **SMTP** sends email, **HTTP** transfers web pages and **FTP** transfers files.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "retrieving email from a server"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q24",
+      "type": "multiple-choice",
+      "prompt": "Which statement about Ethernet does the specification make?",
+      "options": [
+        "It is a single protocol used only on wireless networks",
+        "It is a trademark name, and the generic term for it is WLAN",
+        "It is the protocol that addresses and routes packets",
+        "It is a family of related protocols, not a single protocol"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Ethernet as a family",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The specification says **Ethernet** is a **family of related protocols rather than a single protocol**, and that you do not need its individual members; it is used on **wired** networks. The trademark with WLAN as the generic term is **Wi-Fi**, and addressing and routing packets is the job of **IP**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a family of related protocols, not a single protocol"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q25",
+      "type": "multiple-choice",
+      "prompt": "A school is cabling the computers in one classroom, each a few metres from the switch. Which cable is the sensible choice, and why?",
+      "options": [
+        "Fibre, because it is the only cable that Ethernet can use",
+        "Fibre, because copper cannot carry data inside a building",
+        "Copper, because it is cheaper and fine over short distances",
+        "Copper, because it carries data further than fibre does"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "copper against fibre",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Over a few metres **copper** is **cheaper** and perfectly adequate. **Fibre** carries data faster and much further with less signal loss, which suits long distances and backbone links, but costs more — and copper, not fibre, is the one with the shorter reach.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "copper: cheaper, and fine over short distances"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q26",
+      "type": "multiple-choice",
+      "prompt": "An office uses MAC address filtering, so only its own laptops can join its Wi-Fi. A thief steals one of those laptops. Which method still stops the thief reaching the office's files?",
+      "options": [
+        "Authentication, since the thief still needs a staff member's login",
+        "MAC address filtering, since the laptop's address is still allowed",
+        "Encryption of the Wi-Fi traffic, since it stops the laptop joining",
+        "A firewall, since it blocks every device inside the building"
+      ],
+      "correct": [
+        0
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "combining security methods",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The stolen laptop's **MAC address is on the allowed list**, so MAC filtering lets it straight in: it checks the **device**, not the person. **Authentication** checks the **person**, so the thief still needs a member of staff's username and password. Encrypting the Wi-Fi protects data from eavesdroppers but does not keep an allowed laptop off, and a firewall filters traffic at the network's edge.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "authentication: it checks the person, not the device"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q27",
+      "type": "multiple-choice",
+      "prompt": "A network already has a firewall on its internet connection. Why does it still need authentication?",
+      "options": [
+        "A firewall only works on wireless networks, never on wired ones",
+        "The firewall checks traffic against rules, not who the user is",
+        "Authentication makes the firewall's rules run more quickly",
+        "A firewall cannot be switched on until users have logged in"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "combining security methods",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **firewall** allows or blocks **traffic** according to its rules. Someone who sits down at a computer inside the network, or reaches it through a service the rules allow, sends traffic the firewall lets through. **Authentication** checks **who the user is**, so the two cover different gaps.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the firewall checks traffic, not the user"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ]
+    },
+    {
+      "id": "q28",
+      "type": "multiple-choice",
+      "prompt": "A school links all its computers into one network so that software updates and backups are managed centrally. Which disadvantage comes with that same connection?",
+      "options": [
+        "Every computer stops working if the internet link fails",
+        "Each computer now runs its own programs more slowly",
+        "Central backup leaves only one copy of each file to lose",
+        "Malware on one computer can now spread to the others"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "advantages and disadvantages of networks",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Connecting the computers is what makes central updates, central backup and sharing possible — and it is also what lets **malware** on one machine **spread** to the others. The other options are misconceptions: a LAN keeps working inside the school when the **internet** link fails; joining a network does not slow the programs a computer runs itself; and a central backup is an **extra** copy, not the only one. The real disadvantages are malware spreading, the **cost** of equipment, the need for **expertise**, and a central part whose failure affects **everyone**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "malware can spread across the network"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
+    },
+    {
+      "id": "q29",
+      "type": "extended",
+      "prompt": "A dental practice has six computers on a wired network, Wi-Fi for its tablets, and a connection to the internet. Patient records are kept on a server in the practice. Explain how authentication, encryption, a firewall and MAC address filtering could be used together to protect the network.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "layering network security",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Authentication** checks **who the user is** before letting them in, usually with a **username and password**. At the practice every receptionist, nurse and dentist would have their own login to the computers and the records server, so a stranger who sat down at a machine could not open a patient's record, and each role can be limited to the records it needs.\n\n**Encryption** scrambles data with a key so that anyone who intercepts it **cannot read it**. It matters most on the **Wi-Fi** used by the tablets, because the signal leaves the building and anyone parked outside is within range. The Wi-Fi should be encrypted, and any web system the practice uses should run over **HTTPS**, so patient details crossing the internet are unreadable in transit.\n\nA **firewall** is a network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic based on a defined set of security rules. It belongs on the practice's **connection to the internet**, where it can block connections from outside that nobody inside asked for — so an attacker on the internet cannot reach the records server directly — while still letting staff use the web and email.\n\n**MAC address filtering** allows devices to access, or be blocked from accessing a network based on their physical address embedded within the device's network adapter. The practice knows exactly which six computers and which tablets it owns, so it can list their MAC addresses and refuse anything else — a patient's phone, or a visitor's laptop plugged into a spare socket. On its own it is weak, because a MAC address can be read and copied, which is one reason it is only one layer.\n\n**Together** they check four different things: MAC filtering checks the **device**, authentication the **person**, the firewall the **traffic**, and encryption protects the **data** itself. Each covers a gap the others leave. A stolen practice tablet has an allowed MAC address, but the thief still needs a login. A visitor who learns a password still cannot join from their own phone, because its address is not on the list. And if an attacker does capture wireless traffic, encryption means it cannot be read. An attacker has to get past every layer rather than just one, which is why the practice should use all four rather than choosing the best.",
+      "markScheme": [
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "the four methods explained"
+        },
+        {
+          "code": "B2",
+          "marks": 2,
+          "description": "each applied to the practice"
+        },
+        {
+          "code": "C2",
+          "marks": 2,
+          "description": "how the methods combine"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Explains what each of the four methods is.",
+          "marks": 2
+        },
+        {
+          "text": "Applies each method to a sensible place in the practice's network.",
+          "marks": 2
+        },
+        {
+          "text": "Explains how the methods work together, each covering a gap the others leave.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**Authentication** checks **who the user is** before letting them in, usually with a **username and password**. At the practice every receptionist, nurse and dentist would have their own login to the computers and the records server, so a stranger who sat down at a machine could not open a patient's record, and each role can be limited to the records it needs.\n\n**Encryption** scrambles data with a key so that anyone who intercepts it **cannot read it**. It matters most on the **Wi-Fi** used by the tablets, because the signal leaves the building and anyone parked outside is within range. The Wi-Fi should be encrypted, and any web system the practice uses should run over **HTTPS**, so patient details crossing the internet are unreadable in transit.\n\nA **firewall** is a network security device that monitors incoming and outgoing network traffic and decides whether to allow or block specific traffic based on a defined set of security rules. It belongs on the practice's **connection to the internet**, where it can block connections from outside that nobody inside asked for — so an attacker on the internet cannot reach the records server directly — while still letting staff use the web and email.\n\n**MAC address filtering** allows devices to access, or be blocked from accessing a network based on their physical address embedded within the device's network adapter. The practice knows exactly which six computers and which tablets it owns, so it can list their MAC addresses and refuse anything else — a patient's phone, or a visitor's laptop plugged into a spare socket. On its own it is weak, because a MAC address can be read and copied, which is one reason it is only one layer.\n\n**Together** they check four different things: MAC filtering checks the **device**, authentication the **person**, the firewall the **traffic**, and encryption protects the **data** itself. Each covers a gap the others leave. A stolen practice tablet has an allowed MAC address, but the thief still needs a login. A visitor who learns a password still cannot join from their own phone, because its address is not on the list. And if an attacker does capture wireless traffic, encryption means it cannot be read. An attacker has to get past every layer rather than just one, which is why the practice should use all four rather than choosing the best."
+    },
+    {
+      "id": "q30",
+      "type": "multiple-choice",
+      "prompt": "A web browser fetches a page from a website, and a designer uploads a batch of image files to a server. Which pair of protocols is designed for these two jobs?",
+      "options": [
+        "FTP for the page, HTTP for the files",
+        "HTTP for the page, FTP for the files",
+        "SMTP for the page, IMAP for the files",
+        "IP for the page, TCP for the files"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "purposes of protocols",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**HTTP** transfers **web pages**, and **FTP** (File Transfer Protocol) transfers **files** between computers. SMTP and IMAP send and retrieve **email**, and IP and TCP address and deliver packets for every application rather than doing either job.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "HTTP for pages, FTP for files"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q31",
+      "type": "multiple-choice",
+      "prompt": "Which of these is an advantage of connecting computers in a network?",
+      "options": [
+        "Each computer becomes safer from malware",
+        "No specialist knowledge is needed to run it",
+        "The equipment costs nothing to install",
+        "Files can be shared and backed up centrally"
+      ],
+      "correct": [
+        3
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "advantages of networks",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A network lets users **share files** and hardware such as printers, and lets files be **backed up centrally**. The others are wrong way round: networks **increase** exposure to malware, need **expertise** to set up and maintain, and the equipment **costs** money.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sharing files and central backup"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q32",
+      "type": "multiple-choice",
+      "prompt": "An online shop's login page is sent over HTTP rather than HTTPS. What exactly is the risk?",
+      "options": [
+        "The page will load more slowly than it would over HTTPS",
+        "Customers' emails are sent without going through SMTP",
+        "Passwords cross the network unencrypted, so can be read",
+        "Files on the shop can no longer be transferred by FTP"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "HTTP against HTTPS",
+      "calculator": "either",
+      "tags": [],
+      "solution": "HTTPS is the **encrypted** version of HTTP. Over plain HTTP the username and password travel **unencrypted**, so anyone who intercepts the traffic — on shared Wi-Fi, for example — can **read** them. Saying \"it is less secure\" names the effect; the mechanism is the missing encryption. Email and file transfer use other protocols and are unaffected.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "passwords travel unencrypted and can be read"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "unfamiliar-context"
+      ]
     }
   ],
   "examTechnique": {
-    "body": "Give **both** halves of the LAN/WAN difference — **area** and **ownership**. Know which layer each protocol sits on: **application** for HTTP, HTTPS, SMTP, IMAP, FTP; **transport** for TCP and UDP; **internet** for IP.\n\nSay HTTPS is **encrypted** HTTP. Name the right failure for the right topology: a star loses **one device** per broken cable, a bus **splits**.",
+    "body": "Give **both** halves of the LAN/WAN difference — **area** and **ownership**. Know which layer each protocol sits on: **application** for HTTP, HTTPS, SMTP, IMAP, FTP; **transport** for TCP and UDP; **internet** for IP.\n\nSay HTTPS is **encrypted** HTTP. Name the right failure for the right topology: a star loses **one device** per broken cable, while a break in a bus backbone stops **the whole network**.",
     "examinerErrors": [
       "Separating LAN from WAN by size alone.",
       "Saying HTTPS is \"more secure\" without saying encrypted.",
@@ -1231,7 +1766,10 @@
         "q1",
         "q2",
         "q3",
-        "q4"
+        "q4",
+        "q23",
+        "q24",
+        "q31"
       ],
       "suggestedMinutes": 8
     },
@@ -1243,7 +1781,13 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q25",
+        "q30"
       ],
       "suggestedMinutes": 18
     },
@@ -1257,7 +1801,12 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q26",
+        "q27",
+        "q28",
+        "q29",
+        "q32"
       ],
       "suggestedMinutes": 45
     }
@@ -1279,7 +1828,20 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q19",
+      "q20",
+      "q21",
+      "q22",
+      "q23",
+      "q24",
+      "q25",
+      "q26",
+      "q27",
+      "q28",
+      "q30",
+      "q31",
+      "q32"
     ],
     "sampleSize": 10
   },

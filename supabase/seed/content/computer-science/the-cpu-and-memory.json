@@ -12,7 +12,7 @@
     {
       "kind": "remember",
       "title": "Fetch, decode, execute — in that order",
-      "body": "The cycle is **fetch → decode → execute**, and it never stops while the computer is on. Write all three even if a question seems to want only one: the marks are usually split across them."
+      "body": "The cycle is **fetch → decode → execute**, and it never stops while the computer is on. Name all three in order whenever the cycle comes up, and say the instruction is fetched from main memory."
     },
     {
       "kind": "shortcut",
@@ -22,7 +22,7 @@
     {
       "kind": "spot",
       "title": "Volatile means it is lost when the power goes",
-      "body": "**RAM is volatile**, **ROM is non-volatile**. That single difference explains why a computer needs both: ROM survives being switched off, so there is something to start up from."
+      "body": "**RAM is volatile**, **ROM is non-volatile**. The key difference explains why a computer needs both: ROM survives being switched off, so there is something to start up from."
     },
     {
       "kind": "check",
@@ -32,7 +32,7 @@
     {
       "kind": "remember",
       "title": "More cores is not automatically faster",
-      "body": "Extra cores only help if the work can be **split between them**. Software that cannot be divided runs at much the same speed on four cores as on one — a favourite examiner point."
+      "body": "Extra cores only help if the work can be **split between them**. Software that cannot be divided runs at much the same speed on four cores as on one."
     }
   ],
   "why": {
@@ -40,7 +40,7 @@
     "examples": [
       {
         "title": "Why the processor never stops",
-        "body": "The cycle has three stages and no end. **Fetch** the next instruction from main memory, **decode** it to work out what is wanted, **execute** it — then fetch the next one. There is no idle state in the design; a processor with nothing to do is running instructions that amount to waiting.\n\nTwo things are worth saying in an answer: the stages in order, and that the fetch comes **from main memory**. That is where memory enters the story, and it is why the speed of memory matters as much as the speed of the processor.",
+        "body": "The cycle has three stages and no end. **Fetch** the next instruction from main memory, **decode** it to work out what is wanted, **execute** it — then fetch the next one. In the model you need for the exam the cycle simply repeats; a processor with nothing useful to do is still fetching and executing instructions.\n\nTwo things are worth saying in an answer: the stages in order, and that the fetch comes **from main memory**. That is where memory enters the story, and it is why the speed of memory matters as much as the speed of the processor.",
         "visual": {
           "type": "diagram",
           "component": "flowchart",
@@ -69,7 +69,7 @@
       },
       {
         "title": "Why two processors at the same clock speed are not the same speed",
-        "body": "Clock speed is how many cycles a second, so a faster clock makes every instruction quicker. It is only one of three things the specification names, and on its own it settles nothing.\n\n**Cores** let several instructions run at once — but only for work that can be split up, which is why four cores rarely means four times faster. **Cache** is a small fast memory holding what the processor is likely to need next, so it waits for main memory less often. A comparison question usually gives you all three and expects each to be weighed.",
+        "body": "Clock speed is how many cycles a second, so a faster clock makes every instruction quicker. It is only one of three things the specification names, and on its own it settles nothing.\n\n**Cores** let several instructions run at once — but only for work that can be split up, which is why four cores rarely means four times faster. **Cache** is a small fast memory holding what the processor is likely to need next, so it waits for main memory less often. A good comparison weighs all three.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -152,7 +152,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Inside the CPU",
-        "body": "**The central processing unit is where instructions are actually carried out.** The specification asks for the role and operation of main memory and five components of the CPU within the **Von Neumann architecture**.\n\n**Arithmetic logic unit (ALU)** — does the **calculations** and the **logical comparisons**. Adding two numbers, or deciding whether one is bigger than another, happens here.\n\n**Control unit (CU)** — **directs** everything. It fetches each instruction, decodes it to work out what is wanted, and sends the signals that make the other parts do it.\n\n**Clock** — sends out a regular **pulse** that keeps everything in step. Each pulse allows the next piece of work to happen, so the clock sets the pace of the whole processor.\n\n**Register** — a **very small, very fast** store **inside** the CPU, holding a single value being worked on right now. The specification says knowledge of **specific** registers is **not required**.\n\n**Bus** — the specification's own definition: **a collection of wires through which data or signals are transmitted from one component to another**.\n\n**Main memory** sits outside the CPU and holds the instructions and data currently in use. The CPU can read from and write to it directly.",
+        "body": "**The central processing unit is where instructions are actually carried out.** The specification asks for the role and operation of main memory and five components of the CPU within the **Von Neumann architecture**. In that design, program instructions and data are held together in the same main memory, and the CPU fetches both over the same buses.\n\n**Arithmetic logic unit (ALU)** — does the **calculations** and the **logical comparisons**. Adding two numbers, or deciding whether one is bigger than another, happens here.\n\n**Control unit (CU)** — **directs** everything. It fetches each instruction, decodes it to work out what is wanted, and sends the signals that make the other parts do it.\n\n**Clock** — sends out a regular **pulse** that keeps everything in step. Each pulse allows the next piece of work to happen, so the clock sets the pace of the whole processor.\n\n**Register** — a **very small, very fast** store **inside** the CPU, holding a single value being worked on right now. The specification says knowledge of **specific** registers is **not required**.\n\n**Bus** — the specification's own definition: **a collection of wires through which data or signals are transmitted from one component to another**.\n\n**Main memory** sits outside the CPU and holds the instructions and data currently in use. The CPU can read from and write to it directly.",
         "visuals": [
           {
             "type": "diagram",
@@ -226,7 +226,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "The fetch-execute cycle",
-        "body": "**The CPU continually reads instructions stored in main memory and carries them out.** It does this in a repeating three-stage cycle, and it never stops while the machine is on.\n\n**Fetch** — the next instruction is **fetched** to the CPU from **main memory**.\n\n**Decode** — the instruction is **decoded** to work out **what it is**.\n\n**Execute** — the instruction is **carried out**. This may include **reading from or writing to main memory**.\n\nThen the cycle begins again with the next instruction. Millions of times a second, every second the computer is running.\n\n**Two details that earn marks.** The instruction is fetched **from main memory** — say where it comes from, not just that it is fetched. And execution **may involve main memory again**, since many instructions read or write a value there.\n\n**Why the order matters.** The CPU cannot decode an instruction it has not fetched, and cannot execute one it has not decoded. Giving the three stages out of order loses the mark even when all three are named.\n\nThis cycle is what a **clock speed** measures the pace of, which is the next thing to look at.",
+        "body": "**The CPU continually reads instructions stored in main memory and carries them out.** It does this in a repeating three-stage cycle, and it never stops while the machine is on.\n\n**Fetch** — the next instruction is **fetched** to the CPU from **main memory**.\n\n**Decode** — the instruction is **decoded** to work out **what it is**.\n\n**Execute** — the instruction is **carried out**. This may include **reading from or writing to main memory**.\n\nThen the cycle begins again with the next instruction. Billions of times a second, every second the computer is running.\n\n**Two details worth including.** The instruction is fetched **from main memory** — say where it comes from, not just that it is fetched. And execution **may involve main memory again**, since many instructions read or write a value there.\n\n**Why the order matters.** The CPU cannot decode an instruction it has not fetched, and cannot execute one it has not decoded. So give the three stages in order, not just their names.\n\nThe **clock** sets the pace of this cycle: each stage happens on the clock's ticks, so a faster clock means more instructions per second. That is the next thing to look at.",
         "visuals": [
           {
             "type": "diagram",
@@ -278,7 +278,10 @@
           ],
           "discriminators": [],
           "accepted": [
-            "fetch, decode, execute"
+            "fetch, decode, execute",
+            "fetch, decode and execute",
+            "fetch decode execute",
+            "fetch → decode → execute"
           ]
         }
       },
@@ -382,7 +385,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Types of memory",
-        "body": "**The specification names four types of memory inside a computer**, and asks what each is used for and why it is needed.\n\n**RAM** — random access memory. Holds the **programs and data currently in use**. It is **volatile**: its contents are lost when the power is switched off.\n\n**ROM** — read only memory. Holds the **start-up instructions** the computer boots from. It is **non-volatile**, so it survives being switched off — which is exactly why it can hold the instructions needed before anything else is loaded.\n\n**Cache** — a small, very fast memory that holds **copies of data the CPU is likely to need next**, so the CPU waits for RAM less often.\n\n**Register** — a tiny store **inside the CPU** holding a **single value** being worked on right now. The fastest memory there is, and the smallest.\n\n**Volatile and non-volatile** is the distinction to be precise about: **volatile** means the contents are **lost when power is removed**.\n\n**Main memory against secondary storage.** The specification is exact here:\n\n- **Main memory** is any memory **directly accessible by the CPU**, apart from cache and registers.\n- **Secondary storage** is **non-volatile** storage **not directly accessible** by the CPU.\n\nSo the dividing line is **direct accessibility by the CPU**, not speed or size.",
+        "body": "**The specification names four types of memory inside a computer**, and asks what each is used for and why it is needed.\n\n**RAM** — random access memory. Holds the **programs and data currently in use**. It is **volatile**: its contents are lost when the power is switched off. When RAM is full, the operating system moves data it is not using out to secondary storage and back again, which is slow.\n\n**ROM** — read only memory. Holds the **start-up instructions** the computer boots from. It is **non-volatile**, so it survives being switched off — which is exactly why it can hold the instructions needed before anything else is loaded.\n\n**RAM can be read from and written to; ROM can only be read** — its contents are set when it is made and are not changed in normal use.\n\n**Cache** — a small, very fast memory that holds **copies of data the CPU is likely to need next**, so the CPU waits for RAM less often.\n\n**Register** — a tiny store **inside the CPU** holding a **single value** being worked on right now. The fastest memory there is, and the smallest.\n\n**Volatile and non-volatile** is the distinction to be precise about: **volatile** means the contents are **lost when power is removed**.\n\n**Main memory against secondary storage.** The specification is exact here:\n\n- **Main memory** is any memory **directly accessible by the CPU**, apart from cache and registers.\n- **Secondary storage** is **non-volatile** storage **not directly accessible** by the CPU.\n\nSo the dividing line is **direct accessibility by the CPU**, not speed or size.",
         "visuals": [
           {
             "type": "diagram",
@@ -496,7 +499,7 @@
         "id": "s6",
         "kind": "grade-9",
         "title": "Going deeper",
-        "body": "**Give all three stages, in order, and say where memory is involved.** *The instruction is fetched **from main memory**, decoded to work out what it is, then executed — which may itself **read from or write to main memory**.* Naming the stages alone is a partial answer.\n\n**Use the specification's definition of a bus**: **a collection of wires through which data or signals are transmitted from one component to another**. Nothing more elaborate is wanted, and vaguer answers score less.\n\n**Do not learn specific registers.** The specification says knowledge of specific registers is **not required**. Know what a register **is** — a tiny, extremely fast store inside the CPU holding one value — and spend the time elsewhere.\n\n**Name the catch on each performance factor.** Extra **cores** help only if the work can be **divided**; a task that must run in sequence gains almost nothing. A higher **clock speed** produces more **heat**, which is why speeds have not kept climbing. **Cache** is expensive, so it stays small. Stating the limit is what separates a grade 9 answer from a list.\n\n**Get the main-memory boundary right.** Main memory is what the CPU can access **directly** (excluding cache and registers); secondary storage is **non-volatile** storage the CPU **cannot** access directly. The line is **direct accessibility**, not speed, size or price — a very common mistake.\n\n**Explain why ROM must be non-volatile.** When the power comes on, RAM is empty. Something has to tell the computer what to do first, and it must have survived being switched off. That is the reason ROM exists, and it answers \"why are both needed\" properly.\n\n**Watch for questions where the answer is RAM, not the CPU.** A machine that slows down with many programs open is usually short of **RAM** — it has to keep moving data to secondary storage, which is far slower. A faster CPU would not fix that. Recognising when the bottleneck is not the processor is exactly the applied thinking these questions test.",
+        "body": "**Give all three stages, in order, and say where memory is involved.** *The instruction is fetched **from main memory**, decoded to work out what it is, then executed — which may itself **read from or write to main memory**.* Naming the stages alone is a partial answer.\n\n**Use the specification's definition of a bus**: **a collection of wires through which data or signals are transmitted from one component to another**. Nothing more elaborate is wanted.\n\n**Do not learn specific registers.** The specification says knowledge of specific registers is **not required**. Know what a register **is** — a tiny, extremely fast store inside the CPU holding one value — and spend the time elsewhere.\n\n**Name the catch on each performance factor.** Extra **cores** help only if the work can be **divided**; a task that must run in sequence gains almost nothing. A higher **clock speed** produces more **heat**, which is why speeds have not kept climbing. **Cache** is expensive, so it stays small. Stating the limit is what separates a grade 9 answer from a list.\n\n**Get the main-memory boundary right.** Main memory is what the CPU can access **directly** (excluding cache and registers); secondary storage is **non-volatile** storage the CPU **cannot** access directly. The line is **direct accessibility**, not speed, size or price.\n\n**Explain why ROM must be non-volatile.** When the power comes on, RAM is empty. Something has to tell the computer what to do first, and it must have survived being switched off. That is the reason ROM exists, and it answers \"why are both needed\" properly.\n\n**Watch for questions where the answer is RAM, not the CPU.** A machine that slows down with many programs open is usually short of **RAM** — it has to keep moving data to secondary storage, which is far slower. A faster CPU would not fix that. Recognising when the bottleneck is not the processor is exactly the applied thinking these questions test.",
         "visuals": [
           {
             "type": "diagram",
@@ -642,7 +645,10 @@
       ],
       "discriminators": [],
       "accepted": [
-        "fetch, decode, execute"
+        "fetch, decode, execute",
+        "fetch, decode and execute",
+        "fetch decode execute",
+        "fetch → decode → execute"
       ]
     },
     {
@@ -809,28 +815,31 @@
     },
     {
       "id": "q8",
-      "type": "short-text",
+      "type": "multiple-choice",
       "prompt": "What does volatile mean when describing memory?",
+      "options": [
+        "Its contents can be read but not changed in normal use",
+        "It is the fastest kind of memory in the computer",
+        "It can only be reached by the CPU through the cache",
+        "Its contents are lost when the power is switched off"
+      ],
+      "correct": [
+        3
+      ],
       "marks": 1,
       "gradeBand": "6-7",
       "skill": "volatility",
       "calculator": "either",
       "tags": [],
-      "solution": "**Volatile** means the contents are **lost when the power is removed**. RAM is volatile; ROM is not.",
+      "solution": "**Volatile** means the contents are **lost when the power is switched off**. RAM is volatile; ROM is not. Being readable but not changeable describes ROM, and speed has nothing to do with volatility.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "contents are lost when the power is turned off"
+          "description": "contents are lost when the power is switched off"
         }
       ],
-      "discriminators": [],
-      "accepted": [
-        "contents are lost when the power is turned off",
-        "the contents are lost without power",
-        "data is lost when power is removed",
-        "contents are lost without power"
-      ]
+      "discriminators": []
     },
     {
       "id": "q9",
@@ -1164,6 +1173,34 @@
         }
       ],
       "modelAnswer": "**Clock speed** is the number of cycles the clock produces each second — a 3 GHz processor gives **3 000 000 000** per second. More cycles means more instructions carried out in the same time, so a higher clock speed makes every part of the work faster. The limit is **heat**: raising the clock speed raises heat output, which has to be removed, and this is why speeds have not simply kept climbing.\n\n**Cache size** matters because cache holds **copies of data the CPU is likely to need next**, and reaching it is much quicker than reaching main memory. A larger cache means the processor spends less time **waiting**. Cache is expensive, which is why it stays comparatively small rather than being enlarged indefinitely.\n\n**Number of cores** is the factor that matters most in this particular case. Each core can run **its own fetch-execute cycle**, so several instructions can be processed **at the same time**. Crucially, extra cores only help if the work can be **divided between them** — a task whose every step depends on the previous one gains almost nothing, and would run at much the same speed on four cores as on one.\n\nVideo editing is unusually well suited to this. Different frames, or different sections of the timeline, can be processed **independently**, so the work divides cleanly and the additional cores are genuinely used. For work that cannot be split, the money would be better spent on clock speed.\n\n**RAM** is not part of the CPU but often decides whether the CPU is used at all. Video files are very large, and if there is not enough RAM to hold the footage being worked on, the computer must keep moving data between RAM and **secondary storage**, which is far slower. The processor then spends its time **waiting** rather than working, and a faster CPU would make no difference at all.\n\n**Priority.** I would ensure there is **enough RAM** first, because insufficient RAM creates a bottleneck that no amount of processor speed can overcome. Once RAM is adequate, I would prioritise a **higher core count**, since video editing divides well across cores and that gives the largest gain for the money. **Clock speed** comes next, helping everything somewhat, and **cache size** last — it is rarely a buyer's choice in practice and its effect is the smallest of the four."
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "Which statement describes a difference between RAM and ROM?",
+      "options": [
+        "RAM keeps its contents with the power off, and ROM does not",
+        "RAM can be read and written, while ROM can normally only be read",
+        "RAM is inside the CPU, while ROM is outside the processor",
+        "RAM holds the start-up instructions, and ROM holds open programs"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "RAM against ROM",
+      "calculator": "either",
+      "tags": [],
+      "solution": "RAM can be **read from and written to**, so the programs and data in use can change. ROM's contents are set when it is made and are **only read** in normal use. The other statements swap RAM and ROM round, or put RAM inside the CPU, which is where the registers are.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RAM is read and written; ROM is normally only read"
+        }
+      ],
+      "discriminators": []
     }
   ],
   "examTechnique": {
@@ -1199,9 +1236,10 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q19"
       ],
-      "suggestedMinutes": 18
+      "suggestedMinutes": 20
     },
     "advanced": {
       "level": "advanced",
@@ -1235,7 +1273,8 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q19"
     ],
     "sampleSize": 10
   },

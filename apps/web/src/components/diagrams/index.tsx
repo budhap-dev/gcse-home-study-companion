@@ -51,6 +51,7 @@ import { FrequencyTree } from './FrequencyTree.tsx'
 import { Flowchart } from './Flowchart.tsx'
 import { SizeCompare } from './SizeCompare.tsx'
 import { AngleFigure } from './AngleFigure.tsx'
+import { NetworkTopology } from './NetworkTopology.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -110,6 +111,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'frequency-tree': FrequencyTree,
   'flowchart': Flowchart,
   'size-compare': SizeCompare,
+  'network-topology': NetworkTopology,
 }
 
 export const INK = '#1e2330'

@@ -27,7 +27,7 @@
     {
       "kind": "check",
       "title": "Does the tree travel with the file?",
-      "body": "The decoder cannot read the bits without the tree or code table, so it is stored alongside the data. That overhead is why Huffman pays off on long files and barely helps on short ones. It is usually the evaluation mark."
+      "body": "The decoder cannot read the bits without the tree or code table, so it is stored alongside the data. That overhead is why Huffman pays off on long files and barely helps on short ones. It is the first thing to weigh when judging whether Huffman is worth it."
     }
   ],
   "why": {
@@ -65,12 +65,12 @@
             ],
             "highlight": 3
           },
-          "alt": "A table of run length encoding on a row of twelve pixels: each run of the same colour is written as a count followed by the colour, and the twelve characters come out as eight"
+          "alt": "A table of run length encoding on a row of twelve pixels: each run of the same colour is written as a count followed by the colour, and the twelve characters come out as six"
         }
       },
       {
         "title": "Why run length encoding can make a file bigger",
-        "body": "Give it `abcabc`. Every run is one character long, so every character becomes a pair: `1a1b1c1a1b1c`. 6 characters have turned into 12 — the file has **doubled**.\n\nThis is the part exam questions are built on, because it is the part that shows you understand the method rather than the recipe. Run length encoding wins on runs and loses on variety, and text is mostly variety, which is why nothing compresses a novel this way.",
+        "body": "Give it `abcabc`. Every run is one character long, so every character becomes a pair: `1a1b1c1a1b1c`. 6 characters have turned into 12 — the file has **doubled**.\n\nThis is the part that shows you understand the method rather than the recipe. Run length encoding wins on runs and loses on variety, and text is mostly variety, which is why nothing compresses a novel this way.",
         "visual": {
           "type": "diagram",
           "component": "size-compare",
@@ -146,7 +146,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Why files are compressed",
-        "body": "**Compression** means storing the same information in **fewer bits**. Nothing is thrown away by the two methods on this specification: the original can be rebuilt exactly.\n\nIt matters for three reasons, and an exam answer usually wants two of them:\n\n- **Storage.** A smaller file takes less room on a disk or a phone.\n- **Transmission.** Fewer bits take less time to send, and use less of a mobile data allowance.\n- **Cost.** Less bandwidth and less storage to pay for, which is why streaming services care.\n\nAQA asks for exactly two methods: **run length encoding** and **Huffman coding**. Both spot **repetition** and store it more cleverly.",
+        "body": "**Compression** means storing the same information in **fewer bits**. Nothing is thrown away by the two methods on this specification: the original can be rebuilt exactly.\n\nIt matters for three reasons:\n\n- **Storage.** A smaller file takes less room on a disk or a phone.\n- **Transmission.** Fewer bits take less time to send, and use less of a mobile data allowance.\n- **Cost.** Less bandwidth and less storage to pay for, which is why streaming services care.\n\nAQA asks for exactly two methods: **run length encoding** and **Huffman coding**. Both spot **repetition** and store it more cleverly.",
         "visuals": [
           {
             "type": "diagram",
@@ -579,7 +579,7 @@
               },
               {
                 "text": "Saving: 77 − 21 = **56 bits**",
-                "note": "the question almost always asks for this"
+                "note": "the number a question about saving wants"
               },
               {
                 "text": "That is about a 72% reduction",
@@ -690,7 +690,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: choosing the method, and the hidden cost",
-        "body": "Two points separate a top answer.\n\n**The tree has to be stored too.** The decoder cannot read the bits without knowing the codes, so the tree or code table travels with the compressed data. On a short message that overhead can wipe out the saving, which is why Huffman pays off on **long** files where the same tree serves thousands of characters.\n\n**The methods suit different data.** RLE wants **long runs of identical values**, so it is at home on simple images with blocks of one colour. Huffman wants **uneven frequencies**, which is exactly what ordinary text has: e and t everywhere, q and z almost never. On text that keeps changing, RLE makes the file bigger while Huffman still makes a substantial saving. The 72% saved on *mississippi* is unusually high because that word uses only four different letters; on ordinary English prose Huffman saves nearer 40%.",
+        "body": "Two points separate a top answer.\n\n**The tree has to be stored too.** The decoder cannot read the bits without knowing the codes, so the tree or code table travels with the compressed data. On a short message that overhead can wipe out the saving, which is why Huffman pays off on **long** files where the same tree serves thousands of characters.\n\n**The methods suit different data.** RLE wants **long runs of identical values**, so it is at home on simple images with blocks of one colour. Huffman wants **uneven frequencies**, which is exactly what ordinary text has: e and t everywhere, q and z almost never. On text that keeps changing, RLE makes the file bigger while Huffman still makes a substantial saving. The 72% saved on *mississippi* is unusually high because that word uses only four different letters; ordinary English prose uses far more, so the saving there is smaller.",
         "visuals": [
           {
             "type": "diagram",
@@ -973,8 +973,10 @@
       "accepted": [
         "4a3b1c",
         "4a, 3b, 1c",
-        "(4,a)(3,b)(1,c)"
-      ]
+        "(4,a)(3,b)(1,c)",
+        "4a; 3b; 1c"
+      ],
+      "matchCase": true
     },
     {
       "id": "q6",
@@ -1101,7 +1103,8 @@
       "discriminators": [],
       "accepted": [
         "m"
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q11",
@@ -1228,7 +1231,8 @@
       ],
       "accepted": [
         "banana"
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q15",
@@ -1465,6 +1469,222 @@
         }
       ],
       "modelAnswer": "**Run length encoding** replaces each run of identical values with a **frequency/data pair**. It suits data with **long runs**: a simple icon, a logo, or a black and white scan where large areas are a single colour.\n\nIt is a **poor choice** for a photograph or for ordinary English text. The values change constantly, so nearly every run is one long, and storing a frequency beside each value makes the file **larger** than the original.\n\n**Huffman coding** gives the **most common** characters the **shortest** bit codes. That suits ordinary text, where **e** and **t** appear far more often than **q** and **z**, so the short codes get used over and over.\n\nIt is a **poor choice** when every character appears about **equally often**, because no code can then be much shorter than the rest and there is little to gain. It also struggles on a **very short message**: the tree or code table must be stored alongside the data, and that overhead can cost more than the compression saves."
+    },
+    {
+      "id": "q20",
+      "type": "short-text",
+      "prompt": "One row of a black and white bitmap is stored as the bits **0000011100000011**. Represent this row using run length encoding as frequency/data pairs.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "run length encoding",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Count each run: five 0s, three 1s, six 0s, then two 1s. Frequency first, then the data: **5 0 3 1 6 0 2 1**. Check: 5 + 3 + 6 + 2 = 16, the length of the row.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "splits the row into runs of five 0s, three 1s, six 0s and two 1s"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5 0 3 1 6 0 2 1"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "5 0 3 1 6 0 2 1",
+        "5 0, 3 1, 6 0, 2 1",
+        "5 0; 3 1; 6 0; 2 1",
+        "(5,0)(3,1)(6,0)(2,1)",
+        "(5, 0), (3, 1), (6, 0), (2, 1)"
+      ]
+    },
+    {
+      "id": "q21",
+      "type": "numeric",
+      "prompt": "The Huffman tree shown was built from the word **cheese**. The small number directly under each letter is how many times it appears, and the bold bits below that are its code (each left branch is 0 and each right branch is 1). How many bits does the word *cheese* take when it is stored with these codes?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading a Huffman tree",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Read each code off the tree: e = 0 (1 bit), s = 10 (2 bits), c = 110 and h = 111 (3 bits each). Then frequency × code length: e is 3 × 1 = 3, s is 1 × 2 = 2, c is 1 × 3 = 3 and h is 1 × 3 = 3. Altogether **11** bits, against 6 × 7 = 42 in ASCII.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reads the code lengths off the tree and multiplies by each frequency"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11"
+        }
+      ],
+      "discriminators": [],
+      "visual": {
+        "type": "diagram",
+        "component": "huffman-tree",
+        "props": {
+          "tree": {
+            "weight": 6,
+            "left": {
+              "char": "e",
+              "weight": 3
+            },
+            "right": {
+              "weight": 3,
+              "left": {
+                "char": "s",
+                "weight": 1
+              },
+              "right": {
+                "weight": 2,
+                "left": {
+                  "char": "c",
+                  "weight": 1
+                },
+                "right": {
+                  "char": "h",
+                  "weight": 1
+                }
+              }
+            }
+          },
+          "caption": "Built from cheese. Left is 0, right is 1."
+        },
+        "alt": "A Huffman tree built from the word cheese. The root splits to the letter e on the left, weight 3, code 0, and on the right to a branch that splits to s, weight 1, code 10, and to a branch holding c, code 110, and h, code 111, each of weight 1."
+      },
+      "answer": 11,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "type": "short-text",
+      "prompt": "Using the Huffman tree shown, built from the word **cheese** with each left branch 0 and each right branch 1, decode the bit string **11011101010**.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "reading a Huffman tree",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Walk down from the root and start again at the root each time a letter is reached: 110 is **c**, 111 is **h**, 0 is **e**, 10 is **s** and 10 is **s**. The word is **chess**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "returns to the root after each letter"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "110 decoded as c and 111 as h"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "chess"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "visual": {
+        "type": "diagram",
+        "component": "huffman-tree",
+        "props": {
+          "tree": {
+            "weight": 6,
+            "left": {
+              "char": "e",
+              "weight": 3
+            },
+            "right": {
+              "weight": 3,
+              "left": {
+                "char": "s",
+                "weight": 1
+              },
+              "right": {
+                "weight": 2,
+                "left": {
+                  "char": "c",
+                  "weight": 1
+                },
+                "right": {
+                  "char": "h",
+                  "weight": 1
+                }
+              }
+            }
+          },
+          "caption": "Built from cheese. Left is 0, right is 1."
+        },
+        "alt": "A Huffman tree built from the word cheese. The root splits to the letter e on the left, weight 3, code 0, and on the right to a branch that splits to s, weight 1, code 10, and to a branch holding c, code 110, and h, code 111, each of weight 1."
+      },
+      "accepted": [
+        "chess"
+      ],
+      "matchCase": true
+    },
+    {
+      "id": "q23",
+      "type": "short-text",
+      "prompt": "The Huffman tree shown was built from the word **cheese**, with the codes left off. Each left branch is 0 and each right branch is 1. What is the Huffman code for the letter **c**?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading a Huffman tree",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Walk from the root down to c, writing a bit for each branch: right (1), right (1), then left (0). The code for c is **110**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "110"
+        }
+      ],
+      "discriminators": [],
+      "visual": {
+        "type": "diagram",
+        "component": "huffman-tree",
+        "props": {
+          "tree": {
+            "weight": 6,
+            "left": {
+              "char": "e",
+              "weight": 3
+            },
+            "right": {
+              "weight": 3,
+              "left": {
+                "char": "s",
+                "weight": 1
+              },
+              "right": {
+                "weight": 2,
+                "left": {
+                  "char": "c",
+                  "weight": 1
+                },
+                "right": {
+                  "char": "h",
+                  "weight": 1
+                }
+              }
+            }
+          },
+          "caption": "Built from cheese. Left is 0, right is 1.",
+          "hideCodes": true
+        },
+        "alt": "A Huffman tree built from the word cheese, drawn without its codes. From the root the left branch leads to the letter e, weight 3. The right branch leads to a node that splits left to s, weight 1, and right to a node that splits left to c and right to h, each of weight 1."
+      },
+      "accepted": [
+        "110"
+      ],
+      "matchCase": true
     }
   ],
   "worksheets": {
@@ -1486,7 +1706,10 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q20",
+        "q21",
+        "q23"
       ],
       "suggestedMinutes": 16
     },
@@ -1501,13 +1724,14 @@
         "q16",
         "q17",
         "q18",
-        "q19"
+        "q19",
+        "q22"
       ],
       "suggestedMinutes": 45
     }
   },
   "examTechnique": {
-    "body": "Huffman questions nearly always end in a calculation, and the calculation is always the same shape: **frequency × code length**, added up, then compared with **7 bits per character** for ASCII. Write both numbers down even when only the saving is asked for, because the method marks live there.\n\nRead codes off the tree carefully. Left is 0 and right is 1, and the code ends at a leaf. When decoding, return to the **root** after every character; students who carry on down the tree get nonsense.\n\nFor run length encoding, write the pairs as **frequency then data**, and check the frequencies add up to the length of the original. Include the runs of length one: they still need a pair.\n\nAQA asks for these two methods only. There is no need to write about lossy or lossless compression, and doing so wastes time that the calculation marks need.",
+    "body": "Huffman questions nearly always end in a calculation, and the calculation is always the same shape: **frequency × code length**, added up, then compared with **7 bits per character** for ASCII. Write both numbers down even when only the saving is asked for, because the working shows the method.\n\nRead codes off the tree carefully. Left is 0 and right is 1, and the code ends at a leaf. When decoding, return to the **root** after every character; carrying on down the tree gives nonsense.\n\nFor run length encoding, write the pairs as **frequency then data**, and check the frequencies add up to the length of the original. Include the runs of length one: they still need a pair.\n\nAQA asks for these two methods only. There is no need to write about lossy or lossless compression, and doing so wastes time better spent on the calculation.",
     "examinerErrors": [
       "Forgetting that a run of one still needs a pair, so 1c is written as just c.",
       "Writing RLE pairs the wrong way round. The frequency comes first, then the data.",
@@ -1538,7 +1762,11 @@
       "q14",
       "q15",
       "q16",
-      "q17"
+      "q17",
+      "q20",
+      "q21",
+      "q22",
+      "q23"
     ],
     "sampleSize": 10
   },

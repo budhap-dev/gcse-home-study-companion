@@ -23,7 +23,7 @@
     {
       "kind": "spot",
       "title": "Strings need quotes, numbers do not",
-      "body": "`WHERE YearGroup = 11` takes no quotes because it is a number. `WHERE ClubName = 'Drama'` needs **single quotes** because it is text. Dropping the quotes is the commonest SQL error in the exam."
+      "body": "`WHERE YearGroup = 11` takes no quotes because it is a number. `WHERE ClubName = 'Drama'` needs quotes because it is text (single quotes are standard). Leaving the quotes off text is a common SQL error."
     },
     {
       "kind": "check",
@@ -82,30 +82,26 @@
           "props": {
             "title": "WHERE YearGroup = 11 ORDER BY Name ASC",
             "columns": [
-              "Name",
-              "YearGroup"
+              "Name"
             ],
             "rows": [
               [
-                "Amara",
-                "11"
+                "Amara"
               ],
               [
-                "Chloe",
-                "11"
+                "Chloe"
               ],
               [
-                "Elif",
-                "11"
+                "Elif"
               ]
             ]
           },
-          "alt": "The result of a SQL query selecting the name and year group of every Year 11 student ordered by name, giving three rows in alphabetical order"
+          "alt": "The result of a SQL query selecting the name of every Year 11 student ordered by name, giving three rows in alphabetical order: Amara, Chloe, Elif"
         }
       },
       {
         "title": "Why two tables need the join written down",
-        "body": "*Who is in Drama?* needs both tables: the name of the club is in `Club`, the students are in `Student`, and nothing connects them until you say so. The line that says so is `WHERE Student.ClubID = Club.ClubID` — the foreign key matched to the primary key it points at.\n\nAdd `AND Club.ClubName = 'Drama'` to filter, and the answer is **Amara and Elif**. Leave the join out and every student is paired with every club, which is where the marks go: the join condition is not decoration, it is the sentence that makes the two tables one.",
+        "body": "*Who is in Drama?* needs both tables: the name of the club is in `Club`, the students are in `Student`, and nothing connects them until you say so. The line that says so is `WHERE Student.ClubID = Club.ClubID` — the foreign key matched to the primary key it points at.\n\nAdd `AND Club.ClubName = 'Drama'` to filter, and the answer is **Amara and Elif**. Leave the join out and every student is paired with every club, which is why the join condition is not decoration: it is the sentence that makes the two tables one.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -269,7 +265,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Why split the data into tables",
-        "body": "**The specification says a relational database facilitates the elimination of data inconsistency and data redundancy.** Those are two different problems, and the difference is examined.\n\n**Data redundancy** is storing the **same data more than once**.\n\nSuppose there were no `Club` table, and each student record simply held the club's name. There are **5** students, so the club names would be written out **5** times instead of the **3** times needed. The same text is repeated for no reason, wasting space and effort.\n\n**Data inconsistency** is what happens **next**. If the Drama club is renamed, every row holding the old name has to be changed. Miss one — or mistype one as \"Dramaa\" — and the database now holds **two different answers to the same question**, with nothing to say which is right.\n\n**Splitting the data fixes both.** The name \"Drama\" is stored **once**, in the `Club` table. Students refer to it by `ClubID`. Renaming the club means changing **one** value in **one** place, and every student automatically follows.\n\n**Note the relationship between the two.** Redundancy is the **cause**; inconsistency is the **damage it eventually does**. Answers that treat them as the same thing lose a mark.",
+        "body": "**The specification says a relational database facilitates the elimination of data inconsistency and data redundancy.** Those are two different problems, and the difference matters.\n\n**Data redundancy** is storing the **same data more than once**.\n\nSuppose there were no `Club` table, and each student record simply held the club's name. There are **5** students, so the club names would be written out **5** times instead of the **3** times needed. The same text is repeated for no reason, wasting space and effort.\n\n**Data inconsistency** is what happens **next**. If the Drama club is renamed, every row holding the old name has to be changed. Miss one — or mistype one as \"Dramaa\" — and the database now holds **two different answers to the same question**, with nothing to say which is right.\n\n**Splitting the data fixes both.** The name \"Drama\" is stored **once**, in the `Club` table. Students refer to it by `ClubID`. Renaming the club means changing **one** value in **one** place, and every student automatically follows.\n\n**Note the relationship between the two.** Redundancy is the **cause**; inconsistency is the **damage it eventually does**. Treating them as the same thing is a common mistake.",
         "visuals": [
           {
             "type": "diagram",
@@ -561,7 +557,7 @@
         "id": "s6",
         "kind": "grade-9",
         "title": "Going deeper",
-        "body": "**Quote text, never numbers.** `WHERE ClubName = 'Drama'` needs **single quotes**; `WHERE YearGroup = 11` must not have them. This is the most frequent SQL error in the exam and it is entirely avoidable.\n\n**Keep the keywords in order.** `SELECT … FROM … WHERE … ORDER BY …`. Writing `WHERE` before `FROM` is not a small slip — the statement is simply invalid.\n\n**State the join condition when using two tables.** `WHERE Student.ClubID = Club.ClubID` is what connects them. Without it every student is paired with every club, and the answer is nonsense. Use `Table.Field` so it is clear which field is which.\n\n**Distinguish redundancy from inconsistency.** Redundancy is storing the same data **more than once**; inconsistency is copies **disagreeing** after one is changed. Redundancy is the **cause**, inconsistency the **damage**. Treating them as synonyms loses a mark that is simply there for the taking.\n\n**Explain a primary key by what breaks without one.** If two records shared an ID, no query could reliably pick out one of them, and any foreign key pointing at that ID would be ambiguous. Uniqueness is not an arbitrary rule — it is what makes the links work.\n\n**Be exact about which table holds the foreign key.** In this example `ClubID` is the **primary key of `Club`** and a **foreign key in `Student`**. The same field name plays two roles, and saying which is which in which table is what a precise answer does.\n\n**Take the WHERE clause on UPDATE and DELETE seriously.** Omitting it changes or deletes **every record**. An answer that mentions this risk when asked about DELETE is showing judgement, not just syntax.\n\n**Only select the fields you need.** `SELECT *` returns everything, which is more data than required and slower. Asking for `Name` alone is better practice, and questions usually name the fields wanted.",
+        "body": "**Quote text, not numbers.** `WHERE ClubName = 'Drama'` needs quotes (single quotes are standard); `WHERE YearGroup = 11` is written without them, because YearGroup holds a number. Mixing these up is a common SQL error, and an avoidable one.\n\n**Keep the keywords in order.** `SELECT … FROM … WHERE … ORDER BY …`. Writing `WHERE` before `FROM` is not a small slip — the statement is simply invalid.\n\n**State the join condition when using two tables.** `WHERE Student.ClubID = Club.ClubID` is what connects them. Without it every student is paired with every club, and the answer is nonsense. Use `Table.Field` so it is clear which field is which.\n\n**Distinguish redundancy from inconsistency.** Redundancy is storing the same data **more than once**; inconsistency is copies **disagreeing** after one is changed. Redundancy is the **cause**, inconsistency the **damage**. Treating them as synonyms throws away a distinction that is simple to make.\n\n**Explain a primary key by what breaks without one.** If two records shared an ID, no query could reliably pick out one of them, and any foreign key pointing at that ID would be ambiguous. Uniqueness is not an arbitrary rule — it is what makes the links work.\n\n**Be exact about which table holds the foreign key.** In this example `ClubID` is the **primary key of `Club`** and a **foreign key in `Student`**. The same field name plays two roles, and saying which is which in which table is what a precise answer does.\n\n**Take the WHERE clause on UPDATE and DELETE seriously.** Omitting it changes or deletes **every record**. An answer that mentions this risk when asked about DELETE is showing judgement, not just syntax.\n\n**Only select the fields you need.** `SELECT *` returns everything, which is more data than required and slower. Asking for `Name` alone is better practice, and questions usually name the fields wanted.",
         "visuals": [
           {
             "type": "diagram",
@@ -581,7 +577,7 @@
                 [
                   "numbers",
                   "WHERE YearGroup = '11'",
-                  "WHERE YearGroup = 11"
+                  "YearGroup is a number: = 11, no quotes"
                 ],
                 [
                   "keyword order",
@@ -619,7 +615,7 @@
         "id": "s7",
         "kind": "summary",
         "title": "Summary",
-        "body": "- A **database** is an organised, persistent collection of data.\n- A **relational database** stores data in **linked tables**.\n- **Table** — one kind of thing. **Record** — one row. **Field** — one column.\n- **Data type** — what kind of value a field holds.\n- A **primary key uniquely identifies** each record in its table.\n- A **foreign key** refers to the **primary key of another table**.\n- **Redundancy** is storing the same data **more than once**.\n- **Inconsistency** is copies **disagreeing** after a change.\n- Redundancy is the **cause**; inconsistency is the **damage**.\n- Linked tables store each fact **once**, so a change is made in **one place**.\n- Retrieval: `SELECT … FROM … WHERE … ORDER BY … ASC | DESC`.\n- **Text needs single quotes**; numbers do not.\n- Two tables need a **join condition** matching foreign key to primary key.\n- `INSERT INTO table (fields) VALUES (values)` adds a record.\n- `UPDATE … SET … WHERE …` and `DELETE FROM … WHERE …` — **without WHERE, every record is affected**.",
+        "body": "- A **database** is an organised, persistent collection of data.\n- A **relational database** stores data in **linked tables**.\n- **Table** — one kind of thing. **Record** — one row. **Field** — one column.\n- **Data type** — what kind of value a field holds.\n- A **primary key uniquely identifies** each record in its table.\n- A **foreign key** refers to the **primary key of another table**.\n- **Redundancy** is storing the same data **more than once**.\n- **Inconsistency** is copies **disagreeing** after a change.\n- Redundancy is the **cause**; inconsistency is the **damage**.\n- Linked tables store each fact **once**, so a change is made in **one place**.\n- Retrieval: `SELECT … FROM … WHERE … ORDER BY … ASC | DESC`.\n- **Text needs quotes** (single quotes are standard); numbers do not.\n- Two tables need a **join condition** matching foreign key to primary key.\n- `INSERT INTO table (fields) VALUES (values)` adds a record.\n- `UPDATE … SET … WHERE …` and `DELETE FROM … WHERE …` — **without WHERE, every record is affected**.",
         "visuals": [
           {
             "type": "diagram",
@@ -792,7 +788,7 @@
     {
       "id": "q5",
       "type": "short-text",
-      "prompt": "Using the Student table, write SQL to list the names of all Year 10 students. Write the full statement.",
+      "prompt": "**Student**\n\n| StudentID | Name | YearGroup | ClubID |\n|---|---|---|---|\n| 1 | Amara | 11 | 2 |\n| 2 | Ben | 10 | 1 |\n| 3 | Chloe | 11 | 1 |\n| 4 | Dev | 9 | 3 |\n| 5 | Elif | 11 | 2 |\n\nWrite SQL to list the names of all Year 10 students in this Student table. Write the full statement.",
       "marks": 1,
       "gradeBand": "6-7",
       "skill": "writing a query",
@@ -808,7 +804,10 @@
       ],
       "discriminators": [],
       "accepted": [
-        "SELECT Name FROM Student WHERE YearGroup = 10"
+        "SELECT Name FROM Student WHERE YearGroup = 10",
+        "SELECT Student.Name FROM Student WHERE YearGroup = 10",
+        "SELECT Name FROM Student WHERE Student.YearGroup = 10",
+        "SELECT Student.Name FROM Student WHERE Student.YearGroup = 10"
       ]
     },
     {
@@ -829,7 +828,7 @@
       "skill": "quoting values",
       "calculator": "either",
       "tags": [],
-      "solution": "**Text** values need **single quotes**; numeric values must not have them. Quoting a number, or failing to quote text, are the two commonest SQL errors in the exam.",
+      "solution": "**Text** values need quotes (single quotes are standard); numbers are written without them. Quoting a number, or failing to quote text, are two common SQL errors.",
       "markScheme": [
         {
           "code": "B1",
@@ -842,7 +841,7 @@
     {
       "id": "q7",
       "type": "numeric",
-      "prompt": "Using the Student table in this topic, how many records does `SELECT Name FROM Student WHERE YearGroup = 11` return?",
+      "prompt": "**Student**\n\n| StudentID | Name | YearGroup | ClubID |\n|---|---|---|---|\n| 1 | Amara | 11 | 2 |\n| 2 | Ben | 10 | 1 |\n| 3 | Chloe | 11 | 1 |\n| 4 | Dev | 9 | 3 |\n| 5 | Elif | 11 | 2 |\n\nHow many records does `SELECT Name FROM Student WHERE YearGroup = 11` return from this Student table?",
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "predicting a query result",
@@ -897,7 +896,7 @@
     {
       "id": "q9",
       "type": "short-text",
-      "prompt": "Write SQL to add a record to the Club table with ClubID 4 and ClubName Debating. Write the full statement.",
+      "prompt": "The Club table has the fields ClubID and ClubName. Write SQL to add a record to it with ClubID 4 and ClubName Debating. Write the full statement.",
       "marks": 1,
       "gradeBand": "6-7",
       "skill": "inserting a record",
@@ -913,7 +912,9 @@
       ],
       "discriminators": [],
       "accepted": [
-        "INSERT INTO Club (ClubID, ClubName) VALUES (4, 'Debating')"
+        "INSERT INTO Club (ClubID, ClubName) VALUES (4, 'Debating')",
+        "INSERT INTO Club VALUES (4, 'Debating')",
+        "INSERT INTO Club (ClubName, ClubID) VALUES ('Debating', 4)"
       ]
     },
     {
@@ -979,10 +980,10 @@
       "type": "multiple-choice",
       "prompt": "A query uses two tables but omits the condition linking them. What is the result?",
       "options": [
-        "Every record of one table is paired with every record of the other",
-        "The query returns no records at all",
-        "Only records from the first table are returned",
-        "The database rejects the statement as invalid"
+        "Each record of one table is paired with each of the other",
+        "The query runs but returns no records at all",
+        "Only the records from the first table named are returned",
+        "The database rejects the statement as invalid SQL"
       ],
       "correct": [
         0
@@ -992,7 +993,7 @@
       "skill": "the join condition",
       "calculator": "either",
       "tags": [],
-      "solution": "Without `WHERE Student.ClubID = Club.ClubID`, every combination is returned — 5 students × 3 clubs = 15 meaningless rows. The statement is **valid**, which is what makes the mistake dangerous: it runs and gives a confident wrong answer.",
+      "solution": "Without a join condition such as `WHERE Student.ClubID = Club.ClubID`, every record of one table is paired with every record of the other: a table of 5 students and a table of 3 clubs give 5 × 3 = 15 meaningless rows. The statement is **valid**, which is what makes the mistake dangerous: it runs and gives a confident wrong answer.",
       "markScheme": [
         {
           "code": "B1",
@@ -1037,7 +1038,7 @@
     {
       "id": "q14",
       "type": "short-text",
-      "prompt": "Write SQL to change the YearGroup of the student with StudentID 2 to 11. Write the full statement.",
+      "prompt": "**Student**\n\n| StudentID | Name | YearGroup | ClubID |\n|---|---|---|---|\n| 1 | Amara | 11 | 2 |\n| 2 | Ben | 10 | 1 |\n| 3 | Chloe | 11 | 1 |\n| 4 | Dev | 9 | 3 |\n| 5 | Elif | 11 | 2 |\n\nWrite SQL to change the YearGroup of the student with StudentID 2 in this Student table to 11. Write the full statement.",
       "marks": 1,
       "gradeBand": "8-9",
       "skill": "updating a record",
@@ -1055,7 +1056,8 @@
         "evaluate"
       ],
       "accepted": [
-        "UPDATE Student SET YearGroup = 11 WHERE StudentID = 2"
+        "UPDATE Student SET YearGroup = 11 WHERE StudentID = 2",
+        "UPDATE Student SET YearGroup = 11 WHERE Student.StudentID = 2"
       ]
     },
     {
@@ -1063,9 +1065,9 @@
       "type": "multiple-choice",
       "prompt": "A school stores each student's club name directly in the Student table instead of using a Club table. What goes wrong when a club is renamed?",
       "options": [
-        "The club name can no longer be searched for",
-        "Every student row must be edited, and any missed row now disagrees",
-        "The Student table loses its primary key",
+        "The club name can no longer be searched for in a query",
+        "Every row with that name must change; a missed one disagrees",
+        "The Student table would lose its primary key field",
         "Students can no longer belong to more than one club"
       ],
       "correct": [
@@ -1169,7 +1171,7 @@
     {
       "id": "q18",
       "type": "extended",
-      "prompt": "Using the Student and Club tables, write SQL to list the names of students in the Chess club, and explain how the query works. Then explain the risks of UPDATE and DELETE statements.",
+      "prompt": "**Student**\n\n| StudentID | Name | YearGroup | ClubID |\n|---|---|---|---|\n| 1 | Amara | 11 | 2 |\n| 2 | Ben | 10 | 1 |\n| 3 | Chloe | 11 | 1 |\n| 4 | Dev | 9 | 3 |\n| 5 | Elif | 11 | 2 |\n\n**Club**\n\n| ClubID | ClubName |\n|---|---|\n| 1 | Chess |\n| 2 | Drama |\n| 3 | Robotics |\n\nUsing these two tables, write SQL to list the names of students in the Chess club, and explain how the query works. Then explain the risks of UPDATE and DELETE statements.",
       "marks": 6,
       "gradeBand": "8-9",
       "skill": "writing and reasoning about SQL",
@@ -1212,6 +1214,113 @@
         }
       ],
       "modelAnswer": "The student names are in `Student` but the club **name** is in `Club`, so both tables are needed:\n\n```\nSELECT Student.Name\nFROM Student, Club\nWHERE Student.ClubID = Club.ClubID\nAND Club.ClubName = 'Chess'\n```\n\nThis returns **Ben** and **Chloe**.\n\n**How it works, clause by clause.** `SELECT Student.Name` states which **field** is wanted; writing `Student.Name` rather than just `Name` makes clear which table it comes from, which matters once two tables are involved. `FROM Student, Club` names **both tables**.\n\nThe first condition, `WHERE Student.ClubID = Club.ClubID`, is the **join**: it matches the **foreign key** in `Student` to the **primary key** in `Club`, so each student is paired only with **their own** club. The second condition, `AND Club.ClubName = 'Chess'`, then filters those pairs down to the club wanted. `Chess` is **text**, so it takes **single quotes**; a number such as `11` would not.\n\n**Leaving out the join condition is the classic error.** The statement is still **valid SQL**, so it runs without complaint — but every student is paired with every club, giving 5 × 3 = **15** meaningless rows. A query that fails loudly is much safer than one that returns a confident wrong answer, which is why the join condition should be checked first.\n\n**The risks of UPDATE and DELETE** come from the same clause. `UPDATE Student SET YearGroup = 12 WHERE YearGroup = 11` moves the three Year 11 students up. Omit the `WHERE` and the statement becomes `UPDATE Student SET YearGroup = 12`, which sets **every student in the school** to Year 12 — including those in Years 9 and 10.\n\n`DELETE` is worse, because the damage cannot be undone by simply running another statement. `DELETE FROM Student WHERE StudentID = 4` removes one record; `DELETE FROM Student` removes **every record in the table**. The table still exists, but it is empty, and the only recovery is from a backup.\n\nThe practical safeguard is to run the condition as a `SELECT` first — `SELECT * FROM Student WHERE StudentID = 4` — and confirm it returns exactly the records intended before turning it into a `DELETE` or an `UPDATE`."
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "A Student table needs a field for each student's phone number, such as 07700900123. Which data type suits it best, and why?",
+      "options": [
+        "Integer, because every character in it is a digit from 0 to 9",
+        "Real, because the number is too long to be held as an integer",
+        "Text, because the leading zero must be kept and no sums are done",
+        "Boolean, because each student either has a number or does not"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "choosing a data type",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A phone number is **text**: stored as a number it would lose its **leading zero**, and nobody adds or multiplies phone numbers. Being made only of digits does not make something a number, and Boolean holds just true or false.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "text: keeps the leading zero, no arithmetic"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q20",
+      "type": "short-text",
+      "prompt": "**Student**\n\n| StudentID | Name | YearGroup | ClubID |\n|---|---|---|---|\n| 1 | Amara | 11 | 2 |\n| 2 | Ben | 10 | 1 |\n| 3 | Chloe | 11 | 1 |\n| 4 | Dev | 9 | 3 |\n| 5 | Elif | 11 | 2 |\n\nWrite SQL to delete the record of the student with StudentID 2 from this Student table. Write the full statement.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "deleting a record",
+      "calculator": "either",
+      "tags": [],
+      "solution": "`DELETE FROM Student WHERE StudentID = 2` removes only Ben's record. Without the `WHERE` clause, `DELETE FROM Student` would delete **every** record in the table.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "DELETE FROM Student WHERE StudentID = 2"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "DELETE FROM Student WHERE StudentID = 2",
+        "DELETE FROM Student WHERE Student.StudentID = 2"
+      ]
+    },
+    {
+      "id": "q21",
+      "type": "numeric",
+      "prompt": "**Student**\n\n| StudentID | Name | YearGroup | ClubID |\n|---|---|---|---|\n| 1 | Amara | 11 | 2 |\n| 2 | Ben | 10 | 1 |\n| 3 | Chloe | 11 | 1 |\n| 4 | Dev | 9 | 3 |\n| 5 | Elif | 11 | 2 |\n\n**Club**\n\n| ClubID | ClubName |\n|---|---|\n| 1 | Chess |\n| 2 | Drama |\n| 3 | Robotics |\n\nHow many records does this query return?\n\n```\nSELECT Student.Name\nFROM Student, Club\nWHERE Student.ClubID = Club.ClubID\nAND Club.ClubName = 'Chess'\nAND Student.YearGroup = 11\n```",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "predicting a two-table query",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The join pairs each student with **their own** club: Amara–Drama, Ben–Chess, Chloe–Chess, Dev–Robotics, Elif–Drama. Keeping only Chess leaves Ben and Chloe, and keeping only Year 11 from those leaves **Chloe**, so the query returns **1** record.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "joins each student to their club, then applies both conditions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "type": "numeric",
+      "prompt": "**Student**\n\n| StudentID | Name | YearGroup | ClubID |\n|---|---|---|---|\n| 1 | Amara | 11 | 2 |\n| 2 | Ben | 10 | 1 |\n| 3 | Chloe | 11 | 1 |\n| 4 | Dev | 9 | 3 |\n| 5 | Elif | 11 | 2 |\n\n**Club**\n\n| ClubID | ClubName |\n|---|---|\n| 1 | Chess |\n| 2 | Drama |\n| 3 | Robotics |\n\nThis query was meant to list the Year 11 students, but the join condition was left out. How many records does it return?\n\n```\nSELECT Student.Name\nFROM Student, Club\nWHERE Student.YearGroup = 11\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the missing join condition",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With no join condition, every student is paired with **every** club: 5 × 3 = 15 pairs. The WHERE clause keeps the pairs for the **3** Year 11 students, and each of them appears once per club, so the query returns 3 × 3 = **9** records — Amara, Chloe and Elif three times each. It runs without an error, which is what makes the mistake easy to miss.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "each Year 11 student is paired with all 3 clubs"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "examTechnique": {
@@ -1247,7 +1356,10 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q19",
+        "q20",
+        "q21"
       ],
       "suggestedMinutes": 18
     },
@@ -1261,7 +1373,8 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q22"
       ],
       "suggestedMinutes": 45
     }
@@ -1283,7 +1396,11 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q19",
+      "q20",
+      "q21",
+      "q22"
     ],
     "sampleSize": 10
   },

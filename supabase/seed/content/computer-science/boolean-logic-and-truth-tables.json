@@ -17,12 +17,12 @@
     {
       "kind": "remember",
       "title": "Count up in binary",
-      "body": "00, 01, 10, 11 for two inputs; 000 through 111 for three. Listing them any other way risks a missed or repeated row, and the standard order is what the marker expects to see."
+      "body": "00, 01, 10, 11 for two inputs; 000 through 111 for three. Listing them any other way risks a missed or repeated row; counting up makes every combination appear exactly once."
     },
     {
       "kind": "shortcut",
       "title": "Work in columns, not rows",
-      "body": "Add a working column for each bracket, then combine them. One simple rule applied eight times beats reading the whole expression eight times — and correct working columns earn marks even if the final column slips."
+      "body": "Add a working column for each bracket, then combine them. One simple rule applied eight times beats reading the whole expression eight times — and a slip in the final column can be found by checking the working columns."
     },
     {
       "kind": "check",
@@ -40,7 +40,7 @@
     "examples": [
       {
         "title": "Why a microwave will not start with the door open",
-        "body": "Two things have to be true at once: the door is shut **and** the start button is pressed. Either one on its own does nothing. That is an `AND` gate, and it is wired into the machine rather than written in software, because a safety rule you can reprogram is not a safety rule.\n\nThe truth table is the whole specification of the behaviour: four rows, one output that is 1, and no argument possible about the other three. That is why an exam asks for the table rather than a description — a table cannot be vague.",
+        "body": "Two things have to be true at once: the door is shut **and** the start button is pressed. Either one on its own does nothing. That is an `AND` gate, and it is wired into the machine rather than written in software, because a safety rule you can reprogram is not a safety rule.\n\nThe truth table is the whole specification of the behaviour: four rows, one output that is 1, and no argument possible about the other three. That is why a table is a better answer than a description — a table cannot be vague.",
         "visual": {
           "type": "diagram",
           "component": "logic-circuit",
@@ -60,7 +60,7 @@
       },
       {
         "title": "Why OR and XOR only disagree once",
-        "body": "\"Tea or coffee?\" means one of them. `OR` in logic means **at least** one, including both — and that single difference is where the marks are.\n\nThe two gates agree on three of their four rows. They part company only when both inputs are 1: `OR` gives 1, `XOR` gives 0. Nearly every question that looks like it is about XOR is really about that one row, so if you check it first you can tell which gate a table describes without reading the rest.",
+        "body": "\"Tea or coffee?\" means one of them. `OR` in logic means **at least** one, including both — and that single difference is the one to learn.\n\nThe two gates agree on three of their four rows. They part company only when both inputs are 1: `OR` gives 1, `XOR` gives 0. Most of what makes XOR tricky is that one row, so if you check it first you can tell which gate a table describes without reading the rest.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -104,7 +104,7 @@
       },
       {
         "title": "Why three inputs mean eight rows and not six",
-        "body": "Each input can be 0 or 1, so adding an input **doubles** the number of combinations: 2 rows for one input, 4 for two, 8 for three, 16 for four. Two to the power of the inputs, every time.\n\nKnowing the count before you start is how you avoid the commonest lost mark: a table with a row missing. Write them out counting up in binary — 000, 001, 010 — and the order does the remembering for you, because every combination appears exactly once.",
+        "body": "Each input can be 0 or 1, so adding an input **doubles** the number of combinations: 2 rows for one input, 4 for two, 8 for three, 16 for four. Two to the power of the inputs, every time.\n\nKnowing the count before you start is how you avoid an easy mistake: a table with a row missing. Write them out counting up in binary — 000, 001, 010 — and the order does the remembering for you, because every combination appears exactly once.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -144,7 +144,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Four gates, and only four",
-        "body": "A **logic gate** takes one or two inputs, each of which is **0 or 1**, and produces a single output that is also 0 or 1. Everything a processor does is built from them.\n\nThe specification names **four**, and is unusually explicit that these are all you need:\n\n- **NOT** — one input. The output is the **opposite** of the input.\n- **AND** — the output is 1 **only if both** inputs are 1.\n- **OR** — the output is 1 **if either or both** inputs are 1.\n- **XOR** — *exclusive OR*. The output is 1 **if exactly one** input is 1, but **not both**.\n\n**Students do not need to know about or use NAND and NOR logic gates.**\n\nThat is the specification's own sentence. If you meet NAND or NOR in a textbook, it is not on your course.\n\nThe one that needs care is **XOR**, because it differs from OR in exactly **one row**: when **both** inputs are 1, **OR gives 1** but **XOR gives 0**. Everything else about them is identical, and that single row is what most questions on XOR are testing.",
+        "body": "A **logic gate** takes one or two inputs, each of which is **0 or 1**, and produces a single output that is also 0 or 1. Everything a processor does is built from them.\n\nThe specification names **four**, and is unusually explicit that these are all you need:\n\n- **NOT** — one input. The output is the **opposite** of the input.\n- **AND** — the output is 1 **only if both** inputs are 1.\n- **OR** — the output is 1 **if either or both** inputs are 1.\n- **XOR** — *exclusive OR*. The output is 1 **if exactly one** input is 1, but **not both**.\n\n**Students do not need to know about or use NAND and NOR logic gates.**\n\nThat is the specification's own sentence. If you meet NAND or NOR in a textbook, it is not on your course.\n\nThe one that needs care is **XOR**, because it differs from OR in exactly **one row**: when **both** inputs are 1, **OR gives 1** but **XOR gives 0**. Everything else about them is identical, and that single row is the one to check first.",
         "visuals": [
           {
             "type": "diagram",
@@ -230,7 +230,7 @@
         "id": "s2",
         "kind": "worked-example",
         "title": "Building a truth table",
-        "body": "A **truth table** lists **every possible combination** of the inputs and the output for each. Building one is mechanical, and doing it in a fixed order is what stops rows being missed.\n\n**How many rows?** Two inputs give $2^2 = 4$ rows; three inputs give $2^3 = 8$. The specification takes you up to **three inputs**, so eight rows is the largest table you will need.\n\n**In what order?** Count up in **binary**. For two inputs: 00, 01, 10, 11. For three: 000, 001, 010, 011, 100, 101, 110, 111. Doing it any other way risks a missing or repeated row, and the marker expects the standard order.",
+        "body": "A **truth table** lists **every possible combination** of the inputs and the output for each. Building one is mechanical, and doing it in a fixed order is what stops rows being missed.\n\n**How many rows?** Two inputs give $2^2 = 4$ rows; three inputs give $2^3 = 8$. The specification takes you up to **three inputs**, so eight rows is the largest table you will need.\n\n**In what order?** Count up in **binary**. For two inputs: 00, 01, 10, 11. For three: 000, 001, 010, 011, 100, 101, 110, 111. Any order gives a correct table if every row is there, but counting up in binary makes a missing or repeated row easy to spot.",
         "visuals": [
           {
             "type": "worked-example",
@@ -516,7 +516,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Reading a table the other way",
-        "body": "Questions do not only ask you to **build** a table — they ask you to **interpret** one. That means answering questions like *for which inputs is the output 1?* or *which gate does this table describe?*\n\n**Identifying a gate from its table** is the most common. With two inputs there are only four outputs to compare, and the four you know are:\n\n- **0, 0, 0, 1** → **AND** (only the last row)\n- **0, 1, 1, 1** → **OR** (all but the first)\n- **0, 1, 1, 0** → **XOR** (the middle two)\n- **1, 0** → **NOT** (one input only)\n\nThe pair to look at carefully is **OR and XOR**: they agree on the first three rows and differ only on the **last**, where both inputs are 1. So when identifying a gate, **look at the bottom row first** — it settles OR against XOR immediately, and nothing else does.\n\n**Interpreting in context.** A question may describe a system — an alarm that sounds when a door is open **and** the system is armed — and ask which gate it is. Translate the English into the rule: *only when both* is **AND**; *either or both* is **OR**; *one but not both* is **XOR**; *the opposite of* is **NOT**.",
+        "body": "Questions do not only ask you to **build** a table — they ask you to **interpret** one. That means answering questions like *for which inputs is the output 1?* or *which gate does this table describe?*\n\n**Identifying a gate from its table** is the one to practise first. With two inputs there are only four outputs to compare, and the four you know are:\n\n- **0, 0, 0, 1** → **AND** (only the last row)\n- **0, 1, 1, 1** → **OR** (all but the first)\n- **0, 1, 1, 0** → **XOR** (the middle two)\n- **1, 0** → **NOT** (one input only)\n\nThe pair to look at carefully is **OR and XOR**: they agree on the first three rows and differ only on the **last**, where both inputs are 1. So when identifying a gate, **look at the bottom row first** — it settles OR against XOR immediately, and nothing else does.\n\n**Interpreting in context.** A question may describe a system — an alarm that sounds when a door is open **and** the system is armed — and ask which gate it is. Translate the English into the rule: *only when both* is **AND**; *either or both* is **OR**; *one but not both* is **XOR**; *the opposite of* is **NOT**.",
         "visuals": [
           {
             "type": "diagram",
@@ -680,7 +680,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: the row that separates OR from XOR",
-        "body": "**If you remember one thing.** OR and XOR agree on three of their four rows. They differ **only** when **both inputs are 1**: OR gives **1**, XOR gives **0**. Every question that tests XOR is testing that row, and checking it first identifies a gate faster than working through the whole table.\n\nThe name says it: **exclusive** OR — *one or the other, but not both*. Everyday English often means XOR when it says *or*: *you can have tea or coffee* usually excludes having both. The logical OR does **not** exclude it, which is why the two need different gates at all.\n\n**Why work in columns.** An eight-row table done row by row means reading and evaluating the whole expression eight separate times — eight chances to slip. Done in columns, you apply one simple rule eight times, then another, then combine. The working columns also **earn marks**: if the final column has an error, correct working columns can still be credited, and a bare answer cannot.\n\n**Boolean algebra is not arithmetic.** `+` is OR, so `1 + 1 = 1`, which looks wrong until you read it as *1 OR 1 is 1*. `.` is AND, and there the arithmetic analogy happens to hold: `1 . 1 = 1` and `1 . 0 = 0`, exactly like multiplication. That coincidence is why AND is sometimes called the *product* and OR the *sum* — but only AND actually behaves like its arithmetic namesake.\n\n**The overbar's reach matters.** $\\overline{A} . B$ means *(NOT A) AND B*. $\\overline{A . B}$ means *NOT (A AND B)*. They are different functions — check the row where A=1 and B=1: the first gives 0 (because NOT A is 0), and the second gives 0 as well; but at A=0, B=0 the first gives 0 and the second gives 1. When you read an expression, look at **how far the bar extends** before doing anything else.\n\n**And one thing not to revise.** The specification states that NAND and NOR are **not** required. Time spent on them is time not spent on the three-input tables that are.",
+        "body": "**If you remember one thing.** OR and XOR agree on three of their four rows. They differ **only** when **both inputs are 1**: OR gives **1**, XOR gives **0**. That row is the one to check, and checking it first identifies a gate faster than working through the whole table.\n\nThe name says it: **exclusive** OR — *one or the other, but not both*. Everyday English often means XOR when it says *or*: *you can have tea or coffee* usually excludes having both. The logical OR does **not** exclude it, which is why the two need different gates at all.\n\n**Why work in columns.** An eight-row table done row by row means reading and evaluating the whole expression eight separate times — eight chances to slip. Done in columns, you apply one simple rule eight times, then another, then combine. The working columns also make a slip **easy to find**: if the final column has an error, the working shows where it came from, and a bare answer shows nothing.\n\n**Boolean algebra is not arithmetic.** `+` is OR, so `1 + 1 = 1`, which looks wrong until you read it as *1 OR 1 is 1*. `.` is AND, and there the arithmetic analogy happens to hold: `1 . 1 = 1` and `1 . 0 = 0`, exactly like multiplication. That coincidence is why AND is sometimes called the *product* and OR the *sum* — but only AND actually behaves like its arithmetic namesake.\n\n**The overbar's reach matters.** $\\overline{A} . B$ means *(NOT A) AND B*. $\\overline{A . B}$ means *NOT (A AND B)*. They are different functions — check the row where A=1 and B=1: the first gives 0 (because NOT A is 0), and the second gives 0 as well; but at A=0, B=0 the first gives 0 and the second gives 1. When you read an expression, look at **how far the bar extends** before doing anything else.\n\n**And one thing not to revise.** The specification states that NAND and NOR are **not** required. Time spent on them is time not spent on the three-input tables that are.",
         "visuals": [
           {
             "type": "diagram",
@@ -748,7 +748,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- The four gates on the specification are **NOT, AND, OR and XOR**. **NAND and NOR are not required.**\n- **NOT** flips its single input. **AND** gives 1 only when **both** inputs are 1.\n- **OR** gives 1 when **either or both** inputs are 1. **XOR** gives 1 when **exactly one** is.\n- **OR and XOR differ only in the last row**, where both inputs are 1: OR gives 1, XOR gives 0.\n- A truth table lists **every combination** of the inputs: $2^n$ rows for $n$ inputs.\n- Two inputs give **4** rows, three give **8** — and three is the most the specification asks for.\n- List the inputs by **counting up in binary**, so no row is missed or repeated.\n- Boolean notation: **.** is AND, **+** is OR, **⊕** is XOR, an **overbar** is NOT.\n- `+` means OR, so **1 + 1 = 1**. It is not addition.\n- The **reach of the overbar** changes the meaning: $\\overline{A} . B$ is not $\\overline{A . B}$.\n- Build a three-input table in **columns**: one per bracket, then combine. The working columns earn marks.\n- Identify a gate from its output column, and check the **bottom row** first to settle OR against XOR.",
+        "body": "- The four gates on the specification are **NOT, AND, OR and XOR**. **NAND and NOR are not required.**\n- **NOT** flips its single input. **AND** gives 1 only when **both** inputs are 1.\n- **OR** gives 1 when **either or both** inputs are 1. **XOR** gives 1 when **exactly one** is.\n- **OR and XOR differ only in the last row**, where both inputs are 1: OR gives 1, XOR gives 0.\n- A truth table lists **every combination** of the inputs: $2^n$ rows for $n$ inputs.\n- Two inputs give **4** rows, three give **8** — and three is the most the specification asks for.\n- List the inputs by **counting up in binary**, so no row is missed or repeated.\n- Boolean notation: **.** is AND, **+** is OR, **⊕** is XOR, an **overbar** is NOT.\n- `+` means OR, so **1 + 1 = 1**. It is not addition.\n- The **reach of the overbar** changes the meaning: $\\overline{A} . B$ is not $\\overline{A . B}$.\n- Build a three-input table in **columns**: one per bracket, then combine. The working columns make slips easy to find.\n- Identify a gate from its output column, and check the **bottom row** first to settle OR against XOR.",
         "visuals": [
           {
             "type": "diagram",
@@ -1007,12 +1007,12 @@
       "discriminators": [],
       "options": [
         "They never differ",
-        "When exactly one input is 1",
         "When both inputs are 1",
+        "When exactly one input is 1",
         "When both inputs are 0"
       ],
       "correct": [
-        2
+        1
       ]
     },
     {
@@ -1063,24 +1063,24 @@
       "discriminators": [],
       "options": [
         "OR",
+        "XOR",
         "AND",
-        "NOT",
-        "XOR"
+        "NOT"
       ],
       "correct": [
-        3
+        1
       ]
     },
     {
       "id": "q10",
       "type": "multiple-choice",
-      "prompt": "In what order should the input combinations be listed in a truth table?",
+      "prompt": "Which order of input combinations makes it easiest to be sure none is missed or repeated in a truth table?",
       "marks": 1,
       "gradeBand": "6-7",
       "skill": "truth tables",
       "calculator": "either",
       "tags": [],
-      "solution": "**Counting up in binary** — 00, 01, 10, 11 — so no row can be missed or repeated.",
+      "solution": "**Counting up in binary** — 00, 01, 10, 11 — makes every combination appear exactly once. A table in another order is still correct if every row is there, but a gap is much harder to spot.",
       "markScheme": [
         {
           "code": "B1",
@@ -1090,10 +1090,10 @@
       ],
       "discriminators": [],
       "options": [
-        "Largest first",
-        "In any order",
+        "Largest output first",
+        "In any order at all",
         "Counting up in binary",
-        "Alphabetically"
+        "Alphabetically by label"
       ],
       "correct": [
         2
@@ -1138,12 +1138,12 @@
       "skill": "truth tables",
       "calculator": "either",
       "tags": [],
-      "solution": "Row by row means evaluating the whole expression **eight separate times**. By column you apply one simple rule eight times — and correct **working columns** can be credited even if the final column slips.",
+      "solution": "Row by row means evaluating the whole expression **eight separate times**. By column you apply **one simple rule at a time, so slips are rarer** — and a slip in the final column can be traced back through the working columns.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "one rule at a time, and working earns marks"
+          "description": "one simple rule at a time, so fewer slips"
         }
       ],
       "discriminators": [
@@ -1152,8 +1152,8 @@
       "options": [
         "Rows cannot hold three inputs at once",
         "Columns are simply quicker to draw",
-        "The marker only ever reads columns",
-        "One rule at a time, and working earns marks"
+        "Examiners only ever read the columns",
+        "One simple rule at a time, so slips are rarer"
       ],
       "correct": [
         3
@@ -1180,7 +1180,8 @@
         "multi-topic"
       ],
       "accepted": [
-        "0110"
+        "0110",
+        "0,1,1,0"
       ]
     },
     {
@@ -1192,7 +1193,7 @@
       "skill": "Boolean expressions",
       "calculator": "either",
       "tags": [],
-      "solution": "$\\overline{A} . B$ is *(NOT A) AND B*; $\\overline{A . B}$ is *NOT (A AND B)*. Different functions, so read the **reach of the bar** before anything else.",
+      "solution": "**An overbar inverts whatever it covers**: $\\overline{A} . B$ is *(NOT A) AND B*; $\\overline{A . B}$ is *NOT (A AND B)*. Different functions, so read the **reach of the bar** before anything else.",
       "markScheme": [
         {
           "code": "B1",
@@ -1205,12 +1206,12 @@
       ],
       "options": [
         "A longer bar means a stronger NOT",
-        "A bar can only ever cover one letter",
         "It inverts whatever it covers",
+        "A bar can only ever cover one letter",
         "The length of it makes no difference"
       ],
       "correct": [
-        2
+        1
       ]
     },
     {
@@ -1345,7 +1346,7 @@
           "marks": 1
         }
       ],
-      "modelAnswer": "**The size.** Three inputs, so $2^3 = \\mathbf{8}$ rows.\n\n**The order.** List A, B, C **counting up in binary**: 000, 001, 010, 011, 100, 101, 110, 111.\n\n**Working column 1 — A AND B.** A 1 only where **both** A and B are 1: the last two rows.\n\n**Working column 2 — NOT C.** The **opposite** of the C column: 1 wherever C is 0, so every other row starting from the first.\n\n**The output.** Q is the two working columns **ORed** — 1 wherever **either** is 1:\n\n$$Q = 1,\\ 0,\\ 1,\\ 0,\\ 1,\\ 0,\\ 1,\\ 1$$\n\nThe output is 1 in **five** of the eight rows.\n\n**Check one row in full.** The last: A=1, B=1, C=1 gives $(1 \\text{ AND } 1) \\text{ OR } (\\text{NOT } 1) = 1 \\text{ OR } 0 = 1$ ✓\n\nShow the **working columns**. If the final column slips, correct working can still be credited; a bare answer cannot."
+      "modelAnswer": "**The size.** Three inputs, so $2^3 = \\mathbf{8}$ rows.\n\n**The order.** List A, B, C **counting up in binary**: 000, 001, 010, 011, 100, 101, 110, 111.\n\n**Working column 1 — A AND B.** A 1 only where **both** A and B are 1: the last two rows.\n\n**Working column 2 — NOT C.** The **opposite** of the C column: 1 wherever C is 0, so every other row starting from the first.\n\n**The output.** Q is the two working columns **ORed** — 1 wherever **either** is 1:\n\n$$Q = 1,\\ 0,\\ 1,\\ 0,\\ 1,\\ 0,\\ 1,\\ 1$$\n\nThe output is 1 in **five** of the eight rows.\n\n**Check one row in full.** The last: A=1, B=1, C=1 gives $(1 \\text{ AND } 1) \\text{ OR } (\\text{NOT } 1) = 1 \\text{ OR } 0 = 1$ ✓\n\nShow the **working columns**. If the final column slips, the working shows where; a bare answer shows nothing."
     },
     {
       "id": "q18",
@@ -1411,6 +1412,64 @@
         }
       ],
       "modelAnswer": "**OR** gives 1 when **either** input is 1 — **and also when both are**.\n\n**XOR** — *exclusive OR* — gives 1 when **exactly one** input is 1, and **0 when both are**.\n\n**The difference.** Their truth tables are **identical for three of the four rows**. They differ only in the last, where **both inputs are 1**: OR gives **1**, XOR gives **0**.\n\n**Why it matters in translation.** Everyday English very often means **exclusive** or:\n\n- *The meal comes with soup or salad* — normally one **but not both**: **XOR**.\n- *The alarm sounds when the front door or the back door is open* — it should certainly sound when **both** are open: **OR**.\n\n**How to decide.** Ask one question of the description: **should both together give an output of 1?** If yes, it is OR; if no, it is XOR. That single test settles every case, and it is exactly the row the two gates disagree on."
+    },
+    {
+      "id": "q19",
+      "type": "short-text",
+      "prompt": "Give the output column of the truth table for Q = A ⊕ (B . C), with the rows in the order ABC = 000, 001, 010, 011, 100, 101, 110, 111, as eight digits with no spaces.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "truth tables",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Work in columns. **B . C** is 1 only where B and C are both 1: 0, 0, 0, 1, 0, 0, 0, 1. **A** is 0, 0, 0, 0, 1, 1, 1, 1. XOR gives 1 where exactly one of those two columns is 1: **00011110**. Check the last row: A = 1 and B . C = 1, so 1 ⊕ 1 = 0.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "working column B . C = 0, 0, 0, 1, 0, 0, 0, 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "00011110"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "00011110",
+        "0,0,0,1,1,1,1,0"
+      ]
+    },
+    {
+      "id": "q20",
+      "type": "multiple-choice",
+      "prompt": "Which is (A OR B) AND (NOT C), written in the specification's notation?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Boolean expressions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "OR is **+**, AND is **.** and NOT is an **overbar** over C alone: $(A + B) . \\overline{C}$. Swapping the dot and the plus gives (A AND B) OR (NOT C), a bar over everything would invert the whole expression, and ⊕ is XOR.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(A + B) . C with a bar over C only"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "$(A . B) + \\overline{C}$",
+        "$(A + B) . \\overline{C}$",
+        "$\\overline{(A + B) . C}$",
+        "$(A \\oplus B) . \\overline{C}$"
+      ],
+      "correct": [
+        1
+      ]
     }
   ],
   "worksheets": {
@@ -1432,9 +1491,10 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q20"
       ],
-      "suggestedMinutes": 18
+      "suggestedMinutes": 20
     },
     "advanced": {
       "level": "advanced",
@@ -1446,13 +1506,14 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 48
     }
   },
   "examTechnique": {
-    "body": "Work out how many rows the table needs before drawing it: two to the power of the number of inputs.\n\nList the input combinations by counting up in binary, so none is missed.\n\nAdd a working column for each bracketed part of the expression, then combine them for the output. The working columns carry marks.\n\nWhen identifying a gate from a table, check the row where both inputs are 1 first: it separates OR from XOR immediately.\n\nUse the specification's symbols: a dot for AND, a plus for OR, a circled plus for XOR, and an overbar for NOT.\n\nCheck one row by working the whole expression through in full before moving on.",
+    "body": "Work out how many rows the table needs before drawing it: two to the power of the number of inputs.\n\nList the input combinations by counting up in binary, so none is missed.\n\nAdd a working column for each bracketed part of the expression, then combine them for the output. The working columns show where any slip came from.\n\nWhen identifying a gate from a table, check the row where both inputs are 1 first: it separates OR from XOR immediately.\n\nUse the specification's symbols: a dot for AND, a plus for OR, a circled plus for XOR, and an overbar for NOT.\n\nCheck one row by working the whole expression through in full before moving on.",
     "examinerErrors": [
       "Giving XOR the same output as OR when both inputs are 1.",
       "Missing a row, usually by not listing the inputs in binary order.",
@@ -1463,7 +1524,7 @@
       "Filling in a three-input table row by row and slipping on one row.",
       "Giving only the output column with no working when working was asked for."
     ],
-    "grade9Looks": "A top answer knows that OR and XOR differ in exactly one row and uses that to identify gates rather than working through whole tables. It builds three-input tables in **columns**, so a slip costs one cell rather than a row, and it shows those columns because they are creditable. It reads Boolean notation precisely, including how far an overbar reaches. And translating an everyday description, it asks the one question that settles it — should both together give 1? — instead of guessing between OR and XOR."
+    "grade9Looks": "A top answer knows that OR and XOR differ in exactly one row and uses that to identify gates rather than working through whole tables. It builds three-input tables in **columns**, so a slip costs one cell rather than a row, and it shows those columns so any slip can be traced. It reads Boolean notation precisely, including how far an overbar reaches. And translating an everyday description, it asks the one question that settles it — should both together give 1? — instead of guessing between OR and XOR."
   },
   "quiz": {
     "questionIds": [
@@ -1482,7 +1543,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q19",
+      "q20"
     ],
     "sampleSize": 10
   },

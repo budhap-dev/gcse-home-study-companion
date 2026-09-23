@@ -124,6 +124,9 @@ function Typed({ question, disabled, subjectId, onSubmit }: Props & { question: 
         />
         {units && <span className="shrink-0 text-ink-2">{units}</span>}
       </div>
+      {question.type === 'short-text' && question.matchCase && (
+        <p className="text-sm text-ink-2">Capital letters and spaces count here: T and t are different answers, and so are Hi Amy and HiAmy.</p>
+      )}
 
       {!disabled && (
         <>

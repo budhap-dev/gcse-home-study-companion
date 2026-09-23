@@ -20,11 +20,14 @@ interface Placed {
  * right branch labelled 1, and a character's code read off by walking down to its
  * leaf. Leaves sit on their own depth so the picture shows why a common character
  * ends up with a shorter code than a rare one.
- * Props: { tree: Node, caption?: string } with Node = { char?, weight?, left?, right? }.
+ * Props: { tree: Node, caption?: string, hideCodes?: boolean } with Node = { char?, weight?,
+ * left?, right? }. hideCodes leaves the code off each leaf, for a question that asks the
+ * student to read one off the branches.
  */
 export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const tree = props.tree as Node | undefined
   const caption = props.caption as string | undefined
+  const hideCodes = props.hideCodes === true
   if (!tree) return <p>{alt}</p>
 
   // Leaves are spread evenly left to right in the order they appear; every other
@@ -97,9 +100,11 @@ export function HuffmanTree({ props, alt }: { props: Record<string, unknown>; al
                   {p.node.weight}
                 </text>
               )}
-              <text x={x} y={y + 45} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>
-                {p.code}
-              </text>
+              {!hideCodes && (
+                <text x={x} y={y + 45} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>
+                  {p.code}
+                </text>
+              )}
             </g>
           )
         }

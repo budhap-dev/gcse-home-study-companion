@@ -81,7 +81,7 @@
       },
       {
         "title": "Why a function is a machine you hand a value to",
-        "body": "`is_even(7)` is not a set of instructions at the point where you use it. It **is** `False`. A call becomes its returned value, which is why it can go straight into an `IF`, be stored in a variable, or be output.\n\nThe names in the header are **parameters** and the values handed in are **arguments**: `SUBROUTINE is_even(n)` has the parameter `n`, and `is_even(7)` passes the argument 7. Inside, `n` is 7 for that call only. The next call can pass 8 and get True, with nothing left over from this one.",
+        "body": "`is_even(7)` is not a set of instructions at the point where you use it. It **is** `False`. A call becomes its returned value, which is why it can go straight into an `IF`, be stored in a variable, or be output.\n\nThe names in the header are **parameters**, and AQA calls the values handed in parameters too (some books call them **arguments**): `SUBROUTINE is_even(n)` has the parameter `n`, and `is_even(7)` passes it the value 7. Inside, `n` is 7 for that call only. The next call can pass 8 and get True, with nothing left over from this one.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -115,7 +115,7 @@
             ],
             "highlight": 2
           },
-          "alt": "A trace of a call to is_even with the argument seven: the parameter n holds seven, seven MOD two is one so the IF is not taken, and the ELSE branch returns False"
+          "alt": "A trace of a call to is_even with the value seven: the parameter n holds seven, seven MOD two is one so the IF is not taken, and the ELSE branch returns False"
         }
       },
       {
@@ -215,7 +215,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Parameters and arguments",
-        "body": "The names in the brackets of the header are **parameters**. The values you pass in when you call are **arguments**. They match up **in order**: the first argument goes into the first parameter.\n\n```\nSUBROUTINE show_age(name, age)\n   OUTPUT name + ' is ' + INT_TO_STRING(age)\nENDSUBROUTINE\n\nshow_age('Lee', 15)\n```\n\nOutput: `Lee is 15`. Swap the arguments round and the program would try to join 15 and a string in the wrong places.",
+        "body": "The names in the brackets of the header are **parameters**. The values you pass in when you call it are matched to them **in order**: the first value goes into the first parameter. AQA calls both of these **parameters**; some books call the values in the call **arguments**.\n\n```\nSUBROUTINE show_age(name, age)\n   OUTPUT name + ' is ' + INT_TO_STRING(age)\nENDSUBROUTINE\n\nshow_age('Lee', 15)\n```\n\nOutput: `Lee is 15`. Swap the two values round and the program would try to join 15 and a string in the wrong places.",
         "visuals": [
           {
             "type": "diagram",
@@ -247,7 +247,7 @@
             "problem": "What happens if the call is written `show_age(15, 'Lee')`?",
             "steps": [
               {
-                "text": "Arguments fill parameters left to right, so `name` takes 15 and `age` takes `'Lee'`",
+                "text": "The values fill the parameters left to right, so `name` takes 15 and `age` takes `'Lee'`",
                 "note": "position decides, not meaning"
               },
               {
@@ -256,7 +256,7 @@
               },
               {
                 "text": "`'Lee'` is not an integer, so there is nothing to convert and the program fails",
-                "note": "a type error, not a spelling mistake"
+                "note": "INT_TO_STRING needs an integer and 'Lee' is not one, so the program fails"
               },
               {
                 "text": "Written the right way round, `show_age('Lee', 15)` outputs `Lee is 15`",
@@ -476,7 +476,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Local and global variables",
-        "body": "A variable created **inside** a subroutine is **local**: it exists only while that subroutine runs, and nothing outside can see it. A variable created in the main program is **global**. Languages differ on what happens when a subroutine assigns to a name that **already exists outside**: in Python a new local is made unless you write `global`. In C# and VB.NET a method cannot see another method's locals at all, so the name has to be a field of the class for the outer value to change. AQA's pseudo-code does not say, so an exam question will make the rule clear, and a good answer never relies on shadowing a global. Local variables are better: two subroutines can both use a variable called `total` without clashing, and a subroutine cannot accidentally wreck a value the rest of the program depends on.\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   spent ← amount * 2\n   OUTPUT spent\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```\n\nInside `spend`, `spent` is **local**: it is created when the subroutine runs and is gone when it ends, so the main program could not output it. `total` is **global** and is never assigned to inside the subroutine, so it is still 100 at the end. The outputs are `10` then `100`.",
+        "body": "A variable created **inside** a subroutine is **local**: it exists only while that subroutine runs, and nothing outside can see it. In pseudo-code and Python, a variable created in the main program is **global**; in C# and VB.NET a variable declared inside `Main` is local to `Main`, and a value shared by every method has to be a field of the class. Languages differ on what happens when a subroutine assigns to a name that **already exists outside**: in Python a new local is made unless you write `global`. In C# and VB.NET a method cannot see another method's locals at all, so the name has to be a field of the class for the outer value to change. AQA's pseudo-code does not say, so an exam question will make the rule clear, and a good answer never relies on shadowing a global. Local variables are better: two subroutines can both use a variable called `total` without clashing, and a subroutine cannot accidentally wreck a value the rest of the program depends on.\n\n```\ntotal ← 100\n\nSUBROUTINE spend(amount)\n   spent ← amount * 2\n   OUTPUT spent\nENDSUBROUTINE\n\nspend(5)\nOUTPUT total\n```\n\nInside `spend`, `spent` is **local**: it is created when the subroutine runs and is gone when it ends, so the main program could not output it. `total` is **global** and is never assigned to inside the subroutine, so it is still 100 at the end. The outputs are `10` then `100`.",
         "visuals": [
           {
             "type": "diagram",
@@ -603,7 +603,7 @@
         "id": "s7",
         "kind": "explain",
         "title": "Why programs are built from subroutines",
-        "body": "**Structured programming** means breaking a problem into parts (**decomposition**) and writing a subroutine for each. The benefits come up in almost every exam:\n\n- **No repetition**: written once, called many times.\n- **One change fixes every use**.\n- **Easier to read**: the main program reads like a list of steps.\n- **Easier to test**: each subroutine can be tested on its own.\n- **Reusable**: the same subroutine can be used in another program.\n\nYou already use built-in subroutines: `LEN(word)`, `RANDOM_INT(1, 6)`, `STRING_TO_INT(text)` are all functions someone else wrote.",
+        "body": "The **structured approach** to programming means breaking a problem into parts (**decomposition**) and writing a subroutine, or module, for each, and giving each subroutine a clear, documented interface: its **parameters** say what goes in, its **return value** says what comes out, and it keeps its working in **local variables**. The benefits:\n\n- **No repetition**: written once, called many times.\n- **One change fixes every use**.\n- **Easier to read**: the main program reads like a list of steps.\n- **Easier to test**: each subroutine can be tested on its own.\n- **Reusable**: the same subroutine can be used in another program.\n- **Shared work**: different programmers can write different subroutines, because each interface says exactly what goes in and what comes back.\n\nYou already use built-in subroutines: `LEN(word)`, `RANDOM_INT(1, 6)`, `STRING_TO_INT(text)` are all functions someone else wrote.",
         "visuals": [
           {
             "type": "worked-example",
@@ -613,7 +613,7 @@
                 "text": "Write one subroutine ask(question, answer) that does those ten lines once"
               },
               {
-                "text": "Call it five times with different arguments"
+                "text": "Call it five times with different values"
               },
               {
                 "text": "If the checking needs to change, it changes in one place, and the main program is five readable lines"
@@ -654,7 +654,7 @@
         "id": "s8",
         "kind": "grade-9",
         "title": "Going deeper: nested calls and loops inside functions",
-        "body": "Exam questions stack the ideas: a function that contains a loop, or a call inside a call. Work **inside out**: evaluate the innermost call first, replace it with its value, then continue.\n\n```\nSUBROUTINE g(n)\n   RETURN n + 3\nENDSUBROUTINE\n\nSUBROUTINE f(n)\n   RETURN n * n\nENDSUBROUTINE\n\nOUTPUT f(g(2))\n```\n\n`g(2)` returns 5, so this is `f(5)`, which returns 25.\n\nFor a function with a loop, trace the loop fully inside the function before you write the returned value. The marker wants the trace, not just the answer.\n\n```\nSUBROUTINE sum_to(n)\n   t ← 0\n   FOR i ← 1 TO n\n      t ← t + i\n   ENDFOR\n   RETURN t\nENDSUBROUTINE\n```",
+        "body": "Exam questions stack the ideas: a function that contains a loop, or a call inside a call. Work **inside out**: evaluate the innermost call first, replace it with its value, then continue.\n\n```\nSUBROUTINE g(n)\n   RETURN n + 3\nENDSUBROUTINE\n\nSUBROUTINE f(n)\n   RETURN n * n\nENDSUBROUTINE\n\nOUTPUT f(g(2))\n```\n\n`g(2)` returns 5, so this is `f(5)`, which returns 25.\n\nFor a function with a loop, trace the loop fully inside the function before you write the returned value. Write the trace out: it shows your working, not just the answer.\n\n```\nSUBROUTINE sum_to(n)\n   t ← 0\n   FOR i ← 1 TO n\n      t ← t + i\n   ENDFOR\n   RETURN t\nENDSUBROUTINE\n```",
         "visuals": [
           {
             "type": "diagram",
@@ -751,7 +751,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- A subroutine is a named block of code. A procedure does a job; a function also returns a value with RETURN.\n- Parameters are the names in the header; arguments are the values in the call, matched in order.\n- A function call becomes its returned value, so it can be stored or used in an expression.\n- Variables made inside a subroutine are local. Globals belong to the main program. Prefer locals.\n- Subroutines remove repetition, make one change fix every use, and make programs easier to read, test and reuse.\n- Trace nested calls from the inside out; trace loops fully before writing the return value.",
+        "body": "- A subroutine is a named block of code. A procedure does a job; a function also returns a value with RETURN.\n- Parameters are the names in the header, and the values in the call are matched to them in order (AQA calls both parameters; some books call the values arguments).\n- A function call becomes its returned value, so it can be stored or used in an expression.\n- Variables made inside a subroutine are local. Globals belong to the main program. Prefer locals.\n- The **structured approach**: one subroutine per part of the problem, each with a clear interface of parameters in, a return value out and local variables inside.\n- Subroutines remove repetition, make one change fix every use, and make programs easier to read, test and reuse.\n- Trace nested calls from the inside out; trace loops fully before writing the return value.",
         "visuals": [
           {
             "type": "diagram",
@@ -849,7 +849,7 @@
       "skill": "parameters",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Parameters are the names in the brackets of the header. The values passed in the call are the arguments.",
+      "solution": "Parameters are the names in the brackets of the header. AQA also calls the values passed in the call parameters; some books call those arguments.",
       "markScheme": [
         {
           "code": "B1",
@@ -890,7 +890,8 @@
         "Hi Amy!",
         "\"Hi Amy!\"",
         "'Hi Amy!'"
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q5",
@@ -936,7 +937,8 @@
         "gogo!!",
         "\"gogo!!\"",
         "'gogo!!'"
-      ]
+      ],
+      "matchCase": true
     },
     {
       "id": "q7",
@@ -947,7 +949,7 @@
       "skill": "why use subroutines",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "Any three of: no repetition, one change fixes every use, easier to read, easier to test, easier to debug, reusable in other programs.",
+      "solution": "Any three of: no repetition, one change fixes every use, easier to read, easier to test, easier to debug, reusable in other programs, split between different programmers.",
       "markScheme": [
         {
           "code": "B1",
@@ -957,12 +959,12 @@
         {
           "code": "B1",
           "marks": 1,
-          "description": "Easier to read, test and fix"
+          "description": "Easier to read, or to test and fix one part at a time"
         },
         {
           "code": "B1",
           "marks": 1,
-          "description": "Reusable or testable separately"
+          "description": "Reusable in other programs, or can be written by different programmers"
         }
       ],
       "discriminators": [],
@@ -973,15 +975,15 @@
           "marks": 1
         },
         {
-          "text": "Each subroutine does one job, so the program is easier to read, test and fix",
+          "text": "A second, different advantage: each subroutine does one job, so the program is easier to read, or to test and fix one part at a time",
           "marks": 1
         },
         {
-          "text": "A third advantage: subroutines can be written and tested separately, or reused in another program",
+          "text": "A third, different advantage: subroutines can be reused in other programs, or written by different programmers",
           "marks": 1
         }
       ],
-      "modelAnswer": "A subroutine is written once and can be called from many places, so code is not repeated and a change only has to be made in one place. Breaking a program into subroutines that each do one job makes it easier to read, easier to test one part at a time, and easier to find and fix errors. Subroutines can also be reused in other programs."
+      "modelAnswer": "A subroutine is written once and can be called from many places, so code is not repeated and a change only has to be made in one place. Breaking a program into subroutines that each do one job makes it easier to read, easier to test one part at a time, and easier to find and fix errors. Subroutines can also be reused in other programs, and different programmers can write different subroutines at the same time."
     },
     {
       "id": "q8",
@@ -1064,12 +1066,12 @@
         {
           "code": "B1",
           "marks": 1,
-          "description": "RETURN a in one branch"
+          "description": "Returns a when a is the larger"
         },
         {
           "code": "B1",
           "marks": 1,
-          "description": "RETURN b in the other"
+          "description": "Returns b when b is the larger (or they are equal)"
         },
         {
           "code": "B1",
@@ -1096,11 +1098,11 @@
           "marks": 1
         },
         {
-          "text": "RETURN the larger parameter in the first branch",
+          "text": "Returns the first parameter when it is the larger, by any correct route (a RETURN in a branch, or a local variable returned at the end)",
           "marks": 1
         },
         {
-          "text": "RETURN the other parameter in the ELSE branch",
+          "text": "Returns the second parameter when it is the larger or the two are equal",
           "marks": 1
         },
         {
@@ -1288,6 +1290,121 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Which of these is part of the structured approach to programming?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the structured approach",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The structured approach splits a program into subroutines, each with a clear, documented interface: **parameters in, a return value out, local variables inside**. Globals everywhere, one long program and copied code are what it replaces.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "subroutines with clear interfaces"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Subroutines with clear interfaces: parameters in, a return value out, local variables inside",
+        "Global variables for every value, so that any subroutine can read and change what it needs",
+        "One long main program, so the whole solution can be read from top to bottom at once",
+        "Copying a block of code into each place it is needed, so every copy can be tuned"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "What is output by this program?\n\n```\nSUBROUTINE calc(a, b)\n   RETURN a - b * 2\nENDSUBROUTINE\n\nx ← 10\ny ← 3\nOUTPUT calc(y, x)\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "passing parameters in order",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Values are matched to the parameters in order, not by name: `calc(y, x)` makes a = 3 and b = 10. Multiplication comes before subtraction, so the function returns 3 − 10 × 2 = 3 − 20 = **−17**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a = 3 and b = 10, matched in order"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "−17"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": -17,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "short-text",
+      "prompt": "What is output by this program?\n\n```\nSUBROUTINE grade(mark)\n   IF mark ≥ 50 THEN\n      RETURN 'Pass'\n   ELSE\n      RETURN 'Fail'\n   ENDIF\nENDSUBROUTINE\n\nOUTPUT grade(49) + grade(50)\n```",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "tracing a function call",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "49 is less than 50, so `grade(49)` returns 'Fail'. 50 ≥ 50 is true, so `grade(50)` returns 'Pass'. The two strings are joined with nothing between them: **FailPass**.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "grade(49) returns Fail and grade(50) returns Pass"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "FailPass"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "accepted": [
+        "FailPass"
+      ],
+      "matchCase": true
+    },
+    {
+      "id": "q19",
+      "type": "multiple-choice",
+      "prompt": "Which of these subroutines is a function?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "procedures and functions",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "In AQA pseudo-code a subroutine that contains `RETURN` is a function. Only `twice`, whose body is `RETURN x * 2`, hands a value back; the others output or store a value and return nothing, so they are procedures.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "twice, because it contains RETURN"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "`SUBROUTINE show(x)` whose whole body is `OUTPUT x * 2`",
+        "`SUBROUTINE twice(x)` whose body is `RETURN x * 2`",
+        "`SUBROUTINE hello()` whose body is `OUTPUT 'Hi'`",
+        "`SUBROUTINE store(x)` whose body is `y ← x * 2`"
+      ],
+      "correct": [
+        1
+      ]
     }
   ],
   "worksheets": {
@@ -1307,7 +1424,9 @@
         "q5",
         "q6",
         "q7",
-        "q8"
+        "q8",
+        "q16",
+        "q19"
       ],
       "suggestedMinutes": 14
     },
@@ -1320,19 +1439,21 @@
         "q12",
         "q13",
         "q14",
-        "q15"
+        "q15",
+        "q17",
+        "q18"
       ],
       "suggestedMinutes": 40
     }
   },
   "examTechnique": {
-    "body": "Paper 1 tests subroutines three ways: trace a call and state what is returned or output, explain why subroutines are used, and write a subroutine to a specification. For tracing, draw the table with a column per variable and fill it row by row. For writing, get the header, the parameters and the RETURN right first; those carry the marks. Coded answers are written in the language your paper is set in (Python, C# or VB.NET); algorithm questions can be answered in clear pseudo-code.",
+    "body": "Paper 1 tests subroutines three ways: trace a call and state what is returned or output, explain why subroutines are used, and write a subroutine to a specification. For tracing, draw the table with a column per variable and fill it row by row. For writing, get the header, the parameters and the RETURN right first; those are the core of the answer. Coded answers are written in the language your paper is set in (Python, C# or VB.NET); algorithm questions can be answered in clear pseudo-code.",
     "examinerErrors": [
       "Outputting inside a function instead of returning the value.",
       "Forgetting RETURN in one branch of an IF, so the function sometimes returns nothing.",
       "Worrying about parameters against arguments. AQA states it uses **parameter** for both, so do not lose time drawing a distinction the board does not examine.",
       "Treating a variable assigned inside a subroutine as if it changed the global one.",
-      "Writing the answer to a trace question without the trace table. The table is what earns the method mark when the final answer slips."
+      "Writing the answer to a trace question without the trace table. The table shows your working, so a slip can be found and put right."
     ],
     "grade9Looks": "A grade 9 answer traces nested calls from the inside out with every value in the table, writes functions that return in every branch and never output, explains the reuse and testing benefits with a concrete example, and keeps local and global variables apart."
   },
@@ -1349,7 +1470,11 @@
       "q11",
       "q12",
       "q14",
-      "q15"
+      "q15",
+      "q16",
+      "q17",
+      "q18",
+      "q19"
     ],
     "sampleSize": 10
   },

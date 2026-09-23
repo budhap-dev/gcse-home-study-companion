@@ -21,7 +21,7 @@
     },
     {
       "kind": "spot",
-      "title": "Processing is what changes a value",
+      "title": "Processing is what works something out",
       "body": "**Input** brings a value in, **output** shows one, and **processing** is everything that works something out in between. `total ← total + n` is processing; `OUTPUT total` is not, even though it mentions the same variable."
     },
     {
@@ -32,7 +32,7 @@
     {
       "kind": "remember",
       "title": "Say what it does, not how it works",
-      "body": "When asked for the **purpose** of an algorithm, give the outcome in plain words: *it finds the largest number*. Re-describing each line is not a purpose, and it is the commonest way to answer this kind of question without earning the mark."
+      "body": "When asked for the **purpose** of an algorithm, give the outcome in plain words: *it finds the largest number*. Re-describing each line is not a purpose, and it does not answer the question."
     }
   ],
   "why": {
@@ -40,7 +40,7 @@
     "examples": [
       {
         "title": "Why a recipe is an algorithm and a program is not",
-        "body": "The specification is firm about this: **a program is an implementation of an algorithm, and an algorithm is not a program**. A recipe is the algorithm; the cooking is one run of it; the printed card in a particular language is one implementation.\n\nThe distinction earns marks because it is real. The same algorithm can be written in Python, in C#, on paper, or carried out by a person — and if it is wrong, rewriting it in another language will not help. Debugging starts with asking which of the two is broken.",
+        "body": "The specification is firm about this: **a program is an implementation of an algorithm, and an algorithm is not a program**. A recipe is the algorithm; the cooking is one run of it; the printed card in a particular language is one implementation.\n\nThe distinction matters because it is real. The same algorithm can be written in Python, in C#, on paper, or carried out by a person — and if it is wrong, rewriting it in another language will not help. Debugging starts with asking which of the two is broken.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -73,7 +73,7 @@
       },
       {
         "title": "Why every algorithm has three parts",
-        "body": "Input, processing, output. It sounds like a formality until you use it to read an algorithm you have never seen: label which lines bring a value **in**, which ones **work something out**, and which ones **show** a result, and the structure appears.\n\nIt is also the fastest way to spot what an algorithm is missing. An algorithm with no output does nothing anyone can see; one with no input does the same thing every time it runs. Questions that ask you to identify the three parts are really asking whether you can read code rather than only write it.",
+        "body": "Input, processing, output. It sounds like a formality until you use it to read an algorithm you have never seen: label which lines bring a value **in**, which ones **work something out**, and which ones **show** a result, and the structure appears.\n\nIt is also the fastest way to spot what an algorithm is missing. An algorithm whose result is never output, stored or returned does nothing anyone can use; one with no input can only work from values it sets itself. Questions that ask you to identify the three parts are really asking whether you can read code rather than only write it.",
         "visual": {
           "type": "diagram",
           "component": "flowchart",
@@ -98,7 +98,7 @@
       },
       {
         "title": "Why one test proves nothing",
-        "body": "An algorithm that gives the right answer for the number you tried may still be wrong, and usually the numbers people try are the comfortable ones in the middle.\n\nSo a test set has **normal** data, **boundary** data — the values either side of a limit, so 0 to 100 means trying −1, 0, 100 and 101 — and **erroneous** data, such as a letter where a number was wanted. Almost every bug that reaches real software is at a boundary, because the middle is what everybody checked.",
+        "body": "An algorithm that gives the right answer for the number you tried may still be wrong, and usually the numbers people try are the comfortable ones in the middle.\n\nSo a test set has **normal** data, **boundary** data — the values at each limit and either side of it, so 0 to 100 means trying −1, 0, 100 and 101 — and **erroneous** data, such as a letter where a number was wanted. Many bugs sit at boundaries, because the middle is what everybody checked.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -117,7 +117,7 @@
               [
                 "Boundary",
                 "−1, 0, 100, 101",
-                "either side of each limit"
+                "each limit and either side"
               ],
               [
                 "Erroneous",
@@ -211,7 +211,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Inputs, processing and outputs",
-        "body": "**Every algorithm can be described in three parts, and the specification asks you to identify where each one is happening.**\n\n- **Input** — a value coming **in**, usually from the user.\n- **Processing** — the work done **on** those values: calculating, comparing, counting, totalling.\n- **Output** — a result going **out**, shown to the user.\n\n**The distinction is about what a line does, not what it mentions.** `total ← total + n` is **processing**, because it works out a new value. `OUTPUT total` is **output**, even though it names the same variable. Reading the verb rather than the variable is the way to tell them apart.\n\n**Not every algorithm has all three.** Some have no input at all, working entirely from values they set themselves. But an algorithm with **no output** is of no use to anyone: nothing ever comes out of it.\n\n**Labelling the three parts is a good first move on any unfamiliar algorithm.** It turns \"explain what this does\" into three much easier questions, and it is often worth marks in its own right.",
+        "body": "**Every algorithm can be described in three parts, and the specification asks you to identify where each one is happening.**\n\n- **Input** — a value coming **in**, usually from the user.\n- **Processing** — the work done **on** those values: calculating, comparing, counting, totalling.\n- **Output** — a result going **out**, shown to the user.\n\n**The distinction is about what a line does, not what it mentions.** `total ← total + n` is **processing**, because it works out a new value. `OUTPUT total` is **output**, even though it names the same variable. Reading the verb rather than the variable is the way to tell them apart.\n\n**Input in AQA pseudo-code is written `mark ← USERINPUT`.** The arrow stores the value, but it is `USERINPUT` that brings it in from the user, so the line is **input**.\n\n**Not every algorithm has all three.** Some have no input at all, working entirely from values they set themselves. But an algorithm whose result is never output, stored or returned is of no use to anyone: nothing it works out ever leaves it.\n\n**Labelling the three parts is a good first move on any unfamiliar algorithm.** It turns \"explain what this does\" into three much easier questions, and the specification asks you to identify where each part takes place.",
         "visuals": [
           {
             "type": "diagram",
@@ -224,7 +224,7 @@
               ],
               "rows": [
                 [
-                  "INPUT mark",
+                  "mark ← USERINPUT",
                   "input",
                   "a value comes in from the user"
                 ],
@@ -378,7 +378,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Saying what an algorithm is for",
-        "body": "**The specification asks you to determine the purpose of simple algorithms.** That means saying **what it achieves**, in plain words — not walking through it line by line.\n\n**A purpose is an outcome.** *It finds the largest number in a list.* *It counts how many marks are above 50.* *It works out the average.* Each is one sentence, and each would let someone decide whether the algorithm is the one they need.\n\n**Re-describing the lines is not a purpose.** *It sets max to the first item, then loops through comparing each item with max, and if the item is bigger it changes max* describes the mechanism accurately and never says what the thing is **for**. Examiners see this constantly, and it earns little.\n\n**How to find the purpose when the algorithm is unfamiliar:**\n\n1. Look at what is **output** — that is the thing the algorithm produces.\n2. Look at what goes **in**.\n3. **Trace it** with two or three small inputs and watch what the output does.\n4. Say, in one sentence, what the output **is** in terms of the input.\n\n**Step 3 is what makes it reliable.** Tracing with a list where the largest number is in the middle, and then one where it is at the end, tells you far more than staring at the code.",
+        "body": "**The specification asks you to determine the purpose of simple algorithms.** That means saying **what it achieves**, in plain words — not walking through it line by line.\n\n**A purpose is an outcome.** *It finds the largest number in a list.* *It counts how many marks are above 50.* *It works out the average.* Each is one sentence, and each would let someone decide whether the algorithm is the one they need.\n\n**Re-describing the lines is not a purpose.** *It sets max to the first item, then loops through comparing each item with max, and if the item is bigger it changes max* describes the mechanism accurately and never says what the thing is **for**. It is an easy answer to give, and it does not say what the algorithm is for.\n\n**How to find the purpose when the algorithm is unfamiliar:**\n\n1. Look at what is **output** — that is the thing the algorithm produces.\n2. Look at what goes **in**.\n3. **Trace it** with two or three small inputs and watch what the output does.\n4. Say, in one sentence, what the output **is** in terms of the input.\n\n**Step 3 is what makes it reliable.** Tracing with a list where the largest number is in the middle, and then one where it is at the end, tells you far more than staring at the code.",
         "visuals": [
           {
             "type": "diagram",
@@ -444,7 +444,7 @@
         "id": "s5",
         "kind": "your-turn",
         "title": "Your turn",
-        "body": "**Part A.**\n\n1. Give the specification's definition of an algorithm.\n2. Explain the difference between an algorithm and a program.\n3. Name the three parts every algorithm can be described in.\n\n**Part B.**\n\n4. Classify each as input, processing or output: `INPUT age`, `count ← count + 1`, `OUTPUT total`, `average ← total / n`.\n5. Write an algorithm to find the average of three marks.\n6. Follow it with the marks 12, 15 and 18 and give the output.\n\n**Part C.**\n\n7. An algorithm sets `max` to the first item, then compares every other item with it and replaces it when one is larger. State its purpose in one sentence.\n8. Explain why testing an algorithm with a second set of inputs is worth doing.\n9. A student answers a \"what does this algorithm do\" question by describing every line. Explain why this earns few marks.\n\nFor question 7, one sentence is enough, and it should not mention `max`.",
+        "body": "**Part A.**\n\n1. Give the specification's definition of an algorithm.\n2. Explain the difference between an algorithm and a program.\n3. Name the three parts every algorithm can be described in.\n\n**Part B.**\n\n4. Classify each as input, processing or output: `age ← USERINPUT`, `count ← count + 1`, `OUTPUT total`, `average ← total / n`.\n5. Write an algorithm to find the average of three marks.\n6. Follow it with the marks 12, 15 and 18 and give the output.\n\n**Part C.**\n\n7. An algorithm sets `max` to the first item, then compares every other item with it and replaces it when one is larger. State its purpose in one sentence.\n8. Explain why testing an algorithm with a second set of inputs is worth doing.\n9. A student answers a \"what does this algorithm do\" question by describing every line. Explain why this does not answer the question.\n\nFor question 7, one sentence is enough, and it should not mention `max`.",
         "visuals": [
           {
             "type": "diagram",
@@ -456,7 +456,7 @@
               ],
               "rows": [
                 [
-                  "INPUT age",
+                  "age ← USERINPUT",
                   ""
                 ],
                 [
@@ -482,7 +482,7 @@
         "id": "s6",
         "kind": "grade-9",
         "title": "Going deeper",
-        "body": "**Hold the algorithm-and-program distinction precisely.** The specification says a program **implements** an algorithm and that an algorithm **is not** a program. So an algorithm can exist as a flowchart, as pseudo-code, or in someone's head, and it is the same algorithm in each. A question that gives you pseudo-code has given you an algorithm, not a program.\n\n**Read the verb, not the variable.** `total ← total + n` and `OUTPUT total` both mention `total`, but one **changes** a value and the other **shows** one. Processing is whatever works something out; output is whatever leaves the algorithm.\n\n**A purpose is an outcome, in one sentence.** *It finds the largest number* earns the mark. A line-by-line walkthrough does not, however accurate, because the question asked what the algorithm is **for**. This is the single most common way to lose marks on this part of the specification.\n\n**Find the purpose by tracing, not by staring.** Run the algorithm on two or three small inputs and watch what comes out. Pick inputs that could **disagree**: a list where the largest value is at the end, and one where it is at the start. If the output is the same kind of thing both times, you have the purpose.\n\n**Test with a second set of inputs, and pick awkward ones.** An empty list, a list with one item, two equal values, a boundary value. An algorithm that works on 12, 15, 18 and falls over on an empty list is not finished, and noticing that is a grade 9 observation.\n\n**Divide by the count, not by the number you happen to have.** An averaging algorithm that hard-codes 3 works only for three marks. Using the count makes it work for any number, and explaining that difference shows you are thinking about the algorithm rather than the example.",
+        "body": "**Hold the algorithm-and-program distinction precisely.** The specification says a program **implements** an algorithm and that an algorithm **is not** a program. So an algorithm can exist as a flowchart, as pseudo-code, or in someone's head, and it is the same algorithm in each. A question that gives you pseudo-code has given you an algorithm, not a program.\n\n**Read the verb, not the variable.** `total ← total + n` and `OUTPUT total` both mention `total`, but one **changes** a value and the other **shows** one. Processing is whatever works something out; output is whatever leaves the algorithm.\n\n**A purpose is an outcome, in one sentence.** *It finds the largest number* answers the question. A line-by-line walkthrough does not, however accurate, because the question asked what the algorithm is **for**.\n\n**Find the purpose by tracing, not by staring.** Run the algorithm on two or three small inputs and watch what comes out. Pick inputs that could **disagree**: a list where the largest value is at the end, and one where it is at the start. If the output is the same kind of thing both times, you have the purpose.\n\n**Test with a second set of inputs, and pick awkward ones.** An empty list, a list with one item, two equal values, a boundary value. An algorithm that works on 12, 15, 18 and falls over on an empty list is not finished, and noticing that is a grade 9 observation.\n\n**Divide by the count, not by the number you happen to have.** An averaging algorithm that hard-codes 3 works only for three marks. Using the count makes it work for any number, and explaining that difference shows you are thinking about the algorithm rather than the example.",
         "visuals": [
           {
             "type": "diagram",
@@ -535,7 +535,7 @@
         "id": "s7",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **An algorithm is a sequence of steps that can be followed to complete a task.**\n- **A program is an implementation of an algorithm; an algorithm is not a program.**\n- The same algorithm can be implemented in Python, C# or VB.NET.\n- Every algorithm can be described as **input**, **processing** and **output**.\n- **Input** brings a value in; **output** sends a result out.\n- **Processing** is anything that works out a new value.\n- Classify a line by **what it does**, not by the variable it names.\n- An algorithm with **no output** produces nothing useful.\n- The **purpose** of an algorithm is what it **achieves**, in one plain sentence.\n- *It finds the largest number* is a purpose; *it compares each item with max* is not.\n- Find a purpose by **tracing** with small inputs and watching the output.\n- **Test with a second set of inputs**, chosen to be awkward.\n- Useful awkward cases: an **empty list**, a **single item**, **equal values**, a **boundary**.\n- Divide by the **count**, not by a hard-coded number.\n- Working systematically: understand, decide inputs and outputs, write the steps, then test.",
+        "body": "- **An algorithm is a sequence of steps that can be followed to complete a task.**\n- **A program is an implementation of an algorithm; an algorithm is not a program.**\n- The same algorithm can be implemented in Python, C# or VB.NET.\n- Every algorithm can be described as **input**, **processing** and **output**.\n- **Input** brings a value in; **output** sends a result out.\n- **Processing** is anything that works out a new value.\n- Classify a line by **what it does**, not by the variable it names.\n- An algorithm whose result never leaves it produces nothing useful.\n- The **purpose** of an algorithm is what it **achieves**, in one plain sentence.\n- *It finds the largest number* is a purpose; *it compares each item with max* is not.\n- Find a purpose by **tracing** with small inputs and watching the output.\n- **Test with a second set of inputs**, chosen to be awkward.\n- Useful awkward cases: an **empty list**, a **single item**, **equal values**, a **boundary**.\n- Divide by the **count**, not by a hard-coded number.\n- Working systematically: understand, decide inputs and outputs, write the steps, then test.",
         "visuals": [
           {
             "type": "diagram",
@@ -661,7 +661,7 @@
       "prompt": "Which line is an input?",
       "options": [
         "total ← total + 1",
-        "INPUT age",
+        "age ← USERINPUT",
         "OUTPUT total",
         "average ← total / n"
       ],
@@ -673,12 +673,12 @@
       "skill": "identifying the three parts",
       "calculator": "either",
       "tags": [],
-      "solution": "**INPUT age** brings a value in from the user. The others work out a value or show one.",
+      "solution": "`age ← USERINPUT` brings a value in from the user. The others work out a value or show one.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "INPUT age"
+          "description": "age ← USERINPUT"
         }
       ],
       "discriminators": []
@@ -735,14 +735,23 @@
     },
     {
       "id": "q6",
-      "type": "short-text",
-      "prompt": "An algorithm sets max to the first item, compares every other item with it, and replaces it when one is larger. State its purpose in one sentence.",
+      "type": "multiple-choice",
+      "prompt": "An algorithm sets max to the first item in a list, compares every other item with it, and replaces it when one is larger. Which sentence states its purpose?",
+      "options": [
+        "It compares each item with the one stored in max",
+        "It loops from the second item to the end of the list",
+        "It outputs the value held in the variable max",
+        "It finds the largest number in the list"
+      ],
+      "correct": [
+        3
+      ],
       "marks": 1,
       "gradeBand": "6-7",
       "skill": "stating a purpose",
       "calculator": "either",
       "tags": [],
-      "solution": "**It finds the largest number** in the list. A purpose is the outcome, not the mechanism, so it should not mention `max` or the comparisons at all.",
+      "solution": "**It finds the largest number in the list.** A purpose is the outcome, not the mechanism: comparing each item with `max` and looping to the end describe how it works, and outputting `max` names a variable rather than saying what the algorithm achieves.",
       "markScheme": [
         {
           "code": "B1",
@@ -750,13 +759,7 @@
           "description": "it finds the largest number"
         }
       ],
-      "discriminators": [],
-      "accepted": [
-        "it finds the largest number",
-        "finds the largest value",
-        "finds the maximum",
-        "it finds the biggest number in the list"
-      ]
+      "discriminators": []
     },
     {
       "id": "q7",
@@ -803,7 +806,7 @@
       "skill": "the three parts",
       "calculator": "either",
       "tags": [],
-      "solution": "Processing **changes or calculates** a value. `OUTPUT total` only shows one that already exists, so it is output — even though it names the same variable a processing line might.",
+      "solution": "Processing works something out: it **calculates, compares or changes** a value. `OUTPUT total` only shows one that already exists, so it is output — even though it names the same variable a processing line might.",
       "markScheme": [
         {
           "code": "B1",
@@ -816,12 +819,12 @@
     {
       "id": "q9",
       "type": "multiple-choice",
-      "prompt": "An algorithm has input and processing but no output. What is wrong with it?",
+      "prompt": "An algorithm takes input and processes it, but never outputs, stores or returns the result. What is wrong with it?",
       "options": [
-        "Processing is not allowed without output",
-        "It cannot be written in pseudo-code",
-        "It will not compile into a program",
-        "Nothing ever comes out of it, so it is of no use"
+        "Processing is not allowed without an output line",
+        "It cannot be written in pseudo-code at all",
+        "It will not compile into a working program",
+        "The result never leaves it, so it is of no use"
       ],
       "correct": [
         3
@@ -831,12 +834,12 @@
       "skill": "why output matters",
       "calculator": "either",
       "tags": [],
-      "solution": "Work is done but nothing is ever shown or returned, so no one can use the result. Some algorithms legitimately have no **input**, but one with no **output** achieves nothing visible.",
+      "solution": "Work is done, but the result is never shown, stored or returned, so **nothing can use it**. Some algorithms legitimately have no **input**, and some hand their result on without an OUTPUT line, by returning it or storing it; one whose result goes nowhere achieves nothing.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "nothing comes out of it"
+          "description": "the result never leaves it"
         }
       ],
       "discriminators": []
@@ -862,15 +865,17 @@
       "accepted": [
         "input, processing, output",
         "inputs, processing, outputs",
-        "input processing output"
+        "input processing output",
+        "input, process, output",
+        "inputs, processes, outputs"
       ]
     },
     {
       "id": "q11",
       "type": "multiple-choice",
-      "prompt": "A student answers \"what does this algorithm do?\" by describing every line in order. Why does this earn few marks?",
+      "prompt": "A student answers \"what does this algorithm do?\" by describing every line in order. Why does this not answer the question?",
       "options": [
-        "It is too short to earn the marks available here",
+        "It is too short to answer the question fully",
         "It gives the mechanism, not what the algorithm achieves",
         "Describing the lines is only allowed for flowcharts",
         "The lines should have been described in reverse order"
@@ -883,7 +888,7 @@
       "skill": "stating a purpose",
       "calculator": "either",
       "tags": [],
-      "solution": "The question asks for the **purpose** — the outcome, in plain words. A walkthrough describes **how** the algorithm works, which the reader can already see. *It finds the largest number* is worth more than a paragraph of accurate description.",
+      "solution": "The question asks for the **purpose** — the outcome, in plain words. A walkthrough describes **how** the algorithm works, which the reader can already see. *It finds the largest number* answers the question; a paragraph of accurate description does not.",
       "markScheme": [
         {
           "code": "B1",
@@ -957,31 +962,32 @@
     },
     {
       "id": "q14",
-      "type": "short-text",
-      "prompt": "Give one awkward set of inputs worth testing an algorithm with, beyond ordinary values.",
+      "type": "multiple-choice",
+      "prompt": "Which of these is an awkward input worth testing a find-the-largest algorithm with?",
+      "options": [
+        "A list of five ordinary positive numbers",
+        "The same ordinary list run twice",
+        "A list containing only negative numbers",
+        "The same list typed in more slowly"
+      ],
+      "correct": [
+        2
+      ],
       "marks": 1,
       "gradeBand": "8-9",
       "skill": "choosing test data",
       "calculator": "either",
       "tags": [],
-      "solution": "Good choices include **an empty list**, a list with one item, two equal values, a boundary value, zero, or a negative. Ordinary values confirm what you already believe; awkward ones are where algorithms break.",
+      "solution": "**A list containing only negative numbers** is awkward on purpose: an algorithm that wrongly starts `max` at 0 returns 0 for −5, −2, −9, although 0 is not in the list. Ordinary positive numbers confirm what you already believe, running the same list twice tests nothing new, and typing speed does not change the input.",
       "markScheme": [
         {
           "code": "B1",
           "marks": 1,
-          "description": "an empty list"
+          "description": "a list of only negative numbers"
         }
       ],
       "discriminators": [
         "evaluate"
-      ],
-      "accepted": [
-        "an empty list",
-        "a list with one item",
-        "equal values",
-        "a boundary value",
-        "zero",
-        "a negative number"
       ]
     },
     {
@@ -1053,7 +1059,7 @@
       "skill": "algorithms and their parts",
       "calculator": "either",
       "tags": [],
-      "solution": "An **algorithm** is a **sequence of steps that can be followed to complete a task**. A **program** is an **implementation** of an algorithm — the same steps written in a particular language so that a computer can carry them out. The specification is explicit that **an algorithm is not a computer program**.\n\nThe practical consequence is that an algorithm is **independent of any language**. The same algorithm for finding an average can be implemented in Python, in C# or in VB.NET, and in each case it is still the same algorithm; only the implementation has changed. It can also exist as a **flowchart** or as **pseudo-code**, neither of which any computer runs. So when an exam question gives you pseudo-code, it has given you an algorithm, not a program.\n\nAny algorithm can be described in **three parts**.\n\n**Input** is a value coming into the algorithm, usually from the user: `INPUT mark`. Some algorithms have no input at all, working only from values they set themselves.\n\n**Processing** is the work done on those values — anything that calculates, compares, counts or totals. `total ← total + mark` is processing, because it works out a new value for `total`. So is `average ← total / count`.\n\n**Output** is a result leaving the algorithm to be shown to the user: `OUTPUT average`. Unlike input, output is effectively essential: an algorithm that never outputs anything has done work that no one can see or use.\n\nThe distinction between processing and output is about **what the line does**, not which variable it names. `total ← total + mark` and `OUTPUT total` both mention `total`, but the first **changes** it and the second only **shows** it. Reading the verb rather than the variable is the reliable way to classify a line, and the specification asks you to identify where each of the three is taking place.",
+      "solution": "An **algorithm** is a **sequence of steps that can be followed to complete a task**. A **program** is an **implementation** of an algorithm — the same steps written in a particular language so that a computer can carry them out. The specification is explicit that **an algorithm is not a computer program**.\n\nThe practical consequence is that an algorithm is **independent of any language**. The same algorithm for finding an average can be implemented in Python, in C# or in VB.NET, and in each case it is still the same algorithm; only the implementation has changed. It can also exist as a **flowchart** or as **pseudo-code**, neither of which any computer runs. So when an exam question gives you pseudo-code, it has given you an algorithm, not a program.\n\nAny algorithm can be described in **three parts**.\n\n**Input** is a value coming into the algorithm, usually from the user: `mark ← USERINPUT`. Some algorithms have no input at all, working only from values they set themselves.\n\n**Processing** is the work done on those values — anything that calculates, compares, counts or totals. `total ← total + mark` is processing, because it works out a new value for `total`. So is `average ← total / count`.\n\n**Output** is a result leaving the algorithm to be shown to the user: `OUTPUT average`. Unlike input, some way for the result to leave is essential: an algorithm whose result is never output, stored or returned has done work that nothing can use.\n\nThe distinction between processing and output is about **what the line does**, not which variable it names. `total ← total + mark` and `OUTPUT total` both mention `total`, but the first **changes** it and the second only **shows** it. Reading the verb rather than the variable is the reliable way to classify a line, and the specification asks you to identify where each of the three is taking place.",
       "markScheme": [
         {
           "code": "B2",
@@ -1089,7 +1095,7 @@
           "marks": 3
         }
       ],
-      "modelAnswer": "An **algorithm** is a **sequence of steps that can be followed to complete a task**. A **program** is an **implementation** of an algorithm — the same steps written in a particular language so that a computer can carry them out. The specification is explicit that **an algorithm is not a computer program**.\n\nThe practical consequence is that an algorithm is **independent of any language**. The same algorithm for finding an average can be implemented in Python, in C# or in VB.NET, and in each case it is still the same algorithm; only the implementation has changed. It can also exist as a **flowchart** or as **pseudo-code**, neither of which any computer runs. So when an exam question gives you pseudo-code, it has given you an algorithm, not a program.\n\nAny algorithm can be described in **three parts**.\n\n**Input** is a value coming into the algorithm, usually from the user: `INPUT mark`. Some algorithms have no input at all, working only from values they set themselves.\n\n**Processing** is the work done on those values — anything that calculates, compares, counts or totals. `total ← total + mark` is processing, because it works out a new value for `total`. So is `average ← total / count`.\n\n**Output** is a result leaving the algorithm to be shown to the user: `OUTPUT average`. Unlike input, output is effectively essential: an algorithm that never outputs anything has done work that no one can see or use.\n\nThe distinction between processing and output is about **what the line does**, not which variable it names. `total ← total + mark` and `OUTPUT total` both mention `total`, but the first **changes** it and the second only **shows** it. Reading the verb rather than the variable is the reliable way to classify a line, and the specification asks you to identify where each of the three is taking place."
+      "modelAnswer": "An **algorithm** is a **sequence of steps that can be followed to complete a task**. A **program** is an **implementation** of an algorithm — the same steps written in a particular language so that a computer can carry them out. The specification is explicit that **an algorithm is not a computer program**.\n\nThe practical consequence is that an algorithm is **independent of any language**. The same algorithm for finding an average can be implemented in Python, in C# or in VB.NET, and in each case it is still the same algorithm; only the implementation has changed. It can also exist as a **flowchart** or as **pseudo-code**, neither of which any computer runs. So when an exam question gives you pseudo-code, it has given you an algorithm, not a program.\n\nAny algorithm can be described in **three parts**.\n\n**Input** is a value coming into the algorithm, usually from the user: `mark ← USERINPUT`. Some algorithms have no input at all, working only from values they set themselves.\n\n**Processing** is the work done on those values — anything that calculates, compares, counts or totals. `total ← total + mark` is processing, because it works out a new value for `total`. So is `average ← total / count`.\n\n**Output** is a result leaving the algorithm to be shown to the user: `OUTPUT average`. Unlike input, some way for the result to leave is essential: an algorithm whose result is never output, stored or returned has done work that nothing can use.\n\nThe distinction between processing and output is about **what the line does**, not which variable it names. `total ← total + mark` and `OUTPUT total` both mention `total`, but the first **changes** it and the second only **shows** it. Reading the verb rather than the variable is the reliable way to classify a line, and the specification asks you to identify where each of the three is taking place."
     },
     {
       "id": "q18",
@@ -1100,7 +1106,7 @@
       "skill": "determining and testing purpose",
       "calculator": "either",
       "tags": [],
-      "solution": "To **determine the purpose**, I would start from the two ends of the algorithm. What goes **in** is a list of numbers; what comes **out** is the value held in `max`. The purpose must therefore be a statement about what that output **is**, in terms of the list.\n\nThen I would **trace it** on a small input rather than stare at it. Taking the list 4, 9, 2: `max` starts at 4; 9 is larger so `max` becomes 9; 2 is not, so `max` stays 9. The output is 9, which is the largest of the three.\n\nOne trace is not enough to be sure, because 9 was in the middle. I would run it again on a list where the largest value is **last**, such as 4, 2, 9, and on one where it is **first**, such as 9, 4, 2. Both give 9. Inputs that could disagree, but do not, are what make the conclusion trustworthy.\n\nThe **purpose**, stated as an outcome, is: **it finds the largest number in the list**. That is one sentence, it says what the algorithm achieves, and it does not mention `max` or the comparisons at all. Writing *it sets max to the first item, then loops through comparing each item* would describe the **mechanism** — accurate, but not what a purpose question is asking for, and worth very little.\n\nFor **testing whether it works**, ordinary lists are the least useful data, because they confirm what I already believe. I would choose inputs that could expose a fault:\n\n- The largest value **first** — this is the case that a broken algorithm which simply returns the first item would also pass, so it must be paired with one where the largest is **last**.\n- A list with **one item**, where the answer must be that item.\n- A list where **two items are equal** and both are the largest.\n- **Negative numbers** throughout, which catches an algorithm that wrongly starts `max` at 0 rather than at the first item.\n\nThat last case is the sharpest. Starting `max` at 0 looks harmless and gives the right answer for every list of positive numbers, but returns 0 for a list like −5, −2, −9, where 0 is not in the list at all. An **empty list** is worth considering too: there is no first item to set `max` to, so the algorithm as described has nothing sensible to do, and a complete answer would say what should happen in that case.",
+      "solution": "To **determine the purpose**, I would start from the two ends of the algorithm. What goes **in** is a list of numbers; what comes **out** is the value held in `max`. The purpose must therefore be a statement about what that output **is**, in terms of the list.\n\nThen I would **trace it** on a small input rather than stare at it. Taking the list 4, 9, 2: `max` starts at 4; 9 is larger so `max` becomes 9; 2 is not, so `max` stays 9. The output is 9, which is the largest of the three.\n\nOne trace is not enough to be sure, because 9 was in the middle. I would run it again on a list where the largest value is **last**, such as 4, 2, 9, and on one where it is **first**, such as 9, 4, 2. Both give 9. Inputs that could disagree, but do not, are what make the conclusion trustworthy.\n\nThe **purpose**, stated as an outcome, is: **it finds the largest number in the list**. That is one sentence, it says what the algorithm achieves, and it does not mention `max` or the comparisons at all. Writing *it sets max to the first item, then loops through comparing each item* would describe the **mechanism** — accurate, but not what a purpose question is asking for.\n\nFor **testing whether it works**, ordinary lists are the least useful data, because they confirm what I already believe. I would choose inputs that could expose a fault:\n\n- The largest value **first** — this is the case that a broken algorithm which simply returns the first item would also pass, so it must be paired with one where the largest is **last**.\n- A list with **one item**, where the answer must be that item.\n- A list where **two items are equal** and both are the largest.\n- **Negative numbers** throughout, which catches an algorithm that wrongly starts `max` at 0 rather than at the first item.\n\nThat last case is the sharpest. Starting `max` at 0 looks harmless and gives the right answer for every list of positive numbers, but returns 0 for a list like −5, −2, −9, where 0 is not in the list at all. An **empty list** is worth considering too: there is no first item to set `max` to, so the algorithm as described has nothing sensible to do, and a complete answer would say what should happen in that case.",
       "markScheme": [
         {
           "code": "B2",
@@ -1137,7 +1143,7 @@
           "marks": 2
         }
       ],
-      "modelAnswer": "To **determine the purpose**, I would start from the two ends of the algorithm. What goes **in** is a list of numbers; what comes **out** is the value held in `max`. The purpose must therefore be a statement about what that output **is**, in terms of the list.\n\nThen I would **trace it** on a small input rather than stare at it. Taking the list 4, 9, 2: `max` starts at 4; 9 is larger so `max` becomes 9; 2 is not, so `max` stays 9. The output is 9, which is the largest of the three.\n\nOne trace is not enough to be sure, because 9 was in the middle. I would run it again on a list where the largest value is **last**, such as 4, 2, 9, and on one where it is **first**, such as 9, 4, 2. Both give 9. Inputs that could disagree, but do not, are what make the conclusion trustworthy.\n\nThe **purpose**, stated as an outcome, is: **it finds the largest number in the list**. That is one sentence, it says what the algorithm achieves, and it does not mention `max` or the comparisons at all. Writing *it sets max to the first item, then loops through comparing each item* would describe the **mechanism** — accurate, but not what a purpose question is asking for, and worth very little.\n\nFor **testing whether it works**, ordinary lists are the least useful data, because they confirm what I already believe. I would choose inputs that could expose a fault:\n\n- The largest value **first** — this is the case that a broken algorithm which simply returns the first item would also pass, so it must be paired with one where the largest is **last**.\n- A list with **one item**, where the answer must be that item.\n- A list where **two items are equal** and both are the largest.\n- **Negative numbers** throughout, which catches an algorithm that wrongly starts `max` at 0 rather than at the first item.\n\nThat last case is the sharpest. Starting `max` at 0 looks harmless and gives the right answer for every list of positive numbers, but returns 0 for a list like −5, −2, −9, where 0 is not in the list at all. An **empty list** is worth considering too: there is no first item to set `max` to, so the algorithm as described has nothing sensible to do, and a complete answer would say what should happen in that case."
+      "modelAnswer": "To **determine the purpose**, I would start from the two ends of the algorithm. What goes **in** is a list of numbers; what comes **out** is the value held in `max`. The purpose must therefore be a statement about what that output **is**, in terms of the list.\n\nThen I would **trace it** on a small input rather than stare at it. Taking the list 4, 9, 2: `max` starts at 4; 9 is larger so `max` becomes 9; 2 is not, so `max` stays 9. The output is 9, which is the largest of the three.\n\nOne trace is not enough to be sure, because 9 was in the middle. I would run it again on a list where the largest value is **last**, such as 4, 2, 9, and on one where it is **first**, such as 9, 4, 2. Both give 9. Inputs that could disagree, but do not, are what make the conclusion trustworthy.\n\nThe **purpose**, stated as an outcome, is: **it finds the largest number in the list**. That is one sentence, it says what the algorithm achieves, and it does not mention `max` or the comparisons at all. Writing *it sets max to the first item, then loops through comparing each item* would describe the **mechanism** — accurate, but not what a purpose question is asking for.\n\nFor **testing whether it works**, ordinary lists are the least useful data, because they confirm what I already believe. I would choose inputs that could expose a fault:\n\n- The largest value **first** — this is the case that a broken algorithm which simply returns the first item would also pass, so it must be paired with one where the largest is **last**.\n- A list with **one item**, where the answer must be that item.\n- A list where **two items are equal** and both are the largest.\n- **Negative numbers** throughout, which catches an algorithm that wrongly starts `max` at 0 rather than at the first item.\n\nThat last case is the sharpest. Starting `max` at 0 looks harmless and gives the right answer for every list of positive numbers, but returns 0 for a list like −5, −2, −9, where 0 is not in the list at all. An **empty list** is worth considering too: there is no first item to set `max` to, so the algorithm as described has nothing sensible to do, and a complete answer would say what should happen in that case."
     }
   ],
   "examTechnique": {
@@ -1149,7 +1155,7 @@
       "Treating pseudo-code as a program.",
       "Testing with one set of ordinary inputs and concluding the algorithm works.",
       "Dividing by a hard-coded number instead of by the count.",
-      "Forgetting that an algorithm with no output achieves nothing.",
+      "Forgetting that an algorithm whose result never leaves it achieves nothing.",
       "Starting a largest-value search at 0 rather than at the first item."
     ],
     "grade9Looks": "A grade 9 answer states a **purpose as an outcome in one sentence** and resists describing the mechanism. It classifies lines by **what they do**, so `OUTPUT total` is never called processing. It finds an unfamiliar algorithm's purpose by **tracing**, choosing inputs that could **disagree** — the largest value first against last — and it tests with the awkward cases: an empty list, a single item, equal values, negatives. It knows that pseudo-code is an **algorithm**, not a program, and that dividing by the **count** rather than a fixed number is what makes an algorithm general."
