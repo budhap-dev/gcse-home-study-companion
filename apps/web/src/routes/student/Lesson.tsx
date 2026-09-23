@@ -1,4 +1,4 @@
-import { getSubject, mark, XP, type MarkResult } from '@study/shared'
+import { claimAnswer, getSubject, mark, XP, type MarkResult } from '@study/shared'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -158,7 +158,7 @@ export function Lesson() {
           <KindChip kind="check" />
           <RichText source={step.check.prompt} className="font-bold" />
           <QuestionInput subjectId={subjectId} key={step.id} question={step.check} disabled={result !== null} onSubmit={submit} />
-          {result && <Feedback question={step.check} result={result} />}
+          {result && <Feedback question={step.check} result={result} onClaim={() => setResult(claimAnswer(result))} />}
         </section>
       )}
 

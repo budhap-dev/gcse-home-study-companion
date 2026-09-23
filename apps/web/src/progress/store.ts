@@ -18,6 +18,8 @@ export interface QuestionResult {
    * than typed in, so every reader has to cope with it being missing.
    */
   answer?: string
+  /** The marker rejected a typed answer and the student counted it as right. */
+  claimed?: boolean
 }
 
 export interface AttemptRecord {

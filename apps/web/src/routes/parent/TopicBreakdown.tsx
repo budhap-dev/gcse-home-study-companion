@@ -79,6 +79,13 @@ function QuestionRow({ n, result, question }: { n: number; result: QuestionResul
             : <span className={part ? 'text-[#8a6d1d]' : 'text-[color:var(--status-not-secure-ink)]'}>{part ? '~' : '✗'} {result.marksScored}/{result.marksAvailable}</span>}
         </span>
       </span>
+      {result.claimed && (
+        <span className="flex flex-col gap-0.5 text-xs">
+          {result.answer !== undefined && <span className="text-ink-2">They put: <RichText source={result.answer} className="inline text-xs font-bold text-ink" /></span>}
+          {expected && <span className="text-ink-2">Model answer: <RichText source={expected} className="inline text-xs font-bold text-ink" /></span>}
+          <span className="text-ink-3">The marker did not match it; they said it means the same and counted it.</span>
+        </span>
+      )}
       {!right && (
         <span className="flex flex-col gap-0.5 text-xs">
           {result.answer !== undefined
