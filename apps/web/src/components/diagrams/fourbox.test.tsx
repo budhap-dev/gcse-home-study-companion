@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { FourBox } from './FourBox.tsx'
+import { FourBox, FourBoxStack } from './FourBox.tsx'
 
 /**
  * Fourteen diagrams in the content pack were written with `body` on each box while the
@@ -83,5 +83,54 @@ describe('four-box', () => {
       const inside = boxes.some((b) => t.x >= b.x && t.x <= b.x + b.w && t.y >= b.y && t.y <= b.y + b.h)
       expect(inside, `text at ${t.x},${t.y} is outside every box`).toBe(true)
     }
+  })
+})
+
+/**
+ * On a phone the grid is wider than the card, and a diagram stops shrinking at its natural
+ * width, so the right-hand boxes sat off-screen. The stacked layout has to fit the width
+ * it is given and still carry every word.
+ */
+describe('four-box stacked for a narrow screen', () => {
+  const CENTRE = 'The marketing mix, four decisions that pull on one product'
+  const boxes = [
+    { title: 'Product', points: ['what is sold', 'its design and quality'] },
+    { title: 'Price', body: 'What the customer pays, set against costs, competitors and what the market will bear.' },
+    { title: 'Place', points: ['where it is sold'] },
+    { title: 'A title long enough that it has to wrap onto a second line', body: 'Short.' },
+  ]
+  const render = (width: number) =>
+    renderToStaticMarkup(<FourBoxStack centre={CENTRE} boxes={boxes} width={width} alt="" svgRef={{ current: null }} />)
+
+  it('draws exactly as wide as the space it is given', () => {
+    expect(render(298)).toContain('viewBox="0 0 298 ')
+  })
+
+  it('keeps every word of the titles, points, bodies and centre', () => {
+    const html = render(298)
+    const words = [CENTRE, ...boxes.flatMap((b) => [b.title, ...(b.points ?? []), b.body ?? ''])].join(' ').split(' ').filter(Boolean)
+    for (const w of words) expect(html).toContain(w)
+  })
+
+  it('wraps every line of text to fit the width', () => {
+    const texts = [...render(298).matchAll(/<text ([^>]*)>([^<]*)<\/text>/g)].map(([, attrs, text]) => ({
+      x: Number(/x="([\d.]+)"/.exec(attrs!)![1]),
+      size: /font-size="(\d+)"/.exec(attrs!)![1],
+      middle: attrs!.includes('text-anchor="middle"'),
+      text: text!,
+    }))
+    expect(texts.length).toBeGreaterThan(10)
+    for (const { x, size, middle, text } of texts) {
+      const w = text.length * (size === '15' ? 7.8 : size === '13' ? 7.6 : 7)
+      const start = middle ? x - w / 2 : x
+      expect(start, text).toBeGreaterThanOrEqual(0)
+      expect(start + w, text).toBeLessThanOrEqual(298)
+    }
+  })
+
+  it('stacks the boxes without overlap', () => {
+    const rects = [...render(298).matchAll(/<rect x="1" y="([\d.]+)" width="[\d.]+" height="([\d.]+)" rx="10" fill="var\(--subject-soft\)"/g)].map((m) => [Number(m[1]), Number(m[2])])
+    expect(rects).toHaveLength(4)
+    for (let i = 1; i < rects.length; i++) expect(rects[i]![0]).toBeGreaterThanOrEqual(rects[i - 1]![0] + rects[i - 1]![1])
   })
 })

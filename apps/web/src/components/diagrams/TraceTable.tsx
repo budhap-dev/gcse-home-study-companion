@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef, useState } from 'react'
-import { REFIT } from '../fitSvgText.ts'
+import { useLayoutEffect, useRef } from 'react'
+import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 import { CHAR_WIDTH, LINE_HEIGHT, charBudget, fitColumns, rowHeight, wrapCell } from './tableLayout.ts'
 
@@ -76,26 +76,3 @@ export function TraceTable({ props, alt }: { props: Record<string, unknown>; alt
 
 /** The bold display face runs wider than the body text CHAR_WIDTH was measured on. */
 const TITLE_CHAR = CHAR_WIDTH + 0.6
-
-/**
- * The content width of the box the table sits in, kept current as it resizes. Undefined
- * until measured, and where there is no layout to measure (tests, the server), in which
- * case the table takes its natural width exactly as it always did.
- */
-function useAvailableWidth(svg: React.RefObject<SVGSVGElement | null>): number | undefined {
-  const [width, setWidth] = useState<number>()
-  useLayoutEffect(() => {
-    const box = svg.current?.parentElement
-    if (!box || typeof ResizeObserver === 'undefined') return
-    const measure = () => {
-      const style = getComputedStyle(box)
-      const inner = box.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
-      if (inner > 0) setWidth(Math.floor(inner))
-    }
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(box)
-    return () => observer.disconnect()
-  }, [svg])
-  return width
-}
