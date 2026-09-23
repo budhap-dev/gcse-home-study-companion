@@ -39,9 +39,9 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 
 ### Physics (AQA 8463)
 - [ ] Required practicals 2, 9 and 10
-- [ ] Required practical 8: the "waves in a solid" half
-- [ ] Nuclide notation and balanced nuclear equations
-- [ ] Heating and cooling curve (4.3.2.3)
+- [x] Required practical 8: the "waves in a solid" half
+- [x] Nuclide notation and balanced nuclear equations
+- [x] Heating and cooling curve (4.3.2.3)
 - [ ] Field pattern round a current-carrying wire and a solenoid (4.7.2.1)
 - [ ] Alternator against dynamo: slip rings, commutator, pd–time graphs
 
@@ -123,6 +123,7 @@ One PR per subject.
   displayed formulae (16), circuit diagrams (13), French verb tables (10), then ray, curve,
   reaction-profile, lens, lattice and electric-field diagrams. Measure with a before-and-after
   run of every page at 390 against `main`.
+  Motion graphs now take the card's width, as line graphs do, and no longer scroll.
 - [ ] **The correct option is too often the longest.** In 1757 of 3841 multiple-choice
   questions (46%) the right answer is the only longest option, so "pick the longest" nearly
   doubles a guesser's score. Rebalance the options, and add a collection test with a
