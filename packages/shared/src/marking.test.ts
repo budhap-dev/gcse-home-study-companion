@@ -340,3 +340,38 @@ describe('claiming a typed answer', () => {
     expect(claimAnswer({ correct: false, marksScored: 0, marksAvailable: 2 })).toEqual({ correct: true, marksScored: 2, marksAvailable: 2, claimed: true })
   })
 })
+
+describe('genotypes', () => {
+  const q = (prompt: string, accepted: string[]): Question => ({ ...base, marks: 1, type: 'short-text', prompt, accepted })
+
+  it('keeps the case of a genotype, where the case is the answer', () => {
+    const cross = q('What is the genotype of all the offspring?', ['Bb', 'all Bb'])
+    expect(mark(cross, 'Bb').correct).toBe(true)
+    expect(mark(cross, 'all Bb').correct).toBe(true)
+    expect(mark(cross, 'BB').correct).toBe(false)
+    expect(mark(cross, 'bb').correct).toBe(false)
+    expect(mark(cross, 'bB').correct).toBe(false)
+    expect(mark(q('Give the genotype.', ['BbTt']), 'bbtt').correct).toBe(false)
+  })
+
+  it('keeps a homozygote strict only when the prompt asks for a genotype', () => {
+    expect(mark(q('Give the genotype of a homozygous recessive plant.', ['bb']), 'BB').correct).toBe(false)
+    expect(mark(q('Give the genotype of a homozygous recessive plant.', ['bb']), 'bb').correct).toBe(true)
+  })
+
+  it('still folds case everywhere else', () => {
+    expect(mark(q('Who discovered the neutron?', ['James Chadwick']), 'james chadwick').correct).toBe(true)
+    expect(mark(q('Name the network.', ['a LAN']), 'lan').correct).toBe(true)
+    expect(mark(q('What are the sex chromosomes of a human male?', ['XY']), 'xy').correct).toBe(true)
+  })
+})
+
+describe('magnification', () => {
+  it('reads a times sign on either side of the number', () => {
+    expect(parseNumber('×3000')).toBe(3000)
+    expect(parseNumber('x 400')).toBe(400)
+    expect(parseNumber('400×')).toBe(400)
+    expect(parseNumber('400x')).toBe(400)
+    expect(parseNumber('1.8 × 10^5')).toBe(180000)
+  })
+})

@@ -30,7 +30,9 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
   const span = xMax - xMin
   const fit = useFitSvgText<HTMLElement>()
   const yMax = Math.max(...Array.from({ length: 41 }, (_, i) => f(xMin + (i / 40) * span)), 1)
-  const W = 360
+  // 320 fits a phone card (about 324 wide inside its padding). At 360 the drawing, which
+  // will not shrink below its natural width, pushed the whole page 3px sideways.
+  const W = 320
   const H = 220
   const pad = 34
   const sx = (v: number) => pad + ((v - xMin) / span) * (W - 2 * pad)
@@ -39,7 +41,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
   const y = f(x)
   const fmt = (v: number) => (v >= 1000 ? Math.round(v).toLocaleString('en-GB') : v >= 100 ? v.toFixed(0) : v >= 1 ? v.toFixed(1) : v.toFixed(2))
   return (
-    <figure ref={fit} className="flex flex-col gap-3 rounded-xl border border-rule bg-surface p-4">
+    <figure ref={fit} className="flex flex-col gap-3 overflow-x-auto rounded-xl border border-rule bg-surface p-4">
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440, ...LIGHT_CANVAS, borderRadius: 12 }} role="img" aria-label={alt}>
         {[0.25, 0.5, 0.75, 1].map((k) => <line key={k} x1={pad} y1={sy(k * yMax)} x2={W - pad} y2={sy(k * yMax)} stroke={RULE} />)}
         <line x1={pad} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />
@@ -54,8 +56,10 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
         <text x={pad - 6} y={sy(y) + 4} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{fmt(y)}</text>
       </svg>
       <label htmlFor={id} className="flex items-center gap-3 text-sm">
-        <span className="whitespace-nowrap text-ink-2">{String(config.x ?? 'x')}</span>
-        <input id={id} type="range" min={xMin} max={xMax} step={span / 40} value={x} onChange={(e) => setX(Number(e.target.value))} className="h-11 flex-grow accent-[color:var(--subject)]" />
+        {/* The axis name wraps rather than pushing the row wider than a phone: "distance
+            from lamp (cm)" on one line put the value off the right edge of the page. */}
+        <span className="min-w-0 max-w-[40%] text-ink-2">{String(config.x ?? 'x')}</span>
+        <input id={id} type="range" min={xMin} max={xMax} step={span / 40} value={x} onChange={(e) => setX(Number(e.target.value))} className="h-11 min-w-0 flex-grow accent-[color:var(--subject)]" />
         <span className="shrink-0 whitespace-nowrap text-right font-bold tabular-nums">{fmt(x)} → {fmt(y)}</span>
       </label>
     </figure>
