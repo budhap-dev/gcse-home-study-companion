@@ -14,15 +14,22 @@ import { useLayoutEffect, useRef } from 'react'
  * deliberately crops at the viewBox edge stays cropped.
  */
 export function fitTextInsideViewBox(svg: SVGSVGElement): void {
-  const declared = svg.dataset.viewbox ?? svg.getAttribute('viewBox')
-  if (!declared) return
-  const declaredMax = svg.dataset.maxwidth ?? svg.style.maxWidth
   // Remember what the component asked for, and measure from that every time, so a
-  // second pass cannot compound its own correction.
+  // second pass cannot compound its own correction. But only while the viewBox is still
+  // the one this function set: a component that lays itself out again (a table reflowing
+  // to its box) declares a new one, and restoring the remembered one put the table back
+  // at its old width the moment the web font loaded.
+  const current = svg.getAttribute('viewBox')
+  const ours = svg.dataset.fitted !== undefined && current === svg.dataset.fitted
+  const declared = ours ? svg.dataset.viewbox : current
+  if (!declared) return
+  const declaredMax = ours && svg.style.maxWidth === svg.dataset.fittedmax ? (svg.dataset.maxwidth ?? '') : svg.style.maxWidth
   svg.dataset.viewbox = declared
   svg.dataset.maxwidth = declaredMax
   svg.setAttribute('viewBox', declared)
   svg.style.maxWidth = declaredMax
+  svg.dataset.fitted = declared
+  svg.dataset.fittedmax = declaredMax
 
   const [vx, vy, vw, vh] = declared.split(/[\s,]+/).map(Number)
   if (![vx, vy, vw, vh].every(Number.isFinite) || vw <= 0 || vh <= 0) return
@@ -53,6 +60,7 @@ export function fitTextInsideViewBox(svg: SVGSVGElement): void {
   const width = vw + growLeft + growRight
   const height = vh + growTop + growBottom
   svg.setAttribute('viewBox', `${vx - growLeft} ${vy - growTop} ${width} ${height}`)
+  svg.dataset.fitted = svg.getAttribute('viewBox')!
 
   // Growing the viewBox alone would shrink the drawing to fit; growing the cap by the
   // same ratio keeps it the size the component intended. width="100%" still holds it
@@ -61,6 +69,7 @@ export function fitTextInsideViewBox(svg: SVGSVGElement): void {
   if (Number.isFinite(max) && declaredMax.trim().endsWith('px')) {
     svg.style.maxWidth = `${Math.round(max * (width / vw))}px`
   }
+  svg.dataset.fittedmax = svg.style.maxWidth
 }
 
 /**
@@ -97,6 +106,9 @@ export function stopShrinkingBelowNaturalWidth(svg: SVGSVGElement): void {
  * (a slider graph redraws its labels as the student drags), and again when the webfont
  * lands, since text measured in the fallback face measures differently.
  */
+/** Dispatched, bubbling, from an svg whose own layout changed. */
+export const REFIT = 'diagram-refit'
+
 export function useFitSvgText<T extends HTMLElement>() {
   const ref = useRef<T>(null)
   useLayoutEffect(() => {
@@ -112,7 +124,13 @@ export function useFitSvgText<T extends HTMLElement>() {
     }
     fit()
     void document.fonts?.ready.then(fit).catch(() => {})
-    return () => { live = false }
+    // A diagram that lays itself out again without its parent re-rendering (a table
+    // reflowing to the width it was given) announces it, so the fit follows it.
+    host.addEventListener(REFIT, fit)
+    return () => {
+      live = false
+      host.removeEventListener(REFIT, fit)
+    }
   })
   return ref
 }

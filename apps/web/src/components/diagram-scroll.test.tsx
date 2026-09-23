@@ -93,3 +93,47 @@ describe('a diagram that does not fit its card', () => {
     expect(shrunk).toBeGreaterThan(PHONE_CARD)
   })
 })
+
+/**
+ * fitTextInsideViewBox remembers the viewBox a component declared, so a second pass does
+ * not compound its own widening. A table that lays itself out again to fit a phone
+ * declares a new, narrower viewBox; restoring the remembered one when the web font
+ * loaded put 1 700 tables back at their old width, scrolling, with nothing failing.
+ */
+describe('fitting after a diagram lays itself out again', () => {
+  /** An svg whose attributes can change, laid out at zero size so nothing is measured. */
+  const liveSvg = (viewBox: string) => {
+    const attrs: Record<string, string> = { viewBox }
+    return {
+      style: {} as Record<string, string>,
+      dataset: {} as Record<string, string>,
+      getAttribute: (n: string) => attrs[n] ?? null,
+      setAttribute: (n: string, v: string) => { attrs[n] = v },
+      getBoundingClientRect: () => ({ width: 0, height: 0, left: 0, right: 0, top: 0, bottom: 0 }),
+      querySelectorAll: () => [],
+    } as unknown as SVGSVGElement & { style: Record<string, string> }
+  }
+
+  it('measures from the new viewBox, not the one it remembered', () => {
+    const svg = liveSvg('0 0 616 300')
+    svg.style.maxWidth = '678px'
+    fitTextInsideViewBox(svg)
+    expect(svg.getAttribute('viewBox')).toBe('0 0 616 300')
+
+    svg.setAttribute('viewBox', '0 0 331 420')
+    svg.style.maxWidth = '364px'
+    fitTextInsideViewBox(svg)
+    expect(svg.getAttribute('viewBox')).toBe('0 0 331 420')
+    expect(svg.style.maxWidth).toBe('364px')
+  })
+
+  it('still measures from the declared viewBox after widening it itself', () => {
+    const svg = liveSvg('0 0 300 200')
+    fitTextInsideViewBox(svg)
+    // As if that pass had widened the viewBox for an overhanging label.
+    svg.setAttribute('viewBox', '-10 0 320 200')
+    svg.dataset.fitted = '-10 0 320 200'
+    fitTextInsideViewBox(svg)
+    expect(svg.getAttribute('viewBox')).toBe('0 0 300 200')
+  })
+})
