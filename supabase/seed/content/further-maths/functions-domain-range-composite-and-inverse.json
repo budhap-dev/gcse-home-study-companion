@@ -1,0 +1,1532 @@
+{
+  "id": "functions-domain-range-composite-and-inverse",
+  "subjectId": "further-maths",
+  "unitId": "algebra",
+  "title": "Functions: domain, range, composite and inverse",
+  "specPoints": [
+    "2.2",
+    "2.3",
+    "2.4",
+    "2.5",
+    "2.13"
+  ],
+  "order": 7,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Replace the whole input",
+      "body": "$f(x + 1)$ means every $x$ in the rule becomes $(x + 1)$, brackets included: for $f(x) = x^2 - 9$, $f(x + 1) = (x + 1)^2 - 9$. The same move builds a composite: $fg(x)$ replaces the $x$ in $f$ by all of $g(x)$."
+    },
+    {
+      "kind": "spot",
+      "title": "Composite: the function next to x acts first",
+      "body": "$fg(x) = f(g(x))$, so $g$ goes first; the specification says *$g$ followed by $f$*. For a number, work from the inside: $fg(3) = f(g(3))$. $fg$ and $gf$ are usually different."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Inverse: make x the subject, then swap",
+      "body": "Write $y = f(x)$, rearrange to $x = \\ldots$, and swap the letters. Check with one number: $f(4) = 9$ must give $f^{-1}(9) = 4$. Domain and range swap, so the value $f$ never produces is the one $f^{-1}$ cannot take."
+    },
+    {
+      "kind": "check",
+      "title": "Range in f(x), domain in x",
+      "body": "A range describes outputs, so write $f(x) \\geqslant -9$, never $x \\geqslant -9$. Get it from the shape: a square is at least $0$, a root is at least $0$, and on a restricted domain substitute the ends and keep the strict signs."
+    },
+    {
+      "kind": "remember",
+      "title": "Restrict the domain to make f one-one",
+      "body": "A square over all $x$ sends $3$ and $-3$ to the same place, so it has no inverse; with $x \\geqslant 0$ it does, and the inverse takes the positive root. Whichever side the domain keeps decides the sign in $f^{-1}$."
+    }
+  ],
+  "why": {
+    "matters": "A function is a rule with a name, and naming the rule is what lets you talk about it: what it accepts, what it produces, what happens when two rules run one after another, and how to undo one. Every formula in science is a function, every conversion is an inverse, and every program is a composite of smaller ones. The exam's questions are short, and each is one of a handful of moves: substitute, state a domain or a range, compose, invert, or sketch. The ideas return in calculus, where the gradient function is a function of a function, and in the circle and trigonometry topics, where domains are restricted to make an inverse exist.",
+    "examples": [
+      {
+        "title": "Temperature, both ways",
+        "body": "Celsius to Fahrenheit is $f(C) = 1.8C + 32$; the inverse, Fahrenheit to Celsius, is $f^{-1}(F) = \\dfrac{F - 32}{1.8}$, found exactly as this topic finds it: make the input the subject. A weather app applies one, a recipe from abroad needs the other, and the check is a value you know: $f(100) = 212$ and $f^{-1}(212) = 100$. The pair meets where $C = F$, at $-40$, which is where solving $f(x) = x$ lands.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Function",
+              "Rule",
+              "Check"
+            ],
+            "rows": [
+              [
+                "f: Celsius to Fahrenheit",
+                "1.8C + 32",
+                "f(100) = 212"
+              ],
+              [
+                "f⁻¹: Fahrenheit to Celsius",
+                "(F − 32)/1.8",
+                "f⁻¹(212) = 100"
+              ],
+              [
+                "where f(x) = x",
+                "1.8x + 32 = x",
+                "x = −40"
+              ]
+            ],
+            "title": "A conversion and its inverse"
+          },
+          "alt": "A table of the Celsius to Fahrenheit conversion, its inverse, and the point where the two scales agree at minus forty"
+        }
+      },
+      {
+        "title": "Two discounts, in order",
+        "body": "A shop takes £5 off, then applies 20% off: that is $gf$ with $f(x) = x - 5$ and $g(x) = 0.8x$, giving $0.8(x - 5) = 0.8x - 4$. The other order, 20% off then £5 off, is $fg(x) = 0.8x - 5$, a pound cheaper for the customer. Which composite the till runs is a real question with a real answer, and the algebra settles it before anyone reaches the checkout.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "£5 off and 20% off, in each order",
+            "boxes": [
+              {
+                "title": "f then g",
+                "body": "0.8(x − 5) = 0.8x − 4"
+              },
+              {
+                "title": "g then f",
+                "body": "0.8x − 5"
+              },
+              {
+                "title": "Difference",
+                "body": "£1 in the customer's favour, g first"
+              },
+              {
+                "title": "Why",
+                "body": "composites do not commute: fg ≠ gf"
+              }
+            ]
+          },
+          "alt": "Four boxes comparing the two orders of a five pound discount and a twenty per cent discount, showing that the composite functions differ by one pound"
+        }
+      },
+      {
+        "title": "A population that doubles",
+        "body": "Bacteria that double every hour follow $y = ab^x$ with $b = 2$ and $a$ the starting count; a drug that halves in the body every hour follows $y = ab^{-x}$. Two readings fix both numbers, exactly as the specification's *given two points, find $a$ and $b$*. A lab technician, a pharmacist and an investor watching compound interest are all reading the same curve, and the sketch through the intercept $a$ is what they draw first.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Hours",
+              "Doubling from 5",
+              "Halving from 40"
+            ],
+            "rows": [
+              [
+                "0",
+                "5",
+                "40"
+              ],
+              [
+                "1",
+                "10",
+                "20"
+              ],
+              [
+                "2",
+                "20",
+                "10"
+              ],
+              [
+                "3",
+                "40",
+                "5"
+              ]
+            ],
+            "title": "y = 5 × 2ˣ and y = 40 × 2⁻ˣ"
+          },
+          "alt": "A table of a population doubling from five each hour and a dose halving from forty each hour over three hours, the two exponential forms in the specification"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Function notation: a rule with a name",
+        "body": "A **function** is a rule that turns each input into exactly one output. The rule is named, usually $f$, and $f(x)$ is the output for the input $x$. The specification's example: $f(x) = x^2 - 9$.\n\n**Evaluate by substituting.** $f(3) = 9 - 9 = 0$; $f(-2) = 4 - 9 = -5$; $f(5) = 16$. The brackets in $f(-2)$ are not multiplication: they say *apply $f$ to $-2$*.\n\n**The input can be an expression.** $f(x + 1) = (x + 1)^2 - 9 = x^2 + 2x - 8$: replace every $x$ in the rule by the new input, brackets and all. That single habit, *replace the whole input*, is what composite functions and inverses are built from.\n\n**Solve $f(x) = k$** by writing the rule equal to $k$: $f(x) = 16$ gives $x^2 - 9 = 16$, so $x = 5$ or $x = -5$. Two inputs can share an output; one input never has two.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Input",
+                "Rule x² − 9",
+                "Output"
+              ],
+              "rows": [
+                [
+                  "3",
+                  "3² − 9",
+                  "0"
+                ],
+                [
+                  "−2",
+                  "(−2)² − 9",
+                  "−5"
+                ],
+                [
+                  "5",
+                  "5² − 9",
+                  "16"
+                ],
+                [
+                  "x + 1",
+                  "(x + 1)² − 9",
+                  "x² + 2x − 8"
+                ]
+              ],
+              "title": "f(x) = x² − 9: replace the whole input"
+            },
+            "alt": "A table evaluating the function f of x equals x squared minus nine at three, minus two, five and the expression x plus one"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "$f(x) = x^2 - 9$. Work out $f(-2)$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "evaluating a function",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$f(-2) = (-2)^2 - 9 = 4 - 9 = -5$. The square of a negative number is positive.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "−5"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Domain and range: what goes in, what comes out",
+        "body": "The **domain** is the set of inputs a function is allowed; the **range** is the set of outputs it produces. The specification writes a domain like $x > 2$ or *for all $x$ except $x = 0$*, and a range like $f(x) > -1$.\n\n**Where a domain is forced.** You cannot divide by zero, so $f(x) = \\dfrac{1}{x}$ has domain all $x$ except $x = 0$. You cannot square-root a negative, so $f(x) = \\sqrt{x - 2}$ has domain $x \\geqslant 2$.\n\n**Find a range from the shape.** $f(x) = x^2 - 9$ for all $x$: a square is at least $0$, so $f(x) \\geqslant -9$. $f(x) = \\sqrt{x - 2}$: a square root is at least $0$, so $f(x) \\geqslant 0$. $f(x) = 2x + 1$ for $0 \\leqslant x < 4$: substitute the ends, $1 \\leqslant f(x) < 9$, keeping the strict inequality where the domain has one.\n\n**A range is about outputs, so it is written with $f(x)$ or $y$**, never $x$. Writing $x \\geqslant -9$ for the range of $x^2 - 9$ is the commonest slip on this page, and it costs the mark.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Function",
+                "Domain",
+                "Range",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "x² − 9",
+                  "all x",
+                  "f(x) ≥ −9",
+                  "a square is at least 0"
+                ],
+                [
+                  "1/x",
+                  "x ≠ 0",
+                  "f(x) ≠ 0",
+                  "no division by zero"
+                ],
+                [
+                  "√(x − 2)",
+                  "x ≥ 2",
+                  "f(x) ≥ 0",
+                  "no root of a negative"
+                ],
+                [
+                  "2x + 1, 0 ≤ x < 4",
+                  "0 ≤ x < 4",
+                  "1 ≤ f(x) < 9",
+                  "substitute the ends"
+                ]
+              ],
+              "title": "Domain: inputs allowed. Range: outputs produced"
+            },
+            "alt": "A table of four functions with their domains and ranges and the reason for each, including a square, a reciprocal, a square root and a linear function on a restricted domain"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "$f(x) = x^2 + 3$ for all $x$. What is the range of $f$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a range from the shape",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "A square is at least $0$, so $x^2 + 3$ is at least $3$, with $3$ reached at $x = 0$: the range is $f(x) \\geqslant 3$. A range describes outputs, so it is written with $f(x)$, and it includes $3$ because $x = 0$ is allowed.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$f(x) \\geqslant 3$, because $x^2$ is never negative"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "$f(x) \\geqslant 3$, because $x^2$ is never negative",
+            "$x \\geqslant 3$, because $x^2$ is never negative",
+            "$f(x) > 3$, because $x^2$ is always positive",
+            "All real numbers, because $x$ can be anything and so can $x^2 + 3$"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Composite functions: the one nearer x goes first",
+        "body": "*$f(x) = 2x + 1$ and $g(x) = x^2$. Find $fg(x)$, $gf(x)$, and $fg(3)$.*\n\n$fg(x)$ means $f(g(x))$: apply $g$ first, then $f$ to the result. The specification puts it as *$fg(x)$ is $g$ followed by $f$*. So $fg(x) = f(x^2) = 2x^2 + 1$: replace the whole input of $f$ by $x^2$.\n\n$gf(x) = g(2x + 1) = (2x + 1)^2 = 4x^2 + 4x + 1$. The two are different, and the order is read from the inside outwards.\n\nFor a number, work from the inside: $fg(3) = f(g(3)) = f(9) = 19$. And $gf(3) = g(7) = 49$. Substituting into the composite formula gives the same, $2 \\times 9 + 1 = 19$, which is the check.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "f(x) = 2x + 1 and g(x) = x². Find fg(x), gf(x) and fg(3).",
+            "steps": [
+              {
+                "text": "$fg(x) = f(g(x)) = f(x^2)$",
+                "note": "g is nearer x, so g goes first"
+              },
+              {
+                "text": "$= 2x^2 + 1$",
+                "note": "replace the x in f by x²"
+              },
+              {
+                "text": "$gf(x) = g(2x + 1) = (2x + 1)^2 = 4x^2 + 4x + 1$",
+                "note": "replace the x in g by 2x + 1, brackets and all"
+              },
+              {
+                "text": "$fg(3) = f(9) = 19$",
+                "note": "inside first: g(3) = 9, then f"
+              },
+              {
+                "text": "Check: $2 \\times 3^2 + 1 = 19$",
+                "note": "the composite formula agrees"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Composite",
+                "Means",
+                "With f = 3x − 2, g = x + 5",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "fg(x)",
+                  "f(g(x)): g first",
+                  "3(x + 5) − 2",
+                  "3x + 13"
+                ],
+                [
+                  "gf(x)",
+                  "g(f(x)): f first",
+                  "(3x − 2) + 5",
+                  "3x + 3"
+                ],
+                [
+                  "ff(x)",
+                  "f(f(x))",
+                  "3(3x − 2) − 2",
+                  "9x − 8"
+                ],
+                [
+                  "fg(2)",
+                  "f(g(2)) = f(7)",
+                  "3 × 7 − 2",
+                  "19"
+                ]
+              ],
+              "title": "Read from the inside: the function next to x acts first"
+            },
+            "alt": "A table of the composites f g, g f, f f and f g of two for f equals three x minus two and g equals x plus five, showing which function is applied first and the result"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "$f(x) = 2x + 1$ and $g(x) = x^2$. Work out $fg(2)$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a composite value",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$fg(2) = f(g(2)) = f(4) = 2 \\times 4 + 1 = 9$. Using the composite formula, $2 \\times 2^2 + 1 = 9$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "9"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 9,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Inverse functions: undo the rule",
+        "body": "The **inverse** $f^{-1}$ sends every output back to its input: $f^{-1}(f(x)) = x$. To find it, write $y = f(x)$, make $x$ the subject, then swap the letters.\n\n$f(x) = 2x + 1$: $y = 2x + 1$, so $x = \\dfrac{y - 1}{2}$, and $f^{-1}(x) = \\dfrac{x - 1}{2}$. Check: $f(4) = 9$ and $f^{-1}(9) = 4$.\n\n$f(x) = 3x - 2$: $f^{-1}(x) = \\dfrac{x + 2}{3}$. The inverse undoes the steps in reverse order: $f$ multiplies by $3$ then subtracts $2$, so $f^{-1}$ adds $2$ then divides by $3$.\n\n**Domain and range swap.** The range of $f$ is the domain of $f^{-1}$, and the other way round. $f(x) = x^2 - 9$ with $x \\geqslant 0$ has range $f(x) \\geqslant -9$; its inverse $f^{-1}(x) = \\sqrt{x + 9}$ has domain $x \\geqslant -9$ and range $f^{-1}(x) \\geqslant 0$. The $x \\geqslant 0$ is there because a square root only returns the positive root; without it, $f(3) = f(-3) = 0$ and there would be two values to send $0$ back to. The specification says *domains will be chosen for $f$ to make $f$ one-one*, and that is what the restriction does.\n\n**On a graph**, $y = f^{-1}(x)$ is the reflection of $y = f(x)$ in the line $y = x$, because swapping the letters swaps the axes: $P(2, 5)$ on $f(x) = 2x + 1$ reflects to $P'(5, 2)$ on $f^{-1}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -3,
+                9
+              ],
+              "yRange": [
+                -3,
+                9
+              ],
+              "grid": true,
+              "square": true,
+              "xStep": 2,
+              "yStep": 2,
+              "lines": [
+                {
+                  "m": 2,
+                  "c": 1,
+                  "label": "y = f(x)"
+                },
+                {
+                  "m": 0.5,
+                  "c": -0.5,
+                  "label": "y = f⁻¹(x)"
+                },
+                {
+                  "m": 1,
+                  "c": 0,
+                  "label": "y = x",
+                  "dashed": true
+                }
+              ],
+              "points": [
+                {
+                  "x": 2,
+                  "y": 5,
+                  "label": "P",
+                  "labelBelow": true
+                },
+                {
+                  "x": 5,
+                  "y": 2,
+                  "label": "P′"
+                }
+              ]
+            },
+            "alt": "The line y equals f of x, which is two x plus one, and its inverse y equals x minus one over two, reflections of each other in the dashed line y equals x, with the point P at two five on the line and its reflection P dash at five two on the inverse"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "f(x)",
+                "Make x the subject of y = f(x)",
+                "f⁻¹(x)",
+                "Check"
+              ],
+              "rows": [
+                [
+                  "2x + 1",
+                  "x = (y − 1)/2",
+                  "(x − 1)/2",
+                  "f(4) = 9, f⁻¹(9) = 4"
+                ],
+                [
+                  "3x − 2",
+                  "x = (y + 2)/3",
+                  "(x + 2)/3",
+                  "f(1) = 1, f⁻¹(1) = 1"
+                ],
+                [
+                  "x² − 9, x ≥ 0",
+                  "x = √(y + 9)",
+                  "√(x + 9), x ≥ −9",
+                  "f(4) = 7, f⁻¹(7) = 4"
+                ],
+                [
+                  "(2x + 1)/(x − 3)",
+                  "x = (3y + 1)/(y − 2)",
+                  "(3x + 1)/(x − 2)",
+                  "f(4) = 9, f⁻¹(9) = 4"
+                ]
+              ],
+              "title": "Make x the subject, then swap the letters"
+            },
+            "alt": "A table of four functions, the rearrangement of y equals f of x to make x the subject, the inverse function and a numerical check"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "$f(x) = 3x - 2$. Find $f^{-1}(x)$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "an inverse function",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$y = 3x - 2$, so $3x = y + 2$ and $x = \\dfrac{y + 2}{3}$. Swap the letters: $f^{-1}(x) = \\dfrac{x + 2}{3}$. Check: $f(1) = 1$ and $f^{-1}(1) = 1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(x + 2)/3"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "(x + 2)/3",
+            "x/3 + 2/3",
+            "(2 + x)/3"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Drawing and sketching: quadratics, pieces and exponentials",
+        "body": "The specification's graphs are linear, quadratic and exponential, defined on no more than three domains, and three tasks come up.\n\n**A quadratic sketch with its intersections labelled.** $y = x^2 - 5x + 6 = (x - 2)(x - 3)$ crosses the $x$ axis at $2$ and $3$, the $y$ axis at $6$, and turns at $x = 2.5$, where $y = -\\frac{1}{4}$. A sketch is the shape with those points marked; it is not plotted.\n\n**A function defined in pieces**, drawn on a grid. The specification's example: $f(x) = x^2$ for $0 \\leqslant x < 1$, $f(x) = 1$ for $1 \\leqslant x < 2$, $f(x) = 3 - x$ for $2 \\leqslant x < 3$. Draw each piece on its own interval only: a curve from $(0, 0)$ up to $(1, 1)$, a flat line at height $1$ to $x = 2$, then a straight line down to $(3, 0)$. No more than three pieces are set, and the pieces here happen to join.\n\n**An exponential through two points.** $y = ab^x$ has $y$-intercept $a$ and multiplies by $b$ for each step in $x$. Through $(0, 3)$ and $(2, 12)$: $a = 3$, then $3b^2 = 12$ gives $b = 2$, so $y = 3 \\times 2^x$. The form $y = ab^{-x}$ decays: through $(1, 20)$ and $(2, 10)$ it halves each step, so $b = 2$, and $a = 40$ from $\\frac{a}{2} = 20$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                3.5
+              ],
+              "yRange": [
+                0,
+                1.5
+              ],
+              "grid": true,
+              "xStep": 1,
+              "yStep": 0.5,
+              "points": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "label": "(0, 0)",
+                  "labelBelow": true,
+                  "free": true
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "label": "x² up to (1, 1)",
+                  "free": true
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "label": "then 3 − x",
+                  "labelBelow": true,
+                  "free": true
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "label": "(3, 0)",
+                  "labelBelow": true,
+                  "free": true
+                }
+              ],
+              "polygons": [
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      0.25,
+                      0.0625
+                    ],
+                    [
+                      0.5,
+                      0.25
+                    ],
+                    [
+                      0.75,
+                      0.5625
+                    ],
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      2,
+                      1
+                    ],
+                    [
+                      3,
+                      0
+                    ]
+                  ],
+                  "open": true
+                }
+              ]
+            },
+            "alt": "The specification's function in three pieces drawn on a grid: the curve y equals x squared from zero zero up to one one, the flat line at height one from one to two, and the straight line from two one down to three zero"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Graph",
+                "What fixes it",
+                "Example",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "quadratic sketch",
+                  "roots, intercept, vertex",
+                  "y = x² − 5x + 6",
+                  "crosses at 2 and 3, intercept 6, vertex (2.5, −0.25)"
+                ],
+                [
+                  "exponential growth",
+                  "a from x = 0, b from a second point",
+                  "through (0, 3) and (2, 12)",
+                  "y = 3 × 2ˣ"
+                ],
+                [
+                  "exponential decay",
+                  "y = ab⁻ˣ: divide by b each step",
+                  "through (1, 20) and (2, 10)",
+                  "y = 40 × 2⁻ˣ"
+                ],
+                [
+                  "pieces",
+                  "each rule on its own interval",
+                  "x², then 1, then 3 − x",
+                  "drawn only where it applies"
+                ]
+              ],
+              "title": "Sketch: shape and marked points. Draw: exact, on the grid"
+            },
+            "alt": "A table of the three kinds of graph in the specification, what fixes each, an example and its result"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "The curve $y = ab^x$ passes through $(0, 5)$ and $(3, 40)$. Work out the value of $b$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "an exponential through two points",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "At $x = 0$, $y = a$, so $a = 5$. At $x = 3$, $5b^3 = 40$, so $b^3 = 8$ and $b = 2$. The curve is $y = 5 \\times 2^x$, doubling for each step.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "One-one, restricted domains, and where f meets its inverse",
+        "body": "**An inverse exists only when each output comes from one input.** $f(x) = x^2$ over all $x$ fails: $f(3) = f(-3) = 9$, so $f^{-1}(9)$ would have to be two numbers. Restrict the domain to $x \\geqslant 0$ and the function becomes **one-one**; then $f^{-1}(x) = \\sqrt{x}$. A horizontal line crossing the graph twice is the picture of a function that is not one-one.\n\n**Composite with a domain.** $fg(x)$ is only defined for $x$ in the domain of $g$ whose outputs are allowed into $f$. With $f(x) = \\sqrt{x}$ and $g(x) = x - 2$, $fg(x) = \\sqrt{x - 2}$ needs $x \\geqslant 2$: the restriction comes from $f$ but is stated in terms of $x$.\n\n**Where $f$ meets $f^{-1}$.** The graphs are reflections in $y = x$, so they meet on that line: solve $f(x) = x$. For $f(x) = 3x - 2$, $3x - 2 = x$ gives $x = 1$, and $f^{-1}(1) = 1$ too. Solving $f(x) = f^{-1}(x)$ directly is longer and reaches the same place.\n\n**Self-inverse functions** are their own reflection: $f(x) = \\dfrac{1}{x}$ and $f(x) = 5 - x$ satisfy $ff(x) = x$, so $f^{-1} = f$. Spotting one saves the rearrangement.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -4,
+                4
+              ],
+              "yRange": [
+                -1,
+                12
+              ],
+              "grid": true,
+              "xStep": 1,
+              "yStep": 2,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 0,
+                  "c": 0,
+                  "label": "y = x²",
+                  "labelX": 2.6
+                }
+              ],
+              "lines": [
+                {
+                  "m": 0,
+                  "c": 9,
+                  "label": "y = 9",
+                  "dashed": true,
+                  "labelX": -1.5
+                }
+              ],
+              "points": [
+                {
+                  "x": -3,
+                  "y": 9,
+                  "label": "(−3, 9)"
+                },
+                {
+                  "x": 3,
+                  "y": 9,
+                  "label": "(3, 9)",
+                  "labelBelow": true
+                }
+              ]
+            },
+            "alt": "The parabola y equals x squared with the horizontal line y equals nine crossing it twice, at minus three and three, showing that x squared is not one-one over all x"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "Why is the domain of $f(x) = x^2$ restricted to $x \\geqslant 0$ before its inverse is found?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "one-one functions",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "An inverse must send each output back to exactly one input. Over all $x$, two inputs share every positive output, so there is no inverse; keeping only $x \\geqslant 0$ makes $f$ one-one and $f^{-1}(x) = \\sqrt{x}$. Negative numbers square perfectly well; the restriction is a choice, which is why the specification says domains *will be chosen* to make $f$ one-one.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "So that each output comes from one input: without it, $f(3) = f(-3) = 9$ and $f^{-1}(9)$ could not be a single value"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "Because negative numbers cannot be squared, so they were never in the domain",
+            "So that each output comes from one input: without it, $f(3) = f(-3) = 9$ and $f^{-1}(9)$ could not be a single value",
+            "Because the range of $f$ is $f(x) \\geqslant 0$, and the domain of a function must always be chosen to match its range exactly",
+            "So that the graph of $f^{-1}$ is a straight line rather than a curve"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. $f(x) = x^2 - 9$. Work out $f(5)$ and $f(x + 5)$.\n2. Write down the domain of $f(x) = \\dfrac{1}{x + 2}$.\n3. $f(x) = 3x - 2$ and $g(x) = x + 5$. Work out $gf(x)$.\n\n**Part B.**\n\n4. Find the range of $f(x) = 4 - x^2$ for all $x$.\n5. $f(x) = 2x + 1$ and $g(x) = x^2 + k$. Given that $fg(x) = 2x^2 + 7$, find $k$.\n6. Find the inverse of $f(x) = \\dfrac{x - 1}{2}$.\n\n**Part C.**\n\n7. $f(x) = x^2 - 4x + 7$ for $x \\geqslant 2$. Find the range of $f$ and the inverse $f^{-1}(x)$, stating its domain.\n8. The curve $y = ab^x$ passes through $(1, 6)$ and $(3, 54)$. Find $a$ and $b$.\n9. $f(x) = \\dfrac{2x + 1}{x - 3}$. Find $f^{-1}(x)$ and state the value of $x$ for which $f^{-1}$ is not defined.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "16; x² + 10x + 16"
+                ],
+                [
+                  "2",
+                  "all x except x = −2"
+                ],
+                [
+                  "3",
+                  "3x + 3"
+                ],
+                [
+                  "4",
+                  "f(x) ≤ 4"
+                ],
+                [
+                  "5",
+                  "k = 3"
+                ],
+                [
+                  "6",
+                  "f⁻¹(x) = 2x + 1"
+                ],
+                [
+                  "7",
+                  "f(x) ≥ 3; f⁻¹(x) = 2 + √(x − 3), domain x ≥ 3"
+                ],
+                [
+                  "8",
+                  "a = 2, b = 3"
+                ],
+                [
+                  "9",
+                  "f⁻¹(x) = (3x + 1)/(x − 2); not defined at x = 2"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on functions, domains, ranges, composites, inverses and exponential curves"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: fractions, ranges, and reading the question",
+        "body": "**Inverse of a fraction function.** $f(x) = \\dfrac{2x + 1}{x - 3}$: set $y = \\dfrac{2x + 1}{x - 3}$, multiply out, $yx - 3y = 2x + 1$, gather the $x$ terms, $x(y - 2) = 3y + 1$, so $x = \\dfrac{3y + 1}{y - 2}$ and $f^{-1}(x) = \\dfrac{3x + 1}{x - 2}$. The domain of $f$ excludes $3$; the domain of $f^{-1}$ excludes $2$, and $2$ is exactly the value $f$ never produces, because the range of $f$ is everything except $2$. Domain and range have swapped, as they must.\n\n**A range from a completed square.** $f(x) = x^2 - 4x + 7 = (x - 2)^2 + 3$, so the least value is $3$ at $x = 2$ and the range is $f(x) \\geqslant 3$. With domain $x \\geqslant 2$ the function is one-one and $f^{-1}(x) = 2 + \\sqrt{x - 3}$, choosing the positive root because the original $x$ was at least $2$. That choice of sign is the mark most often lost.\n\n**Read $fg$ as a sentence.** *$fg(x) = 2x^2 + 7$, find $k$* is solved by writing $fg(x)$ in terms of $k$, $2(x^2 + k) + 1 = 2x^2 + 2k + 1$, and comparing: $2k + 1 = 7$, $k = 3$. An unknown inside a composite is found by matching coefficients, not by guessing.\n\n**Sketch means shape plus labelled points.** For $y = x^2 - 5x + 6$ the marks are for the roots $2$ and $3$, the intercept $6$, and a minimum between the roots; a scale and plotted points are not wanted. For $y = ab^{-x}$ the marks are for a curve falling towards the $x$ axis, never touching it, with the intercept $a$ marked.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does with a function question",
+              "boxes": [
+                {
+                  "title": "Swaps domain and range",
+                  "body": "The value f never reaches is the value f⁻¹ cannot take: 2 for (2x + 1)/(x − 3)."
+                },
+                {
+                  "title": "Chooses the root by the domain",
+                  "body": "x ≥ 2 makes f⁻¹(x) = 2 + √(x − 3), not 2 − √(x − 3)."
+                },
+                {
+                  "title": "Matches coefficients",
+                  "body": "fg(x) in terms of k, compared term by term."
+                },
+                {
+                  "title": "Sketches what is asked",
+                  "body": "Roots, intercept, turning point; no plotting."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band functions answer: swapping domain and range, choosing the sign of a root from the domain, matching coefficients to find an unknown, and sketching with the labelled points"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **$f(x)$** is the output for input $x$; replace the whole input, brackets and all. $f(x) = x^2 - 9$ gives $f(-2) = -5$ and $f(x + 1) = x^2 + 2x - 8$.\n- **Domain**: inputs allowed, written in $x$. **Range**: outputs produced, written in $f(x)$. Division by zero and roots of negatives force a domain; the shape gives the range.\n- **$fg(x) = f(g(x))$**: $g$ first. $f = 2x + 1$, $g = x^2$: $fg(x) = 2x^2 + 1$, $gf(x) = (2x + 1)^2$.\n- **Inverse**: $y = f(x)$, make $x$ the subject, swap letters. Domain and range swap; the graph reflects in $y = x$. $f$ must be one-one, so the domain is restricted where needed.\n- **Sketch** a quadratic with roots, intercept and vertex; **draw** a piecewise function on its own intervals; find $y = ab^x$ from two points, $a$ at $x = 0$.\n- $f$ meets $f^{-1}$ on $y = x$: solve $f(x) = x$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Composite",
+                  "equation": "fg(x) = f(g(x))",
+                  "units": "g acts first"
+                },
+                {
+                  "name": "Inverse",
+                  "equation": "y = f(x), make x the subject, swap",
+                  "units": "domain of f⁻¹ = range of f"
+                },
+                {
+                  "name": "Range of a square",
+                  "equation": "(x − p)² + q ≥ q",
+                  "units": "least value q at x = p"
+                },
+                {
+                  "name": "Exponential",
+                  "equation": "y = ab^x: a at x = 0, then b per step",
+                  "units": "ab⁻ˣ decays"
+                }
+              ]
+            },
+            "alt": "A reference card with the composite rule, the method for an inverse, the range of a completed square and the exponential form"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "$f(x) = x^2 - 9$. Work out $f(5)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "evaluating",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(5) = 5^2 - 9 = 25 - 9 = 16$: square the input, then subtract $9$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "prompt": "What is the domain of $f(x) = \\dfrac{1}{x + 2}$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a forced domain",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Division by zero is undefined, and $x + 2 = 0$ when $x = -2$. Every other input is allowed, including negatives, which just give negative outputs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "All $x$ except $x = -2$, because the denominator would be zero there"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$x > -2$, because a fraction cannot be negative",
+        "All real numbers, because any number can be divided into $1$",
+        "All $x$ except $x = 2$, because $x = 2$ makes the fraction $\\frac{1}{4}$",
+        "All $x$ except $x = -2$, because the denominator would be zero there"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "$f(x) = 3x - 2$ and $g(x) = x + 5$. Find $gf(x)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a composite",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$gf(x) = g(f(x)) = g(3x - 2) = (3x - 2) + 5 = 3x + 3$. The function next to $x$, here $f$, acts first.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3x + 3"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "3x + 3",
+        "3 + 3x",
+        "3(x + 1)"
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "$f(x) = 2x + 1$ for $0 \\leqslant x < 4$. What is the range of $f$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a range on a restricted domain",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Substitute the ends of the domain: $f(0) = 1$ and $f(4) = 9$. The domain includes $0$ but not $4$, so the range includes $1$ but not $9$: $1 \\leqslant f(x) < 9$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$1 \\leqslant f(x) < 9$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$1 \\leqslant f(x) < 9$",
+        "$0 \\leqslant f(x) < 4$",
+        "$1 < f(x) \\leqslant 9$",
+        "$f(x) \\geqslant 1$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "$f(x) = 4 - x^2$ for all $x$. Find the range of $f$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a range with a maximum",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$x^2$ is at least $0$, so $4 - x^2$ is at most $4$, with $4$ reached at $x = 0$. The range is $f(x) \\leqslant 4$, written with $f(x)$ because it describes outputs.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "f(x) ≤ 4"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "f(x) ≤ 4",
+        "f(x) <= 4",
+        "y ≤ 4",
+        "f(x) ⩽ 4"
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "$f(x) = 2x + 1$ and $g(x) = x^2 + k$. Given that $fg(x) = 2x^2 + 7$, work out $k$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "an unknown inside a composite",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$fg(x) = f(x^2 + k) = 2(x^2 + k) + 1 = 2x^2 + 2k + 1$. Comparing with $2x^2 + 7$: $2k + 1 = 7$, so $k = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "fg(x) = 2x² + 2k + 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "prompt": "$f(x) = \\dfrac{x - 1}{2}$. Find $f^{-1}(x)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "an inverse",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$y = \\dfrac{x - 1}{2}$, so $2y = x - 1$ and $x = 2y + 1$. Swap the letters: $f^{-1}(x) = 2x + 1$. The inverse undoes halving and subtracting one by doubling and adding one.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2x + 1"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "2x + 1",
+        "1 + 2x"
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "The curve $y = ab^x$ passes through $(0, 3)$ and $(2, 12)$. Work out $b$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "an exponential from two points",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "At $x = 0$, $y = a = 3$. At $x = 2$, $3b^2 = 12$, so $b^2 = 4$ and $b = 2$, taking the positive value for a base.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a = 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "prompt": "$f(x) = 3x - 2$. Work out the value of $x$ for which $f(x) = f^{-1}(x)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "where f meets its inverse",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The graphs of $f$ and $f^{-1}$ meet on the line $y = x$, so solve $f(x) = x$: $3x - 2 = x$ gives $x = 1$. Check: $f^{-1}(x) = \\frac{x + 2}{3}$ and $f^{-1}(1) = 1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "prompt": "$f(x) = x^2 - 9$ with domain $x \\geqslant 0$. Which is $f^{-1}(x)$, with its domain?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "an inverse with a restricted domain",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$y = x^2 - 9$ gives $x^2 = y + 9$ and, since $x \\geqslant 0$, $x = \\sqrt{y + 9}$. So $f^{-1}(x) = \\sqrt{x + 9}$. Its domain is the range of $f$, which is $f(x) \\geqslant -9$. A $\\pm$ would make it two-valued, and $\\frac{1}{f(x)}$ is a reciprocal, not an inverse.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$f^{-1}(x) = \\sqrt{x + 9}$, for $x \\geqslant -9$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$f^{-1}(x) = \\dfrac{1}{x^2 - 9}$, for $x \\neq \\pm 3$",
+        "$f^{-1}(x) = \\sqrt{x + 9}$, for $x \\geqslant -9$",
+        "$f^{-1}(x) = \\sqrt{x} + 9$, for $x \\geqslant 0$",
+        "$f^{-1}(x) = \\pm\\sqrt{x + 9}$, for $x \\geqslant -9$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "$f(x) = x^2 - 4x + 7$ for $x \\geqslant 2$. Find the range of $f$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a range by completing the square",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Complete the square: $f(x) = (x - 2)^2 + 3$. The square is $0$ at $x = 2$ and grows from there, so the least value is $3$ and the range is $f(x) \\geqslant 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "f(x) ≥ 3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "f(x) ≥ 3",
+        "f(x) >= 3",
+        "y ≥ 3",
+        "f(x) ⩾ 3"
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "$f(x) = x^2 - 4x + 7$ for $x \\geqslant 2$. Find $f^{-1}(x)$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "choosing the root from the domain",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$y = (x - 2)^2 + 3$, so $(x - 2)^2 = y - 3$ and $x - 2 = \\sqrt{y - 3}$, the positive root because $x \\geqslant 2$. So $f^{-1}(x) = 2 + \\sqrt{x - 3}$, with domain $x \\geqslant 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2 + √(x − 3)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "2 + √(x - 3)",
+        "√(x - 3) + 2"
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "$f(x) = \\dfrac{2x + 1}{x - 3}$. Find $f^{-1}(x)$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the inverse of a fraction function",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$y(x - 3) = 2x + 1$, so $yx - 3y = 2x + 1$, $yx - 2x = 3y + 1$, $x(y - 2) = 3y + 1$ and $x = \\dfrac{3y + 1}{y - 2}$. So $f^{-1}(x) = \\dfrac{3x + 1}{x - 2}$. Check: $f(4) = 9$ and $f^{-1}(9) = \\frac{28}{7} = 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(3x + 1)/(x − 2)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(3x + 1)/(x - 2)",
+        "(1 + 3x)/(x - 2)"
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "$f(x) = \\dfrac{2x + 1}{x - 3}$. Which value is not in the range of $f$, and why?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a value missing from the range",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Setting $f(x) = 2$ gives $2x + 1 = 2x - 6$, so $1 = -6$: no $x$ works, and $2$ is never an output. It is the horizontal asymptote, and it is the value the inverse $\\frac{3x + 1}{x - 2}$ cannot take. $x = 3$ is missing from the domain, which is a different thing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$2$: solving $\\dfrac{2x + 1}{x - 3} = 2$ gives $2x + 1 = 2x - 6$, which is impossible"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$-\\dfrac{1}{3}$: the function is zero there, so it cannot be a value",
+        "$3$: the function is not defined at $x = 3$, so $3$ cannot be an output of the function either",
+        "$2$: solving $\\dfrac{2x + 1}{x - 3} = 2$ gives $2x + 1 = 2x - 6$, which is impossible",
+        "$0$: a fraction can never equal zero, whatever the value of $x$ on the top"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "The specification's function is $f(x) = x^2$ for $0 \\leqslant x < 1$, $f(x) = 1$ for $1 \\leqslant x < 2$, and $f(x) = 3 - x$ for $2 \\leqslant x < 3$. Which statement about its graph is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a function in pieces",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Each rule applies only on its own interval: $x^2$ gives a curve from $(0, 0)$ to $(1, 1)$; the constant $1$ gives a flat line to $x = 2$; $3 - x$ gives a line from $(2, 1)$ down to $(3, 0)$. The pieces meet, so the graph is unbroken.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "It rises along a curve from $(0, 0)$ to $(1, 1)$, stays at height $1$ until $x = 2$, then falls in a straight line to $(3, 0)$"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "It is three separate horizontal lines at heights $0$, $1$ and $3$",
+        "It rises in a straight line from $(0, 0)$ to $(1, 1)$, stays there until $x = 2$, then jumps up to height $3$ and stays flat until $x = 3$",
+        "It is the parabola $y = x^2$ drawn for every $x$ from $0$ to $3$",
+        "It rises along a curve from $(0, 0)$ to $(1, 1)$, stays at height $1$ until $x = 2$, then falls in a straight line to $(3, 0)$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "The curve $y = ab^{-x}$ passes through $(1, 20)$ and $(2, 10)$. Work out the value of $a$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "an exponential decay from two points",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Each step in $x$ divides $y$ by $b$, and $20$ to $10$ is a halving, so $b = 2$. Then $y = \\frac{a}{2}$ at $x = 1$ gives $a = 40$. Check: at $x = 2$, $\\frac{40}{4} = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "b = 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 40,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "prompt": "$f(x) = \\dfrac{2x + 1}{x - 3}$, $x \\neq 3$.\n\n(a) Work out $f(4)$.\n\n(b) Find $f^{-1}(x)$, and state the value of $x$ for which $f^{-1}(x)$ is not defined.\n\n(c) Explain why the value in part (b) is the one value that $f(x)$ never takes.\n\n(d) Show that $ff^{-1}(x) = x$.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "a fraction function and its inverse in full",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** $f(4) = \\dfrac{8 + 1}{4 - 3} = 9$.\n\n**(b)** Let $y = \\dfrac{2x + 1}{x - 3}$. Then $y(x - 3) = 2x + 1$, so $xy - 3y = 2x + 1$. Gather the $x$ terms: $xy - 2x = 3y + 1$, so $x(y - 2) = 3y + 1$ and $x = \\dfrac{3y + 1}{y - 2}$. Swapping the letters, $f^{-1}(x) = \\dfrac{3x + 1}{x - 2}$, which is not defined at $x = 2$. Check with part (a): $f^{-1}(9) = \\dfrac{28}{7} = 4$.\n\n**(c)** The domain of $f^{-1}$ is the range of $f$, so the input $f^{-1}$ cannot accept is the output $f$ never produces. Directly: if $f(x) = 2$ then $2x + 1 = 2(x - 3) = 2x - 6$, giving $1 = -6$, which no $x$ satisfies. So $2$ is not in the range of $f$; on the graph, $y = 2$ is the horizontal asymptote the curve approaches but never reaches.\n\n**(d)** $ff^{-1}(x) = f\\left(\\dfrac{3x + 1}{x - 2}\\right) = \\dfrac{2 \\cdot \\dfrac{3x + 1}{x - 2} + 1}{\\dfrac{3x + 1}{x - 2} - 3}$. Multiply top and bottom by $(x - 2)$: $\\dfrac{2(3x + 1) + (x - 2)}{(3x + 1) - 3(x - 2)} = \\dfrac{6x + 2 + x - 2}{3x + 1 - 3x + 6} = \\dfrac{7x}{7} = x$. Applying $f$ after its inverse returns the input, which is what an inverse means.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "f(4) = 9"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies out and gathers x terms"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "f⁻¹(x) = (3x + 1)/(x − 2)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "undefined at x = 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets f(x) = 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "contradiction, so 2 not in the range"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes and clears the denominators"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "simplifies to x"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "f(4) = 9/1 = 9.",
+          "marks": 1
+        },
+        {
+          "text": "Rearranges y(x − 3) = 2x + 1 to x(y − 2) = 3y + 1 and gives f⁻¹(x) = (3x + 1)/(x − 2), undefined at x = 2.",
+          "marks": 3
+        },
+        {
+          "text": "Shows that f(x) = 2 leads to 1 = −6, impossible, so 2 is not in the range; the domain of f⁻¹ is the range of f.",
+          "marks": 2
+        },
+        {
+          "text": "Substitutes the inverse into f and simplifies to x, with the (x − 2) denominators clearing.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** $f(4) = \\dfrac{8 + 1}{4 - 3} = 9$.\n\n**(b)** Let $y = \\dfrac{2x + 1}{x - 3}$. Then $y(x - 3) = 2x + 1$, so $xy - 3y = 2x + 1$. Gather the $x$ terms: $xy - 2x = 3y + 1$, so $x(y - 2) = 3y + 1$ and $x = \\dfrac{3y + 1}{y - 2}$. Swapping the letters, $f^{-1}(x) = \\dfrac{3x + 1}{x - 2}$, which is not defined at $x = 2$. Check with part (a): $f^{-1}(9) = \\dfrac{28}{7} = 4$.\n\n**(c)** The domain of $f^{-1}$ is the range of $f$, so the input $f^{-1}$ cannot accept is the output $f$ never produces. Directly: if $f(x) = 2$ then $2x + 1 = 2(x - 3) = 2x - 6$, giving $1 = -6$, which no $x$ satisfies. So $2$ is not in the range of $f$; on the graph, $y = 2$ is the horizontal asymptote the curve approaches but never reaches.\n\n**(d)** $ff^{-1}(x) = f\\left(\\dfrac{3x + 1}{x - 2}\\right) = \\dfrac{2 \\cdot \\dfrac{3x + 1}{x - 2} + 1}{\\dfrac{3x + 1}{x - 2} - 3}$. Multiply top and bottom by $(x - 2)$: $\\dfrac{2(3x + 1) + (x - 2)}{(3x + 1) - 3(x - 2)} = \\dfrac{6x + 2 + x - 2}{3x + 1 - 3x + 6} = \\dfrac{7x}{7} = x$. Applying $f$ after its inverse returns the input, which is what an inverse means."
+    },
+    {
+      "id": "q18",
+      "prompt": "$f(x) = x^2 - 4x + 7$ for $x \\geqslant 2$, and $g(x) = x + 5$ for all $x$.\n\n(a) Write $f(x)$ in the form $(x - p)^2 + q$, and hence state the range of $f$.\n\n(b) Find $f^{-1}(x)$, stating its domain.\n\n(c) Work out $fg(x)$, and find the value of $x$ for which $fg(x) = 3$.\n\n(d) Explain why $f$ would have no inverse if its domain were all real numbers.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "completed square, inverse and composite together",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** $x^2 - 4x + 7 = (x - 2)^2 - 4 + 7 = (x - 2)^2 + 3$, so $p = 2$ and $q = 3$. The square is never negative and is $0$ at $x = 2$, which is in the domain, so the least value is $3$: the range is $f(x) \\geqslant 3$.\n\n**(b)** $y = (x - 2)^2 + 3$ gives $(x - 2)^2 = y - 3$. Since $x \\geqslant 2$, $x - 2$ is not negative, so $x - 2 = \\sqrt{y - 3}$, the positive root, and $x = 2 + \\sqrt{y - 3}$. So $f^{-1}(x) = 2 + \\sqrt{x - 3}$. Its domain is the range of $f$: $x \\geqslant 3$. Check: $f(3) = 4$ and $f^{-1}(4) = 2 + 1 = 3$.\n\n**(c)** $fg(x) = f(x + 5) = (x + 5)^2 - 4(x + 5) + 7 = x^2 + 10x + 25 - 4x - 20 + 7 = x^2 + 6x + 12$. Completing the square, $(x + 3)^2 + 3$, so $fg(x) = 3$ when $(x + 3)^2 = 0$, that is, $x = -3$. That input is allowed because $g(-3) = 2$ lies in the domain of $f$.\n\n**(d)** Over all real numbers the parabola is symmetric about $x = 2$, so two inputs share each output above $3$: for example $f(1) = 1 - 4 + 7 = 4$ and $f(3) = 9 - 12 + 7 = 4$. An inverse would have to send $4$ to both $1$ and $3$, which a function cannot do. Restricting the domain to $x \\geqslant 2$ keeps one side of the parabola, makes $f$ one-one, and is why the positive root was the right choice in part (b).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "completes the square"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "range f(x) ≥ 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "makes x the subject"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "positive root with the reason"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "domain x ≥ 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "fg(x) expanded"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = −3"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "not one-one, with an example"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "f(x) = (x − 2)² + 3, so the range is f(x) ≥ 3.",
+          "marks": 2
+        },
+        {
+          "text": "Rearranges to x = 2 + √(y − 3), choosing the positive root because x ≥ 2; f⁻¹(x) = 2 + √(x − 3), domain x ≥ 3.",
+          "marks": 3
+        },
+        {
+          "text": "fg(x) = (x + 5)² − 4(x + 5) + 7 = x² + 6x + 12 = (x + 3)² + 3; equals 3 at x = −3.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that without the restriction f is not one-one, for example f(1) = f(3) = 4, so f⁻¹(4) would need two values.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** $x^2 - 4x + 7 = (x - 2)^2 - 4 + 7 = (x - 2)^2 + 3$, so $p = 2$ and $q = 3$. The square is never negative and is $0$ at $x = 2$, which is in the domain, so the least value is $3$: the range is $f(x) \\geqslant 3$.\n\n**(b)** $y = (x - 2)^2 + 3$ gives $(x - 2)^2 = y - 3$. Since $x \\geqslant 2$, $x - 2$ is not negative, so $x - 2 = \\sqrt{y - 3}$, the positive root, and $x = 2 + \\sqrt{y - 3}$. So $f^{-1}(x) = 2 + \\sqrt{x - 3}$. Its domain is the range of $f$: $x \\geqslant 3$. Check: $f(3) = 4$ and $f^{-1}(4) = 2 + 1 = 3$.\n\n**(c)** $fg(x) = f(x + 5) = (x + 5)^2 - 4(x + 5) + 7 = x^2 + 10x + 25 - 4x - 20 + 7 = x^2 + 6x + 12$. Completing the square, $(x + 3)^2 + 3$, so $fg(x) = 3$ when $(x + 3)^2 = 0$, that is, $x = -3$. That input is allowed because $g(-3) = 2$ lies in the domain of $f$.\n\n**(d)** Over all real numbers the parabola is symmetric about $x = 2$, so two inputs share each output above $3$: for example $f(1) = 1 - 4 + 7 = 4$ and $f(3) = 9 - 12 + 7 = 4$. An inverse would have to send $4$ to both $1$ and $3$, which a function cannot do. Restricting the domain to $x \\geqslant 2$ keeps one side of the parabola, makes $f$ one-one, and is why the positive root was the right choice in part (b)."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 14
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 33
+    }
+  },
+  "examTechnique": {
+    "body": "Function questions are short and worth a mark or two each, and the marks are specific: a range written with $f(x)$, a domain with the excluded value stated, a composite built in the right order, an inverse with the letters swapped. Show the substitution for a composite even when it is one line, because the method mark sits there.\n\nFor an inverse, write $y = f(x)$, rearrange, swap, and check one value. Where the domain is restricted, say why the positive or negative root was chosen. For a sketch, mark the intersections with the axes and the turning point; for a function in pieces, draw each rule only on its own interval; for $y = ab^x$, find $a$ from $x = 0$ and $b$ from the other point, and state both.",
+    "examinerErrors": [
+      "Writing a range in terms of $x$, such as $x \\geqslant -9$ instead of $f(x) \\geqslant -9$.",
+      "Applying $f$ first in $fg(x)$.",
+      "Giving the reciprocal $\\dfrac{1}{f(x)}$ as the inverse.",
+      "Forgetting to swap the letters, so the inverse is left as an expression in $y$.",
+      "Writing $\\pm\\sqrt{}$ in an inverse when the domain fixes the sign.",
+      "Drawing a piecewise function beyond the interval its rule applies to.",
+      "Finding $b$ before $a$ for $y = ab^x$ and losing the intercept, or taking $b$ as the $y$ value at $x = 1$."
+    ],
+    "grade9Looks": "A grade 9 answer treats $f(x + 1)$, $fg(x)$ and $f^{-1}(x)$ as the same move, replacing a whole input, and builds a composite in the right order without pausing. It reads a range from the shape, completing the square when needed, and writes it in $f(x)$. It inverts a fraction function by gathering the $x$ terms, states the domain of the inverse as the range of the original, and explains why a restricted domain is needed before the inverse exists, choosing the root the domain demands. It sketches with the points labelled and finds an exponential from two points in two lines."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
