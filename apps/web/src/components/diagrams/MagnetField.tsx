@@ -1,7 +1,8 @@
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 
 /**
- * Magnetic field patterns, and the force between two magnets, for AQA 4.7.1.2.
+ * Magnetic field patterns, and the force between two magnets, for AQA 4.7.1.2, and the
+ * field a current makes round a straight wire and inside a solenoid, for 4.7.2.1.
  *
  * Direction is computed from the poles the content gives, never taken from it. Outside a
  * magnet the field runs from north to south, so which way every arrow points follows from
@@ -9,10 +10,17 @@ import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
  * differ. That way the picture cannot show like poles attracting, which is the one thing
  * the lesson beside it is claiming.
  *
+ * The same holds for a current: the content says which way it flows, and the right-hand
+ * grip rule decides which way the field circles the wire and which end of the coil is
+ * north. A diagram cannot put north at the end the rule says is south.
+ *
  * Props:
- *   kind: 'bar' (a single magnet and its field) or 'pair' (two magnets and the force)
+ *   kind: 'bar' (a single magnet and its field), 'pair' (two magnets and the force),
+ *         'wire' (a straight wire seen end-on) or 'solenoid' (a coil seen from the side)
  *   northAt: 'left' | 'right'        -- bar only, which end is north
  *   magnets: [{ facing: 'N' | 'S' }] -- pair only, the pole each one turns to the other
+ *   current: 'out' | 'in'            -- wire only, out of the page (towards you) or into it
+ *   current: 'up' | 'down'           -- solenoid only, the way it flows on the front of the coil
  *   note: a caption under the drawing
  */
 const N_COLOUR = '#c8501f'
@@ -55,9 +63,126 @@ function Bar({ x, y, w, h, northAt }: { x: number; y: number; w: number; h: numb
 }
 
 export function MagnetField({ props, alt }: { props: Record<string, unknown>; alt: string }) {
-  const kind = props.kind === 'pair' ? 'pair' : 'bar'
+  const kind = props.kind === 'pair' || props.kind === 'wire' || props.kind === 'solenoid' ? props.kind : 'bar'
   const note = typeof props.note === 'string' ? props.note : undefined
   const noteH = note ? 22 : 0
+
+  if (kind === 'wire') {
+    // The wire runs straight through the page, so it is a dot when the current comes
+    // towards you and a cross when it goes away, the way the specification draws it.
+    const out = props.current !== 'in'
+    const H = 216 + noteH
+    const cx = W / 2, cy = 108
+    // Gaps that grow outwards: the field is weaker further from the wire.
+    const radii = [22, 46, 78]
+    // Right-hand grip: thumb along the current, fingers curl with the field. Current
+    // towards you means the field runs anticlockwise as you look at it.
+    const heads = radii.flatMap((r, i) =>
+      [90, 270].map((deg) => {
+        const th = (deg * Math.PI) / 180
+        const x = cx + r * Math.cos(th), y = cy - r * Math.sin(th)
+        // The anticlockwise tangent in the page's coordinates, or its reverse.
+        const angle = out ? Math.atan2(-Math.cos(th), -Math.sin(th)) : Math.atan2(Math.cos(th), Math.sin(th))
+        return arrowHead(x, y, angle, INK_2, `w${i}${deg}`, 7)
+      }),
+    )
+    return (
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 360 }} role="img" aria-label={alt}>
+        <rect x="1" y="1" width={W - 2} height={H - 2} rx="12" fill="none" stroke={RULE} />
+        {radii.map((r) => <circle key={r} cx={cx} cy={cy} r={r} fill="none" stroke={INK_2} strokeWidth="1.6" />)}
+        {heads}
+        <circle cx={cx} cy={cy} r="9" fill="#fff" stroke={INK} strokeWidth="1.6" />
+        {out ? (
+          <circle cx={cx} cy={cy} r="3" fill={INK} />
+        ) : (
+          <g stroke={INK} strokeWidth="1.8">
+            <line x1={cx - 5} y1={cy - 5} x2={cx + 5} y2={cy + 5} />
+            <line x1={cx - 5} y1={cy + 5} x2={cx + 5} y2={cy - 5} />
+          </g>
+        )}
+        <text x={W / 2} y={18} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>
+          {out ? 'Current out of the page, towards you' : 'Current into the page, away from you'}
+        </text>
+        <text x={W / 2} y={H - 8 - noteH} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
+          {out ? 'The field circles anticlockwise' : 'The field circles clockwise'}
+        </text>
+        {note && <text x={W / 2} y={H - 7} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{note}</text>}
+      </svg>
+    )
+  }
+
+  if (kind === 'solenoid') {
+    // The coil is seen from the side with its axis across the page. The content gives
+    // the current's direction on the turns nearest you; the right-hand grip rule (fingers
+    // curl with the current, thumb points to north) then fixes which end is north. With
+    // the current going up the front of the coil the thumb points left.
+    const up = props.current !== 'down'
+    const northAt: 'left' | 'right' = up ? 'left' : 'right'
+    const H = 232 + noteH
+    const cy = 116
+    const left = 88, right = 208, half = 26
+    const turns = 6
+    const pitch = (right - left) / turns
+    const nx = northAt === 'left' ? left : right
+    const sx = northAt === 'left' ? right : left
+    const dir = northAt === 'left' ? -1 : 1   // the way a loop leaves the north end
+    // Outside, the loops leave north and come round into south, as they do for a bar.
+    const loops = [50, 78]
+    // Inside, the lines are straight, parallel and evenly spaced: a uniform field, and
+    // they run from south to north to complete the loops.
+    const inside = [-13, 0, 13]
+    const toN = northAt === 'left' ? Math.PI : 0
+    return (
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 360 }} role="img" aria-label={alt}>
+        <rect x="1" y="1" width={W - 2} height={H - 2} rx="12" fill="none" stroke={RULE} />
+        {[-1, 1].map((side) =>
+          loops.map((bulge, i) => {
+            const ctrl = 60 + i * 26
+            const top = cy + side * bulge
+            const d = `M ${nx} ${cy} C ${nx + dir * ctrl} ${top} ${sx - dir * ctrl} ${top} ${sx} ${cy}`
+            const mid = (nx + sx) / 2
+            return (
+              <g key={`${side}${i}`}>
+                <path d={d} fill="none" stroke={INK_2} strokeWidth="1.6" />
+                {arrowHead(mid, top * 0.78 + cy * 0.22, dir > 0 ? Math.PI : 0, INK_2, `o${side}${i}`, 7)}
+              </g>
+            )
+          }),
+        )}
+        {inside.map((dy) => (
+          <g key={dy}>
+            <line x1={left - 30} y1={cy + dy} x2={right + 30} y2={cy + dy} stroke={INK_2} strokeWidth="1.6" />
+            {arrowHead((left + right) / 2 + (northAt === 'left' ? -8 : 8), cy + dy, toN, INK_2, `i${dy}`, 7)}
+          </g>
+        ))}
+        {/* Each turn: the far half faint and dashed, the near half solid and carrying the current. */}
+        {Array.from({ length: turns }, (_, i) => {
+          const x0 = left + i * pitch
+          const x1 = x0 + pitch * 0.55
+          const yTop = cy - half, yBot = cy + half
+          const from = up ? { x: x0, y: yBot } : { x: x1, y: yTop }
+          const to = up ? { x: x1, y: yTop } : { x: x0, y: yBot }
+          const angle = Math.atan2(to.y - from.y, to.x - from.x)
+          return (
+            <g key={i}>
+              <line x1={x1} y1={yTop} x2={x0 + pitch} y2={yBot} stroke={INK_2} strokeWidth="1.2" strokeDasharray="3 3" />
+              <line x1={x0} y1={yBot} x2={x1} y2={yTop} stroke={N_COLOUR} strokeWidth="2.6" />
+              {arrowHead(from.x + (to.x - from.x) * 0.62, from.y + (to.y - from.y) * 0.62, angle, N_COLOUR, `c${i}`, 7)}
+            </g>
+          )
+        })}
+        <text x={nx + (northAt === 'left' ? -46 : 46)} y={cy + 5} textAnchor="middle" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={N_COLOUR}>N</text>
+        <text x={sx + (northAt === 'left' ? 46 : -46)} y={cy + 5} textAnchor="middle" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={S_COLOUR}>S</text>
+        <text x={W / 2} y={18} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>
+          {up ? 'Current flows up the front of the coil' : 'Current flows down the front of the coil'}
+        </text>
+        <text x={W / 2} y={H - 8 - noteH} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
+          {`Grip rule: north is on the ${northAt}`}
+        </text>
+        {note && <text x={W / 2} y={H - 7} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{note}</text>}
+      </svg>
+    )
+  }
 
   if (kind === 'pair') {
     const magnets = (props.magnets as Magnet[] | undefined) ?? [{ facing: 'N' }, { facing: 'S' }]

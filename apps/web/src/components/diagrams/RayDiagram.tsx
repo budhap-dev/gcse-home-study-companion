@@ -3,16 +3,21 @@ import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
 /**
  * Light meeting a boundary. The component works out where every ray goes, so the
  * picture cannot disagree with the angles the lesson quotes. Props:
- *   kind: 'reflection' | 'refraction' | 'specular' | 'diffuse'
+ *   kind: 'reflection' | 'refraction' | 'specular' | 'diffuse' | 'block'
  *   incidence: angle of incidence in degrees, measured from the normal
  *   speedRatio: for refraction, the speed in the second medium divided by the speed in
  *     the first. Below 1 the light slows and bends towards the normal, which is what
  *     the specification asks students to explain. The refraction angle is computed
  *     from it rather than given, so a slower medium always bends the right way.
  *   media: [name of the upper medium, name of the lower one]
+ *
+ * 'block' is required practical 9's picture: a ray into a rectangular block, the faint
+ * reflection off its top face, the refracted ray inside, and the ray emerging from the
+ * bottom face. The emergent ray leaves at the angle the incident ray arrived, so it is
+ * drawn parallel to it, shifted sideways; `media` names [the surroundings, the block].
  */
 export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt: string }) {
-  const kind = String(props.kind ?? 'reflection') as 'reflection' | 'refraction' | 'specular' | 'diffuse'
+  const kind = String(props.kind ?? 'reflection') as 'reflection' | 'refraction' | 'specular' | 'diffuse' | 'block'
   const i = Math.max(5, Math.min(80, Number(props.incidence ?? 40)))
   const ratio = Math.max(0.2, Math.min(2, Number(props.speedRatio ?? 2 / 3)))
   const media = (props.media as string[] | undefined) ?? ['air', 'glass']
@@ -61,6 +66,64 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
         <path d={`M${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${radius} ${radius} 0 0 ${a1 > a0 ? 1 : 0} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`} fill="none" stroke={INK_2} strokeWidth="1.5" />
         <text x={P.x + (radius + 14) * Math.sin(mid)} y={P.y - (radius + 14) * Math.cos(mid) + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>{label}</text>
       </g>
+    )
+  }
+
+  if (kind === 'block') {
+    // Drawn 300 wide rather than 360: the phone card is 298 across, and at 360 every
+    // label on the picture shrinks below 10px.
+    const BW = 300
+    const top = 92, bottom = 172, bw = 200
+    const bx = (BW - bw) / 2
+    const entry = { x: BW / 2 - 20, y: top }
+    const depth = bottom - top
+    // Inside the block the ray runs at the refracted angle, so the exit point follows.
+    const exit = { x: entry.x + depth * Math.tan(rad(r)), y: bottom }
+    const inLen = 74, outLen = 44
+    const start = { x: entry.x - inLen * Math.sin(rad(i)), y: entry.y - inLen * Math.cos(rad(i)) }
+    const bounce = { x: entry.x + inLen * 0.7 * Math.sin(rad(i)), y: entry.y - inLen * 0.7 * Math.cos(rad(i)) }
+    // Same angle out as in: air to block undoes what block to air did.
+    const end = { x: exit.x + outLen * Math.sin(rad(i)), y: exit.y + outLen * Math.cos(rad(i)) }
+    /**
+     * The arc sits between the ray and the normal; the label sits just outside the ray on
+     * the side away from the normal, because for a small angle the wedge is narrower than
+     * the text and a label inside it has a line through it whatever the radius.
+     */
+    const arc = (at: { x: number; y: number }, fromDeg: number, toDeg: number, label: string, radius: number, labelDeg: number, labelR: number) => {
+      const a0 = rad(fromDeg), a1 = rad(toDeg), la = rad(labelDeg)
+      const p0 = { x: at.x + radius * Math.sin(a0), y: at.y - radius * Math.cos(a0) }
+      const p1 = { x: at.x + radius * Math.sin(a1), y: at.y - radius * Math.cos(a1) }
+      return (
+        <g>
+          <path d={`M${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${radius} ${radius} 0 0 ${a1 > a0 ? 1 : 0} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`} fill="none" stroke={INK_2} strokeWidth="1.5" />
+          <text x={at.x + labelR * Math.sin(la)} y={at.y - labelR * Math.cos(la) + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{label}</text>
+        </g>
+      )
+    }
+    return (
+      <svg viewBox={`0 0 ${BW} ${H}`} width="100%" style={{ maxWidth: BW * 1.2 }} role="img" aria-label={alt}>
+        <rect x={bx} y={top} width={bw} height={depth} fill="var(--subject-soft)" stroke={INK} strokeWidth="2" />
+        <text x={bx + 8} y={bottom - 8} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[1]}</text>
+        <text x={bx + 8} y={top - 8} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[0]}</text>
+        {/* Normals, dashed, at the point of entry and the point of exit. */}
+        <line x1={entry.x} y1={top - 68} x2={entry.x} y2={top + 30} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
+        <line x1={exit.x} y1={bottom - 30} x2={exit.x} y2={bottom + 24} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
+        <text x={entry.x + 5} y={top - 58} fontFamily={FONT} fontSize="11" fill={INK_2}>normal</text>
+        {/* Incident, the faint reflection, refracted, emergent. */}
+        <line x1={start.x} y1={start.y} x2={entry.x} y2={entry.y} stroke="var(--subject)" strokeWidth="2.5" />
+        {arrow(start, entry)}
+        <line x1={entry.x} y1={entry.y} x2={bounce.x} y2={bounce.y} stroke="var(--subject)" strokeWidth="1.2" strokeDasharray="4 3" opacity="0.7" />
+        <line x1={entry.x} y1={entry.y} x2={exit.x} y2={exit.y} stroke="var(--subject)" strokeWidth="2.5" />
+        {arrow(entry, exit, 0.5)}
+        <line x1={exit.x} y1={exit.y} x2={end.x} y2={end.y} stroke="var(--subject)" strokeWidth="2.5" />
+        {arrow(exit, end, 0.6)}
+        {arc(entry, -i, 0, `${Math.round(i)}°`, 34, -(i + 16), 46)}
+        {arc(entry, 180, 180 - r, `${Math.round(r)}°`, 30, 180 - r - 16, 50)}
+        {arc(exit, 180, 180 - i, `${Math.round(i)}°`, 30, 180 - i - 16, 46)}
+        <circle cx={entry.x} cy={entry.y} r="3.5" fill={ACCENT} />
+        <circle cx={exit.x} cy={exit.y} r="3.5" fill={ACCENT} />
+        <text x={BW - 12} y={16} textAnchor="end" fontFamily={FONT} fontSize="12" fill={INK_2}>out parallel to in, shifted sideways</text>
+      </svg>
     )
   }
 

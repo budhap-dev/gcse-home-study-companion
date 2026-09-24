@@ -41,6 +41,7 @@ import { DisplayedFormula } from './DisplayedFormula.tsx'
 import { CircuitDiagram } from './CircuitDiagram.tsx'
 import { ElectricField } from './ElectricField.tsx'
 import { MagnetField } from './MagnetField.tsx'
+import { GeneratorOutput } from './GeneratorOutput.tsx'
 import { LensDiagram } from './LensDiagram.tsx'
 import { LogicCircuit } from './LogicCircuit.tsx'
 import { VectorFigure } from './VectorFigure.tsx'
@@ -72,6 +73,7 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'displayed-formula': DisplayedFormula,
   'electric-field': ElectricField,
   'magnet-field': MagnetField,
+  'generator-output': GeneratorOutput,
   'circuit-diagram': CircuitDiagram,
   'lens-diagram': LensDiagram,
   'logic-circuit': LogicCircuit,

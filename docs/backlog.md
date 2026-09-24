@@ -5,7 +5,7 @@ add the PR number; add new work here as it is found, not in a separate note. Sto
 (`LRN-2`, `PAR-4`) refer to [stories.md](stories.md), where the acceptance criteria live;
 [plan.md](plan.md) holds the delivery plan these came from.
 
-Last reviewed: 23 September 2026.
+Last reviewed: 24 September 2026.
 
 ## Order of work
 
@@ -17,7 +17,7 @@ Agreed with the owner on 23 September 2026:
 
 ## 1. Content, subject by subject
 
-Computer Science and Business have no known content gaps.
+Computer Science, Business, Physics and Chemistry have no known content gaps.
 
 ### Maths (Pearson 1MA1)
 All 97 specification codes were checked against the pack on 23 September 2026.
@@ -38,12 +38,15 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 (coordinates) are used throughout the pack and have no topic of their own.
 
 ### Physics (AQA 8463)
-- [ ] Required practicals 2, 9 and 10
+- [x] Required practicals 2, 9 and 10 (PR #260): thermal insulation in Energy transfers, the ray box and
+  block in Light, the Leslie cube in Infrared radiation, each with AQA's own method and data
 - [x] Required practical 8: the "waves in a solid" half
 - [x] Nuclide notation and balanced nuclear equations
 - [x] Heating and cooling curve (4.3.2.3)
-- [ ] Field pattern round a current-carrying wire and a solenoid (4.7.2.1)
-- [ ] Alternator against dynamo: slip rings, commutator, pd–time graphs
+- [x] Field pattern round a current-carrying wire and a solenoid (4.7.2.1) (PR #260); `magnet-field`
+  gained `wire` and `solenoid` kinds whose direction comes from the grip rule
+- [x] Alternator against dynamo: slip rings, commutator, pd–time graphs (PR #260); new
+  `generator-output` diagram
 
 ### Chemistry (AQA 8462)
 - [x] Haber process: how conditions change rate and yield, with graphs (4.10.4.1, HT)
@@ -51,7 +54,7 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 
 ### Biology (Edexcel 1BI0)
 - [ ] Year 9 bridging units: five rows unwritten (microbes, immune system, nervous system,
-  genetic code, classification and evolution). **Owner to decide** whether they are in scope.
+  genetic code, classification and evolution). Owner decided on 23 September 2026: write them.
 
 ### French (Edexcel 1FR1)
 - [ ] `why` block (why it matters, and real-world examples) for all 50 topics
@@ -88,9 +91,8 @@ Board confirmed 18 September 2026. The teaching order is derived in
 - [ ] `why` blocks
 - [ ] Exam technique guide (LRN-5); the page says "not been written yet"
 
-### English
-- [ ] **Owner to confirm** Language, Literature or both, and which board; find the school's
-  curriculum overview
+### English (AQA 8700 Language and AQA 8702 Literature, confirmed 23 September 2026)
+- [ ] Find the school's curriculum overview and the set texts
 - [ ] Plan and write every topic, with `why` blocks and an exam technique guide
 
 ## 2. Testing and validation (after the content)
