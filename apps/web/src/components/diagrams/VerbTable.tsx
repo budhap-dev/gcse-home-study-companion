@@ -9,6 +9,11 @@ import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
  * Props: `infinitive`, `tense`, `stem` (shown once above), and `forms`: one entry per
  * person as { person, stem?, ending, irregular? }. A per-form `stem` overrides the shared
  * one, which is how avoir and être are shown.
+ *
+ * Drawn 296 units wide so it fits a phone card without scrolling: at 400 it scrolled
+ * sideways by about a hundred pixels on every French lesson that used it, with the
+ * endings, the point of the picture, in the hidden strip. The stem line wraps onto two
+ * lines and the irregular flag sits against the right edge for the same reason.
  */
 interface Form {
   person: string
@@ -24,23 +29,26 @@ export function VerbTable({ props, alt }: { props: Record<string, unknown>; alt:
   const forms = (props.forms as Form[] | undefined) ?? []
 
   const rowH = 30
-  const headH = stem ? 54 : 30
-  const W = 400
+  const headH = stem ? 70 : 30
+  const W = 296
   const H = headH + forms.length * rowH + 16
   const personX = 16
-  const splitX = 170
+  const splitX = 150
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 460 }} role="img" aria-label={alt}>
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 360 }} role="img" aria-label={alt}>
       <text x={personX} y={18} fontFamily={DISPLAY} fontSize="14" fontWeight="700" fill={INK}>
         {infinitive}
         {tense && <tspan fontFamily={FONT} fontSize="12" fontWeight="400" fill={INK_2}>{`  ·  ${tense}`}</tspan>}
       </text>
 
       {stem && (
-        <text x={personX} y={40} fontFamily={FONT} fontSize="12" fill={INK_2}>
-          stem <tspan fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={ACCENT}>{stem}</tspan> stays the same; only the ending changes
-        </text>
+        <>
+          <text x={personX} y={40} fontFamily={FONT} fontSize="12" fill={INK_2}>
+            stem <tspan fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={ACCENT}>{stem}</tspan> stays the same;
+          </text>
+          <text x={personX} y={56} fontFamily={FONT} fontSize="12" fill={INK_2}>only the ending changes</text>
+        </>
       )}
 
       {forms.map((form, i) => {
@@ -54,7 +62,7 @@ export function VerbTable({ props, alt }: { props: Record<string, unknown>; alt:
         return (
           <g key={i}>
             <line x1={personX} y1={y + 6} x2={W - 16} y2={y + 6} stroke={RULE} />
-            <text x={personX} y={y + 24} fontFamily={FONT} fontSize="13" fill={INK_2}>{form.person}</text>
+            <text x={personX} y={y + 24} fontFamily={FONT} fontSize="12" fill={INK_2}>{form.person}</text>
             <text x={splitX} y={y + 24} textAnchor="end" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={form.irregular ? INK : INK_2}>
               {rowStem}
             </text>
@@ -62,7 +70,7 @@ export function VerbTable({ props, alt }: { props: Record<string, unknown>; alt:
               {form.ending}
             </text>
             {form.irregular && (
-              <text x={splitX + 96} y={y + 24} fontFamily={FONT} fontSize="11" fill={INK_2}>irregular</text>
+              <text x={W - 16} y={y + 24} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>irregular</text>
             )}
           </g>
         )
