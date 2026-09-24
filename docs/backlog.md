@@ -17,7 +17,7 @@ Agreed with the owner on 23 September 2026:
 
 ## 1. Content, subject by subject
 
-Computer Science, Business, Physics, Chemistry and Music have no known content gaps.
+Computer Science, Business, Physics, Chemistry, Biology and Music have no known content gaps.
 
 ### Maths (Pearson 1MA1)
 All 97 specification codes were checked against the pack on 23 September 2026.
@@ -53,8 +53,10 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 - [x] 4.1.1.1: symbols and naming compounds, only partly taught
 
 ### Biology (Edexcel 1BI0)
-- [ ] Year 9 bridging units: five rows unwritten (microbes, immune system, nervous system,
-  genetic code, classification and evolution). Owner decided on 23 September 2026: write them.
+- [x] Year 9 bridging units: five topics written (PR #262): microbes and microscopy; how the
+  body fights infection; senses, nerves and reaction time; the genetic code; classification,
+  adaptation and evolution. Owner decided on 23 September 2026: write them. Each sits first in
+  the Edexcel unit it leads into. Biology is complete, 38 of 38 rows.
 
 ### French (Edexcel 1FR1)
 - [ ] `why` block (why it matters, and real-world examples) for all 50 topics
