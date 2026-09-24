@@ -50,3 +50,41 @@ describe('ray diagram', () => {
     expect(new Set(rough).size).toBeGreaterThan(1)
   })
 })
+
+/**
+ * Required practical 9 traces a ray through a rectangular block. The refracted angle is
+ * computed from the speed ratio, and the ray leaves the far face at the angle it arrived,
+ * so the emergent ray is parallel to the incident one. Both follow from the physics; the
+ * content only names the angle of incidence and the material.
+ */
+describe('ray through a block', () => {
+  it('writes the angle of incidence, the refracted angle, and the same angle again on the way out', () => {
+    const markup = svg({ kind: 'block', incidence: 25, speedRatio: 0.69 })
+    expect(angles(markup)).toEqual([25, 17, 25])
+  })
+
+  it('gives AQA\'s technician results for glass and Perspex from their speed ratios', () => {
+    // 25° in gave 17° in glass and 16° in Perspex; the ratios are sin 17 / sin 25 and sin 16 / sin 25.
+    expect(angles(svg({ kind: 'block', incidence: 25, speedRatio: 0.69 }))[1]).toBe(17)
+    expect(angles(svg({ kind: 'block', incidence: 25, speedRatio: 0.65 }))[1]).toBe(16)
+  })
+
+  it('sends the emergent ray out parallel to the incident ray', () => {
+    const markup = svg({ kind: 'block', incidence: 40, speedRatio: 2 / 3 })
+    const solid = [...markup.matchAll(/<line x1="([-\d.]+)" y1="([-\d.]+)" x2="([-\d.]+)" y2="([-\d.]+)" stroke="var\(--subject\)" stroke-width="2.5"/g)]
+      .map((m) => m.slice(1, 5).map(Number))
+    expect(solid).toHaveLength(3)
+    const slope = ([x1, y1, x2, y2]: number[]) => (x2! - x1!) / (y2! - y1!)
+    const incident = solid[0]!, refracted = solid[1]!, emergent = solid[2]!
+    expect(slope(emergent)).toBeCloseTo(slope(incident), 6)
+    // Inside the block the ray is steeper: closer to the normal.
+    expect(Math.abs(slope(refracted))).toBeLessThan(Math.abs(slope(incident)))
+    // And it is shifted sideways: it leaves to the right of where the straight line would have gone.
+    expect(emergent[0]).toBeGreaterThan(incident[2]!)
+  })
+
+  it('draws a normal at the point of entry and at the point of exit', () => {
+    const markup = svg({ kind: 'block', incidence: 30 })
+    expect(markup.match(/stroke-dasharray="5 4"/g)).toHaveLength(2)
+  })
+})

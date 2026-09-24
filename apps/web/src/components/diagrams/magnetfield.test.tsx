@@ -88,3 +88,79 @@ describe('magnet field', () => {
     }
   })
 })
+
+/**
+ * The field a current makes is derived from the current the content gives, by the
+ * right-hand grip rule, so a card cannot draw the field circling the wrong way or put
+ * north at the end the rule says is south.
+ */
+describe('the field a current makes', () => {
+  /** Each arrowhead's tip and the middle of its base, in drawing order. */
+  const heads = (markup: string) =>
+    [...markup.matchAll(/<polygon points="([^"]+)"/g)].map((m) => {
+      const [tip, a, b] = m[1]!.split(' ').map((p) => p.split(',').map(Number)) as [number, number][]
+      return { tip, base: [(a![0] + b![0]) / 2, (a![1] + b![1]) / 2] as [number, number] }
+    })
+
+  it('circles the wire anticlockwise when the current comes towards you, clockwise when it goes away', () => {
+    const out = svg({ kind: 'wire', current: 'out' })
+    const into = svg({ kind: 'wire', current: 'in' })
+    expect(out).toContain('anticlockwise')
+    expect(into).toContain('circles clockwise')
+    // The first head sits at the top of the innermost circle: anticlockwise there is leftwards.
+    expect(heads(out)[0]!.tip[0]).toBeLessThan(heads(out)[0]!.base[0])
+    expect(heads(into)[0]!.tip[0]).toBeGreaterThan(heads(into)[0]!.base[0])
+    expect(heads(out)).toHaveLength(6)
+  })
+
+  it('draws the wire as a dot for current towards you and a cross for current away', () => {
+    expect(svg({ kind: 'wire', current: 'out' })).toContain('r="3"')
+    expect(svg({ kind: 'wire', current: 'in' })).not.toContain('r="3"')
+  })
+
+  it('puts north at the end the grip rule gives, and moves it when the current reverses', () => {
+    const up = svg({ kind: 'solenoid', current: 'up' })
+    const down = svg({ kind: 'solenoid', current: 'down' })
+    expect(up).toContain('north is on the left')
+    expect(down).toContain('north is on the right')
+    const pole = (markup: string, letter: 'N' | 'S') => Number(new RegExp(`<text x="([\\d.]+)"[^>]*>${letter}</text>`).exec(markup)![1])
+    expect(pole(up, 'N')).toBeLessThan(pole(up, 'S'))
+    expect(pole(down, 'N')).toBeGreaterThan(pole(down, 'S'))
+  })
+
+  it('reverses every field arrow of the solenoid when the current reverses', () => {
+    const up = heads(svg({ kind: 'solenoid', current: 'up' }))
+    const down = heads(svg({ kind: 'solenoid', current: 'down' }))
+    expect(up.length).toBeGreaterThan(8)
+    expect(up).toHaveLength(down.length)
+    // Field heads (not the current heads on the turns) point the opposite way in x.
+    const fieldUp = up.slice(0, 7), fieldDown = down.slice(0, 7)
+    for (let i = 0; i < fieldUp.length; i++) {
+      const dxUp = fieldUp[i]!.tip[0] - fieldUp[i]!.base[0]
+      const dxDown = fieldDown[i]!.tip[0] - fieldDown[i]!.base[0]
+      expect(Math.sign(dxUp)).toBe(-Math.sign(dxDown))
+    }
+  })
+
+  it('runs the lines inside the solenoid straight, parallel and evenly spaced', () => {
+    const markup = svg({ kind: 'solenoid', current: 'up' })
+    const ys = [...markup.matchAll(/<line x1="58" y1="([\d.]+)"[^>]*x2="238" y2="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])])
+    expect(ys).toHaveLength(3)
+    for (const [y1, y2] of ys) expect(y1).toBe(y2)
+    const sorted = ys.map((p) => p[0]!).sort((a, b) => a - b)
+    expect(sorted[1]! - sorted[0]!).toBe(sorted[2]! - sorted[1]!)
+  })
+
+  it('keeps the current pictures narrow enough for a phone card and their labels inside', () => {
+    for (const props of [{ kind: 'wire', current: 'out' }, { kind: 'wire', current: 'in', note: 'a compass follows the circle' }, { kind: 'solenoid', current: 'up' }, { kind: 'solenoid', current: 'down', note: 'reverse the current and the poles swap' }]) {
+      const markup = svg(props)
+      const [, w, h] = markup.match(/viewBox="0 0 (\d+) (\d+)"/)!.map(Number)
+      expect(w).toBeLessThanOrEqual(298)
+      for (const m of markup.matchAll(/<text[^>]*\bx="([\d.]+)"[^>]*\by="([\d.]+)"/g)) {
+        expect(Number(m[1])).toBeLessThan(w!)
+        expect(Number(m[1])).toBeGreaterThan(0)
+        expect(Number(m[2])).toBeLessThan(h!)
+      }
+    }
+  })
+})
