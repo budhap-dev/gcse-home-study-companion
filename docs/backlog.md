@@ -17,7 +17,7 @@ Agreed with the owner on 23 September 2026:
 
 ## 1. Content, subject by subject
 
-Computer Science, Business, Physics and Chemistry have no known content gaps.
+Computer Science, Business, Physics, Chemistry and Music have no known content gaps.
 
 ### Maths (Pearson 1MA1)
 All 97 specification codes were checked against the pack on 23 September 2026.
@@ -60,7 +60,7 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 - [ ] `why` block (why it matters, and real-world examples) for all 50 topics
 
 ### Music (Edexcel 1MU0)
-- [ ] `why` block for all 19 topics
+- [x] `why` block for all 19 topics (PR #261): 56 examples, 50 with a picture
 
 ### Further Maths (AQA Level 2 Certificate 8365)
 Board confirmed 18 September 2026. The teaching order is derived in
