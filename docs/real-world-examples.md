@@ -1,6 +1,6 @@
 # Why it exists, and where you meet it
 
-**Status: rolled out to six of nine subjects.** Requested 18 September 2026 and proved first on Physics *Moments, levers and gears*. As of 22 September 2026 every Maths, Physics, Chemistry, Biology, Computer Science and Business topic carries the block; French, Music and Further Maths are still to be written. The rest of this document is the design, corrected where building it showed the design was wrong.
+**Status: rolled out to seven of nine subjects.** Requested 18 September 2026 and proved first on Physics *Moments, levers and gears*. As of 24 September 2026 every Maths, Physics, Chemistry, Biology, Computer Science, Business and Music topic carries the block; French and Further Maths are still to be written. Music, expected to be thin, was not: every one of its 19 topics carries examples, because *why does this form exist* and *what is the exam actually paying for* turned out to be the questions a set work most needs answered. The rest of this document is the design, corrected where building it showed the design was wrong.
 
 ## The gap
 
@@ -258,7 +258,7 @@ Written out in full, so the standard is set by example rather than by adjective.
 
 There are 315 rows. Retrofitting all of them at once would produce filler, which is the failure this design is most concerned about.
 
-0. ~~**Build `size-compare` first**, and prove the design on one topic end to end.~~ **Done.** `size-compare` exists, the `why` field is on `Topic`, the card renders on the topic page, and Physics *Moments, levers and gears* is written. Read that one before writing another. As of 22 September 2026 Maths, Physics, Chemistry, Biology, Computer Science and Business carry the section on every topic; French, Music and Further Maths do not yet.
+0. ~~**Build `size-compare` first**, and prove the design on one topic end to end.~~ **Done.** `size-compare` exists, the `why` field is on `Topic`, the card renders on the topic page, and Physics *Moments, levers and gears* is written. Read that one before writing another. As of 24 September 2026 Maths, Physics, Chemistry, Biology, Computer Science, Business and Music carry the section on every topic; French and Further Maths do not yet.
 1. **New topics carry it from the start.** The next Further Maths rows should include it, so the standard is set while the volume is small.
 2. **Then the subjects where the gap is worst.** Maths and Further Maths first — they are the subjects a student is most likely to find pointless, and the ones where the answer is most satisfying. Then the sciences, where the "what is actually happening" version matters more than the application.
 3. **Languages and Music last**, and expect lower coverage. "Where you meet it" is a strange question to ask of a set work; "why does this exist" is not.
