@@ -312,12 +312,15 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
   ],
   'biology': [
+    // The school's pre-GCSE bridging unit, written 24 September 2026 on the owner's
+    // decision. Each sits first in the Edexcel unit it leads into, so a student meets the
+    // groundwork before the topic that assumes it.
     { year: 9, term: 'Autumn and Spring', topics: [
-      { title: 'Microbes and microscopy' },
-      { title: 'The immune system' },
-      { title: 'The nervous system' },
-      { title: 'The genetic code' },
-      { title: 'Classification and evolution' },
+      { title: 'Microbes and microscopy', topicId: 'microbes-and-microscopy' },
+      { title: 'The immune system', topicId: 'how-the-body-fights-infection' },
+      { title: 'The nervous system', topicId: 'senses-nerves-and-reaction-time' },
+      { title: 'The genetic code', topicId: 'dna-chromosomes-and-genes' },
+      { title: 'Classification and evolution', topicId: 'classification-adaptation-and-evolution' },
     ] },
     { year: 9, term: 'Spring and Summer', topics: [
       { title: 'Unit 1: cells and specialisation', topicId: 'cells-and-how-they-are-specialised' },

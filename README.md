@@ -76,7 +76,7 @@ The app version is the `version` field in `apps/web/package.json`, shown in the 
 
 - **Patch** (7.1.0 → 7.1.1): fixes to content or code with no new topics or features.
 - **Minor** (7.1.0 → 7.2.0): new topics, a new feature, or a new diagram or interactive kind.
-- **Major** (7.x → 8.0.0): a subject is complete — every row of the school's plan for it, Years 9 to 11, links to a written topic. Computer Science took the app to 1.0.0 and Music to 7.0.0.
+- **Major** (7.x → 8.0.0): a subject is complete — every row of the school's plan for it, Years 9 to 11, links to a written topic. Computer Science took the app to 1.0.0, Music to 7.0.0 and Biology to 8.0.0.
 
 Bump the version in the same PR as the change, so the footer always says which release is deployed. CI enforces it: the *Version bumped* check fails a pull request that changes anything outside `docs/`, `.github/` and Markdown files without raising the version above the base branch's.
 
