@@ -59,7 +59,9 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
   the Edexcel unit it leads into. Biology is complete, 38 of 38 rows.
 
 ### French (Edexcel 1FR1)
-- [ ] `why` block (why it matters, and real-world examples) for all 50 topics
+- [x] `why` block (why it matters, and real-world examples) for all 50 topics (PR #263):
+  150 examples, every one with a picture; grammar topics take a `verb-table`, the rest
+  short tables, four-boxes and a `size-compare` where the lesson prints a figure.
 
 ### Music (Edexcel 1MU0)
 - [x] `why` block for all 19 topics (PR #261): 56 examples, 50 with a picture
