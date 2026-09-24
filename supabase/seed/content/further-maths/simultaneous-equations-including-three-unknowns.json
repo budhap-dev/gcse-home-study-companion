@@ -1,0 +1,1467 @@
+{
+  "id": "simultaneous-equations-including-three-unknowns",
+  "subjectId": "further-maths",
+  "unitId": "algebra",
+  "title": "Simultaneous equations, including three unknowns",
+  "specPoints": [
+    "2.15",
+    "2.16"
+  ],
+  "order": 10,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Substitute the linear equation into the other",
+      "body": "Rearrange the linear one for whichever unknown is easier, put it into the second-order one, and solve the quadratic. Then find each $y$ from the linear equation and write the answer as pairs. $y = x + 2$, $y^2 = 4x + 5$: $(1, 3)$ and $(-1, 1)$."
+    },
+    {
+      "kind": "spot",
+      "title": "Three unknowns: same letter out of two pairs",
+      "body": "Pick the unknown with the easiest coefficients, eliminate it from two different pairs of equations, and you have a two-by-two. Label the equations and write which combination you formed. The specification's system gives $x = 3$, $y = -2$, $z = \\frac{3}{2}$."
+    },
+    {
+      "kind": "check",
+      "title": "Check in the equation you did not use last",
+      "body": "A solution must satisfy every equation. After back-substituting, put the values into the equations that were not used for the final step; for three unknowns, all three. Fractions like $\\frac{1}{2}$ and $\\frac{2}{3}$ are expected, not a warning sign."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Tangent means discriminant zero",
+      "body": "Substituting a line into a curve gives a quadratic; $b^2 - 4ac = 0$ is one touching point, positive is two crossings, negative is none. $y = x + c$ touches $y = x^2$ when $1 + 4c = 0$."
+    },
+    {
+      "kind": "remember",
+      "title": "Pair the solutions",
+      "body": "$x = \\pm 1$ with $y = 3$ or $1$ is not an answer; $(1, 3)$ and $(-1, 1)$ is. Each $x$ has its own $y$, from the linear equation, and a wrong pairing such as $(1, 1)$ satisfies neither equation properly."
+    }
+  ],
+  "why": {
+    "matters": "Two facts about the same unknowns pin them down, and simultaneous equations are the method for doing the pinning. A line meeting a curve is the algebra of every intersection question that follows, from the tangent to a circle to where a projectile lands; three unknowns from three facts is how prices, mixtures and forces are found from measurements. The specification asks for two linear equations, a linear and a second-order one, the graphical picture, and three linear equations in three unknowns, and every one comes down to the same two moves: eliminate or substitute, then check.",
+    "examples": [
+      {
+        "title": "The café bill, itemised",
+        "body": "Three receipts with different mixes of coffee, tea and cake give three equations in three unknowns, and solving them recovers the price list nobody wrote down. With $2x + y + z = 9.50$, $x + 2y + z = 8.50$ and $x + y + 2z = 9.00$, adding all three gives $x + y + z = 6.75$, and subtracting that from each receipt gives the prices directly. Accountants, buyers and anyone reconciling a bill do this, usually with software that runs the same eliminations.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Receipt",
+              "Equation",
+              "Subtract x + y + z = 6.75",
+              "Price"
+            ],
+            "rows": [
+              [
+                "2 coffee, 1 tea, 1 cake: £9.50",
+                "2x + y + z = 9.5",
+                "x = 2.75",
+                "coffee £2.75"
+              ],
+              [
+                "1 coffee, 2 tea, 1 cake: £8.50",
+                "x + 2y + z = 8.5",
+                "y = 1.75",
+                "tea £1.75"
+              ],
+              [
+                "1 coffee, 1 tea, 2 cake: £9.00",
+                "x + y + 2z = 9",
+                "z = 2.25",
+                "cake £2.25"
+              ],
+              [
+                "sum of the three",
+                "4(x + y + z) = 27",
+                "x + y + z = 6.75",
+                "one of each £6.75"
+              ]
+            ],
+            "title": "Three receipts, three unknowns, one price list"
+          },
+          "alt": "A table of three café receipts as equations in three unknowns, solved by adding them to find the cost of one of each item and subtracting to find each price"
+        }
+      },
+      {
+        "title": "Break-even",
+        "body": "A stall pays £200 for a pitch and £4 per item, and sells each item for £9. Costs are $y = 200 + 4n$ and takings are $y = 9n$; the stall breaks even where the two lines meet, $200 + 4n = 9n$, at $n = 40$ items. Below that the cost line is higher and the stall loses; above it, the takings line is higher. Every business plan has this pair of lines in it somewhere.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              80
+            ],
+            "yRange": [
+              0,
+              720
+            ],
+            "grid": true,
+            "xStep": 10,
+            "yStep": 100,
+            "lines": [
+              {
+                "m": 4,
+                "c": 200,
+                "label": "cost",
+                "labelX": 15
+              },
+              {
+                "m": 9,
+                "c": 0,
+                "label": "takings",
+                "labelX": 52
+              }
+            ],
+            "points": [
+              {
+                "x": 40,
+                "y": 360,
+                "label": "break-even"
+              }
+            ]
+          },
+          "alt": "The cost line y equals two hundred plus four n and the takings line y equals nine n meeting at forty items and three hundred and sixty pounds, the break-even point"
+        }
+      },
+      {
+        "title": "Catching up",
+        "body": "A car leaves at 40 km/h; an hour later a second car follows the same road at 60 km/h. When does it catch up? Distances are $d = 40(t + 1)$ and $d = 60t$, and the two are equal at $t = 2$ hours, $120$ km down the road. The same pair of equations, with a curve instead of a line, is how a projectile and a target are matched, and the meeting point is the solution of the pair.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Car",
+              "Distance after t hours of the second car",
+              "At t = 2"
+            ],
+            "rows": [
+              [
+                "first, 40 km/h, one hour ahead",
+                "40(t + 1)",
+                "120 km"
+              ],
+              [
+                "second, 60 km/h",
+                "60t",
+                "120 km"
+              ],
+              [
+                "catch-up",
+                "40(t + 1) = 60t",
+                "t = 2"
+              ]
+            ],
+            "title": "Two distance equations, one meeting point"
+          },
+          "alt": "A table of the two cars' distances as equations in t, meeting at two hours and one hundred and twenty kilometres"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Two linear equations: eliminate or substitute",
+        "body": "Two equations in two unknowns have, usually, one pair of values that satisfies both. There are two routes.\n\n**Elimination**: scale the equations so that one unknown has matching coefficients, then add or subtract. The specification's pair: $4x - 3y = 0$ and $6x + 15y = 13$. Multiply the first by $5$: $20x - 15y = 0$. Add to the second: $26x = 13$, so $x = \\frac{1}{2}$. Then $4 \\times \\frac{1}{2} - 3y = 0$ gives $y = \\frac{2}{3}$.\n\n**Substitution**: make one unknown the subject of one equation and put it into the other. From $4x - 3y = 0$, $y = \\frac{4x}{3}$; then $6x + 15 \\times \\frac{4x}{3} = 13$, so $6x + 20x = 13$ and $x = \\frac{1}{2}$ again.\n\n**Check in the equation you did not use for the last step**: $6 \\times \\frac{1}{2} + 15 \\times \\frac{2}{3} = 3 + 10 = 13$. Fractions are normal at this level and stay as fractions.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve 4x − 3y = 0 and 6x + 15y = 13.",
+            "steps": [
+              {
+                "text": "$20x - 15y = 0$",
+                "note": "first equation × 5, so the y coefficients are −15 and +15"
+              },
+              {
+                "text": "$26x = 13$, so $x = \\dfrac{1}{2}$",
+                "note": "add the equations: the y terms cancel"
+              },
+              {
+                "text": "$4 \\times \\dfrac{1}{2} - 3y = 0$, so $y = \\dfrac{2}{3}$",
+                "note": "substitute into the simpler equation"
+              },
+              {
+                "text": "Check: $6 \\times \\dfrac{1}{2} + 15 \\times \\dfrac{2}{3} = 3 + 10 = 13$",
+                "note": "the other equation agrees"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "Solve $4x - 3y = 0$ and $6x + 15y = 13$. Give the value of $x$ as a decimal.",
+          "marks": 2,
+          "gradeBand": "4-5",
+          "skill": "the specification's linear pair",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Multiply the first equation by $5$ and add: $26x = 13$, so $x = \\frac{1}{2} = 0.5$. Then $y = \\frac{2}{3}$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "eliminates one unknown"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "x = 1/2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 0.5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Graphically: solutions are where the graphs meet",
+        "body": "Each equation is a graph, and a solution is a point on both: the graphs **intersect** there. Two lines meet once, unless they are parallel, in which case there is no solution, or the same line, in which case every point on it is one.\n\nA line and a curve can meet **twice, once, or not at all**. $y = x^2$ and $y - 5x = 6$: the line $y = 5x + 6$ cuts the parabola at $(-1, 1)$ and $(6, 36)$, so the pair has two solutions, and the algebra agrees: $x^2 = 5x + 6$ gives $x^2 - 5x - 6 = (x - 6)(x + 1) = 0$.\n\n**Reading from a drawn graph** gives approximate solutions, which is what a *use the graph to estimate* question wants; the algebra gives exact ones. A line that just touches a curve is a **tangent**, and the quadratic that comes from substituting then has a repeated root.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -3,
+                8
+              ],
+              "yRange": [
+                0,
+                45
+              ],
+              "grid": true,
+              "xStep": 1,
+              "yStep": 10,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 0,
+                  "c": 0,
+                  "label": "y = x²",
+                  "labelX": -2.5
+                }
+              ],
+              "lines": [
+                {
+                  "m": 5,
+                  "c": 6,
+                  "label": "y = 5x + 6",
+                  "labelX": 2.6
+                }
+              ],
+              "points": [
+                {
+                  "x": -1,
+                  "y": 1
+                },
+                {
+                  "x": 6,
+                  "y": 36,
+                  "label": "(6, 36)"
+                }
+              ]
+            },
+            "alt": "The parabola y equals x squared and the line y equals five x plus six meeting at the two solutions, minus one one and six thirty-six"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "A straight line and a parabola are drawn on the same axes. How many solutions can the pair of equations have?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "how many solutions",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Substituting the line into the parabola gives a quadratic in $x$, which has two, one or no real roots: two crossings, a tangent, or a miss. A parabola bends only once, so three meetings with a line are impossible.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Two, one or none: the line can cut the curve twice, touch it once, or miss it"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "Always exactly one, because two graphs meet once",
+            "Any number, because a curve can bend back to meet the same line again and again",
+            "Two, one or none: the line can cut the curve twice, touch it once, or miss it",
+            "Always exactly two, because a quadratic has two roots"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "A line and a curve: substitute the linear one into the other",
+        "body": "*Solve $y = x + 2$ and $y^2 = 4x + 5$.*\n\nThe linear equation gives $y$ in terms of $x$, so substitute it into the second-order one: $(x + 2)^2 = 4x + 5$. Expand: $x^2 + 4x + 4 = 4x + 5$, so $x^2 = 1$ and $x = 1$ or $x = -1$.\n\nEach $x$ needs its own $y$, from the **linear** equation: $x = 1$ gives $y = 3$, and $x = -1$ gives $y = 1$. The solutions are the pairs $(1, 3)$ and $(-1, 1)$. Writing $x = \\pm 1$, $y = 3$ or $1$ without pairing them is not a solution; the marks are for the pairs.\n\nCheck both pairs in the equation you did not use for the pairing: $3^2 = 9 = 4 + 5$ and $1^2 = 1 = -4 + 5$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve y = x + 2 and y² = 4x + 5.",
+            "steps": [
+              {
+                "text": "$(x + 2)^2 = 4x + 5$",
+                "note": "substitute the linear equation into the other"
+              },
+              {
+                "text": "$x^2 + 4x + 4 = 4x + 5$, so $x^2 = 1$",
+                "note": "expand; the 4x terms cancel"
+              },
+              {
+                "text": "$x = 1$ or $x = -1$",
+                "note": "both square roots"
+              },
+              {
+                "text": "$y = 3$ or $y = 1$, from $y = x + 2$",
+                "note": "each x with its own y, from the linear equation"
+              },
+              {
+                "text": "$(1, 3)$ and $(-1, 1)$; check: $9 = 4 + 5$ and $1 = -4 + 5$",
+                "note": "paired, and both checked"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Pair of equations",
+                "Substitute",
+                "Quadratic",
+                "Solutions"
+              ],
+              "rows": [
+                [
+                  "y = x + 2, y² = 4x + 5",
+                  "(x + 2)² = 4x + 5",
+                  "x² = 1",
+                  "(1, 3), (−1, 1)"
+                ],
+                [
+                  "y = x², y − 5x = 6",
+                  "x² − 5x = 6",
+                  "x² − 5x − 6 = 0",
+                  "(6, 36), (−1, 1)"
+                ],
+                [
+                  "xy = 8, x + y = 6",
+                  "x(6 − x) = 8",
+                  "x² − 6x + 8 = 0",
+                  "(2, 4), (4, 2)"
+                ],
+                [
+                  "y = 2x − 1, y = x² − 4",
+                  "x² − 4 = 2x − 1",
+                  "x² − 2x − 3 = 0",
+                  "(3, 5), (−1, −3)"
+                ]
+              ],
+              "title": "Substitute the linear equation; pair each x with its y"
+            },
+            "alt": "A table of four pairs of equations with one linear and one second order, the substitution, the quadratic it produces and the solution pairs"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "Solve $y = x + 2$ and $y^2 = 4x + 5$. Give the value of $y$ that goes with $x = 1$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the specification's line and parabola",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Substituting gives $(x + 2)^2 = 4x + 5$, so $x^2 = 1$. With $x = 1$, the linear equation gives $y = 3$; check $3^2 = 4 + 5$. The other pair is $(-1, 1)$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Products and sums: xy = 8 and x + y = 6",
+        "body": "The specification's fourth example has a product: $xy = 8$ and $x + y = 6$. Make one unknown the subject of the linear equation, $y = 6 - x$, and substitute: $x(6 - x) = 8$, so $6x - x^2 = 8$ and $x^2 - 6x + 8 = 0$, which factorises as $(x - 2)(x - 4) = 0$.\n\n$x = 2$ gives $y = 4$; $x = 4$ gives $y = 2$. The two solutions are mirror images because the equations are symmetric in $x$ and $y$; that is a check, not a coincidence.\n\n**Which equation to substitute into which.** Always rearrange the **linear** one and put it into the other. Rearranging $xy = 8$ to $y = \\frac{8}{x}$ works but produces a fraction to clear; the linear route is cleaner. And substitute for the unknown that is easier to isolate: from $y - 5x = 6$ take $y = 5x + 6$, not $x = \\frac{y - 6}{5}$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve xy = 8 and x + y = 6.",
+            "steps": [
+              {
+                "text": "$y = 6 - x$",
+                "note": "rearrange the linear equation"
+              },
+              {
+                "text": "$x(6 - x) = 8$",
+                "note": "substitute into the product"
+              },
+              {
+                "text": "$x^2 - 6x + 8 = 0$",
+                "note": "expand and rearrange to zero"
+              },
+              {
+                "text": "$(x - 2)(x - 4) = 0$: $x = 2$ or $4$",
+                "note": "factorise"
+              },
+              {
+                "text": "$(2, 4)$ and $(4, 2)$",
+                "note": "y from y = 6 − x; symmetric, as the equations are"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "Solve $y = x^2$ and $y - 5x = 6$. Give the larger value of $x$.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "a curve and a line",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Substitute $y = x^2$ into $y - 5x = 6$: $x^2 - 5x - 6 = 0$, so $(x - 6)(x + 1) = 0$. $x = 6$ or $x = -1$; the larger is $6$, with $y = 36$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "x² − 5x − 6 = 0"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Three unknowns: eliminate one letter twice",
+        "body": "With three linear equations in three unknowns, eliminate the same unknown from two different pairs of equations, which leaves two equations in two unknowns, then solve those as before and back-substitute.\n\nThe specification's system:\n\n$$2x - 5y + 4z = 22 \\quad (1)$$\n\n$$x + y + 2z = 4 \\quad (2)$$\n\n$$x - y - 6z = -4 \\quad (3)$$\n\n$(2) - (3)$: $2y + 8z = 8$, so $y + 4z = 4$. $(1) - 2 \\times (2)$: $-7y = 14$, so $y = -2$; here the $z$ vanished as well, a bonus. Then $-2 + 4z = 4$ gives $z = \\frac{3}{2}$, and $(2)$ gives $x - 2 + 3 = 4$, so $x = 3$.\n\n**Check in all three**: $6 + 10 + 6 = 22$, $3 - 2 + 3 = 4$, $3 + 2 - 9 = -4$. Label the equations, say which combination you are forming, and expect fractions. The specification's own example has $z = \\frac{3}{2}$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve 2x − 5y + 4z = 22, x + y + 2z = 4, x − y − 6z = −4.",
+            "steps": [
+              {
+                "text": "$(2) - (3)$: $2y + 8z = 8$, so $y + 4z = 4$",
+                "note": "the x terms cancel"
+              },
+              {
+                "text": "$(1) - 2(2)$: $-7y = 14$, so $y = -2$",
+                "note": "the x terms cancel, and so do the z terms"
+              },
+              {
+                "text": "$-2 + 4z = 4$, so $z = \\dfrac{3}{2}$",
+                "note": "back into y + 4z = 4"
+              },
+              {
+                "text": "$x - 2 + 3 = 4$, so $x = 3$",
+                "note": "back into (2)"
+              },
+              {
+                "text": "Check (1): $6 + 10 + 6 = 22$; (3): $3 + 2 - 9 = -4$",
+                "note": "all three hold"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "Combination",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "eliminate x once",
+                  "(2) − (3)",
+                  "y + 4z = 4"
+                ],
+                [
+                  "eliminate x again",
+                  "(1) − 2(2)",
+                  "−7y = 14, y = −2"
+                ],
+                [
+                  "solve for z",
+                  "y + 4z = 4 with y = −2",
+                  "z = 3/2"
+                ],
+                [
+                  "solve for x",
+                  "(2) with y and z",
+                  "x = 3"
+                ],
+                [
+                  "check",
+                  "all three equations",
+                  "22, 4, −4"
+                ]
+              ],
+              "title": "Same unknown out of two pairs, then two equations in two unknowns"
+            },
+            "alt": "A table of the five steps for the specification's three-unknown system: two eliminations of x, then z, then x, then the check"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "Solve $2x - 5y + 4z = 22$, $x + y + 2z = 4$ and $x - y - 6z = -4$. Give the value of $z$ as a decimal.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "the specification's three unknowns",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Subtracting the third equation from the second gives $y + 4z = 4$; the first minus twice the second gives $y = -2$. Then $4z = 6$, so $z = 1.5$, and $x = 3$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "eliminates x from two pairs"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "z = 3/2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 1.5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "A circle and a line, and when a line only touches",
+        "body": "Second order can mean $x^2 + y^2$ as well as $y^2$ or $xy$. $x^2 + y^2 = 25$ and $y = x + 1$: substitute, $x^2 + (x + 1)^2 = 25$, so $2x^2 + 2x - 24 = 0$, $x^2 + x - 12 = 0$, $(x + 4)(x - 3) = 0$. The solutions are $(3, 4)$ and $(-4, -3)$: the line crosses the circle of radius $5$ twice.\n\n**Touching.** The line $y = x + c$ meets $y = x^2$ where $x^2 - x - c = 0$. That quadratic has one repeated root when its discriminant is zero: $1 + 4c = 0$, so $c = -\\frac{1}{4}$. For that value the line is a tangent to the parabola; for $c > -\\frac{1}{4}$ it cuts twice, and for $c < -\\frac{1}{4}$ it misses. The number of solutions is the sign of $b^2 - 4ac$.\n\nThat link, *tangent means repeated root*, is the same discriminant from the quadratics topic. The specification's list stops at the four kinds of pair above; the touching case follows from them, and the tangent to a circle (3.9) and to a curve (4.4) later use the same idea.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -3,
+                4
+              ],
+              "yRange": [
+                -3,
+                6
+              ],
+              "grid": true,
+              "xStep": 3,
+              "yStep": 3,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 0,
+                  "c": 0,
+                  "label": "y = x²",
+                  "labelX": -2.3
+                }
+              ],
+              "lines": [
+                {
+                  "m": 1,
+                  "c": 2,
+                  "label": "c = 2",
+                  "labelX": 3.2
+                },
+                {
+                  "m": 1,
+                  "c": -0.25,
+                  "label": "c = −¼",
+                  "labelX": 3.2,
+                  "dashed": true
+                },
+                {
+                  "m": 1,
+                  "c": -2,
+                  "label": "c = −2",
+                  "labelX": 3.2
+                }
+              ],
+              "points": [
+                {
+                  "x": 0.5,
+                  "y": 0.25
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "label": "(2, 4)"
+                },
+                {
+                  "x": -1,
+                  "y": 1
+                }
+              ]
+            },
+            "alt": "The parabola y equals x squared with three lines of gradient one: c equals two cutting it twice at minus one one and two four, c equals minus a quarter, dashed, touching it at the marked point a half, a quarter, and c equals minus two missing it"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "The line $y = x + c$ is a tangent to the curve $y = x^2$. Work out the value of $c$. Give your answer as a decimal.",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "a tangent by the discriminant",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Substituting gives $x^2 - x - c = 0$. A tangent means one repeated root, so the discriminant is zero: $(-1)^2 - 4(1)(-c) = 1 + 4c = 0$, giving $c = -\\frac{1}{4} = -0.25$. The touch is at $\\left(\\frac{1}{2}, \\frac{1}{4}\\right)$.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "discriminant = 0"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "−1/4"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -0.25,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Solve $3x + 2y = 12$ and $x - y = 4$.\n2. Solve $2x + 3y = 7$ and $5x - 2y = 8$.\n3. Solve $y = 2x - 1$ and $y = x^2 - 4$.\n\n**Part B.**\n\n4. Solve $x^2 + y^2 = 13$ and $y = x - 1$.\n5. Solve $xy = 12$ and $x - y = 1$.\n6. Solve $x + y + z = 6$, $2x - y + z = 3$ and $x + 2y - z = 2$.\n\n**Part C.**\n\n7. Solve $x + y + z = 10$, $x - y = 2$ and $y - z = 1$.\n8. Find the value of $c$ for which $y = 2x + c$ is a tangent to $y = x^2 + 4$, and the point where it touches.\n9. Solve $y = 3x$ and $y^2 = x + 8$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "x = 4, y = 0"
+                ],
+                [
+                  "2",
+                  "x = 2, y = 1"
+                ],
+                [
+                  "3",
+                  "(3, 5) and (−1, −3)"
+                ],
+                [
+                  "4",
+                  "(3, 2) and (−2, −3)"
+                ],
+                [
+                  "5",
+                  "(4, 3) and (−3, −4)"
+                ],
+                [
+                  "6",
+                  "x = 1, y = 2, z = 3"
+                ],
+                [
+                  "7",
+                  "x = 5, y = 3, z = 2"
+                ],
+                [
+                  "8",
+                  "c = 3, touching at (1, 5)"
+                ],
+                [
+                  "9",
+                  "(1, 3) and (−8/9, −8/3)"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on simultaneous equations, including pairs with a curve and systems in three unknowns"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: strategy, contexts and the discriminant",
+        "body": "**Choose the elimination that costs least.** In the three-unknown system, $(2) - (3)$ removed $x$ with no scaling, and $(1) - 2(2)$ removed $x$ and $z$ together. Before combining, look for a coefficient of $1$ or a pair that already match; a system set for an exam usually has one. Label every line, because *which equations did you combine* is what the examiner reads.\n\n**A context gives the equations.** Two coffees, a tea and a cake cost £9.50; one coffee, two teas and a cake £8.50; one of each with a second cake £9.00. That is $2x + y + z = 9.5$, $x + 2y + z = 8.5$, $x + y + 2z = 9$, and the same method gives coffee £2.75, tea £1.75 and cake £2.25. Writing the equations is the first mark; checking the answer against every line of the story is the last.\n\n**The discriminant decides how many solutions.** $y = 2x + c$ and $y = x^2 + 4$ give $x^2 - 2x + 4 - c = 0$, with discriminant $4 - 4(4 - c) = 4c - 12$. Zero at $c = 3$: a tangent, touching at $(1, 5)$. Positive for $c > 3$: two crossings. Negative for $c < 3$: the line misses. The three cases are the three signs of the discriminant.\n\n**Fractions are not a sign of error.** $y = 3x$ and $y^2 = x + 8$ give $9x^2 - x - 8 = 0$. It factorises as $(9x + 8)(x - 1)$, though the factors are not obvious, and the formula finds the same: $x = \\frac{1 \\pm \\sqrt{1 + 288}}{18} = \\frac{1 \\pm 17}{18}$, giving $1$ or $-\\frac{8}{9}$. Both pairs, $(1, 3)$ and $(-\\frac{8}{9}, -\\frac{8}{3})$, satisfy both equations: $\\frac{64}{9} = -\\frac{8}{9} + 8$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does with simultaneous equations",
+              "boxes": [
+                {
+                  "title": "Looks before combining",
+                  "body": "A coefficient of 1 or a matching pair fixes which elimination to do."
+                },
+                {
+                  "title": "Turns a story into equations",
+                  "body": "One line of the story, one equation; check the answer against every line."
+                },
+                {
+                  "title": "Reads the discriminant",
+                  "body": "Zero: tangent. Positive: two points. Negative: none."
+                },
+                {
+                  "title": "Pairs every solution",
+                  "body": "(x, y) together, each checked in the equation not used to find it."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band simultaneous equations answer: choosing the cheapest elimination, building equations from a context, reading the discriminant and pairing solutions"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Two linear**: eliminate by matching a coefficient and adding or subtracting, or substitute. $4x - 3y = 0$, $6x + 15y = 13$: $x = \\frac{1}{2}$, $y = \\frac{2}{3}$.\n- **Linear and second order**: rearrange the linear one, substitute into the other, solve the quadratic, and find each $y$ from the linear equation. Pairs, checked.\n- $y = x + 2$, $y^2 = 4x + 5$: $(1, 3)$, $(-1, 1)$. $y = x^2$, $y - 5x = 6$: $(6, 36)$, $(-1, 1)$. $xy = 8$, $x + y = 6$: $(2, 4)$, $(4, 2)$.\n- **Graphically**: solutions are intersections; a line meets a curve twice, once or not at all, and a drawn graph gives estimates.\n- **Three unknowns**: eliminate the same letter from two pairs, solve the two-by-two, back-substitute, check all three. The specification's system gives $x = 3$, $y = -2$, $z = \\frac{3}{2}$.\n- **Tangent**: substituting gives a quadratic with discriminant zero. $y = x + c$ touches $y = x^2$ at $c = -\\frac{1}{4}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Eliminate",
+                  "equation": "scale to match a coefficient, add or subtract",
+                  "units": "then substitute back"
+                },
+                {
+                  "name": "Line and curve",
+                  "equation": "substitute the linear equation",
+                  "units": "quadratic in x; pair each y"
+                },
+                {
+                  "name": "Three unknowns",
+                  "equation": "remove one letter from two pairs",
+                  "units": "then a 2 × 2, then back"
+                },
+                {
+                  "name": "Tangent",
+                  "equation": "b² − 4ac = 0",
+                  "units": "positive: two points; negative: none"
+                }
+              ]
+            },
+            "alt": "A reference card with the elimination method, the substitution route for a line and a curve, the three-unknown strategy and the discriminant test for a tangent"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Solve $3x + 2y = 12$ and $x - y = 4$. Give the value of $x$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "two linear equations",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "From the second, $y = x - 4$. Substitute: $3x + 2x - 8 = 12$, so $5x = 20$ and $x = 4$. Then $y = 0$. Check: $12 + 0 = 12$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes or eliminates"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "prompt": "To solve $4x - 3y = 0$ and $6x + 15y = 13$ by elimination, which first step works?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing the elimination",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Matching coefficients: $-3y \\times 5 = -15y$, which cancels $+15y$ on adding, leaving $26x = 13$. Adding as they stand leaves $12y$; scaling by $3$ and $2$ matches the $x$ terms at $12x$, but adding then doubles them, so you would subtract instead.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Multiply the first equation by $5$ and add, so the $y$ terms cancel"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Add the equations as they stand, because $-3y + 15y = 12y$ cancels",
+        "Multiply the first equation by $5$ and add, so the $y$ terms cancel",
+        "Multiply the first equation by $3$ and the second by $2$, then add",
+        "Subtract the second equation from the first to remove the constants on the right"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "Solve $y = 2x - 1$ and $y = x^2 - 4$. Give both solutions as coordinate pairs.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a line and a parabola",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Equate: $x^2 - 4 = 2x - 1$, so $x^2 - 2x - 3 = 0$ and $(x - 3)(x + 1) = 0$. $x = 3$ gives $y = 5$; $x = -1$ gives $y = -3$. Check in the curve: $9 - 4 = 5$ and $1 - 4 = -3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(3, 5) and (−1, −3)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(3, 5) and (-1, -3)",
+        "(-1, -3) and (3, 5)",
+        "x = 3, y = 5 and x = -1, y = -3",
+        "x = -1, y = -3 and x = 3, y = 5"
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "The graphs of two equations are drawn and they meet at $(2, 4)$ only. What does that tell you?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a solution from a graph",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A solution is a point on both graphs, and there is one such point. Its $x$-coordinate is $2$ and its $y$-coordinate is $4$; the order matters.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The pair of equations has exactly one solution, $x = 2$, $y = 4$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "The solution is $x = 4$, $y = 2$, reading the coordinates in the usual order",
+        "The equations are the same, so every point is a solution",
+        "The pair of equations has exactly one solution, $x = 2$, $y = 4$",
+        "The equations have no solution, because they should meet twice"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "Solve $2x + 3y = 7$ and $5x - 2y = 8$. Give the value of $y$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "elimination with both equations scaled",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiply the first by $2$ and the second by $3$: $4x + 6y = 14$ and $15x - 6y = 24$. Add: $19x = 38$, so $x = 2$, and then $4 + 3y = 7$ gives $y = 1$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "matches a coefficient"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "prompt": "Solve $xy = 8$ and $x + y = 6$. Give both solutions as coordinate pairs.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the specification's product pair",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$y = 6 - x$, so $x(6 - x) = 8$ and $x^2 - 6x + 8 = 0$, giving $(x - 2)(x - 4) = 0$. The pairs are $(2, 4)$ and $(4, 2)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(2, 4) and (4, 2)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(2, 4) and (4, 2)",
+        "(4, 2) and (2, 4)",
+        "x = 2, y = 4 and x = 4, y = 2",
+        "x = 4, y = 2 and x = 2, y = 4"
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "Solve $x^2 + y^2 = 13$ and $y = x - 1$. Give both solutions as coordinate pairs.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a circle and a line",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$x^2 + (x - 1)^2 = 13$, so $2x^2 - 2x - 12 = 0$ and $x^2 - x - 6 = (x - 3)(x + 2) = 0$. $x = 3$ gives $y = 2$; $x = -2$ gives $y = -3$. Check: $9 + 4 = 13$ and $4 + 9 = 13$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(3, 2) and (−2, −3)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(3, 2) and (-2, -3)",
+        "(-2, -3) and (3, 2)",
+        "x = 3, y = 2 and x = -2, y = -3",
+        "x = -2, y = -3 and x = 3, y = 2"
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "Solve $x + y + z = 6$, $2x - y + z = 3$ and $x + 2y - z = 2$. Give the value of $z$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "three unknowns",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Add the first and third: $2x + 3y = 8$. Add the second and third: $3x + y = 5$, so $y = 5 - 3x$. Then $2x + 15 - 9x = 8$ gives $x = 1$, $y = 2$, and $z = 6 - 1 - 2 = 3$. Check the second: $2 - 2 + 3 = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "eliminates z from two pairs"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "prompt": "A student solves $y = x + 2$ and $y^2 = 4x + 5$, gets $x = \\pm 1$, and writes \"$x = 1$ or $-1$, $y = 3$ or $1$\". Why does this lose a mark?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "pairing the solutions",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A solution of a pair of equations is a pair of values that satisfy both together. Each $x$ has one $y$, found from the linear equation, and the answer is the two pairs. Taking $y$ from the quadratic equation would introduce $y = -3$, which is not on the line.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The values are not paired: the solutions are the points $(1, 3)$ and $(-1, 1)$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Because $x = -1$ should have been rejected as negative",
+        "Because $y$ should have been found from $y^2 = 4x + 5$, giving $y = \\pm 3$ and $\\pm 1$",
+        "It does not: listing the values is a complete answer",
+        "The values are not paired: the solutions are the points $(1, 3)$ and $(-1, 1)$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "Solve $x + y + z = 10$, $x - y = 2$ and $y - z = 1$. Give the value of $x$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "three unknowns by substitution",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "From the second and third, $x = y + 2$ and $z = y - 1$. Substitute into the first: $y + 2 + y + y - 1 = 10$, so $3y = 9$, $y = 3$, and $x = 5$, $z = 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expresses x and z in terms of y"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "prompt": "The line $y = 2x + c$ is a tangent to the curve $y = x^2 + 4$. Work out the value of $c$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a tangent by the discriminant",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Equate: $x^2 + 4 = 2x + c$, so $x^2 - 2x + (4 - c) = 0$. A tangent gives a repeated root, so the discriminant is zero: $4 - 4(4 - c) = 0$, giving $c = 3$. The touch is at $x = 1$, $(1, 5)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "discriminant of x² − 2x + 4 − c"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "prompt": "For which values of $c$ does the line $y = 2x + c$ miss the curve $y = x^2 + 4$ entirely?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the sign of the discriminant",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The quadratic $x^2 - 2x + 4 - c = 0$ has discriminant $4 - 4(4 - c) = 4c - 12$. No real roots when $4c - 12 < 0$, that is, $c < 3$: the line passes below the curve. For $c > 3$ it cuts twice, and at $c = 3$ it touches.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$c < 3$, because the discriminant $4c - 12$ is then negative"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$c < 3$, because the discriminant $4c - 12$ is then negative",
+        "No values: a line always meets a parabola somewhere",
+        "$c > 3$, because the line is then above the curve",
+        "$c = 3$ only, because that is the single value where the discriminant is zero"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "Solve $y = 3x$ and $y^2 = x + 8$. Give both solutions as coordinate pairs.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "fractional solutions",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Substitute: $9x^2 = x + 8$, so $9x^2 - x - 8 = 0$, which factorises as $(9x + 8)(x - 1) = 0$; the formula gives the same, $x = \\dfrac{1 \\pm \\sqrt{289}}{18} = \\dfrac{1 \\pm 17}{18}$. So $x = 1$ or $-\\dfrac{8}{9}$, and $y = 3x$: $(1, 3)$ and $(-\\frac{8}{9}, -\\frac{8}{3})$. Check: $\\frac{64}{9} = -\\frac{8}{9} + \\frac{72}{9}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(1, 3) and (−8/9, −8/3)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(1, 3) and (-8/9, -8/3)",
+        "(-8/9, -8/3) and (1, 3)",
+        "x = 1, y = 3 and x = -8/9, y = -8/3",
+        "x = -8/9, y = -8/3 and x = 1, y = 3"
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "Two coffees, a tea and a cake cost £9.50. A coffee, two teas and a cake cost £8.50. A coffee, a tea and two cakes cost £9.00. Work out the price of a cake in pounds.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "three unknowns from a context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "With coffee $x$, tea $y$ and cake $z$: $2x + y + z = 9.5$, $x + 2y + z = 8.5$, $x + y + 2z = 9$. Adding all three gives $4(x + y + z) = 27$, so $x + y + z = 6.75$. Subtracting that from the third equation leaves $z = 9 - 6.75 = 2.25$. Likewise $x = 2.75$ and $y = 1.75$; check the first: $5.5 + 1.75 + 2.25 = 9.5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "three equations"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.25"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 2.25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "prompt": "Two lines have equations $2x + 3y = 7$ and $4x + 6y = 20$. What happens when you try to solve them simultaneously?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "no solution",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Both lines have gradient $-\\frac{2}{3}$ but different intercepts, so they are parallel and never meet. The algebra shows it as an impossible statement, $14 = 20$. Had the second been $4x + 6y = 14$, every point on the line would be a solution.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Doubling the first gives $4x + 6y = 14$, not $20$: the lines are parallel, so there is no solution"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "The lines are the same line drawn twice, so there are infinitely many solutions, one for every point",
+        "Doubling the first gives $4x + 6y = 14$, not $20$: the lines are parallel, so there is no solution",
+        "The solution is $x = 7$, $y = 20$",
+        "Doubling the first and subtracting gives $0 = 6$, so $x = 0$ and $y = 6$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "Solve $xy = 12$ and $x - y = 1$. Give the positive value of $x$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a product and a difference",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$y = x - 1$, so $x(x - 1) = 12$ and $x^2 - x - 12 = 0$, giving $(x - 4)(x + 3) = 0$. $x = 4$, $y = 3$ or $x = -3$, $y = -4$. The positive $x$ is $4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x² − x − 12 = 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "prompt": "Solve the simultaneous equations\n\n$$2x - 5y + 4z = 22$$\n\n$$x + y + 2z = 4$$\n\n$$x - y - 6z = -4$$\n\nShow every elimination you use, and check your solution in all three equations.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's three-unknown system",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Label the equations $(1)$, $(2)$, $(3)$ in the order given.\n\n**Eliminate $x$ from $(2)$ and $(3)$:** $(2) - (3)$ gives $(x - x) + (y + y) + (2z + 6z) = 4 + 4$, so $2y + 8z = 8$, that is, $y + 4z = 4$. Call this $(4)$.\n\n**Eliminate $x$ from $(1)$ and $(2)$:** $(1) - 2 \\times (2)$ gives $(2x - 2x) + (-5y - 2y) + (4z - 4z) = 22 - 8$, so $-7y = 14$ and $y = -2$. The $z$ terms happened to cancel too, which saves a step.\n\n**Back-substitute:** in $(4)$, $-2 + 4z = 4$, so $4z = 6$ and $z = \\dfrac{3}{2}$. In $(2)$, $x - 2 + 3 = 4$, so $x = 3$.\n\n**Check in all three:** $(1)$: $6 + 10 + 6 = 22$. $(2)$: $3 - 2 + 3 = 4$. $(3)$: $3 + 2 - 9 = -4$. All hold, so $x = 3$, $y = -2$, $z = \\dfrac{3}{2}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a valid elimination of one unknown"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "y + 4z = 4 or equivalent"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a second elimination of the same unknown"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "y = −2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "z = 3/2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 3"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "checks in the two equations not used last"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "all three values stated together"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Labels the equations and eliminates x from one pair, for example (2) − (3) giving 2y + 8z = 8.",
+          "marks": 2
+        },
+        {
+          "text": "Eliminates x from a second pair, for example (1) − 2(2) giving −7y = 14, so y = −2.",
+          "marks": 2
+        },
+        {
+          "text": "Finds z = 3/2 and x = 3 by back-substitution.",
+          "marks": 2
+        },
+        {
+          "text": "Checks all three: 22, 4 and −4.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "Label the equations $(1)$, $(2)$, $(3)$ in the order given.\n\n**Eliminate $x$ from $(2)$ and $(3)$:** $(2) - (3)$ gives $(x - x) + (y + y) + (2z + 6z) = 4 + 4$, so $2y + 8z = 8$, that is, $y + 4z = 4$. Call this $(4)$.\n\n**Eliminate $x$ from $(1)$ and $(2)$:** $(1) - 2 \\times (2)$ gives $(2x - 2x) + (-5y - 2y) + (4z - 4z) = 22 - 8$, so $-7y = 14$ and $y = -2$. The $z$ terms happened to cancel too, which saves a step.\n\n**Back-substitute:** in $(4)$, $-2 + 4z = 4$, so $4z = 6$ and $z = \\dfrac{3}{2}$. In $(2)$, $x - 2 + 3 = 4$, so $x = 3$.\n\n**Check in all three:** $(1)$: $6 + 10 + 6 = 22$. $(2)$: $3 - 2 + 3 = 4$. $(3)$: $3 + 2 - 9 = -4$. All hold, so $x = 3$, $y = -2$, $z = \\dfrac{3}{2}$."
+    },
+    {
+      "id": "q18",
+      "prompt": "The line $y = x + c$ and the curve $y = x^2$ are drawn on the same axes.\n\n(a) Show that the $x$-coordinates of any points where they meet satisfy $x^2 - x - c = 0$.\n\n(b) Find the value of $c$ for which the line is a tangent to the curve, and the coordinates of the point of contact.\n\n(c) For $c = 2$, find the coordinates of both points where the line cuts the curve.\n\n(d) State the range of values of $c$ for which the line and the curve do not meet.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "a line and a curve through every case",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** At a meeting point the $y$ values are equal, so $x^2 = x + c$. Rearranging, $x^2 - x - c = 0$.\n\n**(b)** A tangent touches at one point, so the quadratic has a repeated root and its discriminant is zero: $(-1)^2 - 4(1)(-c) = 1 + 4c = 0$, giving $c = -\\dfrac{1}{4}$. The repeated root is $x = \\dfrac{1}{2}$, and on the curve $y = \\dfrac{1}{4}$; the line $y = x - \\dfrac{1}{4}$ agrees. The point of contact is $\\left(\\dfrac{1}{2}, \\dfrac{1}{4}\\right)$.\n\n**(c)** With $c = 2$: $x^2 - x - 2 = 0$, so $(x - 2)(x + 1) = 0$ and $x = 2$ or $x = -1$. From the line $y = x + 2$: $x = 2$ gives $y = 4$ and $x = -1$ gives $y = 1$. The points are $(2, 4)$ and $(-1, 1)$, and both lie on $y = x^2$.\n\n**(d)** The line and curve do not meet when the quadratic has no real roots, that is, when the discriminant is negative: $1 + 4c < 0$, so $c < -\\dfrac{1}{4}$. The line then lies entirely below the parabola. For $c > -\\dfrac{1}{4}$ there are two meeting points, and $c = -\\dfrac{1}{4}$ is the single touching case from part (b).",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x² − x − c = 0"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "discriminant = 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "c = −1/4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "point (1/2, 1/4)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises x² − x − 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(2, 4)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(−1, 1)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "c < −1/4"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Equates x² = x + c and rearranges to x² − x − c = 0.",
+          "marks": 1
+        },
+        {
+          "text": "Discriminant 1 + 4c = 0 gives c = −1/4; repeated root x = 1/2, point (1/2, 1/4).",
+          "marks": 3
+        },
+        {
+          "text": "x² − x − 2 = (x − 2)(x + 1) = 0, points (2, 4) and (−1, 1), each checked on the line.",
+          "marks": 3
+        },
+        {
+          "text": "No meeting when 1 + 4c < 0, that is c < −1/4.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** At a meeting point the $y$ values are equal, so $x^2 = x + c$. Rearranging, $x^2 - x - c = 0$.\n\n**(b)** A tangent touches at one point, so the quadratic has a repeated root and its discriminant is zero: $(-1)^2 - 4(1)(-c) = 1 + 4c = 0$, giving $c = -\\dfrac{1}{4}$. The repeated root is $x = \\dfrac{1}{2}$, and on the curve $y = \\dfrac{1}{4}$; the line $y = x - \\dfrac{1}{4}$ agrees. The point of contact is $\\left(\\dfrac{1}{2}, \\dfrac{1}{4}\\right)$.\n\n**(c)** With $c = 2$: $x^2 - x - 2 = 0$, so $(x - 2)(x + 1) = 0$ and $x = 2$ or $x = -1$. From the line $y = x + 2$: $x = 2$ gives $y = 4$ and $x = -1$ gives $y = 1$. The points are $(2, 4)$ and $(-1, 1)$, and both lie on $y = x^2$.\n\n**(d)** The line and curve do not meet when the quadratic has no real roots, that is, when the discriminant is negative: $1 + 4c < 0$, so $c < -\\dfrac{1}{4}$. The line then lies entirely below the parabola. For $c > -\\dfrac{1}{4}$ there are two meeting points, and $c = -\\dfrac{1}{4}$ is the single touching case from part (b)."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 9
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 15
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 35
+    }
+  },
+  "examTechnique": {
+    "body": "Simultaneous equations carry three to six marks, with method marks for a correct elimination or substitution, for the quadratic when there is a curve, and for the back-substitution. Show the line where an unknown cancels, and label three-unknown equations so the examiner can follow which pair you combined.\n\nGive the solutions as pairs, or as three values together, and check them in an equation not used for the last step. Fractions are expected and stay exact. If a question turns on a tangent, or on how many solutions there are, write the quadratic and its discriminant explicitly, then draw the conclusion in a sentence. A graph question wants the intersections read off and named as the solutions.",
+    "examinerErrors": [
+      "Adding equations when the matched coefficients have the same sign, so the unknown doubles instead of cancelling.",
+      "Substituting the quadratic equation into itself, or finding $y$ from the curve and producing spurious pairs.",
+      "Leaving $x = \\pm 1$, $y = 3$ or $1$ unpaired.",
+      "Eliminating a different unknown from each pair in a three-unknown system, leaving three unknowns still.",
+      "A sign slip when subtracting a whole equation, especially with negative terms.",
+      "Rounding $\\frac{2}{3}$ to $0.67$.",
+      "Forgetting that a tangent means discriminant zero, and solving for the meeting points instead."
+    ],
+    "grade9Looks": "A grade 9 answer picks the cheaper of elimination and substitution by looking at the coefficients, and for a line and a curve substitutes the linear equation without being told. It solves the resulting quadratic by factorising or the formula, pairs the solutions, and checks them. With three unknowns it labels the equations, eliminates one letter from two pairs, and back-substitutes cleanly, with fractions kept exact. It reads the discriminant for tangency and for the number of solutions, translates a context into equations, and recognises parallel lines as a pair with no solution."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

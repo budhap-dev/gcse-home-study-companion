@@ -547,16 +547,16 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Sequences and limiting values', topicId: 'sequences-and-limiting-values' },
     ] },
     { year: 10, term: 'Summer', topics: [
-      { title: 'Gradients, distance and points on a line' },
+      { title: 'Gradients, distance and points on a line', topicId: 'gradients-distance-and-points-on-a-line' },
       { title: 'Differentiation and the gradient function', topicId: 'differentiation-and-the-gradient-function' },
       { title: 'Tangents, normals, and increasing and decreasing functions', topicId: 'tangents-normals-and-increasing-functions' },
       { title: 'Maxima, minima and optimisation', topicId: 'maxima-minima-and-optimisation' },
     ] },
     { year: 11, term: 'Autumn', topics: [
-      { title: 'Functions: domain, range, composite and inverse' },
-      { title: 'Algebraic fractions at Further Maths level' },
-      { title: 'Rearranging formulae and algebraic proof' },
-      { title: 'Simultaneous equations, including three unknowns' },
+      { title: 'Functions: domain, range, composite and inverse', topicId: 'functions-domain-range-composite-and-inverse' },
+      { title: 'Algebraic fractions at Further Maths level', topicId: 'algebraic-fractions-at-further-maths-level' },
+      { title: 'Rearranging formulae and algebraic proof', topicId: 'rearranging-formulae-and-algebraic-proof' },
+      { title: 'Simultaneous equations, including three unknowns', topicId: 'simultaneous-equations-including-three-unknowns' },
     ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Circles and the tangent at a point' },

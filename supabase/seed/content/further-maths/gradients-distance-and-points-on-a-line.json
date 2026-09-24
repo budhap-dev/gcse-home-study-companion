@@ -1,0 +1,1482 @@
+{
+  "id": "gradients-distance-and-points-on-a-line",
+  "subjectId": "further-maths",
+  "unitId": "coordinate-geometry",
+  "title": "Gradients, distance and points on a line",
+  "specPoints": [
+    "3.1",
+    "3.2",
+    "3.3",
+    "3.4",
+    "3.5",
+    "3.6"
+  ],
+  "order": 1,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Gradient is change in y over change in x",
+      "body": "$m = \\dfrac{y_2 - y_1}{x_2 - x_1}$, with both subtractions in the same order. $A(0, 2)$ to $B(4, 6)$ gives $1$; $B$ to $C(10, 0)$ gives $-1$. Positive means up to the right; a horizontal line is $0$; a vertical line has none."
+    },
+    {
+      "kind": "spot",
+      "title": "Perpendicular: gradients multiply to −1",
+      "body": "Flip the fraction and change the sign: $\\frac{2}{3}$ pairs with $-\\frac{3}{2}$. A *show that the triangle is right-angled* is two gradients, their product, and a sentence naming the vertex. Pythagoras on the squared lengths is the other route: $32 + 72 = 104$."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Ratio a : b means a/(a + b) of the way",
+      "body": "From the first point add that fraction of the change in each coordinate. The midpoint is $1 : 1$, half the way. Backwards: the fraction of the way from one coordinate gives the ratio, and the other coordinate checks it."
+    },
+    {
+      "kind": "check",
+      "title": "Substitute the point you did not use",
+      "body": "A line found from two points should pass through both; a line through a point with a gradient should return that point. $y = 2x - 1$ through $(1, 1)$ and $(4, 7)$: $2 \\times 4 - 1 = 7$. Ten seconds, and it catches most slips."
+    },
+    {
+      "kind": "remember",
+      "title": "Perpendicular bisector: midpoint, then flip the gradient",
+      "body": "Midpoint of the two points, negative reciprocal of their gradient, then $y - y_1 = m(x - x_1)$. For $A(0, 2)$ and $C(10, 0)$: $(5, 1)$, gradient $5$, $y = 5x - 24$. Every point on it is the same distance from $A$ as from $C$."
+    }
+  ],
+  "why": {
+    "matters": "Coordinates turn geometry into arithmetic. A gradient is a rate, a distance is Pythagoras, a midpoint is an average, and a line is an equation, so a claim about a shape, that it has a right angle or that a point sits a third of the way along, becomes a calculation with a definite answer. The Further Maths course leans on this everywhere later: tangents and normals in calculus are lines through a point with a known gradient, and the circle work uses distance and the perpendicular bisector. The exam's questions are short, and each asks for one of six things: a gradient, a parallel or perpendicular check, a distance, a point in a ratio, an equation, or a drawing.",
+    "examples": [
+      {
+        "title": "A ramp that meets the rule",
+        "body": "Wheelchair ramps are built to a maximum gradient of $1$ in $12$: for every $12$ units along, at most $1$ unit up. A ramp that runs $900$ cm horizontally can rise at most $75$ cm, because $\\frac{75}{900} = \\frac{1}{12}$. The gradient is a rule written as a fraction, and a builder checks it with rise over run, the definition on this topic's first page. Steeper, and the ramp fails; the number decides.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Run (cm)",
+              "Rise (cm)",
+              "Gradient",
+              "Allowed?"
+            ],
+            "rows": [
+              [
+                "900",
+                "75",
+                "1/12",
+                "yes, exactly the limit"
+              ],
+              [
+                "600",
+                "60",
+                "1/10",
+                "no, too steep"
+              ],
+              [
+                "1200",
+                "80",
+                "1/15",
+                "yes, gentler"
+              ],
+              [
+                "480",
+                "40",
+                "1/12",
+                "yes"
+              ]
+            ],
+            "title": "Rise over run, compared with 1/12"
+          },
+          "alt": "A table of four ramps with their run, rise and gradient, checked against the one in twelve limit for a wheelchair ramp"
+        }
+      },
+      {
+        "title": "The centre of the screen",
+        "body": "A 1920 by 1080 display has its centre at the midpoint of its corners, $(960, 540)$: average the coordinates. Every app that centres a window, a dialogue box or a piece of text does that sum, and anything placed a third of the way across uses the ratio formula, $1 : 2$. Layout is coordinate geometry run thousands of times a second.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "Placing things on a 1920 × 1080 screen",
+            "boxes": [
+              {
+                "title": "Centre",
+                "body": "midpoint of (0, 0) and (1920, 1080): (960, 540)"
+              },
+              {
+                "title": "One third across",
+                "body": "ratio 1 : 2 from the left edge: x = 640"
+              },
+              {
+                "title": "Diagonal length",
+                "body": "√(1920² + 1080²) ≈ 2203 pixels"
+              },
+              {
+                "title": "Same idea",
+                "body": "average, fraction of the way, Pythagoras"
+              }
+            ]
+          },
+          "alt": "Four boxes showing the centre of a screen as a midpoint, a third-of-the-way position as a ratio, the diagonal as a distance, and the three ideas behind them"
+        }
+      },
+      {
+        "title": "Distance on a map",
+        "body": "Grid references are coordinates, and the straight-line distance between two of them is Pythagoras: three squares east and four north is five squares, whatever the scale. A walker planning a route, a delivery app estimating a journey, or a phone finding the nearest shop starts with that number, then adds the detours. The gradient between two points on a hillside map is the steepness of the direct climb, which is why the same word is used.",
+        "visual": {
+          "type": "diagram",
+          "component": "line-graph",
+          "props": {
+            "xRange": [
+              0,
+              5
+            ],
+            "yRange": [
+              0,
+              5
+            ],
+            "grid": true,
+            "square": true,
+            "xStep": 1,
+            "yStep": 1,
+            "lines": [
+              {
+                "m": 1.3333333333333333,
+                "c": 0,
+                "label": "direct: 5 squares",
+                "labelX": 2
+              }
+            ],
+            "points": [
+              {
+                "x": 0,
+                "y": 0,
+                "label": "start",
+                "labelBelow": true
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "label": "shop"
+              }
+            ]
+          },
+          "alt": "Two points on a grid three squares apart horizontally and four vertically, joined by the direct line of length five"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Gradient: rise over run, with a sign",
+        "body": "The **gradient** of a line is how much $y$ changes for each unit that $x$ changes:\n\n$$m = \\frac{y_2 - y_1}{x_2 - x_1}$$\n\nfor any two points $(x_1, y_1)$ and $(x_2, y_2)$ on it. The order does not matter as long as it is the same on top and bottom: from $A(0, 2)$ to $B(4, 6)$, $m = \\frac{6 - 2}{4 - 0} = 1$, and from $B$ to $A$, $\\frac{2 - 6}{0 - 4} = 1$ as well.\n\n**The sign is the direction.** Positive: up to the right. Negative: down to the right. A horizontal line has gradient $0$, because $y$ never changes. A vertical line has no gradient, because the run is $0$ and you cannot divide by it; its equation is $x = \\text{a number}$.\n\n**Read it as a rate.** Gradient $2$ means two up for every one along; gradient $-\\frac{1}{5}$ means one down for every five along. In a context, that is a rate: metres per second, pounds per item, degrees per minute.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Points",
+                "Change in y",
+                "Change in x",
+                "Gradient"
+              ],
+              "rows": [
+                [
+                  "(0, 2) and (4, 6)",
+                  "4",
+                  "4",
+                  "1"
+                ],
+                [
+                  "(1, 3) and (5, 11)",
+                  "8",
+                  "4",
+                  "2"
+                ],
+                [
+                  "(2, 7) and (6, −1)",
+                  "−8",
+                  "4",
+                  "−2"
+                ],
+                [
+                  "(−3, 4) and (5, 4)",
+                  "0",
+                  "8",
+                  "0"
+                ]
+              ],
+              "title": "Gradient = change in y ÷ change in x, sign included"
+            },
+            "alt": "A table of four pairs of points with the change in y, the change in x and the gradient, including a negative gradient and a horizontal line"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "Work out the gradient of the line through $(1, 3)$ and $(5, 11)$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a gradient from two points",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$m = \\dfrac{11 - 3}{5 - 1} = \\dfrac{8}{4} = 2$: two up for every one along.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Parallel and perpendicular: the gradient test",
+        "body": "**Parallel lines have the same gradient.** **Perpendicular lines have gradients that multiply to $-1$**: each is the negative reciprocal of the other, so $2$ pairs with $-\\frac{1}{2}$, $\\frac{2}{3}$ pairs with $-\\frac{3}{2}$, and $1$ pairs with $-1$.\n\nThe specification's example: *show that $A(0, 2)$, $B(4, 6)$ and $C(10, 0)$ form a right-angled triangle.* Gradient of $AB$: $\\frac{6 - 2}{4 - 0} = 1$. Gradient of $BC$: $\\frac{0 - 6}{10 - 4} = -1$. The product is $-1$, so $AB$ is perpendicular to $BC$ and the angle at $B$ is a right angle. Three lines of working and one sentence.\n\n**A show-that needs the sentence.** Two gradients on their own are not a proof; *product $-1$, so perpendicular, so right angle at $B$* is. Say which vertex, because the question will ask.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1,
+                11
+              ],
+              "yRange": [
+                -1,
+                8
+              ],
+              "grid": true,
+              "square": true,
+              "xStep": 4,
+              "yStep": 2,
+              "points": [
+                {
+                  "x": 0,
+                  "y": 2,
+                  "label": "A",
+                  "labelBelow": true,
+                  "free": true
+                },
+                {
+                  "x": 4,
+                  "y": 6,
+                  "label": "B",
+                  "free": true
+                },
+                {
+                  "x": 10,
+                  "y": 0,
+                  "label": "C",
+                  "labelBelow": true,
+                  "free": true
+                }
+              ],
+              "polygons": [
+                {
+                  "points": [
+                    [
+                      0,
+                      2
+                    ],
+                    [
+                      4,
+                      6
+                    ],
+                    [
+                      10,
+                      0
+                    ]
+                  ],
+                  "label": "90° at B"
+                }
+              ]
+            },
+            "alt": "The points A at zero two, B at four six and C at ten zero joined as a triangle and labelled A, B and C, with the right angle at B where the gradient one segment meets the gradient minus one segment"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Gradient",
+                "Parallel",
+                "Perpendicular"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "2",
+                  "−1/2"
+                ],
+                [
+                  "2/3",
+                  "2/3",
+                  "−3/2"
+                ],
+                [
+                  "1",
+                  "1",
+                  "−1"
+                ],
+                [
+                  "−1/5",
+                  "−1/5",
+                  "5"
+                ]
+              ],
+              "title": "Parallel: same gradient. Perpendicular: flip and change the sign"
+            },
+            "alt": "A table of four gradients with the gradient of a parallel line, the same, and of a perpendicular line, the negative reciprocal"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "A line has gradient $\\dfrac{2}{3}$. What is the gradient of a line perpendicular to it?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "perpendicular gradients",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Perpendicular gradients multiply to $-1$, so the new gradient is the negative reciprocal: flip $\\frac{2}{3}$ to $\\frac{3}{2}$ and change the sign, $-\\frac{3}{2}$. Check: $\\frac{2}{3} \\times -\\frac{3}{2} = -1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$-\\dfrac{3}{2}$, because $\\dfrac{2}{3} \\times -\\dfrac{3}{2} = -1$"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "$\\dfrac{2}{3}$, because perpendicular lines share a gradient",
+            "$\\dfrac{3}{2}$, because you flip the fraction but keep the sign the same",
+            "$-\\dfrac{3}{2}$, because $\\dfrac{2}{3} \\times -\\dfrac{3}{2} = -1$",
+            "$-\\dfrac{2}{3}$, because you change the sign"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Distance between two points: Pythagoras on the grid",
+        "body": "*Work out the lengths of the sides of the triangle $A(0, 2)$, $B(4, 6)$, $C(10, 0)$, and confirm it is right-angled.*\n\nThe distance between two points is the hypotenuse of a right-angled triangle whose legs are the change in $x$ and the change in $y$:\n\n$$d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$$\n\n$AB = \\sqrt{4^2 + 4^2} = \\sqrt{32} = 4\\sqrt{2}$. $BC = \\sqrt{6^2 + 6^2} = \\sqrt{72} = 6\\sqrt{2}$. $AC = \\sqrt{10^2 + 2^2} = \\sqrt{104} = 2\\sqrt{26}$.\n\nCheck with Pythagoras: $AB^2 + BC^2 = 32 + 72 = 104 = AC^2$. So the triangle is right-angled at $B$, the vertex opposite the longest side, which agrees with the gradient test. Two independent methods, one answer: that is what a *show that* on Paper 1 likes to see. Keep the lengths as surds; $\\sqrt{32} = 5.66$ would throw away the exactness the check depends on.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the side lengths of the triangle A(0, 2), B(4, 6), C(10, 0), and confirm the right angle.",
+            "steps": [
+              {
+                "text": "$AB^2 = (4 - 0)^2 + (6 - 2)^2 = 16 + 16 = 32$",
+                "note": "square the two changes and add"
+              },
+              {
+                "text": "$BC^2 = (10 - 4)^2 + (0 - 6)^2 = 36 + 36 = 72$",
+                "note": "a negative change squares to a positive"
+              },
+              {
+                "text": "$AC^2 = (10 - 0)^2 + (0 - 2)^2 = 100 + 4 = 104$",
+                "note": "the longest side"
+              },
+              {
+                "text": "$32 + 72 = 104$, so $AB^2 + BC^2 = AC^2$",
+                "note": "Pythagoras holds: right angle at B"
+              },
+              {
+                "text": "$AB = 4\\sqrt{2}$, $BC = 6\\sqrt{2}$, $AC = 2\\sqrt{26}$",
+                "note": "simplify the surds; the area is ½ × 4√2 × 6√2 = 24"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "Work out the distance between $(2, -1)$ and $(7, 11)$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "distance between two points",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$d = \\sqrt{(7 - 2)^2 + (11 - (-1))^2} = \\sqrt{25 + 144} = \\sqrt{169} = 13$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "13"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 13,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Points along a line: the midpoint and a ratio",
+        "body": "The **midpoint** of $A(x_1, y_1)$ and $B(x_2, y_2)$ averages the coordinates: $\\left(\\dfrac{x_1 + x_2}{2}, \\dfrac{y_1 + y_2}{2}\\right)$. For $A(1, 2)$ and $B(9, 10)$ it is $(5, 6)$.\n\n**A point that divides $AB$ in a given ratio** goes a fraction of the way along. In the ratio $1 : 3$, $P$ is $\\frac{1}{1 + 3} = \\frac{1}{4}$ of the way from $A$ to $B$: add a quarter of the change in each coordinate. The change from $A$ to $B$ is $8$ in $x$ and $8$ in $y$, so $P = (1 + 2, \\; 2 + 2) = (3, 4)$. In the ratio $3 : 1$, three quarters of the way: $(7, 8)$. The midpoint is the ratio $1 : 1$.\n\n$$P = A + \\frac{a}{a + b}(B - A) \\quad \\text{for the ratio } a : b$$\n\n**Direction matters.** *$P$ divides $AB$ in the ratio $1 : 3$* means $AP : PB = 1 : 3$, close to $A$. Reversing the letters reverses the point.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                10
+              ],
+              "yRange": [
+                0,
+                11
+              ],
+              "grid": true,
+              "square": true,
+              "xStep": 1,
+              "yStep": 1,
+              "lines": [
+                {
+                  "m": 1,
+                  "c": 1,
+                  "label": "AB"
+                }
+              ],
+              "points": [
+                {
+                  "x": 1,
+                  "y": 2,
+                  "label": "A",
+                  "labelBelow": true
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "label": "1:3",
+                  "labelBelow": true
+                },
+                {
+                  "x": 5,
+                  "y": 6,
+                  "label": "M",
+                  "labelBelow": true
+                },
+                {
+                  "x": 7,
+                  "y": 8,
+                  "label": "3:1"
+                },
+                {
+                  "x": 9,
+                  "y": 10,
+                  "label": "B"
+                }
+              ]
+            },
+            "alt": "The line from A at one two to B at nine ten with the quarter point at three four labelled one to three, the midpoint M at five six and the three-quarter point at seven eight labelled three to one"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "From A(1, 2) to B(9, 10)",
+                "Fraction of the way",
+                "Add to A",
+                "Point"
+              ],
+              "rows": [
+                [
+                  "ratio 1 : 3",
+                  "1/4",
+                  "(2, 2)",
+                  "(3, 4)"
+                ],
+                [
+                  "midpoint, 1 : 1",
+                  "1/2",
+                  "(4, 4)",
+                  "(5, 6)"
+                ],
+                [
+                  "ratio 3 : 1",
+                  "3/4",
+                  "(6, 6)",
+                  "(7, 8)"
+                ],
+                [
+                  "ratio 1 : 2",
+                  "1/3",
+                  "(8/3, 8/3)",
+                  "(11/3, 14/3)"
+                ]
+              ],
+              "title": "Fraction of the way = first part ÷ (both parts)"
+            },
+            "alt": "A table of points dividing the line from one two to nine ten in the ratios one to three, one to one, three to one and one to two, with the fraction of the way and the coordinates"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "$P$ divides the line from $A(2, 1)$ to $B(14, 7)$ in the ratio $1 : 2$. Work out the $x$-coordinate of $P$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a point in a given ratio",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$P$ is $\\frac{1}{3}$ of the way from $A$ to $B$. The change in $x$ is $12$, and a third of it is $4$, so $x = 2 + 4 = 6$. The $y$-coordinate is $1 + 2 = 3$, so $P = (6, 3)$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "The equation of a line, in three forms",
+        "body": "**$y = mx + c$**: gradient $m$, $y$-intercept $c$. Read straight off: $y = -\\frac{3}{2}x + 6$ falls $3$ for every $2$ along and crosses the $y$ axis at $6$.\n\n**$y - y_1 = m(x - x_1)$**: for a line through a known point with a known gradient, and the quickest way to write one down. Through $B(4, 6)$ with gradient $-1$: $y - 6 = -(x - 4)$, so $y = 10 - x$. That is the line through $B$ perpendicular to $AB$, and it passes through $C(10, 0)$, as the right angle promised.\n\n**$ax + by + c = 0$**, or $ax + by = c$: no fractions, and the form an answer is often asked for. $y = \\frac{4x - 1}{3}$ becomes $3y = 4x - 1$, then $4x - 3y - 1 = 0$. To read the gradient from this form, rearrange to $y = \\ldots$: $3x + 2y = 12$ gives $y = 6 - \\frac{3}{2}x$, gradient $-\\frac{3}{2}$.\n\n**Through two points:** find $m$ first, then use either point. Through $(1, 1)$ and $(4, 7)$: $m = 2$, so $y - 1 = 2(x - 1)$ and $y = 2x - 1$. Check with the point you did not use: $2 \\times 4 - 1 = 7$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Given",
+                "Form to use",
+                "Example",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "gradient and intercept",
+                  "y = mx + c",
+                  "m = 3, c = −1",
+                  "y = 3x − 1"
+                ],
+                [
+                  "gradient and a point",
+                  "y − y₁ = m(x − x₁)",
+                  "m = −1 through (4, 6)",
+                  "y = 10 − x"
+                ],
+                [
+                  "two points",
+                  "find m, then a point",
+                  "(1, 1) and (4, 7)",
+                  "y = 2x − 1"
+                ],
+                [
+                  "no fractions wanted",
+                  "ax + by + c = 0",
+                  "y = (4x − 1)/3",
+                  "4x − 3y − 1 = 0"
+                ]
+              ],
+              "title": "Choose the form by what you are given"
+            },
+            "alt": "A table matching what a question gives, gradient and intercept, gradient and a point, two points, or a request for integer coefficients, to the form of the line equation to use, with an example of each"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "Write down the equation of the line through $(2, 5)$ with gradient $3$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a line from a point and a gradient",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$y - 5 = 3(x - 2)$, so $y = 3x - 6 + 5 = 3x - 1$. Check: $x = 2$ gives $y = 5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "y = 3x − 1"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "y = 3x - 1",
+            "y - 5 = 3(x - 2)",
+            "y = -1 + 3x"
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Drawing a line, and the perpendicular bisector",
+        "body": "**To draw a line** from its equation, find two points and join them; the intercepts are the easiest. $3x + 2y = 12$ crosses the $y$ axis where $x = 0$, at $(0, 6)$, and the $x$ axis where $y = 0$, at $(4, 0)$. From $y = mx + c$, start at $(0, c)$ and step along by the gradient. A third point is the check.\n\n**The perpendicular bisector** of $AC$ passes through the midpoint of $AC$ at right angles to it, so it needs both ideas from this topic. For $A(0, 2)$ and $C(10, 0)$: midpoint $M(5, 1)$; gradient of $AC$ is $\\frac{0 - 2}{10 - 0} = -\\frac{1}{5}$, so the perpendicular gradient is $5$; the line is $y - 1 = 5(x - 5)$, that is, $y = 5x - 24$. Every point on it is the same distance from $A$ as from $C$, which is what a *bisector* is for.\n\n**Reading a line from given information** is the reverse: from a sketch with the intercepts marked, gradient $= -\\frac{\\text{y-intercept}}{\\text{x-intercept}}$, then $y = mx + c$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1,
+                11
+              ],
+              "yRange": [
+                -4,
+                8
+              ],
+              "grid": true,
+              "xStep": 2,
+              "yStep": 4,
+              "lines": [
+                {
+                  "m": -1.5,
+                  "c": 6,
+                  "label": "3x + 2y = 12",
+                  "labelX": 0.5
+                },
+                {
+                  "m": 5,
+                  "c": -24,
+                  "label": "y = 5x − 24",
+                  "labelX": 5.8
+                },
+                {
+                  "m": -0.2,
+                  "c": 2,
+                  "label": "AC",
+                  "dashed": true,
+                  "labelX": 8.5
+                }
+              ],
+              "points": [
+                {
+                  "x": 0,
+                  "y": 6,
+                  "label": "(0, 6)"
+                },
+                {
+                  "x": 4,
+                  "y": 0
+                },
+                {
+                  "x": 5,
+                  "y": 1,
+                  "label": "M",
+                  "labelBelow": true
+                }
+              ]
+            },
+            "alt": "The line three x plus two y equals twelve drawn through its intercepts at zero six and four zero, and the perpendicular bisector y equals five x minus twenty-four through M, the midpoint five one of A and C, with AC dashed"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "The perpendicular bisector of $A(0, 2)$ and $C(10, 0)$ is $y = 5x - 24$. Write down its $y$-intercept.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "reading an intercept",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "In $y = mx + c$ the $y$-intercept is $c$, here $-24$. The line passes through the midpoint $(5, 1)$ with gradient $5$, so it crosses the $y$ axis far below the triangle.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "−24"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -24,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Work out the gradient of the line through $(2, 7)$ and $(6, -1)$.\n2. Work out the distance between $(1, 5)$ and $(7, 13)$.\n3. Write down the midpoint of $(-3, 4)$ and $(5, -2)$.\n\n**Part B.**\n\n4. Find the equation of the line through $(1, 1)$ and $(4, 7)$.\n5. $P$ divides the line from $A(-2, 5)$ to $B(10, -1)$ in the ratio $2 : 1$. Find $P$.\n6. Write $3x + 2y = 12$ in the form $y = mx + c$ and state the gradient.\n\n**Part C.**\n\n7. Find the equation of the perpendicular bisector of $(-3, 4)$ and $(5, -2)$, giving your answer in the form $ax + by + c = 0$.\n8. Show that $(1, 2)$, $(3, 8)$ and $(6, 17)$ lie on a straight line.\n9. Find the equation of the line through $(6, -1)$ perpendicular to $y = 2x + 3$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "−2"
+                ],
+                [
+                  "2",
+                  "10"
+                ],
+                [
+                  "3",
+                  "(1, 1)"
+                ],
+                [
+                  "4",
+                  "y = 2x − 1"
+                ],
+                [
+                  "5",
+                  "(6, 1)"
+                ],
+                [
+                  "6",
+                  "y = −3x/2 + 6; gradient −3/2"
+                ],
+                [
+                  "7",
+                  "4x − 3y − 1 = 0"
+                ],
+                [
+                  "8",
+                  "gradient 3 from the first to the second and from the second to the third"
+                ],
+                [
+                  "9",
+                  "y = −x/2 + 2"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on gradients, distances, midpoints, ratios and line equations"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: proofs on a grid",
+        "body": "**Collinear means one gradient.** Three points lie on a line if the gradient from the first to the second equals the gradient from the second to the third. $(1, 2)$, $(3, 8)$, $(6, 17)$: both gradients are $3$, so they are collinear; swap the last point for $(6, 16)$ and the second gradient is $\\frac{8}{3}$, so they are not. Distances can do it too: if $AB + BC = AC$ exactly, $B$ is between $A$ and $C$ on the line.\n\n**Two routes to a right angle.** Gradients multiplying to $-1$, or $AB^2 + BC^2 = AC^2$. The gradient route names the vertex directly; the Pythagoras route finds all three lengths, which a later part often needs for an area or a perimeter. A top-band answer picks the route that serves the whole question, and states which angle is the right angle in either case.\n\n**The ratio formula runs backwards.** Given $P(5, 4.5)$ on the line from $A(2, 3)$ to $B(14, 9)$, the fraction of the way is $\\frac{5 - 2}{14 - 2} = \\frac{1}{4}$, so $AP : PB = 1 : 3$. Either coordinate gives it; the other coordinate is the check.\n\n**A perpendicular bisector is a locus.** Every point on it is equidistant from the two ends, so a question that asks for *the point on the $y$ axis equidistant from $A$ and $C$* is asking where the bisector meets the axis: for $y = 5x - 24$, at $(0, -24)$. Recognising a distance condition as a line saves a page of algebra.\n\n**Keep the surds.** $\\sqrt{32}$ and $\\sqrt{72}$ simplify to $4\\sqrt{2}$ and $6\\sqrt{2}$, and their product gives the area $24$ exactly. Decimals here would make an exact answer look approximate.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does with coordinates",
+              "boxes": [
+                {
+                  "title": "Chooses the route",
+                  "body": "Gradients for the angle; Pythagoras when the lengths are needed anyway."
+                },
+                {
+                  "title": "Names the vertex",
+                  "body": "\"Right angle at B\" is the conclusion; \"product −1\" is the reason."
+                },
+                {
+                  "title": "Runs the ratio backwards",
+                  "body": "Fraction of the way from one coordinate; the other coordinate is the check."
+                },
+                {
+                  "title": "Reads a condition as a line",
+                  "body": "Equidistant from two points is the perpendicular bisector."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band coordinate geometry answer: choosing the route to a right angle, naming the vertex, recovering a ratio from a coordinate and recognising an equidistance condition as a perpendicular bisector"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Gradient** $m = \\dfrac{y_2 - y_1}{x_2 - x_1}$; positive up to the right, $0$ horizontal, none for vertical.\n- **Parallel**: same gradient. **Perpendicular**: gradients multiply to $-1$. $A(0, 2)$, $B(4, 6)$, $C(10, 0)$: $1 \\times -1 = -1$, right angle at $B$.\n- **Distance** $= \\sqrt{(\\Delta x)^2 + (\\Delta y)^2}$; keep it as a surd. $AB = 4\\sqrt{2}$, $BC = 6\\sqrt{2}$, $AC = 2\\sqrt{26}$, and $32 + 72 = 104$.\n- **Midpoint**: average the coordinates. **Ratio $a : b$**: go $\\dfrac{a}{a + b}$ of the way from the first point.\n- **Line**: $y = mx + c$ to read $m$ and $c$; $y - y_1 = m(x - x_1)$ to write one from a point; $ax + by + c = 0$ when integers are wanted.\n- **Perpendicular bisector**: midpoint, negative reciprocal gradient, point-gradient form. For $AC$: $y = 5x - 24$.\n- **To draw**: two points, usually the intercepts, and a third as a check.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Gradient",
+                  "equation": "m = (y₂ − y₁) / (x₂ − x₁)",
+                  "units": "perpendicular: m₁ × m₂ = −1"
+                },
+                {
+                  "name": "Distance",
+                  "equation": "d = √((x₂ − x₁)² + (y₂ − y₁)²)",
+                  "units": "leave as a surd"
+                },
+                {
+                  "name": "Midpoint",
+                  "equation": "((x₁ + x₂)/2, (y₁ + y₂)/2)",
+                  "units": "ratio a : b: A + a/(a + b) × (B − A)"
+                },
+                {
+                  "name": "Line",
+                  "equation": "y − y₁ = m(x − x₁)",
+                  "units": "or y = mx + c, or ax + by + c = 0"
+                }
+              ]
+            },
+            "alt": "A reference card with the gradient, distance, midpoint and ratio formulae and the three forms of the equation of a straight line"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Work out the gradient of the line through $(2, 7)$ and $(6, -1)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a negative gradient",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$m = \\dfrac{-1 - 7}{6 - 2} = \\dfrac{-8}{4} = -2$: down two for every one along.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−2"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": -2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "prompt": "Which line is parallel to $y = 3x - 1$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "parallel lines",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Parallel lines have the same gradient, $3$, whatever their intercepts. $-\\frac{1}{3}$ is the perpendicular gradient, and a shared intercept means the lines cross there, not that they are parallel.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$y = 3x + 4$, because it has the same gradient"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$y = -\\dfrac{1}{3}x - 1$, because the gradients multiply to $-1$",
+        "$y = x - 1$, because it has the same intercept",
+        "$y = 3x + 4$, because it has the same gradient",
+        "$y = -3x - 1$, because it has the same intercept"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "Work out the distance between $(1, 5)$ and $(7, 13)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a distance",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$d = \\sqrt{6^2 + 8^2} = \\sqrt{36 + 64} = \\sqrt{100} = 10$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "prompt": "Write down the midpoint of $(-3, 4)$ and $(5, -2)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a midpoint",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Average each coordinate: $x = \\dfrac{-3 + 5}{2} = 1$ and $y = \\dfrac{4 + (-2)}{2} = 1$. The midpoint is $(1, 1)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(1, 1)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(1, 1)",
+        "x = 1, y = 1"
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "A line has gradient $\\dfrac{2}{3}$. Work out the gradient of a line perpendicular to it. Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a perpendicular gradient",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The negative reciprocal of $\\frac{2}{3}$ is $-\\frac{3}{2} = -1.5$. Check: $\\frac{2}{3} \\times -\\frac{3}{2} = -1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−3/2"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": -1.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "prompt": "Find the equation of the line through $(1, 1)$ and $(4, 7)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a line through two points",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Gradient $m = \\dfrac{7 - 1}{4 - 1} = 2$. Then $y - 1 = 2(x - 1)$, so $y = 2x - 1$. Check with the other point: $2 \\times 4 - 1 = 7$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = 2x − 1"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "y = 2x - 1",
+        "y - 1 = 2(x - 1)",
+        "y - 7 = 2(x - 4)",
+        "y = -1 + 2x"
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "$P$ divides the line from $A(-2, 5)$ to $B(10, -1)$ in the ratio $2 : 1$. Find the coordinates of $P$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a point in a ratio",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$P$ is $\\frac{2}{3}$ of the way from $A$ to $B$. The change is $12$ in $x$ and $-6$ in $y$; two thirds of each is $8$ and $-4$. $P = (-2 + 8, 5 - 4) = (6, 1)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(6, 1)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(6, 1)",
+        "x = 6, y = 1"
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "Write $3x + 2y = 12$ in the form $y = mx + c$. Give the value of $c$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "rearranging to y = mx + c",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2y = 12 - 3x$, so $y = 6 - \\frac{3}{2}x$: gradient $-\\frac{3}{2}$ and $y$-intercept $c = 6$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "prompt": "Which working shows that $A(0, 2)$, $B(4, 6)$ and $C(10, 0)$ form a right-angled triangle?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the specification's show-that",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Perpendicular lines have gradients whose product is $-1$. Different gradients only mean the lines meet; different lengths say nothing about the angle. The complete argument names the product and the vertex.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Gradient of $AB$ is $1$ and gradient of $BC$ is $-1$; the product is $-1$, so $AB \\perp BC$ and the angle at $B$ is $90°$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Gradient of $AB$ is $1$ and gradient of $BC$ is $-1$; they are different, so the lines cross at a right angle where they meet at $B$",
+        "$AB = 4\\sqrt{2}$ and $BC = 6\\sqrt{2}$, which are different lengths, so the angle between them is $90°$",
+        "The $y$-coordinates $2$, $6$ and $0$ are all different, so the triangle has a right angle",
+        "Gradient of $AB$ is $1$ and gradient of $BC$ is $-1$; the product is $-1$, so $AB \\perp BC$ and the angle at $B$ is $90°$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "Find the equation of the perpendicular bisector of $(-3, 4)$ and $(5, -2)$. Give your answer in the form $y = mx + c$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a perpendicular bisector",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Midpoint $(1, 1)$. Gradient of the segment: $\\dfrac{-2 - 4}{5 - (-3)} = -\\dfrac{3}{4}$, so the perpendicular gradient is $\\dfrac{4}{3}$. Then $y - 1 = \\dfrac{4}{3}(x - 1)$, so $y = \\dfrac{4}{3}x - \\dfrac{1}{3}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = 4x/3 − 1/3"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "y = 4x/3 - 1/3",
+        "y = (4x - 1)/3",
+        "y = (4/3)x - 1/3",
+        "y = 4/3 x - 1/3"
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "Work out the length of the line from $A(0, 2)$ to $B(4, 6)$. Give your answer as a simplified surd.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a distance as a surd",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$AB^2 = 4^2 + 4^2 = 32$, so $AB = \\sqrt{32} = \\sqrt{16 \\times 2} = 4\\sqrt{2}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4√2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "4√2"
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "Do the points $(1, 2)$, $(3, 8)$ and $(6, 16)$ lie on a straight line?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "collinearity",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Collinear points have one gradient throughout. From the first to the second the gradient is $\\frac{6}{2} = 3$; from the second to the third it is $\\frac{8}{3}$. They differ, so the points are not collinear. Replace $(6, 16)$ by $(6, 17)$ and both gradients are $3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "No: the gradient from $(1, 2)$ to $(3, 8)$ is $3$ but from $(3, 8)$ to $(6, 16)$ it is $\\dfrac{8}{3}$"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "No: the gradient from $(1, 2)$ to $(3, 8)$ is $3$ but from $(3, 8)$ to $(6, 16)$ it is $\\dfrac{8}{3}$",
+        "No: three points can never lie on one straight line unless one of them is exactly the midpoint of the other two",
+        "Yes: the $x$-coordinates go up and so do the $y$-coordinates",
+        "Yes: the gradient from $(1, 2)$ to $(3, 8)$ is $3$, and $3$ is a whole number"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "Find the equation of the line through $(6, -1)$ that is perpendicular to $y = 2x + 3$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a perpendicular through a point",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The perpendicular gradient is $-\\frac{1}{2}$. Then $y + 1 = -\\frac{1}{2}(x - 6)$, so $y = -\\frac{1}{2}x + 3 - 1 = -\\frac{1}{2}x + 2$. Check: $x = 6$ gives $-3 + 2 = -1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = −x/2 + 2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "y = -x/2 + 2",
+        "y = 2 - x/2",
+        "y = -0.5x + 2",
+        "y = -(1/2)x + 2"
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "$P(5, 4.5)$ lies on the line from $A(2, 3)$ to $B(14, 9)$. In what ratio does $P$ divide $AB$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the ratio from a point",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The fraction of the way along in $x$ is $\\dfrac{5 - 2}{14 - 2} = \\dfrac{3}{12} = \\dfrac{1}{4}$, so $AP : PB = 1 : 3$. Check with $y$: $3 + \\frac{1}{4} \\times 6 = 4.5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1 : 3"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "1:3",
+        "1 to 3"
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "$O(0, 0)$, $P(6, 8)$ and $Q(14, 2)$ are the vertices of a triangle. Which description is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "classifying a triangle",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$OP^2 = 36 + 64 = 100$, $PQ^2 = 64 + 36 = 100$, $OQ^2 = 196 + 4 = 200$. Two equal sides make it isosceles; $100 + 100 = 200$ makes it right-angled at $P$, the vertex opposite the longest side. The gradients $\\frac{4}{3}$ and $-\\frac{3}{4}$ confirm it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Isosceles and right-angled: $OP = PQ = 10$ and $OP^2 + PQ^2 = OQ^2 = 200$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Right-angled at $O$, because $O$ is the origin",
+        "Isosceles and right-angled: $OP = PQ = 10$ and $OP^2 + PQ^2 = OQ^2 = 200$",
+        "Isosceles but not right-angled, because $200$ is not a square number so $OQ$ is not a whole number",
+        "Equilateral: all three sides are $10$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "Work out the area of the triangle with vertices $A(0, 2)$, $B(4, 6)$ and $C(10, 0)$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "area from the perpendicular sides",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The triangle is right-angled at $B$, so the area is $\\frac{1}{2} \\times AB \\times BC = \\frac{1}{2} \\times 4\\sqrt{2} \\times 6\\sqrt{2} = \\frac{1}{2} \\times 24 \\times 2 = 24$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "AB and BC as surds"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "prompt": "$A$ is $(0, 2)$, $B$ is $(4, 6)$ and $C$ is $(10, 0)$.\n\n(a) Show that triangle $ABC$ is right-angled, and state at which vertex.\n\n(b) Work out the exact area of the triangle.\n\n(c) Find the equation of the perpendicular bisector of $AC$, and show that it passes through $B$ only if $B$ is equidistant from $A$ and $C$. Is it?",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's triangle in full",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** Gradient of $AB$: $\\dfrac{6 - 2}{4 - 0} = 1$. Gradient of $BC$: $\\dfrac{0 - 6}{10 - 4} = -1$. The product is $-1$, so $AB$ is perpendicular to $BC$ and the triangle is right-angled **at $B$**. The same follows from the lengths: $AB^2 = 32$, $BC^2 = 72$, $AC^2 = 104$, and $32 + 72 = 104$.\n\n**(b)** $AB = \\sqrt{32} = 4\\sqrt{2}$ and $BC = \\sqrt{72} = 6\\sqrt{2}$ are the perpendicular sides, so the area is $\\frac{1}{2} \\times 4\\sqrt{2} \\times 6\\sqrt{2} = \\frac{1}{2} \\times 24 \\times 2 = 24$ square units.\n\n**(c)** The midpoint of $AC$ is $\\left(\\dfrac{0 + 10}{2}, \\dfrac{2 + 0}{2}\\right) = (5, 1)$. The gradient of $AC$ is $\\dfrac{0 - 2}{10 - 0} = -\\dfrac{1}{5}$, so the perpendicular gradient is $5$. The bisector is $y - 1 = 5(x - 5)$, that is, $y = 5x - 24$.\n\nEvery point on a perpendicular bisector is equidistant from the two ends, so $B$ lies on it exactly when $AB = BC$. Substituting $x = 4$ gives $y = 20 - 24 = -4$, not $6$, so $B$ is **not** on the bisector. That agrees with part (b): $AB = 4\\sqrt{2}$ and $BC = 6\\sqrt{2}$ are different, so $B$ is nearer to $A$ than to $C$, and the triangle is right-angled but not isosceles.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both gradients"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "product −1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "right angle at B stated"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "AB and BC as surds"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "area 24"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "midpoint and perpendicular gradient"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "y = 5x − 24"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "B not on it, with the reason"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Gradients of AB and BC, 1 and −1, product −1, so the right angle is at B; or the three squared lengths 32, 72, 104 with 32 + 72 = 104.",
+          "marks": 3
+        },
+        {
+          "text": "AB = 4√2 and BC = 6√2, area ½ × 4√2 × 6√2 = 24.",
+          "marks": 2
+        },
+        {
+          "text": "Midpoint of AC (5, 1), gradient of AC −1/5, perpendicular gradient 5, equation y = 5x − 24.",
+          "marks": 2
+        },
+        {
+          "text": "Tests B: 5 × 4 − 24 = −4 ≠ 6, so B is not on the bisector, consistent with AB = 4√2 ≠ BC = 6√2.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** Gradient of $AB$: $\\dfrac{6 - 2}{4 - 0} = 1$. Gradient of $BC$: $\\dfrac{0 - 6}{10 - 4} = -1$. The product is $-1$, so $AB$ is perpendicular to $BC$ and the triangle is right-angled **at $B$**. The same follows from the lengths: $AB^2 = 32$, $BC^2 = 72$, $AC^2 = 104$, and $32 + 72 = 104$.\n\n**(b)** $AB = \\sqrt{32} = 4\\sqrt{2}$ and $BC = \\sqrt{72} = 6\\sqrt{2}$ are the perpendicular sides, so the area is $\\frac{1}{2} \\times 4\\sqrt{2} \\times 6\\sqrt{2} = \\frac{1}{2} \\times 24 \\times 2 = 24$ square units.\n\n**(c)** The midpoint of $AC$ is $\\left(\\dfrac{0 + 10}{2}, \\dfrac{2 + 0}{2}\\right) = (5, 1)$. The gradient of $AC$ is $\\dfrac{0 - 2}{10 - 0} = -\\dfrac{1}{5}$, so the perpendicular gradient is $5$. The bisector is $y - 1 = 5(x - 5)$, that is, $y = 5x - 24$.\n\nEvery point on a perpendicular bisector is equidistant from the two ends, so $B$ lies on it exactly when $AB = BC$. Substituting $x = 4$ gives $y = 20 - 24 = -4$, not $6$, so $B$ is **not** on the bisector. That agrees with part (b): $AB = 4\\sqrt{2}$ and $BC = 6\\sqrt{2}$ are different, so $B$ is nearer to $A$ than to $C$, and the triangle is right-angled but not isosceles."
+    },
+    {
+      "id": "q18",
+      "prompt": "$A$ is $(1, 1)$, $B$ is $(7, 9)$ and $C$ is $(13, 17)$.\n\n(a) Show that $A$, $B$ and $C$ lie on a straight line, and find its equation.\n\n(b) Show that $B$ is the midpoint of $AC$.\n\n(c) $D$ is the point on the line $AC$ such that $AD : DC = 1 : 3$. Find $D$, and work out the distance $DB$.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "collinear points, midpoint and ratio together",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** Gradient of $AB$: $\\dfrac{9 - 1}{7 - 1} = \\dfrac{8}{6} = \\dfrac{4}{3}$. Gradient of $BC$: $\\dfrac{17 - 9}{13 - 7} = \\dfrac{8}{6} = \\dfrac{4}{3}$. The gradients are equal and the segments share the point $B$, so $A$, $B$ and $C$ are collinear. The line through $A$ with gradient $\\frac{4}{3}$ is $y - 1 = \\frac{4}{3}(x - 1)$, so $y = \\frac{4}{3}x - \\frac{1}{3}$, or $4x - 3y - 1 = 0$. Check $C$: $52 - 51 - 1 = 0$.\n\n**(b)** The midpoint of $AC$ is $\\left(\\dfrac{1 + 13}{2}, \\dfrac{1 + 17}{2}\\right) = (7, 9)$, which is $B$. The distances agree: $AB^2 = 36 + 64 = 100$ and $BC^2 = 36 + 64 = 100$, so $AB = BC = 10$.\n\n**(c)** $AD : DC = 1 : 3$ puts $D$ a quarter of the way from $A$ to $C$. The change from $A$ to $C$ is $12$ in $x$ and $16$ in $y$; a quarter of each is $3$ and $4$, so $D = (1 + 3, 1 + 4) = (4, 5)$. Check that it is on the line: $16 - 15 - 1 = 0$.\n\n$DB = \\sqrt{(7 - 4)^2 + (9 - 5)^2} = \\sqrt{9 + 16} = 5$. That is a quarter of $AC = \\sqrt{144 + 256} = 20$, as it should be: $D$ is at the quarter point and $B$ at the half, a quarter of the length apart.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both gradients"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "equal, so collinear"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "point-gradient form"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "equation in any correct form"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "midpoint (7, 9) = B"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a quarter of the change"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "D = (4, 5)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "DB = 5"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Gradient AB = 8/6 = 4/3 and gradient BC = 8/6 = 4/3, equal, so collinear.",
+          "marks": 2
+        },
+        {
+          "text": "Equation y − 1 = (4/3)(x − 1), so y = 4x/3 − 1/3, or 4x − 3y − 1 = 0.",
+          "marks": 2
+        },
+        {
+          "text": "Midpoint of AC is ((1 + 13)/2, (1 + 17)/2) = (7, 9) = B.",
+          "marks": 1
+        },
+        {
+          "text": "D is a quarter of the way: (1 + 3, 1 + 4) = (4, 5).",
+          "marks": 2
+        },
+        {
+          "text": "DB = √(3² + 4²) = 5, or a quarter of AC = 20.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** Gradient of $AB$: $\\dfrac{9 - 1}{7 - 1} = \\dfrac{8}{6} = \\dfrac{4}{3}$. Gradient of $BC$: $\\dfrac{17 - 9}{13 - 7} = \\dfrac{8}{6} = \\dfrac{4}{3}$. The gradients are equal and the segments share the point $B$, so $A$, $B$ and $C$ are collinear. The line through $A$ with gradient $\\frac{4}{3}$ is $y - 1 = \\frac{4}{3}(x - 1)$, so $y = \\frac{4}{3}x - \\frac{1}{3}$, or $4x - 3y - 1 = 0$. Check $C$: $52 - 51 - 1 = 0$.\n\n**(b)** The midpoint of $AC$ is $\\left(\\dfrac{1 + 13}{2}, \\dfrac{1 + 17}{2}\\right) = (7, 9)$, which is $B$. The distances agree: $AB^2 = 36 + 64 = 100$ and $BC^2 = 36 + 64 = 100$, so $AB = BC = 10$.\n\n**(c)** $AD : DC = 1 : 3$ puts $D$ a quarter of the way from $A$ to $C$. The change from $A$ to $C$ is $12$ in $x$ and $16$ in $y$; a quarter of each is $3$ and $4$, so $D = (1 + 3, 1 + 4) = (4, 5)$. Check that it is on the line: $16 - 15 - 1 = 0$.\n\n$DB = \\sqrt{(7 - 4)^2 + (9 - 5)^2} = \\sqrt{9 + 16} = 5$. That is a quarter of $AC = \\sqrt{144 + 256} = 20$, as it should be: $D$ is at the quarter point and $B$ at the half, a quarter of the length apart."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 12
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 33
+    }
+  },
+  "examTechnique": {
+    "body": "Coordinate questions are short, worth two to four marks each, and the marks are for the method: a gradient written as a fraction with the subtraction visible, a distance written as a square root before it is simplified, a midpoint as an average. Write the formula's structure even when the arithmetic is easy.\n\nA *show that* about a right angle or collinear points needs the numbers and the sentence: *product $-1$, so perpendicular, so the right angle is at $B$*. Give an equation in the form the question names; if none is named, $y = mx + c$ or $ax + by + c = 0$ are both accepted, but a fraction left unsimplified is not. Leave distances as simplified surds unless a decimal is asked for, and check every line by substituting a point.",
+    "examinerErrors": [
+      "Subtracting the coordinates in different orders on the top and bottom of a gradient, giving the wrong sign.",
+      "Using the same gradient for a perpendicular line, or flipping the fraction without changing the sign.",
+      "Adding the changes instead of squaring them in the distance formula.",
+      "Halving the difference of the coordinates for a midpoint instead of averaging them.",
+      "Taking the ratio $1 : 3$ as a third of the way rather than a quarter.",
+      "Giving a right-angle argument with no vertex named, or with different gradients as the reason.",
+      "Leaving $\\sqrt{32}$ unsimplified, or writing $4\\sqrt{2}$ as $5.66$ in an exact answer."
+    ],
+    "grade9Looks": "A grade 9 answer moves between the forms of a line without effort, chooses the point-gradient form to write a line down and the general form when integers are asked for, and checks each with a point. It proves a right angle by gradients and confirms it by Pythagoras when the lengths are wanted anyway, naming the vertex. It handles a ratio in either direction and recognises *equidistant from two points* as the perpendicular bisector. Its surds stay exact, its fractions are simplified, and its show-that answers end in a sentence."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

@@ -1,0 +1,1377 @@
+{
+  "id": "rearranging-formulae-and-algebraic-proof",
+  "subjectId": "further-maths",
+  "unitId": "algebra",
+  "title": "Rearranging formulae and algebraic proof",
+  "specPoints": [
+    "2.10",
+    "2.19"
+  ],
+  "order": 9,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Undo in reverse order, both sides",
+      "body": "Last operation first: for $T = 2\\pi\\sqrt{l/g}$, divide by $2\\pi$, square, multiply by $g$. Squaring a fraction squares top and bottom. Then check by a round trip with easy numbers."
+    },
+    {
+      "kind": "spot",
+      "title": "Subject twice: collect, factorise, divide",
+      "body": "Clear fractions and expand, move every term with the subject to one side, factorise the subject out of them, and divide by the bracket. $p = \\dfrac{3q + 2}{q - 1}$ becomes $q(p - 3) = p + 2$. A root can hide the second appearance until you square."
+    },
+    {
+      "kind": "check",
+      "title": "Flip whole sides, never term by term",
+      "body": "$\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u}$ must be combined to $\\dfrac{u - f}{fu}$ before inverting: $v = \\dfrac{fu}{u - f}$, not $f - u$. Test: $\\frac{1}{6} - \\frac{1}{10} = \\frac{1}{15}$, and $6 - 10$ is not $15$."
+    },
+    {
+      "kind": "remember",
+      "title": "A proof is a letter, not a list of examples",
+      "body": "Let $n$ be any integer; write odd as $2n + 1$, even as $2n$, consecutive as $n, n + 1$. Expand, factorise into the claimed form, and end with the sentence: *the bracket is an integer, so the expression is a multiple of 4*. $(n + 5)^2 - (n + 3)^2 = 4(n + 4)$."
+    },
+    {
+      "kind": "shortcut",
+      "title": "n(n + 1) is always even",
+      "body": "One of two consecutive integers is even, so their product is. It is the step that turns $4n(n + 1) + 1$ into $8k + 1$ and makes $n(n + 1) + 1$ odd. Write the fact down every time it is used."
+    }
+  ],
+  "why": {
+    "matters": "Every formula in science and finance is written with one particular subject, and the one you need is usually a different letter: the lens formula gives $f$, but the question asks for $v$. Rearranging is how a formula is turned round, and when the subject appears twice the method is a small piece of algebra that has to be learned. Proof is the other half of the topic: a claim about *every* number cannot be checked by trying numbers, so it is written with a letter and rearranged until the claim is visible. Both halves reward the same discipline, showing each step and finishing with a check or a sentence.",
+    "examples": [
+      {
+        "title": "The lens formula, turned round",
+        "body": "A camera lens of focal length $f$ focuses an object at distance $u$ onto a sensor at distance $v$, with $\\frac{1}{f} = \\frac{1}{u} + \\frac{1}{v}$. The photographer knows $f$ and $u$ and wants $v$, which is where the sensor must be, so the formula is rearranged to $v = \\dfrac{fu}{u - f}$. At $u = 2f$ the image is also at $2f$, life size; as the object moves away, $v$ falls towards $f$. The specification's example is exactly this rearrangement.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "f (cm)",
+              "u (cm)",
+              "v = fu/(u − f)",
+              "Meaning"
+            ],
+            "rows": [
+              [
+                "6",
+                "10",
+                "15",
+                "image further than the object"
+              ],
+              [
+                "6",
+                "12",
+                "12",
+                "u = 2f: image at 2f, life size"
+              ],
+              [
+                "6",
+                "30",
+                "7.5",
+                "far object, image near f"
+              ],
+              [
+                "6",
+                "6",
+                "undefined",
+                "object at f: no image forms"
+              ]
+            ],
+            "title": "v = fu/(u − f) for a 6 cm lens"
+          },
+          "alt": "A table of image distances for a six centimetre lens with the object at ten, twelve, thirty and six centimetres, showing the life-size case at twice the focal length and the undefined case at the focal length"
+        }
+      },
+      {
+        "title": "Think of a number",
+        "body": "*Think of a number, add 3, double it, subtract 6, halve it.* The answer is always the number you started with, and the proof is one line: $\\dfrac{2(x + 3) - 6}{2} = x$. Every number trick is an identity in disguise, and proving it is the same move as the exam's *prove that the expression is divisible by 4*: write the steps in a letter, simplify, and see what is left.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "The trick, in algebra",
+            "boxes": [
+              {
+                "title": "Think of x",
+                "body": "x"
+              },
+              {
+                "title": "Add 3, double",
+                "body": "2(x + 3) = 2x + 6"
+              },
+              {
+                "title": "Subtract 6, halve",
+                "body": "(2x + 6 − 6) / 2 = x"
+              },
+              {
+                "title": "Why it always works",
+                "body": "an identity: true for every x"
+              }
+            ]
+          },
+          "alt": "Four boxes following a think-of-a-number trick through the algebra to show it returns the starting number for every value"
+        }
+      },
+      {
+        "title": "A multiplication done sideways",
+        "body": "$29 \\times 31$ is $30^2 - 1 = 899$, because $(n - 1)(n + 1) = n^2 - 1$ for every $n$; $19 \\times 21 = 399$ and $49 \\times 51 = 2499$ come the same way. An identity proved once in algebra is a tool for ever after, which is what a proof is for: the exam's *prove that* questions are asking you to build such a tool and show it works for every case.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Product",
+              "As n² − 1",
+              "Value"
+            ],
+            "rows": [
+              [
+                "29 × 31",
+                "30² − 1",
+                "899"
+              ],
+              [
+                "19 × 21",
+                "20² − 1",
+                "399"
+              ],
+              [
+                "49 × 51",
+                "50² − 1",
+                "2499"
+              ],
+              [
+                "99 × 101",
+                "100² − 1",
+                "9999"
+              ]
+            ],
+            "title": "(n − 1)(n + 1) = n² − 1, used four times"
+          },
+          "alt": "A table of four products of numbers two apart worked out as a square minus one using the identity n minus one times n plus one equals n squared minus one"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Rearranging: undo the operations in reverse order",
+        "body": "To make a letter the **subject** of a formula, undo what has been done to it, last operation first, doing the same to both sides. The operations at this level include squares and square roots, fractions, and brackets.\n\n$v^2 = u^2 + 2as$, make $s$ the subject: subtract $u^2$, then divide by $2a$: $s = \\dfrac{v^2 - u^2}{2a}$.\n\n$T = 2\\pi\\sqrt{\\dfrac{l}{g}}$, make $l$ the subject: divide by $2\\pi$, square both sides, multiply by $g$: $l = \\dfrac{gT^2}{4\\pi^2}$. Squaring $\\dfrac{T}{2\\pi}$ squares both the top and the bottom.\n\n$A = 2\\pi r^2 + 2\\pi rh$, make $h$ the subject: the $h$ term is $2\\pi rh$, so move everything else across first, then divide: $h = \\dfrac{A - 2\\pi r^2}{2\\pi r}$.\n\n**Check by substituting numbers**: pick easy values for the other letters, work out the original, then see whether the rearranged formula returns the value you started with.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Formula",
+                "Subject",
+                "Undo, in order",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "v² = u² + 2as",
+                  "s",
+                  "subtract u², divide by 2a",
+                  "s = (v² − u²)/(2a)"
+                ],
+                [
+                  "T = 2π√(l/g)",
+                  "l",
+                  "divide by 2π, square, multiply by g",
+                  "l = gT²/(4π²)"
+                ],
+                [
+                  "A = 2πr² + 2πrh",
+                  "h",
+                  "subtract 2πr², divide by 2πr",
+                  "h = (A − 2πr²)/(2πr)"
+                ],
+                [
+                  "y = 3x² − 5, x > 0",
+                  "x",
+                  "add 5, divide by 3, square root",
+                  "x = √((y + 5)/3)"
+                ]
+              ],
+              "title": "Last operation first, same to both sides"
+            },
+            "alt": "A table of four formulae with the new subject, the operations undone in reverse order and the rearranged result"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "Make $s$ the subject of $v^2 = u^2 + 2as$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "rearranging in two steps",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Subtract $u^2$ from both sides: $v^2 - u^2 = 2as$. Divide by $2a$: $s = \\dfrac{v^2 - u^2}{2a}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "s = (v² − u²)/(2a)"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "s = (v^2 - u^2)/(2a)",
+            "(v^2 - u^2)/(2a)"
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "When the subject appears twice: collect, then factorise",
+        "body": "If the letter you want appears in two places, ordinary undoing cannot isolate it. The method: clear any fractions, expand any brackets, **collect every term containing the subject on one side** and everything else on the other, **factorise** the subject out, and divide.\n\n$p = \\dfrac{3q + 2}{q - 1}$, make $q$ the subject. Multiply out: $p(q - 1) = 3q + 2$, so $pq - p = 3q + 2$. Collect: $pq - 3q = p + 2$. Factorise: $q(p - 3) = p + 2$. Divide: $q = \\dfrac{p + 2}{p - 3}$.\n\n$ax + b = cx + d$, make $x$ the subject: $ax - cx = d - b$, so $x(a - c) = d - b$ and $x = \\dfrac{d - b}{a - c}$.\n\n**Check with numbers.** $q = 5$ gives $p = \\dfrac{17}{4}$; putting $p = \\dfrac{17}{4}$ into $\\dfrac{p + 2}{p - 3}$ gives $\\dfrac{25/4}{5/4} = 5$. The round trip is the proof that the rearrangement is right.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Make q the subject of p = (3q + 2)/(q − 1).",
+            "steps": [
+              {
+                "text": "$p(q - 1) = 3q + 2$",
+                "note": "multiply both sides by the denominator"
+              },
+              {
+                "text": "$pq - p = 3q + 2$",
+                "note": "expand the bracket"
+              },
+              {
+                "text": "$pq - 3q = p + 2$",
+                "note": "q terms to the left, everything else to the right"
+              },
+              {
+                "text": "$q(p - 3) = p + 2$",
+                "note": "factorise q out"
+              },
+              {
+                "text": "$q = \\dfrac{p + 2}{p - 3}$",
+                "note": "divide by the bracket; check: q = 5 gives p = 17/4, and back"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "Make $x$ the subject of $y = \\dfrac{2x - 1}{x + 4}$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a subject that appears twice",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$y(x + 4) = 2x - 1$, so $xy + 4y = 2x - 1$. Collect the $x$ terms: $xy - 2x = -1 - 4y$, so $x(y - 2) = -(4y + 1)$ and $x = \\dfrac{4y + 1}{2 - y}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = (4y + 1)/(2 − y)"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "x = (4y + 1)/(2 - y)",
+            "(4y + 1)/(2 - y)",
+            "x = -(4y + 1)/(y - 2)",
+            "x = (1 + 4y)/(2 - y)"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "The specification's formula: 1/f = 1/u + 1/v",
+        "body": "*Rearrange $\\dfrac{1}{f} = \\dfrac{1}{u} + \\dfrac{1}{v}$ to make $v$ the subject.*\n\nIsolate the term with $v$ in it: $\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u}$. Combine the right side into one fraction with denominator $fu$: $\\dfrac{1}{v} = \\dfrac{u - f}{fu}$. Then turn both sides upside down:\n\n$$v = \\frac{fu}{u - f}$$\n\nFlipping both sides is allowed because two equal fractions have equal reciprocals. What is **not** allowed is flipping each term separately: $v = f - u$ is the wrong answer that comes from writing $\\frac{1}{v} = \\frac{1}{f} - \\frac{1}{u}$ and inverting term by term.\n\nCheck with numbers: $f = 6$, $u = 10$ gives $\\dfrac{1}{v} = \\dfrac{1}{6} - \\dfrac{1}{10} = \\dfrac{1}{15}$, so $v = 15$; the formula gives $\\dfrac{60}{4} = 15$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Rearrange 1/f = 1/u + 1/v to make v the subject.",
+            "steps": [
+              {
+                "text": "$\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u}$",
+                "note": "isolate the v term"
+              },
+              {
+                "text": "$\\dfrac{1}{v} = \\dfrac{u - f}{fu}$",
+                "note": "one fraction: each top times the other bottom"
+              },
+              {
+                "text": "$v = \\dfrac{fu}{u - f}$",
+                "note": "flip both whole sides, never term by term"
+              },
+              {
+                "text": "Check: $f = 6$, $u = 10$: $\\frac{1}{6} - \\frac{1}{10} = \\frac{1}{15}$ and $\\frac{60}{4} = 15$",
+                "note": "numbers agree"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Formula",
+                "Subject",
+                "Combined",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "1/f = 1/u + 1/v",
+                  "v",
+                  "1/v = (u − f)/(fu)",
+                  "v = fu/(u − f)"
+                ],
+                [
+                  "1/r = 1/p + 1/q",
+                  "p",
+                  "1/p = (q − r)/(qr)",
+                  "p = qr/(q − r)"
+                ],
+                [
+                  "y = √((x + 1)/(x − 2))",
+                  "x",
+                  "y²(x − 2) = x + 1, x(y² − 1) = 2y² + 1",
+                  "x = (2y² + 1)/(y² − 1)"
+                ],
+                [
+                  "s = (u + v)t/2",
+                  "u",
+                  "2s = ut + vt",
+                  "u = 2s/t − v"
+                ]
+              ],
+              "title": "Combine into one fraction before flipping; square before collecting"
+            },
+            "alt": "A table of four formulae with reciprocals, roots or the subject appearing twice, the combined form and the rearranged result"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "Rearrange $\\dfrac{1}{r} = \\dfrac{1}{p} + \\dfrac{1}{q}$ to make $p$ the subject.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the reciprocal formula",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$\\dfrac{1}{p} = \\dfrac{1}{r} - \\dfrac{1}{q} = \\dfrac{q - r}{qr}$, so $p = \\dfrac{qr}{q - r}$. Flip both sides as wholes.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "p = qr/(q − r)"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "p = qr/(q - r)",
+            "qr/(q - r)",
+            "p = rq/(q - r)",
+            "p = -qr/(r - q)"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Algebraic proof: let the letter stand for any integer",
+        "body": "A **proof** shows that a statement holds for *every* case, so it cannot be done by trying numbers. It is done with a letter: let $n$ be any integer, write the statement in terms of $n$, and rearrange it into a form that makes the claim visible.\n\nThe specification's example: *prove that $(n + 5)^2 - (n + 3)^2$ is divisible by $4$ for any integer $n$.* Expand: $(n^2 + 10n + 25) - (n^2 + 6n + 9) = 4n + 16$. Factorise: $4(n + 4)$. Since $n + 4$ is an integer, $4(n + 4)$ is a multiple of $4$. That last sentence is part of the proof; without it, $4(n + 4)$ is just an expression.\n\n**The vocabulary of $n$.** Consecutive integers: $n, n + 1, n + 2$. An even number: $2n$. An odd number: $2n + 1$. Consecutive even numbers: $2n, 2n + 2$. Consecutive odd numbers: $2n + 1, 2n + 3$. A multiple of $3$: $3n$. Choosing the right expression is half the proof.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "To say",
+                "Write",
+                "Because"
+              ],
+              "rows": [
+                [
+                  "any integer",
+                  "n",
+                  "n stands for every case at once"
+                ],
+                [
+                  "an even number",
+                  "2n",
+                  "twice an integer"
+                ],
+                [
+                  "an odd number",
+                  "2n + 1",
+                  "one more than an even number"
+                ],
+                [
+                  "consecutive integers",
+                  "n, n + 1, n + 2",
+                  "each one more than the last"
+                ],
+                [
+                  "consecutive odd numbers",
+                  "2n + 1, 2n + 3",
+                  "two apart"
+                ],
+                [
+                  "a multiple of 4",
+                  "4k, or 4(…)",
+                  "factorise 4 out and name the bracket"
+                ]
+              ],
+              "title": "The vocabulary a proof is written in"
+            },
+            "alt": "A table of the standard algebraic expressions used in proofs: any integer, even, odd, consecutive integers, consecutive odd numbers and a multiple of four"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "Which line completes the proof that $(n + 5)^2 - (n + 3)^2$ is divisible by $4$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the specification's proof",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Expanding gives $4n + 16$; factorising gives $4(n + 4)$, four times an integer, which is what *divisible by $4$* means for every $n$ at once. Testing $n = 1$ checks one case; $16$ being a multiple of $4$ says nothing about $4n$; and even numbers need not be multiples of $4$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$= 4n + 16 = 4(n + 4)$, and $n + 4$ is an integer, so it is a multiple of $4$"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "When $n = 1$ it is $36 - 16 = 20$, which is divisible by $4$, so it always is",
+            "$= 4n + 16$, which is even, so it is divisible by $4$",
+            "$= 4n + 16 = 4(n + 4)$, and $n + 4$ is an integer, so it is a multiple of $4$",
+            "$= 4n + 16$, and $16$ is divisible by $4$, so the whole thing is"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Proofs about odd, even and consecutive numbers",
+        "body": "**The sum of the squares of two consecutive odd numbers is $2$ more than a multiple of $8$.** Let them be $2n + 1$ and $2n + 3$. Then $(2n + 1)^2 + (2n + 3)^2 = 4n^2 + 4n + 1 + 4n^2 + 12n + 9 = 8n^2 + 16n + 10 = 8(n^2 + 2n + 1) + 2$. The bracket is an integer, so the sum is $8k + 2$.\n\n**The product of two consecutive even numbers is a multiple of $8$.** $2n(2n + 2) = 4n(n + 1)$. One of $n$ and $n + 1$ is even, so $n(n + 1)$ is even, say $2k$, and the product is $8k$. That *one of two consecutive integers is even* step is used constantly; state it every time.\n\n**The difference of the squares of consecutive integers equals their sum.** $(n + 1)^2 - n^2 = 2n + 1 = n + (n + 1)$. A one-line proof, and a useful mental arithmetic fact: $51^2 - 50^2 = 101$.\n\n**Structure of every proof:** name the letters, expand, simplify, factorise into the form the claim needs, and finish with a sentence saying why that form proves it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Prove that the sum of the squares of two consecutive odd numbers is 2 more than a multiple of 8.",
+            "steps": [
+              {
+                "text": "Let the numbers be $2n + 1$ and $2n + 3$",
+                "note": "odd, and two apart"
+              },
+              {
+                "text": "$(2n + 1)^2 + (2n + 3)^2 = 4n^2 + 4n + 1 + 4n^2 + 12n + 9$",
+                "note": "expand both squares"
+              },
+              {
+                "text": "$= 8n^2 + 16n + 10$",
+                "note": "collect"
+              },
+              {
+                "text": "$= 8(n^2 + 2n + 1) + 2$",
+                "note": "take out 8 from all but the 2"
+              },
+              {
+                "text": "$n^2 + 2n + 1$ is an integer, so this is $2$ more than a multiple of $8$",
+                "note": "the sentence that finishes the proof"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "In proving that $2n(2n + 2)$ is a multiple of $8$, why is the line $4n(n + 1)$ not yet enough?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the consecutive-integers step",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$4n(n + 1)$ is four times something. To reach eight times something, the something must be even, and it is: of two consecutive integers, one is even. So $n(n + 1) = 2k$ and the product is $8k$. Saying so is the mark.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "It shows a multiple of $4$; reaching $8$ needs the fact that $n(n + 1)$ is even"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "Because $4n(n + 1)$ is not equal to $2n(2n + 2)$",
+            "It is enough: $4n(n + 1)$ is visibly a multiple of $8$",
+            "Because $n(n + 1)$ is always odd, so the product can only ever be a multiple of $4$",
+            "It shows a multiple of $4$; reaching $8$ needs the fact that $n(n + 1)$ is even"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Counterexamples, and proving that something is always odd",
+        "body": "**To disprove** a claim that something is *always* true, one counterexample is enough. *$n^2 + n + 41$ is always prime* holds for $n = 0$ to $39$, and fails at $n = 40$: $1600 + 40 + 41 = 1681 = 41^2$. One failure ends the argument; finding it is the whole answer, with the arithmetic shown.\n\n**To prove** something is always odd or always even, write it as $2(\\ldots)$ or $2(\\ldots) + 1$. *$n^2 + n + 1$ is odd for every integer $n$*: $n^2 + n + 1 = n(n + 1) + 1$, and $n(n + 1)$ is even, so the expression is one more than an even number. *Three consecutive integers sum to a multiple of $3$*: $n + (n + 1) + (n + 2) = 3n + 3 = 3(n + 1)$.\n\n**Watch the wording.** *Show that* and *prove that* need the algebra for all $n$. *Is it true that*, or *a student says*, usually wants a counterexample or a proof depending on whether the claim holds, so test small cases first to decide which.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Claim",
+                "Approach",
+                "Working",
+                "Verdict"
+              ],
+              "rows": [
+                [
+                  "n² + n + 41 is always prime",
+                  "look for a counterexample",
+                  "n = 40: 1681 = 41²",
+                  "false"
+                ],
+                [
+                  "n² + n + 1 is always odd",
+                  "prove it",
+                  "n(n + 1) + 1, and n(n + 1) is even",
+                  "true"
+                ],
+                [
+                  "the sum of three consecutive integers is a multiple of 3",
+                  "prove it",
+                  "3n + 3 = 3(n + 1)",
+                  "true"
+                ],
+                [
+                  "the sum of two odd numbers is odd",
+                  "counterexample",
+                  "3 + 5 = 8",
+                  "false"
+                ]
+              ],
+              "title": "One counterexample disproves; algebra in n proves"
+            },
+            "alt": "A table of four claims with the approach taken, the working and the verdict, two disproved by a single counterexample and two proved for all n"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "A student claims that $n^2 + n + 41$ is prime for every positive integer $n$. Work out $n^2 + n + 41$ when $n = 40$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a counterexample",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$40^2 + 40 + 41 = 1600 + 81 = 1681 = 41^2$, which is not prime. One counterexample disproves the claim, even though it holds for every $n$ from $1$ to $39$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "1681"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 1681,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Make $l$ the subject of $T = 2\\pi\\sqrt{\\dfrac{l}{g}}$.\n2. Make $u$ the subject of $s = \\dfrac{(u + v)t}{2}$.\n3. Prove that $(n + 3)^2 - (n - 3)^2$ is a multiple of $12$ for every integer $n$.\n\n**Part B.**\n\n4. Make $x$ the subject of $ax + b = cx + d$.\n5. Make $x$ the subject of $y = \\sqrt{\\dfrac{x + 1}{x - 2}}$.\n6. Prove that the sum of any three consecutive integers is a multiple of $3$.\n\n**Part C.**\n\n7. Prove that the square of any odd number is one more than a multiple of $8$.\n8. Prove that the product of two consecutive odd numbers is one less than a square number.\n9. Show that $(n + 1)^3 - n^3$ is always odd.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "l = gT²/(4π²)"
+                ],
+                [
+                  "2",
+                  "u = 2s/t − v"
+                ],
+                [
+                  "3",
+                  "12n = 12 × n"
+                ],
+                [
+                  "4",
+                  "x = (d − b)/(a − c)"
+                ],
+                [
+                  "5",
+                  "x = (2y² + 1)/(y² − 1)"
+                ],
+                [
+                  "6",
+                  "3n + 3 = 3(n + 1)"
+                ],
+                [
+                  "7",
+                  "(2n + 1)² = 4n(n + 1) + 1, and n(n + 1) is even"
+                ],
+                [
+                  "8",
+                  "(2n + 1)(2n + 3) = 4n² + 8n + 3 = (2n + 2)² − 1"
+                ],
+                [
+                  "9",
+                  "3n² + 3n + 1 = 3n(n + 1) + 1, and n(n + 1) is even"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on rearranging formulae and algebraic proof"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: the shape of a full-mark proof",
+        "body": "**The square of an odd number is one more than a multiple of $8$.** $(2n + 1)^2 = 4n^2 + 4n + 1 = 4n(n + 1) + 1$. Of $n$ and $n + 1$ one is even, so $n(n + 1) = 2k$ and the square is $8k + 1$. Two facts are used: the algebra, and the parity of consecutive integers. Both must be written down; the second is the one students skip, and it carries a mark.\n\n**Choose the letters to match the claim.** For *two consecutive odd numbers* write $2n + 1$ and $2n + 3$, not $2n + 1$ and $2m + 1$, which are any two odd numbers and prove something weaker. For *a two-digit number with tens digit $a$ and units digit $b$* write $10a + b$, and its reverse is $10b + a$; their difference is $9(a - b)$, which is why the difference is always a multiple of $9$.\n\n**Rearranging with a hidden second appearance.** $y = \\sqrt{\\dfrac{x + 1}{x - 2}}$: square first, $y^2(x - 2) = x + 1$, and only then does the double appearance of $x$ show. Collect, $xy^2 - x = 2y^2 + 1$, factorise, $x(y^2 - 1) = 2y^2 + 1$, divide. A rearrangement is finished when the subject appears once, on its own, on the left.\n\n**Finish with the sentence.** *$4(n + 4)$, where $n + 4$ is an integer, so the expression is a multiple of $4$.* The examiner is looking for the claim restated in words at the end; an expression on its own is one mark short.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does in a proof",
+              "boxes": [
+                {
+                  "title": "Names the letters",
+                  "body": "Let the odd numbers be 2n + 1 and 2n + 3, for any integer n."
+                },
+                {
+                  "title": "Uses the parity fact",
+                  "body": "n(n + 1) is even, because one of two consecutive integers is."
+                },
+                {
+                  "title": "Factorises to the claim",
+                  "body": "8(…) + 1 for one more than a multiple of 8."
+                },
+                {
+                  "title": "Ends in a sentence",
+                  "body": "The bracket is an integer, so the statement holds for every n."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a full-mark algebraic proof: naming the letters, using the parity of consecutive integers, factorising into the form the claim needs and finishing with a sentence"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Rearrange** by undoing operations in reverse order; square to remove a root, and root to remove a square. $T = 2\\pi\\sqrt{l/g}$ gives $l = \\dfrac{gT^2}{4\\pi^2}$.\n- **Subject twice**: clear fractions, expand, collect the subject's terms on one side, factorise it out, divide. $p = \\dfrac{3q + 2}{q - 1}$ gives $q = \\dfrac{p + 2}{p - 3}$.\n- **Reciprocals**: combine into one fraction, then flip both whole sides. $\\dfrac{1}{f} = \\dfrac{1}{u} + \\dfrac{1}{v}$ gives $v = \\dfrac{fu}{u - f}$.\n- Check a rearrangement with numbers, round trip.\n- **Prove** with a letter for any integer: $2n$ even, $2n + 1$ odd, $n, n + 1, n + 2$ consecutive. Expand, factorise into the claimed form, finish with a sentence. $(n + 5)^2 - (n + 3)^2 = 4(n + 4)$.\n- $n(n + 1)$ is always even; say so when a multiple of $8$ or an odd result depends on it.\n- **Disprove** with one counterexample: $n = 40$ makes $n^2 + n + 41 = 41^2$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Subject twice",
+                  "equation": "collect, factorise, divide",
+                  "units": "x(a − c) = d − b"
+                },
+                {
+                  "name": "Reciprocals",
+                  "equation": "1/v = (u − f)/(fu), so v = fu/(u − f)",
+                  "units": "flip whole sides only"
+                },
+                {
+                  "name": "Odd and even",
+                  "equation": "2n + 1 and 2n; n(n + 1) is even",
+                  "units": "consecutive: n, n + 1"
+                },
+                {
+                  "name": "Divisible by k",
+                  "equation": "write as k × (an integer)",
+                  "units": "then say so"
+                }
+              ]
+            },
+            "alt": "A reference card with the method for a subject that appears twice, the reciprocal rearrangement, the expressions for odd and even numbers and the form a divisibility proof must reach"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Make $l$ the subject of $T = 2\\pi\\sqrt{\\dfrac{l}{g}}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "rearranging with a root",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Divide by $2\\pi$: $\\dfrac{T}{2\\pi} = \\sqrt{\\dfrac{l}{g}}$. Square: $\\dfrac{T^2}{4\\pi^2} = \\dfrac{l}{g}$. Multiply by $g$: $l = \\dfrac{gT^2}{4\\pi^2}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "l = gT²/(4π²)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "l = gT^2/(4π^2)",
+        "gT^2/(4π^2)",
+        "l = T^2 g/(4π^2)"
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "Which is the correct rearrangement of $A = 2\\pi r^2 + 2\\pi rh$ to make $h$ the subject?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "order of operations when rearranging",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The term containing $h$ is $2\\pi rh$. Subtract $2\\pi r^2$ from both sides first, then divide the whole of what is left by $2\\pi r$. Dividing only part of a side, or subtracting the divisor, gives the wrong answers.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$h = \\dfrac{A - 2\\pi r^2}{2\\pi r}$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$h = \\dfrac{A}{2\\pi r} - 2\\pi r^2$",
+        "$h = \\dfrac{A - 2\\pi r}{2\\pi r^2}$",
+        "$h = A - 2\\pi r^2 - 2\\pi r$",
+        "$h = \\dfrac{A - 2\\pi r^2}{2\\pi r}$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "Expand and simplify $(n + 3)^2 - (n - 3)^2$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the algebra of a proof",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(n^2 + 6n + 9) - (n^2 - 6n + 9) = 12n$. The squares and the $9$s cancel; the $n$ terms add. So the expression is always a multiple of $12$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12n"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "12n"
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "Which expression represents two consecutive odd numbers?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the vocabulary of proof",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2n + 1$ is odd, and the next odd number is two more, $2n + 3$. $2n + 1$ and $2m + 1$ are any two odd numbers, not consecutive ones; $n$ and $n + 1$ are consecutive integers; $2n$ and $2n + 2$ are consecutive even numbers.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$2n + 1$ and $2n + 3$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$2n + 1$ and $2n + 3$",
+        "$2n$ and $2n + 2$",
+        "$2n + 1$ and $2m + 1$",
+        "$n$ and $n + 1$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "Make $x$ the subject of $ax + b = cx + d$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a subject on both sides",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Collect the $x$ terms: $ax - cx = d - b$. Factorise: $x(a - c) = d - b$. Divide: $x = \\dfrac{d - b}{a - c}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = (d − b)/(a − c)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x = (d - b)/(a - c)",
+        "(d - b)/(a - c)",
+        "x = (b - d)/(c - a)"
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "Make $q$ the subject of $p = \\dfrac{3q + 2}{q - 1}$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a subject that appears twice",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$p(q - 1) = 3q + 2$, so $pq - p = 3q + 2$. Collect: $pq - 3q = p + 2$, so $q(p - 3) = p + 2$ and $q = \\dfrac{p + 2}{p - 3}$. Check: $q = 5$ gives $p = \\frac{17}{4}$, and $\\frac{17/4 + 2}{17/4 - 3} = 5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "q = (p + 2)/(p − 3)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "q = (p + 2)/(p - 3)",
+        "(p + 2)/(p - 3)",
+        "q = (2 + p)/(p - 3)"
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "Rearrange $\\dfrac{1}{f} = \\dfrac{1}{u} + \\dfrac{1}{v}$ to make $v$ the subject.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the specification's reciprocal formula",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u} = \\dfrac{u - f}{fu}$. Flip both sides: $v = \\dfrac{fu}{u - f}$. Check: $f = 6$, $u = 10$ gives $v = 15$, and $\\frac{1}{10} + \\frac{1}{15} = \\frac{1}{6}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "v = fu/(u − f)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "v = fu/(u - f)",
+        "fu/(u - f)",
+        "v = uf/(u - f)",
+        "v = -fu/(f - u)"
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "A student rearranges $\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u}$ to $v = f - u$. What is wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "why term-by-term flipping fails",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Reciprocals do not distribute over a sum or difference: $\\frac{1}{6} - \\frac{1}{10} = \\frac{1}{15}$, but $6 - 10 = -4$. Combine first, then flip both sides as wholes to get $v = \\dfrac{fu}{u - f}$. Multiplying by $v$ is a valid alternative route, and it can be solved.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Each term was flipped separately; combine the right side into $\\dfrac{u - f}{fu}$ first, then flip both whole sides"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "The student should have multiplied by $v$ instead, giving $1 = \\dfrac{v}{f} - \\dfrac{v}{u}$, which cannot then be solved for $v$",
+        "Each term was flipped separately; combine the right side into $\\dfrac{u - f}{fu}$ first, then flip both whole sides",
+        "Nothing: the reciprocal of a difference is the difference of the reciprocals",
+        "The signs are the wrong way round; it should be $v = u - f$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q9",
+      "prompt": "Which is a complete proof that the sum of three consecutive integers is a multiple of $3$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "what counts as a proof",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A proof must cover every case with a letter, reach the form $3 \\times$ an integer, and say so. Examples cover only the cases tried; unrelated letters $a, b, c$ do not say the numbers are consecutive; and three numbers being added says nothing about their sum, as $1 + 2 + 4 = 7$ shows.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Let the integers be $n$, $n + 1$, $n + 2$: the sum is $3n + 3 = 3(n + 1)$, three times an integer"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$1 + 2 + 3 = 6$, $4 + 5 + 6 = 15$ and $7 + 8 + 9 = 24$, which are all multiples of $3$",
+        "Let the integers be $a$, $b$ and $c$. Then $a + b + c$ is divisible by $3$ because there are three of them",
+        "Let the integers be $n$, $n + 1$, $n + 2$: the sum is $3n + 3 = 3(n + 1)$, three times an integer",
+        "Any three integers add to a multiple of $3$, because three numbers are being added"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "Prove that $(3n + 1)^2 - (3n - 1)^2$ is a multiple of $12$ for every integer $n$. What is the value of the expression when $n = 7$?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a difference of squares proof",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(9n^2 + 6n + 1) - (9n^2 - 6n + 1) = 12n$, which is $12$ times the integer $n$. When $n = 7$ it is $84$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands and simplifies to 12n"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "84"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 84,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "prompt": "Make $x$ the subject of $y = \\sqrt{\\dfrac{x + 1}{x - 2}}$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a root hiding a double appearance",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Square: $y^2 = \\dfrac{x + 1}{x - 2}$, so $y^2(x - 2) = x + 1$ and $xy^2 - 2y^2 = x + 1$. Collect: $xy^2 - x = 2y^2 + 1$, so $x(y^2 - 1) = 2y^2 + 1$ and $x = \\dfrac{2y^2 + 1}{y^2 - 1}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = (2y² + 1)/(y² − 1)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "x = (2y^2 + 1)/(y^2 - 1)",
+        "(2y^2 + 1)/(y^2 - 1)",
+        "x = (1 + 2y^2)/(y^2 - 1)"
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "Which working proves that the square of any odd number is one more than a multiple of $8$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a proof needing the parity step",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The algebra reaches $4n(n + 1) + 1$, and the parity fact, that one of $n$ and $n + 1$ is even, turns $4n(n + 1)$ into a multiple of $8$. Stopping at $4k + 1$ proves less than asked; examples prove nothing in general; and $(2n + 1)^2$ is not $4n^2 + 1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$(2n + 1)^2 = 4n^2 + 4n + 1 = 4n(n + 1) + 1$; $n(n + 1)$ is even, so this is $8k + 1$"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$(2n + 1)^2 = 4n^2 + 1$, which is one more than a multiple of $4$ and hence of $8$",
+        "$(2n + 1)^2 = 4n^2 + 4n + 1$, and $4n^2 + 4n$ is a multiple of $4$, so the square is $4k + 1$",
+        "$3^2 = 9$, $5^2 = 25$ and $7^2 = 49$ are each one more than a multiple of $8$",
+        "$(2n + 1)^2 = 4n^2 + 4n + 1 = 4n(n + 1) + 1$; $n(n + 1)$ is even, so this is $8k + 1$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "Prove that the product of two consecutive odd numbers is one less than a square number. Write the product $(2n + 1)(2n + 3)$ in the form $(\\ldots)^2 - 1$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "completing the square in a proof",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(2n + 1)(2n + 3) = 4n^2 + 8n + 3 = (4n^2 + 8n + 4) - 1 = (2n + 2)^2 - 1$. Since $2n + 2$ is an integer, the product is one less than a square. Check: $3 \\times 5 = 15 = 16 - 1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(2n + 2)² − 1"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(2n + 2)^2 - 1",
+        "(2(n + 1))^2 - 1"
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "A student says: \"$n^2 - (n - 1)(n + 1) = 1$ for every $n$, so $29 \\times 31 = 30^2 - 1 = 899$.\" Is the reasoning valid?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "using an identity",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(n - 1)(n + 1) = n^2 - 1$ is an identity, true for every value of $n$, so substituting $n = 30$ is exactly what an identity is for. The mental-arithmetic trick is the proof applied to one case.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Yes: $(n - 1)(n + 1) = n^2 - 1$ for every $n$, and $n = 30$ gives $29 \\times 31 = 900 - 1$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Yes: $(n - 1)(n + 1) = n^2 - 1$ for every $n$, and $n = 30$ gives $29 \\times 31 = 900 - 1$",
+        "No: an identity proved in algebra cannot be used for a specific multiplication",
+        "No: $29 \\times 31$ should be checked by long multiplication before the identity is trusted",
+        "Yes, but only because $30$ is a multiple of $10$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "Show that $(n + 1)^3 - n^3$ is always odd. Write the expression in the form $3n(n + 1) + k$ and give the value of $k$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "consecutive cubes",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(n + 1)^3 - n^3 = n^3 + 3n^2 + 3n + 1 - n^3 = 3n^2 + 3n + 1 = 3n(n + 1) + 1$. Since $n(n + 1)$ is even, $3n(n + 1)$ is even, and one more than an even number is odd. So $k = 1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "k = 1"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "1",
+        "k = 1"
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "A two-digit number has tens digit $a$ and units digit $b$. Which working proves that the number minus its reverse is a multiple of $9$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "representing a number by its digits",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A two-digit number with digits $a$ and $b$ is $10a + b$, not $ab$, which would be a product. Its reverse is $10b + a$, and the difference is $9(a - b)$: nine times an integer. The examples confirm it but do not prove it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$(10a + b) - (10b + a) = 9a - 9b = 9(a - b)$, and $a - b$ is an integer"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$ab - ba = 0$, and $0$ is a multiple of $9$",
+        "$(10a + b) - (10b + a) = 9a - 9b = 9(a - b)$, and $a - b$ is an integer",
+        "$(a + b) - (b + a) = 0$, and $0$ is a multiple of $9$",
+        "$72 - 27 = 45$ and $81 - 18 = 63$, both multiples of $9$, so it always works"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "(a) Rearrange $\\dfrac{1}{f} = \\dfrac{1}{u} + \\dfrac{1}{v}$ to make $v$ the subject.\n\n(b) A student claims that, when $u = 2f$, $v$ is also $2f$. Use your answer to part (a) to show whether the claim is correct.\n\n(c) Make $x$ the subject of $y = \\dfrac{2x - 1}{x + 4}$, and state the value of $y$ for which no value of $x$ exists.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's formula, used and extended",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** $\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u}$. Combine the right side over $fu$: $\\dfrac{1}{v} = \\dfrac{u - f}{fu}$. Two equal fractions have equal reciprocals, so $v = \\dfrac{fu}{u - f}$.\n\n**(b)** With $u = 2f$: $v = \\dfrac{f \\times 2f}{2f - f} = \\dfrac{2f^2}{f} = 2f$. So the claim is correct: when the object is at twice the focal length, so is the image. Check in the original: $\\dfrac{1}{2f} + \\dfrac{1}{2f} = \\dfrac{2}{2f} = \\dfrac{1}{f}$.\n\n**(c)** $y(x + 4) = 2x - 1$, so $xy + 4y = 2x - 1$. Collect the $x$ terms: $xy - 2x = -1 - 4y$, so $x(y - 2) = -(4y + 1)$ and $x = \\dfrac{4y + 1}{2 - y}$.\n\nThe formula divides by $2 - y$, so it fails when $y = 2$. Directly: $\\dfrac{2x - 1}{x + 4} = 2$ would need $2x - 1 = 2x + 8$, that is, $-1 = 8$, impossible. So no value of $x$ gives $y = 2$; on the graph, $y = 2$ is the horizontal asymptote.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "isolates 1/v"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "combines into one fraction"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "v = fu/(u − f)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes u = 2f"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "v = 2f, claim correct"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies out and collects x terms"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = (4y + 1)/(2 − y)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "y = 2 with a reason"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Isolates 1/v, combines to (u − f)/(fu), flips both sides: v = fu/(u − f).",
+          "marks": 3
+        },
+        {
+          "text": "Substitutes u = 2f: v = 2f²/f = 2f, so the claim is correct.",
+          "marks": 2
+        },
+        {
+          "text": "Multiplies out, collects x terms, factorises: x = (4y + 1)/(2 − y); no x when y = 2.",
+          "marks": 3
+        }
+      ],
+      "modelAnswer": "**(a)** $\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u}$. Combine the right side over $fu$: $\\dfrac{1}{v} = \\dfrac{u - f}{fu}$. Two equal fractions have equal reciprocals, so $v = \\dfrac{fu}{u - f}$.\n\n**(b)** With $u = 2f$: $v = \\dfrac{f \\times 2f}{2f - f} = \\dfrac{2f^2}{f} = 2f$. So the claim is correct: when the object is at twice the focal length, so is the image. Check in the original: $\\dfrac{1}{2f} + \\dfrac{1}{2f} = \\dfrac{2}{2f} = \\dfrac{1}{f}$.\n\n**(c)** $y(x + 4) = 2x - 1$, so $xy + 4y = 2x - 1$. Collect the $x$ terms: $xy - 2x = -1 - 4y$, so $x(y - 2) = -(4y + 1)$ and $x = \\dfrac{4y + 1}{2 - y}$.\n\nThe formula divides by $2 - y$, so it fails when $y = 2$. Directly: $\\dfrac{2x - 1}{x + 4} = 2$ would need $2x - 1 = 2x + 8$, that is, $-1 = 8$, impossible. So no value of $x$ gives $y = 2$; on the graph, $y = 2$ is the horizontal asymptote."
+    },
+    {
+      "id": "q18",
+      "prompt": "(a) Prove that $(n + 5)^2 - (n + 3)^2$ is divisible by $4$ for any integer $n$.\n\n(b) Prove that the sum of the squares of two consecutive odd numbers is $2$ more than a multiple of $8$.\n\n(c) A student claims that $n^2 + n + 41$ is prime for every positive integer $n$. Show that the claim is false.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's proof, and two more",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** $(n + 5)^2 - (n + 3)^2 = (n^2 + 10n + 25) - (n^2 + 6n + 9) = 4n + 16 = 4(n + 4)$. Since $n$ is an integer, $n + 4$ is an integer, so $4(n + 4)$ is $4$ times an integer: the expression is divisible by $4$ for every integer $n$. Alternatively, by the difference of two squares, $(n + 5 - n - 3)(n + 5 + n + 3) = 2(2n + 8) = 4(n + 4)$.\n\n**(b)** Let the consecutive odd numbers be $2n + 1$ and $2n + 3$, where $n$ is any integer. Then\n\n$$(2n + 1)^2 + (2n + 3)^2 = 4n^2 + 4n + 1 + 4n^2 + 12n + 9 = 8n^2 + 16n + 10 = 8(n^2 + 2n + 1) + 2$$\n\n$n^2 + 2n + 1$ is an integer, so the sum is $2$ more than a multiple of $8$. Check: $3^2 + 5^2 = 34 = 32 + 2$.\n\n**(c)** One counterexample is enough. When $n = 40$: $40^2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41^2$, which has the factor $41$ and so is not prime. The claim is false. (The expression is prime for every $n$ from $1$ to $39$, which is why examples alone would have been misleading; $n = 41$ also fails, giving $41 \\times 43$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands both squares"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4(n + 4)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "sentence: n + 4 is an integer, so a multiple of 4"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2n + 1 and 2n + 3, expanded"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8(n² + 2n + 1) + 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "sentence completing the proof"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tests a value of n"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "n = 40 gives 41², not prime"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Expands to 4n + 16, factorises to 4(n + 4), states that n + 4 is an integer so the expression is a multiple of 4.",
+          "marks": 3
+        },
+        {
+          "text": "Uses 2n + 1 and 2n + 3, expands to 8n² + 16n + 10 = 8(n² + 2n + 1) + 2, and states that the bracket is an integer.",
+          "marks": 3
+        },
+        {
+          "text": "Gives a counterexample with the arithmetic: n = 40 gives 1681 = 41 × 41 (or n = 41 gives 41 × 43).",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** $(n + 5)^2 - (n + 3)^2 = (n^2 + 10n + 25) - (n^2 + 6n + 9) = 4n + 16 = 4(n + 4)$. Since $n$ is an integer, $n + 4$ is an integer, so $4(n + 4)$ is $4$ times an integer: the expression is divisible by $4$ for every integer $n$. Alternatively, by the difference of two squares, $(n + 5 - n - 3)(n + 5 + n + 3) = 2(2n + 8) = 4(n + 4)$.\n\n**(b)** Let the consecutive odd numbers be $2n + 1$ and $2n + 3$, where $n$ is any integer. Then\n\n$$(2n + 1)^2 + (2n + 3)^2 = 4n^2 + 4n + 1 + 4n^2 + 12n + 9 = 8n^2 + 16n + 10 = 8(n^2 + 2n + 1) + 2$$\n\n$n^2 + 2n + 1$ is an integer, so the sum is $2$ more than a multiple of $8$. Check: $3^2 + 5^2 = 34 = 32 + 2$.\n\n**(c)** One counterexample is enough. When $n = 40$: $40^2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41^2$, which has the factor $41$ and so is not prime. The claim is false. (The expression is prime for every $n$ from $1$ to $39$, which is why examples alone would have been misleading; $n = 41$ also fails, giving $41 \\times 43$.)"
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 13
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 32
+    }
+  },
+  "examTechnique": {
+    "body": "Rearranging questions are worth two to four marks, and a subject that appears twice is a Paper 1 favourite: the marks are for the collect, factorise and divide lines, so write all three. With a reciprocal formula, combine into one fraction before inverting, and invert whole sides. Give the final answer with the subject alone on the left, and check it with numbers if there is time.\n\nProof questions are worth three or four marks. Define the letters in a sentence, show the expansion, factorise into the form the claim needs, and finish with the sentence that says why the form proves the claim. Where a multiple of $8$ or an odd result depends on $n(n + 1)$ being even, state that fact. For a claim that is false, give one counterexample with the arithmetic shown.",
+    "examinerErrors": [
+      "Inverting a sum of fractions term by term: $\\dfrac{1}{v} = \\dfrac{1}{f} - \\dfrac{1}{u}$ becoming $v = f - u$.",
+      "Dividing only part of one side, giving $h = \\dfrac{A}{2\\pi r} - 2\\pi r^2$.",
+      "Squaring one side of an equation but not the other.",
+      "Leaving the subject on both sides, with no factorising step.",
+      "Proving with examples, or with letters that do not say the numbers are consecutive or odd.",
+      "Reaching $4(n + 4)$ with no sentence saying that it is a multiple of $4$.",
+      "Claiming $4n(n + 1)$ is a multiple of $8$ without stating that $n(n + 1)$ is even."
+    ],
+    "grade9Looks": "A grade 9 answer rearranges any formula in the specification in a few lines, spotting when a root hides a second appearance of the subject and collecting, factorising and dividing without prompting. It combines reciprocals before inverting and checks the result with a round trip. Its proofs begin by defining the letters, use $2n + 1$ and $2n + 3$ for consecutive odd numbers, state that $n(n + 1)$ is even when that is needed, factorise into the claimed form and finish with a sentence. It disproves a false claim with one worked counterexample and explains why examples alone are not a proof."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

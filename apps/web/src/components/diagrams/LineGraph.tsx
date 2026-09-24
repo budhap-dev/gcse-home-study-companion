@@ -40,6 +40,8 @@ interface Polygon {
   dashed?: boolean
   /** Wash the inside, for a region rather than an outline. */
   fill?: boolean
+  /** Leave the last point unjoined to the first: a polyline, for a function drawn in pieces. */
+  open?: boolean
 }
 /** A circle in graph units. Pair it with `square` so it is drawn round, not oval. */
 interface Circle {
@@ -81,7 +83,7 @@ interface Curve {
  * so small ranges such as 0 to 0.2 still get a scale), waves [{fn, amplitude, label}]
  * for y = sin x, y = cos x and y = tan x with x in degrees, circles [{cx, cy, r}], and
  * square true to give both axes the same unit length so a circle comes out round, and
- * polygons [{points, label}] for shapes on the axes. A curve
+ * polygons [{points, label, open?}] for shapes on the axes, open for a polyline. A curve
  * may also carry `base` (with optional `scale`) for the exponential y = scale x base^x.
  */
 /** The graph's width with room to spare, and the least it narrows to on a phone. */
@@ -350,7 +352,10 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         const cy = g.points.reduce((t, [, y]) => t + y, 0) / g.points.length
         return (
           <g key={`g${i}`} clipPath={`url(#box-${clip})`}>
-            <polygon points={pts} fill={g.fill ? colour : 'none'} fillOpacity={g.fill ? 0.14 : undefined} stroke={colour} strokeWidth="2.5" strokeDasharray={g.dashed ? '6 5' : undefined} strokeLinejoin="round" />
+            {/* An open polygon is a polyline: a function drawn in pieces must not be closed along the x axis. */}
+            {g.open
+              ? <polyline points={pts} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={g.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" />
+              : <polygon points={pts} fill={g.fill ? colour : 'none'} fillOpacity={g.fill ? 0.14 : undefined} stroke={colour} strokeWidth="2.5" strokeDasharray={g.dashed ? '6 5' : undefined} strokeLinejoin="round" />}
             {g.label && <text x={sx(cx)} y={clear(sx(cx), sy(cy) + 4, g.label, 13, 'middle')} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={colour}>{g.label}</text>}
           </g>
         )

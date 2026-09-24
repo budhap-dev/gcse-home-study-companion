@@ -68,7 +68,7 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 
 ### Further Maths (AQA Level 2 Certificate 8365)
 Board confirmed 18 September 2026. The teaching order is derived in
-[curriculum/further-maths.md](curriculum/further-maths.md). 11 of 22 rows are written (Year 10 Autumn and Spring, PR #264).
+[curriculum/further-maths.md](curriculum/further-maths.md). 16 of 22 rows are written (Year 10 and Year 11 Autumn, PRs #264 and #265).
 
 - [x] Surds and exact calculation
 - [x] The product rule for counting
@@ -78,14 +78,14 @@ Board confirmed 18 September 2026. The teaching order is derived in
 - [x] Quadratic inequalities and index equations
 - [x] The factor theorem and cubics
 - [x] Sequences and limiting values
-- [ ] Gradients, distance and points on a line
+- [x] Gradients, distance and points on a line
 - [x] Differentiation and the gradient function
 - [x] Tangents, normals, and increasing and decreasing functions
 - [x] Maxima, minima and optimisation
-- [ ] Functions: domain, range, composite and inverse
-- [ ] Algebraic fractions at Further Maths level
-- [ ] Rearranging formulae and algebraic proof
-- [ ] Simultaneous equations, including three unknowns
+- [x] Functions: domain, range, composite and inverse
+- [x] Algebraic fractions at Further Maths level
+- [x] Rearranging formulae and algebraic proof
+- [x] Simultaneous equations, including three unknowns
 - [ ] Circles and the tangent at a point
 - [ ] Matrix multiplication and the identity
 - [ ] Transformations of the unit square
