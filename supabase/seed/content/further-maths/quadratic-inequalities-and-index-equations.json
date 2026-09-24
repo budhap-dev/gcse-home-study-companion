@@ -1,0 +1,1402 @@
+{
+  "id": "quadratic-inequalities-and-index-equations",
+  "subjectId": "further-maths",
+  "unitId": "algebra",
+  "title": "Quadratic inequalities and index equations",
+  "specPoints": [
+    "2.17",
+    "2.18"
+  ],
+  "order": 4,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Dividing by a negative flips the sign",
+      "body": "Everything else in solving an inequality is the same as an equation. $-2x \\geqslant 6$ becomes $x \\leqslant -3$. Check with a value: $x = -4$ gives $8 \\geqslant 6$, true. If the check fails, the sign was not flipped."
+    },
+    {
+      "kind": "spot",
+      "title": "Below is between, above is outside",
+      "body": "For an upward parabola, *less than zero* is between the roots, one piece; *greater than zero* is outside them, two pieces joined by *or*. Sketch it rather than remember it, and test a value inside and one outside."
+    },
+    {
+      "kind": "check",
+      "title": "Two pieces can never be one double inequality",
+      "body": "$x < 2$ or $x > 3$ is a set with a gap. $3 < x < 2$ describes nothing. If your answer to a *greater than* inequality is a single interval, look at the sketch again."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Root first, and a negative index is a reciprocal",
+      "body": "$16^{\\frac{3}{4}}$: fourth root is $2$, cubed is $8$. $8^{-\\frac{2}{3}}$: flip to $\\frac{1}{8^{2/3}}$, cube root $2$, squared $4$, so $\\frac{1}{4}$. The minus in the index never makes the answer negative."
+    },
+    {
+      "kind": "remember",
+      "title": "Unknown in the index: same base, equate the powers",
+      "body": "$4, 8, 16, 32$ are all powers of $2$; $9$ and $27$ of $3$; $25$ and $125$ of $5$. Write both sides with the shared base and the equation becomes linear in the index: $4^x = 8$ is $2^{2x} = 2^3$, so $x = \\frac{3}{2}$."
+    }
+  ],
+  "why": {
+    "matters": "An equation asks for the one value that works; an inequality asks for all of them, and most real constraints are inequalities: a budget you must stay under, a load a beam can bear, a speed that keeps a car on the bend. The quadratic ones come with a picture, a parabola above or below a line, and the picture is the method. Index laws with fractions and negatives are the other half of the topic because they are how compound growth, decay and scaling are written, and solving $2^{3x} = 4^{x+1}$ is the first step towards solving how long a doubling takes. Both halves are where a rule applied blindly fails and a picture or a check succeeds.",
+    "examples": [
+      {
+        "title": "The stopping distance and the speed limit",
+        "body": "Stopping distance grows with the square of speed, so *which speeds let me stop within 40 metres* is a quadratic inequality, not an equation, and its answer is a range: every speed up to some limit. Solve $v^2 + 2v \\leqslant 40$ by finding the roots and reading the part of the parabola below the line; the negative root is thrown away because a speed is positive, and what is left is *any speed up to* the positive root. A single number would be the wrong kind of answer to the question.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Question",
+              "Kind of answer",
+              "Method"
+            ],
+            "rows": [
+              [
+                "at what speed is the stopping distance exactly 40 m?",
+                "one number",
+                "solve an equation"
+              ],
+              [
+                "which speeds stop within 40 m?",
+                "a range",
+                "solve an inequality: roots, sketch, read"
+              ],
+              [
+                "which speeds need more than 40 m?",
+                "a range, the other way",
+                "the other part of the parabola"
+              ]
+            ],
+            "title": "A constraint is an inequality, and its answer is a range"
+          },
+          "alt": "A table contrasting a question answered by an equation with two answered by inequalities, and the part of the parabola each reads"
+        }
+      },
+      {
+        "title": "The doubling that ends in a kilobyte",
+        "body": "Double something ten times and you multiply it by $2^{10} = 1024$, which is why a kilobyte is 1024 bytes rather than 1000. Turned round, *how many doublings reach 1024?* is $2^x = 1024$, solved by writing $1024$ as $2^{10}$ and equating the indices. Every question of the form *how long until this doubles, quadruples, reaches a target* is an equation with the unknown in the index, and the same-base method is the first tool for it before logarithms arrive at A level.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "Unknown in the index",
+            "boxes": [
+              {
+                "title": "The question",
+                "body": "how many doublings make 1024?"
+              },
+              {
+                "title": "The equation",
+                "body": "2^x = 1024"
+              },
+              {
+                "title": "Same base",
+                "body": "1024 = 2¹⁰, so 2^x = 2¹⁰"
+              },
+              {
+                "title": "Equate",
+                "body": "x = 10"
+              }
+            ]
+          },
+          "alt": "Four boxes solving two to the power x equals 1024 by writing 1024 as two to the ten and equating the indices"
+        }
+      },
+      {
+        "title": "The negative index that is not a minus sign",
+        "body": "A calculator shows $8^{-\\frac{2}{3}}$ as $0.25$, and a student expecting something negative thinks it has gone wrong. It has not: the minus in an index is an instruction to take a reciprocal, and $\\frac{1}{4}$ is what a positive number raised to a negative power always looks like, smaller and still positive. The same reading is what makes $x^{-\\frac{1}{2}} = 3$ solvable by hand, $x = 3^{-2} = \\frac{1}{9}$, and what keeps a decay written as $a \\times b^{-x}$, which the graphs topic uses, from ever going below zero.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Expression",
+              "Read as",
+              "Value"
+            ],
+            "rows": [
+              [
+                "8^(−2/3)",
+                "one over the cube root of 8 squared",
+                "1/4"
+              ],
+              [
+                "3^(−2)",
+                "one over 3 squared",
+                "1/9"
+              ],
+              [
+                "2^(−x) for large x",
+                "one over a large power of 2",
+                "small, and still positive"
+              ]
+            ],
+            "title": "A negative index is a reciprocal"
+          },
+          "alt": "A table reading three negative indices as reciprocals, each giving a small positive value rather than a negative one"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Linear inequalities, and the one step that flips the sign",
+        "body": "A linear inequality is solved like an equation, with one exception: **multiplying or dividing both sides by a negative number reverses the inequality sign**, because it turns the number line round. Everything else, adding, subtracting, multiplying by a positive, leaves the sign alone.\n\nThe specification's example: $5(x - 7) > 2(x + 1)$. Expand, $5x - 35 > 2x + 2$; collect, $3x > 37$; divide by the positive $3$, $x > \\frac{37}{3}$. The answer is a fraction, and it stays a fraction: $x > 12\\frac{1}{3}$ is the same thing, $x > 12.3$ is not.\n\n**The flip.** $-2x \\geqslant 6$: divide by $-2$ and the sign turns, $x \\leqslant -3$. Check with $x = -4$: $-2(-4) = 8 \\geqslant 6$, true, so the solution set is on the right side. The check is worth doing every time a negative is divided out, because the flip is the error the paper is set to catch.\n\nA solution to an inequality is a **set of values**, written as an inequality, not a single number. *Solve* means find them all.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Inequality",
+                "Working",
+                "Solution"
+              ],
+              "rows": [
+                [
+                  "5(x − 7) > 2(x + 1)",
+                  "5x − 35 > 2x + 2, so 3x > 37",
+                  "x > 37/3"
+                ],
+                [
+                  "3(x + 2) ≤ 5x − 4",
+                  "3x + 6 ≤ 5x − 4, so 10 ≤ 2x",
+                  "x ≥ 5"
+                ],
+                [
+                  "−2x ≥ 6",
+                  "divide by −2: the sign flips",
+                  "x ≤ −3"
+                ],
+                [
+                  "7 − 3x < 1",
+                  "−3x < −6: flip",
+                  "x > 2"
+                ]
+              ],
+              "title": "Solve like an equation; dividing by a negative flips the sign"
+            },
+            "alt": "A table of four linear inequalities with the working and the solution set, two of them showing the sign reversing on division by a negative"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "Solve $3(x + 2) \\leqslant 5x - 4$. The solution is $x \\geqslant k$. What is $k$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a linear inequality",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$3x + 6 \\leqslant 5x - 4$, so $10 \\leqslant 2x$ and $x \\geqslant 5$. Dividing by the positive $2$ leaves the sign as it is; $k = 5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "k = 5"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Quadratic inequalities: find the roots, sketch, read",
+        "body": "$x^2 < 9$ is not $x < 3$. The values whose square is less than $9$ run from $-3$ to $3$: $-3 < x < 3$. A quadratic inequality asks **where a curve is above or below the axis**, and the method is always the same: get zero on one side, find the roots, sketch the parabola, and read off the part that is wanted.\n\n$x^2 - 5x + 6 > 0$: roots at $2$ and $3$, the parabola opens upwards, so it is **above** the axis outside the roots: $x < 2$ or $x > 3$. Two separate pieces, joined by *or*, and they can never be squashed into one double inequality: $3 < x < 2$ describes nothing.\n\n$x^2 - 5x + 6 < 0$: the same roots, **below** the axis between them: $2 < x < 3$. One piece.\n\n**The rule for an upward parabola:** less than zero is *between* the roots, greater than zero is *outside* them, in two pieces. $\\leqslant$ and $\\geqslant$ include the roots; $<$ and $>$ exclude them. **One test value** settles any doubt: $x = 0$ gives $6 > 0$, so $0$ is in the *greater than* set, which is the outside.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1,
+                5
+              ],
+              "yRange": [
+                -2,
+                7
+              ],
+              "grid": true,
+              "xStep": 1,
+              "yStep": 1,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": -5,
+                  "c": 6,
+                  "label": "y = x² − 5x + 6"
+                }
+              ],
+              "points": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "label": "2",
+                  "labelBelow": true
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "label": "3",
+                  "labelBelow": true
+                }
+              ]
+            },
+            "alt": "The parabola y equals x squared minus five x plus six crossing the x axis at two and three, above the axis outside the roots and below it between them"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Inequality",
+                "Roots",
+                "Where the curve is",
+                "Solution"
+              ],
+              "rows": [
+                [
+                  "x² < 9",
+                  "−3 and 3",
+                  "below: between",
+                  "−3 < x < 3"
+                ],
+                [
+                  "x² − 5x + 6 > 0",
+                  "2 and 3",
+                  "above: outside",
+                  "x < 2 or x > 3"
+                ],
+                [
+                  "x² − 5x + 6 < 0",
+                  "2 and 3",
+                  "below: between",
+                  "2 < x < 3"
+                ],
+                [
+                  "x² ≥ 16",
+                  "−4 and 4",
+                  "on or above: outside",
+                  "x ≤ −4 or x ≥ 4"
+                ]
+              ],
+              "title": "Below the axis is between the roots; above is outside, in two pieces"
+            },
+            "alt": "A table of four quadratic inequalities with their roots, whether the wanted part of the curve is above or below the axis, and the solution set"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "What is the solution of $x^2 < 9$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a quadratic inequality",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The parabola $y = x^2 - 9$ is below the axis between its roots $-3$ and $3$, so $-3 < x < 3$. $x < 3$ alone would include $x = -10$, whose square is $100$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$-3 < x < 3$"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "$x < -3$ or $x > 3$",
+            "$x < 3$ or $x > -3$",
+            "$x < 3$",
+            "$-3 < x < 3$"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "The specification's example, with a coefficient and a fraction",
+        "body": "*Solve $2x^2 + 5x \\leqslant 3$.* Zero on one side: $2x^2 + 5x - 3 \\leqslant 0$. Factorise: $(2x - 1)(x + 3) \\leqslant 0$, roots $x = \\frac{1}{2}$ and $x = -3$. The parabola opens upwards, so *less than or equal to zero* is between the roots, roots included:\n\n$$-3 \\leqslant x \\leqslant \\tfrac{1}{2}$$\n\nWrite the smaller root on the left. Check with a value inside, $x = 0$: $0 \\leqslant 3$, true. Check with one outside, $x = 1$: $7 \\leqslant 3$, false. The two checks confirm both the interval and its direction.\n\nIf the $x^2$ term comes out **negative** after rearranging, multiply through by $-1$ and reverse the inequality, then proceed with an upward parabola. $4 - x^2 > 0$ becomes $x^2 - 4 < 0$, so $-2 < x < 2$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $2x^2 + 5x \\leqslant 3$.",
+            "steps": [
+              {
+                "text": "$2x^2 + 5x - 3 \\leqslant 0$",
+                "note": "zero on one side first"
+              },
+              {
+                "text": "$(2x - 1)(x + 3) \\leqslant 0$: roots $\\tfrac{1}{2}$ and $-3$",
+                "note": "a × c = −6, pair 6 and −1"
+              },
+              {
+                "text": "Upward parabola, less than or equal to zero: between the roots, included",
+                "note": "sketch it"
+              },
+              {
+                "text": "$-3 \\leqslant x \\leqslant \\tfrac{1}{2}$",
+                "note": "check x = 0: 0 ≤ 3 true; x = 1: 7 ≤ 3 false"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Inequality",
+                "Rearranged",
+                "Roots",
+                "Solution"
+              ],
+              "rows": [
+                [
+                  "2x² + 5x ≤ 3",
+                  "2x² + 5x − 3 ≤ 0",
+                  "−3 and 1/2",
+                  "−3 ≤ x ≤ 1/2"
+                ],
+                [
+                  "3x² − 7x − 6 ≤ 0",
+                  "as it is",
+                  "−2/3 and 3",
+                  "−2/3 ≤ x ≤ 3"
+                ],
+                [
+                  "4 − x² > 0",
+                  "x² − 4 < 0, sign reversed",
+                  "−2 and 2",
+                  "−2 < x < 2"
+                ]
+              ],
+              "title": "Zero on one side, factorise, sketch, read, check"
+            },
+            "alt": "A table of three quadratic inequalities rearranged to zero, with their roots and solution sets, one of them reversed to make the x squared term positive"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "Solve $x^2 - 5x + 6 > 0$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "greater than zero: two pieces",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Roots at $2$ and $3$; the parabola opens upwards, so it is above the axis outside the roots: $x < 2$ or $x > 3$. Two pieces, and they cannot be written as one double inequality.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x < 2 or x > 3"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "x < 2 or x > 3",
+            "x > 3 or x < 2",
+            "x < 2, x > 3"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Index laws with fractions and negatives",
+        "body": "The three GCSE laws still run everything: multiply powers by **adding** indices, divide by **subtracting**, raise a power to a power by **multiplying**. Further Maths uses them with fractions and negatives in the indices.\n\nThe specification's examples: $x^{\\frac{1}{2}} \\times x^{\\frac{7}{2}} = x^{\\frac{8}{2}} = x^4$, and $\\dfrac{x^{\\frac{3}{2}} \\times x^{\\frac{7}{2}}}{x^2} = \\dfrac{x^5}{x^2} = x^3$. Add the fractions, subtract the $2$, and the answer is *a single power of $x$*, as asked.\n\n**A fractional index is a root, then a power.** $x^{\\frac{1}{2}} = \\sqrt{x}$, $x^{\\frac{2}{3}} = \\left(\\sqrt[3]{x}\\right)^2$. Root first, because the numbers stay small: $16^{\\frac{3}{4}} = \\left(\\sqrt[4]{16}\\right)^3 = 2^3 = 8$.\n\n**A negative index is a reciprocal**, and it never makes the answer negative: $8^{-\\frac{2}{3}} = \\dfrac{1}{8^{\\frac{2}{3}}} = \\dfrac{1}{4}$. Three moves in order: the sign flips it over, the denominator of the fraction takes a root, the numerator raises to a power.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Law",
+                "Single power or value"
+              ],
+              "rows": [
+                [
+                  "x^(1/2) × x^(7/2)",
+                  "add the indices",
+                  "x⁴"
+                ],
+                [
+                  "x^(3/2) × x^(7/2) ÷ x²",
+                  "add, then subtract",
+                  "x³"
+                ],
+                [
+                  "(x^(2/3))^(3/2)",
+                  "multiply the indices",
+                  "x"
+                ],
+                [
+                  "16^(3/4)",
+                  "fourth root, then cube",
+                  "8"
+                ],
+                [
+                  "8^(−2/3)",
+                  "flip, cube root, square",
+                  "1/4"
+                ]
+              ],
+              "title": "Add, subtract, multiply the indices; root first; a negative index flips"
+            },
+            "alt": "A table of expressions with fractional and negative indices, the law each uses, and the single power or value it simplifies to"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Work out $8^{-\\frac{2}{3}}$ without a calculator.",
+            "steps": [
+              {
+                "text": "The negative index means a reciprocal: $\\dfrac{1}{8^{\\frac{2}{3}}}$",
+                "note": "the sign flips it over"
+              },
+              {
+                "text": "The denominator $3$ is a cube root: $\\sqrt[3]{8} = 2$",
+                "note": "root first, so the numbers stay small"
+              },
+              {
+                "text": "The numerator $2$ is a square: $2^2 = 4$"
+              },
+              {
+                "text": "$8^{-\\frac{2}{3}} = \\dfrac{1}{4}$",
+                "note": "positive: a negative index never makes a negative answer"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "Work out $16^{\\frac{3}{4}}$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a fractional index",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Root first: $\\sqrt[4]{16} = 2$. Then the power: $2^3 = 8$. Doing the power first, $16^3 = 4096$, then the fourth root, gives the same $8$ with harder arithmetic.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "8"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 8,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Solving an equation with a fractional index",
+        "body": "The specification's example: *solve $x^{-\\frac{1}{2}} = 3$.* Undo the index by raising both sides to its reciprocal: $\\left(x^{-\\frac{1}{2}}\\right)^{-2} = 3^{-2}$, so $x = 3^{-2} = \\dfrac{1}{9}$. Check: $\\left(\\frac{1}{9}\\right)^{-\\frac{1}{2}} = \\sqrt{9} = 3$.\n\n**The method:** raise both sides to the power that makes the index $1$, which is the index turned upside down, sign and all. $x^{\\frac{2}{3}} = 9$ gives $x = 9^{\\frac{3}{2}} = \\left(\\sqrt{9}\\right)^3 = 27$. $x^{\\frac{3}{2}} = 8$ gives $x = 8^{\\frac{2}{3}} = 4$.\n\nQuestions usually say $x > 0$, which rules out the negative root that an even power would otherwise allow, and it is worth writing that you have used it. The check at the end, substituting back, is one line and it catches a reciprocal applied the wrong way round.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "Raise both sides to",
+                "Solution",
+                "Check"
+              ],
+              "rows": [
+                [
+                  "x^(−1/2) = 3",
+                  "−2",
+                  "x = 3^(−2) = 1/9",
+                  "(1/9)^(−1/2) = √9 = 3"
+                ],
+                [
+                  "x^(2/3) = 9",
+                  "3/2",
+                  "x = 9^(3/2) = 27",
+                  "27^(2/3) = 3² = 9"
+                ],
+                [
+                  "x^(3/2) = 8",
+                  "2/3",
+                  "x = 8^(2/3) = 4",
+                  "4^(3/2) = 2³ = 8"
+                ],
+                [
+                  "x^(−2) = 1/25",
+                  "−1/2",
+                  "x = 25^(1/2) = 5",
+                  "5^(−2) = 1/25"
+                ]
+              ],
+              "title": "Raise both sides to the reciprocal of the index"
+            },
+            "alt": "A table of four equations with a fractional or negative index, the power both sides are raised to, the solution and a check by substitution"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "Solve $x^{\\frac{2}{3}} = 9$, where $x > 0$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "undoing a fractional index",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Raise both sides to the power $\\frac{3}{2}$: $x = 9^{\\frac{3}{2}} = \\left(\\sqrt{9}\\right)^3 = 3^3 = 27$. Check: $27^{\\frac{2}{3}} = \\left(\\sqrt[3]{27}\\right)^2 = 9$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "27"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 27,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Same base, then equate the powers",
+        "body": "When the unknown is **in** the index, write both sides as powers of the same base and equate the indices. $2^{3x} = 4^{x + 1}$: since $4 = 2^2$, the right side is $2^{2x + 2}$, so $3x = 2x + 2$ and $x = 2$.\n\n$3^{2x - 1} = 27 = 3^3$, so $2x - 1 = 3$ and $x = 2$. $4^x = 8$: both are powers of $2$, $2^{2x} = 2^3$, so $x = \\frac{3}{2}$. $5^x = \\dfrac{1}{125} = 5^{-3}$, so $x = -3$.\n\n**Finding the base.** Look for the smallest number that both sides are powers of: $4$, $8$, $16$ and $32$ are all powers of $2$; $9$ and $27$ are powers of $3$; $25$ and $125$ of $5$. A fraction such as $\\frac{1}{125}$ is a negative power. Once both sides share a base, the equation is linear in the index and the rest is GCSE.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "Same base",
+                "Equate the indices",
+                "Solution"
+              ],
+              "rows": [
+                [
+                  "2^(3x) = 4^(x + 1)",
+                  "2^(3x) = 2^(2x + 2)",
+                  "3x = 2x + 2",
+                  "x = 2"
+                ],
+                [
+                  "3^(2x − 1) = 27",
+                  "3^(2x − 1) = 3³",
+                  "2x − 1 = 3",
+                  "x = 2"
+                ],
+                [
+                  "4^x = 8",
+                  "2^(2x) = 2³",
+                  "2x = 3",
+                  "x = 3/2"
+                ],
+                [
+                  "5^x = 1/125",
+                  "5^x = 5^(−3)",
+                  "x = −3",
+                  "x = −3"
+                ]
+              ],
+              "title": "Write both sides as powers of one base, then equate the indices"
+            },
+            "alt": "A table of four equations with the unknown in the index, each rewritten with the same base on both sides, the indices equated and solved"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "Solve $2^{3x} = 4^{x + 1}$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "equating indices",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$4^{x + 1} = (2^2)^{x + 1} = 2^{2x + 2}$. With the same base, equate the indices: $3x = 2x + 2$, so $x = 2$. Check: $2^6 = 64$ and $4^3 = 64$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Solve $5(x - 7) > 2(x + 1)$.\n2. Solve $x^2 \\geqslant 16$.\n3. Write $x^{\\frac{3}{2}} \\times x^{\\frac{7}{2}} \\div x^2$ as a single power of $x$.\n\n**Part B.**\n\n4. Solve $x^2 + x - 12 < 0$.\n5. Work out $8^{-\\frac{2}{3}}$.\n6. Solve $3^{2x - 1} = 27$.\n\n**Part C.**\n\n7. Solve $2x^2 + 5x \\leqslant 3$.\n8. Solve $x^{-\\frac{1}{2}} = 3$.\n9. Solve $9^x = 3^{x + 3}$.\n\nFor question 7, get zero on one side before you factorise, and check with $x = 0$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "x > 37/3"
+                ],
+                [
+                  "2",
+                  "x ≤ −4 or x ≥ 4"
+                ],
+                [
+                  "3",
+                  "x³"
+                ],
+                [
+                  "4",
+                  "−4 < x < 3"
+                ],
+                [
+                  "5",
+                  "1/4"
+                ],
+                [
+                  "6",
+                  "x = 2"
+                ],
+                [
+                  "7",
+                  "−3 ≤ x ≤ 1/2"
+                ],
+                [
+                  "8",
+                  "x = 1/9"
+                ],
+                [
+                  "9",
+                  "x = 3"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on inequalities and index equations"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: the picture behind the rule, and the checks that cost nothing",
+        "body": "**A quadratic inequality is a question about a graph, and the sketch is the method.** Students who memorise *less than means between* get the reversed case wrong; students who sketch never do. Roots on the axis, a U or a hump according to the sign of $x^2$, and the wanted part read off. Then one test value inside and one outside, which together confirm the interval and its direction in two substitutions.\n\n**Two pieces stay two pieces.** $x < 2$ or $x > 3$ is a set with a gap in it, and no single double inequality can describe a gap. Writing $3 < x < 2$ is the most common way this mark is lost, and it is lost because the sketch was skipped.\n\n**Reverse, then proceed.** A negative $x^2$ term after rearranging is not a new case; multiply by $-1$, flip the sign, and the parabola opens upwards again. The same flip applies to a linear inequality divided by a negative, and for the same reason: the number line has been turned round.\n\n**Indices: root first, and the sign is a reciprocal, never a minus.** $8^{-\\frac{2}{3}}$ is $\\frac{1}{4}$, positive. Undo a fractional index by raising to its reciprocal, sign included, and substitute back. For an unknown in the index, the whole skill is spotting the shared base, and $4, 8, 16, 32$ all being $2^n$ is worth knowing cold.\n\n**Why the exam pairs these two.** Both are places where a mechanical rule fails and a picture or a check succeeds: the inequality that flips, the two pieces that will not join, the negative index that stays positive. The top band shows the check, because the check is the understanding.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does",
+              "boxes": [
+                {
+                  "title": "Sketches the parabola",
+                  "body": "Roots on the axis, U or hump, the wanted part shaded; the rule follows from the picture."
+                },
+                {
+                  "title": "Tests a value inside and one outside",
+                  "body": "Two substitutions confirm the interval and its direction."
+                },
+                {
+                  "title": "Keeps two pieces as two",
+                  "body": "x < 2 or x > 3 describes a gap; no double inequality can."
+                },
+                {
+                  "title": "Substitutes back into an index equation",
+                  "body": "x = 1/9 in x^(−1/2) = 3 gives √9 = 3, which catches a reciprocal applied the wrong way."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band answer to inequalities and index equations: sketching, testing values, keeping two pieces separate, and substituting back"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Linear inequalities**: solve like an equation; dividing or multiplying by a negative **flips** the sign. $5(x - 7) > 2(x + 1)$ gives $x > \\frac{37}{3}$.\n- **Quadratic inequalities**: zero on one side, find the roots, sketch, read off. Upward parabola: **below** is between the roots, **above** is outside, in two pieces joined by *or*.\n- $x^2 < 9$ is $-3 < x < 3$; $2x^2 + 5x \\leqslant 3$ is $-3 \\leqslant x \\leqslant \\frac{1}{2}$.\n- A negative $x^2$ term: multiply by $-1$ and reverse the sign. Test one value inside and one outside.\n- **Index laws**: add to multiply, subtract to divide, multiply for a power of a power. $x^{\\frac{1}{2}} \\times x^{\\frac{7}{2}} = x^4$.\n- **Fractional index**: root first, then power. $16^{\\frac{3}{4}} = 8$. **Negative index**: reciprocal, still positive. $8^{-\\frac{2}{3}} = \\frac{1}{4}$.\n- **Unknown as the base**: raise both sides to the reciprocal of the index. $x^{-\\frac{1}{2}} = 3$ gives $x = \\frac{1}{9}$.\n- **Unknown in the index**: same base, then equate the indices. $2^{3x} = 4^{x + 1}$ gives $x = 2$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "The flip",
+                  "equation": "divide by a negative: reverse the sign",
+                  "units": "and multiply a quadratic by −1 the same way"
+                },
+                {
+                  "name": "Quadratic inequality",
+                  "equation": "roots, sketch, read",
+                  "units": "below is between; above is outside, two pieces"
+                },
+                {
+                  "name": "Fractional index",
+                  "equation": "x^(p/q) = (q-th root of x)^p",
+                  "units": "root first; a negative index is a reciprocal"
+                },
+                {
+                  "name": "Unknown index",
+                  "equation": "same base, equate the powers",
+                  "units": "4^x = 8 is 2^(2x) = 2^3"
+                }
+              ]
+            },
+            "alt": "A reference card with the sign flip, the method for a quadratic inequality, the meaning of a fractional index and the same-base method for an unknown index"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Solve $7 - 3x < 1$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the flip",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$-3x < -6$. Dividing by $-3$ reverses the sign: $x > 2$. Check with $x = 3$: $7 - 9 = -2 < 1$, true.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x > 2"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x > 2",
+        "2 < x"
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "Solve $x^2 \\geqslant 16$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "greater than or equal: two pieces",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Roots at $-4$ and $4$; the parabola $y = x^2 - 16$ is on or above the axis outside them: $x \\leqslant -4$ or $x \\geqslant 4$, roots included because of the $\\geqslant$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x ≤ −4 or x ≥ 4"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x ≤ -4 or x ≥ 4",
+        "x ≥ 4 or x ≤ -4",
+        "x <= -4 or x >= 4",
+        "x >= 4 or x <= -4"
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "Work out $27^{\\frac{2}{3}}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a fractional index",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Root first: $\\sqrt[3]{27} = 3$. Then the power: $3^2 = 9$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "prompt": "Write $x^{\\frac{1}{2}} \\times x^{\\frac{7}{2}}$ as a single power of $x$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "adding fractional indices",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiplying powers adds the indices: $\\frac{1}{2} + \\frac{7}{2} = \\frac{8}{2} = 4$, so $x^4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x⁴"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x^4"
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "Solve $x^2 + x - 12 < 0$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a quadratic inequality",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(x + 4)(x - 3) < 0$, roots $-4$ and $3$. Below the axis is between the roots: $-4 < x < 3$. Check $x = 0$: $-12 < 0$, true.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−4 < x < 3"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "-4 < x < 3",
+        "3 > x > -4"
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "Work out $8^{-\\frac{2}{3}}$. Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a negative fractional index",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The negative index is a reciprocal: $\\dfrac{1}{8^{\\frac{2}{3}}}$. Cube root of $8$ is $2$, squared is $4$, so the value is $\\frac{1}{4} = 0.25$, positive.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1/4"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "prompt": "Solve $3^{2x - 1} = 27$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "equating indices",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$27 = 3^3$, so $2x - 1 = 3$ and $x = 2$. Check: $3^3 = 27$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "prompt": "Write $\\dfrac{x^{\\frac{3}{2}} \\times x^{\\frac{7}{2}}}{x^2}$ as a single power of $x$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the specification's quotient",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Add the indices on top: $\\frac{3}{2} + \\frac{7}{2} = 5$. Subtract the $2$ underneath: $5 - 2 = 3$. So $x^3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x³"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x^3"
+      ]
+    },
+    {
+      "id": "q9",
+      "prompt": "Solve $x^{\\frac{3}{2}} = 8$, where $x > 0$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "undoing a fractional index",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Raise both sides to the power $\\frac{2}{3}$: $x = 8^{\\frac{2}{3}} = \\left(\\sqrt[3]{8}\\right)^2 = 4$. Check: $4^{\\frac{3}{2}} = 2^3 = 8$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "prompt": "A student solves $x^2 - 5x + 6 > 0$ and writes $3 < x < 2$. What is wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "two pieces",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The parabola is above the axis outside its roots, so the solution is $x < 2$ **or** $x > 3$. Those are two pieces with a gap between them; $3 < x < 2$ asks for a number both bigger than $3$ and smaller than $2$, which is nothing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The solution is two pieces, $x < 2$ or $x > 3$, which no double inequality can describe"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "The solution is two pieces, $x < 2$ or $x > 3$, which no double inequality can describe",
+        "The answer should be $2 < x < 3$, the region between the two roots",
+        "Nothing is wrong: $3 < x < 2$ is the standard way to write the region outside the two roots",
+        "The roots should be $-2$ and $-3$, so the answer is $-3 < x < -2$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "Solve $2x^2 + 5x \\leqslant 3$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the specification's inequality",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Rearrange: $2x^2 + 5x - 3 \\leqslant 0$, so $(2x - 1)(x + 3) \\leqslant 0$ with roots $-3$ and $\\frac{1}{2}$. An upward parabola is on or below the axis between its roots: $-3 \\leqslant x \\leqslant \\frac{1}{2}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−3 ≤ x ≤ 1/2"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "-3 ≤ x ≤ 1/2",
+        "-3 <= x <= 1/2",
+        "-3 ≤ x ≤ 0.5",
+        "1/2 ≥ x ≥ -3"
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "Solve $x^{-\\frac{1}{2}} = 3$. Give your answer as a fraction.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the specification's index equation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Raise both sides to the power $-2$: $x = 3^{-2} = \\dfrac{1}{9}$. Check: $\\left(\\frac{1}{9}\\right)^{-\\frac{1}{2}} = \\sqrt{9} = 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1/9"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "1/9",
+        "x = 1/9",
+        "3^-2"
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "Solve $4^x = 8$. Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a shared base",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Both are powers of $2$: $2^{2x} = 2^3$, so $2x = 3$ and $x = \\frac{3}{2} = 1.5$. Check: $4^{1.5} = (\\sqrt{4})^3 = 8$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3/2"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q14",
+      "prompt": "Which statement about $8^{-\\frac{2}{3}}$ is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the sign of a negative index",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A negative index flips the number over: $\\dfrac{1}{8^{\\frac{2}{3}}}$. Then the cube root of $8$ is $2$ and $2^2 = 4$, so the value is $\\frac{1}{4}$, positive. A negative index never makes a positive base negative.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "It equals $\\dfrac{1}{4}$: a negative index means a reciprocal, not a negative answer"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "It cannot be worked out without a calculator, because the index is a fraction",
+        "It equals $\\dfrac{1}{4}$: a negative index means a reciprocal, not a negative answer",
+        "It equals $-4$, because the index is negative and so the answer must be negative",
+        "It equals $-\\dfrac{1}{4}$, because the negative index makes the reciprocal negative too"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "Solve $3x^2 - 7x - 6 \\leqslant 0$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a quadratic inequality with a coefficient",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(3x + 2)(x - 3) \\leqslant 0$, roots $-\\frac{2}{3}$ and $3$. Upward parabola, on or below the axis between the roots: $-\\frac{2}{3} \\leqslant x \\leqslant 3$. Check $x = 0$: $-6 \\leqslant 0$, true.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−2/3 ≤ x ≤ 3"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "-2/3 ≤ x ≤ 3",
+        "-2/3 <= x <= 3",
+        "3 ≥ x ≥ -2/3"
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "Why does dividing both sides of an inequality by a negative number reverse the sign?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why the sign flips",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Take $2 < 5$ and multiply both by $-1$: $-2$ and $-5$, and now $-2 > -5$. Every pair of numbers swaps order under a negative multiplier, so the sign must reverse to stay true. Dividing by a negative is multiplying by a negative reciprocal, so it does the same.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Multiplying by a negative turns the number line round, so the larger number becomes the smaller"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Because negative numbers cannot appear in inequalities, so the sign must be changed to remove them",
+        "It does not: only multiplying by a negative reverses the sign, dividing leaves it alone",
+        "Multiplying by a negative turns the number line round, so the larger number becomes the smaller",
+        "Because the solution set must always be positive, and the flip keeps it that way"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "(a) Solve $5(x - 7) > 2(x + 1)$.\n\n(b) Solve $2x^2 + 5x \\leqslant 3$.\n\n(c) Write down the integers that satisfy both (a) and (b), or explain why there are none.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's two inequalities",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** Expand both sides: $5x - 35 > 2x + 2$. Collect: $3x > 37$. Divide by the positive $3$, so the sign stays: $x > \\frac{37}{3}$. Left as a fraction, since $\\frac{37}{3} = 12\\frac{1}{3}$ is exact and $12.3$ is not.\n\n**(b)** Zero on one side: $2x^2 + 5x - 3 \\leqslant 0$. Factorise: $a \\times c = -6$, the pair is $6$ and $-1$, so $2x^2 + 6x - x - 3 = (2x - 1)(x + 3) \\leqslant 0$. The roots are $x = \\frac{1}{2}$ and $x = -3$. The parabola opens upwards, so it is on or below the axis between the roots, and the $\\leqslant$ includes them: $-3 \\leqslant x \\leqslant \\frac{1}{2}$. Check with $x = 0$: $0 \\leqslant 3$, true; with $x = 1$: $7 \\leqslant 3$, false.\n\n**(c)** Every number in the solution of (a) is greater than $\\frac{37}{3}$, which is more than $12$. Every number in the solution of (b) is at most $\\frac{1}{2}$. No number can be both larger than $12$ and at most $\\frac{1}{2}$, so no integer, and indeed no number at all, satisfies both. The two sets do not overlap; on a number line one lies entirely to the right of $12$ and the other entirely to the left of $1$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands and collects"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x > 37/3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "rearranges to zero"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "factorises correctly"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "between the roots"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "−3 ≤ x ≤ 1/2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "compares the two sets"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "none, with the reason"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Expands and collects to 3x > 37 and gives x > 37/3, left as a fraction.",
+          "marks": 2
+        },
+        {
+          "text": "Rearranges to 2x² + 5x − 3 ≤ 0 and factorises to (2x − 1)(x + 3).",
+          "marks": 2
+        },
+        {
+          "text": "Sketches or reasons that the solution is between the roots, inclusive: −3 ≤ x ≤ 1/2.",
+          "marks": 2
+        },
+        {
+          "text": "Compares the two sets: every x in (b) is at most 1/2 and every x in (a) exceeds 12, so no number is in both.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** Expand both sides: $5x - 35 > 2x + 2$. Collect: $3x > 37$. Divide by the positive $3$, so the sign stays: $x > \\frac{37}{3}$. Left as a fraction, since $\\frac{37}{3} = 12\\frac{1}{3}$ is exact and $12.3$ is not.\n\n**(b)** Zero on one side: $2x^2 + 5x - 3 \\leqslant 0$. Factorise: $a \\times c = -6$, the pair is $6$ and $-1$, so $2x^2 + 6x - x - 3 = (2x - 1)(x + 3) \\leqslant 0$. The roots are $x = \\frac{1}{2}$ and $x = -3$. The parabola opens upwards, so it is on or below the axis between the roots, and the $\\leqslant$ includes them: $-3 \\leqslant x \\leqslant \\frac{1}{2}$. Check with $x = 0$: $0 \\leqslant 3$, true; with $x = 1$: $7 \\leqslant 3$, false.\n\n**(c)** Every number in the solution of (a) is greater than $\\frac{37}{3}$, which is more than $12$. Every number in the solution of (b) is at most $\\frac{1}{2}$. No number can be both larger than $12$ and at most $\\frac{1}{2}$, so no integer, and indeed no number at all, satisfies both. The two sets do not overlap; on a number line one lies entirely to the right of $12$ and the other entirely to the left of $1$."
+    },
+    {
+      "id": "q18",
+      "prompt": "(a) Write $\\dfrac{x^{\\frac{3}{2}} \\times x^{\\frac{7}{2}}}{x^2}$ as a single power of $x$.\n\n(b) Solve $x^{-\\frac{1}{2}} = 3$.\n\n(c) Solve $2^{3x} = 4^{x + 1}$.\n\n(d) A student says that $8^{-\\frac{2}{3}}$ is negative. Show that the student is wrong.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's index examples",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** Multiplying powers adds the indices: $\\frac{3}{2} + \\frac{7}{2} = \\frac{10}{2} = 5$, so the numerator is $x^5$. Dividing by $x^2$ subtracts: $5 - 2 = 3$. The expression is $x^3$.\n\n**(b)** To undo the index $-\\frac{1}{2}$, raise both sides to its reciprocal, $-2$:\n\n$$\\left(x^{-\\frac{1}{2}}\\right)^{-2} = 3^{-2}, \\qquad x = 3^{-2} = \\frac{1}{9}$$\n\nCheck by substituting back: $\\left(\\frac{1}{9}\\right)^{-\\frac{1}{2}} = \\left(9\\right)^{\\frac{1}{2}} = 3$. The negative index turned the fraction over and the half took its square root.\n\n**(c)** Write both sides with base $2$: $4^{x + 1} = \\left(2^2\\right)^{x + 1} = 2^{2x + 2}$. So $2^{3x} = 2^{2x + 2}$, and with the same base the indices are equal: $3x = 2x + 2$, giving $x = 2$. Check: $2^6 = 64$ and $4^3 = 64$.\n\n**(d)** A negative index means a reciprocal: $8^{-\\frac{2}{3}} = \\dfrac{1}{8^{\\frac{2}{3}}}$. Now $8^{\\frac{2}{3}}$ is the cube root of $8$, which is $2$, squared, which is $4$. So $8^{-\\frac{2}{3}} = \\frac{1}{4}$, a positive number. The minus sign in the index instructs a reciprocal, not a change of sign; a positive base raised to any real power is positive. The student has confused $8^{-\\frac{2}{3}}$ with $-8^{\\frac{2}{3}} = -4$, which is a different expression.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the indices"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x³"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "raises to −2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1/9 with a check"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "same base"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reciprocal, root, power"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1/4 with the reason"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Adds the indices on top to 5 and subtracts 2 to give x³.",
+          "marks": 2
+        },
+        {
+          "text": "Raises both sides to the power −2 to get x = 1/9 and checks by substitution.",
+          "marks": 2
+        },
+        {
+          "text": "Writes 4^(x+1) as 2^(2x+2), equates 3x = 2x + 2 and solves x = 2.",
+          "marks": 2
+        },
+        {
+          "text": "Evaluates 8^(−2/3) as the reciprocal of (cube root of 8)², giving 1/4, and explains that a negative index means a reciprocal, not a negative value.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** Multiplying powers adds the indices: $\\frac{3}{2} + \\frac{7}{2} = \\frac{10}{2} = 5$, so the numerator is $x^5$. Dividing by $x^2$ subtracts: $5 - 2 = 3$. The expression is $x^3$.\n\n**(b)** To undo the index $-\\frac{1}{2}$, raise both sides to its reciprocal, $-2$:\n\n$$\\left(x^{-\\frac{1}{2}}\\right)^{-2} = 3^{-2}, \\qquad x = 3^{-2} = \\frac{1}{9}$$\n\nCheck by substituting back: $\\left(\\frac{1}{9}\\right)^{-\\frac{1}{2}} = \\left(9\\right)^{\\frac{1}{2}} = 3$. The negative index turned the fraction over and the half took its square root.\n\n**(c)** Write both sides with base $2$: $4^{x + 1} = \\left(2^2\\right)^{x + 1} = 2^{2x + 2}$. So $2^{3x} = 2^{2x + 2}$, and with the same base the indices are equal: $3x = 2x + 2$, giving $x = 2$. Check: $2^6 = 64$ and $4^3 = 64$.\n\n**(d)** A negative index means a reciprocal: $8^{-\\frac{2}{3}} = \\dfrac{1}{8^{\\frac{2}{3}}}$. Now $8^{\\frac{2}{3}}$ is the cube root of $8$, which is $2$, squared, which is $4$. So $8^{-\\frac{2}{3}} = \\frac{1}{4}$, a positive number. The minus sign in the index instructs a reciprocal, not a change of sign; a positive base raised to any real power is positive. The student has confused $8^{-\\frac{2}{3}}$ with $-8^{\\frac{2}{3}} = -4$, which is a different expression."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 12
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 32
+    }
+  },
+  "examTechnique": {
+    "body": "Inequality answers are marked on the **set**, so the last mark is for the right symbols round the right numbers: $\\leqslant$ where the roots are included, *or* between two pieces, and the smaller number on the left of a double inequality. Show the roots and a sketch, or a test value, so the method mark is safe even if the reading slips. Dividing by a negative is the one place the algebra changes, and the paper checks it.\n\nFor indices, answer in the form asked: *a single power of $x$* means $x^3$, not $x^5 \\div x^2$. Root first when evaluating a fractional index, treat a negative index as a reciprocal, and when the unknown is in the index write both sides with one base and say that you are equating the indices. Substitute back at the end; it is one line and it catches a reciprocal the wrong way round.",
+    "examinerErrors": [
+      "Not reversing the sign when dividing by a negative.",
+      "Writing $x < 3$ for $x^2 < 9$, forgetting the negative side.",
+      "Joining two pieces into one double inequality: $3 < x < 2$.",
+      "Using $<$ where the question had $\\leqslant$, so the roots are wrongly excluded.",
+      "Making a negative index produce a negative answer.",
+      "Applying the power before the root in $16^{\\frac{3}{4}}$ and getting lost in large numbers.",
+      "Equating indices without first making the bases the same."
+    ],
+    "grade9Looks": "A grade 9 answer treats a quadratic inequality as a picture: it finds the roots, sketches, reads off the part that is wanted, and confirms with a value inside and one outside. It keeps two pieces as two, includes the roots when the symbol says so, and reverses a negative $x^2$ term or a negative divisor without hesitation, because it knows why the sign flips. With indices it works root first, reads a negative index as a reciprocal that stays positive, undoes a fractional index by raising to its reciprocal and substitutes back, and for an unknown in the index it finds the shared base and says that the indices must then be equal."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

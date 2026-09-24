@@ -1,0 +1,1426 @@
+{
+  "id": "the-product-rule-for-counting",
+  "subjectId": "further-maths",
+  "unitId": "number",
+  "title": "The product rule for counting",
+  "specPoints": [
+    "1.2"
+  ],
+  "order": 2,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "At each position, ask how many are left",
+      "body": "With repeats allowed the number of choices stays the same; without, it falls by one each time. $5 \\times 5 \\times 5 = 125$ codes against $5 \\times 4 \\times 3 = 60$ numbers from the same five digits. The word *repeated* in the question decides which."
+    },
+    {
+      "kind": "spot",
+      "title": "Fill the restricted position first",
+      "body": "Odd, even, greater than, starts with: each fixes one position. Count that position while every digit is still available, then let the rest fall. The specification's example is $2 \\times 4! = 48$, the $2$ for the last digit being 1 or 3."
+    },
+    {
+      "kind": "check",
+      "title": "Roles or a set?",
+      "body": "Different roles, positions or labels for the chosen things: stop at the falling product, $8 \\times 7 = 56$. A team, a pair, a committee: divide by the orders of the chosen items, $56 \\div 2 = 28$. The result must be a whole number smaller than the ordered count."
+    },
+    {
+      "kind": "shortcut",
+      "title": "At least one means total minus none",
+      "body": "Codes with at least one 6 are all the codes minus the codes with no 6: $216 - 125 = 91$. *None* is a single product with one fewer digit available. *Exactly one* is not a complement; count it directly, position first."
+    },
+    {
+      "kind": "remember",
+      "title": "A repeated letter divides",
+      "body": "Arrangements of $n$ different things are $n!$; a letter that appears $k$ times has been counted $k!$ times over, so divide by $k!$. SCHOOL: $6! \\div 2! = 360$. LEVEL: $5! \\div (2! \\times 2!) = 30$."
+    }
+  ],
+  "why": {
+    "matters": "Every code, PIN, number plate and lottery ticket is a counting question, and the answer decides how safe or how hopeless it is. The product rule is the one idea underneath all of them: count the choices at each position and multiply. Further Maths takes it further than GCSE by adding restrictions, repeats, choices where order does not matter, and the complement for *at least one*, which are exactly the moves that turn a real situation into a product. The topic also feeds probability directly, because a probability is a count of what you want over a count of everything, and it is the first place the course asks for a systematic argument rather than a formula.",
+    "examples": [
+      {
+        "title": "The bike lock",
+        "body": "A four-digit combination lock has 10 × 10 × 10 × 10 = 10 000 settings, because a digit may repeat. A thief trying one a second, without a break, needs about three hours to be sure of it. The same lock with the rule that no digit may repeat has 5040 settings, which is why the rule makes it weaker, not stronger: every restriction on the code is a restriction on the thief's search as well. Counting tells you which way a rule cuts.",
+        "visual": {
+          "type": "diagram",
+          "component": "size-compare",
+          "props": {
+            "caption": "Settings on a four-digit lock",
+            "bars": [
+              {
+                "label": "Repeats allowed",
+                "value": 10000,
+                "display": "10 000",
+                "note": "10 × 10 × 10 × 10"
+              },
+              {
+                "label": "No digit repeated",
+                "value": 5040,
+                "display": "5040",
+                "note": "10 × 9 × 8 × 7"
+              }
+            ]
+          },
+          "alt": "Two bars to scale: ten thousand settings on a four-digit lock when digits may repeat, against five thousand and forty when no digit may repeat"
+        }
+      },
+      {
+        "title": "The number plate",
+        "body": "A current British number plate is two letters, two digits and three letters. With 26 letters and 10 digits available at every position, the product rule gives 26 × 26 × 10 × 10 × 26 × 26 × 26, which is 1 188 137 600 possible plates, before any letters are ruled out. Nobody lists them; the multiplication is the whole count, and it is why the format was chosen: enough combinations for every car that will ever be registered under it.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Position",
+              "Choices",
+              "Running product"
+            ],
+            "rows": [
+              [
+                "two letters",
+                "26 × 26",
+                "676"
+              ],
+              [
+                "two digits",
+                "10 × 10",
+                "67 600"
+              ],
+              [
+                "three letters",
+                "26 × 26 × 26",
+                "1 188 137 600"
+              ]
+            ],
+            "title": "Seven positions, one multiplication"
+          },
+          "alt": "A table of the seven positions on a number plate in three groups, the choices at each and the running product, ending at just under 1.2 billion plates"
+        }
+      },
+      {
+        "title": "The lottery ticket",
+        "body": "A lottery ticket is six numbers chosen from 59, and the order they come out in does not matter. Count as if it did, 59 × 58 × 57 × 56 × 55 × 54, then divide by the 6! = 720 orders of the six chosen numbers, and there are 45 057 474 possible tickets. One ticket is one of those, so the chance of matching all six is about one in 45 million. The division for order is the step this topic adds to GCSE counting, and it is the step that turns a huge ordered count into the number on the back of the ticket.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Step",
+              "Count"
+            ],
+            "rows": [
+              [
+                "six numbers in order, from 59",
+                "59 × 58 × 57 × 56 × 55 × 54"
+              ],
+              [
+                "orders of the six chosen",
+                "6! = 720"
+              ],
+              [
+                "tickets",
+                "45 057 474"
+              ],
+              [
+                "one ticket",
+                "about 1 in 45 million"
+              ]
+            ],
+            "title": "Order does not matter, so divide"
+          },
+          "alt": "A table counting lottery tickets: six numbers chosen from fifty-nine in order, divided by the seven hundred and twenty orders of the chosen six, giving forty-five million tickets"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Multiply the choices, and count what is left",
+        "body": "The **product rule** is the whole of GCSE counting in one line: if one thing can happen in $m$ ways and then another in $n$ ways, together they can happen in $m \\times n$ ways. Three starters and four mains give $3 \\times 4 = 12$ meals. Further Maths keeps the rule and makes the situations harder, so the skill is in deciding what $m$ and $n$ are.\n\nThe question to ask at every position is **how many choices are left?**\n\n- With **repetition allowed**, the number of choices stays the same: a three-digit code from the digits 1 to 5 is $5 \\times 5 \\times 5 = 125$.\n- With **no repetition**, it falls by one each time: a three-digit number using each of 1 to 5 at most once is $5 \\times 4 \\times 3 = 60$.\n\nRead the question for the word that decides: *code* or *password* usually allows repeats; *using each digit once*, *no digit repeated* or *arranging* does not. A four-digit PIN has $10^4 = 10\\,000$ possibilities with repeats and $10 \\times 9 \\times 8 \\times 7 = 5040$ without.\n\n**Why it works.** Every choice at the first position can be followed by every choice at the second, so the pairs form a grid with $m$ rows and $n$ columns. The grid picture is worth keeping: it is also why a systematic list, if you had the patience, would agree with the multiplication.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Situation",
+                "Choices at each position",
+                "Total"
+              ],
+              "rows": [
+                [
+                  "3-digit code from 1 to 5, repeats allowed",
+                  "5 × 5 × 5",
+                  "125"
+                ],
+                [
+                  "3-digit number from 1 to 5, no repeats",
+                  "5 × 4 × 3",
+                  "60"
+                ],
+                [
+                  "4-digit PIN, repeats allowed",
+                  "10 × 10 × 10 × 10",
+                  "10 000"
+                ],
+                [
+                  "4-digit PIN, no repeats",
+                  "10 × 9 × 8 × 7",
+                  "5040"
+                ],
+                [
+                  "3 starters, 4 mains",
+                  "3 × 4",
+                  "12"
+                ]
+              ],
+              "title": "At each position: how many are left?"
+            },
+            "alt": "A table of five counting situations with the number of choices at each position and the product, contrasting repeats allowed with no repeats"
+          },
+          {
+            "type": "worked-example",
+            "problem": "How many three-digit numbers can be made from the digits 1, 2, 3, 4, 5 if no digit is repeated?",
+            "steps": [
+              {
+                "text": "Hundreds digit: 5 choices",
+                "note": "any of the five"
+              },
+              {
+                "text": "Tens digit: 4 choices",
+                "note": "one digit has been used"
+              },
+              {
+                "text": "Units digit: 3 choices",
+                "note": "two have been used"
+              },
+              {
+                "text": "$5 \\times 4 \\times 3 = 60$",
+                "note": "with repeats allowed it would be 5 × 5 × 5 = 125"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "How many three-digit numbers can be made from the digits 1, 2, 3, 4 and 5 if no digit may be used more than once?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the product rule without repetition",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$5 \\times 4 \\times 3 = 60$. The choices fall by one at each position because a digit, once used, is gone. With repeats allowed the answer would be $125$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "60"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 60,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Deal with the restriction first",
+        "body": "The specification's own example: *how many 5-digit odd numbers can be formed using the digits 1, 3, 4, 6, 8 with no repetition?*\n\nA number is odd because of its **last** digit, so that position is restricted: it must be 1 or 3. Fill the restricted position **first**, while every digit is still available, then count what is left for the others.\n\n- Last digit: **2** choices (1 or 3).\n- The other four positions take the remaining four digits in any order: $4 \\times 3 \\times 2 \\times 1 = 24$.\n- Total: $2 \\times 24 = 48$.\n\n**Why first.** If you filled the positions left to right, the number of choices for the last digit would depend on whether 1 and 3 had already been used, and the count would split into cases. Fixing the restricted position first keeps every later count simple.\n\nThe same idea handles *even*, *starts with*, *greater than* and *ends in 5*: find the position the condition fixes, count its choices, then let the rest fall by one each time. A three-digit even number from the digits 1 to 5 with no repeats: last digit 2 or 4, so $2 \\times 4 \\times 3 = 24$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Position",
+                "Choices",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "last digit",
+                  "2",
+                  "must be odd: 1 or 3"
+                ],
+                [
+                  "first digit",
+                  "4",
+                  "any of the four not yet used"
+                ],
+                [
+                  "second",
+                  "3",
+                  ""
+                ],
+                [
+                  "third",
+                  "2",
+                  ""
+                ],
+                [
+                  "fourth",
+                  "1",
+                  ""
+                ],
+                [
+                  "total",
+                  "2 × 24 = 48",
+                  "restriction first, then the rest"
+                ]
+              ],
+              "title": "The restricted position is counted first"
+            },
+            "alt": "A table filling the five positions of an odd number from the digits 1 3 4 6 8, the last digit first with two choices, then four, three, two and one, giving forty-eight"
+          },
+          {
+            "type": "worked-example",
+            "problem": "How many 5-digit odd numbers can be formed from the digits 1, 3, 4, 6, 8 with no digit repeated?",
+            "steps": [
+              {
+                "text": "The last digit decides oddness, so fix it first: 1 or 3 gives 2 choices",
+                "note": "the restriction"
+              },
+              {
+                "text": "Four digits remain for four positions: $4 \\times 3 \\times 2 \\times 1 = 24$",
+                "note": "no repetition, so falling by one"
+              },
+              {
+                "text": "$2 \\times 24 = 48$",
+                "note": "the answer the specification expects"
+              },
+              {
+                "text": "Check with a smaller case if unsure: with digits 1, 3, 4 the odd 3-digit numbers are 2 × 2 = 4, and listing gives 341, 431, 143, 413",
+                "note": "a list agrees with the product"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "How many three-digit even numbers can be made from the digits 1, 2, 3, 4, 5 with no digit repeated?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a restriction",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Even means the last digit is 2 or 4: fix that first, 2 choices. Then 4 choices for the first digit and 3 for the second: $2 \\times 4 \\times 3 = 24$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "24"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 24,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Or means add, and greater than is a restriction on the first digit",
+        "body": "*And* multiplies; *or* adds. A choice between separate cases is counted case by case, and the cases are added.\n\n*How many four-digit numbers greater than 5000 can be made from 2, 5, 7, 9 with no repeats?* Greater than 5000 restricts the **first** digit to 5, 7 or 9: three choices. The other three digits fall by one each: $3 \\times 3 \\times 2 \\times 1 = 18$, out of the $4! = 24$ arrangements altogether.\n\nWhen the cases really are different, add them. *A meal is a starter and a main, with a dessert optional.* With dessert: $3 \\times 4 \\times 2 = 24$. Without: $3 \\times 4 = 12$. Altogether $36$, which is the same as $3 \\times 4 \\times 3$ with *no dessert* counted as a third dessert choice; both views are right, and agreeing is the check.\n\n**Two traps.** Adding when the question says *and*, so that three starters and four mains give 7. And forgetting that a leading zero is not allowed in a number: four-digit numbers from the ten digits with repeats are $9 \\times 10 \\times 10 \\times 10 = 9000$, not $10\\,000$, because the first digit cannot be $0$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Cases",
+                "Count"
+              ],
+              "rows": [
+                [
+                  "4-digit numbers > 5000 from 2, 5, 7, 9, no repeats",
+                  "first digit 5, 7 or 9",
+                  "3 × 3 × 2 × 1 = 18"
+                ],
+                [
+                  "a meal with an optional dessert",
+                  "with, or without",
+                  "24 + 12 = 36"
+                ],
+                [
+                  "4-digit numbers, repeats allowed",
+                  "first digit not 0",
+                  "9 × 10 × 10 × 10 = 9000"
+                ],
+                [
+                  "4-digit numbers, no repeats",
+                  "first digit not 0, then 9 left",
+                  "9 × 9 × 8 × 7 = 4536"
+                ]
+              ],
+              "title": "And multiplies, or adds, and the first digit of a number is never 0"
+            },
+            "alt": "A table of counting questions with a restriction on the first digit or a choice between cases, showing where cases are added and where a leading zero is excluded"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "How many four-digit numbers greater than 5000 can be made from the digits 2, 5, 7 and 9, using each digit once?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a restriction on the first digit",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Greater than 5000 means the first digit is 5, 7 or 9: 3 choices. The remaining three digits can go in $3 \\times 2 \\times 1 = 6$ orders, so $3 \\times 6 = 18$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "18"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 18,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Arranging letters, and a letter that repeats",
+        "body": "Arranging all of $n$ different things is the product rule with the choices falling from $n$ to 1: $n!$, said *n factorial*. The letters of MATHS can be arranged in $5! = 120$ ways. Starting with a vowel restricts the first letter to A, so $1 \\times 4! = 24$ of them.\n\n**A repeated letter changes the count.** SCHOOL has six letters, but the two O's are identical: swapping them gives the same word. Counting as if they were different gives $6! = 720$, and every arrangement has been counted twice, once for each order of the O's. So the number of distinct arrangements is $\\dfrac{720}{2} = 360$.\n\nThe general rule: divide by the factorial of each repeat. LEVEL has two L's and two E's, so $\\dfrac{5!}{2! \\times 2!} = \\dfrac{120}{4} = 30$.\n\n**Counting feeds probability.** A random arrangement of MATHS starts with a vowel with probability $\\dfrac{24}{120} = \\dfrac{1}{5}$, favourable over total, which is only true because every arrangement is equally likely.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "How many arrangements are there of the letters of SCHOOL?",
+            "steps": [
+              {
+                "text": "Six letters, so $6! = 720$ if all were different",
+                "note": "the falling product 6 × 5 × 4 × 3 × 2 × 1"
+              },
+              {
+                "text": "The two O's are identical, so each arrangement has been counted $2! = 2$ times",
+                "note": "swapping the O's changes nothing"
+              },
+              {
+                "text": "$\\dfrac{720}{2} = 360$",
+                "note": "divide by the repeat"
+              },
+              {
+                "text": "LEVEL, with two L's and two E's: $\\dfrac{120}{2 \\times 2} = 30$",
+                "note": "divide once for each repeated letter"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Word",
+                "Letters",
+                "Repeats",
+                "Arrangements"
+              ],
+              "rows": [
+                [
+                  "MATHS",
+                  "5",
+                  "none",
+                  "5! = 120"
+                ],
+                [
+                  "MATHS starting with A",
+                  "5",
+                  "first letter fixed",
+                  "4! = 24"
+                ],
+                [
+                  "SCHOOL",
+                  "6",
+                  "O twice",
+                  "6! ÷ 2! = 360"
+                ],
+                [
+                  "LEVEL",
+                  "5",
+                  "L twice, E twice",
+                  "5! ÷ (2! × 2!) = 30"
+                ]
+              ],
+              "title": "n factorial, divided by the factorial of each repeat"
+            },
+            "alt": "A table of four words with the number of letters, which letters repeat and the number of distinct arrangements, dividing by the factorial of each repeat"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "How many different arrangements are there of the letters of the word LEVEL?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "arrangements with repeats",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Five letters give $5! = 120$ if all were different. L appears twice and E appears twice, so divide by $2! \\times 2! = 4$: $120 \\div 4 = 30$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "30"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 30,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "When the order does not matter, divide",
+        "body": "Choosing a chair and a secretary from 8 people is $8 \\times 7 = 56$, because the two jobs are different: Amy then Ben is not Ben then Amy. Choosing a **pair** to represent the group is not, because the pair Amy and Ben is the pair Ben and Amy. The $56$ ordered choices count every pair twice, so there are $\\dfrac{56}{2} = 28$ pairs.\n\nThat is the whole method: **count as if order mattered, then divide by the number of orders of the chosen items.** Choosing 3 from 6 for a team: $6 \\times 5 \\times 4 = 120$ ordered, and 3 chosen things can be ordered in $3! = 6$ ways, so $\\dfrac{120}{6} = 20$ teams. Choosing 2 from 5: $\\dfrac{5 \\times 4}{2} = 10$. The specification names only the product rule; dividing by the orders is that rule applied a second time, to the arrangements that were over-counted, and it is how a *choose* question is handled if one appears.\n\n**How to tell.** If the chosen things are given different roles, positions, or labels, order matters and you stop at the product. If they form a set with no roles, a team, a pair, a hand of cards, divide. A question that says *how many ways can 3 people be chosen* is a set; *how many ways can first, second and third be awarded* is an order.\n\n**A check that catches errors.** The number of pairs from 8 must be a whole number, and it must be smaller than the number of ordered choices. If dividing gives a fraction, the order count or the divisor is wrong.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Choose",
+                "Order matters",
+                "Order does not matter"
+              ],
+              "rows": [
+                [
+                  "2 from 8",
+                  "8 × 7 = 56 (chair and secretary)",
+                  "56 ÷ 2 = 28 (a pair)"
+                ],
+                [
+                  "2 from 5",
+                  "5 × 4 = 20",
+                  "20 ÷ 2 = 10"
+                ],
+                [
+                  "3 from 6",
+                  "6 × 5 × 4 = 120",
+                  "120 ÷ 3! = 20 (a team)"
+                ],
+                [
+                  "the rule",
+                  "the falling product",
+                  "divide by the orders of the chosen items"
+                ]
+              ],
+              "title": "Roles: stop at the product. A set: divide by the orders of the chosen"
+            },
+            "alt": "A table contrasting ordered choices with unordered ones: chair and secretary from eight against a pair, and a team of three from six, dividing by the number of orders of the chosen items"
+          },
+          {
+            "type": "worked-example",
+            "problem": "In how many ways can a team of 3 be chosen from 6 players?",
+            "steps": [
+              {
+                "text": "As if the three places were different: $6 \\times 5 \\times 4 = 120$",
+                "note": "the falling product"
+              },
+              {
+                "text": "A team of 3 has no order, and 3 people can be ordered in $3! = 6$ ways",
+                "note": "each team was counted 6 times"
+              },
+              {
+                "text": "$\\dfrac{120}{6} = 20$",
+                "note": "a whole number, smaller than 120: both checks pass"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "In how many ways can a pair of students be chosen from a group of 8 to represent the class?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "choosing without order",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "As an ordered choice, $8 \\times 7 = 56$. A pair has no order, so each pair has been counted twice: $56 \\div 2 = 28$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "28"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 28,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "At least one: count the opposite",
+        "body": "*How many three-digit codes from the digits 1 to 6, repeats allowed, contain at least one 6?* Counting them directly means splitting into exactly one 6, exactly two, all three, and each case is fiddly. Count the **opposite** instead: codes with **no** 6 at all use only five digits, $5 \\times 5 \\times 5 = 125$, and there are $6^3 = 216$ codes altogether. So the codes with at least one 6 number $216 - 125 = 91$.\n\n**Total minus the unwanted.** Whenever a question says *at least one*, the complement, *none*, is usually a single product, and subtracting it from the total is quicker and safer than adding cases.\n\nProbability uses the same move: the probability that a code contains at least one 6 is $1 - \\dfrac{125}{216} = \\dfrac{91}{216}$. The counting and the probability are one calculation seen twice.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Codes of 3 digits from 1 to 6",
+                "Count",
+                "How"
+              ],
+              "rows": [
+                [
+                  "all codes",
+                  "216",
+                  "6 × 6 × 6"
+                ],
+                [
+                  "no 6 at all",
+                  "125",
+                  "5 × 5 × 5: only five digits available"
+                ],
+                [
+                  "at least one 6",
+                  "91",
+                  "216 − 125"
+                ],
+                [
+                  "as a probability",
+                  "91/216",
+                  "1 minus 125/216"
+                ]
+              ],
+              "title": "At least one: the total minus none"
+            },
+            "alt": "A table counting three-digit codes from the digits one to six: all of them, those with no six, and those with at least one six as the difference, with the probability alongside"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "A code has three digits, each from 1 to 6, with repeats allowed. How many such codes contain at least one 6?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "counting the complement",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "All codes: $6^3 = 216$. Codes with no 6 use five digits: $5^3 = 125$. At least one 6: $216 - 125 = 91$. Counting the cases directly gives the same 91, more slowly.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "91"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 91,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. How many four-digit codes can be made from the digits 1 to 4 if repeats are allowed?\n2. How many four-digit numbers can be made from the digits 2, 5, 7, 9, using each once?\n3. A shop sells 3 kinds of bread and 5 fillings. How many different sandwiches are there?\n\n**Part B.**\n\n4. How many four-digit odd numbers can be made from 1, 3, 5, 7, 9 with no repeats, if the number must start with 9?\n5. How many arrangements of the letters of MATHS start with a vowel?\n6. How many pairs can be chosen from 5 people?\n\n**Part C.**\n\n7. How many three-digit numbers, using each of the digits 1, 2, 3, 4 at most once, do not start with 4?\n8. How many three-digit codes from the digits 1 to 6, repeats allowed, contain at least one 6?\n9. Two ordinary dice are rolled. Use counting to find the probability that the total is 7.\n\nFor question 9, count the ordered outcomes: 36 in all.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "4⁴ = 256"
+                ],
+                [
+                  "2",
+                  "4! = 24"
+                ],
+                [
+                  "3",
+                  "15"
+                ],
+                [
+                  "4",
+                  "1 × 4 × 3 × 2 = 24"
+                ],
+                [
+                  "5",
+                  "24"
+                ],
+                [
+                  "6",
+                  "10"
+                ],
+                [
+                  "7",
+                  "3 × 3 × 2 = 18"
+                ],
+                [
+                  "8",
+                  "216 − 125 = 91"
+                ],
+                [
+                  "9",
+                  "6 ÷ 36 = 1/6"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice counting questions, from two hundred and fifty-six codes to the probability of a total of seven"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: the questions that split into cases, and the ones that should not",
+        "body": "**Fill the restricted position first, and say so.** The mark scheme for the specification's odd-number example gives a mark for the $2$ and a mark for the $24$, and a candidate who works left to right ends up with cases that depend on each other. Writing *last digit first: 2 choices* is both the method and the explanation.\n\n**Two restrictions at once can collide.** *Three-digit even numbers with no repeated digit, using 0 to 9*: the first digit cannot be 0 and the last must be even, and 0 is even. Fix the last digit and the first-digit count depends on whether 0 was used. Split: last digit 0 gives $9 \\times 8 = 72$; last digit 2, 4, 6 or 8 gives $4 \\times 8 \\times 8 = 256$; total $328$. When the restrictions interact, cases are unavoidable, and the skill is to split on the restriction that causes the interaction.\n\n**Order or not is decided by the question, not by the objects.** Eight people give $56$ ordered pairs and $28$ unordered ones. The objects are the same; the roles are different. The top-band answer says which it is and why before multiplying.\n\n**A list proves a count.** *Show that* questions in this topic want a systematic list for a small case beside the product for the large one; the list is the evidence that the multiplication counts the right things, and it is how you check a method you are unsure of on a case small enough to write out.\n\n**Complements are a tool, not a reflex.** *At least one* points to total minus none. *Exactly one* does not: that is a direct count, position times choices, and the complement would have to remove two cases rather than one.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does",
+              "boxes": [
+                {
+                  "title": "Restriction first",
+                  "body": "Fixes the position a condition constrains before counting anything else, and writes the reason."
+                },
+                {
+                  "title": "Splits only when it must",
+                  "body": "Two restrictions that interact, such as a leading digit and an even last digit, are split into cases on the one that interacts."
+                },
+                {
+                  "title": "Names the order question",
+                  "body": "Roles or positions: the falling product. A set with no roles: divide by the orders of the chosen items."
+                },
+                {
+                  "title": "Proves with a list",
+                  "body": "A systematic list for a small case, beside the product for the large one, is what a show-that wants."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band counting answer: restriction first, splitting only when restrictions interact, deciding whether order matters, and proving a count with a list"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Product rule**: $m$ ways then $n$ ways gives $m \\times n$. *And* multiplies, *or* adds.\n- At each position ask **how many are left**: the same number with repeats allowed, one fewer each time without.\n- **Restriction first**: fix the position a condition constrains, count its choices, then let the rest fall. Five-digit odd numbers from 1, 3, 4, 6, 8: $2 \\times 4! = 48$.\n- A number's first digit is never $0$: four-digit numbers with repeats are $9 \\times 10^3 = 9000$.\n- **Arrangements** of $n$ different things: $n!$. A repeated letter divides by its factorial: SCHOOL gives $6! \\div 2! = 360$.\n- **Order does not matter**: count as if it did, then divide by the orders of the chosen items. A pair from 8: $56 \\div 2 = 28$; a team of 3 from 6: $120 \\div 6 = 20$.\n- **At least one**: total minus none. Codes from 1 to 6 with at least one 6: $216 - 125 = 91$.\n- Counting feeds probability: favourable over total, when every outcome is equally likely.\n- A **systematic list** for a small case proves the method.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Product rule",
+                  "equation": "m ways then n ways = m × n",
+                  "units": "and multiplies; or adds"
+                },
+                {
+                  "name": "Arrangements",
+                  "equation": "n! = n × (n − 1) × … × 1",
+                  "units": "divide by k! for a letter repeated k times"
+                },
+                {
+                  "name": "Unordered choice",
+                  "equation": "ordered count ÷ (orders of the chosen)",
+                  "units": "a pair from 8: 56 ÷ 2 = 28"
+                },
+                {
+                  "name": "At least one",
+                  "equation": "total − none",
+                  "units": "the complement is one product"
+                }
+              ]
+            },
+            "alt": "A reference card with the product rule, factorial arrangements with repeats divided out, unordered choices as the ordered count divided by the orders of the chosen items, and the complement for at least one"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "A café offers 3 starters, 4 main courses and 2 desserts. How many different three-course meals are there?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the product rule",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "One choice from each course, and the courses are chosen together, so multiply: $3 \\times 4 \\times 2 = 24$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "prompt": "How many three-digit codes can be made from the digits 1, 2, 3, 4 and 5 if a digit may be repeated?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the product rule with repetition",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "With repeats every position has all five choices: $5 \\times 5 \\times 5 = 125$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "125"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 125,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "prompt": "In how many ways can the letters of the word MATHS be arranged?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "arrangements",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Five different letters: $5 \\times 4 \\times 3 \\times 2 \\times 1 = 5! = 120$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "120"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 120,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "prompt": "A four-digit PIN uses the digits 0 to 9 and may repeat a digit. How many PINs are there?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "repeats and leading zeros",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Each of the four positions has all ten digits available, so $10 \\times 10 \\times 10 \\times 10 = 10\\,000$. Without repeats it would be $5040$; $9000$ counts four-digit *numbers*, which cannot start with $0$, but a PIN can.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$10^4 = 10\\,000$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$10 \\times 9 \\times 8 \\times 7 = 5040$",
+        "$10^4 = 10\\,000$",
+        "$4 \\times 10 = 40$",
+        "$9 \\times 10^3 = 9000$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "How many five-digit odd numbers can be formed from the digits 1, 3, 4, 6 and 8 if no digit is repeated?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a restriction on the last digit",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Odd means the last digit is 1 or 3: fix it first, 2 choices. The other four digits fill the other four positions in $4! = 24$ ways. $2 \\times 24 = 48$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "last digit first: 2 choices"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "48"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 48,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "prompt": "How many four-digit numbers, using each of the digits 1, 3, 5, 7, 9 at most once, start with 9?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a restriction on the first digit",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first digit is fixed as 9: 1 choice. The other three positions take three of the remaining four digits: $4 \\times 3 \\times 2 = 24$. So $1 \\times 24 = 24$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "prompt": "How many different arrangements are there of the letters of the word SCHOOL?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "arrangements with a repeated letter",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$6! = 720$ arrangements if the letters were all different. The two O's are identical, so each arrangement has been counted twice: $720 \\div 2 = 360$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6! = 720"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "360"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 360,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "prompt": "A committee of 3 is chosen from 6 people. How many different committees are possible?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "choosing without order",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Ordered, $6 \\times 5 \\times 4 = 120$. A committee has no order, and 3 people can be ordered in $3! = 6$ ways, so $120 \\div 6 = 20$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6 × 5 × 4 divided by 3!"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "prompt": "A student counts the ways of choosing a captain and a vice-captain from 10 players as $10 \\times 9 = 90$, then says a pair of players for a photograph is also $90$. What is wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "order matters or not",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Captain then vice-captain are two different roles, so $90$ ordered choices is right. A pair for a photograph has no roles, and each pair was counted twice, once in each order: $90 \\div 2 = 45$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The photograph pair has no order, so it is $90 \\div 2 = 45$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Nothing: choosing two people is always $10 \\times 9$",
+        "The captain and vice-captain should be $10 \\times 10 = 100$",
+        "The photograph pair has no order, so it is $90 \\div 2 = 45$",
+        "The pair should be $10 + 9 = 19$"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "A code has three digits, each from 1 to 6, and repeats are allowed. How many codes contain no 6?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the complement",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "With 6 excluded, five digits are available at each position: $5 \\times 5 \\times 5 = 125$. This is the count that *at least one 6* is subtracted from: $216 - 125 = 91$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "125"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 125,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "prompt": "How many three-digit even numbers can be made from the digits 0 to 9 if no digit is repeated? Remember that a number cannot start with 0.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "interacting restrictions",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The two restrictions interact, because $0$ is even but cannot lead. Split on the last digit. Last digit $0$: first digit any of 9, middle any of 8, giving $72$. Last digit 2, 4, 6 or 8: first digit 8 choices (not 0, not the last digit), middle 8, giving $4 \\times 8 \\times 8 = 256$. Total $72 + 256 = 328$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "splits on whether the last digit is 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "72 and 256"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "328"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 328,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "prompt": "Three-digit numbers are made using each of the digits 1, 2, 3, 4 at most once. How many of them do not start with 4?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a restriction, two ways",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "First digit: 3 choices (1, 2 or 3). Then 3 choices for the second and 2 for the third: $3 \\times 3 \\times 2 = 18$. Alternatively, all $24$ minus the $6$ that start with 4.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "first digit 3 choices, or 24 minus those starting with 4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "18"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "numeric",
+      "answer": 18,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "prompt": "Two ordinary dice are rolled. Using counting, what is the probability that the total is 7?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "counting and probability",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "There are $6 \\times 6 = 36$ equally likely ordered outcomes. The pairs totalling 7 are (1, 6), (2, 5), (3, 4), (4, 3), (5, 2), (6, 1): six of them, because order matters when the dice are counted as ordered. So $\\dfrac{6}{36} = \\dfrac{1}{6}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\dfrac{6}{36} = \\dfrac{1}{6}$, because 6 of the 36 ordered outcomes total 7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$\\dfrac{1}{11}$, because the totals run from 2 to 12",
+        "$\\dfrac{3}{36}$, because 1 + 6, 2 + 5 and 3 + 4 are the only three ways to make 7",
+        "$\\dfrac{7}{36}$, because there are 7 totals up to 7",
+        "$\\dfrac{6}{36} = \\dfrac{1}{6}$, because 6 of the 36 ordered outcomes total 7"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "A question asks how many three-digit codes from the digits 1 to 6 contain exactly one 6. Which method is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "exactly one against at least one",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "*Exactly one* is a direct count: the 6 sits in one of 3 positions, and the other two positions each take one of the five non-6 digits, $3 \\times 5 \\times 5 = 75$. The complement $216 - 125 = 91$ counts *at least one*, which includes codes with two or three sixes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Position of the 6 (3 ways), then the other two from the five other digits: $3 \\times 5 \\times 5 = 75$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Position of the 6 (3 ways), then the other two from the five other digits: $3 \\times 5 \\times 5 = 75$",
+        "Total minus the codes with no 6 at all: $216 - 125 = 91$, the complement",
+        "Total minus the codes with no 6 and the one code that is all sixes, subtracting both: $216 - 125 - 1 = 90$",
+        "$3 \\times 6 \\times 6 = 108$, the position of the 6 times six choices for each other digit"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "How many distinct arrangements are there of the letters of the word LEVEL?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "two repeated letters",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Five letters give $5! = 120$ if all were different. L is repeated twice and E is repeated twice, so divide by $2! \\times 2! = 4$: $120 \\div 4 = 30$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5! divided by 2! × 2!"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "prompt": "A student says that the number of pairs from 8 people, $8 \\times 7 = 56$, must be right because it is a whole number. Which check shows it is wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "order matters or not",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A whole number is necessary but not sufficient. The pair Amy and Ben is the same pair as Ben and Amy, so the ordered count $56$ has counted every pair twice: $28$ pairs. Dividing by the orders of the chosen items is the step the student missed.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A pair has no order, so each pair was counted twice and the answer is $56 \\div 2 = 28$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "It is right: $56$ pairs, because order always matters in counting",
+        "A pair has no order, so each pair was counted twice and the answer is $56 \\div 2 = 28$",
+        "It should be $8 + 7 = 15$, because a pair is two people",
+        "It should be $8 \\times 8 = 64$, because either person could be chosen twice over in the count"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "Five-digit numbers are formed from the digits 1, 3, 4, 6 and 8, using each digit exactly once.\n\n(a) How many such numbers are there?\n\n(b) How many of them are odd?\n\n(c) How many of them are greater than 40 000 and even?",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "restrictions that share digits",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a) All the numbers.** Five different digits in five positions: $5 \\times 4 \\times 3 \\times 2 \\times 1 = 5! = 120$.\n\n**(b) The odd ones.** A number is odd because of its last digit, so fix that first: it must be 1 or 3, giving 2 choices. The other four digits then fill the other four positions in $4! = 24$ ways. So there are $2 \\times 24 = 48$ odd numbers. This is the specification's own example, and the reason for fixing the last digit first is that every digit is still available when the restricted choice is made.\n\n**(c) Greater than 40 000 and even.** Two restrictions. Greater than $40\\,000$ means the first digit is 4, 6 or 8. Even means the last digit is 4, 6 or 8. The two restrictions draw from the same three digits, so they interact, and the count must respect that.\n\nFix the last digit first: 3 choices (4, 6 or 8). The first digit must now be one of the two even digits not yet used: 2 choices. The middle three positions take the remaining three digits in $3! = 6$ orders. So the count is $3 \\times 2 \\times 6 = 36$.\n\nA check by the other route gives the same: fix the first digit first (3 choices), then the last digit from the two even digits left (2 choices), then $3!$ for the middle, again $36$. When two restrictions share digits, counting either restriction first works as long as the second count allows for the digit already used; the error would be $3 \\times 3 \\times 6 = 54$, which lets the first and last digits be the same.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "five positions, falling product"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "120"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "last digit first, 2 choices"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "48"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both restrictions identified as sharing the digits 4, 6, 8"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the second restricted count reduced to 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3 × 2 × 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Finds 5! = 120 numbers altogether.",
+          "marks": 2
+        },
+        {
+          "text": "Fixes the last digit as 1 or 3 first, then 4! for the rest: 2 × 24 = 48 odd numbers.",
+          "marks": 2
+        },
+        {
+          "text": "Handles the two restrictions: first digit 4, 6 or 8 and last digit 4, 6 or 8, noting that they share digits.",
+          "marks": 2
+        },
+        {
+          "text": "Counts 3 choices for the last digit, then 2 for the first, then 3! for the middle: 3 × 2 × 6 = 36.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a) All the numbers.** Five different digits in five positions: $5 \\times 4 \\times 3 \\times 2 \\times 1 = 5! = 120$.\n\n**(b) The odd ones.** A number is odd because of its last digit, so fix that first: it must be 1 or 3, giving 2 choices. The other four digits then fill the other four positions in $4! = 24$ ways. So there are $2 \\times 24 = 48$ odd numbers. This is the specification's own example, and the reason for fixing the last digit first is that every digit is still available when the restricted choice is made.\n\n**(c) Greater than 40 000 and even.** Two restrictions. Greater than $40\\,000$ means the first digit is 4, 6 or 8. Even means the last digit is 4, 6 or 8. The two restrictions draw from the same three digits, so they interact, and the count must respect that.\n\nFix the last digit first: 3 choices (4, 6 or 8). The first digit must now be one of the two even digits not yet used: 2 choices. The middle three positions take the remaining three digits in $3! = 6$ orders. So the count is $3 \\times 2 \\times 6 = 36$.\n\nA check by the other route gives the same: fix the first digit first (3 choices), then the last digit from the two even digits left (2 choices), then $3!$ for the middle, again $36$. When two restrictions share digits, counting either restriction first works as long as the second count allows for the digit already used; the error would be $3 \\times 3 \\times 6 = 54$, which lets the first and last digits be the same."
+    },
+    {
+      "id": "q18",
+      "prompt": "A code is made of three digits, each chosen from 1 to 6, and a digit may be repeated.\n\n(a) Show that there are 216 possible codes.\n\n(b) Work out how many codes contain at least one 6.\n\n(c) A code is chosen at random. Work out the probability that it contains exactly one 6.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "complements and exact counts",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a) All the codes.** Each of the three positions can take any of the six digits, because repeats are allowed, so the number of codes is $6 \\times 6 \\times 6 = 216$. The *show that* is answered by the reasoning: three positions, six choices at each, and the product rule.\n\n**(b) At least one 6.** Count the opposite. A code with no 6 uses only the digits 1 to 5, so $5 \\times 5 \\times 5 = 125$ codes contain no 6. Every other code contains at least one: $216 - 125 = 91$. Counting the cases directly, exactly one 6 gives 75, exactly two gives $3 \\times 5 = 15$, and all three gives 1, and $75 + 15 + 1 = 91$ agrees, which is the check.\n\n**(c) Exactly one 6.** This is a direct count, not a complement. The single 6 can sit in any of the 3 positions; the other two positions each take one of the 5 digits that are not 6. So there are $3 \\times 5 \\times 5 = 75$ such codes.\n\nEvery code is equally likely, so the probability is favourable over total:\n\n$$\\frac{75}{216} = \\frac{25}{72}$$\n\nThe difference between (b) and (c) is the difference between *at least one*, which is easiest as total minus none, and *exactly one*, which is a direct product with the position of the 6 counted first. Using the complement for (c) would need both the two-6 and the three-6 cases subtracted as well, which is why the direct count is the safer route.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "six choices at each of three positions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "216 with the reason"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "no-6 codes as 5 cubed"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "91"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "position of the 6 times 5 × 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "75"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "favourable over total"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25/72"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Shows 6 × 6 × 6 = 216 with the reasoning that repeats keep six choices at every position.",
+          "marks": 2
+        },
+        {
+          "text": "Counts codes with no 6 as 5³ = 125 and subtracts: 91.",
+          "marks": 2
+        },
+        {
+          "text": "Counts codes with exactly one 6 directly: 3 positions for the 6, 5 × 5 for the others, giving 75.",
+          "marks": 2
+        },
+        {
+          "text": "Gives the probability 75/216, simplified to 25/72, with favourable over total stated.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a) All the codes.** Each of the three positions can take any of the six digits, because repeats are allowed, so the number of codes is $6 \\times 6 \\times 6 = 216$. The *show that* is answered by the reasoning: three positions, six choices at each, and the product rule.\n\n**(b) At least one 6.** Count the opposite. A code with no 6 uses only the digits 1 to 5, so $5 \\times 5 \\times 5 = 125$ codes contain no 6. Every other code contains at least one: $216 - 125 = 91$. Counting the cases directly, exactly one 6 gives 75, exactly two gives $3 \\times 5 = 15$, and all three gives 1, and $75 + 15 + 1 = 91$ agrees, which is the check.\n\n**(c) Exactly one 6.** This is a direct count, not a complement. The single 6 can sit in any of the 3 positions; the other two positions each take one of the 5 digits that are not 6. So there are $3 \\times 5 \\times 5 = 75$ such codes.\n\nEvery code is equally likely, so the probability is favourable over total:\n\n$$\\frac{75}{216} = \\frac{25}{72}$$\n\nThe difference between (b) and (c) is the difference between *at least one*, which is easiest as total minus none, and *exactly one*, which is a direct product with the position of the 6 counted first. Using the complement for (c) would need both the two-6 and the three-6 cases subtracted as well, which is why the direct count is the safer route."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 15
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 35
+    }
+  },
+  "examTechnique": {
+    "body": "Counting questions are short and the marks are for the **reasoning**, so write the choices at each position as a product with a word beside each factor: *last digit first, 2 choices; then 4, 3, 2, 1*. A bare answer earns the answer mark and nothing else if it is wrong.\n\nThree decisions settle nearly every question. **Repeats or not**: the same number of choices at each position, or one fewer each time. **Where the restriction sits**: fix that position first. **Order or not**: roles keep the product, a set divides by the orders of the chosen items. When a question says *at least one*, count the total and subtract *none*. When it says *show that*, a systematic list for a small case beside the product is the proof the examiner wants.",
+    "examinerErrors": [
+      "Adding the choices when the question says *and*: three starters and four mains counted as $7$.",
+      "Working left to right past a restriction, so that the number of choices for the restricted position is unknown.",
+      "Allowing a number to start with $0$, so four-digit numbers are counted as $10\\,000$.",
+      "Stopping at the ordered count for a pair, a team or a committee, when the question has no roles.",
+      "Dividing by the orders of the chosen items when the question does have roles, such as captain and vice-captain.",
+      "Counting *at least one* directly and missing the cases with two or three of the wanted digit.",
+      "Forgetting that a repeated letter means dividing by its factorial, so SCHOOL is counted as $720$."
+    ],
+    "grade9Looks": "A grade 9 answer writes the product with a reason for each factor, fixes the restricted position first and says so, and knows whether the question has roles before deciding whether to divide. Given two restrictions that share digits, it notices the interaction and either counts the second restriction with one fewer choice or splits into cases on the restriction that causes the clash, and it checks by counting the other way round. It reaches for the complement when the question says *at least one* and for a direct count when it says *exactly one*. And in a *show that*, it puts a systematic list for a small case beside the product for the large one, which is the argument, not the arithmetic."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

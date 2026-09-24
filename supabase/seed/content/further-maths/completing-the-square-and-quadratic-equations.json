@@ -1,0 +1,1444 @@
+{
+  "id": "completing-the-square-and-quadratic-equations",
+  "subjectId": "further-maths",
+  "unitId": "algebra",
+  "title": "Completing the square and quadratic equations",
+  "specPoints": [
+    "2.12",
+    "2.14"
+  ],
+  "order": 3,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Take the coefficient out of the first two terms only",
+      "body": "$2x^2 + 6x + 7 = 2(x^2 + 3x) + 7$: the $7$ stays outside. Complete the square inside the bracket, then multiply the subtracted square by the coefficient when it comes out: the $-\\frac{9}{4}$ becomes $-\\frac{9}{2}$. Expand back to check."
+    },
+    {
+      "kind": "spot",
+      "title": "The bracket is never negative",
+      "body": "In $a(x + p)^2 + q$ the square is at least zero, so the turning point is at $x = -p$ with value $q$: a minimum if $a > 0$, a maximum if $a < 0$. *Write down the minimum value* is asking you to read $q$, and the reason is worth a line."
+    },
+    {
+      "kind": "check",
+      "title": "Rearrange to zero before you factorise",
+      "body": "A product tells you about its factors only when it equals zero. $x(x + 3) = 40$ says nothing until it is $x^2 + 3x - 40 = 0$. Expand, collect, divide out any common factor, and only then factorise or use the formula."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Exact means complete the square",
+      "body": "*In exact form* or *in the form $p \\pm \\sqrt{q}$* is a request for the completed square: $(x + 3)^2 = 7$ gives $x = -3 \\pm \\sqrt{7}$. *To 2 decimal places* is a request for the formula on the calculator paper. The formula is not given, so know it."
+    },
+    {
+      "kind": "remember",
+      "title": "Reject with a reason",
+      "body": "A context that leads to a quadratic gives two roots, and the mark is for saying in a sentence why one cannot happen: a negative width, a time before the throw. Silently dropping a root, or keeping both, loses it."
+    }
+  ],
+  "why": {
+    "matters": "A quadratic is the simplest curve that turns, and turning is what most real quantities do: a thrown ball rises then falls, profit rises with price and then falls, a bridge cable sags to a lowest point. Completing the square is the form that shows where the turn is and how high or low it goes, and it is also the form that solves the equation exactly and, done in general, produces the quadratic formula. GCSE met all of this; Further Maths adds the coefficient in front of $x^2$, the exact answers Paper 1 demands, and the contexts that hand you a root to reject. The formula is not printed in this exam, so the method behind it has to be owned.",
+    "examples": [
+      {
+        "title": "The thrown ball",
+        "body": "A ball thrown straight up at 20 m/s has height $h = 20t - 5t^2$ after $t$ seconds. Completing the square, $h = 20 - 5(t - 2)^2$, and the subtracted square is never positive, so the ball is never higher than 20 m and is exactly there at $t = 2$. Setting $h = 15$ gives $(t - 1)(t - 3) = 0$: it passes 15 m twice, once going up at 1 second and once coming down at 3. Every question about the flight is a reading of the same quadratic, and the completed square answers the one about the top.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Question about the ball",
+              "Quadratic",
+              "Answer"
+            ],
+            "rows": [
+              [
+                "how high does it get?",
+                "h = 20 − 5(t − 2)²",
+                "20 m, at t = 2"
+              ],
+              [
+                "when is it at 15 m?",
+                "t² − 4t + 3 = 0",
+                "t = 1 and t = 3"
+              ],
+              [
+                "when does it land?",
+                "20t − 5t² = 0",
+                "t = 4"
+              ]
+            ],
+            "title": "One quadratic, every question about the flight"
+          },
+          "alt": "A table of three questions about a thrown ball answered from the same quadratic, the maximum from the completed square and the times from solving"
+        }
+      },
+      {
+        "title": "The path along the garden",
+        "body": "A garden 3 m longer than it is wide, a path taking a metre off one side, and a lawn of 40 m²: the width $x$ satisfies $(x + 3)(x - 1) = 40$, which rearranges to $x^2 + 2x - 43 = 0$. It does not factorise, so the formula gives $x = -1 \\pm 2\\sqrt{11}$, about 5.63 or $-7.63$. The garden is 5.63 m wide. The algebra offered two answers; a negative width is not a garden, and saying so is part of the working.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "From a garden to a number",
+            "boxes": [
+              {
+                "title": "Name the unknown",
+                "body": "width x; length x + 3; lawn width x − 1"
+              },
+              {
+                "title": "Form and rearrange",
+                "body": "(x + 3)(x − 1) = 40 becomes x² + 2x − 43 = 0"
+              },
+              {
+                "title": "Solve",
+                "body": "the formula: x = −1 ± 2√11, about 5.63 or −7.63"
+              },
+              {
+                "title": "Reject",
+                "body": "a width is positive, so 5.63 m"
+              }
+            ]
+          },
+          "alt": "Four boxes taking a garden problem through naming the unknown, forming and rearranging the quadratic, solving it and rejecting the negative root"
+        }
+      },
+      {
+        "title": "The formula that is not on the paper",
+        "body": "GCSE Maths prints the quadratic formula on its formulae sheet; this exam prints nothing. The candidate who has completed the square on $ax^2 + bx + c$ once, in general, has the formula for ever: $a\\left(x + \\frac{b}{2a}\\right)^2 = \\frac{b^2 - 4ac}{4a}$, take the square root, and $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ falls out. The $2a$ underneath and the $b^2 - 4ac$ under the root are not arbitrary; they are the completed square's bracket and constant. Knowing why is what makes it safe to rely on.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Step",
+              "In general"
+            ],
+            "rows": [
+              [
+                "coefficient out",
+                "a(x² + (b/a)x) + c"
+              ],
+              [
+                "complete the square",
+                "a(x + b/2a)² − b²/4a + c"
+              ],
+              [
+                "set to zero, rearrange",
+                "a(x + b/2a)² = (b² − 4ac)/4a"
+              ],
+              [
+                "square root",
+                "x + b/2a = ±√(b² − 4ac) / 2a"
+              ],
+              [
+                "the formula",
+                "x = (−b ± √(b² − 4ac)) / 2a"
+              ]
+            ],
+            "title": "The formula is the completed square, done once for all"
+          },
+          "alt": "A table deriving the quadratic formula in five steps by completing the square on a x squared plus b x plus c in general"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Completing the square when x² has a coefficient",
+        "body": "GCSE completed the square for $x^2 + bx + c$: halve $b$, square it, adjust. Further Maths puts a number in front of $x^2$, and the specification's example is\n\n$$2x^2 + 6x + 7 \\equiv a(x + b)^2 + c$$\n\n**Take the coefficient out of the first two terms only:** $2(x^2 + 3x) + 7$. **Complete the square inside:** $x^2 + 3x = \\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4}$. **Multiply the subtracted square by the coefficient** when the bracket comes back out: $2\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{2} + 7 = 2\\left(x + \\frac{3}{2}\\right)^2 + \\frac{5}{2}$.\n\nSo $a = 2$, $b = \\frac{3}{2}$, $c = \\frac{5}{2}$. The step most often lost is the third one: the $-\\frac{9}{4}$ sits inside a bracket multiplied by $2$, so it becomes $-\\frac{9}{2}$, not $-\\frac{9}{4}$.\n\n**Check by expanding**: $2\\left(x^2 + 3x + \\frac{9}{4}\\right) + \\frac{5}{2} = 2x^2 + 6x + \\frac{9}{2} + \\frac{5}{2} = 2x^2 + 6x + 7$. The identity sign $\\equiv$ says this must hold for every $x$, which is why comparing coefficients, or expanding back, is the right check.\n\nFractions are normal here. $b = \\frac{3}{2}$ is the answer, not $1.5$ rounded and not a sign that something has gone wrong.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "Working"
+              ],
+              "rows": [
+                [
+                  "coefficient out of the first two terms",
+                  "2(x² + 3x) + 7"
+                ],
+                [
+                  "complete the square inside",
+                  "2[(x + 3/2)² − 9/4] + 7"
+                ],
+                [
+                  "multiply the subtracted square by 2",
+                  "2(x + 3/2)² − 9/2 + 7"
+                ],
+                [
+                  "collect the constants",
+                  "2(x + 3/2)² + 5/2"
+                ],
+                [
+                  "so",
+                  "a = 2, b = 3/2, c = 5/2"
+                ]
+              ],
+              "title": "The subtracted square is multiplied by the coefficient"
+            },
+            "alt": "A table completing the square for two x squared plus six x plus seven in four steps, taking the coefficient out of the first two terms and multiplying the subtracted square by it"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Work out $a$, $b$ and $c$ such that $2x^2 + 6x + 7 \\equiv a(x + b)^2 + c$.",
+            "steps": [
+              {
+                "text": "$2(x^2 + 3x) + 7$",
+                "note": "the 2 comes out of the x² and x terms only"
+              },
+              {
+                "text": "$x^2 + 3x = \\left(x + \\tfrac{3}{2}\\right)^2 - \\tfrac{9}{4}$",
+                "note": "halve 3, square it, subtract"
+              },
+              {
+                "text": "$2\\left(x + \\tfrac{3}{2}\\right)^2 - \\tfrac{9}{2} + 7$",
+                "note": "the −9/4 was inside the bracket, so it is doubled"
+              },
+              {
+                "text": "$2\\left(x + \\tfrac{3}{2}\\right)^2 + \\tfrac{5}{2}$: $a = 2$, $b = \\tfrac{3}{2}$, $c = \\tfrac{5}{2}$",
+                "note": "check: expand back to 2x² + 6x + 7"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "Given $2x^2 + 6x + 7 \\equiv a(x + b)^2 + c$, what is the value of $c$? Give it as a decimal.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "completing the square with a coefficient",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$2(x^2 + 3x) + 7 = 2\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{2} + 7$, and $-\\frac{9}{2} + 7 = \\frac{5}{2} = 2.5$. The subtracted $\\frac{9}{4}$ had to be doubled on its way out of the bracket.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "c = 5/2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 2.5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "What the completed square tells you",
+        "body": "The completed square is the most informative way to write a quadratic, because a squared bracket is **never negative**.\n\n$y = x^2 + 6x + 2 = (x + 3)^2 - 7$. The bracket is at least $0$, and it is $0$ when $x = -3$, so the smallest $y$ can be is $-7$: the curve has its **minimum** at $(-3, -7)$. That point is the vertex of the parabola, and the line $x = -3$ is its axis of symmetry.\n\nWith a coefficient: $y = 3x^2 - 12x + 5 = 3(x - 2)^2 - 7$ has minimum $-7$ at $x = 2$. With a **negative** coefficient the bracket is subtracted, so the curve has a **maximum**: $y = -x^2 + 6x + 1 = -(x - 3)^2 + 10$ is at most $10$, at $x = 3$.\n\n**Sketching from the completed square.** Vertex from the bracket, $y$-intercept from the constant term of the original, direction from the sign of $a$: three facts, and the sketch is right. The roots, where the curve crosses the $x$ axis, come from setting the completed square equal to zero, which is the next step.\n\nQuestions that say *state the minimum value* or *write down the coordinates of the turning point* are asking you to read the completed square, and the reading is worth writing out: *the bracket is never negative, so $y \\geqslant -7$*.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -8,
+                2
+              ],
+              "yRange": [
+                -8,
+                6
+              ],
+              "grid": true,
+              "xStep": 2,
+              "yStep": 2,
+              "curves": [
+                {
+                  "a": 1,
+                  "b": 6,
+                  "c": 2,
+                  "label": "y = x² + 6x + 2",
+                  "labelX": -5
+                }
+              ],
+              "points": [
+                {
+                  "x": -3,
+                  "y": -7,
+                  "label": "(−3, −7)",
+                  "labelBelow": true
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "label": "(0, 2)"
+                }
+              ]
+            },
+            "alt": "The parabola y equals x squared plus six x plus two with its minimum marked at minus three comma minus seven and the y intercept at two"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Quadratic",
+                "Completed square",
+                "Turning point",
+                "Least or greatest"
+              ],
+              "rows": [
+                [
+                  "x² + 6x + 2",
+                  "(x + 3)² − 7",
+                  "(−3, −7)",
+                  "minimum −7"
+                ],
+                [
+                  "3x² − 12x + 5",
+                  "3(x − 2)² − 7",
+                  "(2, −7)",
+                  "minimum −7"
+                ],
+                [
+                  "−x² + 6x + 1",
+                  "−(x − 3)² + 10",
+                  "(3, 10)",
+                  "maximum 10"
+                ],
+                [
+                  "2x² − 4x + 5",
+                  "2(x − 1)² + 3",
+                  "(1, 3)",
+                  "minimum 3"
+                ]
+              ],
+              "title": "The bracket is never negative, so the vertex is where it is zero"
+            },
+            "alt": "A table of four quadratics with their completed square forms, turning points and whether the value there is a minimum or a maximum"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "$3x^2 - 12x + 5 = 3(x - 2)^2 - 7$. What is the minimum value of $3x^2 - 12x + 5$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading the minimum",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The squared bracket is never negative and is $0$ at $x = 2$, so the expression is at least $-7$, and equals $-7$ there. Its minimum value is $-7$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "−7"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Solving: factorise, complete the square, or the formula",
+        "body": "The specification lists four ways to solve a quadratic: factorising, a graph, completing the square, and the formula. Choosing well saves time and keeps the answer in the form the question wants.\n\n**Factorise** when the quadratic factorises: $x^2 - 5x + 6 = (x - 2)(x - 3) = 0$ gives $x = 2$ or $x = 3$; $2x^2 + 5x - 3 = (2x - 1)(x + 3) = 0$ gives $x = \\frac{1}{2}$ or $x = -3$. Always rearrange to zero first; a product equal to $12$ says nothing about its factors.\n\n**Complete the square** when it does not, and the question wants an **exact** answer or has already asked for the completed square: $x^2 + 6x + 2 = 0$ gives $(x + 3)^2 = 7$, so $x + 3 = \\pm\\sqrt{7}$ and $x = -3 \\pm \\sqrt{7}$. That is the exact form Paper 1 wants; as decimals the roots are $-0.354$ and $-5.646$.\n\n**The formula** when it does not factorise and a decimal is acceptable, or when the numbers are awkward: it is the completed square done once and for all, $x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$, and it is **not given** in this exam, so it has to be known.\n\n**A graph** gives approximate roots, where the curve crosses the $x$ axis, and it is the check on the others.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "Method",
+                "Solutions"
+              ],
+              "rows": [
+                [
+                  "x² − 5x + 6 = 0",
+                  "factorise: (x − 2)(x − 3)",
+                  "x = 2 or x = 3"
+                ],
+                [
+                  "2x² + 5x − 3 = 0",
+                  "factorise: (2x − 1)(x + 3)",
+                  "x = 1/2 or x = −3"
+                ],
+                [
+                  "x² + 6x + 2 = 0",
+                  "complete the square: (x + 3)² = 7",
+                  "x = −3 ± √7"
+                ],
+                [
+                  "x² + 4x − 7 = 0",
+                  "formula",
+                  "x = −2 ± √11, so 1.32 or −5.32"
+                ]
+              ],
+              "title": "Factorise if you can; complete the square for an exact answer; the formula otherwise"
+            },
+            "alt": "A table of four quadratic equations with the method that suits each and the solutions, exact where the method gives them exactly"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Solve $x^2 + 6x + 2 = 0$, giving the answers in exact form.",
+            "steps": [
+              {
+                "text": "It does not factorise (no pair multiplies to 2 and adds to 6), so complete the square",
+                "note": "the method for an exact answer"
+              },
+              {
+                "text": "$(x + 3)^2 - 7 = 0$, so $(x + 3)^2 = 7$",
+                "note": "move the constant across"
+              },
+              {
+                "text": "$x + 3 = \\pm\\sqrt{7}$",
+                "note": "both square roots: the ± is two answers"
+              },
+              {
+                "text": "$x = -3 \\pm \\sqrt{7}$",
+                "note": "exact; as decimals −0.354 and −5.646"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "Solve $x^2 + 6x + 2 = 0$, giving your answers in exact form.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "an exact solution",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Complete the square: $(x + 3)^2 - 7 = 0$, so $(x + 3)^2 = 7$, $x + 3 = \\pm\\sqrt{7}$ and $x = -3 \\pm \\sqrt{7}$. The formula gives the same, since $\\sqrt{36 - 8} = \\sqrt{28} = 2\\sqrt{7}$ and $\\frac{-6 \\pm 2\\sqrt{7}}{2} = -3 \\pm \\sqrt{7}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = −3 ± √7"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "x = -3 ± √7",
+            "-3 ± √7",
+            "x = -3 + √7 or x = -3 - √7",
+            "-3 + √7 or -3 - √7",
+            "x = -3 - √7 or x = -3 + √7"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "The formula, and what the discriminant says",
+        "body": "Solve $x^2 + 4x - 7 = 0$ to two decimal places. It does not factorise, so use the formula with $a = 1$, $b = 4$, $c = -7$:\n\n$$x = \\frac{-4 \\pm \\sqrt{16 - 4(1)(-7)}}{2} = \\frac{-4 \\pm \\sqrt{44}}{2}$$\n\n$\\sqrt{44} = 2\\sqrt{11}$, so exactly $x = -2 \\pm \\sqrt{11}$; as decimals $x = 1.32$ or $x = -5.32$. **Bracket every negative** when substituting: $-4(1)(-7) = +28$ is where a sign is lost.\n\n**The discriminant** $b^2 - 4ac$ is the part under the root, and it decides how many solutions there are before you solve anything. Positive, two real solutions; zero, one repeated solution; negative, none, because a negative number has no real square root. $x^2 + 4x + 5$ has $16 - 20 = -4$: the equation $x^2 + 4x + 5 = 0$ has no real solutions, and the curve $y = x^2 + 4x + 5$ never crosses the $x$ axis. $4x^2 - 12x + 9$ has $144 - 144 = 0$: one repeated root, and the quadratic is a perfect square, $(2x - 3)^2$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $x^2 + 4x - 7 = 0$, giving your answers to 2 decimal places.",
+            "steps": [
+              {
+                "text": "$a = 1$, $b = 4$, $c = -7$; the formula is not given, so write it down",
+                "note": "x = (−b ± √(b² − 4ac)) / 2a"
+              },
+              {
+                "text": "$b^2 - 4ac = 16 - 4(1)(-7) = 16 + 28 = 44$",
+                "note": "bracket the negative c"
+              },
+              {
+                "text": "$x = \\dfrac{-4 \\pm \\sqrt{44}}{2}$",
+                "note": "exact: −2 ± √11, since √44 = 2√11"
+              },
+              {
+                "text": "$x = 1.32$ or $x = -5.32$",
+                "note": "to 2 decimal places, both answers"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "b² − 4ac",
+                "Solutions",
+                "The curve",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "positive",
+                  "two",
+                  "crosses the x axis twice",
+                  "x² + 4x − 7: 44"
+                ],
+                [
+                  "zero",
+                  "one, repeated",
+                  "touches the x axis",
+                  "4x² − 12x + 9: 0"
+                ],
+                [
+                  "negative",
+                  "none real",
+                  "misses the x axis",
+                  "x² + 4x + 5: −4"
+                ]
+              ],
+              "title": "The discriminant decides how many solutions there are"
+            },
+            "alt": "A table of the three cases of the discriminant, positive, zero and negative, with the number of real solutions, what the curve does and an example of each"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "Work out the discriminant $b^2 - 4ac$ of $x^2 + 4x + 5$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the discriminant",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$b^2 - 4ac = 4^2 - 4 \\times 1 \\times 5 = 16 - 20 = -4$. Negative, so $x^2 + 4x + 5 = 0$ has no real solutions and the curve never reaches the $x$ axis.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "−4"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Quadratics from a context",
+        "body": "The specification says problems will be set *in a variety of contexts* that lead to a quadratic. The work is in the setting up, and it has a shape: name the unknown, form the equation, rearrange to zero, solve, then **reject** what the context cannot mean.\n\n*A rectangle is 3 cm longer than it is wide, and its area is 40 cm². Find its width.* Let the width be $x$; the length is $x + 3$; the area is $x(x + 3) = 40$. Rearrange: $x^2 + 3x - 40 = 0$, and factorise: $(x + 8)(x - 5) = 0$, so $x = 5$ or $x = -8$. A width cannot be $-8$, so the width is $5$ cm, and the length $8$ cm. The rejected root is not a mistake; it is the algebra offering two answers and the context choosing one.\n\n*Solve $x + \\dfrac{12}{x} = 7$.* Multiply through by $x$: $x^2 + 12 = 7x$, so $x^2 - 7x + 12 = 0$, $(x - 3)(x - 4) = 0$, and $x = 3$ or $x = 4$. Both work, and neither is rejected, because nothing in the equation forbids them.\n\n*A ball is thrown up. Its height is $h = 20t - 5t^2$ metres after $t$ seconds. When is it 15 m high?* $20t - 5t^2 = 15$ gives $t^2 - 4t + 3 = 0$, $(t - 1)(t - 3) = 0$: at $1$ second on the way up and $3$ seconds on the way down. Two roots, and this time both mean something.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Context",
+                "Equation",
+                "Solutions",
+                "Keep"
+              ],
+              "rows": [
+                [
+                  "width x, length x + 3, area 40",
+                  "x² + 3x − 40 = 0",
+                  "x = 5 or −8",
+                  "5: a width is positive"
+                ],
+                [
+                  "x + 12/x = 7",
+                  "x² − 7x + 12 = 0",
+                  "x = 3 or 4",
+                  "both"
+                ],
+                [
+                  "a ball at 15 m, h = 20t − 5t²",
+                  "t² − 4t + 3 = 0",
+                  "t = 1 or 3",
+                  "both: up, then down"
+                ]
+              ],
+              "title": "Form, rearrange to zero, solve, then let the context choose"
+            },
+            "alt": "A table of three contexts leading to quadratics, the equation each gives, its solutions and which of them the context keeps"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "A rectangle is 3 cm longer than it is wide and has area 40 cm². What is its width, in cm?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a quadratic from a context",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Width $x$, length $x + 3$: $x(x + 3) = 40$, so $x^2 + 3x - 40 = 0$ and $(x + 8)(x - 5) = 0$. The root $-8$ is rejected because a width is positive, leaving $x = 5$ cm.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "5"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 5,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "cm"
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Equations in disguise, and a repeated root",
+        "body": "Some equations do not look like quadratics until they are expanded and rearranged. *Show that $x$ satisfies $x^2 + 3x - 10 = 0$, given that $(x + 1)^2 + (x + 2)^2 = 25$.* Expand: $x^2 + 2x + 1 + x^2 + 4x + 4 = 25$, so $2x^2 + 6x + 5 = 25$, $2x^2 + 6x - 20 = 0$, and dividing by $2$ gives $x^2 + 3x - 10 = 0$ as required. Then $(x + 5)(x - 2) = 0$: $x = 2$ or $x = -5$.\n\nIn a *show that*, every line is a mark, and the division by $2$ at the end is a line: the target has no common factor, so yours must be removed too.\n\n**A repeated root.** $4x^2 - 12x + 9 = 0$ has discriminant $0$ and factorises as $(2x - 3)^2 = 0$, so $x = \\frac{3}{2}$ once. The curve $y = 4x^2 - 12x + 9$ touches the $x$ axis at $x = \\frac{3}{2}$ without crossing it. A question asking for *the* solution, singular, is telling you the quadratic is a perfect square.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Given",
+                "Rearranged",
+                "Factorised",
+                "Solutions"
+              ],
+              "rows": [
+                [
+                  "(x + 1)² + (x + 2)² = 25",
+                  "x² + 3x − 10 = 0",
+                  "(x + 5)(x − 2)",
+                  "x = 2 or −5"
+                ],
+                [
+                  "x + 12/x = 7",
+                  "x² − 7x + 12 = 0",
+                  "(x − 3)(x − 4)",
+                  "x = 3 or 4"
+                ],
+                [
+                  "4x² − 12x + 9 = 0",
+                  "as it is",
+                  "(2x − 3)²",
+                  "x = 3/2, repeated"
+                ]
+              ],
+              "title": "Expand, rearrange to zero, then it is an ordinary quadratic"
+            },
+            "alt": "A table of three equations in disguise, each rearranged to a quadratic equal to zero, factorised and solved, the last with a repeated root"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "Solve $4x^2 - 12x + 9 = 0$. Give the solution as a decimal.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a repeated root",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The discriminant is $144 - 144 = 0$, so there is one repeated solution. $4x^2 - 12x + 9 = (2x - 3)^2$, so $2x - 3 = 0$ and $x = 1.5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = 3/2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 1.5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Solve $x^2 - 10x + 21 = 0$ by factorising.\n2. Write $x^2 - 8x + 7$ in the form $(x - p)^2 - q$.\n3. Write down the minimum value of $2(x - 1)^2 + 3$ and the value of $x$ at which it occurs.\n\n**Part B.**\n\n4. Solve $3x^2 + 5x - 2 = 0$.\n5. Solve $x^2 - 2x - 1 = 0$, giving your answers in exact form.\n6. Write $2x^2 - 4x + 5$ in the form $a(x + b)^2 + c$.\n\n**Part C.**\n\n7. Solve $x^2 + 4x - 7 = 0$, giving your answers to 2 decimal places.\n8. A ball's height is $h = 20t - 5t^2$ metres after $t$ seconds. Complete the square to find its greatest height and when it is reached.\n9. Show that if $(x + 1)^2 + (x + 2)^2 = 25$ then $x^2 + 3x - 10 = 0$, and hence solve it.\n\nFor question 8, take the $-5$ out first: $-5(t^2 - 4t)$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "x = 3 or x = 7"
+                ],
+                [
+                  "2",
+                  "(x − 4)² − 9"
+                ],
+                [
+                  "3",
+                  "minimum 3, at x = 1"
+                ],
+                [
+                  "4",
+                  "x = 1/3 or x = −2"
+                ],
+                [
+                  "5",
+                  "x = 1 ± √2"
+                ],
+                [
+                  "6",
+                  "2(x − 1)² + 3"
+                ],
+                [
+                  "7",
+                  "1.32 or −5.32"
+                ],
+                [
+                  "8",
+                  "h = 20 − 5(t − 2)²: 20 m at t = 2"
+                ],
+                [
+                  "9",
+                  "x = 2 or x = −5"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on completing the square and solving quadratics"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: the completed square as the master form",
+        "body": "**Everything comes from the completed square.** The turning point is read off it; setting it to zero and taking a square root solves the equation; and doing that in general, for $ax^2 + bx + c$, produces the quadratic formula, which is why the formula has $2a$ underneath and $b^2 - 4ac$ under the root. A candidate who can derive the formula in three lines never has to worry about remembering it, and this exam does not print it.\n\n**The discriminant is a question about the vertex.** $b^2 - 4ac > 0$ means the vertex is on the far side of the $x$ axis from the direction the curve opens, so it crosses twice; zero means the vertex sits on the axis; negative means the curve never reaches it. Read that way, the three cases are a picture rather than a rule.\n\n**Exact or decimal is decided by the paper and the wording.** *Exact* or *in the form $p \\pm \\sqrt{q}$* means complete the square or leave the formula's root unsimplified. *To 2 decimal places* means the formula on Paper 2. A surd answer on Paper 1 that is then rounded loses the last mark; a rounded answer where an exact one was asked for loses it too.\n\n**Contexts hand you a root to reject, and the rejection is a mark.** Write the sentence: *$x = -8$ is impossible because a width is positive, so $x = 5$.* Leaving both roots, or silently dropping one, are both marked down.\n\n**Fractions in $b$ and $c$ are the sign of a correct method**, not a mistake. $2x^2 + 6x + 7 \\equiv 2\\left(x + \\frac{3}{2}\\right)^2 + \\frac{5}{2}$ is right; the version with $-\\frac{9}{4}$ instead of $-\\frac{9}{2}$ is the error, and expanding back finds it in one line.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does with a quadratic",
+              "boxes": [
+                {
+                  "title": "Completes the square as the first move",
+                  "body": "Turning point, minimum, sketch and exact roots all read off one form."
+                },
+                {
+                  "title": "Doubles the subtracted square",
+                  "body": "With a coefficient, the −9/4 inside the bracket becomes −9/2 outside; expanding back is the check."
+                },
+                {
+                  "title": "Reads the discriminant as a picture",
+                  "body": "Positive: crosses twice. Zero: touches. Negative: never reaches the axis."
+                },
+                {
+                  "title": "Rejects with a reason",
+                  "body": "A negative width or a time before the throw is ruled out in a sentence, not silently."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band quadratic answer: completing the square first, doubling the subtracted square, reading the discriminant as a picture, and rejecting a root with a reason"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Completing the square with a coefficient**: take $a$ out of the first two terms, complete inside, multiply the subtracted square by $a$. $2x^2 + 6x + 7 \\equiv 2\\left(x + \\frac{3}{2}\\right)^2 + \\frac{5}{2}$.\n- The squared bracket is never negative, so the **turning point** is where it is zero: $(x + 3)^2 - 7$ has minimum $-7$ at $x = -3$; a negative $a$ gives a maximum.\n- **Solve** by factorising when you can, completing the square for an exact answer, the formula otherwise; a graph checks.\n- The formula $x = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ is **not given** in this exam. Bracket every negative.\n- **Discriminant** $b^2 - 4ac$: positive two roots, zero one repeated root, negative none.\n- Always **rearrange to zero** first, and divide out a common factor.\n- **Contexts**: name the unknown, form, rearrange, solve, reject with a reason.\n- **Exact** means a surd; *2 decimal places* means the formula.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Completed square",
+                  "equation": "ax² + bx + c = a(x + p)² + q",
+                  "units": "the subtracted square is multiplied by a"
+                },
+                {
+                  "name": "Turning point",
+                  "equation": "(−p, q): minimum if a > 0, maximum if a < 0",
+                  "units": "the bracket is never negative"
+                },
+                {
+                  "name": "The formula",
+                  "equation": "x = (−b ± √(b² − 4ac)) / 2a",
+                  "units": "not given in this exam"
+                },
+                {
+                  "name": "Discriminant",
+                  "equation": "b² − 4ac: two, one or no real roots",
+                  "units": "positive, zero, negative"
+                }
+              ]
+            },
+            "alt": "A reference card with the completed square form, the turning point read from it, the quadratic formula and the three cases of the discriminant"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Solve $x^2 - 10x + 21 = 0$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "solving by factorising",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Two numbers that multiply to $21$ and add to $-10$ are $-3$ and $-7$: $(x - 3)(x - 7) = 0$, so $x = 3$ or $x = 7$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 3 or x = 7"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x = 3 or x = 7",
+        "3 or 7",
+        "x = 7 or x = 3",
+        "7 or 3",
+        "3, 7",
+        "x = 3, x = 7"
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "Write $x^2 - 8x + 7$ in the form $(x - p)^2 - q$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "completing the square",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Halve $-8$ to get $-4$, square it to get $16$: $x^2 - 8x + 7 = (x - 4)^2 - 16 + 7 = (x - 4)^2 - 9$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(x − 4)² − 9"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(x - 4)^2 - 9"
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "What is the minimum value of $2(x - 1)^2 + 3$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a minimum",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The bracket is never negative and is $0$ at $x = 1$, so the expression is at least $3$. The minimum value is $3$, at $x = 1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "prompt": "What does a negative discriminant, $b^2 - 4ac < 0$, tell you about $ax^2 + bx + c = 0$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the discriminant",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The formula takes the square root of $b^2 - 4ac$. When that is negative there is no real root to take, so there are no real solutions, and the curve never reaches the $x$ axis. Zero gives one repeated solution; positive gives two.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "No real solutions: a negative number has no real square root"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Two negative solutions, because the discriminant is negative",
+        "No real solutions: a negative number has no real square root",
+        "One repeated solution, because the square root is zero",
+        "The curve crosses the $x$ axis twice, once each side of the origin"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "Solve $3x^2 + 5x - 2 = 0$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving ax² + bx + c = 0",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$a \\times c = -6$; the pair adding to $5$ is $6$ and $-1$. $3x^2 + 6x - x - 2 = 3x(x + 2) - (x + 2) = (3x - 1)(x + 2) = 0$, so $x = \\frac{1}{3}$ or $x = -2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 1/3 or x = −2"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x = 1/3 or x = -2",
+        "1/3 or -2",
+        "x = -2 or x = 1/3",
+        "-2 or 1/3",
+        "x = -2, x = 1/3",
+        "-2, 1/3"
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "Solve $x^2 - 2x - 1 = 0$, giving your answers in exact form.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "an exact solution",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Complete the square: $(x - 1)^2 - 2 = 0$, so $(x - 1)^2 = 2$, $x - 1 = \\pm\\sqrt{2}$ and $x = 1 \\pm \\sqrt{2}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 1 ± √2"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x = 1 ± √2",
+        "1 ± √2",
+        "x = 1 + √2 or x = 1 - √2",
+        "1 + √2 or 1 - √2",
+        "x = 1 - √2 or x = 1 + √2"
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "Write $2x^2 - 4x + 5$ in the form $a(x + b)^2 + c$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "completing the square with a coefficient",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2(x^2 - 2x) + 5 = 2[(x - 1)^2 - 1] + 5 = 2(x - 1)^2 - 2 + 5 = 2(x - 1)^2 + 3$. The subtracted $1$ is doubled on its way out of the bracket.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2(x − 1)² + 3"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "2(x - 1)^2 + 3"
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "A ball's height is $h = 20t - 5t^2$ metres after $t$ seconds. At what time, in seconds, does it first reach a height of 15 m?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a quadratic from a context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$20t - 5t^2 = 15$, so $5t^2 - 20t + 15 = 0$ and $t^2 - 4t + 3 = 0$: $(t - 1)(t - 3) = 0$. The ball is at 15 m at $t = 1$ on the way up and $t = 3$ on the way down, so first at $1$ second.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "t² − 4t + 3 = 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "t = 1"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "s"
+    },
+    {
+      "id": "q9",
+      "prompt": "A student solves $x(x + 3) = 40$ by writing $x = 40$ or $x + 3 = 40$. What is wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "rearranging to zero",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Two numbers multiplying to $40$ could be $5$ and $8$, $4$ and $10$, or anything else. Only a product equal to **zero** forces a factor to be zero. Rearranging to $x^2 + 3x - 40 = 0$ and factorising as $(x + 8)(x - 5)$ gives $x = 5$ or $x = -8$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Only a product equal to zero fixes a factor: rearrange to $x^2 + 3x - 40 = 0$ first"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "The student should have divided both sides by $x$ to get $x + 3 = 40$",
+        "The equation has no solutions, because $x$ and $x + 3$ cannot both divide $40$",
+        "Only a product equal to zero fixes a factor: rearrange to $x^2 + 3x - 40 = 0$ first",
+        "Nothing is wrong: when two numbers multiply to $40$, one of them must be $40$ and the other must be $1$"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "Solve $x + \\dfrac{12}{x} = 7$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "an equation in disguise",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiply every term by $x$: $x^2 + 12 = 7x$, so $x^2 - 7x + 12 = 0$ and $(x - 3)(x - 4) = 0$. Both $3$ and $4$ satisfy the original, since $3 + 4 = 7$ and $4 + 3 = 7$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 3 or x = 4"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x = 3 or x = 4",
+        "3 or 4",
+        "x = 4 or x = 3",
+        "4 or 3",
+        "3, 4",
+        "x = 3, x = 4"
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "Solve $x^2 + 4x - 7 = 0$. Give the positive solution to 2 decimal places.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the formula",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The formula with $a = 1$, $b = 4$, $c = -7$: $x = \\dfrac{-4 \\pm \\sqrt{16 + 28}}{2} = \\dfrac{-4 \\pm \\sqrt{44}}{2}$. The positive root is $\\dfrac{-4 + 6.633}{2} = 1.32$ to 2 d.p.; the other is $-5.32$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the formula with the negative c bracketed"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.32"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 1.32,
+      "tolerance": 0.005,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "prompt": "Given $2x^2 + 6x + 7 \\equiv a(x + b)^2 + c$, find $b$. Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the specification example",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2(x^2 + 3x) + 7$: halve the $3$ inside the bracket, so $b = \\frac{3}{2} = 1.5$. The full form is $2\\left(x + \\frac{3}{2}\\right)^2 + \\frac{5}{2}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "b = 3/2"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "prompt": "The curve $y = ax^2 + bx + c$ touches the $x$ axis at exactly one point. What must be true?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a repeated root",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Touching at one point means one repeated root, which is the case $b^2 - 4ac = 0$: the vertex of the parabola sits on the $x$ axis. $4x^2 - 12x + 9 = (2x - 3)^2$ is an example.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$b^2 - 4ac = 0$: one repeated root"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$a$ is negative: the parabola opens downwards",
+        "$b^2 - 4ac > 0$: two distinct roots",
+        "$c = 0$: the curve passes through the origin",
+        "$b^2 - 4ac = 0$: one repeated root"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "A student completes the square for $2x^2 + 6x + 7$ and gets $2\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4} + 7$. What has gone wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the doubled subtracted square",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Inside the bracket $x^2 + 3x = \\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4}$, and the whole of that is multiplied by $2$, so the subtracted square becomes $-\\frac{9}{2}$. Expanding the student's version gives $2x^2 + 6x + \\frac{37}{4}$, not $2x^2 + 6x + 7$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The $-\\frac{9}{4}$ was inside a bracket multiplied by $2$, so it should be $-\\frac{9}{2}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "The $-\\frac{9}{4}$ was inside a bracket multiplied by $2$, so it should be $-\\frac{9}{2}$",
+        "The $7$ should have been divided by $2$ as well as the other terms",
+        "Nothing is wrong: the constant $-\\frac{9}{4} + 7 = \\frac{19}{4}$ is correct exactly as it stands",
+        "The $3$ should not have been halved before it was squared"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "A ball's height is $h = 20t - 5t^2 = 20 - 5(t - 2)^2$. What does the completed square tell you?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a maximum in context",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$-5(t - 2)^2$ is never positive, so $h$ is at most $20$, and equals $20$ when $t = 2$. The completed square hands over the maximum and the time in one reading. The ball lands when $20t - 5t^2 = 0$, at $t = 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Greatest height 20 m at $t = 2$, because the subtracted square is never negative"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "The ball lands after 20 seconds, when the bracket reaches 20",
+        "Greatest height 20 m at $t = 2$, because the subtracted square is never negative",
+        "The greatest height is 5 m, the coefficient of the square",
+        "The height is never more than 2 m, the number inside the bracket, at any time at all"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "Why does the quadratic formula have $b^2 - 4ac$ under the square root and $2a$ underneath?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "where the formula comes from",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Complete the square on $ax^2 + bx + c = 0$: $a\\left(x + \\frac{b}{2a}\\right)^2 = \\frac{b^2 - 4ac}{4a}$. Taking the square root gives $x + \\frac{b}{2a} = \\pm\\frac{\\sqrt{b^2 - 4ac}}{2a}$, which is the formula. It is the completed-square method done once for every quadratic, which is why deriving it beats remembering it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "It is the completed square of $ax^2 + bx + c$, solved in general"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Because those are the values that make the formula easy to remember",
+        "Because $b^2 - 4ac$ is the area of the parabola",
+        "It is the completed square of $ax^2 + bx + c$, solved in general",
+        "Because every quadratic can be written with $a = 1$ first"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "(a) Work out the values of $a$, $b$ and $c$ such that $2x^2 + 6x + 7 \\equiv a(x + b)^2 + c$.\n\n(b) Hence write down the minimum value of $2x^2 + 6x + 7$ and the value of $x$ at which it occurs.\n\n(c) Explain, using your answer to (a), why the equation $2x^2 + 6x + 7 = 0$ has no real solutions, and confirm this with the discriminant.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's completed square",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** Take the coefficient of $x^2$ out of the first two terms: $2(x^2 + 3x) + 7$. Complete the square inside: $x^2 + 3x = \\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4}$. So the expression is $2\\left[\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4}\\right] + 7 = 2\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{2} + 7 = 2\\left(x + \\frac{3}{2}\\right)^2 + \\frac{5}{2}$. Therefore $a = 2$, $b = \\frac{3}{2}$, $c = \\frac{5}{2}$. Check by expanding: $2\\left(x^2 + 3x + \\frac{9}{4}\\right) + \\frac{5}{2} = 2x^2 + 6x + \\frac{9}{2} + \\frac{5}{2} = 2x^2 + 6x + 7$.\n\n**(b)** The squared bracket is never negative, and it is zero when $x = -\\frac{3}{2}$. So the expression is always at least $\\frac{5}{2}$, and equals $\\frac{5}{2}$ at $x = -\\frac{3}{2}$: the minimum value is $\\frac{5}{2}$, occurring at $x = -\\frac{3}{2}$.\n\n**(c)** From (b), $2x^2 + 6x + 7 \\geqslant \\frac{5}{2}$ for every real $x$, so it can never equal $0$: the equation has no real solutions. The curve $y = 2x^2 + 6x + 7$ has its minimum above the $x$ axis and never crosses it.\n\nThe discriminant agrees: $b^2 - 4ac = 6^2 - 4 \\times 2 \\times 7 = 36 - 56 = -20$, which is negative, so the formula would require the square root of a negative number and there are no real roots. The two arguments are the same fact seen twice: a positive minimum and a negative discriminant both say the parabola stays above the axis.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "coefficient out of the first two terms"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "square completed inside with −9/4"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracted square multiplied by 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "a = 2, b = 3/2, c = 5/2"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "minimum 5/2"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "at x = −3/2, with the reason"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "argues the expression is always positive"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "discriminant −20"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Takes the 2 out of the first two terms and completes the square inside: 2[(x + 3/2)² − 9/4] + 7.",
+          "marks": 2
+        },
+        {
+          "text": "Multiplies the subtracted square by 2 and collects: a = 2, b = 3/2, c = 5/2.",
+          "marks": 2
+        },
+        {
+          "text": "Reads the minimum 5/2 at x = −3/2 from the completed square, with the reason that the bracket is never negative.",
+          "marks": 2
+        },
+        {
+          "text": "Argues that the expression is always at least 5/2 so can never be 0, and confirms with b² − 4ac = 36 − 56 = −20 < 0.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** Take the coefficient of $x^2$ out of the first two terms: $2(x^2 + 3x) + 7$. Complete the square inside: $x^2 + 3x = \\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4}$. So the expression is $2\\left[\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4}\\right] + 7 = 2\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{2} + 7 = 2\\left(x + \\frac{3}{2}\\right)^2 + \\frac{5}{2}$. Therefore $a = 2$, $b = \\frac{3}{2}$, $c = \\frac{5}{2}$. Check by expanding: $2\\left(x^2 + 3x + \\frac{9}{4}\\right) + \\frac{5}{2} = 2x^2 + 6x + \\frac{9}{2} + \\frac{5}{2} = 2x^2 + 6x + 7$.\n\n**(b)** The squared bracket is never negative, and it is zero when $x = -\\frac{3}{2}$. So the expression is always at least $\\frac{5}{2}$, and equals $\\frac{5}{2}$ at $x = -\\frac{3}{2}$: the minimum value is $\\frac{5}{2}$, occurring at $x = -\\frac{3}{2}$.\n\n**(c)** From (b), $2x^2 + 6x + 7 \\geqslant \\frac{5}{2}$ for every real $x$, so it can never equal $0$: the equation has no real solutions. The curve $y = 2x^2 + 6x + 7$ has its minimum above the $x$ axis and never crosses it.\n\nThe discriminant agrees: $b^2 - 4ac = 6^2 - 4 \\times 2 \\times 7 = 36 - 56 = -20$, which is negative, so the formula would require the square root of a negative number and there are no real roots. The two arguments are the same fact seen twice: a positive minimum and a negative discriminant both say the parabola stays above the axis."
+    },
+    {
+      "id": "q18",
+      "prompt": "A rectangular garden is 3 m longer than it is wide. A path 1 m wide runs along one long side, and the area of the garden without the path is 40 m².\n\n(a) Taking the width of the whole garden as $x$ metres, show that $x^2 + 2x - 43 = 0$.\n\n(b) Solve the equation, giving the width of the garden to 2 decimal places.\n\n(c) Explain why one of the two solutions is rejected.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "a quadratic from a context, with the formula",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "**(a)** The whole garden is $x$ metres wide and $3$ metres longer than it is wide, so its length is $x + 3$. The path runs along one long side and is $1$ m wide, so it takes $1$ m off the **width**, leaving a garden $(x - 1)$ m wide and still $(x + 3)$ m long. Its area is $40$:\n\n$$(x + 3)(x - 1) = 40$$\n\nExpand: $x^2 - x + 3x - 3 = 40$, so $x^2 + 2x - 3 = 40$, and rearranging to zero, $x^2 + 2x - 43 = 0$, as required. In a *show that* each of those lines is written; the target equation is given, so the marks are for reaching it.\n\n**(b)** $x^2 + 2x - 43$ does not factorise, since no pair of integers multiplies to $-43$ and adds to $2$. Use the formula with $a = 1$, $b = 2$, $c = -43$:\n\n$$x = \\frac{-2 \\pm \\sqrt{4 - 4(1)(-43)}}{2} = \\frac{-2 \\pm \\sqrt{176}}{2}$$\n\n$\\sqrt{176} = 4\\sqrt{11}$, so exactly $x = -1 \\pm 2\\sqrt{11}$. As decimals, $x = 5.63$ or $x = -7.63$ to 2 decimal places. So the width of the garden is $5.63$ m, and the length is $8.63$ m.\n\n**(c)** The root $x = -7.63$ is rejected because $x$ is a width, and a length cannot be negative. The algebra produces two numbers that satisfy the equation; the context accepts only the one that describes a real garden. The check: $(5.63 + 3)(5.63 - 1) = 8.63 \\times 4.63 \\approx 40.0$, as it should.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "length x + 3 and reduced width x − 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(x + 3)(x − 1) = 40"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands correctly"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "rearranges to the given form"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the formula with c bracketed"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "√176 or −1 ± 2√11"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5.63"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rejects −7.63 with the reason"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Sets up the length as x + 3, the width of the garden without the path as x − 1, and forms (x + 3)(x − 1) = 40.",
+          "marks": 2
+        },
+        {
+          "text": "Expands and rearranges to x² + 2x − 43 = 0, showing each line.",
+          "marks": 2
+        },
+        {
+          "text": "Uses the formula with a = 1, b = 2, c = −43 to get x = −1 ± √44, and the width 5.63 m to 2 decimal places.",
+          "marks": 3
+        },
+        {
+          "text": "Rejects the negative root with the reason that a width cannot be negative.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** The whole garden is $x$ metres wide and $3$ metres longer than it is wide, so its length is $x + 3$. The path runs along one long side and is $1$ m wide, so it takes $1$ m off the **width**, leaving a garden $(x - 1)$ m wide and still $(x + 3)$ m long. Its area is $40$:\n\n$$(x + 3)(x - 1) = 40$$\n\nExpand: $x^2 - x + 3x - 3 = 40$, so $x^2 + 2x - 3 = 40$, and rearranging to zero, $x^2 + 2x - 43 = 0$, as required. In a *show that* each of those lines is written; the target equation is given, so the marks are for reaching it.\n\n**(b)** $x^2 + 2x - 43$ does not factorise, since no pair of integers multiplies to $-43$ and adds to $2$. Use the formula with $a = 1$, $b = 2$, $c = -43$:\n\n$$x = \\frac{-2 \\pm \\sqrt{4 - 4(1)(-43)}}{2} = \\frac{-2 \\pm \\sqrt{176}}{2}$$\n\n$\\sqrt{176} = 4\\sqrt{11}$, so exactly $x = -1 \\pm 2\\sqrt{11}$. As decimals, $x = 5.63$ or $x = -7.63$ to 2 decimal places. So the width of the garden is $5.63$ m, and the length is $8.63$ m.\n\n**(c)** The root $x = -7.63$ is rejected because $x$ is a width, and a length cannot be negative. The algebra produces two numbers that satisfy the equation; the context accepts only the one that describes a real garden. The check: $(5.63 + 3)(5.63 - 1) = 8.63 \\times 4.63 \\approx 40.0$, as it should."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 13
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 33
+    }
+  },
+  "examTechnique": {
+    "body": "Quadratic questions are marked on **method and form**. For completing the square with a coefficient, the marks are for taking the coefficient out of the first two terms, completing inside, and multiplying the subtracted square by the coefficient; expanding back is the check that finds the usual error. For solving, rearrange to zero, choose the method the wording asks for, and give the answer in the form the wording asks for: exact on Paper 1, decimals to the stated places on Paper 2.\n\nThe formula must be recalled, so write it down before substituting, and bracket every negative. In a *show that*, every line of the rearrangement is a mark. In a context, name the unknown, and reject the impossible root in a sentence. Read *the* solution, singular, as a hint that the discriminant is zero.",
+    "examinerErrors": [
+      "Not multiplying the subtracted square by the coefficient: $2\\left(x + \\frac{3}{2}\\right)^2 - \\frac{9}{4} + 7$.",
+      "Taking the coefficient out of the constant term as well as the first two.",
+      "Solving $x(x + 3) = 40$ by setting a factor equal to $40$ instead of rearranging to zero.",
+      "Losing a sign in $b^2 - 4ac$ when $c$ is negative, by not bracketing it.",
+      "Giving a rounded decimal where an exact answer was asked for, or a surd where 2 decimal places were asked for.",
+      "Keeping both roots in a context, or dropping one without a reason.",
+      "Forgetting the $\\pm$ when taking the square root of a completed square, and so finding only one root."
+    ],
+    "grade9Looks": "A grade 9 answer completes the square with a coefficient in four lines and expands back without being told, and then reads the turning point, the minimum or maximum and the number of roots straight off that form. It chooses the solving method from the wording, gives $-3 \\pm \\sqrt{7}$ where *exact* is asked and $1.32$ where two decimal places are, and writes the formula from memory with every negative bracketed. In a context it names the unknown, shows each line of the rearrangement, and rejects the impossible root with a sentence. And it can derive the formula from the completed square, which is why it never fears forgetting it."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

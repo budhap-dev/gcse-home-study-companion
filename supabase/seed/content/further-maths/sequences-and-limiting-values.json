@@ -1,0 +1,1549 @@
+{
+  "id": "sequences-and-limiting-values",
+  "subjectId": "further-maths",
+  "unitId": "algebra",
+  "title": "Sequences and limiting values",
+  "specPoints": [
+    "2.20",
+    "2.21",
+    "2.22"
+  ],
+  "order": 6,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Linear: difference times n, then adjust",
+      "body": "A common difference $d$ gives an $n$th term $dn + c$, and $c$ is fixed by the first term: $180, 176, 172$ has $d = -4$ and $c = 184$, so $184 - 4n$. Check the second term. The same recipe gives $r + (2n - 1)s$ for $r + s, r + 3s, r + 5s$."
+    },
+    {
+      "kind": "spot",
+      "title": "Second difference is 2a",
+      "body": "Constant first differences: linear. Constant second differences: quadratic, with $a$ equal to half the second difference. Subtract $an^2$ from every term and what is left is linear; find its $n$th term and add. Then check a term you did not use."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Limit: divide by the highest power of n",
+      "body": "$\\dfrac{2n}{n + 4}$ becomes $\\dfrac{2}{1 + 4/n}$, and $\\dfrac{4}{n}$ vanishes, so the limit is $2$: the ratio of the leading coefficients. Not $\\frac{2}{4}$, which pairs the wrong numbers, and not the first term."
+    },
+    {
+      "kind": "check",
+      "title": "A position is a positive whole number",
+      "body": "*Which term* or *is it a term* means solve for $n$. $4n - 1 = 100$ gives $n = 25.25$, so $100$ is not a term, and that sentence is the mark. A quadratic gives two roots; reject the negative or fractional one with a reason."
+    },
+    {
+      "kind": "remember",
+      "title": "A limit is approached, never reached",
+      "body": "Every term of $\\dfrac{2n}{n + 4}$ is less than $2$, because $2n < 2n + 8$. Setting a term equal to the limit gives a contradiction, and showing that in one line is what a *show that no term equals* question wants."
+    }
+  ],
+  "why": {
+    "matters": "A sequence is a rule for what comes next, and the $n$th term is the rule written down so that any term can be found without listing the ones before it. Linear rules describe steady change and quadratic rules describe change that speeds up or slows down, which between them cover most patterns a Year 10 course will hand you. The limiting value is the new idea: some sequences settle towards a number they never reach, and saying what that number is, and why it is never reached, is the first taste of the argument that underlies calculus. The exam asks for the $n$th term, which term, and the limit, and each is one substitution or one solve.",
+    "examples": [
+      {
+        "title": "The repayment that never quite clears",
+        "body": "A loan on which you repay half the outstanding amount each month leaves a balance that follows a rule: the $n$th balance is the original times $\\frac{1}{2^n}$, and the total repaid after $n$ months approaches the original amount without ever reaching it. The limiting value is the whole loan; no finite number of payments hits it exactly. Understanding that a sequence can head somewhere it never arrives is the difference between a customer who expects the balance to reach zero next month and one who reads the rule.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Month n",
+              "Total repaid, as a fraction of the loan"
+            ],
+            "rows": [
+              [
+                "1",
+                "1/2"
+              ],
+              [
+                "2",
+                "3/4"
+              ],
+              [
+                "3",
+                "7/8"
+              ],
+              [
+                "10",
+                "1023/1024"
+              ],
+              [
+                "limit",
+                "1: the whole loan, never quite reached"
+              ]
+            ],
+            "title": "Approaching the whole, one half at a time"
+          },
+          "alt": "A table of the fraction of a loan repaid after one, two, three and ten months of paying half the balance, approaching the whole loan as a limiting value"
+        }
+      },
+      {
+        "title": "The stack of cans",
+        "body": "Cans stacked in a triangle, one on top of two on top of three, hold $1, 3, 6, 10, \\ldots$ cans in $1, 2, 3, 4$ rows. The first differences $2, 3, 4$ change, but the second difference is $1$ every time, so the rule is quadratic with $a = \\frac{1}{2}$: the $n$th triangular number is $\\frac{1}{2}n^2 + \\frac{1}{2}n$. A shop wanting a display of $210$ cans solves $\\frac{1}{2}n^2 + \\frac{1}{2}n = 210$ and gets $n = 20$ rows, rejecting the negative root, exactly as the exam's *which term* questions do.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "From a pattern to a rule",
+            "boxes": [
+              {
+                "title": "The terms",
+                "body": "1, 3, 6, 10, 15: one row, two rows, three …"
+              },
+              {
+                "title": "The differences",
+                "body": "first 2, 3, 4, 5; second 1, 1, 1"
+              },
+              {
+                "title": "The rule",
+                "body": "a = 1/2, and the nth term is n²/2 + n/2"
+              },
+              {
+                "title": "Which term",
+                "body": "210 cans: n² + n − 420 = 0, so n = 20 rows"
+              }
+            ]
+          },
+          "alt": "Four boxes taking the triangular numbers from their terms through the second difference to the quadratic nth term and a which-term question"
+        }
+      },
+      {
+        "title": "The ratio that settles down",
+        "body": "Divide each Fibonacci number by the one before it, $\\frac{1}{1}, \\frac{2}{1}, \\frac{3}{2}, \\frac{5}{3}, \\frac{8}{5}, \\ldots$, and the sequence of ratios wobbles above and below a value it homes in on, about $1.618$, without ever landing on it. That is a limiting value found by watching, the way the exam's $\\frac{2n}{n + 4}$ can be watched approaching $2$. The exam's sequences are simpler, and the same three questions apply to both: what is the rule, where is it heading, and does it ever get there.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Ratio",
+              "Value"
+            ],
+            "rows": [
+              [
+                "2 / 1",
+                "2"
+              ],
+              [
+                "3 / 2",
+                "1.5"
+              ],
+              [
+                "5 / 3",
+                "1.667"
+              ],
+              [
+                "8 / 5",
+                "1.6"
+              ],
+              [
+                "13 / 8",
+                "1.625"
+              ],
+              [
+                "limit",
+                "about 1.618, never a term"
+              ]
+            ],
+            "title": "A sequence of ratios closing in on a limit"
+          },
+          "alt": "A table of successive ratios of Fibonacci numbers wobbling above and below their limiting value of about 1.618"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Linear sequences: the nth term, and which term",
+        "body": "A **linear** sequence goes up or down by the same amount each time, and its $n$th term is that amount times $n$, adjusted by a constant. The specification's example, $180, 176, 172, \\ldots$, falls by $4$ each time, so the $n$th term is $-4n + c$; the first term is $180 = -4 + c$, so $c = 184$ and the $n$th term is $184 - 4n$. Check the second term: $184 - 8 = 176$.\n\n**Which term has value $-1000$?** Set the $n$th term equal to it and solve: $184 - 4n = -1000$, so $4n = 1184$ and $n = 296$. The $296$th term. A whole-number $n$ means the value is in the sequence; a fraction would mean it is not.\n\n**Letters instead of numbers.** $r + s, \\; r + 3s, \\; r + 5s, \\ldots$ goes up by $2s$ each time, so the $n$th term is $2sn$ adjusted: the first term is $r + s = 2s + c$, giving $c = r - s$, and the $n$th term is $r - s + 2sn$, usually written $r + (2n - 1)s$. Check $n = 2$: $r + 3s$. The method is the same; only the arithmetic is in letters.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sequence",
+                "Difference",
+                "nth term",
+                "Check"
+              ],
+              "rows": [
+                [
+                  "180, 176, 172, …",
+                  "−4",
+                  "184 − 4n",
+                  "n = 2: 176"
+                ],
+                [
+                  "4, 11, 18, …",
+                  "+7",
+                  "7n − 3",
+                  "n = 3: 18"
+                ],
+                [
+                  "r + s, r + 3s, r + 5s, …",
+                  "+2s",
+                  "r + (2n − 1)s",
+                  "n = 2: r + 3s"
+                ],
+                [
+                  "47, 44, 41, …",
+                  "−3",
+                  "50 − 3n",
+                  "n = 3: 41"
+                ]
+              ],
+              "title": "Difference times n, then adjust the constant"
+            },
+            "alt": "A table of four linear sequences with the common difference, the nth term and a check of one term, including the specification's sequence in letters"
+          },
+          {
+            "type": "worked-example",
+            "problem": "The linear sequence 180, 176, 172, … has $n$th term $184 - 4n$. Which term has value $-1000$?",
+            "steps": [
+              {
+                "text": "Set the $n$th term equal to $-1000$: $184 - 4n = -1000$",
+                "note": "the term is unknown, the value is given"
+              },
+              {
+                "text": "$4n = 1184$",
+                "note": "add 4n and 1000 to both sides"
+              },
+              {
+                "text": "$n = 296$",
+                "note": "a whole number, so −1000 really is a term"
+              },
+              {
+                "text": "The 296th term",
+                "note": "check: 184 − 4 × 296 = 184 − 1184 = −1000"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "The sequence 180, 176, 172, … has $n$th term $184 - 4n$. Which term has value $-1000$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "which term",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$184 - 4n = -1000$ gives $4n = 1184$, so $n = 296$. It is the 296th term.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "296"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 296,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Quadratic sequences: the second difference",
+        "body": "A **quadratic** sequence has differences that change, but the differences *of the differences* are constant. The specification's example: $10, 16, 18, 16, \\ldots$ has first differences $6, 2, -2$ and second differences $-4, -4$. Constant, so quadratic.\n\n**The second difference is $2a$.** So $a = -2$, and the $n$th term starts $-2n^2$. Subtract $-2n^2$ from every term, which means adding $2n^2$: $10 + 2 = 12$, $16 + 8 = 24$, $18 + 18 = 36$, $16 + 32 = 48$. What is left, $12, 24, 36, 48$, is linear with $n$th term $12n$. So the $n$th term is\n\n$$-2n^2 + 12n$$\n\nCheck $n = 3$: $-18 + 36 = 18$.\n\n**Which term has value $0$?** $-2n^2 + 12n = 0$, so $2n(6 - n) = 0$ and $n = 6$, since $n = 0$ is not a position. The sixth term is $0$, and after that the terms are negative: the sequence rises, turns at $18$, and falls, which is what a negative $a$ means.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Terms",
+                "10",
+                "16",
+                "18",
+                "16"
+              ],
+              "rows": [
+                [
+                  "first differences",
+                  "",
+                  "6",
+                  "2",
+                  "−2"
+                ],
+                [
+                  "second differences",
+                  "",
+                  "",
+                  "−4",
+                  "−4"
+                ],
+                [
+                  "a = second difference ÷ 2",
+                  "−2",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "add 2n² to each term",
+                  "12",
+                  "24",
+                  "36",
+                  "48"
+                ],
+                [
+                  "linear part",
+                  "12n",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "nth term",
+                  "−2n² + 12n",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Second difference is 2a; subtract an² and what is left is linear"
+            },
+            "alt": "A table finding the nth term of ten sixteen eighteen sixteen: first differences, a constant second difference of minus four giving a equals minus two, the remaining linear sequence twelve n, and the nth term minus two n squared plus twelve n"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "The sequence 10, 16, 18, 16, … has $n$th term $-2n^2 + 12n$. Which term has value 0?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a quadratic sequence",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$-2n^2 + 12n = 0$ factorises as $2n(6 - n) = 0$. $n = 0$ is not a position, so $n = 6$: the sixth term is $0$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 6,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "A quadratic nth term from four terms",
+        "body": "*Find the $n$th term of $2, 7, 14, 23, \\ldots$, and find which term has value $62$.*\n\nFirst differences $5, 7, 9$; second differences $2, 2$. So $a = 1$ and the $n$th term starts $n^2$. Subtract $n^2$ from each term: $2 - 1 = 1$, $7 - 4 = 3$, $14 - 9 = 5$, $23 - 16 = 7$. The remainder $1, 3, 5, 7$ is linear, $2n - 1$. So the $n$th term is $n^2 + 2n - 1$. Check $n = 4$: $16 + 8 - 1 = 23$.\n\nWhich term is $62$? $n^2 + 2n - 1 = 62$, so $n^2 + 2n - 63 = 0$, which factorises as $(n + 9)(n - 7) = 0$. The position must be positive, so $n = 7$: the seventh term. The quadratic gave two solutions and the sequence keeps one, exactly as a context did in the quadratics topic.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find the nth term of 2, 7, 14, 23, … and find which term has value 62.",
+            "steps": [
+              {
+                "text": "First differences $5, 7, 9$; second differences $2, 2$",
+                "note": "constant, so quadratic"
+              },
+              {
+                "text": "$a = 2 \\div 2 = 1$: the $n$th term starts $n^2$",
+                "note": "second difference is 2a"
+              },
+              {
+                "text": "Subtract $n^2$: $1, 3, 5, 7$, which is $2n - 1$",
+                "note": "the linear remainder"
+              },
+              {
+                "text": "$n$th term $n^2 + 2n - 1$; check $n = 4$: $16 + 8 - 1 = 23$",
+                "note": "always check a term you did not use"
+              },
+              {
+                "text": "$n^2 + 2n - 1 = 62$ gives $(n + 9)(n - 7) = 0$, so $n = 7$",
+                "note": "reject −9: a position is positive"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Sequence",
+                "Second difference",
+                "a",
+                "Linear remainder",
+                "nth term"
+              ],
+              "rows": [
+                [
+                  "2, 7, 14, 23",
+                  "2",
+                  "1",
+                  "1, 3, 5, 7 = 2n − 1",
+                  "n² + 2n − 1"
+                ],
+                [
+                  "5, 12, 23, 38",
+                  "4",
+                  "2",
+                  "3, 4, 5, 6 = n + 2",
+                  "2n² + n + 2"
+                ],
+                [
+                  "10, 16, 18, 16",
+                  "−4",
+                  "−2",
+                  "12, 24, 36, 48 = 12n",
+                  "−2n² + 12n"
+                ],
+                [
+                  "2, 11, 26, 47",
+                  "6",
+                  "3",
+                  "−1, −1, −1, −1",
+                  "3n² − 1"
+                ]
+              ],
+              "title": "Four sequences, one method"
+            },
+            "alt": "A table of four quadratic sequences with the second difference, the value of a, the linear remainder after subtracting a n squared and the nth term"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "The sequence 2, 7, 14, 23, … has $n$th term $n^2 + 2n - 1$. Which term has value 62?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "which term of a quadratic sequence",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$n^2 + 2n - 1 = 62$, so $n^2 + 2n - 63 = 0$ and $(n + 9)(n - 7) = 0$. A position is positive, so $n = 7$: the seventh term.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Limiting values: where a sequence is heading",
+        "body": "Some sequences settle towards a value without ever reaching it. The specification's example has $n$th term $\\dfrac{2n}{n + 4}$: the terms are $\\frac{2}{5}, \\frac{4}{6}, \\frac{6}{7}, \\ldots$, and by the hundredth, $\\frac{200}{104}$, they are close to $2$; by the thousandth, $\\frac{2000}{1004}$, closer still. The **limiting value** as $n \\to \\infty$ is $2$.\n\n**How to find it without a table.** Divide every term of the fraction by the highest power of $n$: $\\dfrac{2n}{n + 4} = \\dfrac{2}{1 + \\frac{4}{n}}$. As $n$ grows, $\\frac{4}{n}$ shrinks to nothing, and the fraction tends to $\\frac{2}{1} = 2$. The limit is the **ratio of the leading coefficients** whenever the top and bottom have the same highest power.\n\n$\\dfrac{3n + 2}{n - 1} \\to 3$. $\\dfrac{n^2 + 1}{2n^2 - n} \\to \\frac{1}{2}$. $5 - \\dfrac{1}{n} \\to 5$, since the fraction vanishes.\n\n**Write down** is the command word: no working is expected, just the value. But knowing why keeps you from writing $\\frac{2}{4}$ for $\\frac{2n}{n + 4}$, which is the first term's shape rather than the limit.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                20
+              ],
+              "yRange": [
+                0,
+                2.5
+              ],
+              "grid": true,
+              "xStep": 5,
+              "yStep": 0.5,
+              "lines": [
+                {
+                  "m": 0,
+                  "c": 2,
+                  "label": "limiting value 2",
+                  "dashed": true
+                }
+              ],
+              "points": [
+                {
+                  "x": 1,
+                  "y": 0.4,
+                  "free": true
+                },
+                {
+                  "x": 2,
+                  "y": 0.667,
+                  "free": true
+                },
+                {
+                  "x": 3,
+                  "y": 0.857,
+                  "free": true
+                },
+                {
+                  "x": 4,
+                  "y": 1.0,
+                  "free": true
+                },
+                {
+                  "x": 5,
+                  "y": 1.111,
+                  "free": true
+                },
+                {
+                  "x": 6,
+                  "y": 1.2,
+                  "free": true
+                },
+                {
+                  "x": 7,
+                  "y": 1.273,
+                  "free": true
+                },
+                {
+                  "x": 8,
+                  "y": 1.333,
+                  "free": true
+                },
+                {
+                  "x": 9,
+                  "y": 1.385,
+                  "free": true
+                },
+                {
+                  "x": 10,
+                  "y": 1.429,
+                  "free": true
+                },
+                {
+                  "x": 11,
+                  "y": 1.467,
+                  "free": true
+                },
+                {
+                  "x": 12,
+                  "y": 1.5,
+                  "free": true
+                },
+                {
+                  "x": 13,
+                  "y": 1.529,
+                  "free": true
+                },
+                {
+                  "x": 14,
+                  "y": 1.556,
+                  "free": true
+                },
+                {
+                  "x": 15,
+                  "y": 1.579,
+                  "free": true
+                },
+                {
+                  "x": 16,
+                  "y": 1.6,
+                  "free": true
+                },
+                {
+                  "x": 17,
+                  "y": 1.619,
+                  "free": true
+                },
+                {
+                  "x": 18,
+                  "y": 1.636,
+                  "free": true
+                },
+                {
+                  "x": 19,
+                  "y": 1.652,
+                  "free": true
+                },
+                {
+                  "x": 20,
+                  "y": 1.667,
+                  "free": true
+                }
+              ]
+            },
+            "alt": "The terms of the sequence two n over n plus four plotted against n, rising from 0.4 and flattening towards the dashed line y equals 2 without reaching it"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "nth term",
+                "Divide by the highest power",
+                "Limiting value"
+              ],
+              "rows": [
+                [
+                  "2n / (n + 4)",
+                  "2 / (1 + 4/n)",
+                  "2"
+                ],
+                [
+                  "(3n + 2) / (n − 1)",
+                  "(3 + 2/n) / (1 − 1/n)",
+                  "3"
+                ],
+                [
+                  "(n² + 1) / (2n² − n)",
+                  "(1 + 1/n²) / (2 − 1/n)",
+                  "1/2"
+                ],
+                [
+                  "5 − 1/n",
+                  "the fraction vanishes",
+                  "5"
+                ]
+              ],
+              "title": "Divide through by the highest power of n; the small fractions vanish"
+            },
+            "alt": "A table of four nth terms with each divided by the highest power of n to show the limiting value, two, three, a half and five"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "Write down the limiting value of $\\dfrac{2n}{n + 4}$ as $n \\to \\infty$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a limiting value",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Divide top and bottom by $n$: $\\dfrac{2}{1 + \\frac{4}{n}}$. As $n$ grows, $\\frac{4}{n}$ shrinks to nothing, leaving $2$. The terms $\\frac{2}{5}, \\frac{4}{6}, \\ldots, \\frac{2000}{1004}$ approach it without reaching it.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Working with the terms of a fraction sequence",
+        "body": "The specification's other question about $\\dfrac{2n}{n + 4}$: *work out the difference between the 16th and 6th terms.* Substitute each: the 16th term is $\\dfrac{32}{20} = \\dfrac{8}{5}$ and the 6th is $\\dfrac{12}{10} = \\dfrac{6}{5}$. The difference is $\\dfrac{2}{5}$.\n\nTwo habits earn here. **Simplify each term** before subtracting, so the denominators are small. **Keep the exact fraction**: $0.4$ is accepted here because $\\frac{2}{5}$ terminates, but a term such as $\\frac{4}{6} = \\frac{2}{3}$ does not, and $0.67$ would lose the mark; the fraction is the exact form.\n\nThe difference between terms of a fraction sequence shrinks as $n$ grows, which is another way of seeing the limit: the terms bunch up against $2$. Between the 6th and 16th terms the sequence moves $\\frac{2}{5}$; between the 1006th and 1016th it barely moves at all.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Term",
+                "Substitute",
+                "Simplified"
+              ],
+              "rows": [
+                [
+                  "6th",
+                  "2 × 6 / (6 + 4) = 12/10",
+                  "6/5"
+                ],
+                [
+                  "16th",
+                  "2 × 16 / (16 + 4) = 32/20",
+                  "8/5"
+                ],
+                [
+                  "difference",
+                  "8/5 − 6/5",
+                  "2/5"
+                ],
+                [
+                  "1st",
+                  "2/5",
+                  "2/5, the same number by coincidence"
+                ]
+              ],
+              "title": "Substitute, simplify, subtract"
+            },
+            "alt": "A table working out the sixth and sixteenth terms of two n over n plus four, simplifying each and finding their difference of two fifths"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "The $n$th term of a sequence is $\\dfrac{2n}{n + 4}$. Work out the difference between the 16th term and the 6th term. Give your answer as a decimal.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "terms of a fraction sequence",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The 16th term is $\\frac{32}{20} = \\frac{8}{5}$ and the 6th is $\\frac{12}{10} = \\frac{6}{5}$. The difference is $\\frac{2}{5} = 0.4$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "2/5"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 0.4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Is it in the sequence? Solve for n and look at the answer",
+        "body": "*Is $100$ a term of the sequence with $n$th term $4n - 1$?* Set them equal: $4n - 1 = 100$, so $n = 25.25$. A position must be a **positive whole number**, so $100$ is not a term. For $3n + 1$, $3n + 1 = 100$ gives $n = 33$: yes, the 33rd term.\n\nFor a quadratic sequence the same test produces a quadratic equation, and one root is usually negative or fractional and rejected. $n^2 + 3n = 130$ gives $(n + 13)(n - 10) = 0$, so $130$ is the tenth term of $4, 10, 18, 28, \\ldots$.\n\n**The wording to notice.** *Which term* means find $n$. *Is it a term* means find $n$ and check it is a positive integer. *Work out the term* means find the value at a given $n$. Three questions, one substitution each, and the last one is the easy direction that students sometimes do when the harder one was asked.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Equation",
+                "n",
+                "Conclusion"
+              ],
+              "rows": [
+                [
+                  "is 100 a term of 4n − 1?",
+                  "4n − 1 = 100",
+                  "25.25",
+                  "no: not a whole number"
+                ],
+                [
+                  "is 100 a term of 3n + 1?",
+                  "3n + 1 = 100",
+                  "33",
+                  "yes: the 33rd"
+                ],
+                [
+                  "which term of n² + 3n is 130?",
+                  "n² + 3n − 130 = 0",
+                  "10 or −13",
+                  "the 10th; −13 rejected"
+                ],
+                [
+                  "which term of 50 − 3n is −100?",
+                  "50 − 3n = −100",
+                  "50",
+                  "the 50th"
+                ]
+              ],
+              "title": "Solve for n, then ask whether n is a positive whole number"
+            },
+            "alt": "A table of four membership questions for linear and quadratic sequences, the equation each gives, the value of n and whether it is a valid position"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "Is $100$ a term of the sequence with $n$th term $4n - 1$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "membership",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Set $4n - 1 = 100$ and solve: $n = 25.25$. A position must be a positive whole number, so $100$ is not a term; the 25th term is $99$ and the 26th is $103$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "No, because $4n - 1 = 100$ gives $n = 25.25$, which is not a whole number"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "No, because $4n - 1 = 100$ gives $n = 25.25$, which is not a whole number",
+            "Yes, because $4 \\times 25 = 100$, so it is the 25th term of the sequence",
+            "No, because the sequence never goes above $99$, its 25th term",
+            "Yes, because $100$ is greater than the first term and the sequence goes up for ever"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Find the $n$th term of $4, 11, 18, 25, \\ldots$ and work out which term is $200$.\n2. Write down the limiting value of $\\dfrac{4n - 1}{2n + 3}$ as $n \\to \\infty$.\n3. Find the $n$th term of $47, 44, 41, \\ldots$.\n\n**Part B.**\n\n4. Find the $n$th term of $5, 12, 23, 38, \\ldots$.\n5. Find the $n$th term of $2, 11, 26, 47, \\ldots$.\n6. Write down the limiting value of $\\dfrac{n + 5}{3n}$.\n\n**Part C.**\n\n7. Find the $n$th term of $10, 16, 18, 16, \\ldots$ and find which term has value $0$.\n8. The $n$th term of a sequence is $\\dfrac{5n + 1}{n + 2}$. Work out the first term, write down the limiting value, and explain why no term ever equals the limiting value.\n9. Find the $n$th term of the sequence $r + s, \\; r + 3s, \\; r + 5s, \\ldots$.\n\nFor question 8, compare $5n + 1$ with $5(n + 2)$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "7n − 3; the 29th term"
+                ],
+                [
+                  "2",
+                  "2"
+                ],
+                [
+                  "3",
+                  "50 − 3n"
+                ],
+                [
+                  "4",
+                  "2n² + n + 2"
+                ],
+                [
+                  "5",
+                  "3n² − 1"
+                ],
+                [
+                  "6",
+                  "1/3"
+                ],
+                [
+                  "7",
+                  "−2n² + 12n; the 6th term"
+                ],
+                [
+                  "8",
+                  "first term 2; limit 5; 5n + 1 < 5n + 10 always"
+                ],
+                [
+                  "9",
+                  "r + (2n − 1)s"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on sequences and limiting values"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: why the second difference is 2a, and what a limit means",
+        "body": "**Why $2a$.** For $an^2 + bn + c$ the terms are $a + b + c$, $4a + 2b + c$, $9a + 3b + c$, $16a + 4b + c$. The first differences are $3a + b$, $5a + b$, $7a + b$, and the second differences are $2a$, $2a$. That is a proof, and it is also the reason the method works: halve the second difference for $a$, and the remainder after subtracting $an^2$ is the linear part $bn + c$.\n\n**Check a term you did not use.** Four terms determine a quadratic, and the fourth is the check: if the $n$th term you found does not give the fourth term, the sequence was not quadratic or the arithmetic slipped. A top-band answer shows that substitution.\n\n**A limit is a value the terms approach, not one they reach.** $\\dfrac{2n}{n + 4}$ is always less than $2$, because $2n < 2n + 8$ for every $n$, so no term equals the limiting value, and saying why is the kind of sentence the reasoning objective rewards. Some sequences approach from above, like $5 + \\frac{1}{n}$; some, like $\\frac{n^2 + 1}{2n^2 - n}$, need the highest power identified first, since dividing by $n$ alone leaves the wrong shape.\n\n**Membership is a rejection argument.** *Is 100 a term?* is answered by solving for $n$ and stating that $25.25$ is not a position, not by listing terms until you pass $100$. For a quadratic sequence, the rejected root is negative or fractional, and saying so is the mark.\n\n**Letters are numbers you have not been told.** $r + (2n - 1)s$ is found exactly as $184 - 4n$ was; the difference is $2s$ and the adjustment is $r - s$. Checking $n = 1$ and $n = 2$ against the given terms is the whole verification.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does with a sequence",
+              "boxes": [
+                {
+                  "title": "Proves 2a",
+                  "body": "Writes the terms of an² + bn + c and shows the second difference is 2a, so the method is understood, not recited."
+                },
+                {
+                  "title": "Checks an unused term",
+                  "body": "Substitutes n = 4 into the nth term found from three differences."
+                },
+                {
+                  "title": "Says why a limit is never reached",
+                  "body": "2n / (n + 4) < 2 because 2n < 2n + 8: a sentence, not a table."
+                },
+                {
+                  "title": "Rejects with a reason",
+                  "body": "n = 25.25 is not a position; n = −9 is not a position."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band sequences answer: proving the second difference rule, checking an unused term, explaining why a limit is never reached, and rejecting a non-integer position"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Linear**: constant difference $d$; $n$th term $dn$ plus an adjustment. $180, 176, 172, \\ldots$ is $184 - 4n$; $r + s, r + 3s, r + 5s, \\ldots$ is $r + (2n - 1)s$.\n- **Which term**: set the $n$th term equal to the value and solve for $n$. $184 - 4n = -1000$ gives $n = 296$.\n- **Quadratic**: constant second difference, equal to $2a$. Subtract $an^2$ from each term; the remainder is linear. $10, 16, 18, 16, \\ldots$ is $-2n^2 + 12n$, and its sixth term is $0$.\n- Check the $n$th term on a term you did not use to find it.\n- **Limiting value**: divide top and bottom by the highest power of $n$; the small fractions vanish. $\\dfrac{2n}{n + 4} \\to 2$. It is approached, never reached.\n- **Terms of a fraction sequence**: substitute, simplify, keep exact. The 16th minus the 6th term of $\\dfrac{2n}{n + 4}$ is $\\frac{2}{5}$.\n- **Membership**: solve for $n$; a term needs a positive whole-number position, and the other root of a quadratic is rejected with a reason.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Linear",
+                  "equation": "nth term = dn + (first term − d)",
+                  "units": "d is the common difference"
+                },
+                {
+                  "name": "Quadratic",
+                  "equation": "second difference = 2a",
+                  "units": "subtract an²; the remainder is bn + c"
+                },
+                {
+                  "name": "Limiting value",
+                  "equation": "divide by the highest power of n",
+                  "units": "ratio of the leading coefficients"
+                },
+                {
+                  "name": "Which term",
+                  "equation": "nth term = value, solve for n",
+                  "units": "n must be a positive whole number"
+                }
+              ]
+            },
+            "alt": "A reference card with the linear nth term, the second-difference rule for a quadratic, the method for a limiting value and the membership test"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Find the $n$th term of the linear sequence $4, 11, 18, 25, \\ldots$",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a linear nth term",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The difference is $7$, so the $n$th term is $7n$ adjusted: the first term is $7 - 3 = 4$, so $7n - 3$. Check $n = 3$: $21 - 3 = 18$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7n − 3"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "7n - 3",
+        "-3 + 7n"
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "The sequence $4, 11, 18, 25, \\ldots$ has $n$th term $7n - 3$. Which term has value 200?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "which term",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$7n - 3 = 200$ gives $7n = 203$, so $n = 29$. The 29th term.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "29"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 29,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "prompt": "Write down the limiting value of $\\dfrac{4n - 1}{2n + 3}$ as $n \\to \\infty$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a limiting value",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Divide top and bottom by $n$: $\\dfrac{4 - \\frac{1}{n}}{2 + \\frac{3}{n}} \\to \\dfrac{4}{2} = 2$. The ratio of the leading coefficients.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "prompt": "The sequence $5, 12, 23, 38, \\ldots$ has first differences $7, 11, 15$. What does that tell you?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "recognising a quadratic sequence",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first differences change, so the sequence is not linear; the second differences are $4, 4$, constant, so it is quadratic. The second difference is $2a$, giving $a = 2$: the $n$th term starts $2n^2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The second difference is $4$, so it is quadratic with $a = 2$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "It is linear with $n$th term $7n - 2$, since the first difference is $7$",
+        "The second difference is $4$, so it is quadratic with $a = 4$",
+        "It is a geometric sequence, because the terms are multiplied each time",
+        "The second difference is $4$, so it is quadratic with $a = 2$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "Find the $n$th term of $5, 12, 23, 38, \\ldots$",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a quadratic nth term",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Second difference $4$, so $a = 2$. Subtract $2n^2$: $5 - 2 = 3$, $12 - 8 = 4$, $23 - 18 = 5$, $38 - 32 = 6$, which is $n + 2$. So $2n^2 + n + 2$. Check $n = 4$: $32 + 4 + 2 = 38$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2n² + n + 2"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "2n^2 + n + 2",
+        "2n^2 + 2 + n"
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "Find the $n$th term of $2, 11, 26, 47, \\ldots$",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a quadratic nth term with no n term",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "First differences $9, 15, 21$; second difference $6$, so $a = 3$. Subtract $3n^2$: $2 - 3 = -1$, $11 - 12 = -1$, and so on, a constant $-1$. So $3n^2 - 1$. Check $n = 4$: $48 - 1 = 47$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3n² − 1"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "3n^2 - 1",
+        "-1 + 3n^2"
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "The $n$th term of a sequence is $\\dfrac{5n + 1}{n + 2}$. Write down its limiting value as $n \\to \\infty$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a limiting value",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Divide by $n$: $\\dfrac{5 + \\frac{1}{n}}{1 + \\frac{2}{n}} \\to 5$. The first term is $\\frac{6}{3} = 2$, and the terms climb towards $5$ without reaching it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "prompt": "The sequence $4, 10, 18, 28, \\ldots$ has $n$th term $n^2 + 3n$. Which term has value 130?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "which term of a quadratic sequence",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$n^2 + 3n = 130$, so $n^2 + 3n - 130 = 0$ and $(n + 13)(n - 10) = 0$. A position is positive, so $n = 10$: the tenth term.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n² + 3n − 130 = 0 factorised"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "prompt": "A student says the limiting value of $\\dfrac{2n}{n + 4}$ is $\\dfrac{2}{4} = \\dfrac{1}{2}$. What is wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the limiting value, not the constants",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "For large $n$ the $+4$ is tiny beside $n$: the 1000th term is $\\frac{2000}{1004}$, nearly $2$. Dividing top and bottom by $n$ shows it: $\\frac{2}{1 + 4/n}$, and $\\frac{4}{n} \\to 0$. The student compared the coefficient of $n$ with the constant, which is the wrong pair.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The $4$ becomes negligible as $n$ grows; dividing by $n$ gives $\\dfrac{2}{1 + 4/n} \\to 2$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "The $4$ becomes negligible as $n$ grows; dividing by $n$ gives $\\dfrac{2}{1 + 4/n} \\to 2$",
+        "Nothing: the limiting value is $\\dfrac{1}{2}$, the ratio of the two constants",
+        "The limiting value is $\\dfrac{2}{5}$, the first term, because the sequence never moves",
+        "The limiting value is $0$, because every fraction with $n$ in it tends to $0$ as $n$ grows"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "Find the $n$th term of the sequence $r + s, \\; r + 3s, \\; r + 5s, \\ldots$",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a linear sequence in letters",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The difference is $2s$, so the $n$th term is $2sn$ adjusted: the first term is $r + s = 2s + c$, so $c = r - s$, and the $n$th term is $r - s + 2sn = r + (2n - 1)s$. Check $n = 2$: $r + 3s$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "r + (2n − 1)s"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "r + (2n - 1)s",
+        "r + s(2n - 1)",
+        "r - s + 2sn",
+        "2sn + r - s",
+        "r + 2sn - s"
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "Find the $n$th term of the quadratic sequence $10, 16, 18, 16, \\ldots$",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the specification's quadratic sequence",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "First differences $6, 2, -2$; second difference $-4$, so $a = -2$. Adding $2n^2$ to each term gives $12, 24, 36, 48 = 12n$. So $-2n^2 + 12n$. Check $n = 4$: $-32 + 48 = 16$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−2n² + 12n"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "-2n^2 + 12n",
+        "12n - 2n^2"
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "The $n$th term of a sequence is $\\dfrac{2n}{n + 4}$. Work out the difference between the 16th and 6th terms. Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the specification's fraction sequence",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The 16th term is $\\frac{32}{20} = \\frac{8}{5}$; the 6th is $\\frac{12}{10} = \\frac{6}{5}$. The difference is $\\frac{2}{5} = 0.4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both terms found and simplified"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2/5"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 0.4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "prompt": "Why does no term of $\\dfrac{2n}{n + 4}$ ever equal its limiting value of $2$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why a limit is not reached",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A term equals $2$ only if $2n = 2(n + 4)$, which would need $0 = 8$. Since $2n < 2n + 8$ for every $n$, every term is less than $2$. The terms approach $2$ as closely as you like without reaching it, which is what a limiting value is.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$2n < 2n + 8 = 2(n + 4)$ for every $n$, so every term is less than $2$"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Because $n$ can never be infinite, so the sequence has no last term to equal $2$",
+        "$2n < 2n + 8 = 2(n + 4)$ for every $n$, so every term is less than $2$",
+        "Because the first term is $\\dfrac{2}{5}$, and $\\dfrac{2}{5}$ is not $2$",
+        "Because the terms are fractions and $2$ is a whole number, and a fraction is never whole"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "Why is the second difference of a quadratic sequence $an^2 + bn + c$ equal to $2a$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "proving the second-difference rule",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Write out the first few terms of $an^2 + bn + c$ and subtract: the first differences are $3a + b$, $5a + b$, $7a + b$, which rise by $2a$ each time. So the second difference is $2a$, and halving it gives $a$, which is the method.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The first differences are $3a + b$, $5a + b$, $7a + b$, …, which go up by $2a$ each time"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Because $n^2$ doubles each time you move one term along the sequence",
+        "Because the first difference of $an^2$ is always $a$, and there are two of them",
+        "The first differences are $3a + b$, $5a + b$, $7a + b$, …, which go up by $2a$ each time",
+        "It is not $2a$: the second difference is $a$, because $n^2 - (n - 1)^2 = 2n - 1$ is linear"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q15",
+      "prompt": "The sequence $47, 44, 41, \\ldots$ has $n$th term $50 - 3n$. Which term has value $-100$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "which term, going down",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$50 - 3n = -100$ gives $3n = 150$, so $n = 50$. The 50th term.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "prompt": "A student is asked whether $100$ is a term of $4n - 1$ and lists terms: $3, 7, 11, \\ldots, 99, 103$. What is the better method, and why?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "membership by solving",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Listing works but earns no reasoning mark and takes 26 terms. Solving $4n - 1 = 100$ gives $n = 25.25$, and the sentence *a position must be a positive whole number* is the argument the examiner wants. Substituting $n = 100$ answers a different question.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Solve $4n - 1 = 100$: $n = 25.25$ is not a whole number, which is quicker and gives a reason"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Listing is the only method that works for a question about whether a value is a term of a sequence",
+        "Substitute $n = 100$ to get $399$ and say $399$ is not $100$, so it is not a term",
+        "Divide $100$ by $4$ to get $25$, which is a whole number, so $100$ is the 25th term",
+        "Solve $4n - 1 = 100$: $n = 25.25$ is not a whole number, which is quicker and gives a reason"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "A quadratic sequence begins $10, 16, 18, 16, \\ldots$\n\n(a) Work out the $n$th term of the sequence.\n\n(b) Which term has the value $0$?\n\n(c) Explain, using the $n$th term, why the sequence has a largest term, and state which term it is.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's quadratic sequence in full",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** First differences: $16 - 10 = 6$, $18 - 16 = 2$, $16 - 18 = -2$. Second differences: $2 - 6 = -4$ and $-2 - 2 = -4$, constant, so the sequence is quadratic and $2a = -4$, giving $a = -2$.\n\nSubtract $-2n^2$ from each term, that is, add $2n^2$: $10 + 2 = 12$, $16 + 8 = 24$, $18 + 18 = 36$, $16 + 32 = 48$. The remainder $12, 24, 36, 48$ is linear with $n$th term $12n$. So the $n$th term is $-2n^2 + 12n$. Check a term: $n = 3$ gives $-18 + 36 = 18$, correct.\n\n**(b)** $-2n^2 + 12n = 0$ factorises as $2n(6 - n) = 0$, so $n = 0$ or $n = 6$. There is no zeroth term, so the term with value $0$ is the **sixth**.\n\n**(c)** Complete the square: $-2n^2 + 12n = -2(n^2 - 6n) = -2\\left[(n - 3)^2 - 9\\right] = 18 - 2(n - 3)^2$. The subtracted square is never negative, so every term is at most $18$, and equals $18$ when $n = 3$. So the sequence has a largest term, the **third**, with value $18$. The negative coefficient of $n^2$ is the reason: the $-2n^2$ eventually outweighs the $12n$, so after the third term the values fall, through $16$ and $10$ to $0$ at the sixth and negative beyond. The symmetry of the terms, $10, 16, 18, 16, 10$, says the same thing: the sequence turns at its middle.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "first and second differences"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "a = −2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts an² from each term"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "linear part 12n"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "nth term with a check"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "sixth term is 0, with 0 rejected"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "completes the square or argues from symmetry"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "largest term 18, the third, with the reason"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Finds the first differences 6, 2, −2 and the constant second difference −4, giving a = −2.",
+          "marks": 2
+        },
+        {
+          "text": "Adds 2n² to each term to leave 12, 24, 36, 48, the linear part 12n, and states the nth term −2n² + 12n with a check.",
+          "marks": 3
+        },
+        {
+          "text": "Solves −2n² + 12n = 0 to get n = 6, rejecting n = 0.",
+          "marks": 1
+        },
+        {
+          "text": "Completes the square or uses symmetry to show the terms are largest at n = 3, the third term 18, and explains that the negative n² term makes later terms fall.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** First differences: $16 - 10 = 6$, $18 - 16 = 2$, $16 - 18 = -2$. Second differences: $2 - 6 = -4$ and $-2 - 2 = -4$, constant, so the sequence is quadratic and $2a = -4$, giving $a = -2$.\n\nSubtract $-2n^2$ from each term, that is, add $2n^2$: $10 + 2 = 12$, $16 + 8 = 24$, $18 + 18 = 36$, $16 + 32 = 48$. The remainder $12, 24, 36, 48$ is linear with $n$th term $12n$. So the $n$th term is $-2n^2 + 12n$. Check a term: $n = 3$ gives $-18 + 36 = 18$, correct.\n\n**(b)** $-2n^2 + 12n = 0$ factorises as $2n(6 - n) = 0$, so $n = 0$ or $n = 6$. There is no zeroth term, so the term with value $0$ is the **sixth**.\n\n**(c)** Complete the square: $-2n^2 + 12n = -2(n^2 - 6n) = -2\\left[(n - 3)^2 - 9\\right] = 18 - 2(n - 3)^2$. The subtracted square is never negative, so every term is at most $18$, and equals $18$ when $n = 3$. So the sequence has a largest term, the **third**, with value $18$. The negative coefficient of $n^2$ is the reason: the $-2n^2$ eventually outweighs the $12n$, so after the third term the values fall, through $16$ and $10$ to $0$ at the sixth and negative beyond. The symmetry of the terms, $10, 16, 18, 16, 10$, says the same thing: the sequence turns at its middle."
+    },
+    {
+      "id": "q18",
+      "prompt": "The $n$th term of a sequence is $\\dfrac{2n}{n + 4}$.\n\n(a) Work out the difference between the 16th term and the 6th term.\n\n(b) Write down the limiting value of the sequence as $n \\to \\infty$, and explain how it can be found from the $n$th term.\n\n(c) Show that no term of the sequence is equal to the limiting value.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's fraction sequence in full",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** The 16th term: $\\dfrac{2 \\times 16}{16 + 4} = \\dfrac{32}{20} = \\dfrac{8}{5}$. The 6th term: $\\dfrac{2 \\times 6}{6 + 4} = \\dfrac{12}{10} = \\dfrac{6}{5}$. The difference is $\\dfrac{8}{5} - \\dfrac{6}{5} = \\dfrac{2}{5}$. Each term is simplified before subtracting so that the denominators match.\n\n**(b)** The limiting value is $2$. Divide the top and bottom of the $n$th term by $n$:\n\n$$\\frac{2n}{n + 4} = \\frac{2}{1 + \\frac{4}{n}}$$\n\nAs $n$ grows without limit, $\\frac{4}{n}$ becomes as small as you like, so the denominator tends to $1$ and the fraction tends to $\\frac{2}{1} = 2$. The terms confirm it: the 100th is $\\frac{200}{104}$ and the 1000th is $\\frac{2000}{1004}$, closer and closer to $2$. When the top and bottom have the same highest power of $n$, the limit is the ratio of their leading coefficients.\n\n**(c)** Suppose some term equalled $2$. Then $\\dfrac{2n}{n + 4} = 2$, so $2n = 2(n + 4) = 2n + 8$, which gives $0 = 8$, impossible. So no term equals $2$. In fact every term is **less** than $2$, because $2n < 2n + 8$ for every positive $n$, so $\\dfrac{2n}{n + 4} < 1 \\times 2$. The sequence climbs towards $2$ from below and never arrives, which is what it means for $2$ to be a limiting value rather than a term.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes 16 and 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "both terms simplified"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "difference 2/5"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "limiting value 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by n"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "explains 4/n vanishing"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets the term equal to 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "reaches a contradiction, so never equal"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Finds the 16th term 8/5 and the 6th term 6/5, simplified.",
+          "marks": 2
+        },
+        {
+          "text": "Gives the difference 2/5.",
+          "marks": 1
+        },
+        {
+          "text": "States the limiting value 2 and explains by dividing top and bottom by n so that 4/n vanishes.",
+          "marks": 3
+        },
+        {
+          "text": "Shows that 2n/(n + 4) = 2 would need 2n = 2n + 8, which is impossible, so every term is less than 2.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** The 16th term: $\\dfrac{2 \\times 16}{16 + 4} = \\dfrac{32}{20} = \\dfrac{8}{5}$. The 6th term: $\\dfrac{2 \\times 6}{6 + 4} = \\dfrac{12}{10} = \\dfrac{6}{5}$. The difference is $\\dfrac{8}{5} - \\dfrac{6}{5} = \\dfrac{2}{5}$. Each term is simplified before subtracting so that the denominators match.\n\n**(b)** The limiting value is $2$. Divide the top and bottom of the $n$th term by $n$:\n\n$$\\frac{2n}{n + 4} = \\frac{2}{1 + \\frac{4}{n}}$$\n\nAs $n$ grows without limit, $\\frac{4}{n}$ becomes as small as you like, so the denominator tends to $1$ and the fraction tends to $\\frac{2}{1} = 2$. The terms confirm it: the 100th is $\\frac{200}{104}$ and the 1000th is $\\frac{2000}{1004}$, closer and closer to $2$. When the top and bottom have the same highest power of $n$, the limit is the ratio of their leading coefficients.\n\n**(c)** Suppose some term equalled $2$. Then $\\dfrac{2n}{n + 4} = 2$, so $2n = 2(n + 4) = 2n + 8$, which gives $0 = 8$, impossible. So no term equals $2$. In fact every term is **less** than $2$, because $2n < 2n + 8$ for every positive $n$, so $\\dfrac{2n}{n + 4} < 1 \\times 2$. The sequence climbs towards $2$ from below and never arrives, which is what it means for $2$ to be a limiting value rather than a term."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 13
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 33
+    }
+  },
+  "examTechnique": {
+    "body": "Sequence questions are short and each has a fixed method: for the $n$th term, differences; for *which term*, solve; for the limit, divide by the highest power of $n$. The marks are for the method being visible, so write the differences down, state $a$ as half the second difference, show the subtraction of $an^2$, and check a term.\n\n*Write down* the limiting value means no working is expected, but a wrong pairing, $\\frac{2}{4}$ for $\\frac{2n}{n + 4}$, is the common error, so know why the answer is the ratio of the leading coefficients. *Which term* and *is it a term* both end with a sentence about $n$ being a positive whole number, and a quadratic sequence gives a root to reject. Keep fractions exact when subtracting terms.",
+    "examinerErrors": [
+      "Using the second difference itself as $a$ instead of halving it.",
+      "Subtracting $an^2$ from only some of the terms, so the linear part comes out wrong.",
+      "Giving the value of a term when the question asked which term.",
+      "Answering *is it a term* by listing, with no statement about $n$ being a whole number.",
+      "Pairing the wrong numbers for a limit: $\\frac{2}{4}$ for $\\frac{2n}{n + 4}$.",
+      "Rounding a term such as $\\frac{2}{3}$ to $0.67$ when the exact fraction was asked for.",
+      "Keeping the negative root of $n^2 + 2n - 63 = 0$ as a position."
+    ],
+    "grade9Looks": "A grade 9 answer finds a quadratic $n$th term by differences, checks it on a term it did not use, and can say why the second difference is $2a$. It answers *which term* by solving and rejects the impossible root in a sentence, and answers *is it a term* with the value of $n$ and the reason it is or is not a position. For a limit it divides by the highest power of $n$, states the value, and can show in one line that no term ever equals it. It handles letters as easily as numbers, checking $r + (2n - 1)s$ against the given terms, and it keeps every fraction exact."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

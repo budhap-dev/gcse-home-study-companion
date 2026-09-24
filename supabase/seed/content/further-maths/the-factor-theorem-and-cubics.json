@@ -1,0 +1,1451 @@
+{
+  "id": "the-factor-theorem-and-cubics",
+  "subjectId": "further-maths",
+  "unitId": "algebra",
+  "title": "The factor theorem and cubics",
+  "specPoints": [
+    "2.11"
+  ],
+  "order": 5,
+  "year": 10,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "A zero at a means the factor (x − a)",
+      "body": "The factor theorem: $(x - a)$ divides $f(x)$ exactly when $f(a) = 0$. The sign inside the bracket is opposite to the value tested: $f(1) = 0$ gives $(x - 1)$, $f(-2) = 0$ gives $(x + 2)$. Try the divisors of the constant term, $\\pm 1$ first."
+    },
+    {
+      "kind": "spot",
+      "title": "A coefficient in the factor means a fraction to substitute",
+      "body": "$(2x - 3)$ is zero at $x = \\frac{3}{2}$, so test $f\\left(\\frac{3}{2}\\right)$, and write the terms over a common denominator so the cancelling shows. The specification says *rational values* to make exactly this case examinable."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Ends by inspection, middle by comparing",
+      "body": "Once $(x - a)$ is a factor, write $(x - a)(x^2 + px + q)$: the $x^2$ is forced by the $x^3$, and $q$ by the constant. Find $p$ from the $x^2$ terms, then confirm it with the $x$ terms. That confirmation is the check that saves the question."
+    },
+    {
+      "kind": "check",
+      "title": "Show that means show the arithmetic",
+      "body": "$f(7) = 7^5 - 7 \\times 7^4 - 7 + 7 = 7^5 - 7^5 - 7 + 7 = 0$: the examiner wants to see the terms cancel, not to be told the total is zero. Writing $f(7) = 0$ on its own earns nothing."
+    },
+    {
+      "kind": "remember",
+      "title": "Squared factor, the curve touches",
+      "body": "$(x - 1)^2(x + 2)$ meets the axis at $1$ without crossing, because a square never changes sign, and crosses at $-2$. The factorised form tells you the sketch: crossings at single roots, a touch at a repeated one, shape from the sign of $x^3$."
+    }
+  ],
+  "why": {
+    "matters": "A quadratic can be solved by a formula; a cubic cannot, at this level, and the factor theorem is how one gets solved instead. It turns a guess into a certainty: substitute a value, and a zero means a factor, which means the cubic splits into a linear factor and a quadratic you already know how to handle. The theorem is the first result in the course that is a *theorem*, with a two-line proof about remainders, and it is the tool the maxima-and-minima topic reaches for when a derivative is a cubic. It is also where sketching a curve from its factors, crossings and touches, begins.",
+    "examples": [
+      {
+        "title": "The box with a given volume",
+        "body": "A box is cut from a square sheet by folding up the edges, and its volume comes out as a cubic in the height, something like $4h^3 - 40h^2 + 100h$. Asking *what height gives a volume of 72?* is the equation $4h^3 - 40h^2 + 100h - 72 = 0$, which no formula on the course solves. The factor theorem does: try a sensible height, find the zero, take out the factor, and the quadratic that remains gives the other heights. Every *find the dimensions* question about a box ends in a cubic, and this is how the cubic is opened.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Step",
+              "Working"
+            ],
+            "rows": [
+              [
+                "the equation",
+                "a cubic in h, set equal to zero"
+              ],
+              [
+                "try a value",
+                "a plausible height: h = 1, 2, 3 …"
+              ],
+              [
+                "a zero",
+                "(h − a) is a factor"
+              ],
+              [
+                "the rest",
+                "a quadratic, by comparing coefficients"
+              ],
+              [
+                "the answer",
+                "each factor set to zero, impossible heights rejected"
+              ]
+            ],
+            "title": "A cubic from a box, opened by the factor theorem"
+          },
+          "alt": "A table of the five steps for solving a cubic that arises from the volume of a box, from trying a value to rejecting impossible heights"
+        }
+      },
+      {
+        "title": "The sketch that needs no calculus",
+        "body": "Handed $y = (x + 2)^2(x - 2)$ and asked to sketch it, a student who knows the factor theorem has the whole picture: it meets the axis at $-2$ and $2$, the squared factor means a touch at $-2$ and the single one a crossing at $2$, the constant term $-8$ is the $y$ intercept, and a positive $x^3$ term means low on the left and high on the right. Four facts, no differentiation, and the shape is known; the calculus topics add the turning points that the specification's sketching (4.9) expects to be marked.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "Reading a sketch from the factors",
+            "boxes": [
+              {
+                "title": "Crossings",
+                "body": "single factors: (x − 2) crosses at x = 2"
+              },
+              {
+                "title": "A touch",
+                "body": "a squared factor: (x + 2)² touches at x = −2"
+              },
+              {
+                "title": "Intercept",
+                "body": "the constant term: −8 for (x + 2)²(x − 2)"
+              },
+              {
+                "title": "Shape",
+                "body": "positive x³: low on the left, high on the right"
+              }
+            ]
+          },
+          "alt": "Four boxes on sketching a cubic from its factorised form: crossings at single factors, a touch at a squared factor, the intercept from the constant and the shape from the sign of the cube term"
+        }
+      },
+      {
+        "title": "Substituting instead of dividing",
+        "body": "Long division of $x^3 - 2x^2 - 5x + 6$ by $(x - 2)$ takes half a page and ends with $-4$ left over. Substituting $x = 2$ takes one line and gives $-4$ directly, because any division can be written $f(x) = (x - 2)g(x) + r$, and at $x = 2$ the first part vanishes, leaving $f(2) = r$. That is the whole proof of the factor theorem: $(x - 2)$ divides exactly when $f(2) = 0$. The exam asks the factor question, not for what is left over, but the reason the substitution answers it is the reason it can be trusted.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Question",
+              "Do",
+              "Answer for x³ − 2x² − 5x + 6"
+            ],
+            "rows": [
+              [
+                "is (x − 2) a factor?",
+                "f(2)",
+                "−4, so no"
+              ],
+              [
+                "is (x − 1) a factor?",
+                "f(1)",
+                "0, so yes"
+              ],
+              [
+                "is (x + 2) a factor?",
+                "f(−2)",
+                "0, so yes"
+              ],
+              [
+                "is (x − 3) a factor?",
+                "f(3)",
+                "0, so yes"
+              ]
+            ],
+            "title": "One substitution answers the factor question; zero means a factor"
+          },
+          "alt": "A table showing four factor questions for x cubed minus two x squared minus five x plus six answered by one substitution each, with f of two giving minus four and f of one, f of minus two and f of three giving zero"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "The factor theorem: a root is a factor",
+        "body": "For a polynomial $f(x)$, the **factor theorem** says: $(x - a)$ is a factor of $f(x)$ if and only if $f(a) = 0$. Substitute, and if the answer is zero you have found a factor without dividing anything.\n\nTake the specification's cubic, $f(x) = x^3 - 2x^2 - 5x + 6$. Try $x = 1$: $1 - 2 - 5 + 6 = 0$, so $(x - 1)$ is a factor. Try $x = 2$: $8 - 8 - 10 + 6 = -4$, not zero, so $(x - 2)$ is not. Try $x = -1$: $-1 - 2 + 5 + 6 = 8$, not a factor either.\n\n**Which values to try.** If $(x - a)$ is a factor and the coefficients are integers, $a$ divides the constant term. For a constant of $6$ the candidates are $\\pm 1, \\pm 2, \\pm 3, \\pm 6$, and $1$ and $-1$ are always tried first because they are fastest. The theorem does the rest: one zero, one factor.\n\n**Why it works.** If $f(x) = (x - a) \\times g(x)$ then putting $x = a$ makes the first bracket zero, and zero times anything is zero. The other direction is the useful one, and the exam takes it on trust: a zero at $x = a$ means $(x - a)$ divides in exactly.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Try x =",
+                "f(x) = x³ − 2x² − 5x + 6",
+                "Factor?"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "1 − 2 − 5 + 6 = 0",
+                  "yes: (x − 1)"
+                ],
+                [
+                  "−1",
+                  "−1 − 2 + 5 + 6 = 8",
+                  "no"
+                ],
+                [
+                  "2",
+                  "8 − 8 − 10 + 6 = −4",
+                  "no"
+                ],
+                [
+                  "−2",
+                  "−8 − 8 + 10 + 6 = 0",
+                  "yes: (x + 2)"
+                ],
+                [
+                  "3",
+                  "27 − 18 − 15 + 6 = 0",
+                  "yes: (x − 3)"
+                ]
+              ],
+              "title": "Substitute the divisors of the constant; a zero is a factor"
+            },
+            "alt": "A table trying the divisors of six in the cubic x cubed minus two x squared minus five x plus six, with zero at one, minus two and three giving the three factors"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "For $f(x) = x^3 - 2x^2 - 5x + 6$, work out $f(2)$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "testing a value",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$f(2) = 8 - 8 - 10 + 6 = -4$. Not zero, so $(x - 2)$ is not a factor. $f(1) = 0$ is the one that works.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "−4"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "One factor found: finding the rest",
+        "body": "Knowing $(x - 1)$ is a factor of $x^3 - 2x^2 - 5x + 6$ means $x^3 - 2x^2 - 5x + 6 = (x - 1)(x^2 + ax + b)$ for some quadratic, and there are two ways to find it.\n\n**Compare coefficients.** Expand the right side: $x^3 + (a - 1)x^2 + (b - a)x - b$. Match to the left: $a - 1 = -2$ gives $a = -1$; $-b = 6$ gives $b = -6$; and the middle term checks, $b - a = -6 + 1 = -5$. So the quadratic is $x^2 - x - 6 = (x - 3)(x + 2)$, and\n\n$$x^3 - 2x^2 - 5x + 6 = (x - 1)(x + 2)(x - 3)$$\n\n**Divide.** Long division by $(x - 1)$ gives the same $x^2 - x - 6$. Either method is accepted; comparing coefficients is shorter for a cubic, because the first and last terms of the quadratic can be written down by inspection, $x^2$ to make $x^3$ and $-6$ to make $+6$, and only the middle needs thought.\n\nThen **factorise the quadratic** as usual. The three factors give the three roots, $1$, $-2$ and $3$, which is what the factor theorem is for.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Method",
+                "Working",
+                "Quadratic"
+              ],
+              "rows": [
+                [
+                  "inspection of the ends",
+                  "x² to make x³; −6 to make +6",
+                  "x² + ax − 6"
+                ],
+                [
+                  "compare the x² terms",
+                  "a − 1 = −2, so a = −1",
+                  "x² − x − 6"
+                ],
+                [
+                  "check the x terms",
+                  "b − a = −6 − (−1) = −5, matches",
+                  "confirmed"
+                ],
+                [
+                  "factorise",
+                  "(x − 3)(x + 2)",
+                  "three factors in all"
+                ]
+              ],
+              "title": "Write the ends by inspection, find the middle by comparing"
+            },
+            "alt": "A table finding the quadratic factor of the specification cubic by inspection of the ends and comparing the x squared coefficient, then factorising it"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Factorise $x^3 - 2x^2 - 5x + 6$ fully.",
+            "steps": [
+              {
+                "text": "$f(1) = 1 - 2 - 5 + 6 = 0$, so $(x - 1)$ is a factor",
+                "note": "the factor theorem"
+              },
+              {
+                "text": "$x^3 - 2x^2 - 5x + 6 = (x - 1)(x^2 + ax + b)$; the ends give $x^2$ and $b = -6$",
+                "note": "x times x² makes x³; −1 times −6 makes +6"
+              },
+              {
+                "text": "$x^2$ terms: $a - 1 = -2$, so $a = -1$; check the $x$ terms: $-6 - (-1) = -5$",
+                "note": "comparing coefficients"
+              },
+              {
+                "text": "$(x - 1)(x^2 - x - 6) = (x - 1)(x - 3)(x + 2)$",
+                "note": "factorise the quadratic"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "Factorise $x^3 - 2x^2 - 5x + 6$ fully.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "factorising a cubic",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$f(1) = 0$ gives the factor $(x - 1)$; comparing coefficients gives the quadratic $x^2 - x - 6 = (x - 3)(x + 2)$. So $(x - 1)(x + 2)(x - 3)$, in any order.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(x − 1)(x + 2)(x − 3)"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "(x - 1)(x + 2)(x - 3)",
+            "(x - 1)(x - 3)(x + 2)",
+            "(x + 2)(x - 1)(x - 3)",
+            "(x - 3)(x - 1)(x + 2)",
+            "(x + 2)(x - 3)(x - 1)",
+            "(x - 3)(x + 2)(x - 1)"
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "A factor with a coefficient: show that 2x − 3 is a factor",
+        "body": "The specification asks: *show that $2x - 3$ is a factor of $2x^3 - x^2 - 7x + 6$.* The factor is zero when $x = \\frac{3}{2}$, so that is the value to substitute; the theorem works for **rational** values, which is why the specification says so.\n\n$$f\\left(\\tfrac{3}{2}\\right) = 2 \\cdot \\tfrac{27}{8} - \\tfrac{9}{4} - \\tfrac{21}{2} + 6 = \\tfrac{27}{4} - \\tfrac{9}{4} - \\tfrac{42}{4} + \\tfrac{24}{4} = 0$$\n\nZero, so $(2x - 3)$ is a factor. In a *show that*, the fractions are written out; a bare *$= 0$* earns nothing.\n\nThe other factor: $2x^3 - x^2 - 7x + 6 = (2x - 3)(x^2 + ax + b)$. Ends: $2x \\times x^2 = 2x^3$ and $-3b = 6$ gives $b = -2$. The $x^2$ terms: $2a - 3 = -1$, so $a = 1$. Check the $x$ terms: $2b - 3a = -4 - 3 = -7$. So the quadratic is $x^2 + x - 2 = (x + 2)(x - 1)$, and the cubic is $(2x - 3)(x + 2)(x - 1)$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Show that $2x - 3$ is a factor of $2x^3 - x^2 - 7x + 6$, and factorise it fully.",
+            "steps": [
+              {
+                "text": "$2x - 3 = 0$ at $x = \\tfrac{3}{2}$, so substitute $\\tfrac{3}{2}$",
+                "note": "the factor theorem with a rational value"
+              },
+              {
+                "text": "$f\\left(\\tfrac{3}{2}\\right) = \\tfrac{27}{4} - \\tfrac{9}{4} - \\tfrac{42}{4} + \\tfrac{24}{4} = 0$",
+                "note": "write the fractions: this is the show-that"
+              },
+              {
+                "text": "$(2x - 3)(x^2 + ax + b)$: ends give $2x^3$ and $-3b = 6$, so $b = -2$",
+                "note": "inspection"
+              },
+              {
+                "text": "$x^2$ terms: $2a - 3 = -1$, so $a = 1$; check $x$ terms: $2(-2) - 3(1) = -7$",
+                "note": "comparing coefficients"
+              },
+              {
+                "text": "$(2x - 3)(x^2 + x - 2) = (2x - 3)(x + 2)(x - 1)$",
+                "note": "fully"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Factor",
+                "Value to substitute",
+                "Why"
+              ],
+              "rows": [
+                [
+                  "x − 1",
+                  "1",
+                  "x − 1 = 0 at x = 1"
+                ],
+                [
+                  "x + 2",
+                  "−2",
+                  "x + 2 = 0 at x = −2"
+                ],
+                [
+                  "2x − 3",
+                  "3/2",
+                  "2x − 3 = 0 at x = 3/2"
+                ],
+                [
+                  "3x + 1",
+                  "−1/3",
+                  "a rational value, as the specification allows"
+                ]
+              ],
+              "title": "The value to try is where the factor is zero"
+            },
+            "alt": "A table of linear factors and the value of x to substitute to test each, including the rational values for factors with a coefficient"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "$2x^3 - x^2 - 7x + 6 = (2x - 3)(x^2 + x + b)$. What is $b$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the quadratic factor",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The constant terms must match: $-3 \\times b = 6$, so $b = -2$. The quadratic is $x^2 + x - 2$, which factorises as $(x + 2)(x - 1)$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "b = −2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Solving a cubic, and sketching it",
+        "body": "*Solve $x^3 + x^2 - 10x + 8 = 0$.* Find one root by trying divisors of $8$: $f(1) = 1 + 1 - 10 + 8 = 0$. So $(x - 1)$ is a factor, and the quadratic by inspection and comparison is $x^2 + 2x - 8 = (x + 4)(x - 2)$. The equation is $(x - 1)(x + 4)(x - 2) = 0$, with solutions $x = 1$, $x = -4$, $x = 2$.\n\n**The sketch comes free.** A cubic with a positive $x^3$ term starts low on the left and ends high on the right, and it crosses the $x$ axis at each root: $-4$, $1$ and $2$. The $y$ intercept is the constant term, $8$. Those four facts fix the shape. The specification's *sketch/interpret a curve* (4.9) expects the turning points to be known as well; the calculus topics find them, and the factors give the crossings that a sketch is built round.\n\n**How many roots?** A cubic always has at least one real root and at most three. Three distinct linear factors give three; a repeated factor gives a root where the curve touches the axis, as $x^3 - 3x + 2 = (x - 1)^2(x + 2)$ does at $x = 1$; a quadratic factor with no real roots, like the $x^2 + 1$ in the fifth-power example later, gives fewer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -5.5,
+                3.5
+              ],
+              "yRange": [
+                -20,
+                30
+              ],
+              "grid": true,
+              "xStep": 5,
+              "yStep": 20,
+              "curves": [
+                {
+                  "cube": 1,
+                  "a": 1,
+                  "b": -10,
+                  "c": 8,
+                  "label": "y = f(x)",
+                  "labelX": -2.4
+                }
+              ],
+              "points": [
+                {
+                  "x": -4,
+                  "y": 0,
+                  "label": "−4",
+                  "labelBelow": true
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "label": "1",
+                  "labelBelow": true
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "label": "2",
+                  "labelBelow": true
+                },
+                {
+                  "x": 0,
+                  "y": 8,
+                  "label": "(0, 8)",
+                  "labelBelow": true
+                }
+              ]
+            },
+            "alt": "The cubic y equals x cubed plus x squared minus ten x plus eight crossing the x axis at minus four, one and two, with y intercept eight, low on the left and high on the right"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Fact",
+                "From",
+                "For x³ + x² − 10x + 8"
+              ],
+              "rows": [
+                [
+                  "crossings",
+                  "the roots",
+                  "−4, 1 and 2"
+                ],
+                [
+                  "y intercept",
+                  "the constant term",
+                  "8"
+                ],
+                [
+                  "shape",
+                  "the sign of x³",
+                  "low on the left, high on the right"
+                ],
+                [
+                  "touching",
+                  "a repeated factor",
+                  "none here"
+                ]
+              ],
+              "title": "Roots, intercept, shape: enough to sketch"
+            },
+            "alt": "A table of the four facts that sketch a cubic, the crossings from the roots, the intercept from the constant, the shape from the sign of the cube term, and touching from a repeated factor"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "Solve $x^3 + x^2 - 10x + 8 = 0$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "solving a cubic",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$f(1) = 0$ gives the factor $(x - 1)$; the quadratic is $x^2 + 2x - 8 = (x + 4)(x - 2)$. So $(x - 1)(x + 4)(x - 2) = 0$ and $x = 1$, $x = 2$ or $x = -4$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = 1, 2 or −4"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "x = 1, x = 2, x = -4",
+            "1, 2, -4",
+            "x = -4, x = 1, x = 2",
+            "-4, 1, 2",
+            "x = 1 or x = 2 or x = -4",
+            "x = -4 or x = 1 or x = 2"
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Finding an unknown coefficient",
+        "body": "The theorem runs backwards too. *Given that $(x + 2)$ is a factor of $x^3 + kx^2 - 4x - 8$, find $k$.* If $(x + 2)$ is a factor then $f(-2) = 0$:\n\n$$(-2)^3 + k(-2)^2 - 4(-2) - 8 = -8 + 4k + 8 - 8 = 4k - 8 = 0$$\n\nso $k = 2$. Substituting a value into an expression with an unknown coefficient gives a **linear equation in $k$**, and that is the whole method.\n\nWith $k = 2$ the cubic is $x^3 + 2x^2 - 4x - 8$, and it is worth finishing: $(x + 2)(x^2 - 4) = (x + 2)(x + 2)(x - 2) = (x + 2)^2(x - 2)$. The factor $(x + 2)$ appears twice, so the curve **touches** the axis at $x = -2$ and crosses it at $x = 2$.\n\nA question can also give two factors and two unknowns, which produces two linear equations to solve simultaneously, or ask you to show that a given expression is *not* a factor, which is the same substitution giving a value that is not zero.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Given",
+                "Substitute",
+                "Equation",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "(x + 2) is a factor of x³ + kx² − 4x − 8",
+                  "x = −2",
+                  "−8 + 4k + 8 − 8 = 0",
+                  "k = 2"
+                ],
+                [
+                  "(x − 2) is a factor of 2x³ + cx² − 5x + 6",
+                  "x = 2",
+                  "16 + 4c − 10 + 6 = 0",
+                  "c = −3"
+                ],
+                [
+                  "the remainder on dividing f(x) by (x − 2)",
+                  "x = 2",
+                  "f(2)",
+                  "for x³ − 2x² − 5x + 6, that is −4"
+                ]
+              ],
+              "title": "A factor gives a value; the value gives a linear equation in the unknown"
+            },
+            "alt": "A table of three problems solved by substituting the value where the factor is zero, two finding an unknown coefficient and one finding a remainder"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "$(x + 2)$ is a factor of $x^3 + kx^2 - 4x - 8$. What is $k$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "an unknown coefficient",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$f(-2) = 0$: $-8 + 4k + 8 - 8 = 4k - 8 = 0$, so $k = 2$. The cubic is then $(x + 2)^2(x - 2)$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "k = 2"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 2,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Higher powers, and factorising by grouping as well",
+        "body": "The specification's last example: *show that $x - 7$ is a factor of $x^5 - 7x^4 - x + 7$.* The theorem does not care about the degree: $f(7) = 7^5 - 7 \\cdot 7^4 - 7 + 7 = 7^5 - 7^5 - 7 + 7 = 0$, and there is no need to work out $7^5$ at all, because $7 \\times 7^4$ is $7^5$.\n\nHere grouping shows the same thing without substituting: $x^4(x - 7) - 1(x - 7) = (x - 7)(x^4 - 1)$, and $x^4 - 1 = (x - 1)(x + 1)(x^2 + 1)$ from the factorising topic. So the whole thing is $(x - 7)(x - 1)(x + 1)(x^2 + 1)$, and $x^5 - 7x^4 - x + 7 = 0$ has exactly **three** real solutions, $7$, $1$ and $-1$, because $x^2 + 1$ is never zero.\n\nTwo lessons. The factor theorem and grouping are the same fact seen two ways, and a question that says *show that* accepts either as long as every line is written. And a polynomial of degree $n$ has **at most** $n$ real roots, not always $n$: count the linear factors, and a quadratic factor with a negative discriminant contributes none.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Route",
+                "Working",
+                "Conclusion"
+              ],
+              "rows": [
+                [
+                  "factor theorem",
+                  "f(7) = 7⁵ − 7 × 7⁴ − 7 + 7 = 0",
+                  "(x − 7) is a factor"
+                ],
+                [
+                  "grouping",
+                  "x⁴(x − 7) − (x − 7) = (x − 7)(x⁴ − 1)",
+                  "the same factor, and the rest"
+                ],
+                [
+                  "factorise x⁴ − 1",
+                  "(x − 1)(x + 1)(x² + 1)",
+                  "x² + 1 has no real roots"
+                ],
+                [
+                  "real solutions of f(x) = 0",
+                  "7, 1, −1",
+                  "three, from a fifth power"
+                ]
+              ],
+              "title": "Two routes to the factor, and a count of the real roots"
+            },
+            "alt": "A table showing x minus seven is a factor of the fifth-power polynomial by the factor theorem and by grouping, and counting its three real roots"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "The equation $x^5 - 7x^4 - x + 7 = 0$ factorises as $(x - 7)(x^4 - 1) = 0$. How many real solutions does it have?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "counting real roots",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The polynomial is $(x - 7)(x - 1)(x + 1)(x^2 + 1)$. The three linear factors give $7$, $1$ and $-1$; $x^2 + 1$ is never zero for a real $x$. So there are 3 real solutions, from a fifth-degree equation.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Show that $(x + 1)$ is a factor of $x^3 - 4x^2 + x + 6$.\n2. Hence factorise $x^3 - 4x^2 + x + 6$ fully.\n3. Write down the solutions of $x^3 - 4x^2 + x + 6 = 0$.\n\n**Part B.**\n\n4. Factorise $x^3 - 7x - 6$ fully.\n5. $(x - 2)$ is a factor of $2x^3 + cx^2 - 5x + 6$. Find $c$.\n6. Show that $(2x - 1)$ is a factor of $2x^3 + 3x^2 - 8x + 3$.\n\n**Part C.**\n\n7. Solve $2x^3 + 3x^2 - 8x + 3 = 0$.\n8. Factorise $x^3 - 3x + 2$ fully, and say where the curve $y = x^3 - 3x + 2$ touches the $x$ axis rather than crossing it.\n9. Show that $x - 7$ is a factor of $x^5 - 7x^4 - x + 7$, and find all the real solutions of $x^5 - 7x^4 - x + 7 = 0$.\n\nFor question 4, there is no $x^2$ term, so write the cubic as $x^3 + 0x^2 - 7x - 6$ when comparing coefficients.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "f(−1) = −1 − 4 − 1 + 6 = 0"
+                ],
+                [
+                  "2",
+                  "(x + 1)(x − 2)(x − 3)"
+                ],
+                [
+                  "3",
+                  "x = −1, 2, 3"
+                ],
+                [
+                  "4",
+                  "(x + 1)(x + 2)(x − 3)"
+                ],
+                [
+                  "5",
+                  "c = −3"
+                ],
+                [
+                  "6",
+                  "f(1/2) = 1/4 + 3/4 − 4 + 3 = 0"
+                ],
+                [
+                  "7",
+                  "x = 1/2, 1, −3"
+                ],
+                [
+                  "8",
+                  "(x − 1)²(x + 2); touches at x = 1"
+                ],
+                [
+                  "9",
+                  "f(7) = 0; x = 7, 1, −1"
+                ]
+              ],
+              "title": "The answers, to check against once you have finished"
+            },
+            "alt": "A table of the answers to the nine practice questions on the factor theorem and cubics"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: why the theorem is true, and where the marks hide",
+        "body": "**Why the theorem is true.** Dividing any polynomial by $(x - a)$ leaves a constant $r$ over, so $f(x) = (x - a)g(x) + r$, and putting $x = a$ gives $f(a) = r$. So $f(a) = 0$ exactly when $r = 0$, which is exactly when $(x - a)$ divides exactly. That one line is the proof. The specification examines the factor theorem, not what is left over on dividing, so *find the remainder* is not a question you will meet; the proof is worth knowing because it says why the substitution can be trusted.\n\n**Rational values are the ones with coefficients.** A factor $(2x - 3)$ corresponds to $f\\left(\\frac{3}{2}\\right) = 0$, and the specification says *rational values* precisely so that this case is examinable. When the leading coefficient is not $1$, the candidates are fractions whose numerator divides the constant and whose denominator divides the leading coefficient; $\\pm\\frac{1}{2}$ and $\\pm\\frac{3}{2}$ for $2x^3 + 3x^2 - 8x + 3$.\n\n**Show that means show the arithmetic.** $f(7) = 7^5 - 7 \\cdot 7^4 - 7 + 7$ is worth writing as $7^5 - 7^5 - 7 + 7 = 0$: the examiner wants to see that the two big terms cancel, not to be told the total is zero. For a fraction, write the four terms over a common denominator.\n\n**Comparing coefficients is the fast division.** Write the ends of the quadratic by inspection, find the middle from the $x^2$ terms, and confirm with the $x$ terms. The confirmation is the check, and a top-band answer shows it, because a wrong middle coefficient makes the quadratic unfactorisable and the whole question collapses.\n\n**A repeated factor is a touch, not a crossing.** $(x - 1)^2(x + 2)$ meets the axis at $1$ without crossing it. Reading the shape of a cubic from its factorised form, crossings, touches and the sign of $x^3$, is what a sketch is built from; the specification's sketching (4.9) adds the turning points, which the calculus topics supply.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "What the top band does with a cubic",
+              "boxes": [
+                {
+                  "title": "Tries the right values",
+                  "body": "Divisors of the constant, ±1 first; fractions with the leading coefficient underneath when it is not 1."
+                },
+                {
+                  "title": "Writes the substitution out",
+                  "body": "f(7) = 7⁵ − 7 × 7⁴ − 7 + 7 = 0, with the cancelling visible; fractions over a common denominator."
+                },
+                {
+                  "title": "Finds the quadratic by comparison",
+                  "body": "Ends by inspection, middle from the x² terms, confirmed by the x terms."
+                },
+                {
+                  "title": "Reads the sketch from the factors",
+                  "body": "Crossings at the roots, a touch at a repeated root, shape from the sign of x³."
+                }
+              ]
+            },
+            "alt": "Four boxes on the habits of a top-band factor theorem answer: choosing values to try, writing the substitution out, comparing coefficients with a check, and sketching from the factors"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- **Factor theorem**: $(x - a)$ is a factor of $f(x)$ exactly when $f(a) = 0$. Try the divisors of the constant term, $\\pm 1$ first.\n- A factor with a coefficient, $(2x - 3)$, corresponds to the **rational** value $x = \\frac{3}{2}$.\n- One factor found, write $f(x) = (x - a)(x^2 + px + q)$: the **ends by inspection**, the middle by **comparing the $x^2$ coefficients**, confirmed by the $x$ terms. Then factorise the quadratic.\n- $x^3 - 2x^2 - 5x + 6 = (x - 1)(x + 2)(x - 3)$; $2x^3 - x^2 - 7x + 6 = (2x - 3)(x + 2)(x - 1)$.\n- **Solve** a cubic by factorising fully and setting each factor to zero: $x^3 + x^2 - 10x + 8 = 0$ gives $1$, $2$, $-4$.\n- **Unknown coefficient**: substitute the value where the factor is zero and solve the linear equation in $k$.\n- **Sketch** from the factors: crossings at the roots, a touch at a repeated root, the $y$ intercept at the constant, shape from the sign of $x^3$.\n- A degree-$n$ polynomial has **at most** $n$ real roots; a factor like $x^2 + 1$ contributes none.\n- In a *show that*, write the substitution out in full.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Factor theorem",
+                  "equation": "f(a) = 0 if and only if (x − a) is a factor",
+                  "units": "try the divisors of the constant"
+                },
+                {
+                  "name": "With a coefficient",
+                  "equation": "(2x − 3) is a factor if f(3/2) = 0",
+                  "units": "a rational value"
+                },
+                {
+                  "name": "The other factor",
+                  "equation": "f(x) = (x − a)(x² + px + q)",
+                  "units": "ends by inspection, middle by comparing"
+                },
+                {
+                  "name": "Why it works",
+                  "equation": "f(x) = (x − a)g(x) + r, so f(a) = r",
+                  "units": "f(a) = 0 exactly when r = 0"
+                }
+              ]
+            },
+            "alt": "A reference card with the factor theorem, its use for a factor with a coefficient, the method for the remaining quadratic factor and the remainder as f of a"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "For $f(x) = x^3 - 4x^2 + x + 6$, work out $f(-1)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "testing a value",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(-1) = -1 - 4 - 1 + 6 = 0$. So $(x + 1)$ is a factor of $f(x)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 0,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "prompt": "What does the factor theorem say about $f(x)$ and $(x - 3)$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the statement of the theorem",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A factor $(x - a)$ is zero at $x = a$, so the test value is $3$, not $-3$: $(x - 3)$ divides $f(x)$ exactly when $f(3) = 0$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$(x - 3)$ is a factor of $f(x)$ if and only if $f(3) = 0$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$(x - 3)$ is a factor if $f(-3) = 0$, because the sign changes",
+        "$(x - 3)$ is a factor if $f(0) = 3$",
+        "$(x - 3)$ is a factor if $f(3) = 3$",
+        "$(x - 3)$ is a factor of $f(x)$ if and only if $f(3) = 0$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "Given that $(x + 1)$ is a factor of $x^3 - 4x^2 + x + 6$, factorise it fully.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the remaining quadratic",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(x + 1)(x^2 + ax + b)$: the ends give $b = 6$, and the $x^2$ terms give $a + 1 = -4$, so $a = -5$. The quadratic $x^2 - 5x + 6 = (x - 2)(x - 3)$, so $(x + 1)(x - 2)(x - 3)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(x + 1)(x − 2)(x − 3)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(x + 1)(x - 2)(x - 3)",
+        "(x + 1)(x - 3)(x - 2)",
+        "(x - 2)(x + 1)(x - 3)",
+        "(x - 3)(x - 2)(x + 1)",
+        "(x - 2)(x - 3)(x + 1)",
+        "(x - 3)(x + 1)(x - 2)"
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "Which values should be tried first when looking for a factor of $x^3 - 6x^2 + 11x - 6$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing values",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "If $(x - a)$ is a factor with integer coefficients, $a$ divides the constant term. Here the constant is $-6$, so try $\\pm 1, \\pm 2, \\pm 3, \\pm 6$; in fact $1$, $2$ and $3$ all work: $(x - 1)(x - 2)(x - 3)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The divisors of $6$: $\\pm 1, \\pm 2, \\pm 3, \\pm 6$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "The divisors of $6$: $\\pm 1, \\pm 2, \\pm 3, \\pm 6$",
+        "The divisors of $11$: $\\pm 1$ and $\\pm 11$, because $11$ is the coefficient of $x$",
+        "Any value between $0$ and $10$, checked one at a time until one works",
+        "Only $x = 0$, because that makes every term with an $x$ in it vanish"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "Factorise $x^3 - 7x - 6$ fully.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a cubic with no x² term",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(-1) = -1 + 7 - 6 = 0$, so $(x + 1)$ is a factor. Write $x^3 + 0x^2 - 7x - 6 = (x + 1)(x^2 + ax - 6)$; the $x^2$ terms give $a + 1 = 0$, so $a = -1$, and $x^2 - x - 6 = (x - 3)(x + 2)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(x + 1)(x + 2)(x − 3)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(x + 1)(x + 2)(x - 3)",
+        "(x + 1)(x - 3)(x + 2)",
+        "(x + 2)(x + 1)(x - 3)",
+        "(x - 3)(x + 1)(x + 2)",
+        "(x + 2)(x - 3)(x + 1)",
+        "(x - 3)(x + 2)(x + 1)"
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "$(x - 2)$ is a factor of $2x^3 + cx^2 - 5x + 6$. Find $c$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "an unknown coefficient",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(2) = 0$: $16 + 4c - 10 + 6 = 4c + 12 = 0$, so $c = -3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes x = 2 and sets to zero"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "c = −3"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": -3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "prompt": "For $f(x) = x^3 - 2x^2 - 5x + 6$, work out $f(2)$, and hence decide whether $(x - 2)$ is a factor of $f(x)$. Give the value of $f(2)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a value that is not a root",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(2) = 8 - 8 - 10 + 6 = -4$. It is not zero, so $(x - 2)$ is not a factor: the factors are $(x - 1)$, $(x + 2)$ and $(x - 3)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−4"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": -4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "prompt": "Solve $x^3 - 4x^2 + x + 6 = 0$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solving a cubic",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The factorisation is $(x + 1)(x - 2)(x - 3) = 0$, so $x = -1$, $x = 2$ or $x = 3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = −1, 2 or 3"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "x = -1, x = 2, x = 3",
+        "-1, 2, 3",
+        "x = -1 or x = 2 or x = 3",
+        "x = 2, x = 3, x = -1",
+        "2, 3, -1"
+      ]
+    },
+    {
+      "id": "q9",
+      "prompt": "A student finds $f(1) = 0$ for a cubic and writes the factor as $(x + 1)$. What is wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the sign in the factor",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The factor $(x - a)$ is zero at $x = a$. $f(1) = 0$ means $(x - 1)$ divides $f(x)$; $(x + 1)$ would need $f(-1) = 0$. The sign inside the bracket is opposite to the value tested.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A zero at $x = 1$ gives the factor $(x - 1)$: the factor is zero where $f$ is"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Nothing: $f(1) = 0$ gives the factor $(x + 1)$, since the sign always changes in a factor",
+        "A zero at $x = 1$ gives the factor $(x - 1)$: the factor is zero where $f$ is",
+        "The factor should be $(1 - x)$ only",
+        "The student should have tested $x = -1$ as well before deciding"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "For $f(x) = 2x^3 + 3x^2 - 8x + 3$, work out $f\\left(\\frac{1}{2}\\right)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a rational value",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f\\left(\\frac{1}{2}\\right) = 2 \\cdot \\frac{1}{8} + 3 \\cdot \\frac{1}{4} - 4 + 3 = \\frac{1}{4} + \\frac{3}{4} - 4 + 3 = 0$. So $(2x - 1)$ is a factor.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 0,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "prompt": "Factorise $2x^3 - x^2 - 7x + 6$ fully.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the specification's cubic with a coefficient",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(1) = 2 - 1 - 7 + 6 = 0$, so $(x - 1)$ is a factor; or $f\\left(\\frac{3}{2}\\right) = 0$ gives $(2x - 3)$. Either way the quadratic factor is found by comparing coefficients, and the full factorisation is $(2x - 3)(x + 2)(x - 1)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(2x − 3)(x + 2)(x − 1)"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(2x - 3)(x + 2)(x - 1)",
+        "(2x - 3)(x - 1)(x + 2)",
+        "(x + 2)(2x - 3)(x - 1)",
+        "(x - 1)(x + 2)(2x - 3)",
+        "(x + 2)(x - 1)(2x - 3)",
+        "(x - 1)(2x - 3)(x + 2)"
+      ]
+    },
+    {
+      "id": "q12",
+      "prompt": "Solve $2x^3 + 3x^2 - 8x + 3 = 0$.",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a cubic with a rational root",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(1) = 0$ gives $(x - 1)$; comparing coefficients gives $(x - 1)(2x^2 + 5x - 3)$, and $2x^2 + 5x - 3 = (2x - 1)(x + 3)$. So $x = 1$, $x = \\frac{1}{2}$ or $x = -3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "x = 1/2, 1 or −3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "x = 1/2, x = 1, x = -3",
+        "1/2, 1, -3",
+        "x = -3, x = 1/2, x = 1",
+        "-3, 1/2, 1",
+        "x = 0.5, x = 1, x = -3"
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "The curve $y = x^3 - 3x + 2 = (x - 1)^2(x + 2)$ meets the $x$ axis at $x = 1$ and $x = -2$. What is different about the two points?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "a repeated root",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A squared factor $(x - 1)^2$ is never negative, so the curve does not change sign at $x = 1$: it comes down to the axis and goes back up, a touch. The single factor $(x + 2)$ changes sign at $-2$, a crossing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "At $x = 1$ the curve touches the axis without crossing, because the factor is repeated; at $x = -2$ it crosses"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "At $x = 1$ the curve crosses the axis and at $x = -2$ it touches, because $-2$ is the larger factor and larger factors touch",
+        "The curve crosses at both points in the same way, because a cubic always crosses the axis",
+        "At $x = 1$ the curve touches the axis without crossing, because the factor is repeated; at $x = -2$ it crosses",
+        "The curve does not meet the axis at $x = 1$ because the factor is squared and a square is never zero"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "How many real solutions does $x^5 - 7x^4 - x + 7 = 0$ have?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the specification's fifth power",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Grouping: $x^4(x - 7) - (x - 7) = (x - 7)(x^4 - 1) = (x - 7)(x - 1)(x + 1)(x^2 + 1)$. The linear factors give $7$, $1$ and $-1$; $x^2 + 1$ is never zero for a real $x$. So there are 3 real solutions.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises to (x − 7)(x⁴ − 1) or tests values"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "prompt": "Why does $f(a) = 0$ mean that $(x - a)$ is a factor of $f(x)$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "proving the factor theorem",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Any polynomial can be written $f(x) = (x - a)g(x) + r$ with a constant $r$ left over. Substituting $x = a$ kills the first term, so $f(a) = r$. If $f(a) = 0$ then $r = 0$ and $f(x) = (x - a)g(x)$: $(x - a)$ is a factor. The argument runs both ways, which is why the theorem is an *if and only if*.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Dividing gives $f(x) = (x - a)g(x) + r$; putting $x = a$ leaves $f(a) = r$, so $f(a) = 0$ forces $r = 0$"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Because $a$ is always a root of every polynomial, so the factor must be there somewhere",
+        "Because dividing by $(x - a)$ multiplies the polynomial by $a$, and the constant term stays behind as what is left over",
+        "It does not: $f(a) = 0$ only shows that $(x + a)$ is a factor, not $(x - a)$",
+        "Dividing gives $f(x) = (x - a)g(x) + r$; putting $x = a$ leaves $f(a) = r$, so $f(a) = 0$ forces $r = 0$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "A cubic $f(x)$ has integer coefficients and $f(x) = 0$ has no integer solutions. What can be said about $f(x)$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what the theorem can and cannot find",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A cubic always has at least one real root. If the root is not an integer it may be rational, like $\\frac{3}{2}$ for a factor $(2x - 3)$, in which case the factor theorem with a rational value finds it; or it may be irrational, in which case the cubic has no linear factor with integer coefficients.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "It may have a rational root such as $x = \\frac{3}{2}$, or an irrational one; it has at least one real root"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "It may have a rational root such as $x = \\frac{3}{2}$, or an irrational one; it has at least one real root",
+        "It has no real roots, because every root of a cubic is an integer if it is real",
+        "It must have three irrational roots, because every integer has been tested and ruled out, and a cubic has three roots",
+        "It cannot be factorised at all, because the factor theorem only finds integer roots"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q17",
+      "prompt": "$f(x) = 2x^3 - x^2 - 7x + 6$.\n\n(a) Show that $(2x - 3)$ is a factor of $f(x)$.\n\n(b) Factorise $f(x)$ fully.\n\n(c) Hence solve $f(x) = 0$, and explain why the curve $y = f(x)$ is above the $x$ axis at $x = 0$ but below it between $x = 1$ and $x = \\frac{3}{2}$.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "the specification's show-that, and the sign of a product",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** $(2x - 3)$ is zero at $x = \\frac{3}{2}$, so by the factor theorem it is a factor if $f\\left(\\frac{3}{2}\\right) = 0$.\n\n$$f\\left(\\tfrac{3}{2}\\right) = 2\\left(\\tfrac{27}{8}\\right) - \\tfrac{9}{4} - 7\\left(\\tfrac{3}{2}\\right) + 6 = \\tfrac{27}{4} - \\tfrac{9}{4} - \\tfrac{42}{4} + \\tfrac{24}{4} = \\tfrac{0}{4} = 0$$\n\nSo $(2x - 3)$ is a factor. Every term is written over the common denominator $4$ so that the cancelling is visible; that is what a *show that* is marked on.\n\n**(b)** Write $f(x) = (2x - 3)(x^2 + ax + b)$. The ends: $2x \\times x^2 = 2x^3$, correct; and $-3 \\times b = 6$ gives $b = -2$. The $x^2$ terms: $2a - 3 = -1$, so $a = 1$. Check the $x$ terms: $2b - 3a = -4 - 3 = -7$, which matches. So $f(x) = (2x - 3)(x^2 + x - 2)$, and the quadratic factorises: $x^2 + x - 2 = (x + 2)(x - 1)$.\n\n$$f(x) = (2x - 3)(x + 2)(x - 1)$$\n\n**(c)** $f(x) = 0$ where a factor is zero: $x = -2$, $x = 1$ or $x = \\frac{3}{2}$. At $x = 0$ the value is the constant term, $f(0) = 6$, which is positive, so the curve is above the axis there. Between $x = 1$ and $x = \\frac{3}{2}$, the factors $(x + 2)$ and $(x - 1)$ are both positive but $(2x - 3)$ is negative, so the product is negative and the curve dips below the axis. A check: at $x = \\frac{5}{4}$, $f = -\\frac{13}{32}$. The curve therefore crosses at $1$ going down and at $\\frac{3}{2}$ coming back up, which is what three single factors and a positive $x^3$ term must give.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes 3/2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "terms over a common denominator"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "sum shown to be 0"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets up (2x − 3)(x² + ax + b)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "a = 1, b = −2 with the check"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "quadratic factorised"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "solutions −2, 1 and 3/2"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sign argument from the factors, with f(0) = 6"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Substitutes x = 3/2 and shows the four terms over a common denominator summing to zero.",
+          "marks": 3
+        },
+        {
+          "text": "Writes f(x) = (2x − 3)(x² + ax + b), finds b = −2 from the ends and a = 1 from the x² terms, and checks the x terms.",
+          "marks": 3
+        },
+        {
+          "text": "Factorises the quadratic to (x + 2)(x − 1), gives the solutions −2, 1 and 3/2, and argues from the signs of the three factors: f(0) = 6 > 0, and between 1 and 3/2 only (2x − 3) is negative, so f is negative.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** $(2x - 3)$ is zero at $x = \\frac{3}{2}$, so by the factor theorem it is a factor if $f\\left(\\frac{3}{2}\\right) = 0$.\n\n$$f\\left(\\tfrac{3}{2}\\right) = 2\\left(\\tfrac{27}{8}\\right) - \\tfrac{9}{4} - 7\\left(\\tfrac{3}{2}\\right) + 6 = \\tfrac{27}{4} - \\tfrac{9}{4} - \\tfrac{42}{4} + \\tfrac{24}{4} = \\tfrac{0}{4} = 0$$\n\nSo $(2x - 3)$ is a factor. Every term is written over the common denominator $4$ so that the cancelling is visible; that is what a *show that* is marked on.\n\n**(b)** Write $f(x) = (2x - 3)(x^2 + ax + b)$. The ends: $2x \\times x^2 = 2x^3$, correct; and $-3 \\times b = 6$ gives $b = -2$. The $x^2$ terms: $2a - 3 = -1$, so $a = 1$. Check the $x$ terms: $2b - 3a = -4 - 3 = -7$, which matches. So $f(x) = (2x - 3)(x^2 + x - 2)$, and the quadratic factorises: $x^2 + x - 2 = (x + 2)(x - 1)$.\n\n$$f(x) = (2x - 3)(x + 2)(x - 1)$$\n\n**(c)** $f(x) = 0$ where a factor is zero: $x = -2$, $x = 1$ or $x = \\frac{3}{2}$. At $x = 0$ the value is the constant term, $f(0) = 6$, which is positive, so the curve is above the axis there. Between $x = 1$ and $x = \\frac{3}{2}$, the factors $(x + 2)$ and $(x - 1)$ are both positive but $(2x - 3)$ is negative, so the product is negative and the curve dips below the axis. A check: at $x = \\frac{5}{4}$, $f = -\\frac{13}{32}$. The curve therefore crosses at $1$ going down and at $\\frac{3}{2}$ coming back up, which is what three single factors and a positive $x^3$ term must give."
+    },
+    {
+      "id": "q18",
+      "prompt": "$(x + 2)$ is a factor of $f(x) = x^3 + kx^2 - 4x - 8$.\n\n(a) Show that $k = 2$.\n\n(b) Factorise $f(x)$ fully.\n\n(c) Explain how the factorised form shows that the curve $y = f(x)$ touches the $x$ axis at one point and crosses it at another, and give both points.",
+      "marks": 8,
+      "gradeBand": "8-9",
+      "skill": "an unknown coefficient and a repeated factor",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** Since $(x + 2)$ is a factor, the factor theorem gives $f(-2) = 0$:\n\n$$(-2)^3 + k(-2)^2 - 4(-2) - 8 = -8 + 4k + 8 - 8 = 4k - 8$$\n\nSetting this to zero, $4k = 8$ and $k = 2$, as required. The substitution turns the unknown coefficient into a linear equation, and that is the entire method.\n\n**(b)** With $k = 2$, $f(x) = x^3 + 2x^2 - 4x - 8$. Write $f(x) = (x + 2)(x^2 + ax + b)$: the ends give $2b = -8$, so $b = -4$; the $x^2$ terms give $a + 2 = 2$, so $a = 0$; check the $x$ terms, $b + 2a = -4$, which matches. So $f(x) = (x + 2)(x^2 - 4)$. The quadratic is a difference of two squares, $x^2 - 4 = (x - 2)(x + 2)$, and *fully* means it must be split:\n\n$$f(x) = (x + 2)^2(x - 2)$$\n\nGrouping gives the same result more quickly: $x^2(x + 2) - 4(x + 2) = (x + 2)(x^2 - 4)$.\n\n**(c)** The factor $(x + 2)$ appears **twice**. A squared factor is never negative, so as $x$ passes through $-2$ the sign of $f(x)$ does not change: the curve comes down to the axis, touches it at $(-2, 0)$, and goes back the way it came. The factor $(x - 2)$ appears once, so $f(x)$ changes sign at $x = 2$ and the curve **crosses** the axis at $(2, 0)$. A repeated linear factor is a touch; a single one is a crossing, and the factorised form shows which is which before any sketch is drawn.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes −2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "k = 2 shown"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "finds the quadratic factor"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(x + 2)(x² − 4)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "difference of two squares"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(x + 2)²(x − 2)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "touch at (−2, 0) with the reason"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "crossing at (2, 0) with the reason"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 10,
+      "criteria": [
+        {
+          "text": "Substitutes x = −2, forms 4k − 8 = 0 and solves k = 2.",
+          "marks": 2
+        },
+        {
+          "text": "Divides or compares coefficients to get (x + 2)(x² − 4).",
+          "marks": 2
+        },
+        {
+          "text": "Continues to (x + 2)²(x − 2), recognising the difference of two squares.",
+          "marks": 2
+        },
+        {
+          "text": "Explains that the squared factor does not change sign, so the curve touches at x = −2, and the single factor changes sign, so it crosses at x = 2.",
+          "marks": 2
+        }
+      ],
+      "modelAnswer": "**(a)** Since $(x + 2)$ is a factor, the factor theorem gives $f(-2) = 0$:\n\n$$(-2)^3 + k(-2)^2 - 4(-2) - 8 = -8 + 4k + 8 - 8 = 4k - 8$$\n\nSetting this to zero, $4k = 8$ and $k = 2$, as required. The substitution turns the unknown coefficient into a linear equation, and that is the entire method.\n\n**(b)** With $k = 2$, $f(x) = x^3 + 2x^2 - 4x - 8$. Write $f(x) = (x + 2)(x^2 + ax + b)$: the ends give $2b = -8$, so $b = -4$; the $x^2$ terms give $a + 2 = 2$, so $a = 0$; check the $x$ terms, $b + 2a = -4$, which matches. So $f(x) = (x + 2)(x^2 - 4)$. The quadratic is a difference of two squares, $x^2 - 4 = (x - 2)(x + 2)$, and *fully* means it must be split:\n\n$$f(x) = (x + 2)^2(x - 2)$$\n\nGrouping gives the same result more quickly: $x^2(x + 2) - 4(x + 2) = (x + 2)(x^2 - 4)$.\n\n**(c)** The factor $(x + 2)$ appears **twice**. A squared factor is never negative, so as $x$ passes through $-2$ the sign of $f(x)$ does not change: the curve comes down to the axis, touches it at $(-2, 0)$, and goes back the way it came. The factor $(x - 2)$ appears once, so $f(x)$ changes sign at $x = 2$ and the curve **crosses** the axis at $(2, 0)$. A repeated linear factor is a touch; a single one is a crossing, and the factorised form shows which is which before any sketch is drawn."
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "suggestedMinutes": 8
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 13
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 33
+    }
+  },
+  "examTechnique": {
+    "body": "Factor theorem questions come in three shapes: *show that* something is a factor, *factorise fully*, and *find the unknown coefficient*. All three begin with a substitution written out in full, fractions over a common denominator, powers cancelled visibly, because that line is where the marks sit. A factor with a coefficient means a fraction to substitute, and the specification says *rational values* so that it can be asked.\n\nOnce a factor is known, write the quadratic with its ends by inspection and find the middle by comparing the $x^2$ terms, then confirm with the $x$ terms. Factorise the quadratic, give every root when asked to solve, and read the sketch from the factors: a single root crosses, a repeated one touches. *Hence* means use the factors you have found; starting again from scratch may not score.",
+    "examinerErrors": [
+      "Testing the wrong sign: $f(-1)$ for the factor $(x - 1)$.",
+      "Writing $f(a) = 0$ without showing the arithmetic in a *show that*.",
+      "Substituting $3$ rather than $\\frac{3}{2}$ for the factor $(2x - 3)$.",
+      "A wrong middle coefficient in the quadratic, because the $x$ terms were never checked.",
+      "Stopping at $(x + 2)(x^2 - 4)$ when *fully* was asked.",
+      "Giving two roots for a cubic that has three, or counting $x^2 + 1$ as giving roots.",
+      "Sketching a repeated root as a crossing rather than a touch."
+    ],
+    "grade9Looks": "A grade 9 answer chooses the values to try from the constant term and the leading coefficient, and writes each substitution out so that the cancelling is visible, especially with a fraction. It sets up the quadratic factor with its ends by inspection, finds the middle by comparison and confirms it before factorising further, and it knows that *fully* may need a difference of two squares split. Asked to solve, it gives every root; asked to sketch, it reads crossings, touches, the intercept and the shape from the factors without reaching for calculus. It can prove the theorem in two lines from the remainder, and it knows that a cubic always has at least one real root and at most three."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

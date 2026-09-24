@@ -535,16 +535,16 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
    */
   'further-maths': [
     { year: 10, term: 'Autumn', topics: [
-      { title: 'Surds and exact calculation' },
-      { title: 'The product rule for counting' },
-      { title: 'Expanding, and the binomial expansion' },
-      { title: 'Factorising at Further Maths level' },
+      { title: 'Surds and exact calculation', topicId: 'surds-and-exact-calculation' },
+      { title: 'The product rule for counting', topicId: 'the-product-rule-for-counting' },
+      { title: 'Expanding, and the binomial expansion', topicId: 'expanding-and-the-binomial-expansion' },
+      { title: 'Factorising at Further Maths level', topicId: 'factorising-at-further-maths-level' },
     ] },
     { year: 10, term: 'Spring', topics: [
-      { title: 'Completing the square and quadratic equations' },
-      { title: 'Quadratic inequalities and index equations' },
-      { title: 'The factor theorem and cubics' },
-      { title: 'Sequences and limiting values' },
+      { title: 'Completing the square and quadratic equations', topicId: 'completing-the-square-and-quadratic-equations' },
+      { title: 'Quadratic inequalities and index equations', topicId: 'quadratic-inequalities-and-index-equations' },
+      { title: 'The factor theorem and cubics', topicId: 'the-factor-theorem-and-cubics' },
+      { title: 'Sequences and limiting values', topicId: 'sequences-and-limiting-values' },
     ] },
     { year: 10, term: 'Summer', topics: [
       { title: 'Gradients, distance and points on a line' },
