@@ -90,7 +90,8 @@ export function keypadFor(question: Extract<Question, { type: 'numeric' | 'short
   }
   // Physics and Chemistry write their larger values in standard form.
   if (subjectId === 'physics' || subjectId === 'chemistry') return 'number-plus'
-  if (subjectId === 'maths') return 'number-plus'
+  // Further Maths answers are exact more often than Maths ones: surds, fractions, powers.
+  if (subjectId === 'maths' || subjectId === 'further-maths') return 'number-plus'
   return 'number'
 }
 

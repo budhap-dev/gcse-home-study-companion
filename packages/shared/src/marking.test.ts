@@ -98,6 +98,13 @@ describe('normaliseText', () => {
     expect(normaliseText('5√2')).toBe(normaliseText('5sqrt2'))
     expect(normaliseText('5 root 2')).toBe(normaliseText('5sqrt(2)'))
     expect(normaliseText('√5 + √2')).toBe(normaliseText('sqrt(5)+sqrt(2)'))
+  })
+
+  it('reads the maths field\'s +- and a typed +/- as the ± the content prints', () => {
+    // MathLive sends x = −3 ± √7 as x=-3+-sqrt(7); before this a student who used the ± key was marked wrong.
+    expect(normaliseText('x=-3+-sqrt(7)')).toBe(normaliseText('x = -3 ± √7'))
+    expect(normaliseText('1 +/- √2')).toBe(normaliseText('1 ± √2'))
+    expect(normaliseText('x = \\pm 2')).toBe(normaliseText('x = ±2'))
     expect(normaliseText('2 × 3')).toBe(normaliseText('2*3'))
     expect(normaliseText('1/(9x⁴)')).toBe(normaliseText('1/(9x^4)'))
   })

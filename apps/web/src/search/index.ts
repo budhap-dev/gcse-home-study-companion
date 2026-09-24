@@ -194,6 +194,18 @@ export function search(query: string, records: SearchRecord[] = searchIndex()): 
     }
     // A topic record outranks its own sections when the title is what matched.
     if (record.kind === 'topic') score += 2
+    // A query that is a topic's whole title, allowing for stems ("surd" for "Surds"), puts
+    // that topic page first. Without this the Maths "Surds" page loses to the lesson steps
+    // of Further Maths "Surds and exact calculation", whose headings also contain the word.
+    // An inflected whole-title match earns less, so that "moments" still reaches the
+    // Moments topic, whose own step headings carry the word, ahead of Momentum.
+    if (record.kind === 'topic') {
+      const titleTerms = searchTerms(record.topicTitle)
+      if (titleTerms.length === terms.length) {
+        if (titleTerms.every((w, i) => w === terms[i])) score += 12
+        else if (titleTerms.every((w, i) => sameStem(w, terms[i]))) score += 6
+      }
+    }
     if (matchedAll && score > 0) hits.push({ record, score, snippet: makeSnippet(record.text, terms) })
   }
   return hits.sort((a, b) => b.score - a.score || a.record.key.localeCompare(b.record.key))

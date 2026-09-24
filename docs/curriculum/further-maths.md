@@ -70,7 +70,7 @@ Only four are given in the exam when a question needs them: curved surface area 
 
 | App unit | Specification references |
 |---|---|
-| `number` | 1.1 to 1.3 |
+| `number` | 1.2 and 1.3; 1.1 is the GCSE number work the specification says is *expected*, so no row teaches it |
 | `algebra` | 2.1 to 2.22 |
 | `coordinate-geometry` | 3.1 to 3.9 |
 | `calculus` | 4.1 to 4.9 |

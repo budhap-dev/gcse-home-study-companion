@@ -65,6 +65,8 @@ export function normaliseText(s: string): string {
   return out
     .replace(/\s+/g, '')
     .replace(/[−–—]/g, '-')
+    // The maths field sends ± as +-, and a keyboard gives +/- or \pm; the content prints ±.
+    .replace(/\+\/?-|\\pm/g, '±')
     // French answers are full of apostrophes, and phones type a curly one.
     .replace(/[\u2018\u2019\u02bc`´]/g, "'")
     .replace(/[\u201c\u201d]/g, '"')
