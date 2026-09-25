@@ -30,6 +30,16 @@ const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
 const NAMES_A_SLOT =
   /\b(only the (?:first|second|third|fourth|last)\s+(?:does|is|has|gives|names|compares|starts|works|just|reads|describes|weighs)|the (?:first|second|third|fourth|last) (?:option|answer|sentence|comment|plan|opening|statement|claim))\b/i
 
+/**
+ * The same defect as a bare ordinal at the start of a sentence: "The first ties a belief to a
+ * line. The second gives context without the text." Options are reordered when the pack is
+ * built, and eleven solutions in Music, French and English named options this way on
+ * 25 September 2026; in four of them the ordinal already pointed at the wrong option. The
+ * capital T keeps prose like "the second melts over a range" out of it.
+ */
+const OPENS_WITH_A_SLOT =
+  /(?:^|[.;:]\s+)The (?:first|second|third|fourth|last) (?:makes|joins|ties|connects|gives|names|states|offers|retells|describes|is|explains|answers|does|reads|holds|weighs|treats)\b/
+
 interface Item { id: string; options?: string[]; solution?: string }
 interface Topic { id: string; subjectId: string; questions: Item[]; lesson: { steps: { check?: Item }[] } }
 
@@ -52,10 +62,15 @@ describe('multiple-choice solutions', () => {
       const items = [...t.questions, ...t.lesson.steps.flatMap((s) => (s.check ? [s.check] : []))]
       for (const q of items) {
         if (!q.options || !q.solution) continue
-        const found = NAMES_A_SLOT.exec(q.solution)
+        const found = NAMES_A_SLOT.exec(q.solution) ?? OPENS_WITH_A_SLOT.exec(q.solution)
         if (found) offenders.push(`${t.subjectId}/${t.id} ${q.id}: "${found[0]}"`)
       }
     }
     expect(offenders, offenders.join('\n')).toEqual([])
+  })
+
+  it('the sentence-opening check can fail', () => {
+    expect(OPENS_WITH_A_SLOT.test('It names the feature. The second gives context without the text.')).toBe(true)
+    expect(OPENS_WITH_A_SLOT.test('Both halves melt; the second melts over a range.')).toBe(false)
   })
 })
