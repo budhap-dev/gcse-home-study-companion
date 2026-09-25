@@ -28,7 +28,7 @@ const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
  * pointed at the wrong option.
  */
 const NAMES_A_SLOT =
-  /\b(only the (?:first|second|third|fourth|last)\s+(?:does|is|has|gives|names|compares|starts|works|just|reads|describes|weighs)|the (?:first|second|third|fourth|last) (?:option|answer|sentence|comment|plan))\b/i
+  /\b(only the (?:first|second|third|fourth|last)\s+(?:does|is|has|gives|names|compares|starts|works|just|reads|describes|weighs)|the (?:first|second|third|fourth|last) (?:option|answer|sentence|comment|plan|opening|statement|claim))\b/i
 
 interface Item { id: string; options?: string[]; solution?: string }
 interface Topic { id: string; subjectId: string; questions: Item[]; lesson: { steps: { check?: Item }[] } }
