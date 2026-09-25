@@ -670,10 +670,10 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Romeo and Juliet: analysing an extract', topicId: 'answering-an-extract-question' },
     ] },
     { year: 9, term: 'Summer 1', topics: [
-      { title: 'Introduction to conflict poetry' },
+      { title: 'Introduction to conflict poetry', topicId: 'power-and-conflict-cluster-and-comparison' },
     ] },
     { year: 9, term: 'Summer 2', topics: [
-      { title: 'Social change and links to An Inspector Calls' },
+      { title: 'Social change and links to An Inspector Calls', topicId: 'an-inspector-calls-context-and-the-essay-question' },
     ] },
     { year: 10, term: 'Autumn 1', topics: [
       { title: 'An Inspector Calls: plot and structure', topicId: 'an-inspector-calls-plot-and-structure' },
@@ -700,14 +700,14 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Jekyll and Hyde: context and the extract question', topicId: 'jekyll-and-hyde-context-and-the-extract-question' },
     ] },
     { year: 11, term: 'Spring 1', topics: [
-      { title: 'Power and Conflict: the cluster and the comparison question' },
-      { title: 'The power of humans: Ozymandias, London, My Last Duchess and Tissue' },
-      { title: 'The power of nature: The Prelude, Storm on the Island and Exposure' },
-      { title: 'The reality of war: The Charge of the Light Brigade, Bayonet Charge, Remains and Kamikaze' },
-      { title: 'Memory, identity and loss: Poppies, War Photographer, The Emigrée and Checking Out Me History' },
+      { title: 'Power and Conflict: the cluster and the comparison question', topicId: 'power-and-conflict-cluster-and-comparison' },
+      { title: 'The power of humans: Ozymandias, London, My Last Duchess and Tissue', topicId: 'the-power-of-humans' },
+      { title: 'The power of nature: The Prelude, Storm on the Island and Exposure', topicId: 'the-power-of-nature' },
+      { title: 'The reality of war: The Charge of the Light Brigade, Bayonet Charge, Remains and Kamikaze', topicId: 'the-reality-of-war' },
+      { title: 'Memory, identity and loss: Poppies, War Photographer, The Emigrée and Checking Out Me History', topicId: 'memory-identity-and-loss' },
     ] },
     { year: 11, term: 'Spring 2', topics: [
-      { title: 'An Inspector Calls revision: plot, characters, themes and context' },
+      { title: 'An Inspector Calls revision: plot, characters, themes and context', topicId: 'an-inspector-calls-plot-and-structure' },
       { title: 'Unseen poetry: analysing one poem' },
       { title: 'Unseen poetry: comparing two poems' },
     ] },
