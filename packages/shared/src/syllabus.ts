@@ -708,8 +708,8 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     ] },
     { year: 11, term: 'Spring 2', topics: [
       { title: 'An Inspector Calls revision: plot, characters, themes and context', topicId: 'an-inspector-calls-plot-and-structure' },
-      { title: 'Unseen poetry: analysing one poem' },
-      { title: 'Unseen poetry: comparing two poems' },
+      { title: 'Unseen poetry: analysing one poem', topicId: 'unseen-poetry-analysing-one-poem' },
+      { title: 'Unseen poetry: comparing two poems', topicId: 'unseen-poetry-comparing-two-poems' },
     ] },
   ],
 }
