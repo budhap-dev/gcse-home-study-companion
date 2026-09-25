@@ -75,3 +75,38 @@ describe('Edexcel Business levels', () => {
     expect(bad).toEqual([])
   })
 })
+
+const music = jsonFiles(join(ROOT, 'music')).map((f) => ({
+  file: f.split('/').pop()!,
+  topic: Topic.parse(JSON.parse(readFileSync(f, 'utf8'))),
+}))
+
+/**
+ * Edexcel 1MU0 marks its 12-mark Section B comparison in **four** levels, 1 to 3, 4 to 6,
+ * 7 to 9 and 10 to 12 (Summer 2022 Component 3 mark scheme). The level count belongs to
+ * the specification, not the board: Business on the same board has three. Found in the
+ * Music review pass on 25 September 2026, when two 12-mark essays were still marked as
+ * twelve one-mark points, a grid Pearson does not use.
+ */
+describe('Edexcel Music levels', () => {
+  const levelled = music.flatMap(({ file, topic }) => topic.questions.filter((q) => q.marks === 12).map((q) => ({ file, q })))
+
+  it('has 12-mark questions to check', () => {
+    expect(levelled.length).toBeGreaterThan(3)
+  })
+
+  it('marks every 12-mark question in the four bands Edexcel uses', () => {
+    const bands = ['Level 1 (1 to 3)', 'Level 2 (4 to 6)', 'Level 3 (7 to 9)', 'Level 4 (10 to 12)']
+    const bad: string[] = []
+    for (const { file, q } of levelled) {
+      if (q.markScheme.length !== 4) {
+        bad.push(`${file} ${q.id}: ${q.markScheme.length} lines, expected four levels`)
+        continue
+      }
+      q.markScheme.forEach((line, i) => {
+        if (line.marks !== 3 || !line.description.startsWith(bands[i]!)) bad.push(`${file} ${q.id}: "${line.description.slice(0, 24)}…" should start "${bands[i]}" and be worth 3`)
+      })
+    }
+    expect(bad).toEqual([])
+  })
+})

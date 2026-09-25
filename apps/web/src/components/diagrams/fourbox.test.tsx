@@ -20,6 +20,19 @@ describe('four-box', () => {
     expect(html).toContain('Middle')
   })
 
+  it('wraps a long point inside its box instead of running it out of the side', () => {
+    // Found in the Music review pass, 25 September 2026: the grid drew each point on one
+    // line, so 832 of the pack's 1261 points ran out of their box and under the centre
+    // circle. Only the phone layout wrapped them.
+    const point = 'a light, bell-like note made by touching the string'
+    const html = renderToStaticMarkup(<FourBox alt="" props={{ centre: 'Bass', boxes: [{ title: 'Harmonic', points: [point] }] }} />)
+    const lines = [...html.matchAll(/<text [^>]*font-size="12"[^>]*>([^<]*)<\/text>/g)].map((m) => m[1]!)
+    expect(lines.length).toBeGreaterThan(1)
+    // A 186-wide box less 14 padding each side holds 22 characters at 7 a character.
+    for (const line of lines) expect(line.length).toBeLessThanOrEqual(22)
+    for (const word of point.split(' ')) expect(lines.join(' ')).toContain(word)
+  })
+
   it('draws a body, wrapped, rather than dropping it', () => {
     const html = renderToStaticMarkup(<FourBox alt="" props={{ boxes: [{ title: 'One', body: LONG }] }} />)
     // Every word of the body reaches the drawing.
