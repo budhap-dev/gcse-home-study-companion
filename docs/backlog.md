@@ -160,8 +160,11 @@ One PR per subject.
 - [x] French (PR #275; marker fix for commas, partial accents and a closing ?)
 - [x] Music (PR #277; four-level grid test for the 12-mark question)
 - [x] Further Maths (PR #278)
-- [ ] English
-- [ ] A second pass over any subject that gained topics after its review
+- [x] English (PR #279)
+- [ ] A second pass over what was written after each subject's review: Maths' ten topics for
+  untaught specification content (commit 2c90687), Biology's five Year 9 bridging topics (#262), and
+  the Physics and Chemistry additions inside existing topics (#257, #258, #260). French's three
+  grammar topics (#276) had their own reviewer before merge.
 
 **Pack-wide quality**
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
