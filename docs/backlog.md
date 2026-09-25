@@ -101,8 +101,10 @@ The school's overviews and set texts were found on 25 September 2026 and the pla
 school's order. The subjects, units and syllabus rows were declared in PR #267 (version 9.1.0); the first
 unit, An Inspector Calls, and the Literature exam guide followed in PR #268 (version 9.2.0); the six
 Language Paper 1 topics, the Year 10 Autumn 2 rows, in PR #269 (version 9.3.0); the seven Paper 2 and
-Speaking and Listening topics, which complete English Language, in PR #270 (version 10.0.0 is reserved for
-the day both English subjects are complete; this one is 9.4.0).
+Speaking and Listening topics, which complete English Language, in PR #270 (9.4.0); then Macbeth (PR #271,
+9.5.0), Jekyll and Hyde (PR #272, 9.6.0), Power and Conflict (PR #273, 9.7.0) and unseen poetry (PR #274),
+which completes English Literature and takes the app to version 10.0.0. Every English row in Years 9 to 11
+now links to a written topic.
 
 - [x] Find the school's curriculum overview and the set texts (25 September 2026)
 - [x] Declare the two subjects, their units and every syllabus row, shown as coming soon (PR #267)
@@ -129,9 +131,9 @@ the day both English subjects are complete; this one is 9.4.0).
 - [x] Macbeth: plot and structure · Macbeth and Lady Macbeth · Banquo, Macduff, Duncan and the witches · themes · context and the extract question (PR #271)
 - [x] Jekyll and Hyde: plot and structure · Jekyll, Hyde, Utterson and Lanyon · themes · context and the extract question (PR #272, 25 September 2026)
 - [x] Power and Conflict: the cluster and the comparison question · the power of humans · the power of nature · the reality of war · memory, identity and loss (PR #273, 25 September 2026)
-- [ ] Unseen poetry: analysing one poem · comparing two poems
+- [x] Unseen poetry: analysing one poem · comparing two poems (PR #274, 25 September 2026)
 - [x] Exam technique guide for 8702 (PR #268)
-- [ ] `why` blocks on every topic (written with each topic)
+- [x] `why` blocks on every topic (written with each topic)
 
 ## 2. Testing and validation (after the content)
 

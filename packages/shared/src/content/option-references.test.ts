@@ -38,7 +38,7 @@ const NAMES_A_SLOT =
  * capital T keeps prose like "the second melts over a range" out of it.
  */
 const OPENS_WITH_A_SLOT =
-  /(?:^|[.;:]\s+)The (?:first|second|third|fourth|last) (?:makes|joins|ties|connects|gives|names|states|offers|retells|describes|is|explains|answers|does|reads|holds|weighs|treats)\b/
+  /(?:^|[.;:]\s+)The (?:first|second|third|fourth|last) (?:makes|joins|ties|connects|gives|names|states|offers|retells|describes|is|explains|answers|does|reads|holds|weighs|treats|compares|uses|puts|sets|shows|says|lists|announces|summarises|guesses|keeps|stays)\b/
 
 interface Item { id: string; options?: string[]; solution?: string }
 interface Topic { id: string; subjectId: string; questions: Item[]; lesson: { steps: { check?: Item }[] } }
