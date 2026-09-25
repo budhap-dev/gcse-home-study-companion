@@ -195,6 +195,13 @@ function stripProseCommas(s: string): string {
  * forgiven in the typed answer — a closing full stop, the comma after "Avant" — so a
  * French sentence typed properly is not marked wrong. Punctuation it includes is
  * required: when a program prints "Hi Amy!", the exclamation mark is part of the output.
+ *
+ * Commas, and a closing question mark or full stop, are the exception. A prose comma is forgiven whichever side has it, because
+ * whether a sentence carries one is style, not the answer: "quand j'étais petit, je
+ * jouais" typed without its comma is the same French. Requiring the author's commas
+ * failed hundreds of French answers typed without them. `strictCommas` keeps them for
+ * exact program output (`matchCase`) and SQL, where a comma is syntax. A comma between
+ * two digits is never prose, so a list of numbers keeps its separators either way.
  * Both arguments are already normalised.
  */
 /**
@@ -207,7 +214,7 @@ function lettersByWord(s: string): string {
   return s.trim().split(/\s+/).map((w) => w.replace(/[^\p{L}]/gu, '')).filter(Boolean).join(' ')
 }
 
-function matchesAccepted(given: string, accepted: string): boolean {
+function matchesAccepted(given: string, accepted: string, strictCommas = false): boolean {
   if (given === accepted) return true
   let lenient = given
   // A statement terminator counts as closing punctuation: SQL is often typed with one.
@@ -218,8 +225,20 @@ function matchesAccepted(given: string, accepted: string): boolean {
   // Quotes round the whole answer mark it as a string; they are not part of it unless the
   // accepted answer has them too, as when a program prints the quote marks.
   if (!/^["']/.test(accepted)) lenient = lenient.replace(/^(["'])(.+)\1$/, '$2')
-  if (stripProseCommas(accepted) === accepted) lenient = stripProseCommas(lenient)
-  return lenient === accepted
+  if (strictCommas || /^(select|insert|update|delete)/.test(accepted)) {
+    if (stripProseCommas(accepted) === accepted) lenient = stripProseCommas(lenient)
+    return lenient === accepted
+  }
+  // A closing question mark or full stop is prose punctuation too: "vous pourriez me dire
+  // où est la gare ?" typed without its question mark is the same answer. An exclamation
+  // mark is kept, because in program output it is part of what is printed.
+  const prose = (t: string) => stripProseCommas(t).replace(/[.?]+$/, '')
+  return prose(lenient) === prose(accepted)
+}
+
+/** Letters without their accents: é to e, ç to c. */
+function withoutAccents(s: string): string {
+  return s.normalize('NFD').replace(/\p{M}/gu, '').normalize('NFC')
 }
 
 /**
@@ -336,13 +355,20 @@ export function mark(question: Question, answer: unknown): MarkResult {
     case 'short-text': {
       const raw = String(answer ?? '')
       const given = normaliseText(raw)
-      return result(given.length > 0 && question.accepted.some((a) => {
+      const strict = question.matchCase === true
+      // An accepted list that holds an answer and its accent-free twin says accents are
+      // not being marked. Then a half-accented answer ("je suis née a londres") is as right
+      // as either twin, so compare with the accents folded away on both sides.
+      const folded = question.accepted.map((a) => normaliseText(withoutAccents(a)))
+      const accentFree = question.accepted.some((a, i) => withoutAccents(a) !== a && question.accepted.some((b, j) => j !== i && normaliseText(b) === folded[i]))
+      return result(given.length > 0 && question.accepted.some((a, i) => {
         if (!genotypesMatch(raw, a, question.prompt)) return false
-        if (question.matchCase && lettersByWord(raw) !== lettersByWord(a)) return false
+        if (strict && lettersByWord(raw) !== lettersByWord(a)) return false
         const accepted = normaliseText(a)
-        if (matchesAccepted(given, accepted)) return true
+        if (matchesAccepted(given, accepted, strict)) return true
+        if (accentFree && matchesAccepted(normaliseText(withoutAccents(raw)), folded[i]!, strict)) return true
         const bare = withoutArticle(raw, a)
-        if (bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]))) return true
+        if (bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]), strict)) return true
         return sameListAnyOrder(raw, a, question.prompt)
       }))
     }
