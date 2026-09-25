@@ -692,12 +692,12 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Macbeth: context and the extract question', topicId: 'macbeth-context-and-the-extract-question' },
     ] },
     { year: 11, term: 'Autumn 1', topics: [
-      { title: 'Jekyll and Hyde: plot and structure' },
-      { title: 'Jekyll and Hyde: Jekyll, Hyde, Utterson and Lanyon' },
+      { title: 'Jekyll and Hyde: plot and structure', topicId: 'jekyll-and-hyde-plot-and-structure' },
+      { title: 'Jekyll and Hyde: Jekyll, Hyde, Utterson and Lanyon', topicId: 'jekyll-hyde-utterson-and-lanyon' },
     ] },
     { year: 11, term: 'Autumn 2', topics: [
-      { title: 'Jekyll and Hyde: duality, secrecy, science and reputation' },
-      { title: 'Jekyll and Hyde: context and the extract question' },
+      { title: 'Jekyll and Hyde: duality, secrecy, science and reputation', topicId: 'jekyll-and-hyde-themes' },
+      { title: 'Jekyll and Hyde: context and the extract question', topicId: 'jekyll-and-hyde-context-and-the-extract-question' },
     ] },
     { year: 11, term: 'Spring 1', topics: [
       { title: 'Power and Conflict: the cluster and the comparison question' },

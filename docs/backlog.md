@@ -127,7 +127,7 @@ the day both English subjects are complete; this one is 9.4.0).
 - [x] Answering an extract question (through Romeo and Juliet) (PR #271, 25 September 2026)
 - [x] An Inspector Calls: plot and structure · the Birlings and Gerald · the Inspector and Eva Smith · themes · context and the essay question (PR #268, 25 September 2026)
 - [x] Macbeth: plot and structure · Macbeth and Lady Macbeth · Banquo, Macduff, Duncan and the witches · themes · context and the extract question (PR #271)
-- [ ] Jekyll and Hyde: plot and structure · Jekyll, Hyde, Utterson and Lanyon · themes · context and the extract question
+- [x] Jekyll and Hyde: plot and structure · Jekyll, Hyde, Utterson and Lanyon · themes · context and the extract question (PR #272, 25 September 2026)
 - [ ] Power and Conflict: the cluster and the comparison question · the power of humans · the power of nature · the reality of war · memory, identity and loss
 - [ ] Unseen poetry: analysing one poem · comparing two poems
 - [x] Exam technique guide for 8702 (PR #268)
