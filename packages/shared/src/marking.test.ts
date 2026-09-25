@@ -208,9 +208,29 @@ describe('sentence punctuation', () => {
     const output = q(['Hi Amy!'])
     expect(mark(output, 'Hi Amy!').correct).toBe(true)
     expect(mark(output, 'Hi Amy').correct).toBe(false)
-    const greeting = q(['Hello, Ada'])
+    // Exact program output (matchCase) keeps its commas; so does SQL, where a comma is syntax.
+    const greeting = { ...q(['Hello, Ada']), matchCase: true } as Question
     expect(mark(greeting, 'Hello, Ada').correct).toBe(true)
     expect(mark(greeting, 'Hello Ada').correct).toBe(false)
+    const insert = q(["INSERT INTO Club VALUES (4, 'Debating')"])
+    expect(mark(insert, "INSERT INTO Club VALUES (4 'Debating')").correct).toBe(false)
+  })
+
+  it('forgives a prose comma the accepted answer has and the student left out', () => {
+    // Found reviewing French on 25 September 2026: 350 accepted French answers carry a
+    // comma, and a correct sentence typed without it was marked wrong.
+    const sentence = q(["quand j'étais petit, je jouais dans la cour"])
+    expect(mark(sentence, "Quand j'étais petit je jouais dans la cour.").correct).toBe(true)
+    expect(mark(sentence, "Quand j'étais petit, je jouais dans la cour.").correct).toBe(true)
+    // A comma between numbers is not prose: a list of numbers keeps its separators.
+    expect(mark(q(['2, 5, 6, 8']), '2568').correct).toBe(false)
+    expect(mark(q(['2, 5, 6, 8']), '2,5,6,8').correct).toBe(true)
+  })
+
+  it('forgives a closing question mark the accepted answer has and the student left out', () => {
+    const question = q(['vous pourriez me dire où est la gare ?'])
+    expect(mark(question, 'Vous pourriez me dire où est la gare').correct).toBe(true)
+    expect(mark(question, 'Vous pourriez me dire où est la gare ?').correct).toBe(true)
   })
 
   it('forgives the semicolon that ends an SQL statement, and either quote round a text value', () => {
@@ -291,6 +311,31 @@ describe('sentence punctuation', () => {
   it('leaves normaliseText itself alone, so a decimal point survives', () => {
     expect(normaliseText('2.5')).toBe('2.5')
     expect(normaliseText('Hi Amy!')).toBe('hiamy!')
+  })
+})
+
+describe('accents', () => {
+  const q = (accepted: string[]): Question => ({
+    id: 'q', type: 'short-text', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's',
+    calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }],
+    discriminators: [], accepted,
+  })
+
+  it('accepts any mix of accents when the list holds an accent-free twin', () => {
+    // The twins said accents were not being marked, but a half-accented answer matched
+    // neither twin and was marked wrong.
+    const born = q(['je suis née à londres', 'je suis nee a londres'])
+    expect(mark(born, 'je suis née a londres').correct).toBe(true)
+    expect(mark(born, 'je suis nee à Londres').correct).toBe(true)
+    // Only accents are forgiven: dropping the agreement is still wrong.
+    expect(mark(born, 'je suis né à londres').correct).toBe(false)
+    expect(mark(born, 'je suis allée à londres').correct).toBe(false)
+  })
+
+  it('keeps accents strict when the list has no accent-free twin', () => {
+    const participle = q(['mangé'])
+    expect(mark(participle, 'mangé').correct).toBe(true)
+    expect(mark(participle, 'mange').correct).toBe(false)
   })
 })
 

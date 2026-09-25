@@ -5,7 +5,7 @@ add the PR number; add new work here as it is found, not in a separate note. Sto
 (`LRN-2`, `PAR-4`) refer to [stories.md](stories.md), where the acceptance criteria live;
 [plan.md](plan.md) holds the delivery plan these came from.
 
-Last reviewed: 24 September 2026.
+Last reviewed: 25 September 2026.
 
 ## Order of work
 
@@ -62,6 +62,12 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 - [x] `why` block (why it matters, and real-world examples) for all 50 topics (PR #263):
   150 examples, every one with a picture; grammar topics take a `verb-table`, the rest
   short tables, four-boxes and a `size-compare` where the lesson prints a figure.
+- [ ] **Grammar the specification lists but no topic teaches**, found in the review pass against
+  Appendix 2 of the Pearson specification (Issue 2, pages 154–169): negatives beyond *ne … pas*
+  (*ne … personne* on both tiers; *ne … plus, ne … que, ni … ni, pas encore, personne ne, rien ne*
+  at Higher), relative *que* and *où*, *avant de*, *après avoir*, *venir de* and *être en train de*
+  (Higher), and the word-building rules the Reading paper applies (pages 168–169). Three Year 11
+  topics, written and checked, to follow in their own PR.
 
 ### Music (Edexcel 1MU0)
 - [x] `why` block for all 19 topics (PR #261): 56 examples, 50 with a picture
@@ -151,7 +157,7 @@ One PR per subject.
 - [x] Chemistry (PRs #248, #249)
 - [x] Biology (PR #250; tables #251)
 - [x] Computer Science (PR #253; four-box #252)
-- [ ] French
+- [x] French (this PR; marker fix for commas and partial accents)
 - [ ] Music
 - [ ] Further Maths
 - [ ] English
