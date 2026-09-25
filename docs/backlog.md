@@ -98,7 +98,8 @@ Board confirmed 18 September 2026. The teaching order is derived in
 ### English (AQA 8700 Language and AQA 8702 Literature, confirmed 23 September 2026)
 The school's overviews and set texts were found on 25 September 2026 and the plan is in
 [curriculum/english.md](curriculum/english.md): two app subjects, 35 topics, written in the
-school's order. The subjects, units and syllabus rows were declared in PR #267 (version 9.1.0).
+school's order. The subjects, units and syllabus rows were declared in PR #267 (version 9.1.0); the first
+unit, An Inspector Calls, and the Literature exam guide followed in PR #268 (version 9.2.0).
 
 - [x] Find the school's curriculum overview and the set texts (25 September 2026)
 - [x] Declare the two subjects, their units and every syllabus row, shown as coming soon (PR #267)
@@ -121,12 +122,12 @@ school's order. The subjects, units and syllabus rows were declared in PR #267 (
 
 **English Literature (22 topics)**
 - [ ] Answering an extract question (through Romeo and Juliet)
-- [ ] An Inspector Calls: plot and structure · the Birlings and Gerald · the Inspector and Eva Smith · themes · context and the essay question
+- [x] An Inspector Calls: plot and structure · the Birlings and Gerald · the Inspector and Eva Smith · themes · context and the essay question (PR #268, 25 September 2026)
 - [ ] Macbeth: plot and structure · Macbeth and Lady Macbeth · Banquo, Macduff, Duncan and the witches · themes · context and the extract question
 - [ ] Jekyll and Hyde: plot and structure · Jekyll, Hyde, Utterson and Lanyon · themes · context and the extract question
 - [ ] Power and Conflict: the cluster and the comparison question · the power of humans · the power of nature · the reality of war · memory, identity and loss
 - [ ] Unseen poetry: analysing one poem · comparing two poems
-- [ ] Exam technique guide for 8702
+- [x] Exam technique guide for 8702 (PR #268)
 - [ ] `why` blocks on every topic (written with each topic)
 
 ## 2. Testing and validation (after the content)
