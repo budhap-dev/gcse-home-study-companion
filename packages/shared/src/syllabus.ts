@@ -522,8 +522,25 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Visiting a town or city', topicId: 'visiting-a-town-or-city' },
       { title: 'Exam skills practice', topicId: 'exam-skills-practice' },
     ] },
+    { year: 11, term: 'Autumn', topics: [
+      // Revision rows: the school revisits these Year 10 modules in Year 11 terms 1 and 2,
+      // so they link to where each was taught rather than being rewritten.
+      { title: 'Mental health revisited', topicId: 'good-mental-health' },
+      { title: 'Illness and accidents revisited', topicId: 'illness-and-accidents' },
+      { title: 'Lifestyle revisited', topicId: 'lifestyle-changes' },
+      { title: 'Environment: geography and climate', topicId: 'geography-and-climate' },
+      { title: 'Environment: problems', topicId: 'environmental-problems' },
+      { title: 'Environment: the passive voice', topicId: 'the-passive-voice' },
+      { title: 'Environment: collective and daily actions', topicId: 'taking-action-for-the-environment' },
+      { title: 'New technologies revisited', topicId: 'new-technologies' },
+    ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Exam skills: listening, reading, writing, speaking and translation', topicId: 'exam-skills-listening-reading-writing-speaking-and-translation' },
+      // Not in the school's overview: grammar in Appendix 2 of the Pearson specification
+      // that no other topic teaches, placed with the school's revision of modules 1 to 8.
+      { title: 'Negatives beyond ne … pas', topicId: 'negatives-beyond-ne-pas' },
+      { title: 'Qui, que, où and time expressions', topicId: 'relative-pronouns-and-time-expressions' },
+      { title: 'Working out new words: prefixes and suffixes', topicId: 'working-out-new-words' },
     ] },
   ],
   /**

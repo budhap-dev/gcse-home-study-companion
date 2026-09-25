@@ -62,12 +62,12 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 - [x] `why` block (why it matters, and real-world examples) for all 50 topics (PR #263):
   150 examples, every one with a picture; grammar topics take a `verb-table`, the rest
   short tables, four-boxes and a `size-compare` where the lesson prints a figure.
-- [ ] **Grammar the specification lists but no topic teaches**, found in the review pass against
+- [x] **Grammar the specification lists but no topic teaches**, found in the review pass against
   Appendix 2 of the Pearson specification (Issue 2, pages 154–169): negatives beyond *ne … pas*
   (*ne … personne* on both tiers; *ne … plus, ne … que, ni … ni, pas encore, personne ne, rien ne*
   at Higher), relative *que* and *où*, *avant de*, *après avoir*, *venir de* and *être en train de*
   (Higher), and the word-building rules the Reading paper applies (pages 168–169). Three Year 11
-  topics, written and checked, to follow in their own PR.
+  topics, and the school's Year 11 Autumn revision rows linked to the Year 10 topics (PR #276).
 
 ### Music (Edexcel 1MU0)
 - [x] `why` block for all 19 topics (PR #261): 56 examples, 50 with a picture
