@@ -39,4 +39,6 @@ Board: not named. The PRD assumes Edexcel 1FR1, the specification first examined
 | `studying-and-my-future` | School life, subjects, rules, learning languages, future plans, world of work | Year 9 term 5 then Year 11 |
 | `travel-and-tourism` | Holidays, accommodation, festivals, visiting a city | Year 10 term 2 |
 
+Year 11 in the app: the Autumn rows link back to the Year 10 topics the school revisits, and Spring adds three topics the school's overview does not name, *Negatives beyond ne … pas*, *Qui, que, où and time expressions* and *Working out new words*. They teach grammar from Appendix 2 of the Pearson specification (Issue 2) that no other topic covered, and sit with the school's revision of modules 1 to 8.
+
 Authoring note: the grammar spine the school follows is present, perfect, near future, imperfect, then simple future, reflexive verbs in compound tenses, and the passive. Each app topic should carry its grammar point and its Edexcel vocabulary list entries. French is a Phase 3 subject and needs audio.
