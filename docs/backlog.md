@@ -157,7 +157,7 @@ One PR per subject.
 - [x] Chemistry (PRs #248, #249)
 - [x] Biology (PR #250; tables #251)
 - [x] Computer Science (PR #253; four-box #252)
-- [x] French (this PR; marker fix for commas and partial accents)
+- [x] French (PR #275; marker fix for commas, partial accents and a closing ?)
 - [ ] Music
 - [ ] Further Maths
 - [ ] English
