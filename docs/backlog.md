@@ -158,7 +158,7 @@ One PR per subject.
 - [x] Biology (PR #250; tables #251)
 - [x] Computer Science (PR #253; four-box #252)
 - [x] French (PR #275; marker fix for commas, partial accents and a closing ?)
-- [ ] Music
+- [x] Music (PR #277; four-level grid test for the 12-mark question)
 - [ ] Further Maths
 - [ ] English
 - [ ] A second pass over any subject that gained topics after its review
@@ -184,6 +184,11 @@ One PR per subject.
   are hidden with out-of-range ticks).
 - [ ] **Stacked (composite) bar charts:** no component draws them, so S2 teaches them in
   words only.
+- [ ] **Multi-mark typed answers are marked all or nothing.** A short-text question worth 2 or
+  more marks gives every mark for any accepted entry, so a list that holds a one-part answer
+  ("12/8" where the question also asks for the metre) pays full marks for half the answer. The
+  Music review found three. About 300 multi-mark short-text questions across the pack need an
+  audit, or a rule that splits them into one-mark parts.
 - [ ] **Walk false positive:** a multiple-choice check whose options are pure LaTeX is
   reported "not marked Correct", because the walk's text match cannot find the option.
 

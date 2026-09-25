@@ -83,6 +83,23 @@ function FourBoxGrid({ centre, boxes, alt, svgRef }: LayoutProps) {
   const budget = Math.max(8, Math.floor((bw - 2 * padX) / CHAR_WIDTH))
   const bodies = boxes.map((b) => (b.body ? wrapCell(b.body, budget) : []))
   /**
+   * Points wrap too. They were drawn one line each, so 832 of the pack's 1261 points were
+   * wider than the box and ran out of it, across the gap and under the centre circle; only
+   * the phone layout wrapped them. A point that fits on one line keeps the old geometry:
+   * 20 between points, and a wrapped point's own lines 15 apart.
+   */
+  const points = boxes.map((b) => (b.points ?? []).slice(0, 3).map((p) => wrapCell(`• ${p}`, budget)))
+  /** Each point line's baseline below the title, and the offset after the last point. */
+  const pointRows = points.map((ps) => {
+    const rows: number[] = []
+    let at = 24
+    for (const lines of ps) {
+      lines.forEach((_, k) => rows.push(at + k * LINE_HEIGHT))
+      at += (lines.length - 1) * LINE_HEIGHT + 20
+    }
+    return { rows, end: at }
+  })
+  /**
    * Titles wrap too. Seventy-four of the pack's 675 four-box titles were wider than the
    * box they sat in and simply ran off the side, which the browser draws without
    * complaint and no test could see.
@@ -91,8 +108,8 @@ function FourBoxGrid({ centre, boxes, alt, svgRef }: LayoutProps) {
   const titles = boxes.map((b) => wrapCell(b.title ?? '', titleBudget))
   /** The baseline of the last title line, relative to the top of the box. */
   const titleBottom = (i: number) => 24 + (titles[i]!.length - 1) * TITLE_LINE
-  const needed = boxes.map((b, i) =>
-    titleBottom(i) + (bodies[i]!.length ? 20 + bodies[i]!.length * LINE_HEIGHT : 24 + Math.min(3, b.points?.length ?? 0) * 20) + 12,
+  const needed = boxes.map((_, i) =>
+    titleBottom(i) + (bodies[i]!.length ? 20 + bodies[i]!.length * LINE_HEIGHT : pointRows[i]!.end) + 12,
   )
   const bh = Math.max(118, ...needed)
   // Two rows of boxes, 14 of margin above and below, and 36 of gap between them.
@@ -116,7 +133,7 @@ function FourBoxGrid({ centre, boxes, alt, svgRef }: LayoutProps) {
   ]
   return (
     <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 520 }} role="img" aria-label={alt}>
-      {boxes.map((b, i) => {
+      {boxes.map((_, i) => {
         const [x, y] = positions[i]!
         return (
           <g key={i}>
@@ -124,8 +141,8 @@ function FourBoxGrid({ centre, boxes, alt, svgRef }: LayoutProps) {
             {titles[i]!.map((line, j) => (
               <text key={`t${j}`} x={x + padX} y={y + 24 + j * TITLE_LINE} fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={ACCENT}>{line}</text>
             ))}
-            {(b.points ?? []).slice(0, 3).map((p, j) => (
-              <text key={j} x={x + padX} y={y + titleBottom(i) + 24 + j * 20} fontFamily={FONT} fontSize="12" fill={INK_2}>• {p}</text>
+            {points[i]!.flat().map((line, j) => (
+              <text key={j} x={x + padX} y={y + titleBottom(i) + pointRows[i]!.rows[j]!} fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>
             ))}
             {bodies[i]!.map((line, j) => (
               <text key={`b${j}`} x={x + padX} y={y + titleBottom(i) + 20 + j * LINE_HEIGHT} fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>
