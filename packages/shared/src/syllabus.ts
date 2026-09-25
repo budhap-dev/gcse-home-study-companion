@@ -619,25 +619,25 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Letter writing: letters, speeches and articles' },
     ] },
     { year: 9, term: 'Spring 1', topics: [
-      { title: 'Of Mice and Men: language techniques and their effect' },
+      { title: 'Of Mice and Men: language techniques and their effect', topicId: 'paper-1-finding-and-analysing-language' },
     ] },
     { year: 9, term: 'Spring 2', topics: [
-      { title: 'Narrative writing' },
+      { title: 'Narrative writing', topicId: 'narrative-writing' },
     ] },
     { year: 9, term: 'Summer 1', topics: [
-      { title: 'Descriptive writing' },
+      { title: 'Descriptive writing', topicId: 'descriptive-writing' },
     ] },
     { year: 9, term: 'Summer 2', topics: [
       { title: 'Paper 2 writing: a letter, speech or article from a prompt' },
       { title: 'Social change: reading 19th-century non-fiction' },
     ] },
     { year: 10, term: 'Autumn 2', topics: [
-      { title: 'Paper 1 Questions 1 and 2: finding information and analysing language' },
-      { title: 'Paper 1 Question 3: how the writer structures the text' },
-      { title: 'Paper 1 Question 4: evaluating a statement' },
-      { title: 'Paper 1 Question 5: descriptive writing' },
-      { title: 'Paper 1 Question 5: narrative writing' },
-      { title: 'Technical accuracy: sentences, punctuation and spelling' },
+      { title: 'Paper 1 Questions 1 and 2: finding information and analysing language', topicId: 'paper-1-finding-and-analysing-language' },
+      { title: 'Paper 1 Question 3: how the writer structures the text', topicId: 'paper-1-structure' },
+      { title: 'Paper 1 Question 4: evaluating a statement', topicId: 'paper-1-evaluation' },
+      { title: 'Paper 1 Question 5: descriptive writing', topicId: 'descriptive-writing' },
+      { title: 'Paper 1 Question 5: narrative writing', topicId: 'narrative-writing' },
+      { title: 'Technical accuracy: sentences, punctuation and spelling', topicId: 'technical-accuracy' },
     ] },
     { year: 10, term: 'Spring 1', topics: [
       { title: 'Paper 2 Questions 1 and 2: true statements and the summary' },
@@ -651,11 +651,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Speaking and Listening: the spoken language endorsement' },
     ] },
     { year: 11, term: 'Autumn 1', topics: [
-      { title: 'Paper 1 revision: finding information and analysing language' },
-      { title: 'Paper 1 revision: structure' },
-      { title: 'Paper 1 revision: evaluating a statement' },
-      { title: 'Paper 1 revision: descriptive and narrative writing' },
-      { title: 'Paper 1 revision: technical accuracy' },
+      { title: 'Paper 1 revision: finding information and analysing language', topicId: 'paper-1-finding-and-analysing-language' },
+      { title: 'Paper 1 revision: structure', topicId: 'paper-1-structure' },
+      { title: 'Paper 1 revision: evaluating a statement', topicId: 'paper-1-evaluation' },
+      { title: 'Paper 1 revision: descriptive and narrative writing', topicId: 'descriptive-writing' },
+      { title: 'Paper 1 revision: technical accuracy', topicId: 'technical-accuracy' },
     ] },
     { year: 11, term: 'Autumn 2 and Spring 1', topics: [
       { title: 'Paper 2 revision: true statements and the summary' },
