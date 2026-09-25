@@ -68,7 +68,7 @@ Codes declared where they were already taught: R2, G19 and R15. A2 (substitution
 
 ### Further Maths (AQA Level 2 Certificate 8365)
 Board confirmed 18 September 2026. The teaching order is derived in
-[curriculum/further-maths.md](curriculum/further-maths.md). 16 of 22 rows are written (Year 10 and Year 11 Autumn, PRs #264 and #265).
+[curriculum/further-maths.md](curriculum/further-maths.md). All 22 rows are written, with `why` blocks on every topic and the exam technique guide (PRs #264, #265 and #266; version 9.0.0, 24 September 2026).
 
 - [x] Surds and exact calculation
 - [x] The product rule for counting
@@ -86,14 +86,14 @@ Board confirmed 18 September 2026. The teaching order is derived in
 - [x] Algebraic fractions at Further Maths level
 - [x] Rearranging formulae and algebraic proof
 - [x] Simultaneous equations, including three unknowns
-- [ ] Circles and the tangent at a point
-- [ ] Matrix multiplication and the identity
-- [ ] Transformations of the unit square
-- [ ] Trigonometry and Pythagoras in 2D and 3D
-- [ ] Trigonometric graphs, identities and equations
-- [ ] Geometrical proof
-- [ ] `why` blocks
-- [ ] Exam technique guide (LRN-5); the page says "not been written yet"
+- [x] Circles and the tangent at a point
+- [x] Matrix multiplication and the identity
+- [x] Transformations of the unit square
+- [x] Trigonometry and Pythagoras in 2D and 3D
+- [x] Trigonometric graphs, identities and equations
+- [x] Geometrical proof
+- [x] `why` blocks
+- [x] Exam technique guide (LRN-5); the page says "not been written yet"
 
 ### English (AQA 8700 Language and AQA 8702 Literature, confirmed 23 September 2026)
 - [ ] Find the school's curriculum overview and the set texts

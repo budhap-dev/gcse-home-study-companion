@@ -559,14 +559,14 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Simultaneous equations, including three unknowns', topicId: 'simultaneous-equations-including-three-unknowns' },
     ] },
     { year: 11, term: 'Spring', topics: [
-      { title: 'Circles and the tangent at a point' },
-      { title: 'Matrix multiplication and the identity' },
-      { title: 'Transformations of the unit square' },
+      { title: 'Circles and the tangent at a point', topicId: 'circles-and-the-tangent-at-a-point' },
+      { title: 'Matrix multiplication and the identity', topicId: 'matrix-multiplication-and-the-identity' },
+      { title: 'Transformations of the unit square', topicId: 'transformations-of-the-unit-square' },
     ] },
     { year: 11, term: 'Summer', topics: [
-      { title: 'Trigonometry and Pythagoras in 2D and 3D' },
-      { title: 'Trigonometric graphs, identities and equations' },
-      { title: 'Geometrical proof' },
+      { title: 'Trigonometry and Pythagoras in 2D and 3D', topicId: 'trigonometry-and-pythagoras-in-2d-and-3d' },
+      { title: 'Trigonometric graphs, identities and equations', topicId: 'trigonometric-graphs-identities-and-equations' },
+      { title: 'Geometrical proof', topicId: 'geometrical-proof' },
     ] },
   ],
   'music': [

@@ -1,0 +1,1596 @@
+{
+  "id": "trigonometric-graphs-identities-and-equations",
+  "subjectId": "further-maths",
+  "unitId": "geometry",
+  "title": "Trigonometric graphs, identities and equations",
+  "specPoints": [
+    "6.6",
+    "6.7",
+    "6.8",
+    "6.9",
+    "6.10"
+  ],
+  "order": 2,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Sin and cos are waves; tan has branches",
+      "body": "$\\sin x$ and $\\cos x$ run between $-1$ and $1$ and repeat every $360°$, cos $90°$ ahead of sin. $\\tan x$ repeats every $180°$, takes every value, and is undefined at $90°$ and $270°$, where its asymptotes are. A sketch marks the crossings, the peaks and the asymptotes."
+    },
+    {
+      "kind": "spot",
+      "title": "Size from the acute angle, sign from the quadrant",
+      "body": "Every angle up to $360°$ has a related acute angle: $180° - \\theta$, $\\theta - 180°$ or $360° - \\theta$. The values are the same size; the quadrant fixes the sign. In order: all positive, sin only, tan only, cos only. $\\cos 210° = -\\cos 30° = -\\frac{\\sqrt{3}}{2}$."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Draw the two triangles, not the table",
+      "body": "Half an equilateral triangle, $1 : \\sqrt{3} : 2$, gives $30°$ and $60°$; the right-angled isosceles triangle, $1 : 1 : \\sqrt{2}$, gives $45°$. Read off opposite, adjacent and hypotenuse. $\\tan 60° = \\sqrt{3}$, $\\tan 30° = \\frac{1}{\\sqrt{3}}$, $\\sin 45° = \\frac{\\sqrt{2}}{2}$."
+    },
+    {
+      "kind": "check",
+      "title": "Count the solutions against a sketch",
+      "body": "A horizontal line at the value cuts the sine or cosine graph twice per $360°$, the tangent graph once per $180°$. $\\sin^2 x = \\frac{1}{4}$ is two lines, at $\\pm\\frac{1}{2}$, so four solutions. If the count is wrong, a quadrant or a negative root has been missed."
+    },
+    {
+      "kind": "remember",
+      "title": "Two identities, three uses",
+      "body": "$\\tan \\theta \\equiv \\frac{\\sin \\theta}{\\cos \\theta}$ and $\\sin^2 \\theta + \\cos^2 \\theta \\equiv 1$. Simplify by swapping $1 - \\cos^2$ for $\\sin^2$; prove by working one side into the other; solve by turning $a\\sin x = b\\cos x$ into $\\tan x = \\frac{b}{a}$, or a mixed equation into one function to factorise. Never divide by $\\sin x$ or $\\cos x$ when it could be zero."
+    }
+  ],
+  "why": {
+    "matters": "Anything that goes round or swings back and forth is a sine wave when it is measured: a point on a wheel, the voltage from a generator, the daylight hours through a year. Solving $\\sin x = 0.5$ *in an interval* is the question *when, within this cycle, is the wave at that height*, and it has two answers because a wave passes each height twice. The identities are the bookkeeping that lets one function stand in for another, which is how a calculator, a synthesiser and a surveying program all avoid computing the same thing twice. The papers ask for the graphs sketched, values found for any angle, equations solved in a stated interval, and identities proved a line at a time.",
+    "examples": [
+      {
+        "title": "The wheel and the wave",
+        "body": "A point on the rim of a wheel of radius $1$ m, measured from the axle, has height $\\sin \\theta$ after turning through $\\theta$. It is at half height, $0.5$ m, twice per turn: at $30°$ on the way up and at $150°$ on the way down, the two solutions of $\\sin x = 0.5$ on this topic's worked example. A Ferris wheel timer, a piston in a cylinder and the tip of a wind turbine blade are the same wave with a bigger radius.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Height wanted",
+              "Equation",
+              "On the way up",
+              "On the way down"
+            ],
+            "rows": [
+              [
+                "0.5 m",
+                "sin θ = 0.5",
+                "30°",
+                "150°"
+              ],
+              [
+                "0.866 m",
+                "sin θ = √3/2",
+                "60°",
+                "120°"
+              ],
+              [
+                "1 m, the top",
+                "sin θ = 1",
+                "90°",
+                "none: the turning point, once per turn"
+              ],
+              [
+                "−0.5 m, below the axle",
+                "sin θ = −0.5",
+                "210°",
+                "330°"
+              ]
+            ],
+            "title": "Each height is reached twice per turn"
+          },
+          "alt": "A table of four heights of a point on a wheel of radius one metre with the equation and the two angles in a turn at which the point is at that height"
+        }
+      },
+      {
+        "title": "Mains electricity",
+        "body": "The voltage from the mains is a sine wave, $50$ cycles a second in the UK, so the graph on this topic's first page is one fiftieth of a second of the socket. Engineers ask when the voltage is at a given fraction of its peak, which is $\\sin x = k$ in $0°$ to $360°$, and the second solution matters as much as the first because the current reverses in between. The identity $\\sin^2 + \\cos^2 = 1$ is why the average of $\\sin^2$ over a cycle is exactly a half, the fact behind the *root mean square* voltage on a label.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "One cycle of the mains",
+            "boxes": [
+              {
+                "title": "The graph",
+                "body": "y = sin x, 0° to 360°, once every 1/50 s"
+              },
+              {
+                "title": "Peak",
+                "body": "at 90°; zero at 0°, 180°, 360°"
+              },
+              {
+                "title": "Half of peak",
+                "body": "sin x = 0.5 at 30° and 150°"
+              },
+              {
+                "title": "Why ½",
+                "body": "sin² averages to ½ because sin² + cos² = 1"
+              }
+            ]
+          },
+          "alt": "Four boxes on a cycle of mains voltage as a sine graph: the period, the peak and zeros, the two times it is at half peak, and the identity behind the average of sine squared"
+        }
+      },
+      {
+        "title": "The tilt of a solar panel",
+        "body": "The power a solar panel collects depends on $\\cos$ of the angle between the sun and the panel, so a panel at $60°$ to the sun gets $\\cos 60° = \\frac{1}{2}$ of the power, and one at $30°$ gets $\\frac{\\sqrt{3}}{2} \\approx 0.87$, both exact values from the $1 : \\sqrt{3} : 2$ triangle. An installer asking *at what angle does the panel fall to a third of full power* is solving $\\cos x = \\frac{1}{3}$ for $0° \\leqslant x \\leqslant 90°$, one solution, since only the first quadrant is a real tilt.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Angle to the sun",
+              "cos",
+              "Share of full power"
+            ],
+            "rows": [
+              [
+                "0°",
+                "1",
+                "all of it"
+              ],
+              [
+                "30°",
+                "√3/2 ≈ 0.87",
+                "87%"
+              ],
+              [
+                "45°",
+                "√2/2 ≈ 0.71",
+                "71%"
+              ],
+              [
+                "60°",
+                "1/2",
+                "50%"
+              ],
+              [
+                "90°",
+                "0",
+                "none: edge on"
+              ]
+            ],
+            "title": "Power falls with the cosine of the angle"
+          },
+          "alt": "A table of five angles between a solar panel and the sun with the cosine of each and the share of full power the panel collects"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "The graphs of sin x, cos x and tan x",
+        "body": "**$y = \\sin x$** starts at $0$, rises to $1$ at $90°$, falls through $0$ at $180°$ to $-1$ at $270°$ and returns to $0$ at $360°$; then it repeats, every $360°$. **$y = \\cos x$** is the same wave moved $90°$ to the left: it starts at $1$, is $0$ at $90°$ and $270°$, and $-1$ at $180°$. Both stay between $-1$ and $1$, so $\\sin x = 1.2$ has no solutions.\n\n**$y = \\tan x$** is different: it is $0$ at $0°$, $180°$ and $360°$, climbs through $1$ at $45°$, and shoots off to infinity as $x$ approaches $90°$, where it is **undefined** because $\\cos 90° = 0$ and $\\tan x = \\frac{\\sin x}{\\cos x}$. The dashed lines at $90°$ and $270°$ are **asymptotes**. It repeats every $180°$, not $360°$, and it takes every value, so $\\tan x = 57$ has solutions.\n\n**Sketching** means the shape with the key points marked: where the graph crosses the axes, its maximum and minimum, and for $\\tan$ the asymptotes. A sketch of $y = \\sin x$ for $0° \\leqslant x \\leqslant 360°$ needs $(0, 0)$, $(90, 1)$, $(180, 0)$, $(270, -1)$, $(360, 0)$ and the smooth wave through them.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                359
+              ],
+              "yRange": [
+                -1.5,
+                1.5
+              ],
+              "grid": true,
+              "xStep": 120,
+              "yStep": 1,
+              "waves": [
+                {
+                  "fn": "sin",
+                  "label": "y = sin x",
+                  "labelX": 90
+                },
+                {
+                  "fn": "cos",
+                  "label": "y = cos x",
+                  "labelX": 0,
+                  "dashed": true
+                }
+              ]
+            },
+            "alt": "The graphs of y equals sin x and y equals cos x, dashed, for x from zero to three hundred and sixty degrees, both waves between minus one and one, cos ninety degrees ahead of sin"
+          },
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                359
+              ],
+              "yRange": [
+                -4,
+                4
+              ],
+              "grid": true,
+              "xStep": 90,
+              "yStep": 2,
+              "waves": [
+                {
+                  "fn": "tan",
+                  "label": "y = tan x",
+                  "labelX": 89
+                }
+              ]
+            },
+            "alt": "The graph of y equals tan x for x from zero to three hundred and sixty degrees, with its two branches rising from zero at zero, one hundred and eighty and three hundred and sixty degrees and asymptotes at ninety and two hundred and seventy degrees"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Graph",
+                "Repeats every",
+                "Values",
+                "Zeros in 0° to 360°",
+                "Highest, lowest"
+              ],
+              "rows": [
+                [
+                  "sin x",
+                  "360°",
+                  "−1 to 1",
+                  "0°, 180°, 360°",
+                  "1 at 90°, −1 at 270°"
+                ],
+                [
+                  "cos x",
+                  "360°",
+                  "−1 to 1",
+                  "90°, 270°",
+                  "1 at 0° and 360°, −1 at 180°"
+                ],
+                [
+                  "tan x",
+                  "180°",
+                  "every value",
+                  "0°, 180°, 360°",
+                  "none: asymptotes at 90°, 270°"
+                ]
+              ],
+              "title": "Sin and cos are waves; tan has branches"
+            },
+            "alt": "A table comparing the graphs of sin, cos and tan: their period, the values they take, their zeros between zero and three hundred and sixty degrees and their turning points or asymptotes"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "Write down the value of $\\cos 180°$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading a value from the graph",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The cosine graph starts at $1$, falls to $0$ at $90°$ and reaches its lowest point, $-1$, at $180°$. So $\\cos 180° = -1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "−1"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": -1,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Any angle up to 360°: the same values with a sign",
+        "body": "The specification measures angles **anticlockwise from the positive $x$ axis**, and for an angle $\\theta$ the point on the unit circle is $(\\cos \\theta, \\sin \\theta)$. So $\\cos$ is the $x$-coordinate, $\\sin$ the $y$-coordinate, and $\\tan = \\frac{\\sin}{\\cos}$ is the gradient of the line from the origin. That fixes the signs in each quarter turn:\n\n- $0°$ to $90°$: all three positive.\n- $90°$ to $180°$: $x$ is negative, so only $\\sin$ is positive.\n- $180°$ to $270°$: both coordinates negative, so only $\\tan$ is positive.\n- $270°$ to $360°$: $y$ is negative, so only $\\cos$ is positive.\n\n**Every angle has a related acute angle** with the same values apart from sign: the angle between the line and the $x$ axis. The point $(0.8, 0.6)$ is at $36.87°$, and its reflections $(-0.8, 0.6)$, $(-0.8, -0.6)$ and $(0.8, -0.6)$ are at $143.13°$, $216.87°$ and $323.13°$, that is $180° - 36.87°$, $180° + 36.87°$ and $360° - 36.87°$. So $\\sin 150° = \\sin 30° = \\frac{1}{2}$, $\\cos 210° = -\\cos 30° = -\\frac{\\sqrt{3}}{2}$, $\\tan 225° = \\tan 45° = 1$ and $\\sin 300° = -\\sin 60° = -\\frac{\\sqrt{3}}{2}$.\n\nThe graphs say the same thing: $\\sin(180° - x) = \\sin x$ because the sine wave is symmetric about $90°$; $\\cos(360° - x) = \\cos x$ because the cosine wave is symmetric about $180°$; $\\tan(180° + x) = \\tan x$ because tan repeats every $180°$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1.6,
+                1.6
+              ],
+              "yRange": [
+                -1.6,
+                1.6
+              ],
+              "grid": true,
+              "labels": [
+                {
+                  "x": 1.05,
+                  "y": 0.75,
+                  "text": "36.87°",
+                  "anchor": "start"
+                },
+                {
+                  "x": -1.05,
+                  "y": 0.75,
+                  "text": "143.13°",
+                  "anchor": "end"
+                },
+                {
+                  "x": -1.05,
+                  "y": -0.85,
+                  "text": "216.87°",
+                  "anchor": "end"
+                },
+                {
+                  "x": 1.05,
+                  "y": -0.85,
+                  "text": "323.13°",
+                  "anchor": "start"
+                }
+              ],
+              "square": true,
+              "xStep": 2,
+              "yStep": 2,
+              "points": [
+                {
+                  "x": 0.8,
+                  "y": 0.6
+                },
+                {
+                  "x": -0.8,
+                  "y": 0.6
+                },
+                {
+                  "x": -0.8,
+                  "y": -0.6
+                },
+                {
+                  "x": 0.8,
+                  "y": -0.6
+                }
+              ],
+              "circles": [
+                {
+                  "cx": 0,
+                  "cy": 0,
+                  "r": 1
+                }
+              ],
+              "polygons": [
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      0.8,
+                      0.6
+                    ]
+                  ],
+                  "open": true,
+                  "colour": "#d25b3b"
+                },
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      -0.8,
+                      0.6
+                    ]
+                  ],
+                  "open": true,
+                  "dashed": true
+                },
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      -0.8,
+                      -0.6
+                    ]
+                  ],
+                  "open": true,
+                  "dashed": true
+                },
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      0.8,
+                      -0.6
+                    ]
+                  ],
+                  "open": true,
+                  "dashed": true
+                }
+              ]
+            },
+            "alt": "The unit circle with the four points at angles thirty-six point eight seven, one hundred and forty-three point one three, two hundred and sixteen point eight seven and three hundred and twenty-three point one three degrees, which are the point zero point eight, zero point six and its reflections in the axes"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Quadrant",
+                "Angles",
+                "Positive",
+                "Related acute angle",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "first",
+                  "0° to 90°",
+                  "sin, cos, tan",
+                  "θ",
+                  "sin 30° = ½"
+                ],
+                [
+                  "second",
+                  "90° to 180°",
+                  "sin",
+                  "180° − θ",
+                  "sin 150° = ½, cos 150° = −√3/2"
+                ],
+                [
+                  "third",
+                  "180° to 270°",
+                  "tan",
+                  "θ − 180°",
+                  "tan 225° = 1, cos 210° = −√3/2"
+                ],
+                [
+                  "fourth",
+                  "270° to 360°",
+                  "cos",
+                  "360° − θ",
+                  "sin 300° = −√3/2, cos 300° = ½"
+                ]
+              ],
+              "title": "Same size as the acute angle; the quadrant sets the sign"
+            },
+            "alt": "A table of the four quadrants with the range of angles, which of sin, cos and tan is positive there, how to find the related acute angle and an example value"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "Write down the value of $\\sin 150°$. Give your answer as a decimal.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a value in the second quadrant",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$150°$ is in the second quadrant, where $\\sin$ is positive, and its related acute angle is $180° - 150° = 30°$. So $\\sin 150° = \\sin 30° = 0.5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "0.5"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 0.5,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Exact values from two triangles",
+        "body": "Two triangles give every exact value the specification wants. Half an equilateral triangle of side $2$ has sides $1$, $\\sqrt{3}$, $2$ and angles $30°$, $60°$, $90°$: the ratio $1 : \\sqrt{3} : 2$. A right-angled isosceles triangle with legs $1$ has hypotenuse $\\sqrt{2}$ and angles $45°$, $45°$, $90°$: the ratio $1 : 1 : \\sqrt{2}$.\n\nRead the ratios off with $\\sin = \\frac{\\text{opposite}}{\\text{hypotenuse}}$, $\\cos = \\frac{\\text{adjacent}}{\\text{hypotenuse}}$, $\\tan = \\frac{\\text{opposite}}{\\text{adjacent}}$:\n\n$$\\sin 30° = \\tfrac{1}{2}, \\; \\cos 30° = \\tfrac{\\sqrt{3}}{2}, \\; \\tan 30° = \\tfrac{1}{\\sqrt{3}} = \\tfrac{\\sqrt{3}}{3} \\qquad \\sin 45° = \\cos 45° = \\tfrac{\\sqrt{2}}{2}, \\; \\tan 45° = 1 \\qquad \\sin 60° = \\tfrac{\\sqrt{3}}{2}, \\; \\cos 60° = \\tfrac{1}{2}, \\; \\tan 60° = \\sqrt{3}$$\n\nDraw the triangle rather than recalling nine numbers; with the quadrant rules of the last page, every multiple of $30°$ and $45°$ up to $360°$ follows. On the non-calculator paper these appear inside the sine and cosine rules and in equations such as $\\cos x = -\\frac{\\sqrt{3}}{2}$, whose solutions are the angles with related acute angle $30°$ in the quadrants where cosine is negative: $150°$ and $210°$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Angle",
+                "sin",
+                "cos",
+                "tan",
+                "From"
+              ],
+              "rows": [
+                [
+                  "30°",
+                  "1/2",
+                  "√3/2",
+                  "1/√3 = √3/3",
+                  "1 : √3 : 2, short side opposite"
+                ],
+                [
+                  "45°",
+                  "√2/2",
+                  "√2/2",
+                  "1",
+                  "1 : 1 : √2"
+                ],
+                [
+                  "60°",
+                  "√3/2",
+                  "1/2",
+                  "√3",
+                  "1 : √3 : 2, long side opposite"
+                ],
+                [
+                  "0°",
+                  "0",
+                  "1",
+                  "0",
+                  "the graphs"
+                ],
+                [
+                  "90°",
+                  "1",
+                  "0",
+                  "undefined",
+                  "the graphs"
+                ]
+              ],
+              "title": "Two triangles: 1 : √3 : 2 and 1 : 1 : √2"
+            },
+            "alt": "A table of the exact values of sin, cos and tan at thirty, forty-five, sixty, zero and ninety degrees with the triangle or graph each comes from"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "Write down the exact value of $\\cos 30°$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "an exact value",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "In the $1 : \\sqrt{3} : 2$ triangle the side adjacent to $30°$ is $\\sqrt{3}$ and the hypotenuse is $2$, so $\\cos 30° = \\dfrac{\\sqrt{3}}{2}$, about $0.866$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "√3/2"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "√3/2",
+            "0.5√3"
+          ]
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Solving an equation in an interval: one angle, then its partner",
+        "body": "*Solve $\\sin x = 0.5$ for $0° \\leqslant x \\leqslant 360°$.*\n\nA calculator, or the exact-value triangle, gives one answer: $\\sin^{-1}(0.5) = 30°$. The graph shows there is a second: the sine wave is at height $0.5$ twice in a cycle, at $30°$ and, by the symmetry about $90°$, at $180° - 30° = 150°$. So $x = 30°$ or $150°$.\n\nThe method is always the same. **One:** find the related acute angle from the size of the value, ignoring its sign. **Two:** decide which quadrants from the sign, using the graph or the quadrant table. **Three:** write every angle in the interval. **Four:** check the count against the graph.\n\n*Solve $\\cos x = -\\frac{\\sqrt{3}}{2}$ for $0° \\leqslant x \\leqslant 360°$.* The acute angle with $\\cos = \\frac{\\sqrt{3}}{2}$ is $30°$. Cosine is negative in the second and third quadrants, so $x = 180° - 30° = 150°$ and $x = 180° + 30° = 210°$. A calculator gives $\\cos^{-1}(-0.866) = 150°$ directly and the symmetry of the cosine graph about $180°$ gives $210°$.\n\n*Solve $\\tan x = 1$ for $0° \\leqslant x \\leqslant 360°$.* $45°$, and since tan repeats every $180°$, also $225°$. A different interval changes the list, not the method: $\\cos x = \\frac{1}{2}$ for $-180° \\leqslant x \\leqslant 180°$ has solutions $60°$ and $-60°$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve cos x = −√3/2 for 0° ≤ x ≤ 360°.",
+            "steps": [
+              {
+                "text": "Related acute angle: $\\cos^{-1}\\left(\\tfrac{\\sqrt{3}}{2}\\right) = 30°$",
+                "note": "the size, from the 1 : √3 : 2 triangle"
+              },
+              {
+                "text": "Cosine is negative in the second and third quadrants",
+                "note": "the sign decides the quadrants"
+              },
+              {
+                "text": "$x = 180° - 30° = 150°$",
+                "note": "second quadrant"
+              },
+              {
+                "text": "$x = 180° + 30° = 210°$",
+                "note": "third quadrant"
+              },
+              {
+                "text": "Two solutions, as the cosine graph at height $-0.87$ shows",
+                "note": "check the count against a sketch"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "One solution of $\\sin x = 0.5$ for $0° \\leqslant x \\leqslant 360°$ is $x = 30°$. Write down the other solution.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the second solution",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The sine graph is symmetric about $90°$, so the second solution is $180° - 30° = 150°$: the second quadrant, where sine is still positive.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "150"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 150,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Two identities: tan = sin ÷ cos, and sin² + cos² = 1",
+        "body": "The specification names two identities and expects them used three ways: to simplify, to prove, and to solve.\n\n$$\\tan \\theta \\equiv \\frac{\\sin \\theta}{\\cos \\theta} \\qquad \\sin^2 \\theta + \\cos^2 \\theta \\equiv 1$$\n\nThe first is the definition on the unit circle: the gradient of the radius is $\\frac{y}{x}$. The second is Pythagoras on the unit circle: $x^2 + y^2 = 1$. Both hold for every angle, which is what $\\equiv$ means.\n\n**Simplifying** replaces one form with another: $\\dfrac{1 - \\cos^2 \\theta}{\\sin \\theta} = \\dfrac{\\sin^2 \\theta}{\\sin \\theta} = \\sin \\theta$; $\\dfrac{\\sin \\theta}{\\tan \\theta} = \\sin \\theta \\times \\dfrac{\\cos \\theta}{\\sin \\theta} = \\cos \\theta$; $\\tan \\theta \\cos \\theta = \\sin \\theta$.\n\n**Proving an identity** means starting from one side and reaching the other with each step justified. To prove $(\\sin \\theta + \\cos \\theta)^2 \\equiv 1 + 2\\sin \\theta \\cos \\theta$: expand the left, $\\sin^2 \\theta + 2\\sin \\theta \\cos \\theta + \\cos^2 \\theta$, then replace $\\sin^2 \\theta + \\cos^2 \\theta$ by $1$. To prove $(1 + \\cos \\theta)(1 - \\cos \\theta) \\equiv \\sin^2 \\theta$: the left is $1 - \\cos^2 \\theta$, which is $\\sin^2 \\theta$. Work on the more complicated side, and never move terms across as if it were an equation.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Rewrite",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "(1 − cos²θ) / sin θ",
+                  "sin²θ / sin θ",
+                  "sin θ"
+                ],
+                [
+                  "sin θ / tan θ",
+                  "sin θ × cos θ / sin θ",
+                  "cos θ"
+                ],
+                [
+                  "tan θ cos θ",
+                  "sin θ / cos θ × cos θ",
+                  "sin θ"
+                ],
+                [
+                  "(sin θ + cos θ)²",
+                  "sin²θ + 2 sin θ cos θ + cos²θ",
+                  "1 + 2 sin θ cos θ"
+                ],
+                [
+                  "(1 + cos θ)(1 − cos θ)",
+                  "1 − cos²θ",
+                  "sin²θ"
+                ]
+              ],
+              "title": "Replace 1 − cos² by sin², and tan by sin ÷ cos"
+            },
+            "alt": "A table of five expressions simplified with the identities tan equals sin over cos and sin squared plus cos squared equals one, showing the rewrite and the result"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "Simplify $\\dfrac{1 - \\cos^2 \\theta}{\\sin \\theta}$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "simplifying with sin² + cos² = 1",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "From $\\sin^2 \\theta + \\cos^2 \\theta = 1$, the top is $\\sin^2 \\theta$, and $\\dfrac{\\sin^2 \\theta}{\\sin \\theta} = \\sin \\theta$. Nothing else cancels: a square does not cancel with a different function, and a fraction is only $\\tan$ when it is $\\sin \\div \\cos$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$\\sin \\theta$, because $1 - \\cos^2 \\theta = \\sin^2 \\theta$"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "$1 - \\cos \\theta$, because the square on top cancels with the sine below",
+            "$\\sin \\theta$, because $1 - \\cos^2 \\theta = \\sin^2 \\theta$",
+            "$\\cos \\theta$, because the $1$ and the $\\cos^2 \\theta$ cancel with the $\\sin \\theta$",
+            "$\\tan \\theta$, because a fraction of sines and cosines is a tangent"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Equations that need an identity first",
+        "body": "The specification's equations are *single angle* and come in three shapes, each turning into one of the last page's basic equations.\n\n**$\\sin$ and $\\cos$ on opposite sides: divide by $\\cos$.** $2\\sin x = \\cos x$ becomes $\\tan x = \\frac{1}{2}$, so $x = 26.57°$ and, adding $180°$, $206.57°$. Dividing by $\\cos x$ is safe here because $\\cos x = 0$ would force $\\sin x = 0$ too, which never happens.\n\n**A square: take both roots.** $\\sin^2 x = \\frac{1}{4}$ gives $\\sin x = \\frac{1}{2}$ *or* $\\sin x = -\\frac{1}{2}$: from the first, $30°$ and $150°$; from the second, $210°$ and $330°$. Four solutions in $0°$ to $360°$, and a student who forgets the negative root loses two of them.\n\n**Mixed squares: use $\\sin^2 + \\cos^2 = 1$ to get one function, then factorise.** $2\\cos^2 x + \\sin x = 2$ becomes $2(1 - \\sin^2 x) + \\sin x = 2$, that is $\\sin x - 2\\sin^2 x = 0$, so $\\sin x(1 - 2\\sin x) = 0$: $\\sin x = 0$ gives $0°$, $180°$, $360°$, and $\\sin x = \\frac{1}{2}$ gives $30°$, $150°$. Five solutions. Never divide through by $\\sin x$; that throws away the three where it is zero.\n\nIn every case, finish by listing the solutions in the interval and counting them against a sketch.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "First move",
+                "Becomes",
+                "Solutions, 0° to 360°"
+              ],
+              "rows": [
+                [
+                  "2 sin x = cos x",
+                  "divide by cos x",
+                  "tan x = ½",
+                  "26.57°, 206.57°"
+                ],
+                [
+                  "sin²x = ¼",
+                  "both square roots",
+                  "sin x = ±½",
+                  "30°, 150°, 210°, 330°"
+                ],
+                [
+                  "2cos²x + sin x = 2",
+                  "cos² = 1 − sin², factorise",
+                  "sin x (1 − 2 sin x) = 0",
+                  "0°, 30°, 150°, 180°, 360°"
+                ],
+                [
+                  "3 sin x = 2 cos x",
+                  "divide by cos x",
+                  "tan x = 2/3",
+                  "33.69°, 213.69°"
+                ]
+              ],
+              "title": "Reduce to one function, then solve as before"
+            },
+            "alt": "A table of four trigonometric equations with the identity or step that reduces each to a basic equation and the solutions between zero and three hundred and sixty degrees"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "How many solutions does $\\sin^2 x = \\dfrac{1}{4}$ have for $0° \\leqslant x \\leqslant 360°$?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "counting solutions of a squared equation",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Both roots: $\\sin x = \\frac{1}{2}$ gives $30°$ and $150°$; $\\sin x = -\\frac{1}{2}$ gives $210°$ and $330°$. That is $4$ solutions.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: simplify, then solve",
+        "body": "The hardest trigonometry question on Paper 1 is two questions in one: *simplify $f(x)$, and hence solve $f(x) = k$ in a given interval*. The simplification is an identities exercise; the solving is the last two pages; and *hence* means the second part must use the first.\n\n**An example.** $f(x) = \\dfrac{1 - \\cos^2 x}{\\sin x \\cos x}$. The top is $\\sin^2 x$, so $f(x) = \\dfrac{\\sin^2 x}{\\sin x \\cos x} = \\dfrac{\\sin x}{\\cos x} = \\tan x$. *Hence solve $f(x) = 3$ for $0° < x < 180°$*: $\\tan x = 3$, so $x = 71.57°$; the next solution, $251.57°$, is outside the interval, so there is one answer. Read the interval: it is open at both ends here, and it stops at $180°$.\n\n**A proof with a fourth power.** $\\sin^4 x - \\cos^4 x$ is a difference of two squares: $(\\sin^2 x - \\cos^2 x)(\\sin^2 x + \\cos^2 x) = \\sin^2 x - \\cos^2 x = 1 - 2\\cos^2 x$. *Hence solve $\\sin^4 x - \\cos^4 x = \\frac{1}{2}$*: $1 - 2\\cos^2 x = \\frac{1}{2}$, so $\\cos^2 x = \\frac{1}{4}$, $\\cos x = \\pm\\frac{1}{2}$, and $x = 60°, 120°, 240°, 300°$.\n\n**Intervals that are not $0°$ to $360°$.** $\\tan x = \\sqrt{3}$ for $-180° \\leqslant x \\leqslant 180°$: $60°$, and $60° - 180° = -120°$; not $240°$, which is outside. Sketch the interval on the graph and read off which branches are in it.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Simplify, then solve",
+              "boxes": [
+                {
+                  "title": "Simplify",
+                  "body": "sin² + cos² = 1 and tan = sin ÷ cos, each step written"
+                },
+                {
+                  "title": "Hence",
+                  "body": "the solving must use the simplified form"
+                },
+                {
+                  "title": "Basic equation",
+                  "body": "acute angle, quadrants, every solution in the interval"
+                },
+                {
+                  "title": "The interval",
+                  "body": "open or closed ends, negative angles, a count against the graph"
+                }
+              ]
+            },
+            "alt": "Four boxes on the structure of a simplify-then-solve trigonometry question: the simplification, the word hence, the basic equation and the interval"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "prompt": "Solve $3\\sin x = 2\\cos x$ for $0° \\leqslant x \\leqslant 180°$. Give your answer to two decimal places.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "an equation with sin and cos on opposite sides",
+          "calculator": "calculator",
+          "tags": [],
+          "solution": "Divide by $\\cos x$: $\\tan x = \\frac{2}{3}$, so $x = \\tan^{-1}\\left(\\frac{2}{3}\\right) = 33.69°$. The next solution, $213.69°$, lies outside the interval, so $33.69°$ is the only one.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "33.69"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "type": "numeric",
+          "answer": 33.69,
+          "tolerance": 0.01,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Write down the exact value of $\\sin 60°$.\n2. Write down the value of $\\cos 120°$.\n3. Solve $\\sin x = 0.5$ for $0° \\leqslant x \\leqslant 360°$.\n\n**Part B.**\n\n4. Solve $\\cos x = -\\dfrac{\\sqrt{3}}{2}$ for $0° \\leqslant x \\leqslant 360°$.\n5. Solve $\\tan x = 1$ for $0° \\leqslant x \\leqslant 360°$.\n6. Simplify $\\dfrac{\\sin \\theta}{\\tan \\theta}$.\n\n**Part C.**\n\n7. Solve $2\\sin x = \\cos x$ for $0° \\leqslant x \\leqslant 360°$.\n8. Solve $\\sin^2 x = \\dfrac{1}{4}$ for $0° \\leqslant x \\leqslant 360°$.\n9. Prove that $(\\sin \\theta + \\cos \\theta)^2 \\equiv 1 + 2\\sin \\theta \\cos \\theta$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "√3/2"
+                ],
+                [
+                  "2",
+                  "−1/2"
+                ],
+                [
+                  "3",
+                  "30°, 150°"
+                ],
+                [
+                  "4",
+                  "150°, 210°"
+                ],
+                [
+                  "5",
+                  "45°, 225°"
+                ],
+                [
+                  "6",
+                  "cos θ"
+                ],
+                [
+                  "7",
+                  "26.57°, 206.57°"
+                ],
+                [
+                  "8",
+                  "30°, 150°, 210°, 330°"
+                ],
+                [
+                  "9",
+                  "expand, then sin²θ + cos²θ = 1"
+                ]
+              ]
+            },
+            "alt": "A table of the answers to the nine practice questions on exact values, angles in each quadrant, trigonometric equations in an interval and the identities"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- $\\sin$ and $\\cos$ are waves between $-1$ and $1$ repeating every $360°$, cos $90°$ ahead; $\\tan$ repeats every $180°$ with asymptotes at $90°$ and $270°$.\n- Any angle: the related acute angle gives the size, the quadrant gives the sign. Positive: all, sin, tan, cos in the four quadrants in turn.\n- Exact values from $1 : \\sqrt{3} : 2$ and $1 : 1 : \\sqrt{2}$: $\\sin 30° = \\frac{1}{2}$, $\\cos 30° = \\frac{\\sqrt{3}}{2}$, $\\tan 45° = 1$, $\\tan 60° = \\sqrt{3}$.\n- To solve: acute angle, quadrants from the sign, every solution in the interval, count against a sketch. Squares give both roots; $\\sin$ and $\\cos$ on opposite sides give $\\tan$.\n- $\\tan \\theta \\equiv \\frac{\\sin \\theta}{\\cos \\theta}$ and $\\sin^2 \\theta + \\cos^2 \\theta \\equiv 1$: to simplify, to prove one side into the other, and to reduce an equation to one function before factorising.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Identity 1",
+                  "equation": "tan θ = sin θ ÷ cos θ",
+                  "units": ""
+                },
+                {
+                  "name": "Identity 2",
+                  "equation": "sin²θ + cos²θ = 1",
+                  "units": ""
+                },
+                {
+                  "name": "Second solutions",
+                  "equation": "sin: 180° − θ; cos: 360° − θ; tan: θ + 180°",
+                  "units": ""
+                },
+                {
+                  "name": "Exact",
+                  "equation": "sin 30° = ½, cos 30° = √3/2, tan 45° = 1",
+                  "units": ""
+                }
+              ]
+            },
+            "alt": "An equation card with the two trigonometric identities, the rules for the second solution of each basic equation, and three exact values"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Write down the value of $\\sin 30°$. Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "an exact value",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "From the $1 : \\sqrt{3} : 2$ triangle, the side opposite $30°$ is $1$ and the hypotenuse is $2$: $\\sin 30° = \\frac{1}{2} = 0.5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.5"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "prompt": "How often does the graph of $y = \\tan x$ repeat?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the period of tan",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The tangent graph has one branch from each asymptote to the next, and the branches are identical: $\\tan(x + 180°) = \\tan x$. Sine and cosine repeat every $360°$; the asymptotes are $180°$ apart, not $90°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Every $180°$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Every $180°$",
+        "It does not repeat, because it has asymptotes",
+        "Every $360°$",
+        "Every $90°$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q3",
+      "prompt": "Solve $\\sin x = 0.5$ for $0° \\leqslant x \\leqslant 360°$. Write down the larger solution.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a basic sine equation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\sin^{-1}(0.5) = 30°$, and the sine graph is symmetric about $90°$, so the second solution is $180° - 30° = 150°$. The larger is $150°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "150"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 150,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q4",
+      "prompt": "Write down the exact value of $\\cos 60°$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "an exact value",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "In the $1 : \\sqrt{3} : 2$ triangle the side adjacent to $60°$ is $1$ and the hypotenuse is $2$, so $\\cos 60° = \\frac{1}{2}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1/2"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "1/2",
+        "0.5"
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "For an angle $x$ between $90°$ and $180°$, which statement is true?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "signs in the second quadrant",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Between $90°$ and $180°$ the point on the unit circle has a negative $x$-coordinate and a positive $y$-coordinate, so $\\cos x < 0$ and $\\sin x > 0$; their quotient $\\tan x$ is negative. Only sine is positive in the second quadrant.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\sin x$ is positive and $\\cos x$ is negative"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$\\tan x$ is positive, because $x$ is less than $180°$",
+        "$\\sin x$ is positive and $\\cos x$ is negative",
+        "$\\sin x$ is negative and $\\cos x$ is positive",
+        "$\\sin x$ and $\\cos x$ are both negative"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "Solve $\\cos x = -\\dfrac{\\sqrt{3}}{2}$ for $0° \\leqslant x \\leqslant 360°$. Write down the smaller solution.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a cosine equation with a negative value",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The acute angle with cosine $\\frac{\\sqrt{3}}{2}$ is $30°$. Cosine is negative in the second and third quadrants: $180° - 30° = 150°$ and $180° + 30° = 210°$. The smaller is $150°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "150"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 150,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "prompt": "Solve $\\tan x = 1$ for $180° \\leqslant x \\leqslant 360°$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a tangent equation in a restricted interval",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\tan^{-1}(1) = 45°$, and tan repeats every $180°$, so the solution in the given interval is $45° + 180° = 225°$: the third quadrant, where tan is positive.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "225"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 225,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "prompt": "Simplify $\\dfrac{\\sin \\theta}{\\tan \\theta}$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "simplifying with tan = sin ÷ cos",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\tan \\theta = \\dfrac{\\sin \\theta}{\\cos \\theta}$, so dividing by it multiplies by $\\dfrac{\\cos \\theta}{\\sin \\theta}$: $\\sin \\theta \\times \\dfrac{\\cos \\theta}{\\sin \\theta} = \\cos \\theta$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "cos θ"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "cos θ",
+        "cos theta"
+      ]
+    },
+    {
+      "id": "q9",
+      "prompt": "Solve $\\cos x = 0.3$ for $0° \\leqslant x \\leqslant 360°$. Write down the larger solution to two decimal places.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a cosine equation with a calculator",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\cos^{-1}(0.3) = 72.54°$. Cosine is positive in the first and fourth quadrants, and the cosine graph is symmetric about $180°$, so the second solution is $360° - 72.54° = 287.46°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "72.54"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "287.46"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 287.46,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q10",
+      "prompt": "What is the exact value of $\\tan 60°$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "an exact tangent",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "In the $1 : \\sqrt{3} : 2$ triangle, the side opposite $60°$ is $\\sqrt{3}$ and the adjacent side is $1$, so $\\tan 60° = \\sqrt{3}$. $\\frac{\\sqrt{3}}{2}$ is $\\sin 60°$, $\\frac{1}{\\sqrt{3}}$ is $\\tan 30°$ and $\\frac{1}{2}$ is $\\cos 60°$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\sqrt{3}$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$\\dfrac{1}{2}$",
+        "$\\dfrac{\\sqrt{3}}{2}$",
+        "$\\sqrt{3}$",
+        "$\\dfrac{1}{\\sqrt{3}}$"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "Solve $2\\sin x = \\cos x$ for $0° \\leqslant x \\leqslant 360°$. Write down the smaller solution to two decimal places.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "sin and cos on opposite sides",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Divide both sides by $\\cos x$: $2\\tan x = 1$, so $\\tan x = \\frac{1}{2}$ and $x = \\tan^{-1}(0.5) = 26.57°$. The other solution is $26.57° + 180° = 206.57°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tan x = ½"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "26.57"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 26.57,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "prompt": "Work out the sum of all the solutions of $\\sin^2 x = \\dfrac{1}{4}$ for $0° \\leqslant x \\leqslant 360°$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a squared equation, both roots",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Both roots: $\\sin x = \\frac{1}{2}$ gives $30°$ and $150°$; $\\sin x = -\\frac{1}{2}$ gives $210°$ and $330°$. The sum is $30 + 150 + 210 + 330 = 720$. Forgetting the negative root would give $180$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sin x = ±½"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "all four angles"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "720"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 720,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "prompt": "$f(x) = \\dfrac{1 - \\cos^2 x}{\\sin x \\cos x}$.\n\n(a) Show that $f(x) = \\tan x$.\n\n(b) Hence solve $f(x) = 3$ for $0° < x < 180°$. Give your answer to two decimal places.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "simplify with the identities, then solve",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "**(a)** From $\\sin^2 x + \\cos^2 x \\equiv 1$, the numerator $1 - \\cos^2 x$ is $\\sin^2 x$. So $f(x) = \\dfrac{\\sin^2 x}{\\sin x \\cos x}$. Cancel one factor of $\\sin x$ from the top and bottom: $f(x) = \\dfrac{\\sin x}{\\cos x}$, and by the first identity this is $\\tan x$. Each step is a rewrite of the same expression, which is what an identity proof needs.\n\n**(b)** *Hence* means use part (a): $f(x) = 3$ becomes $\\tan x = 3$. The calculator gives $\\tan^{-1}(3) = 71.57°$. Tangent repeats every $180°$, so the next solution would be $251.57°$, which is outside $0° < x < 180°$. There is one solution in the interval, $x = 71.57°$. As a check, $\\tan x$ is positive only in the first and third quadrants, and only the first lies in the interval.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sin² x on top"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cancelling sin x"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "tan x, with the identity stated"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tan x = 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "71.57"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "no other solution in the interval, with a reason"
+        }
+      ],
+      "discriminators": [
+        "show-that",
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Replaces 1 − cos² x by sin² x.",
+          "marks": 1
+        },
+        {
+          "text": "Cancels sin x to reach sin x / cos x.",
+          "marks": 1
+        },
+        {
+          "text": "States sin x / cos x = tan x.",
+          "marks": 1
+        },
+        {
+          "text": "tan x = 3.",
+          "marks": 1
+        },
+        {
+          "text": "x = 71.57°.",
+          "marks": 1
+        },
+        {
+          "text": "Rejects 251.57° as outside the interval, giving one solution.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** From $\\sin^2 x + \\cos^2 x \\equiv 1$, the numerator $1 - \\cos^2 x$ is $\\sin^2 x$. So $f(x) = \\dfrac{\\sin^2 x}{\\sin x \\cos x}$. Cancel one factor of $\\sin x$ from the top and bottom: $f(x) = \\dfrac{\\sin x}{\\cos x}$, and by the first identity this is $\\tan x$. Each step is a rewrite of the same expression, which is what an identity proof needs.\n\n**(b)** *Hence* means use part (a): $f(x) = 3$ becomes $\\tan x = 3$. The calculator gives $\\tan^{-1}(3) = 71.57°$. Tangent repeats every $180°$, so the next solution would be $251.57°$, which is outside $0° < x < 180°$. There is one solution in the interval, $x = 71.57°$. As a check, $\\tan x$ is positive only in the first and third quadrants, and only the first lies in the interval."
+    },
+    {
+      "id": "q14",
+      "prompt": "Solve $3\\sin x = 2\\cos x$ for $0° \\leqslant x \\leqslant 360°$. Write down the larger solution to two decimal places.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a tan equation from sin and cos",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Divide by $\\cos x$: $\\tan x = \\frac{2}{3}$, so $x = 33.69°$ or, adding $180°$, $x = 213.69°$. The larger is $213.69°$, in the third quadrant where tan is positive.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tan x = 2/3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "213.69"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 213.69,
+      "tolerance": 0.01,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "prompt": "What is the exact value of $\\sin 300°$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "an exact value beyond 90°",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$300°$ lies between $270°$ and $360°$, where sine is negative, and its related acute angle is $360° - 300° = 60°$. So $\\sin 300° = -\\sin 60° = -\\dfrac{\\sqrt{3}}{2}$. The size comes from the acute angle and the sign from the quadrant; $\\sin(360° - x) = -\\sin x$, not $+\\sin x$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$-\\dfrac{\\sqrt{3}}{2}$, because $300°$ is in the fourth quadrant with related acute angle $60°$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$\\dfrac{1}{2}$, because $\\sin 300° = \\sin(300° - 270°) = \\sin 30°$",
+        "$\\dfrac{\\sqrt{3}}{2}$, because $300° = 360° - 60°$ and $\\sin 60° = \\dfrac{\\sqrt{3}}{2}$",
+        "$-\\dfrac{1}{2}$, because $300°$ is $60°$ short of a full turn and $\\sin 60°$ pairs with $\\cos 60°$",
+        "$-\\dfrac{\\sqrt{3}}{2}$, because $300°$ is in the fourth quadrant with related acute angle $60°$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "How many solutions does $2\\cos^2 x + \\sin x = 2$ have for $0° \\leqslant x \\leqslant 360°$?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "an equation reduced to one function",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Replace $\\cos^2 x$ by $1 - \\sin^2 x$: $2 - 2\\sin^2 x + \\sin x = 2$, so $\\sin x - 2\\sin^2 x = 0$ and $\\sin x(1 - 2\\sin x) = 0$. $\\sin x = 0$ at $0°$, $180°$, $360°$; $\\sin x = \\frac{1}{2}$ at $30°$, $150°$. That is $5$ solutions. Dividing through by $\\sin x$ would lose the first three.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cos² x = 1 − sin² x"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorised, both factors kept"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "prompt": "(a) Prove that $\\sin^4 x - \\cos^4 x \\equiv 1 - 2\\cos^2 x$.\n\n(b) Hence solve $\\sin^4 x - \\cos^4 x = \\dfrac{1}{2}$ for $0° \\leqslant x \\leqslant 360°$.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "an identity proved, then used",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** The left-hand side is a difference of two squares: $\\sin^4 x - \\cos^4 x = (\\sin^2 x)^2 - (\\cos^2 x)^2 = (\\sin^2 x - \\cos^2 x)(\\sin^2 x + \\cos^2 x)$. The second bracket is $1$ by the identity, leaving $\\sin^2 x - \\cos^2 x$. Replacing $\\sin^2 x$ by $1 - \\cos^2 x$ gives $1 - \\cos^2 x - \\cos^2 x = 1 - 2\\cos^2 x$, which is the right-hand side. Every line is a rewrite of the line before, so the identity is proved.\n\n**(b)** Using part (a), the equation is $1 - 2\\cos^2 x = \\frac{1}{2}$, so $2\\cos^2 x = \\frac{1}{2}$ and $\\cos^2 x = \\frac{1}{4}$. Both roots: $\\cos x = \\frac{1}{2}$ gives $60°$ and $360° - 60° = 300°$; $\\cos x = -\\frac{1}{2}$ gives $180° - 60° = 120°$ and $180° + 60° = 240°$. The solutions are $x = 60°, 120°, 240°, 300°$: four, one in each quadrant, as the cosine graph at heights $\\pm\\frac{1}{2}$ confirms.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "difference of two squares"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sin² + cos² = 1 applied"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1 − 2cos² x reached with no errors"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cos² x = ¼"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cos x = ±½"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "all four solutions"
+        }
+      ],
+      "discriminators": [
+        "proof",
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "Factorises as a difference of two squares: (sin² x − cos² x)(sin² x + cos² x).",
+          "marks": 1
+        },
+        {
+          "text": "Uses sin² x + cos² x = 1 to get sin² x − cos² x.",
+          "marks": 1
+        },
+        {
+          "text": "Replaces sin² x by 1 − cos² x to reach 1 − 2cos² x.",
+          "marks": 1
+        },
+        {
+          "text": "1 − 2cos² x = ½, so cos² x = ¼.",
+          "marks": 1
+        },
+        {
+          "text": "cos x = ±½.",
+          "marks": 1
+        },
+        {
+          "text": "60°, 120°, 240°, 300°.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** The left-hand side is a difference of two squares: $\\sin^4 x - \\cos^4 x = (\\sin^2 x)^2 - (\\cos^2 x)^2 = (\\sin^2 x - \\cos^2 x)(\\sin^2 x + \\cos^2 x)$. The second bracket is $1$ by the identity, leaving $\\sin^2 x - \\cos^2 x$. Replacing $\\sin^2 x$ by $1 - \\cos^2 x$ gives $1 - \\cos^2 x - \\cos^2 x = 1 - 2\\cos^2 x$, which is the right-hand side. Every line is a rewrite of the line before, so the identity is proved.\n\n**(b)** Using part (a), the equation is $1 - 2\\cos^2 x = \\frac{1}{2}$, so $2\\cos^2 x = \\frac{1}{2}$ and $\\cos^2 x = \\frac{1}{4}$. Both roots: $\\cos x = \\frac{1}{2}$ gives $60°$ and $360° - 60° = 300°$; $\\cos x = -\\frac{1}{2}$ gives $180° - 60° = 120°$ and $180° + 60° = 240°$. The solutions are $x = 60°, 120°, 240°, 300°$: four, one in each quadrant, as the cosine graph at heights $\\pm\\frac{1}{2}$ confirms."
+    },
+    {
+      "id": "q18",
+      "prompt": "Which list gives all the solutions of $\\tan x = \\sqrt{3}$ for $-180° \\leqslant x \\leqslant 180°$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "an interval with negative angles",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\tan^{-1}\\sqrt{3} = 60°$, and tan repeats every $180°$, so the solutions are $60° + 180°k$. In $-180°$ to $180°$ that is $60°$ and $60° - 180° = -120°$. $240°$ is a solution but lies outside the interval; $-60°$ and $120°$ have $\\tan = -\\sqrt{3}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$60°$ and $-120°$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$60°$ and $-120°$",
+        "$60°$, $-60°$, $120°$ and $-120°$",
+        "$60°$ and $240°$",
+        "$60°$ only"
+      ],
+      "correct": [
+        0
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 11
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 33
+    }
+  },
+  "examTechnique": {
+    "body": "Trigonometry appears on both papers. Paper 1 wants exact values, so keep $\\frac{\\sqrt{3}}{2}$ as it is and know that $\\tan 60° = \\sqrt{3}$; Paper 2 wants decimals to the places stated. An equation *in a given interval* is marked on the full list of solutions: the June 2024 mark scheme for its trigonometric equation gave the final accuracy mark for the solution in the interval and nothing for extra solutions added, so the list must be complete and must stop at the interval. Write the acute angle, name the quadrants, list every angle in the interval and count them against a sketch.\n\nA *show that* or *prove* with an identity is marked on the steps: start from one side, state which identity each step uses, and end on the other side; do not treat it as an equation and cancel across. A question that says *simplify, and hence solve* pays for using the simplified form, and the interval may be open, closed or negative, so read it twice. A sketch of a graph needs the crossings, the maximum and minimum, and for tan the asymptotes.",
+    "examinerErrors": [
+      "Giving one solution of $\\sin x = 0.5$ when the interval contains two.",
+      "Taking only the positive root of $\\sin^2 x = \\frac{1}{4}$ and losing two solutions.",
+      "Dividing an equation through by $\\sin x$ and losing the solutions where $\\sin x = 0$.",
+      "Getting the sign wrong beyond $90°$: $\\sin 300°$ as $+\\frac{\\sqrt{3}}{2}$.",
+      "Adding $360°$ to find the second tangent solution instead of $180°$.",
+      "Including $240°$ as a solution when the interval is $-180°$ to $180°$.",
+      "Proving an identity by rearranging it as an equation, or ending with $1 = 1$.",
+      "Sketching $y = \\tan x$ as a wave, or joining its branches across an asymptote."
+    ],
+    "grade9Looks": "A grade 9 answer sketches the graph before it solves, so the number of solutions is known in advance, and it lists every angle in the interval with the quadrant that produced it. It keeps exact values exact on Paper 1 and rounds only at the end on Paper 2. Faced with an identity it works one side into the other, naming $\\sin^2 \\theta + \\cos^2 \\theta = 1$ or $\\tan \\theta = \\frac{\\sin \\theta}{\\cos \\theta}$ at each step; faced with a mixed equation it reduces to one function, factorises, and keeps both factors. It reads the interval, including open ends and negative angles, and treats *hence* as an instruction."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q14",
+      "q15",
+      "q16",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}

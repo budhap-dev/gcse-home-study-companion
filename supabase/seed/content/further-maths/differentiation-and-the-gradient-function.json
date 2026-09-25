@@ -33,6 +33,119 @@
       "body": "The rule applies to $kx^n$ and nothing else, so a product must be expanded and a quotient divided out **first**. There is no rule at this level for differentiating a bracket times a bracket, and trying to invent one is where the marks go."
     }
   ],
+  "why": {
+    "matters": "Differentiation is how a rate is read off a rule. A distance rule gives a speed, a cost rule gives the cost of one more item, a height rule gives how fast the height is changing, and every one of those is the gradient of the graph at a point, which is what $\\frac{dy}{dx}$ is. The Further Maths rule, multiply by the power and drop it by one, is short enough to learn in an afternoon; the point of the topic is knowing what the answer means and tidying an expression into the form the rule needs. Everything in the calculus section that follows, tangents, turning points and the best size for a box, is this one rule used with a purpose.",
+    "examples": [
+      {
+        "title": "A dropped ball, and its speed",
+        "body": "A ball dropped from a tower has fallen $y = 5x^2$ metres after $x$ seconds, the lesson's own example. Its speed is the rate the distance changes, $\\frac{dy}{dx} = 10x$: nothing at the start, $10$ m/s after one second, $30$ m/s after three. No stopwatch measures a speed at an instant; the derivative is the only way to get one, and it is what a physics course calls $v = gt$.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Seconds",
+              "Distance fallen (m)",
+              "Speed (m/s)"
+            ],
+            "rows": [
+              [
+                "0",
+                "0",
+                "0"
+              ],
+              [
+                "1",
+                "5",
+                "10"
+              ],
+              [
+                "2",
+                "20",
+                "20"
+              ],
+              [
+                "3",
+                "45",
+                "30"
+              ]
+            ],
+            "title": "Distance from 5x², speed from its derivative 10x"
+          },
+          "alt": "A table of the distance fallen by a dropped ball after zero, one, two and three seconds from y equals five x squared, and the speed from its derivative ten x"
+        }
+      },
+      {
+        "title": "The cost of one more",
+        "body": "A factory's cost of making $x$ hundred items is modelled by $C = (3x + 1)(x - 2)$ in thousands of pounds, the expression from the *tidy it first* page. The cost of the next hundred is the gradient, and the rule only works on a sum of powers, so expand first: $C = 3x^2 - 5x - 2$ and $\\frac{dC}{dx} = 6x - 5$. At $x = 2$ the next hundred cost about $7$ thousand pounds. Differentiating each bracket and multiplying would give $3$, and a wrong price.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "Marginal cost from a product",
+            "boxes": [
+              {
+                "title": "Rule",
+                "body": "C = (3x + 1)(x − 2)"
+              },
+              {
+                "title": "Tidy first",
+                "body": "C = 3x² − 5x − 2"
+              },
+              {
+                "title": "Differentiate",
+                "body": "dC/dx = 6x − 5"
+              },
+              {
+                "title": "At x = 2",
+                "body": "7: the cost of the next hundred"
+              }
+            ]
+          },
+          "alt": "Four boxes on finding a marginal cost: the product rule for cost, expanding it, differentiating and evaluating at two"
+        }
+      },
+      {
+        "title": "Why a single speed camera cannot do it",
+        "body": "A camera that photographs a car once knows a position, not a speed; a pair a mile apart measures an average, the gradient of a chord. The speed at the instant of passing is the gradient of the tangent, the first idea on this topic's opening pages, and it is what a police radar gun reads. Differentiation is the algebra that turns a rule for position into that instantaneous gradient without needing two photographs at all.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Measurement",
+              "What it gives",
+              "On the graph"
+            ],
+            "rows": [
+              [
+                "one photograph",
+                "a position",
+                "a point"
+              ],
+              [
+                "two cameras a mile apart",
+                "an average speed",
+                "the gradient of a chord"
+              ],
+              [
+                "radar at the instant",
+                "the speed now",
+                "the gradient of the tangent"
+              ],
+              [
+                "differentiation",
+                "the speed at every instant",
+                "the gradient function dy/dx"
+              ]
+            ],
+            "title": "Average is a chord; instantaneous is a tangent"
+          },
+          "alt": "A table of four ways of measuring a moving car, what each gives and the graph idea behind it, ending with the gradient function"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -70,13 +183,20 @@
                 },
                 {
                   "x": 0,
-                  "y": 0,
-                  "label": "(0, 0)"
+                  "y": 0
                 },
                 {
                   "x": 3,
                   "y": 9,
                   "label": "(3, 9)"
+                }
+              ],
+              "labels": [
+                {
+                  "x": 0.3,
+                  "y": -0.5,
+                  "text": "O",
+                  "anchor": "start"
                 }
               ]
             },
@@ -217,16 +337,15 @@
                 5
               ],
               "yRange": [
-                -10,
-                16
+                -9,
+                21.5
               ],
               "grid": true,
               "curves": [
                 {
                   "a": 1,
                   "b": 0,
-                  "c": 0,
-                  "label": "y = x²"
+                  "c": 0
                 }
               ],
               "lines": [
@@ -241,6 +360,14 @@
                   "x": 3,
                   "y": 9,
                   "label": "(3, 9)"
+                }
+              ],
+              "labels": [
+                {
+                  "x": 0.6,
+                  "y": 5,
+                  "text": "y = x²",
+                  "anchor": "start"
                 }
               ]
             },

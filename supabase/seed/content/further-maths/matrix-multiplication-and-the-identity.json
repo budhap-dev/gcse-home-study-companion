@@ -1,0 +1,1351 @@
+{
+  "id": "matrix-multiplication-and-the-identity",
+  "subjectId": "further-maths",
+  "unitId": "matrix-transformations",
+  "title": "Matrix multiplication and the identity",
+  "specPoints": [
+    "5.1",
+    "5.2"
+  ],
+  "order": 1,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Row of the first, column of the second",
+      "body": "Every entry of a product is one row of the left matrix paired with one column of the right one: multiply the pairs, add. Top row with the first column gives the top-left entry. For a matrix times a column there are two sums; for a matrix times a matrix, four."
+    },
+    {
+      "kind": "spot",
+      "title": "AB and BA are different matrices",
+      "body": "Swapping the order pairs different rows with different columns, so $AB \\ne BA$ in general: $(2\\ 1; 3\\ 4)(1\\ 0; 2\\ {-1})$ is $(4\\ {-1}; 11\\ {-4})$, the other way round is $(2\\ 1; 1\\ {-2})$. Read which letter is on the left and keep it there."
+    },
+    {
+      "kind": "check",
+      "title": "The spare entry is your check",
+      "body": "When unknown entries give equations, the product has four entries and you usually need two of them. Solve from two, then confirm the other two match what was given. If $3a = 6$ and $1 + 2b = 9$, check that $a + 4 = 6$ before moving on."
+    },
+    {
+      "kind": "remember",
+      "title": "A² means A times A",
+      "body": "Squaring a matrix is a full product, not the entries squared: $(2\\ 1; 3\\ 4)^2 = (7\\ 6; 18\\ 19)$, and its top left is $2 \\times 2 + 1 \\times 3$, not $4$. Look for $R^2 = -I$, $C^2 = kI$ or a pattern in the corner of $P^n$."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Take a common factor out in front",
+      "body": "A scalar multiplies every entry, so $(5\\ {-10}; 0\\ 15)$ can be written $5(1\\ {-2}; 0\\ 3)$. Taking the factor out first makes a product smaller to compute, and the factor rides along: $(3A)B = 3(AB)$."
+    }
+  ],
+  "why": {
+    "matters": "A matrix is a rule for turning one pair of numbers into another, written so the rule can be applied thousands of times without rewriting it. Graphics, robotics and physics store rotations and stretches this way, and the fact that matrix products do not commute is the fact that turning then tilting is not tilting then turning. The specification keeps to $2 \\times 2$ and $2 \\times 1$ matrices, their products and scalar multiples, and the identity; the questions built on that solve for an unknown entry or an unknown point. Learned here, the row-by-column sum is what makes the next topic, where a matrix becomes a rotation or a reflection of the unit square, a two-line calculation.",
+    "examples": [
+      {
+        "title": "Where a pixel goes",
+        "body": "A game moves every point of a sprite with the same $2 \\times 2$ matrix, one multiplication per pixel. With this topic's matrix $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$, the corner at $(1, 2)$ lands at $(4, 11)$; the graphics chip does that sum for every point, sixty frames a second. Applying a second move afterwards is a second product, and the order it is written in is the order the sprite experiences.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Point",
+              "Row 1 sum",
+              "Row 2 sum",
+              "Image"
+            ],
+            "rows": [
+              [
+                "(1, 2)",
+                "2 × 1 + 1 × 2",
+                "3 × 1 + 4 × 2",
+                "(4, 11)"
+              ],
+              [
+                "(1, 3)",
+                "2 × 1 + 1 × 3",
+                "3 × 1 + 4 × 3",
+                "(5, 15)"
+              ],
+              [
+                "(1, 0)",
+                "2",
+                "3",
+                "(2, 3)"
+              ],
+              [
+                "(0, 1)",
+                "1",
+                "4",
+                "(1, 4)"
+              ]
+            ],
+            "title": "One matrix, applied to every point"
+          },
+          "alt": "A table of four points and the row sums that give each image under the matrix with rows two, one and three, four"
+        }
+      },
+      {
+        "title": "Undoing the move",
+        "body": "Knowing where a point landed and asking where it started is the question a camera system solves when it works out a position from what the sensor saw. It is a pair of simultaneous equations: if $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$ sent a point to $(5, 15)$, then $2x + y = 5$ and $3x + 4y = 15$, and the point was $(1, 3)$, exactly this topic's worked example. Two equations, two unknowns, one starting point.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "From the image back to the point",
+            "boxes": [
+              {
+                "title": "Known",
+                "body": "the matrix and the image (5, 15)"
+              },
+              {
+                "title": "Equations",
+                "body": "2x + y = 5 and 3x + 4y = 15"
+              },
+              {
+                "title": "Solve",
+                "body": "x = 1, y = 3"
+              },
+              {
+                "title": "Check",
+                "body": "2 + 3 = 5 and 3 + 12 = 15"
+              }
+            ]
+          },
+          "alt": "Four boxes on recovering a point from its image under a matrix: what is known, the two equations, the solution and the check"
+        }
+      },
+      {
+        "title": "Doing it four times brings you back",
+        "body": "A robot arm that turns a quarter turn is described by $R = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, and the software checks itself with a power: $R^2 = -I$ and $R^4 = I$, so four quarter turns return every point to where it began, as they should. A matrix whose square is $-I$ or $kI$ is a sign that the rule has a simple geometric meaning, which the next topic names.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Power",
+              "Matrix",
+              "Meaning"
+            ],
+            "rows": [
+              [
+                "R",
+                "(0 −1; 1 0)",
+                "a quarter turn"
+              ],
+              [
+                "R²",
+                "(−1 0; 0 −1) = −I",
+                "a half turn"
+              ],
+              [
+                "R³",
+                "(0 1; −1 0)",
+                "three quarters"
+              ],
+              [
+                "R⁴",
+                "I",
+                "back to the start"
+              ]
+            ],
+            "title": "Powers of R: the turn adds up"
+          },
+          "alt": "A table of the first four powers of the quarter-turn matrix, showing the half turn as minus the identity and the fourth power as the identity"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "What a matrix is, and multiplying by a number",
+        "body": "A **matrix** is a rectangle of numbers. The specification uses two shapes only: a **$2 \\times 2$** matrix, two rows and two columns, and a **$2 \\times 1$** matrix, a single column, which is how a point $(x, y)$ is written when a matrix acts on it.\n\n$$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix} \\qquad \\mathbf{v} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}$$\n\nRows run across and columns run down; *row then column* is the order for everything on this page. The entry $3$ in $A$ is in row $2$, column $1$.\n\n**Multiplying by a number** (a *scalar*) multiplies every entry: $3A = \\begin{pmatrix} 6 & 3 \\\\ 9 & 12 \\end{pmatrix}$. A number in front of a matrix always means this, and it can be taken out again: $\\begin{pmatrix} 5 & -10 \\\\ 0 & 15 \\end{pmatrix} = 5\\begin{pmatrix} 1 & -2 \\\\ 0 & 3 \\end{pmatrix}$, which is a tidier way to write an answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Matrix",
+                "Shape",
+                "Entries",
+                "Used for"
+              ],
+              "rows": [
+                [
+                  "(2 1; 3 4)",
+                  "2 × 2",
+                  "rows 2, 1 and 3, 4",
+                  "a transformation"
+                ],
+                [
+                  "(1; 2)",
+                  "2 × 1",
+                  "a column: 1 above 2",
+                  "a point or a vector"
+                ],
+                [
+                  "3 × (2 1; 3 4)",
+                  "2 × 2",
+                  "rows 6, 3 and 9, 12",
+                  "every entry times 3"
+                ],
+                [
+                  "I = (1 0; 0 1)",
+                  "2 × 2",
+                  "ones on the diagonal",
+                  "the identity, the next pages"
+                ]
+              ],
+              "title": "Rows across, columns down; a scalar multiplies every entry"
+            },
+            "alt": "A table of the two matrix shapes in the specification, a two by two and a two by one column, with a scalar multiple and the identity matrix, written row by row"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$. Write down the entry in row $2$, column $2$ of $3A$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a scalar multiple",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Multiplying by $3$ multiplies every entry: $3A = \\begin{pmatrix} 6 & 3 \\\\ 9 & 12 \\end{pmatrix}$. Row $2$, column $2$ is $3 \\times 4 = 12$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "12"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 12,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "A matrix times a column: row across, column down",
+        "body": "To multiply a $2 \\times 2$ matrix by a $2 \\times 1$ column, take each **row** of the matrix in turn, pair its entries with the column's entries, multiply the pairs and add. The answer is another column.\n\n$$\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 2 \\times 1 + 1 \\times 2 \\\\ 3 \\times 1 + 4 \\times 2 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 11 \\end{pmatrix}$$\n\nTop row with the column gives the top entry; bottom row with the column gives the bottom entry. Say *across and down* as you go and the pairs never slip.\n\n**This is how a matrix moves a point.** Write $(1, 2)$ as the column $\\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}$ and the product says its **image** is $(4, 11)$. The next topic uses exactly this to rotate, reflect and enlarge shapes; here the sum is the whole task.\n\n**Sizes have to fit.** A $2 \\times 2$ times a $2 \\times 1$ works because the matrix has as many columns as the column has rows. A $2 \\times 1$ times a $2 \\times 2$ does not: there is nothing for the second column of the matrix to pair with, and the product is *not defined*.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Row of the matrix",
+                "Column",
+                "Pairs multiplied",
+                "Entry"
+              ],
+              "rows": [
+                [
+                  "2, 1",
+                  "1, 2",
+                  "2 × 1 + 1 × 2",
+                  "4"
+                ],
+                [
+                  "3, 4",
+                  "1, 2",
+                  "3 × 1 + 4 × 2",
+                  "11"
+                ],
+                [
+                  "3, −1",
+                  "2, −3",
+                  "3 × 2 + (−1) × (−3)",
+                  "9"
+                ],
+                [
+                  "2, 5",
+                  "2, −3",
+                  "2 × 2 + 5 × (−3)",
+                  "−11"
+                ]
+              ],
+              "title": "Each entry is a row paired with the column and added"
+            },
+            "alt": "A table of four row and column pairings with the products added to give each entry of a matrix times a column, for two examples"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "Work out the bottom entry of $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} 1 \\\\ 3 \\end{pmatrix}$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "a matrix times a column",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Bottom row with the column: $3 \\times 1 + 4 \\times 3 = 3 + 12 = 15$. The top entry is $2 \\times 1 + 1 \\times 3 = 5$, so the product is $\\begin{pmatrix} 5 \\\\ 15 \\end{pmatrix}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "15"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 15,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "A matrix times a matrix",
+        "body": "*Work out $AB$ where $A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$ and $B = \\begin{pmatrix} 1 & 0 \\\\ 2 & -1 \\end{pmatrix}$.*\n\nA $2 \\times 2$ times a $2 \\times 2$ is the column rule done twice: the first column of $B$ gives the first column of the answer, the second column of $B$ gives the second. Each entry of $AB$ is a **row of $A$** paired with a **column of $B$**, multiplied and added.\n\n$$AB = \\begin{pmatrix} 2 \\times 1 + 1 \\times 2 & 2 \\times 0 + 1 \\times (-1) \\\\ 3 \\times 1 + 4 \\times 2 & 3 \\times 0 + 4 \\times (-1) \\end{pmatrix} = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix}$$\n\nFour entries, four sums, each with two products. Write the sums out on the paper; a mark scheme gives the method mark for a correct row-by-column set-up even when an arithmetic slip follows, and nothing at all for a bare wrong answer.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "AB for A = (2 1; 3 4) and B = (1 0; 2 −1).",
+            "steps": [
+              {
+                "text": "Row 1 of $A$ with column 1 of $B$: $2 \\times 1 + 1 \\times 2 = 4$",
+                "note": "top left"
+              },
+              {
+                "text": "Row 1 of $A$ with column 2 of $B$: $2 \\times 0 + 1 \\times (-1) = -1$",
+                "note": "top right"
+              },
+              {
+                "text": "Row 2 of $A$ with column 1 of $B$: $3 \\times 1 + 4 \\times 2 = 11$",
+                "note": "bottom left"
+              },
+              {
+                "text": "Row 2 of $A$ with column 2 of $B$: $3 \\times 0 + 4 \\times (-1) = -4$",
+                "note": "bottom right"
+              },
+              {
+                "text": "$AB = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix}$",
+                "note": "row of the first, column of the second, every time"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "Work out the bottom-left entry of $\\begin{pmatrix} 4 & -2 \\\\ 1 & 3 \\end{pmatrix}\\begin{pmatrix} 1 & 5 \\\\ 2 & 0 \\end{pmatrix}$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "an entry of a matrix product",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Bottom row of the first, $1, 3$, with the left column of the second, $1, 2$: $1 \\times 1 + 3 \\times 2 = 7$. The whole product is $\\begin{pmatrix} 0 & 20 \\\\ 7 & 5 \\end{pmatrix}$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "explain",
+        "title": "Order matters: AB is not BA",
+        "body": "With numbers, $3 \\times 5 = 5 \\times 3$. With matrices, the order of a product changes the answer, because *row of the first, column of the second* pairs different numbers when the matrices swap.\n\nFor the same $A$ and $B$ as the worked example:\n\n$$AB = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix} \\qquad BA = \\begin{pmatrix} 2 & 1 \\\\ 1 & -2 \\end{pmatrix}$$\n\nNot one entry agrees. So a question that says *work out $BA$* means $B$ on the left, and *$A$ followed by $B$* in the next topic will turn out to mean $BA$, not $AB$. Read the order, then keep it.\n\n**What does not change with order:** a scalar can sit anywhere, $3AB = A(3B) = (3A)B$; and a chain of products can be bracketed either way, $(AB)\\mathbf{v} = A(B\\mathbf{v})$. For $\\mathbf{v} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}$: $B\\mathbf{v} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}$, then $A\\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$; and $(AB)\\mathbf{v} = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix}\\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$ as well. Either route, same point; only swapping the letters is forbidden.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Product",
+                "Top left comes from",
+                "Result"
+              ],
+              "rows": [
+                [
+                  "AB",
+                  "row 1 of A, column 1 of B: 2 × 1 + 1 × 2",
+                  "(4 −1; 11 −4)"
+                ],
+                [
+                  "BA",
+                  "row 1 of B, column 1 of A: 1 × 2 + 0 × 3",
+                  "(2 1; 1 −2)"
+                ],
+                [
+                  "(AB)v",
+                  "AB first, then the column",
+                  "(2; 3)"
+                ],
+                [
+                  "A(Bv)",
+                  "Bv = (1; 0) first, then A",
+                  "(2; 3)"
+                ]
+              ],
+              "title": "Swapping the letters changes the answer; moving the brackets does not"
+            },
+            "alt": "A table showing that AB and BA have different entries because different rows and columns are paired, while bracketing a chain of products either way gives the same column"
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "$A$ and $B$ are $2 \\times 2$ matrices. Which statement is always true?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "what order changes",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Bracketing a chain either way gives the same result, so $(AB)\\mathbf{v} = A(B\\mathbf{v})$ always. $AB$ and $BA$ pair different rows with different columns and are usually different in every entry, and a column on the left of a $2 \\times 2$ has nothing to pair with, so that product is not defined.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$(AB)\\mathbf{v} = A(B\\mathbf{v})$ for any column $\\mathbf{v}$"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "$(AB)\\mathbf{v} = A(B\\mathbf{v})$ for any column $\\mathbf{v}$",
+            "$AB$ has the same top-left entry as $BA$",
+            "A $2 \\times 1$ column times a $2 \\times 2$ matrix is defined",
+            "$AB = BA$, because multiplication of numbers is commutative and a matrix is a grid of numbers"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "The identity matrix, and powers",
+        "body": "The **identity matrix** is\n\n$$I = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}$$\n\nand it does for matrices what $1$ does for numbers: $AI = IA = A$ for every $2 \\times 2$ matrix $A$, and $I\\mathbf{v} = \\mathbf{v}$ for every column. Check one: row $2$ of $A$ with column $1$ of $I$ is $3 \\times 1 + 4 \\times 0 = 3$, the entry of $A$ that was there already. The specification's identity is $2 \\times 2$ only.\n\n**Powers** are repeated products: $A^2 = AA$, $A^3 = A^2 A$. For $A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$, $A^2 = \\begin{pmatrix} 7 & 6 \\\\ 18 & 19 \\end{pmatrix}$; squaring is not squaring each entry. Some matrices come back to $I$: $R = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$ has $R^2 = -I$ and $R^4 = I$, which is a quarter turn done four times, as the next topic will show. And $C = \\begin{pmatrix} 1 & 3 \\\\ 2 & -1 \\end{pmatrix}$ has $C^2 = \\begin{pmatrix} 7 & 0 \\\\ 0 & 7 \\end{pmatrix} = 7I$, a multiple of the identity.\n\n**A pattern in the powers** is a favourite: $P = \\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$ gives $P^2 = \\begin{pmatrix} 1 & 4 \\\\ 0 & 1 \\end{pmatrix}$ and $P^3 = \\begin{pmatrix} 1 & 6 \\\\ 0 & 1 \\end{pmatrix}$, so $P^n$ has $2n$ in the corner, and $P^{10}$ has $20$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Matrix",
+                "Square",
+                "Note"
+              ],
+              "rows": [
+                [
+                  "A = (2 1; 3 4)",
+                  "(7 6; 18 19)",
+                  "not the entries squared"
+                ],
+                [
+                  "R = (0 −1; 1 0)",
+                  "(−1 0; 0 −1) = −I",
+                  "R⁴ = I"
+                ],
+                [
+                  "C = (1 3; 2 −1)",
+                  "(7 0; 0 7) = 7I",
+                  "a multiple of I"
+                ],
+                [
+                  "P = (1 2; 0 1)",
+                  "(1 4; 0 1)",
+                  "Pⁿ has 2n top right"
+                ]
+              ],
+              "title": "A² = AA: multiply, do not square the entries"
+            },
+            "alt": "A table of four two by two matrices with their squares, showing a general square, one that is minus the identity, one that is seven times the identity and one with a pattern in its powers"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$. Work out the top-left entry of $A^2$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a power of a matrix",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$A^2 = AA$. Row $1$ of $A$ with column $1$ of $A$: $2 \\times 2 + 1 \\times 3 = 7$. Squaring the entry, $2^2 = 4$, is the wrong sum.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 7,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Unknown entries, and a point from its image",
+        "body": "**Unknown entries** turn a product into equations. If $\\begin{pmatrix} a & 2 \\\\ 1 & b \\end{pmatrix}\\begin{pmatrix} 3 & 1 \\\\ 0 & 2 \\end{pmatrix} = \\begin{pmatrix} 6 & 6 \\\\ 3 & 9 \\end{pmatrix}$, multiply out in terms of $a$ and $b$: the product is $\\begin{pmatrix} 3a & a + 4 \\\\ 3 & 1 + 2b \\end{pmatrix}$. Matching entries, $3a = 6$ gives $a = 2$, and $1 + 2b = 9$ gives $b = 4$. The other two entries, $a + 4 = 6$ and $3 = 3$, are the check.\n\n**A point from its image** is a pair of simultaneous equations. If $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} 5 \\\\ 15 \\end{pmatrix}$, then $2x + y = 5$ and $3x + 4y = 15$. Four times the first, $8x + 4y = 20$, minus the second gives $5x = 5$, so $x = 1$ and $y = 3$: the point was $(1, 3)$. Substitute back: $2 + 3 = 5$ and $3 + 12 = 15$.\n\n**Powers with an unknown** work the same way: $\\begin{pmatrix} a & 1 \\\\ 0 & a \\end{pmatrix}^2 = \\begin{pmatrix} a^2 & 2a \\\\ 0 & a^2 \\end{pmatrix}$, so if that square is $\\begin{pmatrix} 9 & 6 \\\\ 0 & 9 \\end{pmatrix}$ then $a^2 = 9$ *and* $2a = 6$: $a = 3$, and $a = -3$ is ruled out by the corner. Use every entry the question gives you; the second equation is there to choose the sign.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find x and y when (2 1; 3 4)(x; y) = (5; 15).",
+            "steps": [
+              {
+                "text": "Top row: $2x + y = 5$",
+                "note": "row 1 paired with the column"
+              },
+              {
+                "text": "Bottom row: $3x + 4y = 15$",
+                "note": "row 2 paired with the column"
+              },
+              {
+                "text": "$8x + 4y = 20$, subtract: $5x = 5$",
+                "note": "eliminate y"
+              },
+              {
+                "text": "$x = 1$, then $y = 5 - 2 = 3$",
+                "note": "back into the top row"
+              },
+              {
+                "text": "Check: $3(1) + 4(3) = 15$",
+                "note": "the row you did not use"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "$\\begin{pmatrix} 2 & k \\\\ 1 & 3 \\end{pmatrix}\\begin{pmatrix} 3 \\\\ -1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix}$. Work out the value of $k$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "an unknown entry from a product",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The top entry is $2 \\times 3 + k \\times (-1) = 6 - k$, and it equals $2$, so $k = 4$. The bottom entry, $1 \\times 3 + 3 \\times (-1) = 0$, agrees with the $0$ given.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: where a matrix question puts its marks",
+        "body": "Matrix questions on the papers are short, one to four marks, and the marks are for a correct product written out. The difficulty is added by unknowns, powers and order.\n\n**Unknowns on both sides.** *$\\begin{pmatrix} 2 & 3 \\\\ 1 & 4 \\end{pmatrix}\\begin{pmatrix} a \\\\ b \\end{pmatrix} = \\begin{pmatrix} 8 \\\\ 9 \\end{pmatrix}$; find $a$ and $b$.* Two equations, $2a + 3b = 8$ and $a + 4b = 9$, solved together: $a = 1$, $b = 2$. The product is the set-up mark; the solving is the rest.\n\n**A power that returns to $I$.** *$R = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$; find the smallest $n > 0$ with $R^n = I$.* Compute $R^2 = -I$, so $R^4 = (-I)^2 = I$, and $R^3 = -R \\ne I$: the answer is $4$. A pattern must be shown, not guessed.\n\n**Show that.** *Show that $C^2 = 7I$ for $C = \\begin{pmatrix} 1 & 3 \\\\ 2 & -1 \\end{pmatrix}$.* All four sums on the page, $1 + 6$, $3 - 3$, $2 - 2$, $6 + 1$, then the sentence: *$= 7I$*. Two of the four sums are zero, and a show-that that skips them is incomplete.\n\n**Order in a chain.** *Work out $A(B\\mathbf{v})$ and $(AB)\\mathbf{v}$.* Same answer, which the question may ask you to confirm; the point being tested is that the brackets move and the letters do not.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "Matrix marks",
+              "boxes": [
+                {
+                  "title": "Set-up",
+                  "body": "row × column sums written out, even when an entry is a letter"
+                },
+                {
+                  "title": "Unknowns",
+                  "body": "match entries to make equations; use the spare entry as the check"
+                },
+                {
+                  "title": "Powers",
+                  "body": "A² = AA; look for −I, kI or a pattern in n"
+                },
+                {
+                  "title": "Order",
+                  "body": "AB ≠ BA; (AB)v = A(Bv); the letters keep their order"
+                }
+              ]
+            },
+            "alt": "Four boxes on how matrix questions are marked: the set-up, unknown entries, powers and the order of a product"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "prompt": "$\\begin{pmatrix} a & 1 \\\\ 0 & a \\end{pmatrix}^2 = \\begin{pmatrix} 9 & 6 \\\\ 0 & 9 \\end{pmatrix}$. Work out the value of $a$.",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "an unknown in a power",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Squaring: $\\begin{pmatrix} a & 1 \\\\ 0 & a \\end{pmatrix}^2 = \\begin{pmatrix} a^2 & 2a \\\\ 0 & a^2 \\end{pmatrix}$. So $a^2 = 9$ and $2a = 6$. The corner fixes the sign: $a = 3$, and $a = -3$ would give $-6$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "type": "numeric",
+          "answer": 3,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. $A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$. Write down $3A$.\n2. Work out $\\begin{pmatrix} 3 & -1 \\\\ 2 & 5 \\end{pmatrix}\\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix}$.\n3. Work out $\\begin{pmatrix} 4 & -2 \\\\ 1 & 3 \\end{pmatrix}\\begin{pmatrix} 1 & 5 \\\\ 2 & 0 \\end{pmatrix}$.\n\n**Part B.**\n\n4. With the same two matrices, work out $\\begin{pmatrix} 1 & 5 \\\\ 2 & 0 \\end{pmatrix}\\begin{pmatrix} 4 & -2 \\\\ 1 & 3 \\end{pmatrix}$ and confirm it differs from question 3.\n5. $A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$. Work out $A^2$.\n6. $\\begin{pmatrix} 2 & k \\\\ 1 & 3 \\end{pmatrix}\\begin{pmatrix} 3 \\\\ -1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix}$. Find $k$.\n\n**Part C.**\n\n7. $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 6 \\end{pmatrix}$. Find $x$ and $y$.\n8. Show that $C = \\begin{pmatrix} 1 & 3 \\\\ 2 & -1 \\end{pmatrix}$ satisfies $C^2 = 7I$.\n9. $P = \\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$. Write down $P^{10}$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "(6 3; 9 12)"
+                ],
+                [
+                  "2",
+                  "(9; −11)"
+                ],
+                [
+                  "3",
+                  "(0 20; 7 5)"
+                ],
+                [
+                  "4",
+                  "(9 13; 8 −4)"
+                ],
+                [
+                  "5",
+                  "(7 6; 18 19)"
+                ],
+                [
+                  "6",
+                  "k = 4"
+                ],
+                [
+                  "7",
+                  "x = −2, y = 3"
+                ],
+                [
+                  "8",
+                  "C² = (7 0; 0 7) = 7I"
+                ],
+                [
+                  "9",
+                  "(1 20; 0 1)"
+                ]
+              ]
+            },
+            "alt": "A table of the answers to the nine practice questions on scalar multiples, matrix products, powers and unknown entries, each matrix written row by row"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- Only $2 \\times 2$ and $2 \\times 1$ matrices appear. A scalar in front multiplies every entry.\n- To multiply: **row of the first, column of the second**, multiply the pairs and add. A $2 \\times 2$ times a column gives a column, the image of a point; a $2 \\times 2$ times a $2 \\times 2$ gives a $2 \\times 2$.\n- $AB \\ne BA$ in general; the letters keep their order, the brackets can move: $(AB)\\mathbf{v} = A(B\\mathbf{v})$.\n- $I = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}$ leaves everything unchanged. $A^2 = AA$, never the entries squared; watch for $R^2 = -I$, $C^2 = kI$ and patterns in $P^n$.\n- Unknown entries: multiply out with the letters in, match entries, solve, and use the entry left over to check.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Matrix × column",
+                  "equation": "row across, column down, add",
+                  "units": ""
+                },
+                {
+                  "name": "Matrix × matrix",
+                  "equation": "row of the first with each column of the second",
+                  "units": ""
+                },
+                {
+                  "name": "Identity",
+                  "equation": "I = (1 0; 0 1); AI = IA = A",
+                  "units": ""
+                },
+                {
+                  "name": "Order",
+                  "equation": "AB ≠ BA; (AB)v = A(Bv)",
+                  "units": ""
+                }
+              ]
+            },
+            "alt": "An equation card with the row-by-column rule for a matrix times a column and a matrix times a matrix, the identity matrix, and the note that order matters but brackets do not"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Write down the top-right entry of $5\\begin{pmatrix} 1 & -2 \\\\ 0 & 3 \\end{pmatrix}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a scalar multiple",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A scalar multiplies every entry: $5\\begin{pmatrix} 1 & -2 \\\\ 0 & 3 \\end{pmatrix} = \\begin{pmatrix} 5 & -10 \\\\ 0 & 15 \\end{pmatrix}$. The top-right entry is $5 \\times (-2) = -10$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−10"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": -10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q2",
+      "prompt": "Work out the top entry of $\\begin{pmatrix} 3 & -1 \\\\ 2 & 5 \\end{pmatrix}\\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a matrix times a column",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Top row with the column: $3 \\times 2 + (-1) \\times (-3) = 6 + 3 = 9$. The bottom entry is $2 \\times 2 + 5 \\times (-3) = -11$, so the product is $\\begin{pmatrix} 9 \\\\ -11 \\end{pmatrix}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "prompt": "$A$ is a $2 \\times 2$ matrix and $\\mathbf{v}$ is a $2 \\times 1$ column. Which of these products is defined?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "which products are defined",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Row of the first, column of the second: the first must have as many columns as the second has rows. $A$ has $2$ columns and $\\mathbf{v}$ has $2$ rows, so $A\\mathbf{v}$ works and gives a column. With $\\mathbf{v}$ on the left there is one column to pair with two rows, so $\\mathbf{v}A$ and $\\mathbf{v}\\mathbf{v}$ are not defined.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$A\\mathbf{v}$, a $2 \\times 2$ times a $2 \\times 1$, giving a $2 \\times 1$ column"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$A\\mathbf{v}$, a $2 \\times 2$ times a $2 \\times 1$, giving a $2 \\times 1$ column",
+        "$\\mathbf{v}A$, a $2 \\times 1$ times a $2 \\times 2$, giving a $2 \\times 2$ matrix",
+        "$\\mathbf{v}A$, a $2 \\times 1$ times a $2 \\times 2$, giving a $2 \\times 1$ column",
+        "$\\mathbf{v}\\mathbf{v}$, a $2 \\times 1$ times a $2 \\times 1$, giving a number"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "Work out the top-right entry of $\\begin{pmatrix} 4 & -2 \\\\ 1 & 3 \\end{pmatrix}\\begin{pmatrix} 1 & 5 \\\\ 2 & 0 \\end{pmatrix}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "an entry of a matrix product",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Top row of the first, $4, -2$, with the right column of the second, $5, 0$: $4 \\times 5 + (-2) \\times 0 = 20$. The whole product is $\\begin{pmatrix} 0 & 20 \\\\ 7 & 5 \\end{pmatrix}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q5",
+      "prompt": "Which matrix is the $2 \\times 2$ identity matrix $I$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the identity matrix",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The identity has ones on the diagonal and zeros elsewhere, so that $AI = IA = A$. The all-ones matrix squares to all twos, $\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$ swaps the two entries of a column, and the zero matrix sends everything to zero.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$\\begin{pmatrix} 1 & 1 \\\\ 1 & 1 \\end{pmatrix}$",
+        "$\\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}$",
+        "$\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$",
+        "$\\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix}$"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q6",
+      "prompt": "$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$ and $B = \\begin{pmatrix} 1 & 0 \\\\ 2 & -1 \\end{pmatrix}$. Work out the bottom-right entry of $BA$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a product the other way round",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$BA$ has $B$ on the left. Bottom row of $B$, $2, -1$, with the right column of $A$, $1, 4$: $2 \\times 1 + (-1) \\times 4 = -2$. In $AB$ that entry is $-4$: the order changes the answer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−2"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": -2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q7",
+      "prompt": "$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$. Work out the bottom-right entry of $A^2$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a power of a matrix",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$A^2 = AA$. Bottom row with the right column: $3 \\times 1 + 4 \\times 4 = 3 + 16 = 19$. Squaring the entry, $4^2 = 16$, is not the same sum. $A^2 = \\begin{pmatrix} 7 & 6 \\\\ 18 & 19 \\end{pmatrix}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "19"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 19,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q8",
+      "prompt": "$\\begin{pmatrix} a & 2 \\\\ 1 & b \\end{pmatrix}\\begin{pmatrix} 3 & 1 \\\\ 0 & 2 \\end{pmatrix} = \\begin{pmatrix} 6 & 6 \\\\ 3 & 9 \\end{pmatrix}$. Work out the value of $b$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "unknown entries from a product",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiply out with the letters in: the product is $\\begin{pmatrix} 3a & a + 4 \\\\ 3 & 1 + 2b \\end{pmatrix}$. Bottom right: $1 + 2b = 9$, so $b = 4$. Top left gives $a = 2$, and then $a + 4 = 6$ checks.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "product in terms of a and b"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "b = 4"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q9",
+      "prompt": "The matrix $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$ transforms the point $(1, 2)$. Write down the coordinates of its image.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the image of a point",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Write the point as a column and multiply: $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 2 + 2 \\\\ 3 + 8 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 11 \\end{pmatrix}$. The image is $(4, 11)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(4, 11)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(4, 11)",
+        "x = 4, y = 11"
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "$\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} 5 \\\\ 15 \\end{pmatrix}$. Work out the value of $y$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a point from its image",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The product gives two equations: $2x + y = 5$ and $3x + 4y = 15$. Four times the first minus the second: $5x = 5$, so $x = 1$ and $y = 5 - 2 = 3$. Check: $3 + 12 = 15$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both equations"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "y = 3"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q11",
+      "prompt": "$C = \\begin{pmatrix} 1 & 3 \\\\ 2 & -1 \\end{pmatrix}$ and $C^2 = kI$. Work out the value of $k$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a square that is a multiple of the identity",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Square it: top left $1 \\times 1 + 3 \\times 2 = 7$, top right $1 \\times 3 + 3 \\times (-1) = 0$, bottom left $2 \\times 1 + (-1) \\times 2 = 0$, bottom right $2 \\times 3 + (-1) \\times (-1) = 7$. So $C^2 = \\begin{pmatrix} 7 & 0 \\\\ 0 & 7 \\end{pmatrix} = 7I$ and $k = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "all four entries of C² attempted"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "k = 7"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "prompt": "$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$. The image of the point $P(x, y)$ under $A$ is $(-1, 6)$.\n\n(a) Show that $2x + y = -1$ and $3x + 4y = 6$.\n\n(b) Work out the coordinates of $P$.\n\n(c) Work out the image of $P$ under $A^2$.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "a point from its image, then a second application",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** $A\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} 2x + y \\\\ 3x + 4y \\end{pmatrix}$, and this equals $\\begin{pmatrix} -1 \\\\ 6 \\end{pmatrix}$, so $2x + y = -1$ and $3x + 4y = 6$: the top row gives the first equation and the bottom row the second.\n\n**(b)** Four times the first equation is $8x + 4y = -4$; subtracting the second gives $5x = -10$, so $x = -2$. Then $y = -1 - 2(-2) = 3$. Check in the second: $3(-2) + 4(3) = -6 + 12 = 6$. So $P = (-2, 3)$.\n\n**(c)** $A^2$ applied to $P$ is $A$ applied to the image of $P$, because $A^2\\mathbf{p} = A(A\\mathbf{p})$. The image of $P$ under $A$ is $(-1, 6)$, so apply $A$ once more: $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} -1 \\\\ 6 \\end{pmatrix} = \\begin{pmatrix} -2 + 6 \\\\ -3 + 24 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 21 \\end{pmatrix}$. Alternatively $A^2 = \\begin{pmatrix} 7 & 6 \\\\ 18 & 19 \\end{pmatrix}$ applied to $(-2, 3)$: $-14 + 18 = 4$ and $-36 + 57 = 21$. Either way the image is $(4, 21)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "both equations from the product"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "elimination"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = −2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "y = 3 with check"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "A applied to (−1, 6), or A² found"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(4, 21)"
+        }
+      ],
+      "discriminators": [
+        "show-that",
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Writes the product as a column and reads off both equations.",
+          "marks": 1
+        },
+        {
+          "text": "Eliminates one unknown correctly.",
+          "marks": 1
+        },
+        {
+          "text": "x = −2.",
+          "marks": 1
+        },
+        {
+          "text": "y = 3, with a check in the other equation.",
+          "marks": 1
+        },
+        {
+          "text": "Uses A² = (7 6; 18 19) or applies A to (−1, 6).",
+          "marks": 1
+        },
+        {
+          "text": "Image (4, 21).",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** $A\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} 2x + y \\\\ 3x + 4y \\end{pmatrix}$, and this equals $\\begin{pmatrix} -1 \\\\ 6 \\end{pmatrix}$, so $2x + y = -1$ and $3x + 4y = 6$: the top row gives the first equation and the bottom row the second.\n\n**(b)** Four times the first equation is $8x + 4y = -4$; subtracting the second gives $5x = -10$, so $x = -2$. Then $y = -1 - 2(-2) = 3$. Check in the second: $3(-2) + 4(3) = -6 + 12 = 6$. So $P = (-2, 3)$.\n\n**(c)** $A^2$ applied to $P$ is $A$ applied to the image of $P$, because $A^2\\mathbf{p} = A(A\\mathbf{p})$. The image of $P$ under $A$ is $(-1, 6)$, so apply $A$ once more: $\\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}\\begin{pmatrix} -1 \\\\ 6 \\end{pmatrix} = \\begin{pmatrix} -2 + 6 \\\\ -3 + 24 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 21 \\end{pmatrix}$. Alternatively $A^2 = \\begin{pmatrix} 7 & 6 \\\\ 18 & 19 \\end{pmatrix}$ applied to $(-2, 3)$: $-14 + 18 = 4$ and $-36 + 57 = 21$. Either way the image is $(4, 21)$."
+    },
+    {
+      "id": "q13",
+      "prompt": "$S = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$ and $R = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$. A student claims $SR = RS$. Which statement is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "testing a claim about order",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Work both out. $SR$: row $1$ of $S$, $0, 1$, with the columns of $R$ gives $1$ and $0$; row $2$, $1, 0$, gives $0$ and $-1$: $SR = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$. $RS$: row $1$ of $R$, $0, -1$, gives $-1$ and $0$; row $2$, $1, 0$, gives $0$ and $1$: $RS = \\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$. They differ, so the claim is false. Both products are defined; commutativity is not a property of matrices.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The claim is false: $SR = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ but $RS = \\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "The claim is true: both products equal $\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ because each matrix has the same entries in a different order",
+        "The claim is true: matrix multiplication is commutative whenever both matrices are $2 \\times 2$",
+        "The claim is false: $SR = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ but $RS = \\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$",
+        "The claim is false: $SR$ is defined but $RS$ is not, because $R$ has a negative entry"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q14",
+      "prompt": "$\\begin{pmatrix} 2 & 3 \\\\ 1 & 4 \\end{pmatrix}\\begin{pmatrix} a \\\\ b \\end{pmatrix} = \\begin{pmatrix} 8 \\\\ 9 \\end{pmatrix}$. Work out the value of $a$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "unknowns in the column",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The product gives $2a + 3b = 8$ and $a + 4b = 9$. Twice the second is $2a + 8b = 18$; subtract the first: $5b = 10$, so $b = 2$ and $a = 9 - 8 = 1$. Check: $2 + 6 = 8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both equations"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "a = 1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "prompt": "$R = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$. Work out the smallest positive integer $n$ for which $R^n = I$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a power returning to the identity",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$R^2$: top left $0 \\times 0 + (-1) \\times 1 = -1$, top right $0$, bottom left $0$, bottom right $-1$, so $R^2 = -I$. Then $R^3 = R^2 R = -R$, which is not $I$, and $R^4 = (R^2)^2 = (-I)^2 = I$. The smallest such $n$ is $4$: a quarter turn repeated four times is a full turn.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "R² = −I"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "n = 4 with R³ ≠ I noted"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "prompt": "$P = \\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$. Work out the top-right entry of $P^{10}$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a pattern in the powers",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$P^2 = \\begin{pmatrix} 1 & 4 \\\\ 0 & 1 \\end{pmatrix}$ and $P^3 = \\begin{pmatrix} 1 & 6 \\\\ 0 & 1 \\end{pmatrix}$: each extra factor of $P$ adds $2$ to the corner while the other entries stay $1, 0, 1$. So $P^n$ has top-right entry $2n$, and $P^{10}$ has $20$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P² and P³ found, or the pattern 2n stated"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "prompt": "$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$, $B = \\begin{pmatrix} 1 & 0 \\\\ 2 & -1 \\end{pmatrix}$ and $\\mathbf{v} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}$.\n\n(a) Work out $AB$.\n\n(b) Work out $(AB)\\mathbf{v}$.\n\n(c) Work out $B\\mathbf{v}$, and hence $A(B\\mathbf{v})$.\n\n(d) Work out $BA$, and state what parts (b) to (d) show about the order of matrix products.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "brackets move, letters do not",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** Row of $A$, column of $B$: $AB = \\begin{pmatrix} 2 + 2 & 0 - 1 \\\\ 3 + 8 & 0 - 4 \\end{pmatrix} = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix}$.\n\n**(b)** $(AB)\\mathbf{v} = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix}\\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 4 - 2 \\\\ 11 - 8 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$.\n\n**(c)** $B\\mathbf{v} = \\begin{pmatrix} 1 + 0 \\\\ 2 - 2 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}$, and then $A\\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$, the same column as (b).\n\n**(d)** $BA = \\begin{pmatrix} 2 + 0 & 1 + 0 \\\\ 4 - 3 & 2 - 4 \\end{pmatrix} = \\begin{pmatrix} 2 & 1 \\\\ 1 & -2 \\end{pmatrix}$, which is not $AB$. So the brackets in a chain of products can be moved, $(AB)\\mathbf{v} = A(B\\mathbf{v})$, but the letters cannot be swapped: $AB \\ne BA$. The order in which matrices are written is the order that counts.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "AB"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(AB)v"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Bv"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A(Bv)"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "BA"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the conclusion in words"
+        }
+      ],
+      "discriminators": [
+        "show-that",
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "AB = (4 −1; 11 −4).",
+          "marks": 1
+        },
+        {
+          "text": "(AB)v = (2; 3).",
+          "marks": 1
+        },
+        {
+          "text": "Bv = (1; 0).",
+          "marks": 1
+        },
+        {
+          "text": "A(Bv) = (2; 3).",
+          "marks": 1
+        },
+        {
+          "text": "BA = (2 1; 1 −2).",
+          "marks": 1
+        },
+        {
+          "text": "States that (AB)v = A(Bv) but BA ≠ AB: brackets move, letters do not.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** Row of $A$, column of $B$: $AB = \\begin{pmatrix} 2 + 2 & 0 - 1 \\\\ 3 + 8 & 0 - 4 \\end{pmatrix} = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix}$.\n\n**(b)** $(AB)\\mathbf{v} = \\begin{pmatrix} 4 & -1 \\\\ 11 & -4 \\end{pmatrix}\\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 4 - 2 \\\\ 11 - 8 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$.\n\n**(c)** $B\\mathbf{v} = \\begin{pmatrix} 1 + 0 \\\\ 2 - 2 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}$, and then $A\\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}$, the same column as (b).\n\n**(d)** $BA = \\begin{pmatrix} 2 + 0 & 1 + 0 \\\\ 4 - 3 & 2 - 4 \\end{pmatrix} = \\begin{pmatrix} 2 & 1 \\\\ 1 & -2 \\end{pmatrix}$, which is not $AB$. So the brackets in a chain of products can be moved, $(AB)\\mathbf{v} = A(B\\mathbf{v})$, but the letters cannot be swapped: $AB \\ne BA$. The order in which matrices are written is the order that counts."
+    },
+    {
+      "id": "q18",
+      "prompt": "$A = \\begin{pmatrix} 2 & 1 \\\\ 3 & 4 \\end{pmatrix}$ and $AM = \\begin{pmatrix} 13 & 11 \\\\ 37 & 19 \\end{pmatrix}$. Which matrix is $M$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "recovering a factor of a product",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Test the candidate by multiplying: $A\\begin{pmatrix} 3 & 5 \\\\ 7 & 1 \\end{pmatrix}$ has top left $2 \\times 3 + 1 \\times 7 = 13$, top right $2 \\times 5 + 1 \\times 1 = 11$, bottom left $3 \\times 3 + 4 \\times 7 = 37$ and bottom right $3 \\times 5 + 4 \\times 1 = 19$: all four match. A product is not undone by subtracting or by dividing entry by entry; the only check is to multiply.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\begin{pmatrix} 3 & 5 \\\\ 7 & 1 \\end{pmatrix}$, since $2 \\times 3 + 1 \\times 7 = 13$ and the other three entries also match"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "$\\begin{pmatrix} 7 & 1 \\\\ 3 & 5 \\end{pmatrix}$, since $2 \\times 7 + 1 \\times 3 = 17$ is close to $13$ once the rows are swapped",
+        "$\\begin{pmatrix} 11 & 10 \\\\ 34 & 15 \\end{pmatrix}$, since subtracting $A$ from $AM$ undoes the multiplication",
+        "$\\begin{pmatrix} 6.5 & 11 \\\\ 12.3 & 4.75 \\end{pmatrix}$, since dividing each entry of $AM$ by the matching entry of $A$ undoes the product",
+        "$\\begin{pmatrix} 3 & 5 \\\\ 7 & 1 \\end{pmatrix}$, since $2 \\times 3 + 1 \\times 7 = 13$ and the other three entries also match"
+      ],
+      "correct": [
+        3
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 12
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 32
+    }
+  },
+  "examTechnique": {
+    "body": "Matrix questions are short and worth the working. A product is marked on the row-by-column sums, so write them out even when they are easy: a correct set-up with one arithmetic slip keeps the method mark, and a bare wrong matrix gets nothing. Keep the answer in matrix form, with the brackets, unless a single entry or a value is asked for.\n\nRead the order in the question and keep it: *$BA$* has $B$ on the left. When entries are unknown, multiply out with the letters in, match the entries you need, and check the ones you did not use. For a power, multiply; do not square the entries. For a point from its image, the product gives two simultaneous equations, and a check in the second equation costs ten seconds. Everything here is Paper 1 arithmetic with small integers, so an unlikely-looking number is a sign to recompute one sum.",
+    "examinerErrors": [
+      "Pairing rows with rows, or columns with columns, instead of a row of the first with a column of the second.",
+      "Working out $AB$ when the question asked for $BA$, or assuming they are equal.",
+      "Squaring each entry for $A^2$ instead of multiplying $A$ by $A$.",
+      "Multiplying only the diagonal entries by a scalar.",
+      "Writing a $2 \\times 1$ column on the left of a $2 \\times 2$ matrix and inventing a product.",
+      "Solving for an unknown from one entry and never checking it against the others.",
+      "Dropping the brackets and giving four loose numbers as the answer."
+    ],
+    "grade9Looks": "A grade 9 answer writes every product as the row-by-column sums, keeps the order of the letters exactly as the question wrote it, and checks a result with the entry it did not need. It treats a power as repeated multiplication and notices when a square is $-I$ or a multiple of $I$, states a pattern in $P^n$ from two computed powers rather than a guess, and turns an image back into a point through two simultaneous equations with a substitution check. Its answers stay in matrix form with brackets, and a scalar is taken out in front when it makes the matrix cleaner."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
