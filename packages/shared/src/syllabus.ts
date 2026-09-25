@@ -606,4 +606,110 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Short analysis essays', topicId: 'short-analysis-essays' },
     ] },
   ],
+  /**
+   * English is two subjects here, both ordered by the school's one English overview
+   * (docs/curriculum/english.md), which teaches the two qualifications as a single course
+   * and names its units by the exam's own papers and sections. The Language rows are those
+   * sections, question by question. Year 9's Romeo and Juliet and Of Mice and Men are not
+   * examined, so their rows point at the skill each was chosen to teach. Language in Year 11
+   * is revision of both papers, listed so the student can see what the class revisits.
+   */
+  'english-language': [
+    { year: 9, term: 'Autumn 2', topics: [
+      { title: 'Letter writing: letters, speeches and articles' },
+    ] },
+    { year: 9, term: 'Spring 1', topics: [
+      { title: 'Of Mice and Men: language techniques and their effect' },
+    ] },
+    { year: 9, term: 'Spring 2', topics: [
+      { title: 'Narrative writing' },
+    ] },
+    { year: 9, term: 'Summer 1', topics: [
+      { title: 'Descriptive writing' },
+    ] },
+    { year: 9, term: 'Summer 2', topics: [
+      { title: 'Paper 2 writing: a letter, speech or article from a prompt' },
+      { title: 'Social change: reading 19th-century non-fiction' },
+    ] },
+    { year: 10, term: 'Autumn 2', topics: [
+      { title: 'Paper 1 Questions 1 and 2: finding information and analysing language' },
+      { title: 'Paper 1 Question 3: how the writer structures the text' },
+      { title: 'Paper 1 Question 4: evaluating a statement' },
+      { title: 'Paper 1 Question 5: descriptive writing' },
+      { title: 'Paper 1 Question 5: narrative writing' },
+      { title: 'Technical accuracy: sentences, punctuation and spelling' },
+    ] },
+    { year: 10, term: 'Spring 1', topics: [
+      { title: 'Paper 2 Questions 1 and 2: true statements and the summary' },
+      { title: 'Paper 2 Question 3: language in non-fiction' },
+      { title: 'Paper 2 Question 4: comparing viewpoints and perspectives' },
+      { title: 'Reading 19th-century non-fiction' },
+      { title: 'Paper 2 Question 5: arguing a point of view' },
+      { title: 'Paper 2 Question 5: letters, speeches and articles' },
+    ] },
+    { year: 10, term: 'Summer 2', topics: [
+      { title: 'Speaking and Listening: the spoken language endorsement' },
+    ] },
+    { year: 11, term: 'Autumn 1', topics: [
+      { title: 'Paper 1 revision: finding information and analysing language' },
+      { title: 'Paper 1 revision: structure' },
+      { title: 'Paper 1 revision: evaluating a statement' },
+      { title: 'Paper 1 revision: descriptive and narrative writing' },
+      { title: 'Paper 1 revision: technical accuracy' },
+    ] },
+    { year: 11, term: 'Autumn 2 and Spring 1', topics: [
+      { title: 'Paper 2 revision: true statements and the summary' },
+      { title: 'Paper 2 revision: language in non-fiction' },
+      { title: 'Paper 2 revision: comparing viewpoints and perspectives' },
+      { title: 'Paper 2 revision: 19th-century non-fiction' },
+      { title: 'Paper 2 revision: arguing a point of view in a letter, speech or article' },
+    ] },
+  ],
+  'english-literature': [
+    { year: 9, term: 'Autumn 1', topics: [
+      { title: 'Romeo and Juliet: analysing an extract' },
+    ] },
+    { year: 9, term: 'Summer 1', topics: [
+      { title: 'Introduction to conflict poetry' },
+    ] },
+    { year: 9, term: 'Summer 2', topics: [
+      { title: 'Social change and links to An Inspector Calls' },
+    ] },
+    { year: 10, term: 'Autumn 1', topics: [
+      { title: 'An Inspector Calls: plot and structure' },
+      { title: 'An Inspector Calls: the Birlings and Gerald' },
+      { title: 'An Inspector Calls: the Inspector and Eva Smith' },
+      { title: 'An Inspector Calls: responsibility, class, age and gender' },
+      { title: 'An Inspector Calls: context and the essay question' },
+    ] },
+    { year: 10, term: 'Spring 2', topics: [
+      { title: 'Macbeth: plot and structure' },
+      { title: 'Macbeth: Macbeth and Lady Macbeth' },
+      { title: 'Macbeth: Banquo, Macduff, Duncan and the witches' },
+    ] },
+    { year: 10, term: 'Summer 1', topics: [
+      { title: 'Macbeth: ambition, power, guilt and the supernatural' },
+      { title: 'Macbeth: context and the extract question' },
+    ] },
+    { year: 11, term: 'Autumn 1', topics: [
+      { title: 'Jekyll and Hyde: plot and structure' },
+      { title: 'Jekyll and Hyde: Jekyll, Hyde, Utterson and Lanyon' },
+    ] },
+    { year: 11, term: 'Autumn 2', topics: [
+      { title: 'Jekyll and Hyde: duality, secrecy, science and reputation' },
+      { title: 'Jekyll and Hyde: context and the extract question' },
+    ] },
+    { year: 11, term: 'Spring 1', topics: [
+      { title: 'Power and Conflict: the cluster and the comparison question' },
+      { title: 'The power of humans: Ozymandias, London, My Last Duchess and Tissue' },
+      { title: 'The power of nature: The Prelude, Storm on the Island and Exposure' },
+      { title: 'The reality of war: The Charge of the Light Brigade, Bayonet Charge, Remains and Kamikaze' },
+      { title: 'Memory, identity and loss: Poppies, War Photographer, The Emigrée and Checking Out Me History' },
+    ] },
+    { year: 11, term: 'Spring 2', topics: [
+      { title: 'An Inspector Calls revision: plot, characters, themes and context' },
+      { title: 'Unseen poetry: analysing one poem' },
+      { title: 'Unseen poetry: comparing two poems' },
+    ] },
+  ],
 }

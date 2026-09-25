@@ -51,7 +51,7 @@ export function Subjects() {
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-8">
       <header className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold leading-tight">Subjects</h1>
-        <p className="text-ink-2">Eight GCSEs at Higher tier, plus Further Maths, taught in full depth. Topics appear here as they are written.</p>
+        <p className="text-ink-2">Ten GCSEs and Further Maths, taught in full depth. Topics appear here as they are written.</p>
       </header>
 
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

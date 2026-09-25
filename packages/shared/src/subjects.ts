@@ -2,6 +2,7 @@
 export type SubjectId =
   | 'maths' | 'further-maths' | 'physics' | 'chemistry' | 'biology'
   | 'computer-science' | 'business' | 'french' | 'music'
+  | 'english-language' | 'english-literature'
 
 export interface Unit {
   id: string
@@ -43,6 +44,14 @@ export const SUBJECTS: Subject[] = [
   // 2026, with musical elements first because every set work is described through them.
   { id: 'music', name: 'Music', board: 'Edexcel 1MU0', phase: 3, colour: '#6B4E9B',
     units: [{ id: 'musical-elements', name: 'Musical elements and language' }, { id: 'instrumental-music-1700-1820', name: 'Instrumental music 1700 to 1820' }, { id: 'vocal-music', name: 'Vocal music' }, { id: 'music-for-stage-and-screen', name: 'Music for stage and screen' }, { id: 'fusions', name: 'Fusions' }] },
+  // English is two GCSEs with two specifications, two sets of papers and two sets of
+  // assessment objectives, so it is two subjects here, each with its own exam guide.
+  // Language's units are the four exam sections plus the spoken language endorsement;
+  // Literature's are the school's set texts (docs/curriculum/english.md).
+  { id: 'english-language', name: 'English Language', board: 'AQA 8700', phase: 3, colour: '#B0263A',
+    units: [{ id: 'reading-fiction', name: 'Paper 1 reading: fiction' }, { id: 'creative-writing', name: 'Paper 1 writing: description and narrative' }, { id: 'reading-non-fiction', name: 'Paper 2 reading: non-fiction' }, { id: 'writing-viewpoints', name: 'Paper 2 writing: viewpoints' }, { id: 'spoken-language', name: 'Spoken language' }] },
+  { id: 'english-literature', name: 'English Literature', board: 'AQA 8702', phase: 3, colour: '#5B6B1F',
+    units: [{ id: 'macbeth', name: 'Macbeth' }, { id: 'jekyll-and-hyde', name: 'The Strange Case of Dr Jekyll and Mr Hyde' }, { id: 'an-inspector-calls', name: 'An Inspector Calls' }, { id: 'power-and-conflict', name: 'Power and Conflict poetry' }, { id: 'unseen-poetry', name: 'Unseen poetry' }] },
 ]
 
 export function getSubject(id: string): Subject | undefined {

@@ -23,6 +23,7 @@ const SUBJECTS = [
   ['maths', 'Mathematics'], ['further-maths', 'Further Maths'], ['physics', 'Physics'],
   ['chemistry', 'Chemistry'], ['biology', 'Biology'], ['computer-science', 'Computer Science'],
   ['business', 'Business'], ['french', 'French'], ['music', 'Music'],
+  ['english-language', 'English Language'], ['english-literature', 'English Literature'],
 ]
 
 /**

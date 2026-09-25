@@ -25,6 +25,8 @@ export const LEVEL_NAMES: Record<SubjectId, string[]> = {
   business: ['Idea', 'Start-up', 'Sole trader', 'Partnership', 'Ltd', 'Brand', 'Franchise', 'PLC', 'Multinational', 'Conglomerate', 'Entrepreneur'],
   french: ['Débutant', 'A1', 'A1+', 'A2', 'A2+', 'B1', 'B1+', 'B2', 'B2+', 'C1', 'Francophone'],
   music: ['ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'sfz', 'Crescendo', 'Maestro'],
+  'english-language': ['Word', 'Phrase', 'Clause', 'Sentence', 'Paragraph', 'Draft', 'Editor', 'Columnist', 'Essayist', 'Author', 'Wordsmith'],
+  'english-literature': ['Reader', 'Line', 'Stanza', 'Scene', 'Act', 'Chapter', 'Volume', 'Critic', 'Scholar', 'Laureate', 'Bard'],
 }
 
 export interface LevelInfo {

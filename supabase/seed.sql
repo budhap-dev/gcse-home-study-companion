@@ -10,7 +10,9 @@ insert into public.subjects (id, name, board, phase, colour, sort) values
   ('computer-science', 'Computer Science', 'AQA 8525', 3, '#1F3A93', 6),
   ('business', 'Business', 'Edexcel 1BS0', 3, '#8A6D1D', 7),
   ('french', 'French', 'Edexcel 1FR1', 3, '#A83E6B', 8),
-  ('music', 'Music', 'Edexcel 1MU0', 3, '#6B4E9B', 9);
+  ('music', 'Music', 'Edexcel 1MU0', 3, '#6B4E9B', 9),
+  ('english-language', 'English Language', 'AQA 8700', 3, '#B0263A', 10),
+  ('english-literature', 'English Literature', 'AQA 8702', 3, '#5B6B1F', 11);
 
 insert into public.subject_thresholds (subject_id) select id from public.subjects;
 
@@ -82,4 +84,14 @@ insert into public.units (subject_id, id, name, sort) values
   ('music', 'instrumental-music-1700-1820', 'Instrumental music 1700 to 1820', 2),
   ('music', 'vocal-music', 'Vocal music', 3),
   ('music', 'music-for-stage-and-screen', 'Music for stage and screen', 4),
-  ('music', 'fusions', 'Fusions', 5);
+  ('music', 'fusions', 'Fusions', 5),
+  ('english-language', 'reading-fiction', 'Paper 1 reading: fiction', 1),
+  ('english-language', 'creative-writing', 'Paper 1 writing: description and narrative', 2),
+  ('english-language', 'reading-non-fiction', 'Paper 2 reading: non-fiction', 3),
+  ('english-language', 'writing-viewpoints', 'Paper 2 writing: viewpoints', 4),
+  ('english-language', 'spoken-language', 'Spoken language', 5),
+  ('english-literature', 'macbeth', 'Macbeth', 1),
+  ('english-literature', 'jekyll-and-hyde', 'The Strange Case of Dr Jekyll and Mr Hyde', 2),
+  ('english-literature', 'an-inspector-calls', 'An Inspector Calls', 3),
+  ('english-literature', 'power-and-conflict', 'Power and Conflict poetry', 4),
+  ('english-literature', 'unseen-poetry', 'Unseen poetry', 5);
