@@ -52,6 +52,17 @@ interface Circle {
   colour?: string
   dashed?: boolean
 }
+/**
+ * Free text at graph coordinates: the letters of a geometry figure, put where there is
+ * room. A point's own label sits a fixed offset from its marker, and on a circle with
+ * chords and radii every such offset has a line through it.
+ */
+interface FreeLabel {
+  x: number
+  y: number
+  text: string
+  anchor?: 'start' | 'middle' | 'end'
+}
 interface Curve {
   /** y = a x² + b x + c, plus cube·x³ when a cubic is wanted */
   a: number
@@ -83,8 +94,10 @@ interface Curve {
  * so small ranges such as 0 to 0.2 still get a scale), waves [{fn, amplitude, label}]
  * for y = sin x, y = cos x and y = tan x with x in degrees, circles [{cx, cy, r}], and
  * square true to give both axes the same unit length so a circle comes out round, and
- * polygons [{points, label, open?}] for shapes on the axes, open for a polyline. A curve
- * may also carry `base` (with optional `scale`) for the exponential y = scale x base^x.
+ * polygons [{points, label, open?}] for shapes on the axes, open for a polyline, and
+ * labels [{x, y, text, anchor?}] for free text such as the letters of a geometry figure.
+ * A curve may also carry `base` (with optional `scale`) for the exponential
+ * y = scale x base^x.
  */
 /** The graph's width with room to spare, and the least it narrows to on a phone. */
 const WIDE = 360
@@ -99,6 +112,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const waves = (props.waves as Wave[] | undefined) ?? []
   const circles = (props.circles as Circle[] | undefined) ?? []
   const polygons = (props.polygons as Polygon[] | undefined) ?? []
+  const labels = (props.labels as FreeLabel[] | undefined) ?? []
   const grid = props.grid !== false
   const xLabel = typeof props.xLabel === 'string' ? props.xLabel : undefined
   const yLabel = typeof props.yLabel === 'string' ? props.yLabel : undefined
@@ -380,6 +394,9 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
             return <text x={lx} y={clear(lx, ly, p.label, 12, left ? 'end' : 'start')} textAnchor={left ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{p.label}</text>
           })()}
         </g>
+      ))}
+      {labels.map((l, i) => (
+        <text key={`t${i}`} x={sx(l.x)} y={clear(sx(l.x), sy(l.y), l.text, 12, l.anchor ?? 'middle')} textAnchor={l.anchor ?? 'middle'} fontFamily={FONT} fontSize="12" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{l.text}</text>
       ))}
     </svg>
   )

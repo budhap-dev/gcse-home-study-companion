@@ -31,6 +31,119 @@
       "body": "The $y$ coordinate of the point comes from the **curve**, and the gradient comes from the **gradient function**. Substituting $x$ into $\\frac{dy}{dx}$ to find $y$ is a common and expensive slip, because everything downstream of it is then wrong."
     }
   ],
+  "why": {
+    "matters": "A tangent is the straight line a curve is following at one point, and a normal is the line straight out from it. That pair is what a road engineer draws where a slip road leaves a bend, what a lens designer uses where a ray meets a curved surface, and what the exam asks for in four steps: the point, the gradient, the tangent, the normal. The sign of the gradient is the other half of the topic: positive means increasing, negative means decreasing, and *where is this quantity rising* becomes an inequality solved by factorising the derivative. Both ideas are the previous topic's rule with a line, or a sign, attached.",
+    "examples": [
+      {
+        "title": "Leaving the bend",
+        "body": "A car that skids on a curved road leaves it along the tangent, and a slip road is built to do the same on purpose. For the lesson's curve $y = x^3 - 2x$ at $x = 1$, the point is $(1, -1)$, the gradient is $3(1)^2 - 2 = 1$, and the tangent is $y = x - 2$: that is the straight line the car would follow. The normal, $y = -x$, is the direction a barrier would face to meet the car square on.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "Tangent and normal at x = 1 on y = x³ − 2x",
+            "boxes": [
+              {
+                "title": "Point",
+                "body": "(1, −1)"
+              },
+              {
+                "title": "Gradient",
+                "body": "dy/dx = 3x² − 2 = 1"
+              },
+              {
+                "title": "Tangent",
+                "body": "y = x − 2: the line the car follows"
+              },
+              {
+                "title": "Normal",
+                "body": "y = −x: square on to the tangent"
+              }
+            ]
+          },
+          "alt": "Four boxes on the tangent and normal at x equals one on the lesson curve: the point, the gradient, the tangent line and the normal line"
+        }
+      },
+      {
+        "title": "When is it rising?",
+        "body": "A quantity that follows $y = x^3 - 3x^2$, the lesson's example, is rising whenever its gradient $3x^2 - 6x = 3x(x - 2)$ is positive: for $x < 0$ and for $x > 2$, and falling in between. A firm asking when its profit is growing, or a doctor asking when a dose in the blood is still climbing, is asking the same question, and the answer comes from the sign of a factorised derivative, not from the value of $y$.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "x",
+              "dy/dx = 3x(x − 2)",
+              "Sign",
+              "The quantity is"
+            ],
+            "rows": [
+              [
+                "−1",
+                "9",
+                "positive",
+                "increasing"
+              ],
+              [
+                "1",
+                "−3",
+                "negative",
+                "decreasing"
+              ],
+              [
+                "3",
+                "9",
+                "positive",
+                "increasing"
+              ],
+              [
+                "0 and 2",
+                "0",
+                "zero",
+                "momentarily still"
+              ]
+            ],
+            "title": "Positive gradient: increasing. Negative: decreasing"
+          },
+          "alt": "A table testing the sign of the derivative three x times x minus two at four values of x, showing where y equals x cubed minus three x squared is increasing and decreasing"
+        }
+      },
+      {
+        "title": "A ray meeting a lens",
+        "body": "Light bends at a curved surface by an angle measured from the normal, the line at right angles to the tangent at the point where the ray lands. An optics program finds that normal exactly as this topic does: differentiate the curve for the tangent gradient, take the negative reciprocal, and draw the line through the point. On the lesson's curve at $(1, -1)$ the tangent has gradient $1$, so the normal has gradient $-1$.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Step",
+              "On y = x³ − 2x at x = 1"
+            ],
+            "rows": [
+              [
+                "tangent gradient",
+                "dy/dx = 1"
+              ],
+              [
+                "normal gradient",
+                "−1, the negative reciprocal"
+              ],
+              [
+                "normal line",
+                "y = −x"
+              ],
+              [
+                "use in optics",
+                "angles of incidence measured from this line"
+              ]
+            ],
+            "title": "The normal: flip the gradient, change the sign"
+          },
+          "alt": "A table of the steps from the tangent gradient to the normal line at x equals one on the lesson curve, and how a lens calculation uses the normal"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -45,10 +158,10 @@
             "props": {
               "xRange": [
                 -1,
-                6
+                7.2
               ],
               "yRange": [
-                -5,
+                -4,
                 10
               ],
               "grid": true,
@@ -57,7 +170,8 @@
                   "a": 1,
                   "b": -4,
                   "c": 5,
-                  "label": "y = x² − 4x + 5"
+                  "label": "y = x² − 4x + 5",
+                  "labelX": 0.2
                 }
               ],
               "lines": [
@@ -71,9 +185,12 @@
                 {
                   "x": 3,
                   "y": 2,
-                  "label": "(3, 2)"
+                  "label": "(3, 2)",
+                  "labelBelow": true
                 }
-              ]
+              ],
+              "yStep": 5,
+              "xStep": 3
             },
             "alt": "The parabola y equals x squared minus four x plus five with its tangent drawn at the point three comma two, the tangent having gradient two"
           },
@@ -138,12 +255,12 @@
             "component": "line-graph",
             "props": {
               "xRange": [
-                -1,
-                6
+                -1.5,
+                9
               ],
               "yRange": [
-                -4,
-                8
+                -5.5,
+                9.5
               ],
               "grid": true,
               "square": true,
@@ -151,8 +268,7 @@
                 {
                   "a": 1,
                   "b": -4,
-                  "c": 5,
-                  "label": "y = x² − 4x + 5"
+                  "c": 5
                 }
               ],
               "lines": [
@@ -170,10 +286,19 @@
               "points": [
                 {
                   "x": 3,
-                  "y": 2,
-                  "label": "(3, 2)"
+                  "y": 2
                 }
-              ]
+              ],
+              "yStep": 6,
+              "yLabel": "y = x² − 4x + 5",
+              "labels": [
+                {
+                  "x": 2.85,
+                  "y": 2.7,
+                  "text": "P"
+                }
+              ],
+              "xStep": 3
             },
             "alt": "The curve with both the tangent and the normal drawn at the point three comma two, meeting at right angles, with the axes at equal scale so the right angle is visible"
           },
@@ -285,10 +410,10 @@
             "props": {
               "xRange": [
                 -2.5,
-                2.5
+                3.5
               ],
               "yRange": [
-                -4,
+                -4.5,
                 4
               ],
               "grid": true,
@@ -298,8 +423,7 @@
                   "a": 0,
                   "b": -2,
                   "c": 0,
-                  "cube": 1,
-                  "label": "y = x³ − 2x"
+                  "cube": 1
                 }
               ],
               "lines": [
@@ -317,8 +441,17 @@
               "points": [
                 {
                   "x": 1,
-                  "y": -1,
-                  "label": "(1, −1)"
+                  "y": -1
+                }
+              ],
+              "xStep": 1,
+              "yStep": 3,
+              "yLabel": "y = x³ − 2x",
+              "labels": [
+                {
+                  "x": 1,
+                  "y": -1.7,
+                  "text": "P"
                 }
               ]
             },
@@ -368,7 +501,7 @@
             "props": {
               "xRange": [
                 -1.5,
-                3.5
+                3.4
               ],
               "yRange": [
                 -5,
@@ -393,9 +526,11 @@
                 {
                   "x": 2,
                   "y": -4,
-                  "label": "(2, −4)"
+                  "label": "(2, −4)",
+                  "labelBelow": true
                 }
-              ]
+              ],
+              "xStep": 2
             },
             "alt": "The cubic y equals x cubed minus three x squared, rising to a flat point at the origin, falling to a flat point at two comma minus four, then rising again"
           },

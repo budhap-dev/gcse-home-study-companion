@@ -32,6 +32,109 @@
       "body": "Optimisation questions give you two variables and a constraint linking them. Use the constraint to eliminate one, so you have a single function of a single variable, and only then differentiate. Trying to differentiate a two-variable expression is where these go wrong."
     }
   ],
+  "why": {
+    "matters": "Most practical questions are *what is the most* or *what is the least*: the biggest pen from a fixed length of fence, the least metal for a box of a set volume, the highest point a projectile reaches. Calculus answers them all the same way. Write the quantity in one variable, differentiate, set the gradient to zero, and use the second derivative to say whether the point is a peak or a trough. The specification's word is *simple problems*, and they are: the algebra of getting to one variable is usually the whole difficulty, and the calculus is three lines.",
+    "examples": [
+      {
+        "title": "The pen against the wall",
+        "body": "A farmer with $40$ m of fence and a long wall builds a rectangular pen on three sides, the lesson's worked example. With width $x$, the area is $A = x(40 - 2x)$, and $\\frac{dA}{dx} = 40 - 4x = 0$ at $x = 10$; the second derivative is $-4$, so it is a maximum, and the biggest pen is $10$ m by $20$ m with area $200$ m². Trying widths of $5$ and $15$ gives $150$ m² each, which is what a maximum in the middle looks like.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Width x (m)",
+              "Length 40 − 2x (m)",
+              "Area (m²)"
+            ],
+            "rows": [
+              [
+                "5",
+                "30",
+                "150"
+              ],
+              [
+                "10",
+                "20",
+                "200"
+              ],
+              [
+                "15",
+                "10",
+                "150"
+              ]
+            ],
+            "title": "A = x(40 − 2x): greatest at x = 10"
+          },
+          "alt": "A table of three pen widths with the matching length and area, showing the greatest area of two hundred square metres at a width of ten metres"
+        }
+      },
+      {
+        "title": "The least tin for a box",
+        "body": "A closed box with a square base of side $x$ cm must hold $27$ cm³, the lesson's second worked example. Its surface area is $S = 2x^2 + \\frac{108}{x}$, and $\\frac{dS}{dx} = 4x - \\frac{108}{x^2} = 0$ gives $x^3 = 27$, so $x = 3$: the height is $27 \\div 9 = 3$ too, the box is a cube, and the least surface is $54$ cm². A packaging firm runs this sum for every product; the answer is why so many boxes are nearly cubes.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Base side x (cm)",
+              "Height 27/x² (cm)",
+              "Surface 2x² + 108/x (cm²)"
+            ],
+            "rows": [
+              [
+                "2",
+                "6.75",
+                "62"
+              ],
+              [
+                "3",
+                "3",
+                "54"
+              ],
+              [
+                "6",
+                "0.75",
+                "90"
+              ]
+            ],
+            "title": "S = 2x² + 108/x: least at x = 3"
+          },
+          "alt": "A table of three box sizes holding twenty-seven cubic centimetres with the height and surface area of each, least at a cube of side three"
+        }
+      },
+      {
+        "title": "The peak of the path",
+        "body": "The highest and lowest points of a path, a price or a temperature are where its gradient is zero. On the lesson's cubic $y = x^3 - 12x$, $\\frac{dy}{dx} = 3x^2 - 12 = 0$ at $x = \\pm 2$; the second derivative $6x$ is $-12$ at $x = -2$, a maximum at $(-2, 16)$, and $+12$ at $x = 2$, a minimum at $(2, -16)$. A sketch follows from those two points, which is how a designer draws a smooth curve from a handful of numbers.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "Stationary points of y = x³ − 12x",
+            "boxes": [
+              {
+                "title": "Differentiate",
+                "body": "dy/dx = 3x² − 12"
+              },
+              {
+                "title": "Set to zero",
+                "body": "x = −2 or x = 2"
+              },
+              {
+                "title": "Second derivative",
+                "body": "6x: −12 at −2, +12 at 2"
+              },
+              {
+                "title": "So",
+                "body": "maximum (−2, 16), minimum (2, −16)"
+              }
+            ]
+          },
+          "alt": "Four boxes on finding and classifying the stationary points of the lesson cubic: differentiate, solve, the second derivative and the conclusion"
+        }
+      }
+    ]
+  },
   "lesson": {
     "steps": [
       {
@@ -71,9 +174,11 @@
                 {
                   "x": 2,
                   "y": -4,
-                  "label": "(2, −4) min"
+                  "label": "(2, −4) min",
+                  "labelBelow": true
                 }
-              ]
+              ],
+              "xStep": 2
             },
             "alt": "The cubic y equals x cubed minus three x squared, with a maximum marked at the origin and a minimum marked at the point two comma minus four"
           },
@@ -287,13 +392,23 @@
               "points": [
                 {
                   "x": -2,
-                  "y": 16,
-                  "label": "(−2, 16) max"
+                  "y": 16
                 },
                 {
                   "x": 2,
-                  "y": -16,
-                  "label": "(2, −16) min"
+                  "y": -16
+                }
+              ],
+              "labels": [
+                {
+                  "x": -2,
+                  "y": 18,
+                  "text": "(−2, 16) max"
+                },
+                {
+                  "x": 2,
+                  "y": -18.8,
+                  "text": "(2, −16) min"
                 }
               ]
             },
@@ -663,8 +778,7 @@
                 "Curve",
                 "dy/dx",
                 "d²y/dx² at 0",
-                "Gradient before",
-                "Gradient after",
+                "Gradient before → after",
                 "What it is"
               ],
               "rows": [
@@ -672,38 +786,34 @@
                   "y = x³",
                   "3x²",
                   "0",
-                  "positive",
-                  "positive",
+                  "positive → positive",
                   "point of inflection"
                 ],
                 [
                   "y = x⁴",
                   "4x³",
                   "0",
-                  "negative",
-                  "positive",
+                  "negative → positive",
                   "minimum"
                 ],
                 [
                   "y = x²",
                   "2x",
                   "2",
-                  "negative",
-                  "positive",
+                  "negative → positive",
                   "minimum"
                 ],
                 [
                   "y = −x²",
                   "−2x",
                   "−2",
-                  "positive",
-                  "negative",
+                  "positive → negative",
                   "maximum"
                 ]
               ],
               "title": "A zero second derivative settles nothing"
             },
-            "alt": "A table of four curves showing that two different kinds of stationary point can both have a second derivative of zero"
+            "alt": "A table of four curves showing that two different shapes, a point of inflection on y equals x cubed and a minimum on y equals x to the fourth, both have a zero second derivative at the origin, and that the sign of the gradient before and after the point tells them apart"
           }
         ],
         "check": {

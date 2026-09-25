@@ -1,0 +1,1573 @@
+{
+  "id": "transformations-of-the-unit-square",
+  "subjectId": "further-maths",
+  "unitId": "matrix-transformations",
+  "title": "Transformations of the unit square",
+  "specPoints": [
+    "5.3",
+    "5.4"
+  ],
+  "order": 2,
+  "year": 11,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "The columns are where (1, 0) and (0, 1) go",
+      "body": "First column: the image of $(1, 0)$. Second column: the image of $(0, 1)$. To write a matrix, send those two points and write the answers down as columns; to read one, take the columns out and draw them. $(1, 1)$ goes to the sum of the columns and $O$ never moves."
+    },
+    {
+      "kind": "spot",
+      "title": "Anticlockwise is positive",
+      "body": "A rotation of $90°$ sends $(1, 0)$ up to $(0, 1)$: matrix $(0\\ {-1}; 1\\ 0)$. If $(1, 0)$ goes down to $(0, -1)$ the turn is clockwise: the rotation of $270°$ in the specification's list, with anticlockwise taken as positive: $(0\\ 1; {-1}\\ 0)$. Say the direction and the centre in every description."
+    },
+    {
+      "kind": "remember",
+      "title": "A then B is BA",
+      "body": "The first transformation is nearest the point: $B(A\\mathbf{p}) = (BA)\\mathbf{p}$. Reflect in $y = x$ then in $x = 0$ is $(-1\\ 0; 0\\ 1)(0\\ 1; 1\\ 0) = (0\\ {-1}; 1\\ 0)$, a quarter turn anticlockwise; the other order turns clockwise. Write the product with the first on the right."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Take the scalar out and name what is left",
+      "body": "$(0\\ {-2}; 2\\ 0) = 2(0\\ {-1}; 1\\ 0)$: an enlargement of scale factor $2$ with a rotation of $90°$ anticlockwise, both centred on the origin. The area of the image is $k^2$ times the original. $kI$ commutes with everything, so its order does not matter."
+    },
+    {
+      "kind": "check",
+      "title": "Follow one vertex through by hand",
+      "body": "After a product, send $(1, 0)$ through the transformations one at a time and compare with the first column of your matrix. Reflect $(1, 0)$ in $y = x$: $(0, 1)$; then in $x = 0$: $(0, 1)$. The product $(0\\ {-1}; 1\\ 0)$ has first column $(0, 1)$. Agreed."
+    }
+  ],
+  "why": {
+    "matters": "Every rotation, reflection and enlargement in this topic is a $2 \\times 2$ matrix, and once a transformation is a matrix, doing two of them is a product and doing one a hundred times is a power. That is how screens, games and robot arms handle motion: the shape is stored once, and a matrix moves it. The unit square is the test shape because its two vertices $(1, 0)$ and $(0, 1)$ are the columns of the matrix, so a matrix can be read as a picture and a picture written as a matrix. The specification keeps to quarter turns, four mirror lines and enlargements about the origin, which is enough to see the one surprise: order matters, and two mirrors make a turn.",
+    "examples": [
+      {
+        "title": "Rotating a sprite",
+        "body": "A game turns a character a quarter turn anticlockwise by multiplying every point of it by $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$: the point $(3, -2)$ on the sprite goes to $(2, 3)$, as on this topic's later page, and every other point follows the same rule. Turning it again is the matrix squared, $-I$, a half turn, and four turns give $I$: the code checks itself by confirming the sprite is back where it started.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Turns",
+              "Matrix",
+              "Where (3, −2) is"
+            ],
+            "rows": [
+              [
+                "1",
+                "(0 −1; 1 0)",
+                "(2, 3)"
+              ],
+              [
+                "2",
+                "(−1 0; 0 −1)",
+                "(−3, 2)"
+              ],
+              [
+                "3",
+                "(0 1; −1 0)",
+                "(−2, −3)"
+              ],
+              [
+                "4",
+                "I",
+                "(3, −2), back at the start"
+              ]
+            ],
+            "title": "Powers of the quarter-turn matrix move one point round"
+          },
+          "alt": "A table of the point three minus two after one, two, three and four quarter turns anticlockwise, with the matrix for each"
+        }
+      },
+      {
+        "title": "The mirror in the phone",
+        "body": "A front camera shows a mirror image, and the app flips it back with a reflection in $x = 0$: $\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$, which sends each $(x, y)$ to $(-x, y)$. Rotating the phone adds a quarter turn, and the order of the two is the difference between reflecting in $y = x$ and in $y = -x$, the pair of results on this topic's grade 9 page. Software applies them as one product, $BA$, computed once and used for every pixel.",
+        "visual": {
+          "type": "diagram",
+          "component": "four-box",
+          "props": {
+            "centre": "Flip, then turn",
+            "boxes": [
+              {
+                "title": "Flip in x = 0",
+                "body": "(−1 0; 0 1): (x, y) → (−x, y)"
+              },
+              {
+                "title": "Quarter turn",
+                "body": "(0 −1; 1 0)"
+              },
+              {
+                "title": "Flip then turn",
+                "body": "(0 −1; 1 0)(−1 0; 0 1) = (0 −1; −1 0): reflection in y = −x"
+              },
+              {
+                "title": "Turn then flip",
+                "body": "(0 1; 1 0): reflection in y = x"
+              }
+            ]
+          },
+          "alt": "Four boxes showing a reflection in the y axis and a quarter turn combined in both orders, giving reflections in y equals minus x and y equals x"
+        }
+      },
+      {
+        "title": "Scaling a map tile",
+        "body": "Zooming a map is an enlargement centred on the corner of the screen: $\\begin{pmatrix} 2 & 0 \\\\ 0 & 2 \\end{pmatrix}$ doubles every coordinate, and a tile that was the unit square becomes the square with corners $(2, 0)$, $(2, 2)$ and $(0, 2)$, four times the area. Because $2I$ commutes with every matrix, zooming then rotating the map gives the same picture as rotating then zooming, which is why an app can do them in either order.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Scale factor k",
+              "Matrix",
+              "Image of (1, 1)",
+              "Area of the tile"
+            ],
+            "rows": [
+              [
+                "2",
+                "(2 0; 0 2)",
+                "(2, 2)",
+                "4"
+              ],
+              [
+                "3",
+                "(3 0; 0 3)",
+                "(3, 3)",
+                "9"
+              ],
+              [
+                "½",
+                "(½ 0; 0 ½)",
+                "(½, ½)",
+                "¼"
+              ],
+              [
+                "1",
+                "I",
+                "(1, 1)",
+                "1"
+              ]
+            ],
+            "title": "Area scales by k²"
+          },
+          "alt": "A table of four enlargement scale factors with the matrix, the image of the corner one one and the area of the tile, which scales by k squared"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "The unit square, and what the columns of a matrix mean",
+        "body": "The **unit square** has vertices $O(0, 0)$, $(1, 0)$, $(1, 1)$ and $(0, 1)$. When a $2 \\times 2$ matrix multiplies each vertex as a column, the square is moved to its **image**, and the whole transformation is fixed by where two vertices go:\n\n$$\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}\\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} a \\\\ c \\end{pmatrix} \\qquad \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}\\begin{pmatrix} 0 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} b \\\\ d \\end{pmatrix}$$\n\n**The first column is the image of $(1, 0)$; the second column is the image of $(0, 1)$.** The origin always stays put, and the fourth vertex $(1, 1)$ goes to the sum of the two columns. So a matrix can be *read* as a picture, and a picture can be *written* as a matrix, by looking at those two points.\n\nTake $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$. Its columns say $(1, 0) \\to (0, 1)$ and $(0, 1) \\to (-1, 0)$: each point has turned a quarter of the way round anticlockwise. The square's image has vertices $(0, 0)$, $(0, 1)$, $(-1, 1)$, $(-1, 0)$: a **rotation of $90°$ anticlockwise about the origin**. Anticlockwise is the positive direction throughout.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -2,
+                2
+              ],
+              "yRange": [
+                -2,
+                2
+              ],
+              "grid": true,
+              "square": true,
+              "xStep": 2,
+              "yStep": 2,
+              "points": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "label": "(1, 0)",
+                  "labelBelow": true,
+                  "free": true
+                },
+                {
+                  "x": -1,
+                  "y": 0,
+                  "label": "(−1, 0)",
+                  "labelBelow": true,
+                  "free": true
+                },
+                {
+                  "x": -1,
+                  "y": 1,
+                  "label": "(−1, 1)",
+                  "free": true
+                }
+              ],
+              "polygons": [
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      1,
+                      0
+                    ],
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      0,
+                      1
+                    ]
+                  ],
+                  "label": "S"
+                },
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      1
+                    ],
+                    [
+                      -1,
+                      1
+                    ],
+                    [
+                      -1,
+                      0
+                    ]
+                  ],
+                  "label": "S′",
+                  "dashed": true
+                }
+              ]
+            },
+            "alt": "The unit square S with vertices at the origin, one zero, one one and zero one, and its image S dash under a quarter turn anticlockwise, with vertices at the origin, zero one, minus one one and minus one zero"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Matrix",
+                "(1, 0) goes to",
+                "(0, 1) goes to",
+                "So it is"
+              ],
+              "rows": [
+                [
+                  "(0 −1; 1 0)",
+                  "(0, 1)",
+                  "(−1, 0)",
+                  "rotation 90° anticlockwise"
+                ],
+                [
+                  "(−1 0; 0 −1)",
+                  "(−1, 0)",
+                  "(0, −1)",
+                  "rotation 180°"
+                ],
+                [
+                  "(0 1; −1 0)",
+                  "(0, −1)",
+                  "(1, 0)",
+                  "rotation 270° anticlockwise"
+                ],
+                [
+                  "(1 0; 0 1)",
+                  "(1, 0)",
+                  "(0, 1)",
+                  "the identity: nothing moves"
+                ]
+              ],
+              "title": "First column: image of (1, 0). Second column: image of (0, 1)"
+            },
+            "alt": "A table reading four matrices as transformations from where they send the points one zero and zero one: the three rotations about the origin and the identity"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "prompt": "Write down the image of the point $(1, 0)$ under the matrix $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "reading a column as an image",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The image of $(1, 0)$ is the first column: $(0, -1)$. Multiply to confirm: $0 \\times 1 + 1 \\times 0 = 0$ and $-1 \\times 1 + 0 \\times 0 = -1$. The point has turned a quarter turn clockwise.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(0, −1)"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "(0, -1)",
+            "x = 0, y = -1"
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "The rotations and the reflections the specification names",
+        "body": "The specification restricts the transformations to **rotations of $90°$, $180°$ and $270°$ about the origin**, **reflections in $x = 0$, $y = 0$, $y = x$ and $y = -x$**, and **enlargements centred on the origin**. Each has a matrix, and each matrix is found the same way: where do $(1, 0)$ and $(0, 1)$ go?\n\n**Reflection in $y = 0$**, the $x$ axis: $(1, 0)$ stays, $(0, 1)$ flips to $(0, -1)$: $\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$.\n**Reflection in $x = 0$**, the $y$ axis: $(1, 0) \\to (-1, 0)$, $(0, 1)$ stays: $\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$.\n**Reflection in $y = x$** swaps the coordinates: $(1, 0) \\to (0, 1)$ and $(0, 1) \\to (1, 0)$: $\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$. The unit square lands on itself, corner for corner swapped.\n**Reflection in $y = -x$**: $(1, 0) \\to (0, -1)$ and $(0, 1) \\to (-1, 0)$: $\\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$.\n\n**Rotations** use the same two points: $180°$ sends $(1, 0) \\to (-1, 0)$ and $(0, 1) \\to (0, -1)$, giving $\\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$; $270°$ anticlockwise, which is $90°$ clockwise, gives $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$. Do not memorise eight matrices: draw the two points, read the columns.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Transformation",
+                "(1, 0) →",
+                "(0, 1) →",
+                "Matrix"
+              ],
+              "rows": [
+                [
+                  "reflect in y = 0",
+                  "(1, 0)",
+                  "(0, −1)",
+                  "(1 0; 0 −1)"
+                ],
+                [
+                  "reflect in x = 0",
+                  "(−1, 0)",
+                  "(0, 1)",
+                  "(−1 0; 0 1)"
+                ],
+                [
+                  "reflect in y = x",
+                  "(0, 1)",
+                  "(1, 0)",
+                  "(0 1; 1 0)"
+                ],
+                [
+                  "reflect in y = −x",
+                  "(0, −1)",
+                  "(−1, 0)",
+                  "(0 −1; −1 0)"
+                ],
+                [
+                  "rotate 90° anticlockwise",
+                  "(0, 1)",
+                  "(−1, 0)",
+                  "(0 −1; 1 0)"
+                ],
+                [
+                  "rotate 180°",
+                  "(−1, 0)",
+                  "(0, −1)",
+                  "(−1 0; 0 −1)"
+                ],
+                [
+                  "rotate 270° anticlockwise",
+                  "(0, −1)",
+                  "(1, 0)",
+                  "(0 1; −1 0)"
+                ]
+              ],
+              "title": "Every matrix comes from two points"
+            },
+            "alt": "A table of the four reflections and three rotations in the specification, with where each sends one zero and zero one and the resulting two by two matrix"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "prompt": "Which matrix represents a reflection in the $y$ axis, the line $x = 0$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the matrix of a reflection",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "Reflecting in the $y$ axis changes the sign of $x$ and leaves $y$ alone: $(1, 0) \\to (-1, 0)$ is the first column and $(0, 1) \\to (0, 1)$ is the second, so the matrix is $\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$. Changing the sign of $y$ is reflection in the $x$ axis, swapping is reflection in $y = x$, and the last matrix is a rotation.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$, because $(1, 0)$ goes to $(-1, 0)$ and $(0, 1)$ stays"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "$\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$, because $(1, 0)$ goes to $(-1, 0)$ and $(0, 1)$ stays",
+            "$\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$, because the $y$ coordinate changes sign",
+            "$\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$, because reflecting swaps the coordinates",
+            "$\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, because the $y$ axis is a quarter turn from the $x$ axis"
+          ],
+          "correct": [
+            0
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "explain",
+        "title": "Enlargements, and reading a matrix you have not seen before",
+        "body": "An **enlargement with scale factor $k$ centred on the origin** multiplies both coordinates by $k$: $(1, 0) \\to (k, 0)$ and $(0, 1) \\to (0, k)$, so the matrix is $\\begin{pmatrix} k & 0 \\\\ 0 & k \\end{pmatrix}$, which is $kI$. With $k = 3$ the unit square becomes the square with vertices $(0, 0)$, $(3, 0)$, $(3, 3)$, $(0, 3)$, of area $9$; area scales by $k^2$. With $k = \\frac{1}{2}$, $(1, 1) \\to \\left(\\frac{1}{2}, \\frac{1}{2}\\right)$ and the square shrinks.\n\n**To describe a matrix you are given**, apply it to $(1, 0)$ and $(0, 1)$ and draw the image of the square. $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$ sends $(1, 0)$ to $(0, -1)$: down, so the square has turned clockwise, and the second column $(1, 0)$ confirms a quarter turn. The answer is written in full, *a rotation of $90°$ clockwise about the origin* (or $270°$ anticlockwise); *rotation* alone scores nothing, and the centre must be named.\n\n**A matrix that does two things** looks like $\\begin{pmatrix} 3 & 0 \\\\ 0 & -3 \\end{pmatrix}$: $(1, 0) \\to (3, 0)$ and $(0, 1) \\to (0, -3)$, an enlargement of scale factor $3$ combined with a reflection in the $x$ axis. Its image of the unit square is the square with vertices $(0, 0)$, $(3, 0)$, $(3, -3)$, $(0, -3)$, below the axis.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                -1,
+                4
+              ],
+              "yRange": [
+                -1,
+                4
+              ],
+              "grid": true,
+              "square": true,
+              "xStep": 1,
+              "yStep": 1,
+              "points": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "label": "(3, 3)",
+                  "free": true
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "label": "(1, 1)",
+                  "free": true
+                }
+              ],
+              "polygons": [
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      1,
+                      0
+                    ],
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      0,
+                      1
+                    ]
+                  ],
+                  "label": "S"
+                },
+                {
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      3,
+                      0
+                    ],
+                    [
+                      3,
+                      3
+                    ],
+                    [
+                      0,
+                      3
+                    ]
+                  ],
+                  "label": "S′",
+                  "dashed": true
+                }
+              ]
+            },
+            "alt": "The unit square S and its image under an enlargement of scale factor three centred on the origin, the square with vertices at the origin, three zero, three three and zero three"
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Matrix",
+                "Image of (1, 0)",
+                "Image of (0, 1)",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "(3 0; 0 3)",
+                  "(3, 0)",
+                  "(0, 3)",
+                  "enlargement, scale factor 3, centre O"
+                ],
+                [
+                  "(½ 0; 0 ½)",
+                  "(½, 0)",
+                  "(0, ½)",
+                  "enlargement, scale factor ½, centre O"
+                ],
+                [
+                  "(0 1; −1 0)",
+                  "(0, −1)",
+                  "(1, 0)",
+                  "rotation 90° clockwise about O"
+                ],
+                [
+                  "(3 0; 0 −3)",
+                  "(3, 0)",
+                  "(0, −3)",
+                  "enlargement 3 with reflection in y = 0"
+                ]
+              ],
+              "title": "Describe in full: type, angle or scale factor, centre or mirror line"
+            },
+            "alt": "A table of four matrices, where each sends one zero and zero one, and the full description of the transformation, including an enlargement combined with a reflection"
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "prompt": "The unit square is transformed by $\\begin{pmatrix} 3 & 0 \\\\ 0 & 3 \\end{pmatrix}$. Work out the area of the image.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "the area after an enlargement",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The matrix is an enlargement of scale factor $3$ centred on the origin, so the image is the square with vertices $(0, 0)$, $(3, 0)$, $(3, 3)$, $(0, 3)$. Its area is $3 \\times 3 = 9$, which is $k^2$ times the unit square's area of $1$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "9"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 9,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Combining transformations: multiply, in the right order",
+        "body": "*The unit square is reflected in $y = x$, and the image is then reflected in $x = 0$. Find the matrix of the single transformation equivalent to the combination, and describe it.*\n\nA point $\\mathbf{p}$ goes first to $M_1\\mathbf{p}$, then to $M_2(M_1\\mathbf{p}) = (M_2 M_1)\\mathbf{p}$. So **the matrix for $M_1$ followed by $M_2$ is $M_2 M_1$**: the first transformation sits on the right, next to the point. This is the one place the previous topic's *order matters* bites.\n\n$M_1 = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$ and $M_2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$, so\n\n$$M_2 M_1 = \\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix} = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$$\n\nwhich sends $(1, 0) \\to (0, 1)$ and $(0, 1) \\to (-1, 0)$: **a rotation of $90°$ anticlockwise about the origin**. Follow one vertex to check: $(1, 0)$ reflects in $y = x$ to $(0, 1)$, which reflects in $x = 0$ to $(0, 1)$, the same as the product gives.\n\nThe other order, $M_1 M_2 = \\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$, is the rotation of $90°$ *clockwise*. Two reflections make a rotation, and which way it turns depends on which mirror came first.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Reflection in y = x, then reflection in x = 0.",
+            "steps": [
+              {
+                "text": "$M_1 = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$, $M_2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$",
+                "note": "the two matrices, from the two points each"
+              },
+              {
+                "text": "Combined matrix $= M_2 M_1$",
+                "note": "the first transformation goes on the right"
+              },
+              {
+                "text": "$\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix} = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$",
+                "note": "row of the first, column of the second"
+              },
+              {
+                "text": "$(1, 0) \\to (0, 1)$ and $(0, 1) \\to (-1, 0)$",
+                "note": "read the columns"
+              },
+              {
+                "text": "Rotation of $90°$ anticlockwise about the origin",
+                "note": "the full description: type, angle, direction, centre"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "prompt": "A transformation with matrix $P$ is followed by one with matrix $Q$. Which matrix represents the combination?",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the order of a combination",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "A point $\\mathbf{p}$ becomes $P\\mathbf{p}$, and then $Q(P\\mathbf{p}) = (QP)\\mathbf{p}$, so the combined matrix is $QP$ with the first transformation on the right. $PQ$ is generally a different matrix, and matrices are never added to combine transformations.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "$QP$, because the point is multiplied by $P$ first and then the result by $Q$"
+            }
+          ],
+          "discriminators": [],
+          "type": "multiple-choice",
+          "options": [
+            "$PQ$, because the transformations are written in the order they happen, left to right",
+            "$QP$, because the point is multiplied by $P$ first and then the result by $Q$",
+            "$P + Q$, because the two transformations are added together",
+            "$PQ$ or $QP$, because matrix products do not depend on order"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "explain",
+        "title": "Squares, repeats and what comes back to I",
+        "body": "Doing a transformation twice is the matrix squared, so the previous topic's powers have pictures.\n\n**Any reflection twice is the identity**: $\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}^2 = I$, because reflecting back across the same mirror undoes the first reflection. **A quarter turn twice is a half turn**: $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}^2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$, the rotation of $180°$, and four quarter turns give $I$. So *describe the transformation represented by $N^2$* for $N = \\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$ is answered by computing $N^2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$, a rotation of $180°$ about the origin, or by seeing that $N$ is a quarter turn clockwise and two of them make a half turn. Show the product; the geometry is the check.\n\n**An enlargement combines with anything, in either order**, because $kI$ commutes with every matrix: $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 2 & 0 \\\\ 0 & 2 \\end{pmatrix} = \\begin{pmatrix} 0 & -2 \\\\ 2 & 0 \\end{pmatrix}$ whichever way round, an enlargement of scale factor $2$ with a rotation of $90°$ anticlockwise. The unit square goes to $(0, 0)$, $(0, 2)$, $(-2, 2)$, $(-2, 0)$.\n\n**Two reflections in perpendicular mirrors** give the half turn in either order: reflecting in $y = x$ then $y = -x$, or the other way, both give $\\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$. Two reflections in mirrors at $45°$ give a quarter turn, and the order sets the direction, as the worked example showed.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Combination",
+                "Product",
+                "Single transformation"
+              ],
+              "rows": [
+                [
+                  "reflection in y = x, twice",
+                  "I",
+                  "nothing moves"
+                ],
+                [
+                  "rotation 90°, twice",
+                  "(−1 0; 0 −1)",
+                  "rotation 180°"
+                ],
+                [
+                  "rotation 90°, four times",
+                  "I",
+                  "a full turn"
+                ],
+                [
+                  "enlargement 2, then rotation 90°",
+                  "(0 −2; 2 0)",
+                  "the same in either order"
+                ],
+                [
+                  "reflection in y = x, then y = −x",
+                  "(−1 0; 0 −1)",
+                  "rotation 180°, either order"
+                ]
+              ],
+              "title": "Repeats and combinations as products"
+            },
+            "alt": "A table of five combinations of transformations with the matrix product and the single transformation it is equivalent to"
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "prompt": "$R = \\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$ represents a rotation. Work out the smallest positive integer $n$ for which $R^n = I$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "a rotation repeated",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$R$ sends $(1, 0)$ to $(0, -1)$: a quarter turn clockwise. $R^2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ is the half turn, $R^3$ is three quarters, and $R^4 = I$ is a full turn. The smallest such $n$ is $4$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "4"
+            }
+          ],
+          "discriminators": [],
+          "type": "numeric",
+          "answer": 4,
+          "tolerance": 0,
+          "unitsRequired": false
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "From a picture to a matrix, and from an image to a point",
+        "body": "**Given the image of the unit square, write the matrix.** Find where $(1, 0)$ and $(0, 1)$ went, and write those as the columns. If the image has vertices $(0, 0)$, $(0, -1)$, $(1, -1)$, $(1, 0)$, with $(1, 0)$ mapped to $(0, -1)$, then $(0, 1)$ went to $(1, 0)$, so the matrix is $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$. The same square is also the image under a reflection in $y = 0$, which sends $(1, 0)$ to itself, so a question has to say where one vertex went. The vertex $(1, 1)$ goes to the sum of the columns, $(1, -1)$, which is the check that the two columns were read from the right vertices.\n\n**Given an image, find the point.** If a rotation of $90°$ anticlockwise sends $P$ to $(-4, 6)$, then $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} -y \\\\ x \\end{pmatrix} = \\begin{pmatrix} -4 \\\\ 6 \\end{pmatrix}$, so $x = 6$ and $y = 4$: $P = (6, 4)$. With a matrix that mixes the coordinates, the two rows give two simultaneous equations, as in the previous topic.\n\n**Images of other points** use the same multiplication: under the reflection in $y = -x$, $(3, -2) \\to \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}\\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix}$; under the quarter turn anticlockwise, $(3, -2) \\to (2, 3)$. A sketch of the point and its image confirms the direction.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Find P if the rotation of 90° anticlockwise about O sends P to (−4, 6).",
+            "steps": [
+              {
+                "text": "Matrix $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$",
+                "note": "columns: (1, 0) → (0, 1), (0, 1) → (−1, 0)"
+              },
+              {
+                "text": "$\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} -y \\\\ x \\end{pmatrix}$",
+                "note": "multiply with the letters in"
+              },
+              {
+                "text": "$-y = -4$ and $x = 6$",
+                "note": "match the entries"
+              },
+              {
+                "text": "$P = (6, 4)$",
+                "note": "the point before the turn"
+              },
+              {
+                "text": "Check: $(6, 4)$ turns to $(-4, 6)$",
+                "note": "a quarter turn anticlockwise moves the point from the first quadrant to the second"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "prompt": "The point $(3, -2)$ is reflected in the line $y = -x$. Write down the coordinates of its image.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "the image of a point under a reflection",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "The matrix for reflection in $y = -x$ is $\\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$. Multiplying: $0 \\times 3 + (-1)(-2) = 2$ and $(-1)(3) + 0 = -3$, so the image is $(2, -3)$: each coordinate becomes the negative of the other.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "(2, −3)"
+            }
+          ],
+          "discriminators": [],
+          "type": "short-text",
+          "accepted": [
+            "(2, -3)",
+            "x = 2, y = -3"
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "grade-9",
+        "title": "Going deeper: the questions that combine the pieces",
+        "body": "**Describe geometrically.** The phrase means the full description: *rotation, $90°$, clockwise, about the origin*; *reflection in the line $y = -x$*; *enlargement, scale factor $3$, centre the origin*. Each missing part is a lost mark. The route is always the two columns, drawn if in doubt.\n\n**A combination, then a description.** *$A$ represents a reflection in $y = 0$ and $B$ a rotation of $90°$ anticlockwise. Describe the single transformation equivalent to $A$ followed by $B$.* Matrix $BA = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix} = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$: reflection in $y = x$. The other order, $AB = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$, is reflection in $y = -x$. The question has been written to catch the wrong order.\n\n**A matrix with an enlargement inside it.** $\\begin{pmatrix} 0 & -2 \\\\ 2 & 0 \\end{pmatrix}$ is $2\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$: take the scalar out and what is left is a named rotation. Describe both parts, and give the area of the image as $k^2 = 4$ if it is asked.\n\n**Back to the point.** *The image of $P$ under the matrix is $(-4, 6)$.* Multiply with $x$ and $y$ in, match entries, solve. The same question can be asked about the unit square in reverse: *which vertex of the square went to $(-1, 1)$?*",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "four-box",
+            "props": {
+              "centre": "A transformation question, at grade 9",
+              "boxes": [
+                {
+                  "title": "Describe",
+                  "body": "type, angle and direction or scale factor or mirror line, and the centre"
+                },
+                {
+                  "title": "Combine",
+                  "body": "A then B is BA; the first transformation is on the right"
+                },
+                {
+                  "title": "Take out a scalar",
+                  "body": "kM is an enlargement of scale factor k with whatever M is; area × k²"
+                },
+                {
+                  "title": "Reverse",
+                  "body": "letters in the column, match entries, solve for the point"
+                }
+              ]
+            },
+            "alt": "Four boxes on the grade 9 shapes of a transformation question: the full description, the order of a combination, a scalar taken out of a matrix, and finding a point from its image"
+          }
+        ],
+        "check": {
+          "id": "c7",
+          "prompt": "$A = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$, a reflection in the $x$ axis, and $B = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, a rotation of $90°$ anticlockwise about $O$. What single transformation is equivalent to $A$ followed by $B$?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "describing a combination",
+          "calculator": "non-calculator",
+          "tags": [],
+          "solution": "$A$ first, then $B$, is the product $BA$: $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix} = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$, which swaps the coordinates: reflection in $y = x$. $AB$ is the other order and gives reflection in $y = -x$. A reflection followed by a rotation is a reflection, not a rotation.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "Reflection in the line $y = x$, because $BA = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$"
+            }
+          ],
+          "discriminators": [
+            "multi-topic"
+          ],
+          "type": "multiple-choice",
+          "options": [
+            "Rotation of $180°$ about $O$, because a reflection and a quarter turn together make a half turn",
+            "Reflection in the line $y = -x$, because $AB = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$",
+            "Reflection in the line $y = x$, because $BA = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$",
+            "Rotation of $90°$ clockwise, because a reflection reverses the direction of the rotation"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s8",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Write down the matrix for a rotation of $90°$ anticlockwise about the origin.\n2. Write down the matrix for a reflection in the line $y = -x$.\n3. Describe fully the transformation represented by $\\begin{pmatrix} 3 & 0 \\\\ 0 & 3 \\end{pmatrix}$.\n\n**Part B.**\n\n4. Work out the image of $(3, -2)$ under a rotation of $90°$ anticlockwise about $O$.\n5. Describe fully the transformation represented by $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$.\n6. $N = \\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$. Describe the transformation represented by $N^2$.\n\n**Part C.**\n\n7. Find the matrix for a reflection in $y = x$ followed by a reflection in $x = 0$, and describe the result.\n8. The unit square is enlarged by scale factor $2$ and then rotated $90°$ anticlockwise about $O$. Find the matrix and the vertices of the image.\n9. A rotation of $90°$ anticlockwise about $O$ sends $P$ to $(-4, 6)$. Find $P$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Part",
+                "Answer"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "(0 −1; 1 0)"
+                ],
+                [
+                  "2",
+                  "(0 −1; −1 0)"
+                ],
+                [
+                  "3",
+                  "enlargement, scale factor 3, centre the origin"
+                ],
+                [
+                  "4",
+                  "(2, 3)"
+                ],
+                [
+                  "5",
+                  "rotation 90° clockwise about the origin"
+                ],
+                [
+                  "6",
+                  "rotation 180° about the origin"
+                ],
+                [
+                  "7",
+                  "(0 −1; 1 0): rotation 90° anticlockwise about O"
+                ],
+                [
+                  "8",
+                  "(0 −2; 2 0); (0, 0), (0, 2), (−2, 2), (−2, 0)"
+                ],
+                [
+                  "9",
+                  "(6, 4)"
+                ]
+              ]
+            },
+            "alt": "A table of the answers to the nine practice questions on transformation matrices, descriptions, combinations and points recovered from their images"
+          }
+        ]
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "What to carry forward",
+        "body": "- The columns of the matrix are the images of $(1, 0)$ and $(0, 1)$; $(1, 1)$ goes to their sum and $O$ stays. Read a matrix, or write one, from those two points.\n- Rotations about $O$: $90°$ anticlockwise $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, $180°$ is $-I$, $270°$ anticlockwise $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$. Anticlockwise is positive.\n- Reflections: in $y = 0$ change the sign of $y$; in $x = 0$ the sign of $x$; in $y = x$ swap; in $y = -x$ swap and negate both.\n- Enlargement, scale factor $k$, centre $O$: $kI$; area multiplies by $k^2$. A scalar in front of any matrix is an enlargement combined with it.\n- $M_1$ followed by $M_2$ is $M_2 M_1$. Describe results in full: type, angle and direction or mirror line or scale factor, and the centre.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Columns",
+                  "equation": "images of (1, 0) and (0, 1)",
+                  "units": ""
+                },
+                {
+                  "name": "Rotation 90° anticlockwise",
+                  "equation": "(0 −1; 1 0)",
+                  "units": ""
+                },
+                {
+                  "name": "Reflection in y = x",
+                  "equation": "(0 1; 1 0)",
+                  "units": ""
+                },
+                {
+                  "name": "Enlargement k, centre O",
+                  "equation": "(k 0; 0 k) = kI",
+                  "units": ""
+                },
+                {
+                  "name": "M₁ then M₂",
+                  "equation": "M₂M₁",
+                  "units": ""
+                }
+              ]
+            },
+            "alt": "An equation card with the column rule, the matrices for a quarter turn anticlockwise, reflection in y equals x and an enlargement, and the order rule for a combination"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Which matrix represents a rotation of $90°$ anticlockwise about the origin?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the matrix of a rotation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A quarter turn anticlockwise sends $(1, 0)$ to $(0, 1)$, the first column, and $(0, 1)$ to $(-1, 0)$, the second column: $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$. $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$ turns clockwise, $-I$ is the half turn and the swap matrix is reflection in $y = x$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$",
+        "$\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$",
+        "$\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$",
+        "$\\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q2",
+      "prompt": "The point $(3, -2)$ is rotated $90°$ anticlockwise about the origin. Work out the $x$-coordinate of its image.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the image of a point under a rotation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiply by $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$: $0 \\times 3 + (-1)(-2) = 2$ and $1 \\times 3 + 0 = 3$. The image is $(2, 3)$, so the $x$-coordinate is $2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "prompt": "Which transformation does the matrix $\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$ represent?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a reflection from its matrix",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The columns say $(1, 0) \\to (-1, 0)$ and $(0, 1) \\to (0, 1)$: $x$ changes sign and $y$ is unchanged, which is a reflection in the $y$ axis, the line $x = 0$. Reflection in $y = 0$ would change the sign of $y$; the half turn changes both.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Reflection in the line $x = 0$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Reflection in the line $y = -x$",
+        "Reflection in the line $x = 0$",
+        "Reflection in the line $y = 0$",
+        "Rotation of $180°$ about the origin"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q4",
+      "prompt": "Write down the image of the point $(2, 5)$ under a reflection in the line $y = x$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reflection in y = x",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Reflection in $y = x$ has matrix $\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$, which swaps the coordinates: $(2, 5) \\to (5, 2)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(5, 2)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(5, 2)",
+        "x = 5, y = 2"
+      ]
+    },
+    {
+      "id": "q5",
+      "prompt": "The unit square is transformed by the matrix $\\begin{pmatrix} 2 & 0 \\\\ 0 & 2 \\end{pmatrix}$. Work out the area of the image.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the area after an enlargement",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The matrix is $2I$, an enlargement of scale factor $2$ centred on the origin. The image is the square with vertices $(0, 0)$, $(2, 0)$, $(2, 2)$, $(0, 2)$, of area $2^2 = 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q6",
+      "prompt": "Describe fully the transformation represented by $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "describing a rotation fully",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first column sends $(1, 0)$ to $(0, -1)$, straight down, and the second sends $(0, 1)$ to $(1, 0)$: every point has turned a quarter turn clockwise about the origin, which can also be written as $270°$ anticlockwise. Anticlockwise by $90°$ would send $(1, 0)$ up to $(0, 1)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Rotation of $90°$ clockwise about the origin"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Rotation of $90°$ anticlockwise about the origin",
+        "Reflection in the line $y = x$",
+        "Rotation of $90°$ clockwise about the origin",
+        "Rotation of $180°$ about the origin"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q7",
+      "prompt": "The point $(3, -2)$ is reflected in the line $y = -x$. Write down the coordinates of the image.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reflection in y = −x",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Reflection in $y = -x$ has matrix $\\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$: each coordinate becomes the negative of the other, so $(3, -2) \\to (2, -3)$. Multiply to confirm: $0 \\times 3 + (-1)(-2) = 2$ and $(-1)(3) + 0 = -3$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(2, −3)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(2, -3)",
+        "x = 2, y = -3"
+      ]
+    },
+    {
+      "id": "q8",
+      "prompt": "$N = \\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$. Which transformation does $N^2$ represent?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a transformation done twice",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$N^2$: top left $0 \\times 0 + 1 \\times (-1) = -1$, top right $0$, bottom left $0$, bottom right $-1 \\times 1 + 0 = -1$. So $N^2 = -I$, the rotation of $180°$ about the origin. $N$ itself is a quarter turn clockwise, and two of them make a half turn; squaring the entries would be a different and wrong calculation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Rotation of $180°$ about the origin, since $N^2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "Rotation of $90°$ clockwise, since squaring a matrix squares each entry",
+        "The identity, since $N^2 = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}$, because a rotation done twice returns every point to where it started",
+        "Reflection in $y = x$, since $N^2 = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$",
+        "Rotation of $180°$ about the origin, since $N^2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q9",
+      "prompt": "The unit square is enlarged with scale factor $\\frac{1}{2}$, centre the origin. Write down the image of the vertex $(1, 1)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "an enlargement with a fractional scale factor",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The matrix is $\\begin{pmatrix} \\frac{1}{2} & 0 \\\\ 0 & \\frac{1}{2} \\end{pmatrix}$, so both coordinates halve: $(1, 1) \\to \\left(\\frac{1}{2}, \\frac{1}{2}\\right)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(½, ½)"
+        }
+      ],
+      "discriminators": [],
+      "type": "short-text",
+      "accepted": [
+        "(0.5, 0.5)",
+        "(1/2, 1/2)",
+        "x = 0.5, y = 0.5"
+      ]
+    },
+    {
+      "id": "q10",
+      "prompt": "The image of the unit square under a matrix $M$ has vertices $(0, 0)$, $(0, -1)$, $(1, -1)$ and $(1, 0)$, with $(1, 0)$ mapped to $(0, -1)$. Which matrix is $M$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "writing a matrix from an image",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The columns are the images of $(1, 0)$ and $(0, 1)$. $(1, 0)$ went to $(0, -1)$; the remaining non-origin vertices are $(1, -1)$ and $(1, 0)$, and since $(1, 1)$ goes to the sum of the columns, $(0, 1)$ went to $(1, 0)$. So $M = \\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$, a rotation of $90°$ clockwise. The anticlockwise matrix would put the image on the left of the $y$ axis.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$, because the columns are the images of $(1, 0)$ and $(0, 1)$"
+        }
+      ],
+      "discriminators": [],
+      "type": "multiple-choice",
+      "options": [
+        "$\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$, because the columns are the images of $(1, 0)$ and $(0, 1)$",
+        "$\\begin{pmatrix} 1 & -1 \\\\ 0 & 0 \\end{pmatrix}$, because the vertices $(1, -1)$ and $(0, 0)$ are the columns",
+        "$\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, because the image has turned through a right angle",
+        "$\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$, because the image is below the $x$ axis"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q11",
+      "prompt": "The unit square is reflected in the line $y = x$ and the image is then reflected in the line $x = 0$. Work out the bottom-left entry of the matrix of the single equivalent transformation.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the matrix of a combination",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Reflection in $y = x$ is $M_1 = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$ and reflection in $x = 0$ is $M_2 = \\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}$. The combination is $M_2 M_1 = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, so the bottom-left entry is $1$. That matrix is a rotation of $90°$ anticlockwise about the origin.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "M₂M₁ with the matrices the right way round"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1, from (0 −1; 1 0)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q12",
+      "prompt": "A reflection in $y = x$ is followed by a reflection in $x = 0$. What single transformation is equivalent to the combination?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "describing a combination",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiply with the first transformation on the right: $\\begin{pmatrix} -1 & 0 \\\\ 0 & 1 \\end{pmatrix}\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix} = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, which sends $(1, 0)$ to $(0, 1)$: a rotation of $90°$ anticlockwise about the origin. The other order gives the clockwise turn, and two reflections never make a reflection.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Rotation of $90°$ anticlockwise about the origin"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "Rotation of $180°$ about the origin",
+        "Rotation of $90°$ anticlockwise about the origin",
+        "Rotation of $90°$ clockwise about the origin",
+        "Reflection in the line $y = -x$, the other diagonal of the square"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q13",
+      "prompt": "The unit square is enlarged with scale factor $2$, centre the origin, and the image is then rotated $90°$ anticlockwise about the origin.\n\n(a) Write down the matrix for each transformation.\n\n(b) Work out the matrix of the single equivalent transformation.\n\n(c) Write down the coordinates of the vertices of the final image, and its area.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "an enlargement combined with a rotation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** The enlargement is $E = \\begin{pmatrix} 2 & 0 \\\\ 0 & 2 \\end{pmatrix}$ and the rotation of $90°$ anticlockwise is $R = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$.\n\n**(b)** The enlargement happens first, so it sits on the right: the combined matrix is $RE = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 2 & 0 \\\\ 0 & 2 \\end{pmatrix} = \\begin{pmatrix} 0 & -2 \\\\ 2 & 0 \\end{pmatrix}$. Because $E = 2I$ commutes with everything, $ER$ gives the same matrix here, but the product is still written in the right order.\n\n**(c)** The columns are the images of $(1, 0)$ and $(0, 1)$: $(0, 2)$ and $(-2, 0)$. The vertex $(1, 1)$ goes to their sum, $(-2, 2)$, and the origin stays. The image has vertices $(0, 0)$, $(0, 2)$, $(-2, 2)$, $(-2, 0)$: a square of side $2$ in the second quadrant, area $4$, which is $k^2 = 2^2$ times the unit square. A rotation does not change area.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "enlargement matrix"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rotation matrix"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "product with the enlargement on the right"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "(0 −2; 2 0)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "all four vertices"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "area 4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Enlargement (2 0; 0 2).",
+          "marks": 1
+        },
+        {
+          "text": "Rotation (0 −1; 1 0).",
+          "marks": 1
+        },
+        {
+          "text": "Product in the right order: rotation × enlargement.",
+          "marks": 1
+        },
+        {
+          "text": "(0 −2; 2 0).",
+          "marks": 1
+        },
+        {
+          "text": "Vertices (0, 0), (0, 2), (−2, 2), (−2, 0).",
+          "marks": 1
+        },
+        {
+          "text": "Area 4.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** The enlargement is $E = \\begin{pmatrix} 2 & 0 \\\\ 0 & 2 \\end{pmatrix}$ and the rotation of $90°$ anticlockwise is $R = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$.\n\n**(b)** The enlargement happens first, so it sits on the right: the combined matrix is $RE = \\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 2 & 0 \\\\ 0 & 2 \\end{pmatrix} = \\begin{pmatrix} 0 & -2 \\\\ 2 & 0 \\end{pmatrix}$. Because $E = 2I$ commutes with everything, $ER$ gives the same matrix here, but the product is still written in the right order.\n\n**(c)** The columns are the images of $(1, 0)$ and $(0, 1)$: $(0, 2)$ and $(-2, 0)$. The vertex $(1, 1)$ goes to their sum, $(-2, 2)$, and the origin stays. The image has vertices $(0, 0)$, $(0, 2)$, $(-2, 2)$, $(-2, 0)$: a square of side $2$ in the second quadrant, area $4$, which is $k^2 = 2^2$ times the unit square. A rotation does not change area."
+    },
+    {
+      "id": "q14",
+      "prompt": "A rotation of $90°$ anticlockwise about the origin sends the point $P$ to $(-4, 6)$. Work out the $x$-coordinate of $P$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a point from its image under a rotation",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The matrix is $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, and it sends $(x, y)$ to $(-y, x)$. So $-y = -4$ and $x = 6$: $P = (6, 4)$. Check: a quarter turn anticlockwise takes $(6, 4)$ in the first quadrant to $(-4, 6)$ in the second.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the product with x and y in, or the rule (x, y) → (−y, x)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q15",
+      "prompt": "A student says: *to find the matrix for transformation $A$ followed by transformation $B$, work out $AB$, because that is the order they happen in.* Which statement is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "evaluating a claim about order",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first transformation acts on the point first, so it is next to the column: $B(A\\mathbf{p}) = (BA)\\mathbf{p}$. The combined matrix is $BA$, with the first transformation on the right. $AB$ is usually a different transformation, as reflecting in $y = x$ then $x = 0$ and the reverse show, one a quarter turn each way. Matrices are never added to combine transformations.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "The student is wrong: a point $\\mathbf{p}$ becomes $A\\mathbf{p}$ and then $B(A\\mathbf{p}) = (BA)\\mathbf{p}$, so the matrix is $BA$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "The student is wrong: the matrix is $A + B$, because the second transformation is added on after the first",
+        "The student is right: transformations are combined by multiplying in the order they are performed, so the matrix is $AB$ with $A$ first",
+        "The student is wrong: a point $\\mathbf{p}$ becomes $A\\mathbf{p}$ and then $B(A\\mathbf{p}) = (BA)\\mathbf{p}$, so the matrix is $BA$",
+        "The student is right, because $AB$ and $BA$ are always the same matrix for transformations of the unit square"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q16",
+      "prompt": "$M$ represents a reflection in the line $y = -x$. Work out the smallest positive integer $n$ for which $M^n = I$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a reflection repeated",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$M = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$ and $M^2$: top left $0 + (-1)(-1) = 1$, top right $0$, bottom left $0$, bottom right $1$. So $M^2 = I$ and $n = 2$: reflecting twice in the same line puts every point back where it started, which is true of every reflection.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "M² computed"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "n = 2"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "prompt": "$P = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$ represents a reflection in $y = x$ and $Q = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$ represents a reflection in $y = -x$.\n\n(a) Work out $QP$ and describe the transformation it represents.\n\n(b) Work out $PQ$.\n\n(c) The two mirror lines are perpendicular. Explain, using your answers, why the order of these two reflections does not matter, and why it does matter for a reflection in $y = x$ followed by one in $x = 0$.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "when the order of two reflections matters",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "**(a)** $QP = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$: top left $0 - 1 = -1$, top right $0 + 0 = 0$, bottom left $0 + 0 = 0$, bottom right $-1 + 0 = -1$. So $QP = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$, which sends $(1, 0)$ to $(-1, 0)$ and $(0, 1)$ to $(0, -1)$: a rotation of $180°$ about the origin.\n\n**(b)** $PQ = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$: top left $0 - 1 = -1$, top right $0$, bottom left $0$, bottom right $-1$. So $PQ = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ as well.\n\n**(c)** $QP = PQ$, so reflecting in $y = x$ then $y = -x$ gives the same transformation as the reverse order: a half turn. Two reflections in mirrors at right angles always combine to a rotation of $180°$, and a half turn is the same whichever way round it is turned, so there is no direction for the order to change. Two reflections in mirrors at $45°$, such as $y = x$ and $x = 0$, combine to a quarter turn, and the order sets its direction: one product is $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, anticlockwise, and the other is $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$, clockwise. There the order matters.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "QP computed"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "rotation 180° about O"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "PQ computed"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "QP = PQ stated"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the half-turn reason"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the contrast with y = x then x = 0"
+        }
+      ],
+      "discriminators": [
+        "proof",
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 9,
+      "criteria": [
+        {
+          "text": "QP = (−1 0; 0 −1).",
+          "marks": 1
+        },
+        {
+          "text": "Rotation of 180° about the origin.",
+          "marks": 1
+        },
+        {
+          "text": "PQ = (−1 0; 0 −1).",
+          "marks": 1
+        },
+        {
+          "text": "States QP = PQ, so the same transformation either way.",
+          "marks": 1
+        },
+        {
+          "text": "Reflections in perpendicular mirrors give a half turn, which has no direction to depend on the order.",
+          "marks": 1
+        },
+        {
+          "text": "For y = x then x = 0 the products differ, (0 −1; 1 0) and (0 1; −1 0): quarter turns in opposite directions.",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "**(a)** $QP = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$: top left $0 - 1 = -1$, top right $0 + 0 = 0$, bottom left $0 + 0 = 0$, bottom right $-1 + 0 = -1$. So $QP = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$, which sends $(1, 0)$ to $(-1, 0)$ and $(0, 1)$ to $(0, -1)$: a rotation of $180°$ about the origin.\n\n**(b)** $PQ = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}\\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$: top left $0 - 1 = -1$, top right $0$, bottom left $0$, bottom right $-1$. So $PQ = \\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$ as well.\n\n**(c)** $QP = PQ$, so reflecting in $y = x$ then $y = -x$ gives the same transformation as the reverse order: a half turn. Two reflections in mirrors at right angles always combine to a rotation of $180°$, and a half turn is the same whichever way round it is turned, so there is no direction for the order to change. Two reflections in mirrors at $45°$, such as $y = x$ and $x = 0$, combine to a quarter turn, and the order sets its direction: one product is $\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$, anticlockwise, and the other is $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$, clockwise. There the order matters."
+    },
+    {
+      "id": "q18",
+      "prompt": "The image of the unit square under a matrix has vertices $(0, 0)$, $(3, 0)$, $(3, -3)$ and $(0, -3)$, with $(1, 0)$ mapped to $(3, 0)$. Which description of the transformation is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "describing a matrix that does two things",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(1, 0)$ has gone to $(3, 0)$ and $(0, 1)$ to $(0, -3)$, so the matrix is $\\begin{pmatrix} 3 & 0 \\\\ 0 & -3 \\end{pmatrix}$: every length is tripled and the square is flipped below the $x$ axis, an enlargement of scale factor $3$ with a reflection in $y = 0$. A plain enlargement would keep the square above the axis; the rotation with the enlargement would send $(1, 0)$ to $(0, -3)$, not $(3, 0)$, which is why the question says where that vertex went; scale factor $-3$ would put the image in the third quadrant.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "An enlargement of scale factor $3$, centre the origin, combined with a reflection in the $x$ axis: matrix $\\begin{pmatrix} 3 & 0 \\\\ 0 & -3 \\end{pmatrix}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "multiple-choice",
+      "options": [
+        "An enlargement of scale factor $3$, centre the origin, on its own: matrix $\\begin{pmatrix} 3 & 0 \\\\ 0 & 3 \\end{pmatrix}$, since the image is a square of side $3$",
+        "A rotation of $90°$ clockwise combined with an enlargement of scale factor $3$: matrix $\\begin{pmatrix} 0 & 3 \\\\ -3 & 0 \\end{pmatrix}$, since the image is below the axis",
+        "An enlargement of scale factor $-3$, centre the origin: matrix $\\begin{pmatrix} -3 & 0 \\\\ 0 & -3 \\end{pmatrix}$, since a vertex has a negative coordinate",
+        "An enlargement of scale factor $3$, centre the origin, combined with a reflection in the $x$ axis: matrix $\\begin{pmatrix} 3 & 0 \\\\ 0 & -3 \\end{pmatrix}$"
+      ],
+      "correct": [
+        3
+      ]
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10"
+      ],
+      "suggestedMinutes": 10
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
+      ],
+      "suggestedMinutes": 32
+    }
+  },
+  "examTechnique": {
+    "body": "A transformation question is one to four marks and asks for one of three things: the matrix for a named transformation, the description of a given matrix, or the single transformation equivalent to a combination. The matrix comes from the two points $(1, 0)$ and $(0, 1)$, drawn if in doubt; the description has to be complete, with type, angle and direction or mirror line or scale factor, and the centre, because each part carries a mark.\n\nFor a combination, write the first transformation on the right and multiply, showing the row-by-column sums, then read the columns of the answer. *Describe geometrically* means the same full sentence. A matrix with a scalar in it, such as $(0\\ {-2}; 2\\ 0)$, is an enlargement combined with a rotation: say both. When the question gives an image and asks for the point, or the image of the unit square and asks for the matrix, use the columns and check with the vertex $(1, 1)$.",
+    "examinerErrors": [
+      "Writing the columns as the images of the wrong points, or as rows.",
+      "Giving the clockwise matrix for an anticlockwise rotation; anticlockwise is positive.",
+      "Describing a transformation as *rotation* or *reflection* with no angle, direction, centre or mirror line.",
+      "Multiplying $AB$ for $A$ followed by $B$, when the combination is $BA$.",
+      "Calling $(3\\ 0; 0\\ {-3})$ an enlargement of scale factor $3$ and missing the reflection.",
+      "Squaring the entries of a matrix to find the transformation done twice.",
+      "Giving the image of the unit square as three vertices and forgetting $(1, 1)$ goes to the sum of the columns."
+    ],
+    "grade9Looks": "A grade 9 answer never memorises a matrix it can derive: it sends $(1, 0)$ and $(0, 1)$, writes the columns, and reads any given matrix back the same way. It describes a transformation in a full sentence with the centre named, puts the first transformation on the right of a product and shows the sums, and takes a scalar out of a matrix to see the enlargement inside it. It knows that two reflections make a rotation whose direction depends on the order, that a reflection squared is $I$, and that a quarter turn to the fourth power is $I$, and it uses one vertex followed through by hand as the check on every product."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q14",
+      "q15",
+      "q16",
+      "q18"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-fable-5-1",
+      "promptVersion": "topic-1"
+    }
+  }
+}
