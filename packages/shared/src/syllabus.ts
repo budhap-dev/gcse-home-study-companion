@@ -676,11 +676,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Social change and links to An Inspector Calls' },
     ] },
     { year: 10, term: 'Autumn 1', topics: [
-      { title: 'An Inspector Calls: plot and structure' },
-      { title: 'An Inspector Calls: the Birlings and Gerald' },
-      { title: 'An Inspector Calls: the Inspector and Eva Smith' },
-      { title: 'An Inspector Calls: responsibility, class, age and gender' },
-      { title: 'An Inspector Calls: context and the essay question' },
+      { title: 'An Inspector Calls: plot and structure', topicId: 'an-inspector-calls-plot-and-structure' },
+      { title: 'An Inspector Calls: the Birlings and Gerald', topicId: 'the-birlings-and-gerald' },
+      { title: 'An Inspector Calls: the Inspector and Eva Smith', topicId: 'the-inspector-and-eva-smith' },
+      { title: 'An Inspector Calls: responsibility, class, age and gender', topicId: 'an-inspector-calls-themes' },
+      { title: 'An Inspector Calls: context and the essay question', topicId: 'an-inspector-calls-context-and-the-essay-question' },
     ] },
     { year: 10, term: 'Spring 2', topics: [
       { title: 'Macbeth: plot and structure' },

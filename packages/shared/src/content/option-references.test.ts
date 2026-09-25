@@ -22,9 +22,13 @@ const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
  * Ordinals that describe something in the prompt are left alone -- "only the first of the
  * month", "only the first verb is conjugated", "the second melts over a range" are all
  * about the question's own subject matter and survive any reordering.
+ *
+ * "The last option" and "the third sentence" are the same defect with a different word; six
+ * solutions in four subjects used them on 25 September 2026, and two of those already
+ * pointed at the wrong option.
  */
 const NAMES_A_SLOT =
-  /\b(only the (?:first|second|third|fourth)\s+(?:does|is|has|gives|names|compares|starts|works|just|reads|describes|weighs)|the (?:first|second|third|fourth) (?:option|answer))\b/i
+  /\b(only the (?:first|second|third|fourth|last)\s+(?:does|is|has|gives|names|compares|starts|works|just|reads|describes|weighs)|the (?:first|second|third|fourth|last) (?:option|answer|sentence|comment|plan))\b/i
 
 interface Item { id: string; options?: string[]; solution?: string }
 interface Topic { id: string; subjectId: string; questions: Item[]; lesson: { steps: { check?: Item }[] } }
