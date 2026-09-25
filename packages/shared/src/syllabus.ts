@@ -616,7 +616,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
    */
   'english-language': [
     { year: 9, term: 'Autumn 2', topics: [
-      { title: 'Letter writing: letters, speeches and articles' },
+      { title: 'Letter writing: letters, speeches and articles', topicId: 'letters-speeches-and-articles' },
     ] },
     { year: 9, term: 'Spring 1', topics: [
       { title: 'Of Mice and Men: language techniques and their effect', topicId: 'paper-1-finding-and-analysing-language' },
@@ -628,8 +628,8 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Descriptive writing', topicId: 'descriptive-writing' },
     ] },
     { year: 9, term: 'Summer 2', topics: [
-      { title: 'Paper 2 writing: a letter, speech or article from a prompt' },
-      { title: 'Social change: reading 19th-century non-fiction' },
+      { title: 'Paper 2 writing: a letter, speech or article from a prompt', topicId: 'arguing-a-point-of-view' },
+      { title: 'Social change: reading 19th-century non-fiction', topicId: 'reading-nineteenth-century-non-fiction' },
     ] },
     { year: 10, term: 'Autumn 2', topics: [
       { title: 'Paper 1 Questions 1 and 2: finding information and analysing language', topicId: 'paper-1-finding-and-analysing-language' },
@@ -640,15 +640,15 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Technical accuracy: sentences, punctuation and spelling', topicId: 'technical-accuracy' },
     ] },
     { year: 10, term: 'Spring 1', topics: [
-      { title: 'Paper 2 Questions 1 and 2: true statements and the summary' },
-      { title: 'Paper 2 Question 3: language in non-fiction' },
-      { title: 'Paper 2 Question 4: comparing viewpoints and perspectives' },
-      { title: 'Reading 19th-century non-fiction' },
-      { title: 'Paper 2 Question 5: arguing a point of view' },
-      { title: 'Paper 2 Question 5: letters, speeches and articles' },
+      { title: 'Paper 2 Questions 1 and 2: true statements and the summary', topicId: 'paper-2-true-statements-and-summary' },
+      { title: 'Paper 2 Question 3: language in non-fiction', topicId: 'paper-2-language-in-non-fiction' },
+      { title: 'Paper 2 Question 4: comparing viewpoints and perspectives', topicId: 'paper-2-comparing-viewpoints' },
+      { title: 'Reading 19th-century non-fiction', topicId: 'reading-nineteenth-century-non-fiction' },
+      { title: 'Paper 2 Question 5: arguing a point of view', topicId: 'arguing-a-point-of-view' },
+      { title: 'Paper 2 Question 5: letters, speeches and articles', topicId: 'letters-speeches-and-articles' },
     ] },
     { year: 10, term: 'Summer 2', topics: [
-      { title: 'Speaking and Listening: the spoken language endorsement' },
+      { title: 'Speaking and Listening: the spoken language endorsement', topicId: 'spoken-language-endorsement' },
     ] },
     { year: 11, term: 'Autumn 1', topics: [
       { title: 'Paper 1 revision: finding information and analysing language', topicId: 'paper-1-finding-and-analysing-language' },
@@ -658,11 +658,11 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Paper 1 revision: technical accuracy', topicId: 'technical-accuracy' },
     ] },
     { year: 11, term: 'Autumn 2 and Spring 1', topics: [
-      { title: 'Paper 2 revision: true statements and the summary' },
-      { title: 'Paper 2 revision: language in non-fiction' },
-      { title: 'Paper 2 revision: comparing viewpoints and perspectives' },
-      { title: 'Paper 2 revision: 19th-century non-fiction' },
-      { title: 'Paper 2 revision: arguing a point of view in a letter, speech or article' },
+      { title: 'Paper 2 revision: true statements and the summary', topicId: 'paper-2-true-statements-and-summary' },
+      { title: 'Paper 2 revision: language in non-fiction', topicId: 'paper-2-language-in-non-fiction' },
+      { title: 'Paper 2 revision: comparing viewpoints and perspectives', topicId: 'paper-2-comparing-viewpoints' },
+      { title: 'Paper 2 revision: 19th-century non-fiction', topicId: 'reading-nineteenth-century-non-fiction' },
+      { title: 'Paper 2 revision: arguing a point of view in a letter, speech or article', topicId: 'arguing-a-point-of-view' },
     ] },
   ],
   'english-literature': [

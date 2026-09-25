@@ -100,7 +100,9 @@ The school's overviews and set texts were found on 25 September 2026 and the pla
 [curriculum/english.md](curriculum/english.md): two app subjects, 35 topics, written in the
 school's order. The subjects, units and syllabus rows were declared in PR #267 (version 9.1.0); the first
 unit, An Inspector Calls, and the Literature exam guide followed in PR #268 (version 9.2.0); the six
-Language Paper 1 topics, the Year 10 Autumn 2 rows, in PR #269 (version 9.3.0).
+Language Paper 1 topics, the Year 10 Autumn 2 rows, in PR #269 (version 9.3.0); the seven Paper 2 and
+Speaking and Listening topics, which complete English Language, in PR #270 (version 10.0.0 is reserved for
+the day both English subjects are complete; this one is 9.4.0).
 
 - [x] Find the school's curriculum overview and the set texts (25 September 2026)
 - [x] Declare the two subjects, their units and every syllabus row, shown as coming soon (PR #267)
@@ -112,13 +114,13 @@ Language Paper 1 topics, the Year 10 Autumn 2 rows, in PR #269 (version 9.3.0).
 - [x] Descriptive writing (PR #269)
 - [x] Narrative writing (PR #269)
 - [x] Technical accuracy: sentences, punctuation and spelling (PR #269)
-- [ ] Paper 2 Questions 1 and 2: true statements and the summary
-- [ ] Paper 2 Question 3: language in non-fiction
-- [ ] Paper 2 Question 4: comparing viewpoints and perspectives
-- [ ] Reading 19th-century non-fiction
-- [ ] Paper 2 Question 5: arguing a point of view
-- [ ] Letters, speeches and articles
-- [ ] Speaking and Listening: the spoken language endorsement
+- [x] Paper 2 Questions 1 and 2: true statements and the summary (PR #270, 25 September 2026)
+- [x] Paper 2 Question 3: language in non-fiction (PR #270)
+- [x] Paper 2 Question 4: comparing viewpoints and perspectives (PR #270)
+- [x] Reading 19th-century non-fiction (PR #270)
+- [x] Paper 2 Question 5: arguing a point of view (PR #270)
+- [x] Letters, speeches and articles (PR #270)
+- [x] Speaking and Listening: the spoken language endorsement (PR #270)
 - [x] Exam technique guide for 8700 (PR #268)
 
 **English Literature (22 topics)**
