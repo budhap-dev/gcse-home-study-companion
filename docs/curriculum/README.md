@@ -15,5 +15,6 @@ One document per subject the app covers. Each gives the school's teaching order 
 | French | [french.md](french.md) | Not named; school teaches French and Spanish, the app covers French |
 | Music | [music.md](music.md) | Eight set works match Edexcel GCSE Music 1MU0 |
 | Further Maths | [further-maths.md](further-maths.md) | **No school overview exists.** AQA 8365 confirmed by the owner; the order is derived from each row's GCSE Maths prerequisite |
+| English Language and English Literature | [english.md](english.md) | AQA's own paper titles and the AQA *Power and Conflict* cluster named; AQA 8700 and 8702 confirmed by the owner. One document for both app subjects, because the school teaches them as one course |
 
 The pilot student is in Year 10 in 2026 to 2027, so Year 10 rows drive the authoring queue in [../content-order.md](../content-order.md). Year 9 rows show what the student has already met; Year 11 rows show what is left before the exams.

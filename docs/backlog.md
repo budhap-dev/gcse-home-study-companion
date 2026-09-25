@@ -96,8 +96,38 @@ Board confirmed 18 September 2026. The teaching order is derived in
 - [x] Exam technique guide (LRN-5); the page says "not been written yet"
 
 ### English (AQA 8700 Language and AQA 8702 Literature, confirmed 23 September 2026)
-- [ ] Find the school's curriculum overview and the set texts
-- [ ] Plan and write every topic, with `why` blocks and an exam technique guide
+The school's overviews and set texts were found on 25 September 2026 and the plan is in
+[curriculum/english.md](curriculum/english.md): two app subjects, 35 topics, written in the
+school's order. The subjects, units and syllabus rows were declared in PR #267 (version 9.1.0).
+
+- [x] Find the school's curriculum overview and the set texts (25 September 2026)
+- [x] Declare the two subjects, their units and every syllabus row, shown as coming soon (PR #267)
+
+**English Language (13 topics)**
+- [ ] Paper 1 Questions 1 and 2: finding information and analysing language
+- [ ] Paper 1 Question 3: how the writer structures the text
+- [ ] Paper 1 Question 4: evaluating a statement
+- [ ] Descriptive writing
+- [ ] Narrative writing
+- [ ] Technical accuracy: sentences, punctuation and spelling
+- [ ] Paper 2 Questions 1 and 2: true statements and the summary
+- [ ] Paper 2 Question 3: language in non-fiction
+- [ ] Paper 2 Question 4: comparing viewpoints and perspectives
+- [ ] Reading 19th-century non-fiction
+- [ ] Paper 2 Question 5: arguing a point of view
+- [ ] Letters, speeches and articles
+- [ ] Speaking and Listening: the spoken language endorsement
+- [ ] Exam technique guide for 8700
+
+**English Literature (22 topics)**
+- [ ] Answering an extract question (through Romeo and Juliet)
+- [ ] An Inspector Calls: plot and structure · the Birlings and Gerald · the Inspector and Eva Smith · themes · context and the essay question
+- [ ] Macbeth: plot and structure · Macbeth and Lady Macbeth · Banquo, Macduff, Duncan and the witches · themes · context and the extract question
+- [ ] Jekyll and Hyde: plot and structure · Jekyll, Hyde, Utterson and Lanyon · themes · context and the extract question
+- [ ] Power and Conflict: the cluster and the comparison question · the power of humans · the power of nature · the reality of war · memory, identity and loss
+- [ ] Unseen poetry: analysing one poem · comparing two poems
+- [ ] Exam technique guide for 8702
+- [ ] `why` blocks on every topic (written with each topic)
 
 ## 2. Testing and validation (after the content)
 
