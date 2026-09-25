@@ -667,7 +667,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
   ],
   'english-literature': [
     { year: 9, term: 'Autumn 1', topics: [
-      { title: 'Romeo and Juliet: analysing an extract' },
+      { title: 'Romeo and Juliet: analysing an extract', topicId: 'answering-an-extract-question' },
     ] },
     { year: 9, term: 'Summer 1', topics: [
       { title: 'Introduction to conflict poetry' },
@@ -683,13 +683,13 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'An Inspector Calls: context and the essay question', topicId: 'an-inspector-calls-context-and-the-essay-question' },
     ] },
     { year: 10, term: 'Spring 2', topics: [
-      { title: 'Macbeth: plot and structure' },
-      { title: 'Macbeth: Macbeth and Lady Macbeth' },
-      { title: 'Macbeth: Banquo, Macduff, Duncan and the witches' },
+      { title: 'Macbeth: plot and structure', topicId: 'macbeth-plot-and-structure' },
+      { title: 'Macbeth: Macbeth and Lady Macbeth', topicId: 'macbeth-and-lady-macbeth' },
+      { title: 'Macbeth: Banquo, Macduff, Duncan and the witches', topicId: 'banquo-macduff-duncan-and-the-witches' },
     ] },
     { year: 10, term: 'Summer 1', topics: [
-      { title: 'Macbeth: ambition, power, guilt and the supernatural' },
-      { title: 'Macbeth: context and the extract question' },
+      { title: 'Macbeth: ambition, power, guilt and the supernatural', topicId: 'macbeth-themes' },
+      { title: 'Macbeth: context and the extract question', topicId: 'macbeth-context-and-the-extract-question' },
     ] },
     { year: 11, term: 'Autumn 1', topics: [
       { title: 'Jekyll and Hyde: plot and structure' },
