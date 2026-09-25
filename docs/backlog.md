@@ -159,7 +159,7 @@ One PR per subject.
 - [x] Computer Science (PR #253; four-box #252)
 - [x] French (PR #275; marker fix for commas, partial accents and a closing ?)
 - [x] Music (PR #277; four-level grid test for the 12-mark question)
-- [ ] Further Maths
+- [x] Further Maths (PR #278)
 - [ ] English
 - [ ] A second pass over any subject that gained topics after its review
 
@@ -189,6 +189,11 @@ One PR per subject.
   ("12/8" where the question also asks for the metre) pays full marks for half the answer. The
   Music review found three. About 300 multi-mark short-text questions across the pack need an
   audit, or a rule that splits them into one-mark parts.
+- [ ] **Algebraic answers are matched as text.** The marker normalises spacing, signs and
+  notation but does not know that $(x+1)(x-2)$ and $(x-2)(x+1)$, or $x \geq 3$ and $3 \leq x$, are
+  the same answer, so every equal form has to be listed by hand (the Further Maths review added six
+  bracket orders to one list). A check that compares two algebraic answers by expanding them would
+  remove the class.
 - [ ] **Walk false positive:** a multiple-choice check whose options are pure LaTeX is
   reported "not marked Correct", because the walk's text match cannot find the option.
 
@@ -212,8 +217,7 @@ listed below. Each box is the missing part of a story, not the whole story.
   recommendation points there.
 - [ ] **LRN-1:** show on each topic-map row which of lesson, worksheets and quiz are done
   (today only a status icon).
-- [ ] **LRN-5:** write the Further Maths exam technique guide; the page says "not been
-  written yet".
+- [x] **LRN-5:** the Further Maths exam technique guide (PR #266; checked in the review pass).
 - [ ] **LRN-7:** build the drag-order, drag-match and labelling interactives. They are in the
   schema but have no component.
 - [ ] **WKS-7:** make the scratch canvas resizable.
