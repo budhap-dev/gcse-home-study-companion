@@ -18,7 +18,7 @@ import { describe, expect, it } from 'vitest'
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
 
 /** Subjects rebalanced so far. Each subject's PR adds itself; the last one removes the list. */
-const ENFORCED = new Set(['business', 'english-language', 'english-literature', 'french', 'further-maths', 'music'])
+const ENFORCED = new Set(['business', 'english-language', 'english-literature', 'french', 'further-maths', 'maths', 'music'])
 const CAP = 0.35
 
 interface Item { id: string; type?: string; options?: string[]; correct?: number[] }
