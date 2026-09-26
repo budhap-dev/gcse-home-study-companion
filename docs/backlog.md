@@ -224,9 +224,9 @@ done: LRN-2, LRN-8, WKS-2, WKS-3, QZ-2, PRG-2, PAR-4, MOT-1, MOT-3 and MOT-5. Th
 listed below. Each box is the missing part of a story, not the whole story.
 
 ### Bugs: the app claims something it does not do
-- [ ] **WKS-7:** the scratch canvas says "Working is saved with your answer", but strokes
-  are kept only in `sessionStorage`. They never reach the attempt record or sync. Either
-  save them with the attempt or change the wording.
+- [x] **WKS-7:** the scratch canvas said "Working is saved with your answer", but strokes
+  are kept only in the tab's session storage and never reach the attempt record. The note
+  now says the working stays while the worksheet is open and is not saved with the score.
 - [ ] **PRG-1:** topic status never decays. The PRD's six-week rule (`decayAfterWeeks`) only
   drives the recap suggestion in `recommend.ts`, so a topic stays Secure forever.
 

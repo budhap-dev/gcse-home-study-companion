@@ -7,6 +7,14 @@ export interface Stroke {
   points: [number, number][]
 }
 
+/**
+ * What the canvas says about keeping the working. It used to say "Working is saved with
+ * your answer", but the strokes were never saved with the answer: they live in the tab
+ * until the worksheet is left. A student trusting the old line could lose working they
+ * meant to come back to.
+ */
+export const SCRATCH_NOTE = 'Working stays here while this worksheet is open. It is not saved with your score.'
+
 const COLOURS = ['#1e2330', '#0e7a86', '#d25b3b']
 const ASPECT = 0.62
 /**
@@ -24,7 +32,8 @@ interface Props {
 
 /**
  * Handwriting area for working. Pointer events cover pen, finger, and mouse.
- * Strokes are vector data kept with the attempt, not an image.
+ * Strokes are vector data, not an image. The worksheet keeps them in this tab's session
+ * storage while the sheet is open; they are not part of the attempt record and never sync.
  */
 export function ScratchCanvas({ strokes, onChange, disabled = false }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -140,7 +149,7 @@ export function ScratchCanvas({ strokes, onChange, disabled = false }: Props) {
         style={{ background: PAPER, aspectRatio: `1 / ${ASPECT}`, cursor: tool === 'eraser' ? 'cell' : 'crosshair' }}
         aria-label="Scratch canvas for working"
       />
-      <p className="text-xs text-ink-2">Working is saved with your answer.</p>
+      <p className="text-xs text-ink-2">{SCRATCH_NOTE}</p>
     </div>
   )
 }
