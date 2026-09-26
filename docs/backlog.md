@@ -166,8 +166,11 @@ One PR per subject.
 - [x] Second pass, Biology: the five Year 9 bridging topics (#262). Fifteen fixes, most of them
   a reflex rule stated too absolutely (blinking and coughing go through the brain stem), and
   grouped continuous data now drawn with touching bars.
-- [ ] Second pass, the rest: the Physics and Chemistry additions inside existing topics (#257,
-  #258, #260). French's three grammar topics (#276) had their own reviewer before merge.
+- [x] Second pass, Physics: the additions in #258 and #260 (seven topics). Every heating-curve
+  time, nuclear equation, field direction and handbook figure matched; fixes were quiz pools that
+  left out the new questions, over-long correct options, and RP10's scope.
+- [ ] Second pass, Chemistry: the additions inside existing topics (#257). French's three grammar
+  topics (#276) had their own reviewer before merge.
 
 **Pack-wide quality**
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
