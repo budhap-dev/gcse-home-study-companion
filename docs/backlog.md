@@ -185,8 +185,9 @@ One PR per subject.
   breaks the word at a syllable-like point, or at its own hyphen, never leaving a lone letter.
   Curve graphs (15) followed, narrowed to 280 with every label drawn after every line.
   Plant diagrams (15) followed, with leaders that stop at their labels, then reaction
-  profiles (7), re-laid out so every label has a place of its own.
-  Still to do, each needing its labels re-placed without collisions: free-body (7), lenses (6), vector figures (5), and 4 or fewer each of dot-and-cross, electrolysis
+  profiles (7), re-laid out so every label has a place of its own, and free-body diagrams
+  (7), with each horizontal force labelled above its arrow.
+  Still to do, each needing its labels re-placed without collisions: lenses (6), vector figures (5), and 4 or fewer each of dot-and-cross, electrolysis
   cell, box plot, probability tree, cumulative frequency, collision, fluid column, frequency
   tree, vector triangle, market map, repeated multiplication, index ladder, surface area and
   circle theorem. A first attempt at these made labels collide, so each is looked at in the
