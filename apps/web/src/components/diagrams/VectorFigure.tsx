@@ -29,12 +29,30 @@ interface Edge {
  *
  * Props: points [{name, x, y} | {name, between: [a, b], fraction}], edges
  * [{from, to, label, colour, dashed, arrow}], note (a caption under the figure).
+ *
+ * The figure scales whatever points it is given to fill a fixed canvas, so narrowing
+ * that canvas from 400 to 280 units — plenty for the labels, which are one or two
+ * characters and a handful of short vector expressions — is the whole fix; height is
+ * free, so it grows there instead to keep the same working scale.
  */
 export function VectorFigure({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const declared = (props.points as Point[] | undefined) ?? []
   const edges = (props.edges as Edge[] | undefined) ?? []
   const note = typeof props.note === 'string' ? props.note : undefined
-  const W = 400, H = 300, pad = 42
+  const W = 280, H = 220, pad = 34
+  // The note is a full sentence — "P and Q are midpoints: PQ is parallel to AB and half
+  // its length" is 65 characters — so at any width narrow enough for a phone it has to
+  // wrap onto more than one line rather than run past the edge.
+  const noteLines: string[] = []
+  if (note) {
+    const maxChars = 36
+    let line = ''
+    for (const word of note.split(' ')) {
+      const next = line ? `${line} ${word}` : word
+      if (next.length > maxChars && line) { noteLines.push(line); line = word } else line = next
+    }
+    if (line) noteLines.push(line)
+  }
 
   // Resolve derived points, repeating so a midpoint of a midpoint still lands.
   const at = new Map<string, [number, number]>()
@@ -79,18 +97,42 @@ export function VectorFigure({ props, alt }: { props: Record<string, unknown>; a
    * anchored at the middle would always land on top of it — which is what the first
    * drawing of the midpoint theorem did to both P and Q.
    */
-  const labelSpot = (x1: number, y1: number, x2: number, y2: number, nx: number, ny: number, sign: number) =>
-    [0.5, 0.35, 0.65, 0.25, 0.75]
-      .map((t) => {
-        const px = x1 + t * (x2 - x1) + sign * 15 * nx
-        const py = y1 + t * (y2 - y1) + sign * 15 * ny
+  /** Every edge on screen, so a label can be kept off all of them, not only its own. */
+  const segments = edges.flatMap((e) => {
+    const a = at.get(e.from), b = at.get(e.to)
+    return a && b ? [[sx(a[0]), sy(a[1]), sx(b[0]), sy(b[1])] as const] : []
+  })
+  /** Whether any edge passes through a label's box, sampled along each edge. */
+  const onAnEdge = (cx: number, cy: number, w: number, h: number) =>
+    segments.some(([x1, y1, x2, y2]) => {
+      for (let i = 0; i <= 30; i++) {
+        const x = x1 + ((x2 - x1) * i) / 30, y = y1 + ((y2 - y1) * i) / 30
+        if (Math.abs(x - cx) < w / 2 + 2 && Math.abs(y - cy) < h / 2 + 2) return true
+      }
+      return false
+    })
+  const labelSpot = (x1: number, y1: number, x2: number, y2: number, nx: number, ny: number, sign: number, label: string) => {
+    const w = label.length * 13 * 0.6, h = 13
+    // Far enough off the edge that the whole label clears it, not just its centre: a
+    // fixed 15 put the middle of "½(a + b)" 15 from a sloping edge and its ends on it.
+    const off = 6 + (Math.abs(nx) * w) / 2 + (Math.abs(ny) * h) / 2
+    const candidates = [sign, -sign].flatMap((side) =>
+      [0.5, 0.35, 0.65, 0.25, 0.75].map((t) => {
+        const px = x1 + t * (x2 - x1) + side * off * nx
+        const py = y1 + t * (y2 - y1) + side * off * ny
         const clearance = vertexLabels.length ? Math.min(...vertexLabels.map(([vx, vy]) => Math.hypot(px - vx, py - vy))) : Infinity
-        return { px, py, clearance }
-      })
-      .reduce((best, c) => (c.clearance > best.clearance + 1e-9 ? c : best))
+        // A label pushed outwards could still land on a neighbouring edge: PQ in the
+        // midpoint theorem runs close beside OA, and its label sat on OA. Off every edge
+        // comes first; then the outward side; then clearance from the vertex letters.
+        return { px, py, clearance, free: !onAnEdge(px, py - 4, w, h), outward: side === sign }
+      }),
+    )
+    const rank = (c: (typeof candidates)[number]) => (c.free ? 2 : 0) + (c.outward ? 1 : 0)
+    return candidates.reduce((best, c) => (rank(c) > rank(best) || (rank(c) === rank(best) && c.clearance > best.clearance + 1e-9) ? c : best))
+  }
 
   return (
-    <svg viewBox={`0 0 ${W} ${H + (note ? 20 : 0)}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
+    <svg viewBox={`0 0 ${W} ${H + (noteLines.length ? 6 + noteLines.length * 14 : 0)}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
       {edges.map((e, i) => {
         const a = at.get(e.from), b = at.get(e.to)
         if (!a || !b) return null
@@ -104,7 +146,7 @@ export function VectorFigure({ props, alt }: { props: Record<string, unknown>; a
         const nx = -Math.sin(ang), ny = Math.cos(ang)
         const midX = (x1 + x2) / 2, midY = (y1 + y2) / 2
         const sign = (midX - centreX) * nx + (midY - centreY) * ny >= 0 ? 1 : -1
-        const spot = labelSpot(x1, y1, x2, y2, nx, ny, sign)
+        const spot = labelSpot(x1, y1, x2, y2, nx, ny, sign, e.label ?? '')
         return (
           <g key={i}>
             <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={colour} strokeWidth={e.dashed ? 1.5 : 2} strokeDasharray={e.dashed ? '5 4' : undefined} />
@@ -115,7 +157,7 @@ export function VectorFigure({ props, alt }: { props: Record<string, unknown>; a
               />
             )}
             {e.label && (
-              <text x={spot.px} y={spot.py + 4} textAnchor="middle" fill={colour} style={{ font: DISPLAY, fontWeight: 600 }}>
+              <text x={spot.px} y={spot.py + 4} textAnchor="middle" fill={colour} fontFamily={DISPLAY} fontSize="13" fontWeight="600">
                 {e.label}
               </text>
             )}
@@ -128,17 +170,17 @@ export function VectorFigure({ props, alt }: { props: Record<string, unknown>; a
         return (
           <g key={p.name}>
             <circle cx={px} cy={py} r={4} fill={INK} />
-            <text x={lx} y={ly + 5} textAnchor="middle" fill={INK} style={{ font: DISPLAY, fontWeight: 700 }}>
+            <text x={lx} y={ly + 5} textAnchor="middle" fill={INK} fontFamily={DISPLAY} fontSize="13" fontWeight="700">
               {p.name}
             </text>
           </g>
         )
       })}
-      {note && (
-        <text x={W / 2} y={H + 14} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
-          {note}
+      {noteLines.map((l, i) => (
+        <text key={i} x={W / 2} y={H + 14 + i * 14} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize="12">
+          {l}
         </text>
-      )}
+      ))}
     </svg>
   )
 }

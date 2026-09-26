@@ -188,10 +188,11 @@ One PR per subject.
   arrows), lenses (6; rays cut at the title, a virtual image's labels under the axis) and
   the statistics diagrams (15: box plots with thinned axis labels, trees with every label
   outside its branch, cumulative frequency with readings over the curve).
-  Still to do, each needing its labels placed without collisions: vector figures (5), and
-  4 or fewer each of dot-and-cross, electrolysis cell, collision, fluid column, vector
-  triangle, market map, repeated multiplication, index ladder, surface area and circle
-  theorem. Also 5
+  Then vector figures, vector triangles, collisions and fluid columns (16; labels kept off
+  every edge, titles on their own line).
+  Still to do, each needing its labels placed without collisions: 4 or fewer each of
+  dot-and-cross, electrolysis cell, market map, repeated multiplication, index ladder,
+  surface area and circle theorem. Also 5
   non-diagram elements on maths transformations s7 and four Physics steps. Code blocks
   scroll by design.
 - [x] **The correct option is too often the longest.** Rebalanced subject by subject on
