@@ -1,4 +1,5 @@
 import type { Question } from './content/questions.ts'
+import { sameAlgebra } from './algebra.ts'
 
 export interface MarkResult {
   correct: boolean
@@ -80,10 +81,13 @@ export function normaliseText(s: string): string {
     .replace(/π/g, 'pi')
     .replace(/×/g, '*')
     .replace(/÷/g, '/')
-    .replace(/√\(([^)]+)\)/g, 'sqrt$1')
+    // Brackets after a root go only when they hold one number or letter: √(130) is √130,
+    // but √(a/π) is not √a/π. Dropping them whatever they held marked the root of part
+    // of an expression right for the root of all of it.
+    .replace(/√\(([\d.]+|[a-z])\)/g, 'sqrt$1')
     .replace(/√/g, 'sqrt')
     .replace(/root/g, 'sqrt')
-    .replace(/sqrt\(([^)]+)\)/g, 'sqrt$1')
+    .replace(/sqrt\(([\d.]+|[a-z])\)/g, 'sqrt$1')
     // A times sign is dropped, so 3*x is 3x. In SQL the star is the whole column list:
     // dropping it would pass SELECT FROM Student for SELECT * FROM Student. Between two
     // numbers it stays too: dropped, 2^2 × 3 × 7 and the wrong 2^23 × 7 were one answer.
@@ -348,6 +352,8 @@ function matchesShortText(question: Extract<Question, { type: 'short-text' }>, r
     if (accentFree && matchesAccepted(normaliseText(withoutAccents(raw)), normaliseText(withoutAccents(a)), strict)) return true
     const bare = withoutArticle(raw, a)
     if (bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]), strict)) return true
+    // The same algebra in another order: (x - 2)(x + 1) for (x + 1)(x - 2), 3 <= x for x >= 3.
+    if (!strict && sameAlgebra(given, accepted, a)) return true
     return sameListAnyOrder(raw, a, question.prompt)
   })
 }
