@@ -49,6 +49,17 @@ describe('bar chart', () => {
     expect(heights[0]).toBeCloseTo(2 * heights[1]!, 5)
   })
 
+  it('draws grouped continuous data with the bars touching', () => {
+    const rects = (props: Record<string, unknown>) =>
+      [...bars(props).matchAll(/<rect x="([\d.]+)" y="[\d.]+" width="([\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])])
+    const grouped = rects({ categories: ['16 to 17', '17 to 18', '18 to 19'], values: [2, 5, 9], style: 'grouped' })
+    expect(grouped).toHaveLength(3)
+    for (let i = 1; i < grouped.length; i++) expect(grouped[i]![0]).toBeCloseTo(grouped[i - 1]![0] + grouped[i - 1]![1], 6)
+    // A plain bar chart keeps its gaps.
+    const plain = rects({ categories: ['O', 'A', 'B'], values: [13, 12, 3] })
+    expect(plain[1]![0]).toBeGreaterThan(plain[0]![0] + plain[0]![1] + 10)
+  })
+
   it('fits a phone', () => {
     expect(viewBoxWidth(bars({ categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], values: [1, 2, 3, 4, 5] }))).toBeLessThanOrEqual(298)
   })

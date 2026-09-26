@@ -163,9 +163,11 @@ One PR per subject.
 - [x] English (PR #279)
 - [x] Second pass, Maths: the ten topics for untaught specification content (commit 2c90687).
   Four fixes in ten topics; the pass also made the Venn diagram, cuboid and triangle pair fit a phone.
-- [ ] Second pass, the rest: Biology's five Year 9 bridging topics (#262), and the Physics and
-  Chemistry additions inside existing topics (#257, #258, #260). French's three grammar topics
-  (#276) had their own reviewer before merge.
+- [x] Second pass, Biology: the five Year 9 bridging topics (#262). Fifteen fixes, most of them
+  a reflex rule stated too absolutely (blinking and coughing go through the brain stem), and
+  grouped continuous data now drawn with touching bars.
+- [ ] Second pass, the rest: the Physics and Chemistry additions inside existing topics (#257,
+  #258, #260). French's three grammar topics (#276) had their own reviewer before merge.
 
 **Pack-wide quality**
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
