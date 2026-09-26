@@ -12,14 +12,15 @@ import { describe, expect, it } from 'vitest'
  * so, like answer positions, the defect exists only in the collection.
  *
  * A student meets a topic's questions together, so the cap is per topic: at most 35% of its
- * single-answer items, bank and lesson checks together. Option sets that are all numbers are
+ * single-answer items, bank and lesson checks together. Rebalancing on 26 September 2026 took
+ * the pack from 36% to 24% in seven subject PRs (#285 to #292). Option sets that are all numbers are
  * left out, since their lengths come from the numbers.
  */
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
 
-/** Subjects rebalanced so far. Each subject's PR adds itself; the last one removes the list. */
-const ENFORCED = new Set(['business', 'chemistry', 'computer-science', 'english-language', 'english-literature', 'french', 'further-maths', 'maths', 'music', 'physics'])
 const CAP = 0.35
+/** Across the pack the share now sits near 24%, about chance for four options. */
+const PACK_CAP = 0.3
 
 interface Item { id: string; type?: string; options?: string[]; correct?: number[] }
 interface Topic { id: string; subjectId: string; questions: Item[]; lesson: { steps: { check?: Item }[] } }
@@ -64,13 +65,19 @@ describe('the correct option is not the tell', () => {
     expect(topics.flatMap(items).length).toBeGreaterThan(4500)
   })
 
+  it('is not the tell across the pack either', () => {
+    const all = topics.flatMap(items)
+    const longest = all.filter(correctIsLongest).length
+    expect(longest / all.length).toBeLessThanOrEqual(PACK_CAP)
+  })
+
   it('measures what is rendered, not the markup', () => {
     expect(renderedLength('**Kinetic** energy')).toBe(renderedLength('Kinetic energy'))
     expect(renderedLength('$\\dfrac{1}{2}mv^2$')).toBe('1/2mv2'.length)
     expect(renderedLength('$\\mathrm{H_2O}$')).toBe(3)
   })
 
-  it.each(topics.filter((t) => ENFORCED.has(t.subjectId)).map((t) => [`${t.subjectId}/${t.id}`, t] as const))(
+  it.each(topics.map((t) => [`${t.subjectId}/${t.id}`, t] as const))(
     'is the only longest option in at most 35%% of %s',
     (_name, topic) => {
       const all = items(topic)

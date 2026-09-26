@@ -183,10 +183,11 @@ One PR per subject.
   reaction-profile, lens, lattice and electric-field diagrams. Measure with a before-and-after
   run of every page at 390 against `main`.
   Motion graphs now take the card's width, as line graphs do, and no longer scroll.
-- [ ] **The correct option is too often the longest.** In 1757 of 3841 multiple-choice
-  questions (46%) the right answer is the only longest option, so "pick the longest" nearly
-  doubles a guesser's score. Rebalance the options, and add a collection test with a
-  per-topic cap, as `answers.test.ts` does for answer positions.
+- [x] **The correct option is too often the longest.** Rebalanced subject by subject on
+  26 September 2026 (#285 to #292): the share where the right answer is the only longest
+  option fell from 36% to 24% of 4898 multiple-choice items, about chance for four options.
+  About 560 distractors were lengthened with wrong content, each read in its question.
+  `option-lengths.test.ts` holds every topic to 35% and the pack to 30%.
 - [ ] Chemistry: 15 diagrams scroll at desktop width. Recheck after the diagrams PR.
 - [x] **Components too wide for a phone:** `venn-diagram` (440 → 296), `cuboid` (380 → 284) and
   `triangle-pair`, which now stacks its pair in a box narrower than 520. A walk of the 20 Maths
