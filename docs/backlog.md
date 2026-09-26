@@ -202,11 +202,11 @@ One PR per subject.
   are hidden with out-of-range ticks).
 - [ ] **Stacked (composite) bar charts:** no component draws them, so S2 teaches them in
   words only.
-- [ ] **Multi-mark typed answers are marked all or nothing.** A short-text question worth 2 or
-  more marks gives every mark for any accepted entry, so a list that holds a one-part answer
-  ("12/8" where the question also asks for the metre) pays full marks for half the answer. The
-  Music review found three. About 300 multi-mark short-text questions across the pack need an
-  audit, or a rule that splits them into one-mark parts.
+- [x] **Multi-mark typed answers are marked all or nothing.** All 301 short-text questions
+  worth 2 or more marks were read on 26 September 2026: one paid full marks for half an
+  answer ("a metal hydroxide and hydrogen" for sodium and water). Typed questions now take a
+  `partial` list of part-answers with their marks, so half an answer scores 1 of 2 on a quiz,
+  a lesson check or a worksheet instead of 2 or 0. Four questions use it so far.
 - [ ] **Algebraic answers are matched as text.** The marker normalises spacing, signs and
   notation but does not know that $(x+1)(x-2)$ and $(x-2)(x+1)$, or $x \geq 3$ and $3 \leq x$, are
   the same answer, so every equal form has to be listed by hand (the Further Maths review added six

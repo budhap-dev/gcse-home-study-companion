@@ -123,6 +123,18 @@ describe('mark', () => {
     expect(mark(q, '1 / (9x⁴)').correct).toBe(true)
     expect(mark(q, '9x^4').correct).toBe(false)
   })
+  it('short text pays a part-answer only its part of the marks', () => {
+    const q: Question = {
+      ...base, type: 'short-text', marks: 2, accepted: ['sodium hydroxide and hydrogen'],
+      partial: [{ answer: 'a metal hydroxide and hydrogen', marks: 1 }, { answer: 'hydrogen', marks: 1 }],
+    }
+    expect(mark(q, 'hydrogen and sodium hydroxide')).toEqual({ correct: true, marksScored: 2, marksAvailable: 2 })
+    // The same allowances as a full answer: another order, a dropped article.
+    expect(mark(q, 'hydrogen and metal hydroxide')).toEqual({ correct: false, marksScored: 1, marksAvailable: 2 })
+    expect(mark(q, 'Hydrogen')).toEqual({ correct: false, marksScored: 1, marksAvailable: 2 })
+    expect(mark(q, 'oxygen')).toEqual({ correct: false, marksScored: 0, marksAvailable: 2 })
+    expect(mark(q, '')).toEqual({ correct: false, marksScored: 0, marksAvailable: 2 })
+  })
   it('multiple choice needs the exact set', () => {
     const q: Question = { ...base, type: 'multiple-choice', options: ['a', 'b', 'c'], correct: [0, 2] }
     expect(mark(q, [2, 0]).correct).toBe(true)

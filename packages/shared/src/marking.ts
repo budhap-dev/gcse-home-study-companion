@@ -331,6 +331,27 @@ function genotypesMatch(rawGiven: string, rawAccepted: string, prompt: string): 
   return genotypes(rawAccepted, prompt).every((g) => words.has(g))
 }
 
+/** Whether a typed answer matches any of `list`, with every allowance the marker makes. */
+function matchesShortText(question: Extract<Question, { type: 'short-text' }>, raw: string, list: string[]): boolean {
+  const given = normaliseText(raw)
+  if (given.length === 0) return false
+  const strict = question.matchCase === true
+  // An accepted list that holds an answer and its accent-free twin says accents are
+  // not being marked. Then a half-accented answer ("je suis née a londres") is as right
+  // as either twin, so compare with the accents folded away on both sides.
+  const accentFree = question.accepted.some((a, i) => withoutAccents(a) !== a && question.accepted.some((b, j) => j !== i && normaliseText(b) === normaliseText(withoutAccents(a))))
+  return list.some((a) => {
+    if (!genotypesMatch(raw, a, question.prompt)) return false
+    if (strict && lettersByWord(raw) !== lettersByWord(a)) return false
+    const accepted = normaliseText(a)
+    if (matchesAccepted(given, accepted, strict)) return true
+    if (accentFree && matchesAccepted(normaliseText(withoutAccents(raw)), normaliseText(withoutAccents(a)), strict)) return true
+    const bare = withoutArticle(raw, a)
+    if (bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]), strict)) return true
+    return sameListAnyOrder(raw, a, question.prompt)
+  })
+}
+
 /**
  * Marks an auto-markable answer. Extended responses are self-assessed and return
  * whatever marks the student awarded themselves, capped at the marks available.
@@ -354,23 +375,10 @@ export function mark(question: Question, answer: unknown): MarkResult {
     }
     case 'short-text': {
       const raw = String(answer ?? '')
-      const given = normaliseText(raw)
-      const strict = question.matchCase === true
-      // An accepted list that holds an answer and its accent-free twin says accents are
-      // not being marked. Then a half-accented answer ("je suis née a londres") is as right
-      // as either twin, so compare with the accents folded away on both sides.
-      const folded = question.accepted.map((a) => normaliseText(withoutAccents(a)))
-      const accentFree = question.accepted.some((a, i) => withoutAccents(a) !== a && question.accepted.some((b, j) => j !== i && normaliseText(b) === folded[i]))
-      return result(given.length > 0 && question.accepted.some((a, i) => {
-        if (!genotypesMatch(raw, a, question.prompt)) return false
-        if (strict && lettersByWord(raw) !== lettersByWord(a)) return false
-        const accepted = normaliseText(a)
-        if (matchesAccepted(given, accepted, strict)) return true
-        if (accentFree && matchesAccepted(normaliseText(withoutAccents(raw)), folded[i]!, strict)) return true
-        const bare = withoutArticle(raw, a)
-        if (bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]), strict)) return true
-        return sameListAnyOrder(raw, a, question.prompt)
-      }))
+      if (matchesShortText(question, raw, question.accepted)) return result(true)
+      const part = question.partial?.filter((p) => matchesShortText(question, raw, [p.answer])) ?? []
+      const marksScored = Math.min(available - 1, Math.max(0, ...part.map((p) => p.marks)))
+      return { correct: false, marksScored, marksAvailable: available }
     }
     case 'ordering': {
       const order = Array.isArray(answer) ? (answer as number[]) : []

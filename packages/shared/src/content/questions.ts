@@ -56,6 +56,12 @@ const ShortText = z.object({
    * breaks between words count as well, since "Hi Amy!" and "HiAmy!" are different output.
    */
   matchCase: z.boolean().optional(),
+  /**
+   * Answers that earn some of the marks but not all: half of a two-part answer. An entry in
+   * `accepted` pays every mark, so a part-answer there paid 2 of 2 for naming only the
+   * hydrogen; here it pays what the mark scheme gives it.
+   */
+  partial: z.array(z.object({ answer: z.string().min(1), marks: z.number().int().positive() })).min(1).optional(),
 })
 
 const Ordering = z.object({

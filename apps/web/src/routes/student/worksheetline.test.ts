@@ -23,4 +23,8 @@ describe('the line under a marked answer', () => {
     expect(markedLine(3, false)).toContain('award your method marks')
     expect(markedLine(3, false)).not.toMatch(/\d/)
   })
+
+  it('gives a recognised part-answer its marks', () => {
+    expect(markedLine(2, false, 1)).toBe('Part of the answer matched · 1 of 2 marks. Reveal the solution to see what is missing.')
+  })
 })
