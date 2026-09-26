@@ -22,13 +22,17 @@ export function Cuboid({ props, alt }: { props: Record<string, unknown>; alt: st
   const spaceDiag = Math.sqrt(w * w + d * d + h * h)
   const round = (v: number) => (Math.abs(v - Math.round(v)) < 1e-9 ? String(Math.round(v)) : v.toFixed(2))
 
-  const W = 380
+  /*
+   * 284 wide: the drawing stops shrinking at its natural width, and at 380 it scrolled
+   * 48px on a phone. The box itself only ever reached x = 266; the rest was margin.
+   */
+  const W = 284
   const H = 320
   // Oblique projection: the depth axis goes up and right at a fixed angle.
   const scale = Math.min(150 / Math.max(w, 1), 190 / Math.max(h, 1))
   const dx = 46
   const dy = -30
-  const ox = 70
+  const ox = 58
   const oy = 250
   const bw = w * scale
   const bh = h * scale

@@ -161,10 +161,11 @@ One PR per subject.
 - [x] Music (PR #277; four-level grid test for the 12-mark question)
 - [x] Further Maths (PR #278)
 - [x] English (PR #279)
-- [ ] A second pass over what was written after each subject's review: Maths' ten topics for
-  untaught specification content (commit 2c90687), Biology's five Year 9 bridging topics (#262), and
-  the Physics and Chemistry additions inside existing topics (#257, #258, #260). French's three
-  grammar topics (#276) had their own reviewer before merge.
+- [x] Second pass, Maths: the ten topics for untaught specification content (commit 2c90687).
+  Four fixes in ten topics; the pass also made the Venn diagram, cuboid and triangle pair fit a phone.
+- [ ] Second pass, the rest: Biology's five Year 9 bridging topics (#262), and the Physics and
+  Chemistry additions inside existing topics (#257, #258, #260). French's three grammar topics
+  (#276) had their own reviewer before merge.
 
 **Pack-wide quality**
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
@@ -180,8 +181,15 @@ One PR per subject.
   doubles a guesser's score. Rebalance the options, and add a collection test with a
   per-topic cap, as `answers.test.ts` does for answer positions.
 - [ ] Chemistry: 15 diagrams scroll at desktop width. Recheck after the diagrams PR.
-- [ ] **Components too wide for a phone:** `venn-diagram` (440), `cuboid` (380) and
-  `triangle-pair`. The new Maths topics use all three.
+- [x] **Components too wide for a phone:** `venn-diagram` (440 → 296), `cuboid` (380 → 284) and
+  `triangle-pair`, which now stacks its pair in a box narrower than 520. A walk of the 20 Maths
+  topics that use them against `main` removed 42 scrolling diagrams and added none.
+- [ ] **Labels crossed by lines:** the walk reports a drawn line through a label in `cuboid` (the
+  face-diagonal value on a narrow box, and θ), `triangle-construction` (the vertex C and C′ labels
+  and a side length) and `triangle-pair` angle text (60°, 65°, 78°, 90°). About 30 findings across
+  pythagoras-in-3d, trigonometry-in-3d, constructing-triangles, exact-trigonometric-values and
+  sine-rule-cosine-rule-and-area, all present on `main`. `triangle-construction` also scrolls 22px
+  on a phone.
 - [ ] **LineGraph options:** a joined line through points for time series (today it is a
   polygon traced out and back), and `axes: false` for pictures of shapes (today the axes
   are hidden with out-of-range ticks).

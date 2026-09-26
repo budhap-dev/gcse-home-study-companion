@@ -1,3 +1,5 @@
+import { useLayoutEffect, useRef } from 'react'
+import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
 
 /** Width of one character of the 12px length labels, and half their cap height. */
@@ -98,18 +100,41 @@ function apex(tri: Tri) {
  * both floors drawn the same length, which is the opposite of what the example said.
  * `sameScale` makes the pair share one scale, so the reader sees the difference before
  * reading it.
+ *
+ * A pair side by side is 520 units wide, and a drawing stops shrinking at its natural
+ * width, so on a phone the pair scrolled 188px with the second triangle out of sight:
+ * the one the question was comparing against. Where the box is narrower than the pair,
+ * the second triangle goes under the first instead.
  */
+export const PAIR_WIDTH = 520
+
+/** The canvas, and where the second triangle's centre goes, for the box available. */
+export function pairLayout(pair: boolean, available: number | undefined) {
+  const stacked = pair && available !== undefined && available < PAIR_WIDTH
+  return {
+    stacked,
+    W: pair && !stacked ? PAIR_WIDTH : 280,
+    H: stacked ? 440 : 220,
+    second: stacked ? { cx: 140, cy: 340 } : { cx: 380, cy: 120 },
+  }
+}
+
 export function TrianglePair({ props, alt }: { props: Record<string, unknown>; alt: string }) {
+  const svg = useRef<SVGSVGElement>(null)
+  const available = useAvailableWidth(svg)
   const left = props.left as Tri
   const right = props.right as Tri | undefined
-  const W = right ? 520 : 280
-  const H = 220
+  const { stacked, W, H, second } = pairLayout(right !== undefined, available)
+  // The figure fitted the drawing at its first size; a new layout needs a new fit.
+  useLayoutEffect(() => {
+    svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
+  }, [stacked])
   const extent = (tri: Tri) => { const a = apex(tri); return Math.max(a.ab, a.x, 1) }
   const shared = props.sameScale && right ? 150 / Math.max(extent(left), extent(right)) : undefined
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.1 }} role="img" aria-label={alt}>
+    <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.1 }} role="img" aria-label={alt}>
       <One tri={left} cx={140} cy={120} scale={shared} />
-      {right && <One tri={right} cx={380} cy={120} scale={shared} />}
+      {right && <One tri={right} cx={second.cx} cy={second.cy} scale={shared} />}
     </svg>
   )
 }
