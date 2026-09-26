@@ -18,14 +18,32 @@ interface AtomSpec {
  *   shared: number of shared pairs (covalent, two atoms only)
  *   transfer: number of electrons moved from atoms[0] to atoms[1] (ionic only)
  */
+/** Splits a caption at the space nearest its midpoint, for a label too wide to fit one
+ * line at the fontSize-11 floor without shrinking it or running off the canvas. */
+function splitCaption(text: string): [string, string] {
+  const mid = text.length / 2
+  let bestI = -1, bestD = Infinity
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] === ' ') {
+      const d = Math.abs(i - mid)
+      if (d < bestD) { bestD = d; bestI = i }
+    }
+  }
+  return bestI === -1 ? [text, ''] : [text.slice(0, bestI), text.slice(bestI + 1)]
+}
+
 export function DotAndCross({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const kind = String(props.kind ?? 'covalent')
   const atoms = (props.atoms as AtomSpec[] | undefined) ?? [{ symbol: 'H', outer: 1, mark: 'dot' }, { symbol: 'Cl', outer: 7, mark: 'cross' }]
   const shared = Number(props.shared ?? 1)
   const transfer = Number(props.transfer ?? 1)
   const r = 44
-  const gap = kind === 'ionic' ? 170 : 2 * r - 22
-  const W = 2 * r + gap + 120
+  // The ionic layout used to size itself with 120 units of pure margin (60 either side),
+  // which nothing on the canvas actually needed and which alone put it 82px over a phone's
+  // 296-wide budget. The atoms keep their size and spacing; only that unused margin shrank.
+  const gap = kind === 'ionic' ? 165 : 2 * r - 22
+  const cx0 = kind === 'ionic' ? 58 : 60 + r
+  const W = kind === 'ionic' ? 295 : 2 * r + gap + 120
   /**
    * An ionic diagram needs a band of its own above and below the two atoms. Both of its
    * annotations are wider than the space they were drawn in: "1 electron transferred"
@@ -35,9 +53,9 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
    * with each other, because what they collided with was a box and a circle.
    */
   const topBand = kind === 'ionic' ? 22 : 0
-  const bottomBand = kind === 'ionic' ? 22 : 0
+  const bottomBand = kind === 'ionic' ? 30 : 0
   const H = kind === 'ionic' ? 160 + topBand + bottomBand : 160
-  const cx = [60 + r, 60 + r + gap]
+  const cx = [cx0, cx0 + gap]
   const cy = 70 + topBand
   const mark = (x: number, y: number, m: 'dot' | 'cross') =>
     m === 'dot' ? <circle cx={x} cy={y} r="3.5" fill={INK} /> : <g stroke={INK} strokeWidth="2"><line x1={x - 3.5} y1={y - 3.5} x2={x + 3.5} y2={y + 3.5} /><line x1={x - 3.5} y1={y + 3.5} x2={x + 3.5} y2={y - 3.5} /></g>
@@ -64,7 +82,7 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
   if (kind === 'covalent' && atoms.length > 2) {
     // A central atom sharing one pair with each of the atoms round it: water, ammonia, methane.
     const centre = atoms[0]!, ends = atoms.slice(1), n = ends.length
-    const CW = 300, CH = 236, cx0 = CW / 2, cy0 = CH / 2 - 8
+    const CW = 292, CH = 236, cx0 = CW / 2, cy0 = CH / 2 - 8
     const R = 40, rEnd = 26, dist = R + rEnd - 12
     const angles = n === 2 ? [180, 0] : n === 3 ? [90, 210, 330] : Array.from({ length: n }, (_, i) => 45 + (360 / n) * i)
     const gaps = n === 2 ? [90, 270] : n === 3 ? [270, 30, 150] : Array.from({ length: n }, (_, i) => (360 / n) * i)
@@ -101,10 +119,21 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
       items.push(pair(qx, qy, ang, centre.mark, centre.mark, `lp${k}`))
     }
     const caption = `${n} shared pairs: ${n} single covalent bonds` + (lonePairs > 0 ? `, and ${lonePairs} lone pair${lonePairs > 1 ? 's' : ''} on ${centre.symbol}` : '')
+    // Water and ammonia's captions name their lone pairs and run past 60 characters — too
+    // wide for one line at fontSize 11 on a 292-wide canvas, so those wrap; methane's
+    // shorter caption (no lone pairs) still fits on one.
+    const capLines = caption.length * 6.6 > CW - 16 ? splitCaption(caption) : [caption]
     return (
       <svg viewBox={`0 0 ${CW} ${CH}`} width="100%" style={{ maxWidth: CW * 1.1 }} role="img" aria-label={alt}>
         {items}
-        <text x={CW / 2} y={CH - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{caption}</text>
+        {capLines.length === 1 ? (
+          <text x={CW / 2} y={CH - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{capLines[0]}</text>
+        ) : (
+          <>
+            <text x={CW / 2} y={CH - 19} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{capLines[0]}</text>
+            <text x={CW / 2} y={CH - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{capLines[1]}</text>
+          </>
+        )}
       </svg>
     )
   }
@@ -125,14 +154,33 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
               {ring(cx[i]!, own, at.mark, null)}
               {gained > 0 && ring(cx[i]!, own + gained, a.mark, null).slice(own)}
               <text x={cx[i]! + r + 14} y={cy - r + 2} textAnchor="middle" fontFamily={DISPLAY} fontSize="16" fontWeight="700" fill="#d25b3b">{at.charge ?? (i === 0 ? `${transfer > 1 ? transfer : ''}+` : `${transfer > 1 ? transfer : ''}−`)}</text>
-              {n === 0 && <text x={cx[i]} y={cy + r + 26} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>outer electrons given away</text>}
+              {n === 0 && (
+                // "outer electrons given away" is 27 characters — at the fontSize-11 floor
+                // that runs wider than the atom's own half of the canvas, so it always
+                // wraps rather than shrink or spill off the left edge.
+                <>
+                  {/* Clear of the box, whose edge is at cy + r + 10: at + 20 the words touched it. */}
+                  <text x={cx[i]} y={cy + r + 24} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>outer electrons</text>
+                  <text x={cx[i]} y={cy + r + 37} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>given away</text>
+                </>
+              )}
             </g>
           )
         })}
         <path d={`M${cx[0]! + r + 20} ${cy} C ${cx[0]! + r + 50} ${cy - 30}, ${cx[1]! - r - 50} ${cy - 30}, ${cx[1]! - r - 20} ${cy}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" markerEnd="url(#dc-arrow)" />
         <text x={(cx[0]! + cx[1]!) / 2} y={14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{transfer} electron{transfer > 1 ? 's' : ''} transferred</text>
         <defs><marker id="dc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#d25b3b" /></marker></defs>
-        <text x={W / 2} y={H - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{a.symbol} loses, {b.symbol} gains: both end with full outer shells</text>
+        {(() => {
+          // At any width a phone allows, "<symbol> loses, <symbol> gains: both end with
+          // full outer shells" is too long for one line at fontSize 11, so it always splits.
+          const [l1, l2] = splitCaption(`${a.symbol} loses, ${b.symbol} gains: both end with full outer shells`)
+          return (
+            <>
+              <text x={W / 2} y={H - 19} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{l1}</text>
+              <text x={W / 2} y={H - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{l2}</text>
+            </>
+          )
+        })()}
       </svg>
     )
   }

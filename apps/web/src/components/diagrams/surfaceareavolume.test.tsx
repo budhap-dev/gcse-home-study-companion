@@ -1,3 +1,5 @@
+import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { SurfaceAreaVolume } from './SurfaceAreaVolume.tsx'
@@ -57,5 +59,49 @@ describe('surface area to volume', () => {
   it('draws a caption only when one is given', () => {
     expect(svg({ sides: [1, 2], title: 'the ratio falls as the cube grows' })).toContain('the ratio falls as the cube grows')
     expect(svg({ sides: [1, 2] })).not.toContain('</line>')
+  })
+
+  /**
+   * Every cube in a single row at 150 units each used to draw a 600-unit row for four
+   * cubes, and below its natural width a diagram stops shrinking and scrolls instead.
+   * Cubes now wrap onto a second row after two, and a long caption wraps onto as many
+   * lines as it needs rather than overhanging.
+   */
+  it('fits every use in the content pack on a phone, with every text estimated inside the view', () => {
+    const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
+    const packs: Record<string, unknown>[] = []
+    for (const sub of readdirSync(ROOT).filter((d) => statSync(join(ROOT, d)).isDirectory())) {
+      for (const f of readdirSync(join(ROOT, sub)).filter((x) => x.endsWith('.json'))) {
+        const doc = JSON.parse(readFileSync(join(ROOT, sub, f), 'utf8'))
+        for (const step of doc.lesson?.steps ?? []) {
+          for (const v of step.visuals ?? []) if (v.component === 'surface-area-volume') packs.push(v.props ?? {})
+        }
+      }
+    }
+    expect(packs.length).toBeGreaterThan(0)
+    for (const props of packs) {
+      const markup = svg(props)
+      const [, , w] = /viewBox="([-\d.]+) ([-\d.]+) ([\d.]+) ([\d.]+)"/.exec(markup)!.slice(1).map(Number)
+      expect(w!, JSON.stringify(props)).toBeLessThanOrEqual(296)
+      for (const t of markup.matchAll(/<text\b([^>]*)>([\s\S]*?)<\/text>/g)) {
+        const attrs = t[1]!
+        const x = Number(/\bx="(-?[\d.]+)"/.exec(attrs)![1])
+        const size = Number(/font-size="([\d.]+)"/.exec(attrs)?.[1] ?? '12')
+        const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
+        const text = t[2]!.replace(/<[^>]+>/g, '')
+        const half = text.length * 0.6 * size
+        const left = anchor === 'end' ? x - half : anchor === 'middle' ? x - half / 2 : x
+        const right = anchor === 'end' ? x : anchor === 'middle' ? x + half / 2 : x + half
+        expect(left, `"${text}"`).toBeGreaterThanOrEqual(-0.5)
+        expect(right, `"${text}"`).toBeLessThanOrEqual(w! + 0.5)
+      }
+    }
+  })
+
+  it('still fits, and wraps to a second row, with the maximum of four cubes', () => {
+    const markup = svg({ sides: [1, 2, 3, 4] })
+    const [, , w] = /viewBox="([-\d.]+) ([-\d.]+) ([\d.]+) ([\d.]+)"/.exec(markup)!.slice(1).map(Number)
+    expect(w!).toBeLessThanOrEqual(296)
+    expect([...markup.matchAll(/<rect/g)].length).toBe(4)
   })
 })

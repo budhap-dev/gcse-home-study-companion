@@ -177,30 +177,22 @@ One PR per subject.
 **Pack-wide quality**
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
   byte tables** (PR #255). Scrolling at 390: 47, 96, 9, 1 and 131 dropped to 0, 0, 0, 0 and 23.
-- [ ] **Diagrams fit a phone: the rest.** A census of all 3327 lesson and why pages at 390
-  on 26 September 2026 found 217 diagrams scrolling sideways. Fixed so far, each checked
-  figure by figure in the browser: 18 components in one batch (circuits, displayed
-  formulae, equation cards, electric fields, lattices, energy diagrams, histograms, number
-  lines, index cards, springs, beams, ray diagrams and others), then tables (21; a squeezed
-  column breaks a word at a syllable-like point or its own hyphen), curve graphs (15; every
-  label drawn after every line), plant diagrams (15), reaction profiles (7; every label in
-  a place of its own), free-body diagrams (7; horizontal forces labelled above their
-  arrows), lenses (6; rays cut at the title, a virtual image's labels under the axis) and
-  the statistics diagrams (15: box plots with thinned axis labels, trees with every label
-  outside its branch, cumulative frequency with readings over the curve).
-  Then vector figures, vector triangles, collisions and fluid columns (16; labels kept off
-  every edge, titles on their own line).
-  Still to do, each needing its labels placed without collisions: 4 or fewer each of
-  dot-and-cross, electrolysis cell, market map, repeated multiplication, index ladder,
-  surface area and circle theorem. Also 5
-  non-diagram elements on maths transformations s7 and four Physics steps. Code blocks
-  scroll by design.
+- [x] **Diagrams fit a phone: the rest.** A census of all 3327 lesson and why pages at 390
+  on 26 September 2026 found 217 diagrams scrolling sideways; after #295 to #304 none does,
+  and nothing scrolls at 1280 either. Each component was refitted to about 296 units and
+  every changed figure read in the browser at phone width, because the first attempt, which
+  only checked widths, made labels collide. The fixes that recur: every label drawn after
+  every line on a white halo; labels outside branches and triangles rather than on them; a
+  label offset by its own size; axis labels thinned to fit; table words broken at
+  syllable-like points. Code blocks still scroll by design. The census and contact-sheet
+  scripts are in the session scratchpad (`ph/census.mjs`, `ph/figshots.mjs`).
 - [x] **The correct option is too often the longest.** Rebalanced subject by subject on
   26 September 2026 (#285 to #292): the share where the right answer is the only longest
   option fell from 36% to 24% of 4898 multiple-choice items, about chance for four options.
   About 560 distractors were lengthened with wrong content, each read in its question.
   `option-lengths.test.ts` holds every topic to 35% and the pack to 30%.
-- [ ] Chemistry: 15 diagrams scroll at desktop width. Recheck after the diagrams PR.
+- [x] Chemistry: 15 diagrams scrolled at desktop width. None does after the phone refits
+  (census at 1280, 26 September 2026).
 - [x] **Components too wide for a phone:** `venn-diagram` (440 → 296), `cuboid` (380 → 284) and
   `triangle-pair`, which now stacks its pair in a box narrower than 520. A walk of the 20 Maths
   topics that use them against `main` removed 42 scrolling diagrams and added none.

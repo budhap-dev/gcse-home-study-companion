@@ -362,6 +362,13 @@ figure[data-diagram] {
 .rich-text th, .rich-text td { border: 1px solid var(--color-rule); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
 .rich-text thead th { background: color-mix(in srgb, var(--subject, #c8501f) 14%, var(--color-surface)); font-weight: 700; }
 .rich-text tbody tr:nth-child(even) { background: color-mix(in srgb, var(--color-rule) 25%, transparent); }
+/* On a phone a five-column table of words ("Translation | Reflection | Rotation |
+   Enlargement") was wider than the card, so it scrolled. Tighter cells, a slightly smaller
+   size and dictionary hyphenation of a long word let it fit; the text stays at least 13px. */
+@media (max-width: 480px) {
+  .rich-text table { font-size: 0.85em; }
+  .rich-text th, .rich-text td { padding: 0.3rem 0.35rem; hyphens: auto; -webkit-hyphens: auto; }
+}
 
 /* Colour markers: bold terms in lesson text read like a highlighter pen. */
 .rich-text strong { background: color-mix(in srgb, var(--subject, #c8501f) 16%, transparent); border-radius: 0.3em; padding: 0 0.2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }

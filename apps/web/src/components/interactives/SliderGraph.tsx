@@ -34,17 +34,21 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
   // will not shrink below its natural width, pushed the whole page 3px sideways.
   const W = 320
   const H = 220
+  const fmt = (v: number) => (v >= 1000 ? Math.round(v).toLocaleString('en-GB') : v >= 100 ? v.toFixed(0) : v >= 1 ? v.toFixed(1) : v.toFixed(2))
   const pad = 34
-  const sx = (v: number) => pad + ((v - xMin) / span) * (W - 2 * pad)
+  // The y reading sits right-aligned just left of the axis, so the left margin has to hold
+  // the widest one: at a fixed 34, "1,960" ran past the left edge, the drawing was widened
+  // to take it in, and the whole figure scrolled on a phone.
+  const padL = Math.max(pad, 10 + fmt(yMax).length * 7.2)
+  const sx = (v: number) => padL + ((v - xMin) / span) * (W - padL - pad)
   const sy = (v: number) => H - pad - (v / yMax) * (H - 2 * pad)
   const path = Array.from({ length: 81 }, (_, i) => { const xv = xMin + (i / 80) * span; return `${i ? 'L' : 'M'}${sx(xv).toFixed(1)} ${sy(f(xv)).toFixed(1)}` }).join(' ')
   const y = f(x)
-  const fmt = (v: number) => (v >= 1000 ? Math.round(v).toLocaleString('en-GB') : v >= 100 ? v.toFixed(0) : v >= 1 ? v.toFixed(1) : v.toFixed(2))
   return (
     <figure ref={fit} className="flex flex-col gap-3 overflow-x-auto rounded-xl border border-rule bg-surface p-4">
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440, ...LIGHT_CANVAS, borderRadius: 12 }} role="img" aria-label={alt}>
-        {[0.25, 0.5, 0.75, 1].map((k) => <line key={k} x1={pad} y1={sy(k * yMax)} x2={W - pad} y2={sy(k * yMax)} stroke={RULE} />)}
-        <line x1={pad} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />
+        {[0.25, 0.5, 0.75, 1].map((k) => <line key={k} x1={padL} y1={sy(k * yMax)} x2={W - pad} y2={sy(k * yMax)} stroke={RULE} />)}
+        <line x1={padL} y1={sy(0)} x2={W - pad} y2={sy(0)} stroke={INK} strokeWidth="1.5" />
         <line x1={sx(xMin)} y1={pad} x2={sx(xMin)} y2={H - pad} stroke={INK} strokeWidth="1.5" />
         <path d={path} fill="none" stroke="var(--subject)" strokeWidth="2.5" />
         <line x1={sx(x)} y1={sy(0)} x2={sx(x)} y2={sy(y)} stroke={INK_2} strokeDasharray="4 4" />
@@ -53,7 +57,7 @@ export function SliderGraph({ config, alt }: { config: Record<string, unknown>; 
         <text x={W - pad} y={H - 8} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{String(config.x ?? 'x')}</text>
         <text x={6} y={pad - 8} fontFamily={FONT} fontSize="11" fill={INK_2}>{String(config.y ?? 'y')}</text>
         <text x={sx(x)} y={H - pad + 14} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{fmt(x)}</text>
-        <text x={pad - 6} y={sy(y) + 4} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{fmt(y)}</text>
+        <text x={padL - 6} y={sy(y) + 4} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={INK}>{fmt(y)}</text>
       </svg>
       <label htmlFor={id} className="flex items-center gap-3 text-sm">
         {/* The axis name wraps rather than pushing the row wider than a phone: "distance
