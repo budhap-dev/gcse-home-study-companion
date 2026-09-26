@@ -6,7 +6,7 @@ import { termsForTopic } from '../../content/glossary.ts'
 import { StatusChip } from '../../components/StatusChip.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
 import { useProgress } from '../../progress/useProgress.ts'
-import { evidenceFor } from '../../progress/store.ts'
+import { decayNote, evidenceFor } from '../../progress/store.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 
 /**
@@ -79,6 +79,7 @@ export function Topic() {
           {topic.title}
         </h1>
         <StatusChip status={evidence.status} />
+        {decayNote(evidence) && <p className="text-sm text-ink-2">{decayNote(evidence)}</p>}
       </header>
 
       <section className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">

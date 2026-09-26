@@ -227,8 +227,11 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [x] **WKS-7:** the scratch canvas said "Working is saved with your answer", but strokes
   are kept only in the tab's session storage and never reach the attempt record. The note
   now says the working stays while the worksheet is open and is not saved with the score.
-- [ ] **PRG-1:** topic status never decays. The PRD's six-week rule (`decayAfterWeeks`) only
-  drives the recap suggestion in `recommend.ts`, so a topic stays Secure forever.
+- [x] **PRG-1:** topic status never decayed. The app now applies the PRD's six-week rule
+  when it reads a status, as `apply_decay()` does in the database: Mastered falls to Secure
+  and Secure to Developing, one step per six weeks untouched, never below Developing. Any
+  attempt or lesson step counts as a revisit. A decayed topic is offered a recap quiz, and
+  its page says why the status fell.
 
 ### Partly built
 - [ ] **QZ-1:** a missed quiz question should link to the lesson step that teaches it, not the

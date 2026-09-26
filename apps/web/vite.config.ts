@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { execSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
@@ -14,4 +15,5 @@ export default defineConfig({
     __APP_COMMIT__: JSON.stringify(sha || 'local'),
     __APP_BUILT__: JSON.stringify(new Date().toISOString().slice(0, 10)),
   },
+  test: { setupFiles: ['./src/test-clock.ts'] },
 })

@@ -48,4 +48,12 @@ describe('recommend', () => {
     expect(r.next).toMatchObject({ kind: 'quiz', topic: { id: 'a' } })
     expect(r.next!.reason).toContain('weeks ago')
   })
+
+  it('offers a decayed Mastered topic its recap, not the Advanced sheet it has already passed', () => {
+    const mastered = [quiz('a', 95, '2026-07-01'), sheet('a', 'higher', 80, '2026-07-01'), sheet('a', 'advanced', 80, '2026-07-01')]
+    const r = recommend(topics, { ...emptyState(), attempts: mastered }, now)
+    const forA = [r.next, ...r.alternatives].filter((t) => t?.topic.id === 'a')
+    expect(forA).toHaveLength(1)
+    expect(forA[0]).toMatchObject({ kind: 'quiz' })
+  })
 })
