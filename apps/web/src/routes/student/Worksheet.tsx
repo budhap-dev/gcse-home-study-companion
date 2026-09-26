@@ -109,7 +109,8 @@ export function Worksheet() {
   const scored = (q: Question) => {
     const a = state.answers[q.id]
     if (!a) return 0
-    return q.type === 'extended' ? a.result.marksScored : a.result.correct ? q.marks : (a.methodMarks ?? 0)
+    // A part-answer the marker recognised keeps its marks; method marks can only add to them.
+    return q.type === 'extended' ? a.result.marksScored : a.result.correct ? q.marks : Math.max(a.result.marksScored, a.methodMarks ?? 0)
   }
   const totalScored = questions.reduce((s, q) => s + scored(q), 0)
 
@@ -240,8 +241,8 @@ export function Worksheet() {
           <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
           <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
           {answered && typed && (
-            <p className="text-sm font-bold" style={{ color: answered.result.correct ? 'var(--color-status-secure)' : 'var(--color-status-not-secure)' }}>
-              {markedLine(question.marks, answered.result.correct)}
+            <p className="text-sm font-bold" style={{ color: answered.result.correct ? 'var(--color-status-secure)' : answered.result.marksScored > 0 ? 'var(--color-status-developing)' : 'var(--color-status-not-secure)' }}>
+              {markedLine(question.marks, answered.result.correct, answered.result.marksScored)}
             </p>
           )}
           {answered && typed && !revealed && (
@@ -297,7 +298,8 @@ export function Worksheet() {
  * one-mark multiple choice that tautology was the entire line. What is worth saying is
  * how many marks the answer just earned.
  */
-export function markedLine(marks: number, correct: boolean): string {
+export function markedLine(marks: number, correct: boolean, scored = 0): string {
+  if (!correct && scored > 0) return `Part of the answer matched · ${scored} of ${marks} marks. Reveal the solution to see what is missing.`
   if (!correct) return 'Final answer not matched. Reveal the solution and award your method marks.'
   return marks === 1 ? 'Correct · 1 mark' : `Correct · all ${marks} marks`
 }
