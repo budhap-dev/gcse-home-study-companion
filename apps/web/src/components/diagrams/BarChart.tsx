@@ -21,6 +21,10 @@ function niceStep(max: number): number {
  * convention for discrete numbers (goals scored, children per family), where the gaps
  * between values are real, and a bar would suggest a width the data does not have.
  *
+ * `style: 'grouped'` draws the bars touching, one per class interval, for grouped
+ * continuous data (hand span in 1 cm ranges). Each range starts where the last one ends,
+ * so a gap between the bars would say there were values nothing could take.
+ *
  * A second series (`values2`, named in `names`) draws a dual bar chart, the two bars of
  * each category side by side, with a key.
  *
@@ -28,7 +32,7 @@ function niceStep(max: number): number {
  * their bar onto at most two lines.
  *
  * Props: { categories: string[], values: number[], values2?: number[], names?: string[],
- *          style?: 'bar' | 'line', xLabel?, yLabel?, yStep?, title? }
+ *          style?: 'bar' | 'line' | 'grouped', xLabel?, yLabel?, yStep?, title? }
  */
 export function BarChart({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const categories = ((props.categories as string[] | undefined) ?? []).map(String)
@@ -37,6 +41,7 @@ export function BarChart({ props, alt }: { props: Record<string, unknown>; alt: 
   if (categories.length === 0 || values.length !== categories.length) return <p>{alt}</p>
   const names = ((props.names as string[] | undefined) ?? []).map(String)
   const line = props.style === 'line'
+  const grouped = props.style === 'grouped' && !values2
   const xLabel = props.xLabel ? String(props.xLabel) : ''
   const yLabel = props.yLabel ? String(props.yLabel) : 'Frequency'
   const title = props.title ? wrapCell(String(props.title), 40) : []
@@ -60,7 +65,7 @@ export function BarChart({ props, alt }: { props: Record<string, unknown>; alt: 
   const H = base + 8 + labelLines * LINE + (xLabel ? 18 : 4)
   const sy = (v: number) => base - (v / yTop) * plotH
 
-  const barW = values2 ? Math.min(22, slot * 0.36) : Math.min(40, slot * 0.6)
+  const barW = grouped ? slot : values2 ? Math.min(22, slot * 0.36) : Math.min(40, slot * 0.6)
   const bar = (v: number, x: number, fill: string, key: string) =>
     line
       ? <line key={key} x1={x} y1={base} x2={x} y2={sy(v)} stroke={fill} strokeWidth={3} />
