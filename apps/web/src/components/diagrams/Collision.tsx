@@ -14,12 +14,17 @@ interface Body {
  * arrow direction its sign, which is what makes momentum's direction visible.
  * Props: { before: Body[], after: Body[], unit }. A single body in `after` means the
  * two stuck together.
+ *
+ * The canvas used to be a flat 480 wide no matter what was drawn in it — usually far
+ * more than the row of blocks actually needed, but wide all the same, so it scrolled on
+ * a phone regardless. Width is now worked out from what each row draws: not just the
+ * blocks, but the velocity arrow above each one and its "400 m/s" label too, since a
+ * fast, light body can carry an arrow wider than its own block.
  */
 export function Collision({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const before = (props.before as Body[] | undefined) ?? [{ mass: 2, velocity: 3, label: 'A' }, { mass: 1, velocity: 0, label: 'B' }]
   const after = (props.after as Body[] | undefined) ?? [{ mass: 3, velocity: 2, label: 'A + B' }]
   const unit = String(props.unit ?? 'm/s')
-  const W = 480
   const rowH = 130
   const H = rowH * 2 + 10
   const trackY = (row: number) => 30 + row * rowH + 74
@@ -30,22 +35,31 @@ export function Collision({ props, alt }: { props: Record<string, unknown>; alt:
   // Square-root scale: a 10 m/s recoil beside a 400 m/s bullet is still a visible arrow,
   // and a faster body still gets the longer one.
   const arrowLen = (v: number) => 18 + Math.sqrt(Math.abs(v) / maxV) * 72
+  const velocityLabel = (b: Body) => (b.velocity !== 0 ? `${Math.abs(b.velocity)} ${unit}` : 'at rest')
+  // Each body's own slot is the widest of its block, its arrow and its velocity label,
+  // so nothing painted above or below a block ever runs into its neighbour.
+  const gap = 44
+  const slotW = (b: Body) => Math.max(blockW(b.mass), b.velocity !== 0 ? arrowLen(b.velocity) : 0, velocityLabel(b).length * 8, (b.label ?? '').length * 7)
+  const rowWidth = (bodies: Body[]) => bodies.reduce((sum, b) => sum + slotW(b), 0) + gap * Math.max(0, bodies.length - 1)
+  const W = Math.max(rowWidth(before), rowWidth(after), 200) + 32
 
   const row = (bodies: Body[], r: number, title: string) => {
     const y = trackY(r)
     // Lay the bodies out left to right with an even gap, centred on the track.
-    const widths = bodies.map((b) => blockW(b.mass))
-    const gap = 70
+    const widths = bodies.map((b) => slotW(b))
     const total = widths.reduce((a, b) => a + b, 0) + gap * (bodies.length - 1)
     let cursor = (W - total) / 2
     return (
       <g key={title}>
-        <text x="16" y={30 + r * rowH + 4} fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={ACCENT}>{title}</text>
+        {/* On its own line above the arrows: level with them, "Before" ran into the first
+            body's speed ("Befor3 m/s") once the drawing narrowed to a phone. */}
+        <text x="16" y={30 + r * rowH - 10} fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={ACCENT}>{title}</text>
         <line x1="16" y1={y} x2={W - 16} y2={y} stroke={RULE} strokeWidth="2" />
         {bodies.map((b, i) => {
-          const w = widths[i]!
-          const x = cursor
-          cursor += w + gap
+          const slot = widths[i]!
+          const w = blockW(b.mass)
+          const x = cursor + (slot - w) / 2
+          cursor += slot + gap
           const h = 40
           const v = b.velocity
           const len = arrowLen(v)
