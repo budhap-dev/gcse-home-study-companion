@@ -183,7 +183,8 @@ One PR per subject.
   histograms, number lines, index cards, springs, beams, ray diagrams and others), which
   leaves 118. Tables with long words (21) followed: a column squeezed past its longest word
   breaks the word at a syllable-like point, or at its own hyphen, never leaving a lone letter.
-  Still to do, each needing its labels re-placed without collisions: curve graphs (15), plant diagrams (15), reaction profiles (7), free-body
+  Curve graphs (15) followed, narrowed to 280 with every label drawn after every line.
+  Still to do, each needing its labels re-placed without collisions: plant diagrams (15), reaction profiles (7), free-body
   (7), lenses (6), vector figures (5), and 4 or fewer each of dot-and-cross, electrolysis
   cell, box plot, probability tree, cumulative frequency, collision, fluid column, frequency
   tree, vector triangle, market map, repeated multiplication, index ladder, surface area and
