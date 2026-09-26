@@ -1,3 +1,5 @@
+import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { LensDiagram } from './LensDiagram.tsx'
@@ -65,8 +67,9 @@ describe('lens diagram', () => {
     const markup = svg({ kind: 'convex', focalLength: 4, objectDistance: 12 })
     const fs = [...markup.matchAll(/<circle cx="([\d.]+)" cy="[\d.]+" r="3"/g)].map((m) => Number(m[1]))
     expect(fs).toHaveLength(2)
-    expect(Math.min(...fs)).toBeLessThan(230)
-    expect(Math.max(...fs)).toBeGreaterThan(230)
+    // The lens itself sits at W / 2 = 140; one focus is on each side of it.
+    expect(Math.min(...fs)).toBeLessThan(140)
+    expect(Math.max(...fs)).toBeGreaterThan(140)
   })
 })
 
@@ -82,7 +85,7 @@ describe('the lens symbol', () => {
   it('points both heads outwards for a convex lens', () => {
     // The first version cancelled an offset against a rotate, so both heads pointed the
     // same way and the symbol read as a single arrow rather than a lens.
-    const drawn = heads(svg({ kind: 'convex', focalLength: 4, objectDistance: 12 })).filter((h) => Math.abs(h.x - 230) < 2)
+    const drawn = heads(svg({ kind: 'convex', focalLength: 4, objectDistance: 12 })).filter((h) => Math.abs(h.x - 140) < 2)
     expect(drawn).toHaveLength(2)
     const [top, bottom] = drawn.sort((a, b) => a.tip - b.tip)
     expect(top.tip).toBeLessThan(top.base)        // the upper head points up
@@ -90,7 +93,7 @@ describe('the lens symbol', () => {
   })
 
   it('points both heads inwards for a concave lens', () => {
-    const drawn = heads(svg({ kind: 'concave', focalLength: 4, objectDistance: 12 })).filter((h) => Math.abs(h.x - 230) < 2)
+    const drawn = heads(svg({ kind: 'concave', focalLength: 4, objectDistance: 12 })).filter((h) => Math.abs(h.x - 140) < 2)
     expect(drawn).toHaveLength(2)
     const [top, bottom] = drawn.sort((a, b) => a.tip - b.tip)
     expect(top.tip).toBeGreaterThan(top.base)     // the upper head points down, inwards
@@ -109,13 +112,18 @@ describe('labels near the focus', () => {
     )
     const image = html.match(/<text x="([\d.]+)" y="([\d.]+)" text-anchor="middle"[^>]*>image<\/text>/)
     expect(image).not.toBeNull()
-    const fs = [...html.matchAll(/<text x="([\d.]+)" y="([\d.]+)" text-anchor="(end|middle)"[^>]*>F<\/text>/g)]
+    const fs = [...html.matchAll(/<text x="([\d.]+)" y="([\d.]+)" text-anchor="(start|end|middle)"[^>]*>F<\/text>/g)]
     expect(fs).toHaveLength(2)
-    const covered = fs.find((m) => m[3] === 'end')
+    // The covered F steps to the side away from the lens (the lens is at x = W/2 = 140).
+    const covered = fs.find((m) => m[3] !== 'middle')
     expect(covered).toBeDefined()
+    expect(covered![3]).toBe('start')
+    expect(Number(covered![1])).toBeGreaterThan(140)
     // The axis is at H/2 - 10 = 140: the covered F sits above it, the image label well below.
     expect(Number(covered![2])).toBeLessThan(140)
     expect(Number(image![2])).toBeGreaterThanOrEqual(140 + 34)
+    // And the word "image" clears the lens line: half its width, about 18, plus a margin.
+    expect(Math.abs(Number(image![1]) - 140)).toBeGreaterThanOrEqual(18)
   })
 
   it('leaves a tall image labelled under its arrow as before', () => {
@@ -123,5 +131,68 @@ describe('labels near the focus', () => {
       <LensDiagram props={{ kind: 'convex', focalLength: 4, objectDistance: 12, objectHeight: 3 }} alt="an object beyond twice the focal length of a convex lens" />,
     )
     expect(html).toMatch(/text-anchor="middle"[^>]*>image<\/text>/)
+  })
+})
+
+/**
+ * The measurement that matters: every lens diagram the content pack actually draws has to
+ * fit a 390px phone without scrolling. `fitSvgText` stops the drawing shrinking below its
+ * own viewBox width, so anything wider than the ~298 units a phone card leaves scrolls
+ * sideways — this scrolled up to 246px before the diagram was narrowed to 280 units wide,
+ * with its title and caption sentences wrapped onto more than one line to still fit.
+ */
+describe('lens diagram fits a phone', () => {
+  const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
+  function findProps(component: string): Record<string, unknown>[] {
+    const out: Record<string, unknown>[] = []
+    for (const sub of readdirSync(ROOT).filter((d) => statSync(join(ROOT, d)).isDirectory())) {
+      for (const f of readdirSync(join(ROOT, sub)).filter((x) => x.endsWith('.json'))) {
+        const doc = JSON.parse(readFileSync(join(ROOT, sub, f), 'utf8'))
+        for (const step of doc.lesson?.steps ?? []) {
+          for (const v of step.visuals ?? []) if (v.component === component) out.push(v.props ?? {})
+        }
+        for (const ex of doc.why?.examples ?? []) {
+          if (ex.visual?.component === component) out.push(ex.visual.props ?? {})
+        }
+      }
+    }
+    return out
+  }
+
+  /**
+   * A text's on-page extent, estimated the way this whole pack of phone-fit tests does: a
+   * character is 0.6 × its font size wide, and text-anchor says which way that width runs
+   * from the x it is drawn at. Every text here is unrotated.
+   */
+  function textExtents(markup: string): { left: number; right: number; text: string }[] {
+    const out: { left: number; right: number; text: string }[] = []
+    for (const m of markup.matchAll(/<text\s+([^>]*)>([^<]*)<\/text>/g)) {
+      const attrs = m[1]!, text = m[2]!
+      if (!text.trim()) continue
+      const x = Number(/(?:^|\s)x="(-?[\d.]+)"/.exec(attrs)?.[1])
+      if (!Number.isFinite(x)) continue
+      const size = Number(/font-size="(-?[\d.]+)"/.exec(attrs)?.[1] ?? 11)
+      const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
+      const w = text.length * size * 0.6
+      const [left, right] = anchor === 'end' ? [x - w, x] : anchor === 'middle' ? [x - w / 2, x + w / 2] : [x, x + w]
+      out.push({ left, right, text })
+    }
+    return out
+  }
+
+  it('found lens-diagram in the content pack', () => {
+    expect(findProps('lens-diagram').length).toBeGreaterThan(3)
+  })
+
+  it('keeps every viewBox at or under 296, with every label inside it', () => {
+    for (const props of findProps('lens-diagram')) {
+      const markup = svg(props)
+      const vw = Number(/viewBox="0 0 ([\d.]+)/.exec(markup)?.[1])
+      expect(vw, JSON.stringify(props)).toBeLessThanOrEqual(296)
+      for (const { left, right, text } of textExtents(markup)) {
+        expect(left, `"${text}" in ${JSON.stringify(props)}`).toBeGreaterThanOrEqual(-0.5)
+        expect(right, `"${text}" in ${JSON.stringify(props)}`).toBeLessThanOrEqual(vw + 0.5)
+      }
+    }
   })
 })
