@@ -32,7 +32,10 @@ export function AngleFigure({ props, alt }: { props: Record<string, unknown>; al
   return kind === 'parallel' ? <Parallel props={props} alt={alt} /> : <Rays props={props} alt={alt} />
 }
 
-const W = 420
+// 280 wide (down from 420): the drawing stops shrinking at its natural width, and the
+// old box scrolled on a phone. Every position here is a fraction of W or H, so shrinking
+// them keeps the rays, arcs and parallel-line crossings in the same proportions.
+const W = 280
 const H = 260
 
 function Rays({ props, alt }: { props: Record<string, unknown>; alt: string }) {

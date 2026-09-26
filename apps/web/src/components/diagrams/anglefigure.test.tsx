@@ -1,6 +1,48 @@
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { AngleFigure } from './AngleFigure.tsx'
+
+function contentProps(component: string): Record<string, unknown>[] {
+  const root = join(import.meta.dirname, '../../../../../supabase/seed/content')
+  const found: Record<string, unknown>[] = []
+  const collect = (node: unknown): void => {
+    if (Array.isArray(node)) { node.forEach(collect); return }
+    if (node && typeof node === 'object') {
+      const obj = node as Record<string, unknown>
+      if (obj.component === component) found.push((obj.props as Record<string, unknown>) ?? {})
+      Object.values(obj).forEach(collect)
+    }
+  }
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name)
+      if (entry.isDirectory()) walk(full)
+      else if (entry.name.endsWith('.json')) collect(JSON.parse(readFileSync(full, 'utf8')))
+    }
+  }
+  walk(root)
+  return found
+}
+
+function fitsPhone(html: string, maxWidth = 296): number {
+  const width = Number(/viewBox="[-\d.]+ [-\d.]+ ([\d.]+)/.exec(html)?.[1])
+  expect(width).toBeLessThanOrEqual(maxWidth)
+  for (const m of html.matchAll(/<text\b([^>]*)>([^<]*)<\/text>/g)) {
+    const attrs = m[1]!, text = m[2]!
+    if (!text.trim() || /rotate\(-?90/.test(attrs)) continue
+    const x = Number(/(?:^|\s)x="(-?[\d.]+)"/.exec(attrs)?.[1])
+    if (!Number.isFinite(x)) continue
+    const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
+    const fontSize = Number(/font-size="([\d.]+)"/.exec(attrs)?.[1] ?? '11')
+    const w = text.length * 0.6 * fontSize
+    const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x
+    expect(left, `"${text}" left edge`).toBeGreaterThanOrEqual(-0.5)
+    expect(left + w, `"${text}" right edge`).toBeLessThanOrEqual(width + 0.5)
+  }
+  return width
+}
 
 /**
  * These two figures carry the whole of the angle-properties topic, so what matters is
@@ -16,11 +58,11 @@ describe('angle figure', () => {
     const html = renderToStaticMarkup(<AngleFigure alt="" props={{ kind: 'rays', rays: [{ at: 0 }, { at: 90 }, { at: 180 }], arcs: [{ from: 0, text: 'p' }, { from: 1, text: 'q' }] }} />)
     const p = texts(html).find((t) => t.text === 'p')!
     const q = texts(html).find((t) => t.text === 'q')!
-    // Centre is at x = 210, y = 150. p is between east and north, so right of centre and above it.
-    expect(p.x).toBeGreaterThan(210)
+    // Centre is at x = 140, y = 150. p is between east and north, so right of centre and above it.
+    expect(p.x).toBeGreaterThan(140)
     expect(p.y).toBeLessThan(150)
     // q is between north and west, so left of centre and above it.
-    expect(q.x).toBeLessThan(210)
+    expect(q.x).toBeLessThan(140)
     expect(q.y).toBeLessThan(150)
   })
 
@@ -47,5 +89,11 @@ describe('angle figure', () => {
     const html = renderToStaticMarkup(<AngleFigure alt="" props={{ kind: 'parallel', labels: {} }} />)
     // Two arrowheads on each of the two lines, which is how a diagram says "parallel".
     expect((html.match(/<path /g) ?? []).length).toBe(4)
+  })
+
+  it('fits a phone for every angle figure the content draws', () => {
+    const pack = contentProps('angle-figure')
+    expect(pack.length).toBeGreaterThan(0)
+    for (const props of pack) fitsPhone(renderToStaticMarkup(<AngleFigure alt="" props={props} />))
   })
 })

@@ -1,12 +1,18 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
 
-/** (base^inner)^outer as `outer` boxes each holding base^inner, giving base^(inner×outer). */
+/**
+ * (base^inner)^outer as `outer` boxes each holding base^inner, giving base^(inner×outer).
+ * The box narrows as `outer` grows so the row still fits the 298 CSS px a diagram figure
+ * leaves on a 390px phone (`Visual.tsx`): four boxes at their old fixed 60-unit width and
+ * 24-unit gap drew a 352-unit row, and below its natural width a diagram stops shrinking
+ * and scrolls instead.
+ */
 export function PowerOfPower({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const base = String(props.base ?? 'x')
   const inner = Number(props.inner ?? 3)
   const outer = Math.max(1, Math.min(6, Number(props.outer ?? 4)))
-  const boxW = 60
-  const gap = 24
+  const gap = 14
+  const boxW = Math.min(60, Math.floor((250 - (outer - 1) * gap) / outer))
   const width = outer * boxW + (outer - 1) * gap + 40
   return (
     <svg viewBox={`0 0 ${width} 150`} width="100%" style={{ maxWidth: width * 1.3 }} role="img" aria-label={alt}>

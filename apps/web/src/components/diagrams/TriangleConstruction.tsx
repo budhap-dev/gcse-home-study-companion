@@ -49,7 +49,10 @@ export function TriangleConstruction({ props, alt }: { props: Record<string, unk
     if (t2 > 0.2 && Math.abs(t2 - t1) > 0.2) C2 = { x: t2 * dx, y: t2 * dy }
   }
 
-  const S = 34 // px per cm
+  // 23px per cm (down from 34): the widest construction in the pack (10, 13, 13) drew at
+  // 421 units and scrolled on a phone. The vertex and arc labels are placed in fixed
+  // pixels off each point rather than scaled cm, so they keep the same clearance at any S.
+  const S = 23 // px per cm
   const minX = Math.min(A.x, B.x, C.x, C2?.x ?? 0) - 1.2
   const maxX = Math.max(A.x, B.x, C.x, C2?.x ?? 0) + 1.2
   const maxY = Math.max(C.y, C2?.y ?? 0) + 1.2

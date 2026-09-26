@@ -3,20 +3,26 @@ import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
 interface Eq { name: string; equation: string; units: string }
 
 /**
- * The card is drawn to this width and no wider, so it fits inside a topic card on a 390px
- * phone (about 332 units of usable room) without scrolling.
+ * The card is drawn to this width and no wider, so it fits inside the 298 CSS px a diagram
+ * figure leaves on a 390px phone (`Visual.tsx`) without scrolling.
  *
- * It used to be 520. Below its natural width a diagram stops shrinking and scrolls instead,
- * which keeps its text readable — but this card set the name on the left and anchored the
- * equation to the right edge, so the part that scrolled out of sight was the equation. A
- * student on a phone saw "Potential difference / V, A, ohms" and had to drag sideways to
- * find "V = I R". The one thing the card exists to show was the one thing hidden.
+ * It used to be 520, then 300 (still 2px over that 298). Below its natural width a diagram
+ * stops shrinking and scrolls instead, which keeps its text readable — but this card set
+ * the name on the left and anchored the equation to the right edge, so the part that
+ * scrolled out of sight was the equation. A student on a phone saw "Potential difference /
+ * V, A, ohms" and had to drag sideways to find "V = I R". The one thing the card exists to
+ * show was the one thing hidden.
  */
-const W = 300
+const W = 294
 const PAD = 16
-/** Roughly how wide a character is, as a fraction of the font size, for these two faces. */
-const DISPLAY_RATIO = 0.56
-const BODY_RATIO = 0.52
+/**
+ * Roughly how wide a character is, as a fraction of the font size, for these two faces —
+ * set to the conservative 0.6 the phone-fit check uses (`labelsize.test.ts` and the
+ * component's own test), not a tighter measured average, so a line that just fits by this
+ * component's own wrap can never be the line the check finds hanging over the edge.
+ */
+const DISPLAY_RATIO = 0.6
+const BODY_RATIO = 0.6
 const width = (text: string, size: number, ratio = DISPLAY_RATIO) => text.length * size * ratio
 
 /**

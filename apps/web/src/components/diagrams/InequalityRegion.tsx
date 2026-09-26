@@ -25,9 +25,12 @@ export function InequalityRegion({ props, alt }: { props: Record<string, unknown
   const constraints = (props.constraints as Constraint[] | undefined) ?? []
   const regionLabel = typeof props.label === 'string' ? props.label : 'R'
 
-  const W = 360
+  // 280 wide: the drawing stops shrinking at its natural width, and a 360-wide grid
+  // scrolled on a phone. The region and its label are computed from sx/sy, so shrinking
+  // the box keeps the shading exactly where the constraints put it.
+  const W = 280
   const H = 300
-  const pad = 34
+  const pad = 26
   const sx = (v: number) => pad + ((v - xMin) / (xMax - xMin)) * (W - 2 * pad)
   const sy = (v: number) => H - pad - ((v - yMin) / (yMax - yMin)) * (H - 2 * pad)
 
@@ -87,7 +90,7 @@ export function InequalityRegion({ props, alt }: { props: Record<string, unknown
   }
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.4 }} role="img" aria-label={alt}>
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.8 }} role="img" aria-label={alt}>
       {ticks(xMin, xMax).map((v) => <line key={`gx${v}`} x1={sx(v)} y1={pad} x2={sx(v)} y2={H - pad} stroke={RULE} />)}
       {ticks(yMin, yMax).map((v) => <line key={`gy${v}`} x1={pad} y1={sy(v)} x2={W - pad} y2={sy(v)} stroke={RULE} />)}
 

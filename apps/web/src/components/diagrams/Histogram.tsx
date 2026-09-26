@@ -8,6 +8,27 @@ interface Bar {
 }
 
 /**
+ * A title too long for one line at phone width wraps onto two rather than pushing the
+ * viewBox wider: "Drawn properly: area is the number of people" is 45 characters.
+ */
+function wrapTitle(text: string, maxChars: number): string[] {
+  const words = text.split(' ')
+  const lines: string[] = []
+  let line = ''
+  for (const w of words) {
+    const next = line ? `${line} ${w}` : w
+    if (next.length > maxChars && line) {
+      lines.push(line)
+      line = w
+    } else {
+      line = next
+    }
+  }
+  if (line) lines.push(line)
+  return lines
+}
+
+/**
  * A histogram with unequal class widths, drawn from the frequencies alone. The height
  * of each bar is the **frequency density**, frequency divided by class width, and the
  * component works that out itself rather than taking it as a prop, so the picture can
@@ -29,8 +50,12 @@ export function Histogram({ props, alt }: { props: Record<string, unknown>; alt:
   const maxX = Math.max(...bars.map((b) => b.to))
   const maxD = Math.max(...density)
 
-  const W = 460, H = 300
-  const left = 54, right = 16, top = title ? 32 : 18, bottom = 48
+  // 284 wide: the drawing stops shrinking at its natural width, and a 460-wide chart
+  // scrolled on a phone. "Drawn properly: area is the number of people" (45 characters)
+  // is too long for one line even at the full 296-unit budget, so a title wraps.
+  const W = 284, H = 300
+  const titleLines = title ? wrapTitle(title, 34) : []
+  const left = 48, right = 14, top = title ? (titleLines.length > 1 ? 46 : 30) : 18, bottom = 48
   const sx = (x: number) => left + ((x - minX) / (maxX - minX)) * (W - left - right)
   const sy = (d: number) => H - bottom - (d / (maxD * 1.12)) * (H - top - bottom)
 
@@ -42,12 +67,12 @@ export function Histogram({ props, alt }: { props: Record<string, unknown>; alt:
   const fmt = (v: number) => String(Number(v.toFixed(2)))
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 500 }} role="img" aria-label={alt}>
-      {title && (
-        <text x={W / 2} y={18} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
-          {title}
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 420 }} role="img" aria-label={alt}>
+      {titleLines.map((line, i) => (
+        <text key={`ti${i}`} x={W / 2} y={18 + i * 15} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
+          {line}
         </text>
-      )}
+      ))}
       {ticks.map((d, i) => (
         <g key={`t${i}`}>
           <line x1={left} y1={sy(d)} x2={W - right} y2={sy(d)} stroke={RULE} />

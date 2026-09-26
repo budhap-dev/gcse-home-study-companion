@@ -86,7 +86,7 @@ describe('beam-moments labels', () => {
     const html = renderToStaticMarkup(
       <BeamMoments alt="" props={{ length: 2, pivot: 0.5, forces: [{ at: 0.9, force: 5 }] }} />,
     )
-    expect(html).toContain('viewBox="0 0 300 200"')
+    expect(html).toContain('viewBox="0 0 284 200"')
     expect(clashes(html)).toEqual([])
   })
 })
