@@ -1,6 +1,48 @@
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { CumulativeFrequency } from './CumulativeFrequency.tsx'
+
+function contentProps(component: string): Record<string, unknown>[] {
+  const root = join(import.meta.dirname, '../../../../../supabase/seed/content')
+  const found: Record<string, unknown>[] = []
+  const collect = (node: unknown): void => {
+    if (Array.isArray(node)) { node.forEach(collect); return }
+    if (node && typeof node === 'object') {
+      const obj = node as Record<string, unknown>
+      if (obj.component === component) found.push((obj.props as Record<string, unknown>) ?? {})
+      Object.values(obj).forEach(collect)
+    }
+  }
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = join(dir, entry.name)
+      if (entry.isDirectory()) walk(full)
+      else if (entry.name.endsWith('.json')) collect(JSON.parse(readFileSync(full, 'utf8')))
+    }
+  }
+  walk(root)
+  return found
+}
+
+function fitsPhone(html: string, maxWidth = 296): number {
+  const width = Number(/viewBox="[-\d.]+ [-\d.]+ ([\d.]+)/.exec(html)?.[1])
+  expect(width).toBeLessThanOrEqual(maxWidth)
+  for (const m of html.matchAll(/<text\b([^>]*)>([^<]*)<\/text>/g)) {
+    const attrs = m[1]!, text = m[2]!
+    if (!text.trim() || /rotate\(-?90/.test(attrs)) continue
+    const x = Number(/(?:^|\s)x="(-?[\d.]+)"/.exec(attrs)?.[1])
+    if (!Number.isFinite(x)) continue
+    const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
+    const fontSize = Number(/font-size="([\d.]+)"/.exec(attrs)?.[1] ?? '11')
+    const w = text.length * 0.6 * fontSize
+    const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x
+    expect(left, `"${text}" left edge`).toBeGreaterThanOrEqual(-0.5)
+    expect(left + w, `"${text}" right edge`).toBeLessThanOrEqual(width + 0.5)
+  }
+  return width
+}
 
 /**
  * A reading is taken across from a cumulative frequency to the plotted line and down
@@ -73,5 +115,29 @@ describe('cumulative frequency graph', () => {
     const ys = [...html.matchAll(/<text x="[\d.]+" y="([\d.]+)"[^>]*>([^<]*Q ≈[^<]*)</g)].map((m) => Number(m[1]))
     expect(ys).toHaveLength(2)
     expect(ys[0]).toBe(ys[1])
+  })
+
+  /**
+   * A reading taken near the right of the data used to always grow its label rightwards,
+   * which on the narrower phone width ran the label past the edge of the picture.
+   */
+  it('grows a reading label to the left when there is no room to its right', () => {
+    const html = renderToStaticMarkup(<CumulativeFrequency alt="" props={{
+      points: [{ x: 125, y: 4 }, { x: 130, y: 18 }, { x: 135, y: 52 }, { x: 140, y: 104 }, { x: 145, y: 158 }, { x: 150, y: 188 }, { x: 155, y: 200 }],
+      readings: [{ y: 150, label: '75th centile' }],
+    }} />)
+    fitsPhone(html)
+  })
+
+  it('wraps a long title onto two lines rather than pushing the graph wider', () => {
+    const html = renderToStaticMarkup(<CumulativeFrequency alt="" props={{ points: POINTS, title: 'Heights of 200 children of the same age' }} />)
+    expect((html.match(/<text[^>]*font-family="Bricolage[^>]*>/g) ?? []).length).toBe(2)
+    fitsPhone(html)
+  })
+
+  it('fits a phone for every cumulative frequency graph the content draws', () => {
+    const pack = contentProps('cumulative-frequency')
+    expect(pack.length).toBeGreaterThan(0)
+    for (const props of pack) fitsPhone(renderToStaticMarkup(<CumulativeFrequency alt="" props={props} />))
   })
 })

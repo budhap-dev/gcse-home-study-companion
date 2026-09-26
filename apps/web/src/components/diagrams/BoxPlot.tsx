@@ -36,14 +36,24 @@ export function BoxPlot({ props, alt }: { props: Record<string, unknown>; alt: s
   const ticks: number[] = []
   for (let v = xMin; v <= xMax + step / 1000; v = Number((v + step).toFixed(6))) ticks.push(v)
 
-  const W = 460
+  // 284 wide: the drawing stops shrinking at its natural width, and a 460-wide plot
+  // scrolled on a phone. The row labels are the widest thing on the left, so the left
+  // margin is sized to the longest one rather than a fixed guess: "Through town" needed
+  // more than the old fixed 78 gave it, which would have clipped it at the axis edge.
+  const W = 284
   const rowH = 58
-  const left = 78, right = 18, top = title ? 34 : 16, bottom = 46
+  const maxLabelLen = Math.max(...plots.map((p) => p.label.length))
+  const left = Math.max(60, 22 + maxLabelLen * 7.2), right = 14, top = title ? 34 : 16, bottom = 46
   const H = top + plots.length * rowH + bottom
   // Clamped, so a summary outside the axis range draws at the edge rather than
   // pushing the picture out of its box.
   const sx = (x: number) => left + ((Math.min(Math.max(x, xMin), xMax) - xMin) / (xMax - xMin)) * (W - left - right)
   const fmt = (v: number) => String(Number(v.toFixed(2)))
+  // Every tick is drawn, but only every so many labelled, so the numbers stay a label's
+  // width apart: at 284 wide, 0 to 3500 in 500s printed eight four-digit numbers into
+  // one another.
+  const widest = Math.max(...ticks.map((v) => fmt(v).length)) * 6.6
+  const labelEvery = Math.max(1, Math.ceil((widest + 8) / ((W - left - right) / Math.max(1, ticks.length - 1))))
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 500 }} role="img" aria-label={alt}>
@@ -81,9 +91,11 @@ export function BoxPlot({ props, alt }: { props: Record<string, unknown>; alt: s
       {ticks.map((v, i) => (
         <g key={`t${i}`}>
           <line x1={sx(v)} y1={H - bottom} x2={sx(v)} y2={H - bottom + 5} stroke={INK} />
-          <text x={sx(v)} y={H - bottom + 18} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>
-            {fmt(v)}
-          </text>
+          {i % labelEvery === 0 && (
+            <text x={sx(v)} y={H - bottom + 18} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>
+              {fmt(v)}
+            </text>
+          )}
         </g>
       ))}
       {xLabel && (
