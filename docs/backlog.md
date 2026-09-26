@@ -207,11 +207,12 @@ One PR per subject.
   answer ("a metal hydroxide and hydrogen" for sodium and water). Typed questions now take a
   `partial` list of part-answers with their marks, so half an answer scores 1 of 2 on a quiz,
   a lesson check or a worksheet instead of 2 or 0. Four questions use it so far.
-- [ ] **Algebraic answers are matched as text.** The marker normalises spacing, signs and
-  notation but does not know that $(x+1)(x-2)$ and $(x-2)(x+1)$, or $x \geq 3$ and $3 \leq x$, are
-  the same answer, so every equal form has to be listed by hand (the Further Maths review added six
-  bracket orders to one list). A check that compares two algebraic answers by expanding them would
-  remove the class.
+- [x] **Algebraic answers are matched as text.** The marker now accepts the same algebra in
+  another order: the terms of a sum, the factors of a product, the sides of an equation, and
+  an inequality written either way round (x ⩾ 3 and 3 ⩽ x). Nothing is expanded or collected,
+  so a factorised answer still differs from an expanded one. Text that is not plainly algebra
+  (formulae, pseudo-code, words, 1/2x) keeps the text match. 242 hand-listed orders are now
+  redundant but harmless. The same PR stopped √(a/π) and √a/π normalising to one answer.
 - [ ] **Walk false positive:** a multiple-choice check whose options are pure LaTeX is
   reported "not marked Correct", because the walk's text match cannot find the option.
 
