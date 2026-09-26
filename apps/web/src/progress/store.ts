@@ -1,4 +1,4 @@
-import { DEFAULT_THRESHOLDS, type TopicStatus, type WorksheetLevel } from '@study/shared'
+import { DEFAULT_THRESHOLDS, STATUS_LABEL, TOPIC_STATUSES, type TopicStatus, type WorksheetLevel } from '@study/shared'
 
 /**
  * Progress lives in the browser until Gmail sign-in arrives. The shape mirrors the
@@ -333,6 +333,10 @@ const pct = (a?: AttemptRecord) => (a && a.marksAvailable > 0 ? (100 * a.marksSc
 
 export interface TopicEvidence {
   status: TopicStatus
+  /** The status the scores earned, before decay; set only when decay lowered it. */
+  decayedFrom?: TopicStatus
+  /** Whole weeks since the topic was last touched (an attempt or lesson progress). */
+  idleWeeks?: number
   lessonDone: boolean
   quizPct?: number
   quiz89Pct?: number
@@ -341,7 +345,33 @@ export interface TopicEvidence {
 }
 
 /** Mirrors compute_topic_status() in supabase/migrations/20260902000003_activity_progress.sql. */
-export function evidenceFor(topicId: string, state: ProgressState = read()): TopicEvidence {
+/** When the student last did anything on the topic: an attempt, or a step of its lesson. */
+export function lastActivity(topicId: string, state: ProgressState): Date | undefined {
+  const times = [...state.attempts.filter((a) => a.topicId === topicId).map((a) => a.completedAt), state.lessons[topicId]?.updatedAt].filter(Boolean) as string[]
+  return times.length ? new Date(times.sort().at(-1)!) : undefined
+}
+
+/**
+ * PRD section 6: Grade 9 ready decays to Secure, and Secure to Developing, when a topic has
+ * not been revisited for six weeks. apply_decay() does this nightly in the database, one step
+ * per six idle weeks, never below Developing. The app keeps progress in the browser, where no
+ * job runs, so the same rule is applied when the status is read. Before this, a topic stayed
+ * Secure forever and the six weeks only drove a recap suggestion.
+ */
+function decay(status: TopicStatus, idleWeeks: number): TopicStatus {
+  const steps = Math.floor(idleWeeks / DEFAULT_THRESHOLDS.decayAfterWeeks)
+  if (steps < 1 || (status !== 'secure' && status !== 'grade-9-ready')) return status
+  const floor = TOPIC_STATUSES.indexOf('developing')
+  return TOPIC_STATUSES[Math.max(floor, TOPIC_STATUSES.indexOf(status) - steps)]!
+}
+
+/** Why a status is lower than the scores earned, in the student's terms, or nothing. */
+export function decayNote(e: TopicEvidence): string | undefined {
+  if (!e.decayedFrom || e.idleWeeks === undefined) return undefined
+  return `Was ${STATUS_LABEL[e.decayedFrom]}, but not visited for ${e.idleWeeks} weeks. A quiz brings it back.`
+}
+
+export function evidenceFor(topicId: string, state: ProgressState = read(), now: Date = new Date()): TopicEvidence {
   const t = DEFAULT_THRESHOLDS
   const quiz = latest(state.attempts, topicId, 'quiz')
   const quizPct = pct(quiz)
@@ -365,5 +395,13 @@ export function evidenceFor(topicId: string, state: ProgressState = read()): Top
   } else if ((quizPct !== undefined && quizPct >= t.developingQuizMin) || (quizPct === undefined && lessonDone)) {
     status = 'developing'
   }
-  return { status, lessonDone, quizPct, quiz89Pct, higherPct, advancedPct }
+  const last = lastActivity(topicId, state)
+  const idleWeeks = last ? Math.max(0, Math.floor((now.getTime() - last.getTime()) / (7 * 86400000))) : undefined
+  const decayed = idleWeeks === undefined ? status : decay(status, idleWeeks)
+  return {
+    status: decayed,
+    ...(decayed !== status ? { decayedFrom: status } : {}),
+    ...(idleWeeks !== undefined ? { idleWeeks } : {}),
+    lessonDone, quizPct, quiz89Pct, higherPct, advancedPct,
+  }
 }
