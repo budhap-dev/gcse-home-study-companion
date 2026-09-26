@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
-import { CHAR_WIDTH, LINE_HEIGHT, charBudget, fitColumns, rowHeight, wrapCell } from './tableLayout.ts'
+import { CHAR_WIDTH, LINE_HEIGHT, charBudget, columnWidths, fitColumns, forceColumns, forcedCharBudget, rowHeight, wrapCellForced } from './tableLayout.ts'
 
 /**
  * A table: one column per variable (plus an optional output column), one row per step.
@@ -21,19 +21,40 @@ export function TraceTable({ props, alt }: { props: Record<string, unknown>; alt
 
   const svg = useRef<SVGSVGElement>(null)
   const available = useAvailableWidth(svg)
-  const widths = fitColumns(columns, rows, available ?? Infinity)
-  const budgets = widths.map(charBudget)
+  // fitColumns' own target already sits 2 below whatever it is given, but that lands the
+  // viewBox flush with the box's measured width — no margin against a font that measures
+  // a hair wider than CHAR_WIDTH assumes. Asking for 2 less than the real box keeps a
+  // phone card's table inside 296 on the 298-wide box the brief measures, not just
+  // exactly filling it.
+  const budget = available === undefined ? Infinity : available - 2
+  let widths = fitColumns(columns, rows, budget)
+  // fitColumns documents that a table with enough long, unbreakable words in enough
+  // columns can still be wider than this even at its tightest: five columns of prose
+  // (Hormones and the endocrine system), nine columns of numbers (a value table for a
+  // reciprocal graph), or ten columns nine of which are a single letter (DNA base
+  // pairing) all did, and scrolled. forceColumns takes the extra step, closing every
+  // column past its word floor and leaving wrapCellForced to hyphenate whichever prose
+  // word no longer fits — never a number, which forceColumns never shrinks past.
+  let forced = false
+  if (widths.reduce((a, b) => a + b, 0) + 2 > budget) {
+    widths = forceColumns(columns, rows, columnWidths(columns, rows), budget)
+    forced = true
+  }
+  // forceColumns closes a column up to FORCE_PADDING rather than fitColumns' own
+  // CELL_PADDING, so charBudget's assumption would under-count how much text actually
+  // fits and hyphenate more of it than the column needs.
+  const budgets = widths.map(forced ? forcedCharBudget : charBudget)
   const xs = widths.reduce<number[]>((acc, w) => [...acc, (acc[acc.length - 1] ?? 1) + w], [1]).slice(0, -1)
   const W = widths.reduce((a, b) => a + b, 0) + 2
 
-  const header = columns.map((c, i) => wrapCell(c, budgets[i]!))
-  const body = rows.map((r) => columns.map((_, i) => wrapCell(r[i] ?? '', budgets[i]!)))
+  const header = columns.map((c, i) => wrapCellForced(c, budgets[i]!))
+  const body = rows.map((r) => columns.map((_, i) => wrapCellForced(r[i] ?? '', budgets[i]!)))
   const headH = rowHeight(Math.max(1, ...header.map((l) => l.length)))
   const bodyH = body.map((cells) => rowHeight(Math.max(1, ...cells.map((l) => l.length))))
 
   // The title wraps to the table's width too: an unwrapped title wider than the table
   // made the fitter widen the drawing and put it back into a sideways scroll.
-  const title = props.title ? wrapCell(String(props.title), Math.max(1, Math.floor((W - 2) / TITLE_CHAR))) : []
+  const title = props.title ? wrapCellForced(String(props.title), Math.max(1, Math.floor((W - 2) / TITLE_CHAR))) : []
   const top = title.length ? title.length * LINE_HEIGHT + 7 : 0
   const bodyTop = top + 1 + headH
   // Each row starts where the one above it ends.

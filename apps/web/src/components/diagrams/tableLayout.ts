@@ -134,3 +134,126 @@ export function fitColumns(columns: string[], rows: string[][], available: numbe
   }
   return at(lo).map(Math.floor)
 }
+
+/**
+ * A token whose exact form matters and must never be hyphenated: a number (so a phone
+ * never shows "-0-" over ".25" for -0.25, which reads as a different value), or anything
+ * short enough that splitting it would not save room worth having. Letters-only prose is
+ * the only thing forceColumns is ever allowed to break.
+ */
+export function isAtomic(word: string): boolean {
+  return word.length <= 2 || /\d/.test(word)
+}
+
+/** Like wordFloor, but only over the tokens forceColumns may never shrink past. */
+function atomicFloor(columns: string[], rows: string[][], i: number, padding: number, least: number): number {
+  const words = [columns[i] ?? '', ...rows.map((r) => r[i] ?? '')].flatMap((t) => t.split(' '))
+  const atoms = words.filter(isAtomic)
+  // A compound's parts, each with its hyphen, are never broken either: "orange-brown" is
+  // the exact colour a student has to write, and split as "oran-" "ge-" "brown" it reads
+  // as three words. Compounds are rare, so this costs a column little.
+  const parts = words.filter((w) => /\p{L}-\p{L}/u.test(w)).flatMap((w) => w.split(/(?<=-)/))
+  return Math.max(least, CHAR_WIDTH * Math.max(0, ...[...atoms, ...parts].map((w) => w.length)) + padding)
+}
+
+/** The padding forceColumns closes right up to: it is only ever reached once TIGHT_PADDING has already failed to fit. */
+export const FORCE_PADDING = 4
+
+/**
+ * Split a single word that still will not fit, breaking it with a hyphen rather than
+ * running it past the edge of its column. A comparison across five columns (Hormones and
+ * the endocrine system: thyroxine, blood glucose, temperature and water side by side) can
+ * repeat a word like "hypothalamus" in several columns; five columns can never each show
+ * that whole, so fitColumns' own tight floor still totals more than a phone allows and the
+ * table would scroll past 296 with the word itself the reason. Never called on an atomic
+ * token (wrapCellForced screens those out first), and never reached by an ordinary table.
+ * The break goes at an existing hyphen, else at a syllable-like boundary, leaving at least
+ * three letters each side: cutting wherever the line ran out gave "hydroge-n" and
+ * "chlori-ne" on the first phone layout.
+ */
+export function hardBreak(word: string, budget: number): string[] {
+  if (budget < 2 || word.length <= budget) return [word]
+  // A hyphen the word already has is the best place of all, and adds nothing: break there
+  // first, then break each part on its own, so "orange-brown" never becomes "e-b-".
+  const parts = word.split(/(?<=-)(?=.)/)
+  if (parts.length > 1) return parts.flatMap((part) => hardBreak(part, budget))
+  const lines: string[] = []
+  let rest = word
+  while (rest.length > budget) {
+    const most = Math.min(budget - 1, rest.length - MIN_PIECE)
+    let cut = -1
+    for (let k = most; k >= Math.max(MIN_PIECE, Math.ceil((budget - 1) / 2)); k--) {
+      if (syllableCut(rest, k)) { cut = k; break }
+    }
+    if (cut < 0) cut = most >= MIN_PIECE ? most : budget - 1
+    lines.push(rest.slice(0, cut) + '-')
+    rest = rest.slice(cut)
+  }
+  lines.push(rest)
+  return lines
+}
+
+/** Neither piece of a broken word is shorter than this, where the word allows it: no "hydroge-n". */
+const MIN_PIECE = 3
+const VOWEL = /[aeiouy]/i
+/** Consonant pairs that sound as one, and so are never split. */
+const DIGRAPHS = new Set(['th', 'ch', 'sh', 'ph', 'wh', 'ck', 'gh', 'qu', 'ng'])
+
+/**
+ * Whether a break between word[k - 1] and word[k] falls where a reader expects a syllable
+ * to end: between two consonants that are not a digraph (Ques-tion, potas-sium), or after a
+ * vowel before a consonant that starts the next syllable (hydro-gen, chlo-rine). Not
+ * dictionary hyphenation, but it never leaves a lone letter or splits "th".
+ */
+function syllableCut(word: string, k: number): boolean {
+  const a = word[k - 1] ?? '', b = word[k] ?? '', c = word[k + 1] ?? ''
+  if (!/[a-z]/i.test(a) || !/[a-z]/i.test(b)) return false
+  const va = VOWEL.test(a), vb = VOWEL.test(b)
+  if (!va && !vb) return !DIGRAPHS.has((a + b).toLowerCase())
+  if (va && !vb) return VOWEL.test(c) && !DIGRAPHS.has((b + c).toLowerCase())
+  return false
+}
+
+/**
+ * wrapCell, but a line that is still one word too long for the budget afterwards is
+ * hyphenated instead of left to overflow — unless that word is atomic, which is left
+ * whole and only ever overflows if forceColumns has not already made room for it (it
+ * always has). Everything that already wrapped cleanly is returned exactly as wrapCell
+ * would.
+ */
+export function wrapCellForced(text: string, budget: number): string[] {
+  return wrapCell(text, budget).flatMap((line) => (line.length <= budget || line.includes(' ') || isAtomic(line) ? [line] : hardBreak(line, budget)))
+}
+
+/**
+ * Squeezes every column to fit `available` even past fitColumns' own word floor, for the
+ * rare table fitColumns itself says will still scroll (five columns of prose, or a value
+ * table with nine narrow columns of numbers). A column never gives up the room its
+ * numbers need — atomicFloor, not wordFloor — so a number is never the thing that gets
+ * hyphenated; wrapCellForced then hyphenates whichever prose word no longer fits.
+ *
+ * If even every column at its numbers' floor is wider than a phone (nine columns each
+ * needing at least a two-decimal reading), that is returned as the least-bad width and
+ * the table is left to scroll: no prop here can make numbers narrower than their digits.
+ */
+export function forceColumns(columns: string[], rows: string[][], natural: number[], available: number): number[] {
+  const target = available - 2
+  const total = natural.reduce((a, b) => a + b, 0)
+  if (total <= target) return natural
+  const hardFloor = natural.map((w, i) => Math.min(w, atomicFloor(columns, rows, i, FORCE_PADDING, TIGHT_COLUMN)))
+  const floorSum = hardFloor.reduce((a, b) => a + b, 0)
+  if (floorSum >= target) return hardFloor
+  // Every column keeps its floor, then whatever room is left over is shared out in
+  // proportion to how much each column would still like beyond its floor — the DNA base
+  // pairing table's nine one-letter columns want almost none of it, so "Original strand"
+  // and "Complement" get most of what is left, rather than an equal ninth each.
+  const excess = natural.map((w, i) => w - hardFloor[i]!)
+  const excessSum = excess.reduce((a, b) => a + b, 0)
+  const share = excessSum > 0 ? (target - floorSum) / excessSum : 0
+  return hardFloor.map((f, i) => Math.floor(f + share * excess[i]!))
+}
+
+/** charBudget, but for a column forceColumns closed up to FORCE_PADDING rather than CELL_PADDING. */
+export function forcedCharBudget(width: number): number {
+  return Math.max(1, Math.floor((width - FORCE_PADDING) / CHAR_WIDTH))
+}

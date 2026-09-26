@@ -181,8 +181,9 @@ One PR per subject.
   on 26 September 2026 found 217 diagrams scrolling sideways. 18 components were refitted
   (circuits, displayed formulae, equation cards, electric fields, lattices, energy diagrams,
   histograms, number lines, index cards, springs, beams, ray diagrams and others), which
-  leaves 118. Still to do, each needing its labels re-placed without collisions: tables with
-  long words (21), curve graphs (15), plant diagrams (15), reaction profiles (7), free-body
+  leaves 118. Tables with long words (21) followed: a column squeezed past its longest word
+  breaks the word at a syllable-like point, or at its own hyphen, never leaving a lone letter.
+  Still to do, each needing its labels re-placed without collisions: curve graphs (15), plant diagrams (15), reaction profiles (7), free-body
   (7), lenses (6), vector figures (5), and 4 or fewer each of dot-and-cross, electrolysis
   cell, box plot, probability tree, cumulative frequency, collision, fluid column, frequency
   tree, vector triangle, market map, repeated multiplication, index ladder, surface area and
