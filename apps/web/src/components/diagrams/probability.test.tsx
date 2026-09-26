@@ -18,11 +18,15 @@ describe('probability tree', () => {
 
   it('multiplies along each path and prints the product as an exact fraction', () => {
     const html = renderToStaticMarkup(<ProbabilityTree alt="" props={{ tree: TWO_COUNTERS }} />)
-    // 3/5 × 1/2 = 3/10, and 2/5 × 1/4 = 1/10 after cancelling.
-    expect(html).toContain('Red, Red = 3/10')
-    expect(html).toContain('Red, Blue = 3/10')
-    expect(html).toContain('Blue, Red = 3/10')
-    expect(html).toContain('Blue, Blue = 1/10')
+    // 3/5 × 1/2 = 3/10, and 2/5 × 1/4 = 1/10 after cancelling. The path and its result
+    // print as two lines rather than one, so a leaf label reads "Red, Red" then, right
+    // after it, "= 3/10" as its own text.
+    const path = (label: string, result: string) =>
+      new RegExp(`>${label}</text>\\s*<text[^>]*>= ${result.replace('/', '\\/')}<`).test(html)
+    expect(path('Red, Red', '3/10')).toBe(true)
+    expect(path('Red, Blue', '3/10')).toBe(true)
+    expect(path('Blue, Red', '3/10')).toBe(true)
+    expect(path('Blue, Blue', '1/10')).toBe(true)
   })
 
   it('writes every branch probability on its branch', () => {

@@ -185,11 +185,13 @@ One PR per subject.
   column breaks a word at a syllable-like point or its own hyphen), curve graphs (15; every
   label drawn after every line), plant diagrams (15), reaction profiles (7; every label in
   a place of its own), free-body diagrams (7; horizontal forces labelled above their
-  arrows) and lenses (6; rays cut at the title, a virtual image's labels under the axis).
+  arrows), lenses (6; rays cut at the title, a virtual image's labels under the axis) and
+  the statistics diagrams (15: box plots with thinned axis labels, trees with every label
+  outside its branch, cumulative frequency with readings over the curve).
   Still to do, each needing its labels placed without collisions: vector figures (5), and
-  4 or fewer each of dot-and-cross, electrolysis cell, box plot, probability tree,
-  cumulative frequency, collision, fluid column, frequency tree, vector triangle, market
-  map, repeated multiplication, index ladder, surface area and circle theorem. Also 5
+  4 or fewer each of dot-and-cross, electrolysis cell, collision, fluid column, vector
+  triangle, market map, repeated multiplication, index ladder, surface area and circle
+  theorem. Also 5
   non-diagram elements on maths transformations s7 and four Physics steps. Code blocks
   scroll by design.
 - [x] **The correct option is too often the longest.** Rebalanced subject by subject on

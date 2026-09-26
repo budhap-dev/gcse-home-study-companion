@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { FrequencyTree } from './FrequencyTree.tsx'
+import { ProbabilityTree } from './ProbabilityTree.tsx'
 
 function contentProps(component: string): Record<string, unknown>[] {
   const root = join(import.meta.dirname, '../../../../../supabase/seed/content')
@@ -44,48 +44,36 @@ function fitsPhone(html: string, maxWidth = 296): number {
   return width
 }
 
-/**
- * Counts sit at the nodes and categories along the branches. The tree draws exactly
- * the counts it is given, so every number in the data must appear in the picture,
- * and every category label must appear once, on its branch.
- */
-describe('frequency tree', () => {
-  const TREE = {
-    label: '120 students', count: 120,
-    children: [
-      { label: 'boys', count: 70, children: [{ label: 'walks', count: 42 }, { label: 'does not walk', count: 28 }] },
-      { label: 'girls', count: 50, children: [{ label: 'walks', count: 35 }, { label: 'does not walk', count: 15 }] },
-    ],
-  }
-
-  it('prints every count at a node', () => {
-    const html = renderToStaticMarkup(<FrequencyTree alt="" props={{ root: TREE }} />)
-    for (const n of ['120', '70', '50', '42', '28', '35', '15']) expect(html, n).toContain(`>${n}<`)
+describe('probability tree', () => {
+  it('multiplies branch probabilities into an exact fraction at the leaf', () => {
+    const tree = { children: [
+      { label: 'Red', prob: '3/8', children: [{ label: 'Red', prob: '2/7' }, { label: 'Blue', prob: '5/7' }] },
+    ] }
+    const html = renderToStaticMarkup(<ProbabilityTree alt="" props={{ tree }} />)
+    // 3/8 x 2/7 = 6/56 = 3/28. The path and result print as two lines.
+    expect(html).toContain('Red, Red')
+    expect(html).toContain('= 3/28')
   })
 
-  it('labels every branch with its category, and the root with its description', () => {
-    const html = renderToStaticMarkup(<FrequencyTree alt="" props={{ root: TREE }} />)
-    expect(html.match(/>boys</g)?.length).toBe(1)
-    expect(html.match(/>girls</g)?.length).toBe(1)
-    expect(html.match(/>walks</g)?.length).toBe(2)
-    // The root's description wraps onto two lines above its box.
-    expect(html).toContain('>120</text>')
-    expect(html).toContain('>students</text>')
+  it('wraps a leaf product onto two lines rather than one long one', () => {
+    // A 1/1000 x 99/100 branch multiplies out to a long fraction and a longer path.
+    const tree = { children: [
+      { label: 'well', prob: '999/1000', children: [{ label: 'tests negative', prob: '99/100' }] },
+    ] }
+    const html = renderToStaticMarkup(<ProbabilityTree alt="" props={{ tree }} />)
+    expect(html).toContain('well, tests negative')
+    expect(html).toContain('98901/100000')
+    // Two separate text elements, not one that concatenates path and result.
+    expect(html).not.toContain('well, tests negative = 98901/100000')
   })
 
-  it('draws one node box per count and one branch per child', () => {
-    const html = renderToStaticMarkup(<FrequencyTree alt="" props={{ root: TREE }} />)
-    expect(html.match(/<rect /g)?.length).toBe(7)
-    expect(html.match(/<line /g)?.length).toBe(6)
+  it('fits a phone for every probability tree the content draws', () => {
+    const pack = contentProps('probability-tree')
+    expect(pack.length).toBeGreaterThan(0)
+    for (const props of pack) fitsPhone(renderToStaticMarkup(<ProbabilityTree alt="" props={props} />))
   })
 
   it('falls back to the alt text rather than crashing when given no tree', () => {
-    expect(renderToStaticMarkup(<FrequencyTree alt="a frequency tree" props={{}} />)).toContain('a frequency tree')
-  })
-
-  it('fits a phone for every frequency tree the content draws', () => {
-    const pack = contentProps('frequency-tree')
-    expect(pack.length).toBeGreaterThan(0)
-    for (const props of pack) fitsPhone(renderToStaticMarkup(<FrequencyTree alt="" props={props} />))
+    expect(renderToStaticMarkup(<ProbabilityTree alt="a probability tree" props={{}} />)).toContain('a probability tree')
   })
 })

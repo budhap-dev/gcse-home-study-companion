@@ -76,11 +76,18 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
   const kids = tree.children.map((c) => walk(c, 1, root))
   root.row = kids.reduce((s, k) => s + k.row, 0) / kids.length
 
-  const rowH = 46
-  const colW = 132
-  const padL = 26
+  // A two-level tree fits a 296-unit phone card: a 30-unit margin for the root's outer
+  // probabilities, two 63-unit columns and 140 for the leaf
+  // labels (a leaf's name, then its path and product on two lines of their own). A middle
+  // node's label sits left of its dot, above it for the upper branch and below it for the
+  // lower, the side its incoming branch does not come from, so its own branches can start
+  // right at the dot; written to the right, as a leaf's is, the next branches and their
+  // probabilities ran straight through it.
+  const rowH = 54
+  const colW = 63
+  const padL = 30
   const padT = 26
-  const labelW = showProducts ? 150 : 70
+  const labelW = 140
   const W = padL + maxDepth * colW + labelW
   const H = padT * 2 + Math.max(leaves.length - 1, 1) * rowH
   const sx = (d: number) => padL + d * colW
@@ -89,7 +96,7 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.max(W, 360) }} role="img" aria-label={alt}>
       {edges.map((e, i) => {
-        const x1 = sx(e.from.depth) + (e.from.depth === 0 ? 4 : 26)
+        const x1 = sx(e.from.depth) + 5
         const y1 = sy(e.from.row)
         const x2 = sx(e.to.depth) - 4
         const y2 = sy(e.to.row)
@@ -97,10 +104,15 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
           <g key={`e${i}`}>
             <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={RULE} strokeWidth="2" />
             {e.to.node.prob && (
+              // Beside the branch, on its outer side, never on it: above a branch that rises,
+              // below one that falls, so the middle of every fork stays empty. Centred on
+              // the branch, a steep one ran through its own probability; inside the fork, a
+              // root's probability and the next level's met. From the root it sits by the
+              // middle; further out, two thirds of the way along, next to its own branch.
               <text
-                x={(x1 + x2) / 2}
-                y={(y1 + y2) / 2 - 5}
-                textAnchor="middle"
+                x={x1 + (x2 - x1) * (e.from.depth === 0 ? 0.5 : 0.72) - 4}
+                y={y1 + (y2 - y1) * (e.from.depth === 0 ? 0.5 : 0.72) + (y2 < y1 ? -6 : 16)}
+                textAnchor="end"
                 fontFamily={DISPLAY}
                 fontSize="12"
                 fontWeight="700"
@@ -118,13 +130,21 @@ export function ProbabilityTree({ props, alt }: { props: Record<string, unknown>
         return (
           <g key={`n${i}`}>
             <circle cx={x} cy={y} r="3.5" fill={INK} />
-            <text x={x + 8} y={y + 4} fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
+            <text x={leaf ? x + 8 : x - 6} y={leaf ? y + 4 : p.parent && p.row > p.parent.row ? y + 15 : y - 6} textAnchor={leaf ? 'start' : 'end'} fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
               {p.node.label}
             </text>
             {leaf && showProducts && p.prob && (
-              <text x={x + 8} y={y + 20} fontFamily={FONT} fontSize="11" fill={INK_2}>
-                {p.path.filter(Boolean).join(', ')} = {show(p.prob)}
-              </text>
+              // Two lines rather than one: "well, tests negative = 98901/100000" ran to
+              // 36 characters, which needed a labelW wide enough to scroll a phone. The
+              // path and the result now wrap onto their own lines, each far shorter.
+              <>
+                <text x={x + 8} y={y + 20} fontFamily={FONT} fontSize="11" fill={INK_2}>
+                  {p.path.filter(Boolean).join(', ')}
+                </text>
+                <text x={x + 8} y={y + 32} fontFamily={FONT} fontSize="11" fill={INK_2}>
+                  = {show(p.prob)}
+                </text>
+              </>
             )}
           </g>
         )
