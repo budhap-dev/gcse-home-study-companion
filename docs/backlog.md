@@ -178,21 +178,20 @@ One PR per subject.
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
   byte tables** (PR #255). Scrolling at 390: 47, 96, 9, 1 and 131 dropped to 0, 0, 0, 0 and 23.
 - [ ] **Diagrams fit a phone: the rest.** A census of all 3327 lesson and why pages at 390
-  on 26 September 2026 found 217 diagrams scrolling sideways. 18 components were refitted
-  (circuits, displayed formulae, equation cards, electric fields, lattices, energy diagrams,
-  histograms, number lines, index cards, springs, beams, ray diagrams and others), which
-  leaves 118. Tables with long words (21) followed: a column squeezed past its longest word
-  breaks the word at a syllable-like point, or at its own hyphen, never leaving a lone letter.
-  Curve graphs (15) followed, narrowed to 280 with every label drawn after every line.
-  Plant diagrams (15) followed, with leaders that stop at their labels, then reaction
-  profiles (7), re-laid out so every label has a place of its own, and free-body diagrams
-  (7), with each horizontal force labelled above its arrow.
-  Still to do, each needing its labels re-placed without collisions: lenses (6), vector figures (5), and 4 or fewer each of dot-and-cross, electrolysis
-  cell, box plot, probability tree, cumulative frequency, collision, fluid column, frequency
-  tree, vector triangle, market map, repeated multiplication, index ladder, surface area and
-  circle theorem. A first attempt at these made labels collide, so each is looked at in the
-  browser, figure by figure, before it ships. Also 5 non-diagram elements on maths
-  transformations s7 and four Physics steps. Code blocks scroll by design.
+  on 26 September 2026 found 217 diagrams scrolling sideways. Fixed so far, each checked
+  figure by figure in the browser: 18 components in one batch (circuits, displayed
+  formulae, equation cards, electric fields, lattices, energy diagrams, histograms, number
+  lines, index cards, springs, beams, ray diagrams and others), then tables (21; a squeezed
+  column breaks a word at a syllable-like point or its own hyphen), curve graphs (15; every
+  label drawn after every line), plant diagrams (15), reaction profiles (7; every label in
+  a place of its own), free-body diagrams (7; horizontal forces labelled above their
+  arrows) and lenses (6; rays cut at the title, a virtual image's labels under the axis).
+  Still to do, each needing its labels placed without collisions: vector figures (5), and
+  4 or fewer each of dot-and-cross, electrolysis cell, box plot, probability tree,
+  cumulative frequency, collision, fluid column, frequency tree, vector triangle, market
+  map, repeated multiplication, index ladder, surface area and circle theorem. Also 5
+  non-diagram elements on maths transformations s7 and four Physics steps. Code blocks
+  scroll by design.
 - [x] **The correct option is too often the longest.** Rebalanced subject by subject on
   26 September 2026 (#285 to #292): the share where the right answer is the only longest
   option fell from 36% to 24% of 4898 multiple-choice items, about chance for four options.
