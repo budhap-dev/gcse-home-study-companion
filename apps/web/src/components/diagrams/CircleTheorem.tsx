@@ -29,9 +29,20 @@ interface External {
  * angles [{at, from, to, text, kind}], ticks [['O', 'A'], ['O', 'B']] for equal lengths,
  * arc ['A', 'B'] to highlight the minor arc, labels false to hide point names.
  */
+/**
+ * The box grows to fit whatever is drawn (an external point far from the circle, a long
+ * tangent), and it used to grow past 296 units: `external` at `dist: 2.2` on the circle
+ * theorems page drew a 388-unit box, and below its natural width a diagram stops shrinking
+ * and scrolls instead. Rather than shrink the labels — every label stays at its drawn
+ * font-size, never below 11 — the whole geometry (the circle's radius and everything built
+ * from it) shrinks around the fixed centre O until the box fits, found by bisection since
+ * the box width is not a simple multiple of the radius once fixed-size annotations (tick
+ * marks, angle arcs, tangent length) are folded in.
+ */
+const MAX_BOX = 293
+
 export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const O: Pt = { x: 160, y: 150 }
-  const r = 105
   const specs = (props.points as Record<string, PointSpec> | undefined) ?? {}
   const showCentre = props.centre === true
   const segments = (props.segments as string[][] | undefined) ?? []
@@ -42,40 +53,64 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
   const arc = props.arc as [string, string] | undefined
   const showLabels = props.labels !== false
 
-  const onCircle = (deg: number): Pt => ({ x: O.x + r * Math.cos((deg * Math.PI) / 180), y: O.y - r * Math.sin((deg * Math.PI) / 180) })
-  const pts: Record<string, Pt> = { O }
-  const hidden = new Set<string>(['O'])
-  for (const [name, spec] of Object.entries(specs)) if (typeof spec === 'number') pts[name] = onCircle(spec)
-  for (const [name, spec] of Object.entries(specs)) {
-    if (typeof spec === 'object') {
-      const a = pts[spec.mid[0]], b = pts[spec.mid[1]]
-      if (a && b) pts[name] = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }
+  /** Every point this circle draws, and the box that holds them, at a given radius. */
+  function computeGeometry(r: number) {
+    const onCircle = (deg: number): Pt => ({ x: O.x + r * Math.cos((deg * Math.PI) / 180), y: O.y - r * Math.sin((deg * Math.PI) / 180) })
+    const pts: Record<string, Pt> = { O }
+    const hidden = new Set<string>(['O'])
+    for (const [name, spec] of Object.entries(specs)) if (typeof spec === 'number') pts[name] = onCircle(spec)
+    for (const [name, spec] of Object.entries(specs)) {
+      if (typeof spec === 'object') {
+        const a = pts[spec.mid[0]], b = pts[spec.mid[1]]
+        if (a && b) pts[name] = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }
+      }
     }
+    // A tangent at A runs perpendicular to OA; its ends are registered so angles can refer to them.
+    const tangentLines: [Pt, Pt][] = []
+    for (const name of tangentAt) {
+      const a = pts[name]
+      if (!a) continue
+      const ux = (a.x - O.x) / r, uy = (a.y - O.y) / r
+      const tx = -uy, ty = ux
+      const L = 90
+      const e1 = { x: a.x + tx * L, y: a.y + ty * L }, e2 = { x: a.x - tx * L, y: a.y - ty * L }
+      pts[`${name}1`] = e1; pts[`${name}2`] = e2
+      hidden.add(`${name}1`); hidden.add(`${name}2`)
+      tangentLines.push([e1, e2])
+    }
+    // Tangents from an external point touch the circle at angle ± arccos(r / OP).
+    const externalLines: [Pt, Pt][] = []
+    for (const ex of externals) {
+      const d = Math.max(ex.dist, 1.05)
+      const p: Pt = { x: O.x + r * d * Math.cos((ex.angle * Math.PI) / 180), y: O.y - r * d * Math.sin((ex.angle * Math.PI) / 180) }
+      const alpha = (Math.acos(1 / d) * 180) / Math.PI
+      pts[ex.name] = p
+      pts[`${ex.name}1`] = onCircle(ex.angle + alpha)
+      pts[`${ex.name}2`] = onCircle(ex.angle - alpha)
+      externalLines.push([p, pts[`${ex.name}1`]!], [p, pts[`${ex.name}2`]!])
+    }
+    // The box grows to fit whatever is drawn, so an external point or a long tangent is never clipped.
+    const shown = Object.entries(pts).filter(([name]) => !hidden.has(name) || name === 'O').map(([, p]) => p)
+    const xs = [O.x - r, O.x + r, ...shown.map((p) => p.x)], ys = [O.y - r, O.y + r, ...shown.map((p) => p.y)]
+    const pad = 26
+    const minX = Math.min(...xs) - pad, minY = Math.min(...ys) - pad
+    const boxW = Math.max(...xs) + pad - minX, boxH = Math.max(...ys) + pad - minY
+    return { pts, hidden, tangentLines, externalLines, minX, minY, boxW, boxH }
   }
-  // A tangent at A runs perpendicular to OA; its ends are registered so angles can refer to them.
-  const tangentLines: [Pt, Pt][] = []
-  for (const name of tangentAt) {
-    const a = pts[name]
-    if (!a) continue
-    const ux = (a.x - O.x) / r, uy = (a.y - O.y) / r
-    const tx = -uy, ty = ux
-    const L = 90
-    const e1 = { x: a.x + tx * L, y: a.y + ty * L }, e2 = { x: a.x - tx * L, y: a.y - ty * L }
-    pts[`${name}1`] = e1; pts[`${name}2`] = e2
-    hidden.add(`${name}1`); hidden.add(`${name}2`)
-    tangentLines.push([e1, e2])
+
+  let r = 105
+  let geometry = computeGeometry(r)
+  if (geometry.boxW > MAX_BOX) {
+    let lo = 20, hi = r
+    for (let i = 0; i < 30; i++) {
+      const mid = (lo + hi) / 2
+      if (computeGeometry(mid).boxW > MAX_BOX) hi = mid; else lo = mid
+    }
+    r = lo
+    geometry = computeGeometry(r)
   }
-  // Tangents from an external point touch the circle at angle ± arccos(r / OP).
-  const externalLines: [Pt, Pt][] = []
-  for (const ex of externals) {
-    const d = Math.max(ex.dist, 1.05)
-    const p: Pt = { x: O.x + r * d * Math.cos((ex.angle * Math.PI) / 180), y: O.y - r * d * Math.sin((ex.angle * Math.PI) / 180) }
-    const alpha = (Math.acos(1 / d) * 180) / Math.PI
-    pts[ex.name] = p
-    pts[`${ex.name}1`] = onCircle(ex.angle + alpha)
-    pts[`${ex.name}2`] = onCircle(ex.angle - alpha)
-    externalLines.push([p, pts[`${ex.name}1`]!], [p, pts[`${ex.name}2`]!])
-  }
+  const { pts, hidden, tangentLines, externalLines, minX, minY, boxW, boxH } = geometry
+  const onCircle = (deg: number): Pt => ({ x: O.x + r * Math.cos((deg * Math.PI) / 180), y: O.y - r * Math.sin((deg * Math.PI) / 180) })
 
   const tickMarks = (p: Pt, q: Pt, n: number, key: string) => {
     const m = { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }
@@ -99,7 +134,21 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
     const sweep = d > 0 ? 1 : 0
     const kind = m.kind ?? 1
     const mid = a1 + d / 2
-    const label = m.text ? <text x={v.x + Math.cos(mid) * 30} y={v.y + Math.sin(mid) * 30 + 4} textAnchor="middle" fontFamily={FONT} fontSize="12" fill="#d25b3b">{m.text}</text> : null
+    // Along the bisector, unless a drawn line runs along it too: the angle between two
+    // tangents from P is bisected by OP, so "54°" sat on the dashed OP. Then it steps to one
+    // side of that line.
+    const onALine = segments.some((sg) => {
+      const other = sg[0] === m.at ? pts[sg[1]!] : sg[1] === m.at ? pts[sg[0]!] : undefined
+      if (!other) return false
+      let diff = Math.atan2(other.y - v.y, other.x - v.x) - mid
+      while (diff > Math.PI) diff -= 2 * Math.PI
+      while (diff < -Math.PI) diff += 2 * Math.PI
+      return Math.abs(diff) < 0.2
+    })
+    const side = onALine ? 11 : 0
+    const lx = v.x + Math.cos(mid) * 32 - Math.sin(mid) * side
+    const ly = v.y + Math.sin(mid) * 32 + Math.cos(mid) * side
+    const label = m.text ? <text x={lx} y={ly + 4} textAnchor="middle" fontFamily={FONT} fontSize="12" fill="#d25b3b" stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{m.text}</text> : null
     if (kind === 'r') {
       const s = 11
       const u1 = { x: Math.cos(a1) * s, y: Math.sin(a1) * s }, u2 = { x: Math.cos(a2) * s, y: Math.sin(a2) * s }
@@ -134,12 +183,6 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
     return { x: p.x + (dx / l) * 15, y: p.y + (dy / l) * 15 + 4 }
   }
 
-  // The box grows to fit whatever is drawn, so an external point or a long tangent is never clipped.
-  const shown = Object.entries(pts).filter(([name]) => !hidden.has(name) || name === 'O').map(([, p]) => p)
-  const xs = [O.x - r, O.x + r, ...shown.map((p) => p.x)], ys = [O.y - r, O.y + r, ...shown.map((p) => p.y)]
-  const pad = 26
-  const minX = Math.min(...xs) - pad, minY = Math.min(...ys) - pad
-  const boxW = Math.max(...xs) + pad - minX, boxH = Math.max(...ys) + pad - minY
   return (
     <svg viewBox={`${minX} ${minY} ${boxW} ${boxH}`} width="100%" style={{ maxWidth: Math.max(300, boxW * 1.15) }} role="img" aria-label={alt}>
       <circle cx={O.x} cy={O.y} r={r} fill="var(--subject-soft)" stroke={INK} strokeWidth="2" />
