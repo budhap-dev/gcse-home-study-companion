@@ -61,6 +61,41 @@ describe('venn diagram', () => {
     expect(html).toContain('>4<')
   })
 
+  /*
+   * At 440 units the diagram scrolled 108px on a phone, since a drawing stops shrinking
+   * at its natural width, and the second label and the outside count were out of sight.
+   * Shrinking it moved every region's value, so each is checked against the circles:
+   * inside exactly the ones its key names, with room for a two-digit number.
+   */
+  it('fits a phone, with every value inside exactly the circles its region names', () => {
+    for (const labels of [['A', 'B'], ['A', 'B', 'C']]) {
+      const regions = labels.length === 3 ? ['A', 'B', 'C', 'AB', 'AC', 'BC', 'ABC'] : ['A', 'B', 'AB']
+      const values = Object.fromEntries([...regions, 'none'].map((k) => [k, k === 'none' ? '99' : `${k}#`]))
+      const html = renderToStaticMarkup(<VennDiagram alt="" props={{ labels, values, title: 'Title' }} />)
+      const [, , width, height] = /viewBox="([^"]+)"/.exec(html)![1]!.split(' ').map(Number)
+      expect(width).toBeLessThanOrEqual(298)
+      const circles = [...html.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"/g)].map((m) => m.slice(1).map(Number))
+      expect(circles).toHaveLength(labels.length)
+      const spot = (text: string) => {
+        const m = new RegExp(`<text x="([\\d.]+)" y="([\\d.]+)"[^>]*>${text}<`).exec(html)!
+        return [Number(m[1]), Number(m[2]) - 5]
+      }
+      for (const k of regions) {
+        const [x, y] = spot(`${k}#`)
+        // The corners of a two-digit number's box, 18 by 10.
+        for (const [dx, dy] of [[-9, -5], [9, -5], [-9, 5], [9, 5]]) {
+          circles.forEach(([cx, cy, r], i) => {
+            expect(Math.hypot(x! + dx! - cx!, y! + dy! - cy!) < r!, `${k} in circle ${i}`).toBe(k.includes('ABC'[i]!))
+          })
+        }
+      }
+      const [nx, ny] = spot('99')
+      expect(nx!).toBeLessThan(width! - 10)
+      expect(ny!).toBeLessThan(height!)
+      circles.forEach(([cx, cy, r]) => expect(Math.hypot(nx! - cx!, ny! - cy!)).toBeGreaterThan(r! + 10))
+    }
+  })
+
   it('leaves a region blank rather than printing undefined', () => {
     const html = renderToStaticMarkup(<VennDiagram alt="" props={{ labels: ['A', 'B'], values: { A: 3 } }} />)
     expect(html).not.toContain('undefined')

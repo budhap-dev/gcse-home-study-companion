@@ -16,43 +16,59 @@ export function VennDiagram({ props, alt }: { props: Record<string, unknown>; al
   const values = (props.values as Record<string, string | number> | undefined) ?? {}
   const title = props.title as string | undefined
   const three = labels.length >= 3
-  const W = 440
-  const H = three ? 340 : 300
-  const r = three ? 82 : 92
+  /*
+   * 296 units wide, the width a 390px phone's card holds. The drawing stops shrinking
+   * at its natural width, and at 440 the old layout scrolled 108px on a phone with the
+   * second circle's label and the outside count out of sight.
+   */
+  const W = 296
+  const top = title ? 28 : 8
+  const r = three ? 60 : 68
 
-  // Circle centres, and the point at which each region's value is written.
+  // Circle centres. Three sets sit on an equilateral triangle of side 62.
+  const cy = top + 30 + r
   const circles = three
-    ? [{ cx: 178, cy: 132 }, { cx: 262, cy: 132 }, { cx: 220, cy: 208 }]
-    : [{ cx: 168, cy: 150 }, { cx: 262, cy: 150 }]
+    ? [{ cx: 117, cy }, { cx: 179, cy }, { cx: 148, cy: cy + 54 }]
+    : [{ cx: 112, cy }, { cx: 184, cy }]
+  const H = three ? cy + 54 + r + 30 : cy + r + 28
+  const mid = (i: number, j: number): [number, number] => [(circles[i]!.cx + circles[j]!.cx) / 2, (circles[i]!.cy + circles[j]!.cy) / 2]
+  const [a, b] = circles as [{ cx: number; cy: number }, { cx: number; cy: number }]
+  const c = circles[2] ?? { cx: W / 2, cy }
+  const none: [number, number] = [W - 30, H - 14]
+  // Where each region's value is written, as a baseline 5 below the region's centre.
   const spots: Record<string, [number, number]> = three
-    ? { A: [142, 108], B: [298, 108], C: [220, 250], AB: [220, 100], AC: [168, 182], BC: [272, 182], ABC: [220, 152], none: [396, 302] }
-    : { A: [126, 156], B: [304, 156], AB: [215, 156], none: [396, 268] }
+    ? {
+        A: [a.cx - 26, a.cy - 13], B: [b.cx + 26, b.cy - 13], C: [c.cx, c.cy + 36],
+        AB: [mid(0, 1)[0], mid(0, 1)[1] - 18], AC: [mid(0, 2)[0] - 23, mid(0, 2)[1] + 14],
+        BC: [mid(1, 2)[0] + 23, mid(1, 2)[1] + 14], ABC: [148, (a.cy + b.cy + c.cy) / 3 + 1], none,
+      }
+    : { A: [(a.cx - r + b.cx - r) / 2, cy + 5], B: [(a.cx + r + b.cx + r) / 2, cy + 5], AB: [(a.cx + b.cx) / 2, cy + 5], none }
 
   // Regions are always keyed by position, A B C, whatever the sets are called, so two
   // sets whose names start with the same letter cannot collide.
   const regions = three ? ['A', 'B', 'C', 'AB', 'AC', 'BC', 'ABC'] : ['A', 'B', 'AB']
 
-  // Labels sit outside their circle, on the side away from the others.
-  const labelAt: [number, number, string][] = three
-    ? [[96, 78, 'end'], [344, 78, 'start'], [220, 316, 'middle']]
-    : [[92, 76, 'end'], [348, 76, 'start']]
+  // The first two labels share a row above the circles, one from each end, so a long
+  // name has the whole half-width rather than the gap beside its circle; the third
+  // goes under its circle.
+  const labelAt: [number, number, string][] = [[30, top + 20, 'start'], [W - 14, top + 20, 'end'], [c.cx, c.cy + r + 18, 'middle']]
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 460 }} role="img" aria-label={alt}>
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.3 }} role="img" aria-label={alt}>
       {title && (
         <text x={W / 2} y={18} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>
           {title}
         </text>
       )}
-      <rect x="14" y={title ? 28 : 18} width={W - 28} height={H - (title ? 42 : 32)} fill="none" stroke={RULE} strokeWidth="2" />
-      <text x="24" y={(title ? 28 : 18) + 18} fontFamily={FONT} fontSize="12" fill={INK_2}>
+      <rect x="6" y={top} width={W - 12} height={H - top - 6} fill="none" stroke={RULE} strokeWidth="2" />
+      <text x="14" y={top + 18} fontFamily={FONT} fontSize="12" fill={INK_2}>
         ξ
       </text>
       {circles.map((c, i) => (
         <circle key={`c${i}`} cx={c.cx} cy={c.cy} r={r} fill={ACCENT} fillOpacity="0.1" stroke={ACCENT} strokeWidth="2" />
       ))}
       {labelAt.slice(0, labels.length).map(([x, y, anchor], i) => (
-        <text key={`l${i}`} x={x} y={y} textAnchor={anchor as 'start' | 'end' | 'middle'} fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={ACCENT}>
+        <text key={`l${i}`} x={x} y={y} textAnchor={anchor as 'start' | 'end' | 'middle'} fontFamily={DISPLAY} fontSize="14" fontWeight="700" fill={ACCENT}>
           {labels[i]}
         </text>
       ))}

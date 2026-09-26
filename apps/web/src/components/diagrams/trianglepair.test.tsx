@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { TrianglePair } from './TrianglePair.tsx'
+import { pairLayout, TrianglePair } from './TrianglePair.tsx'
 
 /**
  * Side labels used to be pushed a flat 14px out from the centroid. That clears a
@@ -154,5 +154,24 @@ describe('triangle-pair', () => {
     expect(arcs(45)).toBe(3)
     expect(arcs(-2)).toBe(0)
     expect(arcs('r')).toBe(1) // a right angle is one path, whatever the number rules say
+  })
+
+  /*
+   * Side by side the pair is 520 units, and a drawing stops shrinking at its natural
+   * width, so on a phone it scrolled 188px with the second triangle out of sight.
+   */
+  it('stacks the pair in a box narrower than it, and keeps it side by side otherwise', () => {
+    const phone = pairLayout(true, 298)
+    expect(phone.stacked).toBe(true)
+    expect(phone.W).toBeLessThanOrEqual(298)
+    // Under the first triangle, which is centred at (140, 120), a whole row down.
+    expect(phone.second).toEqual({ cx: 140, cy: 340 })
+    expect(phone.H).toBeGreaterThanOrEqual(phone.second.cy + 100)
+
+    expect(pairLayout(true, 742)).toMatchObject({ stacked: false, W: 520, H: 220 })
+    // Unmeasured (the server, tests) keeps the natural layout.
+    expect(pairLayout(true, undefined).stacked).toBe(false)
+    // A single triangle already fits.
+    expect(pairLayout(false, 298)).toMatchObject({ stacked: false, W: 280 })
   })
 })
