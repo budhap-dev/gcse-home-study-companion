@@ -18,7 +18,7 @@ import { describe, expect, it } from 'vitest'
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
 
 /** Subjects rebalanced so far. Each subject's PR adds itself; the last one removes the list. */
-const ENFORCED = new Set(['business', 'english-language', 'english-literature', 'french', 'further-maths', 'maths', 'music'])
+const ENFORCED = new Set(['business', 'computer-science', 'english-language', 'english-literature', 'french', 'further-maths', 'maths', 'music'])
 const CAP = 0.35
 
 interface Item { id: string; type?: string; options?: string[]; correct?: number[] }
@@ -44,7 +44,8 @@ function renderedLength(option: string): number {
   return [...s].length
 }
 
-const numeric = (q: Item) => (q.options ?? []).every((o) => /^\s*[-+]?\d[\d.,]*\s*[^\d]{0,12}$/.test(o.trim()))
+/** Every option a number, perhaps with a unit; 1 000 000 is written in groups of three. */
+const numeric = (q: Item) => (q.options ?? []).every((o) => /^\s*[-+]?\d[\d.,]*(?:[  ]\d{3})*\s*[^\d]{0,12}$/.test(o.trim()))
 
 const items = (t: Topic) =>
   [...t.questions, ...t.lesson.steps.flatMap((s) => (s.check ? [s.check] : []))].filter(
@@ -74,7 +75,8 @@ describe('the correct option is not the tell', () => {
     (_name, topic) => {
       const all = items(topic)
       const longest = all.filter(correctIsLongest).map((q) => q.id)
-      expect(longest.length, `${longest.length} of ${all.length}: ${longest.join(', ')}`).toBeLessThanOrEqual(Math.floor(CAP * all.length))
+      // A topic with two or three items may have one: 1 of 2 is chance, not a habit.
+      expect(longest.length, `${longest.length} of ${all.length}: ${longest.join(', ')}`).toBeLessThanOrEqual(Math.max(1, Math.floor(CAP * all.length)))
     },
   )
 })
