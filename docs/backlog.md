@@ -169,8 +169,10 @@ One PR per subject.
 - [x] Second pass, Physics: the additions in #258 and #260 (seven topics). Every heating-curve
   time, nuclear equation, field direction and handbook figure matched; fixes were quiz pools that
   left out the new questions, over-long correct options, and RP10's scope.
-- [ ] Second pass, Chemistry: the additions inside existing topics (#257). French's three grammar
-  topics (#276) had their own reviewer before merge.
+- [x] Second pass, Chemistry: the additions in #257 (naming compounds, Haber yield graphs). Every
+  formula, charge, equation and plotted yield matched; fixes were over-long correct options and two
+  sentences the step was missing. French's three grammar topics (#276) had their own reviewer
+  before merge, so the second pass is complete.
 
 **Pack-wide quality**
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
