@@ -1,6 +1,24 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
 
 /**
+ * Greedy word wrap to a room measured the same way the phone-fit test measures text: a
+ * character is 0.6 × the font size wide. A word longer than the room is left on its own
+ * line rather than split.
+ */
+function wrapWords(text: string, size: number, room: number): string[] {
+  const words = text.trim().split(/\s+/).filter(Boolean)
+  const lines: string[] = []
+  let line = ''
+  for (const word of words) {
+    const candidate = line ? `${line} ${word}` : word
+    if (line && candidate.length * size * 0.6 > room) { lines.push(line); line = word }
+    else line = candidate
+  }
+  if (line) lines.push(line)
+  return lines
+}
+
+/**
  * Light meeting a boundary. The component works out where every ray goes, so the
  * picture cannot disagree with the angles the lesson quotes. Props:
  *   kind: 'reflection' | 'refraction' | 'specular' | 'diffuse' | 'block'
@@ -24,11 +42,14 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
   const rad = (d: number) => (d * Math.PI) / 180
   const deg = (r: number) => (r * 180) / Math.PI
 
-  const W = 360
-  const H = 240
+  // 280 rather than 360, and the ray length scaled down with it: at 360 this scrolled up
+  // to 62px on a phone. H grows a little (250 rather than 240) to give the long sentences
+  // below room to wrap onto two lines without crowding the rays.
+  const W = 280
+  const H = 250
   const surfaceY = kind === 'reflection' || kind === 'specular' || kind === 'diffuse' ? 170 : 120
   const P = { x: W / 2, y: surfaceY }
-  const len = 110
+  const len = 86
 
   // The refracted angle comes from the speed ratio, so it bends towards the normal
   // whenever the light slows down. Total internal reflection is out of scope here, so
@@ -70,9 +91,10 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
   }
 
   if (kind === 'block') {
-    // Drawn 300 wide rather than 360: the phone card is 298 across, and at 360 every
-    // label on the picture shrinks below 10px.
-    const BW = 300
+    // Drawn 280 wide rather than the 300 this used before: 300 still scrolled 28px once
+    // fitSvgText widened it for the caption in the corner, so both the box and that
+    // caption are narrower now.
+    const BW = 280
     const top = 92, bottom = 172, bw = 200
     const bx = (BW - bw) / 2
     const entry = { x: BW / 2 - 20, y: top }
@@ -100,8 +122,11 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
         </g>
       )
     }
+    const cornerLines = wrapWords('out parallel to in, shifted sideways', 12, BW - 24)
     return (
-      <svg viewBox={`0 0 ${BW} ${H}`} width="100%" style={{ maxWidth: BW * 1.2 }} role="img" aria-label={alt}>
+      // 360 keeps the desktop size this had at its old 300-unit width (300 × 1.2); only
+      // the phone-facing viewBox got narrower.
+      <svg viewBox={`0 0 ${BW} ${H}`} width="100%" style={{ maxWidth: 360 }} role="img" aria-label={alt}>
         <rect x={bx} y={top} width={bw} height={depth} fill="var(--subject-soft)" stroke={INK} strokeWidth="2" />
         <text x={bx + 8} y={bottom - 8} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[1]}</text>
         <text x={bx + 8} y={top - 8} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[0]}</text>
@@ -122,30 +147,41 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
         {arc(exit, 180, 180 - i, `${Math.round(i)}°`, 30, 180 - i - 16, 46)}
         <circle cx={entry.x} cy={entry.y} r="3.5" fill={ACCENT} />
         <circle cx={exit.x} cy={exit.y} r="3.5" fill={ACCENT} />
-        <text x={BW - 12} y={16} textAnchor="end" fontFamily={FONT} fontSize="12" fill={INK_2}>out parallel to in, shifted sideways</text>
+        {cornerLines.map((line, j) => (
+          <text key={`corner${j}`} x={BW - 12} y={16 + j * 14} textAnchor="end" fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>
+        ))}
       </svg>
     )
   }
 
   if (kind === 'specular' || kind === 'diffuse') {
-    const rays = [-70, 0, 70]
+    // Scaled down from the ±70/80 units this used at W = 360, so a ray drawn at the
+    // widest spread still lands inside the narrower box instead of running past its edge.
+    const spreadX = 54, runY = 62
+    const rays = [-spreadX, 0, spreadX]
+    const title = kind === 'specular' ? 'Specular reflection: a smooth surface' : 'Diffuse reflection: a rough surface'
+    const titleLines = wrapWords(title, 14, W - 24)
+    const caption = kind === 'specular' ? 'parallel rays in, parallel rays out' : 'parallel rays in, scattered rays out'
+    const captionLines = wrapWords(caption, 12, W - 20)
     return (
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.4 }} role="img" aria-label={alt}>
-        <text x={W / 2} y="22" textAnchor="middle" fontFamily={DISPLAY} fontSize="14" fontWeight="700" fill={INK}>
-          {kind === 'specular' ? 'Specular reflection: a smooth surface' : 'Diffuse reflection: a rough surface'}
-        </text>
+      // 504 keeps the desktop size this had at its old 360-unit width (360 × 1.4); only
+      // the phone-facing viewBox got narrower.
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 504 }} role="img" aria-label={alt}>
+        {titleLines.map((line, j) => (
+          <text key={`title${j}`} x={W / 2} y={16 + j * 16} textAnchor="middle" fontFamily={DISPLAY} fontSize="14" fontWeight="700" fill={INK}>{line}</text>
+        ))}
         {kind === 'specular' ? (
           <line x1="30" y1={surfaceY} x2={W - 30} y2={surfaceY} stroke={INK} strokeWidth="2.5" />
         ) : (
-          <path d={`M30 ${surfaceY} l 40 -9 l 45 12 l 38 -13 l 42 10 l 40 -8 l 45 11 l 30 -6`} fill="none" stroke={INK} strokeWidth="2.5" />
+          <path d={`M23 ${surfaceY} l 31 -9 l 35 12 l 30 -13 l 33 10 l 31 -8 l 35 11 l 23 -6`} fill="none" stroke={INK} strokeWidth="2.5" />
         )}
         {rays.map((dx, n) => {
           // On a rough surface each ray meets the bumps at its own angle, so the
           // reflected rays scatter instead of staying parallel.
           const hit = { x: W / 2 + dx, y: surfaceY - (kind === 'diffuse' ? [-2, 6, -4][n] : 0) }
-          const inFrom = { x: hit.x - 70, y: hit.y - 80 }
-          const spread = kind === 'specular' ? 0 : [26, -18, 10][n]
-          const out = { x: hit.x + 70 + spread, y: hit.y - 80 + (kind === 'specular' ? 0 : [10, -14, 18][n]) }
+          const inFrom = { x: hit.x - spreadX, y: hit.y - runY }
+          const spread = kind === 'specular' ? 0 : [20, -14, 8][n]
+          const out = { x: hit.x + spreadX + spread, y: hit.y - runY + (kind === 'specular' ? 0 : [10, -14, 18][n]) }
           return (
             <g key={n}>
               <line x1={inFrom.x} y1={inFrom.y} x2={hit.x} y2={hit.y} stroke="var(--subject)" strokeWidth="2" />
@@ -155,15 +191,24 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
             </g>
           )
         })}
-        <text x={W / 2} y={H - 10} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>
-          {kind === 'specular' ? 'parallel rays in, parallel rays out' : 'parallel rays in, scattered rays out'}
-        </text>
+        {captionLines.map((line, j) => (
+          <text key={`caption${j}`} x={W / 2} y={H - 10 - (captionLines.length - 1 - j) * 14} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>
+        ))}
       </svg>
     )
   }
 
+  const reflectionCaption = wrapWords('angle of incidence = angle of reflection', 12, W - 20)
+  const refractionCaption = wrapWords(
+    ratio < 1 ? 'slower in the second medium, so it bends towards the normal' : 'faster in the second medium, so it bends away from the normal',
+    12,
+    W - 20,
+  )
+
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.4 }} role="img" aria-label={alt}>
+    // 504 keeps the desktop size this had at its old 360-unit width (360 × 1.4); only the
+    // phone-facing viewBox got narrower.
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 504 }} role="img" aria-label={alt}>
       {kind === 'refraction' && <rect x="0" y={surfaceY} width={W} height={H - surfaceY} fill="var(--subject-soft)" />}
       <line x1="20" y1={surfaceY} x2={W - 20} y2={surfaceY} stroke={INK} strokeWidth="2.5" />
       <line x1={P.x} y1={surfaceY - 100} x2={P.x} y2={surfaceY + (kind === 'refraction' ? 100 : 26)} stroke={INK_2} strokeWidth="1.5" strokeDasharray="5 4" />
@@ -178,7 +223,9 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
           <line x1={P.x} y1={P.y} x2={reflected.x} y2={reflected.y} stroke="var(--subject)" strokeWidth="2.5" />
           {arrow(P, reflected)}
           {angleArc(0, i, `${Math.round(i)}°`, 42)}
-          <text x={W / 2} y={H - 12} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>angle of incidence = angle of reflection</text>
+          {reflectionCaption.map((line, j) => (
+            <text key={`refl${j}`} x={W / 2} y={H - 10 - (reflectionCaption.length - 1 - j) * 14} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>
+          ))}
         </g>
       )}
 
@@ -189,9 +236,9 @@ export function RayDiagram({ props, alt }: { props: Record<string, unknown>; alt
           {angleArc(180, 180 - r, `${Math.round(r)}°`, 42)}
           <text x="14" y={surfaceY - 12} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[0]}</text>
           <text x="14" y={surfaceY + 20} fontFamily={FONT} fontSize="12" fill={INK_2}>{media[1]}</text>
-          <text x={W / 2} y={H - 10} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>
-            {ratio < 1 ? 'slower in the second medium, so it bends towards the normal' : 'faster in the second medium, so it bends away from the normal'}
-          </text>
+          {refractionCaption.map((line, j) => (
+            <text key={`refr${j}`} x={W / 2} y={H - 10 - (refractionCaption.length - 1 - j) * 14} textAnchor="middle" fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>
+          ))}
         </g>
       )}
       <circle cx={P.x} cy={P.y} r="3.5" fill={ACCENT} />

@@ -177,12 +177,18 @@ One PR per subject.
 **Pack-wide quality**
 - [x] **Diagrams fit a phone: flowcharts, line graphs, logic circuits, Huffman trees and
   byte tables** (PR #255). Scrolling at 390: 47, 96, 9, 1 and 131 dropped to 0, 0, 0, 0 and 23.
-- [ ] **Diagrams fit a phone: the rest.** 124 diagrams still scroll sideways at 390 on
-  lesson and why pages. The largest groups are tables with long words (23), Chemistry
-  displayed formulae (16), circuit diagrams (13), French verb tables (10), then ray, curve,
-  reaction-profile, lens, lattice and electric-field diagrams. Measure with a before-and-after
-  run of every page at 390 against `main`.
-  Motion graphs now take the card's width, as line graphs do, and no longer scroll.
+- [ ] **Diagrams fit a phone: the rest.** A census of all 3327 lesson and why pages at 390
+  on 26 September 2026 found 217 diagrams scrolling sideways. 18 components were refitted
+  (circuits, displayed formulae, equation cards, electric fields, lattices, energy diagrams,
+  histograms, number lines, index cards, springs, beams, ray diagrams and others), which
+  leaves 118. Still to do, each needing its labels re-placed without collisions: tables with
+  long words (21), curve graphs (15), plant diagrams (15), reaction profiles (7), free-body
+  (7), lenses (6), vector figures (5), and 4 or fewer each of dot-and-cross, electrolysis
+  cell, box plot, probability tree, cumulative frequency, collision, fluid column, frequency
+  tree, vector triangle, market map, repeated multiplication, index ladder, surface area and
+  circle theorem. A first attempt at these made labels collide, so each is looked at in the
+  browser, figure by figure, before it ships. Also 5 non-diagram elements on maths
+  transformations s7 and four Physics steps. Code blocks scroll by design.
 - [x] **The correct option is too often the longest.** Rebalanced subject by subject on
   26 September 2026 (#285 to #292): the share where the right answer is the only longest
   option fell from 36% to 24% of 4898 multiple-choice items, about chance for four options.

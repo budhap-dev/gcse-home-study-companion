@@ -103,4 +103,45 @@ describe('equation card', () => {
       expect(Math.max(...ys), `a card runs past its own height`).toBeLessThan(h)
     }
   })
+
+  /**
+   * The phone-fit floor the whole pack has to clear: the viewBox itself must be at most
+   * 296 units (the 298 CSS px `Visual.tsx` leaves on a 390px phone, less a small margin),
+   * and every text's estimated extent — x ± 0.6 × fontSize × characters, by its
+   * text-anchor — must lie inside it. HTML entities (a "<" or ">" in a rate law) are
+   * decoded first so a `>` counted as four characters ("&gt;") does not fail a line that
+   * actually fits.
+   */
+  it('is drawn to 296 units or less, with every text estimated to stay inside it', () => {
+    const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
+    const cards: { name: string; equation: string; units: string }[][] = []
+    for (const sub of readdirSync(ROOT).filter((d) => statSync(join(ROOT, d)).isDirectory())) {
+      for (const f of readdirSync(join(ROOT, sub)).filter((x) => x.endsWith('.json'))) {
+        const doc = JSON.parse(readFileSync(join(ROOT, sub, f), 'utf8'))
+        for (const step of doc.lesson.steps) {
+          for (const v of step.visuals ?? []) {
+            if (v.component === 'equation-card' && Array.isArray(v.props?.equations)) cards.push(v.props.equations)
+          }
+        }
+      }
+    }
+    expect(cards.length).toBeGreaterThan(50)
+    for (const equations of cards) {
+      const markup = svg({ equations })
+      const w = box(markup).w
+      expect(w, JSON.stringify(equations).slice(0, 60)).toBeLessThanOrEqual(296)
+      for (const t of markup.matchAll(/<text\b([^>]*)>([\s\S]*?)<\/text>/g)) {
+        const attrs = t[1]!
+        const x = Number(/\bx="(-?[\d.]+)"/.exec(attrs)![1])
+        const size = Number(/font-size="([\d.]+)"/.exec(attrs)?.[1] ?? '12')
+        const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
+        const text = t[2]!.replace(/<[^>]+>/g, '').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&')
+        const half = text.length * 0.6 * size
+        const left = anchor === 'end' ? x - half : anchor === 'middle' ? x - half / 2 : x
+        const right = anchor === 'end' ? x : anchor === 'middle' ? x + half / 2 : x + half
+        expect(left, `"${text}"`).toBeGreaterThanOrEqual(-0.5)
+        expect(right, `"${text}"`).toBeLessThanOrEqual(w + 0.5)
+      }
+    }
+  })
 })

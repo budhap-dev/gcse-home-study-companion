@@ -4,18 +4,25 @@ import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
  * Springs hanging from a clamp, each with a load, showing extension against a ruler.
  * Props: { loads: number[] in N, k: spring constant in N/m, naturalLength: cm, unit: 'cm' }.
  * Extension in cm = load / k * 100.
+ *
+ * The extension bracket used to sit beside the spring, with its "12 cm" label another
+ * 27px further out again: at a 90-unit gap between springs that was fine, but it made
+ * every extra spring add 90 units of width, and four springs scrolled 132px on a phone.
+ * The bracket now sits tight against the spring and its label moves underneath the load
+ * instead of out to the side, so a spring's whole footprint is its own load box (32
+ * units) rather than the label's width, and springs can sit closer together.
  */
 export function SpringLoad({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const loads = (props.loads as number[] | undefined) ?? [0, 1, 2, 3]
   const k = Number(props.k ?? 25)
   const natural = Number(props.naturalLength ?? 5)
   const scale = 9 // px per cm
-  const gap = 90
-  const W = loads.length * gap + 70
+  const gap = 58
+  const W = 70 + Math.max(0, loads.length - 1) * gap + 40
   const maxExt = Math.max(...loads.map((F) => (F / k) * 100))
-  const H = 60 + (natural + maxExt) * scale + 70
+  const H = 60 + (natural + maxExt) * scale + 90
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.min(560, W * 1.2) }} role="img" aria-label={alt}>
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: Math.min(420, W * 1.2) }} role="img" aria-label={alt}>
       <rect x="10" y="20" width={W - 20} height="10" fill={INK} />
       {/* ruler */}
       <line x1="34" y1="30" x2="34" y2={H - 30} stroke={INK_2} />
@@ -26,7 +33,7 @@ export function SpringLoad({ props, alt }: { props: Record<string, unknown>; alt
         </g>
       ))}
       {loads.map((F, idx) => {
-        const x = 90 + idx * gap
+        const x = 70 + idx * gap
         const ext = (F / k) * 100
         const len = (natural + ext) * scale
         const coils = 8
@@ -44,10 +51,10 @@ export function SpringLoad({ props, alt }: { props: Record<string, unknown>; alt
             <text x={x} y={30 + len + 25} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={F > 0 ? '#fff' : INK}>{F} N</text>
             {ext > 0 && (
               <g>
-                <line x1={x + 22} y1={30 + natural * scale} x2={x + 22} y2={30 + len} stroke="#d25b3b" strokeWidth="1.5" />
-                <line x1={x + 18} y1={30 + natural * scale} x2={x + 26} y2={30 + natural * scale} stroke="#d25b3b" strokeWidth="1.5" />
-                <line x1={x + 18} y1={30 + len} x2={x + 26} y2={30 + len} stroke="#d25b3b" strokeWidth="1.5" />
-                <text x={x + 27} y={30 + natural * scale + (len - natural * scale) / 2 + 4} fontFamily={FONT} fontSize="11" fill="#d25b3b">{ext.toFixed(ext % 1 ? 1 : 0)} cm</text>
+                <line x1={x + 17} y1={30 + natural * scale} x2={x + 17} y2={30 + len} stroke="#d25b3b" strokeWidth="1.5" />
+                <line x1={x + 14} y1={30 + natural * scale} x2={x + 20} y2={30 + natural * scale} stroke="#d25b3b" strokeWidth="1.5" />
+                <line x1={x + 14} y1={30 + len} x2={x + 20} y2={30 + len} stroke="#d25b3b" strokeWidth="1.5" />
+                <text x={x} y={30 + len + 46} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{ext.toFixed(ext % 1 ? 1 : 0)} cm</text>
               </g>
             )}
           </g>

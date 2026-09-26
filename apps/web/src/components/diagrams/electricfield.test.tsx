@@ -10,7 +10,9 @@ const heads = (markup: string) =>
     back: [(Number(m[3]) + Number(m[5])) / 2, (Number(m[4]) + Number(m[6])) / 2] as const,
   }))
 /** Where the charged spheres are drawn. */
-const spheres = (markup: string) => [...markup.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)" r="24"/g)].map((m) => Number(m[1]))
+const spheres = (markup: string) => [...markup.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)" r="24"/g)].map((m) => [Number(m[1]), Number(m[2])] as const)
+/** The viewBox width, so the middle of the drawing can be found without a hardcoded number. */
+const width = (markup: string) => Number(/viewBox="0 0 ([\d.]+)/.exec(markup)![1])
 
 /**
  * The direction of every arrow follows from the signs given, so the picture cannot
@@ -18,20 +20,24 @@ const spheres = (markup: string) => [...markup.matchAll(/<circle cx="([\d.]+)" c
  * like charges repel.
  */
 describe('electric field', () => {
-  const centre = 200
-
   it('points the field lines away from a positive charge', () => {
-    const drawn = heads(svg({ charges: [{ sign: 1 }] }))
+    const markup = svg({ charges: [{ sign: 1 }] })
+    const centre = width(markup) / 2
+    const [, midY] = spheres(markup)[0]!
+    const drawn = heads(markup)
     expect(drawn.length).toBeGreaterThan(6)
     for (const { tip, back } of drawn) {
-      const outwards = Math.hypot(tip[0] - centre, tip[1] - 150) - Math.hypot(back[0] - centre, back[1] - 150)
+      const outwards = Math.hypot(tip[0] - centre, tip[1] - midY) - Math.hypot(back[0] - centre, back[1] - midY)
       expect(outwards).toBeGreaterThan(0)
     }
   })
 
   it('points the field lines towards a negative charge', () => {
-    for (const { tip, back } of heads(svg({ charges: [{ sign: -1 }] }))) {
-      const outwards = Math.hypot(tip[0] - centre, tip[1] - 150) - Math.hypot(back[0] - centre, back[1] - 150)
+    const markup = svg({ charges: [{ sign: -1 }] })
+    const centre = width(markup) / 2
+    const [, midY] = spheres(markup)[0]!
+    for (const { tip, back } of heads(markup)) {
+      const outwards = Math.hypot(tip[0] - centre, tip[1] - midY) - Math.hypot(back[0] - centre, back[1] - midY)
       expect(outwards).toBeLessThan(0)
     }
   })
@@ -39,7 +45,8 @@ describe('electric field', () => {
   it('draws two like charges pushing apart', () => {
     for (const pair of [[1, 1], [-1, -1]] as const) {
       const markup = svg({ charges: pair.map((sign) => ({ sign })) })
-      const [left, right] = spheres(markup)
+      const centre = width(markup) / 2
+      const [[left], [right]] = spheres(markup)
       const drawn = heads(markup)
       expect(drawn).toHaveLength(2)
       // The arrow near the left sphere points further left; the right one further right.
@@ -54,6 +61,7 @@ describe('electric field', () => {
   it('draws two unlike charges pulling together', () => {
     for (const pair of [[1, -1], [-1, 1]] as const) {
       const markup = svg({ charges: pair.map((sign) => ({ sign })) })
+      const centre = width(markup) / 2
       const drawn = heads(markup)
       expect(drawn).toHaveLength(2)
       // Both arrows point inwards, so each tip is nearer the middle than its tail.

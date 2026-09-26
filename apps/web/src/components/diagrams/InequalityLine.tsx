@@ -23,9 +23,12 @@ export function InequalityLine({ props, alt }: { props: Record<string, unknown>;
   const upper = props.upper as Bound | undefined
   const label = typeof props.label === 'string' ? props.label : undefined
 
-  const W = 420
+  // 280 wide: the drawing stops shrinking at its natural width, and a 420-wide line
+  // scrolled on a phone. The scale and tick logic below is unaffected by padX, so the
+  // number line stays accurate at any width.
+  const W = 280
   const H = 110
-  const padX = 30
+  const padX = 22
   const axisY = 68
   // Not Math.max(1, ...): that guards a zero span but silently ruins a fractional one.
   // A 49.9 to 50.1 tolerance band was squashed into the leftmost fifth of the line.
@@ -65,7 +68,7 @@ export function InequalityLine({ props, alt }: { props: Record<string, unknown>;
   )
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.3 }} role="img" aria-label={alt}>
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.6 }} role="img" aria-label={alt}>
       {label && <text x={W / 2} y="22" textAnchor="middle" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={INK}>{label}</text>}
 
       <line x1={padX - 12} y1={axisY} x2={W - padX + 12} y2={axisY} stroke={INK} strokeWidth="1.5" />

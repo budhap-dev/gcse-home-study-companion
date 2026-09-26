@@ -46,14 +46,38 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
       ? { i: round(pd! / p.resistance!), v: round(pd!) }
       : { i: round(totalI), v: round(totalI * p.resistance!) }
 
-  const W = 440
-  const rows = parallel ? loads.length : 1
+  /*
+   * 290 units wide, inside the 296 a phone's card allows. At 440 (and with the free-text
+   * note drawn on a single line) this scrolled up to 142px on a phone — the caption alone
+   * ("Standard symbols: rectangle, triangle and bar, circle with a cross", 68 characters)
+   * needed about 490 units on one line. The note now wraps; everything else keeps its
+   * on-screen size, laid out over the narrower width instead of shrunk to fit it.
+   */
+  const W = 290
+  const rows = parallel ? parts.length : 1
   // Label above (to -26) and resistance and readings below (to +49): a stack about 90px
   // tall, so branches closer than that run into each other.
   const BRANCH_GAP = 96
-  const H = parallel ? 110 + rows * BRANCH_GAP : 240
-  const left = 46, right = W - 46, top = 66, bottom = H - 48
+  const NOTE_BUDGET = 36
+  const fallback = parallel
+    ? `The same ${pd} V across each branch; the currents add to ${round(totalI)} A`
+    : `Total resistance ${round(totalR)} Ω, so the current is ${round(totalI)} A everywhere in the loop`
+  const bottomText = showValues ? (note ?? fallback) : note
+  const bottomLines = bottomText ? wrapCell(bottomText, NOTE_BUDGET) : []
+  const noteExtra = Math.max(0, bottomLines.length - 1) * 14
+  const H = (parallel ? 110 + rows * BRANCH_GAP : 240) + noteExtra
+  const left = 46, right = W - 46, top = 66, bottom = H - noteExtra - 48
   const midY = (top + bottom) / 2
+  /** The note/caption, wrapped to fit the width, stacked upward from the bottom edge. */
+  const bottomNote = (
+    <>
+      {bottomLines.map((line, i) => (
+        <text key={i} x={W / 2} y={H - 10 - (bottomLines.length - 1 - i) * 14} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
+          {line}
+        </text>
+      ))}
+    </>
+  )
 
   const symbol = (p: Part, cx: number, cy: number, key: string) => {
     const box = 46, half = box / 2
@@ -172,10 +196,17 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
   )
 
   if (!parallel) {
-    // One loop, with the parts spaced along the top wire.
-    const span = right - left
-    const at = parts.map((_, i) => left + (span * (i + 1)) / (parts.length + 1))
-    const gap = 26
+    /*
+     * One loop, with the parts spaced evenly between the corners, each inset just far
+     * enough (half a symbol's width plus its own wire gap) to clear the corner wire. That
+     * gives three parts the most room this width allows to spread their labels apart.
+     */
+    // Three or more parts need a tighter gap around each symbol to leave room to spread out.
+    const gap = parts.length >= 3 ? 14 : 26
+    const half = 23
+    const inset = half + gap
+    const spanL = left + inset, spanR = right - inset
+    const at = parts.length === 1 ? [(left + right) / 2] : parts.map((_, i) => spanL + ((spanR - spanL) * i) / (parts.length - 1))
     return (
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
         {wire(left, midY - CELL_GAP, left, top, 'lu')}
@@ -187,16 +218,7 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
         {wire(right, bottom, left, bottom, 'bb')}
         {cell(left, midY)}
         {parts.map((p, i) => symbol(p, at[i]!, top, `p${i}`))}
-        {showValues && (
-          <text x={W / 2} y={H - 10} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
-            {note ?? `Total resistance ${round(totalR)} Ω, so the current is ${round(totalI)} A everywhere in the loop`}
-          </text>
-        )}
-        {!showValues && note && (
-          <text x={W / 2} y={H - 10} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
-            {note}
-          </text>
-        )}
+        {bottomNote}
       </svg>
     )
   }
@@ -205,6 +227,7 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
   const railL = 150, railR = right
   const branchY = parts.map((_, i) => top + 24 + i * BRANCH_GAP)
   const lastY = branchY[branchY.length - 1]!
+  const loopBottom = H - noteExtra - 26
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
       {wire(left, midY - CELL_GAP, left, branchY[0]!, 'lu')}
@@ -217,21 +240,12 @@ export function CircuitDiagram({ props, alt }: { props: Record<string, unknown>;
           {wire((railL + railR) / 2 + 26, branchY[i]!, railR, branchY[i]!, `br${i}`)}
         </g>
       ))}
-      {wire(railR, lastY, railR, H - 26, 'rd')}
-      {wire(railR, H - 26, left, H - 26, 'bb')}
-      {wire(left, H - 26, left, midY + CELL_GAP, 'lb')}
+      {wire(railR, lastY, railR, loopBottom, 'rd')}
+      {wire(railR, loopBottom, left, loopBottom, 'bb')}
+      {wire(left, loopBottom, left, midY + CELL_GAP, 'lb')}
       {cell(left, midY)}
       {parts.map((p, i) => symbol(p, (railL + railR) / 2, branchY[i]!, `p${i}`))}
-      {showValues && (
-        <text x={W / 2} y={H - 8} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
-          {note ?? `The same ${pd} V across each branch; the currents add to ${round(totalI)} A`}
-        </text>
-      )}
-      {!showValues && note && (
-        <text x={W / 2} y={H - 8} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
-          {note}
-        </text>
-      )}
+      {bottomNote}
     </svg>
   )
 }

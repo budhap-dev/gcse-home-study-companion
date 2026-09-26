@@ -1,6 +1,34 @@
+import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { DisplayedFormula } from './DisplayedFormula.tsx'
+import { DisplayedFormula, DisplayedFormulaStack } from './DisplayedFormula.tsx'
+
+const CONTENT = join(import.meta.dirname, '../../../../../supabase/seed/content')
+
+/** Every distinct props object a "displayed-formula" use in the content pack passes. */
+function everyDisplayedFormulaProps(): Record<string, unknown>[] {
+  const seen = new Map<string, Record<string, unknown>>()
+  const walk = (node: unknown) => {
+    if (Array.isArray(node)) return node.forEach(walk)
+    if (node && typeof node === 'object') {
+      const o = node as Record<string, unknown>
+      if (o.component === 'displayed-formula' && o.props) {
+        const p = o.props as Record<string, unknown>
+        seen.set(JSON.stringify(p), p)
+      }
+      for (const v of Object.values(o)) walk(v)
+    }
+  }
+  for (const subject of readdirSync(CONTENT)) {
+    const dir = join(CONTENT, subject)
+    if (!statSync(dir).isDirectory()) continue
+    for (const f of readdirSync(dir)) {
+      if (f.endsWith('.json')) walk(JSON.parse(readFileSync(join(dir, f), 'utf8')))
+    }
+  }
+  return [...seen.values()]
+}
 
 const svg = (props: Record<string, unknown>) => renderToStaticMarkup(<DisplayedFormula props={props} alt="a displayed formula" />)
 
@@ -194,5 +222,119 @@ describe('displayed formula layout', () => {
     expect(labels).toHaveLength(2)
     const [a, b] = labels
     expect(b!.x - a!.x).toBeGreaterThan(((a!.text.length + b!.text.length) / 2) * 6.4)
+  })
+})
+
+/**
+ * Side by side, several molecules can run past 500 units wide — "butane → ethane + ethene"
+ * reached 474 — and a diagram stops shrinking at its natural width, so every multi-molecule
+ * equation in the pack scrolled sideways on a phone, by as much as 347px on the census. At
+ * a phone's available width the molecules stack one per row instead: `DisplayedFormulaStack`
+ * is called directly (as `useAvailableWidth` measures nothing in this environment) with the
+ * 298 a phone's figure actually gives it, for every props object the content pack uses.
+ */
+describe('displayed formula fits a phone for every use in the content pack', () => {
+  const uses = everyDisplayedFormulaProps()
+
+  it('found them', () => {
+    expect(uses.length).toBeGreaterThanOrEqual(15)
+  })
+
+  const stackSvg = (props: Record<string, unknown>) =>
+    renderToStaticMarkup(
+      <DisplayedFormulaStack
+        molecules={(props.molecules as never) ?? []}
+        joiners={(props.joiners as string[] | undefined) ?? []}
+        title={typeof props.title === 'string' ? props.title : undefined}
+        width={298}
+        alt="a displayed formula"
+        svgRef={{ current: null }}
+      />,
+    )
+
+  it('keeps the viewBox within the phone width for every use', () => {
+    for (const props of uses) {
+      const markup = stackSvg(props)
+      const [width] = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(markup)!.slice(1).map(Number)
+      expect(width, JSON.stringify(props)).toBeLessThanOrEqual(296)
+    }
+  })
+
+  it('never lowers a fontSize below 11', () => {
+    for (const props of uses) {
+      // The atom symbols and the "n" of a repeat unit use `style="font-size:...px"`,
+      // not the `font-size="..."` attribute; both are read here.
+      const markup = stackSvg(props)
+      const sizes = [
+        ...[...markup.matchAll(/font-size="([\d.]+)"/g)].map((m) => Number(m[1])),
+        ...[...markup.matchAll(/font-size:(\d+(?:\.\d+)?)px/g)].map((m) => Number(m[1])),
+      ]
+      for (const s of sizes) expect(s, JSON.stringify(props)).toBeGreaterThanOrEqual(11)
+    }
+  })
+
+  /**
+   * Every `<text>`'s position in the final, rendered coordinate space — each molecule is
+   * drawn inside its own `<g transform="translate(x y)">` row, so a label's own `x`/`y`
+   * attributes are local to that row and have to be added to the row's offset before they
+   * mean anything against the viewBox.
+   */
+  function absoluteTexts(markup: string) {
+    const out: { x: number; y: number; text: string; attrs: string }[] = []
+    const stack: [number, number][] = [[0, 0]]
+    const tokens = markup.matchAll(/<g\b[^>]*>|<\/g>|<text\b[^>]*>[^<]*<\/text>/g)
+    for (const tok of tokens) {
+      const t = tok[0]
+      if (t === '</g>') {
+        stack.pop()
+      } else if (t.startsWith('<g')) {
+        const m = /translate\(([-\d.]+)[ ,]([-\d.]+)\)/.exec(t)
+        const [px, py] = stack[stack.length - 1]!
+        stack.push(m ? [px + Number(m[1]), py + Number(m[2])] : [px, py])
+      } else {
+        const tm = /<text x="([-\d.]+)" y="([-\d.]+)"([^>]*)>([^<]*)<\/text>/.exec(t)!
+        const [ox, oy] = stack[stack.length - 1]!
+        out.push({ x: Number(tm[1]) + ox, y: Number(tm[2]) + oy, attrs: tm[3]!, text: tm[4]! })
+      }
+    }
+    return out
+  }
+
+  /** x ± 0.6 × fontSize × characters, by text-anchor, must lie inside the viewBox. */
+  it('keeps every label inside the viewBox', () => {
+    const escaped: string[] = []
+    for (const props of uses) {
+      const markup = stackSvg(props)
+      const [width, height] = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(markup)!.slice(1).map(Number) as [number, number]
+      for (const { x, y, attrs, text } of absoluteTexts(markup)) {
+        if (!text.trim()) continue
+        const fontSize = Number(/font-size="([\d.]+)"/.exec(attrs)?.[1] ?? /font-size:(\d+(?:\.\d+)?)px/.exec(attrs)?.[1] ?? 11)
+        const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
+        const w = 0.6 * fontSize * text.length
+        const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x
+        const right = left + w
+        if (left < -0.5 || right > width + 0.5 || y < 0 || y > height + 0.5) {
+          escaped.push(`${JSON.stringify(props)}: "${text}" left ${left.toFixed(1)} right ${right.toFixed(1)} y ${y} (canvas ${width}x${height})`)
+        }
+      }
+    }
+    expect(escaped).toEqual([])
+  })
+
+  it('is only over budget in the wide row for a reason the stack above actually fixes', () => {
+    // Unmeasured (this environment), DisplayedFormula always renders its wide row — real
+    // phones switch to the stack, checked above, once it would not fit. A row over 296
+    // here has to be over it because of more than one molecule, or a title too long for
+    // one line — the two things the stack (and its title wrap) exist to fix — and never
+    // for some other reason the stack would not actually help with.
+    for (const props of uses) {
+      const markup = renderToStaticMarkup(<DisplayedFormula props={props} alt="a displayed formula" />)
+      const [width] = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(markup)!.slice(1).map(Number)
+      if (width! > 296) {
+        const many = (props.molecules as unknown[]).length > 1
+        const title = typeof props.title === 'string' ? props.title : undefined
+        expect(many || !!title, JSON.stringify(props)).toBe(true)
+      }
+    }
   })
 })

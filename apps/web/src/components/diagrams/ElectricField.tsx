@@ -22,9 +22,47 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
   const charges = (props.charges as Charge[] | undefined) ?? [{ sign: 1 }]
   const count = typeof props.lines === 'number' ? props.lines : 12
   const note = typeof props.note === 'string' ? props.note : undefined
-  const W = 400, H = 300
-  const midY = H / 2 - (note ? 6 : 0)
+  /*
+   * 290 units wide, inside the 296 a phone's card allows. At 400, with the caption drawn
+   * on one line, this scrolled up to 260px on a phone: the default caption alone ("The
+   * lines are closest together near the sphere, where the field is strongest", 78
+   * characters) needed about 560 units by itself. Every caption and label now wraps, and
+   * the height grows to fit however many lines that takes — only the width is limited.
+   */
+  const W = 290
   const R = 24
+  /** Every caption and label uses this so the same word-wrap runs everywhere. */
+  const wrap = (text: string, perLine: number): string[] => {
+    const lines: string[] = []
+    let line = ''
+    for (const word of text.split(' ')) {
+      if (line && (line + ' ' + word).length > perLine) {
+        lines.push(line)
+        line = word
+      } else line = line ? line + ' ' + word : word
+    }
+    if (line) lines.push(line)
+    return lines
+  }
+  /** A caption's lines, centred, growing downward from y0. */
+  const downFrom = (text: string, y0: number, budget: number) =>
+    wrap(text, budget).map((line, i) => (
+      <text key={i} x={W / 2} y={y0 + i * 14} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
+        {line}
+      </text>
+    ))
+  /** A caption's lines, centred, with its last line fixed at yLast. */
+  const upTo = (text: string, yLast: number, budget: number) => {
+    const lines = wrap(text, budget)
+    return lines.map((line, i) => (
+      <text key={i} x={W / 2} y={yLast - (lines.length - 1 - i) * 14} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
+        {line}
+      </text>
+    ))
+  }
+  /** How many extra 14px rows a caption needs beyond its first line. */
+  const extra = (text: string, budget: number) => Math.max(0, wrap(text, budget).length - 1)
+  const CAPTION_BUDGET = 34
 
   const head = (x: number, y: number, angle: number, colour: string, key: string) => {
     const back = 9, wing = 5
@@ -40,30 +78,22 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
 
   /**
    * Two spheres sit side by side, so a long label under one runs into the label under the
-   * other. Wrapping at a width that fits half the diagram keeps them apart, whatever the
-   * content says — "the cloth, having lost electrons" beside "the rod, having gained them"
-   * overlapped before this.
+   * other. `budget` narrows further than a full-width caption so two labels never meet in
+   * the middle, whatever the content says — "the cloth, having lost electrons" beside
+   * "the rod, having gained them" overlapped before this.
    */
-  const wrap = (text: string, perLine = 18) => {
-    const lines: string[] = []
-    let line = ''
-    for (const word of text.split(' ')) {
-      if (line && (line + ' ' + word).length > perLine) { lines.push(line); line = word } else line = line ? line + ' ' + word : word
-    }
-    if (line) lines.push(line)
-    return lines
-  }
-
-  const sphere = (cx: number, sign: 1 | -1, label: string | undefined, key: string) => (
+  const sphere = (cx: number, cy: number, sign: 1 | -1, label: string | undefined, key: string, budget: number) => (
     <g key={key}>
-      <circle cx={cx} cy={midY} r={R} fill={sign > 0 ? '#f6e2dc' : '#dce6f3'} stroke={INK} strokeWidth={1.6} />
-      <text x={cx} y={midY + 7} textAnchor="middle" fill={INK} style={{ font: DISPLAY, fontSize: 22, fontWeight: 700 }}>
+      <circle cx={cx} cy={cy} r={R} fill={sign > 0 ? '#f6e2dc' : '#dce6f3'} stroke={INK} strokeWidth={1.6} />
+      <text x={cx} y={cy + 7} textAnchor="middle" fill={INK} style={{ font: DISPLAY, fontSize: 22, fontWeight: 700 }}>
         {sign > 0 ? '+' : '−'}
       </text>
       {label && (
-        <text x={cx} y={midY + R + 22} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
-          {wrap(label).map((line, i) => (
-            <tspan key={i} x={cx} dy={i === 0 ? 0 : 14}>{line}</tspan>
+        <text x={cx} y={cy + R + 22} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 12 }}>
+          {wrap(label, budget).map((line, i) => (
+            <tspan key={i} x={cx} dy={i === 0 ? 0 : 14}>
+              {line}
+            </tspan>
           ))}
         </text>
       )}
@@ -74,6 +104,14 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
     const c = charges[0]!
     const cx = W / 2
     const reach = 110
+    const topText = c.sign > 0 ? 'Field lines point away from a positive charge' : 'Field lines point towards a negative charge'
+    const bottomText = note ?? 'The lines are closest together near the sphere, where the field is strongest'
+    const topRows = extra(topText, CAPTION_BUDGET)
+    const bottomRows = extra(bottomText, CAPTION_BUDGET)
+    const topLast = 16 + topRows * 14
+    const midY = topLast + 34 + reach
+    const bottomFirst = midY + reach + 34
+    const H = bottomFirst + bottomRows * 14 + 10
     const lines = Array.from({ length: count }, (_, i) => {
       const a = (i / count) * 2 * Math.PI
       const x1 = cx + R * Math.cos(a), y1 = midY + R * Math.sin(a)
@@ -94,13 +132,9 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
     return (
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
         {lines}
-        {sphere(cx, c.sign, c.label, 'c')}
-        <text x={W / 2} y={16} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
-          {c.sign > 0 ? 'Field lines point away from a positive charge' : 'Field lines point towards a negative charge'}
-        </text>
-        <text x={W / 2} y={H - 8} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
-          {note ?? 'The lines are closest together near the sphere, where the field is strongest'}
-        </text>
+        {sphere(cx, midY, c.sign, c.label, 'c', CAPTION_BUDGET)}
+        {downFrom(topText, 16, CAPTION_BUDGET)}
+        {upTo(bottomText, H - 10, CAPTION_BUDGET)}
       </svg>
     )
   }
@@ -108,11 +142,30 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
   // Two charges: the force arrows follow from whether the signs match.
   const [a, b] = charges as [Charge, Charge]
   const repel = a.sign === b.sign
-  const leftX = W / 2 - 90, rightX = W / 2 + 90
+  /*
+   * Half the gap between the two sphere centres, and how far each arrow reaches from its
+   * sphere (R + 8 to start, ARROW_LEN more to the tip). At the original 90 and 46 an
+   * attracting pair's arrows barely fell short of the middle; shrunk to this width that
+   * would overshoot the other sphere. Both are cut back together, so attracting arrows
+   * still point together without crossing, and repelling ones still land inside the view.
+   */
+  const ARROW_LEN = 26
+  const d = 60
+  const LABEL_BUDGET = 12
+  const leftX = W / 2 - d, rightX = W / 2 + d
+  const topText = repel ? 'The same charge: they repel' : 'Different charges: they attract'
+  const bottomText = note ?? 'A non-contact force: the closer they are, the stronger it is'
+  const topRows = extra(topText, CAPTION_BUDGET)
+  const maxLabelRows = Math.max(a.label ? wrap(a.label, LABEL_BUDGET).length : 1, b.label ? wrap(b.label, LABEL_BUDGET).length : 1) - 1
+  const bottomRows = extra(bottomText, CAPTION_BUDGET)
+  const topLast = 16 + topRows * 14
+  const midY = topLast + 40
+  const bottomFirst = midY + R + 22 + maxLabelRows * 14 + 30
+  const H = bottomFirst + bottomRows * 14 + 10
   const arrow = (from: number, towards: number, key: string) => {
     const dir = Math.sign(towards - from)
     const start = from + dir * (R + 8)
-    const end = start + dir * 46
+    const end = start + dir * ARROW_LEN
     return (
       <g key={key}>
         <line x1={start} y1={midY} x2={end} y2={midY} stroke="#d25b3b" strokeWidth={2.4} />
@@ -122,16 +175,12 @@ export function ElectricField({ props, alt }: { props: Record<string, unknown>; 
   }
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
-      <text x={W / 2} y={16} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
-        {repel ? 'The same charge: they repel' : 'Different charges: they attract'}
-      </text>
-      {sphere(leftX, a.sign, a.label, 'a')}
-      {sphere(rightX, b.sign, b.label, 'b')}
+      {downFrom(topText, 16, CAPTION_BUDGET)}
+      {sphere(leftX, midY, a.sign, a.label, 'a', LABEL_BUDGET)}
+      {sphere(rightX, midY, b.sign, b.label, 'b', LABEL_BUDGET)}
       {arrow(leftX, repel ? leftX - 100 : rightX, 'la')}
       {arrow(rightX, repel ? rightX + 100 : leftX, 'ra')}
-      <text x={W / 2} y={H - 8} textAnchor="middle" fill={INK_2} style={{ font: FONT }}>
-        {note ?? 'A non-contact force: the closer they are, the stronger it is'}
-      </text>
+      {upTo(bottomText, H - 10, CAPTION_BUDGET)}
     </svg>
   )
 }

@@ -17,9 +17,20 @@ export function BeamMoments({ props, alt }: { props: Record<string, unknown>; al
   const pivot = Number(props.pivot ?? 2)
   const forces = (props.forces as ForceMark[] | undefined) ?? []
   const showDistances = props.showDistances !== false
-  const scale = 100
-  const pad = 50
-  const W = length * scale + 2 * pad
+  /*
+   * A beam drawn at 100 units per metre scrolled sideways past a 5 m beam (600 wide) and
+   * even past a 2 m one (300). The pad on each end has to stay fixed, whatever the scale,
+   * because it is there for a force's own label at the very end of the beam — "20 N
+   * here: 16 N m" is 18 characters, and at 12px that is about 65 units either side of
+   * where it is anchored. So the scale shrinks with the beam's length instead, and the
+   * pad does not: a short beam still draws at a full 100 units per metre, and a long one
+   * compresses until the whole drawing is 284 wide.
+   */
+  const pad = 72
+  const maxW = 284
+  const naturalScale = 100
+  const W = Math.min(length * naturalScale + 2 * pad, maxW)
+  const scale = (W - 2 * pad) / length
   const beamY = 110
   const baseH = 200
   const x = (m: number) => pad + m * scale

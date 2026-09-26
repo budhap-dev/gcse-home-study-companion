@@ -74,10 +74,11 @@ describe('inequality number line', () => {
     it('spreads the bounds across the line rather than squashing them left', () => {
       const cs = circles(svg(TOL))
       expect(cs).toHaveLength(2)
-      // 49.95 and 50.05 sit a quarter and three quarters along a 49.9 to 50.1 line.
-      expect(cs[0]!.cx).toBeGreaterThan(100)
-      expect(cs[1]!.cx).toBeLessThan(320)
-      expect(cs[1]!.cx - cs[0]!.cx).toBeGreaterThan(120)
+      // 49.95 and 50.05 sit a quarter and three quarters along a 49.9 to 50.1 line,
+      // drawn 280 wide (22 to 258) since the 420-wide line scrolled on a phone.
+      expect(cs[0]!.cx).toBeGreaterThan(60)
+      expect(cs[1]!.cx).toBeLessThan(220)
+      expect(cs[1]!.cx - cs[0]!.cx).toBeGreaterThan(100)
     })
 
     it('labels it in the right steps', () => {
