@@ -9,6 +9,7 @@ import { useProgress } from '../../progress/useProgress.ts'
 import { decayNote, evidenceFor } from '../../progress/store.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 import { suggestedLevel } from '../../progress/level.ts'
+import { openSession, quizKey, worksheetKey } from '../../progress/inProgress.ts'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -114,18 +115,23 @@ export function Topic() {
           // One level is suggested from the topic's status (Advanced once Secure); the
           // others stay open, because the app recommends and never blocks.
           const suggested = level === suggestedLevel(evidence.status)
+          const open = openSession(worksheetKey(topic.id, level))
           return (
             <Part
               key={level}
               to={`worksheet/${level}`}
               title={`${LEVEL_LABEL[level]} worksheet`}
-              note={`${suggested ? 'Suggested for where you are. ' : ''}${sheet.questionIds.length} questions · ${totalMarks(topic, sheet.questionIds)} marks · about ${sheet.suggestedMinutes} min. ${LEVEL_NOTE[level]}`}
-              action={suggested ? 'Start here' : 'Open'}
+              note={`${open ? `Started: on question ${open.index + 1} of ${sheet.questionIds.length}. ` : suggested ? 'Suggested for where you are. ' : ''}${sheet.questionIds.length} questions · ${totalMarks(topic, sheet.questionIds)} marks · about ${sheet.suggestedMinutes} min. ${LEVEL_NOTE[level]}`}
+              action={open ? 'Resume' : suggested ? 'Start here' : 'Open'}
               highlight={suggested}
             />
           )
         })}
-        <Part to="quiz" title="Quiz" note={`${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action="Start" />
+        {(() => {
+          // An unfinished quiz is kept on the device, so the tile offers to carry on with it.
+          const open = openSession(quizKey(topic.id))
+          return <Part to="quiz" title="Quiz" note={open ? `Started: on question ${open.index + 1} of ${open.total}. Your answers so far are kept.` : `${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action={open ? 'Resume' : 'Start'} />
+        })()}
         <Part to="flashcards" title="Flashcards" note="Quick recall: key points, questions, and examiner traps. Tap to flip." action="Flip" />
         <Part to="cheatsheet" title="Cheat sheet" note="The whole topic on one page: memory hooks, formulae, key points and traps. Prints." action="Read" />
         <Part to={`/subjects/${subject.id}/exam-technique`} title="Exam technique" note={previewOf(topic.examTechnique.body)} action="Read" />

@@ -13,6 +13,7 @@ import { settle, type Settlement } from '../../progress/settle.ts'
 import { Celebration } from '../../components/Celebration.tsx'
 import { xpForQuestions } from '../../progress/xp.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
+import { loadInProgress, saveInProgress, worksheetKey } from '../../progress/inProgress.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -40,23 +41,9 @@ interface SheetState {
   earned?: { xp: number; badges: string[]; levelUp?: string }
 }
 
-const key = (topicId: string, level: string) => `study-companion.worksheet.${topicId}.${level}`
-function load(topicId: string, level: string): SheetState | null {
-  try {
-    const raw = sessionStorage.getItem(key(topicId, level))
-    return raw ? (JSON.parse(raw) as SheetState) : null
-  } catch {
-    return null
-  }
-}
-function save(topicId: string, level: string, state: SheetState | null) {
-  try {
-    if (state) sessionStorage.setItem(key(topicId, level), JSON.stringify(state))
-    else sessionStorage.removeItem(key(topicId, level))
-  } catch {
-    // no session storage: the sheet still works for this visit
-  }
-}
+// Kept on the device, so an unfinished worksheet survives closing the app (UXI-2).
+const load = (topicId: string, level: string) => loadInProgress<SheetState>(worksheetKey(topicId, level))
+const save = (topicId: string, level: string, state: SheetState | null) => saveInProgress(worksheetKey(topicId, level), state)
 
 /**
  * A worksheet at one level. Question, scratch canvas, and worked solution live side
