@@ -9,10 +9,15 @@ import { PART_LETTERS, partsDone, partsLabel, type PartsDone } from '../../progr
 import { useProgress } from '../../progress/useProgress.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 
-const YEAR_NOTE: Record<number, string> = {
-  9: 'Taught before the app existed. Kept as recap, because the milestones and synoptic tests keep coming back to it.',
-  10: 'This year’s work.',
-  11: 'Next year’s work.',
+/**
+ * A year's note, relative to the student's own year (UXI-10). These were fixed for a Year
+ * 10 student: "This year's work" on Year 10 whoever was reading.
+ */
+function yearNote(year: number, mine: number): string | undefined {
+  if (year < mine) return 'Taught in an earlier year. Kept as recap, because mocks and the final exams keep coming back to it.'
+  if (year === mine) return 'This year’s work.'
+  if (year === mine + 1) return 'Next year’s work.'
+  return undefined
 }
 
 export function TopicMap() {
@@ -27,7 +32,9 @@ export function TopicMap() {
   const planned = blocks.reduce((n, b) => n + b.topics.length, 0)
   // Open the year the student is working through: the latest one that has any topic
   // written. Earlier years are recap and later ones are not started, so both stay shut.
-  const current = years.filter((y) => blocks.some((b) => b.year === y && b.topics.some((t) => t.topicId))).pop() ?? years[0]
+  // The student's own year opens first when they have said it; otherwise the latest year with topics.
+  const mine = progress.profile?.year
+  const current = mine && years.includes(mine) ? mine : years.filter((y) => blocks.some((b) => b.year === y && b.topics.some((t) => t.topicId))).pop() ?? years[0]
   /** Has the student done anything on any of these topics? Drives whether a reset is offered. */
   const studied = (ids: string[]) => ids.some((id) => progress.attempts.some((a) => a.topicId === id) || Boolean(progress.lessons[id]))
   const subjectTopicIds = written.map((t) => t.id)
@@ -80,7 +87,7 @@ export function TopicMap() {
                   would still paint a hairline when the row has collapsed to nothing. */}
               <div className="accordion-panel">
                 <div className="flex flex-col gap-5 border-t border-rule px-4 pb-4 pt-3">
-                {YEAR_NOTE[year] && <p className="text-sm text-ink-3">{YEAR_NOTE[year]}</p>}
+                {yearNote(year, mine ?? 10) && <p className="text-sm text-ink-3">{yearNote(year, mine ?? 10)}</p>}
                 {inYear.map((block) => (
                   <div key={`${year}-${block.term}`} className="flex flex-col gap-1.5">
                     <h3 className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{block.term}</h3>

@@ -8,7 +8,8 @@ import { Smiley } from '../../components/Smiley.tsx'
 import { Link } from 'react-router'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { recommend, type Task } from '../../progress/recommend.ts'
-import { evidenceFor, isoDate, streakDays, weekMinutes } from '../../progress/store.ts'
+import { evidenceFor, isoDate, setProfile, streakDays, studiedTopics, weekMinutes } from '../../progress/store.ts'
+import { ProfileForm, daysUntil } from '../../components/ProfileForm.tsx'
 import { useProgress } from '../../progress/useProgress.ts'
 import { mistakeQueue } from '../../progress/mistakes.ts'
 import { redoable } from './Mistakes.tsx'
@@ -18,10 +19,13 @@ import { useMyAssignments } from '../../auth/assignments.ts'
 
 export function Home() {
   const progress = useProgress()
-  const { next, alternatives } = recommend(TOPICS, progress)
+  const profile = progress.profile ?? {}
+  // The plan covers the subjects the student takes (UXI-10); all of them until they say.
+  const studied = studiedTopics(TOPICS, profile)
+  const { next, alternatives } = recommend(studied, progress)
   const mistakes = mistakeQueue(progress, redoable)
   const { list: assignments } = useMyAssignments()
-  const plan = todayPlan(TOPICS, progress, assignedTasks(assignments, progress), mistakes.length)
+  const plan = todayPlan(studied, progress, assignedTasks(assignments, progress), mistakes.length)
   const done = doneToday(TOPICS, progress)
   const others = alternatives.filter((t) => !plan.some((p) => p.to === t.to))
   const minutes = weekMinutes(progress)
@@ -36,6 +40,9 @@ export function Home() {
   const firstName = auth.status === 'allowed' && auth.name ? auth.name.split(' ')[0] : undefined
   const [factOffset, setFactOffset] = useState(0)
   const fact = factOfTheDay(SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => s.id), new Date(), factOffset)
+
+  const fresh = !profile.setupAt && progress.attempts.length === 0 && Object.keys(progress.lessons).length === 0
+  if (fresh) return <Welcome />
 
   return (
     <article className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-x-10 lg:gap-y-6">
@@ -70,6 +77,16 @@ export function Home() {
           </p>
         </div>
       </section>
+
+      {!profile.setupAt && (
+        <Link to="/settings#you" className="flex items-center gap-3 rounded-xl border border-dashed border-rule bg-surface px-4 py-3">
+          <span className="flex flex-grow flex-col gap-0.5">
+            <span className="font-bold">Tell the app your year and subjects</span>
+            <span className="text-xs text-ink-2">So the plan and your subject list cover what you take. Half a minute.</span>
+          </span>
+          <span className="rounded-lg border border-rule px-3 py-1.5 text-sm font-bold">Set up</span>
+        </Link>
+      )}
 
       {plan.length > 0 ? (
         <section className="flex flex-col gap-2">
@@ -136,7 +153,7 @@ export function Home() {
       <section className="flex flex-col gap-2">
         <SectionLabel colour="#6B4E9B" emoji="🏅">Your subjects</SectionLabel>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
-        {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
+        {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0 && (!profile.subjects?.length || profile.subjects.includes(s.id))).map((s) => {
           const topics = topicsForSubject(s.id)
           const ready = topics.filter((t) => evidenceFor(t.id, progress).status === 'grade-9-ready').length
           const level = levels[s.id as SubjectId]
@@ -144,7 +161,7 @@ export function Home() {
             <Link key={s.id} to={`/subjects/${s.id}`} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3" style={{ '--subject': s.colour } as React.CSSProperties}>
               <span className="flex items-center gap-3">
                 <span className="h-3 w-3 rounded-sm" style={{ background: s.colour }} aria-hidden />
-                <span className="flex flex-grow flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} mastered</span></span>
+                <span className="flex flex-grow flex-col"><span className="font-bold">{s.name}</span><span className="text-xs text-ink-2">{ready} of {topics.length} mastered{examNote(profile.examDates?.[s.id])}</span></span>
                 <span className="text-right text-xs"><span className="block font-bold accent-ink">{level ? level.name : 'Level 1'}</span><span className="text-ink-2">{level ? `${level.into} / ${level.span} XP` : 'no XP yet'}</span></span>
               </span>
               <span className="h-1.5 overflow-hidden rounded-full bg-panel"><span className="anim-bar block h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></span>
@@ -208,5 +225,29 @@ function GoalRing({ minutes, goal }: { minutes: number; goal: number }) {
       <circle cx="38" cy="38" r={r} fill="none" stroke="#2E8B57" strokeWidth="8" strokeLinecap="round" strokeDasharray={`${c * frac} ${c}`} transform="rotate(-90 38 38)" style={{ transition: 'stroke-dasharray 0.9s ease-out' }} />
       <text x="38" y="42" textAnchor="middle" fontFamily="Bricolage Grotesque, Arial, sans-serif" fontSize="15" fontWeight="700" fill="currentColor">{Math.round(frac * 100)}%</text>
     </svg>
+  )
+}
+
+/** " · exam in 212 days", from a date the student gave; nothing for no date or one past. */
+function examNote(iso: string | undefined): string {
+  const d = iso ? daysUntil(iso) : undefined
+  return d === undefined ? '' : d === 0 ? ' · exam today' : ` · exam in ${d} day${d === 1 ? '' : 's'}`
+}
+
+/**
+ * The first visit (UXI-10): three questions before the dashboard, so the plan starts from
+ * what the student actually takes. Skipping is one tap, and it is not asked again.
+ */
+function Welcome() {
+  const progress = useProgress()
+  return (
+    <article className="mx-auto flex w-full max-w-2xl flex-col gap-5">
+      <header className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold leading-tight">Welcome</h1>
+        <p className="text-ink-2">Three quick questions, so your plan covers what you study. You can change any of it later in Settings.</p>
+      </header>
+      <ProfileForm profile={progress.profile ?? {}} saveLabel="Start" />
+      <button type="button" onClick={() => setProfile({})} className="w-fit text-sm text-ink-3 underline underline-offset-2">Skip for now</button>
+    </article>
   )
 }

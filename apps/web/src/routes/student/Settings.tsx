@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { signOut, useAuth } from '../../auth/useAuth.ts'
 import { FamilyPanel } from '../../auth/FamilyPanel.tsx'
 import { THEMES, applyTheme, currentThemeId } from '../../theme/themes.ts'
@@ -6,9 +6,14 @@ import { setPref, usePref } from '../../theme/prefs.ts'
 import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
 import { clearProgress, isoDate, setGoalMinutes, toggleDayOff, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
+import { ProfileForm } from '../../components/ProfileForm.tsx'
 
 export function Settings() {
   const progress = useProgress()
+  // Home's "Set up" card links to #you; the router does not scroll to a hash by itself.
+  useEffect(() => {
+    if (location.hash === '#you') document.getElementById('you')?.scrollIntoView({ block: 'start' })
+  }, [])
   const [goal, setGoal] = useState(String(progress.goalMinutes))
   const [confirmClear, setConfirmClear] = useState(false)
   const days = weekDays()
@@ -23,6 +28,11 @@ export function Settings() {
         <h1 className="text-3xl font-bold leading-tight">Settings</h1>
         <p className="text-ink-2">Theme and preferences live on this device. Progress follows your account when family sign-in is set up.</p>
       </header>
+
+      <section id="you" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+        <h2 className="font-bold">Your year and subjects</h2>
+        <ProfileForm profile={progress.profile ?? {}} />
+      </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
         <h2 className="font-bold">Theme</h2>
