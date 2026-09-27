@@ -1,33 +1,37 @@
 import { expectedAnswer, type Question } from '@study/shared'
 import { RichText } from '../../components/RichText.tsx'
 import { StatusChip } from '../../components/StatusChip.tsx'
-import { TOPICS } from '../../content/index.ts'
+import { summaryById } from '../../content/index.ts'
+import { useTopic } from '../../content/load.ts'
 import { evidenceFor, type AttemptRecord, type ProgressState, type QuestionResult } from '../../progress/store.ts'
 
 const WHEN = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
 const pct = (a: AttemptRecord) => (a.marksAvailable > 0 ? Math.round((100 * a.marksScored) / a.marksAvailable) : 0)
-const nameOf = (a: AttemptRecord) => (a.kind === 'quiz' ? 'Quiz' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`)
+// A redo session has no level: it is its own kind, not a worksheet.
+const nameOf = (a: AttemptRecord) => (a.kind === 'quiz' ? 'Quiz' : a.kind === 'review' ? 'Redo my mistakes' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`)
 
 /**
  * Every attempt on one topic, question by question.
  *
  * The per-question results have been recorded all along; the question text, the skill and
- * the right answer come from the content pack bundled into the app, looked up by id. So
- * this needs nothing from the database that was not already there.
+ * the right answer come from the topic's content, fetched when the breakdown is opened and
+ * looked up by id. So this needs nothing from the database that was not already there.
  *
  * `answer` is only present on attempts made since it started being recorded, and never on
  * an extended question, which is self-assessed against a mark scheme rather than typed —
  * so every row has to read sensibly without it.
  */
 export function TopicBreakdown({ topicId, state }: { topicId: string; state: ProgressState }) {
-  const topic = TOPICS.find((t) => t.id === topicId)
+  const topic = summaryById(topicId)
+  // The questions' text and answers come with the full topic; rows show without them until it arrives.
+  const full = useTopic(topic?.subjectId, topicId)
   const attempts = state.attempts
     .filter((a) => a.topicId === topicId)
     .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
   const lesson = state.lessons[topicId]
   if (!topic) return <p className="text-sm text-ink-2">This topic is not in the app.</p>
 
-  const byId = new Map(topic.questions.map((q) => [q.id, q as Question]))
+  const byId = new Map<string, Question>((full?.questions ?? []).map((q) => [q.id, q]))
   return (
     <div className="flex flex-col gap-3 border-t border-rule pt-3">
       <p className="flex flex-wrap items-center gap-2 text-sm text-ink-2">

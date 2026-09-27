@@ -2,9 +2,11 @@ import { cheatSheetOf, getSubject, type CheatTip } from '@study/shared'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
-import { getTopic } from '../../content/index.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useRecordActivity } from '../../progress/useRecordActivity.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 
 /**
  * One page of everything worth having in your head before a test.
@@ -22,10 +24,9 @@ import { useRecordActivity } from '../../progress/useRecordActivity.ts'
  * It prints. `print-sheet` and the print rules in styles.css strip the chrome and the
  * colour, and every card avoids a page break inside itself.
  */
-export function CheatSheet() {
-  const { subjectId, topicId } = useParams()
+function CheatSheetBody({ topic }: { topic: TopicRecord }) {
+  const { subjectId } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   // Before the early return: a hook cannot be called conditionally.
   useRecordActivity(topic && { subjectId: topic.subjectId, topicId: topic.id }, 'cheat-sheet')
   useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'cheat-sheet' })
@@ -149,4 +150,13 @@ function TipCard({ tip, lead = false }: { tip: CheatTip; lead?: boolean }) {
       <RichText source={tip.body} className="text-sm" />
     </li>
   )
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function CheatSheet() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown topic.</p>
+  return <CheatSheetBody key={topic.id} topic={topic} />
 }

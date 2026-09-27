@@ -5,9 +5,11 @@ import { RichText } from '../../components/RichText.tsx'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Confetti } from '../../components/Confetti.tsx'
 import { usePref } from '../../theme/prefs.ts'
-import { getTopic } from '../../content/index.ts'
 import { recordActivity } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 
 /**
  * What to say at the end. Keyed to how the deck actually went rather than always
@@ -60,7 +62,7 @@ function cueAndDetail(bullet: string): { front: string; back: string } | null {
 }
 
 /** Cards come from the topic itself: its summary points, its questions, and its exam technique note. */
-export function buildCards(topic: NonNullable<ReturnType<typeof getTopic>>): Card[] {
+export function buildCards(topic: TopicRecord): Card[] {
   const cards: Card[] = []
   const summary = topic.lesson.steps.find((s) => s.kind === 'summary')
   if (summary) {
@@ -96,10 +98,9 @@ export function buildCards(topic: NonNullable<ReturnType<typeof getTopic>>): Car
  * Flip cards for quick recall. Tap to flip, then say whether you knew it. Cards
  * you did not know come back at the end of the deck until you do.
  */
-export function Flashcards() {
-  const { subjectId, topicId } = useParams()
+function FlashcardsBody({ topic }: { topic: TopicRecord }) {
+  const { subjectId } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const deck = useMemo(() => (topic ? seededShuffle(buildCards(topic), String(Date.now() % 100000)) : []), [topic])
   const [queue, setQueue] = useState<Card[]>(() => deck)
   const [flipped, setFlipped] = useState(false)
@@ -233,4 +234,13 @@ export function Flashcards() {
       </div>
     </article>
   )
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function Flashcards() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown topic.</p>
+  return <FlashcardsBody key={topic.id} topic={topic} />
 }

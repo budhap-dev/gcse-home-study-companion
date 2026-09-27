@@ -7,13 +7,16 @@ import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
-import { getTopic, totalMarks } from '../../content/index.ts'
+import { totalMarks } from '../../content/index.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
 import { settle, type Settlement } from '../../progress/settle.ts'
 import { Celebration } from '../../components/Celebration.tsx'
 import { xpForQuestions } from '../../progress/xp.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { loadInProgress, saveInProgress, worksheetKey } from '../../progress/inProgress.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -50,10 +53,9 @@ const save = (topicId: string, level: string, state: SheetState | null) => saveI
  * by side on wide screens and stack on a phone. Final answers auto-mark; after the
  * solution is revealed the student awards their own method marks against the scheme.
  */
-export function Worksheet() {
+function WorksheetBody({ topic }: { topic: TopicRecord }) {
   const { subjectId, topicId, level: levelParam } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const level = (['core', 'higher', 'advanced'] as const).find((l) => l === levelParam)
   const [state, setState] = useState<SheetState | null>(() => (topic && level ? load(topic.id, level) : null))
   const [celebration, setCelebration] = useState<Settlement | null>(null)
@@ -291,4 +293,13 @@ export function markedLine(marks: number, correct: boolean, scored = 0): string 
   if (!correct && scored > 0) return `Part of the answer matched · ${scored} of ${marks} marks. Reveal the solution to see what is missing.`
   if (!correct) return 'Final answer not matched. Reveal the solution and award your method marks.'
   return marks === 1 ? 'Correct · 1 mark' : `Correct · all ${marks} marks`
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function Worksheet() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown topic.</p>
+  return <WorksheetBody key={topic.id} topic={topic} />
 }

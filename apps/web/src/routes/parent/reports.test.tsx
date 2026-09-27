@@ -15,10 +15,11 @@ describe('describing a reported item', () => {
     expect(d.href).toBe(`/subjects/maths/topics/${topic.id}/lesson?step=3`)
   })
 
-  it('shows a question by its prompt', () => {
+  it('names a question\'s topic, and leaves its prompt to be fetched with the topic', () => {
     const q = topic.questions[0]!
     const d = describeItem({ subject_id: 'maths', topic_id: topic.id, item_kind: 'question', item_id: q.id })
-    expect(d.text).toBe(q.prompt)
+    expect(d.topicTitle).toBe(topic.title)
+    expect(d.text).toBeUndefined()
     expect(d.href).toBeUndefined()
   })
 

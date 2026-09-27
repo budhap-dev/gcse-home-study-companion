@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
+import '../../content/all.ts'
 import { WorksheetPrint } from './WorksheetPrint.tsx'
 
 const render = (path: string) =>

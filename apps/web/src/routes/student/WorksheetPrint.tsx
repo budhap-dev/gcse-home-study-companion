@@ -2,7 +2,10 @@ import { expectedAnswer, getSubject, type Question, type WorksheetLevel } from '
 import { Link, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
-import { getTopic, totalMarks } from '../../content/index.ts'
+import { totalMarks } from '../../content/index.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 
@@ -17,11 +20,10 @@ const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Hig
  * ?answers=1 prints the answers and mark scheme instead of the questions, so the two are
  * separate documents rather than one a student has to fold over.
  */
-export function WorksheetPrint() {
-  const { subjectId, topicId, level } = useParams()
+function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
+  const { level } = useParams()
   const [params] = useSearchParams()
   const answers = params.get('answers') === '1'
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const sheet = topic && level ? topic.worksheets[level as WorksheetLevel] : undefined
   if (!topic || !sheet) return <p className="p-6">Unknown worksheet.</p>
 
@@ -118,4 +120,13 @@ function AnswerBlock({ question }: { question: Question }) {
       </ul>
     </div>
   )
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function WorksheetPrint() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown worksheet.</p>
+  return <WorksheetPrintBody key={topic.id} topic={topic} />
 }

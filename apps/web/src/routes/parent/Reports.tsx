@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { listReports, setReportStatus, type ContentReport } from '../../auth/reports.ts'
-import { getTopic } from '../../content/index.ts'
+import { getSummary } from '../../content/index.ts'
+import { useTopic } from '../../content/load.ts'
 import { RichText } from '../../components/RichText.tsx'
 
 const STATUS_LABEL: Record<ContentReport['status'], string> = { open: 'Open', fixed: 'Fixed', 'not-a-fault': 'Not a fault' }
 
-/** What a report points at, read from the bundled content: a step's title and address, or a question's prompt. */
+/** What a report points at: a step's title and address from the catalogue. A question's prompt is fetched with its topic (QuestionPrompt). */
 export function describeItem(r: Pick<ContentReport, 'subject_id' | 'topic_id' | 'item_kind' | 'item_id'>) {
-  const topic = getTopic(r.subject_id, r.topic_id)
+  const topic = getSummary(r.subject_id, r.topic_id)
   if (!topic) return { topicTitle: r.topic_id, text: undefined, href: undefined }
   if (r.item_kind === 'step') {
     const i = topic.lesson.steps.findIndex((s) => s.id === r.item_id)
     const step = topic.lesson.steps[i]
     return { topicTitle: topic.title, text: step ? `Lesson step ${i + 1}: ${step.title}` : undefined, href: step ? `/subjects/${r.subject_id}/topics/${r.topic_id}/lesson?step=${i + 1}` : undefined }
   }
-  const q = topic.questions.find((x) => x.id === r.item_id)
-  return { topicTitle: topic.title, text: q?.prompt, href: undefined }
+  return { topicTitle: topic.title, text: undefined, href: undefined }
 }
 
 /**
@@ -51,9 +51,8 @@ export function ReportsPanel() {
                 <span><strong className="text-ink">{item.topicTitle}</strong> · {r.item_kind === 'step' ? 'lesson step' : `${r.seen_in} question`} {r.item_id}</span>
                 <span>{new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} · {r.reporter_email} · v{r.app_version}</span>
               </div>
-              {item.text && (item.href
-                ? <Link to={item.href} className="text-sm font-bold text-ink underline">{item.text}</Link>
-                : <div className="rounded-lg bg-panel p-2 text-sm"><RichText source={item.text} /></div>)}
+              {item.text && item.href && <Link to={item.href} className="text-sm font-bold text-ink underline">{item.text}</Link>}
+              {r.item_kind === 'question' && <QuestionPrompt subjectId={r.subject_id} topicId={r.topic_id} questionId={r.item_id} />}
               <p className="text-[15px]">“{r.note}”</p>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{STATUS_LABEL[r.status]}</span>
@@ -67,4 +66,12 @@ export function ReportsPanel() {
       </ul>
     </div>
   )
+}
+
+/** A reported question's prompt, fetched with its topic. */
+function QuestionPrompt({ subjectId, topicId, questionId }: { subjectId: string; topicId: string; questionId: string }) {
+  const topic = useTopic(subjectId, topicId)
+  const prompt = topic?.questions.find((q) => q.id === questionId)?.prompt
+  if (!prompt) return null
+  return <div className="rounded-lg bg-panel p-2 text-sm"><RichText source={prompt} /></div>
 }

@@ -5,7 +5,7 @@ import { Highlight } from '../../components/Highlight.tsx'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { TermCard } from '../../components/TermCard.tsx'
 import { GLOSSARY, type Term } from '../../content/glossary.ts'
-import { search, searchIndex, type SearchHit } from '../../search/index.ts'
+import { search, useSearchIndex, type SearchHit } from '../../search/index.ts'
 import { BackToTop } from '../../components/BackToTop.tsx'
 
 const KIND_LABEL: Record<SearchHit['record']['kind'], string> = {
@@ -36,8 +36,9 @@ export function Search() {
   const trimmed = query.trim()
   const ready = trimmed.length > 1
   const terms = useMemo(() => (ready ? searchGlossary(GLOSSARY, trimmed).map((h) => h.entry as Term) : []), [ready, trimmed])
-  const hits = useMemo(() => (ready ? search(trimmed) : []), [ready, trimmed])
-  const total = searchIndex().length
+  const index = useSearchIndex(true)
+  const hits = useMemo(() => (ready && index ? search(trimmed, index) : []), [ready, trimmed, index])
+  const total = index?.length
 
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
@@ -56,7 +57,8 @@ export function Search() {
         className="h-14 w-full rounded-xl border border-rule bg-surface px-4 text-lg focus:border-[color:var(--subject)]"
       />
 
-      {!ready && <p className="text-sm text-ink-3">Type two or more letters. {total} places to look.</p>}
+      {!ready && <p className="text-sm text-ink-3">Type two or more letters.{total ? ` ${total} places to look.` : ''}</p>}
+      {ready && !index && <p className="text-sm text-ink-3">Loading the search…</p>}
 
       {ready && terms.length === 0 && hits.length === 0 && (
         <p className="rounded-xl border border-rule bg-surface p-4 text-ink-2">

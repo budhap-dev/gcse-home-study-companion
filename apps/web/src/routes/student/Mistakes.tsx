@@ -6,7 +6,9 @@ import { QuestionInput, type Answer } from '../../components/questions/QuestionI
 import { ReportMistake } from '../../components/ReportMistake.tsx'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
-import { TOPICS, getTopic } from '../../content/index.ts'
+import { summaryById } from '../../content/index.ts'
+import { useTopics } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
 import { mistakeQueue, type Mistake } from '../../progress/mistakes.ts'
 import { loadInProgress, MISTAKES_KEY, saveInProgress } from '../../progress/inProgress.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
@@ -14,12 +16,9 @@ import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { xpForQuestions } from '../../progress/xp.ts'
 
-const TOPIC_SUBJECT = new Map(TOPICS.map((t) => [t.id, t.subjectId]))
-const topicById = (topicId: string) => getTopic(TOPIC_SUBJECT.get(topicId) ?? '', topicId)
-
 /** A question can be redone here if it still exists and is marked by the app: an extended answer is self-marked. */
 export function redoable(topicId: string, questionId: string): boolean {
-  const q = topicById(topicId)?.questions.find((x) => x.id === questionId)
+  const q = summaryById(topicId)?.questions.find((x) => x.id === questionId)
   return Boolean(q && q.type !== 'extended')
 }
 
@@ -51,6 +50,9 @@ export function Mistakes() {
   const setSession = (s: Session | null) => { save(s); setSessionState(s) }
   const queue = mistakeQueue(progress, redoable)
   const item = session && !session.finishedAt ? session.items[session.index] : undefined
+  // Every topic in the session, fetched before it starts, so each question and the record at the end have their content.
+  const loaded = useTopics((session && !session.finishedAt ? session.items : []).flatMap((m) => { const s = summaryById(m.topicId); return s ? [{ subjectId: s.subjectId, topicId: m.topicId }] : [] }))
+  const topicById = (topicId: string) => loaded?.get(topicId)
   const topic = item ? topicById(item.topicId) : undefined
   useActivityTimer(topic ? { subjectId: topic.subjectId, topicId: topic.id, kind: 'review' } : undefined)
 
@@ -96,6 +98,7 @@ export function Mistakes() {
     )
   }
 
+  if (!loaded) return <TopicLoading />
   const question = topic?.questions.find((q) => q.id === item?.questionId)
   // The content changed under a saved session (a question removed by an update): start afresh.
   if (!item || !topic || !question) {

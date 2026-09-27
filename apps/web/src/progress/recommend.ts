@@ -1,4 +1,5 @@
-import { DEFAULT_THRESHOLDS, getSubject, type Topic, type WorksheetLevel } from '@study/shared'
+import { DEFAULT_THRESHOLDS, getSubject, type WorksheetLevel } from '@study/shared'
+import type { TopicSummary as Topic } from '../content/index.ts'
 import { evidenceFor, lastActivity, type ProgressState } from './store.ts'
 
 export interface Task {

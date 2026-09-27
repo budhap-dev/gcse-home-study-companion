@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { TOPICS } from './index.ts'
+import { ALL_TOPICS as TOPICS } from './all.ts'
 import { teachingStep } from './teachingStep.ts'
 
 // A missed quiz question links to the lesson step that teaches it. A link to the wrong step

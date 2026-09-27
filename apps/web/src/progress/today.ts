@@ -1,4 +1,4 @@
-import type { Topic } from '@study/shared'
+import type { TopicSummary as Topic } from '../content/index.ts'
 import type { AssignedTask } from './assignments.ts'
 import { recommend } from './recommend.ts'
 import { evidenceFor, isoDate, type ProgressState } from './store.ts'

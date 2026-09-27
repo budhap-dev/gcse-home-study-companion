@@ -2,9 +2,11 @@ import { getSubject } from '@study/shared'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
-import { getTopic } from '../../content/index.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useRecordActivity } from '../../progress/useRecordActivity.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 
 /**
  * Where the idea is met outside a classroom.
@@ -18,9 +20,8 @@ import { useRecordActivity } from '../../progress/useRecordActivity.ts'
  * is framing a student should not have to tap for. This page is the examples, which are
  * a thing you go and read — the same split the design makes between the two.
  */
-export function WhyItExists() {
-  const { subjectId, topicId } = useParams()
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
+function WhyItExistsBody({ topic }: { topic: TopicRecord }) {
+  const { subjectId } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
   // Before the early return: a hook cannot be called conditionally.
   useRecordActivity(topic && { subjectId: topic.subjectId, topicId: topic.id }, 'why')
@@ -61,4 +62,13 @@ export function WhyItExists() {
       )}
     </article>
   )
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function WhyItExists() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown topic.</p>
+  return <WhyItExistsBody key={topic.id} topic={topic} />
 }

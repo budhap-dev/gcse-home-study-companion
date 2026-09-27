@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import type { Topic } from '@study/shared'
+import type { TopicSummary as Topic } from '../content/index.ts'
 import { recommend } from './recommend.ts'
 import { emptyState, type AttemptRecord } from './store.ts'
 
 const topic = (id: string): Topic => ({
   id, subjectId: 'maths', unitId: 'number', title: id, specPoints: ['N1'], year: 10,
-  lesson: { steps: [{ id: 's1', kind: 'explain', title: 't', body: 'b', visuals: [{ type: 'diagram', component: 'x', props: {}, alt: 'a' }] }, { id: 's2', kind: 'grade-9', title: 't', body: 'b', visuals: [{ type: 'diagram', component: 'x', props: {}, alt: 'a' }] }, { id: 's3', kind: 'summary', title: 't', body: 'b', visuals: [{ type: 'diagram', component: 'x', props: {}, alt: 'a' }] }] },
-  questions: [], worksheets: { core: { level: 'core', questionIds: ['q'], suggestedMinutes: 5 }, higher: { level: 'higher', questionIds: ['q'], suggestedMinutes: 10 }, advanced: { level: 'advanced', questionIds: ['q'], suggestedMinutes: 15 } },
-  examTechnique: { body: 'b', examinerErrors: ['e'], grade9Looks: 'g' }, quiz: { questionIds: ['q'], sampleSize: 10 },
-  provenance: { draftedBy: { kind: 'person', name: 'n' } },
+  whyExamples: 0,
+  lesson: { steps: [{ id: 's1', kind: 'explain', title: 't' }, { id: 's2', kind: 'grade-9', title: 't' }, { id: 's3', kind: 'summary', title: 't' }] },
+  questions: [], worksheets: { core: { questionIds: ['q'], suggestedMinutes: 5 }, higher: { questionIds: ['q'], suggestedMinutes: 10 }, advanced: { questionIds: ['q'], suggestedMinutes: 15 } },
+  quiz: { questionIds: ['q'], sampleSize: 10 },
 })
 const quiz = (topicId: string, pct: number, day: string): AttemptRecord => ({ id: `${topicId}-${day}`, topicId, kind: 'quiz', marksScored: pct, marksAvailable: 100, markedHow: 'auto', completedAt: `${day}T10:00:00.000Z` })
 const sheet = (topicId: string, level: 'higher' | 'advanced', pct: number, day: string): AttemptRecord => ({ id: `${topicId}-${level}-${day}`, topicId, kind: 'worksheet', level, marksScored: pct, marksAvailable: 100, markedHow: 'self', completedAt: `${day}T10:00:00.000Z` })
