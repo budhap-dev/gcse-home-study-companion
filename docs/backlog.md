@@ -196,12 +196,15 @@ One PR per subject.
 - [x] **Components too wide for a phone:** `venn-diagram` (440 → 296), `cuboid` (380 → 284) and
   `triangle-pair`, which now stacks its pair in a box narrower than 520. A walk of the 20 Maths
   topics that use them against `main` removed 42 scrolling diagrams and added none.
-- [ ] **Labels crossed by lines:** the walk reports a drawn line through a label in `cuboid` (the
-  face-diagonal value on a narrow box, and θ), `triangle-construction` (the vertex C and C′ labels
-  and a side length) and `triangle-pair` angle text (60°, 65°, 78°, 90°). About 30 findings across
-  pythagoras-in-3d, trigonometry-in-3d, constructing-triangles, exact-trigonometric-values and
-  sine-rule-cosine-rule-and-area, all present on `main`. `triangle-construction` also scrolls 22px
-  on a phone.
+- [x] **Labels crossed by lines, geometry:** `cuboid`, `triangle-construction`, `triangle-pair`
+  and `circle-theorem` place every label clear of what they draw (`labelPlace.ts`), and
+  `labels-clear.test.tsx` renders every content prop set of the four and fails on a line through
+  a label. The walk at 390 and 1280 finds none in them (27 September 2026). The stacked
+  `triangle-pair` also fits a tall triangle in its half instead of running into the other.
+- [ ] **Labels crossed by lines, the rest:** a pack walk at 390 found 32 more, all present on
+  `main`: `line-graph` 13 (an equation or name printed on its own line or curve), `motion-graph`
+  9, `dot-and-cross` 8 (the ion's charge on its bracket corner), `logic-circuit` 2 (NOT on its
+  wire), `inequality-region` and `lens-diagram` 1 each, `four-box` 1 at 1280.
 - [ ] **LineGraph options:** a joined line through points for time series (today it is a
   polygon traced out and back), and `axes: false` for pictures of shapes (today the axes
   are hidden with out-of-range ticks).

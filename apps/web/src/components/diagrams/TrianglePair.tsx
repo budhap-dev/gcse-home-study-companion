@@ -55,8 +55,13 @@ function inside(p: Pt, tri: Pt[]) {
  *
  * If no distance fits, the text goes outside the vertex instead, which is legible even
  * though it is not where an angle label belongs.
+ *
+ * `clear` is how far the vertex's own angle mark reaches. Fitting inside the triangle is
+ * not enough: at 16px along the bisector "60°" sat on its arc (14px) and "90°" on its
+ * right-angle square (17px across the diagonal), so no part of the text may come nearer
+ * the vertex than the mark does.
  */
-function anglePlace(v: Pt, p: Pt, q: Pt, tri: Pt[], text: string): Pt {
+function anglePlace(v: Pt, p: Pt, q: Pt, tri: Pt[], text: string, clear = 0): Pt {
   const unit = (t: Pt) => { const l = Math.hypot(t.x - v.x, t.y - v.y) || 1; return { x: (t.x - v.x) / l, y: (t.y - v.y) / l } }
   const u1 = unit(p)
   const u2 = unit(q)
@@ -76,7 +81,8 @@ function anglePlace(v: Pt, p: Pt, q: Pt, tri: Pt[], text: string): Pt {
       { x: c.x - halfW, y: c.y + ANGLE_HALF_HEIGHT },
       { x: c.x + halfW, y: c.y + ANGLE_HALF_HEIGHT },
     ]
-    if (corners.every((corner) => inside(corner, tri))) return c
+    const nearest = Math.hypot(Math.max(Math.abs(v.x - c.x) - halfW, 0), Math.max(Math.abs(v.y - c.y) - ANGLE_HALF_HEIGHT, 0))
+    if (corners.every((corner) => inside(corner, tri)) && nearest > clear) return c
   }
   const back = halfW + ANGLE_HALF_HEIGHT + 8
   return { x: v.x - bx * back, y: v.y - by * back }
@@ -87,6 +93,35 @@ function apex(tri: Tri) {
   const [ab, bc, ca] = tri.sides
   const x = (ca * ca - bc * bc + ab * ab) / (2 * ab)
   return { ab, x, y: Math.sqrt(Math.max(0, ca * ca - x * x)) }
+}
+
+/** The triangle at unit scale on screen (y down), flipped and rotated as asked, about its centroid. */
+function shape(tri: Tri): Pt[] {
+  const { ab, x, y } = apex(tri)
+  const raw = [{ x: 0, y: 0 }, { x: ab, y: 0 }, { x, y: -y }]
+  const mx = (raw[0]!.x + raw[1]!.x + raw[2]!.x) / 3
+  const my = (raw[0]!.y + raw[1]!.y + raw[2]!.y) / 3
+  const rot = ((tri.rotate ?? 0) * Math.PI) / 180
+  return raw.map((p) => {
+    let dx = p.x - mx
+    const dy = p.y - my
+    if (tri.flip) dx = -dx
+    return { x: dx * Math.cos(rot) - dy * Math.sin(rot), y: dx * Math.sin(rot) + dy * Math.cos(rot) }
+  })
+}
+
+/**
+ * The scale a triangle is drawn at on its own: 150px across its base, as it always was,
+ * unless that makes it taller than its 220-unit slot has room for. A right triangle on a
+ * short base (6 by 12 by 15) used to come out 190 tall at 150 wide and, centred on its
+ * centroid, ran into the triangle above it and off the bottom of the card.
+ */
+function fitScale(tri: Tri) {
+  const { ab, x } = apex(tri)
+  const pts = shape(tri)
+  const w = Math.max(...pts.map((p) => p.x)) - Math.min(...pts.map((p) => p.x))
+  const h = Math.max(...pts.map((p) => p.y)) - Math.min(...pts.map((p) => p.y))
+  return Math.min(150 / Math.max(ab, x, 1), 160 / Math.max(h, 1e-6), 220 / Math.max(w, 1e-6))
 }
 
 /**
@@ -129,8 +164,7 @@ export function TrianglePair({ props, alt }: { props: Record<string, unknown>; a
   useLayoutEffect(() => {
     svg.current?.dispatchEvent(new Event(REFIT, { bubbles: true }))
   }, [stacked])
-  const extent = (tri: Tri) => { const a = apex(tri); return Math.max(a.ab, a.x, 1) }
-  const shared = props.sameScale && right ? 150 / Math.max(extent(left), extent(right)) : undefined
+  const shared = props.sameScale && right ? Math.min(fitScale(left), fitScale(right)) : undefined
   return (
     <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W * 1.1 }} role="img" aria-label={alt}>
       <One tri={left} cx={140} cy={120} scale={shared} />
@@ -140,25 +174,13 @@ export function TrianglePair({ props, alt }: { props: Record<string, unknown>; a
 }
 
 function One({ tri, cx, cy, scale: given }: { tri: Tri; cx: number; cy: number; scale?: number }) {
-  const { ab, x, y } = apex(tri)
-  // place A at origin, B along x, C above
-  let pts = [
-    { x: 0, y: 0 },
-    { x: ab, y: 0 },
-    { x, y },
-  ]
-  // scale to fit ~150px wide, centre
-  const scale = given ?? 150 / Math.max(ab, x, 1)
-  pts = pts.map((p) => ({ x: p.x * scale, y: -p.y * scale }))
-  const mx = (pts[0]!.x + pts[1]!.x + pts[2]!.x) / 3
-  const my = (pts[0]!.y + pts[1]!.y + pts[2]!.y) / 3
-  const rot = ((tri.rotate ?? 0) * Math.PI) / 180
-  pts = pts.map((p) => {
-    let dx = p.x - mx
-    const dy = p.y - my
-    if (tri.flip) dx = -dx
-    return { x: cx + dx * Math.cos(rot) - dy * Math.sin(rot), y: cy + dx * Math.sin(rot) + dy * Math.cos(rot) }
-  })
+  // Centred on its bounding box, not its centroid: a tall triangle's centroid sits a third
+  // of the way up, so centring on it pushed the apex out of the top of its slot.
+  const unit = shape(tri)
+  const scale = given ?? fitScale(tri)
+  const midX = (Math.max(...unit.map((p) => p.x)) + Math.min(...unit.map((p) => p.x))) / 2
+  const midY = (Math.max(...unit.map((p) => p.y)) + Math.min(...unit.map((p) => p.y))) / 2
+  const pts = unit.map((p) => ({ x: cx + (p.x - midX) * scale, y: cy + (p.y - midY) * scale }))
   const [A, B, C] = pts as [{ x: number; y: number }, { x: number; y: number }, { x: number; y: number }]
   const names = tri.labels ?? ['A', 'B', 'C']
   const sides: [typeof A, typeof B][] = [[A, B], [B, C], [C, A]]
@@ -222,6 +244,8 @@ function One({ tri, cx, cy, scale: given }: { tri: Tri; cx: number; cy: number; 
       return <path key={i} d={`M${s.x} ${s.y} A${r} ${r} 0 0 ${sweep} ${e.x} ${e.y}`} fill="none" stroke="#d25b3b" strokeWidth="1.5" />
     })
   }
+  // How far from the vertex its mark reaches, plus a gap: the square's far corner, or the outer arc.
+  const markReach = (kind: number | 'r') => (kind === 'r' ? 12 * Math.SQRT2 + 3 : kind ? 14 + (Math.max(1, Math.min(3, Math.round(kind))) - 1) * 5 + 3 : 0)
   const verts = [A, B, C]
   return (
     <g>
@@ -244,7 +268,7 @@ function One({ tri, cx, cy, scale: given }: { tri: Tri; cx: number; cy: number; 
           <g key={i}>
             {kind ? angleMark(v, p, q, kind) : null}
             <text x={lp.x} y={lp.y + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={INK}>{names[i]}</text>
-            {tri.angleText?.[i] && (() => { const ip = anglePlace(v, p, q, pts, tri.angleText![i]!); return <text x={ip.x} y={ip.y + 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{tri.angleText![i]}</text> })()}
+            {tri.angleText?.[i] && (() => { const ip = anglePlace(v, p, q, pts, tri.angleText![i]!, markReach(kind)); return <text x={ip.x} y={ip.y + 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{tri.angleText![i]}</text> })()}
           </g>
         )
       })}

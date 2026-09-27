@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { around, baseline, hits, labelHalf, placeLabel, type Seg } from './labelPlace.ts'
 
 /**
  * A cuboid drawn in oblique projection, with the diagonals a 3D Pythagoras or
@@ -56,6 +57,50 @@ export function Cuboid({ props, alt }: { props: Record<string, unknown>; alt: st
    */
   const viewTop = Math.max(0, C2y - 26)
 
+  /*
+   * Every label is painted on a white halo. A cuboid's labels have nowhere clear to go:
+   * the base diagonal's value sits among the hidden edges at the back of the base, and on
+   * a narrow or a flat box the space diagonal's value lands on an edge whichever side it
+   * is put. The walk found a line through "5", "13", "14.76" and θ on four boxes; the halo
+   * breaks the line under the text instead, the way a printed diagram does.
+   */
+  const halo = { stroke: '#ffffff', strokeWidth: 3.5, paintOrder: 'stroke' } as const
+
+  /*
+   * The diagonals' values go beside their lines where the box leaves room: below the base
+   * diagonal, towards the front edge, and above-left of the space diagonal. On a narrow or
+   * flat box nothing near the line is clear, and the value sits on the line, on its halo.
+   */
+  const segs: Seg[] = [[A, B], [B, C], [C, D], [D, A], [A2, B2], [B2, C2], [C2, D2], [D2, A2], [A, A2], [B, B2], [C, C2], [D, D2], [A, C], [A, C2]]
+  const claim = (c: { x: number; y: number }, halfW: number, halfH: number) => {
+    const l = c.x - halfW, r = c.x + halfW, t = c.y - halfH, b = c.y + halfH
+    segs.push([{ x: l, y: t }, { x: r, y: t }], [{ x: r, y: t }, { x: r, y: b }], [{ x: r, y: b }, { x: l, y: b }], [{ x: l, y: b }, { x: l, y: t }])
+  }
+  const beside = (p: { x: number; y: number }, q: { x: number; y: number }, t: number, text: string, size: number, down: boolean) => {
+    const { halfW, halfH } = labelHalf(text, size, true)
+    const at = { x: p.x + (q.x - p.x) * t, y: p.y + (q.y - p.y) * t }
+    let n = Math.atan2(q.x - p.x, -(q.y - p.y))
+    if ((Math.sin(n) > 0) !== down) n += Math.PI
+    // Near its own line or not at all: a value pushed far off to find space (below the
+    // front corner, beside "3 cm") no longer says which line it measures.
+    const found = placeLabel(at, halfW, halfH, segs, around(n, 15, 60), 3, 12)
+    const c = hits(found, halfW, halfH, segs) ? at : found
+    claim(c, halfW, halfH)
+    return { x: c.x, y: baseline(c.y, size) }
+  }
+  // The three dimensions keep their places; claimed first, so a diagonal's value is never
+  // set beside one of them ("5" next to "3 cm" read as 5 3 cm on a narrow box).
+  const wText = `${w} ${unit}`, dText = `${d} ${unit}`, hText = `${h} ${unit}`
+  const wAt = { x: (A.x + B.x) / 2, y: A.y + 20 }
+  const dAt = { x: (B.x + C.x) / 2 + 14, y: (B.y + C.y) / 2 + 16 }
+  const hAt = { x: A.x - 12, y: (A.y + A2.y) / 2 }
+  for (const [at, text, end] of [[wAt, wText, false], [dAt, dText, false], [hAt, hText, true]] as const) {
+    const { halfW, halfH } = labelHalf(text, 13)
+    claim({ x: end ? at.x - halfW : at.x, y: at.y - 13 * 0.35 }, halfW + 4, halfH + 2)
+  }
+  const spaceAt = show === 'space' || show === 'both' ? beside(A, C2, 0.5, round(spaceDiag), 13, false) : undefined
+  const baseAt = show === 'base' || show === 'both' ? beside(A, C, 0.6, round(baseDiag), 12, true) : undefined
+
   const edge = (p: { x: number; y: number }, q: { x: number; y: number }, hidden = false) => (
     <line x1={p.x} y1={p.y} x2={q.x} y2={q.y} stroke={INK} strokeWidth="2" strokeDasharray={hidden ? '5 4' : undefined} opacity={hidden ? 0.5 : 1} />
   )
@@ -91,20 +136,22 @@ export function Cuboid({ props, alt }: { props: Record<string, unknown>; alt: st
         return (
           <g>
             <path d={`M ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} A ${r} ${r} 0 0 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`} fill="none" stroke={INK_2} strokeWidth="1.8" />
-            <text x={A.x + (r + 16) * Math.cos(mid)} y={A.y + (r + 16) * Math.sin(mid) + 4} textAnchor="middle" fontFamily={DISPLAY} fontSize="14" fill={INK}>θ</text>
+            {/* Inside the arc, between the two diagonals: outside it, θ landed on the hidden
+                vertical edge at the back-left corner. */}
+            <text x={A.x + (r - 13) * Math.cos(mid)} y={A.y + (r - 13) * Math.sin(mid) + 5} textAnchor="middle" fontFamily={DISPLAY} fontSize="14" fill={INK} {...halo}>θ</text>
           </g>
         )
       })()}
 
-      <text x={(A.x + B.x) / 2} y={A.y + 20} textAnchor="middle" fontFamily={FONT} fontSize="13" fill={INK}>{w} {unit}</text>
-      <text x={(B.x + C.x) / 2 + 14} y={(B.y + C.y) / 2 + 16} textAnchor="middle" fontFamily={FONT} fontSize="13" fill={INK}>{d} {unit}</text>
-      <text x={A.x - 12} y={(A.y + A2.y) / 2} textAnchor="end" fontFamily={FONT} fontSize="13" fill={INK}>{h} {unit}</text>
+      <text x={wAt.x} y={wAt.y} textAnchor="middle" fontFamily={FONT} fontSize="13" fill={INK} {...halo}>{wText}</text>
+      <text x={dAt.x} y={dAt.y} textAnchor="middle" fontFamily={FONT} fontSize="13" fill={INK} {...halo}>{dText}</text>
+      <text x={hAt.x} y={hAt.y} textAnchor="end" fontFamily={FONT} fontSize="13" fill={INK} {...halo}>{hText}</text>
 
-      {(show === 'base' || show === 'both') && (
-        <text x={(A.x + C.x) / 2 + 26} y={(A.y + C.y) / 2 + 6} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill="var(--subject)">{round(baseDiag)}</text>
+      {baseAt && (
+        <text x={baseAt.x} y={baseAt.y} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill="var(--subject)" {...halo}>{round(baseDiag)}</text>
       )}
-      {(show === 'space' || show === 'both') && (
-        <text x={(A.x + C2.x) / 2 - 18} y={(A.y + C2.y) / 2} textAnchor="end" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill="var(--subject)">{round(spaceDiag)}</text>
+      {spaceAt && (
+        <text x={spaceAt.x} y={spaceAt.y} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill="var(--subject)" {...halo}>{round(spaceDiag)}</text>
       )}
     </svg>
   )
