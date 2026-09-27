@@ -5,7 +5,11 @@ add the PR number; add new work here as it is found, not in a separate note. Sto
 (`LRN-2`, `PAR-4`) refer to [stories.md](stories.md), where the acceptance criteria live;
 [plan.md](plan.md) holds the delivery plan these came from.
 
-Last reviewed: 25 September 2026.
+Last reviewed: 27 September 2026.
+
+**Development closed on 27 September 2026**, at the owner's request, with content (1) and
+testing and validation (2) complete. The product features in section 3 are **not planned**:
+they stay listed as a record of what the stories asked for, not as work in progress.
 
 ## Order of work
 
@@ -13,7 +17,7 @@ Agreed with the owner on 23 September 2026:
 1. Finish all the content, one subject at a time, each subject complete before the next
    starts.
 2. Then testing and validation.
-3. Then product features.
+3. Then product features. Not started: development closed after step 2 (27 September 2026).
 
 ## 1. Content, subject by subject
 
@@ -214,11 +218,12 @@ One PR per subject.
   spot around its focus clear of the rays; `inequality-region` tick numbers have a halo and the
   region's name moves off a boundary; the `four-box` centre circle is sized for bold type.
   `labels-clear.test.tsx` covers all of them (27 September 2026).
-- [ ] **LineGraph options:** a joined line through points for time series (today it is a
-  polygon traced out and back), and `axes: false` for pictures of shapes (today the axes
-  are hidden with out-of-range ticks).
-- [ ] **Stacked (composite) bar charts:** no component draws them, so S2 teaches them in
-  words only.
+- [x] **LineGraph options:** a joined line through points was already `polygons` with
+  `open: true` (15 figures, none traced out and back). `axes: false` now draws a shape with no
+  axes, grid or scale; the 9 shape pictures that hid their axes with 100-unit tick steps use
+  it, which also removes the stray x and y they still printed.
+- [x] **Stacked (composite) bar charts:** `bar-chart` takes `style: 'stacked'` with a second
+  series. S2's bar-chart step shows the travel survey as a composite chart beside the dual one.
 - [x] **Multi-mark typed answers are marked all or nothing.** All 301 short-text questions
   worth 2 or more marks were read on 26 September 2026: one paid full marks for half an
   answer ("a metal hydroxide and hydrogen" for sodium and water). Typed questions now take a
@@ -230,10 +235,11 @@ One PR per subject.
   so a factorised answer still differs from an expanded one. Text that is not plainly algebra
   (formulae, pseudo-code, words, 1/2x) keeps the text match. 242 hand-listed orders are now
   redundant but harmless. The same PR stopped √(a/π) and √a/π normalising to one answer.
-- [ ] **Walk false positive:** a multiple-choice check whose options are pure LaTeX is
-  reported "not marked Correct", because the walk's text match cannot find the option.
+- [x] **Walk false positive:** option buttons carry `data-option`, their index in the content,
+  so a browser check clicks the right answer to an option written only in maths. Every lesson
+  check in the pack (2,275) answered with its own answer is marked Correct (27 September 2026).
 
-## 3. Product features
+## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are
 done: LRN-2, LRN-8, WKS-2, WKS-3, QZ-2, PRG-2, PAR-4, MOT-1, MOT-3 and MOT-5. The rest are

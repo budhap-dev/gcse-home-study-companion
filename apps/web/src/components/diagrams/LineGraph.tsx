@@ -96,7 +96,9 @@ interface Curve {
  * for y = sin x, y = cos x and y = tan x with x in degrees, circles [{cx, cy, r}], and
  * square true to give both axes the same unit length so a circle comes out round, and
  * polygons [{points, label, open?}] for shapes on the axes, open for a polyline, and
- * labels [{x, y, text, anchor?}] for free text such as the letters of a geometry figure.
+ * labels [{x, y, text, anchor?}] for free text such as the letters of a geometry figure,
+ * and axes false for a picture of a shape with no axes, grid or scale at all (it used to
+ * be done with tick steps larger than the range, which left a stray x and y behind).
  * A curve may also carry `base` (with optional `scale`) for the exponential
  * y = scale x base^x.
  */
@@ -114,6 +116,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   const circles = (props.circles as Circle[] | undefined) ?? []
   const polygons = (props.polygons as Polygon[] | undefined) ?? []
   const labels = (props.labels as FreeLabel[] | undefined) ?? []
+  const axes = props.axes !== false
   const grid = props.grid !== false
   const xLabel = typeof props.xLabel === 'string' ? props.xLabel : undefined
   const yLabel = typeof props.yLabel === 'string' ? props.yLabel : undefined
@@ -197,7 +200,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     for (let v = Math.ceil(min / step - 1e-9) * step; v <= max + 1e-9; v += step) out.push(Number(v.toFixed(6)))
     return out
   }
-  const xTicks = ticks(xMin, xMax, props.xStep), yTicks = ticks(yMin, yMax, props.yStep)
+  const xTicks = axes ? ticks(xMin, xMax, props.xStep) : [], yTicks = axes ? ticks(yMin, yMax, props.yStep) : []
   const fmt = (v: number) => String(Number(v.toFixed(4)))
   // The left margin grows with the widest y label, so a 20 000 axis is not clipped.
   const padL = Math.max(pad, 12 + 6.2 * Math.max(...yTicks.map((v) => fmt(v).length)))
@@ -300,8 +303,8 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
    */
   const drawn: Seg[] = []
   const xAxisY = sy(Math.max(yMin, Math.min(0, yMax))), yAxisX = sx(Math.max(xMin, Math.min(0, xMax)))
-  if (yMin <= 0 && yMax >= 0) drawn.push([{ x: left, y: sy(0) }, { x: right, y: sy(0) }])
-  if (xMin <= 0 && xMax >= 0) drawn.push([{ x: sx(0), y: top }, { x: sx(0), y: bottom }])
+  if (axes && yMin <= 0 && yMax >= 0) drawn.push([{ x: left, y: sy(0) }, { x: right, y: sy(0) }])
+  if (axes && xMin <= 0 && xMax >= 0) drawn.push([{ x: sx(0), y: top }, { x: sx(0), y: bottom }])
   const pieceSegs = (pieces: Pt[][]) => { for (const piece of pieces) for (let i = 1; i < piece.length; i++) drawn.push([piece[i - 1]!, piece[i]!]) }
   const lineSegs = lines.map((l) => segment(l))
   for (const seg of lineSegs) if (seg) drawn.push([{ x: sx(seg[0][0]), y: sy(seg[0][1]) }, { x: sx(seg[1][0]), y: sy(seg[1][1]) }])
@@ -425,8 +428,8 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       <defs><clipPath id={`box-${clip}`}><rect x={left} y={top} width={right - left} height={bottom - top} /></clipPath></defs>
       {grid && xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={top} x2={sx(v)} y2={bottom} stroke={RULE} />)}
       {grid && yTicks.map((v) => <line key={`gy${v}`} x1={left} y1={sy(v)} x2={right} y2={sy(v)} stroke={RULE} />)}
-      {yMin <= 0 && yMax >= 0 && <line x1={left} y1={sy(0)} x2={right} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
-      {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={top} x2={sx(0)} y2={bottom} stroke={INK} strokeWidth="1.5" />}
+      {axes && yMin <= 0 && yMax >= 0 && <line x1={left} y1={sy(0)} x2={right} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
+      {axes && xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={top} x2={sx(0)} y2={bottom} stroke={INK} strokeWidth="1.5" />}
       {lines.map((l, i) => {
         const seg = lineSegs[i]
         if (!seg) return null
@@ -457,10 +460,10 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
         */}
       {xTicks.map((v, i) => v !== 0 && <text key={`tx${v}`} x={sx(v)} y={xTickYs[i]} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2} {...halo}>{fmt(v)}</text>)}
       {yTicks.map((v, i) => v !== 0 && <text key={`ty${v}`} x={yAxisX - 6} y={yTickYs[i]} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2} {...halo}>{fmt(v)}</text>)}
-      {xLabel
+      {!axes ? null : xLabel
         ? <text x={W / 2} y={xLetter.y} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
         : <text x={xLetter.x} y={xLetter.y} textAnchor={xLetter.anchor} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK} {...halo}>x</text>}
-      {yLabel
+      {!axes ? null : yLabel
         ? <text x={padL} y={yLetterY} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
         : // Above the plot rather than inside it: a steep line's own label is drawn at the
           // top of the axis and used to land on this letter.
