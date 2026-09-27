@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { sameStem, search, searchIndex } from './index.ts'
+import { loadSearchIndex, sameStem, search as searchIn } from './index.ts'
 import { TOPICS } from '../content/index.ts'
 import { GLOSSARY } from '../content/glossary.ts'
+
+// The same text module the app fetches on the first search, built from the content pack.
+const INDEX = await loadSearchIndex()
+const searchIndex = () => INDEX
+const search = (q: string) => searchIn(q, INDEX)
 
 describe('search index', () => {
   it('covers every topic and every lesson step', () => {

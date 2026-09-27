@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import { cheatSheetOf } from '@study/shared'
-import { TOPICS, getTopic } from '../../content/index.ts'
+import { ALL_TOPICS as TOPICS, getFullTopic as getTopic } from '../../content/all.ts'
 import { CheatSheet } from './CheatSheet.tsx'
 
 const render = (subjectId: string, topicId: string) =>

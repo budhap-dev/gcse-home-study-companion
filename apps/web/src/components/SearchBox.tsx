@@ -2,7 +2,7 @@ import { entrySlug, searchGlossary } from '@study/shared'
 import { useEffect, useId, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { GLOSSARY } from '../content/glossary.ts'
-import { search } from '../search/index.ts'
+import { search, useSearchIndex } from '../search/index.ts'
 import { Highlight } from './Highlight.tsx'
 import { SearchIcon } from './icons.tsx'
 
@@ -26,7 +26,9 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
   const trimmed = query.trim()
   const ready = trimmed.length > 1
   const terms = ready ? searchGlossary(GLOSSARY, trimmed).slice(0, MAX_TERMS) : []
-  const topics = ready ? search(trimmed).slice(0, MAX_TOPICS) : []
+  // Fetched as soon as the box opens, so it has usually arrived by the second letter.
+  const index = useSearchIndex(open || ready)
+  const topics = ready && index ? search(trimmed, index).slice(0, MAX_TOPICS) : []
 
   // Every row the arrow keys can land on, in the order they are drawn.
   const rows: { to: string; label: string }[] = [

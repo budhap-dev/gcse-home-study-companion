@@ -12,11 +12,12 @@ import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
-import { getTopic } from '../../content/index.ts'
 import { teachingStep } from '../../content/teachingStep.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { loadInProgress, quizKey, saveInProgress } from '../../progress/inProgress.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
 
 interface Answered {
   answer: Answer
@@ -48,10 +49,9 @@ function newQuiz(questionIds: string[], size: number): QuizState {
  * Every answer is kept in session storage, so a refresh loses nothing. The finished
  * attempt is recorded in progress and feeds the topic's status.
  */
-export function Quiz() {
+function QuizBody({ topic }: { topic: TopicRecord }) {
   const { subjectId, topicId } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const [state, setState] = useState<QuizState | null>(() => (topic ? load(topic.id) : null))
   const [celebration, setCelebration] = useState<Settlement | null>(null)
   useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'quiz' }, Boolean(state && !state.finishedAt))
@@ -281,4 +281,13 @@ function Stat({ label, value, colour }: { label: string; value: string; colour?:
       <span className="text-xl font-bold tabular-nums" style={colour ? { color: colour } : undefined}>{value}</span>
     </div>
   )
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function Quiz() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown topic.</p>
+  return <QuizBody key={topic.id} topic={topic} />
 }

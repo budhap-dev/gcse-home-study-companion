@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import { SUBJECTS } from '@study/shared'
-import { TOPICS, getTopic } from '../../content/index.ts'
+import { ALL_TOPICS as TOPICS, getFullTopic as getTopic } from '../../content/all.ts'
 import { Subjects } from './Subjects.tsx'
 import { WhyItExists } from './WhyItExists.tsx'
 

@@ -1,13 +1,14 @@
 import { getSubject } from '@study/shared'
-import { TOPICS } from '../content/index.ts'
+import { useEffect, useState } from 'react'
 
 /**
  * One searchable place in the app. Records are per **section**, not per topic, so a hit
  * on "conjugate" lands on the grade 9 step of Surds rather than the topic page, and the
  * result can say which part of the topic matched.
  *
- * The index is derived from the already-bundled content, so it costs no extra download.
- * It is built once, lazily, on the first search.
+ * The text it searches is its own module (virtual:search-text, built from the content
+ * pack by contentPlugin.ts), fetched the first time someone searches: it is most of the
+ * content's words, and a student who never searches should not download them (OPS-1).
  */
 export interface SearchRecord {
   /** Unique within the index. */
@@ -48,13 +49,50 @@ function plain(source: string): string {
     .trim()
 }
 
-let cached: SearchRecord[] | null = null
+/** The searchable text of one topic, as virtual:search-text provides it. */
+export interface SearchTopic {
+  id: string
+  subjectId: string
+  unitId: string
+  title: string
+  specPoints: string[]
+  specCode?: string
+  steps: { id: string; title: string; body: string; check: string }[]
+  examTechnique: { body: string; examinerErrors: string[]; grade9Looks: string }
+  /** Each question's prompt and skill, joined. */
+  questions: string[]
+}
 
-export function searchIndex(): SearchRecord[] {
-  if (cached) return cached
+let cached: SearchRecord[] | null = null
+let loading: Promise<SearchRecord[]> | null = null
+
+/** The index once it has been fetched, or null. */
+export function cachedSearchIndex(): SearchRecord[] | null {
+  return cached
+}
+
+export function loadSearchIndex(): Promise<SearchRecord[]> {
+  if (cached) return Promise.resolve(cached)
+  loading ??= import('virtual:search-text').then((m) => (cached = buildIndex(m.default)))
+  return loading
+}
+
+/** The index for a component, fetched once `wanted` turns true; null until it arrives. */
+export function useSearchIndex(wanted: boolean): SearchRecord[] | null {
+  const [records, setRecords] = useState<SearchRecord[] | null>(cached)
+  useEffect(() => {
+    if (!wanted || records) return
+    let live = true
+    void loadSearchIndex().then((r) => { if (live) setRecords(r) })
+    return () => { live = false }
+  }, [wanted, records])
+  return records
+}
+
+export function buildIndex(topics: SearchTopic[]): SearchRecord[] {
   const records: SearchRecord[] = []
   const blank = new Set<string>()
-  for (const topic of TOPICS) {
+  for (const topic of topics) {
     const subject = getSubject(topic.subjectId)
     const base = `/subjects/${topic.subjectId}/topics/${topic.id}`
     const common = {
@@ -68,10 +106,10 @@ export function searchIndex(): SearchRecord[] {
 
     records.push({
       ...common, key: topic.id, kind: 'topic', heading: unit, to: base, words: blank,
-      text: plain([topic.title, unit, topic.specCode ?? '', topic.specPoints.join(' '), topic.lesson.steps.map((s) => s.title).join('. ')].join('. ')),
+      text: plain([topic.title, unit, topic.specCode ?? '', topic.specPoints.join(' '), topic.steps.map((s) => s.title).join('. ')].join('. ')),
     })
 
-    topic.lesson.steps.forEach((step, i) => {
+    topic.steps.forEach((step, i) => {
       records.push({
         ...common, key: `${topic.id}#${step.id}`, kind: 'lesson', heading: step.title, words: blank,
         // Deep link: the lesson opens on this step rather than wherever the student left off.
@@ -79,7 +117,7 @@ export function searchIndex(): SearchRecord[] {
         // The step title is the heading already, so it is left out of the body to stop
         // the snippet repeating what the result has just said. Title matches still score
         // through `heading`, and the stem index takes the heading in as well.
-        text: plain([step.body, step.check?.prompt ?? ''].join('. ')),
+        text: plain([step.body, step.check].join('. ')),
       })
     })
 
@@ -94,7 +132,7 @@ export function searchIndex(): SearchRecord[] {
     records.push({
       ...common, key: `${topic.id}#questions`, kind: 'question', heading: `${topic.questions.length} questions`, words: blank,
       to: `${base}/quiz`,
-      text: plain(topic.questions.map((q) => `${q.prompt} ${q.skill}`).join('. ')),
+      text: plain(topic.questions.join('. ')),
     })
   }
   for (const record of records) {
@@ -103,7 +141,6 @@ export function searchIndex(): SearchRecord[] {
     // "breakeven" finds content that writes "break-even".
     record.words = new Set([...tokens(all), ...tokens(all.replace(/[-–—]/g, ''))])
   }
-  cached = records
   return records
 }
 
@@ -163,7 +200,7 @@ export function searchTerms(query: string): string[] {
  * buried in the body. Every word must match somewhere, which keeps a two-word query
  * from returning everything that mentions either word.
  */
-export function search(query: string, records: SearchRecord[] = searchIndex()): SearchHit[] {
+export function search(query: string, records: SearchRecord[]): SearchHit[] {
   const terms = searchTerms(query)
   if (terms.length === 0) return []
 

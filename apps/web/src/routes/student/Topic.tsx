@@ -4,12 +4,15 @@ import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { termsForTopic } from '../../content/glossary.ts'
 import { StatusChip } from '../../components/StatusChip.tsx'
-import { getTopic, totalMarks } from '../../content/index.ts'
+import { totalMarks } from '../../content/index.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { decayNote, evidenceFor } from '../../progress/store.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 import { suggestedLevel } from '../../progress/level.ts'
 import { openSession, quizKey, worksheetKey } from '../../progress/inProgress.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -56,10 +59,9 @@ const LEVEL_NOTE = {
   advanced: 'Multi-step problems in unfamiliar contexts. Show that, and explain.',
 } as const
 
-export function Topic() {
-  const { subjectId, topicId } = useParams()
+function TopicBody({ topic }: { topic: TopicRecord }) {
+  const { subjectId } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const progress = useProgress()
   if (!subject || !topic) return <p>Unknown topic.</p>
   const evidence = evidenceFor(topic.id, progress)
@@ -234,4 +236,13 @@ function WhyCard({ matters }: { matters: string }) {
       </div>
     </section>
   )
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function Topic() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown topic.</p>
+  return <TopicBody key={topic.id} topic={topic} />
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { TOPICS } from '../../content/index.ts'
+import { ALL_TOPICS as TOPICS } from '../../content/all.ts'
 import { previewOf } from './Topic.tsx'
 
 /**

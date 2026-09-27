@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { getSubject } from '@study/shared'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { getGuide, topicsForSubject } from '../../content/index.ts'
+import { useTopic } from '../../content/load.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useRecordActivity } from '../../progress/useRecordActivity.ts'
 
@@ -88,29 +90,46 @@ export function ExamTechnique() {
       {topics.length > 0 && (
         <section className="flex flex-col gap-3">
           <SectionLabel colour="#0f766e" emoji="📚">Topic by topic</SectionLabel>
-          {topics.map((t) => (
-            <details key={t.id} className="rounded-xl border border-rule bg-surface px-4 py-3">
-              <summary className="cursor-pointer font-bold">{t.title}</summary>
-              <div className="mt-3 flex flex-col gap-3">
-                <RichText source={t.examTechnique.body} className="text-sm" />
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Examiners report</span>
-                  <ul className="flex flex-col gap-1 pl-4 text-sm">
-                    {t.examTechnique.examinerErrors.map((e, i) => (
-                      <li key={i} className="list-disc"><RichText source={e} inline /></li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">What a top answer does</span>
-                  <RichText source={t.examTechnique.grade9Looks} className="text-sm" />
-                </div>
-                <Link to={`/subjects/${subject.id}/topics/${t.id}`} className="w-fit py-1 text-sm font-bold underline">Open topic</Link>
-              </div>
-            </details>
-          ))}
+          {topics.map((t) => <TopicExamNote key={t.id} subjectId={subject.id} topicId={t.id} title={t.title} />)}
         </section>
       )}
     </article>
+  )
+}
+
+/**
+ * One topic's exam note, in a closed section. Its content is fetched when the section is
+ * opened (OPS-1): a subject's whole list is dozens of topics, and most are never opened.
+ */
+function TopicExamNote({ subjectId, topicId, title }: { subjectId: string; topicId: string; title: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <details className="rounded-xl border border-rule bg-surface px-4 py-3" onToggle={(e) => setOpen(e.currentTarget.open)}>
+      <summary className="cursor-pointer font-bold">{title}</summary>
+      {open && <TopicExamBody subjectId={subjectId} topicId={topicId} />}
+    </details>
+  )
+}
+
+function TopicExamBody({ subjectId, topicId }: { subjectId: string; topicId: string }) {
+  const topic = useTopic(subjectId, topicId)
+  if (!topic) return <p className="mt-3 text-sm text-ink-2">{topic === null ? 'Not found.' : 'Loading…'}</p>
+  return (
+    <div className="mt-3 flex flex-col gap-3">
+      <RichText source={topic.examTechnique.body} className="text-sm" />
+      <div className="flex flex-col gap-1">
+        <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Examiners report</span>
+        <ul className="flex flex-col gap-1 pl-4 text-sm">
+          {topic.examTechnique.examinerErrors.map((e, i) => (
+            <li key={i} className="list-disc"><RichText source={e} inline /></li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">What a top answer does</span>
+        <RichText source={topic.examTechnique.grade9Looks} className="text-sm" />
+      </div>
+      <Link to={`/subjects/${subjectId}/topics/${topicId}`} className="w-fit py-1 text-sm font-bold underline">Open topic</Link>
+    </div>
   )
 }

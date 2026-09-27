@@ -770,7 +770,7 @@ cannot drift.
 
 ### OPS-1 · Load content per subject
 
-**Effort:** M · **Priority:** Next
+**Effort:** M · **Priority:** Next · **Status:** done (27 September 2026)
 
 As a student on mobile data, I want the app to download only what I open.
 
@@ -778,7 +778,8 @@ As a student on mobile data, I want the app to download only what I open.
 
 - Content is split per subject and topic and loaded on demand. Today the app is one 18.5 MB
   JavaScript file (4.7 MB compressed).
-- The first load is under 1 MB compressed.
+- The first load is under 1 MB compressed: 677 KB of script and 18 KB of styles, from 4.7 MB. On
+  a throttled phone (1.6 Mbps, 150 ms, CPU slowed 4×) Home took 4.7 s instead of 25.2 s.
 
 ### OPS-2 · Browser checks in CI
 

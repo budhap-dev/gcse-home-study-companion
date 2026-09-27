@@ -8,11 +8,13 @@ import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
-import { getTopic } from '../../content/index.ts'
 import { getState, saveLessonPosition } from '../../progress/store.ts'
 import { settle, type Settlement } from '../../progress/settle.ts'
 import { Celebration } from '../../components/Celebration.tsx'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
+import { useTopic } from '../../content/load.ts'
+import { TopicLoading } from '../../components/TopicLoading.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 
 
 /**
@@ -36,11 +38,10 @@ function isTable(v: { type: string; component?: string }): boolean {
   return v.type === 'diagram' && v.component === 'trace-table'
 }
 
-export function Lesson() {
+function LessonBody({ topic }: { topic: TopicRecord }) {
   const { subjectId, topicId } = useParams()
   const navigate = useNavigate()
   const subject = subjectId ? getSubject(subjectId) : undefined
-  const topic = subjectId && topicId ? getTopic(subjectId, topicId) : undefined
   const [params] = useSearchParams()
   const [index, setIndex] = useState(() => {
     const steps = topic?.lesson.steps.length ?? 1
@@ -170,4 +171,13 @@ export function Lesson() {
       </button>
     </article>
   )
+}
+
+/** Fetches the topic's full content, then shows the page (OPS-1). */
+export function Lesson() {
+  const { subjectId, topicId } = useParams()
+  const topic = useTopic(subjectId, topicId)
+  if (topic === undefined) return <TopicLoading />
+  if (topic === null) return <p>Unknown topic.</p>
+  return <LessonBody key={topic.id} topic={topic} />
 }
