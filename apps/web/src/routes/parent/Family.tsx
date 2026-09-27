@@ -16,6 +16,7 @@ import { WeeklyBars } from '../../components/charts/WeeklyBars.tsx'
 import { SkillBars } from '../../components/charts/SkillBars.tsx'
 import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts.ts'
 import { skillStats } from '../../progress/xp.ts'
+import { ReportsPanel } from './Reports.tsx'
 import { minutesBySubject } from '../../progress/subjectDetail.ts'
 
 export interface Child {
@@ -25,10 +26,11 @@ export interface Child {
   syncedAt?: string
 }
 
-export type FamilyTab = 'dashboard' | 'tasks'
+export type FamilyTab = 'dashboard' | 'tasks' | 'reports'
 const TABS: { id: FamilyTab; label: string }[] = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'tasks', label: 'Tasks' },
+  { id: 'reports', label: 'Reports' },
 ]
 
 /** One glyph per kind, so the feed can be skimmed down the left edge. */
@@ -52,7 +54,8 @@ export function Family() {
   const [params, setParams] = useSearchParams()
   // The tab is in the URL, so a refresh, a bookmark or a link sent to the other parent
   // all land back on the one that was open. Dashboard is the plain /family address.
-  const tab: FamilyTab = params.get('tab') === 'tasks' ? 'tasks' : 'dashboard'
+  const asked = params.get('tab')
+  const tab: FamilyTab = asked === 'tasks' || asked === 'reports' ? asked : 'dashboard'
   const setTab = (t: FamilyTab) => setParams(t === 'dashboard' ? {} : { tab: t }, { replace: true })
   // An open subject is in the URL too, as ?subject=, and is pushed rather than replaced so
   // the browser's back button closes it again.
@@ -109,7 +112,7 @@ export function Family() {
   const first = firstNameOf(child.name)
 
   return (
-    <Shell title={child.name} subtitle={tab === 'tasks' ? `What ${first} has been set, and how it is going.` : `How ${first} is getting on, from their signed-in account.`}>
+    <Shell title={child.name} subtitle={tab === 'tasks' ? `What ${first} has been set, and how it is going.` : tab === 'reports' ? 'Mistakes the family has reported in questions and lessons.' : `How ${first} is getting on, from their signed-in account.`}>
       {children.length > 1 && (
         <div className="flex flex-wrap gap-2">
           {children.map((c) => (
@@ -141,6 +144,11 @@ export function FamilyBody({ child, tab, onTab, subjectId }: { child: Child; tab
               Tasks can still be set on the <button type="button" onClick={() => onTab('tasks')} className="font-bold text-ink underline">Tasks</button> tab.
             </p>
           )}
+        </TabPanel>
+      ) : tab === 'reports' ? (
+        <TabPanel tab="reports">
+          {/* Reports are the family's, not one child's: the same list whichever child is chosen. */}
+          <ReportsPanel />
         </TabPanel>
       ) : (
         <TabPanel tab="tasks">

@@ -10,6 +10,7 @@ import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
+import { ReportMistake } from '../../components/ReportMistake.tsx'
 import { getTopic } from '../../content/index.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
@@ -175,6 +176,7 @@ export function Quiz() {
         <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
         <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
         {answered && <Feedback question={question} result={answered.result} onClaim={claim} />}
+        <ReportMistake key={`r-${question.id}`} item={{ subjectId: subjectId!, topicId: topicId!, itemKind: 'question', itemId: question.id, seenIn: 'quiz' }} />
       </section>
 
       {answered && (
