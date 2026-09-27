@@ -26,13 +26,16 @@ function niceStep(max: number): number {
  * so a gap between the bars would say there were values nothing could take.
  *
  * A second series (`values2`, named in `names`) draws a dual bar chart, the two bars of
- * each category side by side, with a key.
+ * each category side by side, with a key. With `style: 'stacked'` the second series sits on
+ * top of the first instead: a composite bar chart, one bar per category whose height is the
+ * total, read by subtracting at the split. 1MA1 S2 names composite bar charts; before this
+ * the lesson could only describe one.
  *
  * Drawn 296 units wide so it fits a phone without scrolling; category labels wrap under
  * their bar onto at most two lines.
  *
  * Props: { categories: string[], values: number[], values2?: number[], names?: string[],
- *          style?: 'bar' | 'line' | 'grouped', xLabel?, yLabel?, yStep?, title? }
+ *          style?: 'bar' | 'line' | 'grouped' | 'stacked', xLabel?, yLabel?, yStep?, title? }
  */
 export function BarChart({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const categories = ((props.categories as string[] | undefined) ?? []).map(String)
@@ -42,11 +45,12 @@ export function BarChart({ props, alt }: { props: Record<string, unknown>; alt: 
   const names = ((props.names as string[] | undefined) ?? []).map(String)
   const line = props.style === 'line'
   const grouped = props.style === 'grouped' && !values2
+  const stacked = props.style === 'stacked' && !!values2
   const xLabel = props.xLabel ? String(props.xLabel) : ''
   const yLabel = props.yLabel ? String(props.yLabel) : 'Frequency'
   const title = props.title ? wrapCell(String(props.title), 40) : []
 
-  const maxV = Math.max(1, ...values, ...(values2 ?? []))
+  const maxV = stacked ? Math.max(1, ...values.map((v, i) => v + (values2![i] ?? 0))) : Math.max(1, ...values, ...(values2 ?? []))
   const step = typeof props.yStep === 'number' && props.yStep > 0 ? props.yStep : niceStep(maxV)
   const yTop = Math.ceil(maxV / step) * step
   const ticks: number[] = []
@@ -65,7 +69,7 @@ export function BarChart({ props, alt }: { props: Record<string, unknown>; alt: 
   const H = base + 8 + labelLines * LINE + (xLabel ? 18 : 4)
   const sy = (v: number) => base - (v / yTop) * plotH
 
-  const barW = grouped ? slot : values2 ? Math.min(22, slot * 0.36) : Math.min(40, slot * 0.6)
+  const barW = grouped ? slot : values2 && !stacked ? Math.min(22, slot * 0.36) : Math.min(40, slot * 0.6)
   const bar = (v: number, x: number, fill: string, key: string) =>
     line
       ? <line key={key} x1={x} y1={base} x2={x} y2={sy(v)} stroke={fill} strokeWidth={3} />
@@ -92,6 +96,16 @@ export function BarChart({ props, alt }: { props: Record<string, unknown>; alt: 
       ))}
       {categories.map((_, i) => {
         const cx = left + slot * (i + 0.5)
+        if (stacked) {
+          // The first series from the axis up, the second from where it stops.
+          const v1 = values[i]!, v2 = values2![i] ?? 0
+          return (
+            <g key={`b${i}`}>
+              <rect x={cx - barW / 2} y={sy(v1)} width={barW} height={base - sy(v1)} fill={ACCENT} fillOpacity={0.8} stroke={ACCENT} strokeWidth={1.5} />
+              <rect x={cx - barW / 2} y={sy(v1 + v2)} width={barW} height={sy(v1) - sy(v1 + v2)} fill={SECOND} fillOpacity={0.8} stroke={SECOND} strokeWidth={1.5} />
+            </g>
+          )
+        }
         return values2
           ? <g key={`b${i}`}>{bar(values[i]!, cx - barW / 2 - 1, ACCENT, 'a')}{bar(values2[i] ?? 0, cx + barW / 2 + 1, SECOND, 'b')}</g>
           : <g key={`b${i}`}>{bar(values[i]!, cx, ACCENT, 'a')}</g>

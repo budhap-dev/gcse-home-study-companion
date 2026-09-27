@@ -56,6 +56,10 @@ function MultipleChoice({ question, disabled, onSubmit }: Props & { question: Ex
               type="button"
               role={multi ? 'checkbox' : 'radio'}
               aria-checked={on}
+              // The option's place in the content, whatever order it is shown in: a browser check
+              // can then pick the right answer to an option written only in maths, whose rendered
+              // KaTeX no text match could find reliably.
+              data-option={i}
               disabled={disabled}
               onClick={() => toggle(i)}
               className={`min-h-11 rounded-lg border px-3 py-2 text-left text-[15px] ${on ? 'border-2 border-[color:var(--subject)] font-bold' : 'border-rule'} bg-surface disabled:opacity-70`}
