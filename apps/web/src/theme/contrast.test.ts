@@ -101,9 +101,9 @@ const themeColours = THEMES.map((t) => ({
 }))
 
 describe('every theme', () => {
-  it('has all nine themes measured, so a new one cannot be added without a check', () => {
+  it('has every theme measured, so a new one cannot be added without a check', () => {
     expect(themeColours).toHaveLength(THEMES.length)
-    expect(THEMES.length).toBeGreaterThanOrEqual(9)
+    expect(THEMES.length).toBeGreaterThanOrEqual(11)
   })
 
   it.each(themeColours)('reads its three inks against surface, paper and panel: $id', (t) => {
@@ -140,6 +140,39 @@ describe('every theme', () => {
       if (t.dark) expect(t.accentMin, t.id).toBeGreaterThan(0.5)
       else expect(t.accentMax, t.id).toBeLessThanOrEqual(0.5)
     }
+  })
+})
+
+/**
+ * The map look's banners: white text on a moving three-stop gradient. The gradient slides,
+ * so any point along it can end up behind a word, and the blends between two stops are
+ * checked as well as the stops themselves -- sRGB interpolation, which is what CSS paints.
+ * 5:1 rather than 4.5, so a label set at 90% white still clears AA.
+ */
+describe('the banner gradient', () => {
+  const HERO_DEFAULTS = [cssToken('--hero-1'), cssToken('--hero-2'), cssToken('--hero-3')]
+
+  it.each(THEMES.map((t) => ({ id: t.id, vars: t.vars })))('keeps white text readable everywhere along it: $id', ({ id, vars }) => {
+    const stops = [1, 2, 3].map((n, i) => rgb(vars[`--hero-${n}`] ?? HERO_DEFAULTS[i]!))
+    const white = [255, 255, 255]
+    for (let seg = 0; seg < 2; seg++) {
+      for (let k = 0; k <= 10; k++) {
+        const colour = stops[seg]!.map((v, i) => v + (stops[seg + 1]![i]! - v) * (k / 10))
+        expect(ratio(white, colour), `${id}, between stops ${seg + 1} and ${seg + 2} at ${k * 10}%`).toBeGreaterThanOrEqual(5)
+      }
+    }
+  })
+
+  it('declares a set for every theme but Paper, whose set is the styles.css default', () => {
+    for (const t of THEMES) {
+      if (t.id === 'paper') expect(t.vars['--hero-1']).toBeUndefined()
+      else expect(['--hero-1', '--hero-2', '--hero-3', '--glow-1', '--glow-2'].filter((k) => !t.vars[k]), t.id).toEqual([])
+    }
+  })
+
+  /** Navy squares on a navy page: a dark theme has to lift the colour a map square is filled with. */
+  it('lifts map squares on the dark themes', () => {
+    for (const t of THEMES) if (t.dark) expect(Number(t.vars['--map-l-min']), t.id).toBeGreaterThan(0.5)
   })
 })
 
