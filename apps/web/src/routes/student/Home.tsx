@@ -10,10 +10,13 @@ import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { recommend, type Task } from '../../progress/recommend.ts'
 import { evidenceFor, isoDate, streakDays, weekMinutes } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
+import { mistakeQueue } from '../../progress/mistakes.ts'
+import { redoable } from './Mistakes.tsx'
 
 export function Home() {
   const progress = useProgress()
   const { next, alternatives } = recommend(TOPICS, progress)
+  const mistakes = mistakeQueue(progress, redoable)
   const minutes = weekMinutes(progress)
   const goal = progress.goalMinutes
   const streak = streakDays(progress)
@@ -71,6 +74,19 @@ export function Home() {
         </section>
       ) : (
         <p className="text-ink-2">No topics yet. They appear here as they are written.</p>
+      )}
+
+      {mistakes.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <SectionLabel colour="#b8860b" emoji="🔁">Redo my mistakes</SectionLabel>
+          <Link to="/mistakes" className="flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3">
+            <span className="flex flex-grow flex-col gap-0.5">
+              <span className="font-bold">{mistakes.length} question{mistakes.length === 1 ? '' : 's'} to redo</span>
+              <span className="text-xs text-ink-2">The ones you got wrong, newest first. Right twice in a row and they leave the list.</span>
+            </span>
+            <span className="rounded-lg bg-ink px-3 py-1.5 text-sm font-bold text-surface">Start</span>
+          </Link>
+        </section>
       )}
 
       {alternatives.length > 0 && (

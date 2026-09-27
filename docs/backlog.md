@@ -287,7 +287,8 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [ ] **LRN-4:** exam dates per subject. Once set, LRN-3's "soonest exam first" ordering follows.
 - [ ] **LRN-6:** target grade per subject. There is a database column only.
 - [ ] **QZ-3:** spaced recap quiz of 5–10 questions across subjects, started with one tap.
-- [ ] **QZ-4:** wrong-answer bank. The per-question results are already stored.
+- [x] **QZ-4:** wrong-answer bank. Redo my mistakes (`/mistakes`, and a card on Home) asks up to 15
+  questions got wrong, newest first; two right in a row clears one (WKP-1).
 - [ ] **WKS-4:** mixed-topic worksheet.
 - [ ] **WKS-6:** grade 9 problem set per unit.
 - [ ] **WKS-5:** timed paper mode.

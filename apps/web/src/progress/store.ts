@@ -25,7 +25,8 @@ export interface QuestionResult {
 export interface AttemptRecord {
   id: string
   topicId: string
-  kind: 'quiz' | 'worksheet'
+  /** A review is a "Redo my mistakes" session: it earns XP but never moves a topic's status. */
+  kind: 'quiz' | 'worksheet' | 'review'
   level?: WorksheetLevel
   marksScored: number
   marksAvailable: number
@@ -73,7 +74,7 @@ export interface ActivityRecord {
 }
 
 /** Every kind of study screen, for time spent. The marked ones and the unmarked ones together. */
-export type StudyKind = 'lesson' | 'quiz' | 'worksheet' | 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
+export type StudyKind = 'lesson' | 'quiz' | 'worksheet' | 'review' | 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
 
 /** Where a minute of study was spent. `topicId` is absent on the subject-wide exam technique page. */
 export interface StudyPlace {

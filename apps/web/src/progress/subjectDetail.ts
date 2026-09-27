@@ -17,6 +17,7 @@ export const STUDY_LABEL: Record<StudyKind, string> = {
   lesson: 'Lesson',
   quiz: 'Quiz',
   worksheet: 'Worksheets',
+  review: 'Redo my mistakes',
   flashcards: 'Flashcards',
   'cheat-sheet': 'Cheat sheet',
   why: 'Where you meet it',

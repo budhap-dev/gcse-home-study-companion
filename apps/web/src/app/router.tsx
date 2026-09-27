@@ -13,6 +13,7 @@ import { WorksheetPrint } from '../routes/student/WorksheetPrint.tsx'
 import { ExamTechnique } from '../routes/student/ExamTechnique.tsx'
 import { WhyItExists } from '../routes/student/WhyItExists.tsx'
 import { Progress } from '../routes/student/Progress.tsx'
+import { Mistakes } from '../routes/student/Mistakes.tsx'
 import { Settings } from '../routes/student/Settings.tsx'
 import { Flashcards } from '../routes/student/Flashcards.tsx'
 import { CheatSheet } from '../routes/student/CheatSheet.tsx'
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
       { path: 'search', element: <Search /> },
       { path: 'glossary', element: <Glossary /> },
       { path: 'progress', element: <Progress /> },
+      { path: 'mistakes', element: <Mistakes /> },
       { path: 'family', element: <Family /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <NotFound /> },
