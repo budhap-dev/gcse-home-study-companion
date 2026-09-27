@@ -189,7 +189,7 @@ went wrong.
 
 ### WKP-8 · Model answers for extended questions
 
-**Effort:** M · **Priority:** Next
+**Effort:** M · **Priority:** Next · **Status:** done (27 September 2026)
 
 As a student, I want to see a full-mark answer before I self-mark so that my self-marking is
 honest.
@@ -197,6 +197,10 @@ honest.
 **Acceptance criteria**
 
 - Every extended question shows a model answer and its mark scheme beside the student's answer.
+  Most of this already existed (QZ-2): all 801 extended questions had a model answer and criteria
+  shown after "Show the mark scheme". What changed: the mark scheme waits for an attempt (40
+  characters, or "I wrote it on paper"), and the two answers sit side by side where the
+  question's box is wide enough.
 
 
 ## Epic 3 · Generated questions (Maths and Science)
