@@ -88,7 +88,7 @@ export interface ActivityEntry {
   subjectId: string
   subjectName: string
   subjectColour: string
-  kind: 'quiz' | 'worksheet' | 'lesson' | 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
+  kind: 'quiz' | 'worksheet' | 'review' | 'lesson' | 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
   /** What this kind of work is called on screen. */
   label: string
   at: string
@@ -101,6 +101,7 @@ export interface ActivityEntry {
 const KIND_LABEL: Record<ActivityEntry['kind'], string> = {
   quiz: 'Quiz',
   worksheet: 'Worksheet',
+  review: 'Redo my mistakes',
   lesson: 'Lesson',
   flashcards: 'Flashcards',
   'cheat-sheet': 'Cheat sheet',
@@ -153,7 +154,7 @@ export function recentActivity(state: ProgressState, limit = 12): ActivityEntry[
     const b = base(a.topicId)
     if (!b) continue
     const percentage = Math.round(pct(a))
-    const level = a.level ? `${a.level[0]!.toUpperCase()}${a.level.slice(1)} worksheet` : 'Quiz'
+    const level = a.kind === 'review' ? 'Redo my mistakes' : a.level ? `${a.level[0]!.toUpperCase()}${a.level.slice(1)} worksheet` : 'Quiz'
     entries.push({
       ...b, id: a.id, kind: a.kind, label: level, at: a.completedAt, pct: percentage,
       detail: `${a.marksScored} of ${a.marksAvailable} marks`,

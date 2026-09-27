@@ -104,7 +104,7 @@ wherever it is taught.
 
 ### WKP-1 · Redo my mistakes
 
-**Effort:** S · **Priority:** Now · **Finishes:** QZ-4
+**Effort:** S · **Priority:** Now · **Finishes:** QZ-4 · **Status:** done (27 September 2026)
 
 As a student, I want a worksheet of the questions I got wrong so that I practise exactly what I
 missed.
