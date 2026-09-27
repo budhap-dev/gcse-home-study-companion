@@ -5,6 +5,7 @@ import { StatusIcon } from '../../components/StatusChip.tsx'
 import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { topicsForSubject } from '../../content/index.ts'
 import { evidenceFor } from '../../progress/store.ts'
+import { PART_LETTERS, partsDone, partsLabel, type PartsDone } from '../../progress/parts.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 
@@ -94,6 +95,7 @@ export function TopicMap() {
                               <StatusIcon status={evidenceFor(entry.topicId, progress).status} />
                               <SpecNumber code={specCodes.get(entry.topicId)} />
                               <span>{entry.title}</span>
+                              <Parts done={partsDone(entry.topicId, progress)} />
                             </Link>
                           </li>
                         ) : (
@@ -137,5 +139,23 @@ export function TopicMap() {
         />
       </section>
     </article>
+  )
+}
+
+/**
+ * Which of the topic's five parts are done, as five small letters at the end of the row:
+ * lesson, Core, Higher, Advanced and quiz, filled once done. The status icon says how well
+ * the topic is known; this says what is left to do in it (LRN-1).
+ */
+function Parts({ done }: { done: PartsDone }) {
+  return (
+    <span className="ml-auto flex shrink-0 gap-0.5" role="img" aria-label={partsLabel(done)}>
+      {PART_LETTERS.map(([key, letter]) => (
+        <span key={key} aria-hidden
+          className={`flex h-[18px] w-[18px] items-center justify-center rounded-full text-[11px] font-bold ${done[key] ? 'bg-[color:var(--subject)] text-white' : 'border border-rule text-ink-3'}`}>
+          {letter}
+        </span>
+      ))}
+    </span>
   )
 }

@@ -10,8 +10,10 @@ import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
+import type { Topic as TopicRecord } from '@study/shared'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
 import { getTopic } from '../../content/index.ts'
+import { teachingStep } from '../../content/teachingStep.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
@@ -97,7 +99,7 @@ export function Quiz() {
             onDone={() => setCelebration(null)}
           />
         )}
-        <Summary topicTitle={topic.title} questions={questions} state={state} backTo={backTo} onRetake={start} />
+        <Summary topic={topic} questions={questions} state={state} backTo={backTo} onRetake={start} />
       </>
     )
   }
@@ -207,7 +209,8 @@ function Intro({ subjectName, title, count, pool, minutes, onStart, backTo }: { 
   )
 }
 
-function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitle: string; questions: Question[]; state: QuizState; backTo: string; onRetake: () => void }) {
+function Summary({ topic, questions, state, backTo, onRetake }: { topic: TopicRecord; questions: Question[]; state: QuizState; backTo: string; onRetake: () => void }) {
+  const topicTitle = topic.title
   const scored = questions.reduce((s, q) => s + (state.answers[q.id]?.result.marksScored ?? 0), 0)
   const available = questions.reduce((s, q) => s + q.marks, 0)
   const pct = available ? Math.round((100 * scored) / available) : 0
@@ -263,7 +266,13 @@ function Summary({ topicTitle, questions, state, backTo, onRetake }: { topicTitl
                   <RichText source={q.prompt} className="text-sm" />
                   <div className="flex items-center justify-between text-xs text-ink-2">
                     <span>{r ? `${r.marksScored} of ${r.marksAvailable}` : 'not answered'} · grade {q.gradeBand} · {q.skill}</span>
-                    <Link to={`${backTo}/lesson`} className="font-bold underline">Lesson</Link>
+                    {(() => {
+                      // The step that teaches this question, where one stands out; else the lesson's start.
+                      const i = teachingStep(topic, q)
+                      return i === undefined
+                        ? <Link to={`${backTo}/lesson`} className="font-bold underline">Lesson</Link>
+                        : <Link to={`${backTo}/lesson?step=${i + 1}`} className="font-bold underline">Revise: step {i + 1}, {topic.lesson.steps[i]!.title}</Link>
+                    })()}
                   </div>
                 </li>
               )

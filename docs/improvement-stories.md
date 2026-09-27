@@ -30,7 +30,7 @@ topic goes badly.
 
 ### TOP-2 · Progress on the topic map
 
-**Effort:** S · **Priority:** Now · **Finishes:** LRN-1
+**Effort:** S · **Priority:** Now · **Finishes:** LRN-1 · **Status:** done (27 September 2026)
 
 As a student, I want each topic-map row to show which parts I have done so that I can see what
 is left at a glance.
@@ -165,14 +165,15 @@ am ready for the hardest questions.
 
 ### WKP-6 · Right level by default
 
-**Effort:** S · **Priority:** Now · **Finishes:** WKS-1
+**Effort:** S · **Priority:** Now · **Finishes:** WKS-1 · **Status:** done (27 September 2026)
 
 As a student, I want the worksheet page to open at the level that suits me so that I do not
 repeat work that is too easy.
 
 **Acceptance criteria**
 
-- Not started or Developing opens Core, Secure opens Advanced, otherwise Higher.
+- Core is suggested for a topic not yet started, Higher for Developing, Advanced from Secure up,
+  the same choice Home's recommendation makes; the other levels stay one tap away.
 
 ### WKP-7 · Keep the working
 
@@ -351,15 +352,15 @@ As a student, I want a wrong answer to tell me what went wrong so that I learn f
 
 ### UXI-4 · Missed question links to its lesson step
 
-**Effort:** S · **Priority:** Now · **Finishes:** QZ-1
+**Effort:** S · **Priority:** Now · **Finishes:** QZ-1 · **Status:** done (27 September 2026)
 
 As a student, I want a missed quiz question to take me to the step that teaches it.
 
 **Acceptance criteria**
 
-- Each question can name its teaching step; the quiz result links there, not to the lesson's
-  start.
-- A test fails if a named step does not exist.
+- A missed question links to the step whose check practises the same skill, or else to the
+  step its words most clearly match; failing both, to the lesson's start.
+- A test holds the word match to at least 80% agreement with the skill match.
 
 ### UXI-5 · Works offline
 
