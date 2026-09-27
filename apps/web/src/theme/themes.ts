@@ -18,7 +18,7 @@ export interface Theme {
  *
  * Light themes use the defaults in styles.css (cap at 0.5); only the dark ones lift the floor.
  */
-const DARK_ACCENT = { '--accent-l-min': '0.78', '--accent-l-max': '1', '--map-l-min': '0.62' }
+const DARK_ACCENT = { '--accent-l-min': '0.78', '--accent-l-max': '1', '--map-l-min': '0.62', '--map-on-strong': 'var(--color-paper)' }
 
 /**
  * A banner's three colours and the page's two soft lights (the map look). White text sits on
