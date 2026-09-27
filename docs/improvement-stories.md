@@ -456,7 +456,7 @@ where I stand.
 
 ### MTV-3 · Celebrate milestones
 
-**Effort:** S · **Priority:** Next · **Finishes:** MOT-4
+**Effort:** S · **Priority:** Next · **Finishes:** MOT-4 · **Status:** done (27 September 2026)
 
 As a student, I want a celebration when a topic reaches Mastered or I finish a unit.
 

@@ -17,6 +17,8 @@ import { loadInProgress, saveInProgress, worksheetKey } from '../../progress/inP
 import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
+import { MilestoneCard } from '../../components/MilestoneCard.tsx'
+import type { Milestone } from '../../progress/milestones.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -59,6 +61,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
   const level = (['core', 'higher', 'advanced'] as const).find((l) => l === levelParam)
   const [state, setState] = useState<SheetState | null>(() => (topic && level ? load(topic.id, level) : null))
   const [celebration, setCelebration] = useState<Settlement | null>(null)
+  const [milestones, setMilestones] = useState<Milestone[]>([])
   useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'worksheet' }, Boolean(state && !state.finishedAt))
 
   useEffect(() => {
@@ -110,7 +113,8 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
     const earned = state.earned
     return (
       <article className="mx-auto flex w-full max-w-2xl flex-col gap-6">
-        {celebration && (
+        {milestones[0] && <MilestoneCard milestone={milestones[0]} onDone={() => setMilestones((ms) => ms.slice(1))} />}
+        {celebration && !milestones.length && (
           <Celebration
             title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
             detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}
@@ -192,6 +196,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
     })
     const outcome = settle(before)
     if (outcome.newBadges.length || outcome.levelUp) setCelebration(outcome)
+    if (outcome.milestones.length) setMilestones(outcome.milestones)
     setState({
       ...state,
       finishedAt,

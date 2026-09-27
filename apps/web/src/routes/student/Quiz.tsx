@@ -18,6 +18,8 @@ import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { loadInProgress, quizKey, saveInProgress } from '../../progress/inProgress.ts'
 import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
+import { MilestoneCard } from '../../components/MilestoneCard.tsx'
+import type { Milestone } from '../../progress/milestones.ts'
 
 interface Answered {
   answer: Answer
@@ -54,6 +56,7 @@ function QuizBody({ topic }: { topic: TopicRecord }) {
   const subject = subjectId ? getSubject(subjectId) : undefined
   const [state, setState] = useState<QuizState | null>(() => (topic ? load(topic.id) : null))
   const [celebration, setCelebration] = useState<Settlement | null>(null)
+  const [milestones, setMilestones] = useState<Milestone[]>([])
   useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'quiz' }, Boolean(state && !state.finishedAt))
 
   useEffect(() => {
@@ -77,7 +80,8 @@ function QuizBody({ topic }: { topic: TopicRecord }) {
   if (state.finishedAt) {
     return (
       <>
-        {celebration && (
+        {milestones[0] && <MilestoneCard milestone={milestones[0]} onDone={() => setMilestones((ms) => ms.slice(1))} />}
+        {celebration && !milestones.length && (
           <Celebration
             title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
             detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}
@@ -129,6 +133,7 @@ function QuizBody({ topic }: { topic: TopicRecord }) {
     })
     const outcome = settle(before)
     if (outcome.newBadges.length || outcome.levelUp) setCelebration(outcome)
+    if (outcome.milestones.length) setMilestones(outcome.milestones)
     setState({ ...state, finishedAt, earned: { xp, previousPct, badges: outcome.newBadges.map((b) => b.name), levelUp: outcome.levelUp ? `${outcome.levelUp.level.name}` : undefined } })
   }
 

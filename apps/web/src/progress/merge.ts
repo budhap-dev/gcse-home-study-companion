@@ -44,6 +44,9 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
   for (const [key, m] of Object.entries(B.time)) time[key] = Math.max(time[key] ?? 0, m)
   const badges: ProgressState['badges'] = { ...A.badges }
   for (const [id, at] of Object.entries(B.badges)) badges[id] = badges[id] && badges[id]! < at ? badges[id]! : at
+  // Milestones as badges: reached once, at the earlier of the two times.
+  const milestones: ProgressState['milestones'] = { ...A.milestones }
+  for (const [id, at] of Object.entries(B.milestones ?? {})) milestones[id] = milestones[id] && milestones[id]! < at ? milestones[id]! : at
   return {
     attempts: [...attempts.values()].sort((x, y) => x.completedAt.localeCompare(y.completedAt)),
     lessons,
@@ -53,5 +56,6 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
     goalMinutes: A.goalMinutes !== DEFAULT_GOAL_MINUTES ? A.goalMinutes : B.goalMinutes,
     daysOff: [...new Set([...A.daysOff, ...B.daysOff])].sort(),
     badges,
+    milestones,
   }
 }
