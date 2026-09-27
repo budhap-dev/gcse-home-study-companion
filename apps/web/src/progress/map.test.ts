@@ -1,7 +1,7 @@
 import { SUBJECTS } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { TOPICS } from '../content/index.ts'
-import { countLevels, daysThisWeek, fixFirst, levelsSentence, square, unitGroups } from './map.ts'
+import { countLevels, daysThisWeek, fixFirst, levelsSentence, nextRung, square, unitGroups } from './map.ts'
 import { emptyState, type AttemptRecord, type ProgressState } from './store.ts'
 
 const now = new Date('2026-09-26T12:00:00Z')
@@ -89,5 +89,28 @@ describe('this week', () => {
     expect(week.map((d) => d.minutes)).toEqual([0, 10, 0, 15, 0, 0, 0])
     expect(week.find((d) => d.today)!.day).toBe('2026-09-24')
     expect(week.filter((d) => d.future).map((d) => d.name)).toEqual(['Friday', 'Saturday', 'Sunday'])
+  })
+})
+
+describe('the next rung', () => {
+  const t = maths[0]!
+  const rung = (state: ProgressState, lesson = false) => nextRung(square(t, state, now), lesson)
+
+  it('says what the thresholds ask for, and where the student stands against them', () => {
+    expect(rung(emptyState())).toBe('Start the lesson. It takes one idea at a time.')
+    expect(rung(withAttempts(attempt(t.id, 'quiz', 35)))).toBe('Developing needs 50% on the quiz. Last time 35%.')
+    expect(rung(withAttempts(attempt(t.id, 'quiz', 62)))).toBe('Secure needs 80% on the quiz and 70% on the Higher sheet. Quiz 62% so far; Higher sheet not tried yet.')
+    expect(rung(withAttempts(attempt(t.id, 'quiz', 85), attempt(t.id, 'worksheet', 72, 1, 'higher')))).toMatch(/^Mastered needs 90% on the quiz.*Quiz 85% so far; Advanced sheet not tried yet\.$/)
+    expect(rung(withAttempts(attempt(t.id, 'quiz', 95), attempt(t.id, 'worksheet', 80, 1, 'advanced')))).toMatch(/^Top of the ladder/)
+  })
+
+  it('asks for the lesson first when it is under way and no quiz is taken', () => {
+    const state = { ...emptyState(), lessons: { [t.id]: { topicId: t.id, stepIndex: 3, updatedAt: at(1) } } }
+    expect(rung(state, true)).toMatch(/^Finish the lesson, then score 50%/)
+  })
+
+  it('names a faded topic as faded, and what brings it back', () => {
+    const state = withAttempts(attempt(t.id, 'quiz', 90, 60), attempt(t.id, 'worksheet', 80, 60, 'higher'))
+    expect(rung(state)).toBe('It has faded after 8 weeks away. A quiz of 80% or more brings it back to Secure.')
   })
 })
