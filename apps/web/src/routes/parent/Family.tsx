@@ -18,6 +18,7 @@ import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts
 import { skillStats } from '../../progress/xp.ts'
 import { ReportsPanel } from './Reports.tsx'
 import { minutesBySubject } from '../../progress/subjectDetail.ts'
+import { weekOnWeek } from '../../progress/weekOnWeek.ts'
 
 export interface Child {
   email: string
@@ -236,6 +237,8 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
         <Tile label="Topics secure" value={`${s.topicsMastered}`} note={`${s.topicsStarted} ${s.topicsStarted === 1 ? 'topic' : 'topics'} started`} />
       </section>
 
+      <WeekOnWeek state={child.state!} />
+
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#d25b3b" emoji="🎯">Worth a conversation</SectionLabel>
         {s.stuck.length === 0 ? (
@@ -251,6 +254,10 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
                     {x.reason === 'low-score' ? <>scored <strong className="tabular-nums text-ink">{x.pct}%</strong></> : 'lesson read, no quiz yet'}
                     <span className="text-ink-3"> · {x.subjectName}</span>
                   </span>
+                </span>
+                {/* A next step to suggest, so the conversation ends with something to do. */}
+                <span className="text-xs text-ink-2">
+                  Suggested next: <strong className="text-ink">{x.reason === 'no-quiz' ? 'the quiz, to see what went in' : 'the Core worksheet, then the quiz again'}</strong>. Set it on the Tasks tab.
                 </span>
                 {openTopic === x.topicId && child.state && <TopicBreakdown topicId={x.topicId} state={child.state} />}
               </li>
@@ -384,3 +391,51 @@ function Tile({ label, value, note }: { label: string; value: string; note: stri
   )
 }
 
+/**
+ * This week against last, per subject (TRK-5, PAR-1): minutes, the average mark on quizzes
+ * and worksheets, and topics whose status moved. It answers "is this week better or worse
+ * than last", which the week's totals alone cannot.
+ */
+function WeekOnWeek({ state }: { state: ProgressState }) {
+  const { rows, total } = weekOnWeek(state)
+  if (rows.length === 0) return null
+  const arrow = (a: number | undefined, b: number | undefined, unit: string) =>
+    a === undefined && b === undefined ? '—' : `${a === undefined ? '—' : `${a}${unit}`} → ${b === undefined ? '—' : `${b}${unit}`}`
+  const moved = (up: number, down: number) => (up || down ? [up ? `${up} up` : '', down ? `${down} down` : ''].filter(Boolean).join(', ') : 'none')
+  return (
+    <section className="flex flex-col gap-3">
+      <SectionLabel colour="#1f3a93" emoji="📆">This week and last</SectionLabel>
+      <p className="text-xs text-ink-2">Each figure is last week → this week. Mark is the average on quizzes and worksheets; moved counts topics whose status went up or down.</p>
+      <div className="overflow-x-auto rounded-xl border border-rule bg-surface">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-xs text-ink-2">
+              <th className="px-2 py-2 font-bold">Subject</th>
+              <th className="px-2 py-2 font-bold">Minutes</th>
+              <th className="px-2 py-2 font-bold">Mark</th>
+              <th className="px-2 py-2 font-bold">Moved</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.subjectId} className="border-t border-rule/60">
+                <td className="px-2 py-2 font-bold"><span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-sm" style={{ background: r.colour }} aria-hidden />{r.name}</td>
+                <td className="whitespace-nowrap px-2 py-2 tabular-nums">{arrow(r.last.minutes, r.this.minutes, '')}</td>
+                <td className="whitespace-nowrap px-2 py-2 tabular-nums">{arrow(r.last.avgPct, r.this.avgPct, '%')}</td>
+                <td className="px-2 py-2">{moved(r.up, r.down)}</td>
+              </tr>
+            ))}
+            {rows.length > 1 && (
+              <tr className="border-t border-rule font-bold">
+                <td className="px-3 py-2">All</td>
+                <td className="whitespace-nowrap px-2 py-2 tabular-nums">{arrow(total.last.minutes, total.this.minutes, '')}</td>
+                <td className="whitespace-nowrap px-2 py-2 tabular-nums">{arrow(total.last.avgPct, total.this.avgPct, '%')}</td>
+                <td className="px-2 py-2">{moved(total.up, total.down)}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
+}
