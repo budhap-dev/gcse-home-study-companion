@@ -86,3 +86,44 @@ export function labelHalf(text: string, size: number, bold = false) {
 
 /** The baseline to give a centred label whose box centre is `cy`. */
 export const baseline = (cy: number, size: number) => cy + size * 0.35
+
+export type Anchor = 'start' | 'middle' | 'end'
+/** A label's baseline position and the side of x its text runs. */
+export type Spot = { x: number; y: number; anchor: Anchor }
+/** A label already on the canvas: its left edge, baseline and width. */
+export type Placed = { x: number; y: number; w: number }
+
+/** Spots beside a point on a line or curve: above, below, to its left and right, and the four corners. */
+export const besides = (p: Pt, gap = 0): Spot[] => [
+  { x: p.x, y: p.y - 7 - gap, anchor: 'middle' }, { x: p.x, y: p.y + 16 + gap, anchor: 'middle' },
+  { x: p.x - 6 - gap, y: p.y + 4, anchor: 'end' }, { x: p.x + 6 + gap, y: p.y + 4, anchor: 'start' },
+  { x: p.x - 5 - gap, y: p.y - 6 - gap, anchor: 'end' }, { x: p.x + 5 + gap, y: p.y - 6 - gap, anchor: 'start' },
+  { x: p.x - 5 - gap, y: p.y + 15 + gap, anchor: 'end' }, { x: p.x + 5 + gap, y: p.y + 15 + gap, anchor: 'start' },
+]
+
+/** A label's own spot, then small steps off it in each direction. */
+export const near = (o: Spot): Spot[] => [o, ...[[0, -8], [0, 8], [-8, 0], [8, 0], [0, -14], [0, 14], [-14, 0], [14, 0]].map(([dx, dy]) => ({ ...o, x: o.x + dx!, y: o.y + dy! }))]
+
+/**
+ * A chart's label placer. Given what is drawn, the labels already placed and the canvas,
+ * it returns `settle(spots, text, size, fallback)`: the first spot where the text crosses
+ * nothing drawn, overlaps no placed label and stays on the canvas, recorded as placed.
+ * Failing all of them, `fallback` is handed to `nudge`, the chart's own label-on-label
+ * step, which is what every label got before.
+ */
+export function settler(drawn: Seg[], placed: Placed[], W: number, H: number, nudge: (x: number, y: number, text: string, size: number, anchor: Anchor) => number) {
+  return (spots: Spot[], text: string, size: number, fallback: Spot, bold = true): Spot => {
+    // Bold display text runs wider than the 0.55 em a label-on-label nudge assumes; at 0.55
+    // "y = x³ − 12x" was judged to fit and ran off the right-hand edge.
+    const w = text.length * size * (bold ? 0.62 : 0.56)
+    for (const c of spots) {
+      const l = c.anchor === 'end' ? c.x - w : c.anchor === 'middle' ? c.x - w / 2 : c.x
+      if (l < 2 || l + w > W - 2 || c.y - size < 0 || c.y > H - 2) continue
+      if (hits({ x: l + w / 2, y: c.y - size * 0.35 }, w / 2, size * 0.45, drawn, 1)) continue
+      if (placed.some((q) => Math.abs(q.y - c.y) < size + 2 && l < q.x + q.w && q.x < l + w)) continue
+      placed.push({ x: l, y: c.y, w })
+      return c
+    }
+    return { ...fallback, y: nudge(fallback.x, fallback.y, text, size, fallback.anchor) }
+  }
+}

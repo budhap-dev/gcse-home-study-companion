@@ -207,9 +207,13 @@ One PR per subject.
   a halo. Counting haloed labels, named labels crossed at 390 fell from 61 to 12 across 125 pages;
   the 12 are crowded figures with no clear spot (two nested circles, three overlapping ones, a
   stock level's sawtooth). `labels-clear.test.tsx` holds the static count at 6 (62 on `main`).
-- [ ] **Labels crossed by lines, the rest:** `motion-graph` 9, `dot-and-cross` 8 (the ion's
-  charge on its bracket corner), `logic-circuit` 2 (NOT on its wire), `inequality-region` and
-  `lens-diagram` 1 each, `four-box` 1 at 1280. All present on `main`.
+- [x] **Labels crossed by lines, the rest:** `motion-graph` labels (markers, series, gradient
+  legs, shading, free text) are placed by the same `settler` as `line-graph` and drawn last on a
+  halo; an ion's charge in `dot-and-cross` sits outside its bracket's corner; a `logic-circuit`
+  gate name goes under its gate when a wire runs above it; a `lens-diagram` F takes the first
+  spot around its focus clear of the rays; `inequality-region` tick numbers have a halo and the
+  region's name moves off a boundary; the `four-box` centre circle is sized for bold type.
+  `labels-clear.test.tsx` covers all of them (27 September 2026).
 - [ ] **LineGraph options:** a joined line through points for time series (today it is a
   polygon traced out and back), and `axes: false` for pictures of shapes (today the axes
   are hidden with out-of-range ticks).

@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { hits, type Seg } from './labelPlace.ts'
 
 /**
  * Greedy word wrap to a room measured the same way the phone-fit test measures text: a
@@ -109,10 +110,17 @@ export function LensDiagram({ props, alt }: { props: Record<string, unknown>; al
     }
     return out
   }
-  const ray = (pts: [number, number][], dashed: boolean, key: string) => (
+  // Every ray as drawn, kept as segments so the F labels can keep off them.
+  const raySegs: Seg[] = []
+  const ray = (pts: [number, number][], dashed: boolean, key: string) => {
+    const cut = clip(pts)
+    for (let i = 1; i < cut.length; i++) raySegs.push([{ x: cut[i - 1]![0], y: cut[i - 1]![1] }, { x: cut[i]![0], y: cut[i]![1] }])
+    return drawRay(cut, dashed, key)
+  }
+  const drawRay = (cut: [number, number][], dashed: boolean, key: string) => (
     <polyline
       key={key}
-      points={clip(pts).map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}
+      points={cut.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}
       fill="none"
       stroke={dashed ? INK_2 : '#d25b3b'}
       strokeWidth={1.5}
@@ -187,12 +195,26 @@ export function LensDiagram({ props, alt }: { props: Record<string, unknown>; al
         // above the axis on the side away from the lens. Towards the lens it sat against
         // the lens line once the drawing narrowed to fit a phone; away from it is clear,
         // because the refracted ray crosses the axis at F and runs below it beyond.
+        // Whichever spot the rays, the lens and the arrows leave clear: under the focus, then
+        // above it away from the lens, then the corners. "Away from the lens" alone was not
+        // enough when the image sat at F: the ray from the top of the lens ran down through it.
         const covered = Math.abs(imgX - x) < 12
         const away = x >= lensX ? 1 : -1
+        const blocks: Seg[] = [...raySegs, [{ x: lensX, y: lensTop }, { x: lensX, y: lensBottom }], [{ x: imgX, y: axisY }, { x: imgX, y: imgTop }], [{ x: objX, y: axisY }, { x: objX, y: objTop }]]
+        const spots = [
+          ...(covered ? [] : [{ x, y: axisY + 18, anchor: 'middle' as const }]),
+          { x: x + away * 6, y: axisY - 8, anchor: away > 0 ? 'start' as const : 'end' as const },
+          { x: x + away * 6, y: axisY + 17, anchor: away > 0 ? 'start' as const : 'end' as const },
+          { x: x - away * 6, y: axisY - 8, anchor: away > 0 ? 'end' as const : 'start' as const },
+          { x: x - away * 6, y: axisY + 17, anchor: away > 0 ? 'end' as const : 'start' as const },
+          { x, y: axisY + 18, anchor: 'middle' as const },
+        ]
+        const box = (sp: (typeof spots)[number]) => ({ x: sp.anchor === 'start' ? sp.x + 4 : sp.anchor === 'end' ? sp.x - 4 : sp.x, y: sp.y - 4 })
+        const at = spots.find((sp) => !hits(box(sp), 4.5, 5.5, blocks, 1)) ?? spots[0]!
         return (
           <g key={`f${i}`}>
             <circle cx={x} cy={axisY} r={3} fill={INK} />
-            <text x={covered ? x + away * 6 : x} y={covered ? axisY - 8 : axisY + 18} textAnchor={covered ? (away > 0 ? 'start' : 'end') : 'middle'} fill={INK} style={{ font: DISPLAY, fontSize: 12, fontWeight: 700 }}>F</text>
+            <text x={at.x} y={at.y} textAnchor={at.anchor} fill={INK} style={{ font: DISPLAY, fontSize: 12, fontWeight: 700 }}>F</text>
           </g>
         )
       })}

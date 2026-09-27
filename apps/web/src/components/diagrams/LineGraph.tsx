@@ -1,7 +1,7 @@
 import { useId, useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
-import { hits, type Pt, type Seg } from './labelPlace.ts'
+import { besides, near, settler, type Pt, type Seg, type Spot } from './labelPlace.ts'
 
 interface Line {
   /** y = m x + c */
@@ -327,35 +327,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
   // The fixed labels first: tick numbers and axis letters, which the rest keep clear of.
   const xTickYs = xTicks.map((v) => reserve(sx(v) - String(fmt(v)).length * 3, xAxisY + 14, fmt(v)))
   const yTickYs = yTicks.map((v) => reserve(yAxisX - 6, sy(v) + 4, fmt(v), 11, true))
-  type Spot = { x: number; y: number; anchor: 'start' | 'middle' | 'end' }
-  /**
-   * The first of `spots` (baseline positions) where the text crosses nothing drawn, overlaps
-   * no label already placed and stays on the canvas; failing all of them, `fallback` nudged
-   * clear of the other labels only, which is what every label got before.
-   */
-  const settle = (spots: Spot[], text: string, size: number, fallback: Spot, bold = true): Spot => {
-    // Bold display text runs wider than the 0.55 em the label-on-label nudge assumes; at
-    // 0.55 "y = x³ − 12x" was judged to fit and ran off the right-hand edge.
-    const w = text.length * size * (bold ? 0.62 : 0.56)
-    for (const c of spots) {
-      const l = c.anchor === 'end' ? c.x - w : c.anchor === 'middle' ? c.x - w / 2 : c.x
-      if (l < 2 || l + w > W - 2 || c.y - size < 0 || c.y > totalH - 2) continue
-      if (hits({ x: l + w / 2, y: c.y - size * 0.35 }, w / 2, size * 0.45, drawn, 1)) continue
-      if (placed.some((q) => Math.abs(q.y - c.y) < size + 2 && l < q.x + q.w && q.x < l + w)) continue
-      placed.push({ x: l, y: c.y, w })
-      return c
-    }
-    return { ...fallback, y: clear(fallback.x, fallback.y, text, size, fallback.anchor) }
-  }
-  /** Spots beside a point on a line or curve: above, below, to its left and to its right. */
-  const besides = (p: Pt, gap = 0): Spot[] => [
-    { x: p.x, y: p.y - 7 - gap, anchor: 'middle' }, { x: p.x, y: p.y + 16 + gap, anchor: 'middle' },
-    { x: p.x - 6 - gap, y: p.y + 4, anchor: 'end' }, { x: p.x + 6 + gap, y: p.y + 4, anchor: 'start' },
-    { x: p.x - 5 - gap, y: p.y - 6 - gap, anchor: 'end' }, { x: p.x + 5 + gap, y: p.y - 6 - gap, anchor: 'start' },
-    { x: p.x - 5 - gap, y: p.y + 15 + gap, anchor: 'end' }, { x: p.x + 5 + gap, y: p.y + 15 + gap, anchor: 'start' },
-  ]
-  /** A label's own spot, then small steps off it in each direction. */
-  const near = (o: Spot): Spot[] => [o, ...[[0, -8], [0, 8], [-8, 0], [8, 0], [0, -14], [0, 14], [-14, 0], [14, 0]].map(([dx, dy]) => ({ ...o, x: o.x + dx!, y: o.y + dy! }))]
+  const settle = settler(drawn, placed, W, totalH, clear)
   // The axis letters step off the end of their axis only if a line runs through them there.
   const xLetter: Spot = xLabel ? { x: W / 2, y: totalH - 4, anchor: 'middle' } : settle(near({ x: W - pad, y: xAxisY - 6, anchor: 'end' }), 'x', 12, { x: W - pad, y: xAxisY - 6, anchor: 'end' }, false)
   const yLetterY = yLabel ? reserve(padL, pad - 10, yLabel) : clear(yAxisX + 8, pad - 8, 'y')
@@ -381,7 +353,7 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     const fallback: Spot = { x: sx(last[0]) - 4, y: sy(last[1]) + (k.a > 0 ? -8 : 16), anchor: 'end' }
     const piece = pieces[pieces.length - 1] ?? []
     const back = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4].map((t) => piece[Math.round((piece.length - 1) * t)]).filter((p): p is Pt => !!p)
-    return settle([fallback, ...back.flatMap(besides)], k.label, 12, fallback)
+    return settle([fallback, ...back.flatMap((p) => besides(p))], k.label, 12, fallback)
   })
   const waveLabels = waves.map((w, i) => {
     const { last } = waveDraws[i]!
