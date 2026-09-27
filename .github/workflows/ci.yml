@@ -86,12 +86,12 @@ jobs:
           SAMPLE: '1'
           TOPICS: ${{ steps.changed.outputs.topics }}
         run: node e2e/walk.mjs --base http://localhost:4173
-      # The main screens with a sample student's progress, at both widths, in a light and a
+      # The main screens with a sample student's progress, at phone, tablet and desktop width, in a light and a
       # dark theme: sideways scroll, script errors, small or clipped text, contrast, and
       # phone tap targets.
       - name: Screens
         if: always()
-        run: node e2e/screens.mjs --base http://localhost:4173 --themes paper,midnight
+        run: node e2e/screens.mjs --base http://localhost:4173 --themes paper,midnight --widths 390,820,1280
       - uses: actions/upload-artifact@v4
         if: always()
         with:
