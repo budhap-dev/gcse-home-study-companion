@@ -44,7 +44,7 @@ describe('where you meet it', () => {
   })
 })
 
-describe('the tile', () => {
+describe('the way in to where you meet it', () => {
   /**
    * The grid reads as a sequence: lesson, worksheets, quiz. A tile for orientation
    * belongs at the front of it — placed beside Exam technique it implied you read it
@@ -52,8 +52,9 @@ describe('the tile', () => {
    */
   it('comes before the lesson, and only where there are examples', () => {
     const source = readFileSync(new URL('./Topic.tsx', import.meta.url), 'utf8')
-    const why = source.indexOf('title="Where you meet it"')
-    const lesson = source.indexOf('title="Lesson"')
+    // Since the map redesign it is a button in the topic's banner, and the lesson is the card below it.
+    const why = source.indexOf('>Where you meet it</Link>')
+    const lesson = source.indexOf('id="lesson-heading"')
     expect(why).toBeGreaterThan(-1)
     expect(why).toBeLessThan(lesson)
     expect(source).toContain('topic.why && topic.why.examples.length > 0')

@@ -418,7 +418,10 @@ figure[data-diagram] {
    not started is an empty outline rather than the palest fill, because "not begun" is a
    different kind of fact from "begun and weak". Every square also carries its status in its
    accessible name, and the bigger squares on the subject page carry its shape. */
-.map-sq { --map-ink: var(--subject); display: block; border-radius: 3px; }
+/* Colour only: the shape and the layout are left to each use. Unlayered CSS outranks every
+   Tailwind utility, so a display or radius set here silently beat the flex centring and
+   the rounded corners written on the element. */
+.map-sq { --map-ink: var(--subject); }
 @supports (color: oklch(from red l c h)) {
   .map-sq { --map-ink: oklch(from var(--subject) clamp(var(--map-l-min), l, 1) c h); }
 }

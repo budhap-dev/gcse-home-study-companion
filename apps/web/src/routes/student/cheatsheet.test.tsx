@@ -99,11 +99,12 @@ describe('the tile', () => {
   /** Revision comes after the practice: the tile sits with Flashcards, before Exam technique. */
   it('sits after Flashcards and before Exam technique on the topic page', () => {
     const source = readFileSync(new URL('./Topic.tsx', import.meta.url), 'utf8')
-    const flashcards = source.indexOf('title="Flashcards"')
-    const sheet = source.indexOf('title="Cheat sheet"')
-    const exam = source.indexOf('title="Exam technique"')
+    // Since the map redesign the three are one row of revision links, listed in order.
+    const flashcards = source.indexOf("['flashcards', 'Flashcards'")
+    const sheet = source.indexOf("['cheatsheet', 'Cheat sheet'")
+    const exam = source.indexOf("'Exam technique', '🎓'")
+    expect(flashcards).toBeGreaterThan(-1)
     expect(sheet).toBeGreaterThan(flashcards)
     expect(sheet).toBeLessThan(exam)
-    expect(source).toContain('to="cheatsheet"')
   })
 })
