@@ -12,11 +12,18 @@ import { evidenceFor, isoDate, streakDays, weekMinutes } from '../../progress/st
 import { useProgress } from '../../progress/useProgress.ts'
 import { mistakeQueue } from '../../progress/mistakes.ts'
 import { redoable } from './Mistakes.tsx'
+import { doneToday, todayPlan, type PlanItem } from '../../progress/today.ts'
+import { assignedTasks } from '../../progress/assignments.ts'
+import { useMyAssignments } from '../../auth/assignments.ts'
 
 export function Home() {
   const progress = useProgress()
   const { next, alternatives } = recommend(TOPICS, progress)
   const mistakes = mistakeQueue(progress, redoable)
+  const { list: assignments } = useMyAssignments()
+  const plan = todayPlan(TOPICS, progress, assignedTasks(assignments, progress), mistakes.length)
+  const done = doneToday(TOPICS, progress)
+  const others = alternatives.filter((t) => !plan.some((p) => p.to === t.to))
   const minutes = weekMinutes(progress)
   const goal = progress.goalMinutes
   const streak = streakDays(progress)
@@ -64,19 +71,24 @@ export function Home() {
         </div>
       </section>
 
-      {/* Above Next up: a task somebody asked for outranks one the app suggested. */}
-      <SetForYou />
-
-      {next ? (
+      {plan.length > 0 ? (
         <section className="flex flex-col gap-2">
-          <SectionLabel colour="#c8501f" emoji="🚀">Next up</SectionLabel>
-          <TaskCard task={next} primary />
+          <SectionLabel colour="#c8501f" emoji="🚀">Today</SectionLabel>
+          {plan.map((item, i) => <PlanCard key={item.to} item={item} primary={i === 0} />)}
+          {done.length > 0 && (
+            <p className="text-sm text-ink-2">
+              <strong className="text-ink">Done today:</strong> {done.map((d) => `${d.what} · ${d.topicTitle}${d.detail ? ` (${d.detail})` : ''}`).join('; ')}.
+            </p>
+          )}
         </section>
-      ) : (
+      ) : !next && (
         <p className="text-ink-2">No topics yet. They appear here as they are written.</p>
       )}
 
-      {mistakes.length > 0 && (
+      {/* Every task a parent set, done or not, below the plan that picks the most pressing one. */}
+      <SetForYou />
+
+      {mistakes.length > 0 && !plan.some((p) => p.to === '/mistakes') && (
         <section className="flex flex-col gap-2">
           <SectionLabel colour="#b8860b" emoji="🔁">Redo my mistakes</SectionLabel>
           <Link to="/mistakes" className="flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3">
@@ -89,11 +101,11 @@ export function Home() {
         </section>
       )}
 
-      {alternatives.length > 0 && (
+      {others.length > 0 && (
         <section className="flex flex-col gap-2">
           <SectionLabel colour="#1f3a93" emoji="🧭">Or choose</SectionLabel>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {alternatives.map((t) => (
+            {others.map((t) => (
               <TaskCard key={t.to} task={t} />
             ))}
           </div>
@@ -143,6 +155,20 @@ export function Home() {
       </section>
       </aside>
     </article>
+  )
+}
+
+/** One item of today's plan: why it is there, what it is, and how long it takes. */
+function PlanCard({ item, primary }: { item: PlanItem; primary: boolean }) {
+  return (
+    <Link to={item.to} className={`flex items-center gap-3 rounded-xl px-4 py-3 ${primary ? 'border-2 border-ink bg-surface' : 'border border-rule bg-surface'}`}>
+      <span className="flex flex-grow flex-col gap-0.5">
+        <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-ink-3">{item.label}</span>
+        <span className="font-bold leading-snug">{item.title}{item.topicTitle ? <span className="font-normal text-ink-2"> · {item.topicTitle}</span> : null}</span>
+        <span className="text-xs text-ink-2">{item.reason} About {item.minutes} min.</span>
+      </span>
+      <span className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-bold ${primary ? 'bg-ink text-surface' : 'border border-rule'}`}>Go</span>
+    </Link>
   )
 }
 

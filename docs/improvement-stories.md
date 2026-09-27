@@ -321,7 +321,7 @@ hard.
 
 ### UXI-1 · Today plan
 
-**Effort:** M · **Priority:** Now
+**Effort:** M · **Priority:** Now · **Status:** done (27 September 2026)
 
 As a student, I want Home to show three things to do today so that I start straight away.
 
