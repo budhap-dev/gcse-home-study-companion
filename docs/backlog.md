@@ -10,6 +10,8 @@ Last reviewed: 27 September 2026.
 **Development closed on 27 September 2026**, at the owner's request, with content (1) and
 testing and validation (2) complete. The product features in section 3 are **not planned**:
 they stay listed as a record of what the stories asked for, not as work in progress.
+The improvement scope review of the same day, written as 71 stories with effort estimates, is in
+[improvement-stories.md](improvement-stories.md).
 
 ## Order of work
 
