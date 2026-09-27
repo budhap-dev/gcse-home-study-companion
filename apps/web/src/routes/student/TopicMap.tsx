@@ -86,7 +86,7 @@ function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: 
   const years = yearsForSubject(subject.id)
   return (
     <header
-      className="anim-rise flex flex-col gap-5 rounded-3xl border p-5 sm:flex-row sm:items-center sm:gap-7 sm:p-6"
+      className="anim-rise flex flex-col gap-5 rounded-3xl border p-5 sm:p-6 xl:flex-row xl:items-center xl:gap-7"
       style={{ borderColor: 'color-mix(in srgb, var(--subject) 30%, var(--color-rule))', background: 'linear-gradient(120deg, color-mix(in srgb, var(--subject) 20%, var(--color-surface)), var(--color-surface) 55%, color-mix(in srgb, var(--hero-2) 10%, var(--color-surface)))' }}
     >
       <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label={`${secure} of ${squares.length} topics secure`} className="shrink-0">
@@ -109,7 +109,7 @@ function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: 
           ))}
         </ul>
       </div>
-      <div className="flex shrink-0 flex-col gap-2 sm:items-center">
+      <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 xl:flex-col xl:gap-2">
         <Link to={`/subjects/${subject.id}/exam-technique`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <span aria-hidden>✎</span> Exam technique guide
         </Link>
@@ -144,7 +144,7 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22.5rem)] lg:items-start">
       <section className="flex flex-col gap-3" aria-labelledby="units-heading">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
           <h2 id="units-heading" className="text-xl font-bold">By unit <span className="font-sans text-sm font-normal text-ink-2">· press any square</span></h2>
           {years.length > 1 && (
             <div role="group" aria-label="School year" className="flex w-fit flex-wrap gap-1 rounded-xl bg-panel p-1">
@@ -209,7 +209,8 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
       style={{ '--subject': subject.colour } as React.CSSProperties}
       className={wide
         ? 'card-top sticky top-24 flex flex-col gap-3.5 rounded-3xl border border-rule bg-surface p-5 shadow-[0_8px_28px_rgb(16_24_40/0.08)]'
-        : `${open ? 'flex' : 'hidden'} sheet-up card-top fixed inset-x-0 bottom-[calc(4.2rem+env(safe-area-inset-bottom))] z-40 max-h-[70dvh] flex-col gap-3.5 overflow-y-auto rounded-t-3xl border border-rule bg-surface p-5 shadow-[0_-12px_40px_rgb(16_24_40/0.22)]`}
+        // A tablet has no menu bar along the bottom, so there the sheet is a card in the corner.
+        : `${open ? 'flex' : 'hidden'} sheet-up card-top fixed inset-x-0 bottom-[calc(4.2rem+env(safe-area-inset-bottom))] z-40 max-h-[70dvh] flex-col gap-3.5 overflow-y-auto rounded-t-3xl border border-rule bg-surface p-5 shadow-[0_-12px_40px_rgb(16_24_40/0.22)] md:bottom-6 md:left-auto md:right-6 md:w-[25rem] md:rounded-3xl`}
     >
       <div className="flex items-start justify-between gap-3">
         <span className="text-xs font-bold uppercase tracking-[0.1em] text-ink-2">{subject.units.find((u) => u.id === t.unitId)?.name} · Year {t.year}</span>
