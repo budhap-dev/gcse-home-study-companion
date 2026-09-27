@@ -43,6 +43,56 @@ jobs:
           path: apps/web/dist
           retention-days: 7
 
+  browser:
+    # The built app in a real browser at phone and desktop width: diagrams or pages that
+    # scroll sideways, lines drawn through diagram labels, script errors, and lesson checks
+    # not marked Correct when given their own answer. Every PR walks a fixed sample that
+    # reaches every subject, plus every topic whose content the PR changes; the whole pack
+    # is walked weekly by browser-full.yml.
+    name: Browser checks
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: apps/web/dist
+      - name: Serve the build
+        working-directory: apps/web
+        run: |
+          npx vite preview --outDir dist --port 4173 --strictPort > preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:4173/ > /dev/null && exit 0; sleep 1; done
+          cat preview.log; exit 1
+      - name: Topics this PR changes
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="origin/${{ github.base_ref }}"
+            ids=$(git diff --name-only "$base"...HEAD -- 'supabase/seed/content/*/*.json' | while read -r f; do [ -f "$f" ] && basename "$f" .json; done | paste -sd, -)
+          fi
+          echo "topics=${ids:-}" >> "$GITHUB_OUTPUT"
+          echo "Changed topics: ${ids:-none}"
+      - name: Walk
+        env:
+          SAMPLE: '1'
+          TOPICS: ${{ steps.changed.outputs.topics }}
+        run: node e2e/walk.mjs --base http://localhost:4173
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-report
+          path: e2e-report.json
+          retention-days: 14
+
   database:
     name: Migrations and policies
     runs-on: ubuntu-latest

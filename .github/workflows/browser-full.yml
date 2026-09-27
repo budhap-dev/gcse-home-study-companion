@@ -1,0 +1,43 @@
+name: Browser checks, whole pack
+
+# Every lesson step and why page of every topic, at phone and desktop width, with every
+# lesson check answered: about 3,000 page visits a width, too many for each PR, so it
+# runs weekly and on demand, split four ways.
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+jobs:
+  walk:
+    name: Walk, part ${{ matrix.shard }} of 4
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Serve the build
+        working-directory: apps/web
+        run: |
+          npx vite preview --outDir dist --port 4173 --strictPort > preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:4173/ > /dev/null && exit 0; sleep 1; done
+          cat preview.log; exit 1
+      - name: Walk
+        env:
+          SHARD: ${{ matrix.shard }}/4
+        run: node e2e/walk.mjs --base http://localhost:4173
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-report-${{ matrix.shard }}
+          path: e2e-report.json
+          retention-days: 30

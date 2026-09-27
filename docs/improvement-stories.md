@@ -778,7 +778,7 @@ As a student on mobile data, I want the app to download only what I open.
 
 ### OPS-2 · Browser checks in CI
 
-**Effort:** M · **Priority:** Now
+**Effort:** M · **Priority:** Now · **Status:** done (27 September 2026)
 
 As the owner, I want the browser checks to run on every PR so that a regression cannot merge.
 
