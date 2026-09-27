@@ -1,10 +1,13 @@
 import { BADGES, type Badge, type LevelInfo, type SubjectId } from '@study/shared'
-import { awardBadges, getState, type ProgressState } from './store.ts'
+import { awardBadges, getState, recordMilestones, type ProgressState } from './store.ts'
+import { milestonesIn, type Milestone } from './milestones.ts'
 import { earnedBadgeIds, levelBySubject } from './xp.ts'
 
 export interface Settlement {
   newBadges: Badge[]
   levelUp?: { subjectId: SubjectId; level: LevelInfo }
+  /** Topics mastered and units finished by this attempt, first time only (MTV-3). */
+  milestones: Milestone[]
 }
 
 /**
@@ -21,5 +24,11 @@ export function settle(before: ProgressState): Settlement {
   for (const [s, info] of Object.entries(la)) {
     if (info.level > (lb[s]?.level ?? 1)) levelUp = { subjectId: s as SubjectId, level: info }
   }
-  return { newBadges, levelUp }
+  // Celebrated only when this attempt crossed the line. Milestones already true before it,
+  // such as topics mastered before milestones were recorded, are recorded quietly: the
+  // first quiz after this shipped must not set off a celebration for every one of them.
+  const already = new Set(milestonesIn(before).map((m) => m.id))
+  const reached = milestonesIn(after)
+  const fresh2 = new Set(recordMilestones(reached.map((m) => m.id)))
+  return { newBadges, levelUp, milestones: reached.filter((m) => fresh2.has(m.id) && !already.has(m.id)) }
 }

@@ -15,6 +15,8 @@ import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
+import { MilestoneCard } from '../../components/MilestoneCard.tsx'
+import type { Milestone } from '../../progress/milestones.ts'
 
 
 /**
@@ -55,6 +57,7 @@ function LessonBody({ topic }: { topic: TopicRecord }) {
   const [result, setResult] = useState<MarkResult | null>(null)
   const [done, setDone] = useState(false)
   const [celebration, setCelebration] = useState<Settlement | null>(null)
+  const [milestones, setMilestones] = useState<Milestone[]>([])
   useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'lesson' }, !done)
 
   useEffect(() => {
@@ -75,6 +78,7 @@ function LessonBody({ topic }: { topic: TopicRecord }) {
       saveLessonPosition(topic.id, index, true)
       const outcome = settle(before)
       if (outcome.newBadges.length || outcome.levelUp) setCelebration(outcome)
+      if (outcome.milestones.length) setMilestones(outcome.milestones)
       setDone(true)
       return
     }
@@ -95,7 +99,8 @@ function LessonBody({ topic }: { topic: TopicRecord }) {
   if (done) {
     return (
       <article className="mx-auto flex w-full max-w-2xl flex-col gap-6 py-6 text-center">
-        {celebration && (
+        {milestones[0] && <MilestoneCard milestone={milestones[0]} onDone={() => setMilestones((ms) => ms.slice(1))} />}
+        {celebration && !milestones.length && (
           <Celebration
             title={celebration.levelUp ? `Level up: ${celebration.levelUp.level.name}` : celebration.newBadges[0]!.name}
             detail={celebration.levelUp ? `${subject.name} level ${celebration.levelUp.level.level}` : celebration.newBadges[0]!.description}

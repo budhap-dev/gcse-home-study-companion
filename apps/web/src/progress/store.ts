@@ -120,12 +120,19 @@ export interface ProgressState {
   daysOff: string[]
   /** Badge id to the ISO time it was earned. */
   badges: Record<string, string>
+  /**
+   * Milestones (MTV-3) to the ISO time they were reached: `mastered:<topicId>` when a topic
+   * reaches Mastered, `unit:<subjectId>/<unitId>` when every topic in a unit is Secure or
+   * better. Recorded once, the first time, so a topic that fades and comes back is not
+   * celebrated twice.
+   */
+  milestones: Record<string, string>
 }
 
 export const DEFAULT_GOAL_MINUTES = 180
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {}, milestones: {} }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -136,7 +143,7 @@ function read(): ProgressState {
     if (raw) {
       const stored = JSON.parse(raw) as Partial<ProgressState>
       // A state written before `activities` existed has none, and every reader iterates it.
-      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {} }
+      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {} }
     }
   } catch {
     // storage unavailable or corrupt: start clean
@@ -207,6 +214,17 @@ export function saveLessonPosition(topicId: string, stepIndex: number, completed
     updatedAt: new Date().toISOString(),
   }
   write(state)
+}
+
+/** Records milestones not reached before and returns those, for the screen to celebrate. */
+export function recordMilestones(ids: string[]): string[] {
+  const state = read()
+  const fresh = ids.filter((id) => !state.milestones[id])
+  if (fresh.length === 0) return []
+  const now = new Date().toISOString()
+  for (const id of fresh) state.milestones[id] = now
+  write(state)
+  return fresh
 }
 
 export function awardBadges(ids: string[]): string[] {

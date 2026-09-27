@@ -12,6 +12,7 @@ import { StatusIcon } from '../../components/StatusChip.tsx'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { evidenceFor, isoDate, streakDays, weekDays, weekMinutes } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
+import { describeMilestone } from '../../progress/milestones.ts'
 
 export function Progress() {
   const progress = useProgress()
@@ -70,6 +71,29 @@ export function Progress() {
           <SkillBars skills={strengths} empty="Nothing above 80% yet." />
         </div>
       </section>
+
+      {Object.keys(progress.milestones).length > 0 && (
+        <section className="flex flex-col gap-3">
+          <SectionLabel colour="#b8860b" emoji="⭐">{`Milestones · ${Object.keys(progress.milestones).length}`}</SectionLabel>
+          <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {Object.entries(progress.milestones)
+              .sort(([, a], [, b]) => b.localeCompare(a))
+              .map(([id, at]) => {
+                const m = describeMilestone(id)
+                if (!m) return null
+                return (
+                  <li key={id} className="flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3">
+                    <Smiley className="text-2xl">{m.kind === 'mastered' ? '⭐' : '🏆'}</Smiley>
+                    <span className="flex flex-col">
+                      <span className="font-bold leading-snug">{m.title}</span>
+                      <span className="text-xs text-ink-2">{m.detail} · {new Date(at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                    </span>
+                  </li>
+                )
+              })}
+          </ul>
+        </section>
+      )}
 
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#c8501f" emoji="🏆">{`Badges · ${Object.keys(progress.badges).length} of ${BADGES.length}`}</SectionLabel>

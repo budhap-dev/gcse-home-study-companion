@@ -276,7 +276,7 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [ ] **TUT-3:** show the student who set a task, and the score once it is done.
 - [ ] **MOT-2:** add a "finished a unit" badge, show badges in the parent summary, and give
   badges per-subject artwork.
-- [ ] **MOT-4:** celebrate each topic reaching Mastered and each unit finished, with a card the
+- [x] **MOT-4:** celebrate each topic reaching Mastered and each unit finished, with a card the
   student can keep or share.
 - [ ] **FAM-3:** let a student see which parents are linked to them. An expiring invite link
   is not needed while sign-in is by Google allow-list.
