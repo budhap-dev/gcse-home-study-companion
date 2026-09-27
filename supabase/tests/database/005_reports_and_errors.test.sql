@@ -24,7 +24,7 @@ select lives_ok(
 select is((select reporter_email from public.content_reports), 'kid@test.local', 'the reporter is the signed-in student');
 select throws_ok(
   $$ insert into public.content_reports (reporter_email, subject_id, topic_id, item_kind, item_id, seen_in, note, app_version)
-     values ('mum@test.local', 'maths', 'quadratic-curves', 'q5', 'quiz', 'pretending', '10.34.0') $$,
+     values ('mum@test.local', 'maths', 'quadratic-curves', 'question', 'q5', 'quiz', 'pretending', '10.34.0') $$,
   '42501', null, 'a report cannot be made in someone else''s name');
 select throws_ok(
   $$ insert into public.content_reports (subject_id, topic_id, item_kind, item_id, seen_in, note, app_version)
