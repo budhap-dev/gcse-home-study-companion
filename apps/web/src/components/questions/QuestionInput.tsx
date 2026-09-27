@@ -193,43 +193,74 @@ function Ordering({ question, disabled, onSubmit }: Props & { question: Extract<
   )
 }
 
+/**
+ * An extended answer, marked by the student against the model answer and the criteria
+ * (QZ-2, WKP-8). The mark scheme waits for an attempt: with nothing written it was one tap
+ * to read the answer first, which makes the self-marking meaningless. Someone who wrote on
+ * paper says so. Once shown, the student's answer and the model answer sit side by side
+ * where the question's own box is wide enough (a container query, not the screen width:
+ * a worksheet on a laptop gives the question a narrow column beside the scratch pad).
+ */
+const MIN_ATTEMPT = 40
 function Extended({ question, disabled, onSubmit }: Props & { question: Extract<Question, { type: 'extended' }> }) {
   const [text, setText] = useState('')
+  const [onPaper, setOnPaper] = useState(false)
   const [awarded, setAwarded] = useState<boolean[]>(() => question.criteria.map(() => false))
   const [revealed, setRevealed] = useState(false)
   const total = question.criteria.reduce((sum, c, i) => sum + (awarded[i] ? c.marks : 0), 0)
+  const attempted = text.trim().length >= MIN_ATTEMPT || onPaper
+  const answerBox = (
+    <textarea
+      value={text}
+      disabled={disabled || revealed}
+      onChange={(e) => setText(e.target.value)}
+      rows={revealed ? 10 : 6}
+      aria-label="Your answer"
+      placeholder={`Write your answer. About ${question.suggestedMinutes} minutes.`}
+      className="w-full rounded-lg border border-rule bg-surface p-3 text-[15px] focus:border-[color:var(--subject)] disabled:opacity-80"
+    />
+  )
   return (
-    <div className="flex flex-col gap-3">
-      <textarea
-        value={text}
-        disabled={disabled || revealed}
-        onChange={(e) => setText(e.target.value)}
-        rows={6}
-        placeholder={`Write your answer. About ${question.suggestedMinutes} minutes.`}
-        className="rounded-lg border border-rule bg-surface p-3 text-[15px] focus:border-[color:var(--subject)] disabled:opacity-70"
-      />
+    <div className="@container flex flex-col gap-3">
+      {!revealed && answerBox}
       {!revealed && !disabled && (
-        <button type="button" onClick={() => setRevealed(true)} className="h-11 rounded-lg bg-[color:var(--subject)] px-4 font-bold text-white">
-          Show the mark scheme
-        </button>
+        <div className="flex flex-col gap-2">
+          <button type="button" onClick={() => setRevealed(true)} disabled={!attempted} className="h-11 rounded-lg bg-[color:var(--subject)] px-4 font-bold text-white disabled:opacity-40">
+            Show the mark scheme
+          </button>
+          {!attempted && (
+            <p className="text-xs text-ink-2">
+              Write your answer first: the mark scheme is for checking it, not reading instead of it.{' '}
+              <button type="button" onClick={() => setOnPaper(true)} className="font-bold underline">I wrote it on paper</button>
+            </p>
+          )}
+        </div>
       )}
       {revealed && (
-        <div className="flex flex-col gap-3 rounded-xl border border-rule bg-surface p-4">
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Model answer</p>
-          <RichText source={question.modelAnswer} className="text-sm" />
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Tick what your answer includes</p>
-          <ul className="flex flex-col gap-2">
-            {question.criteria.map((c, i) => (
-              <li key={i}>
-                <label className="flex min-h-11 cursor-pointer items-start gap-3">
-                  <input type="checkbox" disabled={disabled} checked={awarded[i]} onChange={(e) => setAwarded((a) => a.map((v, j) => (j === i ? e.target.checked : v)))} className="mt-1 h-5 w-5" />
-                  <span className="flex-grow text-sm"><RichText source={c.text} inline /></span>
-                  <span className="text-xs text-ink-2">{c.marks} mark{c.marks > 1 ? 's' : ''}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-          {!disabled && <SubmitButton label={`Record ${total} of ${question.marks} marks`} onClick={() => onSubmit(total)} />}
+        <div className="grid grid-cols-1 gap-3 @2xl:grid-cols-2">
+          <div className="flex flex-col gap-2">
+            <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Your answer</p>
+            {text.trim() ? answerBox : <p className="rounded-lg border border-dashed border-rule p-3 text-sm text-ink-2">Written on paper. Have it beside you as you tick.</p>}
+          </div>
+          <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface p-4">
+            <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Model answer, full marks</p>
+            <RichText source={question.modelAnswer} className="text-sm" />
+          </div>
+          <div className="flex flex-col gap-3 rounded-xl border border-rule bg-surface p-4 @2xl:col-span-2">
+            <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Tick what your answer includes</p>
+            <ul className="flex flex-col gap-2">
+              {question.criteria.map((c, i) => (
+                <li key={i}>
+                  <label className="flex min-h-11 cursor-pointer items-start gap-3">
+                    <input type="checkbox" disabled={disabled} checked={awarded[i]} onChange={(e) => setAwarded((a) => a.map((v, j) => (j === i ? e.target.checked : v)))} className="mt-1 h-5 w-5" />
+                    <span className="flex-grow text-sm"><RichText source={c.text} inline /></span>
+                    <span className="text-xs text-ink-2">{c.marks} mark{c.marks > 1 ? 's' : ''}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+            {!disabled && <SubmitButton label={`Record ${total} of ${question.marks} marks`} onClick={() => onSubmit(total)} />}
+          </div>
         </div>
       )}
     </div>
