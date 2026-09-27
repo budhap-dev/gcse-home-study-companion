@@ -1,0 +1,181 @@
+// The screens walk: the app's main screens in a real browser, at phone and desktop width and
+// in each theme, with a sample student's progress loaded so the maps, rings and bars have
+// something to draw. It fails on what the lesson walk (walk.mjs) does not visit:
+//
+//   - the page scrolling sideways;
+//   - a script error on the page;
+//   - text under 11px, or text cut off by its own box;
+//   - text below WCAG AA contrast against the solid colour behind it (4.5:1, or 3:1 for
+//     large text). Text on a banner gradient is skipped here: contrast.test.ts holds every
+//     theme's gradient to 5:1 for white;
+//   - at phone width, a button or link smaller than 24 by 24 pixels (WCAG 2.2 target size),
+//     unless it sits inside a line of text.
+//
+// Usage: node e2e/screens.mjs [--base http://localhost:4173] [--widths 390,1280]
+//          [--themes paper,midnight | all] [--shots dir]
+// Writes e2e-screens-report.json and exits 1 if anything was found.
+import { chromium } from 'playwright-core'
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const HERE = dirname(fileURLToPath(import.meta.url))
+const ROOT = join(HERE, '..', 'supabase', 'seed', 'content')
+const arg = (name, fallback) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1] : fallback }
+const BASE = arg('base', 'http://localhost:4173')
+const WIDTHS = arg('widths', '390,1280').split(',').map(Number)
+const THEME_SOURCE = readFileSync(join(HERE, '..', 'apps', 'web', 'src', 'theme', 'themes.ts'), 'utf8')
+const ALL_THEMES = [...THEME_SOURCE.matchAll(/\{ id: '([a-z-]+)', name:/g)].map((m) => m[1])
+const THEMES = arg('themes', 'paper,midnight') === 'all' ? ALL_THEMES : arg('themes', 'paper,midnight').split(',')
+const SHOTS = arg('shots', '')
+
+const ROUTES = [
+  '/',
+  '/subjects',
+  '/subjects/maths',
+  '/subjects/maths/topics/circle-theorems',
+  '/subjects/physics',
+  '/subjects/english-literature/topics/an-inspector-calls-themes',
+  '/progress',
+  '/settings',
+]
+
+/** The sample student: Year 10, a spread of statuses in every subject, a lesson half done. */
+function sampleProgress() {
+  const now = Date.now()
+  const daysAgo = (d) => new Date(now - d * 86400000).toISOString()
+  const attempts = []
+  const lessons = {}
+  let n = 0
+  const attempt = (topicId, kind, pct, level, ago) => attempts.push({
+    id: `sample-${n++}`, topicId, kind, level, marksScored: pct, marksAvailable: 100, markedHow: 'auto', completedAt: daysAgo(ago), xp: Math.round(pct / 2),
+  })
+  for (const subject of readdirSync(ROOT).filter((d) => !d.includes('.')).sort()) {
+    const ids = readdirSync(join(ROOT, subject)).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)).sort()
+    ids.forEach((id, i) => {
+      // Of every nine topics: one mastered, two secure, two developing, one not secure, three untouched.
+      const k = i % 9
+      if (k === 0) { attempt(id, 'quiz', 95, undefined, 3); attempt(id, 'worksheet', 85, 'higher', 4); attempt(id, 'worksheet', 80, 'advanced', 3) }
+      if (k === 1 || k === 2) { attempt(id, 'quiz', 85, undefined, 5 + k); attempt(id, 'worksheet', 75, 'higher', 6) }
+      if (k === 3) attempt(id, 'quiz', 60, undefined, 2)
+      if (k === 4) lessons[id] = { topicId: id, stepIndex: 7, completedAt: daysAgo(1), updatedAt: daysAgo(1) }
+      if (k === 5) attempt(id, 'quiz', 35, undefined, 1)
+      if (k < 5) lessons[id] ??= { topicId: id, stepIndex: 6, completedAt: daysAgo(8), updatedAt: daysAgo(8) }
+    })
+  }
+  lessons['circle-theorems'] = { topicId: 'circle-theorems', stepIndex: 4, updatedAt: daysAgo(0) }
+  const minutes = {}
+  for (let d = 0; d < 6; d++) minutes[new Date(now - d * 86400000).toISOString().slice(0, 10)] = [22, 0, 15, 13, 30, 8][d]
+  return {
+    attempts, lessons, activities: [], minutes, time: {}, goalMinutes: 180, daysOff: [], badges: {}, milestones: {},
+    profile: { year: 10, setupAt: daysAgo(20) },
+  }
+}
+
+/** In the page: everything this walk fails on. Runs after the entrance animations settle. */
+const scan = ({ phone }) => {
+  const out = []
+  const push = (kind, el, detail) => out.push({ kind, where: describe(el), detail })
+  function describe(el) {
+    if (!el || el === document.documentElement) return 'page'
+    const text = (el.innerText || el.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 50)
+    return `${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''} "${text}"`
+  }
+  if (document.documentElement.scrollWidth > window.innerWidth) out.push({ kind: 'page scrolls sideways', where: 'page', detail: `${document.documentElement.scrollWidth} > ${window.innerWidth}` })
+
+  // Any CSS colour, oklch and color-mix included, to sRGB bytes: paint it and read it back.
+  const cvs = document.createElement('canvas'); cvs.width = cvs.height = 1
+  const ctx = cvs.getContext('2d', { willReadFrequently: true })
+  const toRgba = (css) => { ctx.clearRect(0, 0, 1, 1); ctx.fillStyle = '#000'; ctx.fillStyle = css; ctx.fillRect(0, 0, 1, 1); const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data; return [r, g, b, a / 255] }
+  const lin = (v) => { const s = v / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4 }
+  const lum = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+  const over = (top, under) => top.slice(0, 3).map((v, i) => v * top[3] + under[i] * (1 - top[3]))
+  /** The solid colour painted behind an element, or null where a gradient or image is behind it. */
+  const groundOf = (el) => {
+    const layers = []
+    for (let e = el; e; e = e.parentElement) {
+      const cs = getComputedStyle(e)
+      if (cs.backgroundImage !== 'none' && e !== document.documentElement && e !== document.body) return null
+      const c = toRgba(cs.backgroundColor)
+      if (c[3] > 0) { layers.push(c); if (c[3] >= 1) break }
+    }
+    let ground = toRgba(getComputedStyle(document.documentElement).backgroundColor)
+    for (const layer of layers.reverse()) ground = over(layer, ground)
+    return ground
+  }
+  const visible = (el) => el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })
+
+  for (const el of document.querySelectorAll('main *, header *, nav *, aside *')) {
+    if (el.closest('svg, .katex, .sr-only, math-field, figure[data-diagram]')) continue
+    const own = [...el.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim())
+    if (!own || !visible(el)) continue
+    const cs = getComputedStyle(el)
+    const size = parseFloat(cs.fontSize)
+    if (size < 11) push('text under 11px', el, `${size}px`)
+    if ((cs.overflow === 'hidden' || cs.overflowX === 'hidden') && cs.textOverflow !== 'ellipsis' && el.scrollWidth > el.clientWidth + 1) push('text cut off', el, `${el.scrollWidth} > ${el.clientWidth}`)
+    const ground = groundOf(el)
+    if (!ground) continue
+    let opacity = 1
+    for (let e = el; e; e = e.parentElement) opacity *= parseFloat(getComputedStyle(e).opacity)
+    const ink = toRgba(cs.color)
+    const painted = over([...ink.slice(0, 3), ink[3] * opacity], ground)
+    const [hi, lo] = [lum(painted), lum(ground)].sort((a, b) => b - a)
+    const ratio = (hi + 0.05) / (lo + 0.05)
+    const large = size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700)
+    if (ratio < (large ? 3 : 4.5)) push('low contrast', el, `${ratio.toFixed(2)}:1 at ${size}px`)
+  }
+
+  if (phone) {
+    for (const el of document.querySelectorAll('main a, main button, main [role="button"], main input, main select, nav a')) {
+      // A control inside a label is reached through the whole label, which is the real target.
+      if (!visible(el) || el.closest('p, li > span, .rich-text') || (el.tagName === 'INPUT' && el.closest('label'))) continue
+      const r = el.getBoundingClientRect()
+      if (r.width < 24 || r.height < 24) push('target under 24px', el, `${Math.round(r.width)}x${Math.round(r.height)}`)
+    }
+  }
+  return out
+}
+
+const browser = await chromium.launch({ channel: 'chrome' })
+const findings = []
+const progress = JSON.stringify(sampleProgress())
+if (SHOTS) mkdirSync(SHOTS, { recursive: true })
+for (const theme of THEMES) {
+  for (const width of WIDTHS) {
+    const phone = width < 768
+    const context = await browser.newContext({ viewport: { width, height: phone ? 844 : 900 }, deviceScaleFactor: 1 })
+    await context.addInitScript(([p, t]) => {
+      localStorage.setItem('study-companion.progress.v1', p)
+      localStorage.setItem('study-companion.theme', t)
+    }, [progress, theme])
+    const page = await context.newPage()
+    const errors = []
+    page.on('pageerror', (e) => errors.push(String(e)))
+    page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(m.text()) })
+    for (const route of ROUTES) {
+      errors.length = 0
+      await page.goto(BASE + route, { waitUntil: 'load', timeout: 60000 })
+      await page.waitForSelector('main h1', { timeout: 20000 }).catch(() => errors.push('no heading rendered'))
+      // Entrance animations run to about 1.6s; measuring mid-animation reports boxes that are not the layout.
+      await page.waitForTimeout(2200)
+      const found = await page.evaluate(scan, { phone })
+      for (const e of errors) found.push({ kind: 'script error', where: 'page', detail: e.slice(0, 200) })
+      for (const f of found) findings.push({ theme, width, route, ...f })
+      if (SHOTS) await page.screenshot({ path: join(SHOTS, `${theme}-${width}${route.replaceAll('/', '_') || '_home'}.png`), fullPage: true })
+      console.log(`${theme} ${width} ${route}: ${found.length ? found.length + ' found' : 'clean'}`)
+    }
+    await context.close()
+  }
+}
+await browser.close()
+
+writeFileSync(join(HERE, '..', 'e2e-screens-report.json'), JSON.stringify(findings, null, 2))
+if (findings.length) {
+  const byKind = Object.groupBy(findings, (f) => f.kind)
+  for (const [kind, list] of Object.entries(byKind)) {
+    console.log(`\n${kind}: ${list.length}`)
+    for (const f of list.slice(0, 12)) console.log(`  ${f.theme} ${f.width} ${f.route} ${f.where} ${f.detail}`)
+  }
+  process.exit(1)
+}
+console.log('\nAll screens clean.')

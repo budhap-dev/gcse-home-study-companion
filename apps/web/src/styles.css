@@ -459,8 +459,13 @@ figure[data-diagram] {
   .rich-text th, .rich-text td { padding: 0.3rem 0.35rem; hyphens: auto; -webkit-hyphens: auto; }
 }
 
-/* Colour markers: bold terms in lesson text read like a highlighter pen. */
-.rich-text strong { background: color-mix(in srgb, var(--subject, #c8501f) 16%, transparent); border-radius: 0.3em; padding: 0 0.2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+/* Colour markers: bold terms in lesson text read like a highlighter pen. In the full ink,
+   not the muted ink of the note around them: grey on the highlighter band measured 4.2:1
+   in Sunshine. */
+.rich-text strong { color: var(--color-ink); background: color-mix(in srgb, var(--subject, #c8501f) 16%, transparent); border-radius: 0.3em; padding: 0 0.2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+/* On a banner the words are white, and so is their highlighter, faintly. */
+.hero-gradient .rich-text strong { color: inherit; background: rgb(255 255 255 / 0.18); }
+.hero-gradient .rich-text a { color: inherit; }
 /* Coloured label chips for sections and step kinds. */
 /* A chip is handed a raw accent -- the subject's, or one of the five fixed hexes the cheat
    sheet and the lesson pass as --chip -- so it adjusts what it is given rather than trusting

@@ -24,7 +24,7 @@ export function WeeklyBars({ weeks, goal }: { weeks: Week[]; goal: number }) {
             height: in an auto-height column every bar computed to zero and drew nothing. */}
         {weeks.map((w) => (
           <span key={w.start} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1" title={`${w.minutes} minutes in the week of ${w.label}`}>
-            <span className="text-[10px] tabular-nums text-ink-3">{w.minutes || ''}</span>
+            <span className="text-[11px] tabular-nums text-ink-3">{w.minutes || ''}</span>
             <span
               className={`w-full rounded-t ${w.minutes >= goal ? 'bg-status-secure' : w.minutes > 0 ? 'bg-status-developing' : 'bg-panel'}`}
               style={{ height: `${Math.max(w.minutes > 0 ? 3 : 2, (100 * w.minutes) / best)}%` }}
@@ -33,7 +33,7 @@ export function WeeklyBars({ weeks, goal }: { weeks: Week[]; goal: number }) {
         ))}
       </div>
       <div className="flex gap-1.5">
-        {weeks.map((w) => <span key={w.start} className="min-w-0 flex-1 truncate text-center text-[10px] text-ink-3">{w.label}</span>)}
+        {weeks.map((w) => <span key={w.start} className="min-w-0 flex-1 truncate text-center text-[11px] text-ink-3">{w.label}</span>)}
       </div>
       <p className="text-xs text-ink-2">
         {total} minutes over {weeks.length} weeks · goal of {goal} met in {met} of {weeks.length}
