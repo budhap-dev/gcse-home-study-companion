@@ -75,8 +75,13 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
     else if (e.quizPct! < DEFAULT_THRESHOLDS.grade9QuizMin) ranked.push(buildTask(t, 'quiz', 'Advanced sheet done. A quiz will show how much has stuck.'))
     else ranked.push(buildTask(t, 'worksheet', `Advanced sheet ${Math.round(e.advancedPct)}%. Another go with the solutions beside you.`, 'advanced'))
   }
-  // 5. not started, in content order
-  for (const t of topics.filter((t) => !state.lessons[t.id] && ev.get(t.id)!.quizPct === undefined)) {
+  // 5. not started, in content order; the student's own year first when they have said it
+  // (UXI-10), then earlier years as recap, then later years. A Year 11 student was otherwise
+  // steered to Year 9 topics first, because content order starts there.
+  const mine = state.profile?.year
+  const yearRank = (t: Topic) => (!mine ? 0 : t.year === mine ? 0 : t.year < mine ? 1 : 2)
+  const notStarted = topics.filter((t) => !state.lessons[t.id] && ev.get(t.id)!.quizPct === undefined)
+  for (const t of notStarted.map((t, i) => ({ t, i })).sort((a, b) => yearRank(a.t) - yearRank(b.t) || a.i - b.i).map((x) => x.t)) {
     ranked.push(buildTask(t, 'lesson', 'New idea. One step at a time.'))
   }
   // 6. lesson done but no quiz

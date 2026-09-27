@@ -127,12 +127,40 @@ export interface ProgressState {
    * celebrated twice.
    */
   milestones: Record<string, string>
+  /** The student's own answers from first-run setup (UXI-10); every field optional. */
+  profile: Profile
+}
+
+/**
+ * What the student tells the app about themselves: their school year, the subjects they
+ * take, and exam dates where known. It narrows the plan and the subject list to what they
+ * study and opens the topic map on their year. `setupAt` records that setup was done (or
+ * skipped), so it is offered once.
+ */
+export interface Profile {
+  year?: 9 | 10 | 11
+  subjects?: string[]
+  /** Subject id to the ISO date of its first exam paper. */
+  examDates?: Record<string, string>
+  setupAt?: string
+}
+
+export function setProfile(profile: Profile) {
+  const state = read()
+  state.profile = { ...profile, setupAt: profile.setupAt ?? new Date().toISOString() }
+  write(state)
+}
+
+/** Only the topics of the subjects the student takes, or all of them if they have not said. */
+export function studiedTopics<T extends { subjectId: string }>(topics: T[], profile: Profile | undefined): T[] {
+  const chosen = profile?.subjects
+  return chosen && chosen.length ? topics.filter((t) => chosen.includes(t.subjectId)) : topics
 }
 
 export const DEFAULT_GOAL_MINUTES = 180
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {}, milestones: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {}, milestones: {}, profile: {} }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -143,7 +171,7 @@ function read(): ProgressState {
     if (raw) {
       const stored = JSON.parse(raw) as Partial<ProgressState>
       // A state written before `activities` existed has none, and every reader iterates it.
-      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {} }
+      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {}, profile: stored.profile ?? {} }
     }
   } catch {
     // storage unavailable or corrupt: start clean

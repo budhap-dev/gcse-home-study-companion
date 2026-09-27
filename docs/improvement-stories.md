@@ -420,7 +420,7 @@ that lessons are accessible.
 
 ### UXI-10 · First-run setup
 
-**Effort:** S · **Priority:** Next · **Pairs with:** ACC-1
+**Effort:** S · **Priority:** Next · **Pairs with:** ACC-1 · **Status:** done (27 September 2026)
 
 As a new student, I want to pick my year, subjects and exam dates first so that the app starts
 relevant.

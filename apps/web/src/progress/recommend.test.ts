@@ -57,3 +57,13 @@ describe('recommend', () => {
     expect(forA[0]).toMatchObject({ kind: 'quiz' })
   })
 })
+
+describe('the student\'s year', () => {
+  it('suggests their own year\'s new topics first, then earlier years, then later', () => {
+    const t9 = { ...topic('nine'), year: 9 as const }, t10 = { ...topic('ten'), year: 10 as const }, t11 = { ...topic('eleven'), year: 11 as const }
+    const order = (year?: 9 | 10 | 11) => { const r = recommend([t9, t10, t11], { ...emptyState(), profile: year ? { year } : {} }); return [r.next, ...r.alternatives].map((x) => x!.topic.id) }
+    expect(order()).toEqual(['nine', 'ten', 'eleven'])
+    expect(order(11)).toEqual(['eleven', 'nine', 'ten'])
+    expect(order(10)).toEqual(['ten', 'nine', 'eleven'])
+  })
+})

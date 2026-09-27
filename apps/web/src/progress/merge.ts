@@ -57,5 +57,7 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
     daysOff: [...new Set([...A.daysOff, ...B.daysOff])].sort(),
     badges,
     milestones,
+    // One profile: the one set up or changed more recently.
+    profile: (B.profile?.setupAt ?? '') > (A.profile?.setupAt ?? '') ? B.profile : A.profile,
   }
 }
