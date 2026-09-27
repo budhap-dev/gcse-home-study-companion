@@ -8,6 +8,7 @@ import { getTopic, totalMarks } from '../../content/index.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { decayNote, evidenceFor } from '../../progress/store.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
+import { suggestedLevel } from '../../progress/level.ts'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -110,13 +111,17 @@ export function Topic() {
         <Part to="lesson" title="Lesson" note={`${topic.lesson.steps.length} steps, one idea each`} action={lesson && !evidence.lessonDone ? 'Resume' : 'Start'} />
         {WORKSHEET_LEVELS.map((level) => {
           const sheet = topic.worksheets[level]
+          // One level is suggested from the topic's status (Advanced once Secure); the
+          // others stay open, because the app recommends and never blocks.
+          const suggested = level === suggestedLevel(evidence.status)
           return (
             <Part
               key={level}
               to={`worksheet/${level}`}
               title={`${LEVEL_LABEL[level]} worksheet`}
-              note={`${sheet.questionIds.length} questions · ${totalMarks(topic, sheet.questionIds)} marks · about ${sheet.suggestedMinutes} min. ${LEVEL_NOTE[level]}`}
-              action="Open"
+              note={`${suggested ? 'Suggested for where you are. ' : ''}${sheet.questionIds.length} questions · ${totalMarks(topic, sheet.questionIds)} marks · about ${sheet.suggestedMinutes} min. ${LEVEL_NOTE[level]}`}
+              action={suggested ? 'Start here' : 'Open'}
+              highlight={suggested}
             />
           )
         })}
@@ -189,9 +194,9 @@ const TIP_LABEL: Record<string, string> = { remember: 'Remember it', spot: 'Spot
 
 const PART_EMOJI: Record<string, string> = { Lesson: '📖', 'Core worksheet': '📝', 'Higher worksheet': '📝', 'Advanced worksheet': '🧠', Quiz: '⚡', Flashcards: '🃏', 'Cheat sheet': '📋', 'Exam technique': '🎓', 'Where you meet it': '🌍' }
 
-function Part({ to, title, note, action }: { to: string; title: string; note: string; action: string }) {
+function Part({ to, title, note, action, highlight = false }: { to: string; title: string; note: string; action: string; highlight?: boolean }) {
   return (
-    <Link to={to} className="flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-[color:var(--subject)]">
+    <Link to={to} className={`flex items-center gap-3 rounded-xl bg-surface px-4 py-3 hover:border-[color:var(--subject)] ${highlight ? 'border-2 border-[color:var(--subject)]' : 'border border-rule'}`}>
       <span className="tint flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xl"><Smiley>{PART_EMOJI[title] ?? '📚'}</Smiley></span>
       <span className="flex flex-grow flex-col gap-0.5">
         <span className="font-bold">{title}</span>

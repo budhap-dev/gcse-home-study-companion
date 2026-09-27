@@ -258,11 +258,11 @@ listed below. Each box is the missing part of a story, not the whole story.
   its page says why the status fell.
 
 ### Partly built
-- [ ] **QZ-1:** a missed quiz question should link to the lesson step that teaches it, not the
+- [x] **QZ-1:** a missed quiz question should link to the lesson step that teaches it, not the
   start of the lesson.
-- [ ] **WKS-1:** open the Advanced worksheet by default for a Secure topic. Today only Home's
+- [x] **WKS-1:** open the Advanced worksheet by default for a Secure topic. Today only Home's
   recommendation points there.
-- [ ] **LRN-1:** show on each topic-map row which of lesson, worksheets and quiz are done
+- [x] **LRN-1:** show on each topic-map row which of lesson, worksheets and quiz are done
   (today only a status icon).
 - [x] **LRN-5:** the Further Maths exam technique guide (PR #266; checked in the review pass).
 - [ ] **LRN-7:** build the drag-order, drag-match and labelling interactives. They are in the
