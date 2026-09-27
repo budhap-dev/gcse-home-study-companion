@@ -41,7 +41,8 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
   // The ionic layout used to size itself with 120 units of pure margin (60 either side),
   // which nothing on the canvas actually needed and which alone put it 82px over a phone's
   // 296-wide budget. The atoms keep their size and spacing; only that unused margin shrank.
-  const gap = kind === 'ionic' ? 165 : 2 * r - 22
+  // 160 (was 165) so the second ion's charge fits outside its bracket on the canvas.
+  const gap = kind === 'ionic' ? 160 : 2 * r - 22
   const cx0 = kind === 'ionic' ? 58 : 60 + r
   const W = kind === 'ionic' ? 295 : 2 * r + gap + 120
   /**
@@ -153,7 +154,9 @@ export function DotAndCross({ props, alt }: { props: Record<string, unknown>; al
               <text x={cx[i]} y={cy + 6} textAnchor="middle" fontFamily={DISPLAY} fontSize="18" fontWeight="700" fill={INK}>{at.symbol}</text>
               {ring(cx[i]!, own, at.mark, null)}
               {gained > 0 && ring(cx[i]!, own + gained, a.mark, null).slice(own)}
-              <text x={cx[i]! + r + 14} y={cy - r + 2} textAnchor="middle" fontFamily={DISPLAY} fontSize="16" fontWeight="700" fill="#d25b3b">{at.charge ?? (i === 0 ? `${transfer > 1 ? transfer : ''}+` : `${transfer > 1 ? transfer : ''}−`)}</text>
+              {/* The charge is a superscript outside the bracket's top-right corner, starting clear
+                  of its edge: centred 4 units past the edge, the edge ran through the "+". */}
+              <text x={cx[i]! + r + 13} y={cy - r - 4} textAnchor="start" fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill="#d25b3b">{at.charge ?? (i === 0 ? `${transfer > 1 ? transfer : ''}+` : `${transfer > 1 ? transfer : ''}−`)}</text>
               {n === 0 && (
                 // "outer electrons given away" is 27 characters — at the fontSize-11 floor
                 // that runs wider than the atom's own half of the canvas, so it always

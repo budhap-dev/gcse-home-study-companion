@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { hits, type Seg } from './labelPlace.ts'
 
 /** Where the input wires start, just right of the input letters. */
 const WIRE_START = 28
@@ -137,6 +138,36 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
       ? <line key={key} x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK} strokeWidth={1.5} />
       : <polyline key={key} points={`${x1},${y1} ${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`} fill="none" stroke={INK} strokeWidth={1.5} />
 
+  // Every wire as straight segments, the same routes `wire` draws, for the gate names to keep clear of.
+  const wireSegs: Seg[] = []
+  const route = (x1: number, y1: number, x2: number, y2: number) => {
+    if (y1 === y2) wireSegs.push([{ x: x1, y: y1 }, { x: x2, y: y2 }])
+    else { const m = (x1 + x2) / 2; wireSegs.push([{ x: x1, y: y1 }, { x: m, y: y1 }], [{ x: m, y: y1 }, { x: m, y: y2 }], [{ x: m, y: y2 }, { x: x2, y: y2 }]) }
+  }
+  for (const p of placed) {
+    const gate = p.node as { op: string; inputs: Node[] }
+    gate.inputs.forEach((child, k) => {
+      const spread = (k - (gate.inputs.length - 1) / 2) * 12
+      const from = typeof child === 'string' ? { x: WIRE_START, y: inputY(variables.indexOf(child)) } : { x: placed.find((q) => q.node === child)!.x + GATE_W / 2, y: placed.find((q) => q.node === child)!.y }
+      route(from.x, from.y, p.x - GATE_W / 2, p.y + spread)
+    })
+  }
+  route(out.x + GATE_W / 2, out.y, W - 30, out.y)
+  /*
+   * A gate's name sits above it, unless a wire runs there: in A + (B . NOT C) the wire from
+   * B to the AND gate passes just over the NOT gate, straight through "NOT". Then it goes
+   * under the gate instead.
+   */
+  const nameAt = placed.map((p) => {
+    const op = (p.node as { op: string }).op
+    const halfW = op.length * 3.4, halfH = 5
+    const above = { x: p.x, y: p.y - GATE_H / 2 - 10 }, below = { x: p.x, y: p.y + GATE_H / 2 + 9 }
+    // Below is only an option clear of the caption, which sits at the foot of the canvas.
+    const belowOk = !hits(below, halfW, halfH, wireSegs, 1) && (!label || below.y + 4 < H - 20)
+    const at = !hits(above, halfW, halfH, wireSegs, 1) || !belowOk ? above : below
+    return at.y + 4
+  })
+
   const circuit = (
     <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
       {variables.map((v, i) => (
@@ -156,7 +187,7 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
       })}
       {placed.map((p, i) => gateShape((p.node as { op: string }).op, p.x, p.y, `g${i}`))}
       {placed.map((p, i) => (
-        <text key={`n${i}`} x={p.x} y={p.y - GATE_H / 2 - 6} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 11 }}>
+        <text key={`n${i}`} x={p.x} y={nameAt[i]} textAnchor="middle" fill={INK_2} style={{ font: FONT, fontSize: 11 }}>
           {(p.node as { op: string }).op}
         </text>
       ))}

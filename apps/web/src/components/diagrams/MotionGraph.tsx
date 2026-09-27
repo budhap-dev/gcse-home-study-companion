@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { besides, near, settler, type Seg, type Spot } from './labelPlace.ts'
 
 interface Pt { t: number; y: number }
 interface Series {
@@ -118,63 +119,106 @@ export function MotionGraph({ props, alt }: { props: Record<string, unknown>; al
   const chosen = new Set(series.map((s) => s.colour).filter(Boolean))
   const free = PALETTE.filter((c) => !chosen.has(c))
 
+  /*
+   * Everything drawn, as segments on screen. Each label used to be drawn straight after its
+   * own element, so a dashed marker, a later series or a gradient leg could run through it:
+   * the walk found the t = 3 marker and the curve through "tangent at 3 min", markers through
+   * "terminal velocity", "drag = weight" and "gradient = 8 m/s", and a tangent through "4 s".
+   * Every label now takes its own spot if nothing drawn runs through it, else the nearest
+   * clear one, and all are drawn last on a halo.
+   */
+  const drawn: Seg[] = []
+  const axisY = sy(axisAtBottom ? yMin : 0)
+  drawn.push([{ x: padL, y: axisY }, { x: W - padR, y: axisY }], [{ x: padL, y: padT }, { x: padL, y: H - padB }])
+  for (const m of markers) drawn.push([{ x: sx(m.t), y: padT }, { x: sx(m.t), y: H - padB }])
+  for (const sr of series) for (let i = 1; i < sr.points.length; i++) drawn.push([{ x: sx(sr.points[i - 1]!.t), y: sy(sr.points[i - 1]!.y) }, { x: sx(sr.points[i]!.t), y: sy(sr.points[i]!.y) }])
+  const g = gradient && (() => {
+    const y1 = valueAt(first, gradient.from), y2 = valueAt(first, gradient.to)
+    const x1 = sx(gradient.from), x2 = sx(gradient.to), Y1 = sy(y1), Y2 = sy(y2)
+    return { x1, x2, Y1, Y2, rise: y2 - y1, run: gradient.to - gradient.from }
+  })()
+  if (g) drawn.push([{ x: g.x1, y: g.Y1 }, { x: g.x2, y: g.Y1 }], [{ x: g.x2, y: g.Y1 }, { x: g.x2, y: g.Y2 }])
+  // The tick numbers sit outside the plot; registered so nothing else lands on them.
+  for (const v of yTicks) placed.push({ x: padL - 6 - fmt(v).length * 6, y: sy(v) + 4, w: fmt(v).length * 6 })
+  for (const v of xTicks) placed.push({ x: sx(v) - fmt(v).length * 3, y: H - padB + 14, w: fmt(v).length * 6 })
+  const settle = settler(drawn, placed, W, H, clear)
+
+  const shadeLabels = shades.map((sh) => {
+    if (!sh.label) return undefined
+    const mid = (sh.from + sh.to) / 2
+    const own: Spot = { x: sx(mid), y: (sy(valueAt(first, mid)) + sy(0)) / 2 + 4, anchor: 'middle' }
+    return settle(near(own), sh.label, 11, own)
+  })
+  const markerLabels = markers.map((m) => {
+    // Beside its line at the top, reading away from the right-hand edge; then on down the line, either side.
+    const toLeft = sx(m.t) > W - padR - 70
+    const own: Spot = { x: toLeft ? sx(m.t) - 4 : sx(m.t) + 4, y: padT + 12, anchor: toLeft ? 'end' : 'start' }
+    const other: Spot = { x: toLeft ? sx(m.t) + 4 : sx(m.t) - 4, y: padT + 12, anchor: toLeft ? 'start' : 'end' }
+    const down = [1, 2, 3, 4, 5, 6].flatMap((k) => [{ ...own, y: own.y + k * 13 }, { ...other, y: other.y + k * 13 }])
+    return settle([own, other, ...down], m.label, 11, own, false)
+  })
+  const seriesLabels = series.map((sr) => {
+    const end = sr.points[sr.points.length - 1]
+    if (!sr.label || !end) return undefined
+    const own: Spot = { x: Math.min(sx(end.t), W - padR - 2), y: sy(end.y) - 8, anchor: 'end' }
+    const back = sr.points.slice(-4).reverse().map((p) => ({ x: sx(p.t), y: sy(p.y) }))
+    return settle([...near(own), ...back.flatMap((p) => besides(p))], sr.label, 11, own)
+  })
+  const gradientLabels = g && (() => {
+    // The run label goes under the horizontal leg unless that leg lies on the axis, where it would hit the tick numbers.
+    const runOwn: Spot = { x: (g.x1 + g.x2) / 2, y: g.Y2 < g.Y1 && g.Y1 < H - padB - 2 ? g.Y1 + 14 : g.Y1 - 6, anchor: 'middle' }
+    const run = settle([...near(runOwn), { ...runOwn, y: g.Y1 + 14 }, { ...runOwn, y: g.Y1 - 6 }], `${fmt(g.run)} s`, 11, runOwn, false)
+    // The rise labels sit to the right of the vertical leg, or to its left when the leg is near the right edge.
+    const left = g.x2 > W - padR - 60
+    const riseOwn: Spot = { x: left ? g.x2 - 6 : g.x2 + 6, y: (g.Y1 + g.Y2) / 2 + 4, anchor: left ? 'end' : 'start' }
+    const flip = (o: Spot): Spot => ({ x: left ? g.x2 + 6 : g.x2 - 6, y: o.y, anchor: left ? 'start' : 'end' })
+    // Inside the triangle, in the corner between its legs, when both sides of the rise leg
+    // are taken: a marker line beside the leg ran through "60 km/h" and "gradient = 8 m/s".
+    const up = g.Y2 < g.Y1 ? -1 : 1
+    const inside = [1, 2, 3].map((k): Spot => ({ x: g.x2 - 6, y: g.Y1 + up * (k * 14 - 4) + (up > 0 ? 8 : 0), anchor: 'end' }))
+    const rise = settle([...near(riseOwn), flip(riseOwn), ...inside], fmt(g.rise), 11, riseOwn, false)
+    const nameOwn: Spot = { ...riseOwn, y: riseOwn.y + 14 }
+    const name = gradient!.label ? settle([...near(nameOwn), flip(nameOwn), { ...riseOwn, y: riseOwn.y - 14 }, { ...flip(riseOwn), y: riseOwn.y - 14 }, ...inside], gradient!.label, 11, nameOwn) : undefined
+    return { run, rise, name }
+  })()
+  const freeLabels = labels.map((l) => { const own: Spot = { x: sx(l.t), y: sy(l.y), anchor: 'middle' }; return settle(near(own), l.text, 11, own, false) })
+  const halo = { stroke: '#ffffff', strokeWidth: 3, paintOrder: 'stroke' } as const
+  const colourOf = (i: number) => series[i]!.colour ?? free[i % free.length]!
+
   return (
     <svg ref={svg} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 480 }} role="img" aria-label={alt}>
       {yTicks.map((v) => <line key={`gy${v}`} x1={padL} y1={sy(v)} x2={W - padR} y2={sy(v)} stroke={RULE} />)}
       {xTicks.map((v) => <line key={`gx${v}`} x1={sx(v)} y1={padT} x2={sx(v)} y2={H - padB} stroke={RULE} />)}
-      {shades.map((s, i) => {
+      {shades.map((sh, i) => {
         // Sample the polyline between the two times so a sloped section shades as a trapezium.
-        const ts = [s.from, ...first.map((p) => p.t).filter((t) => t > s.from && t < s.to), s.to]
-        const d = `M${sx(s.from).toFixed(1)} ${sy(0).toFixed(1)} ` + ts.map((t) => `L${sx(t).toFixed(1)} ${sy(valueAt(first, t)).toFixed(1)}`).join(' ') + ` L${sx(s.to).toFixed(1)} ${sy(0).toFixed(1)} Z`
-        const mid = (s.from + s.to) / 2
-        return (
-          <g key={`sh${i}`}>
-            <path d={d} fill={ACCENT} opacity="0.18" />
-            {s.label && <text x={sx(mid)} y={clear(sx(mid), (sy(valueAt(first, mid)) + sy(0)) / 2 + 4, s.label)} textAnchor="middle" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK}>{s.label}</text>}
-          </g>
-        )
+        const ts = [sh.from, ...first.map((p) => p.t).filter((t) => t > sh.from && t < sh.to), sh.to]
+        const d = `M${sx(sh.from).toFixed(1)} ${sy(0).toFixed(1)} ` + ts.map((t) => `L${sx(t).toFixed(1)} ${sy(valueAt(first, t)).toFixed(1)}`).join(' ') + ` L${sx(sh.to).toFixed(1)} ${sy(0).toFixed(1)} Z`
+        return <path key={`sh${i}`} d={d} fill={ACCENT} opacity="0.18" />
       })}
-      <line x1={padL} y1={sy(axisAtBottom ? yMin : 0)} x2={W - padR} y2={sy(axisAtBottom ? yMin : 0)} stroke={INK} strokeWidth="1.5" />
+      <line x1={padL} y1={axisY} x2={W - padR} y2={axisY} stroke={INK} strokeWidth="1.5" />
       <line x1={padL} y1={padT} x2={padL} y2={H - padB} stroke={INK} strokeWidth="1.5" />
       {yTicks.map((v) => <text key={`ty${v}`} x={padL - 6} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
       {xTicks.map((v) => <text key={`tx${v}`} x={sx(v)} y={H - padB + 14} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{fmt(v)}</text>)}
-      {markers.map((m, i) => (
-        <g key={`m${i}`}>
-          <line x1={sx(m.t)} y1={padT} x2={sx(m.t)} y2={H - padB} stroke={INK_2} strokeDasharray="4 4" />
-          <text x={sx(m.t) > W - padR - 70 ? sx(m.t) - 4 : sx(m.t) + 4} y={clear(sx(m.t) > W - padR - 70 ? sx(m.t) - 4 : sx(m.t) + 4, padT + 12, m.label, 11, sx(m.t) > W - padR - 70 ? 'end' : 'start')} textAnchor={sx(m.t) > W - padR - 70 ? 'end' : 'start'} fontFamily={FONT} fontSize="11" fill={INK_2}>{m.label}</text>
+      {markers.map((m, i) => <line key={`m${i}`} x1={sx(m.t)} y1={padT} x2={sx(m.t)} y2={H - padB} stroke={INK_2} strokeDasharray="4 4" />)}
+      {series.map((sr, i) => <path key={`s${i}`} d={path(sr.points)} fill="none" stroke={colourOf(i)} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" strokeDasharray={sr.dashed ? '6 5' : undefined} />)}
+      {g && (
+        <g>
+          <line x1={g.x1} y1={g.Y1} x2={g.x2} y2={g.Y1} stroke="#d25b3b" strokeWidth="1.5" strokeDasharray="5 4" />
+          <line x1={g.x2} y1={g.Y1} x2={g.x2} y2={g.Y2} stroke="#d25b3b" strokeWidth="1.5" strokeDasharray="5 4" />
         </g>
-      ))}
-      {series.map((s, i) => {
-        const colour = s.colour ?? free[i % free.length]!
-        const end = s.points[s.points.length - 1]
-        return (
-          <g key={`s${i}`}>
-            <path d={path(s.points)} fill="none" stroke={colour} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" strokeDasharray={s.dashed ? '6 5' : undefined} />
-            {s.label && end && <text x={Math.min(sx(end.t), W - padR - 2)} y={clear(Math.min(sx(end.t), W - padR - 2), sy(end.y) - 8, s.label, 11, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colour}>{s.label}</text>}
-          </g>
-        )
-      })}
-      {gradient && (() => {
-        const y1 = valueAt(first, gradient.from), y2 = valueAt(first, gradient.to)
-        const x1 = sx(gradient.from), x2 = sx(gradient.to), Y1 = sy(y1), Y2 = sy(y2)
-        const rise = y2 - y1, run = gradient.to - gradient.from
-        // The run label goes under the horizontal leg unless that leg lies on the axis, where it would hit the tick numbers.
-        const runY = Y2 < Y1 && Y1 < H - padB - 2 ? Y1 + 14 : Y1 - 6
-        // The rise labels sit to the right of the vertical leg, or to its left when the leg is near the right edge.
-        const left = x2 > W - padR - 60
-        const riseX = left ? x2 - 6 : x2 + 6
-        const riseAnchor = left ? 'end' : 'start'
-        return (
-          <g>
-            <line x1={x1} y1={Y1} x2={x2} y2={Y1} stroke="#d25b3b" strokeWidth="1.5" strokeDasharray="5 4" />
-            <line x1={x2} y1={Y1} x2={x2} y2={Y2} stroke="#d25b3b" strokeWidth="1.5" strokeDasharray="5 4" />
-            <text x={(x1 + x2) / 2} y={runY} textAnchor="middle" fontFamily={FONT} fontSize="11" fill="#d25b3b">{fmt(run)} s</text>
-            <text x={riseX} y={(Y1 + Y2) / 2 + 4} textAnchor={riseAnchor} fontFamily={FONT} fontSize="11" fill="#d25b3b">{fmt(rise)}</text>
-            {gradient.label && <text x={riseX} y={clear(riseX, (Y1 + Y2) / 2 + 18, gradient.label, 11, riseAnchor)} textAnchor={riseAnchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill="#d25b3b">{gradient.label}</text>}
-          </g>
-        )
-      })()}
-      {labels.map((l, i) => <text key={`l${i}`} x={sx(l.t)} y={clear(sx(l.t), sy(l.y), l.text)} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{l.text}</text>)}
+      )}
+      {/* Labels last, each where nothing drawn runs through it. */}
+      {shades.map((sh, i) => shadeLabels[i] && <text key={`shl${i}`} x={shadeLabels[i]!.x} y={shadeLabels[i]!.y} textAnchor={shadeLabels[i]!.anchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={INK} {...halo}>{sh.label}</text>)}
+      {markers.map((m, i) => <text key={`ml${i}`} x={markerLabels[i]!.x} y={markerLabels[i]!.y} textAnchor={markerLabels[i]!.anchor} fontFamily={FONT} fontSize="11" fill={INK_2} {...halo}>{m.label}</text>)}
+      {series.map((sr, i) => seriesLabels[i] && <text key={`sl${i}`} x={seriesLabels[i]!.x} y={seriesLabels[i]!.y} textAnchor={seriesLabels[i]!.anchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill={colourOf(i)} {...halo}>{sr.label}</text>)}
+      {g && gradientLabels && (
+        <g>
+          <text x={gradientLabels.run.x} y={gradientLabels.run.y} textAnchor={gradientLabels.run.anchor} fontFamily={FONT} fontSize="11" fill="#d25b3b" {...halo}>{fmt(g.run)} s</text>
+          <text x={gradientLabels.rise.x} y={gradientLabels.rise.y} textAnchor={gradientLabels.rise.anchor} fontFamily={FONT} fontSize="11" fill="#d25b3b" {...halo}>{fmt(g.rise)}</text>
+          {gradientLabels.name && <text x={gradientLabels.name.x} y={gradientLabels.name.y} textAnchor={gradientLabels.name.anchor} fontFamily={DISPLAY} fontSize="11" fontWeight="700" fill="#d25b3b" {...halo}>{gradient!.label}</text>}
+        </g>
+      )}
+      {labels.map((l, i) => <text key={`l${i}`} x={freeLabels[i]!.x} y={freeLabels[i]!.y} textAnchor={freeLabels[i]!.anchor} fontFamily={FONT} fontSize="11" fill={INK} {...halo}>{l.text}</text>)}
       <text x={(padL + W - padR) / 2} y={H - 6} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
       <text x={padL} y={padT - 6} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
     </svg>

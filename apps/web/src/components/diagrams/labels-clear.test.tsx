@@ -6,6 +6,12 @@ import { describe, expect, it } from 'vitest'
 import { CircleTheorem } from './CircleTheorem.tsx'
 import { LineGraph } from './LineGraph.tsx'
 import { Cuboid } from './Cuboid.tsx'
+import { DotAndCross } from './DotAndCross.tsx'
+import { FourBox } from './FourBox.tsx'
+import { InequalityRegion } from './InequalityRegion.tsx'
+import { LensDiagram } from './LensDiagram.tsx'
+import { LogicCircuit } from './LogicCircuit.tsx'
+import { MotionGraph } from './MotionGraph.tsx'
 import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
 
@@ -96,12 +102,13 @@ function labels(markup: string, halos = false) {
   for (const t of markup.matchAll(/<text\b([^>]*)>([\s\S]*?)<\/text>/g)) {
     const attrs = t[1]!
     if (!halos && /paint-order="stroke"/.test(attrs)) continue
-    const text = t[2]!.replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, 'x')
+    const text = t[2]!.replace(/<[^>]+>/g, '').replace(/&#?[a-z0-9]+;/gi, 'x')
     if (!text.trim()) continue
     // With halos counted, tick numbers are left out: they sit on the axes by design, and a curve crossing an axis crosses them.
     if (halos && /^[-−]?[\d.]+$/.test(text.trim())) continue
-    const size = num(attrs, 'font-size') || 16
-    const w = text.length * size * (/font-weight="700"/.test(attrs) ? 0.62 : 0.56)
+    // The size is an attribute, or set through style (font-size:12px) by components that use the font shorthand.
+    const size = num(attrs, 'font-size') || Number(/font-size:\s*([\d.]+)px/.exec(attrs)?.[1]) || 16
+    const w = text.length * size * (/font-weight(="|:\s*)700/.test(attrs) ? 0.62 : 0.56)
     const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
     const x = num(attrs, 'x'), y = num(attrs, 'y')
     const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x
@@ -138,12 +145,18 @@ function crossings(markup: string, halos = false) {
 }
 
 const LINE_GRAPH_CROSSINGS = 6
+const MOTION_GRAPH_CROSSINGS = 2
 
 const cases: [string, ComponentType<{ props: Record<string, unknown>; alt: string }>][] = [
   ['cuboid', Cuboid],
   ['triangle-construction', TriangleConstruction],
   ['triangle-pair', TrianglePair],
   ['circle-theorem', CircleTheorem],
+  ['dot-and-cross', DotAndCross],
+  ['four-box', FourBox],
+  ['inequality-region', InequalityRegion],
+  ['lens-diagram', LensDiagram],
+  ['logic-circuit', LogicCircuit],
 ]
 
 /**
@@ -169,6 +182,14 @@ describe('labels clear of lines', () => {
     expect(all.length).toBeGreaterThan(100)
     const found = all.flatMap((props) => crossings(renderToStaticMarkup(<LineGraph props={props} alt="" />), true).map((f) => `${f} in ${JSON.stringify(props).slice(0, 60)}`))
     expect(found.length, found.join('\n')).toBeLessThanOrEqual(LINE_GRAPH_CROSSINGS)
+  })
+  // MotionGraph's labels are all haloed too since they were moved clear of what is drawn:
+  // 6 crossed on main by this estimate, 2 left where a gradient or tangent sits among markers.
+  it('motion-graph, haloed labels included', () => {
+    const all = findProps('motion-graph')
+    expect(all.length).toBeGreaterThan(10)
+    const found = all.flatMap((props) => crossings(renderToStaticMarkup(<MotionGraph props={props} alt="" />), true).map((f) => `${f} in ${JSON.stringify(props).slice(0, 60)}`))
+    expect(found.length, found.join('\n')).toBeLessThanOrEqual(MOTION_GRAPH_CROSSINGS)
   })
   for (const [kind, Comp] of cases) {
     it(kind, () => {

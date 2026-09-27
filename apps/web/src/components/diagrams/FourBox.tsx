@@ -5,6 +5,12 @@ import { CHAR_WIDTH, LINE_HEIGHT, wrapCell } from './tableLayout.ts'
 
 /** Line spacing for the centre label, which is set at 13px. */
 const CENTRE_LINE = 16
+/**
+ * Width of one character of the centre label, which is 13px bold display type. The table
+ * cells' CHAR_WIDTH is for regular text and is a unit narrower: sized with it, the circle
+ * round "The Human Genome" was cut by its own edge at both ends of the line.
+ */
+const CENTRE_CHAR = 8
 /** Line spacing for a box title, which is set at 15px bold. */
 const TITLE_LINE = 18
 /**
@@ -56,7 +62,7 @@ export function FourBox({ props, alt }: { props: Record<string, unknown>; alt: s
 /** The centre label wrapped, and the circle that holds it. */
 function centreCircle(centre: string) {
   const lines = centre ? wrapCell(centre, 16) : []
-  const textW = Math.max(0, ...lines.map((l) => l.length * CHAR_WIDTH))
+  const textW = Math.max(0, ...lines.map((l) => l.length * CENTRE_CHAR))
   const textH = lines.length * CENTRE_LINE
   // A circle contains a block of text when its radius clears the block's half-diagonal.
   const r = Math.max(44, Math.ceil(Math.hypot(textW / 2, textH / 2)) + 6)

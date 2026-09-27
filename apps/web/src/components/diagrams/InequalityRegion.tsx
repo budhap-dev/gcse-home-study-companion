@@ -1,4 +1,5 @@
 import { DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { hits, type Seg } from './labelPlace.ts'
 
 interface Constraint {
   /** y = m x + c for a sloping or horizontal boundary; omit for a vertical one. */
@@ -67,9 +68,38 @@ export function InequalityRegion({ props, alt }: { props: Record<string, unknown
   const hasRegion = outline.length > 2
 
   /** The centre of the shaded region, so the label sits inside it. */
-  const centre = hasRegion
+  const middle = hasRegion
     ? { x: (top[0][0] + top[top.length - 1][0]) / 2, y: (top[Math.floor(top.length / 2)][1] + bottom[Math.floor(bottom.length / 2)][1]) / 2 }
     : null
+  /*
+   * The label goes at the middle unless a boundary runs through it there: "possible plans"
+   * at the middle of a wedge-shaped region was crossed by the steep line that closes it.
+   * Then it takes the nearest spot where the whole word is inside the shading and clear of
+   * every boundary and axis.
+   */
+  const boundaries: Seg[] = [
+    [{ x: sx(0), y: pad }, { x: sx(0), y: H - pad }], [{ x: pad, y: sy(0) }, { x: W - pad, y: sy(0) }],
+    ...constraints.map((k): Seg => (k.x !== undefined
+      ? [{ x: sx(k.x), y: pad }, { x: sx(k.x), y: H - pad }]
+      : [{ x: sx(xMin), y: sy((k.m ?? 0) * xMin + (k.c ?? 0)) }, { x: sx(xMax), y: sy((k.m ?? 0) * xMax + (k.c ?? 0)) }])),
+  ]
+  const halfW = (regionLabel.length * 18 * 0.62) / 2, halfH = 18 * 0.45
+  const inRegion = (x: number, y: number) => {
+    let inside = false
+    for (let i = 0, j = outline.length - 1; i < outline.length; j = i++) {
+      const [xi, yi] = outline[i]!, [xj, yj] = outline[j]!
+      if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside
+    }
+    return inside
+  }
+  const fits = (c: { x: number; y: number }) =>
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].every(([dx, dy]) => inRegion(c.x + dx! * halfW, c.y + dy! * halfH)) && !hits(c, halfW, halfH, boundaries, 2)
+  const centre = middle && (() => {
+    if (fits(middle)) return middle
+    const spots: { x: number; y: number }[] = []
+    for (let x = pad; x <= W - pad; x += 6) for (let y = pad; y <= H - pad; y += 6) spots.push({ x, y })
+    return spots.filter(fits).sort((a, b) => Math.hypot(a.x - middle.x, a.y - middle.y) - Math.hypot(b.x - middle.x, b.y - middle.y))[0] ?? middle
+  })()
 
   /**
    * A gridline and a label every whole number is right for the small ranges these
@@ -110,8 +140,9 @@ export function InequalityRegion({ props, alt }: { props: Record<string, unknown
       })}
 
       {centre && <text x={centre.x} y={centre.y + 6} textAnchor="middle" fontFamily={DISPLAY} fontSize="18" fontWeight="700" fill={INK}>{regionLabel}</text>}
-      {ticks(xMin, xMax).filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={sy(0) + 15} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2}>{v}</text>)}
-      {ticks(yMin, yMax).filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(0) - 8} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>{v}</text>)}
+      {/* On a halo, as LineGraph draws them: a boundary line meets the axis at a tick, and ran through "70". */}
+      {ticks(xMin, xMax).filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={sy(0) + 15} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{v}</text>)}
+      {ticks(yMin, yMax).filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(0) - 8} y={sy(v) + 4} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{v}</text>)}
     </svg>
   )
 }
