@@ -76,6 +76,9 @@
   --glow-2: rgb(90 75 209 / 0.08);
   --map-empty: #cfcbc0;
   --map-l-min: 0;
+  /* A status shape drawn on a Secure or Mastered square: white on a light page, the page's
+     own dark on a dark one, where those squares are the lightest thing on it. */
+  --map-on-strong: #fff;
 }
 
 /* Declared here as well as by applyTheme, which only runs once the bundle has loaded.
@@ -424,6 +427,13 @@ figure[data-diagram] {
 .map-l2 { background: color-mix(in srgb, var(--map-ink) 52%, var(--color-surface)); }
 .map-l3 { background: color-mix(in srgb, var(--map-ink) 76%, var(--color-surface)); }
 .map-l4 { background: var(--map-ink); }
+.map-on-l1, .map-on-l2 { color: var(--color-ink); }
+.map-on-l3, .map-on-l4 { color: var(--map-on-strong); }
+
+/* The subject page's topic panel becomes a sheet from the bottom on a phone. */
+@keyframes sheet-up { from { transform: translateY(100%); opacity: 0.6; } }
+@media (max-width: 1023px) { .sheet-up { animation: sheet-up 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both; } }
+[data-motion="off"] .sheet-up { animation: none !important; }
 
 [data-motion="off"] .anim-rise, [data-motion="off"] .anim-drift, [data-motion="off"] .anim-sq, [data-motion="off"] .anim-grow-x, [data-motion="off"] .anim-grow-y, [data-motion="off"] .anim-draw, [data-motion="off"] .anim-here, [data-motion="off"] .anim-ring, [data-motion="off"] .hero-gradient, [data-motion="off"] .lift { animation: none !important; transition: none !important; }
 /* A path left with its dash in place but no animation would be drawn as a single dash. */

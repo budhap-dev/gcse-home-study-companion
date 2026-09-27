@@ -29,10 +29,12 @@ const ALL_THEMES = [...THEME_SOURCE.matchAll(/\{ id: '([a-z-]+)', name:/g)].map(
 const THEMES = arg('themes', 'paper,midnight') === 'all' ? ALL_THEMES : arg('themes', 'paper,midnight').split(',')
 const SHOTS = arg('shots', '')
 
+// A route with `press` is scanned again after pressing that control, for what only shows then.
 const ROUTES = [
   '/',
   '/subjects',
-  '/subjects/maths',
+  { path: '/subjects/maths', press: 'button[aria-pressed][title]' },
+  '/subjects/maths?view=list',
   '/subjects/maths/topics/circle-theorems',
   '/subjects/physics',
   '/subjects/english-literature/topics/an-inspector-calls-themes',
@@ -152,16 +154,33 @@ for (const theme of THEMES) {
     const errors = []
     page.on('pageerror', (e) => errors.push(String(e)))
     page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(m.text()) })
-    for (const route of ROUTES) {
+    const shot = (name) => SHOTS ? page.screenshot({ path: join(SHOTS, `${theme}-${width}${name.replace(/[/?=]/g, '_') || '_home'}.png`), fullPage: true }) : undefined
+    for (const entry of ROUTES) {
+      const { path: route, press } = typeof entry === 'string' ? { path: entry } : entry
       errors.length = 0
       await page.goto(BASE + route, { waitUntil: 'load', timeout: 60000 })
       await page.waitForSelector('main h1', { timeout: 20000 }).catch(() => errors.push('no heading rendered'))
       // Entrance animations run to about 1.6s; measuring mid-animation reports boxes that are not the layout.
       await page.waitForTimeout(2200)
       const found = await page.evaluate(scan, { phone })
+      await shot(route)
+      if (press) {
+        await page.locator(press).nth(3).click()
+        await page.waitForTimeout(900)
+        const after = await page.evaluate(scan, { phone })
+        // Anything opened over the page must stay clear of the phone's menu bar.
+        const hidden = await page.evaluate(() => {
+          const nav = document.querySelector('nav[aria-label="Primary"]')
+          const navTop = nav && getComputedStyle(nav).display !== 'none' ? nav.getBoundingClientRect().top : Infinity
+          return [...document.querySelectorAll('aside')].filter((a) => getComputedStyle(a).position === 'fixed' && a.checkVisibility())
+            .map((a) => a.getBoundingClientRect().bottom - navTop).filter((d) => d > 0.5)
+        })
+        for (const d of hidden) after.push({ kind: 'sheet under the menu bar', where: 'aside', detail: `${Math.round(d)}px` })
+        for (const f of after) found.push({ ...f, where: `after pressing: ${f.where}` })
+        await shot(route + '-pressed')
+      }
       for (const e of errors) found.push({ kind: 'script error', where: 'page', detail: e.slice(0, 200) })
       for (const f of found) findings.push({ theme, width, route, ...f })
-      if (SHOTS) await page.screenshot({ path: join(SHOTS, `${theme}-${width}${route.replaceAll('/', '_') || '_home'}.png`), fullPage: true })
       console.log(`${theme} ${width} ${route}: ${found.length ? found.length + ' found' : 'clean'}`)
     }
     await context.close()

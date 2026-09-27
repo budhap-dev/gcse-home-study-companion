@@ -1,6 +1,7 @@
 import type { LevelInfo, Subject } from '@study/shared'
+import { StatusIcon } from '../StatusChip.tsx'
 import { Link } from 'react-router'
-import { MAP_LEVEL_LABEL, countLevels, isSecure, levelsSentence, type DayBar, type MapSquare } from '../../progress/map.ts'
+import { MAP_LEVEL_LABEL, RUNGS, countLevels, isSecure, levelsSentence, type DayBar, type MapLevel, type MapSquare } from '../../progress/map.ts'
 
 /**
  * The map's small pieces (Option C), shared by Home and the subject page. Squares are
@@ -100,5 +101,60 @@ export function WeekBars({ days }: { days: DayBar[] }) {
         </span>
       ))}
     </div>
+  )
+}
+
+const RUNG_STATUS = ['not-secure', 'developing', 'secure', 'grade-9-ready'] as const
+/** The status colours as each theme adjusts them (styles.css), so navy stays visible on a dark page. */
+const RUNG_COLOUR = ['var(--status-not-secure-ink)', 'var(--status-developing-ink)', 'var(--status-secure-ink)', 'var(--status-grade-9-ink)'] as const
+
+/**
+ * The mastery ladder: four rungs, filled up to where the topic stands, the current one
+ * named in full ink. A topic not started stands below the first rung. Each rung also carries
+ * its status shape, so the ladder reads without its colours.
+ */
+export function MasteryLadder({ level }: { level: MapLevel }) {
+  return (
+    <ol aria-label={`Mastery: ${level === 0 ? 'not started' : RUNGS[level - 1]}`} className="grid grid-cols-4">
+      {RUNGS.map((label, i) => {
+        const reached = i + 1 <= level
+        const current = i + 1 === level
+        const status = RUNG_STATUS[i]!
+        return (
+          <li key={label} aria-current={current ? 'step' : undefined} className="relative flex flex-col items-center gap-1.5 text-center">
+            {i < 3 && <span aria-hidden className="absolute left-1/2 top-[13px] h-[3px] w-full" style={{ background: i + 1 < level ? RUNG_COLOUR[i + 1] : 'var(--color-rule)' }} />}
+            <span
+              aria-hidden
+              className={`relative flex h-7 w-7 items-center justify-center rounded-full ${current ? 'anim-pop ring-4 ring-[color:var(--color-surface)]' : ''}`}
+              style={reached ? { background: RUNG_COLOUR[i] } : { background: 'var(--color-surface)', boxShadow: `inset 0 0 0 3px ${RUNG_COLOUR[i]}` }}
+            >
+              {reached && <StatusIcon status={status} size={14} colour="var(--map-on-strong)" />}
+            </span>
+            <span className={`text-xs font-bold leading-tight ${current ? 'text-ink' : 'text-ink-3'}`}>{label}</span>
+          </li>
+        )
+      })}
+    </ol>
+  )
+}
+
+/**
+ * One topic as a square you can press, on the subject page. Its status shape is drawn inside
+ * it, so the scale reads without its colours, and its accessible name says the rest.
+ */
+export function TopicSquare({ square: s, picked, onPick, delay }: { square: MapSquare; picked: boolean; onPick: () => void; delay: string }) {
+  const status = s.level > 0 ? RUNG_STATUS[s.level - 1] : undefined
+  return (
+    <button
+      type="button"
+      onClick={onPick}
+      aria-pressed={picked}
+      aria-label={`${s.topic.title}, Year ${s.topic.year}, ${MAP_LEVEL_LABEL[s.level]}`}
+      title={s.topic.title}
+      className={`map-sq anim-sq map-l${s.level} map-on-l${s.level} flex h-8 w-8 items-center justify-center rounded-lg transition-transform hover:scale-110`}
+      style={{ '--d': delay, ...(picked ? { outline: '3px solid var(--color-ink)', outlineOffset: '2px' } : {}) } as React.CSSProperties}
+    >
+      {status && <StatusIcon status={status} size={13} colour="currentColor" />}
+    </button>
   )
 }
