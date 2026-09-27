@@ -8,6 +8,7 @@ import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { TOPICS, getTopic } from '../../content/index.ts'
 import { mistakeQueue, type Mistake } from '../../progress/mistakes.ts'
+import { loadInProgress, MISTAKES_KEY, saveInProgress } from '../../progress/inProgress.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useProgress } from '../../progress/useProgress.ts'
@@ -33,10 +34,9 @@ interface Session {
   cleared?: number
 }
 
-const KEY = 'study-companion.mistakes'
 const itemKey = (m: Mistake) => `${m.topicId}/${m.questionId}`
-const load = (): Session | null => { try { const raw = sessionStorage.getItem(KEY); return raw ? (JSON.parse(raw) as Session) : null } catch { return null } }
-const save = (s: Session | null) => { try { if (s) sessionStorage.setItem(KEY, JSON.stringify(s)); else sessionStorage.removeItem(KEY) } catch { /* unavailable: works for this visit */ } }
+const load = () => loadInProgress<Session>(MISTAKES_KEY)
+const save = (s: Session | null) => saveInProgress(MISTAKES_KEY, s)
 
 /**
  * Redo my mistakes (WKP-1): up to fifteen questions the student got wrong, from any topic,

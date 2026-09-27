@@ -332,13 +332,15 @@ As a student, I want Home to show three things to do today so that I start strai
 
 ### UXI-2 · Resume where I left off
 
-**Effort:** S · **Priority:** Now
+**Effort:** S · **Priority:** Now · **Status:** done (27 September 2026)
 
 As a student, I want to reopen a lesson or worksheet where I stopped so that I do not lose work.
 
 **Acceptance criteria**
 
-- The step or question and any typed answers are restored on the same device.
+- The step or question and any typed answers are restored on the same device, after the tab or
+  the installed app is closed: an unfinished quiz, worksheet or redo session for a week, a
+  finished one for an hour. The Topic page says Resume and where it got to.
 
 ### UXI-3 · Feedback that explains
 

@@ -16,6 +16,7 @@ import { getTopic } from '../../content/index.ts'
 import { teachingStep } from '../../content/teachingStep.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
+import { loadInProgress, quizKey, saveInProgress } from '../../progress/inProgress.ts'
 
 interface Answered {
   answer: Answer
@@ -33,24 +34,9 @@ interface QuizState {
   earned?: { xp: number; previousPct?: number; badges: string[]; levelUp?: string }
 }
 
-const key = (topicId: string) => `study-companion.quiz.${topicId}`
-
-function load(topicId: string): QuizState | null {
-  try {
-    const raw = sessionStorage.getItem(key(topicId))
-    return raw ? (JSON.parse(raw) as QuizState) : null
-  } catch {
-    return null
-  }
-}
-function save(topicId: string, state: QuizState | null) {
-  try {
-    if (state) sessionStorage.setItem(key(topicId), JSON.stringify(state))
-    else sessionStorage.removeItem(key(topicId))
-  } catch {
-    // session storage unavailable: the quiz still works, it just will not survive a refresh
-  }
-}
+// Kept on the device, so an unfinished quiz survives closing the app (UXI-2).
+const load = (topicId: string) => loadInProgress<QuizState>(quizKey(topicId))
+const save = (topicId: string, state: QuizState | null) => saveInProgress(quizKey(topicId), state)
 
 function newQuiz(questionIds: string[], size: number): QuizState {
   const attemptId = crypto.randomUUID()
