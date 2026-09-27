@@ -248,3 +248,24 @@ describe('a topic with only time on it', () => {
     expect(html).toMatch(/1 of \d+ started · 12 min · last opened 18 Sept/)
   })
 })
+
+// This week against last (TRK-5). The test clock is Saturday 26 September 2026, so this
+// week is 21 to 27 September and last week 14 to 20.
+describe('this week and last', () => {
+  it('shows each subject with last week → this week, and a next step beside a stuck topic', () => {
+    const state: ProgressState = {
+      ...emptyState(),
+      time: { [timeKey('2026-09-15', { subjectId: 'maths', topicId: 'surds', kind: 'quiz' })]: 20, [timeKey('2026-09-22', { subjectId: 'maths', topicId: 'surds', kind: 'quiz' })]: 45 },
+      attempts: [quiz('surds', 30, '2026-09-15'), quiz('surds', 40, '2026-09-22')],
+    }
+    const html = body('dashboard', state)
+    expect(html).toContain('This week and last')
+    expect(html).toContain('20 → 45')
+    expect(html).toContain('30% → 40%')
+    expect(html).toContain('Suggested next:')
+  })
+
+  it('leaves the section out for a fortnight with nothing done', () => {
+    expect(body('dashboard', { ...emptyState(), attempts: [quiz('surds', 80, '2026-08-01')] })).not.toContain('This week and last')
+  })
+})

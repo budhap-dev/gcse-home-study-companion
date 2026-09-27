@@ -268,7 +268,7 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [ ] **LRN-7:** build the drag-order, drag-match and labelling interactives. They are in the
   schema but have no component.
 - [ ] **WKS-7:** make the scratch canvas resizable.
-- [ ] **PAR-1:** compare with the previous week (minutes, topics, quizzes, per-subject status
+- [x] **PAR-1:** compare with the previous week (minutes, topics, quizzes, per-subject status
   change), and add a suggested task beside each weak topic.
 - [ ] **PAR-2:** give the parent the child's own year and term topic map, read-only.
 - [ ] **PAR-5:** split the 8-week trend by subject and add average score per week. Today it is

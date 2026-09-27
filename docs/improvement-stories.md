@@ -647,7 +647,7 @@ As a parent, I want to see which mistakes my child repeats so that I can help wi
 
 ### TRK-5 · Week on week
 
-**Effort:** S · **Priority:** Now · **Finishes:** PAR-1, PAR-5
+**Effort:** S · **Priority:** Now · **Finishes:** PAR-1 · **Status:** done (27 September 2026)
 
 As a parent, I want this week compared with last so that I can see the trend.
 
@@ -668,14 +668,15 @@ As a parent, I want a short weekly summary by email so that I stay informed with
 
 ### TRK-7 · Honest study time
 
-**Effort:** S · **Priority:** Now
+**Effort:** S · **Priority:** Now · **Status:** done (27 September 2026)
 
 As a parent, I want study time to count only active time so that an open tab is not studying.
 
 **Acceptance criteria**
 
-- The timer pauses after a minute with no input. Today any minute a learning screen is visible
-  counts.
+- A minute counts only if there was input in the last three minutes; before this, any minute a
+  learning screen was visible counted. Three, not one: an Advanced question is often worked on
+  paper for several minutes without touching the phone.
 
 ### TRK-8 · Export
 
