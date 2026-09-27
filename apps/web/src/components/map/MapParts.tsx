@@ -20,7 +20,7 @@ export function MiniMap({ squares, name, delay = 0 }: { squares: MapSquare[]; na
   return (
     <span role="img" aria-label={`${name}: ${levelsSentence(countLevels(squares))}`} className="flex flex-wrap content-start gap-[3px]">
       {squares.map((s, i) => (
-        <span key={s.topic.id} className={`map-sq anim-sq map-l${s.level} h-[9px] w-[9px] rounded-[2px]`} style={{ '--d': popDelay(delay, i) } as React.CSSProperties} />
+        <span key={s.topic.id} className={`map-sq anim-sq map-l${s.level} block h-[9px] w-[9px] rounded-[2px]`} style={{ '--d': popDelay(delay, i) } as React.CSSProperties} />
       ))}
     </span>
   )
@@ -68,7 +68,7 @@ export function MapLegend({ className = '' }: { className?: string }) {
     <span className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-2 ${className}`} style={{ '--subject': 'var(--hero-2)' } as React.CSSProperties}>
       {MAP_LEVEL_LABEL.map((label, level) => (
         <span key={label} className="flex items-center gap-1.5">
-          <span aria-hidden className={`map-sq map-l${level} h-3 w-3`} />
+          <span aria-hidden className={`map-sq map-l${level} inline-block h-3 w-3 rounded-[3px]`} />
           {label}
         </span>
       ))}

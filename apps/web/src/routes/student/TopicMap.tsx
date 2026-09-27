@@ -103,7 +103,7 @@ function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: 
         <ul className="mt-2 flex flex-wrap gap-2">
           {[4, 3, 2, 1, 0].map((level) => (
             <li key={level} className="flex items-center gap-1.5 rounded-full border border-rule bg-surface px-3 py-1 text-[13px] font-bold">
-              <span aria-hidden className={`map-sq map-l${level} h-3 w-3`} />
+              <span aria-hidden className={`map-sq map-l${level} inline-block h-3 w-3 rounded-[3px]`} />
               {counts[level]} {MAP_LEVEL_LABEL[level]!.toLowerCase()}
             </li>
           ))}
@@ -217,7 +217,7 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
       </div>
       <div key={t.id} className="anim-fade-up flex flex-col gap-3.5">
         <span className="flex w-fit items-center gap-1.5 rounded-full bg-panel px-2.5 py-1 text-[13px] font-bold">
-          <span aria-hidden className={`map-sq map-l${s.level} h-3 w-3`} />
+          <span aria-hidden className={`map-sq map-l${s.level} inline-block h-3 w-3 rounded-[3px]`} />
           {status ? STATUS_LABEL[status] : 'Not started'}
         </span>
         <h2 ref={heading} tabIndex={-1} className="text-[26px] font-bold leading-[1.1] outline-none">
