@@ -31,7 +31,7 @@ export function AppShell() {
         </div>
       )}
 
-      <header className="sticky top-0 z-30 border-b border-rule bg-paper">
+      <header className="sticky top-0 z-30 border-b border-rule bg-paper/85 backdrop-blur-md">
         {/* One row on desktop: name left, search pushed right and bounded, so it reads
             as a tool rather than a field spanning the window. Two rows on a phone,
             because the name and a usable search box will not share 390px. */}
@@ -46,7 +46,7 @@ export function AppShell() {
       </header>
 
       <div className="flex min-h-0 flex-1 md:flex-row">
-        <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-60 shrink-0 flex-col gap-4 border-r border-rule bg-surface px-4 py-5 md:flex">
+        <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-60 shrink-0 flex-col gap-4 border-r border-rule bg-surface/70 px-4 py-5 md:flex">
           <Menu orientation="vertical" role={auth.role} />
           <div className="mt-auto flex flex-col gap-0.5 px-2 text-xs text-ink-3">
             <span>{auth.status === 'allowed' ? `Signed in as ${auth.name ?? auth.email}. Progress is saved to your account.` : 'Progress is saved on this device.'}</span>
@@ -61,7 +61,7 @@ export function AppShell() {
         </main>
       </div>
 
-      <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 z-30 border-t border-rule bg-surface pb-[env(safe-area-inset-bottom)] md:hidden">
+      <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 z-30 border-t border-rule bg-surface/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden">
         <Menu orientation="horizontal" role={auth.role} />
       </nav>
     </div>
@@ -84,9 +84,9 @@ function Menu({ orientation, role }: { orientation: 'vertical' | 'horizontal'; r
             end={end}
             className={({ isActive }) =>
               [
-                'flex min-h-11 items-center gap-3 rounded-lg text-sm font-bold transition-colors',
+                'flex min-h-11 items-center gap-3 rounded-xl text-sm font-bold transition-colors',
                 vertical ? 'px-3 py-2' : 'flex-col justify-center gap-0.5 py-2 text-[11px]',
-                isActive ? 'bg-panel text-ink' : 'text-ink-2 hover:bg-panel hover:text-ink',
+                isActive ? 'nav-on' : 'text-ink-2 hover:bg-panel hover:text-ink',
               ].join(' ')
             }
           >
