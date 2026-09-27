@@ -55,10 +55,11 @@ export function Home() {
         </div>
         <span className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-nowrap">
         <Link to="/progress" className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#e3c26a] bg-[#fff4cc] px-3 py-1.5 text-sm font-bold text-[#6b4d00]" title="XP and badges">
-          {/* opacity, not text-ink-2: the pill pins its own colour against a fixed cream,
-              and a themed ink inside it turns near-white on the dark themes. */}
-          <span className="opacity-70">XP</span>{totalXp(progress)}
-          <span className="ml-1 opacity-70">·</span>{badgeCount}/{BADGES.length}
+          {/* Weight, not text-ink-2 or opacity: the pill pins its own colour against a fixed
+              cream, a themed ink inside it turns near-white on the dark themes, and 70%
+              opacity measured 3.5:1. */}
+          <span className="font-normal">XP</span>{totalXp(progress)}
+          <span className="ml-1 font-normal">·</span>{badgeCount}/{BADGES.length}
         </Link>
         <span className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#f2b08a] bg-[#ffe9dc] px-3 py-1.5 text-sm font-bold text-[#8a3b12]" title="Days in a row with something finished">
           <span className={streak > 0 ? 'anim-flicker' : ''}><Smiley>🔥</Smiley></span>

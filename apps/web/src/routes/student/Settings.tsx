@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { signOut, useAuth } from '../../auth/useAuth.ts'
 import { FamilyPanel } from '../../auth/FamilyPanel.tsx'
-import { THEMES, applyTheme, currentThemeId } from '../../theme/themes.ts'
+import { AUTO_THEME, THEMES, applyTheme, currentThemeId, resolveTheme } from '../../theme/themes.ts'
 import { setPref, usePref } from '../../theme/prefs.ts'
 import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
 import { clearProgress, isoDate, setGoalMinutes, toggleDayOff, weekDays } from '../../progress/store.ts'
@@ -38,17 +38,24 @@ export function Settings() {
         <h2 className="font-bold">Theme</h2>
         <p className="text-sm text-ink-2">Pick the look you like. Subject colours stay the same in every theme.</p>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3" role="radiogroup" aria-label="Theme">
-          {THEMES.map((t) => {
+          {[AUTO_THEME, ...THEMES].map((t) => {
             const on = t.id === theme
-            const paper = t.vars['--color-paper'] ?? '#f7f5ef'
-            const ink = t.vars['--color-ink'] ?? '#1e2330'
-            const panel = t.vars['--color-panel'] ?? '#f0ede4'
+            // The device choice shows a swatch of both themes it moves between.
+            const swatches = t.id === AUTO_THEME.id ? [resolveTheme(t.id, false), resolveTheme(t.id, true)] : [resolveTheme(t.id)]
             return (
-              <button key={t.id} type="button" role="radio" aria-checked={on} onClick={() => { applyTheme(t.id); setTheme(t.id) }} className={`flex flex-col gap-2 rounded-xl border-2 p-3 text-left ${on ? 'border-[color:var(--subject)]' : 'border-rule'}`}>
-                <span className="flex h-10 w-full items-end gap-1 rounded-lg p-1.5" style={{ background: paper }} aria-hidden>
-                  <span className="h-full w-1/3 rounded" style={{ background: panel }} />
-                  <span className="h-2/3 w-1/3 rounded" style={{ background: ink }} />
-                  <span className="h-1/2 w-1/3 rounded bg-[#0E7A86]" />
+              <button key={t.id} type="button" role="radio" aria-checked={on} onClick={() => { applyTheme(t.id); setTheme(t.id) }} className={`press flex flex-col gap-2 rounded-xl border-2 p-3 text-left ${on ? 'border-[color:var(--subject)]' : 'border-rule'}`}>
+                <span className="flex h-10 w-full gap-1" aria-hidden>
+                  {swatches.map((s) => {
+                    const v = (k: string, fallback: string) => s.vars[k] ?? fallback
+                    return (
+                      <span key={s.id} className="flex h-full flex-1 items-end gap-1 rounded-lg p-1.5" style={{ background: v('--color-paper', '#f7f5ef') }}>
+                        <span className="h-full w-1/3 rounded" style={{ background: v('--color-panel', '#f0ede4') }} />
+                        <span className="h-2/3 w-1/3 rounded" style={{ background: v('--color-ink', '#1e2330') }} />
+                        {/* The theme's banner gradient, which the map look paints its headers in. */}
+                        <span className="h-1/2 w-1/3 rounded" style={{ background: `linear-gradient(135deg, ${v('--hero-1', '#0b6e78')}, ${v('--hero-2', '#5a4bd1')}, ${v('--hero-3', '#a83e6b')})` }} />
+                      </span>
+                    )
+                  })}
                 </span>
                 <span className="text-sm font-bold">{t.name}</span>
                 <span className="text-xs text-ink-2">{t.blurb}</span>
