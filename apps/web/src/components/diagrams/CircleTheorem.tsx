@@ -1,4 +1,5 @@
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { arcSegs, around, baseline, labelHalf, placeLabel, type Seg } from './labelPlace.ts'
 
 type Pt = { x: number; y: number }
 /** A point on the circumference, given as degrees anticlockwise from the right, or the midpoint of two named points. */
@@ -123,7 +124,8 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
       return <line key={`${key}${i}`} x1={c.x - nx * 5} y1={c.y - ny * 5} x2={c.x + nx * 5} y2={c.y + ny * 5} stroke={INK} strokeWidth="2" />
     })
   }
-  const angleMark = (m: AngleMark, key: string) => {
+  /** Where an angle mark's vertex, arms and text go, shared by the drawing and the label placement. */
+  const angleGeom = (m: AngleMark) => {
     const v = pts[m.at], p = pts[m.from], q = pts[m.to]
     if (!v || !p || !q) return null
     const a1 = Math.atan2(p.y - v.y, p.x - v.x)
@@ -131,7 +133,6 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
     let d = a2 - a1
     while (d > Math.PI) d -= 2 * Math.PI
     while (d < -Math.PI) d += 2 * Math.PI
-    const sweep = d > 0 ? 1 : 0
     const kind = m.kind ?? 1
     const mid = a1 + d / 2
     // Along the bisector, unless a drawn line runs along it too: the angle between two
@@ -148,6 +149,13 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
     const side = onALine ? 11 : 0
     const lx = v.x + Math.cos(mid) * 32 - Math.sin(mid) * side
     const ly = v.y + Math.sin(mid) * 32 + Math.cos(mid) * side
+    return { v, a1, a2, d, kind, lx, ly }
+  }
+  const angleMark = (m: AngleMark, key: string) => {
+    const g = angleGeom(m)
+    if (!g) return null
+    const { v, a1, a2, d, kind, lx, ly } = g
+    const sweep = d > 0 ? 1 : 0
     const label = m.text ? <text x={lx} y={ly + 4} textAnchor="middle" fontFamily={FONT} fontSize="12" fill="#d25b3b" stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{m.text}</text> : null
     if (kind === 'r') {
       const s = 11
@@ -176,11 +184,36 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
     // when the anticlockwise way round is the long way, go clockwise instead.
     return <path d={`M${p.x} ${p.y} A${r} ${r} 0 0 ${d > 180 ? 1 : 0} ${q.x} ${q.y}`} fill="none" stroke={ACCENT} strokeWidth="5" strokeLinecap="round" opacity="0.55" />
   }
-  const labelPos = (name: string, p: Pt): Pt => {
-    if (name === 'O') return { x: p.x + 9, y: p.y + 15 }
-    const dx = p.x - O.x, dy = p.y - O.y
-    const l = Math.hypot(dx, dy) || 1
-    return { x: p.x + (dx / l) * 15, y: p.y + (dy / l) * 15 + 4 }
+  /*
+   * Everything drawn, as segments, for the point labels to keep clear of. Each label used
+   * to sit a fixed 15 out from the centre, and O a fixed step down and right of it, so a
+   * radius or a dashed line leaving O in that direction ran straight through the "O", an
+   * angle arc at O crossed it, and M at the foot of a chord near the bottom of the circle
+   * was drawn on the circle itself.
+   */
+  const segs: Seg[] = [...arcSegs(O, r, 0, 2 * Math.PI, 48), ...tangentLines, ...externalLines]
+  for (const sg of segments) { const a = pts[sg[0]!], b = pts[sg[1]!]; if (a && b) segs.push([a, b]) }
+  const claim = (c: Pt, halfW: number, halfH: number) => {
+    const l = c.x - halfW, rr = c.x + halfW, t = c.y - halfH, b = c.y + halfH
+    segs.push([{ x: l, y: t }, { x: rr, y: t }], [{ x: rr, y: t }, { x: rr, y: b }], [{ x: rr, y: b }, { x: l, y: b }], [{ x: l, y: b }, { x: l, y: t }])
+  }
+  for (const m of angles) {
+    const g = angleGeom(m)
+    if (!g) continue
+    const outer = 14 + (g.kind === 'r' ? 0 : (Number(g.kind) - 1) * 5)
+    segs.push(...arcSegs(g.v, outer, g.a1, g.a1 + g.d, 8))
+    if (m.text) { const { halfW, halfH } = labelHalf(m.text, 12); claim({ x: g.lx, y: g.ly }, halfW, halfH) }
+  }
+  const labelAt: Record<string, Pt> = {}
+  for (const [name, p] of Object.entries(pts)) {
+    if (!showLabels || (hidden.has(name) && !(name === 'O' && showCentre))) continue
+    const { halfW, halfH } = labelHalf(name, 13, true)
+    // Points on the circle look outward; O prefers below and to the right, where it always sat.
+    const prefer = name === 'O' ? Math.atan2(15, 9) : Math.atan2(p.y - O.y, p.x - O.x)
+    // A point's hollow dot is 5.5 across its stroke, so its label starts beyond that.
+    const c = placeLabel(p, halfW, halfH, segs, around(prefer), name === 'O' ? 4 : 7, 30)
+    claim(c, halfW, halfH)
+    labelAt[name] = { x: c.x, y: baseline(c.y, 13) }
   }
 
   return (
@@ -200,11 +233,11 @@ export function CircleTheorem({ props, alt }: { props: Record<string, unknown>; 
       {Object.entries(pts).map(([name, p]) => {
         if (hidden.has(name) && name !== 'O') return null
         const isPoint = name !== 'O'
-        const lp = labelPos(name, p)
+        const lp = labelAt[name]
         return (
           <g key={`p${name}`}>
             {isPoint && <circle cx={p.x} cy={p.y} r="3.5" fill="#fff" stroke={INK} strokeWidth="2" />}
-            {showLabels && (name !== 'O' || showCentre) && <text x={lp.x} y={lp.y} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={name === 'O' ? INK_2 : INK}>{name}</text>}
+            {lp && <text x={lp.x} y={lp.y} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={name === 'O' ? INK_2 : INK}>{name}</text>}
           </g>
         )
       })}
