@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react'
 import { AUTH_ENABLED, supabase } from './client.ts'
 import { startSync, stopSync } from './sync.ts'
+import { setErrorReportingSignedIn } from './reports.ts'
 
 export type AuthStatus = 'disabled' | 'loading' | 'signed-out' | 'checking' | 'allowed' | 'denied' | 'error'
 
@@ -26,6 +27,8 @@ let state: AuthState = { status: AUTH_ENABLED ? 'loading' : 'disabled' }
 const listeners = new Set<() => void>()
 function set(next: AuthState) {
   state = next
+  // Error reports are written as the signed-in family member's device, so only then.
+  setErrorReportingSignedIn(next.status === 'allowed')
   listeners.forEach((fn) => fn())
 }
 

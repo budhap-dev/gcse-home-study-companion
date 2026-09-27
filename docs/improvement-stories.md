@@ -789,7 +789,7 @@ As the owner, I want the browser checks to run on every PR so that a regression 
 
 ### OPS-3 · Report a mistake
 
-**Effort:** S · **Priority:** Now · **Finishes:** ADM-4
+**Effort:** S · **Priority:** Now · **Finishes:** ADM-4 · **Status:** done (27 September 2026)
 
 As a student or parent, I want to report a mistake in a question or lesson step.
 
@@ -800,7 +800,7 @@ As a student or parent, I want to report a mistake in a question or lesson step.
 
 ### OPS-4 · Crash reporting
 
-**Effort:** S · **Priority:** Now
+**Effort:** S · **Priority:** Now · **Status:** done (27 September 2026)
 
 As the owner, I want errors on real devices reported so that a broken page does not go unseen.
 
