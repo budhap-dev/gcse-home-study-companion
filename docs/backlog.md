@@ -292,7 +292,8 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [ ] **WKS-6:** grade 9 problem set per unit.
 - [ ] **WKS-5:** timed paper mode.
 - [ ] **PAR-3:** weekly email digest.
-- [ ] **ADM-4:** report a mistake in content.
+- [x] **ADM-4:** report a mistake in content. A link under every lesson step and question sends
+  a note to `content_reports`; parents review it on the Family page's Reports tab (OPS-3).
 
 ### Deferred by the 8 September scope change
 Not planned unless the scope changes again:

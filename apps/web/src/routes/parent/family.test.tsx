@@ -98,10 +98,10 @@ const body = (tab: 'dashboard' | 'tasks', state?: ProgressState) =>
 describe('the family tabs', () => {
   const state = { ...emptyState(), attempts: [quiz('surds', 80, '2026-09-18')] }
 
-  it('offers exactly Dashboard and Tasks, with one selected', () => {
+  it('offers exactly Dashboard, Tasks and Reports, with one selected', () => {
     const html = body('dashboard', state)
     const tabs = [...html.matchAll(/role="tab"[^>]*>([^<]+)</g)].map((m) => m[1])
-    expect(tabs).toEqual(['Dashboard', 'Tasks'])
+    expect(tabs).toEqual(['Dashboard', 'Tasks', 'Reports'])
     expect(html).toContain('role="tablist"')
     expect((html.match(/aria-selected="true"/g) ?? [])).toHaveLength(1)
   })

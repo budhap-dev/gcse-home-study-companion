@@ -6,6 +6,7 @@ import { ScratchCanvas, type Stroke } from '../../components/ScratchCanvas.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
+import { ReportMistake } from '../../components/ReportMistake.tsx'
 import { getTopic, totalMarks } from '../../content/index.ts'
 import { getState, recordAttempt } from '../../progress/store.ts'
 import { settle, type Settlement } from '../../progress/settle.ts'
@@ -270,6 +271,7 @@ export function Worksheet() {
               )}
             </div>
           )}
+          <ReportMistake key={`r-${question.id}`} item={{ subjectId: subjectId!, topicId: topicId!, itemKind: 'question', itemId: question.id, seenIn: 'worksheet' }} />
         </section>
 
         <section className="flex flex-col gap-3">

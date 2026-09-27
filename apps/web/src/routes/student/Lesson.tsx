@@ -7,6 +7,7 @@ import { KindChip } from '../../components/KindChip.tsx'
 import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
+import { ReportMistake } from '../../components/ReportMistake.tsx'
 import { getTopic } from '../../content/index.ts'
 import { getState, saveLessonPosition } from '../../progress/store.ts'
 import { settle, type Settlement } from '../../progress/settle.ts'
@@ -161,6 +162,8 @@ export function Lesson() {
           {result && <Feedback question={step.check} result={result} onClaim={() => setResult(claimAnswer(result))} />}
         </section>
       )}
+
+      <ReportMistake item={{ subjectId: subjectId!, topicId: topicId!, itemKind: 'step', itemId: step.id, seenIn: 'lesson' }} />
 
       <button type="button" onClick={next} disabled={!canAdvance} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface disabled:opacity-40">
         {last ? 'Finish lesson' : 'Next step'}

@@ -6,9 +6,11 @@ import './styles.css'
 import { applyTheme, currentThemeId } from './theme/themes.ts'
 import { applyPrefs } from './theme/prefs.ts'
 import { AuthGate } from './auth/AuthGate.tsx'
+import { installErrorReporting } from './auth/reports.ts'
 
 applyTheme(currentThemeId())
 applyPrefs()
+installErrorReporting()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
