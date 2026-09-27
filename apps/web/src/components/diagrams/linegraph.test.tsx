@@ -29,8 +29,9 @@ describe('line graph curves', () => {
   it('puts a curve label where labelX says, not at the curve\'s end', () => {
     const at = (html: string) => Number(/<text x="([\d.]+)"[^>]*>y = 1\/x</.exec(html)?.[1])
     const props = { xRange: [-4, 4], yRange: [-4, 4], curves: [{ a: 0, b: 0, c: 0, reciprocal: 1, label: 'y = 1/x' }] }
-    // By default the label sits at the last visible sample: the right-hand edge, on the axis letter.
-    expect(at(renderToStaticMarkup(<LineGraph alt="" props={props} />))).toBeGreaterThan(300)
+    // By default the label sits by the last visible sample, near the right-hand edge (moved
+    // back along the curve far enough to clear the axis letter it used to land on).
+    expect(at(renderToStaticMarkup(<LineGraph alt="" props={props} />))).toBeGreaterThan(270)
     // With labelX it sits above the curve at that x, well inside the plot.
     const moved = { ...props, curves: [{ ...props.curves[0]!, labelX: 0.6 }] }
     expect(at(renderToStaticMarkup(<LineGraph alt="" props={moved} />))).toBeLessThan(250)

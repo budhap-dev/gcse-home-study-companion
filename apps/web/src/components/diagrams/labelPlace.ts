@@ -51,16 +51,17 @@ export function hits(c: Pt, halfW: number, halfH: number, segs: Seg[], pad = 2) 
  * (radians, tried in order) and distances from `near` to `far` where the box clears every
  * segment. The distance is to the box's edge, not its centre, so a wide label is pushed
  * out further along a horizontal direction than a narrow one. If nothing is clear, the
- * nearest position with the fewest crossings.
+ * nearest position with the fewest crossings. `accept` can rule a position out altogether.
  */
-export function placeLabel(at: Pt, halfW: number, halfH: number, segs: Seg[], directions: number[], near = 4, far = 40): Pt {
+export function placeLabel(at: Pt, halfW: number, halfH: number, segs: Seg[], directions: number[], near = 4, far = 40, accept: (c: Pt) => boolean = () => true): Pt {
   let best: { c: Pt; n: number } | undefined
   for (let d = near; d <= far; d += 2) {
     for (const a of directions) {
       const cos = Math.cos(a), sin = Math.sin(a)
       const reach = d + Math.min(halfW / Math.max(Math.abs(cos), 1e-6), halfH / Math.max(Math.abs(sin), 1e-6))
       const c = { x: at.x + cos * reach, y: at.y + sin * reach }
-      const n = hits(c, halfW, halfH, segs)
+      // A position the caller rules out (off the canvas, over another label) counts as crossing everything.
+      const n = accept(c) ? hits(c, halfW, halfH, segs) : Infinity
       if (n === 0) return c
       if (!best || n < best.n) best = { c, n }
     }

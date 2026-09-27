@@ -1,6 +1,7 @@
 import { useId, useLayoutEffect, useRef } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2, RULE } from './index.tsx'
+import { hits, type Pt, type Seg } from './labelPlace.ts'
 
 interface Line {
   /** y = m x + c */
@@ -243,16 +244,19 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     let d = ''
     let pen = false
     let last: [number, number] | null = null
+    const pieces: Pt[][] = []
     for (let i = 0; i <= 120; i++) {
       const x = xMin + ((xMax - xMin) * i) / 120
       const y = yOf(k, x)
       if (Number.isFinite(y) && y >= yMin && y <= yMax) {
         d += `${pen ? 'L' : 'M'}${sx(x).toFixed(1)} ${sy(y).toFixed(1)} `
+        if (!pen) pieces.push([])
+        pieces[pieces.length - 1]!.push({ x: sx(x), y: sy(y) })
         pen = true
         last = [x, y]
       } else pen = false
     }
-    return { d, last }
+    return { d, last, pieces }
   }
   /**
    * A wave is sampled every half degree. The pen lifts where the value leaves the box —
@@ -265,22 +269,185 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
     const f = w.fn === 'sin' ? Math.sin : w.fn === 'cos' ? Math.cos : Math.tan
     const steps = Math.max(240, Math.round((xMax - xMin) * 2))
     let d = '', pen = false, last: [number, number] | null = null, prev: number | null = null
+    const pieces: Pt[][] = []
     for (let i = 0; i <= steps; i++) {
       const x = xMin + ((xMax - xMin) * i) / steps
       const y = amp * f((x * Math.PI) / 180)
       const jump = prev !== null && Math.abs(y - prev) > (yMax - yMin) / 2
       if (Number.isFinite(y) && y >= yMin && y <= yMax && !jump) {
         d += `${pen ? 'L' : 'M'}${sx(x).toFixed(1)} ${sy(y).toFixed(1)} `
+        if (!pen) pieces.push([])
+        pieces[pieces.length - 1]!.push({ x: sx(x), y: sy(y) })
         pen = true
         last = [x, y]
       } else pen = false
       prev = y
     }
-    return { d, last }
+    return { d, last, pieces }
   }
   // Circles are clipped to the plot box, and two charts on one page must not share a
   // clip path, so the id comes from React rather than being a constant.
   const clip = useId().replace(/[^\w-]/g, '')
+
+  /*
+   * Everything drawn, as segments on screen. Each label used to be drawn straight after its
+   * own line, placed a fixed step from the line's end, so anything drawn later could run
+   * through it: the walk found a circle and its tangent through "3x + 4y = 25", y = x
+   * through "y = ½x + 1", the curve through "tangent at x = 3", a sine wave through
+   * "y = 0.643", a stock level's sawtooth through "reorder level", and "parallelogram"
+   * wider than its own shape. Every label now looks for a place clear of all of this —
+   * its own spot if that is clear, else the nearest that is — and is drawn last.
+   */
+  const drawn: Seg[] = []
+  const xAxisY = sy(Math.max(yMin, Math.min(0, yMax))), yAxisX = sx(Math.max(xMin, Math.min(0, xMax)))
+  if (yMin <= 0 && yMax >= 0) drawn.push([{ x: left, y: sy(0) }, { x: right, y: sy(0) }])
+  if (xMin <= 0 && xMax >= 0) drawn.push([{ x: sx(0), y: top }, { x: sx(0), y: bottom }])
+  const pieceSegs = (pieces: Pt[][]) => { for (const piece of pieces) for (let i = 1; i < piece.length; i++) drawn.push([piece[i - 1]!, piece[i]!]) }
+  const lineSegs = lines.map((l) => segment(l))
+  for (const seg of lineSegs) if (seg) drawn.push([{ x: sx(seg[0][0]), y: sy(seg[0][1]) }, { x: sx(seg[1][0]), y: sy(seg[1][1]) }])
+  const curveDraws = curves.map((k) => curvePath(k))
+  for (const c of curveDraws) pieceSegs(c.pieces)
+  const waveDraws = waves.map((w) => wavePath(w))
+  for (const w of waveDraws) pieceSegs(w.pieces)
+  for (const g of polygons) {
+    const pts = g.points.map(([x, y]) => ({ x: sx(x), y: sy(y) }))
+    for (let i = 1; i < pts.length; i++) drawn.push([pts[i - 1]!, pts[i]!])
+    if (!g.open && pts.length > 2) drawn.push([pts[pts.length - 1]!, pts[0]!])
+  }
+  const inBox = (p: Pt) => p.x >= left - 0.5 && p.x <= right + 0.5 && p.y >= top - 0.5 && p.y <= bottom + 0.5
+  for (const c of circles) {
+    const ring = Array.from({ length: 73 }, (_, i) => ({ x: sx(c.cx) + Math.abs(c.r) * kx * Math.cos((i * Math.PI) / 36), y: sy(c.cy) + Math.abs(c.r) * ky * Math.sin((i * Math.PI) / 36) }))
+    for (let i = 1; i < ring.length; i++) if (inBox(ring[i - 1]!) && inBox(ring[i]!)) drawn.push([ring[i - 1]!, ring[i]!])
+  }
+  for (const p of points) {
+    const c = { x: sx(p.x), y: sy(p.y) }
+    drawn.push([{ x: c.x - 6, y: c.y - 6 }, { x: c.x + 6, y: c.y + 6 }], [{ x: c.x - 6, y: c.y + 6 }, { x: c.x + 6, y: c.y - 6 }])
+  }
+
+  // The fixed labels first: tick numbers and axis letters, which the rest keep clear of.
+  const xTickYs = xTicks.map((v) => reserve(sx(v) - String(fmt(v)).length * 3, xAxisY + 14, fmt(v)))
+  const yTickYs = yTicks.map((v) => reserve(yAxisX - 6, sy(v) + 4, fmt(v), 11, true))
+  type Spot = { x: number; y: number; anchor: 'start' | 'middle' | 'end' }
+  /**
+   * The first of `spots` (baseline positions) where the text crosses nothing drawn, overlaps
+   * no label already placed and stays on the canvas; failing all of them, `fallback` nudged
+   * clear of the other labels only, which is what every label got before.
+   */
+  const settle = (spots: Spot[], text: string, size: number, fallback: Spot, bold = true): Spot => {
+    // Bold display text runs wider than the 0.55 em the label-on-label nudge assumes; at
+    // 0.55 "y = x³ − 12x" was judged to fit and ran off the right-hand edge.
+    const w = text.length * size * (bold ? 0.62 : 0.56)
+    for (const c of spots) {
+      const l = c.anchor === 'end' ? c.x - w : c.anchor === 'middle' ? c.x - w / 2 : c.x
+      if (l < 2 || l + w > W - 2 || c.y - size < 0 || c.y > totalH - 2) continue
+      if (hits({ x: l + w / 2, y: c.y - size * 0.35 }, w / 2, size * 0.45, drawn, 1)) continue
+      if (placed.some((q) => Math.abs(q.y - c.y) < size + 2 && l < q.x + q.w && q.x < l + w)) continue
+      placed.push({ x: l, y: c.y, w })
+      return c
+    }
+    return { ...fallback, y: clear(fallback.x, fallback.y, text, size, fallback.anchor) }
+  }
+  /** Spots beside a point on a line or curve: above, below, to its left and to its right. */
+  const besides = (p: Pt, gap = 0): Spot[] => [
+    { x: p.x, y: p.y - 7 - gap, anchor: 'middle' }, { x: p.x, y: p.y + 16 + gap, anchor: 'middle' },
+    { x: p.x - 6 - gap, y: p.y + 4, anchor: 'end' }, { x: p.x + 6 + gap, y: p.y + 4, anchor: 'start' },
+    { x: p.x - 5 - gap, y: p.y - 6 - gap, anchor: 'end' }, { x: p.x + 5 + gap, y: p.y - 6 - gap, anchor: 'start' },
+    { x: p.x - 5 - gap, y: p.y + 15 + gap, anchor: 'end' }, { x: p.x + 5 + gap, y: p.y + 15 + gap, anchor: 'start' },
+  ]
+  /** A label's own spot, then small steps off it in each direction. */
+  const near = (o: Spot): Spot[] => [o, ...[[0, -8], [0, 8], [-8, 0], [8, 0], [0, -14], [0, 14], [-14, 0], [14, 0]].map(([dx, dy]) => ({ ...o, x: o.x + dx!, y: o.y + dy! }))]
+  // The axis letters step off the end of their axis only if a line runs through them there.
+  const xLetter: Spot = xLabel ? { x: W / 2, y: totalH - 4, anchor: 'middle' } : settle(near({ x: W - pad, y: xAxisY - 6, anchor: 'end' }), 'x', 12, { x: W - pad, y: xAxisY - 6, anchor: 'end' }, false)
+  const yLetterY = yLabel ? reserve(padL, pad - 10, yLabel) : clear(yAxisX + 8, pad - 8, 'y')
+  // Near the far end first, so the label is read with the line it names; then back along it.
+  const along = (a: Pt, b: Pt) => [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4].flatMap((t) => besides({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }))
+  const lineLabels = lines.map((l, i) => {
+    const seg = lineSegs[i]
+    if (!seg || !l.label) return undefined
+    const [[x1, y1], [x2, y2]] = seg
+    const fallback: Spot = { x: sx(x2) - 4, y: sy(y2) + (y2 > y1 ? -8 : 16), anchor: 'end' }
+    return settle([fallback, ...along({ x: sx(x1), y: sy(y1) }, { x: sx(x2), y: sy(y2) })], l.label, 12, fallback)
+  })
+  const curveLabels = curves.map((k, i) => {
+    const { last, pieces } = curveDraws[i]!
+    if (!last || !k.label) return undefined
+    if (typeof k.labelX === 'number') {
+      const side = sideAt(sx(k.labelX), k.label)
+      const lx = sx(k.labelX) + (side === 'end' ? -6 : 6)
+      const on = { x: sx(k.labelX), y: sy(Math.max(yMin, Math.min(yOf(k, k.labelX), yMax))) }
+      const own: Spot = { x: lx, y: on.y - 8, anchor: side }
+      return settle([...near(own), ...besides(on)], k.label, 12, own)
+    }
+    const fallback: Spot = { x: sx(last[0]) - 4, y: sy(last[1]) + (k.a > 0 ? -8 : 16), anchor: 'end' }
+    const piece = pieces[pieces.length - 1] ?? []
+    const back = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4].map((t) => piece[Math.round((piece.length - 1) * t)]).filter((p): p is Pt => !!p)
+    return settle([fallback, ...back.flatMap(besides)], k.label, 12, fallback)
+  })
+  const waveLabels = waves.map((w, i) => {
+    const { last } = waveDraws[i]!
+    if (!last || !w.label) return undefined
+    const at = typeof w.labelX === 'number' ? w.labelX : last[0]
+    const y = (w.amplitude ?? 1) * (w.fn === 'sin' ? Math.sin : w.fn === 'cos' ? Math.cos : Math.tan)((at * Math.PI) / 180)
+    /*
+     * A wave labelled at its last visible point reads back towards the curve, so the text
+     * ends there. One labelled at a chosen x reads forwards from it, the way a curve's
+     * labelX already does: ending at that x instead drags the text left across the y-axis
+     * numbers, and y = tan x spent every nudge trying to get out from under them.
+     */
+    const on = { x: sx(at), y: sy(Math.max(yMin, Math.min(y, yMax))) }
+    const side = typeof w.labelX === 'number' ? sideAt(sx(at), w.label) : 'end'
+    const own: Spot = { x: sx(at) + (typeof w.labelX === 'number' ? (side === 'end' ? -6 : 6) : -4), y: on.y - 8, anchor: side }
+    return settle([...near(own), ...besides(on)], w.label, 12, own)
+  })
+  const polygonLabels = polygons.map((g) => {
+    if (!g.label) return undefined
+    const pts = g.points.map(([x, y]) => ({ x: sx(x), y: sy(y) }))
+    const cx = g.points.reduce((t, [x]) => t + x, 0) / g.points.length
+    const cy = g.points.reduce((t, [, y]) => t + y, 0) / g.points.length
+    const xs = pts.map((p) => p.x), ys = pts.map((p) => p.y)
+    const mid = { x: sx(cx), y: sy(cy) }
+    // Inside the shape if it fits, else just above, below or beside it.
+    const spots: Spot[] = [
+      { x: mid.x, y: mid.y + 4, anchor: 'middle' },
+      { x: mid.x, y: Math.min(...ys) - 6, anchor: 'middle' }, { x: mid.x, y: Math.max(...ys) + 15, anchor: 'middle' },
+      { x: Math.min(...xs) - 6, y: mid.y + 4, anchor: 'end' }, { x: Math.max(...xs) + 6, y: mid.y + 4, anchor: 'start' },
+    ]
+    return settle(spots, g.label, 13, spots[0]!)
+  })
+  const circleLabels = circles.map((c) => {
+    if (!c.label) return undefined
+    const topOf = { x: sx(c.cx), y: sy(c.cy + Math.abs(c.r)) }
+    const own: Spot = { x: topOf.x, y: topOf.y - 8, anchor: 'middle' }
+    // The top of a circle centred on the y-axis is where the axis runs, so its shoulders
+    // come next, the text reading away from the circle on whichever side it is.
+    const shoulders = [60, 120, 45, 135, 30, 150].map((deg): Spot => {
+      const a = (deg * Math.PI) / 180
+      const p = { x: sx(c.cx) + Math.abs(c.r) * kx * Math.cos(a), y: sy(c.cy) - Math.abs(c.r) * ky * Math.sin(a) }
+      return Math.cos(a) > 0 ? { x: p.x + 5, y: p.y - 5, anchor: 'start' } : { x: p.x - 5, y: p.y - 5, anchor: 'end' }
+    })
+    return settle([own, ...shoulders, ...near(own), ...besides(topOf)], c.label, 12, own)
+  })
+  // A point in the right half labels to its left, so the text stays inside the chart.
+  const pointLabels = points.map((p) => {
+    if (!p.label) return undefined
+    const toLeft = sx(p.x) > W / 2
+    const own: Spot = { x: sx(p.x) + (toLeft ? -8 : 8), y: p.labelBelow ? sy(p.y) + 16 : sy(p.y) - 8, anchor: toLeft ? 'end' : 'start' }
+    return settle([own, ...besides({ x: sx(p.x), y: sy(p.y) }, 3)], p.label, 12, own, false)
+  })
+  // Free text is put where the content asks, and only stepped off that spot when something drawn runs through it.
+  const freeLabels = labels.map((l) => { const own: Spot = { x: sx(l.x), y: sy(l.y), anchor: l.anchor ?? 'middle' }; return settle(near(own), l.text, 12, own, false) })
+  // Every label is drawn on a white halo, so a line that has to pass one still leaves it readable.
+  const halo = { stroke: '#ffffff', strokeWidth: 3, paintOrder: 'stroke' } as const
+  const colourOf = {
+    line: (i: number) => lines[i]!.colour ?? palette[i % palette.length]!,
+    curve: (i: number) => curves[i]!.colour ?? palette[(lines.length + i) % palette.length]!,
+    wave: (i: number) => waves[i]!.colour ?? palette[(lines.length + curves.length + i) % palette.length]!,
+    polygon: (i: number) => polygons[i]!.colour ?? palette[(lines.length + curves.length + waves.length + i) % palette.length]!,
+    circle: (i: number) => circles[i]!.colour ?? palette[(lines.length + curves.length + waves.length + i) % palette.length]!,
+  }
+  const named = (at: Spot | undefined, text: string | undefined, colour: string, key: string, size = 12) =>
+    at && text ? <text key={key} x={at.x} y={at.y} textAnchor={at.anchor} fontFamily={DISPLAY} fontSize={size} fontWeight="700" fill={colour} {...halo}>{text}</text> : null
+
   return (
     <svg ref={svg} viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
       <defs><clipPath id={`box-${clip}`}><rect x={left} y={top} width={right - left} height={bottom - top} /></clipPath></defs>
@@ -288,115 +455,52 @@ export function LineGraph({ props, alt }: { props: Record<string, unknown>; alt:
       {grid && yTicks.map((v) => <line key={`gy${v}`} x1={left} y1={sy(v)} x2={right} y2={sy(v)} stroke={RULE} />)}
       {yMin <= 0 && yMax >= 0 && <line x1={left} y1={sy(0)} x2={right} y2={sy(0)} stroke={INK} strokeWidth="1.5" />}
       {xMin <= 0 && xMax >= 0 && <line x1={sx(0)} y1={top} x2={sx(0)} y2={bottom} stroke={INK} strokeWidth="1.5" />}
-      {/*
-        * The tick numbers sit against the axes, which is exactly where a curve crosses
-        * them: every sine wave in the pack had its 180 and 360 struck through. They are
-        * drawn on a white halo, as ReactionProfile and CurveGraph draw text that has to
-        * sit over a picture, so a line passing over one leaves it readable.
-        */}
-      {xTicks.filter((v) => v !== 0).map((v) => <text key={`tx${v}`} x={sx(v)} y={reserve(sx(v) - String(fmt(v)).length * 3, sy(Math.max(yMin, Math.min(0, yMax))) + 14, fmt(v))} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{fmt(v)}</text>)}
-      {yTicks.filter((v) => v !== 0).map((v) => <text key={`ty${v}`} x={sx(Math.max(xMin, Math.min(0, xMax))) - 6} y={reserve(sx(Math.max(xMin, Math.min(0, xMax))) - 6, sy(v) + 4, fmt(v), 11, true)} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{fmt(v)}</text>)}
-      {xLabel
-        ? <text x={W / 2} y={totalH - 4} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
-        : <text x={W - pad} y={sy(Math.max(yMin, Math.min(0, yMax))) - 6} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">x</text>}
-      {yLabel
-        ? <text x={padL} y={pad - 10} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
-        : // Above the plot rather than inside it: a steep line's own label is drawn at the
-          // top of the axis and used to land on this letter.
-          <text x={sx(Math.max(xMin, Math.min(0, xMax))) + 8} y={clear(sx(Math.max(xMin, Math.min(0, xMax))) + 8, pad - 8, 'y')} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">y</text>}
       {lines.map((l, i) => {
-        const seg = segment(l)
+        const seg = lineSegs[i]
         if (!seg) return null
-        const colour = l.colour ?? palette[i % palette.length]!
         const [[x1, y1], [x2, y2]] = seg
-        return (
-          <g key={i}>
-            <line x1={sx(x1)} y1={sy(y1)} x2={sx(x2)} y2={sy(y2)} stroke={colour} strokeWidth="2.5" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {l.label && <text x={sx(x2) - 4} y={clear(sx(x2) - 4, sy(y2) + (y2 > y1 ? -8 : 16), l.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{l.label}</text>}
-          </g>
-        )
+        return <line key={i} x1={sx(x1)} y1={sy(y1)} x2={sx(x2)} y2={sy(y2)} stroke={colourOf.line(i)} strokeWidth="2.5" strokeDasharray={l.dashed ? '6 5' : undefined} strokeLinecap="round" />
       })}
-      {curves.map((k, i) => {
-        const { d, last } = curvePath(k)
-        if (!last) return null
-        const colour = k.colour ?? palette[(lines.length + i) % palette.length]!
-        return (
-          <g key={`k${i}`}>
-            <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={k.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {k.label && (typeof k.labelX === 'number'
-              ? (() => {
-                  const side = sideAt(sx(k.labelX), k.label)
-                  const lx = sx(k.labelX) + (side === 'end' ? -6 : 6)
-                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(yOf(k, k.labelX), yMax))) - 8, k.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{k.label}</text>
-                })()
-              : <text x={sx(last[0]) - 4} y={clear(sx(last[0]) - 4, sy(last[1]) + (k.a > 0 ? -8 : 16), k.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour}>{k.label}</text>)}
-          </g>
-        )
-      })}
-      {waves.map((w, i) => {
-        const { d, last } = wavePath(w)
-        if (!last) return null
-        const colour = w.colour ?? palette[(lines.length + curves.length + i) % palette.length]!
-        const at = typeof w.labelX === 'number' ? w.labelX : last[0]
-        const y = (w.amplitude ?? 1) * (w.fn === 'sin' ? Math.sin : w.fn === 'cos' ? Math.cos : Math.tan)((at * Math.PI) / 180)
-        return (
-          <g key={`w${i}`}>
-            <path d={d} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={w.dashed ? '6 5' : undefined} strokeLinecap="round" />
-            {/*
-              * A wave labelled at its last visible point reads back towards the curve, so
-              * the text ends there. One labelled at a chosen x reads forwards from it, the
-              * way a curve's labelX already does: ending at that x instead drags the text
-              * left across the y-axis numbers, and y = tan x spent every nudge trying to
-              * get out from under them.
-              */}
-            {w.label && (typeof w.labelX === 'number'
-              ? (() => {
-                  const side = sideAt(sx(at), w.label)
-                  const lx = sx(at) + (side === 'end' ? -6 : 6)
-                  return <text x={lx} y={clear(lx, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, side)} textAnchor={side} fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{w.label}</text>
-                })()
-              : <text x={sx(at) - 4} y={clear(sx(at) - 4, sy(Math.max(yMin, Math.min(y, yMax))) - 8, w.label, 12, 'end')} textAnchor="end" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{w.label}</text>)}
-          </g>
-        )
-      })}
+      {curves.map((k, i) => curveDraws[i]!.last && <path key={`k${i}`} d={curveDraws[i]!.d} fill="none" stroke={colourOf.curve(i)} strokeWidth="2.5" strokeDasharray={k.dashed ? '6 5' : undefined} strokeLinecap="round" />)}
+      {waves.map((w, i) => waveDraws[i]!.last && <path key={`w${i}`} d={waveDraws[i]!.d} fill="none" stroke={colourOf.wave(i)} strokeWidth="2.5" strokeDasharray={w.dashed ? '6 5' : undefined} strokeLinecap="round" />)}
       {polygons.map((g, i) => {
-        const colour = g.colour ?? palette[(lines.length + curves.length + waves.length + i) % palette.length]!
         const pts = g.points.map(([x, y]) => `${sx(x).toFixed(1)},${sy(y).toFixed(1)}`).join(' ')
-        const cx = g.points.reduce((t, [x]) => t + x, 0) / g.points.length
-        const cy = g.points.reduce((t, [, y]) => t + y, 0) / g.points.length
+        const colour = colourOf.polygon(i)
         return (
           <g key={`g${i}`} clipPath={`url(#box-${clip})`}>
             {/* An open polygon is a polyline: a function drawn in pieces must not be closed along the x axis. */}
             {g.open
               ? <polyline points={pts} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={g.dashed ? '6 5' : undefined} strokeLinejoin="round" strokeLinecap="round" />
               : <polygon points={pts} fill={g.fill ? colour : 'none'} fillOpacity={g.fill ? 0.14 : undefined} stroke={colour} strokeWidth="2.5" strokeDasharray={g.dashed ? '6 5' : undefined} strokeLinejoin="round" />}
-            {g.label && <text x={sx(cx)} y={clear(sx(cx), sy(cy) + 4, g.label, 13, 'middle')} textAnchor="middle" fontFamily={DISPLAY} fontSize="13" fontWeight="700" fill={colour}>{g.label}</text>}
           </g>
         )
       })}
-      {circles.map((c, i) => {
-        const colour = c.colour ?? palette[(lines.length + curves.length + waves.length + i) % palette.length]!
-        return (
-          <g key={`c${i}`}>
-            <ellipse cx={sx(c.cx)} cy={sy(c.cy)} rx={Math.abs(c.r) * kx} ry={Math.abs(c.r) * ky} fill="none" stroke={colour} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} clipPath={`url(#box-${clip})`} />
-            {c.label && <text x={sx(c.cx)} y={clear(sx(c.cx), sy(c.cy + Math.abs(c.r)) - 8, c.label, 12, 'middle')} textAnchor="middle" fontFamily={DISPLAY} fontSize="12" fontWeight="700" fill={colour} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{c.label}</text>}
-          </g>
-        )
-      })}
-      {points.map((p, i) => (
-        <g key={`p${i}`}>
-          <circle cx={sx(p.x)} cy={sy(p.y)} r="4.5" fill="#fff" stroke={INK} strokeWidth="2" />
-          {/* A point in the right half labels to its left, so the text stays inside the chart. */}
-          {p.label && (() => {
-            const left = sx(p.x) > W / 2
-            const lx = sx(p.x) + (left ? -8 : 8)
-            const ly = p.labelBelow ? sy(p.y) + 16 : sy(p.y) - 8
-            return <text x={lx} y={clear(lx, ly, p.label, 12, left ? 'end' : 'start')} textAnchor={left ? 'end' : 'start'} fontFamily={FONT} fontSize="12" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{p.label}</text>
-          })()}
-        </g>
-      ))}
+      {circles.map((c, i) => <ellipse key={`c${i}`} cx={sx(c.cx)} cy={sy(c.cy)} rx={Math.abs(c.r) * kx} ry={Math.abs(c.r) * ky} fill="none" stroke={colourOf.circle(i)} strokeWidth="2.5" strokeDasharray={c.dashed ? '6 5' : undefined} clipPath={`url(#box-${clip})`} />)}
+      {points.map((p, i) => <circle key={`p${i}`} cx={sx(p.x)} cy={sy(p.y)} r="4.5" fill="#fff" stroke={INK} strokeWidth="2" />)}
+      {/*
+        * The tick numbers sit against the axes, which is exactly where a curve crosses
+        * them: every sine wave in the pack had its 180 and 360 struck through. They are
+        * drawn on a white halo, as ReactionProfile and CurveGraph draw text that has to
+        * sit over a picture, so a line passing over one leaves it readable.
+        */}
+      {xTicks.map((v, i) => v !== 0 && <text key={`tx${v}`} x={sx(v)} y={xTickYs[i]} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK_2} {...halo}>{fmt(v)}</text>)}
+      {yTicks.map((v, i) => v !== 0 && <text key={`ty${v}`} x={yAxisX - 6} y={yTickYs[i]} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2} {...halo}>{fmt(v)}</text>)}
+      {xLabel
+        ? <text x={W / 2} y={xLetter.y} textAnchor="middle" fontFamily={FONT} fontSize="11" fill={INK}>{xLabel}</text>
+        : <text x={xLetter.x} y={xLetter.y} textAnchor={xLetter.anchor} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK} {...halo}>x</text>}
+      {yLabel
+        ? <text x={padL} y={yLetterY} fontFamily={FONT} fontSize="11" fill={INK}>{yLabel}</text>
+        : // Above the plot rather than inside it: a steep line's own label is drawn at the
+          // top of the axis and used to land on this letter.
+          <text x={yAxisX + 8} y={yLetterY} fontFamily={DISPLAY} fontSize="12" fontStyle="italic" fill={INK} {...halo}>y</text>}
+      {lines.map((l, i) => named(lineLabels[i], l.label, colourOf.line(i), `ll${i}`))}
+      {curves.map((k, i) => named(curveLabels[i], k.label, colourOf.curve(i), `kl${i}`))}
+      {waves.map((w, i) => named(waveLabels[i], w.label, colourOf.wave(i), `wl${i}`))}
+      {polygons.map((g, i) => named(polygonLabels[i], g.label, colourOf.polygon(i), `gl${i}`, 13))}
+      {circles.map((c, i) => named(circleLabels[i], c.label, colourOf.circle(i), `cl${i}`))}
+      {points.map((p, i) => pointLabels[i] && <text key={`pl${i}`} x={pointLabels[i]!.x} y={pointLabels[i]!.y} textAnchor={pointLabels[i]!.anchor} fontFamily={FONT} fontSize="12" fill={INK} {...halo}>{p.label}</text>)}
       {labels.map((l, i) => (
-        <text key={`t${i}`} x={sx(l.x)} y={clear(sx(l.x), sy(l.y), l.text, 12, l.anchor ?? 'middle')} textAnchor={l.anchor ?? 'middle'} fontFamily={FONT} fontSize="12" fill={INK} stroke="#ffffff" strokeWidth="3" paintOrder="stroke">{l.text}</text>
+        <text key={`t${i}`} x={freeLabels[i]!.x} y={freeLabels[i]!.y} textAnchor={freeLabels[i]!.anchor} fontFamily={FONT} fontSize="12" fill={INK} {...halo}>{l.text}</text>
       ))}
     </svg>
   )

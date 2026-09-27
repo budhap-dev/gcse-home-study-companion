@@ -201,10 +201,15 @@ One PR per subject.
   `labels-clear.test.tsx` renders every content prop set of the four and fails on a line through
   a label. The walk at 390 and 1280 finds none in them (27 September 2026). The stacked
   `triangle-pair` also fits a tall triangle in its half instead of running into the other.
-- [ ] **Labels crossed by lines, the rest:** a pack walk at 390 found 32 more, all present on
-  `main`: `line-graph` 13 (an equation or name printed on its own line or curve), `motion-graph`
-  9, `dot-and-cross` 8 (the ion's charge on its bracket corner), `logic-circuit` 2 (NOT on its
-  wire), `inequality-region` and `lens-diagram` 1 each, `four-box` 1 at 1280.
+- [x] **Labels crossed by lines, line graphs:** every `line-graph` label (line and curve names,
+  shape names, point labels, free text, the axis letters) now takes its own spot if nothing drawn
+  runs through it and the nearest clear one if something does, and all of them are drawn last on
+  a halo. Counting haloed labels, named labels crossed at 390 fell from 61 to 12 across 125 pages;
+  the 12 are crowded figures with no clear spot (two nested circles, three overlapping ones, a
+  stock level's sawtooth). `labels-clear.test.tsx` holds the static count at 6 (62 on `main`).
+- [ ] **Labels crossed by lines, the rest:** `motion-graph` 9, `dot-and-cross` 8 (the ion's
+  charge on its bracket corner), `logic-circuit` 2 (NOT on its wire), `inequality-region` and
+  `lens-diagram` 1 each, `four-box` 1 at 1280. All present on `main`.
 - [ ] **LineGraph options:** a joined line through points for time series (today it is a
   polygon traced out and back), and `axes: false` for pictures of shapes (today the axes
   are hidden with out-of-range ticks).

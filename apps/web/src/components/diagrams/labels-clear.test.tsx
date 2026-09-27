@@ -4,6 +4,7 @@ import type { ComponentType } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { CircleTheorem } from './CircleTheorem.tsx'
+import { LineGraph } from './LineGraph.tsx'
 import { Cuboid } from './Cuboid.tsx'
 import { TriangleConstruction } from './TriangleConstruction.tsx'
 import { TrianglePair } from './TrianglePair.tsx'
@@ -90,13 +91,15 @@ function shapes(markup: string): [Pt, Pt][][] {
  * A label's box from its attributes: its width estimated from its characters, its height the
  * glyphs' own, above the baseline. A white-haloed label is meant to sit over lines, and is left out.
  */
-function labels(markup: string) {
+function labels(markup: string, halos = false) {
   const out: { text: string; box: { x: number; y: number; w: number; h: number } }[] = []
   for (const t of markup.matchAll(/<text\b([^>]*)>([\s\S]*?)<\/text>/g)) {
     const attrs = t[1]!
-    if (/paint-order="stroke"/.test(attrs)) continue
+    if (!halos && /paint-order="stroke"/.test(attrs)) continue
     const text = t[2]!.replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, 'x')
     if (!text.trim()) continue
+    // With halos counted, tick numbers are left out: they sit on the axes by design, and a curve crossing an axis crosses them.
+    if (halos && /^[-−]?[\d.]+$/.test(text.trim())) continue
     const size = num(attrs, 'font-size') || 16
     const w = text.length * size * (/font-weight="700"/.test(attrs) ? 0.62 : 0.56)
     const anchor = /text-anchor="(\w+)"/.exec(attrs)?.[1] ?? 'start'
@@ -112,10 +115,10 @@ function labels(markup: string) {
  * span most of its width or height. A line that ends at a label reaches in and stops; one
  * drawn through it enters one side and leaves the other. (The browser walk uses the same rule.)
  */
-function crossings(markup: string) {
+function crossings(markup: string, halos = false) {
   const found: string[] = []
   const elements = shapes(markup)
-  for (const { text, box } of labels(markup)) {
+  for (const { text, box } of labels(markup, halos)) {
     for (const segs of elements) {
       const inside: Pt[] = []
       for (const [p, q] of segs) {
@@ -134,6 +137,8 @@ function crossings(markup: string) {
   return found
 }
 
+const LINE_GRAPH_CROSSINGS = 6
+
 const cases: [string, ComponentType<{ props: Record<string, unknown>; alt: string }>][] = [
   ['cuboid', Cuboid],
   ['triangle-construction', TriangleConstruction],
@@ -151,6 +156,19 @@ describe('labels clear of lines', () => {
   it('can see a line through a label', () => {
     const markup = '<svg><line x1="0" y1="25" x2="200" y2="25" stroke="#000"/><text x="20" y="30" font-size="14">through</text><line x1="0" y1="80" x2="24" y2="76" stroke="#000"/><text x="24" y="80" font-size="14">ending</text></svg>'
     expect(crossings(markup)).toEqual(['"through" crossed near 21,25'])
+  })
+  /*
+   * Every LineGraph label is drawn on a halo, so the check above would pass it whatever it
+   * did. Counting haloed labels too (but not tick numbers), this estimate finds 62 names,
+   * equations and point labels crossed across the pack on main (27 September 2026). They
+   * now look for a clear place, and the 6 left are crowded figures where none exists: two
+   * nested circles, three overlapping ones, a stock level's sawtooth. This holds the count.
+   */
+  it('line-graph, haloed labels included', () => {
+    const all = findProps('line-graph')
+    expect(all.length).toBeGreaterThan(100)
+    const found = all.flatMap((props) => crossings(renderToStaticMarkup(<LineGraph props={props} alt="" />), true).map((f) => `${f} in ${JSON.stringify(props).slice(0, 60)}`))
+    expect(found.length, found.join('\n')).toBeLessThanOrEqual(LINE_GRAPH_CROSSINGS)
   })
   for (const [kind, Comp] of cases) {
     it(kind, () => {
