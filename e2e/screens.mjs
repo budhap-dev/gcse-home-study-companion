@@ -12,7 +12,7 @@
 //     unless it sits inside a line of text.
 //
 // Usage: node e2e/screens.mjs [--base http://localhost:4173] [--widths 390,1280]
-//          [--themes paper,midnight | all] [--shots dir]
+//          [--themes paper,midnight | all] [--shots dir] [--motion on|off]
 // Writes e2e-screens-report.json and exits 1 if anything was found.
 import { chromium } from 'playwright-core'
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
@@ -28,10 +28,17 @@ const THEME_SOURCE = readFileSync(join(HERE, '..', 'apps', 'web', 'src', 'theme'
 const ALL_THEMES = [...THEME_SOURCE.matchAll(/\{ id: '([a-z-]+)', name:/g)].map((m) => m[1])
 const THEMES = arg('themes', 'paper,midnight') === 'all' ? ALL_THEMES : arg('themes', 'paper,midnight').split(',')
 const SHOTS = arg('shots', '')
+// --motion off: the Settings switch for animations, which must leave every page complete.
+const MOTION = arg('motion', 'on')
 
 // A route with `press` is scanned again after pressing that control, for what only shows then.
+// A route with `seed` starts from that student instead of the sample: 'new' has never opened
+// the app (the welcome questions), 'blank' has answered them and done nothing since.
 const ROUTES = [
   '/',
+  { path: '/', seed: 'new' },
+  { path: '/', seed: 'blank' },
+  { path: '/subjects/physics', seed: 'blank', press: 'button[aria-pressed][title]' },
   '/subjects',
   { path: '/subjects/maths', press: 'button[aria-pressed][title]' },
   '/subjects/maths?view=list',
@@ -146,24 +153,32 @@ for (const theme of THEMES) {
   for (const width of WIDTHS) {
     const phone = width < 768
     const context = await browser.newContext({ viewport: { width, height: phone ? 844 : 900 }, deviceScaleFactor: 1 })
-    await context.addInitScript(([p, t]) => {
-      localStorage.setItem('study-companion.progress.v1', p)
+    const SEEDS = { sample: progress, new: '', blank: JSON.stringify({ profile: { setupAt: new Date().toISOString() } }) }
+    await context.addInitScript(([seeds, t, motion]) => {
+      const seed = seeds[sessionStorage.getItem('screens.seed') ?? 'sample']
+      if (seed) localStorage.setItem('study-companion.progress.v1', seed)
+      else localStorage.removeItem('study-companion.progress.v1')
       localStorage.setItem('study-companion.theme', t)
-    }, [progress, theme])
+      localStorage.setItem('study-companion.motion', motion)
+    }, [SEEDS, theme, MOTION])
     const page = await context.newPage()
     const errors = []
     page.on('pageerror', (e) => errors.push(String(e)))
     page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(m.text()) })
     const shot = (name) => SHOTS ? page.screenshot({ path: join(SHOTS, `${theme}-${width}${name.replace(/[/?=]/g, '_') || '_home'}.png`), fullPage: true }) : undefined
     for (const entry of ROUTES) {
-      const { path: route, press } = typeof entry === 'string' ? { path: entry } : entry
+      const { path, press, seed = 'sample' } = typeof entry === 'string' ? { path: entry } : entry
+      const route = seed === 'sample' ? path : `${path} (${seed} student)`
       errors.length = 0
-      await page.goto(BASE + route, { waitUntil: 'load', timeout: 60000 })
+      // The seed is chosen per visit through sessionStorage, which the init script reads first.
+      await page.goto(BASE + '/404-seed', { waitUntil: 'load' })
+      await page.evaluate((s) => sessionStorage.setItem('screens.seed', s), seed)
+      await page.goto(BASE + path, { waitUntil: 'load', timeout: 60000 })
       await page.waitForSelector('main h1', { timeout: 20000 }).catch(() => errors.push('no heading rendered'))
       // Entrance animations run to about 1.6s; measuring mid-animation reports boxes that are not the layout.
       await page.waitForTimeout(2200)
       const found = await page.evaluate(scan, { phone })
-      await shot(route)
+      await shot(route.replace(/[ ()]/g, '-'))
       if (press) {
         await page.locator(press).nth(3).click()
         await page.waitForTimeout(900)
@@ -177,7 +192,7 @@ for (const theme of THEMES) {
         })
         for (const d of hidden) after.push({ kind: 'sheet under the menu bar', where: 'aside', detail: `${Math.round(d)}px` })
         for (const f of after) found.push({ ...f, where: `after pressing: ${f.where}` })
-        await shot(route + '-pressed')
+        await shot(route.replace(/[ ()]/g, '-') + '-pressed')
       }
       for (const e of errors) found.push({ kind: 'script error', where: 'page', detail: e.slice(0, 200) })
       for (const f of found) findings.push({ theme, width, route, ...f })

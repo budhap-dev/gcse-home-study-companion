@@ -51,6 +51,13 @@ pnpm typecheck
 pnpm build
 ```
 
+Two browser checks run against a built copy (`npx vite preview --outDir dist`, port 4173), using the system Chrome:
+
+```
+node e2e/walk.mjs --base http://localhost:4173      # lesson steps and diagrams, SAMPLE=1 or TOPICS=id,id
+node e2e/screens.mjs --base http://localhost:4173   # main screens with sample progress: --themes all --widths 390,820,1280 --motion off --shots dir
+```
+
 The app is deployed by Vercel from `main` at https://gcse-home-study-companion.vercel.app. Every screen reads real content bundled from `supabase/seed/content` and `supabase/seed/guides`: subjects, topic maps, topic pages, step-by-step lessons with checks, three worksheets per topic with a scratch canvas and self-marked method marks, sampled quizzes, flashcards, and the exam technique guides. Progress, XP, badges and streaks are stored in the browser, and sync to Supabase once a family account signs in.
 
 ## Search and glossary

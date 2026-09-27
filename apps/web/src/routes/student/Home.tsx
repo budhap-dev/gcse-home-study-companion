@@ -99,7 +99,7 @@ export function Home() {
       )}
 
       <section className="flex flex-col gap-3 lg:col-span-2" aria-labelledby="map-heading">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-2 xl:flex-row xl:items-end xl:justify-between">
           <h2 id="map-heading" className="text-[22px] font-bold leading-tight">
             Your map <span className="font-sans text-[15px] font-normal text-ink-2">· every topic, every subject</span>
           </h2>
@@ -279,7 +279,7 @@ function Welcome() {
         <p className="text-ink-2">Three quick questions, so your plan covers what you study. You can change any of it later in Settings.</p>
       </header>
       <ProfileForm profile={progress.profile ?? {}} saveLabel="Start" />
-      <button type="button" onClick={() => setProfile({})} className="w-fit text-sm text-ink-3 underline underline-offset-2">Skip for now</button>
+      <button type="button" onClick={() => setProfile({})} className="-my-2 min-h-11 w-fit text-sm text-ink-3 underline underline-offset-2">Skip for now</button>
     </article>
   )
 }

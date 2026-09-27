@@ -287,7 +287,7 @@ function LessonRing({ done, total }: { done: number; total: number }) {
   const r = 58
   const c = 2 * Math.PI * r
   return (
-    <svg width="160" height="160" viewBox="0 0 160 160" aria-hidden className="anim-drift relative hidden shrink-0 md:block" style={{ '--r': '0deg' } as React.CSSProperties}>
+    <svg width="160" height="160" viewBox="0 0 160 160" aria-hidden className="anim-drift relative hidden shrink-0 lg:block" style={{ '--r': '0deg' } as React.CSSProperties}>
       <circle cx="80" cy="80" r="70" fill="rgb(255 255 255 / 0.12)" />
       <circle cx="80" cy="80" r={r} fill="none" stroke="rgb(255 255 255 / 0.25)" strokeWidth="12" />
       {done > 0 && <circle className="anim-ring" cx="80" cy="80" r={r} fill="none" stroke="#fff" strokeWidth="12" strokeLinecap="round" strokeDasharray={`${(c * done) / total} ${c}`} transform="rotate(-90 80 80)" />}
