@@ -41,6 +41,17 @@ export interface AttemptRecord {
   questions?: QuestionResult[]
 }
 
+/**
+ * What an attempt was, in words: "Quiz", "Core worksheet", "Redo my mistakes". A redo
+ * session has no level, and a worksheet saved by an old build may lack one too, so the
+ * level is never assumed; the Progress page once crashed on a redo session doing that.
+ */
+export function attemptName(a: Pick<AttemptRecord, 'kind' | 'level'>): string {
+  if (a.kind === 'quiz') return 'Quiz'
+  if (a.kind === 'review') return 'Redo my mistakes'
+  return a.level ? `${a.level[0]!.toUpperCase()}${a.level.slice(1)} worksheet` : 'Worksheet'
+}
+
 export interface LessonRecord {
   topicId: string
   stepIndex: number

@@ -10,9 +10,10 @@ import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts
 import { Link } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
-import { evidenceFor, isoDate, streakDays, weekDays, weekMinutes } from '../../progress/store.ts'
+import { attemptName, evidenceFor, isoDate, streakDays, weekDays, weekMinutes } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { describeMilestone } from '../../progress/milestones.ts'
+import { SubjectIcon } from '../../components/SubjectIcon.tsx'
 
 export function Progress() {
   const progress = useProgress()
@@ -39,7 +40,7 @@ export function Progress() {
             return (
               <div key={s.id} className="flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                  <span className="font-bold accent-ink" style={{ '--subject': s.colour } as React.CSSProperties}>{s.name}</span>
+                  <span className="flex items-center gap-2 self-center font-bold accent-ink" style={{ '--subject': s.colour } as React.CSSProperties}><SubjectIcon subjectId={s.id} width={18} height={18} className="shrink-0" />{s.name}</span>
                   <span className="whitespace-nowrap text-sm"><strong>{level ? level.name : LEVEL_NAMES[s.id][0]}</strong> <span className="text-ink-2">· level {level?.level ?? 1}</span></span>
                 </div>
                 <div className="h-2 overflow-hidden rounded-full bg-panel"><div className="h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: s.colour }} /></div>
@@ -160,7 +161,7 @@ export function Progress() {
           <ul className="flex flex-col gap-1.5">
             {recent.map((a) => (
               <li key={a.id} className="flex items-center justify-between rounded-lg border border-rule bg-surface px-3 py-2 text-sm">
-                <span>{titleOf(a.topicId)} · {a.kind === 'quiz' ? 'Quiz' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`}<span className="text-ink-2"> · {a.markedHow === 'auto' ? 'auto-marked' : a.markedHow === 'self' ? 'self-marked' : 'mixed'}</span></span>
+                <span>{titleOf(a.topicId)} · {attemptName(a)}<span className="text-ink-2"> · {a.markedHow === 'auto' ? 'auto-marked' : a.markedHow === 'self' ? 'self-marked' : 'mixed'}</span></span>
                 <span className="font-bold tabular-nums">{Math.round((100 * a.marksScored) / a.marksAvailable)}%</span>
               </li>
             ))}

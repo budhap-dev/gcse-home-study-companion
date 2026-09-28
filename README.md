@@ -64,7 +64,7 @@ The app is deployed by Vercel from `main` at https://gcse-home-study-companion.v
 
 Two ways in, both bundled with the app and working offline:
 
-- **Search** (`/search`, or the box in the sidebar, or `/` from anywhere) covers every
+- **Search** (`/search`, or the box in the top bar, or `/` from anywhere) covers every
   topic, every lesson step, every exam technique note and every question bank, plus the
   glossary. Results are per section, so a hit lands on the step that teaches the idea
   rather than the top of the topic. Matching allows for the endings school vocabulary

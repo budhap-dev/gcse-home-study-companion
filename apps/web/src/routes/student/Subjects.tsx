@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { topicsForSubject } from '../../content/index.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { evidenceFor } from '../../progress/store.ts'
+import { SubjectIcon } from '../../components/SubjectIcon.tsx'
 
 const YEARS = [9, 10, 11] as const
 
@@ -63,9 +64,11 @@ export function Subjects() {
               <Link
                 to={`/subjects/${s.id}`}
                 style={{ '--subject': s.colour } as React.CSSProperties}
-                className="flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-[color:var(--subject)]"
+                className="icon-tilt-host flex items-center gap-3 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-[color:var(--subject)]"
               >
-                <span className="h-3 w-3 rounded-sm" style={{ background: s.colour }} aria-hidden />
+                <span aria-hidden className="icon-tilt accent-ink flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[color-mix(in_srgb,var(--subject)_14%,var(--color-surface))]">
+                  <SubjectIcon subjectId={s.id} />
+                </span>
                 <span className="flex flex-col">
                   <span className="font-bold">{s.name}</span>
                   <span className="text-xs text-ink-2">
@@ -113,7 +116,7 @@ export function Subjects() {
                 <tr key={subject.id} className="border-b border-rule/60">
                   <th scope="row" className="py-2 pr-3 text-left font-normal">
                     <Link to={`/subjects/${subject.id}`} className="flex items-center gap-2 whitespace-nowrap py-1 font-bold hover:underline">
-                      <span className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: subject.colour }} aria-hidden />
+                      <span aria-hidden className="accent-ink flex shrink-0" style={{ '--subject': subject.colour } as React.CSSProperties}><SubjectIcon subjectId={subject.id} width={16} height={16} /></span>
                       {subject.name}
                     </Link>
                   </th>

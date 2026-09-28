@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { decayNote, emptyState, evidenceFor, type AttemptRecord } from './store.ts'
+import { attemptName, decayNote, emptyState, evidenceFor, type AttemptRecord } from './store.ts'
 
 const at = (n: number) => new Date(2026, 8, n).toISOString()
 const quiz = (pct: number, n: number, g89?: [number, number]): AttemptRecord => ({
@@ -85,3 +85,12 @@ describe('evidenceFor applies the six-week decay', () => {
   })
 })
 
+
+describe('attemptName', () => {
+  it('names every kind of attempt without assuming a level', () => {
+    expect(attemptName({ kind: 'quiz' })).toBe('Quiz')
+    expect(attemptName({ kind: 'worksheet', level: 'higher' })).toBe('Higher worksheet')
+    expect(attemptName({ kind: 'review' })).toBe('Redo my mistakes')
+    expect(attemptName({ kind: 'worksheet' })).toBe('Worksheet')
+  })
+})
