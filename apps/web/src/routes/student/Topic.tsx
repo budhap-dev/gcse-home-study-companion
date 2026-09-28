@@ -15,6 +15,7 @@ import { openSession, quizKey, worksheetKey } from '../../progress/inProgress.ts
 import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
+import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -105,10 +106,17 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
             {topic.specCode && <span className="opacity-80">{topic.specCode} </span>}
             {topic.title}
           </h1>
-          <span className="flex w-fit items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-[13px] font-bold">
-            <StatusIcon status={evidence.status} size={12} colour="currentColor" />
-            {sq?.level === 0 ? 'Not started' : STATUS_LABEL[evidence.status]}
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="flex w-fit items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-[13px] font-bold">
+              <StatusIcon status={evidence.status} size={12} colour="currentColor" />
+              {sq?.level === 0 ? 'Not started' : STATUS_LABEL[evidence.status]}
+            </span>
+            {/* The ring's place below laptop width, where there is no room beside the text. */}
+            <span className="flex w-fit items-center gap-1.5 rounded-full bg-white/20 py-1 pl-1.5 pr-3 text-[13px] font-bold lg:hidden">
+              <LessonRing done={stepsDone} total={steps.length} small />
+              {stepsDone}/{steps.length} steps
+            </span>
+          </div>
           {topic.why && <RichText source={topic.why.matters} className="text-[15px] leading-relaxed sm:text-base" />}
           <div className="mt-1 flex flex-wrap gap-3">
             <Link to={primary.to} className="lift flex min-h-12 items-center gap-2 rounded-2xl bg-white px-5 font-bold text-[#2a2f9e] shadow-[0_8px_20px_rgb(0_0_0/0.2)]">
@@ -120,7 +128,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
             )}
           </div>
         </div>
-        <LessonRing done={stepsDone} total={steps.length} />
+        <HeroPicture subject={subject} done={stepsDone} total={steps.length} />
       </section>
 
       {/* Three blocks in the order a phone reads them: the lesson, then mastery and practice,
@@ -282,15 +290,44 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
   )
 }
 
-/** The banner's picture: a ring of the lesson's steps, filling as far as the student has gone. Wide screens only. */
-function LessonRing({ done, total }: { done: number; total: number }) {
+/**
+ * The banner's right-hand side on a laptop: the ring of lesson steps, with three of the
+ * subject's pictures drifting round it, different ones on each visit. It takes the width the
+ * text leaves, rather than sitting beside the text and leaving a gap at the end.
+ */
+function HeroPicture({ subject, done, total }: { subject: { id: string; colour: string }; done: number; total: number }) {
+  const first = useRandomIcon(subject.id)
+  const spots = ['-translate-x-[130px] -translate-y-[92px]', 'translate-x-[118px] translate-y-[8px]', '-translate-x-[112px] translate-y-[84px]']
+  return (
+    <div aria-hidden className="relative hidden min-w-80 flex-1 items-center justify-center self-stretch lg:flex">
+      {spots.map((spot, i) => (
+        <span key={i} className={`absolute left-1/2 top-1/2 -ml-[26px] -mt-[26px] ${spot}`}>
+          <SubjectTile subjectId={subject.id} colour={subject.colour} variant={first + i} i={i} big />
+        </span>
+      ))}
+      <LessonRing done={done} total={total} />
+    </div>
+  )
+}
+
+/** A ring of the lesson's steps, filling as far as the student has gone. */
+function LessonRing({ done, total, small = false }: { done: number; total: number; small?: boolean }) {
   const r = 58
   const c = 2 * Math.PI * r
+  const fill = done > 0 && <circle className="anim-ring" cx="80" cy="80" r={r} fill="none" stroke="#fff" strokeWidth={small ? 22 : 12} strokeLinecap="round" strokeDasharray={`${(c * done) / total} ${c}`} transform="rotate(-90 80 80)" />
+  if (small) {
+    return (
+      <svg width="22" height="22" viewBox="0 0 160 160" aria-hidden className="shrink-0">
+        <circle cx="80" cy="80" r={r} fill="none" stroke="rgb(255 255 255 / 0.3)" strokeWidth="22" />
+        {fill}
+      </svg>
+    )
+  }
   return (
-    <svg width="160" height="160" viewBox="0 0 160 160" aria-hidden className="anim-drift relative hidden shrink-0 lg:block" style={{ '--r': '0deg' } as React.CSSProperties}>
+    <svg width="160" height="160" viewBox="0 0 160 160" aria-hidden className="anim-drift relative shrink-0" style={{ '--r': '0deg' } as React.CSSProperties}>
       <circle cx="80" cy="80" r="70" fill="rgb(255 255 255 / 0.12)" />
       <circle cx="80" cy="80" r={r} fill="none" stroke="rgb(255 255 255 / 0.25)" strokeWidth="12" />
-      {done > 0 && <circle className="anim-ring" cx="80" cy="80" r={r} fill="none" stroke="#fff" strokeWidth="12" strokeLinecap="round" strokeDasharray={`${(c * done) / total} ${c}`} transform="rotate(-90 80 80)" />}
+      {fill}
       <text x="80" y="82" textAnchor="middle" fontFamily="Bricolage Grotesque, Arial, sans-serif" fontSize="34" fontWeight="700" fill="#fff">{done}/{total}</text>
       <text x="80" y="104" textAnchor="middle" fontSize="13" fill="#fff">steps</text>
     </svg>

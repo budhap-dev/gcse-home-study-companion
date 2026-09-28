@@ -18,7 +18,7 @@ import { redoable } from './Mistakes.tsx'
 import { doneToday, todayPlan, type PlanItem } from '../../progress/today.ts'
 import { assignedTasks } from '../../progress/assignments.ts'
 import { useMyAssignments } from '../../auth/assignments.ts'
-import { SubjectIcon, subjectIconCount } from '../../components/SubjectIcon.tsx'
+import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
 
 /**
  * Home as the map (Option C). A banner with the day's numbers and the first thing to do,
@@ -240,20 +240,9 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
   )
 }
 
-/**
- * A subject's icon on a white tile, drifting and tilted a little, each out of step with the
- * last. The picture is one of the subject's several, chosen afresh on each visit to Home.
- */
+/** A tile on the Home banner, with one of its subject's pictures chosen afresh on each visit. */
 function HeroTile({ tile, i, big = false }: { tile: { id: string; colour: string }; i: number; big?: boolean }) {
-  const [variant] = useState(() => Math.floor(Math.random() * subjectIconCount(tile.id)))
-  return (
-    <span
-      className={`anim-drift light-ground accent-ink flex items-center justify-center bg-white/95 shadow-[0_10px_24px_rgb(0_0_0/0.2)] ${big ? 'h-[52px] w-[52px] rounded-[15px]' : 'h-10 w-10 rounded-xl'}`}
-      style={{ '--r': `${[-6, 5, -3, 4, -5, 6][i % 6]}deg`, '--d': `${-i * 0.7}s`, '--subject': tile.colour } as React.CSSProperties}
-    >
-      <SubjectIcon subjectId={tile.id} variant={variant} width={big ? 26 : 21} height={big ? 26 : 21} />
-    </span>
-  )
+  return <SubjectTile subjectId={tile.id} colour={tile.colour} variant={useRandomIcon(tile.id)} i={i} big={big} />
 }
 
 /** One item of today's plan: why it is there, what it is, and how long it takes. */

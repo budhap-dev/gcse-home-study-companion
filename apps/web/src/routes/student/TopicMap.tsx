@@ -209,8 +209,9 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
       style={{ '--subject': subject.colour } as React.CSSProperties}
       className={wide
         ? 'card-top sticky top-24 flex flex-col gap-3.5 rounded-3xl border border-rule bg-surface p-5 shadow-[0_8px_28px_rgb(16_24_40/0.08)]'
-        // A tablet has no menu bar along the bottom, so there the sheet is a card in the corner.
-        : `${open ? 'flex' : 'hidden'} sheet-up card-top fixed inset-x-0 bottom-[calc(4.2rem+env(safe-area-inset-bottom))] z-40 max-h-[70dvh] flex-col gap-3.5 overflow-y-auto rounded-t-3xl border border-rule bg-surface p-5 shadow-[0_-12px_40px_rgb(16_24_40/0.22)] md:bottom-6 md:left-auto md:right-6 md:w-[25rem] md:rounded-3xl`}
+        // A card floating just above the menu dock, like the dock itself: full width on a
+        // phone, in the corner on a tablet.
+        : `${open ? 'flex' : 'hidden'} sheet-up card-top bottom-nav-clear fixed inset-x-3 z-40 max-h-[65dvh] flex-col gap-3.5 overflow-y-auto rounded-3xl border border-rule bg-surface p-5 shadow-[0_-12px_40px_rgb(16_24_40/0.22)] md:left-auto md:right-6 md:w-[25rem]`}
     >
       <div className="flex items-start justify-between gap-3">
         <span className="text-xs font-bold uppercase tracking-[0.1em] text-ink-2">{subject.units.find((u) => u.id === t.unitId)?.name} · Year {t.year}</span>
