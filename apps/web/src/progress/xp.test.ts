@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { earnedBadgeIds, skillStats, xpForQuestions } from './xp.ts'
+import { closestLevelUp, earnedBadgeIds, skillStats, xpForQuestions } from './xp.ts'
+import { TOPICS } from '../content/index.ts'
 import { emptyState, type AttemptRecord } from './store.ts'
 
 const q = (gradeBand: '4-5' | '6-7' | '8-9', correct: boolean, skill = 's') => ({ id: skill, skill, gradeBand, correct, marksScored: correct ? 2 : 0, marksAvailable: 2 })
@@ -38,5 +39,17 @@ describe('skillStats', () => {
     const { strengths, weaknesses } = skillStats(s)
     expect(strengths.map((x) => x.skill)).toEqual(['simplifying surds'])
     expect(weaknesses.map((x) => x.skill)).toEqual(['rationalising denominators'])
+  })
+})
+
+describe('closest level up', () => {
+  it('picks the subject furthest through its level, and gives a new student a goal', () => {
+    const fresh = closestLevelUp(emptyState(), ['maths', 'physics'])
+    expect(fresh?.level.level).toBe(1)
+    const lessons = { [TOPICS.find((t) => t.subjectId === 'physics')!.id]: { topicId: TOPICS.find((t) => t.subjectId === 'physics')!.id, stepIndex: 3, updatedAt: '2026-09-01T10:00:00Z' } }
+    const best = closestLevelUp({ ...emptyState(), lessons }, ['maths', 'physics'])
+    expect(best?.subjectId).toBe('physics')
+    expect(best!.level.progress).toBeGreaterThan(0)
+    expect(closestLevelUp(emptyState(), [])).toBeUndefined()
   })
 })

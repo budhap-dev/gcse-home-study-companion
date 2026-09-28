@@ -3,13 +3,13 @@ import { SectionLabel } from '../../components/KindChip.tsx'
 import { SetForYou } from '../../components/AssignedTasks.tsx'
 import { useAuth } from '../../auth/useAuth.ts'
 import { useState } from 'react'
-import { levelBySubject, totalXp } from '../../progress/xp.ts'
+import { closestLevelUp, levelBySubject, totalXp } from '../../progress/xp.ts'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link } from 'react-router'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { recommend, type Task } from '../../progress/recommend.ts'
 import { isoDate, setProfile, streakDays, studiedTopics, weekMinutes } from '../../progress/store.ts'
-import { daysThisWeek, fixFirst, isSecure, square } from '../../progress/map.ts'
+import { countLevels, daysThisWeek, fixFirst, isSecure, lastDays, square } from '../../progress/map.ts'
 import { MapLegend, SubjectMapCard, WeekBars } from '../../components/map/MapParts.tsx'
 import { ProfileForm, daysUntil } from '../../components/ProfileForm.tsx'
 import { useProgress } from '../../progress/useProgress.ts'
@@ -19,6 +19,7 @@ import { doneToday, todayPlan, type PlanItem } from '../../progress/today.ts'
 import { assignedTasks } from '../../progress/assignments.ts'
 import { useMyAssignments } from '../../auth/assignments.ts'
 import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
+import { HeroCharts } from '../../components/HeroCharts.tsx'
 
 /**
  * Home as the map (Option C). A banner with the day's numbers and the first thing to do,
@@ -51,6 +52,8 @@ export function Home() {
   // Anything already in today's plan is not offered twice.
   const fix = fixFirst(studied, progress, new Date(), 6).filter((f) => !plan.some((p) => p.to === f.to)).slice(0, 3)
 
+  const levelUp = closestLevelUp(progress, mapped.map((m) => m.subject.id))
+
   const fresh = !profile.setupAt && progress.attempts.length === 0 && Object.keys(progress.lessons).length === 0
   if (fresh) return <Welcome />
 
@@ -69,6 +72,14 @@ export function Home() {
         first={plan[0]}
         mistakes={mistakes.length}
         tiles={mapped.slice(0, 6).map((m) => ({ id: m.subject.id, colour: m.subject.colour }))}
+        charts={
+          <HeroCharts
+            days={lastDays(progress)}
+            goal={progress.goalMinutes}
+            levels={countLevels(mapped.flatMap((m) => m.squares))}
+            levelUp={levelUp && { ...levelUp, name: mapped.find((m) => m.subject.id === levelUp.subjectId)!.subject.name }}
+          />
+        }
       />
 
       <div className="flex flex-col gap-5">
@@ -184,9 +195,11 @@ export function Home() {
  * and the first thing to do. Tiles in the subjects' own colours drift beside the words on
  * wide screens, where there is room for them.
  */
-function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, badges, first, mistakes, tiles }: {
+function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, badges, first, mistakes, tiles, charts }: {
   greeting: string; welcome?: string; streak: number; minutes: number; goal: number; offToday: boolean
   secure: number; xp: number; badges: string; first?: PlanItem; mistakes: number; tiles: { id: string; colour: string }[]
+  /** Charts for the foot of the banner, where a laptop's tall Today column leaves room. */
+  charts?: React.ReactNode
 }) {
   const hour = new Date().getHours()
   const stats: [string, React.ReactNode][] = [
@@ -198,44 +211,47 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
   return (
     <section className="hero-gradient anim-rise relative flex flex-col gap-4 overflow-hidden rounded-[26px] p-5 shadow-[0_16px_40px_rgb(90_75_209/0.28)] sm:p-7">
       <span className="hero-shine" aria-hidden />
-      {/* The student's subjects, each on a floating tile: a column beside the text on a wide
-          screen, a row across the top of the banner below that. */}
+      {/* The student's subjects, each on a floating tile: a row across the top of the banner,
+          and on a wide screen a column beside the text instead. */}
       {tiles.length > 0 && (
-        <>
-          <span aria-hidden className="pointer-events-none absolute right-7 top-1/2 hidden -translate-y-1/2 grid-cols-2 gap-3 xl:grid">
+        <span aria-hidden className="pointer-events-none relative flex flex-wrap gap-2.5 pt-1 xl:hidden">
+          {tiles.map((t, i) => <HeroTile key={t.id} tile={t} i={i} />)}
+        </span>
+      )}
+      <div className="relative flex flex-col gap-4">
+        {tiles.length > 0 && (
+          <span aria-hidden className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 grid-cols-2 gap-3 xl:grid">
             {tiles.map((t, i) => <HeroTile key={t.id} tile={t} i={i} big />)}
           </span>
-          <span aria-hidden className="pointer-events-none relative flex flex-wrap gap-2.5 pt-1 xl:hidden">
-            {tiles.map((t, i) => <HeroTile key={t.id} tile={t} i={i} />)}
-          </span>
-        </>
-      )}
-      <div className="relative flex flex-col gap-1 xl:pr-36">
-        <p className="text-xs font-bold uppercase tracking-[0.12em]">{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
-        <h1 className="flex flex-wrap items-center gap-2 text-[32px] font-bold leading-[1.05] sm:text-[42px]">
-          {greeting}<Smiley bounce>{hour < 12 ? '🌞' : hour < 18 ? '👋' : '🌙'}</Smiley>
-        </h1>
-        {welcome && <p className="text-sm">{welcome}</p>}
-      </div>
-      <dl className="relative grid grid-cols-2 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-9 xl:pr-36">
-        {stats.map(([label, value]) => (
-          <div key={label} className="flex flex-col-reverse">
-            <dt className="text-[13px]">{label}</dt>
-            <dd className="flex items-center gap-1 font-display text-[28px] font-bold leading-tight tabular-nums">{value}</dd>
-          </div>
-        ))}
-      </dl>
-      <div className="relative flex flex-wrap gap-3 xl:pr-36">
-        {first && (
-          <Link to={first.to} className="lift flex min-h-12 max-w-full items-center gap-2 rounded-2xl bg-white px-5 py-2 font-bold text-[#2a2f9e] shadow-[0_8px_20px_rgb(0_0_0/0.2)]">
-            <span className="truncate">{first.title}{first.topicTitle ? `: ${first.topicTitle}` : ''}</span>
-            <span aria-hidden>→</span>
-          </Link>
         )}
-        <Link to={mistakes > 0 ? '/mistakes' : '/subjects'} className="lift flex min-h-12 items-center rounded-2xl border-[1.5px] border-white/70 px-5 font-bold">
-          {mistakes > 0 ? `Redo ${mistakes} mistake${mistakes === 1 ? '' : 's'}` : 'All subjects'}
-        </Link>
+        <div className="relative flex flex-col gap-1 xl:pr-36">
+          <p className="text-xs font-bold uppercase tracking-[0.12em]">{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+          <h1 className="flex flex-wrap items-center gap-2 text-[32px] font-bold leading-[1.05] sm:text-[42px]">
+            {greeting}<Smiley bounce>{hour < 12 ? '🌞' : hour < 18 ? '👋' : '🌙'}</Smiley>
+          </h1>
+          {welcome && <p className="text-sm">{welcome}</p>}
+        </div>
+        <dl className="relative grid grid-cols-2 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-9 xl:pr-36">
+          {stats.map(([label, value]) => (
+            <div key={label} className="flex flex-col-reverse">
+              <dt className="text-[13px]">{label}</dt>
+              <dd className="flex items-center gap-1 font-display text-[28px] font-bold leading-tight tabular-nums">{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="relative flex flex-wrap gap-3 xl:pr-36">
+          {first && (
+            <Link to={first.to} className="lift flex min-h-12 max-w-full items-center gap-2 rounded-2xl bg-white px-5 py-2 font-bold text-[#2a2f9e] shadow-[0_8px_20px_rgb(0_0_0/0.2)]">
+              <span className="truncate">{first.title}{first.topicTitle ? `: ${first.topicTitle}` : ''}</span>
+              <span aria-hidden>→</span>
+            </Link>
+          )}
+          <Link to={mistakes > 0 ? '/mistakes' : '/subjects'} className="lift flex min-h-12 items-center rounded-2xl border-[1.5px] border-white/70 px-5 font-bold">
+            {mistakes > 0 ? `Redo ${mistakes} mistake${mistakes === 1 ? '' : 's'}` : 'All subjects'}
+          </Link>
+        </div>
       </div>
+      {charts}
     </section>
   )
 }

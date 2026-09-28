@@ -1,6 +1,6 @@
 import { getSubject, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
 import type { Subject, SyllabusBlock } from '@study/shared'
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useParams, useSearchParams } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
@@ -183,7 +183,8 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
 /**
  * The picked topic: where it sits, what it holds, its place on the ladder, what moves it up
  * one rung, and the way in. A sticky card beside the map on a wide screen; on a phone a sheet
- * that slides up above the menu bar when a square is pressed, and shuts with its button or Escape.
+ * that slides up above the menu bar when a square is pressed, and slides away again when it is
+ * swiped down or shut with its button or Escape.
  */
 function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare; progress: ProgressState; open: boolean; onClose: () => void }) {
   const t = s.topic
@@ -191,31 +192,55 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
   const lesson = progress.lessons[t.id]
   const steps = t.lesson.steps.length
   const heading = useRef<HTMLHeadingElement>(null)
+  const sheet = useRef<HTMLElement>(null)
+  const wide = useWide()
+  // Shutting slides the sheet down first and hides it when the slide ends; `onClose` alone
+  // would hide it on the spot, with no frame left for the slide to play in.
+  const [closing, setClosing] = useState(false)
+  const close = useCallback(() => {
+    if (wide || !motionOn()) onClose()
+    else setClosing(true)
+  }, [wide, onClose])
+  const closed = () => {
+    const el = sheet.current
+    if (el) { el.style.transform = ''; el.style.transition = '' }
+    setClosing(false)
+    onClose()
+  }
+  // A transition that never starts (the tab hidden mid-slide, say) must not leave it half shut.
+  useEffect(() => {
+    if (!closing) return
+    const fallback = setTimeout(closed, 500)
+    return () => clearTimeout(fallback)
+  })
   useEffect(() => {
     if (!open) return
     heading.current?.focus({ preventScroll: true })
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
+  }, [open, close])
+  useSwipeDown(sheet, open && !wide, close)
   const base = `/subjects/${t.subjectId}/topics/${t.id}`
   const status = s.level > 0 ? TOPIC_STATUSES[s.level - 1] : undefined
-  const wide = useWide()
 
   const panel = (
     <aside
+      ref={sheet}
       aria-label="Topic"
+      onTransitionEnd={(e) => { if (closing && e.target === e.currentTarget && e.propertyName === 'transform') closed() }}
       // Set here as well as by SubjectTheme, because on a phone the sheet is rendered outside it.
       style={{ '--subject': subject.colour } as React.CSSProperties}
       className={wide
         ? 'card-top sticky top-24 flex flex-col gap-3.5 rounded-3xl border border-rule bg-surface p-5 shadow-[0_8px_28px_rgb(16_24_40/0.08)]'
         // A card floating just above the menu dock, like the dock itself: full width on a
         // phone, in the corner on a tablet.
-        : `${open ? 'flex' : 'hidden'} sheet-up card-top bottom-nav-clear fixed inset-x-3 z-40 max-h-[65dvh] flex-col gap-3.5 overflow-y-auto rounded-3xl border border-rule bg-surface p-5 shadow-[0_-12px_40px_rgb(16_24_40/0.22)] md:left-auto md:right-6 md:w-[25rem]`}
+        : `${open ? 'flex' : 'hidden'} ${closing ? 'sheet-closing' : ''} sheet-up card-top bottom-nav-clear fixed inset-x-3 z-40 max-h-[65dvh] flex-col gap-3.5 overflow-y-auto overscroll-contain rounded-3xl border border-rule bg-surface p-5 shadow-[0_-12px_40px_rgb(16_24_40/0.22)] md:left-auto md:right-6 md:w-[25rem]`}
     >
+      {!wide && <span aria-hidden className="-mb-2 -mt-2 h-1.5 w-10 shrink-0 self-center rounded-full bg-rule" />}
       <div className="flex items-start justify-between gap-3">
         <span className="text-xs font-bold uppercase tracking-[0.1em] text-ink-2">{subject.units.find((u) => u.id === t.unitId)?.name} · Year {t.year}</span>
-        <button type="button" onClick={onClose} className="-m-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xl text-ink-2 hover:bg-panel lg:hidden" aria-label="Close">×</button>
+        <button type="button" onClick={close} className="-m-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xl text-ink-2 hover:bg-panel lg:hidden" aria-label="Close">×</button>
       </div>
       <div key={t.id} className="anim-fade-up flex flex-col gap-3.5">
         <span className="flex w-fit items-center gap-1.5 rounded-full bg-panel px-2.5 py-1 text-[13px] font-bold">
@@ -253,6 +278,75 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
   // transform on an ancestor, and a transform makes `position: fixed` fix to that ancestor
   // instead of the window, which put the sheet 444px down the page under the menu bar.
   return wide ? panel : createPortal(panel, document.body)
+}
+
+/** Whether animations are on: the Settings switch, and the device's reduce-motion preference. */
+function motionOn(): boolean {
+  return document.documentElement.dataset.motion !== 'off' && !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+}
+
+/**
+ * Lets a sheet be dragged down and let go to shut, as a phone's own sheets are. The drag
+ * starts only from the top of the sheet's scroll, so a sheet with more below still scrolls,
+ * and a swipe on a sheet with nothing to scroll is kept from moving the page behind it.
+ */
+function useSwipeDown(ref: React.RefObject<HTMLElement | null>, on: boolean, close: () => void) {
+  const shut = useRef(close)
+  shut.current = close
+  useEffect(() => {
+    const el = ref.current
+    if (!on || !el) return
+    let startY = 0
+    let dy = 0
+    // Recent positions, for the speed at the moment of letting go: a flick is fast at the end.
+    let trail: { y: number; at: number }[] = []
+    let atTop = true
+    let dragging = false
+    const start = (e: TouchEvent) => {
+      startY = e.touches[0]!.clientY
+      trail = [{ y: startY, at: e.timeStamp }]
+      dy = 0
+      atTop = el.scrollTop <= 0
+      dragging = false
+    }
+    const move = (e: TouchEvent) => {
+      dy = e.touches[0]!.clientY - startY
+      trail = [...trail.filter((p) => e.timeStamp - p.at < 100), { y: e.touches[0]!.clientY, at: e.timeStamp }]
+      if (!dragging && atTop && dy > 6) {
+        dragging = true
+        el.style.transition = 'none'
+      }
+      if (dragging) {
+        e.preventDefault()
+        el.style.transform = `translateY(${Math.max(0, dy)}px)`
+      } else if (el.scrollHeight <= el.clientHeight + 1) {
+        e.preventDefault()
+      }
+    }
+    const end = () => {
+      if (!dragging) return
+      dragging = false
+      const first = trail[0]!
+      const last = trail.at(-1)!
+      const flick = dy > 30 && (last.y - first.y) / Math.max(1, last.at - first.at) > 0.5
+      if (dy > 90 || flick) {
+        shut.current()
+      } else {
+        el.style.transition = 'transform 0.2s ease-out'
+        el.style.transform = ''
+      }
+    }
+    el.addEventListener('touchstart', start, { passive: true })
+    el.addEventListener('touchmove', move, { passive: false })
+    el.addEventListener('touchend', end)
+    el.addEventListener('touchcancel', end)
+    return () => {
+      el.removeEventListener('touchstart', start)
+      el.removeEventListener('touchmove', move)
+      el.removeEventListener('touchend', end)
+      el.removeEventListener('touchcancel', end)
+    }
+  }, [ref, on])
 }
 
 const WIDE = '(min-width: 1024px)'

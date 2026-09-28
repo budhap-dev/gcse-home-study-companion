@@ -105,3 +105,18 @@ export function xpForQuestions(results: { gradeBand: '4-5' | '6-7' | '8-9'; corr
   if (results.length > 0 && results.every((r) => r.correct)) xp += XP.cleanSweep
   return xp
 }
+
+/**
+ * The subject nearest its next level, as a share of that level, among `subjects`. A subject
+ * with no XP yet counts as level 1 at nothing, so a new student still gets a goal to aim at.
+ */
+export function closestLevelUp(state: ProgressState, subjects: SubjectId[]): { subjectId: SubjectId; level: LevelInfo } | undefined {
+  const xp = xpBySubject(state)
+  let best: { subjectId: SubjectId; level: LevelInfo } | undefined
+  for (const s of subjects) {
+    const level = levelFor(s, xp[s] ?? 0)
+    if (!level.nextName) continue
+    if (!best || level.progress > best.level.progress) best = { subjectId: s, level }
+  }
+  return best
+}

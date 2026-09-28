@@ -472,7 +472,10 @@ figure[data-diagram] {
 
 /* The subject page's topic panel becomes a sheet from the bottom on a phone. */
 @keyframes sheet-up { from { transform: translateY(100%); opacity: 0.6; } }
-@media (max-width: 1023px) { .sheet-up { animation: sheet-up 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both; } }
+/* Backwards, not both: a fill held after the slide would pin the transform that a drag moves. */
+@media (max-width: 1023px) { .sheet-up { animation: sheet-up 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; } }
+/* Shutting: down past the menu dock, from wherever a drag let go. Important beats the drag's inline style. */
+.sheet-closing { transform: translateY(calc(100% + 8rem)) !important; opacity: 0.6; transition: transform 0.26s cubic-bezier(0.4, 0, 1, 1), opacity 0.26s !important; }
 [data-motion="off"] .sheet-up { animation: none !important; }
 
 [data-motion="off"] .anim-rise, [data-motion="off"] .anim-drift, [data-motion="off"] .anim-sq, [data-motion="off"] .anim-grow-x, [data-motion="off"] .anim-grow-y, [data-motion="off"] .anim-draw, [data-motion="off"] .anim-here, [data-motion="off"] .anim-ring, [data-motion="off"] .hero-gradient, [data-motion="off"] .lift, [data-motion="off"] .menu-pill, [data-motion="off"] .menu-item, [data-motion="off"] .menu-item svg { animation: none !important; transition: none !important; }
