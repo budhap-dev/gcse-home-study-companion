@@ -1,0 +1,1564 @@
+{
+  "id": "substituting-into-formulae",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Substituting into formulae",
+  "specPoints": [
+    "A2"
+  ],
+  "order": 8,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Brackets round every value you put in",
+      "body": "Write $x = -3$ in as $(-3)$ every time. It keeps the minus sign attached to its number, it makes $(-3)^2 = 9$ come out right, and it tells a calculator what you mean: $-3^2$ typed without brackets gives $-9$."
+    },
+    {
+      "kind": "spot",
+      "title": "The power is on the letter, not the number in front",
+      "body": "$2x^2$ squares only the $x$. With $x = 3$ that is $2 \\times 9 = 18$. Squaring $2 \\times 3$ gives 36, which is $(2x)^2$, a different expression. The same goes for $\\tfrac{1}{2}mv^2$: square the $v$ and nothing else."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Substitute first, then solve",
+      "body": "If the letter you want is not on its own, you do not need to rearrange the formula. Put in every value you know, and what is left is an ordinary equation: in $v = u + at$ with $v = 26$, $u = 8$ and $t = 6$, that is $26 = 8 + 6a$, so $a = 3$."
+    },
+    {
+      "kind": "check",
+      "title": "Estimate before you press equals",
+      "body": "A rough answer in your head catches a missed bracket. For $\\tfrac{1}{2} \\times 1200 \\times 13^2$, $13^2$ is about 170 and half of 1200 is 600, so expect about 100 000. An answer near a million or near a thousand means a typing slip."
+    },
+    {
+      "kind": "check",
+      "title": "Keep the full value, and round once at the end",
+      "body": "Use the calculator's full answer, or its answer memory, all the way through. Rounding $r^3 = 17.576$ to $17.6$ part-way through $\\tfrac{4}{3}\\pi r^3$ turns $73.6$ into $73.7$."
+    }
+  ],
+  "why": {
+    "matters": "A formula is a calculation written once, with letters where the numbers go, so that anyone can do it again for their own numbers. Substitution is the other half of that bargain: putting this time's numbers in place of the letters.\n\nAlmost every formula you will ever use is used this way, in science, in finance, in a spreadsheet, and the mistakes are always the same few: a negative value without its bracket, a power applied to too much, a rounded number carried forward. Getting substitution reliable is what makes every formula after it usable.",
+    "examples": [
+      {
+        "title": "The temperature where both scales agree",
+        "body": "Weather apps in the UK give Celsius, and in the US Fahrenheit. The formula between them is $F = 1.8C + 32$. At 0 °C water freezes, and $F = 1.8(0) + 32 = 32$ °F. At 100 °C it boils, and $F = 180 + 32 = 212$ °F. Body temperature, 37 °C, is $66.6 + 32 = 98.6$ °F.\n\nNow substitute a negative: $C = -40$ gives $F = 1.8(-40) + 32 = -72 + 32 = -40$. At minus 40 the two scales read the same number, the one temperature where it does not matter which thermometer you own. The bracket round $-40$ is what gets you there.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Celsius",
+              "Working",
+              "Fahrenheit"
+            ],
+            "rows": [
+              [
+                "−40",
+                "1.8 × (−40) + 32",
+                "−40"
+              ],
+              [
+                "0",
+                "1.8 × 0 + 32",
+                "32"
+              ],
+              [
+                "37",
+                "1.8 × 37 + 32",
+                "98.6"
+              ],
+              [
+                "100",
+                "1.8 × 100 + 32",
+                "212"
+              ]
+            ],
+            "title": "F = 1.8C + 32, one row at a time",
+            "highlight": 0
+          },
+          "alt": "A table converting Celsius to Fahrenheit: minus 40 gives minus 40, 0 gives 32, 37 gives 98.6, and 100 gives 212"
+        }
+      },
+      {
+        "title": "Body mass index",
+        "body": "Doctors use body mass index, $\\text{BMI} = \\dfrac{\\text{mass}}{\\text{height}^2}$, with mass in kilograms and height in metres. For someone of 70 kg and 1.75 m, the height is squared first: $1.75^2 = 3.0625$, and $70 \\div 3.0625 = 22.9$ to 1 decimal place.\n\nDivide by the height only once and you get 40.0. Double the height instead of squaring it and you get 20. Both are plausible-looking numbers, which is exactly why the power has to be read as written, on the height and nothing else: the formula does not warn you when it has been misread.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Working",
+              "Result",
+              "Right?"
+            ],
+            "rows": [
+              [
+                "70 ÷ 1.75²",
+                "22.9",
+                "yes: square, then divide"
+              ],
+              [
+                "70 ÷ 1.75",
+                "40.0",
+                "no: not squared"
+              ],
+              [
+                "70 ÷ (1.75 × 2)",
+                "20.0",
+                "no: doubled, not squared"
+              ]
+            ],
+            "title": "The same numbers, three readings of one formula",
+            "highlight": 0
+          },
+          "alt": "A table of three ways to work out BMI for 70 kilograms and 1.75 metres: squaring the height gives 22.9, which is right; not squaring gives 40.0 and doubling gives 20.0, both wrong"
+        }
+      },
+      {
+        "title": "A spreadsheet column",
+        "body": "In a spreadsheet, a cell holding $=\\text{B2}*\\text{C2}$ is a formula whose letters are cell names. Copy it down the column and the spreadsheet substitutes each row's own numbers: price times quantity for every line of an order.\n\nThat is substitution done a thousand times without a slip, and it goes wrong in the same ways as by hand. A formula that needs a bracket and lacks one is wrong on every row at once.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Row",
+              "Price (B)",
+              "Quantity (C)",
+              "= B × C"
+            ],
+            "rows": [
+              [
+                "2",
+                "£1.20",
+                "5",
+                "£6.00"
+              ],
+              [
+                "3",
+                "£0.85",
+                "12",
+                "£10.20"
+              ],
+              [
+                "4",
+                "£4.50",
+                "3",
+                "£13.50"
+              ]
+            ],
+            "title": "One formula, each row substituting its own values"
+          },
+          "alt": "A spreadsheet order: row 2 has price 1 pound 20 and quantity 5, giving 6 pounds; row 3 has 85p and 12, giving 10 pounds 20; row 4 has 4 pounds 50 and 3, giving 13 pounds 50"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "Letters stand for numbers",
+        "body": "**To substitute is to replace each letter with its value, then work the calculation out.** A formula is a calculation written once so it can be used again with different numbers, and substitution is how it gets used.\n\nThe perimeter of a rectangle is $P = 2l + 2w$. For a rectangle 7 cm long and 4 cm wide, $l = 7$ and $w = 4$:\n\n$$P = 2(7) + 2(4) = 14 + 8 = 22 \\text{ cm}$$\n\n**Three habits make it reliable:**\n\n- **Write each value in brackets** as you put it in. It costs nothing with $7$, and it saves you with $-2$.\n- **Letters written together multiply.** $3a$ means $3 \\times a$, and $ab$ means $a \\times b$. So with $a = 5$, $3a$ is $15$, not $35$.\n- **Then follow the order of operations**: brackets, powers, multiplying and dividing, then adding and subtracting.\n\nAn **expression** such as $4a - 3b$ has no equals sign, and substituting gives its value. A **formula** such as $P = 2l + 2w$ says how one quantity, $P$, is worked out from others. You substitute into both in exactly the same way.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "Written out",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "4a",
+                  "4 × (5)",
+                  "20"
+                ],
+                [
+                  "ab",
+                  "(5) × (−2)",
+                  "−10"
+                ],
+                [
+                  "3b",
+                  "3 × (−2)",
+                  "−6"
+                ],
+                [
+                  "a − b",
+                  "(5) − (−2)",
+                  "7"
+                ],
+                [
+                  "4a − 3b",
+                  "4 × (5) − 3 × (−2)",
+                  "26"
+                ]
+              ],
+              "title": "a = 5 and b = −2, each written in brackets first",
+              "highlight": 4
+            },
+            "alt": "A table substituting a equals 5 and b equals minus 2: 4a is 20, ab is minus 10, 3b is minus 6, a minus b is 7, and 4a minus 3b is 26"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "numeric",
+          "prompt": "Work out the value of $5p + 2q$ when $p = 3$ and $q = -4$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "substituting into an expression",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$5(3) + 2(-4) = 15 - 8 = 7$. Writing $(-4)$ in brackets keeps the minus attached to the 4.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "7"
+            }
+          ],
+          "discriminators": [],
+          "answer": 7,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "explain",
+        "title": "Powers come before multiplying",
+        "body": "**A power belongs only to what it is written on.** In $2x^2$ the square is on the $x$, not on the $2x$. So with $x = 3$:\n\n$$2x^2 = 2 \\times 3^2 = 2 \\times 9 = 18$$\n\nSquaring first is the order of operations at work: **powers come before multiplying**. Working out $2 \\times 3 = 6$ and then squaring gives $36$, which is the value of a different expression, $(2x)^2$.\n\n**Negative values need their brackets most of all.** With $x = -4$, $x^2$ is $(-4)^2 = (-4) \\times (-4) = 16$. Typed into a calculator as $-4^2$, without the brackets, it gives $-16$, because the calculator squares the 4 and then applies the minus. The bracket you wrote on paper is the one to type.\n\n**And $-x^2$ is not the same as $(-x)^2$.** $-x^2$ means *square $x$, then make it negative*, so it is negative for every $x$ except 0, where it is 0: with $x = -4$ it is $-16$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Expression",
+                "x = 3",
+                "x = −4"
+              ],
+              "rows": [
+                [
+                  "x²",
+                  "9",
+                  "16"
+                ],
+                [
+                  "2x²",
+                  "18",
+                  "32"
+                ],
+                [
+                  "(2x)²",
+                  "36",
+                  "64"
+                ],
+                [
+                  "−x²",
+                  "−9",
+                  "−16"
+                ],
+                [
+                  "x³",
+                  "27",
+                  "−64"
+                ]
+              ],
+              "title": "The power is on the x alone, unless a bracket says otherwise"
+            },
+            "alt": "A table of values at x equals 3 and x equals minus 4: x squared is 9 and 16, 2x squared is 18 and 32, 2x all squared is 36 and 64, minus x squared is minus 9 and minus 16, x cubed is 27 and minus 64"
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "multiple-choice",
+          "prompt": "Work out the value of $3x^2$ when $x = 4$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "powers in substitution",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Square first: $4^2 = 16$, then $3 \\times 16 = 48$. $144$ comes from squaring $3 \\times 4$, which is $(3x)^2$; $24$ doubles the 12 instead of squaring the 4.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "48"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "144",
+            "24",
+            "48",
+            "19"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "Negative values: the brackets do the work",
+        "body": "**Put the negative value in brackets, then let the sign rules do their job**: a negative times a negative is positive, and a negative squared is positive.\n\nThe commonest slip is in a term like $-5x$. With $x = -3$ it is $-5 \\times (-3) = +15$, and dropping either minus sign turns it into $-15$.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Work out $x^2 - 5x$ when $x = -3$.",
+            "steps": [
+              {
+                "text": "Write it out with brackets: $(-3)^2 - 5(-3)$",
+                "note": "every $x$ becomes $(-3)$, sign included"
+              },
+              {
+                "text": "Powers first: $(-3)^2 = 9$",
+                "note": "a negative squared is positive"
+              },
+              {
+                "text": "Then the multiplication: $-5 \\times (-3) = +15$",
+                "note": "negative times negative"
+              },
+              {
+                "text": "Add: $9 + 15 = 24$"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "Work out $a^2 - 2ab$ when $a = -2$ and $b = 3$.",
+            "steps": [
+              {
+                "text": "Write it out: $(-2)^2 - 2(-2)(3)$"
+              },
+              {
+                "text": "$(-2)^2 = 4$"
+              },
+              {
+                "text": "$2(-2)(3) = -12$, so $-2ab = -(-12) = +12$",
+                "note": "take the product with its sign, then subtract it"
+              },
+              {
+                "text": "$4 + 12 = 16$"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "Work out the value of $x^2 - 4x$ when $x = -2$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "substituting negative values",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$(-2)^2 - 4(-2) = 4 + 8 = 12$. Both terms come out positive: a negative squared, and a negative times a negative.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "12"
+            }
+          ],
+          "discriminators": [],
+          "answer": 12,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Fraction bars and roots group what they cover",
+        "body": "**A fraction bar works like a pair of brackets round the top and another round the bottom.** In $\\dfrac{a + b}{c}$ you add first and divide after: with $a = 7$, $b = 5$, $c = 4$ it is $\\dfrac{12}{4} = 3$, not $7 + \\dfrac{5}{4}$.\n\n**A root sign covers everything under it.** $\\sqrt{a^2 + b^2}$ with $a = 6$, $b = 8$ is $\\sqrt{36 + 64} = \\sqrt{100} = 10$, not $6 + 8$.\n\n**On a calculator, type the brackets the bar and the root imply**: $(7 + 5) \\div 4$, and $\\sqrt{(36 + 64)}$. A calculator only knows about the grouping you give it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Work out $T = \\dfrac{3m + n}{m - n}$ when $m = 4$ and $n = -1$.",
+            "steps": [
+              {
+                "text": "Top: $3(4) + (-1) = 12 - 1 = 11$",
+                "note": "work out the whole numerator first"
+              },
+              {
+                "text": "Bottom: $4 - (-1) = 4 + 1 = 5$",
+                "note": "subtracting a negative adds"
+              },
+              {
+                "text": "Divide: $T = \\dfrac{11}{5} = 2.2$",
+                "note": "only now does the fraction bar act"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "Work out the value of $\\sqrt{p^2 - q^2}$ when $p = 13$ and $q = 5$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "roots in substitution",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Everything under the root first: $13^2 - 5^2 = 169 - 25 = 144$, then $\\sqrt{144} = 12$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "12"
+            }
+          ],
+          "discriminators": [],
+          "answer": 12,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Formulae from science",
+        "body": "**The specification names scientific formulae**, and exam papers use them because they are real: $v = u + at$, $E_k = \\tfrac{1}{2}mv^2$, $s = ut + \\tfrac{1}{2}at^2$. You are not expected to know the physics. The formula is given, the values are given, and the skill is the same substitution.\n\n**Two things are new.** The letters can be subscripted, as in $E_k$, which is simply a name. And the values come with **units**: if every value is in the standard unit (metres, seconds, kilograms), the answer is in the standard unit too.\n\nIn $E_k = \\tfrac{1}{2}mv^2$ the square is on the $v$ only, as in the step on powers. With $m = 4$ kg and $v = 3$ m/s:\n\n$$E_k = \\tfrac{1}{2} \\times 4 \\times 3^2 = \\tfrac{1}{2} \\times 4 \\times 9 = 18 \\text{ J}$$\n\nSquaring $\\tfrac{1}{2} \\times 4 \\times 3 = 6$ instead gives $36$, twice the right answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Final velocity",
+                  "equation": "v = u + at",
+                  "units": "u and v in m/s, a in m/s², t in s"
+                },
+                {
+                  "name": "Kinetic energy",
+                  "equation": "Eₖ = ½mv²",
+                  "units": "m in kg, v in m/s, Eₖ in joules"
+                },
+                {
+                  "name": "Distance travelled",
+                  "equation": "s = ut + ½at²",
+                  "units": "the same units as above; s in metres"
+                }
+              ]
+            },
+            "alt": "Three science formulae: final velocity v equals u plus a t, kinetic energy equals a half m v squared, and distance s equals u t plus a half a t squared, each with its units"
+          },
+          {
+            "type": "worked-example",
+            "problem": "Work out $s = ut + \\tfrac{1}{2}at^2$ when $u = 4$ m/s, $t = 3$ s and $a = 2$ m/s².",
+            "steps": [
+              {
+                "text": "First term: $ut = 4 \\times 3 = 12$"
+              },
+              {
+                "text": "Second term: $\\tfrac{1}{2} \\times 2 \\times 3^2 = \\tfrac{1}{2} \\times 2 \\times 9 = 9$",
+                "note": "the square is on the $t$ alone"
+              },
+              {
+                "text": "Add: $s = 12 + 9 = 21$ m",
+                "note": "metres, because the inputs were in metres and seconds"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "$s = ut + \\tfrac{1}{2}at^2$. Work out $s$ when $u = 2$, $t = 4$ and $a = 3$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "scientific formulae",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$ut = 2 \\times 4 = 8$ and $\\tfrac{1}{2} \\times 3 \\times 4^2 = \\tfrac{1}{2} \\times 3 \\times 16 = 24$, so $s = 8 + 24 = 32$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "32"
+            }
+          ],
+          "discriminators": [],
+          "answer": 32,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "worked-example",
+        "title": "When the letter you want is not the subject",
+        "body": "**Sometimes the value you are given is the answer, and a letter on the right is the unknown.** You are told $v$, $u$ and $t$ and asked for $a$.\n\n**Substitute everything you know, then solve the equation that is left.** There is no need to rearrange the formula first: once the numbers are in, it is an ordinary linear equation with one letter.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "$v = u + at$. Find $a$ when $v = 26$, $u = 8$ and $t = 6$.",
+            "steps": [
+              {
+                "text": "Substitute: $26 = 8 + 6a$",
+                "note": "three of the four letters are now numbers"
+              },
+              {
+                "text": "Subtract 8 from both sides: $18 = 6a$"
+              },
+              {
+                "text": "Divide by 6: $a = 3$"
+              },
+              {
+                "text": "Check: $8 + 3 \\times 6 = 26$ ✓",
+                "note": "put the answer back into the original"
+              }
+            ]
+          },
+          {
+            "type": "worked-example",
+            "problem": "The area of a trapezium is $A = \\tfrac{1}{2}(a + b)h$. Find $h$ when $A = 45$, $a = 7$ and $b = 8$.",
+            "steps": [
+              {
+                "text": "Substitute: $45 = \\tfrac{1}{2}(7 + 8)h = 7.5h$",
+                "note": "the bracket first: $7 + 8 = 15$, and half of 15 is 7.5"
+              },
+              {
+                "text": "Divide by 7.5: $h = 6$"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "numeric",
+          "prompt": "$P = 2l + 2w$. Find $w$ when $P = 30$ and $l = 9$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "substitute then solve",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Substitute: $30 = 2(9) + 2w = 18 + 2w$. Subtract 18: $12 = 2w$, so $w = 6$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Work out $4a + b$ when $a = 6$ and $b = -5$.\n2. Work out $3x^2$ when $x = 2$.\n3. $v = u + at$. Work out $v$ when $u = 20$, $a = -4$ and $t = 3$.\n\n**Part B.**\n\n4. Work out $x^2 + 2x$ when $x = -4$.\n5. $E_k = \\tfrac{1}{2}mv^2$. Work out $E_k$ when $m = 10$ and $v = 3$.\n6. Work out $\\dfrac{a - b}{a + 2b}$ when $a = 5$ and $b = -1$.\n\n**Part C.**\n\n7. $v = u + at$. Find $t$ when $v = 30$, $u = 6$ and $a = 4$.\n8. Work out $-x^2$ when $x = -5$, and explain why the answer is negative.\n9. A student works out $3x^2$ when $x = -2$ and gets $36$. Find the mistake.\n\nWrite every value in brackets as you substitute, and do the powers before anything else.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Written out with brackets",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "4",
+                  "",
+                  ""
+                ],
+                [
+                  "6",
+                  "",
+                  ""
+                ],
+                [
+                  "8",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Write the brackets in before working anything out"
+            },
+            "alt": "An empty table for questions 4, 6 and 8, with a column for the expression written out with brackets and a column for its value"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: substitution as a test",
+        "body": "**One value can prove a claim false.** The expression $n^2 + n + 41$ gives a prime number for every whole number $n$ from 0 to 39: 41, 43, 47, and on up to 1601. It looks like a rule. Substitute $n = 40$:\n\n$$40^2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41 \\times 41$$\n\nwhich is not prime. A single **counterexample** is enough to disprove *always*, and substitution is how you find one.\n\n**No number of examples proves *always*.** Forty values that work say nothing about the forty-first. That is why proofs use algebra rather than substitution, and why a question that says *show that ... for all values* wants algebra.\n\n**Keep the full value until the end.** The volume of a sphere is $V = \\tfrac{4}{3}\\pi r^3$. With $r = 2.6$, $r^3 = 17.576$ and $V = 73.62\\ldots$, which is $73.6$ to 1 decimal place. Rounding $r^3$ to $17.6$ first gives $73.72\\ldots$, which is $73.7$: the early rounding has moved the final answer. Use the calculator's full value, or its answer memory, and round once, at the end.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "n",
+                "n² + n + 41",
+                "Prime?"
+              ],
+              "rows": [
+                [
+                  "1",
+                  "43",
+                  "yes"
+                ],
+                [
+                  "2",
+                  "47",
+                  "yes"
+                ],
+                [
+                  "39",
+                  "1601",
+                  "yes"
+                ],
+                [
+                  "40",
+                  "1681",
+                  "no: 41 × 41"
+                ]
+              ],
+              "title": "Every value up to 39 works, and one value is enough to break it",
+              "highlight": 3
+            },
+            "alt": "A table of n squared plus n plus 41: 43, 47 and 1601 are prime, but at n equals 40 the value is 1681, which is 41 times 41"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "A student claims that $n^2 - n + 11$ is prime for every whole number $n$. Which value of $n$ shows that the claim is false?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "counterexamples",
+          "calculator": "either",
+          "tags": [],
+          "solution": "At $n = 11$: $11^2 - 11 + 11 = 121 = 11 \\times 11$, which is not prime. The other values give 31, 101 and 23, which are all prime, so they fit the claim without testing it.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "n = 11"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "$n = 5$",
+            "$n = 11$",
+            "$n = 10$",
+            "$n = 4$"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- To **substitute**, replace each letter with its value and work the calculation out.\n- **Write every value in brackets**, especially a negative one: $x = -3$ goes in as $(-3)$.\n- **Letters written together multiply**: $3a$ is $3 \\times a$, and $ab$ is $a \\times b$.\n- Follow the **order of operations**: brackets, powers, multiplying and dividing, adding and subtracting.\n- A **power belongs to what it is written on**: $2x^2$ squares the $x$ only, so with $x = 3$ it is 18, not 36.\n- **A negative squared is positive**: $(-4)^2 = 16$. But $-x^2$ is always negative or zero.\n- A **fraction bar** groups the top and the bottom, and a **root** covers everything under it.\n- **Scientific formulae** work the same way. Standard units in give standard units out.\n- If the unknown letter is **not the subject**, substitute everything you know, then solve.\n- **One counterexample disproves a claim**, but no number of examples proves one.\n- **Round once, at the end**: rounding part-way through can change the answer.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Substitute",
+                  "replace each letter with its value"
+                ],
+                [
+                  "Negative value",
+                  "in brackets: (−3)"
+                ],
+                [
+                  "3a",
+                  "3 × a"
+                ],
+                [
+                  "2x² at x = 3",
+                  "18: the power is on the x"
+                ],
+                [
+                  "(−4)²",
+                  "16"
+                ],
+                [
+                  "−x² at x = −4",
+                  "−16"
+                ],
+                [
+                  "Fraction bar",
+                  "work out the top and bottom first"
+                ],
+                [
+                  "Unknown on the right",
+                  "substitute, then solve"
+                ],
+                [
+                  "Counterexample",
+                  "one value that breaks a claim"
+                ],
+                [
+                  "Rounding",
+                  "once, at the end"
+                ]
+              ]
+            },
+            "alt": "A summary table of the rules: brackets round negative values, powers first, fraction bars group, substitute then solve, one counterexample disproves, and round at the end"
+          }
+        ],
+        "check": {
+          "id": "c9",
+          "type": "multiple-choice",
+          "prompt": "Work out the value of $a - 2b$ when $a = 3$ and $b = -4$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "substituting into an expression",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$3 - 2(-4) = 3 + 8 = 11$. Subtracting a negative adds; $-5$ comes from treating $-2(-4)$ as $-8$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "11"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "−5",
+            "11",
+            "−11",
+            "5"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "Work out the value of $3a + 2b$ when $a = 4$ and $b = 5$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "substituting into an expression",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3(4) + 2(5) = 12 + 10 = 22$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "22"
+        }
+      ],
+      "discriminators": [],
+      "answer": 22,
+      "tolerance": 0
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "The perimeter of a rectangle is $P = 2l + 2w$. Work out $P$ when $l = 8.5$ cm and $w = 3$ cm.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "substituting into a formula",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P = 2(8.5) + 2(3) = 17 + 6 = 23$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 × 8.5 + 2 × 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "23"
+        }
+      ],
+      "discriminators": [],
+      "answer": 23,
+      "tolerance": 0,
+      "units": "cm",
+      "unitsRequired": false
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Work out the value of $5x - y$ when $x = 3$ and $y = -4$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "substituting negative values",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5(3) - (-4) = 15 + 4 = 19$. Subtracting a negative adds.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "19"
+        }
+      ],
+      "discriminators": [],
+      "answer": 19,
+      "tolerance": 0
+    },
+    {
+      "id": "q4",
+      "type": "multiple-choice",
+      "prompt": "Work out the value of $2x^2$ when $x = 5$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "powers in substitution",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Square first: $5^2 = 25$, then $2 \\times 25 = 50$. $100$ is $(2 \\times 5)^2$, which squares the 2 as well, and $20$ doubles the 5 twice.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "50",
+        "100",
+        "20",
+        "25"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q5",
+      "type": "numeric",
+      "prompt": "$v = u + at$. Work out $v$ when $u = 12$, $a = -3$ and $t = 2$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "scientific formulae",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$v = 12 + (-3)(2) = 12 - 6 = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "12 + (−3) × 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "Work out the value of $x^2 - 3x$ when $x = -5$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "substituting negative values",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(-5)^2 - 3(-5) = 25 + 15 = 40$. A negative squared is positive, and $-3 \\times -5$ is $+15$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "(−5)² − 3(−5), or 25 and 15 seen"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [],
+      "answer": 40,
+      "tolerance": 0
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "$E_k = \\tfrac{1}{2}mv^2$. Work out $E_k$ when $m = 6$ and $v = 4$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "scientific formulae",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$E_k = \\tfrac{1}{2} \\times 6 \\times 4^2 = \\tfrac{1}{2} \\times 6 \\times 16 = 48$. The square is on the $v$ alone.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "½ × 6 × 16"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "48"
+        }
+      ],
+      "discriminators": [],
+      "answer": 48,
+      "tolerance": 0
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "Work out the value of $\\dfrac{a + 3b}{a - b}$ when $a = 7$ and $b = -1$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "fractions in substitution",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Top: $7 + 3(-1) = 4$. Bottom: $7 - (-1) = 8$. So $\\dfrac{4}{8} = 0.5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "numerator 4 or denominator 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.5 or ½"
+        }
+      ],
+      "discriminators": [],
+      "answer": 0.5,
+      "tolerance": 0
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "$s = ut + \\tfrac{1}{2}at^2$. Work out $s$ when $u = 5$, $t = 4$ and $a = -2$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "scientific formulae",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$ut = 5 \\times 4 = 20$ and $\\tfrac{1}{2} \\times (-2) \\times 4^2 = -16$, so $s = 20 - 16 = 4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20 and −16 seen"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "$v = u + at$. Find $a$ when $v = 35$, $u = 11$ and $t = 8$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "substitute then solve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute: $35 = 11 + 8a$. Subtract 11: $24 = 8a$. Divide by 8: $a = 3$. Check: $11 + 3 \\times 8 = 35$ ✓.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "35 = 11 + 8a"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "24 = 8a, or a = (35 − 11) ÷ 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "answer": 3,
+      "tolerance": 0
+    },
+    {
+      "id": "q11",
+      "type": "multiple-choice",
+      "prompt": "$y = -x^2$. What is the value of $y$ when $x = -3$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "powers in substitution",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$-x^2$ means square $x$, then make it negative: $(-3)^2 = 9$, so $y = -9$. Getting 9 squares the minus sign as well, which is $(-x)^2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "−9"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "9",
+        "6",
+        "−6",
+        "−9"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "The area of a trapezium is $A = \\tfrac{1}{2}(a + b)h$. A trapezium has parallel sides $a = 5$ cm and $b = 9$ cm, and an area of 42 cm². Find its height $h$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "substitute then solve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute: $42 = \\tfrac{1}{2}(5 + 9)h = 7h$. Divide by 7: $h = 6$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "42 = ½ × 14 × h, or 42 = 7h"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0,
+      "units": "cm",
+      "unitsRequired": false
+    },
+    {
+      "id": "q13",
+      "type": "multiple-choice",
+      "prompt": "Amir works out $2x^2$ when $x = -3$ and gets $-18$. Beth works it out and gets $36$. Who is right?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "powers in substitution",
+      "calculator": "either",
+      "tags": [],
+      "solution": "**Neither of them: it is 18.** The square is on the $x$ alone, so $(-3)^2 = 9$ comes first, and then $2 \\times 9 = 18$. Amir squared the 3 and kept the minus, which is $-2 \\times 3^2$. Beth squared the whole of $2x$, which is $(2x)^2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "neither: 18"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Beth: the 2 and the −3 multiply to −6 first, and (−6)² is 36",
+        "Amir: the minus sign in x = −3 stays in front of the answer",
+        "Neither of them: it is 18, since (−3)² = 9 and 2 × 9 = 18",
+        "Both of them: it depends on the calculator being used"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q14",
+      "type": "numeric",
+      "prompt": "A polygon with $n$ sides has $d = \\dfrac{n(n - 3)}{2}$ diagonals. A polygon has 35 diagonals. How many sides does it have?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "substitute then solve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute: $35 = \\dfrac{n(n - 3)}{2}$, so $n(n - 3) = 70$. That is $n^2 - 3n - 70 = 0$, which factorises as $(n - 10)(n + 7) = 0$. A polygon cannot have $-7$ sides, so $n = 10$. Check: $\\dfrac{10 \\times 7}{2} = 35$ ✓.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n(n − 3) = 70"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "(n − 10)(n + 7) = 0, or 10 found by trial with 10 × 7 = 70"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 10,
+      "tolerance": 0
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "A ball is thrown upwards from a height of 2 m. Its height in metres after $t$ seconds is $h = 2 + 14t - 5t^2$. After how many seconds is it back at a height of 2 m?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "substitute then solve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute $h = 2$: $2 = 2 + 14t - 5t^2$, so $14t - 5t^2 = 0$. Factorise: $t(14 - 5t) = 0$, so $t = 0$ or $t = 2.8$. At $t = 0$ the ball is just being thrown, so it is back at 2 m after $2.8$ seconds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 = 2 + 14t − 5t²"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "t(14 − 5t) = 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.8, rejecting t = 0"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 2.8,
+      "tolerance": 0,
+      "units": "s",
+      "unitsRequired": false
+    },
+    {
+      "id": "q16",
+      "type": "multiple-choice",
+      "prompt": "Nadia says that $n^2 + n + 17$ is a prime number for every whole number $n$. Which value of $n$ shows that she is wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "counterexamples",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At $n = 16$: $16^2 + 16 + 17 = 256 + 33 = 289 = 17 \\times 17$, which is not prime. The other values give 173, 127 and 257, which are prime, so they fit the claim without testing it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "n = 16"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "$n = 12$",
+        "$n = 10$",
+        "$n = 15$",
+        "$n = 16$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "The time in seconds for one complete swing of a pendulum, there and back, is $T = 2\\pi\\sqrt{\\dfrac{l}{g}}$, where $l$ is its length in metres and $g = 9.8$. A clock needs a pendulum with $T = 2$. How long should the pendulum be? Give your answer to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "substitute then solve",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Substitute: $2 = 2\\pi\\sqrt{\\dfrac{l}{9.8}}$. Divide by $2\\pi$: $\\sqrt{\\dfrac{l}{9.8}} = \\dfrac{1}{\\pi}$. Square both sides: $\\dfrac{l}{9.8} = \\dfrac{1}{\\pi^2}$, so $l = \\dfrac{9.8}{\\pi^2} = 0.9929\\ldots$, which is $0.99$ m to 2 decimal places.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "√(l ÷ 9.8) = 1/π"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "l = 9.8 ÷ π²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.99"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.99,
+      "tolerance": 0.005,
+      "units": "m",
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "multiple-choice",
+      "prompt": "Sam and Tia work out $V = \\tfrac{4}{3}\\pi r^3$ with $r = 2.6$, to 1 decimal place. Sam rounds $r^3$ to $17.6$ first and gets $73.7$. Tia keeps every digit and gets $73.6$. Who is right?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "rounding in substitution",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "**Tia is right.** $r^3 = 17.576$, and $\\tfrac{4}{3}\\pi \\times 17.576 = 73.62\\ldots$, which is $73.6$. Rounding to $17.6$ first gives $73.72\\ldots$ Rounding part-way through changed the final answer, so keep the full value and round once, at the end. Using 3.14 would make the answer less exact, not more.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Tia: early rounding changes the answer"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Sam: rounding r³ first makes the working clearer to follow",
+        "Tia: rounding r³ part-way through moved the final answer",
+        "Sam: his answer is larger, so it is the safer one to give",
+        "Neither: π should have been taken as 3.14 to be exact"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q19",
+      "type": "numeric",
+      "prompt": "A car starts from rest, so $u = 0$, and travels 100 m in 8 seconds with a constant acceleration $a$. Using $s = ut + \\tfrac{1}{2}at^2$, find $a$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "substitute then solve",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Substitute: $100 = 0 \\times 8 + \\tfrac{1}{2}a \\times 8^2 = 32a$. Divide by 32: $a = 3.125$ m/s².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "100 = 0 × 8 + ½ × a × 8², or 32a = 100"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3.125, or 3.13"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3.125,
+      "tolerance": 0.005,
+      "units": "m/s²",
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "type": "extended",
+      "prompt": "The kinetic energy of a moving object is $E_k = \\tfrac{1}{2}mv^2$, with $m$ in kilograms, $v$ in m/s and $E_k$ in joules.\n\n(a) Work out the kinetic energy of a car of mass 1200 kg travelling at 13 m/s.\n\n(b) The car speeds up to 26 m/s. A student says that because the speed has doubled, the kinetic energy has doubled too. Use the formula to evaluate this claim.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "scientific formulae",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "(a) $E_k = \\tfrac{1}{2} \\times 1200 \\times 13^2 = 600 \\times 169 = 101\\,400$ J.\n\n(b) At 26 m/s, $E_k = \\tfrac{1}{2} \\times 1200 \\times 26^2 = 600 \\times 676 = 405\\,600$ J. That is $405\\,600 \\div 101\\,400 = 4$ times as much, not twice. The student is wrong: the speed is squared in the formula, so doubling it multiplies the energy by $2^2 = 4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "½ × 1200 × 13²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "101 400"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "½ × 1200 × 26²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "405 600"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "compares: 4 times, not 2"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "explains: the speed is squared"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "suggestedMinutes": 7,
+      "criteria": [
+        {
+          "text": "Substitutes correctly into ½mv² for the car at 13 m/s",
+          "marks": 1
+        },
+        {
+          "text": "Gets 101 400 J",
+          "marks": 1
+        },
+        {
+          "text": "Substitutes 26 m/s",
+          "marks": 1
+        },
+        {
+          "text": "Gets 405 600 J",
+          "marks": 1
+        },
+        {
+          "text": "Shows the energy is 4 times as much, not twice",
+          "marks": 1
+        },
+        {
+          "text": "Explains that it is 4 times because the speed is squared",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "(a) $E_k = \\tfrac{1}{2} \\times 1200 \\times 169 = 101\\,400$ J.\n\n(b) At 26 m/s, $E_k = 600 \\times 676 = 405\\,600$ J, which is 4 times 101 400. So the claim is wrong: the energy is multiplied by 4, not 2, because the speed is squared in the formula and $2^2 = 4$."
+    },
+    {
+      "id": "q21",
+      "type": "extended",
+      "prompt": "To change a temperature in degrees Celsius, $C$, into degrees Fahrenheit, $F$, you can use $F = 1.8C + 32$.\n\n(a) Change 25 °C into degrees Fahrenheit.\n\n(b) A rule of thumb says *double the Celsius and add 30*. Compare the rule with the formula at 25 °C and at 0 °C.\n\n(c) Find the Celsius temperature at which the rule of thumb gives exactly the right answer.",
+      "marks": 6,
+      "gradeBand": "8-9",
+      "skill": "substitute then solve",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "(a) $F = 1.8 \\times 25 + 32 = 45 + 32 = 77$ °F.\n\n(b) At 25 °C the rule gives $2 \\times 25 + 30 = 80$ °F, 3 degrees too high. At 0 °C it gives $30$ °F against the true $32$ °F, 2 degrees too low.\n\n(c) The rule is exact where $2C + 30 = 1.8C + 32$. Subtract $1.8C$ and 30 from both sides: $0.2C = 2$, so $C = 10$. Check: both give 50 °F.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "77 °F"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rule gives 80 at 25 °C"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rule gives 30 against 32 at 0 °C"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2C + 30 = 1.8C + 32"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.2C = 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "C = 10"
+        }
+      ],
+      "discriminators": [
+        "evaluate",
+        "multi-topic"
+      ],
+      "suggestedMinutes": 8,
+      "criteria": [
+        {
+          "text": "Gets 77 °F at 25 °C",
+          "marks": 1
+        },
+        {
+          "text": "Finds the rule gives 80 °F at 25 °C, and says it is too high",
+          "marks": 1
+        },
+        {
+          "text": "Finds the rule gives 30 °F at 0 °C against 32 °F, and says it is too low",
+          "marks": 1
+        },
+        {
+          "text": "Sets the rule equal to the formula",
+          "marks": 1
+        },
+        {
+          "text": "Simplifies to 0.2C = 2",
+          "marks": 1
+        },
+        {
+          "text": "Finds C = 10",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "(a) $1.8 \\times 25 + 32 = 77$ °F.\n\n(b) The rule gives 80 °F at 25 °C, 3 too many, and 30 °F at 0 °C, 2 too few, so it is close but not exact.\n\n(c) $2C + 30 = 1.8C + 32$ gives $0.2C = 2$, so $C = 10$: at 10 °C both give 50 °F."
+    },
+    {
+      "id": "q22",
+      "type": "numeric",
+      "prompt": "Heron's formula gives the area of a triangle with sides $a$, $b$ and $c$ as $A = \\sqrt{s(s - a)(s - b)(s - c)}$, where $s = \\dfrac{a + b + c}{2}$. Work out the area of a triangle with sides 13 cm, 14 cm and 15 cm.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "substituting into a formula",
+      "calculator": "either",
+      "tags": [],
+      "solution": "First $s = \\dfrac{13 + 14 + 15}{2} = 21$. Then $A = \\sqrt{21 \\times 8 \\times 7 \\times 6} = \\sqrt{7056} = 84$ cm².",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "s = 21"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "√(21 × 8 × 7 × 6), or √7056"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "84"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 84,
+      "tolerance": 0,
+      "units": "cm²",
+      "unitsRequired": false
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "suggestedMinutes": 10
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13"
+      ],
+      "suggestedMinutes": 22
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "**Write the formula out with the values in brackets before calculating anything.** It is the method mark, and it is where most errors are prevented.\n\n**Do the powers first**, and remember a power belongs only to what it is written on.\n\n**Type brackets into the calculator** round negative values, round the whole top and bottom of a fraction, and round everything under a root.\n\n**If the unknown is not the subject, substitute and then solve.** Show the equation you get after substituting, because that line earns a method mark even if the algebra afterwards slips.\n\n**Give units** when the question gives units, and round only at the end, to the accuracy asked for.",
+    "examinerErrors": [
+      "Writing $-3^2 = -9$ instead of $(-3)^2 = 9$.",
+      "Squaring the coefficient as well: working out $2x^2$ as $(2x)^2$.",
+      "Treating $3a$ with $a = 5$ as 35 rather than $3 \\times 5$.",
+      "Losing the sign when subtracting a negative: $4 - (-2)$ written as 2.",
+      "Dividing only the last term by the denominator of a fraction formula.",
+      "Rounding part-way through and giving a final answer that is out by the last digit.",
+      "Showing only the final answer, and so losing the method mark when it is wrong."
+    ],
+    "grade9Looks": "A top answer writes every value into the formula in brackets before calculating, so the method is visible and the signs are safe. It squares only what the power is written on, reads fraction bars and roots as brackets, and keeps full calculator values until a single rounding at the end. When the unknown is not the subject it substitutes first and solves the equation that is left, checking by putting the answer back. Asked whether a claim is always true, it knows that one counterexample settles *no*, and that examples alone never settle *yes*."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q18",
+      "q19",
+      "q22"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

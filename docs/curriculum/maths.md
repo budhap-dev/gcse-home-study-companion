@@ -45,6 +45,7 @@ The overview starts at Year 9 and lists what the school teaches from there. Pear
 |---|---|---|
 | Factors, multiples and primes | N4 | Year 9, groundwork |
 | Calculating with fractions and negative numbers | N1, N2 | Year 9, groundwork |
+| Substituting into formulae | A2 | Year 9, groundwork (written 28 September 2026) |
 | Ratio notation, simplifying and sharing | R3, R4, R5, R6, N11 | Year 9, groundwork |
 | Converting units and estimating | N13, N14, R1, G14 | Year 9, groundwork |
 | Properties of triangles and quadrilaterals | G4 | Year 9, groundwork |
@@ -54,7 +55,7 @@ The overview starts at Year 9 and lists what the school teaches from there. Pear
 | Sampling and populations | S1, S5 | Year 10 term 3, beside scatter graphs (S6, written 23 September 2026 for the same reason) |
 | 3D shapes: faces, edges, plans and elevations | G12, G13 | Year 10 term 6, beside surface areas and volumes |
 
-Three codes were already taught but not declared, and now are: R2 (scale drawings), G19 (similar figures) and R15 (instantaneous rate of change, taught with tangents). A2 (substitution) and A8 (coordinates in four quadrants) are used throughout the pack and have no topic of their own.
+Three codes were already taught but not declared, and now are: R2 (scale drawings), G19 (similar figures) and R15 (instantaneous rate of change, taught with tangents). A8 (coordinates in four quadrants) is used throughout the pack and has no topic of its own. A2 (substitution) was left the same way on 23 September, since every algebra topic substitutes; on 28 September it got a topic, because none of them teaches the skill itself (brackets round negative values, a power on the letter alone, fraction bars and roots as grouping, scientific formulae), and papers ask for it directly.
 
 ## Mapping to the app
 
