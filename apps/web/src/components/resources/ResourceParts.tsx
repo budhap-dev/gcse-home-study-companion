@@ -69,14 +69,17 @@ export function Block({ block }: { block: ResourceBlock }) {
           ))}
         </div>
       )
-    case 'table':
+    case 'table': {
+      // Cards only when a row has a long cell to hold: eight place values or three short
+      // columns of numbers fit a phone as a table, and read far better as one.
+      const stacked = block.columns.length >= 3 && block.rows.some((row) => row.some((cell) => cell.replace(/\$[^$]*\$|`/g, '').length > 16))
       return (
         <figure className="flex flex-col gap-2">
           {block.title && <figcaption className="font-bold">{block.title}</figcaption>}
           {/* Three or more columns squeeze to a word a line on a phone, so there each row
               becomes a card: its first cell the heading, the rest labelled by column. Only
               one of the two is displayed at a width, so a screen reader meets one. */}
-          {block.columns.length >= 3 && (
+          {stacked && (
             <ul className="flex flex-col gap-2 sm:hidden">
               {block.rows.map((row, i) => (
                 <li key={i} className="break-inside-avoid flex flex-col gap-1.5 rounded-xl border border-rule bg-surface px-4 py-3" style={{ borderLeft: '4px solid var(--subject)' }}>
@@ -91,7 +94,7 @@ export function Block({ block }: { block: ResourceBlock }) {
               ))}
             </ul>
           )}
-          <div className={`overflow-x-auto rounded-xl border border-rule bg-surface ${block.columns.length >= 3 ? 'hidden sm:block' : ''}`}>
+          <div className={`overflow-x-auto rounded-xl border border-rule bg-surface ${stacked ? 'hidden sm:block' : ''}`}>
             <table className="w-full border-collapse text-left text-[15px]">
               <thead>
                 <tr className="bg-[color:var(--subject-soft)]">
@@ -114,6 +117,7 @@ export function Block({ block }: { block: ResourceBlock }) {
           {block.note && <RichText source={block.note} className="text-sm text-ink-2" />}
         </figure>
       )
+    }
     case 'text':
       return <RichText source={block.body} className="max-w-3xl" />
     case 'widget':
