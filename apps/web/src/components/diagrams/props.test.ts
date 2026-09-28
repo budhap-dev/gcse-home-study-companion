@@ -6,6 +6,8 @@ import { DIAGRAMS } from './index.tsx'
 
 const HERE = import.meta.dirname
 const CONTENT = join(HERE, '../../../../../supabase/seed/content')
+/** Resource pages carry diagrams too, held to the same rules. */
+const RESOURCES = join(import.meta.dirname, '../../../../../supabase/seed/resources')
 
 /**
  * Every prop name a component actually reads, taken from its source. Components read
@@ -60,7 +62,7 @@ function jsonFiles(dir: string): string[] {
 }
 
 const used: { file: string; step: string; component: string; keys: string[]; props?: Record<string, unknown> }[] = []
-for (const file of jsonFiles(CONTENT)) {
+for (const file of [...jsonFiles(CONTENT), ...jsonFiles(RESOURCES)]) {
   const topic = JSON.parse(readFileSync(file, 'utf8'))
   for (const { visual, where } of everyVisual(topic)) {
     if (visual.type !== 'diagram') continue

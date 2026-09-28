@@ -72,7 +72,25 @@ export function Block({ block }: { block: ResourceBlock }) {
       return (
         <figure className="flex flex-col gap-2">
           {block.title && <figcaption className="font-bold">{block.title}</figcaption>}
-          <div className="overflow-x-auto rounded-xl border border-rule bg-surface">
+          {/* Three or more columns squeeze to a word a line on a phone, so there each row
+              becomes a card: its first cell the heading, the rest labelled by column. Only
+              one of the two is displayed at a width, so a screen reader meets one. */}
+          {block.columns.length >= 3 && (
+            <ul className="flex flex-col gap-2 sm:hidden">
+              {block.rows.map((row, i) => (
+                <li key={i} className="break-inside-avoid flex flex-col gap-1.5 rounded-xl border border-rule bg-surface px-4 py-3" style={{ borderLeft: '4px solid var(--subject)' }}>
+                  <span className="font-bold"><RichText source={row[0] || ' '} inline /></span>
+                  {row.slice(1).map((cell, j) => (
+                    <span key={j} className="text-[15px]">
+                      <span className="text-xs font-bold uppercase tracking-[0.06em] text-ink-3">{block.columns[j + 1]}</span>{' '}
+                      <RichText source={cell || ' '} inline />
+                    </span>
+                  ))}
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className={`overflow-x-auto rounded-xl border border-rule bg-surface ${block.columns.length >= 3 ? 'hidden sm:block' : ''}`}>
             <table className="w-full border-collapse text-left text-[15px]">
               <thead>
                 <tr className="bg-[color:var(--subject-soft)]">

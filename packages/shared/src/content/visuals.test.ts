@@ -33,6 +33,11 @@ describe('everyVisual', () => {
     ])
   })
 
+  it('finds the drawings on a resource page', () => {
+    const file = { resources: [{ id: 'circuit-symbols', blocks: [{ kind: 'text', body: 'x' }, { kind: 'visual', visual: { type: 'diagram', component: 'circuit-symbols' } }] }] }
+    expect(everyVisual(file).map((v) => `${v.where}: ${(v.visual as { component: string }).component}`)).toEqual(['circuit-symbols block 1: circuit-symbols'])
+  })
+
   it('survives a topic missing every one of them', () => {
     expect(everyVisual({})).toEqual([])
     expect(everyVisual({ lesson: {}, questions: [], why: { examples: [] } })).toEqual([])
