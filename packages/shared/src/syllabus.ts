@@ -36,6 +36,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
     { year: 9, term: 'Groundwork from Years 7 and 8', topics: [
       { title: 'Factors, multiples and primes', topicId: 'factors-multiples-and-primes' },
       { title: 'Calculating with fractions and negative numbers', topicId: 'calculating-with-fractions-and-negatives' },
+      { title: 'Substituting into formulae', topicId: 'substituting-into-formulae' },
       { title: 'Ratio notation, simplifying and sharing', topicId: 'ratio-notation-and-sharing' },
       { title: 'Converting units and estimating', topicId: 'units-conversion-and-estimation' },
       { title: 'Properties of triangles and quadrilaterals', topicId: 'properties-of-2d-shapes' },
