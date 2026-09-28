@@ -185,8 +185,9 @@ for (const theme of THEMES) {
         const after = await page.evaluate(scan, { phone })
         // Anything opened over the page must stay clear of the phone's menu bar.
         const hidden = await page.evaluate(() => {
-          const nav = document.querySelector('nav[aria-label="Primary"]')
-          const navTop = nav && getComputedStyle(nav).display !== 'none' ? nav.getBoundingClientRect().top : Infinity
+          // Two menus share the name, the top band's and the dock's; only one is shown at a width.
+          const nav = [...document.querySelectorAll('nav[aria-label="Primary"]')].find((n) => getComputedStyle(n).display !== 'none')
+          const navTop = nav && nav.getBoundingClientRect().bottom > window.innerHeight / 2 ? nav.getBoundingClientRect().top : Infinity
           return [...document.querySelectorAll('aside')].filter((a) => getComputedStyle(a).position === 'fixed' && a.checkVisibility())
             .map((a) => a.getBoundingClientRect().bottom - navTop).filter((d) => d > 0.5)
         })

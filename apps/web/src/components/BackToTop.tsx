@@ -8,8 +8,8 @@ import { usePref } from '../theme/prefs.ts'
  * system's, because a smooth scroll over several thousand pixels is exactly the kind of
  * movement someone turns those off to avoid.
  *
- * `bottom-nav-clear` is a media-query class, so the button clears the phone's bottom
- * bar and sits low on desktop without reading the window width during render.
+ * `bottom-nav-clear` is a media-query class, so the button clears the menu dock on a
+ * phone or tablet and sits low on a laptop without reading the window width during render.
  *
  * It renders through a portal to the body. The shell wraps each page in an element that
  * animates its transform, and any non-none transform makes that element the containing
