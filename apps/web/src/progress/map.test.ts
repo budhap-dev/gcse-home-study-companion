@@ -1,7 +1,7 @@
 import { SUBJECTS } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { TOPICS } from '../content/index.ts'
-import { countLevels, daysThisWeek, fixFirst, levelsSentence, nextRung, square, unitGroups } from './map.ts'
+import { countLevels, daysThisWeek, lastDays, fixFirst, levelsSentence, nextRung, square, unitGroups } from './map.ts'
 import { emptyState, type AttemptRecord, type ProgressState } from './store.ts'
 
 const now = new Date('2026-09-26T12:00:00Z')
@@ -112,5 +112,17 @@ describe('the next rung', () => {
   it('names a faded topic as faded, and what brings it back', () => {
     const state = withAttempts(attempt(t.id, 'quiz', 90, 60), attempt(t.id, 'worksheet', 80, 60, 'higher'))
     expect(rung(state)).toBe('It has faded after 8 weeks away. A quiz of 80% or more brings it back to Secure.')
+  })
+})
+
+describe('the last fourteen days', () => {
+  it('runs oldest first to today, across a month end, with zero for days not studied', () => {
+    const state: ProgressState = { ...emptyState(), minutes: { '2026-09-30': 20, '2026-10-03': 15, '2026-09-19': 99 } }
+    const days = lastDays(state, 14, '2026-10-03')
+    expect(days).toHaveLength(14)
+    expect(days[0]!.day).toBe('2026-09-20')
+    expect(days.at(-1)).toEqual({ day: '2026-10-03', minutes: 15 })
+    expect(days.find((d) => d.day === '2026-09-30')!.minutes).toBe(20)
+    expect(days.reduce((n, d) => n + d.minutes, 0)).toBe(35)
   })
 })

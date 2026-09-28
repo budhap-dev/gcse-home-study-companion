@@ -152,3 +152,14 @@ export function nextRung(s: MapSquare, lessonStarted: boolean): string {
       return `Top of the ladder. A quiz within ${t.decayAfterWeeks} weeks keeps it from fading.`
   }
 }
+
+/** The last `n` days up to today, oldest first, with the minutes studied each day. */
+export function lastDays(state: ProgressState, n = 14, today = isoDate()): { day: string; minutes: number }[] {
+  const end = new Date(today + 'T12:00:00')
+  return Array.from({ length: n }, (_, i) => {
+    const d = new Date(end)
+    d.setDate(end.getDate() - (n - 1 - i))
+    const day = isoDate(d)
+    return { day, minutes: state.minutes[day] ?? 0 }
+  })
+}
