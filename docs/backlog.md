@@ -284,7 +284,9 @@ listed below. Each box is the missing part of a story, not the whole story.
   retention and a warning email).
 
 ### Not started
-- [ ] **LRN-4:** exam dates per subject. Once set, LRN-3's "soonest exam first" ordering follows.
+- [x] ~~**LRN-4:** exam dates per subject.~~ Dropped 28 September 2026. School exams follow the
+  topics taught, so the dates are not known ahead, and a countdown to a guessed date would
+  mislead. The field and the Home countdown were taken out; LRN-3 keeps subject order.
 - [ ] **LRN-6:** target grade per subject. There is a database column only.
 - [ ] **QZ-3:** spaced recap quiz of 5–10 questions across subjects, started with one tap.
 - [x] **QZ-4:** wrong-answer bank. Redo my mistakes (`/mistakes`, and a card on Home) asks up to 15
