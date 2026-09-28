@@ -20,6 +20,7 @@ import { assignedTasks } from '../../progress/assignments.ts'
 import { useMyAssignments } from '../../auth/assignments.ts'
 import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
 import { HeroCharts } from '../../components/HeroCharts.tsx'
+import { useWide } from '../../components/useWide.ts'
 
 /**
  * Home as the map (Option C). A banner with the day's numbers and the first thing to do,
@@ -52,6 +53,7 @@ export function Home() {
   // Anything already in today's plan is not offered twice.
   const fix = fixFirst(studied, progress, new Date(), 6).filter((f) => !plan.some((p) => p.to === f.to)).slice(0, 3)
 
+  const wide = useWide()
   const levelUp = closestLevelUp(progress, mapped.map((m) => m.subject.id))
 
   const fresh = !profile.setupAt && progress.attempts.length === 0 && Object.keys(progress.lessons).length === 0
@@ -96,8 +98,10 @@ export function Home() {
         ) : !next && (
           <p className="text-ink-2">No topics yet. They appear here as they are written.</p>
         )}
-        {/* Every task a parent set, done or not, below the plan that picks the most pressing one. */}
-        <SetForYou />
+        {/* Every task a parent set, done or not, below the plan that picks the most pressing one.
+            On a laptop the list goes below the map instead: beside the banner it made this
+            column far taller than the banner, and the map waited for it to end. */}
+        {!wide && <SetForYou />}
       </div>
 
       {!profile.setupAt && (
@@ -131,6 +135,7 @@ export function Home() {
       </section>
 
       <div className="flex flex-col gap-5">
+        {wide && <SetForYou />}
         {fix.length > 0 && (
           <section className="flex flex-col gap-2">
             <SectionLabel colour="#d25b3b" emoji="🩹">Fix these first</SectionLabel>
@@ -198,7 +203,10 @@ export function Home() {
 function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, badges, first, mistakes, tiles, charts }: {
   greeting: string; welcome?: string; streak: number; minutes: number; goal: number; offToday: boolean
   secure: number; xp: number; badges: string; first?: PlanItem; mistakes: number; tiles: { id: string; colour: string }[]
-  /** Charts for the foot of the banner, where a laptop's tall Today column leaves room. */
+  /**
+   * Charts under the buttons on a laptop. The banner keeps to its own height rather than
+   * stretching to the Today column's, which fifteen set tasks once made a screen tall.
+   */
   charts?: React.ReactNode
 }) {
   const hour = new Date().getHours()
@@ -209,7 +217,7 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
     [`XP · ${badges} badges`, xp.toLocaleString('en-GB')],
   ]
   return (
-    <section className="hero-gradient anim-rise relative flex flex-col gap-4 overflow-hidden rounded-[26px] p-5 shadow-[0_16px_40px_rgb(90_75_209/0.28)] sm:p-7">
+    <section className="hero-gradient anim-rise relative flex flex-col gap-4 self-start overflow-hidden rounded-[26px] p-5 shadow-[0_16px_40px_rgb(90_75_209/0.28)] sm:p-7">
       <span className="hero-shine" aria-hidden />
       {/* The student's subjects, each on a floating tile: a row across the top of the banner,
           and on a wide screen a column beside the text instead. */}

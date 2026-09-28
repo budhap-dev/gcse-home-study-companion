@@ -1,6 +1,6 @@
 import { getSubject, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
 import type { Subject, SyllabusBlock } from '@study/shared'
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useParams, useSearchParams } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
@@ -12,6 +12,7 @@ import { useProgress } from '../../progress/useProgress.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 import { MAP_LEVEL_LABEL, countLevels, isSecure, nextRung, square, unitGroups, type MapSquare } from '../../progress/map.ts'
 import { MasteryLadder, TopicSquare } from '../../components/map/MapParts.tsx'
+import { useWide } from '../../components/useWide.ts'
 
 /**
  * A year's note, relative to the student's own year (UXI-10). These were fixed for a Year
@@ -347,16 +348,6 @@ function useSwipeDown(ref: React.RefObject<HTMLElement | null>, on: boolean, clo
       el.removeEventListener('touchcancel', end)
     }
   }, [ref, on])
-}
-
-const WIDE = '(min-width: 1024px)'
-/** True at the width where the panel sits beside the map rather than rising as a sheet. */
-function useWide(): boolean {
-  return useSyncExternalStore(
-    (fn) => { const m = matchMedia(WIDE); m.addEventListener('change', fn); return () => m.removeEventListener('change', fn) },
-    () => matchMedia(WIDE).matches,
-    () => true,
-  )
 }
 
 /**

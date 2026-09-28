@@ -4,10 +4,10 @@ import { MAP_LEVEL_LABEL } from '../progress/map.ts'
 import { SubjectIcon } from './SubjectIcon.tsx'
 
 /*
- * Three small charts along the foot of the Home banner, for the room a laptop leaves there
- * beside a tall Today column: study time over two weeks, where the topics stand, and the
- * subject nearest its next level. They sit on the banner's gradient, so everything is white
- * on a darkening glass, which only adds contrast to the white text the banner already holds.
+ * Three small charts at the foot of the Home banner on a laptop: study time over two
+ * weeks, where the topics stand, and the subject nearest its next level. They sit on the
+ * banner's gradient, so everything is white on a darkening glass, which only adds contrast
+ * to the white text the banner already holds.
  */
 
 const W = 280
@@ -24,7 +24,7 @@ export function HeroCharts({ days, goal, levels, levelUp }: {
   levelUp?: { subjectId: string; name: string; level: LevelInfo }
 }) {
   return (
-    <div className="anim-rise relative mt-auto hidden gap-3 pt-2 lg:grid lg:grid-cols-2 xl:grid-cols-3" style={{ '--d': '0.2s' } as React.CSSProperties}>
+    <div className="anim-rise relative hidden gap-3 pt-2 lg:grid lg:grid-cols-2 xl:grid-cols-3" style={{ '--d': '0.2s' } as React.CSSProperties}>
       <StudyTime days={days} goal={goal} />
       <TopicMix levels={levels} />
       {levelUp && <NextLevel {...levelUp} />}

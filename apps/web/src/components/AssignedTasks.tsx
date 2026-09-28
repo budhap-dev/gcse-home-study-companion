@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router'
 import { SectionLabel } from './KindChip.tsx'
 import { assignedTasks, outstanding, upcoming, type AssignedTask } from '../progress/assignments.ts'
@@ -12,10 +13,18 @@ const PLAIN = (iso: string) => new Date(iso + 'T12:00:00').toLocaleDateString('e
  *
  * Renders nothing at all when there are none, rather than an empty heading: a student
  * with no tasks set should not be told about a feature that is not being used on them.
+ *
+ * Only the first few show until asked for the rest. A parent can set a term's work at
+ * once, and fifteen cards made this column so tall that the Home banner beside it and the
+ * map below it were pushed apart by a screen of empty space. The list is sorted most
+ * pressing first, so the first few are the ones to act on.
  */
+const SHOWN = 3
+
 export function SetForYou() {
   const progress = useProgress()
   const { list } = useMyAssignments()
+  const [all, setAll] = useState(false)
   if (list.length === 0) return null
   const tasks = assignedTasks(list, progress)
   const todo = outstanding(tasks)
@@ -29,8 +38,14 @@ export function SetForYou() {
     <section className="flex flex-col gap-2">
       <SectionLabel colour="#6B4E9B" emoji="📌">{heading}</SectionLabel>
       <ul className="flex flex-col gap-2">
-        {tasks.map((t) => <li key={t.assignment.id}><AssignedCard task={t} /></li>)}
+        {(all ? tasks : tasks.slice(0, SHOWN)).map((t) => <li key={t.assignment.id}><AssignedCard task={t} /></li>)}
       </ul>
+      {tasks.length > SHOWN && (
+        <button type="button" onClick={() => setAll((a) => !a)} aria-expanded={all}
+          className="min-h-11 rounded-xl border border-rule bg-surface px-4 text-sm font-bold hover:bg-panel">
+          {all ? 'Show fewer' : `Show all ${tasks.length}`}
+        </button>
+      )}
     </section>
   )
 }
