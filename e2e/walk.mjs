@@ -162,7 +162,9 @@ for (const width of WIDTHS) {
         await page.goto(BASE + p.url, { waitUntil: 'load', timeout: 60000 })
         // A topic's content is fetched after the page loads (OPS-1): scan it, not the loading state.
         await page.waitForFunction(() => ![...document.querySelectorAll('main [role="status"]')].some((e) => e.textContent === 'Loading…'), null, { timeout: 20000 })
-        await page.waitForFunction(() => document.getAnimations().every((a) => a.playState === 'finished' || a.playState === 'idle'), null, { timeout: 5000 }).catch(() => {})
+        // Wait for animations that end. The menu's drifting gradient runs forever, and waiting
+        // for it too timed out at 5 s on every visit: the walk went from 90 s to 535 s in CI.
+        await page.waitForFunction(() => document.getAnimations().every((a) => a.playState === 'finished' || a.playState === 'idle' || a.effect?.getComputedTiming().iterations === Infinity), null, { timeout: 5000 }).catch(() => {})
         await page.waitForTimeout(250)
         for (const f of await page.evaluate(scan)) found.push({ width, url: p.url, ...f })
         visits++
