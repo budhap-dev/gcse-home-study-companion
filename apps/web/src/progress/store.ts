@@ -144,15 +144,13 @@ export interface ProgressState {
 
 /**
  * What the student tells the app about themselves: their school year, the subjects they
- * take, and exam dates where known. It narrows the plan and the subject list to what they
+ * take. It narrows the plan and the subject list to what they
  * study and opens the topic map on their year. `setupAt` records that setup was done (or
  * skipped), so it is offered once.
  */
 export interface Profile {
   year?: 9 | 10 | 11
   subjects?: string[]
-  /** Subject id to the ISO date of its first exam paper. */
-  examDates?: Record<string, string>
   setupAt?: string
 }
 

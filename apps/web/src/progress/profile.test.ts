@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest'
-import { daysUntil } from '../components/ProfileForm.tsx'
 import { mergeProgress } from './merge.ts'
 import { studiedTopics } from './store.ts'
 
@@ -18,12 +17,5 @@ describe('the student profile', () => {
     const newer = { year: 11 as const, setupAt: '2026-09-20' }
     expect(mergeProgress({ profile: older }, { profile: newer }).profile).toEqual(newer)
     expect(mergeProgress({ profile: newer }, { profile: older }).profile).toEqual(newer)
-  })
-
-  it('counts days to an exam, and nothing once it has passed', () => {
-    const today = new Date('2026-09-27T09:00:00Z')
-    expect(daysUntil('2026-09-27', today)).toBe(0)
-    expect(daysUntil('2027-05-14', today)).toBe(229)
-    expect(daysUntil('2026-09-20', today)).toBeUndefined()
   })
 })

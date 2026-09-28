@@ -31,7 +31,7 @@ export function MiniMap({ squares, name, delay = 0 }: { squares: MapSquare[]; na
  * One subject on Home's map: its colour along the top, its squares, how many are secure, and
  * the subject's XP level with a bar towards the next one.
  */
-export function SubjectMapCard({ subject, squares, index, level, note }: { subject: Subject; squares: MapSquare[]; index: number; level?: LevelInfo; note?: string }) {
+export function SubjectMapCard({ subject, squares, index, level }: { subject: Subject; squares: MapSquare[]; index: number; level?: LevelInfo }) {
   const secure = squares.filter(isSecure).length
   const delay = 0.15 + index * 0.05
   return (
@@ -57,7 +57,6 @@ export function SubjectMapCard({ subject, squares, index, level, note }: { subje
         <span className="block h-1 overflow-hidden rounded-full bg-panel" aria-hidden>
           <span className="anim-grow-x block h-full rounded-full" style={{ width: `${Math.round((level?.progress ?? 0) * 100)}%`, background: subject.colour, '--d': `${(delay + 0.3).toFixed(2)}s` } as React.CSSProperties} />
         </span>
-        {note && <span className="text-xs text-ink-2">{note}</span>}
       </span>
     </Link>
   )

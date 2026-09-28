@@ -11,7 +11,7 @@ import { recommend, type Task } from '../../progress/recommend.ts'
 import { isoDate, setProfile, streakDays, studiedTopics, weekMinutes } from '../../progress/store.ts'
 import { countLevels, daysThisWeek, fixFirst, isSecure, lastDays, square } from '../../progress/map.ts'
 import { MapLegend, SubjectMapCard, WeekBars } from '../../components/map/MapParts.tsx'
-import { ProfileForm, daysUntil } from '../../components/ProfileForm.tsx'
+import { ProfileForm } from '../../components/ProfileForm.tsx'
 import { useProgress } from '../../progress/useProgress.ts'
 import { mistakeQueue } from '../../progress/mistakes.ts'
 import { redoable } from './Mistakes.tsx'
@@ -119,7 +119,7 @@ export function Home() {
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
           {mapped.map((m, i) => (
-            <SubjectMapCard key={m.subject.id} subject={m.subject} squares={m.squares} index={i} level={levels[m.subject.id as SubjectId]} note={examNote(profile.examDates?.[m.subject.id])} />
+            <SubjectMapCard key={m.subject.id} subject={m.subject} squares={m.squares} index={i} level={levels[m.subject.id as SubjectId]} />
           ))}
           {!profile.subjects?.length && (
             <Link to="/settings#you" className="anim-rise lift flex min-h-32 flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-rule p-3 text-center text-sm font-bold text-ink-2" style={{ '--d': `${(0.15 + mapped.length * 0.05).toFixed(2)}s` } as React.CSSProperties}>
@@ -285,14 +285,8 @@ function TaskCard({ task }: { task: Task }) {
   )
 }
 
-/** "Exam in 212 days", from a date the student gave; nothing for no date or one past. */
-function examNote(iso: string | undefined): string | undefined {
-  const d = iso ? daysUntil(iso) : undefined
-  return d === undefined ? undefined : d === 0 ? 'Exam today' : `Exam in ${d} day${d === 1 ? '' : 's'}`
-}
-
 /**
- * The first visit (UXI-10): three questions before the dashboard, so the plan starts from
+ * The first visit (UXI-10): two questions before the dashboard, so the plan starts from
  * what the student actually takes. Skipping is one tap, and it is not asked again.
  */
 function Welcome() {
