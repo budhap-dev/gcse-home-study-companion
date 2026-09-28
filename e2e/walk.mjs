@@ -57,7 +57,7 @@ if (process.env.SHARD ? process.env.SHARD.startsWith('1/') : true) {
   for (const f of readdirSync(RESOURCES).filter((f) => f.endsWith('.json'))) {
     const file = JSON.parse(readFileSync(join(RESOURCES, f), 'utf8'))
     for (const r of file.resources) {
-      if (r.blocks?.some((b) => b.kind === 'visual')) pages.push({ s: file.subjectId, t: `resource ${r.id}`, where: 'resource', url: `/resources/${file.subjectId}/${r.id}` })
+      if (r.blocks?.some((b) => b.kind === 'visual' || b.kind === 'widget')) pages.push({ s: file.subjectId, t: `resource ${r.id}`, where: 'resource', url: `/resources/${file.subjectId}/${r.id}` })
     }
   }
 }

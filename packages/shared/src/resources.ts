@@ -77,7 +77,15 @@ const TextBlock = z.object({ kind: z.literal('text'), body: RichText })
 /** A drawing from the diagram library, the same kind a lesson step carries. */
 const VisualBlock = z.object({ kind: z.literal('visual'), visual: Visual, caption: RichText.optional() })
 
-export const ResourceBlock = z.discriminatedUnion('kind', [FormulaeBlock, TableBlock, TextBlock, VisualBlock])
+/**
+ * Something to press rather than read: the interactive periodic table. Named, not free
+ * text, because each one is a component written for it. The alt text describes it for a
+ * reader who cannot see it, as a diagram's does.
+ */
+export const WIDGETS = ['periodic-table'] as const
+const WidgetBlock = z.object({ kind: z.literal('widget'), widget: z.enum(WIDGETS), alt: z.string().min(40) })
+
+export const ResourceBlock = z.discriminatedUnion('kind', [FormulaeBlock, TableBlock, TextBlock, VisualBlock, WidgetBlock])
 export type ResourceBlock = z.infer<typeof ResourceBlock>
 
 const ResourceInput = z.object({
