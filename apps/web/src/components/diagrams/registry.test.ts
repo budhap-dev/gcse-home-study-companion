@@ -4,6 +4,8 @@ import { everyVisual } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
+/** Resource pages carry diagrams too, held to the same rules. */
+const RESOURCES = join(import.meta.dirname, '../../../../../supabase/seed/resources')
 const REGISTRY = join(import.meta.dirname, 'index.tsx')
 
 function jsonFiles(dir: string): string[] {
@@ -17,7 +19,7 @@ describe('diagram registry', () => {
   it('has a component for every diagram the content names', () => {
     const registered = new Set([...readFileSync(REGISTRY, 'utf8').matchAll(/'([a-z-]+)': [A-Za-z]+,/g)].map((m) => m[1]))
     const used = new Set<string>()
-    for (const f of jsonFiles(ROOT)) for (const m of readFileSync(f, 'utf8').matchAll(/"component": "([a-z-]+)"/g)) used.add(m[1]!)
+    for (const f of [...jsonFiles(ROOT), ...jsonFiles(RESOURCES)]) for (const m of readFileSync(f, 'utf8').matchAll(/"component": "([a-z-]+)"/g)) used.add(m[1]!)
     const missing = [...used].filter((c) => !registered.has(c))
     expect(missing, `content names diagrams with no component: ${missing.join(', ')}`).toEqual([])
   })
@@ -27,7 +29,7 @@ describe('diagram registry', () => {
     // component is missing from the registry. Seven diagrams carried a label rather
     // than a description, such as "Graphite: layers of hexagons".
     const thin: string[] = []
-    for (const f of jsonFiles(ROOT)) {
+    for (const f of [...jsonFiles(ROOT), ...jsonFiles(RESOURCES)]) {
       const topic = JSON.parse(readFileSync(f, 'utf8')) as { id: string }
       for (const { visual, where } of everyVisual(topic)) {
         if (visual.type !== 'diagram') continue

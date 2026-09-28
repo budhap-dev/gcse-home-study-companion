@@ -73,8 +73,16 @@ export function everyVisual(topic: unknown): PlacedVisual[] {
     why?: { examples?: { title?: string; visual?: Visual }[] }
     lesson?: { steps?: { id?: string; visuals?: Visual[] }[] }
     questions?: { id?: string; visual?: Visual }[]
+    resources?: { id?: string; blocks?: { kind?: string; visual?: Visual }[] }[]
   }
   const out: PlacedVisual[] = []
+  // A resource file (supabase/seed/resources) is not a topic, but its drawings are held to
+  // the same rules, so the scanners walk it through here too.
+  for (const resource of t.resources ?? []) {
+    for (const [i, block] of (resource?.blocks ?? []).entries()) {
+      if (block?.kind === 'visual' && block.visual) out.push({ visual: block.visual, where: `${resource.id ?? 'resource'} block ${i}` })
+    }
+  }
   for (const [i, example] of (t.why?.examples ?? []).entries()) {
     if (example?.visual) out.push({ visual: example.visual, where: `why[${i}] ${example.title ?? ''}`.trim() })
   }

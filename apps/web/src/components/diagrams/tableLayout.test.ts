@@ -5,6 +5,8 @@ import { describe, expect, it } from 'vitest'
 import { CHAR_WIDTH, FULL_ROW, TIGHT_PADDING, MAX_TABLE_WIDTH, MIN_TEXT_PX, TEXT_PX, charBudget, columnWidths, fitColumns, forceColumns, hardBreak, isAtomic, naturalWidth, rowHeight, wrapCell, wrapCellForced } from './tableLayout.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content')
+/** Resource pages carry diagrams too, held to the same rules. */
+const RESOURCES = join(import.meta.dirname, '../../../../../supabase/seed/resources')
 const CONTENT = ROOT
 
 function jsonFiles(dir: string): string[] {
@@ -60,7 +62,7 @@ describe('every table in the content pack fits its columns', () => {
       })
     }
   }
-  for (const file of jsonFiles(ROOT)) {
+  for (const file of [...jsonFiles(ROOT), ...jsonFiles(RESOURCES)]) {
     const topic = JSON.parse(readFileSync(file, 'utf8'))
     const at = file.split('/content/')[1]
     for (const { visual, where } of everyVisual(topic)) check(visual, `${at} ${where}`)

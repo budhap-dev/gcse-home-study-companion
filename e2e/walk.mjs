@@ -50,6 +50,17 @@ if (process.env.SHARD) {
 }
 
 const pages = []
+// Resource pages that carry a drawing (the circuit symbols, the spectrum, the diagrams a
+// resource borrows from its lessons). Few enough to walk on every run, whatever else is.
+const RESOURCES = join(dirname(fileURLToPath(import.meta.url)), '..', 'supabase', 'seed', 'resources')
+if (process.env.SHARD ? process.env.SHARD.startsWith('1/') : true) {
+  for (const f of readdirSync(RESOURCES).filter((f) => f.endsWith('.json'))) {
+    const file = JSON.parse(readFileSync(join(RESOURCES, f), 'utf8'))
+    for (const r of file.resources) {
+      if (r.blocks?.some((b) => b.kind === 'visual')) pages.push({ s: file.subjectId, t: `resource ${r.id}`, where: 'resource', url: `/resources/${file.subjectId}/${r.id}` })
+    }
+  }
+}
 for (const { s, t } of chosen) {
   if (t.why?.examples?.some((e) => e.visual)) pages.push({ s, t: t.id, where: 'why', url: `/subjects/${s}/topics/${t.id}/why` })
   t.lesson.steps.forEach((st, i) => pages.push({ s, t: t.id, where: st.id, url: `/subjects/${s}/topics/${t.id}/lesson?step=${i + 1}`, check: st.check }))
