@@ -2,6 +2,7 @@ import { RESOURCE_STATUS_LABEL, isComingSoon, type Resource, type ResourceBlock,
 import { RichText } from '../RichText.tsx'
 import { Smiley } from '../Smiley.tsx'
 import { Visual } from '../Visual.tsx'
+import { PeriodicTable } from './PeriodicTable.tsx'
 
 /**
  * The badge a student reads first: does the exam hand this over, or must it be in their
@@ -115,6 +116,8 @@ export function Block({ block }: { block: ResourceBlock }) {
       )
     case 'text':
       return <RichText source={block.body} className="max-w-3xl" />
+    case 'widget':
+      return <PeriodicTable alt={block.alt} />
     case 'visual':
       return (
         <figure className="break-inside-avoid flex flex-col gap-2">

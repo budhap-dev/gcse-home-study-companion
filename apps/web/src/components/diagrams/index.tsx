@@ -59,6 +59,9 @@ import { Pictogram } from './Pictogram.tsx'
 import { PlanElevation } from './PlanElevation.tsx'
 import { CircuitSymbols } from './CircuitSymbols.tsx'
 import { EmSpectrum } from './EmSpectrum.tsx'
+import { PhScale } from './PhScale.tsx'
+import { CellDiagram } from './CellDiagram.tsx'
+import { HeartDiagram } from './HeartDiagram.tsx'
 
 /**
  * The SVG diagram library. Content names a component and passes props; anything
@@ -126,6 +129,9 @@ export const DIAGRAMS: Record<string, ComponentType<{ props: Record<string, unkn
   'plan-elevation': PlanElevation,
   'circuit-symbols': CircuitSymbols,
   'em-spectrum': EmSpectrum,
+  'ph-scale': PhScale,
+  'cell-diagram': CellDiagram,
+  'heart-diagram': HeartDiagram,
 }
 
 export const INK = '#1e2330'

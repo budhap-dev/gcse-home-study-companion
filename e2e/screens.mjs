@@ -50,6 +50,8 @@ const ROUTES = [
   '/resources',
   { path: '/resources', press: 'button[aria-pressed="false"]' },
   '/resources/physics/equation-sheet',
+  // The press picks a family, fading the rest of the table: the faded cells must still pass.
+  { path: '/resources/chemistry/periodic-table', press: 'figure button.rounded-full' },
 ]
 
 /** The sample student: Year 10, a spread of statuses in every subject, a lesson half done. */
