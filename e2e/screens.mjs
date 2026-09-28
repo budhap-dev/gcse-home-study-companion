@@ -73,6 +73,8 @@ function sampleProgress() {
     })
   }
   lessons['circle-theorems'] = { topicId: 'circle-theorems', stepIndex: 4, updatedAt: daysAgo(0) }
+  // A redo session has no level; the Progress page once crashed listing one under Recent.
+  attempt('circle-theorems', 'review', 70, undefined, 0)
   const minutes = {}
   for (let d = 0; d < 6; d++) minutes[new Date(now - d * 86400000).toISOString().slice(0, 10)] = [22, 0, 15, 13, 30, 8][d]
   return {

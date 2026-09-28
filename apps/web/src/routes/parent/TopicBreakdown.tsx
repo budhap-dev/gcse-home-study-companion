@@ -3,12 +3,10 @@ import { RichText } from '../../components/RichText.tsx'
 import { StatusChip } from '../../components/StatusChip.tsx'
 import { summaryById } from '../../content/index.ts'
 import { useTopic } from '../../content/load.ts'
-import { evidenceFor, type AttemptRecord, type ProgressState, type QuestionResult } from '../../progress/store.ts'
+import { attemptName, evidenceFor, type AttemptRecord, type ProgressState, type QuestionResult } from '../../progress/store.ts'
 
 const WHEN = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
 const pct = (a: AttemptRecord) => (a.marksAvailable > 0 ? Math.round((100 * a.marksScored) / a.marksAvailable) : 0)
-// A redo session has no level: it is its own kind, not a worksheet.
-const nameOf = (a: AttemptRecord) => (a.kind === 'quiz' ? 'Quiz' : a.kind === 'review' ? 'Redo my mistakes' : `${a.level![0]!.toUpperCase()}${a.level!.slice(1)} worksheet`)
 
 /**
  * Every attempt on one topic, question by question.
@@ -47,7 +45,7 @@ export function TopicBreakdown({ topicId, state }: { topicId: string; state: Pro
         attempts.map((a) => (
           <details key={a.id} className="rounded-xl border border-rule bg-surface">
             <summary className="flex min-h-11 cursor-pointer flex-wrap items-center justify-between gap-x-3 gap-y-1 px-3 py-2 text-sm">
-              <span className="font-bold">{nameOf(a)} <span className="font-normal text-ink-2">· {WHEN(a.completedAt)}</span></span>
+              <span className="font-bold">{attemptName(a)} <span className="font-normal text-ink-2">· {WHEN(a.completedAt)}</span></span>
               <span className="flex items-center gap-2">
                 {a.markedHow !== 'auto' && <span className="text-xs text-ink-3">{a.markedHow === 'self' ? 'self-marked' : 'partly self-marked'}</span>}
                 <strong className="tabular-nums">{a.marksScored} of {a.marksAvailable} · {pct(a)}%</strong>

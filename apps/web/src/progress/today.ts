@@ -1,7 +1,7 @@
 import type { TopicSummary as Topic } from '../content/index.ts'
 import type { AssignedTask } from './assignments.ts'
 import { recommend } from './recommend.ts'
-import { evidenceFor, isoDate, type ProgressState } from './store.ts'
+import { attemptName, evidenceFor, isoDate, type ProgressState } from './store.ts'
 
 export interface PlanItem {
   /** Why it is on the plan, as the card's small heading. */
@@ -57,7 +57,7 @@ export function doneToday(topics: Topic[], state: ProgressState, today = isoDate
   const out: DoneItem[] = []
   for (const a of state.attempts) {
     if (a.completedAt.slice(0, 10) !== today) continue
-    const what = a.kind === 'review' ? 'Redo my mistakes' : a.kind === 'quiz' ? 'Quiz' : `${a.level ? a.level[0]!.toUpperCase() + a.level.slice(1) : ''} worksheet`
+    const what = attemptName(a)
     out.push({ what, topicTitle: title.get(a.topicId) ?? a.topicId, detail: a.marksAvailable ? `${Math.round((100 * a.marksScored) / a.marksAvailable)}%` : undefined })
   }
   for (const l of Object.values(state.lessons)) {
