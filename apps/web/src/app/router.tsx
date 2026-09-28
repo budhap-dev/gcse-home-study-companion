@@ -19,6 +19,8 @@ import { Flashcards } from '../routes/student/Flashcards.tsx'
 import { CheatSheet } from '../routes/student/CheatSheet.tsx'
 import { Search } from '../routes/student/Search.tsx'
 import { Glossary } from '../routes/student/Glossary.tsx'
+import { Resources } from '../routes/student/Resources.tsx'
+import { ResourcePage } from '../routes/student/ResourcePage.tsx'
 import { Family } from '../routes/parent/Family.tsx'
 
 /**
@@ -45,6 +47,8 @@ export const router = createBrowserRouter([
       { path: 'subjects/:subjectId/topics/:topicId/cheatsheet', element: <SubjectTheme><CheatSheet /></SubjectTheme> },
       { path: 'search', element: <Search /> },
       { path: 'glossary', element: <Glossary /> },
+      { path: 'resources', element: <Resources /> },
+      { path: 'resources/:subjectId/:resourceId', element: <SubjectTheme><ResourcePage /></SubjectTheme> },
       { path: 'progress', element: <Progress /> },
       { path: 'mistakes', element: <Mistakes /> },
       { path: 'family', element: <Family /> },

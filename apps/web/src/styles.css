@@ -181,8 +181,11 @@ h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
   html, body { background: #fff !important; }
   main { padding: 0 !important; }
   .print-sheet { max-width: none !important; }
-  /* Colour costs ink and adds nothing here; the layout carries the structure. */
-  * { color: #000 !important; background: transparent !important; box-shadow: none !important; }
+  /* Colour costs ink and adds nothing here; the layout carries the structure. Except on a
+     resource sheet, where the colour is the information: a periodic table's families, a
+     spectrum's bands. Those keep it, and ask the browser to print backgrounds too. */
+  *:not(.print-colour, .print-colour *) { color: #000 !important; background: transparent !important; box-shadow: none !important; }
+  .print-colour, .print-colour * { print-color-adjust: exact; -webkit-print-color-adjust: exact; box-shadow: none !important; }
   .print-sheet .border-rule, .print-sheet [class*="border"] { border-color: #999 !important; }
   /* A question split across a page break is much harder to answer than a short page. */
   .question { break-inside: avoid; page-break-inside: avoid; }

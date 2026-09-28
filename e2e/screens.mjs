@@ -47,6 +47,9 @@ const ROUTES = [
   '/subjects/english-literature/topics/an-inspector-calls-themes',
   '/progress',
   '/settings',
+  '/resources',
+  { path: '/resources', press: 'button[aria-pressed="false"]' },
+  '/resources/physics/equation-sheet',
 ]
 
 /** The sample student: Year 10, a spread of statuses in every subject, a lesson half done. */
