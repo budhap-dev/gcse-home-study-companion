@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { SUBJECTS } from '@study/shared'
 import { topicsForSubject } from '../content/index.ts'
 import { setProfile, type Profile } from '../progress/store.ts'
+import { SubjectIcon } from './SubjectIcon.tsx'
 
 const OFFERED = SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0)
 
@@ -42,7 +43,7 @@ export function ProfileForm({ profile, onSaved, saveLabel = 'Save' }: { profile:
           {OFFERED.map((s) => (
             <label key={s.id} className="flex min-h-11 items-center gap-3 rounded-xl border border-rule bg-surface px-3 py-2">
               <input type="checkbox" checked={subjects.includes(s.id)} onChange={() => toggle(s.id)} className="h-5 w-5" />
-              <span className="h-3 w-3 rounded-sm" style={{ background: s.colour }} aria-hidden />
+              <span aria-hidden className="accent-ink flex" style={{ '--subject': s.colour } as React.CSSProperties}><SubjectIcon subjectId={s.id} width={20} height={20} /></span>
               <span className="font-bold">{s.name}</span>
             </label>
           ))}

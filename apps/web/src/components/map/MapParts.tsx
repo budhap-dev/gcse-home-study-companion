@@ -2,6 +2,7 @@ import type { LevelInfo, Subject } from '@study/shared'
 import { StatusIcon } from '../StatusChip.tsx'
 import { Link } from 'react-router'
 import { MAP_LEVEL_LABEL, RUNGS, countLevels, isSecure, levelsSentence, type DayBar, type MapLevel, type MapSquare } from '../../progress/map.ts'
+import { SubjectIcon } from '../SubjectIcon.tsx'
 
 /**
  * The map's small pieces (Option C), shared by Home and the subject page. Squares are
@@ -42,8 +43,8 @@ export function SubjectMapCard({ subject, squares, index, level, note }: { subje
       <span className="flex items-center gap-2">
         {/* White on the subject colour with a little black in it: Business's own ochre
             measured 4.25:1 under white, and 15% black lifts every subject past 5:1. */}
-        <span aria-hidden className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white" style={{ background: `color-mix(in srgb, ${subject.colour} 85%, #000)` }}>
-          {subject.name[0]}
+        <span aria-hidden className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white" style={{ background: `color-mix(in srgb, ${subject.colour} 85%, #000)` }}>
+          <SubjectIcon subjectId={subject.id} width={17} height={17} />
         </span>
         <span className="min-w-0 text-[15px] font-bold leading-tight">{subject.name}</span>
       </span>
