@@ -8,8 +8,9 @@ if (!base) throw new Error('usage: check-version-bump.mjs <base-ref>')
 
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' })
 
-// Files that do not reach the deployed app, so changing only these needs no bump.
-const exempt = [/^docs\//, /^\.github\//, /\.md$/]
+// Files that do not reach the deployed app, so changing only these needs no bump. The e2e
+// scripts run against a build; they are never part of one.
+const exempt = [/^docs\//, /^\.github\//, /^e2e\//, /\.md$/]
 const changed = git('diff', '--name-only', `${base}...HEAD`).split('\n').filter(Boolean)
 const shipped = changed.filter((f) => !exempt.some((re) => re.test(f)))
 if (shipped.length === 0) {
