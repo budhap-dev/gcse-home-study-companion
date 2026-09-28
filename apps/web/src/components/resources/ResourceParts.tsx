@@ -56,7 +56,8 @@ export function Block({ block }: { block: ResourceBlock }) {
                 {group.items.map((f) => (
                   <li key={f.name} className="flex flex-col gap-1 px-4 py-2.5">
                     <span className="flex flex-wrap items-center gap-1.5 text-sm font-bold">
-                      {f.name}
+                      {/* A name can hold maths ("Solving $ax^2 + bx + c = 0$"), so it is rich text too. */}
+                      <RichText source={f.name} inline />
                       {f.higher && <span className="chip" style={{ '--chip': '#6B4E9B' } as React.CSSProperties} title="Higher tier only">HT</span>}
                       {f.status && <StatusBadge status={f.status} />}
                     </span>
