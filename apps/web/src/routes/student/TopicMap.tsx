@@ -13,6 +13,7 @@ import { ResetProgress } from '../../components/ResetProgress.tsx'
 import { MAP_LEVEL_LABEL, countLevels, isSecure, nextRung, square, unitGroups, type MapSquare } from '../../progress/map.ts'
 import { MasteryLadder, TopicSquare } from '../../components/map/MapParts.tsx'
 import { useWide } from '../../components/useWide.ts'
+import { SheetsIcon } from '../../components/icons.tsx'
 
 /**
  * A year's note, relative to the student's own year (UXI-10). These were fixed for a Year
@@ -113,6 +114,9 @@ function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: 
       <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 xl:flex-col xl:gap-2">
         <Link to={`/subjects/${subject.id}/exam-technique`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <span aria-hidden>✎</span> Exam technique guide
+        </Link>
+        <Link to={`/resources?subject=${subject.id}`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
+          <SheetsIcon width={18} height={18} /> Resources
         </Link>
         {year && <span className="text-[13px] text-ink-2">You are in Year {year}</span>}
       </div>

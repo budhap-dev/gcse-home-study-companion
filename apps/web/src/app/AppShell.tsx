@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router'
-import { navFor } from './nav.ts'
+import { DOCK_FULL_LABELS, navFor } from './nav.ts'
 import { Logo } from '../components/Logo.tsx'
 import { SearchBox } from '../components/SearchBox.tsx'
 import { useAuth } from '../auth/useAuth.ts'
@@ -114,11 +114,11 @@ function Menu({ variant, role }: { variant: 'band' | 'dock'; role?: 'parent' | '
     <div ref={ref} className={`menu menu-${variant}`} data-ready={ready || undefined}>
       <span aria-hidden className="menu-pill" />
       <ul style={variant === 'dock' ? { gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` } : undefined}>
-        {items.map(({ to, label, icon: Icon, colour, end }) => (
+        {items.map(({ to, label, short, icon: Icon, colour, end }) => (
           <li key={to}>
             <NavLink to={to} end={end} className="menu-item" style={{ '--item': colour } as CSSProperties}>
               <span className="menu-ic"><Icon /></span>
-              <span>{label}</span>
+              <span>{variant === 'dock' && short && items.length > DOCK_FULL_LABELS ? short : label}</span>
             </NavLink>
           </li>
         ))}

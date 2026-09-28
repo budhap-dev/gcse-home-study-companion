@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { NAV, navFor } from './nav.ts'
+import { DOCK_FULL_LABELS, NAV, navFor } from './nav.ts'
 
 describe('navFor', () => {
   it('gives a parent the Family screen, just before Settings', () => {
@@ -17,6 +17,19 @@ describe('navFor', () => {
   it('leaves the shared menu untouched', () => {
     navFor('parent')
     expect(NAV.map((n) => n.to)).not.toContain('/family')
+  })
+})
+
+describe('the dock', () => {
+  /** 11px bold is about 6.5px a character; a label wider than its slot runs into the next one. */
+  it('fits every label a parent sees in a seven-item dock', () => {
+    const items = navFor('parent')
+    expect(items.length).toBeGreaterThan(DOCK_FULL_LABELS)
+    for (const n of items) expect((n.short ?? n.label).length, n.label).toBeLessThanOrEqual(8)
+  })
+
+  it('gives a student the full labels', () => {
+    expect(navFor('student').length).toBeLessThanOrEqual(DOCK_FULL_LABELS)
   })
 })
 
