@@ -56,6 +56,23 @@ describe('circuit symbols', () => {
     expect(render({ columns: 40 })).toContain(`viewBox="0 0 ${widthFor(6)} `)
   })
 
+  /** AQA's table (4.2.1.1) draws the open switch with its arm hanging below the gap; ours rose above it. */
+  it('draws the open switch with its arm falling away below the second contact', () => {
+    const arm = (id: string) => {
+      const tile = render({ symbols: [id] })
+      const contacts = [...tile.matchAll(/<circle cx="([\d.]+)" cy="([\d.]+)" r="3"/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) }))
+      expect(contacts).toHaveLength(2)
+      const lines = [...tile.matchAll(/<line x1="([\d.]+)" y1="([\d.]+)" x2="([\d.]+)" y2="([\d.]+)"/g)].map((m) => m.slice(1).map(Number))
+      const found = lines.find(([x1, y1, , y2]) => Math.abs(x1! - contacts[0]!.x) < 4 && y1 !== y2)!
+      return { end: { x: found[2]!, y: found[3]! }, contact: contacts[1]! }
+    }
+    const open = arm('switch-open')
+    // Down the page is a larger y: the arm ends well below the contact it does not reach.
+    expect(open.end.y).toBeGreaterThan(open.contact.y + 10)
+    const closed = arm('switch-closed')
+    expect(Math.abs(closed.end.y - closed.contact.y)).toBeLessThanOrEqual(3)
+  })
+
   it('shows a subset in the order asked', () => {
     const html = render({ symbols: ['ldr', 'thermistor'] })
     expect(html.match(/data-symbol=/g)).toHaveLength(2)

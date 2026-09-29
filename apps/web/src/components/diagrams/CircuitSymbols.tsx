@@ -9,7 +9,8 @@ import { wrapCell } from './tableLayout.ts'
  *
  * Drawn here, not copied: the symbols follow the conventions in AQA's table (the diode and
  * LED inside a circle, the LDR's arrows pointing in, the thermistor's line with a flat
- * foot), redrawn at this app's own line weights.
+ * foot, the open switch's arm hanging below the gap), redrawn at this app's own line
+ * weights.
  *
  * Two tiles a row, 294 units wide, so it fits the 298 a phone's card leaves. A laptop has
  * room for five, which the resource page asks for with `columns`: two a row there left the
@@ -40,13 +41,13 @@ export const SYMBOLS: Record<SymbolId, { name: string; does: string; family: Fam
   'switch-closed': { name: 'Switch (closed)', does: 'Completes the circuit, so current can flow.', family: CONTROL, tag: 'Switch' },
   'fuse': { name: 'Fuse', does: 'Melts and breaks the circuit if the current is too big.', family: CONTROL, tag: 'Protect' },
   'ammeter': { name: 'Ammeter', does: 'Measures current. Connect it in series.', family: METER, tag: 'Measure' },
-  'voltmeter': { name: 'Voltmeter', does: 'Measures potential difference. Connect it in parallel.', family: METER, tag: 'Measure' },
+  'voltmeter': { name: 'Voltmeter', does: 'Measures potential difference (voltage). Connect it in parallel.', family: METER, tag: 'Measure' },
   'resistor': { name: 'Resistor', does: 'A fixed resistance, to limit the current.', family: RESIST, tag: 'Resist' },
   'variable-resistor': { name: 'Variable resistor', does: 'A resistance you can change, like a dimmer.', family: RESIST, tag: 'Resist' },
   'thermistor': { name: 'Thermistor', does: 'Its resistance falls as it gets hotter.', family: RESIST, tag: 'Resist' },
   'ldr': { name: 'LDR', does: 'Light dependent resistor: resistance falls in brighter light.', family: RESIST, tag: 'Resist' },
   'lamp': { name: 'Lamp', does: 'Gives out light. Its resistance rises as it heats up.', family: OUTPUT, tag: 'Light' },
-  'diode': { name: 'Diode', does: 'Lets current through in one direction only.', family: OUTPUT, tag: 'One way' },
+  'diode': { name: 'Diode', does: 'Lets current through one way only: the way the triangle points.', family: OUTPUT, tag: 'One way' },
   'led': { name: 'LED', does: 'Light-emitting diode: gives out light when current flows through it.', family: OUTPUT, tag: 'Light, one way' },
 }
 
@@ -111,7 +112,8 @@ function Glyph({ id, cx, cy, c }: { id: SymbolId; cx: number; cy: number; c: str
           {leads(21)}
           <circle cx={cx - 18} cy={cy} r={3} {...s} fill="#fff" />
           <circle cx={cx + 18} cy={cy} r={3} {...s} fill="#fff" />
-          <line x1={cx - 16} y1={cy - 1} x2={open ? cx + 14 : cx + 16} y2={open ? cy - 16 : cy - 3} {...s} />
+          {/* Open, the arm falls away below the second contact, as AQA's table draws it. */}
+          <line x1={cx - 16} y1={open ? cy + 1 : cy - 1} x2={open ? cx + 14 : cx + 16} y2={open ? cy + 16 : cy - 3} {...s} />
         </g>
       )
     }

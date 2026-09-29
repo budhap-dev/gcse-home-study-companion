@@ -12,6 +12,27 @@ describe('the electromagnetic spectrum', () => {
     for (const b of BANDS) { const i = html.indexOf(`data-band="${b.name}"`); expect(i).toBeGreaterThan(at); at = i }
   })
 
+  /**
+   * "400 to 700 nm, red to violet" put the numbers one way and the colours the other, so it
+   * read as red at 400 nm. Red is the long end: 4.6.2.1 lists "visible light (red to
+   * violet)" going from long wavelength to short.
+   */
+  it('gives red the longer wavelength', () => {
+    const about = BANDS.find((b) => b.name === 'Visible light')!.about
+    const red = Number(/red (\d+)/.exec(about)![1]), violet = Number(/violet (\d+)/.exec(about)![1])
+    expect(red).toBeGreaterThan(violet)
+    expect(about.indexOf('red')).toBeLessThan(about.indexOf('violet'))
+  })
+
+  /** The app's own Wi-Fi example is 12.5 cm; "about 1 cm" left it nowhere to sit. */
+  it('gives microwaves a range that holds the 12.5 cm of Wi-Fi, in order down the spectrum', () => {
+    expect(BANDS.find((b) => b.name === 'Microwaves')!.about).toBe('about 1 cm to 10 cm')
+    // Each group's figure, in metres, is no longer than the one before it.
+    const UNIT: Record<string, number> = { km: 1e3, m: 1, cm: 1e-2, 'μm': 1e-6, nm: 1e-9 }
+    const longest = BANDS.map((b) => Math.max(...[...b.about.matchAll(/([\d.]+) (km|cm|μm|nm|m)\b/g)].map((m) => Number(m[1]) * UNIT[m[2]!]!)))
+    for (let i = 1; i < longest.length; i++) expect(longest[i], BANDS[i]!.name).toBeLessThanOrEqual(longest[i - 1]!)
+  })
+
   it('draws shorter waves further down', () => {
     for (let i = 1; i < BANDS.length; i++) expect(BANDS[i]!.cycles).toBeGreaterThan(BANDS[i - 1]!.cycles)
   })
