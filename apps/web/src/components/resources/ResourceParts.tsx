@@ -283,14 +283,17 @@ export function rowsOf(blocks: ResourceBlock[]): Row[] {
   return rows
 }
 
+/** Each row of a sheet rises into place a little after the one above it, the first few only. */
+const rise = (i: number) => ({ '--d': `${Math.min(0.1 + i * 0.07, 0.45).toFixed(2)}s` }) as React.CSSProperties
+
 export function Blocks({ blocks }: { blocks: ResourceBlock[] }) {
   return (
     <div className="flex flex-col gap-5">
       {rowsOf(blocks).map((row, i) => {
-        if (row.kind === 'single') return <Block key={i} block={row.block} />
+        if (row.kind === 'single') return <div key={i} className="anim-rise min-w-0" style={rise(i)} data-row="single"><Block block={row.block} /></div>
         if (row.kind === 'beside') {
           return (
-            <div key={i} className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]" data-row="beside">
+            <div key={i} className="anim-rise grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]" style={rise(i)} data-row="beside">
               <Figure block={row.figure} />
               <div className="flex min-w-0 flex-col gap-5">
                 {row.next.map((b, j) => <Block key={j} block={b} />)}
@@ -299,7 +302,7 @@ export function Blocks({ blocks }: { blocks: ResourceBlock[] }) {
           )
         }
         return (
-          <div key={i} className={`grid grid-cols-1 items-start gap-5 lg:grid-cols-2 ${row.blocks.length === 3 ? 'xl:grid-cols-3' : ''}`} data-row="figures">
+          <div key={i} className={`anim-rise grid grid-cols-1 items-start gap-5 lg:grid-cols-2 ${row.blocks.length === 3 ? 'xl:grid-cols-3' : ''}`} style={rise(i)} data-row="figures">
             {row.blocks.map((b, j) => <Figure key={j} block={b} />)}
           </div>
         )

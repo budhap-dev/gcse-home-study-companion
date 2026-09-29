@@ -4,6 +4,7 @@ import { SectionLabel } from '../../components/KindChip.tsx'
 import { Blocks, Prose, ResourceBadges } from '../../components/resources/ResourceParts.tsx'
 import { TOPICS } from '../../content/index.ts'
 import { getResource } from '../../content/resources.ts'
+import { stagger } from './Resources.tsx'
 
 /**
  * One resource: the sheet or chart itself, then where it turns up outside the exam, the
@@ -23,7 +24,7 @@ export function ResourcePage() {
 
   return (
     <article className="print-sheet print-colour mx-auto flex w-full max-w-5xl flex-col gap-6">
-      <header className="flex flex-col gap-2">
+      <header className="anim-rise flex flex-col gap-2">
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">
           <Link to="/resources" className="inline-block -my-1 py-1 hover:underline">Resources</Link>
           {' · '}
@@ -57,8 +58,8 @@ export function ResourcePage() {
         <section className="flex flex-col gap-3">
           <SectionLabel colour="#c27a00" emoji="🌍">Where you meet it</SectionLabel>
           <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {resource.applications.map((a) => (
-              <li key={a.title} className="break-inside-avoid flex flex-col gap-1 rounded-xl border border-rule bg-surface px-4 py-3">
+            {resource.applications.map((a, i) => (
+              <li key={a.title} className="anim-rise break-inside-avoid flex flex-col gap-1 rounded-xl border border-rule bg-surface px-4 py-3" style={{ '--d': stagger(i, 0.07, 0.2) } as React.CSSProperties}>
                 <span className="font-bold">{a.title}</span>
                 <Prose source={a.body} className="text-sm" />
               </li>
