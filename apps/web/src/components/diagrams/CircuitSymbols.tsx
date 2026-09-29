@@ -11,9 +11,16 @@ import { wrapCell } from './tableLayout.ts'
  * LED inside a circle, the LDR's arrows pointing in, the thermistor's line with a flat
  * foot), redrawn at this app's own line weights.
  *
- * Two tiles a row, 294 units wide, so it fits the 298 a phone's card leaves.
+ * Two tiles a row, 294 units wide, so it fits the 298 a phone's card leaves. A laptop has
+ * room for five, which the resource page asks for with `columns`: two a row there left the
+ * drawing phone-sized in the middle of a wide card, seven rows deep.
  *
- * Props: { symbols?: SymbolId[] } to show a subset, in the order given. Defaults to all.
+ * Each tile is tagged with what the part is for, in its family's colour. The tag is the
+ * part's own, not the family's name: a fuse sits with the switches but does not switch,
+ * and "Switch and protect" was wider than the tile it was printed on.
+ *
+ * Props: { symbols?: SymbolId[] } to show a subset, in the order given (defaults to all);
+ * { columns?: number } tiles a row, 2 to 6 (defaults to 2).
  */
 export type SymbolId =
   | 'cell' | 'battery' | 'switch-open' | 'switch-closed' | 'fuse' | 'ammeter' | 'voltmeter'
@@ -26,28 +33,30 @@ const METER: Family = { name: 'Measure', colour: '#047857' }
 const RESIST: Family = { name: 'Resist', colour: '#6d28d9' }
 const OUTPUT: Family = { name: 'Light and one-way', colour: '#be185d' }
 
-export const SYMBOLS: Record<SymbolId, { name: string; does: string; family: Family }> = {
-  'cell': { name: 'Cell', does: 'Pushes charge round the circuit. The long line is the positive side.', family: POWER },
-  'battery': { name: 'Battery', does: 'Two or more cells joined in series.', family: POWER },
-  'switch-open': { name: 'Switch (open)', does: 'A gap in the circuit, so no current flows.', family: CONTROL },
-  'switch-closed': { name: 'Switch (closed)', does: 'Completes the circuit, so current can flow.', family: CONTROL },
-  'fuse': { name: 'Fuse', does: 'Melts and breaks the circuit if the current is too big.', family: CONTROL },
-  'ammeter': { name: 'Ammeter', does: 'Measures current. Connect it in series.', family: METER },
-  'voltmeter': { name: 'Voltmeter', does: 'Measures potential difference. Connect it in parallel.', family: METER },
-  'resistor': { name: 'Resistor', does: 'A fixed resistance, to limit the current.', family: RESIST },
-  'variable-resistor': { name: 'Variable resistor', does: 'A resistance you can change, like a dimmer.', family: RESIST },
-  'thermistor': { name: 'Thermistor', does: 'Its resistance falls as it gets hotter.', family: RESIST },
-  'ldr': { name: 'LDR', does: 'Light dependent resistor: resistance falls in brighter light.', family: RESIST },
-  'lamp': { name: 'Lamp', does: 'Gives out light. Its resistance rises as it heats up.', family: OUTPUT },
-  'diode': { name: 'Diode', does: 'Lets current through in one direction only.', family: OUTPUT },
-  'led': { name: 'LED', does: 'Light-emitting diode: gives out light when current flows through it.', family: OUTPUT },
+export const SYMBOLS: Record<SymbolId, { name: string; does: string; family: Family; tag: string }> = {
+  'cell': { name: 'Cell', does: 'Pushes charge round the circuit. The long line is the positive side.', family: POWER, tag: 'Power' },
+  'battery': { name: 'Battery', does: 'Two or more cells joined in series.', family: POWER, tag: 'Power' },
+  'switch-open': { name: 'Switch (open)', does: 'A gap in the circuit, so no current flows.', family: CONTROL, tag: 'Switch' },
+  'switch-closed': { name: 'Switch (closed)', does: 'Completes the circuit, so current can flow.', family: CONTROL, tag: 'Switch' },
+  'fuse': { name: 'Fuse', does: 'Melts and breaks the circuit if the current is too big.', family: CONTROL, tag: 'Protect' },
+  'ammeter': { name: 'Ammeter', does: 'Measures current. Connect it in series.', family: METER, tag: 'Measure' },
+  'voltmeter': { name: 'Voltmeter', does: 'Measures potential difference. Connect it in parallel.', family: METER, tag: 'Measure' },
+  'resistor': { name: 'Resistor', does: 'A fixed resistance, to limit the current.', family: RESIST, tag: 'Resist' },
+  'variable-resistor': { name: 'Variable resistor', does: 'A resistance you can change, like a dimmer.', family: RESIST, tag: 'Resist' },
+  'thermistor': { name: 'Thermistor', does: 'Its resistance falls as it gets hotter.', family: RESIST, tag: 'Resist' },
+  'ldr': { name: 'LDR', does: 'Light dependent resistor: resistance falls in brighter light.', family: RESIST, tag: 'Resist' },
+  'lamp': { name: 'Lamp', does: 'Gives out light. Its resistance rises as it heats up.', family: OUTPUT, tag: 'Light' },
+  'diode': { name: 'Diode', does: 'Lets current through in one direction only.', family: OUTPUT, tag: 'One way' },
+  'led': { name: 'LED', does: 'Light-emitting diode: gives out light when current flows through it.', family: OUTPUT, tag: 'Light, one way' },
 }
 
 const ORDER = Object.keys(SYMBOLS) as SymbolId[]
 
 export const TILE_W = 141
 const GAP = 12
-export const W = TILE_W * 2 + GAP
+/** The drawing's width with `columns` tiles a row. */
+export const widthFor = (columns: number) => TILE_W * columns + GAP * (columns - 1)
+export const W = widthFor(2)
 const SYMBOL_H = 62
 /** Characters a description line holds at 12px in a tile's width, at the 0.6 the phone-fit check assumes. */
 const DOES_BUDGET = Math.floor((TILE_W - 20) / (12 * 0.6))
@@ -158,32 +167,36 @@ function Glyph({ id, cx, cy, c }: { id: SymbolId; cx: number; cy: number; c: str
 export function CircuitSymbols({ props, alt }: { props: Record<string, unknown>; alt: string }) {
   const asked = Array.isArray(props.symbols) ? (props.symbols as string[]).filter((s): s is SymbolId => s in SYMBOLS) : []
   const ids = asked.length ? asked : ORDER
+  const columns = Math.max(2, Math.min(6, Math.round(Number(props.columns)) || 2))
+  const width = widthFor(Math.min(columns, Math.max(2, ids.length)))
 
-  // Every tile in a row takes the taller of the two, so the grid stays square.
+  // Every tile in a row takes the height of the tallest in it, so the grid stays square.
   const tiles = ids.map((id) => ({ id, ...SYMBOLS[id], lines: wrapCell(SYMBOLS[id].does, DOES_BUDGET) }))
   const heightOf = (lines: number) => SYMBOL_H + 16 + 18 + lines * 15 + 10
   const rows: { top: number; height: number }[] = []
   let y = 0
-  for (let r = 0; r < Math.ceil(tiles.length / 2); r++) {
-    const pair = tiles.slice(r * 2, r * 2 + 2)
-    const height = heightOf(Math.max(...pair.map((t) => t.lines.length)))
+  for (let r = 0; r < Math.ceil(tiles.length / columns); r++) {
+    const inRow = tiles.slice(r * columns, (r + 1) * columns)
+    const height = heightOf(Math.max(...inRow.map((t) => t.lines.length)))
     rows.push({ top: y, height })
     y += height + GAP
   }
   const H = y - GAP + 2
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: 440 }} role="img" aria-label={alt}>
+    // Two a row is capped where a phone-sized drawing stays a sensible size; wider
+    // layouts grow with the card, to half as big again as drawn.
+    <svg viewBox={`0 0 ${width} ${H}`} width="100%" style={{ maxWidth: columns === 2 ? 440 : Math.round(width * 1.5) }} role="img" aria-label={alt}>
       {tiles.map((t, i) => {
-        const row = rows[Math.floor(i / 2)]!
-        const x = (i % 2) * (TILE_W + GAP)
+        const row = rows[Math.floor(i / columns)]!
+        const x = (i % columns) * (TILE_W + GAP)
         const c = t.family.colour
         return (
           <g key={t.id} data-symbol={t.id}>
             <rect x={x + 1} y={row.top + 1} width={TILE_W - 2} height={row.height - 2} rx="12" fill="#fff" stroke={RULE} />
             <rect x={x + 1} y={row.top + 1} width={TILE_W - 2} height={SYMBOL_H} rx="12" fill={c} fillOpacity={0.07} />
             <Glyph id={t.id} cx={x + TILE_W / 2} cy={row.top + SYMBOL_H / 2 + 4} c={c} />
-            <text x={x + 10} y={row.top + SYMBOL_H + 14} fontFamily={FONT} fontSize="11" fontWeight="700" letterSpacing="0.06em" fill={c}>{t.family.name.toUpperCase()}</text>
+            <text x={x + 10} y={row.top + SYMBOL_H + 14} fontFamily={FONT} fontSize="11" fontWeight="700" letterSpacing="0.06em" fill={c}>{t.tag.toUpperCase()}</text>
             <text x={x + 10} y={row.top + SYMBOL_H + 32} fontFamily={DISPLAY} fontSize="14" fontWeight="700" fill={INK}>{t.name}</text>
             {t.lines.map((line, j) => (
               <text key={j} x={x + 10} y={row.top + SYMBOL_H + 50 + j * 15} fontFamily={FONT} fontSize="12" fill={INK_2}>{line}</text>

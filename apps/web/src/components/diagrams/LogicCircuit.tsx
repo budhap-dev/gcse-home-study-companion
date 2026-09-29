@@ -121,12 +121,16 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
       )
     }
     if (op === 'AND') {
-      return <path key={key} d={`M ${l} ${t} L ${x} ${t} A ${GATE_H / 2} ${GATE_H / 2} 0 0 1 ${x} ${b} L ${l} ${b} Z`} {...common} />
+      // The flat top runs to where the half-circle must start for its far side to land on
+      // the gate's right edge, which is where the output wire begins. Started from the
+      // centre it fell 11 units short, and the wire to Q hung in the air beside the gate.
+      const turn = r - GATE_H / 2
+      return <path key={key} data-gate="AND" data-right={r} d={`M ${l} ${t} L ${turn} ${t} A ${GATE_H / 2} ${GATE_H / 2} 0 0 1 ${turn} ${b} L ${l} ${b} Z`} {...common} />
     }
     // OR and XOR share the shield shape; XOR adds a second arc at the back.
     const shield = `M ${l} ${t} Q ${x} ${t} ${r} ${y} Q ${x} ${b} ${l} ${b} Q ${l + 12} ${y} ${l} ${t} Z`
     return (
-      <g key={key}>
+      <g key={key} data-gate={op} data-left={l} data-mid={y}>
         <path d={shield} {...common} />
         {op === 'XOR' && <path d={`M ${l - 8} ${t} Q ${l + 4} ${y} ${l - 8} ${b}`} {...common} />}
       </g>
@@ -137,6 +141,14 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
     y1 === y2
       ? <line key={key} x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK} strokeWidth={1.5} />
       : <polyline key={key} points={`${x1},${y1} ${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}`} fill="none" stroke={INK} strokeWidth={1.5} />
+
+  /**
+   * How far in from a gate's left edge an input wire must run to touch it. NOT and AND
+   * have a flat back, on the edge. OR and XOR curve inwards there, by 6 units at the
+   * middle and less towards the corners, and a wire that stopped at the edge ended in
+   * mid air, 5 units short of the gate it fed.
+   */
+  const back = (op: string, spread: number) => (op === 'OR' || op === 'XOR' ? 6 * (1 - (spread / (GATE_H / 2)) ** 2) : 0)
 
   // Every wire as straight segments, the same routes `wire` draws, for the gate names to keep clear of.
   const wireSegs: Seg[] = []
@@ -149,7 +161,7 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
     gate.inputs.forEach((child, k) => {
       const spread = (k - (gate.inputs.length - 1) / 2) * 12
       const from = typeof child === 'string' ? { x: WIRE_START, y: inputY(variables.indexOf(child)) } : { x: placed.find((q) => q.node === child)!.x + GATE_W / 2, y: placed.find((q) => q.node === child)!.y }
-      route(from.x, from.y, p.x - GATE_W / 2, p.y + spread)
+      route(from.x, from.y, p.x - GATE_W / 2 + back(gate.op, spread), p.y + spread)
     })
   }
   route(out.x + GATE_W / 2, out.y, W - 30, out.y)
@@ -182,7 +194,7 @@ export function LogicCircuit({ props, alt }: { props: Record<string, unknown>; a
           const from = typeof child === 'string'
             ? { x: WIRE_START, y: inputY(variables.indexOf(child)) }
             : { x: placed.find((q) => q.node === child)!.x + GATE_W / 2, y: placed.find((q) => q.node === child)!.y }
-          return wire(from.x, from.y, p.x - GATE_W / 2, p.y + spread, `w${p.x}-${p.y}-${k}`)
+          return wire(from.x, from.y, p.x - GATE_W / 2 + back(gate.op, spread), p.y + spread, `w${p.x}-${p.y}-${k}`)
         })
       })}
       {placed.map((p, i) => gateShape((p.node as { op: string }).op, p.x, p.y, `g${i}`))}

@@ -133,3 +133,60 @@ describe('a Markdown table', () => {
     expect(css).toMatch(/\.rich-table\s*\{[^}]*overflow-x:\s*auto/)
   })
 })
+
+/**
+ * The browser sees maths as a box and the full stop after it as a separate character, and
+ * will end a line between the two: "add to 180°" with its full stop alone on the next
+ * line. The pair is glued; the maths can still break inside itself.
+ */
+describe('punctuation written against maths', () => {
+  const glued = (html: string) => [...html.matchAll(/<span class="maths-glue">([\s\S]*?<\/span>)([^<]*)<\/span>/g)]
+
+  it('stays on the line with the maths it follows', () => {
+    const html = renderRichText('The angles add to $180°$. Then $x = 3$, so stop.')
+    expect(html.match(/class="maths-glue"/g)).toHaveLength(2)
+    expect(html).toMatch(/<span class="maths-glue"><span class="katex">[\s\S]*?<\/span>\.<\/span> Then/)
+    expect(html).toMatch(/<\/span>,<\/span> so stop/)
+  })
+
+  it('takes an opening bracket with it too', () => {
+    const html = renderRichText('Square it (so $x^2$) first.')
+    expect(html).toMatch(/\(so <span class="maths-glue"><span class="katex">/)
+    expect(html).toMatch(/<\/span>\)<\/span> first/)
+    expect(renderRichText('Try ($x^2$) now')).toMatch(/<span class="maths-glue">\(<span class="katex">/)
+  })
+
+  it('leaves maths with nothing written against it as it was', () => {
+    expect(renderRichText('So $x = 3$ and $y = 4$ here')).not.toContain('maths-glue')
+  })
+
+  it('leaves display maths alone: it has a line to itself', () => {
+    const html = renderRichText('Then\n\n$$x = 3$$.\n\nDone')
+    expect(html).toContain('katex-display')
+    expect(html).not.toContain('maths-glue')
+  })
+
+  it('changes no word of any string in the pack', () => {
+    const text = (html: string) => html.replace(/<[^>]+>/g, '')
+    let count = 0
+    for (const file of jsonFiles(SEED)) {
+      for (const [path, source] of strings(JSON.parse(readFileSync(file, 'utf8')), '')) {
+        if (!source.includes('$')) continue
+        const html = renderRichText(source)
+        const n = html.match(/class="maths-glue"/g)?.length ?? 0
+        if (!n) continue
+        count += n
+        expect(text(html), `${file.split('/seed/')[1]}${path}`).toBe(text(html.replace(/<span class="maths-glue">([\s\S]*?)<\/span>(?=[^<]*(?:<|$))/g, '$1')))
+        expect(glued(html).length, path).toBeGreaterThan(-1)
+      }
+    }
+    // A floor, so that a rule which matched nothing could not pass as one that broke nothing.
+    expect(count).toBeGreaterThan(500)
+  })
+
+  it('has the rule in the stylesheet that does the holding', () => {
+    const css = readFileSync(join(import.meta.dirname, '../styles.css'), 'utf8')
+    expect(css).toMatch(/\.rich-text \.maths-glue\s*\{[^}]*white-space:\s*nowrap/)
+    expect(css).toMatch(/\.rich-text \.maths-glue \.katex-html\s*\{[^}]*white-space:\s*normal/)
+  })
+})
