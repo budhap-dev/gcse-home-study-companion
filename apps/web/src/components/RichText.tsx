@@ -23,6 +23,15 @@ export function renderRichText(source: string): string {
   const html = marked.parse(withTokens, { async: false, gfm: true, breaks: false }) as string
   return (
     html
+      // A full stop, comma or bracket written hard against maths belongs to it, but the
+      // browser sees a box and then a character and will end the line between them: a
+      // sentence ending "add to 180°." left its full stop alone at the start of the next
+      // line. Glued, the pair moves together; the maths can still break inside itself.
+      .replace(/([(\[“‘]?)\u0000M(\d+)\u0000([.,;:!?)\]”’]*)/g, (whole, before: string, i: string, after: string) => {
+        const tex = maths[Number(i)] ?? ''
+        if ((!before && !after) || tex.includes('katex-display')) return whole
+        return `<span class="maths-glue">${before}\u0000M${i}\u0000${after}</span>`
+      })
       .replace(/\u0000M(\d+)\u0000/g, (_, i) => maths[Number(i)] ?? '')
       .replace(/\u0000D\u0000/g, () => '$')
       // A wide table has to scroll rather than push the page sideways on a phone, and

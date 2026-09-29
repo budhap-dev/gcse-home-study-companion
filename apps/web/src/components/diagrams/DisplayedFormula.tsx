@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, type RefObject } from 'react'
 import { REFIT, useAvailableWidth } from '../fitSvgText.ts'
 import { ACCENT, DISPLAY, FONT, INK, INK_2 } from './index.tsx'
+import { chemText } from './chemText.ts'
 
 interface Molecule {
   /** Carbons in the chain, drawn left to right. */
@@ -195,7 +196,7 @@ function PieceGroup({ piece: { l, m, ox, left, width } }: { piece: Piece }) {
       )}
       {m.label && (
         <text x={left + width / 2} y={RISE + 46} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={CAPTION_SIZE}>
-          {m.label}
+          {chemText(m.label)}
         </text>
       )}
     </>
@@ -230,7 +231,7 @@ function DisplayedFormulaRow({ molecules, joiners, title, alt, svgRef }: LayoutP
     <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${Math.min(W, 520)}px` }} role="img" aria-label={alt}>
       {title && (
         <text x={W / 2} y={14} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={CAPTION_SIZE}>
-          {title}
+          {chemText(title)}
         </text>
       )}
       {pieces.map((piece, i) => (
@@ -285,13 +286,13 @@ export function DisplayedFormulaStack({ molecules, joiners, title, width, alt, s
     <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: `${W}px` }} role="img" aria-label={alt}>
       {titleLines.length === 1 && (
         <text x={W / 2} y={14} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={CAPTION_SIZE}>
-          {titleLines[0]}
+          {chemText(titleLines[0]!)}
         </text>
       )}
       {titleLines.length === 2 && (
         <>
-          <text x={W / 2} y={14} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={CAPTION_SIZE}>{titleLines[0]}</text>
-          <text x={W / 2} y={27} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={CAPTION_SIZE}>{titleLines[1]}</text>
+          <text x={W / 2} y={14} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={CAPTION_SIZE}>{chemText(titleLines[0]!)}</text>
+          <text x={W / 2} y={27} textAnchor="middle" fill={INK_2} fontFamily={FONT} fontSize={CAPTION_SIZE}>{chemText(titleLines[1]!)}</text>
         </>
       )}
       {laid.map((l, i) => {

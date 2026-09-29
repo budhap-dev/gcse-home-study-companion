@@ -1,8 +1,7 @@
 import { getSubject, isComingSoon, type ResourceLink } from '@study/shared'
 import { Link, useParams } from 'react-router'
-import { RichText } from '../../components/RichText.tsx'
 import { SectionLabel } from '../../components/KindChip.tsx'
-import { Block, ResourceBadges } from '../../components/resources/ResourceParts.tsx'
+import { Blocks, Prose, ResourceBadges } from '../../components/resources/ResourceParts.tsx'
 import { TOPICS } from '../../content/index.ts'
 import { getResource } from '../../content/resources.ts'
 
@@ -33,10 +32,10 @@ export function ResourcePage() {
         </p>
         <h1 className="text-3xl font-bold leading-tight">{resource.title}</h1>
         <ResourceBadges resource={resource} />
-        <RichText source={resource.summary} className="max-w-3xl text-ink-2" />
+        <Prose source={resource.summary} className="max-w-3xl text-ink-2" />
         {resource.statusNote && (
           <div className="max-w-3xl rounded-xl border-l-4 border-rule bg-surface px-4 py-2 text-sm" style={{ borderLeftColor: 'var(--subject)' }}>
-            <RichText source={resource.statusNote} />
+            <Prose source={resource.statusNote} />
           </div>
         )}
       </header>
@@ -50,9 +49,7 @@ export function ResourcePage() {
           <div className="no-print flex flex-wrap gap-2">
             <button type="button" onClick={() => window.print()} className="h-11 rounded-lg bg-ink px-4 font-bold text-surface">Print this sheet</button>
           </div>
-          <div className="flex flex-col gap-5">
-            {resource.blocks.map((block, i) => <Block key={i} block={block} />)}
-          </div>
+          <Blocks blocks={resource.blocks} />
         </>
       )}
 
@@ -63,7 +60,7 @@ export function ResourcePage() {
             {resource.applications.map((a) => (
               <li key={a.title} className="break-inside-avoid flex flex-col gap-1 rounded-xl border border-rule bg-surface px-4 py-3">
                 <span className="font-bold">{a.title}</span>
-                <RichText source={a.body} className="text-sm" />
+                <Prose source={a.body} className="text-sm" />
               </li>
             ))}
           </ul>
@@ -76,7 +73,9 @@ export function ResourcePage() {
           <ul className="flex flex-wrap gap-2">
             {topics.map((t) => (
               <li key={t.id}>
-                <Link to={`/subjects/${t.subjectId}/topics/${t.id}`} className="flex min-h-11 items-center rounded-full border border-rule bg-surface px-4 text-sm font-bold hover:border-[color:var(--subject)]">
+                {/* Not a full pill: a long title wraps to two lines on a phone, and a pill's
+                    round ends then cut across the corners of the text. */}
+                <Link to={`/subjects/${t.subjectId}/topics/${t.id}`} className="flex min-h-11 items-center rounded-[1.375rem] border border-rule bg-surface px-4 py-1.5 text-sm font-bold leading-snug hover:border-[color:var(--subject)]">
                   {t.specCode ? `${t.specCode} ` : ''}{t.title}
                 </Link>
               </li>
@@ -103,12 +102,13 @@ function Links({ links }: { links: ResourceLink[] }) {
   return (
     <ul className="flex flex-col gap-1.5">
       {links.map((l) => (
-        <li key={l.url} className="text-[15px]">
-          <a href={l.url} target="_blank" rel="noopener noreferrer" className="inline-block py-1 font-bold underline decoration-rule underline-offset-2 hover:decoration-current">
-            {l.name}
+        // The place in the document goes under the link, not after it: on a phone the
+        // link filled the line and the place began the next with its own dot.
+        <li key={l.url} className="flex flex-col text-[15px]">
+          <a href={l.url} target="_blank" rel="noopener noreferrer" className="w-fit py-1 font-bold underline decoration-rule underline-offset-2 hover:decoration-current">
+            {l.name}<span className="sr-only"> (opens in a new tab)</span>
           </a>
-          {l.where && <span className="text-ink-2"> · {l.where}</span>}
-          <span className="sr-only"> (opens in a new tab)</span>
+          {l.where && <span className="-mt-0.5 text-sm text-ink-2">{l.where}</span>}
         </li>
       ))}
     </ul>

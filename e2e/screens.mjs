@@ -11,7 +11,8 @@
 //   - at phone width, a button or link smaller than 24 by 24 pixels (WCAG 2.2 target size),
 //     unless it sits inside a line of text;
 //   - at phone width, a page that opens with the cursor already in a field, which raises
-//     the on-screen keyboard over the page before any of it has been read.
+//     the on-screen keyboard over the page before any of it has been read;
+//   - a formula on a reference sheet that is wider than its card, and so scrolls.
 //
 // Usage: node e2e/screens.mjs [--base http://localhost:4173] [--widths 390,1280]
 //          [--themes paper,midnight | all] [--shots dir] [--motion on|off]
@@ -55,6 +56,12 @@ const ROUTES = [
   '/resources',
   { path: '/resources', press: 'button[aria-pressed="false"]' },
   '/resources/physics/equation-sheet',
+  // A fraction too wide for a phone's card, a drawing with a wider form for a laptop, a
+  // drawing beside its table, and drawings that share rows.
+  '/resources/business/business-formulae',
+  '/resources/physics/electromagnetic-spectrum',
+  '/resources/biology/the-heart',
+  '/resources/computer-science/logic-gates',
   // The press picks a family, fading the rest of the table: the faded cells must still pass.
   { path: '/resources/chemistry/periodic-table', press: 'figure button.rounded-full' },
 ]
@@ -144,6 +151,10 @@ const scan = ({ phone }) => {
     const ratio = (hi + 0.05) / (lo + 0.05)
     const large = size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700)
     if (ratio < (large ? 3 : 4.5)) push('low contrast', el, `${ratio.toFixed(2)}:1 at ${size}px`)
+  }
+
+  for (const el of document.querySelectorAll('main .formula-line')) {
+    if (visible(el) && el.scrollWidth > el.clientWidth + 1) push('formula wider than its card', el, `${el.scrollWidth} > ${el.clientWidth}`)
   }
 
   if (phone) {

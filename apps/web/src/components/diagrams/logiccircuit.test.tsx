@@ -57,6 +57,64 @@ describe('logic circuit', () => {
     expect(andGate).toContain('>AND<')
   })
 
+  /**
+   * The AND gate's curve started from the gate's centre, so its nose stopped 11 units
+   * short of where the output wire begins and the wire to Q hung in the air beside it.
+   */
+  it('brings the nose of the AND gate out to meet its output wire', () => {
+    for (const expr of [
+      { op: 'AND', inputs: ['A', 'B'] },
+      { op: 'OR', inputs: [{ op: 'AND', inputs: ['A', 'B'] }, { op: 'NOT', inputs: ['C'] }] },
+      { op: 'AND', inputs: [{ op: 'AND', inputs: ['A', 'B'] }, { op: 'AND', inputs: ['C', 'D'] }] },
+    ]) {
+      const markup = svg({ expression: expr, show: 'circuit' })
+      const gates = [...markup.matchAll(/data-gate="AND" data-right="([\d.]+)" d="M ([\d.]+) ([\d.]+) L ([\d.]+) [\d.]+ A ([\d.]+) /g)]
+      expect(gates.length).toBeGreaterThan(0)
+      // Every wire as drawn: a line, or the first point of a bent one.
+      const starts = [
+        ...[...markup.matchAll(/<line x1="([\d.]+)" y1="([\d.]+)"/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) })),
+        ...[...markup.matchAll(/<polyline points="([\d.]+),([\d.]+) /g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) })),
+      ]
+      for (const [, right, left, top, turn, radius] of gates) {
+        expect(Number(turn) + Number(radius), 'the curve ends at the right edge').toBeCloseTo(Number(right), 5)
+        expect(Number(turn), 'with a flat top before it').toBeGreaterThan(Number(left))
+        const mid = Number(top) + Number(radius)
+        expect(starts.some((s) => Math.abs(s.x - Number(right)) < 0.01 && Math.abs(s.y - mid) < 0.01), 'and a wire leaves from the nose').toBe(true)
+      }
+    }
+  })
+
+  /**
+   * The back of an OR or XOR gate curves inwards, so a wire that stopped at the gate's
+   * left edge stopped short of the gate. Each wire must end on the curve itself.
+   */
+  it('ends every input wire on the curved back of an OR or XOR gate', () => {
+    for (const expr of [
+      { op: 'OR', inputs: ['A', 'B'] },
+      { op: 'XOR', inputs: ['A', 'B'] },
+      { op: 'OR', inputs: [{ op: 'AND', inputs: ['A', 'B'] }, { op: 'NOT', inputs: ['C'] }] },
+      { op: 'OR', inputs: ['A', 'B', 'C'] },
+    ]) {
+      const markup = svg({ expression: expr, show: 'circuit' })
+      const gates = [...markup.matchAll(/data-gate="(?:OR|XOR)" data-left="([\d.]+)" data-mid="([\d.]+)"><path d="M [\d.]+ ([\d.]+) Q/g)]
+      expect(gates.length).toBeGreaterThan(0)
+      const ends = [
+        ...[...markup.matchAll(/<line x1="[\d.]+" y1="[\d.]+" x2="([\d.]+)" y2="([\d.]+)"/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) })),
+        ...[...markup.matchAll(/<polyline points="[^"]* ([\d.]+),([\d.]+)"/g)].map((m) => ({ x: Number(m[1]), y: Number(m[2]) })),
+      ]
+      for (const [, left, mid, top] of gates) {
+        const [l, y, half] = [Number(left), Number(mid), Number(mid) - Number(top)]
+        const inputs = ends.filter((e) => e.x >= l && e.x <= l + 7 && Math.abs(e.y - y) < half)
+        expect(inputs.length, 'wires into the gate').toBe((expr.inputs as unknown[]).length)
+        for (const e of inputs) {
+          // The back is a curve from the bottom corner to the top one, pulled in by a point 12 units along.
+          const t = (1 - (e.y - y) / half) / 2
+          expect(e.x, `wire at ${e.y}`).toBeCloseTo(l + 24 * t * (1 - t), 5)
+        }
+      }
+    }
+  })
+
   it('gives XOR the extra arc that distinguishes it from OR', () => {
     const or = svg({ expression: { op: 'OR', inputs: ['A', 'B'] }, show: 'circuit' })
     const xor = svg({ expression: { op: 'XOR', inputs: ['A', 'B'] }, show: 'circuit' })

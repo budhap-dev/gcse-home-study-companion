@@ -251,6 +251,12 @@ figure[data-diagram] {
 .rich-text strong { font-weight: 700; }
 .rich-text .katex-display { margin: 0.6em 0; overflow-x: auto; overflow-y: hidden; }
 .rich-text .katex { font-size: 1.05em; }
+/* Maths and the punctuation written against it, kept on one line (see RichText). Where a
+   line may break is decided by the nearest ancestor the two sides share, so the glue
+   holds the full stop to the maths while the maths, one level down, still breaks after
+   its own equals signs. */
+.rich-text .maths-glue { white-space: nowrap; }
+.rich-text .maths-glue .katex-html { white-space: normal; }
 /* KaTeX sets superscripts and fraction parts at 0.7em of the surrounding text, so maths
    inside the small type of a tip card (14px) came out at 10.3px, and inside a card note
    (12px) at 8.8px. Maths should not shrink below body size, so in those contexts the
