@@ -5,6 +5,7 @@ import { TermCard } from '../../components/TermCard.tsx'
 import { GLOSSARY, termBySlug, type Term } from '../../content/glossary.ts'
 import { topicsForSubject } from '../../content/index.ts'
 import { BackToTop } from '../../components/BackToTop.tsx'
+import { keyboardToHand } from '../../components/keyboardToHand.ts'
 
 /**
  * An A to Z of every term the app teaches, each with a definition, a worked example and
@@ -36,7 +37,8 @@ export function Glossary() {
    * straight there, then correct once more on the next frame for any last shift.
    */
   useEffect(() => {
-    if (!focusSlug || query) { if (!focusSlug) inputRef.current?.focus(); return }
+    // Opened to browse, the field takes the cursor only where that raises no keyboard.
+    if (!focusSlug || query) { if (!focusSlug && keyboardToHand()) inputRef.current?.focus(); return }
     let cancelled = false
     let flashTimer: ReturnType<typeof setTimeout> | undefined
 

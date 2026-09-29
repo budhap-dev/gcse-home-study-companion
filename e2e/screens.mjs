@@ -9,7 +9,9 @@
 //     large text). Text on a banner gradient is skipped here: contrast.test.ts holds every
 //     theme's gradient to 5:1 for white;
 //   - at phone width, a button or link smaller than 24 by 24 pixels (WCAG 2.2 target size),
-//     unless it sits inside a line of text.
+//     unless it sits inside a line of text;
+//   - at phone width, a page that opens with the cursor already in a field, which raises
+//     the on-screen keyboard over the page before any of it has been read.
 //
 // Usage: node e2e/screens.mjs [--base http://localhost:4173] [--widths 390,1280]
 //          [--themes paper,midnight | all] [--shots dir] [--motion on|off]
@@ -47,6 +49,9 @@ const ROUTES = [
   '/subjects/english-literature/topics/an-inspector-calls-themes',
   '/progress',
   '/settings',
+  '/glossary',
+  '/search',
+  '/search?q=momentum',
   '/resources',
   { path: '/resources', press: 'button[aria-pressed="false"]' },
   '/resources/physics/equation-sheet',
@@ -148,6 +153,8 @@ const scan = ({ phone }) => {
       const r = el.getBoundingClientRect()
       if (r.width < 24 || r.height < 24) push('target under 24px', el, `${Math.round(r.width)}x${Math.round(r.height)}`)
     }
+    const at = document.activeElement
+    if (at && at.matches('input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"]), textarea, math-field, [contenteditable="true"]')) push('keyboard raised on open', at, at.getAttribute('aria-label') ?? at.tagName.toLowerCase())
   }
   return out
 }
@@ -159,7 +166,8 @@ if (SHOTS) mkdirSync(SHOTS, { recursive: true })
 for (const theme of THEMES) {
   for (const width of WIDTHS) {
     const phone = width < 768
-    const context = await browser.newContext({ viewport: { width, height: phone ? 844 : 900 }, deviceScaleFactor: 1 })
+    // A phone is touched, not pointed at: the page can ask, and what it does on opening depends on the answer.
+    const context = await browser.newContext({ viewport: { width, height: phone ? 844 : 900 }, deviceScaleFactor: 1, hasTouch: phone })
     const SEEDS = { sample: progress, new: '', blank: JSON.stringify({ profile: { setupAt: new Date().toISOString() } }) }
     await context.addInitScript(([seeds, t, motion]) => {
       const seed = seeds[sessionStorage.getItem('screens.seed') ?? 'sample']
