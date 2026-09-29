@@ -40,7 +40,8 @@ export const LABELS: Record<Kind, Label[]> = {
     { name: 'Nucleus', colour: NUCLEUS, at: [88, 80] },
     { name: 'Ribosomes', colour: RIBOSOME, at: [128, 101] },
     { name: 'Cytoplasm', colour: '#9a3412', at: [104, 122] },
-    { name: 'Cell membrane', colour: MEMBRANE, at: [143, 136] },
+    // On the outline itself. At [143, 136] the point sat 5 units outside it, touching nothing.
+    { name: 'Cell membrane', colour: MEMBRANE, at: [138, 134] },
   ],
   plant: [
     { name: 'Cell wall', colour: CHLORO, at: [147, 22] },
@@ -56,7 +57,9 @@ export const LABELS: Record<Kind, Label[]> = {
     { name: 'Plasmid DNA', colour: PLASMID, at: [128, 78] },
     { name: 'Cell wall', colour: WALL, at: [147, 100] },
     { name: 'Ribosomes', colour: RIBOSOME, at: [60, 116] },
-    { name: 'Cell membrane', colour: MEMBRANE, at: [136, 124] },
+    // On the inner line, 33 from the centre of the end. At [136, 124] the point was 37 from
+    // it, in the gap between the membrane and the wall, and read as pointing at the wall.
+    { name: 'Cell membrane', colour: MEMBRANE, at: [133, 121] },
     { name: 'Flagellum', colour: '#475569', at: [16, 170] },
   ],
 }

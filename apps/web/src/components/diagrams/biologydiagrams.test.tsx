@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import { CellDiagram, LABELS, W as CELL_W, leaderLines } from './CellDiagram.tsx'
-import { HeartDiagram, W as HEART_W } from './HeartDiagram.tsx'
+import { CHAMBER_W, HeartDiagram, W as HEART_W, WALLS } from './HeartDiagram.tsx'
 
 const cell = (kind: string) => renderToStaticMarkup(<CellDiagram props={{ cell: kind }} alt="A labelled cell" />)
 
@@ -36,6 +36,28 @@ describe('the cell diagram', () => {
     }
   })
 
+  /**
+   * Two layers lie side by side in a bacterium, the wall and the membrane inside it, so a
+   * point between them reads as the wall. Each label must land on the line it names.
+   */
+  it('points each membrane and wall label at the line it names', () => {
+    const at = (kind: keyof typeof LABELS, name: string) => LABELS[kind].find((l) => l.name === name)!.at
+    // The bacterium's end is a half circle about (108, 100): membrane of radius 33, wall of radius 40.
+    const fromEnd = (p: [number, number]) => Math.hypot(p[0] - 108, p[1] - 100)
+    expect(Math.abs(fromEnd(at('bacterium', 'Cell membrane')) - 33)).toBeLessThan(0.8)
+    expect(Math.abs(fromEnd(at('bacterium', 'Cell wall')) - 40)).toBeLessThan(2.25)
+    // The animal cell's outline, sampled along its four curves.
+    const curves: P[][] = [[[78, 14], [118, 12], [146, 42], [145, 84]], [[145, 84], [146, 126], [132, 176], [84, 184]], [[84, 184], [42, 190], [10, 160], [12, 108]], [[12, 108], [10, 60], [36, 16], [78, 14]]]
+    const outline = curves.flatMap(([a, b, c, d]) => Array.from({ length: 401 }, (_, i) => {
+      const t = i / 400, u = 1 - t
+      return [0, 1].map((k) => u * u * u * a![k]! + 3 * u * u * t * b![k]! + 3 * u * t * t * c![k]! + t * t * t * d![k]!) as P
+    }))
+    const p = at('animal', 'Cell membrane')
+    expect(Math.min(...outline.map((q) => Math.hypot(p[0] - q[0], p[1] - q[1])))).toBeLessThan(1.3)
+    // The drawing is the outline the points were sampled from.
+    expect(cell('animal')).toContain('M78 14 C118 12 146 42 145 84 C146 126 132 176 84 184 C42 190 10 160 12 108 C10 60 36 16 78 14 Z')
+  })
+
   it('knows a crossing when it sees one', () => {
     expect(cross([0, 0], [10, 10], [0, 10], [10, 0])).toBe(true)
     expect(cross([0, 0], [10, 0], [0, 5], [10, 5])).toBe(false)
@@ -60,6 +82,21 @@ describe('the heart diagram', () => {
     expect(walls).toHaveLength(4)
     const lv = walls.find((w) => w.name === 'Left ventricle')!
     for (const w of walls) if (w !== lv) expect(lv.wall, w.name).toBeGreaterThan(w.wall)
+  })
+
+  /** 8.8 asks for "the relative thickness of chamber walls", and the right ventricle was drawn as thin as the atria. */
+  it('draws the right ventricle thicker than the atria and thinner than the left', () => {
+    expect(WALLS.atrium).toBeLessThan(WALLS.rightVentricle)
+    expect(WALLS.rightVentricle).toBeLessThan(WALLS.leftVentricle)
+    const drawn = [...html.matchAll(/<rect[^>]*rx="12"[^>]*stroke-width="(\d+)"/g)].map((m) => Number(m[1]))
+    expect(drawn).toEqual([WALLS.atrium, WALLS.rightVentricle, WALLS.atrium, WALLS.leftVentricle])
+  })
+
+  it('keeps each chamber’s name clear of its wall', () => {
+    // 0.6 of the font size a character, as the phone-fit check assumes; a wall takes half its width from each side.
+    for (const [name, wall] of [['ventricle', WALLS.leftVentricle], ['ventricle', WALLS.rightVentricle], ['atrium', WALLS.atrium]] as const) {
+      expect(name.length * 12 * 0.6, name).toBeLessThanOrEqual(CHAMBER_W - wall)
+    }
   })
 
   /** Every label inside the 294 units, however it is anchored, at 0.6 of the font size a character. */

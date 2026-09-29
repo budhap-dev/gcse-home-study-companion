@@ -40,6 +40,16 @@ function Vessel({ pts, colour, gap = false }: { pts: [number, number][]; colour:
   )
 }
 
+/** How thick each chamber's wall is drawn. */
+export const WALLS = { atrium: 2, rightVentricle: 5, leftVentricle: 8 }
+/**
+ * How wide a chamber is, and where the two sides start: the heart's right side on the
+ * reader's left. Wide enough that "ventricle" stays clear of the thickest wall; at 60 the
+ * word all but touched it.
+ */
+export const CHAMBER_W = 74
+const LEFT = 150, RIGHT = LEFT - 6 - CHAMBER_W
+
 function Chamber({ x, y, w, h, colour, fill, wall, lines }: { x: number; y: number; w: number; h: number; colour: string; fill: string; wall: number; lines: string[] }) {
   return (
     <g>
@@ -73,18 +83,21 @@ export function HeartDiagram({ alt }: { props: Record<string, unknown>; alt: str
       <Organ y={298} name="Body" note="cells use the oxygen" />
 
       {/* Deoxygenated, on the heart's right side (the reader's left). */}
-      <Vessel pts={[[70, 318], [20, 318], [20, 136], [80, 136]]} colour={BLUE} />
-      <Vessel pts={[[84, 206], [40, 206], [40, 27], [66, 27]]} colour={BLUE} gap />
+      <Vessel pts={[[70, 318], [20, 318], [20, 136], [RIGHT - 4, 136]]} colour={BLUE} />
+      <Vessel pts={[[RIGHT, 206], [40, 206], [40, 27], [66, 27]]} colour={BLUE} gap />
       {/* Oxygenated, on the heart's left side. */}
-      <Vessel pts={[[224, 27], [270, 27], [270, 136], [214, 136]]} colour={RED} />
-      <Vessel pts={[[210, 216], [248, 216], [248, 318], [228, 318]]} colour={RED} />
+      <Vessel pts={[[224, 27], [270, 27], [270, 136], [LEFT + CHAMBER_W + 4, 136]]} colour={RED} />
+      <Vessel pts={[[LEFT + CHAMBER_W, 216], [248, 216], [248, 318], [228, 318]]} colour={RED} />
 
-      <Chamber x={84} y={112} w={60} h={48} colour={BLUE} fill="#dbeafe" wall={3} lines={['Right', 'atrium']} />
-      <Chamber x={84} y={166} w={60} h={80} colour={BLUE} fill="#dbeafe" wall={3} lines={['Right', 'ventricle']} />
-      <Chamber x={150} y={112} w={60} h={48} colour={RED} fill="#fee2e2" wall={3} lines={['Left', 'atrium']} />
-      <Chamber x={150} y={166} w={60} h={86} colour={RED} fill="#fee2e2" wall={8} lines={['Left', 'ventricle']} />
-      <Valve x={114} y={163} />
-      <Valve x={180} y={163} />
+      {/* The walls in order of the work they do (8.8, "the relative thickness of chamber
+          walls"): the atria thinnest, the right ventricle thicker, the left thickest. The
+          right ventricle was drawn as thin as the atria. */}
+      <Chamber x={RIGHT} y={112} w={CHAMBER_W} h={48} colour={BLUE} fill="#dbeafe" wall={WALLS.atrium} lines={['Right', 'atrium']} />
+      <Chamber x={RIGHT} y={166} w={CHAMBER_W} h={80} colour={BLUE} fill="#dbeafe" wall={WALLS.rightVentricle} lines={['Right', 'ventricle']} />
+      <Chamber x={LEFT} y={112} w={CHAMBER_W} h={48} colour={RED} fill="#fee2e2" wall={WALLS.atrium} lines={['Left', 'atrium']} />
+      <Chamber x={LEFT} y={166} w={CHAMBER_W} h={86} colour={RED} fill="#fee2e2" wall={WALLS.leftVentricle} lines={['Left', 'ventricle']} />
+      <Valve x={RIGHT + CHAMBER_W / 2} y={163} />
+      <Valve x={LEFT + CHAMBER_W / 2} y={163} />
 
       <text x="48" y="74" fontFamily={FONT} fontSize="12" fontWeight="700" fill={BLUE}>Pulmonary</text>
       <text x="48" y="89" fontFamily={FONT} fontSize="12" fontWeight="700" fill={BLUE}>artery</text>
