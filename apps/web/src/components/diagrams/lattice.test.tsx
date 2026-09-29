@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import { Lattice } from './Lattice.tsx'
+import { Lattice, honeycomb } from './Lattice.tsx'
 
 const svg = (props: Record<string, unknown>) => renderToStaticMarkup(<Lattice props={props} alt="a lattice" />)
 
@@ -85,6 +85,58 @@ describe('lattice fits a phone for every kind the content uses', () => {
       const markup = svg({ kind })
       const sizes = [...markup.matchAll(/font-size="([\d.]+)"/g)].map((m) => Number(m[1]))
       for (const s of sizes) expect(s, kind).toBeGreaterThanOrEqual(11)
+    }
+  })
+})
+
+/**
+ * AQA 4.2.3.2: "each carbon atom forms three covalent bonds with three other carbon atoms,
+ * forming layers of hexagonal rings which have no covalent bonds between the layers."
+ * Graphite was drawn as four loose hexagons to a layer: every corner had two bonds and no
+ * ring touched the next, under a caption saying each carbon is bonded to three.
+ */
+describe('graphite', () => {
+  const markup = svg({ kind: 'graphite' })
+  const bonds = [...markup.matchAll(/data-bond="(\d+):(\d+)-(\d+)"/g)].map((m) => ({ layer: Number(m[1]), a: Number(m[2]), b: Number(m[3]) }))
+  const atoms = [...markup.matchAll(/data-atom="(\d+):(\d+)"/g)].map((m) => ({ layer: Number(m[1]), id: Number(m[2]) }))
+
+  it('joins the hexagons of a sheet: corners and edges are shared, each drawn once', () => {
+    const sheet = honeycomb(3, 5, 20)
+    // Fifteen separate hexagons would have 90 corners and 90 edges.
+    expect(sheet.atoms.length).toBeLessThan(50)
+    expect(sheet.bonds.length).toBeLessThan(65)
+    expect(new Set(sheet.bonds.map(([a, b]) => `${a}-${b}`)).size).toBe(sheet.bonds.length)
+    // Every edge is one hexagon side long.
+    for (const [a, b] of sheet.bonds) expect(Math.hypot(sheet.atoms[a]![0] - sheet.atoms[b]![0], sheet.atoms[a]![1] - sheet.atoms[b]![1])).toBeCloseTo(20, 1)
+  })
+
+  it('draws two layers, a carbon at every corner', () => {
+    expect(new Set(atoms.map((a) => a.layer))).toEqual(new Set([0, 1]))
+    expect(atoms.filter((a) => a.layer === 0)).toHaveLength(atoms.length / 2)
+    expect(atoms.length / 2).toBe(honeycomb(3, 5, 20).atoms.length)
+  })
+
+  it('gives no carbon more than three bonds, and the ones inside the sheet exactly three', () => {
+    for (const layer of [0, 1]) {
+      const degree = new Map<number, number>()
+      for (const b of bonds.filter((x) => x.layer === layer)) for (const id of [b.a, b.b]) degree.set(id, (degree.get(id) ?? 0) + 1)
+      const counts = [...degree.values()]
+      expect(Math.max(...counts)).toBe(3)
+      expect(Math.min(...counts)).toBe(2)
+      expect(counts.filter((n) => n === 3).length).toBeGreaterThanOrEqual(10)
+    }
+  })
+
+  it('draws no bond from one layer to the other', () => {
+    // Every bond names one layer, and its two ends are atoms of that layer.
+    const ys = (layer: number) => [...markup.matchAll(new RegExp(`data-atom="${layer}:\\d+" cx="[\\d.]+" cy="([\\d.]+)"`, 'g'))].map((m) => Number(m[1]))
+    expect(Math.max(...ys(0))).toBeLessThan(Math.min(...ys(1)))
+    const lines = [...markup.matchAll(/data-bond="(\d+):[^"]*" x1="[\d.]+" y1="([\d.]+)" x2="[\d.]+" y2="([\d.]+)"/g)].map((m) => ({ layer: Number(m[1]), y1: Number(m[2]), y2: Number(m[3]) }))
+    expect(lines.length).toBe(bonds.length)
+    for (const l of lines) {
+      const [lo, hi] = [Math.min(...ys(l.layer)), Math.max(...ys(l.layer))]
+      expect(l.y1).toBeGreaterThanOrEqual(lo); expect(l.y1).toBeLessThanOrEqual(hi)
+      expect(l.y2).toBeGreaterThanOrEqual(lo); expect(l.y2).toBeLessThanOrEqual(hi)
     }
   })
 })

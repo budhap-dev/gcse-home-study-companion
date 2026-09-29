@@ -11,6 +11,30 @@ const CAPTIONS: Partial<Record<string, string>> = {
 }
 
 /**
+ * A sheet of hexagons that share their edges, `rows` deep and `cols` across: the corners,
+ * each once, and the edges between them, each once. Graphite was drawn as four separate
+ * hexagons to a layer, so every corner had two bonds and nothing joined one ring to the
+ * next, under a caption that said each carbon is bonded to three.
+ */
+export function honeycomb(rows: number, cols: number, R: number): { atoms: [number, number][]; bonds: [number, number][]; height: number } {
+  const hx = R * Math.sqrt(3)
+  const atoms: [number, number][] = []
+  const index = new Map<string, number>()
+  const bonds = new Map<string, [number, number]>()
+  const at = (x: number, y: number) => {
+    const key = `${x.toFixed(1)},${y.toFixed(1)}`
+    if (!index.has(key)) { index.set(key, atoms.length); atoms.push([x, y]) }
+    return index.get(key)!
+  }
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const cx = hx / 2 + c * hx + (r % 2) * (hx / 2), cy = R + r * R * 1.5
+    const corners = Array.from({ length: 6 }, (_, k) => { const a = (Math.PI / 3) * k + Math.PI / 6; return at(cx + R * Math.cos(a), cy + R * Math.sin(a)) })
+    corners.forEach((i, k) => { const j = corners[(k + 1) % 6]!; bonds.set(`${Math.min(i, j)}-${Math.max(i, j)}`, [Math.min(i, j), Math.max(i, j)]) })
+  }
+  return { atoms, bonds: [...bonds.values()], height: 2 * R + (rows - 1) * R * 1.5 }
+}
+
+/**
  * Structure sketches. Props: { kind: 'ionic' | 'metallic' | 'giant-covalent' | 'simple-molecules' | 'polymer' | 'graphite' | 'graphene' | 'fullerene' | 'nanotube' | 'alloy' }.
  */
 export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: string }) {
@@ -104,15 +128,22 @@ export function Lattice({ props, alt }: { props: Record<string, unknown>; alt: s
     }
     caption(capText!, H - 8)
   } else if (kind === 'graphite') {
+    // Two layers, each a sheet of joined hexagons seen at an angle, a carbon at every corner.
+    // Tilted enough to read as a layer, not so far that the hexagons close up into a ladder.
+    const sheet = honeycomb(3, 5, 20)
     for (let layer = 0; layer < 2; layer++) {
-      const y0 = 40 + layer * 90
-      for (let c = 0; c < 4; c++) {
-        const x = 50 + c * 70
-        const hex = Array.from({ length: 6 }, (_, k) => { const a = (Math.PI / 3) * k; return `${(x + 20 * Math.cos(a)).toFixed(1)},${(y0 + 20 * Math.sin(a)).toFixed(1)}` }).join(' ')
-        items.push(<polygon key={`h${layer}${c}`} points={hex} fill="var(--subject-soft)" stroke={INK} strokeWidth="1.5" />)
-      }
-      if (layer === 0) items.push(<text key="gap" x={W - 8} y={y0 + 50} textAnchor="end" fontFamily={FONT} fontSize="11" fill="#d25b3b">weak forces between layers</text>)
+      const place = ([x, y]: [number, number]): [number, number] => [20 + x + (sheet.height - y) * 0.42, 10 + layer * 88 + y * 0.58]
+      sheet.bonds.forEach(([i, j], k) => {
+        const [x1, y1] = place(sheet.atoms[i]!), [x2, y2] = place(sheet.atoms[j]!)
+        items.push(<line key={`b${layer}-${k}`} data-bond={`${layer}:${i}-${j}`} x1={x1.toFixed(1)} y1={y1.toFixed(1)} x2={x2.toFixed(1)} y2={y2.toFixed(1)} stroke={INK} strokeWidth="1.5" />)
+      })
+      sheet.atoms.forEach((atom, k) => {
+        const [x, y] = place(atom)
+        items.push(<circle key={`a${layer}-${k}`} data-atom={`${layer}:${k}`} cx={x.toFixed(1)} cy={y.toFixed(1)} r="3.2" fill="var(--subject-soft)" stroke={INK} strokeWidth="1.2" />)
+      })
     }
+    items.push(<text key="gap" x={W - 8} y={86} textAnchor="end" fontFamily={FONT} fontSize="11" fill="#d25b3b">weak forces between layers</text>)
+    items.push(<text key="in" x={W - 8} y={H - 8} textAnchor="end" fontFamily={FONT} fontSize="11" fill={INK_2}>each carbon bonded to three in its layer</text>)
   } else if (kind === 'graphene') {
     const R = 20, hx = R * Math.sqrt(3)
     for (let r = 0; r < 4; r++) for (let c = 0; c < 7; c++) {
