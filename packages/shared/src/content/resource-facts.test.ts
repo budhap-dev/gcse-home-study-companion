@@ -330,3 +330,124 @@ describe('Further Maths, against AQA 8365', () => {
     expect(sheet('further-maths', 'formulae-sheet').statusNote).toContain('No sheet is confirmed for 2028.')
   })
 })
+
+describe('French, against Edexcel 1FR1', () => {
+  const verbs = sheet('french', 'key-verbs')
+  const tables_ = verbs.blocks.flatMap((b) => (b.kind === 'visual' && b.visual.type === 'diagram' && b.visual.component === 'verb-table' ? [b.visual] : []))
+  type Form = { person: string; stem?: string; ending: string }
+  /** Each form as the table draws it and as it is said: the person, then the stem and the ending. */
+  const said = (props: Record<string, unknown>) =>
+    (props.forms as Form[]).map((f) => {
+      const word = (f.stem ?? (props.stem as string) ?? '') + f.ending
+      return f.person.endsWith("'") ? f.person + word : `${f.person} ${word}`
+    })
+
+  it('has seven verb tables of six persons', () => {
+    expect(tables_).toHaveLength(7)
+    for (const t of tables_) expect(said(t.props), String(t.props.infinitive)).toHaveLength(6)
+  })
+
+  /** "je entends" is not French: before a vowel je becomes j'. */
+  it('elides je before a vowel in every table', () => {
+    // It is the form that decides, not the infinitive: aller gives je vais.
+    const first = Object.fromEntries(tables_.map((t) => [String(t.props.infinitive), said(t.props)[0]!]))
+    for (const [verb, form] of Object.entries(first)) {
+      expect(form, verb).not.toMatch(/^je [aeiouéèê]/i)
+      expect(form, verb).not.toMatch(/^j'[^aeiouéèê]/i)
+    }
+    expect(first).toEqual({ être: 'je suis', avoir: "j'ai", aller: 'je vais', faire: 'je fais', jouer: 'je joue', choisir: 'je choisis', entendre: "j'entends" })
+  })
+
+  /** The ending is drawn hard against the stem, so a dash for "no ending" read as "entend—". */
+  it('never draws a dash as an ending', () => {
+    for (const t of tables_) for (const form of said(t.props)) expect(form, String(t.props.infinitive)).not.toMatch(/[—–-]$/)
+    expect(said(tables_.find((t) => t.props.infinitive === 'entendre')!.props)[2]).toBe('il / elle / on entend')
+  })
+
+  /** The description is what a screen reader says: "je e, tu es" is no form of any verb. */
+  it('describes each table by its whole forms, not by its endings', () => {
+    for (const t of tables_) for (const form of said(t.props)) expect(t.alt, String(t.props.infinitive)).toContain(form)
+  })
+
+  /** Marcher and courir are verbs of movement and take avoir. */
+  it('does not say every verb of movement takes être', () => {
+    const caption = verbs.blocks.flatMap((b) => (b.kind === 'visual' && b.caption?.startsWith('**être**') ? [b.caption] : []))[0]!
+    expect(caption).not.toContain('the other verbs of movement')
+    expect(caption).toContain("*j'ai marché*")
+  })
+
+  /** Appendix 2: the imperfect's plural persons, the future and the conditional beyond voudrais are Higher only. */
+  it('marks what is Higher tier on the timeline', () => {
+    const rows = tables(sheet('french', 'tense-timeline'))[0]!.rows
+    expect(rows.find((r) => r[0] === 'Imperfect')![2]).toContain('are Higher tier')
+    expect(rows.map((r) => r[0])).toContain('Future (Higher)')
+    expect(rows.map((r) => r[0])).toContain('Conditional (Higher, apart from *je voudrais*)')
+  })
+
+  /** The vocabulary list files these five under "Higher ONLY". */
+  it('marks the Higher-only words', () => {
+    const all = tables(sheet('french', 'question-words')).flatMap((t) => t.rows.map((r) => r[0]!))
+    for (const word of ['cependant', 'pourtant', 'lorsque', 'puisque', "d'habitude"]) expect(all, word).toContain(`${word} (Higher)`)
+    for (const word of ['donc', 'alors', 'quand', 'comme', 'normalement']) expect(all, word).toContain(word)
+  })
+
+  /** Listening and reading questions are set in English: no prompt holds "pourquoi". */
+  it('does not say the listening prompt is in French', () => {
+    const tip = sheet('french', 'question-words').applications.find((a) => a.title === 'Understanding a listening question')!
+    expect(tip.body).toContain('The listening questions are set in English')
+  })
+
+  /** A reader alone needs the English beside every French phrase. */
+  it('gives English for every French form in the tables of other tenses', () => {
+    for (const t of tables(verbs)) for (const row of t.rows) for (const cell of row.slice(1)) if (cell !== 'not required') expect(cell, row[0]).toMatch(/^\*[^*]+\*: [A-Z]/)
+  })
+})
+
+describe('Music, against Edexcel 1MU0', () => {
+  const elements = sheet('music', 'elements-of-music')
+
+  /** The note promised that the list "defines every word in the third column"; the page defined none. */
+  it('gives a meaning for every word it tells the student to use', () => {
+    const seven = tables(elements)[0]!
+    expect(seven.rows).toHaveLength(7)
+    let words_ = 0
+    for (const row of seven.rows) {
+      const listed = row[2]!.split(', and the symbols')[0]!.split(',').map((w) => w.trim())
+      const meanings = tables(elements).find((t) => t.title === `${row[0]}: what the words mean`)!
+      expect(meanings.rows.map((r) => r[0]), row[0]).toEqual(listed)
+      for (const m of meanings.rows) expect(m[1]!.length, m[0]).toBeGreaterThan(10)
+      words_ += listed.length
+    }
+    expect(words_).toBe(49)
+  })
+
+  /** "the description of 'thick' or 'thin' is not appropriate" for a texture, the specification says. */
+  it('never describes a texture as thick or thin', () => {
+    for (const r of sheets('music')) expect(words(r), r.id).not.toMatch(/\b(?:thin|thick)(?:s|ner|ker)?\b[^.]{0,40}\btexture|\btexture\b[^.]{0,40}\b(?:thin|thick)/i)
+  })
+
+  /** A time signature is not a fraction: the specification prints it 4/4. */
+  it('writes a time signature the way the specification does', () => {
+    expect(words(sheet('music', 'note-values'))).not.toContain('tfrac{4}{4}')
+    expect(tables(sheet('music', 'note-values')).find((t) => t.title === 'Time signatures')!.rows.map((r) => r[0])).toEqual(['2/4', '3/4', '4/4', '6/8', '12/8'])
+  })
+
+  /** Pearson's sheet names a recording of each set work, and the page sent the student to it without naming it. */
+  it('names the recording Pearson names for each of the eight set works', () => {
+    const works = tables(sheet('music', 'set-works'))[0]!
+    expect(works.columns).toEqual(['Area of study', 'Set work', 'Composer or writer', 'Recording Pearson names', 'Score'])
+    expect(works.rows).toHaveLength(8)
+    for (const row of works.rows) expect(row[3], row[1]).toMatch(/^\*[^*]+\*, \S/)
+  })
+
+  /** No bundled audio and no printed timings anywhere in Music. */
+  it('prints no track number, duration or timing', () => {
+    for (const r of sheets('music')) expect(words(r), r.id).not.toMatch(/\b\d{1,2}:\d{2}\b|\bTrack \d|\bDuration\b|\bISRC\b|\bCD \d/)
+  })
+
+  /** Bass drum on every beat is the dance pattern; in a rock beat the snare takes 2 and 4. */
+  it('gives the rock beat its snare', () => {
+    const drums = sheet('music', 'note-values').applications.find((a) => a.title === 'Reading a drum part')!
+    expect(drums.body).toContain('bass drum on beats 1 and 3, snare on 2 and 4')
+  })
+})
