@@ -26,7 +26,7 @@ export function Resources() {
         <h1 className="text-3xl font-bold leading-tight">Resources</h1>
         <p className="text-ink-2">
           Formula sheets, the periodic table, symbols and charts, each redrawn from the exam board’s own documents, with a link to the original.
-          {' '}{ready} of {RESOURCES.length} are ready; the rest are on their way.
+          {ready < RESOURCES.length && <>{' '}{ready} of {RESOURCES.length} are ready; the rest are on their way.</>}
         </p>
         <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-ink-2" aria-label="What the badges mean">
           <li className="flex items-center gap-1.5"><StatusBadge status="given" /> printed in the exam paper</li>

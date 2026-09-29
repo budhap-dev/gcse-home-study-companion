@@ -42,6 +42,10 @@ describe('the resources pages', () => {
       expect(html, r.id).not.toContain('Unknown resource')
       expect(html, r.id).not.toMatch(/\*\*[^<]*</)
       expect(html, r.id).not.toMatch(/\$[^$<]*\\/)
+      // Any maths left unrendered: a formula's name was printed as plain text, so
+      // "Solving $ax^2 + bx + c = 0$" showed its dollar signs, and the check above,
+      // which needs a backslash, passed it.
+      expect(html.replace(/<[^>]+>/g, ' '), r.id).not.toMatch(/\$[^$\n]{1,120}\$/)
       for (const l of r.sources) expect(html, r.id).toContain(l.url.replace(/&/g, '&amp;'))
       if (!isComingSoon(r)) {
         expect(html, r.id).toContain('Print this sheet')
