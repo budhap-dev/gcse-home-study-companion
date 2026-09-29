@@ -7,6 +7,7 @@ import { TermCard } from '../../components/TermCard.tsx'
 import { GLOSSARY, type Term } from '../../content/glossary.ts'
 import { search, useSearchIndex, type SearchHit } from '../../search/index.ts'
 import { BackToTop } from '../../components/BackToTop.tsx'
+import { keyboardToHand } from '../../components/keyboardToHand.ts'
 
 const KIND_LABEL: Record<SearchHit['record']['kind'], string> = {
   topic: 'Topic',
@@ -25,7 +26,9 @@ export function Search() {
   const [query, setQuery] = useState(params.get('q') ?? '')
   const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => { inputRef.current?.focus() }, [])
+  // On a phone the results arrive from the search box above the page, already typed: a
+  // keyboard raised here would cover them.
+  useEffect(() => { if (keyboardToHand()) inputRef.current?.focus() }, [])
 
   // Keep ?q= in step so a search is shareable and survives back and forward.
   useEffect(() => {
