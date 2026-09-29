@@ -3,14 +3,18 @@
  * read from the PDF cell by cell: 90 elements, the lanthanides (58 to 71) and actinides (90
  * to 103) left out as the insert leaves them out, and relative atomic masses rounded to
  * whole numbers except copper (63.5) and chlorine (35.5), as the insert says. A mass in
- * brackets is the insert's own: the mass number of the most stable isotope of an element
- * with no stable one.
+ * brackets is the insert's own. The insert does not say what the brackets mean: they mark
+ * an element with no stable atoms, where the figure is the mass number of one isotope.
  *
  * The insert prints flerovium's symbol as "FI"; it is Fl.
  *
  * Group and period place each element in the main table, with lanthanum and actinium in
  * group 3 where the insert puts them. Groups are numbered 1 to 18 here for layout; the
  * specification calls 13 to 18 Groups 3 to 7 and Group 0, and `groupName` gives those.
+ *
+ * Hydrogen has no group. The insert prints it on its own in the first row, above the
+ * middle of the table and under no group number, and the specification's Group 1 is "the
+ * alkali metals" (4.1.2.5). It was placed at the top of Group 1 here, and said to be in it.
  */
 export type ElementFamily =
   | 'alkali-metal' | 'alkaline-earth-metal' | 'transition-metal' | 'other-metal'
@@ -22,14 +26,15 @@ export interface Element {
   name: string
   /** As printed: '56', '63.5', '[223]'. */
   mass: string
-  group: number
+  /** The column, 1 to 18. Null for hydrogen, which stands on its own. */
+  group: number | null
   period: number
   family: ElementFamily
 }
 
-type Row = [number, string, string, string, number, number, ElementFamily]
+type Row = [number, string, string, string, number | null, number, ElementFamily]
 const ROWS: Row[] = [
-  [1, 'H', 'hydrogen', '1', 1, 1, 'non-metal'],
+  [1, 'H', 'hydrogen', '1', null, 1, 'non-metal'],
   [2, 'He', 'helium', '4', 18, 1, 'noble-gas'],
   [3, 'Li', 'lithium', '7', 1, 2, 'alkali-metal'],
   [4, 'Be', 'beryllium', '9', 2, 2, 'alkaline-earth-metal'],
@@ -141,7 +146,7 @@ export const FAMILY_LABEL: Record<ElementFamily, string> = {
 export const FAMILY_FACT: Record<ElementFamily, string> = {
   'alkali-metal': 'One electron in the outer shell. They react with oxygen, chlorine and water, and get more reactive going down the group.',
   'alkaline-earth-metal': 'Two electrons in the outer shell. Metals, so they react to form positive ions, here with a charge of 2+.',
-  'transition-metal': 'Harder, stronger and denser than Group 1, with higher melting points and slower reactions. Many form ions with different charges, coloured compounds, and are useful catalysts.',
+  'transition-metal': 'Typical transition metals, such as iron and copper, are harder, stronger and denser than Group 1 metals. They have higher melting points and react more slowly. Many form ions with different charges and coloured compounds, and many are useful catalysts.',
   'other-metal': 'Metals: they react to form positive ions. Found towards the bottom and the right of the metals.',
   'metalloid': 'On the border between metals and non-metals, with some properties of each. The specification does not name this group.',
   'non-metal': 'Non-metals do not form positive ions. They are found towards the right and the top of the table.',
@@ -149,8 +154,19 @@ export const FAMILY_FACT: Record<ElementFamily, string> = {
   'noble-gas': 'A full outer shell, eight electrons (two for helium), so they are unreactive. Boiling points rise going down the group.',
 }
 
+/**
+ * What to say about one element. Its family's line, except for hydrogen: "non-metals do
+ * not form positive ions" is the specification's rule (4.1.2.2), and hydrogen breaks it,
+ * since acids "produce hydrogen ions (H+) in aqueous solutions" (4.4.2.4).
+ */
+export function factFor(el: Pick<Element, 'z' | 'family'>): string {
+  if (el.z === 1) return 'A non-metal. Unlike the other non-metals it can form a positive ion, H⁺, the ion that acids release in water. AQA’s table places hydrogen on its own, in no group.'
+  return FAMILY_FACT[el.family]
+}
+
 /** The specification's name for a column: Groups 1 and 2, then 3 to 7 and 0 for columns 13 to 18. */
-export function groupName(group: number): string {
+export function groupName(group: number | null): string {
+  if (group === null) return 'on its own, in no group'
   if (group <= 2) return `Group ${group}`
   if (group >= 13) return group === 18 ? 'Group 0' : `Group ${group - 10}`
   return 'Transition metals'
@@ -165,8 +181,25 @@ export function electronShells(z: number): number[] | undefined {
   return out
 }
 
-/** Neutrons in the usual atom, where the insert gives a whole-number mass for a stable element. */
+/**
+ * Neutrons in the usual atom, for the first 20 elements with a whole-number mass.
+ *
+ * The insert gives relative atomic mass, an average over an element's isotopes, not a
+ * mass number. Up to calcium the rounded figure is the commonest atom's, so taking the
+ * atomic number from it gives that atom's neutrons. Further down it does not: bromine's
+ * 80 gave "45 neutrons", but bromine atoms are bromine-79 and bromine-81, and no stable
+ * atom of nickel, zinc or silver has the mass number the insert's figure would suggest.
+ */
 export function neutrons(el: Pick<Element, 'z' | 'mass'>): number | undefined {
-  if (!/^\d+$/.test(el.mass)) return undefined
+  if (el.z > 20 || !/^\d+$/.test(el.mass)) return undefined
   return Number(el.mass) - el.z
+}
+
+/** What the insert's figure for an element's mass is, in words a student can use. */
+export function massNote(el: Pick<Element, 'z' | 'mass'>): string {
+  const n = neutrons(el)
+  if (n !== undefined) return `the usual atom has ${n} neutron${n === 1 ? '' : 's'}`
+  if (el.mass.startsWith('[')) return 'in brackets because no atom of this element is stable. The figure is the mass number of one of its isotopes'
+  if (el.mass.includes('.')) return 'an average over its isotopes, so not a whole number'
+  return 'an average over the element’s isotopes, rounded to a whole number'
 }

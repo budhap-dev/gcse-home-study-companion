@@ -16,7 +16,8 @@ import { wrapCell } from './tableLayout.ts'
  */
 interface Substance { name: string; ph: number; label?: string }
 
-export const INDICATOR = ['#d7191c', '#e8412a', '#f06b32', '#f7943c', '#fbb645', '#f5d547', '#c9dc4f', '#5fb34a', '#2f9d6f', '#1d8a99', '#2166ac', '#2f4b9c', '#4b3b8f', '#5a2d82', '#4a1f6b']
+// pH 2 was '#f06b32', an orange, beside the word "red": lemon juice's swatch matched vinegar's.
+export const INDICATOR = ['#d7191c', '#dd2a20', '#e43d25', '#f7943c', '#fbb645', '#f5d547', '#c9dc4f', '#5fb34a', '#2f9d6f', '#1d8a99', '#2166ac', '#2f4b9c', '#4b3b8f', '#5a2d82', '#4a1f6b']
 const COLOUR_WORD = (ph: number) => (ph <= 2 ? 'red' : ph <= 4 ? 'orange' : ph <= 6 ? 'yellow' : ph === 7 ? 'green' : ph === 8 ? 'blue-green' : ph <= 10 ? 'blue' : 'purple')
 
 const DEFAULT: Substance[] = [

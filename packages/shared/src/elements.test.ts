@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ELEMENTS, electronShells, groupName, neutrons } from './elements.ts'
+import { ELEMENTS, FAMILY_FACT, electronShells, factFor, groupName, massNote, neutrons } from './elements.ts'
 
 const bySymbol = new Map(ELEMENTS.map((e) => [e.symbol, e]))
 
@@ -44,5 +44,51 @@ describe('the periodic table data', () => {
     expect(neutrons(bySymbol.get('Na')!)).toBe(12)
     expect(neutrons(bySymbol.get('Cl')!)).toBeUndefined()
     expect(neutrons(bySymbol.get('Fr')!)).toBeUndefined()
+  })
+
+  /**
+   * The insert's figure is an average, not a mass number. Up to calcium it rounds to the
+   * commonest atom; past it, it often rounds to an atom that does not exist. Bromine's 80
+   * gave "45 neutrons", and bromine atoms are bromine-79 and bromine-81.
+   */
+  it('counts neutrons only for the first 20 elements', () => {
+    // The commonest isotope of each, by mass number: the figure the sum must agree with.
+    const COMMONEST: Record<string, number> = { H: 1, He: 4, Li: 7, Be: 9, B: 11, C: 12, N: 14, O: 16, F: 19, Ne: 20, Na: 23, Mg: 24, Al: 27, Si: 28, P: 31, S: 32, Ar: 40, K: 39, Ca: 40 }
+    const counted = ELEMENTS.filter((e) => neutrons(e) !== undefined)
+    expect(counted.map((e) => e.symbol)).toEqual(Object.keys(COMMONEST))
+    for (const e of counted) expect(neutrons(e), e.symbol).toBe(COMMONEST[e.symbol]! - e.z)
+    for (const symbol of ['Br', 'Ni', 'Zn', 'Ag', 'Fe']) expect(neutrons(bySymbol.get(symbol)!), symbol).toBeUndefined()
+  })
+
+  it('says what each kind of mass is', () => {
+    expect(massNote(bySymbol.get('Na')!)).toBe('the usual atom has 12 neutrons')
+    expect(massNote(bySymbol.get('H')!)).toBe('the usual atom has 0 neutrons')
+    expect(massNote(bySymbol.get('Cl')!)).toContain('not a whole number')
+    expect(massNote(bySymbol.get('Br')!)).toContain('rounded to a whole number')
+    expect(massNote(bySymbol.get('Fr')!)).toContain('no atom of this element is stable')
+    // Nothing claims to be "the most stable isotope": the insert does not say so.
+    for (const e of ELEMENTS) expect(massNote(e), e.symbol).not.toContain('most stable')
+  })
+
+  /** The insert prints hydrogen alone, under no group number; Group 1 is "the alkali metals". */
+  it('puts hydrogen in no group', () => {
+    const h = bySymbol.get('H')!
+    expect(h.group).toBeNull()
+    expect(groupName(h.group)).toBe('on its own, in no group')
+    expect(ELEMENTS.filter((e) => e.group === null).map((e) => e.symbol)).toEqual(['H'])
+    expect(ELEMENTS.filter((e) => e.group === 1).map((e) => e.symbol)).toEqual(['Li', 'Na', 'K', 'Rb', 'Cs', 'Fr'])
+  })
+
+  /** "Non-metals do not form positive ions", shown for hydrogen, contradicted the ions sheet, which lists H⁺ first. */
+  it('does not say of hydrogen that it forms no positive ion', () => {
+    expect(factFor(bySymbol.get('H')!)).toContain('H⁺')
+    expect(factFor(bySymbol.get('H')!)).not.toContain('do not form positive ions')
+    expect(factFor(bySymbol.get('C')!)).toBe(FAMILY_FACT['non-metal'])
+    expect(factFor(bySymbol.get('Fe')!)).toBe(FAMILY_FACT['transition-metal'])
+  })
+
+  /** Mercury is coloured as a transition metal and is a liquid: the line is about typical ones. */
+  it('speaks of typical transition metals, not of every one', () => {
+    expect(FAMILY_FACT['transition-metal']).toMatch(/^Typical transition metals, such as iron and copper/)
   })
 })
