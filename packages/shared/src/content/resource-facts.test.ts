@@ -257,3 +257,76 @@ describe('English, against AQA 8700 and 8702', () => {
     expect(tables(sheet('english-literature', 'set-texts'))[0]!.note).toBe('Paper 1 is 1 hour 45 minutes, 64 marks and 40% of the GCSE. Paper 2 is 2 hours 15 minutes, 96 marks and 60%.')
   })
 })
+
+describe('Maths, against Edexcel 1MA1', () => {
+  const learn = sheet('maths', 'formulae-to-learn')
+
+  /**
+   * A9 asks Foundation for parallel lines and Higher for "parallel and perpendicular";
+   * N7 asks Foundation for "integer indices" and Higher for "integer and fractional".
+   */
+  it('marks perpendicular lines and fractional powers as Higher tier', () => {
+    expect(formulae(learn).filter((f) => f.higher).map((f) => f.name).sort()).toEqual(['Fractional powers', 'Perpendicular lines'])
+  })
+
+  /** (n − 2) × 180° is the sum, and beside "360° in total" an unnamed one read as each angle. */
+  it('calls the polygon formula a sum', () => {
+    expect(formulae(learn).map((f) => f.name)).toContain('Sum of the interior angles of a polygon')
+  })
+
+  /** A12: "exponential functions y = k^x for positive values of k". For k below 1 the curve falls. */
+  it('does not say every exponential climbs', () => {
+    const caption = sheet('maths', 'graph-shapes').blocks.flatMap((b) => (b.kind === 'visual' && b.caption?.startsWith('**Exponential') ? [b.caption] : []))[0]!
+    expect(caption).toContain('When $k$ is more than $1$')
+    expect(caption).toContain('When $k$ is between $0$ and $1$')
+  })
+
+  /**
+   * With A, B and C evenly spaced every angle in the triangle was 60°, so the figure could
+   * not show which angle the theorem pairs with the one at the tangent.
+   */
+  it('draws the alternate segment theorem on a triangle whose angles differ', () => {
+    const block = sheet('maths', 'circle-theorems').blocks.flatMap((b) => (b.kind === 'visual' && b.caption?.startsWith('**The alternate segment') ? [b] : []))[0]!
+    const at = (block.visual.type === 'diagram' ? block.visual.props.points : {}) as Record<string, number>
+    // An angle at the circumference is half the arc it stands on.
+    const arc = (from: number, to: number) => (((to - from) % 360) + 360) % 360
+    const angles = { C: arc(at.A!, at.B!) / 2, B: arc(at.C!, at.A!) / 2, A: arc(at.B!, at.C!) / 2 }
+    expect(angles.A + angles.B + angles.C).toBe(180)
+    expect(new Set(Object.values(angles)).size).toBe(3)
+  })
+
+  it('names every letter on the given sheet, and gives the hard ones an example', () => {
+    const given = formulae(sheet('maths', 'formulae-given'))
+    for (const f of given) if (/[a-zA-Z]/.test(f.formula.replace(/\\[a-zA-Z]+|\\text\{[^}]*\}/g, ''))) expect(f.symbols?.length ?? 0, f.name).toBeGreaterThan(5)
+    for (const name of ['Sine rule', 'Cosine rule', 'Area of a triangle', 'Solving $ax^2 + bx + c = 0$', 'Either', 'Both']) expect(given.find((f) => f.name === name)!.symbols, name).toContain('Example')
+  })
+})
+
+describe('Further Maths, against AQA 8365', () => {
+  const know = sheet('further-maths', 'must-know')
+
+  /** One letter had two jobs: a was the root in the formula and the number in front of x beside it. */
+  it('does not use a for two things in the factor theorem', () => {
+    const theorem = formulae(know).find((f) => f.name === 'The factor theorem')!
+    expect(theorem.formula).toContain('f(a) = 0')
+    expect(theorem.symbols).not.toContain('(ax - b)')
+    expect(theorem.symbols).toContain('(px - q)')
+  })
+
+  it('explains what it differentiates, and works an example of each calculus result', () => {
+    const calculus = formulae(know).filter((f) => ['Differentiating a power', 'Tangent and normal', 'Stationary points'].includes(f.name))
+    expect(calculus).toHaveLength(3)
+    for (const f of calculus) expect(f.symbols!.length, f.name).toBeGreaterThan(200)
+    expect(formulae(know).find((f) => f.name === 'Stationary points')!.symbols).toContain('A stationary point is where the gradient is $0$')
+  })
+
+  /** The summary speaks of the unit square, and nothing said what it is. */
+  it('says what the unit square is, and shows a matrix used', () => {
+    expect(words(know)).toContain('**The unit square** has corners')
+    expect(words(know)).toContain('**Using a matrix.**')
+  })
+
+  it('says plainly that no sheet is confirmed for 2028', () => {
+    expect(sheet('further-maths', 'formulae-sheet').statusNote).toContain('No sheet is confirmed for 2028.')
+  })
+})
