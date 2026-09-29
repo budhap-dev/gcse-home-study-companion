@@ -481,6 +481,13 @@ figure[data-diagram] {
 
 /* The subject page's topic panel becomes a sheet from the bottom on a phone. */
 @keyframes sheet-up { from { transform: translateY(100%); opacity: 0.6; } }
+/* Blood along a vessel, a signal along a wire: short dashes that travel the way the path is
+   drawn, so the direction of flow can be seen and not only read from an arrowhead. */
+@keyframes flow { to { stroke-dashoffset: -24; } }
+.anim-flow { stroke-dasharray: 3 9; animation: flow 1.1s linear infinite; }
+/* A shape inside a drawing turns and grows about its own middle, not the drawing's corner. */
+.anim-self { transform-box: fill-box; transform-origin: center; }
+
 /* Backwards, not both: a fill held after the slide would pin the transform that a drag moves. */
 @media (max-width: 1023px) { .sheet-up { animation: sheet-up 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; } }
 /* Shutting: down past the menu dock, from wherever a drag let go. Important beats the drag's inline style. */
@@ -491,6 +498,16 @@ figure[data-diagram] {
 /* A path left with its dash in place but no animation would be drawn as a single dash. */
 [data-motion="off"] .anim-draw { stroke-dasharray: none; }
 @media (prefers-reduced-motion: reduce) { .anim-draw { stroke-dasharray: none; } }
+/* Dashes that do not move say nothing, and look like a fault: with motion off they go. */
+[data-motion="off"] .anim-flow { animation: none !important; display: none; }
+@media (prefers-reduced-motion: reduce) { .anim-flow { display: none; } }
+/* Paper has no motion. An entrance caught before it began would print as a blank, so on
+   paper every animated thing is simply there. */
+@media print {
+  .anim-rise, .anim-sq, .anim-fade-up, .anim-pop, .anim-grow-x, .anim-grow-y, .anim-ring { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .anim-draw { animation: none !important; stroke-dasharray: none !important; }
+  .anim-flow { display: none !important; }
+}
 
 /* Celebration confetti. Reduced motion renders none of these. */
 @keyframes confetti-fall {

@@ -118,6 +118,8 @@ function Grid({ label, columns, column, header, firstPeriod = 1, elements, picke
           const faded = family !== null && el.family !== family
           const at = column(el)
           const between = typeof at === 'string' ? Number(at.split(' ')[1]) : undefined
+          // Across the table like a wave, top left first: a cell waits for its row and its column.
+          const wait = { '--d': `${((el.period - firstPeriod) * 0.05 + (typeof at === 'number' ? at : between!) * 0.018).toFixed(2)}s` } as React.CSSProperties
           return (
             <button
               key={el.z}
@@ -125,13 +127,14 @@ function Grid({ label, columns, column, header, firstPeriod = 1, elements, picke
               onClick={() => onPick(el)}
               aria-pressed={on}
               aria-label={`${el.name}, ${el.symbol}, atomic number ${el.z}`}
-              className="flex aspect-[4/5] min-h-7 flex-col items-center justify-center rounded-[5px] leading-none transition-colors"
+              className="anim-sq flex aspect-[4/5] min-h-7 flex-col items-center justify-center rounded-[5px] leading-none transition-colors"
               // Fading drops the family's colour, not the text's contrast: an opacity fade put
               // every other element's symbol under AA, and they can still be pressed.
               style={{
                 // Between two columns: across both, one column wide, in the middle.
                 ...(between !== undefined ? { gridColumn: `${between} / span 2`, width: 'calc((100% - 3px) / 2)', justifySelf: 'center' } : { gridColumn: at }),
                 gridRow: el.period - firstPeriod + top,
+                ...wait,
                 background: faded ? '#f3f4f6' : s.fill,
                 border: `${on ? 2.5 : 1}px solid ${faded ? '#d1d5db' : s.edge}`,
                 color: faded ? INK_2 : INK,
@@ -154,13 +157,14 @@ function Detail({ el, ref }: { el: Element; ref: React.Ref<HTMLElement> }) {
   const s = FAMILY_STYLE[el.family]
   const shells = electronShells(el.z)
   return (
-    <section ref={ref} aria-live="polite" className="flex flex-col gap-2 rounded-xl p-3 sm:flex-row sm:gap-4" style={{ background: s.fill, border: `1px solid ${s.edge}` }}>
-      <div className="flex h-24 w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-white" style={{ border: `2px solid ${s.edge}`, color: INK }}>
+    <section ref={ref} aria-live="polite" className="flex flex-col gap-2 rounded-xl p-3 transition-colors sm:flex-row sm:gap-4" style={{ background: s.fill, border: `1px solid ${s.edge}` }}>
+      {/* Keyed by the element, so each press brings its card in afresh. The section itself stays, for the screen reader's sake. */}
+      <div key={el.z} className="anim-pop flex h-24 w-20 shrink-0 flex-col items-center justify-center rounded-lg bg-white" style={{ border: `2px solid ${s.edge}`, color: INK }}>
         <span className="text-xs" style={{ color: INK_2 }}>{el.mass}</span>
         <span className="text-3xl font-bold leading-none">{el.symbol}</span>
         <span className="text-xs" style={{ color: INK_2 }}>{el.z}</span>
       </div>
-      <div className="flex min-w-0 flex-col gap-1" style={{ color: INK }}>
+      <div key={`words-${el.z}`} className="anim-fade-up flex min-w-0 flex-col gap-1" style={{ color: INK }}>
         <h3 className="text-lg font-bold capitalize leading-tight">{el.name}</h3>
         <p className="text-sm font-bold" style={{ color: INK_2 }}>{FAMILY_LABEL[el.family]}{FAMILY_LABEL[el.family].startsWith(groupName(el.group)) || el.family === 'transition-metal' ? '' : ` · ${groupName(el.group)}`} · period {el.period}</p>
         <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-sm">

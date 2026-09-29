@@ -65,6 +65,9 @@ function wavePath(x: number, cy: number, cycles: number, amp: number): string {
   return d
 }
 
+/** How long the wave takes to cross one band as it draws in: seven bands in under two seconds. */
+export const DRAW_STEP = 0.24
+
 /** Seven columns a laptop card holds at the size the text was drawn. */
 const COL_W = 140
 export const ACROSS_W = COL_W * BANDS.length
@@ -126,7 +129,8 @@ function Across({ alt }: { alt: string }) {
         return (
           <g key={c.name} data-band={c.name}>
             <rect x={x + 2} y={STRIP_TOP} width={COL_W - 4} height={STRIP_H} rx="8" fill={band} fillOpacity={0.08} />
-            <path d={chirp(x, x + COL_W, mid, 26)} stroke={stroke} strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" data-wave="" />
+            {/* Drawn in from the long waves to the short, each band picking up where the last left off. */}
+            <path d={chirp(x, x + COL_W, mid, 26)} pathLength={1} className="anim-draw" style={{ '--d': `${(0.2 + i * DRAW_STEP).toFixed(2)}s`, animationDuration: `${DRAW_STEP}s`, animationTimingFunction: 'linear' } as React.CSSProperties} stroke={stroke} strokeWidth="2.4" fill="none" strokeLinejoin="round" data-wave="" />
             {i > 0 && <line x1={x} y1={STRIP_TOP + STRIP_H + 10} x2={x} y2={H - 6} stroke={RULE} />}
             <text x={x + 10} y={textTop} fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={band}>{c.name}</text>
             {c.about.map((a, j) => <text key={`a${j}`} x={x + 10} y={aboutY[j]} fontFamily={FONT} fontSize="12" fill={INK_2}>{a}</text>)}
@@ -173,7 +177,7 @@ export function EmSpectrum({ props, alt }: { props: Record<string, unknown>; alt
           <g key={r.name} data-band={r.name}>
             {i > 0 && <line x1={WAVE_X} y1={top} x2={W - 8} y2={top} stroke={RULE} />}
             <rect x={WAVE_X} y={top + 8} width={WAVE_W} height={r.height - 16} rx="8" fill={band} fillOpacity={0.08} />
-            <path d={wavePath(WAVE_X, top + r.height / 2, r.cycles, Math.min(16, (r.height - 30) / 2))} stroke={stroke} strokeWidth="2.4" fill="none" strokeLinecap="round" data-wave="" />
+            <path d={wavePath(WAVE_X, top + r.height / 2, r.cycles, Math.min(16, (r.height - 30) / 2))} pathLength={1} className="anim-draw" style={{ '--d': `${(0.2 + i * 0.12).toFixed(2)}s`, animationDuration: '0.9s' } as React.CSSProperties} stroke={stroke} strokeWidth="2.4" fill="none" data-wave="" />
             <text x={TEXT_X} y={nameY} fontFamily={DISPLAY} fontSize="15" fontWeight="700" fill={band}>{r.name}</text>
             <text x={TEXT_X} y={aboutY} fontFamily={FONT} fontSize="12" fill={INK_2}>{keepUnits(r.about)}</text>
             {r.uses.map((u, j) => <text key={`u${j}`} x={TEXT_X} y={usesY[j]} fontFamily={FONT} fontSize="12" fill={INK}>{u}</text>)}

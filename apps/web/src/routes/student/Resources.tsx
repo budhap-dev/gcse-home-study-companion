@@ -6,6 +6,9 @@ import { ResourceBadges, StatusBadge } from '../../components/resources/Resource
 import { RESOURCES } from '../../content/resources.ts'
 import { BackToTop } from '../../components/BackToTop.tsx'
 
+/** How long an entrance waits, in seconds: a step for each place in the list, up to a cap, so the last is not kept waiting. */
+export const stagger = (index: number, step = 0.05, from = 0, cap = 0.6) => `${Math.min(from + index * step, cap).toFixed(2)}s`
+
 /**
  * Every formula sheet, table and chart, grouped by subject. `?subject=` narrows it to one,
  * which is where each subject page's Resources button lands. The planned ones are listed
@@ -22,7 +25,7 @@ export function Resources() {
 
   return (
     <article className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-      <header className="flex flex-col gap-2">
+      <header className="anim-rise flex flex-col gap-2">
         <h1 className="text-3xl font-bold leading-tight">Resources</h1>
         <p className="text-ink-2">
           Formula sheets, the periodic table, symbols and charts, each redrawn from the exam board’s own documents, with a link to the original.
@@ -42,17 +45,19 @@ export function Resources() {
         ))}
       </div>
 
-      {shown.map((subject) => (
-        <section key={subject.id} className="flex flex-col gap-3" style={{ '--subject': subject.colour, '--subject-soft': `${subject.colour}1a` } as React.CSSProperties}>
+      {shown.map((subject, si) => (
+        <section key={subject.id} className="anim-rise flex flex-col gap-3" style={{ '--subject': subject.colour, '--subject-soft': `${subject.colour}1a`, '--d': stagger(si, 0.06, 0.05, 0.35) } as React.CSSProperties}>
           <h2 className="flex flex-wrap items-baseline gap-x-3 border-b border-rule pb-1">
             <span className="text-2xl font-bold">{subject.name}</span>
             <span className="text-sm font-bold uppercase tracking-[0.08em] accent-ink">{subject.board}</span>
           </h2>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {RESOURCES.filter((r) => r.subjectId === subject.id).map((r) => {
+            {RESOURCES.filter((r) => r.subjectId === subject.id).map((r, ri) => {
               const soon = isComingSoon(r)
               return (
-                <li key={r.id}>
+                // The entrance is on the item and the lift on the link inside it: an entrance
+                // holds its last frame, which would pin the link flat under the pointer.
+                <li key={r.id} className="anim-rise" style={{ '--d': stagger(ri, 0.05, 0.12 + Math.min(si, 5) * 0.06) } as React.CSSProperties}>
                   <Link
                     to={`/resources/${r.subjectId}/${r.id}`}
                     className={`lift flex h-full flex-col gap-2 rounded-2xl border p-4 ${soon ? 'border-dashed border-rule bg-transparent' : 'border-rule bg-surface'}`}
