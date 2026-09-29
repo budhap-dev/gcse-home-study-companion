@@ -134,3 +134,126 @@ describe('Business, against Edexcel 1BS0', () => {
     expect(all.find((f) => f.name === 'Total costs')!.symbols).toMatch(/^TC is total cost, TFC total fixed costs and TVC total variable costs/)
   })
 })
+
+describe('Computer Science, against AQA 8525', () => {
+  const pseudo = sheet('computer-science', 'pseudo-code')
+
+  /**
+   * Specification 3.1: "students must respond as instructed", and Paper 1 asks for program
+   * code in C#, Python or VB.NET. The sheet said you may write in pseudo-code "or in any
+   * clear, consistent style of your own", as if any answer could be.
+   */
+  it('says the question decides the form of the answer', () => {
+    expect(pseudo.statusNote).toContain('Each question says what form the answer must take')
+    expect(pseudo.statusNote).toContain('clear, consistent and unambiguous')
+    expect(pseudo.applications.map((a) => a.title)).not.toContain('Exam answers in any language')
+  })
+
+  /** 3.2.8: "string to integer, string to real, integer to string, real to string". Two were missing. */
+  it('has all four string conversions', () => {
+    for (const name of ['STRING_TO_INT', 'STRING_TO_REAL', 'INT_TO_STRING', 'REAL_TO_STRING']) expect(words(pseudo), name).toContain(name)
+  })
+
+  /** Two names in one code span with a space between read as one command. */
+  it('never puts two commands in one code span', () => {
+    // A fenced example is code laid out on its own lines, indented: it is not a span.
+    const spans = [...words(pseudo).replace(/```.*?```/g, '').matchAll(/`([^`]+)`/g)].map((m) => m[1]!)
+    expect(spans.length).toBeGreaterThan(60)
+    expect(spans.filter((s) => / {2,}/.test(s))).toEqual([])
+    for (const pair of ['AND OR', 'OR NOT', 'STRING_TO_INT INT_TO_STRING', 'CHAR_TO_CODE CODE_TO_CHAR']) expect(spans.filter((s) => s.includes(pair)), pair).toEqual([])
+  })
+
+  /** A line too long for a phone's code block makes the whole example scroll sideways. */
+  it('keeps every line of its written-out examples short enough for a phone', () => {
+    const examples = pseudo.blocks.flatMap((b) => (b.kind === 'text' ? [...b.body.matchAll(/```\n([\s\S]*?)\n```/g)].map((m) => m[1]!) : []))
+    expect(examples).toHaveLength(3)
+    for (const line of examples.flatMap((e) => e.split('\n'))) expect(line.length, line).toBeLessThanOrEqual(38)
+  })
+
+  /** The record, the function and the loop each do what the words under them say. */
+  it('traces its own loop correctly', () => {
+    const loop = pseudo.blocks.flatMap((b) => (b.kind === 'text' ? [b.body] : [])).find((t) => t.includes('Tracing a loop'))!
+    const [, from, to, step] = /FOR i ← (\d+) TO (\d+) STEP (\d+)/.exec(loop)!.map(Number)
+    const totals: number[] = []
+    let total = 0
+    for (let i = from!; i <= to!; i += step!) { total += i; totals.push(total) }
+    expect(totals).toEqual([1, 4, 9])
+    for (const t of totals) expect(loop).toContain(`\`total\` becomes ${t}`)
+    expect(loop).toContain(`The output is ${total}.`)
+  })
+
+  /** The specification never says "denary": its papers say decimal. */
+  it('calls base 10 decimal, as the papers do', () => {
+    const bases = sheet('computer-science', 'number-bases-and-ascii')
+    expect(tables(bases)[0]!.columns[0]).toBe('Decimal')
+    expect(bases.summary).toMatch(/^Decimal, binary and hexadecimal/)
+    expect(words(bases)).toContain('Some books call it denary')
+  })
+
+  /** The specification writes AND as a full stop on the line, and so does the drawing above the caption. */
+  it('writes AND the way the specification and the drawing do', () => {
+    const gates = words(sheet('computer-science', 'logic-gates'))
+    expect(gates).not.toContain('\\\\cdot')
+    expect(gates).toContain('(A \\\\,.\\\\, B) + \\\\overline{C}')
+  })
+
+  /** 3.3.6 and 3.3.7 name them "sampling rate" and "sample resolution". */
+  it('uses the specification’s names for a sound file', () => {
+    const storage = words(sheet('computer-science', 'units-of-storage'))
+    expect(storage).toContain('sampling rate')
+    expect(storage).toContain('sample resolution')
+    expect(storage).not.toMatch(/\{sample rate\}|\{resolution\}/)
+  })
+})
+
+describe('English, against AQA 8700 and 8702', () => {
+  const techniques = sheet('english-language', 'language-techniques')
+  const [language, structure] = tables(techniques)
+
+  /**
+   * The June 2023 mark scheme lists "Sentence Forms" under Question 2, language, and takes
+   * a sentence-level point for structure only "when judged to contribute to whole
+   * structure". The short sentence sat in the structure table.
+   */
+  it('lists the short sentence under language, and says when it counts as structure', () => {
+    expect(language!.rows.map((r) => r[0])).toContain('Short sentence')
+    expect(structure!.rows.map((r) => r[0])).not.toContain('Short sentence')
+    expect(structure!.note).toContain('counts as structure only when')
+  })
+
+  it('says which question each table serves', () => {
+    expect(language!.note).toContain('Paper 1 Question 2 (8 marks) and Paper 2 Question 3 (12 marks)')
+    expect(structure!.note).toContain('Paper 1 Question 3 (8 marks)')
+  })
+
+  /** "The effect to write about" must be an effect: the metaphor row compared techniques instead. */
+  it('gives an effect in every row, not a comparison of techniques', () => {
+    for (const row of [...language!.rows, ...structure!.rows]) expect(row[2], row[0]).not.toMatch(/stronger than a simile/)
+    expect(language!.rows.find((r) => r[0] === 'Simile')![2]).toMatch(/\*like\* or \*as\*/)
+  })
+
+  /** AQA prints the title with one accent, and so do the app's lessons. */
+  it('spells The Emigrée as AQA prints it', () => {
+    const poems = tables(sheet('english-literature', 'power-and-conflict'))[0]!.rows.map((r) => r[0])
+    expect(poems).toContain('The Emigrée')
+    expect(poems).toHaveLength(15)
+  })
+
+  /** The Duke is alive and arranging his next marriage: his power has not been outlasted. */
+  it('does not say the art outlasts the power in My Last Duchess', () => {
+    const pair = sheet('english-literature', 'power-and-conflict').applications.find((a) => a.title === 'Choosing a pair in the exam')!
+    expect(pair.body).not.toContain('in both the art outlasts the power')
+    expect(pair.body).toContain('power still at work')
+  })
+
+  /** Sheila and Eric accept responsibility: that split is the theme of age. */
+  it('does not say all the Birlings refuse responsibility', () => {
+    const lasting = sheet('english-literature', 'set-texts').applications.find((a) => a.title === 'Why these stories last')!
+    expect(lasting.body).toContain('the older Birlings')
+  })
+
+  /** 8702: Paper 1 is 1 hour 45 minutes, 64 marks, 40%; Paper 2 is 2 hours 15 minutes, 96 marks, 60%. */
+  it('gives the two Literature papers their length and weight', () => {
+    expect(tables(sheet('english-literature', 'set-texts'))[0]!.note).toBe('Paper 1 is 1 hour 45 minutes, 64 marks and 40% of the GCSE. Paper 2 is 2 hours 15 minutes, 96 marks and 60%.')
+  })
+})
