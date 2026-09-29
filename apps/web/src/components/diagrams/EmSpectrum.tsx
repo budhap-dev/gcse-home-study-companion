@@ -14,6 +14,9 @@ import { wrapCell } from './tableLayout.ts'
  *
  * 294 units wide, for the 298 a phone's card leaves. The typical wavelength in each row
  * is an order of magnitude, labelled "about", because the groups have no sharp edges.
+ * The specification prints no wavelengths; these are the usual ones. Visible light names
+ * red first, at 700 nm, because the specification's order runs "red to violet" from long
+ * wavelength to short: "400 to 700 nm, red to violet" read as red at 400.
  *
  * A laptop has room for the picture every textbook draws, the seven groups side by side
  * under one wave that tightens from left to right, and the resource page asks for it with
@@ -27,10 +30,10 @@ interface Band { name: string; colour: string; about: string; uses: string; harm
 
 export const BANDS: Band[] = [
   { name: 'Radio waves', colour: '#b3261e', about: 'about 1 m to 1 km', uses: 'Television and radio.', cycles: 1 },
-  { name: 'Microwaves', colour: '#c2410c', about: 'about 1 cm', uses: 'Satellite communications, cooking food.', cycles: 1.6 },
+  { name: 'Microwaves', colour: '#c2410c', about: 'about 1 cm to 10 cm', uses: 'Satellite communications, cooking food.', cycles: 1.6 },
   { name: 'Infrared', colour: '#a16207', about: 'about 10 μm', uses: 'Electrical heaters, cooking food, infrared cameras.', cycles: 2.4 },
-  { name: 'Visible light', colour: 'rainbow', about: '400 to 700 nm, red to violet', uses: 'Fibre optic communications. The only group our eyes detect.', cycles: 3.4 },
-  { name: 'Ultraviolet', colour: '#7e22ce', about: 'about 100 nm', uses: 'Energy efficient lamps, sun tanning.', harm: 'Ages skin early and raises the risk of skin cancer.', cycles: 4.6 },
+  { name: 'Visible light', colour: 'rainbow', about: 'red 700 nm to violet 400 nm', uses: 'Fibre optic communications. The only group our eyes detect.', cycles: 3.4 },
+  { name: 'Ultraviolet', colour: '#7e22ce', about: 'about 10 to 400 nm', uses: 'Energy efficient lamps, sun tanning.', harm: 'Ages skin early and raises the risk of skin cancer.', cycles: 4.6 },
   { name: 'X-rays', colour: '#4338ca', about: 'about 0.1 nm', uses: 'Medical imaging and treatments.', harm: 'Ionising: can cause gene mutation and cancer.', cycles: 6 },
   { name: 'Gamma rays', colour: '#1e3a8a', about: 'about 0.001 nm', uses: 'Medical imaging and treatments.', harm: 'Ionising: can cause gene mutation and cancer.', cycles: 8 },
 ]
