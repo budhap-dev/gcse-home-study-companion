@@ -172,6 +172,25 @@ describe('the family tabs', () => {
     expect(html).toContain('12 cards, all known first time')
     expect(html).not.toMatch(/<strong class="shrink-0 tabular-nums">\d/)
   })
+
+  /** The week's good deeds and the answers, once any deed has been seen; nothing before. */
+  it('lists the week’s good deeds and what was said, once there are any', () => {
+    expect(render(emptyState())).not.toContain('Good deeds')
+    const state = {
+      ...emptyState(),
+      deeds: {
+        '2026-09-18': { id: 'help-with-a-chore', seen: '2026-09-18T08:00:00.000Z' },
+        '2026-09-17': { id: 'say-thank-you', seen: '2026-09-17T08:00:00.000Z', done: true, answeredAt: '2026-09-17T18:00:00.000Z' },
+        '2026-09-15': { id: 'pick-up-litter', seen: '2026-09-15T08:00:00.000Z', done: false, answeredAt: '2026-09-15T18:00:00.000Z' },
+      },
+    }
+    // The report reads the last seven days ending today; the section takes today from the clock,
+    // so the fixed dates above are only in it when the test runs in that week. Its count is not.
+    const html = render(state)
+    expect(html).toContain('Good deeds · 1 done')
+    expect(html).toContain('What Ana was asked this week')
+    expect((html.match(/Not opened/g) ?? []).length).toBeGreaterThanOrEqual(4)
+  })
 })
 
 /**

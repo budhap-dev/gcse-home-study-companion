@@ -21,6 +21,8 @@ import { useMyAssignments } from '../../auth/assignments.ts'
 import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
 import { HeroCharts } from '../../components/HeroCharts.tsx'
 import { useWide } from '../../components/useWide.ts'
+import { GoodDeed } from '../../components/GoodDeed.tsx'
+import { Thought } from '../../components/Thought.tsx'
 
 /**
  * Home as the map (Option C). A banner with the day's numbers and the first thing to do,
@@ -98,6 +100,10 @@ export function Home() {
         ) : !next && (
           <p className="text-ink-2">No topics yet. They appear here as they are written.</p>
         )}
+        {/* The day's good deed sits under the plan: it is a thing to do today, and here it
+            is near the top of a phone and beside the banner on a laptop, where the evening's
+            question is seen. */}
+        <GoodDeed />
         {/* Every task a parent set, done or not, below the plan that picks the most pressing one.
             On a laptop the list goes below the map instead: beside the banner it made this
             column far taller than the banner, and the map waited for it to end. */}
@@ -165,6 +171,7 @@ export function Home() {
       </div>
 
       <aside className="flex flex-col gap-5">
+        <Thought />
         {fact && (
           <section
             key={factOffset}

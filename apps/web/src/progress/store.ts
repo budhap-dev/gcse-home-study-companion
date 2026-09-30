@@ -111,6 +111,21 @@ export function parseTimeKey(key: string): StudyPlace & { day: string } {
   return { day, subjectId, topicId: topicId || undefined, kind: kind as StudyKind }
 }
 
+/**
+ * The good deed for one day: which one was shown, and, once the student has been asked,
+ * whether it was done. Only a deed that was shown is ever asked about, so `seen` is
+ * written when the card first appears and the answer comes later, that evening or the
+ * next morning.
+ */
+export interface DeedRecord {
+  id: string
+  /** ISO time the card was first shown that day. */
+  seen: string
+  /** Whether it was done; absent until the student answers. */
+  done?: boolean
+  answeredAt?: string
+}
+
 export interface ProgressState {
   attempts: AttemptRecord[]
   lessons: Record<string, LessonRecord>
@@ -138,6 +153,8 @@ export interface ProgressState {
    * celebrated twice.
    */
   milestones: Record<string, string>
+  /** The good deed of each day the student saw one, by ISO date. */
+  deeds: Record<string, DeedRecord>
   /** The student's own answers from first-run setup (UXI-10); every field optional. */
   profile: Profile
 }
@@ -169,7 +186,7 @@ export function studiedTopics<T extends { subjectId: string }>(topics: T[], prof
 export const DEFAULT_GOAL_MINUTES = 180
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {}, milestones: {}, profile: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {}, milestones: {}, deeds: {}, profile: {} }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -180,7 +197,7 @@ function read(): ProgressState {
     if (raw) {
       const stored = JSON.parse(raw) as Partial<ProgressState>
       // A state written before `activities` existed has none, and every reader iterates it.
-      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {}, profile: stored.profile ?? {} }
+      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {}, deeds: stored.deeds ?? {}, profile: stored.profile ?? {} }
     }
   } catch {
     // storage unavailable or corrupt: start clean
@@ -262,6 +279,22 @@ export function recordMilestones(ids: string[]): string[] {
   for (const id of fresh) state.milestones[id] = now
   write(state)
   return fresh
+}
+
+/** Records that the day's deed was shown, once: a second look the same day changes nothing. */
+export function noteDeedSeen(day: string, id: string) {
+  const state = read()
+  if (state.deeds[day]) return
+  state.deeds[day] = { id, seen: new Date().toISOString() }
+  write(state)
+}
+
+/** The student's answer to "did you do it?", for the deed shown on `day`. */
+export function answerDeed(day: string, id: string, done: boolean) {
+  const state = read()
+  const now = new Date().toISOString()
+  state.deeds[day] = { id, seen: state.deeds[day]?.seen ?? now, done, answeredAt: now }
+  write(state)
 }
 
 export function awardBadges(ids: string[]): string[] {
