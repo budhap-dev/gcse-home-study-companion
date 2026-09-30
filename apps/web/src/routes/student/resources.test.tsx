@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
@@ -59,6 +61,18 @@ describe('the resources pages', () => {
     const html = render(`/resources/${r.subjectId}/${r.id}`)
     expect(html).toContain('print-colour')
     expect(html).toContain('print-sheet')
+  })
+
+  /** The smaller phone code font is the sheet's, not the app's: the stylesheet scopes it to
+   *  this class, and the page carries the class. Lessons keep their 0.9rem code. */
+  it('carries the class that gives its code examples the smaller phone size', () => {
+    const r = RESOURCES[0]!
+    expect(render(`/resources/${r.subjectId}/${r.id}`)).toContain('resource-sheet')
+    const css = readFileSync(join(import.meta.dirname, '../../styles.css'), 'utf8')
+    const rules = [...css.matchAll(/^\s*([^{}\n]*\.rich-text pre[^{]*)\{([^}]*)\}/gm)].map((m) => [m[1]!.trim(), m[2]!] as const)
+    const small = rules.filter(([, body]) => /font-size:\s*0\.8rem/.test(body))
+    expect(small.map(([selector]) => selector)).toEqual(['.resource-sheet .rich-text pre'])
+    expect(rules.find(([selector]) => selector === '.rich-text pre')![1]).toMatch(/font-size:\s*0\.9rem/)
   })
 
   it('says so plainly for a resource that does not exist', () => {
