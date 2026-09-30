@@ -21,7 +21,7 @@ const PLAIN = (iso: string) => new Date(iso + 'T12:00:00').toLocaleDateString('e
  */
 const SHOWN = 3
 
-export function SetForYou() {
+export function SetForYou({ className = '' }: { className?: string }) {
   const progress = useProgress()
   const { list } = useMyAssignments()
   const [all, setAll] = useState(false)
@@ -35,14 +35,15 @@ export function SetForYou() {
     : later > 0 ? `Set for you · ${later} coming up`
     : 'Set for you · all done'
   return (
-    <section className="flex flex-col gap-2">
+    <section className={`flex flex-col gap-2 ${className}`}>
       <SectionLabel colour="#6B4E9B" emoji="📌">{heading}</SectionLabel>
-      <ul className="flex flex-col gap-2">
-        {(all ? tasks : tasks.slice(0, SHOWN)).map((t) => <li key={t.assignment.id}><AssignedCard task={t} /></li>)}
+      {/* A column on a phone; on a laptop, where the list runs the full width under the map, a row of three. */}
+      <ul className="grid grid-cols-1 gap-2 lg:grid-cols-3">
+        {(all ? tasks : tasks.slice(0, SHOWN)).map((t) => <li key={t.assignment.id} className="grid"><AssignedCard task={t} /></li>)}
       </ul>
       {tasks.length > SHOWN && (
         <button type="button" onClick={() => setAll((a) => !a)} aria-expanded={all}
-          className="min-h-11 rounded-xl border border-rule bg-surface px-4 text-sm font-bold hover:bg-panel">
+          className="min-h-11 rounded-xl border border-rule bg-surface px-4 text-sm font-bold hover:bg-panel lg:self-start">
           {all ? 'Show fewer' : `Show all ${tasks.length}`}
         </button>
       )}
