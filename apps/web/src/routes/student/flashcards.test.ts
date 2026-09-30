@@ -49,4 +49,20 @@ describe('flashcard decks', () => {
     }
     expect(bad).toEqual([])
   })
+
+  /**
+   * A known card flies off to the right. The part past the screen's edge widened the page
+   * for a third of a second, and a phone browser widens its layout viewport to fit, which
+   * took the menu dock down off the foot of the screen and back on every "Got it". The
+   * pile clips sideways, and the screens walk presses through a card to hold it so.
+   */
+  it('clips the flight of a known card at the edge of the pile', () => {
+    const source = readFileSync(join(import.meta.dirname, 'Flashcards.tsx'), 'utf8')
+    const css = readFileSync(join(import.meta.dirname, '../../styles.css'), 'utf8')
+    expect(source).toMatch(/className="flashcard-pile relative">[\s\S]*?className={`flashcard /)
+    expect(css).toMatch(/\.flashcard-pile \{ overflow-x: clip; \}/)
+    expect(css).toMatch(/@keyframes card-away \{ to \{ transform: translateX\(\d+%\)/)
+    const walk = readFileSync(join(import.meta.dirname, '../../../../../e2e/screens.mjs'), 'utf8')
+    expect(walk).toMatch(/\/flashcards', tap: \['\.flashcard', .*Got it/)
+  })
 })

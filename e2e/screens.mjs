@@ -12,10 +12,14 @@
 //     unless it sits inside a line of text;
 //   - at phone width, a page that opens with the cursor already in a field, which raises
 //     the on-screen keyboard over the page before any of it has been read;
-//   - a formula on a reference sheet that is wider than its card, and so scrolls.
+//   - a formula on a reference sheet that is wider than its card, and so scrolls;
+//   - after pressing a control, the page widening while whatever it set off is still moving.
+//     A phone browser widens its layout viewport to fit a page that has grown sideways, and
+//     the menu dock at the foot goes with it: a flashcard flying off to the right took the
+//     dock off the screen and back on every "Got it".
 //
 // Usage: node e2e/screens.mjs [--base http://localhost:4173] [--widths 390,1280]
-//          [--themes paper,midnight | all] [--shots dir] [--motion on|off]
+//          [--themes paper,midnight | all] [--shots dir] [--motion on|off] [--only /flashcards]
 // Writes e2e-screens-report.json and exits 1 if anything was found.
 import { chromium } from 'playwright-core'
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
@@ -33,8 +37,13 @@ const THEMES = arg('themes', 'paper,midnight') === 'all' ? ALL_THEMES : arg('the
 const SHOTS = arg('shots', '')
 // --motion off: the Settings switch for animations, which must leave every page complete.
 const MOTION = arg('motion', 'on')
+// --only: just the routes whose path contains this, while working on one screen.
+const ONLY = arg('only', '')
 
 // A route with `press` is scanned again after pressing that control, for what only shows then.
+// A route with `tap` presses each of those controls in turn (the first match of each), for a
+// screen that needs a sequence: turn a card over, then say it is known. Both are watched
+// for the page widening while the press's animation runs.
 // A route with `seed` starts from that student instead of the sample: 'new' has never opened
 // the app (the welcome questions), 'blank' has answered them and done nothing since.
 const ROUTES = [
@@ -64,6 +73,8 @@ const ROUTES = [
   '/resources/computer-science/logic-gates',
   // The press picks a family, fading the rest of the table: the faded cells must still pass.
   { path: '/resources/chemistry/periodic-table', press: 'figure button.rounded-full' },
+  // Turn the card, then send it off the deck: the flight must stay within the page.
+  { path: '/subjects/physics/topics/behaviour-of-gases/flashcards', tap: ['.flashcard', 'button:has-text("Got it")'] },
 ]
 
 /** The sample student: Year 10, a spread of statuses in every subject, a lesson half done. */
@@ -143,6 +154,9 @@ const scan = ({ phone }) => {
     if ((cs.overflow === 'hidden' || cs.overflowX === 'hidden') && cs.textOverflow !== 'ellipsis' && el.scrollWidth > el.clientWidth + 1) push('text cut off', el, `${el.scrollWidth} > ${el.clientWidth}`)
     const ground = groundOf(el)
     if (!ground) continue
+    // A control that cannot be used yet is dimmed on purpose: WCAG 1.4.3 leaves inactive
+    // controls out, and the flashcard's Again and Got it wait, faded, for the card to turn.
+    if (el.closest(':disabled, [aria-disabled="true"]')) continue
     let opacity = 1
     for (let e = el; e; e = e.parentElement) opacity *= parseFloat(getComputedStyle(e).opacity)
     const ink = toRgba(cs.color)
@@ -193,7 +207,8 @@ for (const theme of THEMES) {
     page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(m.text()) })
     const shot = (name) => SHOTS ? page.screenshot({ path: join(SHOTS, `${theme}-${width}${name.replace(/[/?=]/g, '_') || '_home'}.png`), fullPage: true }) : undefined
     for (const entry of ROUTES) {
-      const { path, press, seed = 'sample' } = typeof entry === 'string' ? { path: entry } : entry
+      const { path, press, tap, seed = 'sample' } = typeof entry === 'string' ? { path: entry } : entry
+      if (ONLY && !path.includes(ONLY)) continue
       const route = seed === 'sample' ? path : `${path} (${seed} student)`
       errors.length = 0
       // The seed is chosen per visit through sessionStorage, which the init script reads first.
@@ -205,10 +220,22 @@ for (const theme of THEMES) {
       await page.waitForTimeout(2200)
       const found = await page.evaluate(scan, { phone })
       await shot(route.replace(/[ ()]/g, '-'))
-      if (press) {
-        await page.locator(press).nth(3).click()
-        await page.waitForTimeout(900)
+      if (press || tap) {
+        /** The widest the page gets while a press's animation runs: sampled for 600ms, every 30ms. */
+        const widest = async () => {
+          let most = 0
+          for (let i = 0; i < 20; i++) {
+            most = Math.max(most, await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth))
+            await page.waitForTimeout(30)
+          }
+          return most
+        }
+        let widened = 0
+        if (press) { await page.locator(press).nth(3).click(); widened = await widest() }
+        for (const selector of tap ?? []) { await page.locator(selector).first().click(); widened = Math.max(widened, await widest()) }
+        await page.waitForTimeout(300)
         const after = await page.evaluate(scan, { phone })
+        if (widened > 0) after.push({ kind: 'page widens while animating', where: 'page', detail: `by ${widened}px` })
         // Anything opened over the page must stay clear of the phone's menu bar.
         const hidden = await page.evaluate(() => {
           // Two menus share the name, the top band's and the dock's; only one is shown at a width.
