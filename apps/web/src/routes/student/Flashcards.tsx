@@ -178,7 +178,8 @@ function FlashcardsBody({ topic }: { topic: TopicRecord }) {
         </Link>
         <div className="flex flex-grow flex-col">
           <span className="text-xs font-bold uppercase tracking-[0.06em] accent-ink">{subject.name} · Flashcards</span>
-          <span className="font-bold">{topic.title}</span>
+          {/* The page's heading, in the body face at the header's size: the card is what is read here. */}
+          <h1 className="font-sans text-base font-bold [text-wrap:pretty]">{topic.title}</h1>
         </div>
         <span className="flex shrink-0 items-center gap-2 whitespace-nowrap text-sm text-ink-2 tabular-nums">
           {run >= 3 && (
@@ -199,7 +200,11 @@ function FlashcardsBody({ topic }: { topic: TopicRecord }) {
         <span className="shrink-0 text-xs tabular-nums text-ink-3">{known} of {deck.length}</span>
       </div>
 
-      <div className="relative">
+      {/* The pile clips sideways (flashcard-pile): a known card flies off to the right, and on
+          a phone the part that left the screen widened the page, so the browser widened its
+          viewport to fit and the menu dock at the foot dropped out of sight until the card
+          was gone. Only sideways: the pile's rotated corners still show above and below. */}
+      <div className="flashcard-pile relative">
         {/* The rest of the pile, so the deck visibly shrinks as it is worked through. */}
         {queue.length > 1 && <span aria-hidden className="card-stack card-stack-1" />}
         {queue.length > 2 && <span aria-hidden className="card-stack card-stack-2" />}
@@ -209,7 +214,9 @@ function FlashcardsBody({ topic }: { topic: TopicRecord }) {
         aria-pressed={flipped}
         className={`flashcard relative block min-h-72 w-full rounded-2xl text-left [perspective:1200px] ${leaving === 'known' ? 'is-leaving-known' : leaving === 'again' ? 'is-leaving-again' : ''}`}
       >
-        <div className={`flashcard-inner relative min-h-72 w-full ${flipped ? 'is-flipped' : ''}`}>
+        {/* Keyed by card, so the next card mounts face up rather than turning back over
+            from the answer side of the one that just left. */}
+        <div key={card.id} className={`flashcard-inner relative min-h-72 w-full ${flipped ? 'is-flipped' : ''}`}>
           <div className="flashcard-face flex flex-col gap-3 rounded-2xl border-2 border-[color:var(--subject)] bg-surface p-5"
             style={{ backgroundImage: 'linear-gradient(160deg, color-mix(in srgb, var(--subject) 9%, transparent), transparent 55%)' }}>
             <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{card.kind === 'question' ? 'Question' : 'Recall'}</span>

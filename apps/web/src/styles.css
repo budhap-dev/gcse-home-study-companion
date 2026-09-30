@@ -352,7 +352,12 @@ figure[data-diagram] {
 .card-stack-2 { transform: rotate(4.5deg) translate(7px, 11px); opacity: 0.8; box-shadow: 0 2px 6px rgb(0 0 0 / 0.05); }
 
 /* Leaving the deck. Known cards fly off to the right; ones to see again fall back onto
-   the pile, which is the same gesture a person would make with real cards. */
+   the pile, which is the same gesture a person would make with real cards. The pile clips
+   the flight at its own right edge: the part of the card past the edge of a phone's
+   screen widened the page for a third of a second, and a phone browser widens its layout
+   viewport to fit, which took the menu dock with it, down off the foot of the screen and
+   back. Clip, not hidden, so the other axis stays visible and nothing gains a scrollbar. */
+.flashcard-pile { overflow-x: clip; }
 @keyframes card-away { to { transform: translateX(46%) rotate(9deg); opacity: 0; } }
 @keyframes card-again { 40% { transform: translateY(-6px) rotate(-3deg); } to { transform: translateY(12px) scale(0.96); opacity: 0; } }
 .is-leaving-known { animation: card-away 0.32s ease-in forwards; }
