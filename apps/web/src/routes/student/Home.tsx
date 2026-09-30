@@ -26,9 +26,10 @@ import { Thought } from '../../components/Thought.tsx'
 
 /**
  * Home as the map (Option C). A banner with the day's numbers and the first thing to do,
- * today's plan beside it, then every topic of every subject as a square, shaded by how well
- * it is known, so the gaps show at a glance. The weakest started topics, the fact of the day
- * and the week's minutes come after.
+ * with the thought and the fact of the day under it; today's plan, the good deed and the
+ * week's minutes beside them; then every topic of every subject as a square, shaded by how
+ * well it is known, so the gaps show at a glance. Set tasks and the weakest started topics
+ * come after.
  */
 export function Home() {
   const progress = useProgress()
@@ -63,32 +64,61 @@ export function Home() {
 
   return (
     <article className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-x-8">
-      <Hero
-        greeting={`${greeting}${firstName ? `, ${firstName}` : ''}`}
-        welcome={firstName ? `Welcome back. Your progress is saved to your account${auth.role === 'parent' ? ', and you can manage the family in Settings' : ''}.` : undefined}
-        streak={streakDays(progress)}
-        minutes={weekMinutes(progress)}
-        goal={progress.goalMinutes}
-        offToday={progress.daysOff.includes(isoDate())}
-        secure={mapped.reduce((n, m) => n + m.squares.filter(isSecure).length, 0)}
-        xp={totalXp(progress)}
-        badges={`${Object.keys(progress.badges).length} of ${BADGES.length}`}
-        first={plan[0]}
-        mistakes={mistakes.length}
-        tiles={mapped.slice(0, 6).map((m) => ({ id: m.subject.id, colour: m.subject.colour }))}
-        charts={
-          <HeroCharts
-            days={lastDays(progress)}
-            goal={progress.goalMinutes}
-            levels={countLevels(mapped.flatMap((m) => m.squares))}
-            levelUp={levelUp && { ...levelUp, name: mapped.find((m) => m.subject.id === levelUp.subjectId)!.subject.name }}
-          />
-        }
-      />
+      {/* On a laptop, two columns that each keep to their own height: the banner with the
+          day's reading under it, and beside them what to do today; the map then runs across
+          both. On a phone the two wrappers dissolve and each card takes its turn in the one
+          column by its order: the plan and the deed straight after the banner, the reading
+          and the week's minutes at the end. */}
+      <div className="contents lg:flex lg:flex-col lg:gap-5">
+        <Hero
+          greeting={`${greeting}${firstName ? `, ${firstName}` : ''}`}
+          welcome={firstName ? `Welcome back. Your progress is saved to your account${auth.role === 'parent' ? ', and you can manage the family in Settings' : ''}.` : undefined}
+          streak={streakDays(progress)}
+          minutes={weekMinutes(progress)}
+          goal={progress.goalMinutes}
+          offToday={progress.daysOff.includes(isoDate())}
+          secure={mapped.reduce((n, m) => n + m.squares.filter(isSecure).length, 0)}
+          xp={totalXp(progress)}
+          badges={`${Object.keys(progress.badges).length} of ${BADGES.length}`}
+          first={plan[0]}
+          mistakes={mistakes.length}
+          tiles={mapped.slice(0, 6).map((m) => ({ id: m.subject.id, colour: m.subject.colour }))}
+          charts={
+            <HeroCharts
+              days={lastDays(progress)}
+              goal={progress.goalMinutes}
+              levels={countLevels(mapped.flatMap((m) => m.squares))}
+              levelUp={levelUp && { ...levelUp, name: mapped.find((m) => m.subject.id === levelUp.subjectId)!.subject.name }}
+            />
+          }
+        />
 
-      <div className="flex flex-col gap-5">
+        <div className="max-lg:order-9"><Thought /></div>
+
+        {fact && (
+          <section
+            key={factOffset}
+            className="anim-fade-up relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-5 max-lg:order-10 lg:flex-row lg:items-center lg:gap-6"
+            style={{ '--subject': SUBJECTS.find((s) => s.id === fact.subjectId)?.colour, borderColor: 'color-mix(in srgb, var(--subject) 45%, transparent)', background: 'linear-gradient(135deg, color-mix(in srgb, var(--subject) 18%, var(--color-surface)), var(--color-surface) 70%)' } as React.CSSProperties}
+          >
+            <span className="pointer-events-none absolute -right-4 -top-6 text-[7rem] opacity-15" aria-hidden><Smiley>💡</Smiley></span>
+            <div className="relative flex min-w-0 flex-grow flex-col gap-3">
+              <div className="flex items-center gap-2">
+                <span className="chip" style={{ '--chip': 'var(--subject)' } as React.CSSProperties}><Smiley>💡</Smiley>Did you know</span>
+                <span className="text-xs font-bold accent-ink">{SUBJECTS.find((s) => s.id === fact.subjectId)?.name}</span>
+              </div>
+              <p className="text-[15px] leading-relaxed">{fact.text}</p>
+            </div>
+            <button type="button" onClick={() => setFactOffset((n) => n + 1)} className="press relative w-fit shrink-0 rounded-full bg-[color:var(--subject)] px-4 py-1.5 text-sm font-bold text-white">
+              Another one <span aria-hidden>→</span>
+            </button>
+          </section>
+        )}
+      </div>
+
+      <div className="contents lg:flex lg:flex-col lg:gap-5">
         {plan.length > 0 ? (
-          <section className="anim-rise flex flex-col gap-2" style={{ '--d': '0.08s' } as React.CSSProperties}>
+          <section className="anim-rise flex flex-col gap-2 max-lg:order-2" style={{ '--d': '0.08s' } as React.CSSProperties}>
             <SectionLabel colour="#c8501f" emoji="🚀">Today</SectionLabel>
             {plan.map((item, i) => <PlanCard key={item.to} item={item} primary={i === 0} />)}
             {done.length > 0 && (
@@ -98,20 +128,28 @@ export function Home() {
             )}
           </section>
         ) : !next && (
-          <p className="text-ink-2">No topics yet. They appear here as they are written.</p>
+          <p className="text-ink-2 max-lg:order-2">No topics yet. They appear here as they are written.</p>
         )}
         {/* The day's good deed sits under the plan: it is a thing to do today, and here it
             is near the top of a phone and beside the banner on a laptop, where the evening's
             question is seen. */}
-        <GoodDeed />
+        <div className="max-lg:order-3"><GoodDeed /></div>
         {/* Every task a parent set, done or not, below the plan that picks the most pressing one.
             On a laptop the list goes below the map instead: beside the banner it made this
             column far taller than the banner, and the map waited for it to end. */}
-        {!wide && <SetForYou />}
+        {!wide && <SetForYou className="max-lg:order-4" />}
+
+        <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4 max-lg:order-11">
+          <div className="flex items-baseline justify-between gap-2">
+            <h2 className="font-sans text-sm font-bold text-ink-2">This week, minutes a day</h2>
+            <Link to="/settings" className="-my-2 inline-block py-2 text-xs text-ink-2 underline">Change goal</Link>
+          </div>
+          <WeekBars days={daysThisWeek(progress)} />
+        </section>
       </div>
 
       {!profile.setupAt && (
-        <Link to="/settings#you" className="lift flex items-center gap-3 rounded-2xl border border-dashed border-rule bg-surface px-4 py-3 lg:col-span-2">
+        <Link to="/settings#you" className="lift flex items-center gap-3 rounded-2xl border border-dashed border-rule bg-surface px-4 py-3 max-lg:order-5 lg:col-span-2">
           <span className="flex flex-grow flex-col gap-0.5">
             <span className="font-bold">Tell the app your year and subjects</span>
             <span className="text-xs text-ink-2">So the plan and your map cover what you take. Half a minute.</span>
@@ -120,7 +158,7 @@ export function Home() {
         </Link>
       )}
 
-      <section className="flex flex-col gap-3 lg:col-span-2" aria-labelledby="map-heading">
+      <section className="flex flex-col gap-3 max-lg:order-6 lg:col-span-2" aria-labelledby="map-heading">
         <div className="flex flex-col gap-2 xl:flex-row xl:items-end xl:justify-between">
           <h2 id="map-heading" className="text-[22px] font-bold leading-tight">
             Your map <span className="font-sans text-[15px] font-normal text-ink-2">· every topic, every subject</span>
@@ -140,64 +178,36 @@ export function Home() {
         </div>
       </section>
 
-      <div className="flex flex-col gap-5">
-        {wide && <SetForYou />}
-        {fix.length > 0 && (
-          <section className="flex flex-col gap-2">
-            <SectionLabel colour="#d25b3b" emoji="🩹">Fix these first</SectionLabel>
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1 2xl:grid-cols-2">
-              {fix.map((f, i) => (
-                <Link key={f.topic.id} to={f.to} className="anim-rise lift flex items-center gap-3 rounded-2xl border border-rule bg-surface px-3.5 py-3" style={{ '--subject': f.subjectColour, '--d': `${(0.3 + i * 0.06).toFixed(2)}s` } as React.CSSProperties}>
-                  <span aria-hidden className="tint flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg"><Smiley>🎯</Smiley></span>
-                  <span className="flex min-w-0 flex-grow flex-col gap-0.5">
-                    <span className="font-bold leading-snug">{f.topic.title}</span>
-                    <span className="text-xs text-ink-2">{f.subjectName} · {f.note} · about {f.minutes} min</span>
-                  </span>
-                  <span className="shrink-0 rounded-lg bg-[color:var(--subject)] px-3 py-1.5 text-sm font-bold text-white">Quiz</span>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
+      {/* What else there is to do runs the full width under the map, so nothing sits beside
+          an empty column: the set tasks on a laptop, the weakest topics, and the other choices. */}
+      {wide && <SetForYou className="lg:col-span-2" />}
 
-        {others.length > 0 && (
-          <section className="flex flex-col gap-2">
-            <SectionLabel colour="#1f3a93" emoji="🧭">Or choose</SectionLabel>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {others.map((t) => <TaskCard key={t.to} task={t} />)}
-            </div>
-          </section>
-        )}
-      </div>
-
-      <aside className="flex flex-col gap-5">
-        <Thought />
-        {fact && (
-          <section
-            key={factOffset}
-            className="anim-fade-up relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-5"
-            style={{ '--subject': SUBJECTS.find((s) => s.id === fact.subjectId)?.colour, borderColor: 'color-mix(in srgb, var(--subject) 45%, transparent)', background: 'linear-gradient(135deg, color-mix(in srgb, var(--subject) 18%, var(--color-surface)), var(--color-surface) 70%)' } as React.CSSProperties}
-          >
-            <span className="pointer-events-none absolute -right-4 -top-6 text-[7rem] opacity-15" aria-hidden><Smiley>💡</Smiley></span>
-            <div className="flex items-center gap-2">
-              <span className="chip" style={{ '--chip': 'var(--subject)' } as React.CSSProperties}><Smiley>💡</Smiley>Did you know</span>
-              <span className="text-xs font-bold accent-ink">{SUBJECTS.find((s) => s.id === fact.subjectId)?.name}</span>
-            </div>
-            <p className="relative text-[15px] leading-relaxed">{fact.text}</p>
-            <button type="button" onClick={() => setFactOffset((n) => n + 1)} className="press relative w-fit rounded-full bg-[color:var(--subject)] px-4 py-1.5 text-sm font-bold text-white">
-              Another one <span aria-hidden>→</span>
-            </button>
-          </section>
-        )}
-
-        <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
-          <div className="flex items-baseline justify-between gap-2">
-            <h2 className="font-sans text-sm font-bold text-ink-2">This week, minutes a day</h2>
-            <Link to="/settings" className="-my-2 inline-block py-2 text-xs text-ink-2 underline">Change goal</Link>
+      {fix.length > 0 && (
+        <section className="flex flex-col gap-2 max-lg:order-7 lg:col-span-2">
+          <SectionLabel colour="#d25b3b" emoji="🩹">Fix these first</SectionLabel>
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+            {fix.map((f, i) => (
+              <Link key={f.topic.id} to={f.to} className="anim-rise lift flex items-center gap-3 rounded-2xl border border-rule bg-surface px-3.5 py-3" style={{ '--subject': f.subjectColour, '--d': `${(0.3 + i * 0.06).toFixed(2)}s` } as React.CSSProperties}>
+                <span aria-hidden className="tint flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg"><Smiley>🎯</Smiley></span>
+                <span className="flex min-w-0 flex-grow flex-col gap-0.5">
+                  <span className="font-bold leading-snug">{f.topic.title}</span>
+                  <span className="text-xs text-ink-2">{f.subjectName} · {f.note} · about {f.minutes} min</span>
+                </span>
+                <span className="shrink-0 rounded-lg bg-[color:var(--subject)] px-3 py-1.5 text-sm font-bold text-white">Quiz</span>
+              </Link>
+            ))}
           </div>
-          <WeekBars days={daysThisWeek(progress)} />
         </section>
-      </aside>
+      )}
+
+      {others.length > 0 && (
+        <section className="flex flex-col gap-2 max-lg:order-8 lg:col-span-2">
+          <SectionLabel colour="#1f3a93" emoji="🧭">Or choose</SectionLabel>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
+            {others.map((t) => <TaskCard key={t.to} task={t} />)}
+          </div>
+        </section>
+      )}
     </article>
   )
 }
@@ -211,8 +221,9 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
   greeting: string; welcome?: string; streak: number; minutes: number; goal: number; offToday: boolean
   secure: number; xp: number; badges: string; first?: PlanItem; mistakes: number; tiles: { id: string; colour: string }[]
   /**
-   * Charts under the buttons on a laptop. The banner keeps to its own height rather than
-   * stretching to the Today column's, which fifteen set tasks once made a screen tall.
+   * Charts under the buttons on a laptop. The banner keeps to its own height: the reading
+   * cards under it take up what the plan column leaves, so a long plan (fifteen set tasks,
+   * once) never stretches it to a screen tall.
    */
   charts?: React.ReactNode
 }) {
@@ -224,7 +235,7 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
     [`XP · ${badges} badges`, xp.toLocaleString('en-GB')],
   ]
   return (
-    <section className="hero-gradient anim-rise relative flex flex-col gap-4 self-start overflow-hidden rounded-[26px] p-5 shadow-[0_16px_40px_rgb(90_75_209/0.28)] sm:p-7">
+    <section className="hero-gradient anim-rise relative flex flex-col gap-4 overflow-hidden rounded-[26px] p-5 shadow-[0_16px_40px_rgb(90_75_209/0.28)] sm:p-7">
       <span className="hero-shine" aria-hidden />
       {/* The student's subjects, each on a floating tile: a row across the top of the banner,
           and on a wide screen a column beside the text instead. */}

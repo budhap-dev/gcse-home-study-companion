@@ -538,6 +538,9 @@ be asked in the evening whether I did it, so that the app builds character as we
   never shown is never asked about.
 - The answers are kept with progress, merge across devices, and count on the card; the
   parent's dashboard lists the week's deeds and answers.
+- On a laptop the thought and the fact sit under the banner as wide strips, with the plan,
+  the deed and the week's minutes beside them, so neither column is left beside empty
+  space; what else there is to do runs the full width under the map (v10.61.1).
 
 
 ## Epic 6 · Parent and child accounts
