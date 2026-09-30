@@ -47,6 +47,15 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
   // Milestones as badges: reached once, at the earlier of the two times.
   const milestones: ProgressState['milestones'] = { ...A.milestones }
   for (const [id, at] of Object.entries(B.milestones ?? {})) milestones[id] = milestones[id] && milestones[id]! < at ? milestones[id]! : at
+  // A day's deed: the earlier sighting, and the answer given later, since a student who
+  // said "not today" on the phone and "yes" on the laptop afterwards had done it by then.
+  const deeds: ProgressState['deeds'] = { ...A.deeds }
+  for (const [day, d] of Object.entries(B.deeds ?? {})) {
+    const prev = deeds[day]
+    if (!prev) { deeds[day] = d; continue }
+    const answered = [prev, d].filter((x) => x.answeredAt).sort((x, y) => (x.answeredAt! < y.answeredAt! ? 1 : -1))[0]
+    deeds[day] = { id: prev.id, seen: prev.seen < d.seen ? prev.seen : d.seen, ...(answered ? { done: answered.done, answeredAt: answered.answeredAt } : {}) }
+  }
   return {
     attempts: [...attempts.values()].sort((x, y) => x.completedAt.localeCompare(y.completedAt)),
     lessons,
@@ -57,6 +66,7 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
     daysOff: [...new Set([...A.daysOff, ...B.daysOff])].sort(),
     badges,
     milestones,
+    deeds,
     // One profile: the one set up or changed more recently.
     profile: (B.profile?.setupAt ?? '') > (A.profile?.setupAt ?? '') ? B.profile : A.profile,
   }

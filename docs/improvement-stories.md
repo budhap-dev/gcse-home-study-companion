@@ -520,6 +520,25 @@ As a student with siblings, I want to see our weekly XP side by side, if my pare
 
 - Off by default; a parent switches it on for the family and can switch it off.
 
+### MTV-9 · Thought and good deed of the day
+
+**Effort:** S · **Priority:** Now · **Status:** done (30 September 2026)
+
+As a student, I want a saying to think about and one small good deed to do each day, and to
+be asked in the evening whether I did it, so that the app builds character as well as marks.
+
+**Acceptance criteria**
+
+- Home shows a thought for the day (dedication, determination, discipline and their
+  relatives), with who said it and where; only sayings that trace to a work, a letter or a
+  speech, and proverbs given as proverbs. "Another one" gives the next.
+- Home shows the day's good deed from the owner's list of thirty, one a day in turn, the
+  same for everyone on a given day, each with its own icon. From 5 pm it asks "Did you do
+  it today?"; a deed shown but never answered is asked about the next morning, and one
+  never shown is never asked about.
+- The answers are kept with progress, merge across devices, and count on the card; the
+  parent's dashboard lists the week's deeds and answers.
+
 
 ## Epic 6 · Parent and child accounts
 
@@ -852,7 +871,7 @@ As a parent, I want to know how my child's data is used before I sign up.
 
 ## Summary
 
-71 stories in 9 epics. Working days assume S = 2 to 4, M = 5 to 10, L = 15 to 25, for one
+72 stories in 9 epics. Working days assume S = 2 to 4, M = 5 to 10, L = 15 to 25, for one
 developer working with Claude; they add up effort only and ignore overlap between stories.
 
 | Epic | Stories | S | M | L | Now | Next | Later | Days (low to high) |
@@ -861,11 +880,11 @@ developer working with Claude; they add up effort only and ignore overlap betwee
 | Worksheets | 8 | 2 | 5 | 1 | 2 | 3 | 3 | 44 to 83 |
 | Generated questions (Maths and Science) | 9 | 1 | 5 | 3 | 0 | 6 | 3 | 72 to 129 |
 | UX | 10 | 5 | 4 | 1 | 3 | 3 | 4 | 45 to 85 |
-| Motivation | 8 | 5 | 3 | 0 | 0 | 3 | 5 | 25 to 50 |
+| Motivation | 9 | 6 | 3 | 0 | 1 | 3 | 5 | 27 to 54 |
 | Parent and child accounts | 7 | 2 | 3 | 2 | 0 | 7 | 0 | 49 to 88 |
 | Tracking | 8 | 3 | 4 | 1 | 2 | 3 | 3 | 41 to 77 |
 | Theming | 7 | 5 | 2 | 0 | 0 | 0 | 7 | 20 to 40 |
 | Operations and quality | 7 | 5 | 2 | 0 | 4 | 2 | 1 | 20 to 40 |
-| **All** | **71** | **31** | **32** | **8** | **12** | **29** | **30** | **342 to 644** |
+| **All** | **72** | **32** | **32** | **8** | **13** | **29** | **30** | **344 to 648** |
 
-The 12 **Now** stories come to 30 to 60 working days: TOP-2 Progress on the topic map, WKP-1 Redo my mistakes, WKP-6 Right level by default, UXI-1 Today plan, UXI-2 Resume where I left off, UXI-4 Missed question links to its lesson step, TRK-5 Week on week, TRK-7 Honest study time, OPS-2 Browser checks in CI, OPS-3 Report a mistake, OPS-4 Crash reporting, OPS-5 Pilot before payments.
+The 13 **Now** stories come to 32 to 64 working days: TOP-2 Progress on the topic map, WKP-1 Redo my mistakes, WKP-6 Right level by default, UXI-1 Today plan, UXI-2 Resume where I left off, UXI-4 Missed question links to its lesson step, MTV-9 Thought and good deed of the day, TRK-5 Week on week, TRK-7 Honest study time, OPS-2 Browser checks in CI, OPS-3 Report a mistake, OPS-4 Crash reporting, OPS-5 Pilot before payments.

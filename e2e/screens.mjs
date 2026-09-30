@@ -83,6 +83,12 @@ function sampleProgress() {
   const daysAgo = (d) => new Date(now - d * 86400000).toISOString()
   const attempts = []
   const lessons = {}
+  // Good deeds: today's done, so Home shows the answered card with its week of dots; the
+  // blank student, with none, shows the morning or evening card instead.
+  const deeds = {}
+  // Keyed by the local calendar day, as the app keys them.
+  const localDay = (d) => { const x = new Date(now - d * 86400000); return new Date(x.getTime() - x.getTimezoneOffset() * 60000).toISOString().slice(0, 10) }
+  for (const [ago, done] of [[0, true], [1, true], [2, false], [4, true]]) deeds[localDay(ago)] = { id: 'help-with-a-chore', seen: daysAgo(ago), done, answeredAt: daysAgo(ago) }
   let n = 0
   const attempt = (topicId, kind, pct, level, ago) => attempts.push({
     id: `sample-${n++}`, topicId, kind, level, marksScored: pct, marksAvailable: 100, markedHow: 'auto', completedAt: daysAgo(ago), xp: Math.round(pct / 2),
@@ -106,7 +112,7 @@ function sampleProgress() {
   const minutes = {}
   for (let d = 0; d < 6; d++) minutes[new Date(now - d * 86400000).toISOString().slice(0, 10)] = [22, 0, 15, 13, 30, 8][d]
   return {
-    attempts, lessons, activities: [], minutes, time: {}, goalMinutes: 180, daysOff: [], badges: {}, milestones: {},
+    attempts, lessons, activities: [], minutes, time: {}, goalMinutes: 180, daysOff: [], badges: {}, milestones: {}, deeds,
     profile: { year: 10, setupAt: daysAgo(20) },
   }
 }
@@ -208,7 +214,8 @@ for (const theme of THEMES) {
     const shot = (name) => SHOTS ? page.screenshot({ path: join(SHOTS, `${theme}-${width}${name.replace(/[/?=]/g, '_') || '_home'}.png`), fullPage: true }) : undefined
     for (const entry of ROUTES) {
       const { path, press, tap, seed = 'sample' } = typeof entry === 'string' ? { path: entry } : entry
-      if (ONLY && !path.includes(ONLY)) continue
+      // "--only /" is Home alone, since every path contains a slash.
+      if (ONLY && !(ONLY === '/' ? path === '/' : path.includes(ONLY))) continue
       const route = seed === 'sample' ? path : `${path} (${seed} student)`
       errors.length = 0
       // The seed is chosen per visit through sessionStorage, which the init script reads first.

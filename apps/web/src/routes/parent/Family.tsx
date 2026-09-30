@@ -19,6 +19,8 @@ import { skillStats } from '../../progress/xp.ts'
 import { ReportsPanel } from './Reports.tsx'
 import { minutesBySubject } from '../../progress/subjectDetail.ts'
 import { weekOnWeek } from '../../progress/weekOnWeek.ts'
+import { deedsDone, recentDeeds } from '../../progress/deeds.ts'
+import { CharacterIcon } from '../../components/characterIcons.tsx'
 
 export interface Child {
   email: string
@@ -239,6 +241,8 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
 
       <WeekOnWeek state={child.state!} />
 
+      <GoodDeeds state={child.state!} first={firstNameOf(child.name)} />
+
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#d25b3b" emoji="🎯">Worth a conversation</SectionLabel>
         {s.stuck.length === 0 ? (
@@ -379,6 +383,38 @@ function quizNote(s: ParentSummary): string {
   const of = s.quizCount > 10 ? `Last 10 of ${s.quizCount}` : `Across all ${s.quizCount}`
   if (s.trend === undefined) return of
   return `${of} · ${s.trend >= 0 ? `up ${s.trend}` : `down ${-s.trend}`} points`
+}
+
+/**
+ * The good deed of each of the last seven days, and how many the student has said they
+ * did. Shown once a deed has been seen: a family that has not opened Home since the deeds
+ * began has nothing to read here, and a parent would wonder at an empty week.
+ */
+function GoodDeeds({ state, first }: { state: ProgressState; first: string }) {
+  if (Object.keys(state.deeds).length === 0) return null
+  const days = recentDeeds(state)
+  const count = deedsDone(state)
+  const weekday = (day: string) => new Date(day + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short' })
+  return (
+    <section className="flex flex-col gap-3">
+      <SectionLabel colour="#c8501f" emoji="🌱">{`Good deeds · ${count} done`}</SectionLabel>
+      <p className="text-sm text-ink-2">One small act of character a day on Home, with a question in the evening. What {first} was asked this week, and what they said.</p>
+      <ol className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        {days.map((d) => (
+          <li key={d.day} className={`flex items-center gap-3 rounded-lg border border-rule bg-surface px-3 py-2 text-sm ${d.deed ? '' : 'text-ink-3'}`}>
+            <span className="w-8 shrink-0 text-xs font-bold text-ink-3">{weekday(d.day)}</span>
+            {d.deed ? (
+              <>
+                <span aria-hidden className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white" style={{ background: d.done ? '#c8501f' : 'var(--color-panel)', color: d.done ? '#fff' : 'var(--color-ink-3)' }}><CharacterIcon name={d.deed.icon} size={18} /></span>
+                <span className="min-w-0 flex-grow leading-snug">{d.deed.text}</span>
+                <span className="shrink-0 text-xs font-bold">{d.done === true ? 'Done' : d.done === false ? 'Not done' : 'Not answered'}</span>
+              </>
+            ) : <span>Not opened</span>}
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
 }
 
 function Tile({ label, value, note }: { label: string; value: string; note: string }) {
