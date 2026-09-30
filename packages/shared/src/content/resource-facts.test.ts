@@ -239,6 +239,34 @@ describe('English, against AQA 8700 and 8702', () => {
     expect(poems).toHaveLength(15)
   })
 
+  /** Each poem is told in one line, a sentence a student can carry into the exam, drafted
+   *  from its lesson: a name from the poem's own step must appear in the line's lesson. */
+  it('tells each poem in one line that its lesson teaches', () => {
+    const table = tables(sheet('english-literature', 'power-and-conflict'))[0]!
+    const column = table.columns.indexOf('In one line')
+    expect(column).toBe(3)
+    const lesson = (id: string) => readFileSync(join(ROOT, '../content/english-literature', `${id}.json`), 'utf8').toLowerCase()
+    const named: Record<string, [string, string]> = {
+      'Ozymandias': ['the-power-of-humans', 'tyrant'], 'London': ['the-power-of-humans', 'walker'],
+      'My Last Duchess': ['the-power-of-humans', 'duke'], 'Tissue': ['the-power-of-humans', 'receipts'],
+      'Extract from The Prelude': ['the-power-of-nature', 'peak'], 'Storm on the Island': ['the-power-of-nature', 'empty air'],
+      'Exposure': ['the-power-of-nature', 'cold'], 'The Charge of the Light Brigade': ['the-reality-of-war', 'blunder'],
+      'Bayonet Charge': ['the-reality-of-war', 'terror'], 'Remains': ['the-reality-of-war', 'looter'],
+      'Kamikaze': ['the-reality-of-war', 'one-way'], 'Poppies': ['memory-identity-and-loss', 'memorial'],
+      'War Photographer': ['memory-identity-and-loss', 'do not care'], 'The Emigrée': ['memory-identity-and-loss', 'child'],
+      'Checking Out Me History': ['memory-identity-and-loss', 'heroes'],
+    }
+    expect(table.rows).toHaveLength(15)
+    for (const row of table.rows) {
+      const line = row[column]!
+      const [topic, word] = named[row[0]!]!
+      expect(line, row[0]).toMatch(/^[A-Z].{50,88}\.$/)
+      expect(line, row[0]).not.toMatch(/[—–]/)
+      expect(line.toLowerCase(), `${row[0]} names ${word}`).toContain(word)
+      expect(lesson(topic), `${topic} teaches ${word}`).toContain(word)
+    }
+  })
+
   /** The Duke is alive and arranging his next marriage: his power has not been outlasted. */
   it('does not say the art outlasts the power in My Last Duchess', () => {
     const pair = sheet('english-literature', 'power-and-conflict').applications.find((a) => a.title === 'Choosing a pair in the exam')!

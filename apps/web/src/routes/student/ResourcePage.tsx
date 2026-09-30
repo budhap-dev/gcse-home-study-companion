@@ -23,7 +23,7 @@ export function ResourcePage() {
   const topics = resource.topics.map((id) => TOPICS.find((t) => t.id === id)).filter((t) => t !== undefined)
 
   return (
-    <article className="print-sheet print-colour mx-auto flex w-full max-w-5xl flex-col gap-6">
+    <article className="resource-sheet print-sheet print-colour mx-auto flex w-full max-w-5xl flex-col gap-6">
       <header className="anim-rise flex flex-col gap-2">
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">
           <Link to="/resources" className="inline-block -my-1 py-1 hover:underline">Resources</Link>
