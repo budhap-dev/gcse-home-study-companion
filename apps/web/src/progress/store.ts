@@ -160,14 +160,16 @@ export interface ProgressState {
 }
 
 /**
- * What the student tells the app about themselves: their school year, the subjects they
- * take. It narrows the plan and the subject list to what they
- * study and opens the topic map on their year. `setupAt` records that setup was done (or
- * skipped), so it is offered once.
+ * What the student tells the app about themselves: their school year. The plan puts that
+ * year's topics first and each subject's map opens on it. `setupAt` records that setup was
+ * done (or skipped), so it is offered once.
+ *
+ * Until 1 October 2026 it also held the subjects they take, which narrowed the plan and the
+ * map on Home. The owner found the choice not useful for now, so it went; `read` drops a
+ * list saved before then, so it cannot narrow anything if the choice ever comes back.
  */
 export interface Profile {
   year?: 9 | 10 | 11
-  subjects?: string[]
   setupAt?: string
 }
 
@@ -177,10 +179,12 @@ export function setProfile(profile: Profile) {
   write(state)
 }
 
-/** Only the topics of the subjects the student takes, or all of them if they have not said. */
-export function studiedTopics<T extends { subjectId: string }>(topics: T[], profile: Profile | undefined): T[] {
-  const chosen = profile?.subjects
-  return chosen && chosen.length ? topics.filter((t) => chosen.includes(t.subjectId)) : topics
+/** A profile saved before 1 October 2026 may carry a `subjects` list; see Profile. */
+export function withoutSubjects(profile: Profile | undefined): Profile {
+  if (!profile || !('subjects' in profile)) return profile ?? {}
+  const rest: Profile & { subjects?: unknown } = { ...profile }
+  delete rest.subjects
+  return rest
 }
 
 export const DEFAULT_GOAL_MINUTES = 180
@@ -197,7 +201,7 @@ function read(): ProgressState {
     if (raw) {
       const stored = JSON.parse(raw) as Partial<ProgressState>
       // A state written before `activities` existed has none, and every reader iterates it.
-      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {}, deeds: stored.deeds ?? {}, profile: stored.profile ?? {} }
+      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {}, deeds: stored.deeds ?? {}, profile: withoutSubjects(stored.profile) }
     }
   } catch {
     // storage unavailable or corrupt: start clean

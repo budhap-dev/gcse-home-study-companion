@@ -8,7 +8,7 @@ import { Smiley } from '../../components/Smiley.tsx'
 import { Link } from 'react-router'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { recommend, type Task } from '../../progress/recommend.ts'
-import { isoDate, setProfile, streakDays, studiedTopics, weekMinutes } from '../../progress/store.ts'
+import { isoDate, setProfile, streakDays, weekMinutes } from '../../progress/store.ts'
 import { countLevels, daysThisWeek, fixFirst, isSecure, lastDays, square } from '../../progress/map.ts'
 import { MapLegend, SubjectMapCard, WeekBars } from '../../components/map/MapParts.tsx'
 import { ProfileForm } from '../../components/ProfileForm.tsx'
@@ -34,12 +34,10 @@ import { Thought } from '../../components/Thought.tsx'
 export function Home() {
   const progress = useProgress()
   const profile = progress.profile ?? {}
-  // The plan covers the subjects the student takes (UXI-10); all of them until they say.
-  const studied = studiedTopics(TOPICS, profile)
-  const { next, alternatives } = recommend(studied, progress)
+  const { next, alternatives } = recommend(TOPICS, progress)
   const mistakes = mistakeQueue(progress, redoable)
   const { list: assignments } = useMyAssignments()
-  const plan = todayPlan(studied, progress, assignedTasks(assignments, progress), mistakes.length)
+  const plan = todayPlan(TOPICS, progress, assignedTasks(assignments, progress), mistakes.length)
   const done = doneToday(TOPICS, progress)
   const others = alternatives.filter((t) => !plan.some((p) => p.to === t.to))
   const hour = new Date().getHours()
@@ -50,11 +48,11 @@ export function Home() {
   const [factOffset, setFactOffset] = useState(0)
   const fact = factOfTheDay(SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => s.id), new Date(), factOffset)
 
-  // The map: every topic of every subject the student takes, one square each.
-  const mapped = SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0 && (!profile.subjects?.length || profile.subjects.includes(s.id)))
+  // The map: every topic of every subject, one square each.
+  const mapped = SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0)
     .map((s) => ({ subject: s, squares: topicsForSubject(s.id).map((t) => square(t, progress)) }))
   // Anything already in today's plan is not offered twice.
-  const fix = fixFirst(studied, progress, new Date(), 6).filter((f) => !plan.some((p) => p.to === f.to)).slice(0, 3)
+  const fix = fixFirst(TOPICS, progress, new Date(), 6).filter((f) => !plan.some((p) => p.to === f.to)).slice(0, 3)
 
   const wide = useWide()
   const levelUp = closestLevelUp(progress, mapped.map((m) => m.subject.id))
@@ -151,8 +149,8 @@ export function Home() {
       {!profile.setupAt && (
         <Link to="/settings#you" className="lift flex items-center gap-3 rounded-2xl border border-dashed border-rule bg-surface px-4 py-3 max-lg:order-5 lg:col-span-2">
           <span className="flex flex-grow flex-col gap-0.5">
-            <span className="font-bold">Tell the app your year and subjects</span>
-            <span className="text-xs text-ink-2">So the plan and your map cover what you take. Half a minute.</span>
+            <span className="font-bold">Tell the app your school year</span>
+            <span className="text-xs text-ink-2">So the plan starts on your year’s topics. One tap.</span>
           </span>
           <span className="rounded-lg border border-rule px-3 py-1.5 text-sm font-bold">Set up</span>
         </Link>
@@ -169,12 +167,6 @@ export function Home() {
           {mapped.map((m, i) => (
             <SubjectMapCard key={m.subject.id} subject={m.subject} squares={m.squares} index={i} level={levels[m.subject.id as SubjectId]} />
           ))}
-          {!profile.subjects?.length && (
-            <Link to="/settings#you" className="anim-rise lift flex min-h-32 flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-rule p-3 text-center text-sm font-bold text-ink-2" style={{ '--d': `${(0.15 + mapped.length * 0.05).toFixed(2)}s` } as React.CSSProperties}>
-              <span aria-hidden className="text-2xl leading-none">+</span>
-              Choose which subjects you take
-            </Link>
-          )}
         </div>
       </section>
 
@@ -312,8 +304,8 @@ function TaskCard({ task }: { task: Task }) {
 }
 
 /**
- * The first visit (UXI-10): two questions before the dashboard, so the plan starts from
- * what the student actually takes. Skipping is one tap, and it is not asked again.
+ * The first visit (UXI-10): one question before the dashboard, so the plan starts on the
+ * student's own year. Skipping is one tap, and it is not asked again.
  */
 function Welcome() {
   const progress = useProgress()
@@ -321,7 +313,7 @@ function Welcome() {
     <article className="mx-auto flex w-full max-w-2xl flex-col gap-5">
       <header className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold leading-tight">Welcome</h1>
-        <p className="text-ink-2">Three quick questions, so your plan covers what you study. You can change any of it later in Settings.</p>
+        <p className="text-ink-2">One quick question, so your plan starts on your year. You can change it later in Settings.</p>
       </header>
       <ProfileForm profile={progress.profile ?? {}} saveLabel="Start" />
       <button type="button" onClick={() => setProfile({})} className="-my-2 min-h-11 w-fit text-sm text-ink-3 underline underline-offset-2">Skip for now</button>

@@ -433,6 +433,11 @@ relevant.
 
 - First sign-in asks for year, subjects and exam dates, all changeable later in Settings.
 
+**Since:** exam dates were taken out on 28 September 2026 (school exams follow the topics
+taught, so the dates are not known in advance). The subject tick list went on 1 October 2026:
+the owner found it not useful for now, so the plan and the map cover every subject. Only the
+school year is asked, on first visit and in Settings.
+
 
 ## Epic 5 · Motivation
 
