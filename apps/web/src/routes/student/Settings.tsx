@@ -30,8 +30,9 @@ export function Settings() {
       </header>
 
       <section id="you" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
-        <h2 className="font-bold">Your year and subjects</h2>
-        <ProfileForm profile={progress.profile ?? {}} />
+        <h2 className="font-bold">Your school year</h2>
+        <p className="text-sm text-ink-2">The plan puts your year’s topics first, and each subject’s map opens on it.</p>
+        <ProfileForm profile={progress.profile ?? {}} legend="hidden" />
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
