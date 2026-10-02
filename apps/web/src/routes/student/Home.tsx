@@ -14,7 +14,7 @@ import { MapLegend, SubjectMapCard, WeekBars } from '../../components/map/MapPar
 import { ProfileForm } from '../../components/ProfileForm.tsx'
 import { useProgress } from '../../progress/useProgress.ts'
 import { mistakeQueue } from '../../progress/mistakes.ts'
-import { redoable } from './Mistakes.tsx'
+import { redoable } from '../../content/redoable.ts'
 import { doneToday, todayPlan, type PlanItem } from '../../progress/today.ts'
 import { assignedTasks } from '../../progress/assignments.ts'
 import { useMyAssignments } from '../../auth/assignments.ts'

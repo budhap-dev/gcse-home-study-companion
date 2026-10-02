@@ -824,6 +824,11 @@ As a student on mobile data, I want the app to download only what I open.
 - The libraries, the topic catalogue, the glossary and the reference pages are built into
   files of their own, so a deploy that changes only the app's code leaves them cached: a
   device fetches 183 KB again (compressed) instead of all 670 KB (v10.63.1).
+- The first download holds Home, the subject pages, Progress and Settings; the study screens,
+  the glossary and search, the reference pages and the parent's page are fetched when first
+  opened, and in the background once the app is idle. The first load is 439 KB compressed
+  instead of 682 KB, and on the throttled phone above Home shows in 3.6 s instead of 5.1 s.
+  An open tab that asks for a screen a deploy has replaced reloads once (v10.64.0).
 
 ### OPS-2 · Browser checks in CI
 

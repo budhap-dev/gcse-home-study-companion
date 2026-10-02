@@ -5,23 +5,29 @@ import { NotFound } from '../routes/NotFound.tsx'
 import { Home } from '../routes/student/Home.tsx'
 import { Subjects } from '../routes/student/Subjects.tsx'
 import { TopicMap } from '../routes/student/TopicMap.tsx'
-import { Topic } from '../routes/student/Topic.tsx'
-import { Lesson } from '../routes/student/Lesson.tsx'
-import { Quiz } from '../routes/student/Quiz.tsx'
-import { Worksheet } from '../routes/student/Worksheet.tsx'
-import { WorksheetPrint } from '../routes/student/WorksheetPrint.tsx'
-import { ExamTechnique } from '../routes/student/ExamTechnique.tsx'
-import { WhyItExists } from '../routes/student/WhyItExists.tsx'
 import { Progress } from '../routes/student/Progress.tsx'
-import { Mistakes } from '../routes/student/Mistakes.tsx'
 import { Settings } from '../routes/student/Settings.tsx'
-import { Flashcards } from '../routes/student/Flashcards.tsx'
-import { CheatSheet } from '../routes/student/CheatSheet.tsx'
-import { Search } from '../routes/student/Search.tsx'
-import { Glossary } from '../routes/student/Glossary.tsx'
-import { Resources } from '../routes/student/Resources.tsx'
-import { ResourcePage } from '../routes/student/ResourcePage.tsx'
-import { Family } from '../routes/parent/Family.tsx'
+import { screen } from './screens.ts'
+
+// Fetched when first opened; see screens.ts for which screens and why.
+const study = () => import('../routes/study.ts')
+const lookup = () => import('../routes/lookup.ts')
+const reference = () => import('../routes/reference.ts')
+const Topic = screen(study, 'Topic')
+const Lesson = screen(study, 'Lesson')
+const Quiz = screen(study, 'Quiz')
+const Worksheet = screen(study, 'Worksheet')
+const WorksheetPrint = screen(study, 'WorksheetPrint')
+const ExamTechnique = screen(study, 'ExamTechnique')
+const WhyItExists = screen(study, 'WhyItExists')
+const Flashcards = screen(study, 'Flashcards')
+const CheatSheet = screen(study, 'CheatSheet')
+const Mistakes = screen(study, 'Mistakes')
+const Glossary = screen(lookup, 'Glossary')
+const Search = screen(lookup, 'Search')
+const Resources = screen(reference, 'Resources')
+const ResourcePage = screen(reference, 'ResourcePage')
+const Family = screen(() => import('../routes/parent/Family.tsx'), 'Family')
 
 /**
  * URL structure. Every screen is the student's own except /family, which is a parent

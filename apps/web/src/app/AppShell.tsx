@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
+import { Suspense, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router'
 import { DOCK_FULL_LABELS, navFor } from './nav.ts'
 import { Logo } from '../components/Logo.tsx'
@@ -6,6 +6,10 @@ import { SearchBox } from '../components/SearchBox.tsx'
 import { useAuth } from '../auth/useAuth.ts'
 import { ScrollToTop } from './ScrollToTop.tsx'
 import { useNewBuild } from './useNewBuild.ts'
+import { TopicLoading } from '../components/TopicLoading.tsx'
+import { useScreenOpening } from './screens.ts'
+
+const MAIN = 'min-w-0 flex-1 px-4 pb-32 pt-6 md:px-10 lg:pb-10'
 
 /**
  * Layout: a band of the theme's banner colours across the top, carrying the app's name, the
@@ -18,9 +22,12 @@ export function AppShell() {
   const { pathname } = useLocation()
   const auth = useAuth()
   const newBuild = useNewBuild()
+  const opening = useScreenOpening()
   return (
     <div className="flex min-h-dvh flex-col">
       <ScrollToTop />
+      {/* A screen still being fetched after a press: a line across the top of the band. */}
+      {opening && <div role="status" className="screen-opening"><span className="sr-only">Loading…</span></div>}
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
       </a>
@@ -55,11 +62,18 @@ export function AppShell() {
         </div>
       </header>
 
-      <main id="main" className="min-w-0 flex-1 px-4 pb-32 pt-6 md:px-10 lg:pb-10" key={pathname}>
-        <div className="anim-fade-up">
-          <Outlet />
-        </div>
-      </main>
+      {/* Some screens are fetched when first opened (screens.ts). The boundary sits outside
+          the keyed element on purpose: inside it would be a new boundary on every page, and a
+          new boundary shows its fallback at once, where this one keeps the page being left on
+          the screen until the next is ready. The fallback is seen only when the app opens
+          straight onto such a screen. */}
+      <Suspense fallback={<main id="main" className={MAIN}><TopicLoading /></main>}>
+        <main id="main" className={MAIN} key={pathname}>
+          <div className="anim-fade-up">
+            <Outlet />
+          </div>
+        </main>
+      </Suspense>
 
       <nav aria-label="Primary" className="hero-gradient fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-30 rounded-[1.75rem] shadow-[0_12px_30px_rgb(16_24_40/0.28)] lg:hidden">
         <Menu variant="dock" role={auth.role} />

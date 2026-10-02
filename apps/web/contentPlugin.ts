@@ -91,8 +91,10 @@ const LIBRARIES: [name: string, packages: RegExp][] = [
 
 export function chunkFor(id: string): string | undefined {
   if (id.includes('virtual:topic-catalogue')) return 'catalogue'
+  // Each on its own: the glossary and the exam guides are read as the app opens, the
+  // reference pages only by the screens that show them.
   const seed = /\/supabase\/seed\/(glossary|resources|guides)\//.exec(id)
-  if (seed) return seed[1] === 'glossary' ? 'glossary' : 'reference'
+  if (seed) return seed[1]
   // The package's own name: the last node_modules in the path, since pnpm nests them.
   const pkg = /.*\/node_modules\/((?:@[^/]+\/)?[^/]+)\//.exec(id)?.[1]
   return pkg ? LIBRARIES.find(([, packages]) => packages.test(pkg))?.[0] : undefined
