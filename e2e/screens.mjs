@@ -44,6 +44,8 @@ const ONLY = arg('only', '')
 // A route with `tap` presses each of those controls in turn (the first match of each), for a
 // screen that needs a sequence: turn a card over, then say it is known. Both are watched
 // for the page widening while the press's animation runs.
+// A route with `whole` is scrolled to its end first, again and again until it stops growing:
+// the glossary draws its cards a batch at a time, and every one of them is to be scanned.
 // A route with `seed` starts from that student instead of the sample: 'new' has never opened
 // the app (the welcome questions), 'blank' has answered them and done nothing since.
 const ROUTES = [
@@ -59,7 +61,11 @@ const ROUTES = [
   '/subjects/english-literature/topics/an-inspector-calls-themes',
   '/progress',
   '/settings',
-  '/glossary',
+  { path: '/glossary', whole: true },
+  // A linked term: its card must open on the screen, clear of the header and the dock.
+  { path: '/glossary?term=physics-upthrust', lands: 'main section.anim-fade-up' },
+  // A pressed letter starts the list there.
+  { path: '/glossary', press: 'nav[aria-label="Jump to a letter"] button' },
   '/search',
   '/search?q=momentum',
   '/resources',
@@ -213,7 +219,7 @@ for (const theme of THEMES) {
     page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(m.text()) })
     const shot = (name) => SHOTS ? page.screenshot({ path: join(SHOTS, `${theme}-${width}${name.replace(/[/?=]/g, '_') || '_home'}.png`), fullPage: true }) : undefined
     for (const entry of ROUTES) {
-      const { path, press, tap, seed = 'sample' } = typeof entry === 'string' ? { path: entry } : entry
+      const { path, press, tap, whole, lands, seed = 'sample' } = typeof entry === 'string' ? { path: entry } : entry
       // "--only /" is Home alone, since every path contains a slash.
       if (ONLY && !(ONLY === '/' ? path === '/' : path.includes(ONLY))) continue
       const route = seed === 'sample' ? path : `${path} (${seed} student)`
@@ -225,7 +231,34 @@ for (const theme of THEMES) {
       await page.waitForSelector('main h1', { timeout: 20000 }).catch(() => errors.push('no heading rendered'))
       // Entrance animations run to about 1.6s; measuring mid-animation reports boxes that are not the layout.
       await page.waitForTimeout(2200)
+      // Where the page put what it was asked for, before anything below moves it.
+      const landing = lands ? await page.evaluate((selector) => {
+        const box = document.querySelector(selector)?.getBoundingClientRect()
+        if (!box) return 'not on the page'
+        const header = document.querySelector('header.sticky')?.getBoundingClientRect().bottom ?? 0
+        const dock = [...document.querySelectorAll('nav[aria-label="Primary"]')].find((n) => getComputedStyle(n).position === 'fixed' && getComputedStyle(n).display !== 'none')
+        const floor = Math.min(window.innerHeight, dock?.getBoundingClientRect().top ?? Infinity)
+        // Its top under the header, and a fair part of it above the dock or the fold.
+        if (box.top < header - 1) return `starts ${Math.round(header - box.top)}px under the header`
+        if (box.top + Math.min(box.height, 200) > floor) return `starts at ${Math.round(box.top)}px, with the screen ending at ${Math.round(floor)}px`
+        return ''
+      }, lands) : ''
+      let drawn = 0
+      if (whole) {
+        // Three looks in a row at the same height is the end; a batch is drawn well inside the wait.
+        for (let same = 0, last = 0, i = 0; same < 3 && i < 200; i++) {
+          const height = await page.evaluate(() => { window.scrollTo(0, document.documentElement.scrollHeight); return document.documentElement.scrollHeight })
+          same = height === last ? same + 1 : 0
+          last = height
+          await page.waitForTimeout(120)
+        }
+        drawn = await page.evaluate(() => { window.scrollTo(0, 0); return document.querySelectorAll('main [id^="term-"]').length })
+        await page.waitForTimeout(300)
+      }
       const found = await page.evaluate(scan, { phone })
+      if (landing) found.push({ kind: 'linked item opens off the screen', where: lands, detail: landing })
+      // A floor, so that a page which stopped growing early could not pass as one scanned whole.
+      if (whole && drawn < 500) found.push({ kind: 'page not drawn to its end', where: 'page', detail: `${drawn} cards` })
       await shot(route.replace(/[ ()]/g, '-'))
       if (press || tap) {
         /** The widest the page gets while a press's animation runs: sampled for 600ms, every 30ms. */
