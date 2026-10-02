@@ -821,6 +821,9 @@ As a student on mobile data, I want the app to download only what I open.
   the list at that letter. A linked term is scrolled to: on a phone it had been opening
   below the dock, out of sight, and a "see also" pressed in a search result did nothing
   (v10.63.0).
+- The libraries, the topic catalogue, the glossary and the reference pages are built into
+  files of their own, so a deploy that changes only the app's code leaves them cached: a
+  device fetches 183 KB again (compressed) instead of all 670 KB (v10.63.1).
 
 ### OPS-2 · Browser checks in CI
 
