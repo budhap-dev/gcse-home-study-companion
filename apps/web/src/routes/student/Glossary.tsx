@@ -1,5 +1,5 @@
 import { GLOSSARY_LETTERS, SUBJECTS, letterOf, searchGlossary } from '@study/shared'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { TermCard } from '../../components/TermCard.tsx'
 import { GLOSSARY, termBySlug, type Term } from '../../content/glossary.ts'
@@ -67,19 +67,19 @@ export function Glossary() {
 
   const subjects = useMemo(() => SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0), [])
   const scoped = useMemo(() => (subjectId ? GLOSSARY.filter((t) => t.subjectId === subjectId) : GLOSSARY), [subjectId])
-  const searching = query.trim().length > 0
+  // The list follows the field a moment behind. One letter matches nearly every term, and
+  // drawing them all held the letter itself off the screen for half a second on a phone;
+  // deferred, the field shows what was typed at once and the list catches up, giving way
+  // to the next letter if one arrives first.
+  const listQuery = useDeferredValue(query)
+  const searching = listQuery.trim().length > 0
   const shown: Term[] = useMemo(
-    () => (searching ? (searchGlossary(scoped, query).map((h) => h.entry) as Term[]) : scoped),
-    [searching, query, scoped],
+    () => (searching ? (searchGlossary(scoped, listQuery).map((h) => h.entry) as Term[]) : scoped),
+    [searching, listQuery, scoped],
   )
-
-  const byLetter = useMemo(() => {
-    const map = new Map<string, Term[]>()
-    for (const term of shown) {
-      const letter = letterOf(term)
-      map.set(letter, [...(map.get(letter) ?? []), term])
-    }
-    return map
+  const letters = useMemo(() => {
+    const present = new Set(shown.map(letterOf))
+    return GLOSSARY_LETTERS.filter((l) => present.has(l))
   }, [shown])
 
   const focused = focusSlug ? termBySlug(focusSlug) : undefined
@@ -116,7 +116,7 @@ export function Glossary() {
 
       {!searching && (
         <nav aria-label="Jump to a letter" className="flex flex-wrap gap-1">
-          {GLOSSARY_LETTERS.filter((l) => byLetter.has(l)).map((letter) => (
+          {letters.map((letter) => (
             <a key={letter} href={`#letter-${letter}`} className="flex h-8 w-8 items-center justify-center rounded-lg border border-rule bg-surface text-sm font-bold hover:border-[color:var(--subject)]">
               {letter}
             </a>
@@ -132,7 +132,7 @@ export function Glossary() {
       )}
 
       <p className="text-sm text-ink-3">
-        {shown.length} {shown.length === 1 ? 'term' : 'terms'}{subjectId ? ` in ${subjects.find((s) => s.id === subjectId)?.name}` : ''}{searching ? ` matching “${query.trim()}”` : ''}
+        {shown.length} {shown.length === 1 ? 'term' : 'terms'}{subjectId ? ` in ${subjects.find((s) => s.id === subjectId)?.name}` : ''}{searching ? ` matching “${listQuery.trim()}”` : ''}
       </p>
 
       {shown.length === 0 && (
@@ -141,24 +141,45 @@ export function Glossary() {
         </p>
       )}
 
-      {searching ? (
-        <ul className="flex flex-col gap-3">
-          {shown.map((term) => <li key={term.slug}><TermCard term={term} query={query} id={`term-${term.slug}`} /></li>)}
-        </ul>
-      ) : (
-        GLOSSARY_LETTERS.filter((l) => byLetter.has(l)).map((letter) => (
-          <section key={letter} id={`letter-${letter}`} className="flex scroll-mt-20 flex-col gap-3">
-            <h2 className="border-b border-rule pb-1 text-2xl font-bold">{letter}</h2>
-            <ul className="flex flex-col gap-3">
-              {byLetter.get(letter)!.map((term) => <li key={term.slug}><TermCard term={term} id={`term-${term.slug}`} /></li>)}
-            </ul>
-          </section>
-        ))
-      )}
+      <TermList terms={shown} query={searching ? listQuery : ''} />
       <BackToTop />
     </article>
   )
 }
+
+/**
+ * The cards: search results in rank order, or the A to Z under its letters when `query` is
+ * empty. Its own memoised component so that what the page re-renders for and the list does
+ * not need (the field's own text, the URL keeping in step) leaves the cards alone.
+ */
+const TermList = memo(function TermList({ terms, query }: { terms: Term[]; query: string }) {
+  const byLetter = useMemo(() => {
+    const map = new Map<string, Term[]>()
+    for (const term of terms) {
+      const letter = letterOf(term)
+      const list = map.get(letter)
+      if (list) list.push(term)
+      else map.set(letter, [term])
+    }
+    return map
+  }, [terms])
+
+  if (query) {
+    return (
+      <ul className="flex flex-col gap-3">
+        {terms.map((term) => <li key={term.slug}><TermCard term={term} query={query} id={`term-${term.slug}`} /></li>)}
+      </ul>
+    )
+  }
+  return GLOSSARY_LETTERS.filter((l) => byLetter.has(l)).map((letter) => (
+    <section key={letter} id={`letter-${letter}`} className="flex scroll-mt-20 flex-col gap-3">
+      <h2 className="border-b border-rule pb-1 text-2xl font-bold">{letter}</h2>
+      <ul className="flex flex-col gap-3">
+        {byLetter.get(letter)!.map((term) => <li key={term.slug}><TermCard term={term} id={`term-${term.slug}`} /></li>)}
+      </ul>
+    </section>
+  ))
+})
 
 function Chip({ on, colour, onClick, children }: { on: boolean; colour?: string; onClick: () => void; children: React.ReactNode }) {
   return (
