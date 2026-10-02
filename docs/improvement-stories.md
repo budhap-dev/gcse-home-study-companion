@@ -815,6 +815,12 @@ As a student on mobile data, I want the app to download only what I open.
   4×, a letter typed in its search box took 664 ms to show, because all 559 cards were redrawn
   first; the list now follows the field a moment behind, and a letter shows in 80 ms. A "see
   also" name is found in a table instead of by scanning every term (v10.62.1).
+- The glossary draws 30 cards and more as the reader scrolls, instead of all 559 (23,600
+  elements, a page 240 phone screens tall). It opens in 0.6 s instead of 1.6 s with the CPU
+  slowed 4×, and returning to "All subjects" takes 32 ms instead of 536 ms. A letter starts
+  the list at that letter. A linked term is scrolled to: on a phone it had been opening
+  below the dock, out of sight, and a "see also" pressed in a search result did nothing
+  (v10.63.0).
 
 ### OPS-2 · Browser checks in CI
 
