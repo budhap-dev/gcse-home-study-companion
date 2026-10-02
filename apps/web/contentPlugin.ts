@@ -70,3 +70,30 @@ export function contentPlugin(): Plugin {
     },
   }
 }
+
+/**
+ * What goes in a file of its own, by how often it changes.
+ *
+ * The app deploys with every merged PR, and each asset is cached by a name made from its
+ * contents. As one file, any change at all renamed all 3.2 MB of it, so every device fetched
+ * the libraries and the topic catalogue again after every deploy. Apart, a library file keeps
+ * its name until the library is upgraded, and the catalogue until the content pack changes.
+ *
+ * Only libraries and data are named here: neither imports the app's own code, so no file
+ * below can come to depend on one that changes more often than it does.
+ */
+const LIBRARIES: [name: string, packages: RegExp][] = [
+  ['react', /^(react|react-dom|react-router|scheduler|cookie|set-cookie-parser)$/],
+  ['supabase', /^(@supabase\/.+|iceberg-js|tslib)$/],
+  ['maths', /^(katex|marked)$/],
+  ['zod', /^zod$/],
+]
+
+export function chunkFor(id: string): string | undefined {
+  if (id.includes('virtual:topic-catalogue')) return 'catalogue'
+  const seed = /\/supabase\/seed\/(glossary|resources|guides)\//.exec(id)
+  if (seed) return seed[1] === 'glossary' ? 'glossary' : 'reference'
+  // The package's own name: the last node_modules in the path, since pnpm nests them.
+  const pkg = /.*\/node_modules\/((?:@[^/]+\/)?[^/]+)\//.exec(id)?.[1]
+  return pkg ? LIBRARIES.find(([, packages]) => packages.test(pkg))?.[0] : undefined
+}
