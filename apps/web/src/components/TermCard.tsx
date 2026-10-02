@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router'
 import { getSubject } from '@study/shared'
 import { TOPICS } from '../content/index.ts'
@@ -13,8 +14,11 @@ function titleOf(id: string): string {
  * A glossary term in full: what it means, then a concrete instance of it, then where it
  * is taught and what to read next. The example is not decoration — a definition alone
  * rarely settles what a term means, which is why the schema requires one.
+ *
+ * Memoised because the glossary draws hundreds at once, and its URL changes on every letter
+ * typed and every "see also" followed; none of that changes what a card says.
  */
-export function TermCard({ term, query = '', id }: { term: Term; query?: string; id?: string }) {
+export const TermCard = memo(function TermCard({ term, query = '', id }: { term: Term; query?: string; id?: string }) {
   const subject = getSubject(term.subjectId)
   const related = term.related.map((name) => termByName(name, term.subjectId)).filter((t): t is Term => Boolean(t))
   return (
@@ -54,4 +58,4 @@ export function TermCard({ term, query = '', id }: { term: Term; query?: string;
       )}
     </div>
   )
-}
+})

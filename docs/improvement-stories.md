@@ -811,6 +811,10 @@ As a student on mobile data, I want the app to download only what I open.
   JavaScript file (4.7 MB compressed).
 - The first load is under 1 MB compressed: 677 KB of script and 18 KB of styles, from 4.7 MB. On
   a throttled phone (1.6 Mbps, 150 ms, CPU slowed 4×) Home took 4.7 s instead of 25.2 s.
+- The glossary answers a typed letter at once. Measured on 2 October 2026 with the CPU slowed
+  4×, a letter typed in its search box took 664 ms to show, because all 559 cards were redrawn
+  first; the list now follows the field a moment behind, and a letter shows in 80 ms. A "see
+  also" name is found in a table instead of by scanning every term (v10.62.1).
 
 ### OPS-2 · Browser checks in CI
 

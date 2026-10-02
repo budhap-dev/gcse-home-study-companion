@@ -17,6 +17,13 @@ export const GLOSSARY: Term[] = Object.values(files)
   .sort((a, b) => a.term.localeCompare(b.term, 'en', { sensitivity: 'base' }))
 
 const bySlug = new Map(GLOSSARY.map((t) => [t.slug, t]))
+// Every card looks up each of its "see also" names, so the glossary page asks some 1,300
+// times as it draws: a scan of the whole list per name was a tenth of the time it took to open.
+const byName = new Map<string, Term[]>()
+for (const t of GLOSSARY) {
+  const key = t.term.toLowerCase()
+  byName.set(key, [...(byName.get(key) ?? []), t])
+}
 export function termBySlug(slug: string): Term | undefined {
   return bySlug.get(slug)
 }
@@ -27,8 +34,8 @@ export function termBySlug(slug: string): Term | undefined {
  * names are ignored rather than an error, so a name can be written before its entry is.
  */
 export function termByName(name: string, subjectId?: string): Term | undefined {
-  const matches = GLOSSARY.filter((t) => t.term.toLowerCase() === name.toLowerCase())
-  return matches.find((t) => t.subjectId === subjectId) ?? matches[0]
+  const matches = byName.get(name.toLowerCase())
+  return matches?.find((t) => t.subjectId === subjectId) ?? matches?.[0]
 }
 
 /** The terms a topic teaches, in the order the glossary lists them. */
