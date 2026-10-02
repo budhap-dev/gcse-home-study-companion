@@ -413,6 +413,11 @@ figure[data-diagram] {
 .anim-float { animation: float-up 1.4s ease-out both; }
 .anim-flicker { animation: flicker 1.6s ease-in-out infinite; transform-origin: 50% 90%; }
 .anim-bar { animation: grow-bar 0.9s ease-out both; }
+/* A screen fetched after a press (app/screens.ts): a line that breathes along the top of the
+   band. It only fades, since anything that slid could widen a phone's page as it left. */
+@keyframes screen-opening { from { opacity: 0.25; } to { opacity: 0.95; } }
+.screen-opening { position: fixed; inset: 0 0 auto 0; z-index: 40; height: 3px; background: #fff; animation: screen-opening 0.7s ease-in-out infinite alternate; }
+[data-motion="off"] .screen-opening { animation: none; }
 .press { transition: transform 0.12s ease; }
 .press:active { transform: scale(0.97); }
 [data-motion="off"] .accordion::details-content { transition: none !important; }

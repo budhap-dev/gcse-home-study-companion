@@ -53,11 +53,11 @@ describe('what is built into a file of its own', () => {
     expect(chunkFor(`${ROOT}/mathlive@0.110.0/node_modules/mathlive/mathlive.min.mjs`)).toBeUndefined()
   })
 
-  it('keeps the catalogue, the glossary and the reference pages apart from the code', () => {
+  it('keeps the catalogue, the glossary, the exam guides and the reference pages apart from the code', () => {
     expect(chunkFor('\0virtual:topic-catalogue')).toBe('catalogue')
     expect(chunkFor('/repo/supabase/seed/glossary/physics.json')).toBe('glossary')
-    expect(chunkFor('/repo/supabase/seed/resources/maths.json')).toBe('reference')
-    expect(chunkFor('/repo/supabase/seed/guides/french.json')).toBe('reference')
+    expect(chunkFor('/repo/supabase/seed/resources/maths.json')).toBe('resources')
+    expect(chunkFor('/repo/supabase/seed/guides/french.json')).toBe('guides')
   })
 
   it('names nothing of the app itself, nor a topic, which is fetched when opened', () => {

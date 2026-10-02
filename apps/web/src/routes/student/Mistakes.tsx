@@ -7,6 +7,7 @@ import { ReportMistake } from '../../components/ReportMistake.tsx'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
 import { summaryById } from '../../content/index.ts'
+import { redoable } from '../../content/redoable.ts'
 import { useTopics } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import { mistakeQueue, type Mistake } from '../../progress/mistakes.ts'
@@ -15,12 +16,6 @@ import { getState, recordAttempt } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { xpForQuestions } from '../../progress/xp.ts'
-
-/** A question can be redone here if it still exists and is marked by the app: an extended answer is self-marked. */
-export function redoable(topicId: string, questionId: string): boolean {
-  const q = summaryById(topicId)?.questions.find((x) => x.id === questionId)
-  return Boolean(q && q.type !== 'extended')
-}
 
 interface Session {
   id: string
