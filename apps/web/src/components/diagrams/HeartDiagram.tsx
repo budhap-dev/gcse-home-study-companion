@@ -35,8 +35,9 @@ function Vessel({ pts, colour, gap = false }: { pts: [number, number][]; colour:
     <g>
       {gap && <path d={d} fill="none" stroke="#fff" strokeWidth="13" strokeLinejoin="round" />}
       <path d={d} fill="none" stroke={colour} strokeWidth="7" strokeLinejoin="round" strokeLinecap="round" />
-      {/* The blood itself: pale dashes moving from the first point to the last, the way it flows. */}
-      <path d={d} className="anim-flow" data-flow="" fill="none" stroke="#fff" strokeOpacity="0.85" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" aria-hidden />
+      {/* The blood itself: pale dashes moving from the first point to the last, the way it flows.
+          When a designer gives the flow a number of plays (styles.css), the dashes fade once it ends. */}
+      <path d={d} className="anim-flow" data-flow="" onAnimationEnd={(e) => e.currentTarget.classList.add('flow-done')} fill="none" stroke="#fff" strokeOpacity="0.85" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" aria-hidden />
       <path d={head} fill={colour} />
     </g>
   )

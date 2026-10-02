@@ -365,7 +365,7 @@ figure[data-diagram] {
 
 /* A run of right answers earns a little warmth behind the counter. */
 @keyframes streak-glow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
-.anim-streak { animation: streak-glow 1.3s ease-in-out infinite; }
+.anim-streak { animation: streak-glow var(--streak-time) ease-in-out var(--streak-plays); }
 
 .flashcard-inner { display: grid; transition: transform 0.5s; transform-style: preserve-3d; }
 .flashcard-face { grid-area: 1 / 1; }
@@ -399,6 +399,20 @@ figure[data-diagram] {
 .accordion-panel { min-height: 0; overflow: hidden; }
 
 /* Animations. Switched off wholesale by the Settings toggle or the OS reduced-motion setting. */
+
+/* The looping animations, for a designer to tune in one place. Each has a time, how long one
+   play lasts, and a number of plays: infinite to keep going, or a number such as 5 to play
+   five times and rest where it began (5 plays of 1.1 s is about 5.5 s of movement). Every
+   loop starts and ends on the same frame, so stopping never leaves anything half-moved; the
+   blood's dashes fade away when they stop, since still dashes read as a fault. */
+:root {
+  --flow-time: 1.1s;   --flow-plays: infinite;   /* blood along the heart's vessels */
+  --drift-time: 4.5s;  --drift-plays: infinite;  /* subject badges and the topic ring, floating */
+  --here-time: 1.8s;   --here-plays: infinite;   /* the pulse round "you are here" */
+  --banner-time: 14s;  --banner-plays: infinite; /* banner colours shifting */
+  --flame-time: 1.6s;  --flame-plays: infinite;  /* the streak flame on Home */
+  --streak-time: 1.3s; --streak-plays: infinite; /* the glow on a flashcard run */
+}
 @keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
 @keyframes bounce-in { 0% { transform: translateY(0); } 30% { transform: translateY(-10px); } 55% { transform: translateY(0); } 75% { transform: translateY(-4px); } 100% { transform: translateY(0); } }
@@ -411,7 +425,7 @@ figure[data-diagram] {
 .anim-bounce { animation: bounce-in 0.8s ease-out both; }
 .anim-shake { animation: shake 0.4s ease-in-out both; }
 .anim-float { animation: float-up 1.4s ease-out both; }
-.anim-flicker { animation: flicker 1.6s ease-in-out infinite; transform-origin: 50% 90%; }
+.anim-flicker { animation: flicker var(--flame-time) ease-in-out var(--flame-plays); transform-origin: 50% 90%; }
 .anim-bar { animation: grow-bar 0.9s ease-out both; }
 /* A screen fetched after a press (app/screens.ts): a line that breathes along the top of the
    band. It only fades, since anything that slid could widen a phone's page as it left. */
@@ -439,13 +453,13 @@ figure[data-diagram] {
 @keyframes here-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--subject) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 9px transparent; } }
 @keyframes ring-fill { from { stroke-dasharray: 0 999; } }
 .anim-rise { animation: rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s) both; }
-.anim-drift { animation: drift 4.5s ease-in-out var(--d, 0s) infinite; }
+.anim-drift { animation: drift var(--drift-time) ease-in-out var(--d, 0s) var(--drift-plays); }
 .anim-sq { animation: sq-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) var(--d, 0s) both; }
 .anim-grow-x { transform-origin: left; animation: grow-x 1s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0.2s) both; }
 .anim-grow-y { transform-origin: bottom; animation: grow-y 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s) both; }
 /* For a path drawn with pathLength="1", so one dash covers it whatever its real length. */
 .anim-draw { stroke-dasharray: 1; animation: draw 1.6s ease-out var(--d, 0.3s) both; }
-.anim-here { animation: here-pulse 1.8s ease-out infinite; }
+.anim-here { animation: here-pulse var(--here-time) ease-out var(--here-plays); }
 .anim-ring { animation: ring-fill 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0.2s) both; }
 
 /* A banner: the theme's three hero colours, drifting slowly. White text sits on it, and
@@ -453,7 +467,7 @@ figure[data-diagram] {
 .hero-gradient {
   background-image: linear-gradient(120deg, var(--hero-1), var(--hero-2), var(--hero-3));
   background-size: 220% 220%;
-  animation: hero-shift 14s ease infinite;
+  animation: hero-shift var(--banner-time) ease var(--banner-plays);
   color: #fff;
 }
 /* The soft light across a banner's top corner. Decoration only. */
@@ -494,7 +508,9 @@ figure[data-diagram] {
 /* Blood along a vessel, a signal along a wire: short dashes that travel the way the path is
    drawn, so the direction of flow can be seen and not only read from an arrowhead. */
 @keyframes flow { to { stroke-dashoffset: -24; } }
-.anim-flow { stroke-dasharray: 3 9; animation: flow 1.1s linear infinite; }
+.anim-flow { stroke-dasharray: 3 9; animation: flow var(--flow-time) linear var(--flow-plays); transition: opacity 0.6s ease-out; }
+/* Set by the drawing when a counted run of plays ends (never, while the plays are infinite). */
+.anim-flow.flow-done { opacity: 0; }
 /* A shape inside a drawing turns and grows about its own middle, not the drawing's corner. */
 .anim-self { transform-box: fill-box; transform-origin: center; }
 

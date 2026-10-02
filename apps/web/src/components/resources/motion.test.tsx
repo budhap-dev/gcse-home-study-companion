@@ -63,6 +63,28 @@ describe('the motion switch', () => {
   })
 })
 
+describe('the loops a designer tunes', () => {
+  const LOOPS = ['flow', 'drift', 'here', 'banner', 'flame', 'streak']
+
+  /** A loop that wrote its own time or "infinite" would ignore the controls in styles.css. */
+  it('takes every loop\'s time and number of plays from the tokens', () => {
+    const root = /:root \{\n  --flow-time[\s\S]*?\n\}/.exec(css)![0]
+    for (const name of LOOPS) {
+      expect(root, name).toMatch(new RegExp(`--${name}-time: [\\d.]+s;`))
+      expect(root, name).toMatch(new RegExp(`--${name}-plays: infinite;`))
+      expect(css, name).toMatch(new RegExp(`animation: [a-z-]+ var\\(--${name}-time\\)[^;]*var\\(--${name}-plays\\);`))
+    }
+    // Only the line shown while a screen loads loops on its own terms: it must last as long as the wait.
+    const fixed = [...css.matchAll(/animation:[^;]*\binfinite\b[^;]*;/g)].map((m) => m[0])
+    expect(fixed).toEqual(['animation: screen-opening 0.7s ease-in-out infinite alternate;'])
+  })
+
+  it('fades the blood\'s dashes when a counted run of plays ends', () => {
+    expect(css).toMatch(/\.anim-flow\.flow-done \{ opacity: 0; \}/)
+    expect(readFileSync(join(SRC, 'components/diagrams/HeartDiagram.tsx'), 'utf8')).toMatch(/onAnimationEnd=\{\(e\) => e\.currentTarget\.classList\.add\('flow-done'\)\}/)
+  })
+})
+
 describe('how long a page takes to arrive', () => {
   it('steps each wait up to a cap, and no further', () => {
     expect(stagger(0)).toBe('0.00s')
