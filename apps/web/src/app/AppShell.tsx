@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router'
-import { DOCK_FULL_LABELS, navFor } from './nav.ts'
+import { DOCK_FULL_LABELS, isFocusRoute, navFor } from './nav.ts'
+import { useChromeHidden } from './useChromeHidden.ts'
 import { Logo } from '../components/Logo.tsx'
 import { SearchBox } from '../components/SearchBox.tsx'
 import { useAuth } from '../auth/useAuth.ts'
@@ -23,8 +24,11 @@ export function AppShell() {
   const auth = useAuth()
   const newBuild = useNewBuild()
   const opening = useScreenOpening()
+  // On a lesson, quiz and the like, the band and dock step aside below laptop width while
+  // the student scrolls down (styles.css, `data-chrome`).
+  const [chromeHidden, showChrome] = useChromeHidden(isFocusRoute(pathname), pathname)
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex min-h-dvh flex-col" data-chrome={chromeHidden ? 'hidden' : undefined}>
       <ScrollToTop />
       {/* A screen still being fetched after a press: a line across the top of the band. */}
       {opening && <div role="status" className="screen-opening"><span className="sr-only">Loading…</span></div>}
@@ -40,7 +44,7 @@ export function AppShell() {
         </div>
       )}
 
-      <header className="hero-gradient sticky top-0 z-30 shadow-[0_6px_20px_rgb(16_24_40/0.12)]">
+      <header onFocus={showChrome} className="chrome-band hero-gradient sticky top-0 z-30 shadow-[0_6px_20px_rgb(16_24_40/0.12)]">
         {/* One row from tablet width: name left, search pushed right and bounded, the menu
             between them on a laptop. Two rows on a phone, because the name and a usable
             search box will not share 390px. */}
@@ -75,7 +79,7 @@ export function AppShell() {
         </main>
       </Suspense>
 
-      <nav aria-label="Primary" className="hero-gradient fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-30 rounded-[1.75rem] shadow-[0_12px_30px_rgb(16_24_40/0.28)] lg:hidden">
+      <nav aria-label="Primary" onFocus={showChrome} className="chrome-dock hero-gradient fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-30 rounded-[1.75rem] shadow-[0_12px_30px_rgb(16_24_40/0.28)] lg:hidden">
         <Menu variant="dock" role={auth.role} />
       </nav>
     </div>

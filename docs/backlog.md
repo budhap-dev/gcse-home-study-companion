@@ -241,6 +241,43 @@ One PR per subject.
   so a browser check clicks the right answer to an option written only in maths. Every lesson
   check in the pack (2,275) answered with its own answer is marked Correct (27 September 2026).
 
+## 4. Suggestions of 6 October 2026
+
+Asked for by the owner ("anything you can suggest to improve the app contentwise and
+designwise?") after the daily goal of 25 minutes replaced 180 a week. Built from screenshots of
+the app at 390 and 1536 wide and a count of the content pack. The owner said to do the three
+picked first and list the rest here.
+
+**First, in this order:**
+- [x] **Focus view** (design 7): on a lesson, quiz, worksheet, flashcards or mistakes screen
+  below laptop width, the top band and the menu dock slide away while the student scrolls
+  down and return on scrolling up. They took about a third of a phone screen mid-lesson.
+- [ ] **Daily mixed recap** (content 3, QZ-3, TRK-3, WKP-3): five questions a day drawn
+  across topics already studied, weakest and longest-unseen first, started from Home.
+- [ ] **French listening and dictation** (content 1, TOP-5): questions that play French
+  through the browser's own voice, a sentence to type (the 1FR1 dictation) and a short
+  passage to answer in English. Listening is a quarter of the French grade; until now only
+  9 of 967 French questions involved listening at all.
+
+**Then, not yet scheduled:**
+- [ ] **Business and Biology depth** (content 2): about 5 questions per specification point,
+  against about 10 in Maths and 12 in Computer Science. More calculation and 6/9/12-mark
+  questions per sub-point; split each Business topic (a whole section of 2 to 5 sub-points
+  today) in two.
+- [ ] **Music listening** (content 4): a link to a recording of each set work, no timings.
+  Only if the owner revisits the no-audio decision.
+- [ ] **Phone Home puts Today first** (design 5): the first "Next up" card moves into the
+  banner, and the four counters shrink to one line, since a new or lapsed student reads
+  four zeros before anything to do.
+- [ ] **Next up mixes subjects** (design 6): three suggestions from three subjects. All three
+  were Maths on 6 October 2026.
+- [ ] **Shorter topic intro on a phone** (design 8): two lines and "Read more", so the
+  activities are on the first screen.
+- [ ] **Subject map opens on the student's year and names its squares** (design 9).
+- [ ] **Parent view leftovers** (design 10): PAR-2 (the child's topic map, read-only) and
+  PAR-5 (trend by subject with average score). The suggested task beside a weak topic is
+  already built (Family, "Suggested next").
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are

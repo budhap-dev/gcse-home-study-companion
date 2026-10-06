@@ -593,6 +593,18 @@ figure[data-diagram] {
    where the menu is in the top band instead. */
 .bottom-nav-clear { bottom: calc(6.25rem + env(safe-area-inset-bottom)); }
 @media (min-width: 1024px) { .bottom-nav-clear { bottom: 1.5rem; } }
+/* Focus view: on a lesson, quiz, worksheet, flashcards or mistakes screen the band and the
+   dock slide out of the way while the student scrolls down (useChromeHidden), and whatever
+   floats above the dock follows it down. A laptop keeps both: there the band is one short
+   row and there is no dock. */
+.chrome-band, .chrome-dock { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.bottom-nav-clear { transition: bottom 0.25s ease; }
+@media (max-width: 1023.98px) {
+  [data-chrome="hidden"] .chrome-band { transform: translateY(-100%); box-shadow: none; }
+  [data-chrome="hidden"] .chrome-dock { transform: translateY(calc(100% + 1rem + env(safe-area-inset-bottom))); }
+  [data-chrome="hidden"] .bottom-nav-clear { bottom: calc(1rem + env(safe-area-inset-bottom)); }
+}
+[data-motion="off"] .chrome-band, [data-motion="off"] .chrome-dock, [data-motion="off"] .bottom-nav-clear { transition: none !important; }
 
 /* Native search inputs draw a clear button that ignores the theme; hide it. */
 input[type="search"]::-webkit-search-decoration,
