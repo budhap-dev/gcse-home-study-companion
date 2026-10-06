@@ -107,3 +107,34 @@ describe('validateTopicForPublish', () => {
     expect(validateTopicForPublish(t)).toContainEqual(expect.objectContaining({ path: 'worksheets.advanced', severity: 'error' }))
   })
 })
+
+describe('listening questions', () => {
+  const said = 'Je vais au cinéma samedi.'
+  const dictation = (over: Partial<Extract<Question, { type: 'short-text' }>> = {}): Question => ({
+    id: 'l1', type: 'short-text', prompt: 'Write down the sentence you hear, in French.', marks: 2, gradeBand: '6-7', skill: 'dictation',
+    calculator: 'either', tags: [], solution: 'x', markScheme: [{ code: 'B1', marks: 2, description: 'each word' }], discriminators: [],
+    accepted: [said], listen: { text: said, dictation: true }, ...over,
+  })
+  const errorsFor = (q: Question, sheet?: 'core') => {
+    const t = topic()
+    t.questions.push(q)
+    if (sheet) t.worksheets.core.questionIds.push(q.id)
+    return validateTopicForPublish(t).filter((i) => i.severity === 'error').map((i) => i.message)
+  }
+
+  it('accepts a dictation whose answer is what is read out', () => {
+    expect(errorsFor(dictation())).toEqual([])
+  })
+
+  it('refuses one whose prompt prints what is heard', () => {
+    expect(errorsFor(dictation({ prompt: `Write down: ${said}` }))).toContainEqual(expect.stringMatching(/must not print what is heard/))
+  })
+
+  it('refuses one whose answer is not what is read out', () => {
+    expect(errorsFor(dictation({ accepted: ['Je vais au cinéma dimanche.'] }))).toContainEqual(expect.stringMatching(/first accepted answer/))
+  })
+
+  it('keeps listening off a worksheet, which prints', () => {
+    expect(errorsFor(dictation(), 'core')).toContainEqual(expect.stringMatching(/cannot be printed/))
+  })
+})

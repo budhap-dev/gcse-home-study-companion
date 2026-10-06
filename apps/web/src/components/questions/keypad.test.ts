@@ -12,4 +12,8 @@ describe('keypadFor', () => {
   it('leaves a ratio on the text keyboard, because the maths keypad has no colon', () => {
     expect(keypadFor(shortText('Write 6 : 20 in its simplest form.', ['3:10', '3 : 10']), 'maths')).toBeUndefined()
   })
+
+  it('never opens a keypad on a French answer, whatever the prompt says', () => {
+    expect(keypadFor(shortText('Listen, then write down the sentence in French exactly as you hear it.', ['Je me lève à dix heures.']), 'french')).toBeUndefined()
+  })
 })

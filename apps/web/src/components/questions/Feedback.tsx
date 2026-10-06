@@ -1,4 +1,4 @@
-import type { MarkResult, Question } from '@study/shared'
+import { dictationWords, type MarkResult, type Question } from '@study/shared'
 import { RichText } from '../RichText.tsx'
 import { Smiley } from '../Smiley.tsx'
 
@@ -33,7 +33,8 @@ export function Feedback({ question, result, onClaim }: { question: Question; re
       aria-live="polite"
     >
       <p className="flex items-center gap-2 font-bold"><Smiley bounce className="text-xl">{face}</Smiley>{heading}</p>
-      {!result.correct && question.type !== 'extended' && (
+      {question.listen && <Heard text={question.listen.text} missed={question.listen.dictation ? result.missed ?? [] : undefined} />}
+      {!result.correct && question.type !== 'extended' && !question.listen?.dictation && (
         <p className="text-sm">
           Answer: <strong><RichText source={correctAnswer(question)} inline /></strong>
         </p>
@@ -42,7 +43,7 @@ export function Feedback({ question, result, onClaim }: { question: Question; re
         <p className="text-sm">You said your answer means the same as: <strong><RichText source={correctAnswer(question)} inline /></strong></p>
       )}
       <RichText source={question.solution} className="text-sm" />
-      {onClaim && question.type === 'short-text' && !result.correct && (
+      {onClaim && question.type === 'short-text' && !result.correct && !question.listen?.dictation && (
         <div className="flex flex-col gap-1.5 border-t border-rule pt-3">
           <button type="button" onClick={onClaim} className="min-h-11 w-fit rounded-lg border border-rule bg-surface px-4 text-sm font-bold">
             My answer means the same
@@ -51,6 +52,31 @@ export function Feedback({ question, result, onClaim }: { question: Question; re
         </div>
       )}
     </section>
+  )
+}
+
+/**
+ * What the recording said, now the answer is in. For a dictation the words missed are
+ * marked, so the student sees which spelling or accent cost the mark. The text is split on
+ * spaces and each piece matched to the marker's words; a piece that is only punctuation
+ * (French puts a space before ! and ?) has no word and is never marked.
+ */
+function Heard({ text, missed }: { text: string; missed?: number[] }) {
+  let word = 0
+  const pieces = text.split(/(\s+)/).map((piece, i) => {
+    if (!piece.trim() || !dictationWords(piece).length) return <span key={i}>{piece}</span>
+    const index = word
+    word += dictationWords(piece).length
+    const wrong = missed?.includes(index)
+    return wrong
+      ? <mark key={i} className="rounded px-0.5 font-bold underline decoration-wavy" style={{ background: `color-mix(in srgb, ${TONE.wrong} 22%, transparent)`, color: 'inherit' }}>{piece}<span className="sr-only"> (missed)</span></mark>
+      : <span key={i}>{piece}</span>
+  })
+  return (
+    <div className="flex flex-col gap-1 text-sm">
+      <p className="font-bold">{missed ? (missed.length ? `What was said, with the ${missed.length === 1 ? 'word' : `${missed.length} words`} you missed marked:` : 'What was said:') : 'What was said:'}</p>
+      <p lang="fr" className="text-base">{pieces}</p>
+    </div>
   )
 }
 
