@@ -9,6 +9,19 @@ export const MarkSchemeLine = z.object({
   description: RichText,
 })
 
+/**
+ * French the question is answered from by ear (listening, Paper 2). The device's own voice
+ * reads it, so there are no audio files; the text is shown only after marking, or when the
+ * device has no French voice. The prompt must not contain it.
+ *
+ * A dictation (Paper 2, Section B) is written down in French, word for word, and is marked
+ * one word at a time rather than all or nothing: see `markDictation`.
+ */
+export const Listen = z.object({
+  text: z.string().min(1),
+  dictation: z.boolean().optional(),
+})
+
 const base = {
   id: Slug,
   prompt: RichText,
@@ -24,6 +37,7 @@ const base = {
   discriminators: z.array(Discriminator).default([]),
   /** Optional visual shown with the prompt: a graph, a diagram, a data table image. */
   visual: Visual.optional(),
+  listen: Listen.optional(),
 }
 
 const MultipleChoice = z.object({

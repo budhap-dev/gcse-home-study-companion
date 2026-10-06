@@ -1,5 +1,6 @@
 import { Topic } from './topic.ts'
 import { isAutoMarked } from './questions.ts'
+import { dictationWords } from '../dictation.ts'
 
 export interface Issue {
   /** Where in the topic the problem is, as a dotted path. */
@@ -49,6 +50,14 @@ export function validateTopicForPublish(input: unknown): Issue[] {
     if (q.type === 'multiple-choice' && q.marks !== 1) {
       error(`questions.${q.id}`, 'a multiple-choice question is worth one mark; a single selection cannot earn a method mark')
     }
+    if (q.listen) {
+      const words = (t: string) => dictationWords(t).join(' ')
+      if (words(q.prompt).includes(words(q.listen.text))) error(`questions.${q.id}`, 'a listening question must not print what is heard in its prompt')
+      if (q.listen.dictation && q.type !== 'short-text') error(`questions.${q.id}`, 'a dictation is typed: it must be a short-text question')
+      if (q.listen.dictation && q.type === 'short-text' && words(q.accepted[0]!) !== words(q.listen.text)) {
+        error(`questions.${q.id}`, 'a dictation\'s first accepted answer must be the words that are read out')
+      }
+    }
   }
 
   // Lesson shape.
@@ -71,6 +80,10 @@ export function validateTopicForPublish(input: unknown): Issue[] {
       if (!ids.has(id)) error(`worksheets.${level}`, `unknown question ${id}`)
     }
     if (new Set(sheet.questionIds).size !== sheet.questionIds.length) error(`worksheets.${level}`, 'a question appears twice')
+    // A worksheet prints, and paper cannot read French aloud.
+    for (const id of sheet.questionIds) {
+      if (ids.get(id)?.listen) error(`worksheets.${level}`, `${id} is a listening question, which cannot be printed`)
+    }
   }
   for (const id of topic.worksheets.higher.questionIds) {
     const q = ids.get(id)

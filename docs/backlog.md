@@ -254,7 +254,7 @@ picked first and list the rest here.
   down and return on scrolling up. They took about a third of a phone screen mid-lesson.
 - [x] **Daily mixed recap** (content 3, QZ-3, TRK-3, WKP-3): five questions a day drawn
   across topics already studied, weakest and longest-unseen first, started from Home.
-- [ ] **French listening and dictation** (content 1, TOP-5): questions that play French
+- [x] **French listening and dictation** (content 1, TOP-5): questions that play French
   through the browser's own voice, a sentence to type (the 1FR1 dictation) and a short
   passage to answer in English. Listening is a quarter of the French grade; until now only
   9 of 967 French questions involved listening at all.

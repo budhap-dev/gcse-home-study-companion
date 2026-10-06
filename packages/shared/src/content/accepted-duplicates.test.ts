@@ -2,6 +2,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { normaliseText } from '../marking.ts'
+import { dictationWords } from '../dictation.ts'
 
 /**
  * A short-text question lists the forms of an answer the marker should accept. Two
@@ -15,7 +16,7 @@ import { normaliseText } from '../marking.ts'
  */
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
 
-interface Question { id: string; type: string; accepted?: string[] }
+interface Question { id: string; type: string; accepted?: string[]; listen?: { dictation?: boolean } }
 interface Topic { id: string; questions: Question[]; lesson: { steps: { check?: Question }[] } }
 
 const topics: Topic[] = readdirSync(ROOT)
@@ -39,7 +40,8 @@ describe('accepted answers', () => {
         if (q.type !== 'short-text' || !q.accepted) continue
         const seen = new Map<string, string>()
         for (const a of q.accepted) {
-          const k = normaliseText(a)
+          // A dictation is marked word by word, where a hyphen or an accent is a difference.
+          const k = q.listen?.dictation ? dictationWords(a).join(' ') : normaliseText(a)
           const first = seen.get(k)
           if (first !== undefined) bad.push(`${topic.id} ${q.id}: ${JSON.stringify(first)} and ${JSON.stringify(a)}`)
           else seen.set(k, a)

@@ -9,9 +9,25 @@ import { useEffect, useState } from 'react'
  * French voice exists at all the button hides rather than reading French in an English
  * accent, which would teach the wrong thing.
  */
+/**
+ * The best French voice on the device. Systems list character voices beside the standard
+ * ones (macOS offers Grandpa, Rocko and Shelley, and listed Eddy ahead of Thomas), so a plain
+ * "first fr-FR" could read a dictation in a cartoon voice. The voices each platform ships as
+ * its main French one come first, then any France French that is not a character, then any
+ * French at all.
+ */
+const PREFERRED = /google fran|^thomas|^amélie|^audrey|^aurélie|^marie|hortense|julie|denise|henri|microsoft paul/i
+const CHARACTER = /grandma|grandpa|rocko|reed|sandy|shelley|eddy|flo\b|bad news|bahh|bells|boing|bubbles|cellos|jester|organ|superstar|trinoids|whisper|wobble|zarvox|albert|fred|junior|kathy|ralph/i
+export function rankFrenchVoice(v: Pick<SpeechSynthesisVoice, 'name' | 'lang'>): number {
+  if (!v.lang.toLowerCase().startsWith('fr')) return -1
+  const france = v.lang === 'fr-FR' || v.lang === 'fr_FR'
+  if (PREFERRED.test(v.name)) return france ? 4 : 3
+  if (CHARACTER.test(v.name)) return 0
+  return france ? 2 : 1
+}
 function frenchVoice(): SpeechSynthesisVoice | undefined {
-  const voices = window.speechSynthesis?.getVoices() ?? []
-  return voices.find((v) => v.lang === 'fr-FR') ?? voices.find((v) => v.lang.startsWith('fr'))
+  const voices = (window.speechSynthesis?.getVoices() ?? []).filter((v) => rankFrenchVoice(v) >= 0)
+  return voices.sort((a, b) => rankFrenchVoice(b) - rankFrenchVoice(a))[0]
 }
 
 export function useFrenchVoice(): SpeechSynthesisVoice | undefined | null {

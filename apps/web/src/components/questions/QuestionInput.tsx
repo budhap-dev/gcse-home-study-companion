@@ -3,6 +3,7 @@ import { useId, useRef, useState } from 'react'
 import { RichText } from '../RichText.tsx'
 import { MathField } from './MathField.tsx'
 import type { KeypadKind } from './keyboardLayouts.ts'
+import { ListenPlayer } from './ListenPlayer.tsx'
 
 export type Answer = number[] | string | number | Record<string, string>
 
@@ -20,7 +21,19 @@ interface Props {
  * Ordering and labelling get simple keyboard-friendly versions here; drag-and-drop
  * arrives with the interactive step work.
  */
-export function QuestionInput({ question, disabled = false, subjectId, onSubmit }: Props) {
+export function QuestionInput(props: Props) {
+  const { question, disabled = false } = props
+  if (!question.listen) return <Input {...props} />
+  // A listening question: the recording sits above whatever the answer is given in.
+  return (
+    <div className="flex flex-col gap-3">
+      <ListenPlayer text={question.listen.text} dictation={question.listen.dictation} answered={disabled} />
+      <Input {...props} />
+    </div>
+  )
+}
+
+function Input({ question, disabled = false, subjectId, onSubmit }: Props) {
   switch (question.type) {
     case 'multiple-choice':
       return <MultipleChoice question={question} disabled={disabled} onSubmit={onSubmit} />
@@ -89,6 +102,10 @@ export function keypadFor(question: Extract<Question, { type: 'numeric' | 'short
   // Except a ratio: the maths keypad has no colon, so "3 : 10 in simplest form" could not
   // be typed on it at all.
   if (question.type === 'short-text') {
+    // French is typed in words, with accent keys of its own. "Write it down exactly as you
+    // hear it" opened the maths keypad on every dictation, and French has no way back to the
+    // keyboard, since its maths-keys button is swapped for the accents.
+    if (subjectId === 'french') return undefined
     if (question.accepted.some((a) => a.includes(':'))) return undefined
     return /in terms of|surd|exact|standard form|as a power|single power|as a fraction|simplest form/i.test(question.prompt) ? 'algebra' : undefined
   }
@@ -106,6 +123,8 @@ function Typed({ question, disabled, subjectId, onSubmit }: Props & { question: 
   const box = useRef<HTMLInputElement>(null)
   const id = useId()
   const units = question.type === 'numeric' ? question.units : undefined
+  // French is typed in French: accent keys in place of the maths keys, which it never needs.
+  const french = subjectId === 'french' && question.type === 'short-text'
 
   return (
     <form
@@ -143,19 +162,51 @@ function Typed({ question, disabled, subjectId, onSubmit }: Props & { question: 
           {kind && (
             <MathField kind={kind} value={value} onChange={setValue} onEnter={() => value.trim() && onSubmit(value)} />
           )}
+          {french && <AccentKeys box={box} onType={setValue} />}
           <div className="flex items-center gap-2">
             <SubmitButton disabled={!value.trim()} />
-            <button
-              type="button"
-              onClick={() => setKind(kind ? undefined : (suggested ?? 'algebra'))}
-              className="h-11 shrink-0 rounded-lg border border-rule bg-surface px-3 text-sm font-bold text-ink-2"
-            >
-              {kind ? 'Use my keyboard' : 'Maths keys'}
-            </button>
+            {!french && (
+              <button
+                type="button"
+                onClick={() => setKind(kind ? undefined : (suggested ?? 'algebra'))}
+                className="h-11 shrink-0 rounded-lg border border-rule bg-surface px-3 text-sm font-bold text-ink-2"
+              >
+                {kind ? 'Use my keyboard' : 'Maths keys'}
+              </button>
+            )}
           </div>
         </>
       )}
     </form>
+  )
+}
+
+/** The letters French needs that an English keyboard does not show. */
+export const ACCENTS = ['é', 'è', 'ê', 'ë', 'à', 'â', 'ç', 'î', 'ï', 'ô', 'û', 'ù', 'œ']
+
+/**
+ * A row of accented letters, typed at the cursor. A phone offers them on a long press, but a
+ * laptop keyboard does not, and a dictation counts a missing accent as a wrong word. Pressing
+ * one keeps the cursor in the field (mousedown is cancelled), so the phone keyboard stays up.
+ */
+function AccentKeys({ box, onType }: { box: React.RefObject<HTMLInputElement | null>; onType: (v: string) => void }) {
+  const type = (ch: string) => {
+    const el = box.current
+    if (!el) return
+    const at = el.selectionStart ?? el.value.length
+    const end = el.selectionEnd ?? at
+    const next = el.value.slice(0, at) + ch + el.value.slice(end)
+    onType(next)
+    requestAnimationFrame(() => { el.focus(); el.setSelectionRange(at + ch.length, at + ch.length) })
+  }
+  return (
+    <div className="flex flex-wrap gap-1.5" role="group" aria-label="Accented letters">
+      {ACCENTS.map((ch) => (
+        <button key={ch} type="button" lang="fr" onMouseDown={(e) => e.preventDefault()} onClick={() => type(ch)} className="press h-10 min-w-10 rounded-lg border border-rule bg-surface px-2 text-lg">
+          {ch}
+        </button>
+      ))}
+    </div>
   )
 }
 

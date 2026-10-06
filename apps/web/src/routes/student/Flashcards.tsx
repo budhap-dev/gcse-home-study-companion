@@ -84,7 +84,8 @@ export function buildCards(topic: TopicRecord): Card[] {
   }
   for (const q of topic.questions) {
     const a = answer(q)
-    if (!a || q.prompt.length >= 220) continue
+    // A listening question is answered by ear, and a card has no recording on it.
+    if (!a || q.prompt.length >= 220 || q.listen) continue
     // A multiple-choice prompt says "which of these", so the card has to carry the
     // options too. Without them the front is a question the reader cannot answer.
     const front = q.type === 'multiple-choice' ? `${q.prompt}\n\n${q.options.map((o) => `- ${o}`).join('\n')}` : q.prompt

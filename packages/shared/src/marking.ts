@@ -1,5 +1,6 @@
 import type { Question } from './content/questions.ts'
 import { sameAlgebra } from './algebra.ts'
+import { dictationDiff, markDictation } from './dictation.ts'
 
 export interface MarkResult {
   correct: boolean
@@ -10,6 +11,8 @@ export interface MarkResult {
    * answer. Counted as right, and recorded as self-marked so a parent can see it was.
    */
   claimed?: boolean
+  /** A dictation: which of the words read out were missed, as indexes into `dictationWords`. */
+  missed?: number[]
 }
 
 /**
@@ -381,6 +384,17 @@ export function mark(question: Question, answer: unknown): MarkResult {
     }
     case 'short-text': {
       const raw = String(answer ?? '')
+      if (question.listen?.dictation) {
+        // Word by word against what was read out: see dictation.ts. The validator holds the
+        // first accepted answer to the same words.
+        // Other accepted answers are spellings the board also takes, or a wording that sounds
+        // the same (plait for plaît): the best of them counts. Missed words are always shown
+        // against the sentence that was read out.
+        const said = question.listen.text
+        const best = question.accepted.map((a) => markDictation(a, raw, available)).sort((x, y) => Number(y.correct) - Number(x.correct) || y.marksScored - x.marksScored)[0]!
+        const missed = best.correct ? [] : dictationDiff(said, raw).flatMap((d, i) => (d.ok ? [] : [i]))
+        return { ...best, marksAvailable: available, ...(missed.length ? { missed } : {}) }
+      }
       if (matchesShortText(question, raw, question.accepted)) return result(true)
       const part = question.partial?.filter((p) => matchesShortText(question, raw, [p.answer])) ?? []
       const marksScored = Math.min(available - 1, Math.max(0, ...part.map((p) => p.marks)))
