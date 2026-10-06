@@ -45,3 +45,14 @@ export function navFor(role: 'parent' | 'student' | undefined): NavItem[] {
   const at = NAV.findIndex((n) => n.to === '/settings')
   return [...NAV.slice(0, at), { to: '/family', label: 'Family', icon: ParentIcon, colour: '#1f5fbf' }, ...NAV.slice(at)]
 }
+
+/**
+ * Screens where the student is working through something one item at a time: a lesson, a
+ * quiz, a worksheet, flashcards, mistakes. Below laptop width the band and the dock took
+ * about a third of a phone screen on these, so they step aside while the student scrolls
+ * down (useChromeHidden). A worksheet's print view is not one: it has no chrome to hide.
+ */
+export function isFocusRoute(pathname: string): boolean {
+  if (pathname === '/mistakes') return true
+  return /^\/subjects\/[^/]+\/topics\/[^/]+\/(lesson|quiz|flashcards|worksheet\/[^/]+)\/?$/.test(pathname)
+}

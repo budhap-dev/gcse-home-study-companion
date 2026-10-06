@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { DOCK_FULL_LABELS, NAV, navFor } from './nav.ts'
+import { DOCK_FULL_LABELS, NAV, isFocusRoute, navFor } from './nav.ts'
 
 describe('navFor', () => {
   it('gives a parent the Family screen, just before Settings', () => {
@@ -49,5 +49,26 @@ describe('menu colours', () => {
   it('gives every item a colour of its own', () => {
     const colours = navFor('parent').map((n) => n.colour.toLowerCase())
     expect(new Set(colours).size).toBe(colours.length)
+  })
+})
+
+describe('focus screens', () => {
+  it('are the screens worked through one item at a time', () => {
+    for (const p of [
+      '/subjects/maths/topics/laws-of-indices/lesson',
+      '/subjects/maths/topics/laws-of-indices/quiz',
+      '/subjects/maths/topics/laws-of-indices/flashcards',
+      '/subjects/maths/topics/laws-of-indices/worksheet/core',
+      '/mistakes',
+    ]) expect(isFocusRoute(p), p).toBe(true)
+  })
+
+  it('leave the menu alone everywhere else, including the print view', () => {
+    for (const p of [
+      '/', '/subjects', '/subjects/maths', '/subjects/maths/topics/laws-of-indices',
+      '/subjects/maths/topics/laws-of-indices/cheatsheet',
+      '/subjects/maths/topics/laws-of-indices/worksheet/core/print',
+      '/glossary', '/progress',
+    ]) expect(isFocusRoute(p), p).toBe(false)
   })
 })
