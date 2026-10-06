@@ -47,3 +47,4 @@ export function openSession(key: string, now = Date.now()): { index: number; tot
 export const quizKey = (topicId: string) => `study-companion.quiz.${topicId}`
 export const worksheetKey = (topicId: string, level: string) => `study-companion.worksheet.${topicId}.${level}`
 export const MISTAKES_KEY = 'study-companion.mistakes'
+export const RECAP_KEY = 'study-companion.recap'

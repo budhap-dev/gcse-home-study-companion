@@ -1,5 +1,6 @@
 import type { TopicSummary as Topic } from '../content/index.ts'
 import type { AssignedTask } from './assignments.ts'
+import { recapDoneToday, recapItems, RECAP_SIZE } from './recap.ts'
 import { recommend } from './recommend.ts'
 import { attemptName, evidenceFor, isoDate, type ProgressState } from './store.ts'
 
@@ -18,8 +19,9 @@ export interface PlanItem {
  * knows what to do in ten seconds.
  *
  *   1. a task a parent set, the most pressing first (overdue, then due today, then open);
- *   2. a recap: a topic whose status has faded after six weeks untouched, else Redo my
- *      mistakes when there is anything to redo;
+ *   2. a recap: a topic whose status has faded after six weeks untouched, else the daily
+ *      recap when it is not done yet today, else Redo my mistakes when there is anything
+ *      to redo;
  *   3. the next step the app recommends.
  *
  * Anything short is filled from the recommendation's alternatives, and nothing appears
@@ -40,7 +42,10 @@ export function todayPlan(topics: Topic[], state: ProgressState, assigned: Assig
 
   const { next, alternatives } = recommend(topics, state, now)
   const faded = [next, ...alternatives].find((t) => t && t.kind === 'quiz' && evidenceFor(t.topic.id, state, now).decayedFrom)
+  const recap = faded || recapDoneToday(state, isoDate(now)) ? [] : recapItems(topics, state, now)
+  const spread = new Set(recap.map((i) => i.topicId)).size
   if (faded) add({ label: 'Recap', title: faded.title, topicTitle: faded.topic.title, reason: faded.reason, minutes: faded.minutes, to: faded.to })
+  else if (recap.length) add({ label: 'Recap', title: 'Daily recap', reason: `${recap.length} questions from ${spread} topics you have studied, a new mix each day.`, minutes: RECAP_SIZE, to: '/recap' })
   else if (mistakes > 0) add({ label: 'Recap', title: 'Redo my mistakes', reason: `${mistakes} question${mistakes === 1 ? '' : 's'} you got wrong, newest first.`, minutes: Math.max(5, Math.round(mistakes * 1.5)), to: '/mistakes' })
 
   for (const t of [next, ...alternatives]) {

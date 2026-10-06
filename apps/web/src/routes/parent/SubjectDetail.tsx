@@ -8,13 +8,13 @@ import { TopicBreakdown } from './TopicBreakdown.tsx'
 
 /** One glyph per kind, shared with the dashboard's Recent work so the two read alike. */
 export const STUDY_EMOJI: Record<StudyKind, string> = {
-  quiz: '⚡', worksheet: '📝', review: '🔁', lesson: '📖', flashcards: '🃏',
+  quiz: '⚡', worksheet: '📝', review: '🔁', recap: '🧠', lesson: '📖', flashcards: '🃏',
   'cheat-sheet': '📋', why: '🌍', 'exam-technique': '🎓',
 }
 
 /** Mid-tone fills that read on the light and the dark surface alike. */
 const KIND_COLOUR: Record<StudyKind, string> = {
-  lesson: '#3b82c4', quiz: '#d9822b', worksheet: '#8a5cc2', review: '#b8860b', flashcards: '#2e9e6a',
+  lesson: '#3b82c4', quiz: '#d9822b', worksheet: '#8a5cc2', review: '#b8860b', recap: '#5f8f1f', flashcards: '#2e9e6a',
   'cheat-sheet': '#c2475f', why: '#1f9bb0', 'exam-technique': '#7a7f8c',
 }
 

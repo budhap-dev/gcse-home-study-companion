@@ -23,6 +23,7 @@ const WhyItExists = screen(study, 'WhyItExists')
 const Flashcards = screen(study, 'Flashcards')
 const CheatSheet = screen(study, 'CheatSheet')
 const Mistakes = screen(study, 'Mistakes')
+const Recap = screen(study, 'Recap')
 const Glossary = screen(lookup, 'Glossary')
 const Search = screen(lookup, 'Search')
 const Resources = screen(reference, 'Resources')
@@ -57,6 +58,7 @@ export const router = createBrowserRouter([
       { path: 'resources/:subjectId/:resourceId', element: <SubjectTheme><ResourcePage /></SubjectTheme> },
       { path: 'progress', element: <Progress /> },
       { path: 'mistakes', element: <Mistakes /> },
+      { path: 'recap', element: <Recap /> },
       { path: 'family', element: <Family /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <NotFound /> },

@@ -60,6 +60,7 @@ describe('focus screens', () => {
       '/subjects/maths/topics/laws-of-indices/flashcards',
       '/subjects/maths/topics/laws-of-indices/worksheet/core',
       '/mistakes',
+      '/recap',
     ]) expect(isFocusRoute(p), p).toBe(true)
   })
 
