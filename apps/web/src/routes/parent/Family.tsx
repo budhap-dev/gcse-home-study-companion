@@ -5,7 +5,7 @@ import { supabase } from '../../auth/client.ts'
 import { useAuth } from '../../auth/useAuth.ts'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { StatusIcon } from '../../components/StatusChip.tsx'
-import { emptyState, type ProgressState } from '../../progress/store.ts'
+import { fromStored, type ProgressState } from '../../progress/store.ts'
 import { firstNameOf, personName } from '../../auth/personName.ts'
 import { parentSummary, type ActivityEntry, type ParentSummary } from '../../progress/summary.ts'
 import { AssignPanel } from './Assign.tsx'
@@ -92,7 +92,7 @@ export function Family() {
         return {
           email: r.email as string,
           name: personName({ note: r.note as string | null, profile: row?.display_name as string | null, email: r.email as string }),
-          state: row ? { ...emptyState(), ...(row.state as Partial<ProgressState>) } : undefined,
+          state: row ? fromStored(row.state as Partial<ProgressState>) : undefined,
           syncedAt: row?.updated_at as string | undefined,
         }
       })
@@ -220,7 +220,6 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
   // row that raised the question, not on a separate screen.
   const [openTopic, setOpenTopic] = useState<string | null>(null)
   const toggle = (id: string) => setOpenTopic((cur) => (cur === id ? null : id))
-  const goalPct = s.goalMinutes > 0 ? Math.round((100 * s.weekMinutes) / s.goalMinutes) : 0
   const gap = s.daysSinceActive
   const subjectMinutes = minutesBySubject(child.state!)
   return (
@@ -232,7 +231,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
       </p>
 
       <section className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-        <Tile label="This week" value={`${s.weekMinutes} min`} note={`${goalPct}% of the ${s.goalMinutes} minute goal · ${s.activeDays} ${s.activeDays === 1 ? 'day' : 'days'} studied`} />
+        <Tile label="This week" value={`${s.weekMinutes} min`} note={`${s.goalDays.of > 0 ? `${s.dailyGoalMinutes} minutes reached on ${s.goalDays.met} of ${s.goalDays.of} ${s.goalDays.of === 1 ? 'day' : 'days'}` : `Goal of ${s.dailyGoalMinutes} minutes a day`} · ${s.activeDays} ${s.activeDays === 1 ? 'day' : 'days'} studied`} />
         <Tile label="Streak" value={`${s.streak} ${s.streak === 1 ? 'day' : 'days'}`} note="Days in a row with something finished" />
         <Tile label="Quiz average" value={s.averageQuizPct === undefined ? '—' : `${s.averageQuizPct}%`}
           note={quizNote(s)} />
@@ -276,8 +275,8 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
           <StatusDonut totals={statusTotals(child.state!)} />
         </div>
         <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
-          <SectionLabel colour="#2e8b57" emoji="📅">Study time by week</SectionLabel>
-          <WeeklyBars weeks={weeklyMinutes(child.state!)} goal={s.goalMinutes} />
+          <SectionLabel colour="#2e8b57" emoji="📅">Days on goal, by week</SectionLabel>
+          <WeeklyBars weeks={weeklyMinutes(child.state!)} goal={s.dailyGoalMinutes} />
         </div>
       </section>
 

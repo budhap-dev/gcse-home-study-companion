@@ -22,8 +22,8 @@ describe('mergeProgress', () => {
     expect(m.minutes).toEqual({ '2026-09-01': 30, '2026-09-02': 5 })
   })
   it('lets a changed goal win over the default, and unites days off and badges', () => {
-    const m = mergeProgress({ goalMinutes: 180, daysOff: ['2026-09-05'], badges: { a: '2026-09-03T00:00:00Z' } }, { goalMinutes: 240, daysOff: ['2026-09-06'], badges: { a: '2026-09-01T00:00:00Z', b: '2026-09-04T00:00:00Z' } })
-    expect(m.goalMinutes).toBe(240)
+    const m = mergeProgress({ dailyGoalMinutes: 25, daysOff: ['2026-09-05'], badges: { a: '2026-09-03T00:00:00Z' } }, { dailyGoalMinutes: 40, daysOff: ['2026-09-06'], badges: { a: '2026-09-01T00:00:00Z', b: '2026-09-04T00:00:00Z' } })
+    expect(m.dailyGoalMinutes).toBe(40)
     expect(m.daysOff).toEqual(['2026-09-05', '2026-09-06'])
     expect(m.badges).toEqual({ a: '2026-09-01T00:00:00Z', b: '2026-09-04T00:00:00Z' })
   })

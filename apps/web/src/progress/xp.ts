@@ -1,6 +1,6 @@
 import { BADGES, XP, levelFor, type LevelInfo, type SubjectId } from '@study/shared'
 import { TOPICS } from '../content/index.ts'
-import { evidenceFor, streakDays, weekMinutes, type ProgressState } from './store.ts'
+import { evidenceFor, goalMet, isoDate, streakDays, weekDays, type ProgressState } from './store.ts'
 
 const subjectOf = new Map(TOPICS.map((t) => [t.id, t.subjectId as SubjectId]))
 const stepsOf = new Map(TOPICS.map((t) => [t.id, t.lesson.steps.length]))
@@ -33,7 +33,7 @@ export function totalXp(state: ProgressState): number {
 }
 
 /** Badges the state currently satisfies, whether or not they have been awarded yet. */
-export function earnedBadgeIds(state: ProgressState): string[] {
+export function earnedBadgeIds(state: ProgressState, today = isoDate()): string[] {
   const ids: string[] = []
   const lessonsDone = Object.values(state.lessons).filter((l) => l.completedAt)
   const quizzes = state.attempts.filter((a) => a.kind === 'quiz')
@@ -47,7 +47,7 @@ export function earnedBadgeIds(state: ProgressState): string[] {
   const ready = statuses.filter((s) => s === 'grade-9-ready').length
   if (ready >= 1) ids.push('grade-9-first')
   if (ready >= 5) ids.push('grade-9-five')
-  const streak = streakDays(state)
+  const streak = streakDays(state, today)
   if (streak >= 3) ids.push('streak-3')
   if (streak >= 7) ids.push('streak-7')
   if (streak >= 30) ids.push('streak-30')
@@ -59,7 +59,9 @@ export function earnedBadgeIds(state: ProgressState): string[] {
   for (const scores of byTopic.values()) {
     for (let i = 1; i < scores.length; i++) if (scores[i]! - Math.min(...scores.slice(0, i)) >= 20) ids.push('comeback')
   }
-  if (weekMinutes(state) >= state.goalMinutes) ids.push('goal-week')
+  const week = weekDays(today)
+  if (week.some((d) => d <= today && goalMet(state, d))) ids.push('goal-day')
+  if (week.every((d) => goalMet(state, d) || (d <= today && state.daysOff.includes(d))) && week.some((d) => goalMet(state, d))) ids.push('goal-week')
   if (new Set(lessonsDone.map((l) => subjectOf.get(l.topicId))).size >= 2) ids.push('subject-explorer')
   return [...new Set(ids)].filter((id) => BADGES.some((b) => b.id === id))
 }

@@ -1,6 +1,6 @@
 import { DEFAULT_THRESHOLDS, SUBJECTS, TOPIC_STATUSES, type SubjectId, type TopicStatus } from '@study/shared'
 import { TOPICS, topicsForSubject } from '../content/index.ts'
-import { evidenceFor, isoDate, parseTimeKey, streakDays, weekDays, weekMinutes, type AttemptRecord, type ProgressState } from './store.ts'
+import { evidenceFor, goalDays, isoDate, parseTimeKey, streakDays, weekDays, weekMinutes, type AttemptRecord, type ProgressState } from './store.ts'
 import { skillStats, type SkillStat } from './xp.ts'
 
 /**
@@ -46,7 +46,9 @@ export interface ParentSummary {
   lastActive?: string
   daysSinceActive?: number
   weekMinutes: number
-  goalMinutes: number
+  dailyGoalMinutes: number
+  /** Days this week so far on which the daily goal was met, out of the days that had one. */
+  goalDays: { met: number; of: number }
   /** Days this week with any recorded study time. */
   activeDays: number
   streak: number
@@ -277,7 +279,8 @@ export function parentSummary(state: ProgressState, today = isoDate()): ParentSu
     lastActive,
     daysSinceActive,
     weekMinutes: weekMinutes(state, today),
-    goalMinutes: state.goalMinutes,
+    dailyGoalMinutes: state.dailyGoalMinutes,
+    goalDays: goalDays(state, today),
     activeDays: week.filter((d) => (state.minutes[d] ?? 0) > 0).length,
     streak: streakDays(state, today),
     quizCount: quizzes.length,

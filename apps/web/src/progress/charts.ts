@@ -1,19 +1,21 @@
 import { TOPIC_STATUSES, type TopicStatus } from '@study/shared'
 import { topicsForSubject } from '../content/index.ts'
 import { SUBJECTS } from '@study/shared'
-import { evidenceFor, isoDate, weekDays, type ProgressState } from './store.ts'
+import { evidenceFor, goalDays, isoDate, weekDays, type ProgressState } from './store.ts'
 import type { SkillStat } from './xp.ts'
 
 export interface Week {
   /** Monday of the week, as an ISO date. */
   start: string
   minutes: number
+  /** Days the daily goal was met, out of the days that had one (see goalDays). */
+  goal: { met: number; of: number }
   /** Short label for the axis, such as "8 Sep". */
   label: string
 }
 
 /**
- * Study minutes per week, oldest first, for a bar chart of the habit.
+ * Study minutes and days on goal per week, oldest first, for a bar chart of the habit.
  *
  * Weeks with nothing in them are kept rather than skipped. A gap is the most useful thing
  * on this chart — dropping empty weeks would draw a tidy run of bars over a fortnight
@@ -27,7 +29,7 @@ export function weeklyMinutes(state: ProgressState, weeks = 8, today = isoDate()
     start.setDate(monday.getDate() - back * 7)
     const startIso = isoDate(start)
     const minutes = weekDays(startIso).reduce((sum, d) => sum + (state.minutes[d] ?? 0), 0)
-    out.push({ start: startIso, minutes, label: start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) })
+    out.push({ start: startIso, minutes, goal: goalDays(state, today, weekDays(startIso)), label: start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) })
   }
   return out
 }

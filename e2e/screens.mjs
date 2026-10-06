@@ -118,7 +118,7 @@ function sampleProgress() {
   const minutes = {}
   for (let d = 0; d < 6; d++) minutes[new Date(now - d * 86400000).toISOString().slice(0, 10)] = [22, 0, 15, 13, 30, 8][d]
   return {
-    attempts, lessons, activities: [], minutes, time: {}, goalMinutes: 180, daysOff: [], badges: {}, milestones: {}, deeds,
+    attempts, lessons, activities: [], minutes, time: {}, dailyGoalMinutes: 25, daysOff: [], badges: {}, milestones: {}, deeds,
     profile: { year: 10, setupAt: daysAgo(20) },
   }
 }
