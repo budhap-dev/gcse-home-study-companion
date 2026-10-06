@@ -11,13 +11,14 @@ import { evidenceFor, parseTimeKey, type AttemptRecord, type ProgressState, type
  * read only, like the rest of the parent's summary, so it can be tested without a browser.
  */
 
-export const STUDY_KINDS: StudyKind[] = ['lesson', 'quiz', 'worksheet', 'flashcards', 'cheat-sheet', 'why', 'exam-technique']
+export const STUDY_KINDS: StudyKind[] = ['lesson', 'quiz', 'worksheet', 'review', 'recap', 'flashcards', 'cheat-sheet', 'why', 'exam-technique']
 
 export const STUDY_LABEL: Record<StudyKind, string> = {
   lesson: 'Lesson',
   quiz: 'Quiz',
   worksheet: 'Worksheets',
   review: 'Redo my mistakes',
+  recap: 'Daily recap',
   flashcards: 'Flashcards',
   'cheat-sheet': 'Cheat sheet',
   why: 'Where you meet it',

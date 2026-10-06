@@ -60,6 +60,8 @@ const ROUTES = [
   '/subjects/physics',
   '/subjects/english-literature/topics/an-inspector-calls-themes',
   '/progress',
+  // The daily recap: its opening page, then its first question once Start is pressed.
+  { path: '/recap', tap: ['main article > button'] },
   '/settings',
   { path: '/glossary', whole: true },
   // A linked term: its card must open on the screen, clear of the header and the dock.

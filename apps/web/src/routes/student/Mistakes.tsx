@@ -1,34 +1,30 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
-import { claimAnswer, describeAnswer, getSubject, mark, type MarkResult } from '@study/shared'
-import { Feedback } from '../../components/questions/Feedback.tsx'
-import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
-import { ReportMistake } from '../../components/ReportMistake.tsx'
-import { RichText } from '../../components/RichText.tsx'
-import { Visual } from '../../components/Visual.tsx'
+import { claimAnswer, getSubject, mark } from '@study/shared'
+import type { Answer } from '../../components/questions/QuestionInput.tsx'
+import { SessionQuestion } from '../../components/questions/SessionQuestion.tsx'
 import { summaryById } from '../../content/index.ts'
 import { redoable } from '../../content/redoable.ts'
 import { useTopics } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import { mistakeQueue, type Mistake } from '../../progress/mistakes.ts'
 import { loadInProgress, MISTAKES_KEY, saveInProgress } from '../../progress/inProgress.ts'
-import { getState, recordAttempt } from '../../progress/store.ts'
+import { getState } from '../../progress/store.ts'
+import { itemKey, recordReview, type SessionAnswers } from '../../progress/reviewSession.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useProgress } from '../../progress/useProgress.ts'
-import { xpForQuestions } from '../../progress/xp.ts'
 
 interface Session {
   id: string
   items: Mistake[]
   index: number
-  answers: Record<string, { answer: Answer; result: MarkResult }>
+  answers: SessionAnswers
   startedAt: string
   finishedAt?: string
   /** How many of the questions left the list with this session, worked out once it is recorded. */
   cleared?: number
 }
 
-const itemKey = (m: Mistake) => `${m.topicId}/${m.questionId}`
 const load = () => loadInProgress<Session>(MISTAKES_KEY)
 const save = (s: Session | null) => saveInProgress(MISTAKES_KEY, s)
 
@@ -112,29 +108,7 @@ export function Mistakes() {
   const finish = () => {
     const finishedAt = new Date().toISOString()
     const before = mistakeQueue(getState(), redoable, Infinity).length
-    // One review attempt per topic, so each keeps its own history.
-    const byTopic = new Map<string, Mistake[]>()
-    for (const m of session.items) byTopic.set(m.topicId, [...(byTopic.get(m.topicId) ?? []), m])
-    for (const [topicId, items] of byTopic) {
-      const t = topicById(topicId)!
-      const results = items.map((m) => {
-        const q = t.questions.find((x) => x.id === m.questionId)!
-        const a = session.answers[itemKey(m)]
-        const r = a?.result ?? { correct: false, marksScored: 0, marksAvailable: q.marks }
-        return { id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct, answer: describeAnswer(q, a?.answer), ...(r.claimed ? { claimed: true } : {}) }
-      })
-      recordAttempt({
-        id: `${session.id}:${topicId}`,
-        topicId,
-        kind: 'review',
-        marksScored: results.reduce((s, r) => s + r.marksScored, 0),
-        marksAvailable: results.reduce((s, r) => s + r.marksAvailable, 0),
-        markedHow: results.some((r) => r.claimed) ? 'mixed' : 'auto',
-        completedAt: finishedAt,
-        xp: xpForQuestions(results),
-        questions: results,
-      })
-    }
+    recordReview(session.id, session.items, session.answers, topicById, finishedAt)
     const after = mistakeQueue(getState(), redoable, Infinity).length
     setSession({ ...session, finishedAt, cleared: Math.max(0, before - after) })
     window.scrollTo({ top: 0 })
@@ -152,17 +126,7 @@ export function Mistakes() {
         <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Redo my mistakes · {session.index + 1} of {session.items.length}</p>
         <p className="text-sm"><span className="font-bold accent-ink">{subject?.name}</span> · <Link to={`/subjects/${topic.subjectId}/topics/${topic.id}`} className="underline">{topic.title}</Link></p>
       </header>
-      <section className="flex flex-col gap-4">
-        <div className="flex items-center justify-between text-xs text-ink-2">
-          <span className="rounded bg-panel px-2 py-0.5 font-bold">Grade {question.gradeBand}</span>
-          <span>{question.marks} mark{question.marks > 1 ? 's' : ''}</span>
-        </div>
-        {question.visual && <Visual visual={question.visual} />}
-        <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
-        <QuestionInput subjectId={topic.subjectId} key={itemKey(item)} question={question} disabled={Boolean(answered)} onSubmit={submit} />
-        {answered && <Feedback question={question} result={answered.result} onClaim={claim} />}
-        <ReportMistake key={`r-${itemKey(item)}`} item={{ subjectId: topic.subjectId, topicId: topic.id, itemKind: 'question', itemId: question.id, seenIn: 'worksheet' }} />
-      </section>
+      <SessionQuestion subjectId={topic.subjectId} topicId={topic.id} question={question} answered={answered} onSubmit={submit} onClaim={claim} />
       {answered && (
         <button type="button" onClick={next} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface">
           {last ? 'See how it went' : 'Next question'}

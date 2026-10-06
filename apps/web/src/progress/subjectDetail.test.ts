@@ -73,7 +73,7 @@ describe('one subject, for a parent', () => {
   it('adds up the time on the subject by kind, and leaves another subject out', () => {
     expect(d.minutes).toBe(64)
     const by = Object.fromEntries(d.byKind.map((k) => [k.kind, k.minutes]))
-    expect(by).toEqual({ lesson: 20, quiz: 18, worksheet: 12, flashcards: 7, 'cheat-sheet': 3, why: 0, 'exam-technique': 4 })
+    expect(by).toEqual({ lesson: 20, quiz: 18, worksheet: 12, review: 0, recap: 0, flashcards: 7, 'cheat-sheet': 3, why: 0, 'exam-technique': 4 })
     // Fixed order with zeros kept, so "no Where you meet it at all" is visible as a row.
     expect(d.byKind.map((k) => k.kind)).toEqual(STUDY_KINDS)
     expect(minutesBySubject(evening())).toEqual({ physics: 64, maths: 2 })

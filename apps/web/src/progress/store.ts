@@ -25,8 +25,13 @@ export interface QuestionResult {
 export interface AttemptRecord {
   id: string
   topicId: string
-  /** A review is a "Redo my mistakes" session: it earns XP but never moves a topic's status. */
+  /**
+   * A review is a "Redo my mistakes" session or a daily recap: it earns XP but never moves a
+   * topic's status.
+   */
   kind: 'quiz' | 'worksheet' | 'review'
+  /** Which kind of review: absent for Redo my mistakes, which came first. */
+  from?: 'recap'
   level?: WorksheetLevel
   marksScored: number
   marksAvailable: number
@@ -46,9 +51,9 @@ export interface AttemptRecord {
  * session has no level, and a worksheet saved by an old build may lack one too, so the
  * level is never assumed; the Progress page once crashed on a redo session doing that.
  */
-export function attemptName(a: Pick<AttemptRecord, 'kind' | 'level'>): string {
+export function attemptName(a: Pick<AttemptRecord, 'kind' | 'level' | 'from'>): string {
   if (a.kind === 'quiz') return 'Quiz'
-  if (a.kind === 'review') return 'Redo my mistakes'
+  if (a.kind === 'review') return a.from === 'recap' ? 'Daily recap' : 'Redo my mistakes'
   return a.level ? `${a.level[0]!.toUpperCase()}${a.level.slice(1)} worksheet` : 'Worksheet'
 }
 
@@ -85,7 +90,7 @@ export interface ActivityRecord {
 }
 
 /** Every kind of study screen, for time spent. The marked ones and the unmarked ones together. */
-export type StudyKind = 'lesson' | 'quiz' | 'worksheet' | 'review' | 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
+export type StudyKind = 'lesson' | 'quiz' | 'worksheet' | 'review' | 'recap' | 'flashcards' | 'cheat-sheet' | 'why' | 'exam-technique'
 
 /** Where a minute of study was spent. `topicId` is absent on the subject-wide exam technique page. */
 export interface StudyPlace {

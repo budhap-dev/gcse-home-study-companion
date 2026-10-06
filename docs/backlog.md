@@ -252,7 +252,7 @@ picked first and list the rest here.
 - [x] **Focus view** (design 7): on a lesson, quiz, worksheet, flashcards or mistakes screen
   below laptop width, the top band and the menu dock slide away while the student scrolls
   down and return on scrolling up. They took about a third of a phone screen mid-lesson.
-- [ ] **Daily mixed recap** (content 3, QZ-3, TRK-3, WKP-3): five questions a day drawn
+- [x] **Daily mixed recap** (content 3, QZ-3, TRK-3, WKP-3): five questions a day drawn
   across topics already studied, weakest and longest-unseen first, started from Home.
 - [ ] **French listening and dictation** (content 1, TOP-5): questions that play French
   through the browser's own voice, a sentence to type (the 1FR1 dictation) and a short
@@ -325,7 +325,8 @@ listed below. Each box is the missing part of a story, not the whole story.
   topics taught, so the dates are not known ahead, and a countdown to a guessed date would
   mislead. The field and the Home countdown were taken out; LRN-3 keeps subject order.
 - [ ] **LRN-6:** target grade per subject. There is a database column only.
-- [ ] **QZ-3:** spaced recap quiz of 5–10 questions across subjects, started with one tap.
+- [x] **QZ-3:** spaced recap quiz of 5–10 questions across subjects, started with one tap.
+  The daily recap (`/recap`, on Home's Today plan), 6 October 2026.
 - [x] **QZ-4:** wrong-answer bank. Redo my mistakes (`/mistakes`, and a card on Home) asks up to 15
   questions got wrong, newest first; two right in a row clears one (WKP-1).
 - [ ] **WKS-4:** mixed-topic worksheet.

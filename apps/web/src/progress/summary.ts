@@ -1,6 +1,6 @@
 import { DEFAULT_THRESHOLDS, SUBJECTS, TOPIC_STATUSES, type SubjectId, type TopicStatus } from '@study/shared'
 import { TOPICS, topicsForSubject } from '../content/index.ts'
-import { evidenceFor, goalDays, isoDate, parseTimeKey, streakDays, weekDays, weekMinutes, type AttemptRecord, type ProgressState } from './store.ts'
+import { attemptName, evidenceFor, goalDays, isoDate, parseTimeKey, streakDays, weekDays, weekMinutes, type AttemptRecord, type ProgressState } from './store.ts'
 import { skillStats, type SkillStat } from './xp.ts'
 
 /**
@@ -156,7 +156,7 @@ export function recentActivity(state: ProgressState, limit = 12): ActivityEntry[
     const b = base(a.topicId)
     if (!b) continue
     const percentage = Math.round(pct(a))
-    const level = a.kind === 'review' ? 'Redo my mistakes' : a.level ? `${a.level[0]!.toUpperCase()}${a.level.slice(1)} worksheet` : 'Quiz'
+    const level = attemptName(a)
     entries.push({
       ...b, id: a.id, kind: a.kind, label: level, at: a.completedAt, pct: percentage,
       detail: `${a.marksScored} of ${a.marksAvailable} marks`,
