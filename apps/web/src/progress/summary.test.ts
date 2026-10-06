@@ -148,13 +148,15 @@ describe('parentSummary', () => {
     expect(out.stuck).toEqual([])
   })
 
-  it('counts this week against the goal, and days actually studied', () => {
+  it('counts this week against the daily goal, and days actually studied', () => {
     // 2026-09-18 is a Friday, so its week runs Monday the 14th to Sunday the 20th.
-    const s = state({ minutes: { '2026-09-14': 30, '2026-09-16': 45, '2026-09-07': 60 }, goalMinutes: 180 })
+    const s = state({ minutes: { '2026-09-14': 30, '2026-09-16': 45, '2026-09-07': 60 }, dailyGoalMinutes: 25 })
     const out = parentSummary(s, '2026-09-18')
     expect(out.weekMinutes).toBe(75)
     expect(out.activeDays).toBe(2)
-    expect(out.goalMinutes).toBe(180)
+    expect(out.dailyGoalMinutes).toBe(25)
+    // Monday to Thursday had a goal; Friday is today and not yet met.
+    expect(out.goalDays).toEqual({ met: 2, of: 4 })
   })
 
   it('breaks the syllabus down by subject, counting only subjects with content', () => {

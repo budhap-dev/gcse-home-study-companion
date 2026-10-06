@@ -37,13 +37,14 @@ describe('the parent report', () => {
       ...emptyState(),
       attempts: [quiz('surds', 30, '2026-09-15'), quiz('laws-of-indices', 90, '2026-09-16')],
       minutes: { '2026-09-15': 25, '2026-09-16': 35 },
-      goalMinutes: 180,
+      dailyGoalMinutes: 30,
     }
     const html = render(state, '2026-09-16T10:00:00.000Z')
     expect(html).toContain('Ana')
     expect(html).toContain('2 days ago')
     expect(html).toContain('60 min')
-    expect(html).toContain('33% of the 180 minute goal')
+    // Today is Friday the 18th: the 15th, when study began, to Thursday had a goal, and only the 16th reached 30.
+    expect(html).toContain('30 minutes reached on 1 of 3 days')
     // Mean of 30 and 90.
     expect(html).toContain('60%')
     expect(html).toContain('Across all 2')

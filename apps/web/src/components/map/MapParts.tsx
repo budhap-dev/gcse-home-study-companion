@@ -77,27 +77,32 @@ export function MapLegend({ className = '' }: { className?: string }) {
 }
 
 /**
- * Minutes a day this week, as seven columns that grow into place. Today is picked out, days
+ * Minutes a day this week, as seven columns that grow into place, against the daily goal
+ * drawn across them. A day that reached the goal turns green, today is picked out, days
  * still to come are faint, and the whole chart is one image named day by day.
  */
-export function WeekBars({ days }: { days: DayBar[] }) {
-  const most = Math.max(30, ...days.map((d) => d.minutes))
-  const label = days.filter((d) => !d.future).map((d) => `${d.name} ${d.minutes}`).join(', ')
+export function WeekBars({ days, goal }: { days: DayBar[]; goal: number }) {
+  const most = Math.max(30, goal * 1.25, ...days.map((d) => d.minutes))
+  const px = (m: number) => Math.round((m / most) * 60)
+  const label = days.filter((d) => !d.future).map((d) => `${d.name} ${d.minutes}${d.minutes >= goal ? ', goal met' : ''}`).join('; ')
   return (
-    <div role="img" aria-label={`Minutes studied each day this week: ${label}`} className="grid h-24 grid-cols-7 items-end gap-2">
+    <div role="img" aria-label={`Minutes studied each day this week, against a goal of ${goal}: ${label}`} className="relative grid h-24 grid-cols-7 items-end gap-2">
+      {/* The goal, behind the bars: the day letters are a fixed h-4 under a gap-1, so the
+          bars stand 20px up from the bottom and the line sits the goal's height above that. */}
+      <span aria-hidden className="pointer-events-none absolute inset-x-0 border-t border-dashed border-ink-3" style={{ bottom: `${20 + px(goal)}px` }} />
       {days.map((d, i) => (
         <span key={d.day} className="flex h-full flex-col items-center justify-end gap-1">
           {d.minutes > 0 && <span aria-hidden className="text-[11px] font-bold tabular-nums text-ink-2">{d.minutes}</span>}
           <span
             aria-hidden
-            className={`anim-grow-y block w-full rounded-md ${d.future ? 'bg-panel' : d.minutes > 0 ? '' : 'bg-rule'}`}
+            className={`anim-grow-y relative block w-full rounded-md ${d.future ? 'bg-panel' : d.minutes >= goal ? 'bg-status-secure' : d.minutes > 0 ? '' : 'bg-rule'}`}
             style={{
-              height: `${Math.max(4, Math.round((d.minutes / most) * 60))}px`,
+              height: `${Math.max(4, px(d.minutes))}px`,
               '--d': `${(0.4 + i * 0.06).toFixed(2)}s`,
-              ...(d.minutes > 0 && !d.future ? { backgroundImage: 'linear-gradient(0deg, var(--hero-2), var(--hero-3))' } : {}),
+              ...(d.minutes > 0 && d.minutes < goal && !d.future ? { backgroundImage: 'linear-gradient(0deg, var(--hero-2), var(--hero-3))' } : {}),
             } as React.CSSProperties}
           />
-          <span aria-hidden className={`text-xs font-bold ${d.today ? 'text-ink' : 'text-ink-3'}`}>{d.label}</span>
+          <span aria-hidden className={`h-4 text-xs font-bold leading-4 ${d.today ? 'text-ink' : 'text-ink-3'}`}>{d.label}</span>
         </span>
       ))}
     </div>

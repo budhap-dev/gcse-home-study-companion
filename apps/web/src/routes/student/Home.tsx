@@ -8,7 +8,7 @@ import { Smiley } from '../../components/Smiley.tsx'
 import { Link } from 'react-router'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
 import { recommend, type Task } from '../../progress/recommend.ts'
-import { isoDate, setProfile, streakDays, weekMinutes } from '../../progress/store.ts'
+import { goalDays, isoDate, setProfile, streakDays } from '../../progress/store.ts'
 import { countLevels, daysThisWeek, fixFirst, isSecure, lastDays, square } from '../../progress/map.ts'
 import { MapLegend, SubjectMapCard, WeekBars } from '../../components/map/MapParts.tsx'
 import { ProfileForm } from '../../components/ProfileForm.tsx'
@@ -72,8 +72,8 @@ export function Home() {
           greeting={`${greeting}${firstName ? `, ${firstName}` : ''}`}
           welcome={firstName ? `Welcome back. Your progress is saved to your account${auth.role === 'parent' ? ', and you can manage the family in Settings' : ''}.` : undefined}
           streak={streakDays(progress)}
-          minutes={weekMinutes(progress)}
-          goal={progress.goalMinutes}
+          minutes={progress.minutes[isoDate()] ?? 0}
+          goal={progress.dailyGoalMinutes}
           offToday={progress.daysOff.includes(isoDate())}
           secure={mapped.reduce((n, m) => n + m.squares.filter(isSecure).length, 0)}
           xp={totalXp(progress)}
@@ -84,7 +84,7 @@ export function Home() {
           charts={
             <HeroCharts
               days={lastDays(progress)}
-              goal={progress.goalMinutes}
+              goal={progress.dailyGoalMinutes}
               levels={countLevels(mapped.flatMap((m) => m.squares))}
               levelUp={levelUp && { ...levelUp, name: mapped.find((m) => m.subject.id === levelUp.subjectId)!.subject.name }}
             />
@@ -142,7 +142,8 @@ export function Home() {
             <h2 className="font-sans text-sm font-bold text-ink-2">This week, minutes a day</h2>
             <Link to="/settings" className="-my-2 inline-block py-2 text-xs text-ink-2 underline">Change goal</Link>
           </div>
-          <WeekBars days={daysThisWeek(progress)} />
+          <WeekBars days={daysThisWeek(progress)} goal={progress.dailyGoalMinutes} />
+          <p className="text-xs text-ink-2">{weekGoalLine(goalDays(progress), progress.dailyGoalMinutes)}</p>
         </section>
       </div>
 
@@ -220,9 +221,10 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
   charts?: React.ReactNode
 }) {
   const hour = new Date().getHours()
+  const met = minutes >= goal
   const stats: [string, React.ReactNode][] = [
     [streak === 1 ? 'day streak' : 'days streak', <><span className={streak > 0 ? 'anim-flicker inline-block' : 'inline-block'}><Smiley>🔥</Smiley></span>{streak}</>],
-    [offToday ? 'minutes · today is a day off' : 'minutes this week', <>{minutes}<span className="text-base font-normal"> / {goal}</span></>],
+    [met ? 'minutes today · goal met' : offToday ? 'minutes · today is a day off' : 'minutes today', <>{met && <Smiley>✅</Smiley>}{minutes}<span className="text-base font-normal"> / {goal}</span></>],
     ['topics secure', secure],
     [`XP · ${badges} badges`, xp.toLocaleString('en-GB')],
   ]
@@ -272,6 +274,13 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
       {charts}
     </section>
   )
+}
+
+/** Under the week's bars: how many days so far reached the goal, in a sentence. */
+function weekGoalLine({ met, of }: { met: number; of: number }, goal: number): string {
+  if (of === 0) return `Goal: ${goal} minutes a day. The bar turns green when a day reaches it.`
+  if (met === of) return `${goal} minutes reached on every day so far this week.`
+  return `${goal} minutes reached on ${met} of ${of} ${of === 1 ? 'day' : 'days'} so far this week.`
 }
 
 /** A tile on the Home banner, with one of its subject's pictures chosen afresh on each visit. */

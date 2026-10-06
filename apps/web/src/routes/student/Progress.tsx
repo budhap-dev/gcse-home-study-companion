@@ -10,7 +10,7 @@ import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts
 import { Link } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
-import { attemptName, evidenceFor, isoDate, streakDays, weekDays, weekMinutes } from '../../progress/store.ts'
+import { attemptName, evidenceFor, goalDays, isoDate, streakDays, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { describeMilestone } from '../../progress/milestones.ts'
 import { SubjectIcon } from '../../components/SubjectIcon.tsx'
@@ -19,6 +19,7 @@ export function Progress() {
   const progress = useProgress()
   const days = weekDays()
   const today = isoDate()
+  const onGoal = goalDays(progress, today)
   const max = Math.max(30, ...days.map((d) => progress.minutes[d] ?? 0))
   const recent = [...progress.attempts].sort((a, b) => b.completedAt.localeCompare(a.completedAt)).slice(0, 8)
   const titleOf = (id: string) => TOPICS.find((t) => t.id === id)?.title ?? id
@@ -29,7 +30,7 @@ export function Progress() {
     <article className="mx-auto flex w-full max-w-6xl flex-col gap-6">
       <header className="flex flex-col gap-1">
         <h1 className="text-3xl font-bold leading-tight">Progress</h1>
-        <p className="text-ink-2">Saved on this device. {streakDays(progress)} day streak · {weekMinutes(progress)} of {progress.goalMinutes} minutes this week · {totalXp(progress)} XP.</p>
+        <p className="text-ink-2">Saved on this device. {streakDays(progress)} day streak · {progress.minutes[today] ?? 0} of {progress.dailyGoalMinutes} minutes today ·{onGoal.of > 0 && ` goal met on ${onGoal.met} of ${onGoal.of} ${onGoal.of === 1 ? 'day' : 'days'} this week ·`} {totalXp(progress)} XP.</p>
       </header>
 
       <section className="flex flex-col gap-3">
@@ -57,8 +58,8 @@ export function Progress() {
           <StatusDonut totals={statusTotals(progress)} />
         </div>
         <div className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
-          <SectionLabel colour="#2e8b57" emoji="📅">Your study time by week</SectionLabel>
-          <WeeklyBars weeks={weeklyMinutes(progress)} goal={progress.goalMinutes} />
+          <SectionLabel colour="#2e8b57" emoji="📅">Days on goal, by week</SectionLabel>
+          <WeeklyBars weeks={weeklyMinutes(progress)} goal={progress.dailyGoalMinutes} />
         </div>
       </section>
 

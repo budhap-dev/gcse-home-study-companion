@@ -1,4 +1,4 @@
-import { DEFAULT_GOAL_MINUTES, emptyState, type ProgressState } from './store.ts'
+import { DEFAULT_DAILY_GOAL, fromStored, type ProgressState } from './store.ts'
 
 /**
  * Combines progress from two places so nothing is lost: attempts are united by id,
@@ -8,7 +8,7 @@ import { DEFAULT_GOAL_MINUTES, emptyState, type ProgressState } from './store.ts
  * never changed defers to the other.
  */
 export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressState>): ProgressState {
-  const A = { ...emptyState(), ...a }, B = { ...emptyState(), ...b }
+  const A = fromStored(a), B = fromStored(b)
   const attempts = new Map<string, ProgressState['attempts'][number]>()
   for (const x of [...A.attempts, ...B.attempts]) {
     const prev = attempts.get(x.id)
@@ -62,7 +62,7 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
     activities: [...activities.values()].sort((x, y) => x.at.localeCompare(y.at)),
     minutes,
     time,
-    goalMinutes: A.goalMinutes !== DEFAULT_GOAL_MINUTES ? A.goalMinutes : B.goalMinutes,
+    dailyGoalMinutes: A.dailyGoalMinutes !== DEFAULT_DAILY_GOAL ? A.dailyGoalMinutes : B.dailyGoalMinutes,
     daysOff: [...new Set([...A.daysOff, ...B.daysOff])].sort(),
     badges,
     milestones,

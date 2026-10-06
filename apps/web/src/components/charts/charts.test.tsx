@@ -51,19 +51,23 @@ describe('StatusDonut', () => {
 
 describe('WeeklyBars', () => {
   const weeks = [
-    { start: '2026-09-07', minutes: 0, label: '7 Sept' },
-    { start: '2026-09-14', minutes: 240, label: '14 Sept' },
+    { start: '2026-09-07', minutes: 0, goal: { met: 0, of: 7 }, label: '7 Sept' },
+    { start: '2026-09-14', minutes: 240, goal: { met: 3, of: 6 }, label: '14 Sept' },
+    { start: '2026-09-21', minutes: 175, goal: { met: 5, of: 5 }, label: '21 Sept' },
   ]
 
-  it('says how many weeks met the goal', () => {
-    expect(renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={180} />)).toContain('goal of 180 met in 1 of 2')
+  it('says how many days met the goal, and the minutes in all', () => {
+    expect(renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={25} />)).toContain('25 minutes reached on 8 days over 3 weeks · 415 minutes in all')
   })
 
-  /** A week that beat the goal must not be clipped, and the goal line must stay on chart. */
-  it('scales to the best week when it beats the goal', () => {
-    const html = renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={180} />)
-    expect(html).toContain('height:100%')
-    expect(html).toContain('bottom:75%')
+  /** The track is the days that had a goal; the bar is the share of them met. */
+  it('draws each week as days met out of days with a goal', () => {
+    const html = renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={25} />)
+    expect(html).toContain('3/6')
+    expect(html).toContain(`height:${(100 * 6) / 7}%`)
+    expect(html).toContain('height:50%')
+    // A week with every goal day met is green even with two days off.
+    expect(html).toMatch(/bg-status-secure" style="height:100%/)
   })
 
   /**
@@ -71,13 +75,13 @@ describe('WeeklyBars', () => {
    * column every bar computed to zero and the chart rendered as bare numbers.
    */
   it('gives each column a height for its bar to be a percentage of', () => {
-    expect(renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={180} />)).toContain('flex h-full')
+    expect(renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={25} />)).toContain('flex h-full')
   })
 
   it('still draws an empty week, because a gap is the point', () => {
-    const html = renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={180} />)
-    expect(html).toContain('the week of 7 Sept')
-    expect(html).toContain('0 minutes')
+    const html = renderToStaticMarkup(<WeeklyBars weeks={weeks} goal={25} />)
+    expect(html).toContain('Week of 7 Sept: goal met on 0 of 7 days, 0 minutes in all')
+    expect(html).toContain('0/7')
   })
 })
 

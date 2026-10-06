@@ -45,10 +45,9 @@ function Head({ label, value }: { label: string; value: React.ReactNode }) {
 
 const short = (day: string) => new Date(day + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 
-/** Minutes a day as a soft area, with the pace the weekly goal asks for drawn across it. */
+/** Minutes a day as a soft area, with the daily goal drawn across it. */
 function StudyTime({ days, goal }: { days: { day: string; minutes: number }[]; goal: number }) {
-  const pace = goal / 7
-  const most = Math.max(30, pace * 1.25, ...days.map((d) => d.minutes))
+  const most = Math.max(30, goal * 1.25, ...days.map((d) => d.minutes))
   const x = (i: number) => (i * W) / (days.length - 1)
   const y = (m: number) => H - 4 - (m / most) * (H - 10)
   // Each step bends through the midpoint between days, so the curve never overshoots a day's value.
@@ -67,7 +66,7 @@ function StudyTime({ days, goal }: { days: { day: string; minutes: number }[]; g
               <stop offset="1" stopColor="#fff" stopOpacity="0" />
             </linearGradient>
           </defs>
-          <line x1="0" x2={W} y1={y(pace)} y2={y(pace)} stroke="#fff" strokeOpacity="0.55" strokeDasharray="4 4" strokeWidth="1.25" vectorEffect="non-scaling-stroke" />
+          <line x1="0" x2={W} y1={y(goal)} y2={y(goal)} stroke="#fff" strokeOpacity="0.55" strokeDasharray="4 4" strokeWidth="1.25" vectorEffect="non-scaling-stroke" />
           <path d={`${line} L${W} ${H} L0 ${H}Z`} fill="url(#hero-area)" />
           <path d={line} fill="none" stroke="#fff" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
         </svg>
@@ -75,7 +74,7 @@ function StudyTime({ days, goal }: { days: { day: string; minutes: number }[]; g
       </div>
       <span className="flex justify-between text-[11px]" aria-hidden>
         <span>{short(days[0]!.day)}</span>
-        <span className="flex items-center gap-1.5"><span className="inline-block w-3 border-t-[1.5px] border-dashed border-white/70" />goal pace</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block w-3 border-t-[1.5px] border-dashed border-white/70" />daily goal</span>
         <span>Today</span>
       </span>
     </div>

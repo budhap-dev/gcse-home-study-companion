@@ -77,7 +77,9 @@ export const BADGES: Badge[] = [
   { id: 'streak-7', name: 'Seven-day streak', description: 'Studied seven days in a row.', emoji: '🚀' },
   { id: 'streak-30', name: 'A whole month', description: 'Studied thirty days in a row.', emoji: '🏆' },
   { id: 'comeback', name: 'Comeback', description: 'Improved a quiz score by 20 points or more.', emoji: '📈' },
-  { id: 'goal-week', name: 'Goal reached', description: 'Hit the weekly minutes goal.', emoji: '🎯' },
+  { id: 'goal-day', name: 'Goal reached', description: 'Hit the daily minutes goal.', emoji: '🎯' },
+  // The id is from when the goal was weekly; kept so a badge earned then still counts.
+  { id: 'goal-week', name: 'Goal every day', description: 'Hit the daily goal every day of a week, days off aside.', emoji: '🗓️' },
   { id: 'subject-explorer', name: 'Explorer', description: 'Finished lessons in two different subjects.', emoji: '🧭' },
 ]
 

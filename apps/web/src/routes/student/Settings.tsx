@@ -4,7 +4,7 @@ import { FamilyPanel } from '../../auth/FamilyPanel.tsx'
 import { AUTO_THEME, THEMES, applyTheme, currentThemeId, resolveTheme } from '../../theme/themes.ts'
 import { setPref, usePref } from '../../theme/prefs.ts'
 import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
-import { clearProgress, isoDate, setGoalMinutes, toggleDayOff, weekDays } from '../../progress/store.ts'
+import { clearProgress, isoDate, setDailyGoal, toggleDayOff, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { ProfileForm } from '../../components/ProfileForm.tsx'
 
@@ -14,7 +14,7 @@ export function Settings() {
   useEffect(() => {
     if (location.hash === '#you') document.getElementById('you')?.scrollIntoView({ block: 'start' })
   }, [])
-  const [goal, setGoal] = useState(String(progress.goalMinutes))
+  const [goal, setGoal] = useState(String(progress.dailyGoalMinutes))
   const [confirmClear, setConfirmClear] = useState(false)
   const days = weekDays()
   const today = isoDate()
@@ -79,11 +79,11 @@ export function Settings() {
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
-        <h2 className="font-bold">Weekly goal</h2>
-        <p className="text-sm text-ink-2">Minutes of study per week. The ring on the home screen fills towards it.</p>
-        <form className="flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); setGoalMinutes(Number(goal)) }}>
-          <input type="number" inputMode="numeric" min={30} max={2000} step={10} value={goal} onChange={(e) => setGoal(e.target.value)} className="h-11 w-28 rounded-lg border border-rule px-3 text-lg" aria-label="Weekly goal in minutes" />
-          <span className="text-sm text-ink-2">minutes</span>
+        <h2 className="font-bold">Daily goal</h2>
+        <p className="text-sm text-ink-2">Minutes of study a day. The home screen shows today’s minutes against it. A day off has no goal.</p>
+        <form className="flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); setDailyGoal(Number(goal)) }}>
+          <input type="number" inputMode="numeric" min={10} max={240} step={5} value={goal} onChange={(e) => setGoal(e.target.value)} className="h-11 w-28 rounded-lg border border-rule px-3 text-lg" aria-label="Daily goal in minutes" />
+          <span className="text-sm text-ink-2">minutes a day</span>
           <button type="submit" className="ml-auto h-11 rounded-lg bg-ink px-4 font-bold text-surface">Save</button>
         </form>
       </section>

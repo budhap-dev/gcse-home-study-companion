@@ -21,7 +21,7 @@ describe('withoutTopics', () => {
       attempts: [attempt('alpha', 1), attempt('beta', 2), attempt('alpha', 3), attempt('gamma', 4)],
       lessons: { alpha: lesson('alpha', 1), beta: lesson('beta', 2) },
       minutes: { '2026-09-16': 40 },
-      goalMinutes: 120,
+      dailyGoalMinutes: 40,
       daysOff: ['2026-09-14'],
       badges: { firstQuiz: at(1) },
     }
@@ -44,7 +44,7 @@ describe('withoutTopics', () => {
   it('keeps minutes, goal, days off and badges, which are not a topic\'s to lose', () => {
     const after = withoutTopics(state, ['alpha', 'beta', 'gamma'])
     expect(after.minutes).toEqual({ '2026-09-16': 40 })
-    expect(after.goalMinutes).toBe(120)
+    expect(after.dailyGoalMinutes).toBe(40)
     expect(after.daysOff).toEqual(['2026-09-14'])
     expect(after.badges).toEqual({ firstQuiz: at(1) })
   })

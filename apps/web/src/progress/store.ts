@@ -140,8 +140,12 @@ export interface ProgressState {
    * happen.
    */
   time: Record<string, number>
-  /** Weekly goal in minutes. */
-  goalMinutes: number
+  /**
+   * Daily goal in minutes; a day off has none. Until 6 October 2026 the goal was weekly
+   * (`goalMinutes`, 180 by default), which the student was not reaching: a week is too far
+   * off to aim at on a Monday. `fromStored` turns a weekly goal into a daily one.
+   */
+  dailyGoalMinutes: number
   /** ISO dates marked as days off; they do not break the streak. */
   daysOff: string[]
   /** Badge id to the ISO time it was earned. */
@@ -187,10 +191,32 @@ export function withoutSubjects(profile: Profile | undefined): Profile {
   return rest
 }
 
-export const DEFAULT_GOAL_MINUTES = 180
+export const DEFAULT_DAILY_GOAL = 25
+/** The weekly goal every state carried before the goal became daily. */
+const OLD_DEFAULT_WEEKLY_GOAL = 180
+const clampDailyGoal = (m: number) => Math.max(10, Math.min(240, Math.round(m)))
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, goalMinutes: DEFAULT_GOAL_MINUTES, daysOff: [], badges: {}, milestones: {}, deeds: {}, profile: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, dailyGoalMinutes: DEFAULT_DAILY_GOAL, daysOff: [], badges: {}, milestones: {}, deeds: {}, profile: {} }
+}
+
+/**
+ * A saved state, from this device or the account, in today's shape: fields added since it
+ * was written are filled in, and a weekly goal becomes a daily one. The old default of 180
+ * becomes the new default; a goal the student chose is a seventh of it, to the nearest 5.
+ */
+export function fromStored(stored: Partial<ProgressState> & { goalMinutes?: number }): ProgressState {
+  const { goalMinutes: weekly, ...rest } = stored
+  const daily = typeof rest.dailyGoalMinutes === 'number' ? clampDailyGoal(rest.dailyGoalMinutes)
+    : typeof weekly === 'number' && weekly !== OLD_DEFAULT_WEEKLY_GOAL ? clampDailyGoal(Math.round(weekly / 35) * 5)
+    : DEFAULT_DAILY_GOAL
+  return {
+    ...emptyState(), ...rest,
+    // A state written before these existed has none, and every reader iterates them.
+    activities: rest.activities ?? [], time: rest.time ?? {}, milestones: rest.milestones ?? {}, deeds: rest.deeds ?? {},
+    dailyGoalMinutes: daily,
+    profile: withoutSubjects(rest.profile),
+  }
 }
 
 const KEY = 'study-companion.progress.v1'
@@ -198,11 +224,7 @@ const KEY = 'study-companion.progress.v1'
 function read(): ProgressState {
   try {
     const raw = localStorage.getItem(KEY)
-    if (raw) {
-      const stored = JSON.parse(raw) as Partial<ProgressState>
-      // A state written before `activities` existed has none, and every reader iterates it.
-      return { ...emptyState(), ...stored, activities: stored.activities ?? [], time: stored.time ?? {}, milestones: stored.milestones ?? {}, deeds: stored.deeds ?? {}, profile: withoutSubjects(stored.profile) }
-    }
+    if (raw) return fromStored(JSON.parse(raw) as Partial<ProgressState>)
   } catch {
     // storage unavailable or corrupt: start clean
   }
@@ -324,7 +346,7 @@ export function clearProgress() {
  * The state with the given topics forgotten: their attempts, their place in the lesson, and
  * the revision recorded against them.
  *
- * Study minutes, the weekly goal, days off and badges are deliberately untouched. None of
+ * Study minutes, the daily goal, days off and badges are deliberately untouched. None of
  * them belongs to a topic — the minutes were still studied and the streak was still kept —
  * so resetting one topic must not cost a student a streak they earned.
  *
@@ -356,7 +378,7 @@ export function isoDate(d = new Date()): string {
 
 /**
  * Adds study time to the day, and, when the screen knows where it is, to that place too.
- * The daily total is still kept on its own because the weekly goal and every chart read it,
+ * The daily total is still kept on its own because the daily goal and every chart read it,
  * and because minutes recorded before places existed are only in it.
  */
 export function addStudyMinutes(minutes: number, day = isoDate(), place?: StudyPlace) {
@@ -369,9 +391,9 @@ export function addStudyMinutes(minutes: number, day = isoDate(), place?: StudyP
   write(state)
 }
 
-export function setGoalMinutes(minutes: number) {
+export function setDailyGoal(minutes: number) {
   const state = read()
-  state.goalMinutes = Math.max(30, Math.min(2000, Math.round(minutes)))
+  state.dailyGoalMinutes = clampDailyGoal(minutes)
   write(state)
 }
 
@@ -395,6 +417,35 @@ export function weekDays(day = isoDate()): string[] {
 
 export function weekMinutes(state: ProgressState, day = isoDate()): number {
   return weekDays(day).reduce((sum, d) => sum + (state.minutes[d] ?? 0), 0)
+}
+
+/** Whether the day's minutes reached the daily goal. A day off can still reach it. */
+export function goalMet(state: ProgressState, day: string): boolean {
+  return (state.minutes[day] ?? 0) >= state.dailyGoalMinutes
+}
+
+/**
+ * Days of the week so far on which the goal was met, out of the days that had one; `week`
+ * names another week, for a chart of weeks gone by.
+ *
+ * A day off has no goal, so it counts only if the goal was met anyway. Today counts once it
+ * is met and not before: at breakfast the day is not yet missed, and "1 of 3" on a
+ * Wednesday morning would read as a failure the student has had no chance to avoid. Days
+ * before the first study ever recorded have no goal either, so the weeks before the app was
+ * opened do not chart as weeks missed.
+ */
+export function goalDays(state: ProgressState, today = isoDate(), week = weekDays(today)): { met: number; of: number } {
+  const off = new Set(state.daysOff)
+  const first = Object.keys(state.minutes).filter((d) => (state.minutes[d] ?? 0) > 0).sort()[0]
+  let met = 0, of = 0
+  for (const d of week) {
+    if (d > today) break
+    if (!first || d < first) continue
+    const hit = goalMet(state, d)
+    if (hit) met++
+    if (hit || (d < today && !off.has(d))) of++
+  }
+  return { met, of }
 }
 
 /** Days with a completed activity, counting back from today; days off are skipped, not broken on. */
