@@ -269,9 +269,10 @@ picked first and list the rest here.
 - [x] **Shorter topic intro on a phone** (design 8): below laptop width the banner shows
   the first sentence or two of "why it matters" (whole sentences up to 200 characters) and
   "Read more", so the way into the lesson and the lesson's steps are on the first screen.
-- [ ] **Phone Home puts Today first** (design 5): the first "Next up" card moves into the
-  banner, and the four counters shrink to one line, since a new or lapsed student reads
-  four zeros before anything to do.
+- [x] **Phone Home puts Today first** (design 5): below laptop width the first card of the
+  plan sits in the banner with its reason and time, and the four counters are one small
+  line; the Today list starts at the second card. A new or lapsed student read four large
+  zeros before anything to do, and the plan began under the fold.
 - [ ] **Parent view leftovers** (design 10): PAR-2 (the child's topic map, read-only) and
   PAR-5 (trend by subject with average score). The suggested task beside a weak topic is
   already built (Family, "Suggested next").

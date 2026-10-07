@@ -116,9 +116,11 @@ export function Home() {
 
       <div className="contents lg:flex lg:flex-col lg:gap-5">
         {plan.length > 0 ? (
-          <section className="anim-rise flex flex-col gap-2 max-lg:order-2" style={{ '--d': '0.08s' } as React.CSSProperties}>
+          // Below laptop width the first item is in the banner (HeroPlan), so the list here
+          // starts at the second and goes when there is nothing else to show.
+          <section className={`anim-rise flex flex-col gap-2 max-lg:order-2 ${plan.length === 1 && done.length === 0 ? 'max-lg:hidden' : ''}`} style={{ '--d': '0.08s' } as React.CSSProperties}>
             <SectionLabel colour="#c8501f" emoji="🚀">Today</SectionLabel>
-            {plan.map((item, i) => <PlanCard key={item.to} item={item} primary={i === 0} />)}
+            {plan.map((item, i) => <PlanCard key={item.to} item={item} primary={i === 0} className={i === 0 ? 'max-lg:hidden' : ''} />)}
             {done.length > 0 && (
               <p className="text-sm text-ink-2">
                 <strong className="text-ink">Done today:</strong> {done.map((d) => `${d.what} · ${d.topicTitle}${d.detail ? ` (${d.detail})` : ''}`).join('; ')}.
@@ -208,7 +210,9 @@ export function Home() {
 /**
  * The banner at the top of Home: the day, a greeting, four numbers the student cares about,
  * and the first thing to do. Tiles in the subjects' own colours drift beside the words on
- * wide screens, where there is room for them.
+ * wide screens, where there is room for them. Below laptop width the numbers are one small
+ * line and the first thing to do is a card with its reason and its time: a new or lapsed
+ * student read four large zeros before anything to do, and the plan began under the fold.
  */
 function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, badges, first, mistakes, tiles, charts }: {
   greeting: string; welcome?: string; streak: number; minutes: number; goal: number; offToday: boolean
@@ -227,6 +231,13 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
     [met ? 'minutes today · goal met' : offToday ? 'minutes · today is a day off' : 'minutes today', <>{met && <Smiley>✅</Smiley>}{minutes}<span className="text-base font-normal"> / {goal}</span></>],
     ['topics secure', secure],
     [`XP · ${badges} badges`, xp.toLocaleString('en-GB')],
+  ]
+  // The same four, short enough for one line of a phone's banner.
+  const brief: [string, React.ReactNode][] = [
+    [streak === 1 ? 'day streak' : 'days streak', <><Smiley>🔥</Smiley>{streak}</>],
+    [met ? 'min today, goal met' : offToday ? 'min, a day off' : 'min today', `${minutes}/${goal}`],
+    ['secure', secure],
+    ['XP', xp.toLocaleString('en-GB')],
   ]
   return (
     <section className="hero-gradient anim-rise relative flex flex-col gap-4 overflow-hidden rounded-[26px] p-5 shadow-[0_16px_40px_rgb(90_75_209/0.28)] sm:p-7">
@@ -251,7 +262,15 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
           </h1>
           {welcome && <p className="text-sm">{welcome}</p>}
         </div>
-        <dl className="relative grid grid-cols-2 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-9 xl:pr-36">
+        <dl className="relative flex flex-wrap gap-x-4 gap-y-1 text-[13px] lg:hidden">
+          {brief.map(([label, value]) => (
+            <div key={label} className="flex items-baseline gap-1">
+              <dt className="order-2">{label}</dt>
+              <dd className="order-1 flex items-center font-bold tabular-nums">{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <dl className="relative hidden lg:flex lg:flex-wrap lg:gap-x-9 xl:pr-36">
           {stats.map(([label, value]) => (
             <div key={label} className="flex flex-col-reverse">
               <dt className="text-[13px]">{label}</dt>
@@ -259,9 +278,10 @@ function Hero({ greeting, welcome, streak, minutes, goal, offToday, secure, xp, 
             </div>
           ))}
         </dl>
+        {first && <HeroPlan item={first} />}
         <div className="relative flex flex-wrap gap-3 xl:pr-36">
           {first && (
-            <Link to={first.to} className="lift flex min-h-12 max-w-full items-center gap-2 rounded-2xl bg-white px-5 py-2 font-bold text-[#2a2f9e] shadow-[0_8px_20px_rgb(0_0_0/0.2)]">
+            <Link to={first.to} className="lift hidden min-h-12 max-w-full items-center gap-2 rounded-2xl bg-white px-5 py-2 font-bold text-[#2a2f9e] shadow-[0_8px_20px_rgb(0_0_0/0.2)] lg:flex">
               <span className="truncate">{first.title}{first.topicTitle ? `: ${first.topicTitle}` : ''}</span>
               <span aria-hidden>→</span>
             </Link>
@@ -288,16 +308,33 @@ function HeroTile({ tile, i, big = false }: { tile: { id: string; colour: string
   return <SubjectTile subjectId={tile.id} colour={tile.colour} variant={useRandomIcon(tile.id)} i={i} big={big} />
 }
 
-/** One item of today's plan: why it is there, what it is, and how long it takes. */
-function PlanCard({ item, primary }: { item: PlanItem; primary: boolean }) {
+/** What a plan card says: why it is there, what it is, and how long it takes. */
+function PlanLines({ item }: { item: PlanItem }) {
   return (
-    <Link to={item.to} className={`lift flex items-center gap-3 rounded-2xl bg-surface px-4 py-3 ${primary ? 'border-2 border-[color:var(--hero-2)]' : 'border border-rule'}`}>
-      <span className="flex flex-grow flex-col gap-0.5">
-        <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-ink-3">{item.label}{item.subject ? ` · ${item.subject}` : ''}</span>
-        <span className="font-bold leading-snug">{item.title}{item.topicTitle ? <span className="font-normal text-ink-2"> · {item.topicTitle}</span> : null}</span>
-        <span className="text-xs text-ink-2">{item.reason} About {item.minutes} min.</span>
-      </span>
+    <span className="flex min-w-0 flex-grow flex-col gap-0.5">
+      <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-ink-3">{item.label}{item.subject ? ` · ${item.subject}` : ''}</span>
+      <span className="font-bold leading-snug">{item.title}{item.topicTitle ? <span className="font-normal text-ink-2"> · {item.topicTitle}</span> : null}</span>
+      <span className="text-xs text-ink-2">{item.reason} About {item.minutes} min.</span>
+    </span>
+  )
+}
+
+/** One item of today's plan, in the Today list. */
+function PlanCard({ item, primary, className = '' }: { item: PlanItem; primary: boolean; className?: string }) {
+  return (
+    <Link to={item.to} className={`lift flex items-center gap-3 rounded-2xl bg-surface px-4 py-3 ${primary ? 'border-2 border-[color:var(--hero-2)]' : 'border border-rule'} ${className}`}>
+      <PlanLines item={item} />
       <span className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-bold ${primary ? 'hero-gradient' : 'border border-rule'}`}>Go</span>
+    </Link>
+  )
+}
+
+/** The first item of today's plan, in the banner below laptop width: a card on the gradient. */
+function HeroPlan({ item }: { item: PlanItem }) {
+  return (
+    <Link to={item.to} className="lift relative flex items-center gap-3 rounded-2xl bg-surface px-4 py-3 text-ink shadow-[0_8px_20px_rgb(0_0_0/0.2)] lg:hidden">
+      <PlanLines item={item} />
+      <span className="hero-gradient shrink-0 rounded-lg px-3 py-1.5 text-sm font-bold">Go</span>
     </Link>
   )
 }
