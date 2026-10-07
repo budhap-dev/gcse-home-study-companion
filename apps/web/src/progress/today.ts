@@ -7,6 +7,8 @@ import { attemptName, evidenceFor, isoDate, type ProgressState } from './store.t
 export interface PlanItem {
   /** Why it is on the plan, as the card's small heading. */
   label: 'Set for you' | 'Recap' | 'Next up'
+  /** The subject, beside the label: the three cards can be three subjects now. */
+  subject?: string
   title: string
   topicTitle?: string
   reason: string
@@ -37,19 +39,19 @@ export function todayPlan(topics: Topic[], state: ProgressState, assigned: Assig
     .filter((t) => t.task && (pressing as readonly string[]).includes(t.status))
     .sort((a, b) => pressing.indexOf(a.status as (typeof pressing)[number]) - pressing.indexOf(b.status as (typeof pressing)[number]))[0]
   if (set?.task) {
-    add({ label: 'Set for you', title: set.task.title, topicTitle: set.topicTitle, reason: set.status === 'overdue' ? 'Overdue: set by a parent.' : set.status === 'due-today' ? 'Due today: set by a parent.' : 'Set by a parent.', minutes: set.task.minutes, to: set.task.to })
+    add({ label: 'Set for you', subject: set.task.subjectName, title: set.task.title, topicTitle: set.topicTitle, reason: set.status === 'overdue' ? 'Overdue: set by a parent.' : set.status === 'due-today' ? 'Due today: set by a parent.' : 'Set by a parent.', minutes: set.task.minutes, to: set.task.to })
   }
 
-  const { next, alternatives } = recommend(topics, state, now)
-  const faded = [next, ...alternatives].find((t) => t && t.kind === 'quiz' && evidenceFor(t.topic.id, state, now).decayedFrom)
+  const { next, alternatives, ranked } = recommend(topics, state, now)
+  const faded = ranked.find((t) => t.kind === 'quiz' && evidenceFor(t.topic.id, state, now).decayedFrom)
   const recap = faded || recapDoneToday(state, isoDate(now)) ? [] : recapItems(topics, state, now)
   const spread = new Set(recap.map((i) => i.topicId)).size
-  if (faded) add({ label: 'Recap', title: faded.title, topicTitle: faded.topic.title, reason: faded.reason, minutes: faded.minutes, to: faded.to })
+  if (faded) add({ label: 'Recap', subject: faded.subjectName, title: faded.title, topicTitle: faded.topic.title, reason: faded.reason, minutes: faded.minutes, to: faded.to })
   else if (recap.length) add({ label: 'Recap', title: 'Daily recap', reason: `${recap.length} questions from ${spread} topics you have studied, a new mix each day.`, minutes: RECAP_SIZE, to: '/recap' })
   else if (mistakes > 0) add({ label: 'Recap', title: 'Redo my mistakes', reason: `${mistakes} question${mistakes === 1 ? '' : 's'} you got wrong, newest first.`, minutes: Math.max(5, Math.round(mistakes * 1.5)), to: '/mistakes' })
 
   for (const t of [next, ...alternatives]) {
-    if (t) add({ label: 'Next up', title: t.title, topicTitle: t.topic.title, reason: t.reason, minutes: t.minutes, to: t.to })
+    if (t) add({ label: 'Next up', subject: t.subjectName, title: t.title, topicTitle: t.topic.title, reason: t.reason, minutes: t.minutes, to: t.to })
   }
   return plan
 }

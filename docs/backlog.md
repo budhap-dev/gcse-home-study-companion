@@ -259,24 +259,25 @@ picked first and list the rest here.
   passage to answer in English. Listening is a quarter of the French grade; until now only
   9 of 967 French questions involved listening at all.
 
-**Then, not yet scheduled:**
+**Then, approved 7 October 2026, one PR each in this order:**
+- [x] **Next up mixes subjects** (design 6): the two alternatives to the recommendation come
+  from two other subjects, the best-ranked task of each, so the three cards on Home are
+  three subjects. All three were Maths on 6 October 2026.
+- [ ] **Subject map opens on the student's year and names its squares** (design 9).
+- [ ] **Shorter topic intro on a phone** (design 8): two lines and "Read more", so the
+  activities are on the first screen.
+- [ ] **Phone Home puts Today first** (design 5): the first "Next up" card moves into the
+  banner, and the four counters shrink to one line, since a new or lapsed student reads
+  four zeros before anything to do.
+- [ ] **Parent view leftovers** (design 10): PAR-2 (the child's topic map, read-only) and
+  PAR-5 (trend by subject with average score). The suggested task beside a weak topic is
+  already built (Family, "Suggested next").
 - [ ] **Business and Biology depth** (content 2): about 5 questions per specification point,
   against about 10 in Maths and 12 in Computer Science. More calculation and 6/9/12-mark
   questions per sub-point; split each Business topic (a whole section of 2 to 5 sub-points
   today) in two.
 - [ ] **Music listening** (content 4): a link to a recording of each set work, no timings.
-  Only if the owner revisits the no-audio decision.
-- [ ] **Phone Home puts Today first** (design 5): the first "Next up" card moves into the
-  banner, and the four counters shrink to one line, since a new or lapsed student reads
-  four zeros before anything to do.
-- [ ] **Next up mixes subjects** (design 6): three suggestions from three subjects. All three
-  were Maths on 6 October 2026.
-- [ ] **Shorter topic intro on a phone** (design 8): two lines and "Read more", so the
-  activities are on the first screen.
-- [ ] **Subject map opens on the student's year and names its squares** (design 9).
-- [ ] **Parent view leftovers** (design 10): PAR-2 (the child's topic map, read-only) and
-  PAR-5 (trend by subject with average score). The suggested task beside a weak topic is
-  already built (Family, "Suggested next").
+  Only if the owner revisits the no-audio decision; asked for last.
 
 ## 3. Product features (not planned)
 

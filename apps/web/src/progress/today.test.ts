@@ -34,6 +34,22 @@ describe("today's plan", () => {
     expect(plan[0]!.to).toContain(`${t.id}/quiz`)
   })
 
+  it('offers a new student three subjects, not three Maths topics', () => {
+    const plan = todayPlan(TOPICS, { ...emptyState(), profile: { year: 10 } }, [], 0, now)
+    expect(plan.map((p) => p.label)).toEqual(['Next up', 'Next up', 'Next up'])
+    expect(new Set(plan.map((p) => p.to.split('/')[2])).size).toBe(3)
+    expect(plan[0]!.to).toMatch(/^\/subjects\/maths\//)
+  })
+
+  it('keeps a faded topic in the recap slot when other subjects outrank it as alternatives', () => {
+    const t = maths[0]!
+    const faded = [{ id: 'q', topicId: t.id, kind: 'quiz', marksScored: 9, marksAvailable: 10, markedHow: 'auto', completedAt: '2026-07-01T10:00:00Z' }, { id: 'h', topicId: t.id, kind: 'worksheet', level: 'higher', marksScored: 9, marksAvailable: 10, markedHow: 'auto', completedAt: '2026-07-01T10:00:00Z' }] as const
+    const other = TOPICS.find((x) => x.subjectId === 'biology')!
+    const state: ProgressState = { ...emptyState(), attempts: [...faded], lessons: { [other.id]: { topicId: other.id, stepIndex: 1, updatedAt: '2026-09-25T10:00:00Z' } } }
+    const plan = todayPlan([...maths, ...TOPICS.filter((x) => x.subjectId !== 'maths')], state, [], 0, now)
+    expect(plan.find((p) => p.label === 'Recap')?.to).toContain(`${t.id}/quiz`)
+  })
+
   it('never lists the same thing twice', () => {
     const plan = todayPlan(maths, emptyState(), [], 0, now)
     expect(new Set(plan.map((p) => p.to)).size).toBe(plan.length)

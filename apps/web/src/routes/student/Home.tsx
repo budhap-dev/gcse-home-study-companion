@@ -293,7 +293,7 @@ function PlanCard({ item, primary }: { item: PlanItem; primary: boolean }) {
   return (
     <Link to={item.to} className={`lift flex items-center gap-3 rounded-2xl bg-surface px-4 py-3 ${primary ? 'border-2 border-[color:var(--hero-2)]' : 'border border-rule'}`}>
       <span className="flex flex-grow flex-col gap-0.5">
-        <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-ink-3">{item.label}</span>
+        <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-ink-3">{item.label}{item.subject ? ` · ${item.subject}` : ''}</span>
         <span className="font-bold leading-snug">{item.title}{item.topicTitle ? <span className="font-normal text-ink-2"> · {item.topicTitle}</span> : null}</span>
         <span className="text-xs text-ink-2">{item.reason} About {item.minutes} min.</span>
       </span>

@@ -58,6 +58,30 @@ describe('recommend', () => {
   })
 })
 
+describe('a choice of subjects', () => {
+  const bio = (id: string): Topic => ({ ...topic(id), subjectId: 'biology', unitId: 'key-concepts' })
+  const phys = (id: string): Topic => ({ ...topic(id), subjectId: 'physics', unitId: 'energy' })
+
+  it('takes the alternatives from two other subjects, the best of each in rank order', () => {
+    const r = recommend([topic('m1'), topic('m2'), bio('b1'), bio('b2'), phys('p1')], emptyState(), now)
+    expect(r.next!.topic.id).toBe('m1')
+    expect(r.alternatives.map((t) => t.topic.id)).toEqual(['b1', 'p1'])
+    expect(r.ranked.map((t) => t.topic.id)).toEqual(['m1', 'm2', 'b1', 'b2', 'p1'])
+  })
+
+  it('lets a weak quiz in another subject outrank a new lesson in a third', () => {
+    const state = { ...emptyState(), attempts: [quiz('m1', 40, '2026-09-07'), quiz('b1', 55, '2026-09-07')] }
+    const r = recommend([topic('m1'), topic('m2'), bio('b1'), phys('p1')], state, now)
+    expect(r.next).toMatchObject({ kind: 'quiz', topic: { id: 'm1' } })
+    expect(r.alternatives.map((t) => `${t.kind}:${t.topic.id}`)).toEqual(['quiz:b1', 'lesson:p1'])
+  })
+
+  it('fills from the same subject when no other has anything', () => {
+    const r = recommend([topic('m1'), topic('m2'), topic('m3'), bio('b1')], emptyState(), now)
+    expect(r.alternatives.map((t) => t.topic.id)).toEqual(['b1', 'm2'])
+  })
+})
+
 describe('the student\'s year', () => {
   it('suggests their own year\'s new topics first, then earlier years, then later', () => {
     const t9 = { ...topic('nine'), year: 9 as const }, t10 = { ...topic('ten'), year: 10 as const }, t11 = { ...topic('eleven'), year: 11 as const }
