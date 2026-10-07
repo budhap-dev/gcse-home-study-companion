@@ -273,9 +273,11 @@ picked first and list the rest here.
   plan sits in the banner with its reason and time, and the four counters are one small
   line; the Today list starts at the second card. A new or lapsed student read four large
   zeros before anything to do, and the plan began under the fold.
-- [ ] **Parent view leftovers** (design 10): PAR-2 (the child's topic map, read-only) and
-  PAR-5 (trend by subject with average score). The suggested task beside a weak topic is
-  already built (Family, "Suggested next").
+- [x] **Parent view leftovers** (design 10): PAR-2, the child's map read-only (each subject
+  row on the dashboard carries the child's squares as on Home, and the subject's detail has
+  the map by unit, named tiles, opened on the child's year) and PAR-5, the last eight weeks
+  per subject with the average mark each week (a table on the dashboard, bars on the
+  subject's detail). The suggested task beside a weak topic was already built.
 - [ ] **Business and Biology depth** (content 2): about 5 questions per specification point,
   against about 10 in Maths and 12 in Computer Science. More calculation and 6/9/12-mark
   questions per sub-point; split each Business topic (a whole section of 2 to 5 sub-points
@@ -312,9 +314,8 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [ ] **WKS-7:** make the scratch canvas resizable.
 - [x] **PAR-1:** compare with the previous week (minutes, topics, quizzes, per-subject status
   change), and add a suggested task beside each weak topic.
-- [ ] **PAR-2:** give the parent the child's own year and term topic map, read-only.
-- [ ] **PAR-5:** split the 8-week trend by subject and add average score per week. Today it is
-  study time only, all subjects together.
+- [x] **PAR-2:** give the parent the child's own year and term topic map, read-only (7 October 2026).
+- [x] **PAR-5:** split the 8-week trend by subject and add average score per week (7 October 2026).
 - [ ] **TUT-3:** show the student who set a task, and the score once it is done.
 - [ ] **MOT-2:** add a "finished a unit" badge, show badges in the parent summary, and give
   badges per-subject artwork.

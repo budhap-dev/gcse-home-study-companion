@@ -148,8 +148,36 @@ export function MasteryLadder({ level }: { level: MapLevel }) {
  * named tiles (see TopicSquare), as many to a row as the unit's card has room for. Ten rem
  * at least, so a tile is 180 to 215px at every width and a 70-character title ("Paper 1
  * Questions 1 and 2: finding information and analysing language") fits its three lines.
+ * `named` asks for the tiles at every width, where nothing else names a square; on a phone
+ * they are two to a row at 8.5rem, since one to a row made Year 10 Maths a 41-tile column.
  */
-export const SQUARES_GRID = 'flex flex-wrap gap-1.5 md:grid md:grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]'
+export function squaresGrid(named = false): string {
+  return named
+    ? 'grid grid-cols-[repeat(auto-fill,minmax(8.5rem,1fr))] gap-1.5 md:grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]'
+    : 'flex flex-wrap gap-1.5 md:grid md:grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]'
+}
+export const SQUARES_GRID = squaresGrid()
+
+/** A square's accessible name: its topic, year and level. */
+export const squareName = (s: MapSquare) => `${s.topic.title}, Year ${s.topic.year}, ${MAP_LEVEL_LABEL[s.level]}`
+
+/** A tile's shell: a bare square on a phone, or a bordered tile round the square and its name. */
+const tileClass = (named: boolean) => named
+  ? 'flex min-h-11 items-center gap-2 rounded-xl border border-rule bg-surface px-2 py-1.5 text-left'
+  : 'flex items-center rounded-lg md:min-h-11 md:gap-2 md:rounded-xl md:border md:border-rule md:bg-surface md:px-2 md:py-1.5 md:text-left'
+
+/** The square itself and the name beside it, shared by the pressable and the read-only tile. */
+function SquareFace({ square: s, named }: { square: MapSquare; named: boolean }) {
+  const status = s.level > 0 ? RUNG_STATUS[s.level - 1] : undefined
+  return (
+    <>
+      <span aria-hidden className={`map-sq map-l${s.level} map-on-l${s.level} flex shrink-0 items-center justify-center ${named ? 'h-6 w-6 rounded-md' : 'h-8 w-8 rounded-lg md:h-6 md:w-6 md:rounded-md'}`}>
+        {status && <StatusIcon status={status} size={13} colour="currentColor" />}
+      </span>
+      <span className={`text-[12px] font-bold leading-tight ${named ? 'line-clamp-3' : 'hidden md:line-clamp-3'}`}>{s.topic.title}</span>
+    </>
+  )
+}
 
 /**
  * One topic as a square you can press, on the subject page. Its status shape is drawn inside
@@ -160,21 +188,29 @@ export const SQUARES_GRID = 'flex flex-wrap gap-1.5 md:grid md:grid-cols-[repeat
  * measured 3.3:1 in the paper theme.
  */
 export function TopicSquare({ square: s, picked, onPick, delay }: { square: MapSquare; picked: boolean; onPick: () => void; delay: string }) {
-  const status = s.level > 0 ? RUNG_STATUS[s.level - 1] : undefined
   return (
     <button
       type="button"
       onClick={onPick}
       aria-pressed={picked}
-      aria-label={`${s.topic.title}, Year ${s.topic.year}, ${MAP_LEVEL_LABEL[s.level]}`}
+      aria-label={squareName(s)}
       title={s.topic.title}
-      className="anim-sq flex items-center rounded-lg transition-transform hover:scale-110 md:min-h-11 md:gap-2 md:rounded-xl md:border md:border-rule md:bg-surface md:px-2 md:py-1.5 md:text-left md:hover:scale-[1.03]"
+      className={`anim-sq ${tileClass(false)} transition-transform hover:scale-110 md:hover:scale-[1.03]`}
       style={{ '--d': delay, ...(picked ? { outline: '3px solid var(--color-ink)', outlineOffset: '2px' } : {}) } as React.CSSProperties}
     >
-      <span aria-hidden className={`map-sq map-l${s.level} map-on-l${s.level} flex h-8 w-8 shrink-0 items-center justify-center rounded-lg md:h-6 md:w-6 md:rounded-md`}>
-        {status && <StatusIcon status={status} size={13} colour="currentColor" />}
-      </span>
-      <span className="hidden text-[12px] font-bold leading-tight md:line-clamp-3">{s.topic.title}</span>
+      <SquareFace square={s} named={false} />
     </button>
+  )
+}
+
+/**
+ * A topic as a read-only tile, named at every width: the parent's copy of the map (PAR-2),
+ * where there is no panel to open and nothing else to name a square.
+ */
+export function TopicMark({ square: s }: { square: MapSquare }) {
+  return (
+    <span role="img" aria-label={squareName(s)} title={s.topic.title} className={tileClass(true)}>
+      <SquareFace square={s} named />
+    </span>
   )
 }

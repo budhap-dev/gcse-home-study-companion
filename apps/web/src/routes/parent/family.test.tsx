@@ -84,10 +84,10 @@ describe('the parent report', () => {
   })
 })
 
-const body = (tab: 'dashboard' | 'tasks', state?: ProgressState) =>
+const body = (tab: 'dashboard' | 'tasks', state?: ProgressState, subjectId?: string) =>
   renderToStaticMarkup(
     <MemoryRouter>
-      <FamilyBody child={{ email: 'kid@example.com', name: 'Ana Pandit', state }} tab={tab} onTab={() => {}} />
+      <FamilyBody child={{ email: 'kid@example.com', name: 'Ana Pandit', state }} tab={tab} onTab={() => {}} subjectId={subjectId} />
     </MemoryRouter>,
   )
 
@@ -287,5 +287,46 @@ describe('this week and last', () => {
 
   it('leaves the section out for a fortnight with nothing done', () => {
     expect(body('dashboard', { ...emptyState(), attempts: [quiz('surds', 80, '2026-08-01')] })).not.toContain('This week and last')
+  })
+})
+
+// The last eight weeks by subject (PAR-5), and the child's map (PAR-2).
+describe('eight weeks and the map', () => {
+  const state: ProgressState = {
+    ...emptyState(),
+    profile: { year: 10 },
+    time: { [timeKey('2026-09-15', { subjectId: 'maths', topicId: 'surds', kind: 'quiz' })]: 20, [timeKey('2026-09-22', { subjectId: 'maths', topicId: 'surds', kind: 'quiz' })]: 45 },
+    attempts: [quiz('surds', 30, '2026-09-15'), quiz('surds', 40, '2026-09-22')],
+  }
+
+  it('tables each subject week by week on the dashboard, minutes over the average mark', () => {
+    const html = body('dashboard', state)
+    expect(html).toContain('Last eight weeks, by subject')
+    expect(html).toContain('3 Aug')
+    expect(html).toContain('21 Sept')
+    expect(html).toContain('<span class="font-bold">45</span><span class="text-xs text-ink-2">40%</span>')
+  })
+
+  it('draws each subject on the dashboard as the squares the child sees on Home', () => {
+    const html = body('dashboard', state)
+    expect(html).toMatch(/role="img" aria-label="Mathematics: 1 not secure, \d+ not started"/)
+    expect(html).toMatch(/role="img" aria-label="Physics: \d+ not started"/)
+  })
+
+  it("shows the subject's map by unit, read only, opened on the child's year, and its eight weeks", () => {
+    const html = body('dashboard', state, 'maths')
+    expect(html).toContain('The map, as Ana sees it')
+    expect(html).toMatch(/aria-pressed="true"[^>]*>Year 10<\/button>/)
+    expect(html).toMatch(/role="img" aria-label="Surds, Year 10, Not secure"[^>]*>/)
+    expect(html).not.toContain('aria-label="Factors, multiples and primes, Year 9')
+    expect(html).toContain('Last eight weeks')
+    expect(html).toContain('Minutes and average mark by week. week of 3 Aug: 0 min;')
+    expect(html).toContain('week of 21 Sept: 45 min, average 40%')
+    // Nothing on the map is a button: a parent reads it and cannot change it.
+    expect(html.match(/<button[^>]*aria-label="Surds/)).toBeNull()
+  })
+
+  it('leaves the eight weeks out of a subject with nothing in them', () => {
+    expect(body('dashboard', state, 'music')).not.toContain('Last eight weeks')
   })
 })

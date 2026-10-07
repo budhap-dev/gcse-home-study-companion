@@ -5,6 +5,9 @@ import { StatusChip } from '../../components/StatusChip.tsx'
 import type { ProgressState, StudyKind } from '../../progress/store.ts'
 import { STUDY_KINDS, STUDY_LABEL, subjectDetail, topicDays, type SubjectDetail as Detail, type TopicActivity } from '../../progress/subjectDetail.ts'
 import { TopicBreakdown } from './TopicBreakdown.tsx'
+import { ChildMap } from './ChildMap.tsx'
+import { TrendBars } from '../../components/charts/Trend.tsx'
+import { subjectTrend } from '../../progress/trend.ts'
 
 /** One glyph per kind, shared with the dashboard's Recent work so the two read alike. */
 export const STUDY_EMOJI: Record<StudyKind, string> = {
@@ -62,6 +65,10 @@ function SubjectBody({ d, state, first }: { d: Detail; state: ProgressState; fir
         <Tile label="Exam technique" value={d.examTechnique.days ? `${d.examTechnique.days} ${d.examTechnique.days === 1 ? 'day' : 'days'}` : '—'}
           note={d.examTechnique.last ? `${formatMinutes(d.examTechnique.minutes)} · last ${day(d.examTechnique.last)}` : 'Not opened yet'} />
       </section>
+
+      <ChildMap state={state} subjectId={d.id} first={first} />
+
+      <EightWeeksOf state={state} subjectId={d.id} />
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
         <SectionLabel colour="#2e8b57" emoji="⏱️">Where the time went</SectionLabel>
@@ -202,6 +209,19 @@ function DayByDay({ state, topicId }: { state: ProgressState; topicId: string })
         ))}
       </ol>
     </div>
+  )
+}
+
+/** The last eight weeks of this subject (PAR-5): minutes and the average mark, week by week. */
+function EightWeeksOf({ state, subjectId }: { state: ProgressState; subjectId: string }) {
+  const s = subjectTrend(state).subjects.find((x) => x.subjectId === subjectId)
+  if (!s) return null
+  return (
+    <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+      <SectionLabel colour="#1f3a93" emoji="📈">Last eight weeks</SectionLabel>
+      <p className="text-xs text-ink-2">Minutes a week, and under each the average mark on that week's quizzes and worksheets. Minutes are filed by subject from 23 September 2026.</p>
+      <TrendBars weeks={s.weeks} />
+    </section>
   )
 }
 
