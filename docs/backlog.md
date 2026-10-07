@@ -263,7 +263,9 @@ picked first and list the rest here.
 - [x] **Next up mixes subjects** (design 6): the two alternatives to the recommendation come
   from two other subjects, the best-ranked task of each, so the three cards on Home are
   three subjects. All three were Maths on 6 October 2026.
-- [ ] **Subject map opens on the student's year and names its squares** (design 9).
+- [x] **Subject map opens on the student's year and names its squares** (design 9): the
+  year filter starts on the student's year where the subject teaches in it, and from tablet
+  width each square sits in a tile with its topic's name beside it.
 - [ ] **Shorter topic intro on a phone** (design 8): two lines and "Read more", so the
   activities are on the first screen.
 - [ ] **Phone Home puts Today first** (design 5): the first "Next up" card moves into the
