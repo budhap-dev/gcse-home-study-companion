@@ -33,12 +33,33 @@ export function buildTask(topic: Topic, kind: Task['kind'], reason: string, leve
 }
 
 /**
+ * Two alternatives to the recommendation, from other subjects where any other subject has
+ * something to do: the best-ranked task of each, in rank order. Three choices from three
+ * subjects is a choice; three Maths lessons in a row, which is what content order gave a
+ * new student, is not. Filled from the rest in rank order when fewer subjects have anything.
+ */
+function alternativesFor(next: Task, rest: Task[]): Task[] {
+  const out: Task[] = []
+  const subjects = new Set([next.topic.subjectId])
+  for (const t of rest) {
+    if (out.length === 2) break
+    if (!subjects.has(t.topic.subjectId)) { subjects.add(t.topic.subjectId); out.push(t) }
+  }
+  for (const t of rest) {
+    if (out.length === 2) break
+    if (!out.includes(t)) out.push(t)
+  }
+  return out
+}
+
+/**
  * LRN-3 order: an unfinished lesson, then a topic due for recap, then the weakest
  * attempted topic, then a Secure topic to push to Mastered through its Advanced
- * worksheet, then the next topic not started. Returns the recommendation and two
- * alternatives so the student always has a choice (MOT-5).
+ * worksheet, then the next topic not started. Returns the recommendation, two
+ * alternatives from other subjects so the student always has a choice (MOT-5), and
+ * the whole ranked list for anything that needs to look further down it.
  */
-export function recommend(topics: Topic[], state: ProgressState, now = new Date()): { next: Task | null; alternatives: Task[] } {
+export function recommend(topics: Topic[], state: ProgressState, now = new Date()): { next: Task | null; alternatives: Task[]; ranked: Task[] } {
   const ranked: Task[] = []
   const ev = new Map(topics.map((t) => [t.id, evidenceFor(t.id, state, now)]))
 
@@ -96,5 +117,6 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
     seen.add(k)
     return true
   })
-  return { next: unique[0] ?? null, alternatives: unique.slice(1, 3) }
+  const next = unique[0] ?? null
+  return { next, alternatives: next ? alternativesFor(next, unique.slice(1)) : [], ranked: unique }
 }
