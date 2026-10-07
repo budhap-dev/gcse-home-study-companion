@@ -3,7 +3,13 @@ import { MemoryRouter, Route, Routes } from 'react-router'
 import { SUBJECTS, SYLLABUS } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { topicsForSubject } from '../../content/index.ts'
+import { setProfile } from '../../progress/store.ts'
 import { TopicMap } from './TopicMap.tsx'
+
+// The store writes through localStorage and drops the write without it, so a profile set
+// by a test would never reach the page.
+const stored = new Map<string, string>()
+globalThis.localStorage = { getItem: (k: string) => stored.get(k) ?? null, setItem: (k: string, v: string) => void stored.set(k, v), removeItem: (k: string) => void stored.delete(k) } as unknown as Storage
 
 const render = (subjectId: string, query = '') =>
   renderToStaticMarkup(
@@ -29,6 +35,36 @@ describe('the subject map', () => {
     expect(html).toContain('aria-label="Topic"')
     expect(html).toContain('Mastery: not started')
     expect(html).toContain('Start the lesson.')
+  })
+
+  it('names every square, for the screens with room to show it', () => {
+    const html = render('maths')
+    for (const t of topicsForSubject('maths')) expect(html, t.id).toContain(`md:line-clamp-3">${escape(t.title)}</span>`)
+  })
+
+  /** UXI-10: the year being studied is what the map is for; the whole subject is a click away. */
+  it("opens on the student's own year, and picks a topic from it", () => {
+    setProfile({ year: 10 })
+    try {
+      const html = render('maths')
+      expect(html).toMatch(/aria-pressed="true"[^>]*>Year 10<\/button>/)
+      const nine = topicsForSubject('maths').find((t) => t.year === 9)!
+      expect(html).not.toContain(`aria-label="${escape(nine.title)}, Year 9`)
+      expect(html).toMatch(/aria-pressed="true" aria-label="[^"]*, Year 10, Not started"/)
+      expect(html).toContain('Year 10</span>')
+    } finally {
+      setProfile({})
+    }
+  })
+
+  it('opens on all years for a student who has not said theirs, or whose year the subject does not teach', () => {
+    expect(render('maths')).toMatch(/aria-pressed="true"[^>]*>All years<\/button>/)
+    setProfile({ year: 9 })
+    try {
+      expect(render('further-maths')).toMatch(/aria-pressed="true"[^>]*>All years<\/button>/)
+    } finally {
+      setProfile({})
+    }
   })
 })
 

@@ -144,8 +144,20 @@ export function MasteryLadder({ level }: { level: MapLevel }) {
 }
 
 /**
+ * The squares of one unit: a wrapped row of them on a phone, and from tablet width a grid of
+ * named tiles (see TopicSquare), as many to a row as the unit's card has room for. Ten rem
+ * at least, so a tile is 180 to 215px at every width and a 70-character title ("Paper 1
+ * Questions 1 and 2: finding information and analysing language") fits its three lines.
+ */
+export const SQUARES_GRID = 'flex flex-wrap gap-1.5 md:grid md:grid-cols-[repeat(auto-fill,minmax(10rem,1fr))]'
+
+/**
  * One topic as a square you can press, on the subject page. Its status shape is drawn inside
- * it, so the scale reads without its colours, and its accessible name says the rest.
+ * it, so the scale reads without its colours, and its accessible name says the rest. From
+ * tablet width, where there is room, the square sits in a tile with its topic's name beside
+ * it: a map of nameless squares had to be pressed one at a time to find out which was which.
+ * The name is ink on the surface, not on the square's fill, where 12px text on a mid tint
+ * measured 3.3:1 in the paper theme.
  */
 export function TopicSquare({ square: s, picked, onPick, delay }: { square: MapSquare; picked: boolean; onPick: () => void; delay: string }) {
   const status = s.level > 0 ? RUNG_STATUS[s.level - 1] : undefined
@@ -156,10 +168,13 @@ export function TopicSquare({ square: s, picked, onPick, delay }: { square: MapS
       aria-pressed={picked}
       aria-label={`${s.topic.title}, Year ${s.topic.year}, ${MAP_LEVEL_LABEL[s.level]}`}
       title={s.topic.title}
-      className={`map-sq anim-sq map-l${s.level} map-on-l${s.level} flex h-8 w-8 items-center justify-center rounded-lg transition-transform hover:scale-110`}
+      className="anim-sq flex items-center rounded-lg transition-transform hover:scale-110 md:min-h-11 md:gap-2 md:rounded-xl md:border md:border-rule md:bg-surface md:px-2 md:py-1.5 md:text-left md:hover:scale-[1.03]"
       style={{ '--d': delay, ...(picked ? { outline: '3px solid var(--color-ink)', outlineOffset: '2px' } : {}) } as React.CSSProperties}
     >
-      {status && <StatusIcon status={status} size={13} colour="currentColor" />}
+      <span aria-hidden className={`map-sq map-l${s.level} map-on-l${s.level} flex h-8 w-8 shrink-0 items-center justify-center rounded-lg md:h-6 md:w-6 md:rounded-md`}>
+        {status && <StatusIcon status={status} size={13} colour="currentColor" />}
+      </span>
+      <span className="hidden text-[12px] font-bold leading-tight md:line-clamp-3">{s.topic.title}</span>
     </button>
   )
 }

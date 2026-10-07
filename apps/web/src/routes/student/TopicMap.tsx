@@ -11,7 +11,7 @@ import { PART_LETTERS, partsDone, partsLabel, type PartsDone } from '../../progr
 import { useProgress } from '../../progress/useProgress.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 import { MAP_LEVEL_LABEL, countLevels, isSecure, nextRung, square, unitGroups, type MapSquare } from '../../progress/map.ts'
-import { MasteryLadder, TopicSquare } from '../../components/map/MapParts.tsx'
+import { MasteryLadder, SQUARES_GRID, TopicSquare } from '../../components/map/MapParts.tsx'
 import { useWide } from '../../components/useWide.ts'
 import { SheetsIcon } from '../../components/icons.tsx'
 
@@ -125,22 +125,34 @@ function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: 
 }
 
 /**
- * The map: every written topic as a square, grouped by unit, filterable by school year. The
- * picked topic opens in the panel. The first pick is the topic the student is most likely to
- * want: a lesson under way, then a topic begun and not yet secure, then the first not started.
+ * The map: every written topic as a square, grouped by unit, filterable by school year. It
+ * opens on the student's own year when they have said it and the subject teaches in it
+ * (UXI-10): this year's work is what is being studied, and the whole subject at once is for
+ * looking back over. The picked topic opens in the panel. The first pick is the topic the
+ * student is most likely to want among those shown: a lesson under way, then a topic begun
+ * and not yet secure, then the first not started.
  */
 function MapView({ subject, progress }: { subject: Subject; progress: ProgressState }) {
   const years = yearsForSubject(subject.id)
-  const [year, setYear] = useState<number | 'all'>('all')
+  const mine = progress.profile?.year
+  const [year, setYear] = useState<number | 'all'>(mine && years.includes(mine) ? mine : 'all')
   const all = topicsForSubject(subject.id)
-  const groups = unitGroups(subject.id, year === 'all' ? all : all.filter((t) => t.year === year), progress)
-  const flat = groups.flatMap((g) => g.squares)
-  const underway = Object.values(progress.lessons)
-    .filter((l) => !l.completedAt && all.some((t) => t.id === l.topicId))
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0]?.topicId
-  const [picked, setPicked] = useState<string | undefined>(
-    underway ?? flat.find((s) => s.level === 1 || s.level === 2)?.topic.id ?? flat.find((s) => s.level === 0)?.topic.id ?? flat[0]?.topic.id,
-  )
+  const groupsFor = (y: number | 'all') => unitGroups(subject.id, y === 'all' ? all : all.filter((t) => t.year === y), progress)
+  const groups = groupsFor(year)
+  const bestPick = (squares: MapSquare[]) => {
+    const underway = Object.values(progress.lessons)
+      .filter((l) => !l.completedAt && squares.some((s) => s.topic.id === l.topicId))
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0]?.topicId
+    return underway ?? squares.find((s) => s.level === 1 || s.level === 2)?.topic.id ?? squares.find((s) => s.level === 0)?.topic.id ?? squares[0]?.topic.id
+  }
+  const [picked, setPicked] = useState<string | undefined>(() => bestPick(groups.flatMap((g) => g.squares)))
+  // Another year: the pick moves with it when the picked topic is not in that year, or the
+  // panel would be describing a square that is not on the map.
+  const showYear = (y: number | 'all') => {
+    setYear(y)
+    const shown = groupsFor(y).flatMap((g) => g.squares)
+    if (!shown.some((s) => s.topic.id === picked)) setPicked(bestPick(shown))
+  }
   // On a phone the panel is a sheet, shut until a square is pressed; on a wide screen it is always open.
   const [sheet, setSheet] = useState(false)
   const pickedSquare = all.find((t) => t.id === picked)
@@ -150,11 +162,11 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22.5rem)] lg:items-start">
       <section className="flex flex-col gap-3" aria-labelledby="units-heading">
         <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:justify-between">
-          <h2 id="units-heading" className="text-xl font-bold">By unit <span className="font-sans text-sm font-normal text-ink-2">· press any square</span></h2>
+          <h2 id="units-heading" className="text-xl font-bold">By unit <span className="font-sans text-sm font-normal text-ink-2">· press any topic</span></h2>
           {years.length > 1 && (
             <div role="group" aria-label="School year" className="flex w-fit flex-wrap gap-1 rounded-xl bg-panel p-1">
               {(['all', ...years] as const).map((y) => (
-                <button key={y} type="button" aria-pressed={year === y} onClick={() => setYear(y)}
+                <button key={y} type="button" aria-pressed={year === y} onClick={() => showYear(y)}
                   className={`min-h-9 rounded-lg px-3 text-sm font-bold transition-colors ${year === y ? 'bg-surface text-ink shadow-[0_1px_2px_rgb(30_35_48/0.12)]' : 'text-ink-2 hover:text-ink'}`}>
                   {y === 'all' ? 'All years' : `Year ${y}`}
                 </button>
@@ -169,7 +181,7 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
                 <h3 className="font-sans text-base font-bold leading-snug">{g.name}</h3>
                 <span className="shrink-0 text-[13px] text-ink-2">{g.squares.filter(isSecure).length} of {g.squares.length} secure</span>
               </div>
-              <div className="flex flex-wrap gap-1.5">
+              <div className={SQUARES_GRID}>
                 {g.squares.map((s) => (
                   <TopicSquare key={s.topic.id} square={s} picked={s.topic.id === picked} delay={`${(0.2 + Math.min(n++, 100) * 0.008).toFixed(3)}s`}
                     onPick={() => { setPicked(s.topic.id); setSheet(true) }} />
