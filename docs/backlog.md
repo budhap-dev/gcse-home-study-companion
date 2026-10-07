@@ -280,8 +280,12 @@ picked first and list the rest here.
   subject's detail). The suggested task beside a weak topic was already built.
 - [ ] **Business and Biology depth** (content 2): about 5 questions per specification point,
   against about 10 in Maths and 12 in Computer Science. More calculation and 6/9/12-mark
-  questions per sub-point; split each Business topic (a whole section of 2 to 5 sub-points
-  today) in two.
+  questions per sub-point. **Business done 7 October 2026 (#369, v10.75.0)**: 12 new
+  questions per topic (201 → 321), a third of them at 8-9, each topic gaining a 6, 9 and
+  12-marker and three calculations; two examiner reviews applied. The topics were **not**
+  split in two: progress is keyed by topic id and the pilot student already has Business
+  attempts, so a split would have orphaned them. Biology (34 topics, 10 each) follows per
+  year group.
 - [ ] **Music listening** (content 4): a link to a recording of each set work, no timings.
   Only if the owner revisits the no-audio decision; asked for last.
 
