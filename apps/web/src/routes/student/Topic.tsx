@@ -1,4 +1,5 @@
 import { getSubject, STATUS_LABEL, WORKSHEET_LEVELS } from '@study/shared'
+import { useState } from 'react'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -16,6 +17,7 @@ import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
 import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
+import { useWide } from '../../components/useWide.ts'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -28,13 +30,17 @@ export function previewOf(body: string, max = 150): string {
   let maths = 0
   let bold = 0
   let cut = 0
+  // A sentence ends at a space or a paragraph break. The why texts are two paragraphs, and
+  // a first sentence that closed its paragraph went unrecognised, so the preview ran on
+  // into the second and cut it mid-way: "That matters because…".
+  const gap = (i: number) => body[i] === ' ' || body[i] === '\n'
   for (let i = 0; i < body.length && i < max; i++) {
     if (body[i] === '$') { maths = maths === 0 ? 1 : 0; continue }
     if (body.startsWith('**', i)) { bold = bold === 0 ? 1 : 0; i++; continue }
     if (maths || !(body[i] === '.' || body[i] === '!' || body[i] === '?')) continue
-    if (bold === 0 && body[i + 1] === ' ') cut = i + 1
+    if (bold === 0 && gap(i + 1)) cut = i + 1
     // A sentence that ends inside bold — "…its parent.** Fill" — ends after the bold closes.
-    else if (bold === 1 && body.startsWith('**', i + 1) && (body[i + 3] === ' ' || i + 3 >= body.length)) cut = i + 3
+    else if (bold === 1 && body.startsWith('**', i + 1) && (gap(i + 3) || i + 3 >= body.length)) cut = i + 3
   }
   if (cut > 0) return body.slice(0, cut)
   // No sentence ended in range: fall back to the whole body if it is short, else
@@ -55,6 +61,14 @@ export function previewOf(body: string, max = 150): string {
   return body.slice(0, end) + (maths ? '$' : '') + (bold ? '**' : '') + '…'
 }
 
+/**
+ * How much of "why it matters" a phone shows before "Read more": whole sentences up to
+ * this many characters, about four lines at 390 wide. The full text, two paragraphs and
+ * a median of 515 characters, filled 250 to 320px of the banner and pushed the way into
+ * the lesson under the first screen; it is read once, and the lesson is come back to.
+ */
+export const WHY_PREVIEW = 200
+
 const LEVEL_LABEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const
 const LEVEL_NOTE = {
   core: 'Prerequisites only. Short, done once.',
@@ -72,6 +86,8 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
   const { subjectId } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
   const progress = useProgress()
+  const wide = useWide()
+  const [more, setMore] = useState(false)
   if (!subject || !topic) return <p>Unknown topic.</p>
   const evidence = evidenceFor(topic.id, progress)
   const lesson = progress.lessons[topic.id]
@@ -117,7 +133,21 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
               {stepsDone}/{steps.length} steps
             </span>
           </div>
-          {topic.why && <RichText source={topic.why.matters} className="text-[15px] leading-relaxed sm:text-base" />}
+          {topic.why && (() => {
+            // Below laptop width, the first sentence or two and "Read more" (see WHY_PREVIEW).
+            const preview = previewOf(topic.why.matters, WHY_PREVIEW)
+            const short = !wide && !more && preview !== topic.why.matters
+            return (
+              <>
+                <RichText source={short ? preview : topic.why.matters} className="text-[15px] leading-relaxed sm:text-base" />
+                {short && (
+                  <button type="button" onClick={() => setMore(true)} className="-my-1 w-fit py-1 text-sm font-bold underline underline-offset-2">
+                    Read more
+                  </button>
+                )}
+              </>
+            )
+          })()}
           <div className="mt-1 flex flex-wrap gap-3">
             <Link to={primary.to} className="lift flex min-h-12 items-center gap-2 rounded-2xl bg-white px-5 font-bold text-[#2a2f9e] shadow-[0_8px_20px_rgb(0_0_0/0.2)]">
               {primary.label} <span aria-hidden>→</span>

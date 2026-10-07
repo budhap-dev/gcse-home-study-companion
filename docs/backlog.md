@@ -266,8 +266,9 @@ picked first and list the rest here.
 - [x] **Subject map opens on the student's year and names its squares** (design 9): the
   year filter starts on the student's year where the subject teaches in it, and from tablet
   width each square sits in a tile with its topic's name beside it.
-- [ ] **Shorter topic intro on a phone** (design 8): two lines and "Read more", so the
-  activities are on the first screen.
+- [x] **Shorter topic intro on a phone** (design 8): below laptop width the banner shows
+  the first sentence or two of "why it matters" (whole sentences up to 200 characters) and
+  "Read more", so the way into the lesson and the lesson's steps are on the first screen.
 - [ ] **Phone Home puts Today first** (design 5): the first "Next up" card moves into the
   banner, and the four counters shrink to one line, since a new or lapsed student reads
   four zeros before anything to do.
