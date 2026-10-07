@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigationType, useSearchParams } from 'react-router'
-import { STATUS_COLOUR, STATUS_LABEL, TOPIC_STATUSES } from '@study/shared'
 import { supabase } from '../../auth/client.ts'
 import { useAuth } from '../../auth/useAuth.ts'
 import { SectionLabel } from '../../components/KindChip.tsx'
-import { StatusIcon } from '../../components/StatusChip.tsx'
 import { fromStored, type ProgressState } from '../../progress/store.ts'
 import { firstNameOf, personName } from '../../auth/personName.ts'
 import { parentSummary, type ActivityEntry, type ParentSummary } from '../../progress/summary.ts'
@@ -21,6 +19,11 @@ import { minutesBySubject } from '../../progress/subjectDetail.ts'
 import { weekOnWeek } from '../../progress/weekOnWeek.ts'
 import { deedsDone, recentDeeds } from '../../progress/deeds.ts'
 import { CharacterIcon } from '../../components/characterIcons.tsx'
+import { MapLegend, MiniMap } from '../../components/map/MapParts.tsx'
+import { TrendTable } from '../../components/charts/Trend.tsx'
+import { topicsForSubject } from '../../content/index.ts'
+import { square } from '../../progress/map.ts'
+import { subjectTrend } from '../../progress/trend.ts'
 
 export interface Child {
   email: string
@@ -240,6 +243,8 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
 
       <WeekOnWeek state={child.state!} />
 
+      <EightWeeks state={child.state!} />
+
       <GoodDeeds state={child.state!} first={firstNameOf(child.name)} />
 
       <section className="flex flex-col gap-3">
@@ -293,21 +298,21 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
 
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#0f766e" emoji="📊">Each subject</SectionLabel>
-        <p className="text-sm text-ink-2">Tap a subject to see each topic, what was done on it and how long it took.</p>
-        <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-ink-2">
-          {TOPIC_STATUSES.map((st) => <li key={st} className="flex items-center gap-1.5"><StatusIcon status={st} size={12} />{STATUS_LABEL[st]}</li>)}
-          <li className="flex items-center gap-1.5"><span className="inline-block h-3 w-3 rounded-full bg-panel ring-1 ring-rule" aria-hidden />Not started</li>
-        </ul>
+        <p className="text-sm text-ink-2">
+          The squares are the map {firstNameOf(child.name)} sees on Home: one per topic, darker the better it is known.
+          Tap a subject for its map by unit, each topic, what was done on it and how long it took.
+        </p>
+        <MapLegend />
         <div className="flex flex-col gap-2">
           {s.subjects.map((sub) => (
             // The whole row is the link: on a phone the name alone is a small target, and the
             // row is what a parent reads as "this subject". It opens the subject's detail
             // here rather than the student's own subject page, which shows no progress.
-            <Link key={sub.id} to={`/family?subject=${sub.id}`}
+            <Link key={sub.id} to={`/family?subject=${sub.id}`} style={{ '--subject': sub.colour } as React.CSSProperties}
               className="group flex flex-col gap-2 rounded-xl border border-rule bg-surface px-4 py-3 hover:border-ink">
               <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                 <span className="flex items-baseline gap-2">
-                  <span className="font-bold underline accent-ink" style={{ '--subject': sub.colour } as React.CSSProperties}>{sub.name}</span>
+                  <span className="font-bold underline accent-ink">{sub.name}</span>
                   <span aria-hidden className="text-ink-3 group-hover:text-ink">›</span>
                 </span>
                 <span className="text-xs text-ink-2">
@@ -316,13 +321,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
                   {sub.lastActive ? ` · last opened ${day(sub.lastActive)}` : ''}
                 </span>
               </div>
-              {/* Untouched topics are left as the bar's own background, so a subject not
-                  yet begun reads as empty rather than as a wall of the failing colour. */}
-              <div className="flex h-3 overflow-hidden rounded-full bg-panel">
-                {(['grade-9-ready', 'secure', 'developing', 'not-secure'] as const).map((st) => (
-                  <span key={st} style={{ width: `${(100 * sub.counts[st]) / sub.total}%`, background: STATUS_COLOUR[st] }} />
-                ))}
-              </div>
+              <MiniMap squares={topicsForSubject(sub.id).map((t) => square(t, child.state!))} name={sub.name} />
             </Link>
           ))}
         </div>
@@ -374,6 +373,19 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
   )
 }
 
+
+/** The last eight weeks per subject (PAR-5): minutes and the average mark, week by week. */
+function EightWeeks({ state }: { state: ProgressState }) {
+  const { weeks, subjects } = subjectTrend(state)
+  if (subjects.length === 0) return null
+  return (
+    <section className="flex flex-col gap-3">
+      <SectionLabel colour="#1f3a93" emoji="📈">Last eight weeks, by subject</SectionLabel>
+      <p className="text-xs text-ink-2">Minutes a week in bold, and under them the average mark on that week's quizzes and worksheets. Minutes are filed by subject from 23 September 2026.</p>
+      <TrendTable weeks={weeks} subjects={subjects} />
+    </section>
+  )
+}
 
 /** The average is over the last ten quizzes, and the trend needs six to mean anything. */
 function quizNote(s: ParentSummary): string {
