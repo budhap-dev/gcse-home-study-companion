@@ -66,8 +66,9 @@ function subtractToEliminate(r: Rng, slot: Question): Draft {
     question: {
       type: 'numeric',
       prompt: `Solve $${eqs[0]}$ and $${eqs[1]}$. What is $x$?`,
-      solution: `The $y$ terms match with the **same sign**, so **subtract**: $${coef(k, 'x')} = ${c - e}$, giving $x = ${x}$. Then $y = ${y}$.`,
-      markScheme: scheme(slot, ['subtracts, since the signs match', `reaches ${minus(`${coef(k, 'x')} = ${c - e}`)}`], minus(String(x))),
+      // With one x left after subtracting, "x = 1, giving x = 1" would say the same thing twice.
+      solution: `The $y$ terms match with the **same sign**, so **subtract**: ${k === 1 ? `$x = ${x}$` : `$${coef(k, 'x')} = ${c - e}$, giving $x = ${x}$`}. Then $y = ${y}$.`,
+      markScheme: scheme(slot, ['subtracts, since the signs match', k === 1 ? 'eliminates y' : `reaches ${minus(`${coef(k, 'x')} = ${c - e}`)}`], minus(String(x))),
       answer: x,
       tolerance: 0,
     },

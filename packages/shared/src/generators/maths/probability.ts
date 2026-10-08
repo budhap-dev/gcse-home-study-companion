@@ -459,7 +459,7 @@ const countTwoThings: Builder = (r, slot) => {
   const answer = a * b
   const prompt = r() < 0.5
     ? `${cap(first.name)} is ${first.verb} and ${second.name} is ${second.verb}. How many outcomes are there altogether?`
-    : `${name} spins ${first.name} and uses ${second.name}. How many different outcomes are there altogether?`
+    : `${name} spins ${first.name} and ${{ thrown: 'throws', flipped: 'flips', spun: 'spins' }[second.verb] ?? 'uses'} ${second.name}. How many different outcomes are there altogether?`
   const listed = listAll([first.results, second.results]).length
   const label = (t: Thing) => (t === coin ? 'coin' : t.name.includes('die') ? 'die' : 'second spinner')
   return {
@@ -500,7 +500,7 @@ const gridCells: Builder = (r, slot) => {
 const THREE_WAYS = [
   { setup: (c: string[]) => `A bag holds only ${c[0]}, ${c[1]} and ${c[2]} counters.`, items: ['red', 'blue', 'yellow', 'green', 'white', 'black'], why: 'colours' },
   { setup: (c: string[]) => `A box holds only ${c[0]}, ${c[1]} and ${c[2]} chocolates.`, items: ['milk', 'dark', 'white'], why: 'kinds' },
-  { setup: (c: string[]) => `A spinner can land only on ${c[0]}, ${c[1]} or ${c[2]}.`, items: ['A', 'B', 'C'], why: 'outcomes' },
+  { setup: (c: string[]) => { const [p, q, s] = [...c].sort(); return `A spinner can land only on ${p}, ${q} or ${s}.` }, items: ['A', 'B', 'C'], why: 'outcomes' },
   { setup: (c: string[]) => `A bag of sweets holds only ${c[0]}, ${c[1]} and ${c[2]} sweets.`, items: ['strawberry', 'lemon', 'orange', 'lime'], why: 'flavours' },
 ]
 
@@ -1257,7 +1257,8 @@ const bestEstimateExpected: Builder = (r, slot) => {
       return { n1, n2, n3, k1, k2, k3, M: pick(r, [300, 400, 500, 600, 800, 1000, 1200, 1500, 2000]) }
     },
     ({ n1, n2, n3, k1, k2, k3, M }) =>
-      k1 >= 1 && k2 - k1 >= 1 && k2 - k1 <= n2 - n1 && k3 - k2 >= 1 && k3 - k2 <= n3 - n2 && k3 < n3 && (k3 * M) % n3 === 0 && terminates(k3, n3) && k1 * n3 !== k3 * n1,
+      // Predicting for the number already thrown would make the answer the count already given.
+      k1 >= 1 && k2 - k1 >= 1 && k2 - k1 <= n2 - n1 && k3 - k2 >= 1 && k3 - k2 <= n3 - n2 && k3 < n3 && (k3 * M) % n3 === 0 && terminates(k3, n3) && k1 * n3 !== k3 * n1 && M !== n3,
   )
   const best = k3 / n3
   const answer = (k3 * M) / n3

@@ -331,7 +331,7 @@ export const parallelLineTriangle: Generator = {
       ? `The line is ${d1} cm from the apex and ${gap} cm from the base.`
       : `From the apex, that line is ${d1} cm away and the base is ${d2} cm away.`
     const prompt = `A triangle has a line parallel to its base, cutting off a small triangle at the apex. ${distances} A side of the ${toSmall ? 'large' : 'small'} triangle is ${s} cm. What is the matching side of the ${toSmall ? 'small' : 'large'} triangle, in cm?`
-    const both = fromBase ? `The scale factor needs both distances measured from the apex: the base is $${d1} + ${gap} = ${d2}$ cm from it, not ${gap}. ` : 'Both distances are measured from the apex, so '
+    const both = fromBase ? `The scale factor needs both distances measured from the apex: the base is $${d1} + ${gap} = ${d2}$ cm from it, not ${gap}. So ` : 'Both distances are measured from the apex, so '
     const solution = `${both}the scale factor from small to large is $\\dfrac{${d2}}{${d1}} = ${show(k)}$ and ${toSmall ? `$${s} \\div ${show(k)} = ${show(answer)}$` : `$${s} \\times ${show(k)} = ${show(answer)}$`} cm.`
     const small = toSmall ? answer : s
     const large = toSmall ? s : answer
@@ -657,7 +657,7 @@ export const transformAPoint: Generator = {
     if (slot.id === 'q3') {
       const { x, y, p, q } = draw(r, (r) => ({ x: int(r, -6, 9), y: int(r, -6, 9), p: int(r, -6, 6), q: int(r, -6, 6) }), ({ p, q }) => p !== 0 || q !== 0)
       const [ix, iy] = [x + p, y + q]
-      const step = (d: number, axis: string) => (d >= 0 ? `add $${d}$ to the $${axis}$ coordinate` : `subtract $${-d}$ from the $${axis}$ coordinate`)
+      const step = (d: number, axis: string) => (d === 0 ? `leave the $${axis}$ coordinate as it is` : d > 0 ? `add $${d}$ to the $${axis}$ coordinate` : `subtract $${-d}$ from the $${axis}$ coordinate`)
       const text = `${step(p, 'x')} and ${step(q, 'y')}`
       return {
         question: {

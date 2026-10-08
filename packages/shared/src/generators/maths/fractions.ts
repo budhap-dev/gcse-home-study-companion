@@ -1,4 +1,4 @@
-import { show } from '../format.ts'
+import { grouped, show } from '../format.ts'
 import { draw, int, pick } from '../random.ts'
 import type { Rng } from '../random.ts'
 import { scheme } from '../scheme.ts'
@@ -273,7 +273,8 @@ export const addingAndSubtractingFractions: Generator = {
     const over = `${shown(s1, Math.abs(n1), L)} ${op(s2)} \\dfrac{${Math.abs(n2)}}{${L}}`
     const lcmNote = `using the LCM of ${b} and ${d}, which is ${L}`
     let why = ''
-    if (negative) why = n < 0 ? ' The negative part is bigger, so the answer is negative.' : ' The positive part is bigger, so the answer is positive.'
+    // Form 2 has no positive part to compare: both fractions are negative.
+    if (negative) why = form === 2 ? ' Both parts are negative, so the answer is negative.' : n < 0 ? ' The negative part is bigger, so the answer is negative.' : ' The positive part is bigger, so the answer is positive.'
     // Second route: cross-multiply over b × d, then cancel by trial division; and the decimal value.
     let cn = s1 * a * d + s2 * c * b
     let cd = b * d
@@ -419,8 +420,6 @@ export const multiplyingAndDividingMixedNumbers: Generator = {
   },
 }
 
-/** 10 000 as the content prints it: a space between groups of three, from four digits. */
-const grouped = (x: number) => (x >= 10000 ? String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : String(x))
 
 /** One significant figure, for an estimate. */
 function oneFigure(x: number): number {

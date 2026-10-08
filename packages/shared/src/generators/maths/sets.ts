@@ -276,9 +276,10 @@ const THREE_CONTEXTS: ThreeContext[] = [
 
 function drawThree(r: Rng): Three {
   return {
-    '1': int(r, 1, 12), '2': int(r, 1, 12), '3': int(r, 1, 12),
-    '12': int(r, 1, 9), '13': int(r, 1, 9), '23': int(r, 1, 9),
-    '123': int(r, 1, 6), '': int(r, 0, 9),
+    // Every region holds at least 2: "1 play none" and "0 play none" are not how it is said.
+    '1': int(r, 2, 12), '2': int(r, 2, 12), '3': int(r, 2, 12),
+    '12': int(r, 2, 9), '13': int(r, 2, 9), '23': int(r, 2, 9),
+    '123': int(r, 2, 6), '': int(r, 2, 9),
   }
 }
 

@@ -403,6 +403,27 @@ per use.
   the buttons were hidden. They now always show, greyed with the reason until the sheet is ready,
   pinned to the foot of the screen while the topic list scrolls.
 
+**Validated 8 October 2026 (#384, v10.87.3).** Every one of the 530 generated slots was read
+by a reviewer, three versions each, against the written question, with the maths redone;
+every typed answer form was pushed through the real maths field and marked; non-calculator
+slots were checked for numbers a student can work by hand; and nothing in a generator reads
+the clock, the locale or `Math.random`, so a sheet code rebuilds the same sheet on any device.
+No generated answer was wrong. Found and fixed, as classes where possible: the marker rejected
+a rearranged formula in another right form, (8n+1)/(3−n) for (−8n−1)/(n−3) and −(ac+c)/(1−a)
+for c(a+1)/(a−1), and the "m =" in front counted on some forms and not others, so a fraction
+now matches with its top and bottom both negated or the minus outside, and the subject letter
+is optional where the prompt names it (written questions gain this too); "solve … in surd
+form" or "as a fraction" now counts as asking for a form, so a decimal is not taken; a money
+answer read "3481.6 £" and is now £3481.60, a percentage 80% not "80 %", and an answer asked
+"to 2 decimal places" shows 8.60 not 8.6, on screen, on the answer sheet and in the parent's
+breakdown; √(v/4) also takes √v/2. Contexts drawn out of scale: a 63 m gate, a 50 m tent, a
+ladder at 20°, a crate the size of a building, people older than 100, javelin throws of 2 m, a
+sledge at 6 m/s², two samples of one town at 86% and 20%, a prediction for the number of
+throws already made. Wording: "1 are cracked", "0 play none", "a 8", "x = 1, giving x = 1",
+"(−6 + √10)", "add 0 to the x coordinate", a sentence about the negative part when both parts
+were negative, a line printed twice in a mark scheme or a solution, and pounds in the thousands
+now printed £28 200 as the written content does.
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are

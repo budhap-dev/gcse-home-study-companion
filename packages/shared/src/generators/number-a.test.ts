@@ -276,13 +276,18 @@ describe('indices, powers and roots', () => {
     }
   })
 
-  it('roots a decimal to a number that squares back, and names a slip that does not', () => {
+  it('roots a decimal to a number that squares back, and below 1 names a slip that does not', () => {
+    let slips = 0
     for (const b of build('square-root-of-a-decimal', 'q14')) {
       const [, N] = b.question.prompt.match(/\\sqrt\{([\d.]+)\}/)!
       expect(answerOf(b) ** 2).toBeCloseTo(Number(N), 12)
-      const [, slip] = b.question.solution.match(/wrong answer is \$([\d.]+)\$/)!
-      expect(Math.abs(Number(slip) ** 2 - Number(N))).toBeGreaterThan(1e-6)
+      const m = b.question.solution.match(/wrong answer is \$([\d.]+)\$/)
+      // Keeping the decimal places of the number is a slip for √0.81 → 0.09; nobody offers 0.13 for √1.69.
+      if (Number(N) >= 1) { expect(m).toBeNull(); continue }
+      slips++
+      expect(Math.abs(Number(m![1]) ** 2 - Number(N))).toBeGreaterThan(1e-6)
     }
+    expect(slips).toBeGreaterThan(50)
   })
 
   it('chooses the negative root', () => {

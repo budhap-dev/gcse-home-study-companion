@@ -1034,7 +1034,7 @@ export const factorisingWithALetter: Generator = {
     const accepted = [answer, `${lead}(${poly([w, u], v, true, true)})`]
     return textDraft(slot, {
       prompt,
-      solution: `Every term has a **${g}** and ${an} **$${v}$**, so the HCF is $${lead}$. Dividing gives $${lin(u, 0, v)}$ and $${w}$: $${answer}$. Check: $${lead} \\times ${lin(u, 0, v)} = ${lin(g * u, 0, v).replace(v, `${v}^2`)}$ and $${lead} \\times ${signed(w)} = ${lin(g * w, 0, v)}$ ✓. Taking out only ${g} would leave ${an} $${v}$ common inside.`,
+      solution: `Every term has ${/^(8|11|18|8\d)$/.test(String(g)) ? 'an' : 'a'} **${g}** and ${an} **$${v}$**, so the HCF is $${lead}$. Dividing gives $${lin(u, 0, v)}$ and $${w}$: $${answer}$. Check: $${lead} \\times ${lin(u, 0, v)} = ${lin(g * u, 0, v).replace(v, `${v}^2`)}$ and $${lead} \\times ${signed(w)} = ${lin(g * w, 0, v)}$ ✓. Taking out only ${g} would leave ${an} $${v}$ common inside.`,
       method: [],
       answerTex: answer,
       accepted,

@@ -358,6 +358,7 @@ function matchesShortText(question: Extract<Question, { type: 'short-text' }>, r
     // The same algebra in another order: (x - 2)(x + 1) for (x + 1)(x - 2), 3 <= x for x >= 3.
     if (!strict && sameAlgebra(given, accepted, a)) return true
     if (!strict && sameMathsAnswer(raw, a, question.prompt)) return true
+    if (!strict && sameRearrangement(raw, a, question.prompt)) return true
     return sameListAnyOrder(raw, a, question.prompt)
   })
 }
@@ -428,7 +429,8 @@ function sameMathsAnswer(raw: string, accepted: string, prompt: string): boolean
   const a = mathsText(accepted)
   if (/[<>]/.test(a)) return chainFacingUp(mathsText(raw)) === chainFacingUp(a)
   if (!/\bsolve\b|\broots?\b|\bsolutions?\b|\bvalues? of [a-z]\b/i.test(prompt)) return false
-  const formAsked = /simplest|lowest terms|simplif|exact|in the form/i.test(prompt)
+  // "Surd form", "as a fraction" and "in terms of π" ask for a form as much as "simplest" does.
+  const formAsked = /simplest|lowest terms|simplif|exact|in the form|surd|in terms of|as an? (?:fraction|decimal|mixed number|power|multiple)|standard form/i.test(prompt)
   const same = (g: string, x: string) => {
     if (g === x) return true
     if (formAsked) return false
@@ -547,6 +549,115 @@ export function describeAnswer(question: Question, answer: unknown): string | un
  * student gave. Not the mark scheme and not the worked solution — just the answer, which
  * is what somebody comparing the two needs first.
  */
+/** The letter a prompt asks to be made the subject: "make $m$ the subject of". */
+function subjectLetter(prompt: string): string | undefined {
+  return /make\s+\$?\\?\(?([a-z])\)?\$?\s+the\s+subject/i.exec(prompt)?.[1]?.toLowerCase()
+}
+
+/** The top-level terms of a sum, each with its sign: "-8n-1" is [["-", "8n"], ["-", "1"]]. */
+function termsOf(s: string): [string, string][] {
+  const out: [string, string][] = []
+  let depth = 0, sign = '+', from = 0
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]!
+    if (c === '(') depth++
+    else if (c === ')') depth--
+    else if ((c === '+' || c === '-') && depth === 0 && !/[(^*/+-]/.test(s[i - 1] ?? '(')) {
+      if (i > from) out.push([sign, s.slice(from, i)])
+      sign = c
+      from = i + 1
+    } else if ((c === '+' || c === '-') && depth === 0 && i === 0) {
+      sign = c
+      from = 1
+    }
+  }
+  if (s.length > from) out.push([sign, s.slice(from)])
+  return out
+}
+
+const wholeBracket = (s: string) => {
+  if (!s.startsWith('(') || !s.endsWith(')')) return false
+  let depth = 0
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') depth++
+    else if (s[i] === ')' && --depth === 0 && i < s.length - 1) return false
+  }
+  return true
+}
+
+/**
+ * One side of a fraction with its sign pushed inside: -(8n+1) is (-8n-1). Null when the
+ * side is a sum that is not bracketed, since 8n+1/3 is not a fraction with 8n+1 on top.
+ */
+function sideOf(s: string, negate: boolean): string | null {
+  let t = s, neg = negate
+  if (t.startsWith('-') && wholeBracket(t.slice(1))) { t = t.slice(1); neg = !neg }
+  const inner = wholeBracket(t) ? t.slice(1, -1) : t
+  const terms = termsOf(inner)
+  if (terms.length === 0 || (terms.length > 1 && !wholeBracket(t))) return null
+  const flipped = terms.map(([sign, body], i) => `${(sign === '-') !== neg ? '-' : i === 0 ? '' : '+'}${body}`).join('')
+  return terms.length > 1 ? `(${flipped})` : flipped
+}
+
+/** A fraction and the same fraction with both its top and bottom negated: (8n+1)/(3-n) and (-8n-1)/(n-3). */
+function fractionForms(s: string): string[] {
+  let depth = 0, at = -1
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]
+    if (c === '(') depth++
+    else if (c === ')') depth--
+    else if (c === '/' && depth === 0) { if (at >= 0) return []; at = i }
+  }
+  if (at < 0) return []
+  const num = s.slice(0, at), den = s.slice(at + 1)
+  const forms: string[] = []
+  for (const neg of [false, true]) {
+    const n = sideOf(num, neg), d = sideOf(den, neg)
+    if (n !== null && d !== null) forms.push(`${n}/${d}`)
+  }
+  return forms
+}
+
+/**
+ * A rearranged formula in another right form. The accepted answer is written one way,
+ * m = (-8n-1)/(n-3), and the student who took the other route to it, m = (8n+1)/(3-n), was
+ * marked wrong, as was m = -(8n+1)/(n-3): a fraction is the same fraction with both its
+ * top and bottom negated, or with the minus taken outside. The "m =" in front counts for
+ * nothing where the prompt says what the subject is, so the marker stops caring whether
+ * the student wrote it. Only fractions whose top and bottom are each one term or a bracket
+ * are read this way: 8n+1/3 is not (8n+1)/3.
+ */
+function sameRearrangement(raw: string, accepted: string, prompt: string): boolean {
+  const subject = subjectLetter(prompt)
+  const strip = (t: string) => { const m = normaliseText(t); return subject && m.startsWith(`${subject}=`) ? m.slice(2) : m }
+  const g = strip(raw), a = strip(accepted)
+  if (/[=<>]/.test(g) || /[=<>]/.test(a)) return false
+  const same = (x: string, y: string) => x === y || sameAlgebra(x, y, y)
+  if (subject && same(g, a)) return true
+  const gs = fractionForms(g), as = fractionForms(a)
+  return gs.some((x) => as.some((y) => same(x, y)))
+}
+
+/**
+ * A numeric answer as it is read: money as £3481.60, not "3481.6 £", a percentage as 25%, an
+ * angle as 60°, and anything else with its unit after it. The unit a numeric question carries
+ * is the one its answer box shows after the number, which is why "£" was printed there.
+ */
+export function numericText(answer: number, units?: string, places?: number): string {
+  if (units === '£') return `£${Number.isInteger(answer * 100) ? answer.toFixed(2) : answer}`
+  const n = places !== undefined && Number.isInteger(answer * 10 ** places) ? answer.toFixed(places) : String(answer)
+  if (units === '%' || units === '°') return `${n}${units}`
+  return units ? `${n} ${units}` : n
+}
+
+/** The decimal places a prompt asks for ("to 2 decimal places", "1 d.p."), so the answer is shown with them: 8.60, not 8.6. */
+export function decimalPlacesAsked(prompt: string): number | undefined {
+  const m = /\b(\d|one|two|three)\s+decimal\s+places?\b/i.exec(prompt) ?? /\b(\d)\s*d\.?\s*p\b/i.exec(prompt)
+  if (!m) return undefined
+  const words: Record<string, number> = { one: 1, two: 2, three: 3 }
+  return words[m[1]!.toLowerCase()] ?? Number(m[1])
+}
+
 export function expectedAnswer(question: Question): string | undefined {
   switch (question.type) {
     case 'multiple-choice':
@@ -554,7 +665,7 @@ export function expectedAnswer(question: Question): string | undefined {
     case 'ordering':
       return question.items.join(' → ')
     case 'numeric':
-      return question.units ? `${question.answer} ${question.units}` : String(question.answer)
+      return numericText(question.answer, question.units, decimalPlacesAsked(question.prompt))
     case 'short-text':
       return question.accepted[0]
     case 'labelling':

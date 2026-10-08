@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { claimAnswer, mark, normaliseText, parseNumber } from './marking.ts'
+import { claimAnswer, expectedAnswer, mark, normaliseText, parseNumber } from './marking.ts'
 import type { Question } from './content/questions.ts'
 
 const base = { id: 'q', prompt: 'p', marks: 2, gradeBand: '6-7' as const, skill: 's', calculator: 'either' as const, tags: [], solution: 's', markScheme: [{ code: 'M1', marks: 2, description: 'd' }], discriminators: [] }
@@ -575,10 +575,64 @@ describe('maths answers in another correct form', () => {
     right(st('Solve $4x = 3$.', ['0.75']), 'x = 3/4')
     wrong(st('Solve $4x = 3$. Give your answer as a fraction in its simplest form.', ['3/4']), '6/8')
     wrong(st('Solve $x^2 = 24$. Give the positive solution in the form $a\\sqrt{b}$.', ['2√6']), '√24')
+    // Any form named in the prompt is the answer: surd form, a fraction, in terms of π.
+    wrong(st('Solve $x^2 = 12$. Give your answers in surd form.', ['±2√3']), '±√12')
+    right(st('Solve $x^2 = 12$.', ['±2√3']), '±√12')
+    wrong(st('Solve $4x = 3$. Give your answer as a fraction.', ['3/4']), '6/8')
   })
 
   it('leaves a list whose order is the answer alone', () => {
     const q = st('What does this program print? Give the values in order.', ['3, 5, 7'])
     wrong(q, '7, 5, 3')
+  })
+})
+
+describe('expectedAnswer reads a numeric answer with its unit', () => {
+  const num = (answer: number, units?: string): Question => ({ id: 'q', type: 'numeric', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's', calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }], discriminators: [], answer, tolerance: 0, unitsRequired: false, ...(units ? { units } : {}) })
+  it('puts £ in front with the pence, and % and ° straight after', () => {
+    expect(expectedAnswer(num(3481.6, '£'))).toBe('£3481.60')
+    expect(expectedAnswer(num(12, '£'))).toBe('£12.00')
+    expect(expectedAnswer(num(0.125, '£'))).toBe('£0.125')
+    expect(expectedAnswer(num(25, '%'))).toBe('25%')
+    expect(expectedAnswer(num(60, '°'))).toBe('60°')
+    expect(expectedAnswer(num(12, 'cm'))).toBe('12 cm')
+    expect(expectedAnswer(num(7))).toBe('7')
+  })
+  it('keeps the decimal places the prompt asked for', () => {
+    const asked = (answer: number, prompt: string, units?: string): Question => ({ ...num(answer, units), prompt })
+    expect(expectedAnswer(asked(8.6, 'Find the height, in metres to 2 decimal places.'))).toBe('8.60')
+    expect(expectedAnswer(asked(-0.8, 'Solve, giving your answers to 2 decimal places.'))).toBe('-0.80')
+    expect(expectedAnswer(asked(31, 'Find the angle to 1 decimal place.', '°'))).toBe('31.0°')
+    expect(expectedAnswer(asked(2.5, 'Give your answer to 1 d.p.', 'cm'))).toBe('2.5 cm')
+    expect(expectedAnswer(asked(2.345, 'Give your answer to 2 decimal places.'))).toBe('2.345')
+    expect(expectedAnswer(asked(12, 'How many?'))).toBe('12')
+  })
+})
+
+describe('a rearranged formula in another right form', () => {
+  const right = (q: Question, a: string) => expect(mark(q, a).correct, a).toBe(true)
+  const wrong = (q: Question, a: string) => expect(mark(q, a).correct, a).toBe(false)
+  const st = (prompt: string, accepted: string[]): Question => ({ id: 'q', type: 'short-text', prompt, marks: 1, gradeBand: '6-7', skill: 's', calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }], discriminators: [], accepted })
+
+  it('takes the fraction with its top and bottom both negated, or the minus outside', () => {
+    const q = st('Make $m$ the subject of $3m - mn = 8n + 1$.', ['m=(-8n-1)/(n-3)', '(-8n-1)/(n-3)', 'm=-(-8n-1)/(3-n)'])
+    for (const a of ['(8n+1)/(3-n)', 'm=(8n+1)/(3-n)', 'm = (1+8n)/(3-n)', '-(8n+1)/(n-3)', 'm=-(8n+1)/(n-3)', '(-8n-1)/(n-3)', '-(-8n-1)/(3-n)']) right(q, a)
+    for (const a of ['(8n+1)/(n-3)', '(8n-1)/(3-n)', '(-8n-1)/(3-n)', '8n+1/(3-n)', '(8n+1)/3-n']) wrong(q, a)
+  })
+
+  it('reads the subject letter in front, or not, where the prompt names the subject', () => {
+    const q = st('Rearrange $z = a - ct$ to make $c$ the subject.', ['c=(a-z)/t', '(a-z)/t', 'c=-(z-a)/t'])
+    for (const a of ['-(z-a)/t', 'c = -(z-a)/t', '(-z+a)/t', 'c=(a-z)/t']) right(q, a)
+    const b = st('Make $b$ the subject of $ab - b = ac + c$.', ['b=c(a+1)/(a-1)', 'c(a+1)/(a-1)', 'b=(ac+c)/(a-1)', '(ac+c)/(a-1)', 'b=-c(a+1)/(1-a)'])
+    for (const a of ['-c(a+1)/(1-a)', '(-ac-c)/(1-a)', 'b=(-ac-c)/(1-a)', '-(ac+c)/(1-a)']) right(b, a)
+    wrong(b, 'c(a+1)/(1-a)')
+    wrong(b, 'b=c(a-1)/(a+1)')
+  })
+
+  it('leaves a prompt that names no subject to the ordinary match', () => {
+    const q = st('Simplify fully.', ['(x+1)/(x-2)'])
+    right(q, '(-x-1)/(2-x)')
+    wrong(q, 'm=(x+1)/(x-2)')
+    wrong(st('Factorise $x^2 + 7x + 12$.', ['(x+3)(x+4)']), 'x^2+7x+12')
   })
 })
