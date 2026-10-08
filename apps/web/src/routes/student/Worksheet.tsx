@@ -1,6 +1,6 @@
 import { claimAnswer, describeAnswer, getSubject, mark, sheetQuestions, type MarkResult, type Question, type WorksheetLevel } from '@study/shared'
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router'
+import { Link, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { ScratchCanvas, type Stroke } from '../../components/ScratchCanvas.tsx'
 import { Visual } from '../../components/Visual.tsx'
@@ -18,6 +18,8 @@ import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
 import { MilestoneCard } from '../../components/MilestoneCard.tsx'
+import { ShareSheet } from '../../components/ShareSheet.tsx'
+import { newSheetCode, sheetParam, sheetPath } from '../../content/sheetCode.ts'
 import type { Milestone } from '../../progress/milestones.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
@@ -43,7 +45,8 @@ interface SheetState {
   startedAt: string
   /**
    * Set on a retry: the questions that have a generator are drawn fresh from it (WKP-2). Kept
-   * with the unfinished sheet, so reopening it shows the same numbers.
+   * with the unfinished sheet, so reopening it shows the same numbers. It is the sheet's code,
+   * so the same sheet can be printed or sent (see sheetCode.ts).
    */
   seed?: string
   finishedAt?: string
@@ -72,14 +75,31 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
   const { subjectId, topicId, level: levelParam } = useParams()
   const subject = subjectId ? getSubject(subjectId) : undefined
   const level = (['core', 'higher', 'advanced'] as const).find((l) => l === levelParam)
-  const [state, setState] = useState<SheetState | null>(() => (topic && level ? load(topic.id, level) : null))
+  // A sheet sent as a link: its code decides the questions, first attempt or not.
+  const [params] = useSearchParams()
+  const sent = sheetParam(params)
+  const [printCode] = useState(newSheetCode)
+  /**
+   * An unfinished sheet with other numbers, when a link to a different one is opened. The link
+   * wins, but only once Start is pressed: until then the unfinished one is kept, and the start
+   * screen says it will be replaced.
+   */
+  const [displaced] = useState(() => {
+    const saved = topic && level ? load(topic.id, level) : null
+    return sent && saved && saved.seed !== sent && !saved.finishedAt ? saved : null
+  })
+  const [state, setState] = useState<SheetState | null>(() => {
+    const saved = topic && level ? load(topic.id, level) : null
+    return sent && saved && saved.seed !== sent ? null : saved
+  })
   const [celebration, setCelebration] = useState<Settlement | null>(null)
   const [milestones, setMilestones] = useState<Milestone[]>([])
   useActivityTimer(topic && { subjectId: topic.subjectId, topicId: topic.id, kind: 'worksheet' }, Boolean(state && !state.finishedAt))
 
   useEffect(() => {
+    if (state === null && displaced) return
     if (topic && level) save(topic.id, level, state)
-  }, [topic, level, state])
+  }, [topic, level, state, displaced])
 
   const written = useMemo(() => {
     if (!topic || !level) return []
@@ -100,7 +120,8 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
     const attemptId = crypto.randomUUID()
     // Read at the moment of starting, so "Do it again" sees the attempt just recorded.
     const retry = triedBefore(getState().attempts, topic.id, level)
-    setState({ attemptId, index: 0, answers: {}, revealed: {}, canvases: {}, startedAt: new Date().toISOString(), ...(retry && freshCount ? { seed: attemptId } : {}) })
+    const seed = freshCount ? sent ?? (retry ? newSheetCode() : undefined) : undefined
+    setState({ attemptId, index: 0, answers: {}, revealed: {}, canvases: {}, startedAt: new Date().toISOString(), ...(seed ? { seed } : {}) })
   }
 
   if (!state) {
@@ -113,7 +134,9 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
           <li>{LEVEL_NOTE[level]}</li>
           {freshCount > 0 && (
             <li>
-              {triedBefore(getState().attempts, topic.id, level)
+              {sent
+                ? <>This is sheet <strong className="font-mono">{sent}</strong>, from a link: the same numbers as whoever sent it.{displaced && <strong> Starting it replaces the {LEVEL_LABEL[level]} worksheet you left unfinished.</strong>}</>
+                : triedBefore(getState().attempts, topic.id, level)
                 ? `${freshCount === questions.length ? 'Every question has' : `${freshCount} of the ${questions.length} questions have`} new numbers this time.`
                 : `Try it again later and ${freshCount === questions.length ? 'every question comes' : `${freshCount} of the ${questions.length} questions come`} back with new numbers.`}
             </li>
@@ -123,7 +146,10 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
         <div className="flex flex-col gap-2 sm:flex-row">
           <button type="button" onClick={start} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Start worksheet</button>
           <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
-          <Link to={`${backTo}/worksheet/${level}/print`} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Print or save as PDF</Link>
+          <Link to={sent ? sheetPath(subject.id, topic.id, level, sent, true) : `${backTo}/worksheet/${level}/print`} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Print or save as PDF</Link>
+          {freshCount > 0 && !sent && (
+            <Link to={sheetPath(subject.id, topic.id, level, printCode, true)} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Print one with new numbers</Link>
+          )}
         </div>
       </article>
     )
@@ -182,6 +208,15 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
           <button type="button" onClick={start} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Do it again</button>
           <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
         </div>
+        {state.seed && (
+          <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
+            <p className="text-sm">This was sheet <strong className="font-mono">{state.seed}</strong>. Print it with its answers, or send it to someone: the link opens the same numbers.</p>
+            <div className="flex flex-wrap gap-2">
+              <Link to={sheetPath(subject.id, topic.id, level, state.seed, true)} className="flex h-11 items-center rounded-lg border border-rule bg-surface px-4 font-bold">Print this sheet</Link>
+              <ShareSheet path={sheetPath(subject.id, topic.id, level, state.seed)} title={`${topic.title} · sheet ${state.seed}`} />
+            </div>
+          </section>
+        )}
       </article>
     )
   }

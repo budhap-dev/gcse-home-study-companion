@@ -1,7 +1,8 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
-import '../../content/all.ts'
+import { expectedAnswer, sheetQuestions } from '@study/shared'
+import { getFullTopic } from '../../content/all.ts'
 import { WorksheetPrint } from './WorksheetPrint.tsx'
 
 const render = (path: string) =>
@@ -64,5 +65,40 @@ describe('the printable worksheet', () => {
 
   it('says so plainly rather than crashing on a worksheet that does not exist', () => {
     expect(render('/subjects/maths/topics/not-a-topic/worksheet/higher/print')).toContain('Unknown worksheet')
+  })
+})
+
+describe('a printed sheet with new numbers', () => {
+  const trig = '/subjects/maths/topics/trigonometric-ratios/worksheet/higher/print'
+  const topic = getFullTopic('maths', 'trigonometric-ratios')!
+  const written = topic.worksheets.higher.questionIds.map((id) => topic.questions.find((q) => q.id === id)!)
+  const fresh = sheetQuestions('maths', topic.id, written, 'k7m2qp')
+  // Rendered prompts pass through Markdown and KaTeX, so compare on a plain phrase of each.
+  const phrase = (prompt: string) => prompt.replace(/\$[^$]*\$/g, '').split('.')[0]!.slice(0, 40)
+
+  it('prints the questions its code draws, and the code itself', () => {
+    const html = render(`${trig}?sheet=k7m2qp`)
+    for (const s of fresh) expect(html).toContain(phrase(s.question.prompt))
+    expect(html).toContain('k7m2qp')
+    expect(html).toContain('The answers are on a separate sheet with the same code')
+  })
+
+  it('prints the answers to those questions, not the written ones', () => {
+    const html = render(`${trig}?sheet=k7m2qp&answers=1`)
+    for (const s of fresh.filter((x) => x.generated)) expect(html).toContain(expectedAnswer(s.question)!)
+    expect(html).toContain('Answers for sheet k7m2qp only')
+  })
+
+  it('prints the written sheet without a code, and ignores a code that is not one', () => {
+    for (const path of [trig, `${trig}?sheet=%3Cb%3E`]) {
+      const html = render(path)
+      expect(html).not.toContain('Sheet <strong')
+      for (const q of written) expect(html).toContain(phrase(q.prompt))
+    }
+  })
+
+  it('offers a version with new numbers only where a generator exists', () => {
+    expect(render(trig)).toContain('A version with new numbers')
+    expect(render(sheet)).not.toContain('new numbers')
   })
 })

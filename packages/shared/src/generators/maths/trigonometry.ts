@@ -61,8 +61,9 @@ export const trigFindingASide: Generator = {
   subjectId: 'maths',
   topicId: 'trigonometric-ratios',
   replaces: ['q3', 'q5', 'q6'],
-  build(r, slot) {
-    const c = pick(r, CASES.filter((x) => onTop(x) === (slot.marks < 3)))
+  build(r, slot, turn) {
+    const cases = CASES.filter((x) => onTop(x) === (slot.marks < 3))
+    const c = cases[turn % cases.length]!
     const unit = pick(r, ['cm', 'cm', 'm'])
     const { deg, k, exact } = draw(
       r,
@@ -125,8 +126,8 @@ export const trigFindingAnAngle: Generator = {
   subjectId: 'maths',
   topicId: 'trigonometric-ratios',
   replaces: ['q7', 'q8', 'q10'],
-  build(r, slot) {
-    const ratio = pick(r, ['sin', 'cos', 'tan'] as const)
+  build(r, slot, turn) {
+    const ratio = (['sin', 'cos', 'tan'] as const)[turn % 3]!
     const [top, bottom] = FRACTION[ratio]
     const { t, b, deg } = draw(
       r,

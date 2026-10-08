@@ -16,15 +16,15 @@ const ITEMS: { name: string; worth: [number, number] }[] = [
 /**
  * Compound growth and decay over whole years: written as q5 and q9 (value of an investment),
  * q6 (the interest earned) and q7 (a car's value after depreciation), all 3 marks. Any of
- * the three kinds can fill any of the slots.
+ * the three kinds can fill any of the slots, and a sheet with three or more has all three.
  */
 export const compoundInterest: Generator = {
   id: 'compound-interest',
   subjectId: 'maths',
   topicId: TOPIC,
   replaces: ['q5', 'q6', 'q7', 'q9'],
-  build(r, slot) {
-    const kind = pick(r, ['value', 'interest', 'depreciation'] as const)
+  build(r, slot, turn) {
+    const kind = (['value', 'interest', 'depreciation'] as const)[turn % 3]!
     const down = kind === 'depreciation'
     const item = pick(r, ITEMS)
     const { P, rate, n, final } = draw(
