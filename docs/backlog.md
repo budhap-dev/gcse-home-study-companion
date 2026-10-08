@@ -389,8 +389,16 @@ per use.
   also found a Business solution printing "2\,000\,000" as text); frequency-trees q5 and
   grouped q8 referred to a tree or graph the question does not show; three answers accepting a
   decimal had a mark scheme naming only the fraction.
-- [ ] **8. Make a worksheet** (WKS-4): choose topics, number of questions and level, and
-  print several versions at once.
+- [x] **8. Make a worksheet** (WKS-4). **Done 8 October 2026 (#381, v10.87.0).** "Make a
+  worksheet" on every subject page: choose topics from any unit (at least three, so the topic
+  no longer gives the method away), a level, 5 to 20 questions and 1 to 4 versions to print.
+  The sheet's link holds every choice and a sheet code, which picks the questions (topics take
+  turns, never the same topic twice running) and their new numbers, so a link always opens,
+  prints and marks the same sheet. On screen it runs like the daily recap: one question at a
+  time, the topic named only once it is answered, recorded as a review per topic with the
+  code, so results feed each question's own topic and the parent's breakdown rebuilds what
+  was asked; it never moves a topic's status. Print gives each version its own page, code and
+  answer sheet. Works in every subject; Maths questions get new numbers.
 
 ## 3. Product features (not planned)
 
@@ -442,7 +450,7 @@ listed below. Each box is the missing part of a story, not the whole story.
   The daily recap (`/recap`, on Home's Today plan), 6 October 2026.
 - [x] **QZ-4:** wrong-answer bank. Redo my mistakes (`/mistakes`, and a card on Home) asks up to 15
   questions got wrong, newest first; two right in a row clears one (WKP-1).
-- [ ] **WKS-4:** mixed-topic worksheet.
+- [x] **WKS-4:** mixed-topic worksheet. Make a worksheet (#381), section 5 item 8.
 - [ ] **WKS-6:** grade 9 problem set per unit.
 - [ ] **WKS-5:** timed paper mode.
 - [ ] **PAR-3:** weekly email digest.

@@ -118,6 +118,9 @@ function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: 
         <Link to={`/resources?subject=${subject.id}`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <SheetsIcon width={18} height={18} /> Resources
         </Link>
+        <Link to={`/subjects/${subject.id}/make-worksheet`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
+          <span aria-hidden>⊞</span> Make a worksheet
+        </Link>
         {year && <span className="text-[13px] text-ink-2">You are in Year {year}</span>}
       </div>
     </header>
