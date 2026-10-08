@@ -287,7 +287,10 @@ picked first and list the rest here.
   attempts, so a split would have orphaned them. Biology (34 topics, 10 each) follows per
   year group: **Year 9 done 7 October 2026 (#370, v10.76.0)**, 13 topics, 130 questions,
   two examiner reviews applied (constants and formulae moved into prompts, overlapping
-  hand-span and memory-lymphocyte items re-aimed). Year 10 (18) and Year 11 (7) next.
+  hand-span and memory-lymphocyte items re-aimed). **Year 10 done 8 October 2026 (#371,
+  v10.77.0)**, 18 topics, 180 questions, four examiner reviews applied (every valid route
+  and example credited, criteria held to the question asked, overlapping items re-aimed
+  at lysozyme, chlorophyll, the pill and heat made by exercise). Year 11 (7) next.
 - [ ] **Music listening** (content 4): a link to a recording of each set work, no timings.
   Only if the owner revisits the no-audio decision; asked for last.
 
