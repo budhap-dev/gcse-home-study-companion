@@ -128,6 +128,10 @@ rather than remember.
 - Where a generator exists for a skill, each attempt draws fresh generated questions.
 - Written questions are still used where no generator exists.
 
+**Built 8 October 2026 (#375)**, with one choice the story left open: the first attempt keeps
+the written questions, which an examiner reviewed, and retries draw generated ones. The seed is
+the attempt's id and is stored on the attempt record.
+
 ### WKP-3 · Mixed-topic worksheet
 
 **Effort:** M · **Priority:** Next · **Finishes:** WKS-4

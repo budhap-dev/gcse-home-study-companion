@@ -8,6 +8,11 @@ export interface MistakeReport {
   itemId: string
   seenIn: 'lesson' | 'quiz' | 'worksheet'
   note: string
+  /**
+   * A generated question has the written one's id but different words, so the generator and
+   * seed go with the note: without them the reviewer would read a question the student never saw.
+   */
+  generated?: { generatorId: string; seed: string }
 }
 
 /**
@@ -18,8 +23,10 @@ export interface MistakeReport {
  */
 export async function sendReport(r: MistakeReport): Promise<boolean> {
   if (!supabase) return false
-  const note = r.note.trim().slice(0, 1000)
-  if (!note) return false
+  const typed = r.note.trim()
+  if (!typed) return false
+  // The address is kept whole: a long note is cut, not the line that says what was seen.
+  const note = r.generated ? `${typed.slice(0, 880)}\n\n(Generated question: ${r.generated.generatorId}, seed ${r.generated.seed})` : typed.slice(0, 1000)
   const { error } = await supabase.from('content_reports').insert({
     subject_id: r.subjectId, topic_id: r.topicId, item_kind: r.itemKind, item_id: r.itemId,
     seen_in: r.seenIn, note, app_version: APP_VERSION,

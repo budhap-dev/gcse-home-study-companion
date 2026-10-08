@@ -319,8 +319,13 @@ per use.
   for 16 written questions in four topics: percentages, fractions of amounts, sharing in a
   ratio, right-angled trigonometry, compound interest and reverse percentages. Not yet shown to
   the student: item 2 does that.
-- [ ] **2. New numbers on each worksheet retry** (WKP-2): the seed is saved with the attempt,
-  so a past attempt is rebuilt exactly; written questions stay where there is no generator.
+- [x] **2. New numbers on each worksheet retry** (WKP-2). **Done 8 October 2026 (#375,
+  v10.81.0).** The first attempt at a worksheet is the written sheet; every attempt after it
+  draws the questions that have a generator fresh from the attempt's seed, which is saved with
+  the attempt (and with an unfinished sheet), so a past attempt is rebuilt exactly. The start
+  screen says how many questions get new numbers, each one carries a "New numbers" chip, a
+  wrong option a generator built names the slip, the parent's breakdown rebuilds the questions
+  the student saw, and a mistake report carries the generator and seed.
 - [ ] **3. Print and share generated sheets**: the print page and its separate answer sheet
   are built from the sheet's code, and a share link opens the same sheet.
 - [ ] **4. Number generators**: fractions, indices, standard form, bounds, units, proportion.
