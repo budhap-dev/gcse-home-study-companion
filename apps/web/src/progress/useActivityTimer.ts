@@ -29,12 +29,57 @@ export function countsAsStudy(now: number, last: number, visible: boolean): bool
 }
 
 /**
+ * One clock for every learning screen, ticking once a minute while any is open; each tick
+ * files a minute against the place on screen at that moment.
+ *
+ * It used to be one clock per place, started when a screen opened at a place and stopped
+ * when the place changed. A mixed worksheet, the daily recap and Redo my mistakes change
+ * topic with every question, so the clock restarted every question and a question
+ * answered inside a minute added nothing: a whole mixed worksheet could record no time at
+ * all (8 October 2026). Now the place moves and the clock runs on.
+ */
+let current: StudyPlace | undefined
+let holders = 0
+let ticker: ReturnType<typeof setInterval> | null = null
+
+function tick() {
+  const visible = typeof document === 'undefined' || document.visibilityState === 'visible'
+  if (current && countsAsStudy(Date.now(), lastInput, visible)) addStudyMinutes(1, isoDate(), current)
+}
+
+/** A learning screen is open at `place`: starts the clock, or moves it there. Exported for tests. */
+export function enterPlace(place: StudyPlace) {
+  listen()
+  // Opening the screen, or its next question, is itself activity.
+  lastInput = Date.now()
+  current = place
+  holders++
+  if (!ticker) ticker = setInterval(tick, 60_000)
+}
+
+/**
+ * The screen has closed or moved on. The clock stops only once nobody holds it, and that
+ * is checked a moment later rather than at once: a screen moving to its next question
+ * leaves and re-enters in the same breath, and stopping between the two would throw away
+ * the part of a minute already spent. Exported for tests.
+ */
+export function leavePlace() {
+  holders--
+  queueMicrotask(() => {
+    if (holders > 0) return
+    holders = 0
+    current = undefined
+    if (ticker) clearInterval(ticker)
+    ticker = null
+  })
+}
+
+/**
  * Adds a study minute for each minute a learning screen is open, visible and in use, filed
  * against the place it was spent so a parent can see flashcards apart from quizzes.
  *
  * The place is taken apart into its fields for the dependency list: an object literal
- * built in the caller is new on every render and would restart the interval each time,
- * so no minute would ever complete.
+ * built in the caller is new on every render and would re-enter the place on each render.
  */
 export function useActivityTimer(place: StudyPlace | undefined, active = true) {
   const subjectId = place?.subjectId
@@ -42,12 +87,7 @@ export function useActivityTimer(place: StudyPlace | undefined, active = true) {
   const kind = place?.kind
   useEffect(() => {
     if (!active || !subjectId || !kind) return
-    listen()
-    // Opening the screen is itself activity.
-    lastInput = Date.now()
-    const id = setInterval(() => {
-      if (countsAsStudy(Date.now(), lastInput, document.visibilityState === 'visible')) addStudyMinutes(1, isoDate(), { subjectId, topicId, kind })
-    }, 60_000)
-    return () => clearInterval(id)
+    enterPlace({ subjectId, ...(topicId ? { topicId } : {}), kind })
+    return leavePlace
   }, [active, subjectId, topicId, kind])
 }
