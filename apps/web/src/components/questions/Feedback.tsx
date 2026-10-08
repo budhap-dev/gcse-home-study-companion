@@ -1,4 +1,4 @@
-import { dictationWords, type MarkResult, type Question } from '@study/shared'
+import { dictationWords, expectedAnswer, type MarkResult, type Question } from '@study/shared'
 import { RichText } from '../RichText.tsx'
 import { Smiley } from '../Smiley.tsx'
 
@@ -84,19 +84,5 @@ function Heard({ text, missed }: { text: string; missed?: number[] }) {
   )
 }
 
-function correctAnswer(q: Question): string {
-  switch (q.type) {
-    case 'multiple-choice':
-      return q.correct.map((i) => q.options[i]).join(', ')
-    case 'numeric':
-      return `${q.answer}${q.units ? ` ${q.units}` : ''}`
-    case 'short-text':
-      return q.accepted[0]!
-    case 'ordering':
-      return q.items.join(' → ')
-    case 'labelling':
-      return q.labels.map((l) => l.text).join(', ')
-    case 'extended':
-      return ''
-  }
-}
+/** The right answer as it is read: expectedAnswer, with nothing for an extended answer, which has no single one. */
+const correctAnswer = (q: Question): string => expectedAnswer(q) ?? ''

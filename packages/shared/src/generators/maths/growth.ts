@@ -43,17 +43,17 @@ export const compoundInterest: Generator = {
     const power = `${P} \\times ${m}^{${n}}`
     let prompt: string, solution: string, method: string[], answer: number
     if (kind === 'depreciation') {
-      prompt = `A ${item.name} worth £${P} depreciates by ${rate}% a year. What is its value after ${n} years, in pounds to 2 decimal places?`
+      prompt = `A ${item.name} worth ${money(P)} depreciates by ${rate}% a year. What is its value after ${n} years, in pounds to 2 decimal places?`
       solution = `A fall of ${rate}% a year is a multiplier of ${m}, so $${power} = £${value}$.`
       method = [`multiplier ${m}`, `power ${n}`]
       answer = roundTo(final, 2)
     } else if (kind === 'value') {
-      prompt = `£${P} is invested at ${rate}% compound interest for ${n} years. What is the value, in pounds to 2 decimal places?`
+      prompt = `${money(P)} is invested at ${rate}% compound interest for ${n} years. What is the value, in pounds to 2 decimal places?`
       solution = `$${power} = £${value}$.`
       method = [`multiplier ${m}`, `power ${n}`]
       answer = roundTo(final, 2)
     } else {
-      prompt = `£${P} is invested at ${rate}% compound interest for ${n} years. How much interest is earned, in pounds to 2 decimal places?`
+      prompt = `${money(P)} is invested at ${rate}% compound interest for ${n} years. How much interest is earned, in pounds to 2 decimal places?`
       solution = `The value is $${power} = £${value}$, so the interest is $${value} - ${P} = £${interest}$.`
       method = [`${P} × ${m}^${n}`, `subtracts ${P}`]
       answer = Number(interest)

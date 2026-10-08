@@ -137,7 +137,11 @@ function ladder(r: Rng, slot: Question, turn: number): Draft {
     r,
     (r) => {
       const L = lengthTenths(r, 3, 12, 0.5)
-      return { L, k: int(r, Math.ceil(L * 0.25), Math.floor(L * 0.8)) }
+      // A ladder stands steep: its foot within half its length of the wall, so reaching most of
+      // its length up it. A ramp lies shallow. A rope from a pole top can be at any angle. Drawn
+      // at any angle, one ladder 8.9 m long reached 3 m up a wall (8 October 2026).
+      const [lo, hi] = s.thing === 'ladder' ? (s.find === 'height' ? [0.25, 0.5] : [0.7, 0.9]) : s.thing === 'ramp' ? [0.75, 0.95] : [0.3, 0.8]
+      return { L, k: int(r, Math.ceil(L * lo), Math.floor(L * hi)) }
     },
     ({ L, k }) => k % 5 === 0 && k < L && !isSquare(L * L - k * k) && clearOfHalf(Math.sqrt(L * L - k * k) / 10, 2),
   )
@@ -244,10 +248,11 @@ function isoscelesHeight(r: Rng, slot: Question): Draft {
   const [h, H, s] = triple(r, 65)
   const base = 2 * h
   const unit = pick(r, ['cm', 'cm', 'm', 'mm'])
+  // A tent or a roof only at the size of a tent or a roof: the triple is drawn first.
   const prompt = pick(r, [
     `An isosceles triangle has two sides of ${s} ${unit} and a base of ${base} ${unit}. Find its height, in ${unit}.`,
-    `The end of a tent is an isosceles triangle with sloping sides of ${s} ${unit} and a base of ${base} ${unit}. Find its height, in ${unit}.`,
-    `A roof truss is an isosceles triangle with equal sides of ${s} ${unit} and a base of ${base} ${unit}. Find its height, in ${unit}.`,
+    ...(unit === 'm' && s <= 6 ? [`The end of a tent is an isosceles triangle with sloping sides of ${s} ${unit} and a base of ${base} ${unit}. Find its height, in ${unit}.`] : []),
+    ...(unit === 'm' && s <= 15 ? [`A roof truss is an isosceles triangle with equal sides of ${s} ${unit} and a base of ${base} ${unit}. Find its height, in ${unit}.`] : []),
   ])
   // Second route: Heron's formula for the area, then height = 2 × area ÷ base.
   const other = (2 * heron(s, s, base)) / base
@@ -266,11 +271,12 @@ function isoscelesHeight(r: Rng, slot: Question): Draft {
   }
 }
 
-const RECTANGLES = [
-  (a: number, b: number, u: string) => `A rectangle is ${a} ${u} by ${b} ${u}. Find the length of its diagonal, in ${u}.`,
-  (a: number, b: number, u: string) => `A rectangular field is ${a} ${u} long and ${b} ${u} wide. A path runs straight across it from one corner to the opposite corner. How long is the path, in ${u}?`,
-  (a: number, b: number, u: string) => `A rectangular gate is ${a} ${u} wide and ${b} ${u} tall, with a diagonal brace from one corner to the opposite corner. How long is the brace, in ${u}?`,
-  (a: number, b: number, u: string) => `A rectangular screen is ${a} ${u} wide and ${b} ${u} high. Find the length of its diagonal, in ${u}.`,
+/** Each setting with the sizes it comes in: a field is tens of metres, a gate a few; a 63 m gate was drawn once. */
+const RECTANGLES: { text: (a: number, b: number, u: string) => string; fits: (a: number, b: number, u: string) => boolean }[] = [
+  { text: (a, b, u) => `A rectangle is ${a} ${u} by ${b} ${u}. Find the length of its diagonal, in ${u}.`, fits: () => true },
+  { text: (a, b, u) => `A rectangular field is ${a} ${u} long and ${b} ${u} wide. A path runs straight across it from one corner to the opposite corner. How long is the path, in ${u}?`, fits: (a, b, u) => u === 'm' && Math.min(a, b) >= 20 },
+  { text: (a, b, u) => `A rectangular gate is ${a} ${u} wide and ${b} ${u} tall, with a diagonal brace from one corner to the opposite corner. How long is the brace, in ${u}?`, fits: (a, b, u) => (u === 'm' && Math.max(a, b) <= 5) || (u === 'cm' && Math.min(a, b) >= 50) },
+  { text: (a, b, u) => `A rectangular screen is ${a} ${u} wide and ${b} ${u} high. Find the length of its diagonal, in ${u}.`, fits: (a, b, u) => u === 'cm' && Math.min(a, b) >= 20 },
 ]
 
 /** The diagonal of a rectangle: written as q16 (3 marks). */
@@ -281,7 +287,7 @@ function rectangleDiagonal(r: Rng, slot: Question): Draft {
   return {
     question: {
       type: 'numeric',
-      prompt: pick(r, RECTANGLES)(a, b, unit),
+      prompt: pick(r, RECTANGLES.filter((x) => x.fits(a, b, unit))).text(a, b, unit),
       solution: `The diagonal splits the rectangle into two right-angled triangles with legs ${a} and ${b}, and the diagonal is the hypotenuse of each. $${a * a} + ${b * b} = ${c * c}$, so the diagonal is $\\sqrt{${c * c}} = ${c}$ ${unit}.`,
       markScheme: scheme(slot, ['identifies the diagonal as a hypotenuse', `reaches ${c * c}`], String(c)),
       answer: c,
@@ -465,13 +471,16 @@ function spaceDiagonalRounded(r: Rng, slot: Question): Draft {
   )
   const n = sides.reduce((t, x) => t + x * x, 0)
   const d = Math.sqrt(n)
-  const unit = pick(r, ['cm', 'cm', 'm'])
+  // Metres only for something a few metres across, and a crate is a crate in tens of centimetres:
+  // "a storage crate 18 m by 14 m by 11 m" is a building.
+  const unit = Math.max(...sides) > 4 ? 'cm' : pick(r, ['cm', 'cm', 'm'])
+  const things = unit === 'm' ? ['A cuboid', 'A storage container'] : Math.min(...sides) >= 10 ? ['A box', 'A cuboid', 'A storage crate'] : ['A box', 'A cuboid']
   const other = spaceByTrig(sides[0]!, sides[1]!, sides[2]!)
   const answer = roundTo(d, 1)
   return {
     question: {
       type: 'numeric',
-      prompt: `${pick(r, ['A box', 'A cuboid', 'A storage crate'])} measures ${dims(sides, unit)}. What is its space diagonal, in ${unit}, to 1 decimal place?`,
+      prompt: `${pick(r, things)} measures ${dims(sides, unit)}. What is its space diagonal, in ${unit}, to 1 decimal place?`,
       solution: `$${sides.map((x) => x * x).join(' + ')} = ${n}$, so $d = \\sqrt{${n}} = ${fixed(d, 1)}$ ${unit} to 1 decimal place.`,
       markScheme: scheme(slot, ['squares and adds', 'takes the root'], `${fixed(d, 1)} ${unit}`),
       answer,
@@ -1006,7 +1015,8 @@ function exactProduct(r: Rng, slot: Question): Draft {
       type: 'numeric',
       prompt: `Work out the exact value of $${expr}$.`,
       solution,
-      markScheme: scheme(slot, [`${named(e1)} = ${e1.text}`, `${named(e2)} = ${e2.text}`], show(answer)),
+      // The same value twice earns the second mark for multiplying, not for naming it again.
+      markScheme: scheme(slot, same ? [`${named(e1)} = ${e1.text}`, `${e1.text} × ${e1.text} = ${p}/${q}`] : [`${named(e1)} = ${e1.text}`, `${named(e2)} = ${e2.text}`], show(answer)),
       answer,
       tolerance: 0,
     },

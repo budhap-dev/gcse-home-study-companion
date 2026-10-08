@@ -1,4 +1,4 @@
-import { show } from '../format.ts'
+import { money as poundsText, show } from '../format.ts'
 import { draw, int, pick } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Draft, Generator } from '../types.ts'
@@ -163,7 +163,7 @@ export const shareOfATotal: Generator = {
     const word = three ? (largest ? 'largest' : 'smallest') : largest ? 'larger' : 'smaller'
     const money = r() < 0.4
     const prompt = money
-      ? `£${total} is shared in the ratio ${ratio.join(' : ')}. What is the ${word} share, in pounds?`
+      ? `${poundsText(total)} is shared in the ratio ${ratio.join(' : ')}. What is the ${word} share, in pounds?`
       : `Share ${total} in the ratio ${ratio.join(' : ')}. What is the ${word} share?`
     // Second route: each share as a fraction of the total, multiplying before dividing.
     const shares = ratio.map((p) => (total * p) / parts)
@@ -209,7 +209,7 @@ export const totalFromAShare: Generator = {
     let prompt: string, solution: string, method: string[], viaTotal: boolean
     if (slot.id === 'q11') {
       const diff = (b - a) * part
-      prompt = `${who} in the ratio ${a} : ${b}. The difference between their shares is £${diff}. What is the total, in pounds?`
+      prompt = `${who} in the ratio ${a} : ${b}. The difference between their shares is ${poundsText(diff)}. What is the total, in pounds?`
       solution = `The difference in parts is $${b} - ${a} = ${b - a}$, so one part is $${diff} \\div ${b - a} = £${part}$. The total is $${parts} \\times ${part} = £${total}$.`
       method = [`divides by the difference of ${b - a}`, `one part is ${part}`]
       // Second route: the two shares rebuilt from the total, then their difference.
@@ -218,7 +218,7 @@ export const totalFromAShare: Generator = {
       const smaller = r() < 0.6
       const k = smaller ? a : b
       const share = k * part
-      const given = named ? `${smaller ? p : q} gets £${share}` : `The ${smaller ? 'smaller' : 'larger'} share is £${share}`
+      const given = named ? `${smaller ? p : q} gets ${poundsText(share)}` : `The ${smaller ? 'smaller' : 'larger'} share is ${poundsText(share)}`
       prompt = `${who} in the ratio ${a} : ${b}. ${given}. What is the total, in pounds?`
       solution = `The £${share} is ${k} parts, so one part is £${part}. The total is $${parts} \\times ${part} = £${total}$.`
       method = [`one part is ${part}`, `${parts} parts altogether`]

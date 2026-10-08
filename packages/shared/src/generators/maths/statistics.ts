@@ -1205,7 +1205,8 @@ function scaleUp(contexts: ScaleUp[], alternative: boolean): Builder {
         const k = int(r, Math.max(1, Math.ceil(n * c.share[0])), Math.floor(n * c.share[1]))
         return { N, n, k }
       },
-      ({ N, n, k }) => (N * k) % n === 0 && k >= 1,
+      // At least 2, so "are faulty" is never said of 1.
+      ({ N, n, k }) => (N * k) % n === 0 && k >= 2,
     )
     const answer = (N * k) / n
     // Second route: cancel the fraction first, then scale.
@@ -1250,7 +1251,8 @@ const combinedSamples: Builder = (r, slot) => {
       const n2 = n - n1
       return { N: int(r, 12, 160) * 50, n1, k1: int(r, 2, n1 - 2), n2, k2: int(r, 2, n2 - 2) }
     },
-    ({ N, n1, k1, n2, k2 }) => n1 !== n2 && k1 * n2 !== k2 * n1 && (N * (k1 + k2)) % (n1 + n2) === 0 && Math.abs((k1 + k2) / (n1 + n2) - (k1 / n1 + k2 / n2) / 2) * N >= 1,
+    // Two random samples of one population agree roughly: 56 of 65 against 27 of 135 do not.
+    ({ N, n1, k1, n2, k2 }) => n1 !== n2 && k1 * n2 !== k2 * n1 && Math.abs(k1 / n1 - k2 / n2) <= 0.2 && (N * (k1 + k2)) % (n1 + n2) === 0 && Math.abs((k1 + k2) / (n1 + n2) - (k1 / n1 + k2 / n2) / 2) * N >= 1,
   )
   const K = k1 + k2
   const n = n1 + n2

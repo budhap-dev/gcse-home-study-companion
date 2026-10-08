@@ -44,7 +44,8 @@ const MEASURES: Measure[] = [
   { v: 't', things: 'journeys', unit: 'minutes', of: ' for journey times', some: (N, f, cls) => `Of ${N} journeys, ${f} take ${cls}.` },
   { v: 'h', things: 'plants', unit: 'cm', of: ' for plant heights', some: (N, f, cls) => `Of ${N} plants, ${f} have a height of ${cls}.` },
   { v: 'w', things: 'parcels', unit: 'kg', of: ' for parcel masses', some: (N, f, cls) => `Of ${N} parcels, ${f} weigh ${cls}.` },
-  { v: 'd', things: 'throws', unit: 'm', of: ' for javelin throws', some: (N, f, cls) => `Of ${N} javelin throws, ${f} measure ${cls}.` },
+  // Classes start from 0, so the thing measured must come in small sizes: javelin throws of 0 to 2 m did not.
+  { v: 'd', things: 'deliveries', unit: 'km', of: ' for delivery distances', some: (N, f, cls) => `Of ${N} deliveries, ${f} cover a distance of ${cls}.` },
 ]
 
 /** A class as the pack prints it: $20 < x \le 35$, then its unit. */
@@ -625,6 +626,8 @@ interface Table {
   widths: number[]
   /** "How many of the times were longer than 35 minutes?" */
   ask: (b: number) => string
+  /** The highest class bound the context allows: nobody is older than 100. */
+  max?: number
 }
 
 const TABLES: Table[] = [
@@ -632,7 +635,7 @@ const TABLES: Table[] = [
   { v: 'h', of: (n) => `the heights of ${n} plants`, items: 'plants', unit: 'cm', measure: 'height', starts: [0, 10, 20], widths: [5, 10, 20], ask: (b) => `How many of the plants were taller than ${b} cm?` },
   { v: 'm', of: (n) => `the masses of ${n} apples`, items: 'apples', unit: 'g', measure: 'mass', starts: [100, 120, 140], widths: [10, 20], ask: (b) => `How many of the apples were heavier than ${b} g?` },
   { v: 'd', of: (n) => `${n} long jump distances`, items: 'jumps', unit: 'cm', measure: 'distance', starts: [200, 250, 300], widths: [10, 20, 25], ask: (b) => `How many of the jumps were longer than ${b} cm?` },
-  { v: 'a', of: (n) => `the ages of ${n} people`, items: 'people', unit: 'years', measure: 'age', starts: [0, 10, 20], widths: [10, 20], ask: (b) => `How many of the people were older than ${b} years?` },
+  { v: 'a', of: (n) => `the ages of ${n} people`, items: 'people', unit: 'years', measure: 'age', starts: [0, 10, 20], widths: [10, 20], ask: (b) => `How many of the people were older than ${b} years?`, max: 100 },
 ]
 
 interface Drawn {
@@ -660,7 +663,7 @@ function drawTable(r: Rng, k: [number, number], n: [number, number], ok: (d: Dra
       freqs.reduce((acc, f) => (cf.push(acc + f), acc + f), 0)
       return { t, start, w, freqs, n: total_, bounds, cf }
     },
-    ok,
+    (d) => (t.max === undefined || d.bounds[d.bounds.length - 1]! <= t.max) && ok(d),
     3000,
   )
 }
