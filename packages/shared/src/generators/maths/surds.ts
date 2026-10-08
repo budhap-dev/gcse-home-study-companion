@@ -208,7 +208,8 @@ export const expandingSurdBrackets: Generator = {
     const R = m + a * b
     const K = a + b
     const rootFirst = r() < 0.7
-    const bracket = (n: number) => (rootFirst ? `\\sqrt{${m}} ${n < 0 ? '-' : '+'} ${Math.abs(n)}` : `${n} + \\sqrt{${m}}`)
+    // A negative number goes after the root: (√10 − 6), never (−6 + √10).
+    const bracket = (n: number) => (rootFirst || n < 0 ? `\\sqrt{${m}} ${n < 0 ? '-' : '+'} ${Math.abs(n)}` : `${n} + \\sqrt{${m}}`)
     const prompt = `Expand and simplify $(${bracket(a)})(${bracket(b)})$.`
     const t = (n: number) => (n < 0 ? `(${n})` : String(n))
     const terms = `$\\sqrt{${m}}\\times\\sqrt{${m}} = ${m}$, $\\sqrt{${m}}\\times${t(b)} = ${surdTex(b, m)}$, $${a}\\times\\sqrt{${m}} = ${surdTex(a, m)}$, $${a}\\times${t(b)} = ${a * b}$`

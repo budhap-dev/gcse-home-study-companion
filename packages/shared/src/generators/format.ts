@@ -33,7 +33,13 @@ export function clearOfHalf(x: number, dp: number, margin = 0.02): boolean {
 /** Pounds as the pack prints them: £60, £2318.55, £57.60. */
 export function money(x: number): string {
   const v = roundTo(x, 2)
-  return Number.isInteger(v) ? `£${v}` : `£${v.toFixed(2)}`
+  const [whole, pence] = (Number.isInteger(v) ? String(v) : v.toFixed(2)).split('.')
+  return `£${grouped(Number(whole))}${pence ? `.${pence}` : ''}`
+}
+
+/** 10 000 as the content prints it in prose: a space between groups of three, from five digits. Inside maths, write 10\,000 instead. */
+export function grouped(x: number): string {
+  return Math.abs(x) >= 10000 ? String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : String(x)
 }
 
 /** The same amount as a number in maths, without the sign: 2318.55, 60, 57.60. */

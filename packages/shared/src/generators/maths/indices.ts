@@ -609,7 +609,7 @@ export const squareRootOfADecimal: Generator = {
       question: {
         type: 'numeric',
         prompt: `${pick(r, VERBS)} $\\sqrt{${show(N)}}$.`,
-        solution: `Ask what squares to $${show(N)}$. $${show(answer)} \\times ${show(answer)} = ${show(N)}$, so the answer is $${show(answer)}$. The common wrong answer is $${show(slip)}$; check it by squaring, since $${show(slip)}^2 = ${slipSquared}$.`,
+        solution: `Ask what squares to $${show(N)}$. $${show(answer)} \\times ${show(answer)} = ${show(N)}$, so the answer is $${show(answer)}$.${N < 1 ? ` The common wrong answer is $${show(slip)}$; check it by squaring, since $${show(slip)}^2 = ${slipSquared}$.` : ''}`,
         markScheme: scheme(slot, [`$${show(answer)} \\times ${show(answer)} = ${show(N)}$, or $\\sqrt{\\tfrac{${k * k}}{${10 ** (2 * j)}}}$`], `$${show(answer)}$`),
         answer,
         tolerance: 0,

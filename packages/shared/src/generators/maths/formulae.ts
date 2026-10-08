@@ -664,7 +664,6 @@ function pendulum(r: Rng, slot: Question): Draft {
 
 /** q19: s = ut + ½at² from rest, find a. */
 function accelerationFromRest(r: Rng, slot: Question): Draft {
-  const who = pick(r, ['A car', 'A cyclist', 'A train', 'A runner', 'A sledge'])
   const whole = r() < 0.15
   const { s, t, a } = draw(
     r,
@@ -675,6 +674,9 @@ function accelerationFromRest(r: Rng, slot: Question): Draft {
     },
     ({ a }) => a >= 0.25 && a <= 12 && Number.isInteger(a * 1000) && Number.isInteger(a) === whole,
   )
+  // Who moves depends on how hard: a sledge at 6 m/s² reaches 108 km/h in 5 seconds.
+  const MOVERS: [string, number, number][] = [['A car', 0, 6], ['A cyclist', 0, 1.5], ['A train', 0, 1.5], ['A runner', 0, 3], ['A sledge', 0, 2], ['A dragster', 6, 12]]
+  const who = pick(r, MOVERS.filter(([, least, most]) => a >= least && a <= most).map(([w]) => w))
   const k = (t * t) / 2
   const loose = Number.isInteger(a * 100) ? '' : `, or ${fixed(a, 2)}`
   return {
@@ -880,7 +882,13 @@ function squareSubject(r: Rng, slot: Question): Draft {
       prompt: `Make $${S}$ the subject of $${original}$, where $${S} > 0$.`,
       solution: `Divide by $${kTex}$: $${S}^2 = \\dfrac{${L}}{${kTex}}$. Square root: $${answer}$. Undo the square last, because it was applied first.`,
       markScheme: scheme(slot, [`$${S}^2 = \\frac{${L}}{${kTex}}$`], `$${answer.replace('\\dfrac', '\\frac')}$`),
-      accepted: [`${S}=sqrt(${L}/${kTyped})`, `sqrt(${L}/${kTyped})`],
+      // √(v/4) simplifies to √v/2, and √(A/(4π)) to √A/(2√π): the forms a student reaches.
+      accepted: [
+        `${S}=sqrt(${L}/${kTyped})`,
+        `sqrt(${L}/${kTyped})`,
+        ...(kind === 'number' && Number.isInteger(Math.sqrt(n)) ? [`${S}=sqrt(${L})/${Math.sqrt(n)}`, `sqrt(${L})/${Math.sqrt(n)}`] : []),
+        ...(kind === 'four pi' ? [`${S}=sqrt(${L})/(2sqrt(π))`, `sqrt(${L})/(2sqrt(π))`] : []),
+      ],
     },
     check: substituteBack(original, answer, S, kind === 'letter' ? [L, K] : [L], r, true),
     values: { kind, original },

@@ -157,7 +157,9 @@ export const hcfLcmFromPrimes: Generator = {
       const left = [...fa, ...fb].map(([q]) => q).filter((q) => !sharedNames.includes(q))
       const powers = p.shared.map(([q, e]) => (e === 1 ? `${q}` : `${q ** e}`))
       prompt = `$A = ${primeForm(fa)}$ and $B = ${primeForm(fb)}$. Find the highest common factor of $A$ and $B$, as an ordinary number.`
-      solution = `Only the primes in both, each at its lower power: $${primeForm(p.shared)} = ${powers.join(' \\times ')} = ${answer}$. ${names(left)} ${left.length === 1 ? 'is' : 'are each'} in only one number, so ${left.length === 1 ? 'it is' : 'they are'} left out.`
+      // With every shared prime at power 1 the two forms are the same line, so it is printed once.
+      const expanded = powers.join(' \\times ')
+      solution = `Only the primes in both, each at its lower power: $${primeForm(p.shared)} = ${expanded === primeForm(p.shared) ? '' : `${expanded} = `}${answer}$. ${names(left)} ${left.length === 1 ? 'is' : 'are each'} in only one number, so ${left.length === 1 ? 'it is' : 'they are'} left out.`
       method = `takes ${names(sharedNames)} at their lower powers`
     } else {
       prompt = `$${a} = ${primeForm(fa)}$ and $${b} = ${primeForm(fb)}$. Find the ${task === 'HCF' ? 'highest common factor' : 'lowest common multiple'} of ${a} and ${b}.`
