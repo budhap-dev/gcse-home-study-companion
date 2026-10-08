@@ -303,6 +303,36 @@ picked first and list the rest here.
   YouTube and Spotify, from the topic page and the your-turn step that says to play it. Still
   no bundled audio and no durations.
 
+## 5. Generated questions and worksheets (8 October 2026)
+
+Approved by the owner on 8 October 2026 after a working example (new numbers on each retry,
+printable and shareable sheets). Stories GEN-1 to GEN-4, WKP-2 and WKS-4 in
+[improvement-stories.md](improvement-stories.md). One PR each, in this order; each box is
+ticked in the PR that finishes it. Generators run in the browser: no server, no AI, no cost
+per use.
+
+- [x] **1. Generator framework and checks** (GEN-1, GEN-2, GEN-3). **Done 8 October 2026
+  (#374, v10.80.0).** A seed builds a complete question in the existing format (prompt,
+  answer, worked solution, mark scheme), standing in for a named written question and keeping
+  its id, marks and grade. Every generator is checked a second way on 1,000 seeds per question
+  it replaces; multiple-choice wrong options come from named mistakes. Nine generators stand in
+  for 16 written questions in four topics: percentages, fractions of amounts, sharing in a
+  ratio, right-angled trigonometry, compound interest and reverse percentages. Not yet shown to
+  the student: item 2 does that.
+- [ ] **2. New numbers on each worksheet retry** (WKP-2): the seed is saved with the attempt,
+  so a past attempt is rebuilt exactly; written questions stay where there is no generator.
+- [ ] **3. Print and share generated sheets**: the print page and its separate answer sheet
+  are built from the sheet's code, and a share link opens the same sheet.
+- [ ] **4. Number generators**: fractions, indices, standard form, bounds, units, proportion.
+- [ ] **5. Algebra generators**: expanding, factorising, quadratics, simultaneous equations,
+  sequences, rearranging, including show-that-then-solve.
+- [ ] **6. Geometry and measures generators**: angles, area and volume, Pythagoras, circles,
+  sine and cosine rules, including two-triangle problems with diagrams.
+- [ ] **7. Probability and statistics generators**, bringing generators to at least half of
+  the 454 typed-answer Maths questions (GEN-4).
+- [ ] **8. Make a worksheet** (WKS-4): choose topics, number of questions and level, and
+  print several versions at once.
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are
