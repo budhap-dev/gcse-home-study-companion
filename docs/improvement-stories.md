@@ -144,6 +144,10 @@ method a question needs.
 - The student picks a unit and a level; questions come from at least three topics.
 - Results feed each question's own topic.
 
+**Built 8 October 2026 (#381)** as Make a worksheet: topics from any unit rather than one, at
+least three; results recorded as a review per topic (from "mixed"), which feeds each topic's
+history and the mistakes list without moving its status.
+
 ### WKP-4 · Timed paper mode
 
 **Effort:** M · **Priority:** Later · **Finishes:** WKS-5

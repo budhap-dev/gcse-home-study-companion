@@ -30,8 +30,8 @@ export interface AttemptRecord {
    * topic's status.
    */
   kind: 'quiz' | 'worksheet' | 'review'
-  /** Which kind of review: absent for Redo my mistakes, which came first. */
-  from?: 'recap'
+  /** Which kind of review: absent for Redo my mistakes, which came first. A mixed worksheet is one too (WKS-4). */
+  from?: 'recap' | 'mixed'
   level?: WorksheetLevel
   marksScored: number
   marksAvailable: number
@@ -58,7 +58,7 @@ export interface AttemptRecord {
  */
 export function attemptName(a: Pick<AttemptRecord, 'kind' | 'level' | 'from'>): string {
   if (a.kind === 'quiz') return 'Quiz'
-  if (a.kind === 'review') return a.from === 'recap' ? 'Daily recap' : 'Redo my mistakes'
+  if (a.kind === 'review') return a.from === 'recap' ? 'Daily recap' : a.from === 'mixed' ? 'Mixed worksheet' : 'Redo my mistakes'
   return a.level ? `${a.level[0]!.toUpperCase()}${a.level.slice(1)} worksheet` : 'Worksheet'
 }
 

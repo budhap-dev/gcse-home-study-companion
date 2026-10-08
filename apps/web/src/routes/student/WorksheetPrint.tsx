@@ -78,31 +78,7 @@ function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
         </p>
       </header>
 
-      <ol className="flex flex-col">
-        {questions.map((q, i) => (
-          <li key={q.id} className="question break-inside-avoid border-b border-rule py-3 last:border-b-0">
-            <div className="flex items-start justify-between gap-4">
-              <span className="flex min-w-0 gap-2">
-                <span className="font-bold tabular-nums">{i + 1}.</span>
-                <RichText source={q.prompt} className="text-[15px]" />
-              </span>
-              <span className="shrink-0 text-sm text-ink-2">({q.marks})</span>
-            </div>
-            {q.type === 'multiple-choice' && (
-              <ol className="mt-2 flex flex-col gap-1 pl-6 text-[15px]">
-                {q.options.map((o, k) => (
-                  <li key={k} className="flex gap-2">
-                    <span className="text-ink-2">{'ABCD'[k] ?? k + 1}</span>
-                    <RichText source={o} className="inline text-[15px]" />
-                  </li>
-                ))}
-              </ol>
-            )}
-            {'visual' in q && q.visual && <div className="mt-2 max-w-md"><Visual visual={q.visual} /></div>}
-            {answers ? <AnswerBlock question={q} /> : <Working marks={q.marks} />}
-          </li>
-        ))}
-      </ol>
+      <PrintedQuestions questions={questions} answers={answers} />
       {code && (
         <p className="mt-4 border-t border-rule pt-2 text-xs text-ink-2">
           {answers ? `Answers for sheet ${code} only: a different code has different numbers.` : `Sheet ${code}. The answers are on a separate sheet with the same code.`}
@@ -110,6 +86,41 @@ function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
         </p>
       )}
     </article>
+  )
+}
+
+/**
+ * The questions of a printed sheet, numbered, with ruled working space or, on the answer
+ * sheet, the answer, the working and the mark scheme. Shared by a topic's worksheet and a
+ * mixed worksheet, so the two print alike.
+ */
+export function PrintedQuestions({ questions, answers }: { questions: Question[]; answers: boolean }) {
+  return (
+  <ol className="flex flex-col">
+    {questions.map((q, i) => (
+      <li key={i} className="question break-inside-avoid border-b border-rule py-3 last:border-b-0">
+        <div className="flex items-start justify-between gap-4">
+          <span className="flex min-w-0 gap-2">
+            <span className="font-bold tabular-nums">{i + 1}.</span>
+            <RichText source={q.prompt} className="text-[15px]" />
+          </span>
+          <span className="shrink-0 text-sm text-ink-2">({q.marks})</span>
+        </div>
+        {q.type === 'multiple-choice' && (
+          <ol className="mt-2 flex flex-col gap-1 pl-6 text-[15px]">
+            {q.options.map((o, k) => (
+              <li key={k} className="flex gap-2">
+                <span className="text-ink-2">{'ABCD'[k] ?? k + 1}</span>
+                <RichText source={o} className="inline text-[15px]" />
+              </li>
+            ))}
+          </ol>
+        )}
+        {'visual' in q && q.visual && <div className="mt-2 max-w-md"><Visual visual={q.visual} /></div>}
+        {answers ? <AnswerBlock question={q} /> : <Working marks={q.marks} />}
+      </li>
+    ))}
+  </ol>
   )
 }
 

@@ -1,4 +1,4 @@
-import { describeAnswer, type MarkResult, type Topic } from '@study/shared'
+import { describeAnswer, type MarkResult, type Question, type Topic } from '@study/shared'
 import type { Answer } from '../components/questions/QuestionInput.tsx'
 import { recordAttempt, type AttemptRecord } from './store.ts'
 import { xpForQuestions } from './xp.ts'
@@ -13,15 +13,18 @@ export const itemKey = (m: SessionItem) => `${m.topicId}/${m.questionId}`
  * Records a finished session as one review attempt per topic, so each topic keeps its own
  * history. It earns XP and counts as study; it never moves a topic's status. A question
  * left unanswered counts as wrong.
+ *
+ * A mixed worksheet shows generated questions, so it passes `seen` (the question as asked,
+ * for describing the answer) and `seed` (stored, so the parent's breakdown rebuilds them).
  */
-export function recordReview(sessionId: string, items: SessionItem[], answers: SessionAnswers, topicById: (id: string) => Topic | undefined, finishedAt: string, from?: AttemptRecord['from']) {
+export function recordReview(sessionId: string, items: SessionItem[], answers: SessionAnswers, topicById: (id: string) => Topic | undefined, finishedAt: string, from?: AttemptRecord['from'], asked?: { seen: (m: SessionItem) => Question | undefined; seed: string }) {
   const byTopic = new Map<string, SessionItem[]>()
   for (const m of items) byTopic.set(m.topicId, [...(byTopic.get(m.topicId) ?? []), m])
   for (const [topicId, its] of byTopic) {
     const t = topicById(topicId)
     if (!t) continue
     const results = its.flatMap((m) => {
-      const q = t.questions.find((x) => x.id === m.questionId)
+      const q = asked?.seen(m) ?? t.questions.find((x) => x.id === m.questionId)
       if (!q) return []
       const a = answers[itemKey(m)]
       const r = a?.result ?? { correct: false, marksScored: 0, marksAvailable: q.marks }
@@ -39,6 +42,7 @@ export function recordReview(sessionId: string, items: SessionItem[], answers: S
       completedAt: finishedAt,
       xp: xpForQuestions(results),
       questions: results,
+      ...(asked ? { seed: asked.seed } : {}),
     })
   }
 }

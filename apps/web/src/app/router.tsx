@@ -18,6 +18,9 @@ const Lesson = screen(study, 'Lesson')
 const Quiz = screen(study, 'Quiz')
 const Worksheet = screen(study, 'Worksheet')
 const WorksheetPrint = screen(study, 'WorksheetPrint')
+const MakeWorksheet = screen(study, 'MakeWorksheet')
+const MixedWorksheet = screen(study, 'MixedWorksheet')
+const MixedPrint = screen(study, 'MixedPrint')
 const ExamTechnique = screen(study, 'ExamTechnique')
 const WhyItExists = screen(study, 'WhyItExists')
 const Flashcards = screen(study, 'Flashcards')
@@ -43,6 +46,9 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'subjects', element: <Subjects /> },
       { path: 'subjects/:subjectId', element: <SubjectTheme><TopicMap /></SubjectTheme> },
+      { path: 'subjects/:subjectId/make-worksheet', element: <SubjectTheme><MakeWorksheet /></SubjectTheme> },
+      { path: 'subjects/:subjectId/mixed', element: <SubjectTheme><MixedWorksheet /></SubjectTheme> },
+      { path: 'subjects/:subjectId/mixed/print', element: <SubjectTheme><MixedPrint /></SubjectTheme> },
       { path: 'subjects/:subjectId/exam-technique', element: <SubjectTheme><ExamTechnique /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId', element: <SubjectTheme><Topic /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/why', element: <SubjectTheme><WhyItExists /></SubjectTheme> },
