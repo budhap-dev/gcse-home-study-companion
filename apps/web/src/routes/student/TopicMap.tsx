@@ -51,7 +51,7 @@ export function TopicMap() {
       <p className="text-sm text-ink-2">
         <Link to="/subjects" className="-my-1 inline-block py-1 underline">Subjects</Link> <span aria-hidden>/</span> {subject.name}
       </p>
-      <SubjectHeader subject={subject} squares={squares} year={progress.profile?.year} />
+      <SubjectHeader subject={subject} squares={squares} />
 
       <div role="group" aria-label="View" className="flex w-fit gap-1 rounded-xl bg-panel p-1">
         {(['map', 'list'] as const).map((v) => (
@@ -80,7 +80,7 @@ export function TopicMap() {
 }
 
 /** The subject's banner: a ring of topics secure, its name and board, and a count at each level. */
-function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: MapSquare[]; year?: number }) {
+function SubjectHeader({ subject, squares }: { subject: Subject; squares: MapSquare[] }) {
   const secure = squares.filter(isSecure).length
   const counts = countLevels(squares)
   const r = 42
@@ -121,10 +121,22 @@ function SubjectHeader({ subject, squares, year }: { subject: Subject; squares: 
         <Link to={`/subjects/${subject.id}/make-worksheet`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <span aria-hidden>⊞</span> Make a worksheet
         </Link>
-        {year && <span className="text-[13px] text-ink-2">You are in Year {year}</span>}
       </div>
     </header>
   )
+}
+
+/**
+ * The line under the year tabs, for the year shown. The student's own year used to sit in the
+ * header as "You are in Year 9", which stayed put while the tabs changed and read as a label
+ * that failed to follow them (8 October 2026). It now says what the year shown is to them.
+ */
+function shownYearNote(shown: number | 'all', mine?: number): string {
+  if (!mine) return shown === 'all' ? 'Every year’s topics.' : `Topics taught in Year ${shown}.`
+  if (shown === 'all') return `Every year’s topics. You are in Year ${mine}.`
+  if (shown === mine) return `Year ${mine} is your year: this year’s work.`
+  if (shown < mine) return `Taught before your year (Year ${mine}). Kept as recap, because mocks and the final exams keep coming back to it.`
+  return `${shown === mine + 1 ? 'Next year’s work' : 'Taught after next year'}: you are in Year ${mine}.`
 }
 
 /**
@@ -172,11 +184,17 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
                 <button key={y} type="button" aria-pressed={year === y} onClick={() => showYear(y)}
                   className={`min-h-9 rounded-lg px-3 text-sm font-bold transition-colors ${year === y ? 'bg-surface text-ink shadow-[0_1px_2px_rgb(30_35_48/0.12)]' : 'text-ink-2 hover:text-ink'}`}>
                   {y === 'all' ? 'All years' : `Year ${y}`}
+                  {y === mine && <span className="font-normal"> · yours</span>}
                 </button>
               ))}
             </div>
           )}
         </div>
+        {years.length > 1 && (
+          <p aria-live="polite" className="text-sm text-ink-2">
+            {shownYearNote(year, mine)} <Link to="/settings" className="-my-1 inline-block py-1 underline">{mine ? 'Change your year' : 'Set your year'}</Link>
+          </p>
+        )}
         <div className="grid grid-cols-1 items-start gap-3 xl:grid-cols-2">
           {groups.map((g, gi) => (
             <section key={g.id} className="anim-rise flex flex-col gap-2.5 rounded-2xl border border-rule bg-surface p-4" style={{ '--d': `${(0.1 + gi * 0.05).toFixed(2)}s` } as React.CSSProperties}>
