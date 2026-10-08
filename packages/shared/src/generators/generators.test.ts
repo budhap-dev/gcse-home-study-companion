@@ -73,6 +73,10 @@ describe('question generators', () => {
           }
         })
 
+        it('says "1 time", not "1 times"', () => {
+          for (const { question: q, seed } of built) expect(JSON.stringify(q), seed).not.toMatch(/\b1 times\b/)
+        })
+
         // A tolerance is for rounding, not for being nearly right: 0.5 on an answer of 3 marked 2.6 correct.
         it('marks no further from the answer than rounding allows', () => {
           for (const { question: q, seed } of built) if (q.type === 'numeric' && q.answer !== 0) expect(q.tolerance, seed).toBeLessThanOrEqual(Math.abs(q.answer) * 0.02)
