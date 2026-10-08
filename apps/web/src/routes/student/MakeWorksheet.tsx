@@ -116,31 +116,44 @@ export function MakeWorksheet() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4" aria-live="polite">
-        {ready ? (
-          <p>
-            <strong>{items.length} question{items.length === 1 ? '' : 's'}</strong> from {fromTopics} topics · {marks} marks
-            {fresh > 0 && <> · <strong>{fresh}</strong> with new numbers</>}
-            {items.length < count && <span className="block text-sm text-ink-2">Only {items.length} questions at this level can be marked on screen across these topics; choose more topics for {count}.</span>}
-            <span className="block text-sm text-ink-2">Sheet <strong className="font-mono text-ink">{code}</strong></span>
-          </p>
-        ) : (
-          <p className="text-ink-2">Choose at least {MIXED_MIN_TOPICS} topics. With fewer, the topic gives the method away.</p>
-        )}
-        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+      {/* Pinned to the foot of the screen while the topic list scrolls, and its buttons are
+          always there: with them hidden until three topics were ticked, a page with none
+          ticked looked as if it had no way to make anything (8 October 2026). */}
+      <section className="bottom-nav-clear sticky z-20 flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4 shadow-[0_-8px_30px_rgb(16_24_40/0.12)]" aria-label="Your worksheet">
+        <p aria-live="polite" className="text-[15px]">
           {ready ? (
             <>
-              <Link to={mixedPath(spec)} className="flex h-12 items-center justify-center rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Do it on screen</Link>
-              <Link to={mixedPath(spec, { codes: [code, ...more].slice(0, versions) })} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">
+              <strong>{items.length} question{items.length === 1 ? '' : 's'}</strong> from {fromTopics} topics · {marks} marks
+              {fresh > 0 && <> · {fresh} with new numbers</>} · sheet <strong className="font-mono">{code}</strong>
+              {items.length < count && <span className="block text-sm text-ink-2">Only {items.length} questions at this level can be marked on screen across these topics; tick more topics for {count}.</span>}
+            </>
+          ) : (
+            <strong>{spec.topicIds.length === 0 ? `Tick at least ${MIXED_MIN_TOPICS} topics above to make a worksheet.` : `Tick ${MIXED_MIN_TOPICS - spec.topicIds.length} more topic${MIXED_MIN_TOPICS - spec.topicIds.length === 1 ? '' : 's'} above: with fewer than ${MIXED_MIN_TOPICS}, the topic gives the method away.`}</strong>
+          )}
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          {ready ? (
+            <>
+              <Link to={mixedPath(spec)} className="flex h-12 items-center justify-center rounded-xl bg-[color:var(--subject)] px-3 text-center font-bold text-white">Do it on screen</Link>
+              <Link to={mixedPath(spec, { codes: [code, ...more].slice(0, versions) })} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-3 text-center font-bold">
                 {versions === 1 ? 'Print or save as PDF' : `Print ${versions} versions`}
               </Link>
-              <ShareSheet path={mixedPath(spec)} title={`${subject.name} · mixed worksheet ${code}`} />
-              <button type="button" onClick={() => setCode(newSheetCode())} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Different questions</button>
             </>
-          ) : null}
-          <Link to={`/subjects/${subjectId}`} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to {subject.name}</Link>
+          ) : (
+            <>
+              <button type="button" disabled className="h-12 rounded-xl bg-[color:var(--subject)] px-3 font-bold text-white opacity-40">Do it on screen</button>
+              <button type="button" disabled className="h-12 rounded-xl border border-rule bg-surface px-3 font-bold opacity-40">Print or save as PDF</button>
+            </>
+          )}
         </div>
+        {ready && (
+          <div className="flex flex-wrap items-start gap-2">
+            <ShareSheet small path={mixedPath(spec)} title={`${subject.name} · mixed worksheet ${code}`} />
+            <button type="button" onClick={() => setCode(newSheetCode())} className="flex h-9 items-center rounded-lg border border-rule bg-surface px-3 text-sm font-bold">Different questions</button>
+          </div>
+        )}
       </section>
+      <Link to={`/subjects/${subjectId}`} className="flex h-11 w-fit items-center rounded-lg border border-rule bg-surface px-4 font-bold">Back to {subject.name}</Link>
     </article>
   )
 }
