@@ -33,6 +33,26 @@ export const Topic = z.object({
   year: z.union([z.literal(9), z.literal(10), z.literal(11)]),
   /** Outside places to practise this topic, shown on the topic page as links that open in a new tab. */
   resources: z.array(z.object({ label: z.string().min(1), url: z.string().url(), note: z.string().optional() })).optional(),
+  /**
+   * The recording a Music set work is studied from, as Pearson's set works information
+   * sheet names it. The app still bundles no audio: the topic page offers a search for it
+   * on YouTube and Spotify, which cannot rot the way a link to one upload can. No duration
+   * is given, for the reason no timings are printed (docs/content-order.md).
+   */
+  listen: z
+    .object({
+      /** The work as the sheet names it: "Killer Queen (album version)". */
+      work: z.string().min(1),
+      performers: z.string().min(1),
+      album: z.string().min(1),
+      /** "track 2", or "CD 1, track 10": it follows the album's name and a comma. */
+      track: z.string().min(1),
+      /** What is typed into the search box: work and performers, nothing that narrows it to nothing. */
+      search: z.string().min(1),
+      /** The lesson step that asks the student to play the recording, which shows the same links. */
+      stepId: Slug.optional(),
+    })
+    .optional(),
   /** Shown or hidden by the student's chosen board when a topic is board-specific. */
   boards: z.array(z.string().min(1)).optional(),
   /**

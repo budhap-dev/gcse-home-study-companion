@@ -8,6 +8,7 @@ import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
+import { Listen } from '../../components/Listen.tsx'
 import { getState, saveLessonPosition } from '../../progress/store.ts'
 import { settle, type Settlement } from '../../progress/settle.ts'
 import { Celebration } from '../../components/Celebration.tsx'
@@ -159,6 +160,9 @@ function LessonBody({ topic }: { topic: TopicRecord }) {
       </div>
 
       <RichText source={step.body} className="text-[17px] leading-relaxed" />
+
+      {/* The step that asks for the recording to be played offers it there and then. */}
+      {topic.listen?.stepId === step.id && <Listen recording={topic.listen} />}
 
       {step.check && (
         <section className="tint flex flex-col gap-3 rounded-2xl border border-[color:var(--subject)] p-4">

@@ -85,7 +85,8 @@ to what I hear.
 
 **Acceptance criteria**
 
-- Each set-work topic links to a licensed recording.
+- Each set-work topic links to a licensed recording. Done 8 October 2026 as a search for the
+  recording Pearson names, which cannot rot; a direct link to one upload could.
 - No audio is bundled with the app.
 
 ### TOP-7 · Search by skill

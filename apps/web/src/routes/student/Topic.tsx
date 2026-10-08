@@ -18,6 +18,7 @@ import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
 import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
 import { useWide } from '../../components/useWide.ts'
+import { Listen } from '../../components/Listen.tsx'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -261,6 +262,8 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
         </div>
 
         <div className="flex flex-col gap-6 lg:col-start-1 lg:row-start-2">
+          {topic.listen && <Listen recording={topic.listen} />}
+
           {topic.tips && topic.tips.length > 0 && (
             <section className="flex flex-col gap-2">
               <h2 className="chip w-fit" style={{ '--chip': '#c27a00' } as React.CSSProperties}><Smiley>💡</Smiley>Tips and tricks</h2>

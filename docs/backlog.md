@@ -297,8 +297,11 @@ picked first and list the rest here.
   their prompts set a scene first, so `teachingStep` gained a skill-only fallback at a
   two-thirds lead, back above the floor; its additions agree with the skill rule 83% of the
   time.
-- [ ] **Music listening** (content 4): a link to a recording of each set work, no timings.
-  Only if the owner revisits the no-audio decision; asked for last.
+- [x] **Music listening** (content 4): a link to a recording of each set work, no timings.
+  The owner asked for it on 8 October 2026 ("finish all"). **Done (#373, v10.79.0)**: each set
+  work names the recording on Pearson's set works information sheet and searches for it on
+  YouTube and Spotify, from the topic page and the your-turn step that says to play it. Still
+  no bundled audio and no durations.
 
 ## 3. Product features (not planned)
 
