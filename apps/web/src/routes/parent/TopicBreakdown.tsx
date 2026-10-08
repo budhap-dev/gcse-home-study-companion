@@ -1,4 +1,4 @@
-import { expectedAnswer, type Question } from '@study/shared'
+import { expectedAnswer, sheetQuestions, type Question } from '@study/shared'
 import { RichText } from '../../components/RichText.tsx'
 import { StatusChip } from '../../components/StatusChip.tsx'
 import { summaryById } from '../../content/index.ts'
@@ -18,6 +18,10 @@ const pct = (a: AttemptRecord) => (a.marksAvailable > 0 ? Math.round((100 * a.ma
  * `answer` is only present on attempts made since it started being recorded, and never on
  * an extended question, which is self-assessed against a mark scheme rather than typed —
  * so every row has to read sensibly without it.
+ *
+ * A worksheet retry with a `seed` had generated questions in place of some written ones, and
+ * the seed rebuilds them: looked up by id alone, the row would print the written question's
+ * numbers beside the answer the student gave to different ones.
  */
 export function TopicBreakdown({ topicId, state }: { topicId: string; state: ProgressState }) {
   const topic = summaryById(topicId)
@@ -54,7 +58,7 @@ export function TopicBreakdown({ topicId, state }: { topicId: string; state: Pro
             {a.questions?.length
               ? (
                 <ol className="flex flex-col gap-2 border-t border-rule px-3 py-3">
-                  {a.questions.map((r, i) => <QuestionRow key={r.id} n={i + 1} result={r} question={byId.get(r.id)} />)}
+                  {asSeen(a, byId, topic.subjectId).map(([r, q], i) => <QuestionRow key={r.id} n={i + 1} result={r} question={q} />)}
                 </ol>
               )
               : <p className="border-t border-rule px-3 py-3 text-sm text-ink-2">This attempt was recorded before the app kept question-by-question results.</p>}
@@ -63,6 +67,15 @@ export function TopicBreakdown({ topicId, state }: { topicId: string; state: Pro
       )}
     </div>
   )
+}
+
+/** Each result with the question as the student saw it on that attempt. */
+export function asSeen(a: AttemptRecord, byId: Map<string, Question>, subjectId: string): [QuestionResult, Question | undefined][] {
+  const results = a.questions ?? []
+  const written = results.map((r) => byId.get(r.id))
+  if (!a.seed || written.some((q) => !q)) return results.map((r, i) => [r, written[i]])
+  const seen = sheetQuestions(subjectId, a.topicId, written as Question[], a.seed)
+  return results.map((r, i) => [r, seen[i]!.question])
 }
 
 function QuestionRow({ n, result, question }: { n: number; result: QuestionResult; question?: Question }) {

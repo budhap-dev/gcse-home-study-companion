@@ -21,8 +21,11 @@ const TONE = {
  * cross to disappear" — can match none of them. Having read the model answer, the student
  * says whether theirs means the same; the claim is recorded as self-marked, exactly as an
  * extended answer is, so the parent's view shows which marks were given this way.
+ *
+ * `slip` names the mistake behind a wrong option a generator built (GEN-3): "took 20% off
+ * the new price". It reads after "you", so it is written as something the student did.
  */
-export function Feedback({ question, result, onClaim }: { question: Question; result: MarkResult; onClaim?: () => void }) {
+export function Feedback({ question, result, onClaim, slip }: { question: Question; result: MarkResult; onClaim?: () => void; slip?: string }) {
   const tone = result.correct ? TONE.correct : result.marksScored > 0 ? TONE.partial : TONE.wrong
   const heading = result.claimed ? 'Counted as right' : result.correct ? 'Correct' : result.marksScored > 0 ? `${result.marksScored} of ${result.marksAvailable} marks` : 'Not quite'
   const face = result.correct ? '😄' : result.marksScored > 0 ? '🙂' : '🤔'
@@ -42,6 +45,7 @@ export function Feedback({ question, result, onClaim }: { question: Question; re
       {result.claimed && (
         <p className="text-sm">You said your answer means the same as: <strong><RichText source={correctAnswer(question)} inline /></strong></p>
       )}
+      {slip && !result.correct && <p className="text-sm">The likely slip: you <strong>{slip}</strong>.</p>}
       <RichText source={question.solution} className="text-sm" />
       {onClaim && question.type === 'short-text' && !result.correct && !question.listen?.dictation && (
         <div className="flex flex-col gap-1.5 border-t border-rule pt-3">

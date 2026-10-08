@@ -44,6 +44,11 @@ export interface AttemptRecord {
   xp?: number
   /** Per-question results, for strengths and weaknesses by skill. */
   questions?: QuestionResult[]
+  /**
+   * The seed a worksheet retry drew its generated questions from (WKP-2). The questions are
+   * not stored, since the seed rebuilds them exactly; absent when every question was written.
+   */
+  seed?: string
 }
 
 /**

@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../content/questions.ts'
 import { mark } from '../marking.ts'
-import { GENERATORS, generate, generatorFor } from './index.ts'
+import { GENERATORS, generate, generatorFor, sheetQuestions } from './index.ts'
 import type { Generated } from './types.ts'
 
 /**
@@ -156,5 +156,35 @@ describe('generators vary the structure of a question as well as its numbers', (
       if (b.values.kind === 'value') expect(q.answer).toBeGreaterThan(P)
       if (b.values.kind === 'interest') expect(q.answer).toBeGreaterThan(0)
     }
+  })
+})
+
+describe('a worksheet attempt', () => {
+  const written = topic('maths', 'trigonometric-ratios')
+  const sheet = ['q5', 'q6', 'q7', 'q8', 'q9', 'q10'].map((id) => written.find((q) => q.id === id)!)
+
+  it('is the written questions when there is no seed', () => {
+    expect(sheetQuestions('maths', 'trigonometric-ratios', sheet).map((s) => s.question)).toEqual(sheet)
+  })
+
+  it('replaces only the questions that have a generator, in the same order and worth the same', () => {
+    const fresh = sheetQuestions('maths', 'trigonometric-ratios', sheet, 'attempt-2')
+    expect(fresh.map((s) => s.question.id)).toEqual(sheet.map((q) => q.id))
+    expect(fresh.map((s) => s.question.marks)).toEqual(sheet.map((q) => q.marks))
+    expect(fresh.filter((s) => s.generated).map((s) => s.question.id)).toEqual(['q5', 'q6', 'q7', 'q8', 'q10'])
+    // q9 asks whether to multiply or divide: no generator, so it stays as written.
+    expect(fresh[4]!.question).toBe(sheet[4])
+    expect(fresh[0]!.question.prompt).not.toBe(sheet[0]!.prompt)
+  })
+
+  it('is rebuilt exactly from its seed, and differs from the next attempt', () => {
+    const a = sheetQuestions('maths', 'trigonometric-ratios', sheet, 'attempt-2')
+    expect(sheetQuestions('maths', 'trigonometric-ratios', sheet, 'attempt-2')).toEqual(a)
+    expect(sheetQuestions('maths', 'trigonometric-ratios', sheet, 'attempt-3').map((s) => s.question.prompt)).not.toEqual(a.map((s) => s.question.prompt))
+  })
+
+  it('leaves a subject with no generators alone', () => {
+    const french = Question.array().parse(JSON.parse(readFileSync(join(ROOT, 'french', 'celebrations.json'), 'utf8')).questions)
+    expect(sheetQuestions('french', 'celebrations', french, 'attempt-2').every((s) => !s.generated)).toBe(true)
   })
 })

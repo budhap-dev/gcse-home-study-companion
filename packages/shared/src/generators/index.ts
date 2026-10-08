@@ -32,6 +32,28 @@ export function generatorFor(subjectId: string, topicId: string, questionId: str
   return BY_SLOT.get(`${subjectId}/${topicId}/${questionId}`)
 }
 
+export interface SheetQuestion {
+  question: Question
+  /** Present when a generator wrote this question for the attempt. */
+  generated?: Generated
+}
+
+/**
+ * A worksheet's questions for one attempt, in the written order (WKP-2).
+ *
+ * Without a seed they are the written questions. With one, each written question that has a
+ * generator is replaced by a fresh version drawn from the seed, and the rest stay as written:
+ * explain questions, proofs and longer problems have no generator and never will.
+ */
+export function sheetQuestions(subjectId: string, topicId: string, written: Question[], seed?: string): SheetQuestion[] {
+  return written.map((question) => {
+    const g = seed ? generatorFor(subjectId, topicId, question.id) : undefined
+    if (!g) return { question }
+    const generated = generate(g, question, seed!)
+    return { question: generated.question, generated }
+  })
+}
+
 /**
  * A fresh version of the written question `slot`, built from `seed`.
  *

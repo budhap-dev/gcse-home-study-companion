@@ -1,4 +1,4 @@
-import { claimAnswer, describeAnswer, getSubject, mark, type MarkResult, type Question, type WorksheetLevel } from '@study/shared'
+import { claimAnswer, describeAnswer, getSubject, mark, sheetQuestions, type MarkResult, type Question, type WorksheetLevel } from '@study/shared'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -8,7 +8,7 @@ import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
 import { totalMarks } from '../../content/index.ts'
-import { getState, recordAttempt } from '../../progress/store.ts'
+import { getState, recordAttempt, type AttemptRecord } from '../../progress/store.ts'
 import { settle, type Settlement } from '../../progress/settle.ts'
 import { Celebration } from '../../components/Celebration.tsx'
 import { xpForQuestions } from '../../progress/xp.ts'
@@ -41,6 +41,11 @@ interface SheetState {
   revealed: Record<string, boolean>
   canvases: Record<string, Stroke[]>
   startedAt: string
+  /**
+   * Set on a retry: the questions that have a generator are drawn fresh from it (WKP-2). Kept
+   * with the unfinished sheet, so reopening it shows the same numbers.
+   */
+  seed?: string
   finishedAt?: string
   /** Set when the attempt is recorded, so the summary can show what it earned. */
   earned?: { xp: number; badges: string[]; levelUp?: string }
@@ -49,6 +54,14 @@ interface SheetState {
 // Kept on the device, so an unfinished worksheet survives closing the app (UXI-2).
 const load = (topicId: string, level: string) => loadInProgress<SheetState>(worksheetKey(topicId, level))
 const save = (topicId: string, level: string, state: SheetState | null) => saveInProgress(worksheetKey(topicId, level), state)
+
+/**
+ * Whether this is a retry, which draws new numbers. A first attempt shows the written
+ * questions, which an examiner reviewed; every attempt after it has the generated ones.
+ */
+export function triedBefore(attempts: AttemptRecord[], topicId: string, level: WorksheetLevel): boolean {
+  return attempts.some((a) => a.topicId === topicId && a.kind === 'worksheet' && a.level === level)
+}
 
 /**
  * A worksheet at one level. Question, scratch canvas, and worked solution live side
@@ -68,17 +81,27 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
     if (topic && level) save(topic.id, level, state)
   }, [topic, level, state])
 
-  const questions = useMemo(() => {
+  const written = useMemo(() => {
     if (!topic || !level) return []
     const byId = new Map(topic.questions.map((q) => [q.id, q]))
     return topic.worksheets[level].questionIds.map((id) => byId.get(id)).filter((q): q is Question => Boolean(q))
   }, [topic, level])
+  const seed = state?.seed
+  const sheetItems = useMemo(() => (topic ? sheetQuestions(topic.subjectId, topic.id, written, seed) : []), [topic, written, seed])
+  const questions = useMemo(() => sheetItems.map((s) => s.question), [sheetItems])
+  /** How many of the questions a retry writes fresh, for the start screen. */
+  const freshCount = useMemo(() => (topic ? sheetQuestions(topic.subjectId, topic.id, written, 'count').filter((s) => s.generated).length : 0), [topic, written])
 
   if (!subject || !topic || !level) return <p>Unknown worksheet.</p>
   const sheet = topic.worksheets[level]
   const backTo = `/subjects/${subject.id}/topics/${topic.id}`
   const marksAvailable = totalMarks(topic, sheet.questionIds)
-  const start = () => setState({ attemptId: crypto.randomUUID(), index: 0, answers: {}, revealed: {}, canvases: {}, startedAt: new Date().toISOString() })
+  const start = () => {
+    const attemptId = crypto.randomUUID()
+    // Read at the moment of starting, so "Do it again" sees the attempt just recorded.
+    const retry = triedBefore(getState().attempts, topic.id, level)
+    setState({ attemptId, index: 0, answers: {}, revealed: {}, canvases: {}, startedAt: new Date().toISOString(), ...(retry && freshCount ? { seed: attemptId } : {}) })
+  }
 
   if (!state) {
     return (
@@ -88,6 +111,13 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
         <ul className="flex flex-col gap-1 text-ink-2">
           <li>{questions.length} questions · {marksAvailable} marks · about {sheet.suggestedMinutes} minutes.</li>
           <li>{LEVEL_NOTE[level]}</li>
+          {freshCount > 0 && (
+            <li>
+              {triedBefore(getState().attempts, topic.id, level)
+                ? `${freshCount === questions.length ? 'Every question has' : `${freshCount} of the ${questions.length} questions have`} new numbers this time.`
+                : `Try it again later and ${freshCount === questions.length ? 'every question comes' : `${freshCount} of the ${questions.length} questions come`} back with new numbers.`}
+            </li>
+          )}
           <li>Write your working on the canvas, type the final answer, then reveal the solution and award your method marks.</li>
         </ul>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -157,7 +187,11 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
   }
 
   const question = questions[state.index]!
+  const generated = sheetItems[state.index]?.generated
   const answered = state.answers[question.id]
+  // A wrong option a generator built is a named slip (GEN-3).
+  const picked = answered && question.type === 'multiple-choice' && Array.isArray(answered.answer) ? (answered.answer as number[])[0] : undefined
+  const slip = picked === undefined ? undefined : generated?.mistakes?.[picked] ?? undefined
   const revealed = Boolean(state.revealed[question.id])
   const allAnswered = questions.every((q) => state.answers[q.id])
   const typed = question.type !== 'extended'
@@ -193,6 +227,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
       completedAt: finishedAt,
       xp,
       questions: questionResults,
+      ...(state.seed ? { seed: state.seed } : {}),
     })
     const outcome = settle(before)
     if (outcome.newBadges.length || outcome.levelUp) setCelebration(outcome)
@@ -229,7 +264,10 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         <section className="flex flex-col gap-4 rounded-2xl border border-rule bg-surface p-4">
           <div className="flex items-center justify-between text-xs text-ink-2">
-            <span className="font-bold">Question {state.index + 1}</span>
+            <span className="flex items-center gap-2">
+              <span className="font-bold">Question {state.index + 1}</span>
+              {generated && <span className="rounded-full bg-[color:var(--subject-soft)] px-2 py-0.5 font-bold accent-ink">New numbers</span>}
+            </span>
             <span>{question.marks} mark{question.marks > 1 ? 's' : ''} · grade {question.gradeBand}{question.calculator === 'non-calculator' ? ' · non-calculator' : question.calculator === 'calculator' ? ' · calculator' : ''}</span>
           </div>
           {question.visual && <Visual visual={question.visual} />}
@@ -245,7 +283,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
           )}
           {answered && (revealed || !typed) && (
             <div className="flex flex-col gap-3">
-              <Feedback question={question} result={answered.result} onClaim={claim} />
+              <Feedback question={question} result={answered.result} onClaim={claim} slip={slip} />
               {typed && !answered.result.correct && methodTotal > 0 && (
                 <div className="flex flex-col gap-2 rounded-xl bg-panel p-3">
                   <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">Method marks you earned</p>
@@ -265,7 +303,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
               )}
             </div>
           )}
-          <ReportMistake key={`r-${question.id}`} item={{ subjectId: subjectId!, topicId: topicId!, itemKind: 'question', itemId: question.id, seenIn: 'worksheet' }} />
+          <ReportMistake key={`r-${question.id}`} item={{ subjectId: subjectId!, topicId: topicId!, itemKind: 'question', itemId: question.id, seenIn: 'worksheet', ...(generated ? { generated: { generatorId: generated.generatorId, seed: generated.seed } } : {}) }} />
         </section>
 
         <section className="flex flex-col gap-3">
