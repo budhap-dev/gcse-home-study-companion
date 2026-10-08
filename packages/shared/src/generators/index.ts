@@ -11,6 +11,12 @@ import { indicesGenerators } from './maths/indices.ts'
 import { proportionGenerators } from './maths/proportion.ts'
 import { standardFormGenerators } from './maths/standardForm.ts'
 import { unitsGenerators } from './maths/units.ts'
+import { equationsGenerators } from './maths/equations.ts'
+import { formulaeGenerators } from './maths/formulae.ts'
+import { linesGenerators } from './maths/lines.ts'
+import { quadraticsGenerators } from './maths/quadratics.ts'
+import { sequencesGenerators } from './maths/sequences.ts'
+import { surdsGenerators } from './maths/surds.ts'
 import { rng } from './random.ts'
 import type { Generated, Generator } from './types.ts'
 
@@ -39,6 +45,12 @@ export const GENERATORS: Generator[] = [
   ...proportionGenerators,
   ...factorsGenerators,
   ...compoundMeasuresGenerators,
+  ...quadraticsGenerators,
+  ...surdsGenerators,
+  ...formulaeGenerators,
+  ...linesGenerators,
+  ...sequencesGenerators,
+  ...equationsGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))

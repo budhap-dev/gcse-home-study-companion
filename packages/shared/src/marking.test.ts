@@ -535,3 +535,50 @@ describe('matching case', () => {
     expect(mark(q(['T'], false), 't').correct).toBe(true)
   })
 })
+
+/**
+ * Maths answers written another correct way (8 October 2026). Each "right" case below was
+ * marked wrong on a written question; each "wrong" case is what the rule must not loosen.
+ */
+describe('maths answers in another correct form', () => {
+  const st = (prompt: string, accepted: string[]): Question => ({
+    id: 'q', type: 'short-text', prompt, accepted, marks: 1, gradeBand: '6-7', skill: 's', calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }], discriminators: [],
+  })
+  const right = (q: Question, a: string) => expect(mark(q, a).correct, a).toBe(true)
+  const wrong = (q: Question, a: string) => expect(mark(q, a).correct, a).toBe(false)
+
+  it('takes a chain inequality turned round, and nothing else', () => {
+    const q = st('Solve $x^2 - 5x + 6 < 0$. Give your answer in the form a < x < b.', ['2 < x < 3'])
+    for (const a of ['3 > x > 2', '2<x<3']) right(q, a)
+    for (const a of ['3 < x < 2', '2 <= x <= 3', '2 > x > 3', '3 > x']) wrong(q, a)
+    const le = st('Solve $x^2 + 3 \\leqslant 4x$.', ['1 <= x <= 3'])
+    for (const a of ['3 >= x >= 1', '3 ≥ x ≥ 1', '1 ⩽ x ⩽ 3']) right(le, a)
+    wrong(le, '3 > x > 1')
+  })
+
+  it('takes the solutions of an equation in any order and layout', () => {
+    const q = st('Find the roots of $y = x^2 + 2x - 8$. Give both values of x, separated by a comma.', ['-4, 2'])
+    for (const a of ['x = 2, x = -4', 'x = -4 or x = 2', '-4 and 2', '2; -4']) right(q, a)
+    for (const a of ['2', '4, -2', '-4, 2, 3', 'x = -4']) wrong(q, a)
+    const pm = st('Solve $x^2 - 9 = 0$.', ['x = 3 or x = -3'])
+    for (const a of ['x = ±3', '±3', 'x = +-3']) right(pm, a)
+    for (const a of ['3', 'x = 3', '±9']) wrong(pm, a)
+  })
+
+  it('takes one solution with its letter in front', () => {
+    const q = st('Solve $x^2 + 3x - 5 = 0$ using the quadratic formula. Give the positive solution in exact surd form.', ['(-3+√29)/2'])
+    for (const a of ['x = (-3+√29)/2', 'x=(-3+sqrt(29))/2']) right(q, a)
+    wrong(q, 'x = 1.19')
+  })
+
+  it('takes the same number written differently only where no form is asked for', () => {
+    right(st('Solve $4x = 3$.', ['0.75']), 'x = 3/4')
+    wrong(st('Solve $4x = 3$. Give your answer as a fraction in its simplest form.', ['3/4']), '6/8')
+    wrong(st('Solve $x^2 = 24$. Give the positive solution in the form $a\\sqrt{b}$.', ['2√6']), '√24')
+  })
+
+  it('leaves a list whose order is the answer alone', () => {
+    const q = st('What does this program print? Give the values in order.', ['3, 5, 7'])
+    wrong(q, '7, 5, 3')
+  })
+})

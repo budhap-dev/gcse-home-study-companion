@@ -347,8 +347,20 @@ per use.
   in e-notation (one solution had printed 1e-8), and no tolerance wider than 2% of the answer
   (the written compound-measures 0.5 would have accepted 2.6 for 3 m/s). Also fixed: the
   written standard-form q2 said the point moves right for 2.4 × 10⁻³ → 0.0024.
-- [ ] **5. Algebra generators**: expanding, factorising, quadratics, simultaneous equations,
-  sequences, rearranging, including show-that-then-solve.
+- [x] **5. Algebra generators.** **Done 8 October 2026 (#378, v10.84.0).** 62 generators for 158
+  more written questions in 17 topics: expanding and factorising, simplifying, solving
+  quadratics, surds, algebraic fractions, quadratic inequalities and curves, substituting,
+  rearranging and identities, straight lines, parallel and perpendicular lines, the circle,
+  sequences, simultaneous equations, inequalities, functions, iteration. Generators now cover
+  270 written questions in 31 topics (173 of the 454 numeric ones, 38%). Every accepted
+  factorisation, root list, rearrangement and line is checked against the prompt by expanding
+  or substituting back. Show-that questions are self-marked extended answers, so they stay
+  written. **Marker fix, for written questions too:** correct maths answers in another form
+  were marked wrong: 3 > x > 2 for 2 < x < 3, "x = 2, x = -4" or "-4 and 2" for "-4, 2",
+  x = ±3, and "x = (-3+√29)/2" with its letter. Equations' solutions now compare as a set,
+  chains are turned one way, and numbers compare by value only where no form is asked for,
+  so 26/48 for "simplest form" and √24 for "simplify" stay wrong. Also fixed: iteration q14's
+  tolerance was half its answer (0.005 on −0.01).
 - [ ] **6. Geometry and measures generators**: angles, area and volume, Pythagoras, circles,
   sine and cosine rules, including two-triangle problems with diagrams.
 - [ ] **7. Probability and statistics generators**, bringing generators to at least half of

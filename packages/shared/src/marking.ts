@@ -357,8 +357,94 @@ function matchesShortText(question: Extract<Question, { type: 'short-text' }>, r
     if (bare !== null && matchesAccepted(normaliseText(bare[0]), normaliseText(bare[1]), strict)) return true
     // The same algebra in another order: (x - 2)(x + 1) for (x + 1)(x - 2), 3 <= x for x >= 3.
     if (!strict && sameAlgebra(given, accepted, a)) return true
+    if (!strict && sameMathsAnswer(raw, a, question.prompt)) return true
     return sameListAnyOrder(raw, a, question.prompt)
   })
+}
+
+/** One side of an answer as the maths comparisons read it: no spaces, one minus, one way of writing ⩽ and √. */
+function mathsText(s: string): string {
+  return s.toLowerCase().replace(/\s+/g, '').replace(/[−–—]/g, '-').replace(/[⩽≤]/g, '<=').replace(/[⩾≥]/g, '>=')
+    .replace(/\+\/?-|\\pm/g, '±').replace(/sqrt/g, '√')
+    // √(29) and √29 are one number: brackets round a plain number under a root say nothing.
+    .replace(/√\((\d+)\)/g, '√$1')
+}
+
+/** A chain inequality turned to face one way: 3>x>2 is 2<x<3, and 3>=x>=1 is 1<=x<=3. */
+function chainFacingUp(s: string): string {
+  const m = s.match(/^([^<>=]+)(>=?)([a-z])(>=?)([^<>=]+)$/)
+  return m ? `${m[5]}${m[4]!.replace('>', '<')}${m[3]}${m[2]!.replace('>', '<')}${m[1]}` : s
+}
+
+/**
+ * The value of a plain numeric expression: digits, + − × ÷ ^, brackets and √. Undefined for
+ * anything with a letter in it, so it never guesses at algebra.
+ */
+function numericValue(s: string): number | undefined {
+  const src = s.replace(/×/g, '*').replace(/÷/g, '/')
+  if (!/^[-+*/^().\d√]+$/.test(src)) return undefined
+  let i = 0
+  const peek = () => src[i]
+  const expr = (): number => { let v = term(); while (peek() === '+' || peek() === '-') { const op = src[i++]; const t = term(); v = op === '+' ? v + t : v - t } return v }
+  const term = (): number => { let v = power(); while (peek() === '*' || peek() === '/' || /[\d(√]/.test(peek() ?? '')) { const op = peek() === '*' || peek() === '/' ? src[i++] : '*'; const t = power(); v = op === '/' ? v / t : v * t } return v }
+  const power = (): number => { const b = unary(); if (peek() === '^') { i++; return b ** power() } return b }
+  const unary = (): number => { if (peek() === '-') { i++; return -unary() } if (peek() === '+') { i++; return unary() } return atom() }
+  const atom = (): number => {
+    if (peek() === '√') { i++; return Math.sqrt(atom()) }
+    if (peek() === '(') { i++; const v = expr(); if (src[i++] !== ')') throw new Error('bracket'); return v }
+    const m = src.slice(i).match(/^\d+(?:\.\d+)?/)
+    if (!m) throw new Error('number')
+    i += m[0].length
+    return Number(m[0])
+  }
+  try {
+    const v = expr()
+    return i === src.length && Number.isFinite(v) ? v : undefined
+  } catch {
+    return undefined
+  }
+}
+
+/** The values in a list of solutions: "x = 3 or x = -3", "3, -3", "x = ±3", "-4 and 2". */
+function solutionItems(raw: string): string[] {
+  return raw.split(/\s*(?:,(?!\d{3}\b)|;|\bor\b|\band\b)\s*/i).map(mathsText).filter(Boolean)
+    .map((p) => p.replace(/^[a-z]=/, ''))
+    .flatMap((p) => (p.startsWith('±') ? [p.slice(1), `-${p.slice(1)}`] : [p]))
+}
+
+/**
+ * Maths answers written another correct way, where the accepted list cannot hold them all
+ * (8 October 2026). Each was found marked wrong on a written question:
+ * - a chain inequality turned round: 3 > x > 2 for 2 < x < 3;
+ * - the solutions of an equation in any order and layout: "x = 2, x = -4", "-4 and 2",
+ *   "x = ±3", and one solution with its "x =" in front;
+ * - the same number written differently, (√29-3)/2 for (-3+√29)/2, but only where the
+ *   question does not ask for a form. "Simplest form", "simplify" or "exact" mean the form is
+ *   the answer, so 26/48 for 13/24 and √24 for 2√6 stay wrong.
+ * Lists are compared as sets only for a question that asks to solve, or for roots, solutions
+ * or values of a letter: elsewhere, such as a program's output, order is the answer.
+ */
+function sameMathsAnswer(raw: string, accepted: string, prompt: string): boolean {
+  const a = mathsText(accepted)
+  if (/[<>]/.test(a)) return chainFacingUp(mathsText(raw)) === chainFacingUp(a)
+  if (!/\bsolve\b|\broots?\b|\bsolutions?\b|\bvalues? of [a-z]\b/i.test(prompt)) return false
+  const formAsked = /simplest|lowest terms|simplif|exact|in the form/i.test(prompt)
+  const same = (g: string, x: string) => {
+    if (g === x) return true
+    if (formAsked) return false
+    const gv = numericValue(g), xv = numericValue(x)
+    return gv !== undefined && xv !== undefined && Math.abs(gv - xv) < 1e-9
+  }
+  const want = solutionItems(accepted)
+  const got = solutionItems(raw)
+  if (want.length === 0 || got.length !== want.length) return false
+  const left = [...want]
+  for (const g of got) {
+    const k = left.findIndex((x) => same(g, x))
+    if (k < 0) return false
+    left.splice(k, 1)
+  }
+  return true
 }
 
 /**
