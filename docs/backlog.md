@@ -278,7 +278,7 @@ picked first and list the rest here.
   the map by unit, named tiles, opened on the child's year) and PAR-5, the last eight weeks
   per subject with the average mark each week (a table on the dashboard, bars on the
   subject's detail). The suggested task beside a weak topic was already built.
-- [ ] **Business and Biology depth** (content 2): about 5 questions per specification point,
+- [x] **Business and Biology depth** (content 2): about 5 questions per specification point,
   against about 10 in Maths and 12 in Computer Science. More calculation and 6/9/12-mark
   questions per sub-point. **Business done 7 October 2026 (#369, v10.75.0)**: 12 new
   questions per topic (201 → 321), a third of them at 8-9, each topic gaining a 6, 9 and
@@ -290,7 +290,13 @@ picked first and list the rest here.
   hand-span and memory-lymphocyte items re-aimed). **Year 10 done 8 October 2026 (#371,
   v10.77.0)**, 18 topics, 180 questions, four examiner reviews applied (every valid route
   and example credited, criteria held to the question asked, overlapping items re-aimed
-  at lysozyme, chlorophyll, the pill and heat made by exercise). Year 11 (7) next.
+  at lysozyme, chlorophyll, the pill and heat made by exercise). **Year 11 done 8 October
+  2026 (#372, v10.78.0)**, 7 topics, 70 questions, two examiner reviews applied (any valid
+  evidence credited in the Darwin and Wallace 6-marker, one worked slip corrected). The
+  deeper questions pushed the share placed on a lesson step below its 60% floor, since
+  their prompts set a scene first, so `teachingStep` gained a skill-only fallback at a
+  two-thirds lead, back above the floor; its additions agree with the skill rule 83% of the
+  time.
 - [ ] **Music listening** (content 4): a link to a recording of each set work, no timings.
   Only if the owner revisits the no-audio decision; asked for last.
 
