@@ -64,6 +64,20 @@ describe('question generators', () => {
           for (const b of built) expect(strings(b.question), b.seed).not.toMatch(new RegExp(`${RESIDUE.source}|NaN|undefined|Infinity`))
         })
 
+        // String(0.00000001) is "1e-8": a student reads it as nonsense. The accepted forms of a
+        // standard-form answer may say 7.3e4 on purpose, so only the text a student reads is scanned.
+        it('prints no number in e-notation', () => {
+          for (const { question: q, seed } of built) {
+            const read = [q.prompt, q.solution, ...q.markScheme.map((l) => l.description), ...(q.type === 'multiple-choice' ? q.options : [])].join(' ')
+            expect(read, seed).not.toMatch(/\d(?:\.\d+)?e[-+]?\d/)
+          }
+        })
+
+        // A tolerance is for rounding, not for being nearly right: 0.5 on an answer of 3 marked 2.6 correct.
+        it('marks no further from the answer than rounding allows', () => {
+          for (const { question: q, seed } of built) if (q.type === 'numeric' && q.answer !== 0) expect(q.tolerance, seed).toBeLessThanOrEqual(Math.abs(q.answer) * 0.02)
+        })
+
         it('is marked right with its own answer and wrong with another', () => {
           for (const { question: q, seed } of built) {
             if (q.type === 'numeric') {
@@ -72,6 +86,10 @@ describe('question generators', () => {
               expect(mark(q, String(q.answer + q.tolerance * 3 + 1)).correct, seed).toBe(false)
               // The solution reaches the number it marks against.
               expect(q.solution, seed).toContain(String(q.answer))
+            } else if (q.type === 'short-text') {
+              expect(q.accepted.length, seed).toBeGreaterThan(0)
+              for (const a of q.accepted) expect(mark(q, a).correct, `${seed}: ${a}`).toBe(true)
+              expect(mark(q, 'not the answer').correct, seed).toBe(false)
             } else if (q.type === 'multiple-choice') {
               expect(q.correct, seed).toHaveLength(1)
               expect(mark(q, q.correct).correct, seed).toBe(true)

@@ -32,7 +32,17 @@ export interface BuiltChoice extends BuiltBase {
   mistakes: (string | null)[]
 }
 
-export type Built = BuiltNumeric | BuiltChoice
+/**
+ * A typed answer that is not a single number: a fraction in its simplest form, a number in
+ * standard form, a power. `accepted` lists the forms the marker takes, the first being the
+ * one the solution and answer sheet print, as for a written short-text question.
+ */
+export interface BuiltText extends BuiltBase {
+  type: 'short-text'
+  accepted: string[]
+}
+
+export type Built = BuiltNumeric | BuiltChoice | BuiltText
 
 /**
  * The generator's own working of the answer by a second route: substituting back, working

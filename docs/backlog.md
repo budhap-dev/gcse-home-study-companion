@@ -337,7 +337,16 @@ per use.
   first and replaces it only on Start. Also fixed here: where one generator fills several
   slots on a sheet, each slot now asks something different (sin, cos and tan once each), as
   the written sheet did; independent draws had given one sheet tan twice and no cos.
-- [ ] **4. Number generators**: fractions, indices, standard form, bounds, units, proportion.
+- [x] **4. Number generators.** **Done 8 October 2026 (#377, v10.83.0).** 51 generators for 96
+  more written questions in ten topics: fractions and negatives, laws of indices, powers and
+  roots, standard form, bounds, units, direct and inverse proportion, ratio and proportion,
+  factors and multiples, compound measures. Generators now cover 112 written questions in 14
+  topics. Each slot keeps its written task (upper or lower bound, find y or find x), so a sheet
+  keeps its spread. Typed answers that are not one number (a fraction in its simplest form, a
+  number in standard form) are now supported. Two release-check rules added: no number printed
+  in e-notation (one solution had printed 1e-8), and no tolerance wider than 2% of the answer
+  (the written compound-measures 0.5 would have accepted 2.6 for 3 m/s). Also fixed: the
+  written standard-form q2 said the point moves right for 2.4 × 10⁻³ → 0.0024.
 - [ ] **5. Algebra generators**: expanding, factorising, quadratics, simultaneous equations,
   sequences, rearranging, including show-that-then-solve.
 - [ ] **6. Geometry and measures generators**: angles, area and volume, Pythagoras, circles,
