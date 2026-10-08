@@ -220,6 +220,12 @@ can be fresh and still correct.
 - The seed is stored with each attempt, so any question can be rebuilt exactly.
 - Generated questions use the existing question schema and marker.
 
+**Built 8 October 2026 (#374)**, in `packages/shared/src/generators`. A generator stands in
+for named written questions and keeps each one's id, marks, grade band and discriminators, so
+results, the mistakes list and mastery treat a generated question as the written one. Storing
+the seed with an attempt is WKP-2's part (docs/backlog.md section 5, item 2); diagrams come
+with the geometry generators.
+
 ### GEN-2 · Independent check for every generator
 
 **Effort:** M · **Priority:** Next · **Depends on:** GEN-1
@@ -232,6 +238,12 @@ reach a student.
 - Each generator ships with a solver that works the answer another way.
 - A test runs at least 1,000 seeds per generator and fails on a disagreement, a non-terminating
   decimal where a clean answer is promised, or a value outside realistic limits.
+
+**Built 8 October 2026 (#374):** `generators.test.ts` builds 1,000 of every generator for
+each written question it replaces and fails on a second-method disagreement, a schema or
+mark-scheme error, binary residue, the marker rejecting the generator's own answer, or too
+little variety. Answers that sit within a hair of a rounding boundary are redrawn, and each
+context draws from its own realistic range.
 
 ### GEN-3 · Distractors from named mistakes
 
@@ -246,6 +258,10 @@ something.
   builds one option from each.
 - No distractor equals the answer, and no two options are equal.
 - Picking a distractor records the named mistake (see TRK-4).
+
+**Built 8 October 2026 (#374)**, except recording: each option carries its mistake's name
+(`Generated.mistakes`), the release check holds options distinct and the answer spread across
+all four positions. Showing and recording the name comes with WKP-2.
 
 ### GEN-4 · Maths generators
 
