@@ -376,8 +376,19 @@ per use.
   printed 1 d.p. for a 2 d.p. answer; sine rule q12 rounded −0.21875 to −0.2187;
   trigonometry-in-3d q5 and q11 did not say which edge was the height; surface-areas q5 stored
   376.99 for a 1 d.p. answer.
-- [ ] **7. Probability and statistics generators**, bringing generators to at least half of
-  the 454 typed-answer Maths questions (GEN-4).
+- [x] **7. Probability and statistics generators.** **Done 8 October 2026 (#380, v10.86.0).** 40
+  generators for 129 more written questions in 14 topics: choices and outcomes, sample spaces,
+  combined events and tree diagrams, relative frequency, frequency trees, Venn diagrams, sets,
+  averages, charts, sampling, scatter graphs, histograms, box plots, grouped and cumulative
+  frequency. Generators now cover 530 written questions in 64 topics: 398 of the 454 numeric
+  Maths questions (88%) and 529 of the 631 typed ones (84%); GEN-4 asked for half. Every
+  probability is recomputed by enumerating the sample space or tree, every Venn and set answer
+  from explicit member lists, every average from the expanded raw data. A release-check rule
+  added: no "1 times". Written content fixed: 83 thousands separators inside maths printed as
+  "10, 000" in Maths, Physics and Business (now 10\,000, held by maths-thousands.test.ts, which
+  also found a Business solution printing "2\,000\,000" as text); frequency-trees q5 and
+  grouped q8 referred to a tree or graph the question does not show; three answers accepting a
+  decimal had a mark scheme naming only the fraction.
 - [ ] **8. Make a worksheet** (WKS-4): choose topics, number of questions and level, and
   print several versions at once.
 

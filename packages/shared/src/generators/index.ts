@@ -22,6 +22,10 @@ import { mensurationGenerators } from './maths/mensuration.ts'
 import { similarityGenerators } from './maths/similarity.ts'
 import { trianglesGenerators } from './maths/triangles.ts'
 import { vectorsGenerators } from './maths/vectors.ts'
+import { distributionsGenerators } from './maths/distributions.ts'
+import { probabilityGenerators } from './maths/probability.ts'
+import { setsGenerators } from './maths/sets.ts'
+import { statisticsGenerators } from './maths/statistics.ts'
 import { rng } from './random.ts'
 import type { Generated, Generator } from './types.ts'
 
@@ -61,6 +65,10 @@ export const GENERATORS: Generator[] = [
   ...mensurationGenerators,
   ...similarityGenerators,
   ...vectorsGenerators,
+  ...probabilityGenerators,
+  ...setsGenerators,
+  ...statisticsGenerators,
+  ...distributionsGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))
