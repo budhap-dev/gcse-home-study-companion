@@ -398,7 +398,10 @@ per use.
   time, the topic named only once it is answered, recorded as a review per topic with the
   code, so results feed each question's own topic and the parent's breakdown rebuilds what
   was asked; it never moves a topic's status. Print gives each version its own page, code and
-  answer sheet. Works in every subject; Maths questions get new numbers.
+  answer sheet. Works in every subject; Maths questions get new numbers. **Fixed the same day
+  (#382, v10.87.1)** after the owner could not find a button: with fewer than three topics ticked
+  the buttons were hidden. They now always show, greyed with the reason until the sheet is ready,
+  pinned to the foot of the screen while the topic list scrolls.
 
 ## 3. Product features (not planned)
 

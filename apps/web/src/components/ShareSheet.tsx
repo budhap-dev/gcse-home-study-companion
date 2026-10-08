@@ -6,7 +6,7 @@ import { useState } from 'react'
  * copied by hand. Whoever opens it gets the same questions; the app's sign-in still decides
  * who can open it at all.
  */
-export function ShareSheet({ path, title }: { path: string; title: string }) {
+export function ShareSheet({ path, title, small }: { path: string; title: string; small?: boolean }) {
   const [state, setState] = useState<'idle' | 'copied' | 'shown'>('idle')
   // Built on the press, not in render: there is no location while the page is pre-rendered.
   const url = () => `${location.origin}${path}`
@@ -23,7 +23,7 @@ export function ShareSheet({ path, title }: { path: string; title: string }) {
   }
   return (
     <span className="flex flex-col gap-1">
-      <button type="button" onClick={() => void share()} className="flex h-11 items-center rounded-lg border border-rule bg-surface px-4 font-bold">
+      <button type="button" onClick={() => void share()} className={`flex items-center rounded-lg border border-rule bg-surface font-bold ${small ? 'h-9 px-3 text-sm' : 'h-11 px-4'}`}>
         {state === 'copied' ? 'Link copied' : 'Share this sheet'}
       </button>
       {state === 'shown' && <span className="select-all break-all text-xs text-ink-2">{url()}</span>}
