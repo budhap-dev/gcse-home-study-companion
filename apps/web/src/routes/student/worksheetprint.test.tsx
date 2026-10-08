@@ -99,6 +99,9 @@ describe('a printed sheet with new numbers', () => {
 
   it('offers a version with new numbers only where a generator exists', () => {
     expect(render(trig)).toContain('A version with new numbers')
-    expect(render(sheet)).not.toContain('new numbers')
+    // Generators are Maths only; Biology has none.
+    const biology = render('/subjects/biology/topics/aerobic-and-anaerobic-respiration/worksheet/higher/print')
+    expect(biology).toContain('Higher worksheet')
+    expect(biology).not.toContain('new numbers')
   })
 })
