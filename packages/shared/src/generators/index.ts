@@ -3,6 +3,14 @@ import { compoundInterest, reversePercentage, reversePercentageChoice } from './
 import { asAPercentage, fractionOfAnAmount, percentageOfAnAmount } from './maths/percentages.ts'
 import { sharingInARatio } from './maths/ratio.ts'
 import { trigFindingAnAngle, trigFindingASide } from './maths/trigonometry.ts'
+import { boundsGenerators } from './maths/bounds.ts'
+import { compoundMeasuresGenerators } from './maths/compoundMeasures.ts'
+import { factorsGenerators } from './maths/factors.ts'
+import { fractionsGenerators } from './maths/fractions.ts'
+import { indicesGenerators } from './maths/indices.ts'
+import { proportionGenerators } from './maths/proportion.ts'
+import { standardFormGenerators } from './maths/standardForm.ts'
+import { unitsGenerators } from './maths/units.ts'
 import { rng } from './random.ts'
 import type { Generated, Generator } from './types.ts'
 
@@ -23,6 +31,14 @@ export const GENERATORS: Generator[] = [
   compoundInterest,
   reversePercentage,
   reversePercentageChoice,
+  ...fractionsGenerators,
+  ...indicesGenerators,
+  ...standardFormGenerators,
+  ...boundsGenerators,
+  ...unitsGenerators,
+  ...proportionGenerators,
+  ...factorsGenerators,
+  ...compoundMeasuresGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))
@@ -78,7 +94,9 @@ export function generate(generator: Generator, slot: Question, seed: string): Ge
   const common = { ...kept, prompt: b.prompt, solution: b.solution, markScheme: b.markScheme, ...(b.visual ? { visual: b.visual } : {}) }
   const question: Question = b.type === 'numeric'
     ? { ...common, type: 'numeric', answer: b.answer, tolerance: b.tolerance, unitsRequired: false, ...(b.units ? { units: b.units } : {}) }
-    : { ...common, type: 'multiple-choice', options: b.options, correct: b.correct }
+    : b.type === 'short-text'
+      ? { ...common, type: 'short-text', accepted: b.accepted }
+      : { ...common, type: 'multiple-choice', options: b.options, correct: b.correct }
   return {
     question,
     generatorId: generator.id,
