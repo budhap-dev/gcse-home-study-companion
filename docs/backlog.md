@@ -326,8 +326,17 @@ per use.
   screen says how many questions get new numbers, each one carries a "New numbers" chip, a
   wrong option a generator built names the slip, the parent's breakdown rebuilds the questions
   the student saw, and a mistake report carries the generator and seed.
-- [ ] **3. Print and share generated sheets**: the print page and its separate answer sheet
-  are built from the sheet's code, and a share link opens the same sheet.
+- [x] **3. Print and share generated sheets.** **Done 8 October 2026 (#376, v10.82.0).** A
+  generated sheet has a six-character code (no 0, o, 1, i or l, so it reads off paper), which
+  is its seed. The print page and its separate answer sheet are built from the code and print
+  it at the top and foot, so the answers that go with a sheet are never in doubt. "Print one
+  with new numbers" on a worksheet's start screen and "New numbers" on the print page draw a
+  fresh code; "Share this sheet" (phone share sheet, else clipboard, else the link shown)
+  sends a link that opens the same numbers, on screen or printed. A finished retry offers to
+  print or share itself. Opening a link to a different sheet while one is unfinished warns
+  first and replaces it only on Start. Also fixed here: where one generator fills several
+  slots on a sheet, each slot now asks something different (sin, cos and tan once each), as
+  the written sheet did; independent draws had given one sheet tan twice and no cos.
 - [ ] **4. Number generators**: fractions, indices, standard form, bounds, units, proportion.
 - [ ] **5. Algebra generators**: expanding, factorising, quadratics, simultaneous equations,
   sequences, rearranging, including show-that-then-solve.

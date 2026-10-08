@@ -1,4 +1,5 @@
-import { expectedAnswer, getSubject, type Question, type WorksheetLevel } from '@study/shared'
+import { expectedAnswer, getSubject, sheetQuestions, type Question, type WorksheetLevel } from '@study/shared'
+import { useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { Visual } from '../../components/Visual.tsx'
@@ -6,6 +7,8 @@ import { totalMarks } from '../../content/index.ts'
 import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
+import { ShareSheet } from '../../components/ShareSheet.tsx'
+import { newSheetCode, sheetParam, sheetPath } from '../../content/sheetCode.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 
@@ -19,30 +22,48 @@ const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Hig
  *
  * ?answers=1 prints the answers and mark scheme instead of the questions, so the two are
  * separate documents rather than one a student has to fold over.
+ *
+ * ?sheet=<code> prints a generated version: each question with a generator is drawn fresh
+ * from the code, the rest as written. The code is printed on both documents, so the answers
+ * that go with a sheet are never in doubt, and the same link always prints the same sheet.
  */
 function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
   const { level } = useParams()
   const [params] = useSearchParams()
   const answers = params.get('answers') === '1'
+  const code = sheetParam(params)
+  // Drawn once per visit, so the link does not change under the reader.
+  const [next] = useState(newSheetCode)
   const sheet = topic && level ? topic.worksheets[level as WorksheetLevel] : undefined
   if (!topic || !sheet) return <p className="p-6">Unknown worksheet.</p>
 
-  const questions = sheet.questionIds
+  const written = sheet.questionIds
     .map((id) => topic.questions.find((q) => q.id === id))
     .filter((q): q is Question => Boolean(q))
+  const items = sheetQuestions(topic.subjectId, topic.id, written, code)
+  const questions = items.map((i) => i.question)
+  const generators = sheetQuestions(topic.subjectId, topic.id, written, 'count').filter((i) => i.generated).length
   const marks = totalMarks(topic, sheet.questionIds)
   const subject = getSubject(topic.subjectId)
-  const back = `/subjects/${topic.subjectId}/topics/${topic.id}/worksheet/${level}`
+  const lvl = level as WorksheetLevel
+  const back = code ? sheetPath(topic.subjectId, topic.id, lvl, code) : `/subjects/${topic.subjectId}/topics/${topic.id}/worksheet/${level}`
+  const here = (withAnswers: boolean) => (code ? sheetPath(topic.subjectId, topic.id, lvl, code, true, withAnswers) : `/subjects/${topic.subjectId}/topics/${topic.id}/worksheet/${level}/print${withAnswers ? '?answers=1' : ''}`)
 
   return (
     <article className="print-sheet mx-auto w-full max-w-3xl">
       {/* Not printed: the controls that only make sense on screen. */}
       <div className="no-print mb-4 flex flex-wrap items-center gap-2">
         <button type="button" onClick={() => window.print()} className="h-11 rounded-lg bg-ink px-4 font-bold text-surface">Print this sheet</button>
-        <Link to={`${back}/print${answers ? '' : '?answers=1'}`} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">
+        <Link to={here(!answers)} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">
           {answers ? 'Print the questions instead' : 'Print the answers instead'}
         </Link>
-        <Link to={back} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">Back</Link>
+        {generators > 0 && (
+          <Link to={sheetPath(topic.subjectId, topic.id, lvl, next, true)} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">
+            {code ? 'New numbers' : 'A version with new numbers'}
+          </Link>
+        )}
+        {code && <ShareSheet path={sheetPath(topic.subjectId, topic.id, lvl, code, true)} title={`${topic.title} · sheet ${code}`} />}
+        <Link to={back} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">{code ? 'Do it on screen' : 'Back'}</Link>
       </div>
 
       <header className="mb-4 border-b border-rule pb-3">
@@ -51,6 +72,7 @@ function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
           {topic.title} · {LEVEL_LABEL[level as WorksheetLevel]} worksheet{answers ? ' · answers' : ''}
         </h1>
         <p className="text-sm text-ink-2">
+          {code && <>Sheet <strong className="font-mono text-ink">{code}</strong> · </>}
           {questions.length} questions · {marks} marks
           {!answers && ' · Name ............................................  Date ....................'}
         </p>
@@ -81,6 +103,12 @@ function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
           </li>
         ))}
       </ol>
+      {code && (
+        <p className="mt-4 border-t border-rule pt-2 text-xs text-ink-2">
+          {answers ? `Answers for sheet ${code} only: a different code has different numbers.` : `Sheet ${code}. The answers are on a separate sheet with the same code.`}
+          {' '}{generators} of the {questions.length} questions have numbers drawn from this code.
+        </p>
+      )}
     </article>
   )
 }

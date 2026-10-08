@@ -13,20 +13,21 @@ const GROUPS = [
 
 /**
  * Sharing in a ratio: written as q2 (£120 between Mo and Lily, 5 : 3) and q5 (boys to girls
- * in a class of 32, 3 : 5). Either slot gets either kind, and either share is asked for.
+ * in a class of 32, 3 : 5). On one sheet the two slots get one kind each, in either order,
+ * and either share is asked for.
  */
 export const sharingInARatio: Generator = {
   id: 'sharing-in-a-ratio',
   subjectId: 'maths',
   topicId: 'ratio-notation-and-sharing',
   replaces: ['q2', 'q5'],
-  build(r, slot) {
+  build(r, slot, turn) {
     const [a, b] = pick(r, RATIOS)
     const parts = a + b
     const k = r() < 0.5 ? 1 : 0
     const ratio = [a, b]
     let part: number, prompt: string, last: (share: number[]) => string
-    if (r() < 0.5) {
+    if (turn % 2 === 0) {
       const names = pick(r, PEOPLE)
       part = int(r, 3, 60)
       prompt = `Share £${part * parts} between ${names[0]} and ${names[1]} in the ratio ${a} : ${b}. How much does ${names[k]} get, in pounds?`

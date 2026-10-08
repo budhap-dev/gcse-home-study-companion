@@ -67,7 +67,14 @@ export interface Generator {
   topicId: string
   /** Ids, within the topic, of the written questions this generator writes fresh versions of. */
   replaces: string[]
-  build(r: Rng, slot: Question): Draft
+  /**
+   * `turn` picks a variant where a generator has several (which ratio, which kind of growth).
+   * Slots it fills on one sheet get consecutive turns, so a sheet with three of its questions
+   * asks three different things, as the written sheet did; the starting turn comes from the
+   * seed, so the next attempt rotates. Drawing each slot's variant at random gave one sheet
+   * "use tan" twice and no cos at all.
+   */
+  build(r: Rng, slot: Question, turn: number): Draft
 }
 
 export interface Generated {

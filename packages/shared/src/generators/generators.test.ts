@@ -188,3 +188,29 @@ describe('a worksheet attempt', () => {
     expect(sheetQuestions('french', 'celebrations', french, 'attempt-2').every((s) => !s.generated)).toBe(true)
   })
 })
+
+describe('one generator filling several slots on a sheet', () => {
+  const sheet = (topicId: string, level: 'core' | 'higher' | 'advanced', seed: string) => {
+    const t = JSON.parse(readFileSync(join(ROOT, 'maths', `${topicId}.json`), 'utf8'))
+    const bank = Question.array().parse(t.questions)
+    return sheetQuestions('maths', topicId, t.worksheets[level].questionIds.map((id: string) => bank.find((q) => q.id === id)!), seed)
+  }
+  const variants = (items: ReturnType<typeof sheet>, generatorId: string, key: string) =>
+    items.filter((s) => s.generated?.generatorId === generatorId).map((s) => s.generated!.values[key])
+
+  it('asks something different in each, as the written sheet did', () => {
+    for (let i = 0; i < 200; i++) {
+      const trig = sheet('trigonometric-ratios', 'higher', `turn-${i}`)
+      // q7, q8 and q10: sin, cos and tan once each.
+      expect(new Set(variants(trig, 'trig-finding-an-angle', 'ratio')).size).toBe(3)
+      const ci = sheet('compound-interest-growth-and-decay', 'higher', `turn-${i}`)
+      // q5, q6, q7 and q9: growth, interest earned and depreciation all appear.
+      expect(new Set(variants(ci, 'compound-interest', 'kind')).size).toBe(3)
+    }
+  })
+
+  it('rotates between attempts, so a slot does not always ask the same thing', () => {
+    const firsts = new Set(Array.from({ length: 30 }, (_, i) => variants(sheet('trigonometric-ratios', 'higher', `turn-${i}`), 'trig-finding-an-angle', 'ratio')[0]))
+    expect(firsts.size).toBe(3)
+  })
+})

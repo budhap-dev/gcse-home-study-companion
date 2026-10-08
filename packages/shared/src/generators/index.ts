@@ -62,7 +62,8 @@ export function sheetQuestions(subjectId: string, topicId: string, written: Ques
  * written one's id, marks, grade band, skill, calculator rule, tags and discriminators.
  */
 export function generate(generator: Generator, slot: Question, seed: string): Generated {
-  const draft = generator.build(rng(`${seed}:${generator.topicId}:${slot.id}`), slot)
+  const start = Math.floor(rng(`${seed}:${generator.id}`)() * 1000)
+  const draft = generator.build(rng(`${seed}:${generator.topicId}:${slot.id}`), slot, start + Math.max(0, generator.replaces.indexOf(slot.id)))
   const kept = {
     id: slot.id,
     marks: slot.marks,
