@@ -361,8 +361,21 @@ per use.
   chains are turned one way, and numbers compare by value only where no form is asked for,
   so 26/48 for "simplest form" and √24 for "simplify" stay wrong. Also fixed: iteration q14's
   tolerance was half its answer (0.005 on −0.01).
-- [ ] **6. Geometry and measures generators**: angles, area and volume, Pythagoras, circles,
-  sine and cosine rules, including two-triangle problems with diagrams.
+- [x] **6. Geometry and measures generators.** **Done 8 October 2026 (#379, v10.85.0).** 51
+  generators for 131 more written questions in 19 topics: angles and polygons, quadrilaterals,
+  circle theorems, bearings and scales, Pythagoras in 2D and 3D, trigonometry in 3D, the sine
+  and cosine rules and area, exact values, trigonometric graphs, arcs and sectors, surface area
+  and volume, plans and elevations, scale factors, similarity, congruency, transformations,
+  constructions, vectors. Generators now cover 401 written questions in 50 topics: 284 of the
+  454 numeric ones (63%), past GEN-4's half. Every angle and length is checked by drawing the
+  figure on coordinates and measuring it; bearings are tested on both sides of 180 and near 0
+  and 360. The six typed geometry questions with a diagram stay written, since a diagram shows
+  the written numbers; two-triangle problems with new diagrams are left for later. Written
+  content fixed: properties-of-angles q17's scheme named the wrong angle fact; bearings q18
+  called the two bearings co-interior (070 + 250 is 320); pythagoras-in-2d q5 and arc-length q6
+  printed 1 d.p. for a 2 d.p. answer; sine rule q12 rounded −0.21875 to −0.2187;
+  trigonometry-in-3d q5 and q11 did not say which edge was the height; surface-areas q5 stored
+  376.99 for a 1 d.p. answer.
 - [ ] **7. Probability and statistics generators**, bringing generators to at least half of
   the 454 typed-answer Maths questions (GEN-4).
 - [ ] **8. Make a worksheet** (WKS-4): choose topics, number of questions and level, and
