@@ -47,7 +47,10 @@ describe('the subject map', () => {
     setProfile({ year: 10 })
     try {
       const html = render('maths')
-      expect(html).toMatch(/aria-pressed="true"[^>]*>Year 10<\/button>/)
+      expect(html).toMatch(/aria-pressed="true"[^>]*>Year 10(<!-- -->)?<span[^>]*> · yours<\/span><\/button>/)
+      // The note under the tabs speaks of the year shown, not a fixed "You are in" line.
+      expect(html).toContain('Year 10 is your year: this year’s work.')
+      expect(html).not.toContain('You are in Year 10<')
       const nine = topicsForSubject('maths').find((t) => t.year === 9)!
       expect(html).not.toContain(`aria-label="${escape(nine.title)}, Year 9`)
       expect(html).toMatch(/aria-pressed="true" aria-label="[^"]*, Year 10, Not started"/)
