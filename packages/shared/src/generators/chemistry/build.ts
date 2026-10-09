@@ -1,6 +1,7 @@
 import { ELEMENTS } from '../../elements.ts'
 import { show } from '../format.ts'
-import { near } from '../physics/build.ts'
+import { figures, near } from '../physics/build.ts'
+import { sfTolerance } from '../physics/format.ts'
 import { pick, type Rng } from '../random.ts'
 
 /**
@@ -127,6 +128,15 @@ export const places = (x: number) => (show(x).includes('.') ? show(x).split('.')
  * mark 0.81 right.
  */
 export const toPlaces = (x: number, dp: number) => (dp <= 0 ? 0 : Number(Math.min(0.5 * 10 ** -dp, Math.abs(x) * 0.019).toPrecision(10)))
+
+/**
+ * A calculated answer the prompt gives no precision for, widened so its three-figure rounding
+ * is marked right: 0.24 × 43 = 10.32 g, and 10.3 g is how a student writes it. Only for
+ * answers with more than three figures that come from multiplying or dividing; a sum such as
+ * an Mr (134.5) or a mass difference (11.88 g) stays exact.
+ */
+export const threeFigures = (tolerance: number, answer: number) =>
+  figures(answer) > 3 ? Math.max(tolerance, sfTolerance(answer, 3)) : tolerance
 
 /**
  * Every candidate a slot allows, grouped by its answer and built once per key. A build draws

@@ -481,8 +481,14 @@ as `elements.ts` holds it, and every Mr is computed from its formula
   9 October 2026 (v10.92.0): 33 generators cover all 37 slots. Every equation is checked for
   balance when its file loads; one name table (`chemistry/compounds.ts`) names each formula
   once; which reactant runs out is drawn evenly, so "fewer moles runs out" pays half the time.
-- [ ] **2. Solutions, gases and acids.** Concentrations and titrations, gas volumes, potable
-  and waste water, strong and weak acids, carboxylic acids (31 slots).
+- [x] **2. Solutions, gases and acids.** Concentrations and titrations, gas volumes, potable
+  and waste water, strong and weak acids, carboxylic acids (31 slots). Shipped 9 October 2026
+  (v10.93.0): 29 generators cover 29 slots; the two that ask for a recalled fact (1000 cm³ in a
+  dm³, the molar volume) stay written. Titration moles are exact at three figures, so a student
+  who rounds as the written method does lands on the answer; a fuel-rich mixture is never shown
+  burning completely. A calculated answer the prompt gives no precision for now accepts its
+  three-figure rounding (10.3 g for 10.32 g) in these topics and in item 1's; sums and Mr values
+  stay exact.
 - [ ] **3. The rest of the specification.** Energy changes and bond energies, rates,
   equilibria and the Haber process, atoms and bonding, nanoparticles, materials, extraction
   and corrosion, the atmosphere, life-cycle assessment, chromatography, alcohols (35 slots).

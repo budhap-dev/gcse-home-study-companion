@@ -3,7 +3,7 @@ import { int, pick } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { atMost, cap, near, numeric } from '../physics/build.ts'
 import { dpTolerance } from '../physics/format.ts'
-import { clean, clearOf, coef, distinct, equation, evenly, mathrm, mr, noOnes, range, sub, tenfold, written, type Equation, type Term } from './build.ts'
+import { clean, clearOf, coef, distinct, equation, evenly, mathrm, mr, noOnes, range, sub, tenfold, threeFigures, type Equation, type Term, written } from './build.ts'
 import { CONVERSIONS, given, oneToOne, ratioOf, type Conversion } from './reacting.ts'
 import { nameOf } from './compounds.ts'
 
@@ -113,7 +113,7 @@ export const theoreticalMass: Generator = {
         solution: `Moles of ${sub(c.from)} $= \\dfrac{${show(m)}}{${show(M1)}} = ${show(n)}$; ${ratioOf(c.eq, c.from, c.to)}; mass $= ${show(n)} \\times ${show(M2)} = $ **${show(out)} g**.`,
         method: [`$${show(n)}$ mol of ${sub(c.from)}`],
         answer: out,
-        tolerance: dpTolerance(out),
+        tolerance: threeFigures(dpTolerance(out), out),
       },
       { agrees: near((m * M2) / M1, out), detail: `${m} × ${M2} ÷ ${M1} = ${show((m * M2) / M1)} g` },
       { context: `${c.from}->${c.to}`, m, n, out },
@@ -513,7 +513,7 @@ export const massFromAtomEconomy: Generator = {
         solution: `At 100% yield, the product mass is the atom economy applied to the reactants: $\\dfrac{${AE}}{100} \\times ${m} = $ **${show(out)} g**. The remaining $${show(waste)}\\text{ g}$ leaves as by-products.`,
         method: [`takes ${AE}% of ${m}`],
         answer: out,
-        tolerance: dpTolerance(out),
+        tolerance: threeFigures(dpTolerance(out), out),
       },
       // Second route: the reactants less the by-products, which take the rest of the mass.
       { agrees: near(m - ((100 - AE) * m) / 100, out), detail: `${m} − ${100 - AE}% of ${m} = ${show(m - ((100 - AE) * m) / 100)} g` },
@@ -580,7 +580,7 @@ export const atomEconomyAndYield: Generator = {
         solution: `Atom economy gives the theoretical product: $\\dfrac{${AE}}{100} \\times ${m} = ${show(T)}\\text{ g}$. The yield is then applied to that: $\\dfrac{${Y}}{100} \\times ${show(T)} = $ **${show(out)} g**. Applying only one of the two percentages is the usual error.`,
         method: [`theoretical product $${show(T)}$ g from the atom economy`, `applies the ${Y}% yield to $${show(T)}$ g`],
         answer: out,
-        tolerance: dpTolerance(out),
+        tolerance: threeFigures(dpTolerance(out), out),
       },
       // Second route: both percentages as one fraction of the reactants.
       { agrees: near((m * AE * Y) / 10000, out), detail: `${m} × ${AE} × ${Y} ÷ 10000 = ${show((m * AE * Y) / 10000)} g` },
