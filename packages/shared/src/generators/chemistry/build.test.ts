@@ -2,9 +2,11 @@ import { describe, expect, it } from 'vitest'
 import { rng } from '../random.ts'
 import {
   AR,
+  an,
   arLine,
   atoms,
   balanced,
+  byFirst,
   clean,
   clearOf,
   coef,
@@ -12,6 +14,7 @@ import {
   equation,
   equationTex,
   evenly,
+  hundredths,
   mathrm,
   mr,
   mrWorking,
@@ -19,10 +22,12 @@ import {
   places,
   powerOfTen,
   range,
+  shiftFree,
   sub,
   tenfold,
   threeFigures,
   toPlaces,
+  word,
   written,
 } from './build.ts'
 import { COMPOUNDS, ORES, factual, nameOf } from './compounds.ts'
@@ -178,5 +183,42 @@ describe('the one table of names', () => {
     expect(threeFigures(0.00005, 0.1755)).toBe(0.0005)
     expect(threeFigures(0.05, 2.5)).toBe(0.05)
     expect(threeFigures(0, 12)).toBe(0)
+  })
+
+  it('refuses a given doubled or halved with the point moved, as clearOf does not', () => {
+    // 1.75 g from 35 g/dm³ in 50 cm³ is 35 halved with the point moved.
+    expect(shiftFree(1.75, 35, 50)).toBe(false)
+    expect(clearOf(1.75, 35, 50)).toBe(true)
+    expect(shiftFree(0.12, 0.6, 5)).toBe(false)
+    expect(shiftFree(60, 0.3, 200)).toBe(false)
+    expect(shiftFree(0.4, 0.8)).toBe(false)
+    expect(shiftFree(0.75, 6.0, 8.0)).toBe(true)
+  })
+
+  it('draws the first input evenly among those with enough answers, then an answer evenly', () => {
+    // Value 1 allows answers 1 to 6, value 2 only 7, value 3 answers 8 and 9.
+    const items = [...[1, 2, 3, 4, 5, 6].map((a) => ({ f: 1, a })), { f: 2, a: 7 }, { f: 3, a: 8 }, { f: 3, a: 9 }]
+    const r = rng('by-first')
+    const firsts = new Map<number, number>()
+    for (let i = 0; i < 3000; i++) {
+      const x = byFirst(r, 'build-test:by-first', () => items, (y) => y.f, (y) => y.a, 2)
+      firsts.set(x.f, (firsts.get(x.f) ?? 0) + 1)
+    }
+    // 2 allows one answer, under the minimum of two, so it is never drawn; 1 and 3 share evenly.
+    expect(firsts.has(2)).toBe(false)
+    expect(Math.abs(firsts.get(1)! - firsts.get(3)!)).toBeLessThan(300)
+  })
+
+  it('writes small counts in words, the article for a word, and a reading\'s hundredths', () => {
+    expect(word(2)).toBe('two')
+    expect(word(12)).toBe('twelve')
+    expect(word(25)).toBe('25')
+    expect(an('oxide')).toBe('an')
+    expect(an('iron(II)')).toBe('an')
+    expect(an('sodium')).toBe('a')
+    expect(an('Earring')).toBe('an')
+    expect(hundredths(4.87)).toBe(87)
+    expect(hundredths(30.05)).toBe(5)
+    expect(hundredths(12)).toBe(0)
   })
 })

@@ -43,6 +43,10 @@ import { concentrationGenerators } from './chemistry/concentration.ts'
 import { gasGenerators } from './chemistry/gases.ts'
 import { waterGenerators } from './chemistry/water.ts'
 import { acidGenerators } from './chemistry/acids.ts'
+import { energyGenerators as chemEnergyGenerators } from './chemistry/energy.ts'
+import { rateGenerators } from './chemistry/rates.ts'
+import { structureGenerators } from './chemistry/structure.ts'
+import { materialGenerators } from './chemistry/materials.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -109,6 +113,10 @@ export const GENERATORS: Generator[] = [
   ...gasGenerators,
   ...waterGenerators,
   ...acidGenerators,
+  ...chemEnergyGenerators,
+  ...rateGenerators,
+  ...structureGenerators,
+  ...materialGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))

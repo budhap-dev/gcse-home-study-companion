@@ -1,9 +1,9 @@
 import { fixed, roundTo, show } from '../format.ts'
 import { figures, near, numeric } from '../physics/build.ts'
 import { sfTolerance, sigText } from '../physics/format.ts'
-import { pick, shuffle, type Rng } from '../random.ts'
+import { pick, shuffle } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { clean, coef, distinct, equation, evenly, mr, noOnes, places, powerOfTen, range, sub, tenfold, toPlaces, written, type Equation } from './build.ts'
+import { byFirst, clean, coef, distinct, equation, evenly, mr, noOnes, places, powerOfTen, range, shiftFree, sub, tenfold, toPlaces, written, type Equation } from './build.ts'
 import { nameOf } from './compounds.ts'
 
 /**
@@ -30,11 +30,6 @@ const called = (f: string) => LOCAL[f] ?? nameOf(f)
 const CM3 = '\\text{ cm}^3'
 const DM3 = '\\text{ dm}^3'
 
-/**
- * Not a given, nor one doubled or halved, with or without the point moved: the answer to
- * 35 g/dm³ in 50 cm³ (1.75 g) is 35 halved with the point moved, and a student who halves gets it.
- */
-export const shiftFree = (answer: number, ...givens: number[]) => givens.every((g) => !tenfold(answer, g) && !tenfold(answer, 2 * g) && !tenfold(2 * answer, g))
 
 /** A volume in dm³ with the figures its cm³ reading carried: 25.0 is 0.0250, 22.45 is 0.02245, 250 is 0.25. */
 export const dm3Text = (v: number, dp: number) => (dp === 0 ? show(v / 1000) : fixed(v / 1000, dp + 3))
@@ -531,20 +526,6 @@ function ratioStep(t: Titration, x: Titrated): string {
   return `The ratio of acid to alkali is $${a} : ${b}$, so the ${role(t)} is $${step} = ${sf3(x.nu)}\\text{ mol}$.`
 }
 
-/**
- * One input first, evenly among the values that allow at least `min` answers, then an answer
- * evenly among the draws it allows. Drawing the answer alone let one burette concentration fill
- * 45% of a context (0.0500 mol/dm³ gives the most exact answers) and one volume 88% of the
- * sea-water samples: the value that divides most cleanly wins.
- */
-export function byFirst<T>(r: Rng, key: string, make: () => T[], first: (x: T) => number, answerOf: (x: T) => number, min = 1): T {
-  const usable = () => {
-    const all = make()
-    return [...new Set(all.map(first))].filter((f) => new Set(all.filter((x) => first(x) === f).map(answerOf)).size >= min)
-  }
-  const f = evenly(r, `${key}:first`, usable, (x) => x)
-  return evenly(r, `${key}:${f}`, () => make().filter((x) => first(x) === f), answerOf)
-}
 
 function titrationGenerator(id: string, slots: string[], contexts: Titration[]): Generator {
   return {

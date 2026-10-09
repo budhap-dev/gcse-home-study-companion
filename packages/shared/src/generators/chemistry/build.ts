@@ -117,6 +117,11 @@ export const powerOfTen = (x: number) => tenfold(x, 1)
 export const distinct = (...xs: number[]) => xs.every((x, i) => xs.slice(i + 1).every((y) => !tenfold(x, y)))
 /** An answer that is none of the givens, nor one with the point moved, doubled or halved. */
 export const clearOf = (answer: number, ...givens: number[]) => givens.every((g) => !tenfold(answer, g) && !near(answer, 2 * g) && !near(2 * answer, g))
+/**
+ * Not a given, nor one doubled or halved, with or without the point moved: the answer to
+ * 35 g/dm³ in 50 cm³ (1.75 g) is 35 halved with the point moved, and a student who halves gets it.
+ */
+export const shiftFree = (answer: number, ...givens: number[]) => givens.every((g) => !tenfold(answer, g) && !tenfold(answer, 2 * g) && !tenfold(2 * answer, g))
 /** Multiplying or dividing by 1 is no step. */
 export const noOnes = (...xs: number[]) => xs.every((x) => !near(x, 1))
 /** The decimal places x prints with: 2 for 0.25, 0 for 40. */
@@ -161,6 +166,33 @@ export function evenly<T>(r: Rng, key: string, make: () => T[], answerOf: (t: T)
   }
   return pick(r, pool.groups.get(pick(r, pool.answers))!) as T
 }
+
+/**
+ * One input first, evenly among the values that allow at least `min` answers, then an answer
+ * evenly among the draws it allows. Drawing the answer alone let one burette concentration fill
+ * 45% of a context (0.0500 mol/dm³ gives the most exact answers) and one volume 88% of the
+ * sea-water samples: the value that divides most cleanly wins.
+ */
+export function byFirst<T>(r: Rng, key: string, make: () => T[], first: (x: T) => number, answerOf: (x: T) => number, min = 1): T {
+  const usable = () => {
+    const all = make()
+    return [...new Set(all.map(first))].filter((f) => new Set(all.filter((x) => first(x) === f).map(answerOf)).size >= min)
+  }
+  const f = evenly(r, `${key}:first`, usable, (x) => x)
+  return evenly(r, `${key}:${f}`, () => make().filter((x) => first(x) === f), answerOf)
+}
+
+// ---------------------------------------------------------------------------------------------
+// Words
+// ---------------------------------------------------------------------------------------------
+
+const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty']
+/** Small counts in words, as the written mark schemes put them: "multiplies oxygen by three". */
+export const word = (n: number) => WORDS[n] ?? String(n)
+/** "a" or "an" before a word: an oxide ion, a sodium ion. */
+export const an = (w: string) => (/^[aeiou]/i.test(w) ? 'an' : 'a')
+/** A balance reading's last two digits, in hundredths of a gram: 4.87 g gives 87. */
+export const hundredths = (x: number) => Math.round(x * 100) % 100
 
 // ---------------------------------------------------------------------------------------------
 // Equations

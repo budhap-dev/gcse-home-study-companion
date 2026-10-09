@@ -489,9 +489,16 @@ as `elements.ts` holds it, and every Mr is computed from its formula
   burning completely. A calculated answer the prompt gives no precision for now accepts its
   three-figure rounding (10.3 g for 10.32 g) in these topics and in item 1's; sums and Mr values
   stay exact.
-- [ ] **3. The rest of the specification.** Energy changes and bond energies, rates,
+- [x] **3. The rest of the specification.** Energy changes and bond energies, rates,
   equilibria and the Haber process, atoms and bonding, nanoparticles, materials, extraction
   and corrosion, the atmosphere, life-cycle assessment, chromatography, alcohols (35 slots).
+  Shipped 9 October 2026 (v10.94.0): 23 generators cover 24 slots. Eleven stay written: recalled
+  facts (Haber conditions, 24 carat, oxygen in the air, nm in a metre, shared pairs in O₂) and
+  questions on one fixed equation (balancing an alcohol's combustion, counting molecules), which
+  cannot reach 100 distinct prompts. Bond energies are the lesson's where it gives them and the
+  values AQA papers print elsewhere; isotope abundances are IUPAC's.
+
+With item 3, generators cover 90 of the 103 numeric Chemistry questions.
 
 ## 3. Product features (not planned)
 
