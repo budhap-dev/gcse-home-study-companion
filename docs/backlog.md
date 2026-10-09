@@ -453,9 +453,16 @@ $3.0 \times 10^{8}$, "to 2 significant figures", the written question's unit on 
   covering the 42 numeric slots without a diagram in the four topics (the five
   questions drawn round a diagram stay written); collisions are drawn only where they can happen,
   and vehicle crashes keep at most 70% of the kinetic energy.
-- [ ] **4. Electricity, waves, magnetism, atoms and space.** Charge, current, resistance, power
+- [x] **4. Electricity, waves, magnetism, atoms and space.** Charge, current, resistance, power
   and energy in circuits, series and parallel rules, mains and transformers; the wave equation,
   lenses, sound and echoes, the electromagnetic spectrum; the motor effect, half-life, red shift.
+  Shipped 9 October 2026 (v10.91.0): 50 generators covering 56 numeric slots in 14 topics; the
+  four that ask for a recalled fact (mains 230 V, the earth wire at 0 V, eight planets, 1998)
+  stay written. Each answer is drawn first and the givens fitted to it, so no easy value
+  dominates a context; every context gives at least ten answers.
+
+With item 4, generators cover 174 of the 191 numeric Physics questions; the other 17 ask about a
+diagram or a recalled fact.
 
 ## 3. Product features (not planned)
 
