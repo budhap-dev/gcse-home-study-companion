@@ -57,6 +57,18 @@ describe('question generators', () => {
             expect(q.gradeBand).toBe(slot!.gradeBand)
             expect(q.discriminators).toEqual(slot!.discriminators)
             expect(q.markScheme.reduce((s, l) => s + l.marks, 0), b.seed).toBe(q.marks)
+            // Physics answers are in the equation's unit, which the answer box prints after the
+            // number, so a generated question keeps the written one's. Maths changes units on
+            // purpose (a 2D Pythagoras in cm, then in m), so the rule is Physics's.
+            if (g.subjectId === 'physics' && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
+          }
+        })
+
+        // "To 2 significant figures" is a promise about the answer marked, not only the one printed.
+        it('gives an answer with the significant figures its prompt asks for', () => {
+          for (const { question: q, seed } of built) {
+            const sf = /\b(\d) significant figures?\b/.exec(q.prompt)
+            if (sf && q.type === 'numeric' && q.answer !== 0) expect(Number(q.answer.toPrecision(Number(sf[1]))), `${seed}: ${q.answer}`).toBe(q.answer)
           }
         })
 

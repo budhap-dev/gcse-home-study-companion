@@ -424,6 +424,33 @@ throws already made. Wording: "1 are cracked", "0 play none", "a 8", "x = 1, giv
 were negative, a line printed twice in a mark scheme or a solution, and pounds in the thousands
 now printed £28 200 as the written content does.
 
+## 6. Physics generators (8 October 2026)
+
+Asked for by the owner on 8 October 2026 ("do physics now"), after the Maths generators were
+validated. Story GEN-5 (Physics half). Physics has 191 numeric questions in 28 topics; 13 of them
+ask about a diagram and stay written, since generators draw none. Each PR follows the Maths
+method: generators per topic file under `generators/physics/`, the release check on 1,000 seeds
+per slot, structural tests on the printed working, a review of every slot's samples before it
+ships. Physics conventions the generators keep: g = 9.8 N/kg, standard form as
+$3.0 \times 10^{8}$, "to 2 significant figures", the written question's unit on the answer box.
+
+- [x] **1. Physics framework, energy and the particle model.** Helpers for significant figures
+  (rounding, printing with the trailing zero, a tolerance of half a unit in the last figure,
+  never over 2%), standard form and prefixes; a release-check rule that a generated question
+  keeps the written one's unit. Generators for kinetic and gravitational potential energy,
+  energy transfers and dissipation, power and efficiency, density, thermal physics (specific
+  heat capacity and latent heat), behaviour of gases. Shipped 9 October 2026 (v10.88.0): 30
+  generators covering all 42 numeric slots in the six topics, each with structural tests on
+  the printed working; `show()` now clears residue at twelve significant figures first, since
+  a six-figure product like 750 × 9.8 × 47 kept its binary tail under the old ten decimal places.
+- [ ] **2. Forces A.** Describing motion (speed, acceleration, the SUVAT equation), Newton's laws,
+  resultant forces and work done, stopping distances and reaction time.
+- [ ] **3. Forces B.** Hooke's law and elastic energy, moments, levers and gears, momentum and
+  collisions, pressure in fluids and upthrust.
+- [ ] **4. Electricity, waves, magnetism, atoms and space.** Charge, current, resistance, power
+  and energy in circuits, series and parallel rules, mains and transformers; the wave equation,
+  lenses, sound and echoes, the electromagnetic spectrum; the motor effect, half-life, red shift.
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are

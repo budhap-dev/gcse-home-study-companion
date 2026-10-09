@@ -6,7 +6,9 @@
 
 /** A number with no residue and no trailing zeros: 3.5, 42, 0.12. */
 export function show(x: number): string {
-  const s = String(Number(x.toFixed(10)))
+  // Twelve significant figures first: 750 × 9.8 × 47 is 345450.00000000006, which ten
+  // decimal places alone would keep as 345450.0000000001.
+  const s = String(Number(Number(x.toPrecision(12)).toFixed(10)))
   return s === '-0' ? '0' : s
 }
 
