@@ -525,9 +525,13 @@ for accepts its three-figure rounding (`threeFigures`).
   framed as not stored in the consumer, not as never reaching it. The written peanut packet
   value was 2100 kJ per 100 g, below any real peanut, and is now 2520 (answer 25%). Shared
   draw helpers moved to `generators/biology/build.ts`.
-- [ ] **3. The human body and health.** Blood glucose and BMI, the heart and cardiac output,
+- [x] **3. The human body and health.** Blood glucose and BMI, the heart and cardiac output,
   hormones, nerves and reaction time, the eye, thermoregulation and the kidneys, the menstrual
-  cycle, lifestyle disease, pathogens, immunity and antibiotics (47 slots).
+  cycle, lifestyle disease, pathogens, immunity and antibiotics (47 slots). Shipped 9 October
+  2026 (v10.97.0): 43 generators cover 45 slots; the two ruler-drop questions read off a diagram
+  stay written. Clear-zone areas accept the π = 3.14 answer the written mark scheme accepts;
+  contraception figures are the NHS's typical-use rates; resting cardiac output stays within
+  4000–7000 cm³/min; R0 values are each disease's own.
 - [ ] **4. Genetics and evolution.** DNA and protein synthesis, genetic crosses and pedigrees,
   genetic disorders, meiosis, variation and natural selection, fossils and classification,
   selective breeding (44 slots).

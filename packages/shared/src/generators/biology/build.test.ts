@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Question } from '../../content/questions.ts'
 import { rng } from '../random.ts'
-import { balanced, between, gcd, layered, list, memo, onGrid, rich, unitsOf, whole, WithArticle, withArticle } from './build.ts'
+import { balanced, between, cut, ending, fair, figureTolerance, full, gcd, halfLastPlace, layered, lcm, list, memo, onGrid, piRoom, rich, tidy, toThree, trail, unitsOf, whole, WithArticle, withArticle } from './build.ts'
 
 /**
  * The shared Biology helpers, each tested on its own. The draw helpers are checked for what they
@@ -135,5 +135,75 @@ describe('draws', () => {
     for (const n of answers.values()) expect(n / draws.length).toBeLessThan(0.4)
     expect(answers.size).toBe(5)
     expect(balanced(rng('x'), 'build-test:balanced', () => pool, (x) => x.ans, (x) => x.m)).toBe(balanced(rng('x'), 'build-test:balanced', () => pool, (x) => x.ans, (x) => x.m))
+  })
+})
+
+describe('answers exact to three figures, or rounded to three', () => {
+  it('lcm is the least common multiple, beside gcd', () => {
+    expect(lcm(4, 6)).toBe(12)
+    expect(lcm(100, 97)).toBe(9700)
+    expect(lcm(100, 8)).toBe(200)
+    expect(gcd(84, 96)).toBe(12)
+  })
+
+  it('tidy is exact to the places asked, with three figures at most', () => {
+    expect(tidy(12.5)).toBe(true)
+    expect(tidy(0.1 + 0.2)).toBe(true)
+    expect(tidy(12.34)).toBe(false)
+    expect(tidy(0.125)).toBe(false)
+    expect(tidy(0.125, 3)).toBe(true)
+    expect(tidy(1000 / 3, 4)).toBe(false)
+  })
+
+  it('halfLastPlace is half a unit in the last place, capped at 1.9%, and none for a whole number', () => {
+    expect(halfLastPlace(97.5)).toBe(0.05)
+    expect(halfLastPlace(15.36)).toBe(0.005)
+    expect(halfLastPlace(25)).toBe(0)
+    expect(halfLastPlace(2.5)).toBe(0.0475)
+  })
+
+  it('cut keeps the first figures without rounding them; trail and full add an ellipsis only when the value runs on', () => {
+    expect(cut(23.4375, 5)).toBe('23.437')
+    expect(cut(1000 / 7, 5)).toBe('142.85')
+    expect(cut(1 / 900, 4)).toBe('0.001111')
+    expect(cut(0.1 + 0.2, 1)).toBe('0.3')
+    expect(trail(20.761904, 3)).toBe('20.761\\ldots')
+    expect(trail(20.8, 3)).toBe('20.8')
+    expect(full(23.4375)).toBe('23.4375')
+    expect(full(1 / 3)).toBe('0.333333\\ldots')
+  })
+
+  it('toThree keeps an answer of three figures exact and rounds a longer one', () => {
+    expect(toThree(25)).toEqual({ exact: 25, answer: 25, rounded: false })
+    expect(toThree(0.875)).toEqual({ exact: 0.875, answer: 0.875, rounded: false })
+    expect(toThree(21.09375)).toEqual({ exact: 21.09375, answer: 21.1, rounded: true })
+    expect(toThree(111 / 3.3124).answer).toBe(33.5)
+  })
+
+  it('fair refuses a half-way rounding and an answer whose trailing 0 the box would drop', () => {
+    expect(fair(toThree(23.4375))).toBe(true)
+    expect(fair(toThree(25))).toBe(true)
+    expect(fair(toThree(24.04))).toBe(false)
+    expect(fair(toThree(24.9501))).toBe(false)
+  })
+
+  it('figureTolerance is half a unit in the last place, exact or rounded', () => {
+    expect(figureTolerance(toThree(23.4375))).toBe(0.05)
+    expect(figureTolerance(toThree(0.947368))).toBe(0.0005)
+    expect(figureTolerance(toThree(22.5))).toBe(0.05)
+    expect(figureTolerance(toThree(25))).toBe(0)
+  })
+
+  it('ending closes the maths at an exact answer, or prints the full value and its rounding', () => {
+    expect(ending(toThree(25))).toBe('= 25$')
+    expect(ending(toThree(23.4375), ' kg')).toBe('= 23.4375$ kg, which is 23.4 kg to 3 significant figures')
+    expect(ending(toThree(400 / 81), '%')).toBe('= 4.93827\\ldots$%, which is 4.94% to 3 significant figures')
+  })
+
+  it('piRoom covers the π = 3.14 answer and its roundings, never under half a unit', () => {
+    expect(piRoom(78.5, 78.5, 1)).toBe(0.05)
+    expect(piRoom(706.9, 706.5, 1)).toBe(0.45)
+    expect(piRoom(285.9, 285.74, 2)).toBe(0.26)
+    expect(piRoom(113.1, 113.04, 1)).toBe(0.11)
   })
 })
