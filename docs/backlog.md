@@ -517,9 +517,14 @@ for accepts its three-figure rounding (`threeFigures`).
   41 slots. Cell sizes, lens powers and all 51 chromosome numbers are real; the two-sperm
   question uses mammals only (birds are polyspermic); a potometer table changes 1.5 to 3.5 times
   across its factor, each row inside its own condition's range.
-- [ ] **2. Enzymes, energy and ecology.** Enzyme rates, food tests and calorimetry,
+- [x] **2. Enzymes, energy and ecology.** Enzyme rates, food tests and calorimetry,
   photosynthesis and the inverse square law, respiration, ecosystems and sampling, material
-  cycles and decay, plant hormones (32 slots).
+  cycles and decay, plant hormones (32 slots). Shipped 9 October 2026 (v10.96.0): 30 generators
+  cover 31 slots; the mass of 25 cm³ of water stays written. Quadrat estimates are exact and
+  have three figures at most, as the written ones do; energy lost between trophic levels is
+  framed as not stored in the consumer, not as never reaching it. The written peanut packet
+  value was 2100 kJ per 100 g, below any real peanut, and is now 2520 (answer 25%). Shared
+  draw helpers moved to `generators/biology/build.ts`.
 - [ ] **3. The human body and health.** Blood glucose and BMI, the heart and cardiac output,
   hormones, nerves and reaction time, the eye, thermoregulation and the kidneys, the menstrual
   cycle, lifestyle disease, pathogens, immunity and antibiotics (47 slots).
