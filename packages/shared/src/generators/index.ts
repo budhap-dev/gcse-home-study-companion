@@ -53,6 +53,8 @@ import { bioenergeticsGenerators } from './biology/bioenergetics.ts'
 import { ecologyGenerators } from './biology/ecology.ts'
 import { bodyGenerators } from './biology/body.ts'
 import { healthGenerators } from './biology/health.ts'
+import { geneticsGenerators } from './biology/genetics.ts'
+import { evolutionGenerators } from './biology/evolution.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -129,6 +131,8 @@ export const GENERATORS: Generator[] = [
   ...ecologyGenerators,
   ...bodyGenerators,
   ...healthGenerators,
+  ...geneticsGenerators,
+  ...evolutionGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))
