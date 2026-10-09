@@ -453,3 +453,41 @@ describe('stopping distances', () => {
     expect(contexts(built)).toBeGreaterThanOrEqual(6)
   })
 })
+
+/**
+ * No single value carries the slot. Drawing two figures at random and keeping the pairs that
+ * divide cleanly made a = 2 the acceleration in 38% of one slot, a 0.5 s reaction time a
+ * quarter of another, and a braking distance of exactly twice the speed a quarter of a third:
+ * patterns a student would learn as rules (aggregate-only-defects).
+ */
+describe('spread across builds', () => {
+  const share = (built: Generated[], key: (b: Generated) => unknown) => {
+    const counts = new Map<unknown, number>()
+    for (const b of built) counts.set(key(b), (counts.get(key(b)) ?? 0) + 1)
+    return Math.max(...counts.values()) / built.length
+  }
+  const cases: [string, string, string, (b: Generated) => unknown][] = [
+    ['final-velocity-from-rest', 'describing-motion', 'q7', (b) => values(b).a],
+    ['braking-distance-from-deceleration', 'describing-motion', 'q11', (b) => values(b).a],
+    ['braking-distance-from-deceleration', 'describing-motion', 'q11', (b) => values(b).s / values(b).u],
+    ['reaction-time-from-thinking-distance', 'stopping-distances', 'q5', (b) => answer(b)],
+    ['stopping-distance-from-reaction-and-deceleration', 'stopping-distances', 'q14', (b) => values(b).a],
+    ['stopping-distance-from-reaction-and-deceleration', 'stopping-distances', 'q14', (b) => values(b).react],
+    ['stopping-distance-from-reaction-and-deceleration', 'stopping-distances', 'q14', (b) => values(b).braking / values(b).u],
+  ]
+  for (const [id, topic, slot, key] of cases) {
+    it(`${id} ${slot}: no value is more than 40% of the draws`, () => {
+      const g = GENERATORS.find((x) => x.id === id)!
+      expect(g.topicId).toBe(topic)
+      expect(share(build(id, slot), key)).toBeLessThanOrEqual(0.4)
+    })
+  }
+
+  it('braking distance at another speed never throws, over 20 000 seeds', () => {
+    const g = GENERATORS.find((x) => x.id === 'braking-distance-at-another-speed')!
+    const slot = bank(g.topicId).find((q) => g.replaces.includes(q.id))!
+    expect(() => {
+      for (let i = 0; i < 20000; i++) generate(g, slot, `throw-${i}`)
+    }).not.toThrow()
+  })
+})

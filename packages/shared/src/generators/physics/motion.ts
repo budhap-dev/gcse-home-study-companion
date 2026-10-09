@@ -47,6 +47,30 @@ const ms2 = (a: number) => `${show(a)} m/s²`
  */
 const halfUnit = (answer: number, n: number) => 0.5 * 10 ** (Math.floor(Math.log10(Math.abs(answer))) - (n - 1)) + 1e-12
 
+const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b))
+/** The smallest whole number whose square is a multiple of n: 4 for 8, 3 for 9, 10 for 10. A speed that is a multiple of it has a square n divides. */
+function rootMultiple(n: number): number {
+  for (let m = 1; ; m++) if ((m * m) % n === 0) return m
+}
+/** A multiple of `step` from lo to hi, or 0 when there is none, so a draw can reject the candidate. */
+const multipleIn = (r: Rng, step: number, lo: number, hi: number) => (Math.ceil(lo / step) <= Math.floor(hi / step) ? int(r, Math.ceil(lo / step), Math.floor(hi / step)) * step : 0)
+
+/**
+ * A deceleration from the range in quarter steps, then a speed from the range whose braking
+ * distance u² ÷ 2a is whole, so each deceleration is offered evenly. Rejected afterwards:
+ * a of 0.5 or 1 (s is u² or half of it) and a distance that is 1, 2, 3 or 4 times the
+ * speed. a = u ÷ 4 is on offer for every speed and made s = 2u a quarter of all draws, a
+ * pattern a student would learn as a rule.
+ */
+function brakingPair(r: Rng, uRange: [number, number], aRange: [number, number]) {
+  const a = stepped(r, aRange[0], aRange[1], 0.25)
+  // 2a as p/q in lowest terms (q is 1 or 2): s is whole exactly when p divides u².
+  const q = Number.isInteger(2 * a) ? 1 : 2
+  const u = multipleIn(r, rootMultiple(Math.round(2 * a * q)), uRange[0], uRange[1])
+  return { u, a, s: u ? clean((u * u) / (2 * a)) : 0 }
+}
+const cleanBraking = ({ u, a, s }: { u: number; a: number; s: number }) => u > 0 && Number.isInteger(s) && a !== 0.5 && a !== 1 && a !== u && !(Number.isInteger(s / u) && s / u <= 4)
+
 /**
  * A thing with its mass: "900 kg car", or "car of mass 1800 kg" where "a" before the figure
  * would be read "an" (eighteen hundred, eleven thousand, eighty). The prompt puts "a" in front.
@@ -72,7 +96,7 @@ const STEADY: Steady[] = [
   { noun: 'car', verb: 'travels at a constant', speed: [10, 30], step: 1, time: [5, 60], tstep: 1 },
   { noun: 'train', verb: 'travels at a steady', speed: [20, 60], step: 5, time: [10, 120], tstep: 10 },
   { noun: 'walker', verb: 'walks at a steady', speed: [1.5, 2], step: 0.5, time: [60, 600], tstep: 30 },
-  { noun: 'swimmer', verb: 'swims at a constant', speed: [1.5, 2], step: 0.5, time: [20, 120], tstep: 10 },
+  { noun: 'swimmer', verb: 'swims at a constant', speed: [1.2, 1.8], step: 0.2, time: [20, 120], tstep: 10 },
   { noun: 'bus', verb: 'travels at a steady', speed: [8, 15], step: 1, time: [10, 60], tstep: 5 },
   { noun: 'horse', verb: 'gallops at a steady', speed: [8, 15], step: 1, time: [10, 60], tstep: 5 },
   { noun: 'lorry', verb: 'travels at a constant', speed: [10, 25], step: 1, time: [5, 60], tstep: 1 },
@@ -123,6 +147,8 @@ export const distanceFromSpeedAndTime: Generator = {
 interface Speeder {
   noun: string
   its: string
+  /** The pronoun that stands for it mid-prompt: a person is never "it". */
+  it: string
   a: [number, number]
   step: number
   t: [number, number]
@@ -132,16 +158,16 @@ interface Speeder {
   from?: [number, number]
 }
 const SPEEDERS: Speeder[] = [
-  { noun: 'a cyclist', its: 'the acceleration', a: [1, 3], step: 0.5, t: [2, 8], tstep: 1, vmax: 12, from: [2, 5] },
-  { noun: 'a car', its: 'its acceleration', a: [1, 4], step: 0.5, t: [3, 15], tstep: 1, vmax: 30, from: [5, 15] },
-  { noun: 'a sprinter', its: 'her acceleration', a: [2, 4], step: 0.5, t: [2, 3], tstep: 1, vmax: 10 },
-  { noun: 'a train', its: 'its acceleration', a: [0.5, 1.5], step: 0.5, t: [10, 40], tstep: 5, vmax: 50, from: [5, 20] },
-  { noun: 'a motorbike', its: 'its acceleration', a: [2, 5], step: 0.5, t: [2, 8], tstep: 1, vmax: 35, from: [5, 15] },
-  { noun: 'a bus', its: 'its acceleration', a: [0.5, 1.5], step: 0.5, t: [4, 16], tstep: 2, vmax: 15, from: [2, 6] },
-  { noun: 'an aircraft taking off', its: 'its acceleration', a: [2, 4], step: 0.5, t: [10, 30], tstep: 5, vmax: 80 },
-  { noun: 'a lift', its: 'its acceleration', a: [0.5, 1.5], step: 0.5, t: [2, 4], tstep: 1, vmax: 4 },
-  { noun: 'a skateboarder', its: 'his acceleration', a: [0.5, 2], step: 0.5, t: [2, 6], tstep: 1, vmax: 8 },
-  { noun: 'a dog', its: 'its acceleration', a: [2, 4], step: 0.5, t: [2, 3], tstep: 1, vmax: 10 },
+  { noun: 'a cyclist', its: 'her acceleration', it: 'she', a: [1, 3], step: 0.5, t: [2, 8], tstep: 1, vmax: 12, from: [2, 5] },
+  { noun: 'a car', its: 'its acceleration', it: 'it', a: [1, 4], step: 0.5, t: [3, 15], tstep: 1, vmax: 30, from: [5, 15] },
+  { noun: 'a sprinter', its: 'her acceleration', it: 'she', a: [2, 4], step: 0.5, t: [2, 3], tstep: 1, vmax: 10 },
+  { noun: 'a train', its: 'its acceleration', it: 'it', a: [0.5, 1.5], step: 0.5, t: [10, 40], tstep: 5, vmax: 50, from: [5, 20] },
+  { noun: 'a motorbike', its: 'its acceleration', it: 'it', a: [2, 5], step: 0.5, t: [2, 8], tstep: 1, vmax: 35, from: [5, 15] },
+  { noun: 'a bus', its: 'its acceleration', it: 'it', a: [0.5, 1.5], step: 0.5, t: [4, 16], tstep: 2, vmax: 15, from: [2, 6] },
+  { noun: 'an aircraft taking off', its: 'its acceleration', it: 'it', a: [2, 4], step: 0.5, t: [10, 30], tstep: 5, vmax: 80 },
+  { noun: 'a lift', its: 'its acceleration', it: 'it', a: [0.5, 1.5], step: 0.5, t: [2, 4], tstep: 1, vmax: 4 },
+  { noun: 'a skateboarder', its: 'his acceleration', it: 'he', a: [0.5, 2], step: 0.5, t: [2, 6], tstep: 1, vmax: 8 },
+  { noun: 'a dog', its: 'its acceleration', it: 'it', a: [2, 4], step: 0.5, t: [2, 3], tstep: 1, vmax: 10 },
 ]
 
 /**
@@ -166,13 +192,13 @@ export const accelerationFromSpeedChange: Generator = {
         const u = moving ? int(r, c.from![0], c.from![1]) : 0
         return { u, v: clean(u + a * t), t, a }
       },
-      ({ u, v, t, a }) => Number.isInteger(v) && v <= c.vmax && v > u && a !== t && a !== v && v !== t && v - u !== t && v - u !== u,
+      ({ u, v, t, a }) => Number.isInteger(v) && v <= c.vmax && v > u && a !== t && a !== v && a !== u && v !== t && v - u !== t && v - u !== u,
     )
     const dv = v - u
     const prompt = moving
       ? pick(r, [
           `${cap(c.noun)} speeds up from ${u} m/s to ${v} m/s in ${t} s. Calculate ${c.its}.`,
-          `${cap(c.noun)} is travelling at ${u} m/s. Over the next ${t} s it accelerates to ${v} m/s. Calculate ${c.its}, in m/s².`,
+          `${cap(c.noun)} is travelling at ${u} m/s. Over the next ${t} s ${c.it} accelerates to ${v} m/s. Calculate ${c.its}, in m/s².`,
         ])
       : pick(r, [
           `${cap(c.noun)} accelerates from rest to ${v} m/s in ${t} s. Calculate ${c.its}.`,
@@ -217,9 +243,10 @@ const ACCELERATING: Accelerating[] = [
 ]
 
 /**
- * v² = 2as from rest: written as q7 (2.5 m/s² over 80 m, 20 m/s, 3 marks). The speed is
- * drawn first and the distance follows, so v² is a perfect square and the distance a whole
- * number that is never the speed.
+ * v² = 2as from rest: written as q7 (2.5 m/s² over 80 m, 20 m/s, 3 marks). The acceleration
+ * is drawn first, then a speed whose square 2a divides, so v² is a perfect square, the
+ * distance is whole and never the speed, and each acceleration is drawn evenly: drawing
+ * both at random made a = 2, which needs only an even speed, 38% of draws.
  */
 export const finalVelocityFromRest: Generator = {
   id: 'final-velocity-from-rest',
@@ -232,11 +259,11 @@ export const finalVelocityFromRest: Generator = {
       r,
       (r) => {
         const a = stepped(r, c.a[0], c.a[1], c.step)
-        const v = int(r, ...c.v)
-        return { a, v, s: clean((v * v) / (2 * a)) }
+        const v = multipleIn(r, rootMultiple(Math.round(2 * a)), c.v[0], c.v[1])
+        return { a, v, s: v ? clean((v * v) / (2 * a)) : 0 }
       },
       // Never a = 1: "2 × 1 × s" makes the doubling a step in name only.
-      ({ a, v, s }) => Number.isInteger(s) && s >= 2 && s !== v && s !== a && a !== 1,
+      ({ a, v, s }) => v > 0 && Number.isInteger(s) && s >= 2 && s !== v && s !== a && a !== 1 && v !== a,
     )
     const v2 = v * v
     const prompt = pick(r, [
@@ -276,8 +303,8 @@ const STOPPERS: Stopper[] = [
   { noun: 'a lorry', its: 'its', u: [10, 25], a: [1, 5], step: 0.5, t: [3, 12], tstep: 1 },
   { noun: 'a bus', its: 'its', u: [8, 20], a: [1, 4], step: 0.5, t: [3, 10], tstep: 1 },
   { noun: 'a runner', its: 'his', u: [3, 9], a: [1, 3], step: 0.5, t: [2, 5], tstep: 1 },
-  { noun: 'a motorbike', its: 'its', u: [15, 35], a: [3, 10], step: 0.5, t: [2, 8], tstep: 1 },
-  { noun: 'an aircraft that has just landed', its: 'its', u: [50, 80], a: [2, 5], step: 0.5, t: [10, 30], tstep: 5 },
+  { noun: 'a motorbike', its: 'its', u: [15, 35], a: [3, 9], step: 0.5, t: [2, 8], tstep: 1 },
+  { noun: 'a landing aircraft', its: 'its', u: [50, 80], a: [2, 5], step: 0.5, t: [10, 30], tstep: 5 },
   { noun: 'a tram', its: 'its', u: [8, 20], a: [1, 2], step: 0.5, t: [5, 15], tstep: 1 },
   { noun: 'a skateboarder', its: 'her', u: [3, 8], a: [0.5, 2], step: 0.5, t: [2, 6], tstep: 1 },
 ]
@@ -303,7 +330,7 @@ export const decelerationFromSpeedChange: Generator = {
         const v = slowing ? int(r, 1, c.u[1]) : 0
         return { u: clean(v + a * t), v, t, a }
       },
-      ({ u, v, t, a }) => Number.isInteger(u) && u >= c.u[0] && u <= c.u[1] && a !== t && a !== u && u !== t && u - v !== t && v !== u - v,
+      ({ u, v, t, a }) => Number.isInteger(u) && u >= c.u[0] && u <= c.u[1] && a !== t && a !== u && a !== v && u !== t && u - v !== t && v !== u - v,
     )
     const dv = u - v
     const prompt = slowing
@@ -337,27 +364,19 @@ interface Braker {
 }
 /** Vehicles braking to a stop, with the speeds they have and the decelerations they manage. */
 const BRAKERS: Braker[] = [
-  { noun: 'a car', it: 'it', u: [10, 30], a: [2.5, 10] },
+  { noun: 'a car', it: 'it', u: [10, 30], a: [2.5, 8] },
   { noun: 'a lorry', it: 'it', u: [10, 25], a: [1.5, 5] },
   { noun: 'a train', it: 'it', u: [20, 60], a: [0.5, 2] },
   { noun: 'a cyclist', it: 'she', u: [4, 12], a: [1, 4] },
-  { noun: 'a motorbike', it: 'it', u: [15, 35], a: [3, 10] },
+  { noun: 'a motorbike', it: 'it', u: [15, 35], a: [3, 9] },
   { noun: 'a bus', it: 'it', u: [8, 20], a: [1.5, 5] },
-  { noun: 'an aircraft landing', it: 'it', u: [50, 80], a: [2, 5] },
+  { noun: 'a landing aircraft', it: 'it', u: [50, 80], a: [2, 5] },
   { noun: 'a van', it: 'it', u: [10, 25], a: [2, 8] },
 ]
 
-/** A speed and a deceleration from a braker's ranges whose braking distance u² ÷ 2a is whole and not the speed. */
-function braking(r: Rng, c: Braker, ok: (x: { u: number; a: number; s: number }) => boolean = () => true) {
-  return draw(
-    r,
-    (r) => {
-      const u = int(r, ...c.u)
-      const a = stepped(r, c.a[0], c.a[1], 0.25)
-      return { u, a, s: clean((u * u) / (2 * a)) }
-    },
-    (x) => Number.isInteger(x.s) && x.s !== x.u && x.s !== x.a && x.a !== 1 && ok(x),
-  )
+/** A speed and a deceleration from a braker's ranges whose braking distance u² ÷ 2a is whole and no small multiple of the speed. */
+function braking(r: Rng, c: Braker) {
+  return draw(r, (r) => brakingPair(r, c.u, c.a), (x) => cleanBraking(x) && x.s !== x.a)
 }
 
 /**
@@ -411,10 +430,10 @@ interface Journey {
 /** Two-stage journeys with the speeds each stage really has; times in whole minutes or half-minutes so the distances come out whole. */
 const JOURNEYS: Journey[] = [
   { text: (d1, v1, d2, v2) => `A student walks ${d1} m to a bus stop at ${v1} m/s, then rides ${d2} m on a bus at an average of ${v2} m/s.`, whole: 'journey', first: 'walking', second: 'bus', v1: [1, 2], step1: 0.5, t1: [120, 600], tstep1: 60, v2: [8, 15], step2: 1, t2: [60, 600], tstep2: 30 },
-  { text: (d1, v1, d2, v2) => `A runner jogs ${d1} m at ${v1} m/s, then walks ${d2} m at ${v2} m/s.`, whole: 'journey', first: 'jogging', second: 'walking', v1: [2, 4], step1: 0.5, t1: [60, 600], tstep1: 60, v2: [1, 2], step2: 0.5, t2: [60, 600], tstep2: 60 },
+  { text: (d1, v1, d2, v2) => `A runner jogs ${d1} m at ${v1} m/s, then walks ${d2} m at ${v2} m/s.`, whole: 'journey', first: 'jogging', second: 'walking', v1: [2, 3], step1: 0.5, t1: [60, 600], tstep1: 60, v2: [1, 2], step2: 0.5, t2: [60, 600], tstep2: 60 },
   { text: (d1, v1, d2, v2) => `A commuter cycles ${d1} m to the station at ${v1} m/s, then travels ${d2} m by train at an average of ${v2} m/s.`, whole: 'journey', first: 'cycling', second: 'train', v1: [4, 8], step1: 1, t1: [120, 600], tstep1: 60, v2: [20, 40], step2: 5, t2: [300, 1200], tstep2: 60 },
   { text: (d1, v1, d2, v2) => `A car covers ${d1} m through a town at an average of ${v1} m/s, then ${d2} m on a motorway at ${v2} m/s.`, whole: 'journey', first: 'town', second: 'motorway', v1: [8, 15], step1: 1, t1: [120, 600], tstep1: 60, v2: [25, 30], step2: 1, t2: [300, 1200], tstep2: 60 },
-  { text: (d1, v1, d2, v2) => `In a race an athlete swims ${d1} m at ${v1} m/s, then runs ${d2} m at ${v2} m/s.`, whole: 'race', first: 'swimming', second: 'running', v1: [1.2, 1.6], step1: 0.2, t1: [300, 900], tstep1: 60, v2: [3, 5], step2: 0.5, t2: [300, 1500], tstep2: 60 },
+  { text: (d1, v1, d2, v2) => `In a race an athlete swims ${d1} m at ${v1} m/s, then runs ${d2} m at ${v2} m/s.`, whole: 'race', first: 'swimming', second: 'running', v1: [1.2, 1.4], step1: 0.2, t1: [300, 600], tstep1: 60, v2: [3, 5], step2: 0.5, t2: [300, 1500], tstep2: 60 },
   { text: (d1, v1, d2, v2) => `A hiker walks ${d1} m uphill at ${v1} m/s, then ${d2} m downhill at ${v2} m/s.`, whole: 'walk', first: 'uphill', second: 'downhill', v1: [0.5, 1.5], step1: 0.5, t1: [600, 1800], tstep1: 60, v2: [1.5, 2], step2: 0.5, t2: [600, 1800], tstep2: 60 },
   { text: (d1, v1, d2, v2) => `A lorry travels ${d1} m on an A-road at an average of ${v1} m/s, then ${d2} m on a motorway at ${v2} m/s.`, whole: 'journey', first: 'A-road', second: 'motorway', v1: [10, 18], step1: 1, t1: [300, 900], tstep1: 60, v2: [20, 25], step2: 1, t2: [600, 1800], tstep2: 60 },
   { text: (d1, v1, d2, v2) => `A passenger crosses ${d1} m of water on a ferry at ${v1} m/s, then walks ${d2} m at ${v2} m/s.`, whole: 'journey', first: 'ferry', second: 'walking', v1: [4, 8], step1: 1, t1: [300, 900], tstep1: 60, v2: [1, 2], step2: 0.5, t2: [300, 900], tstep2: 60 },
@@ -486,12 +505,12 @@ interface Running {
 }
 const RUNNING: Running[] = [
   { text: (u, a, s) => `An aircraft on a runway is moving at ${u} m/s when its engines give it an acceleration of ${a} m/s². It travels a further ${s} m before taking off.`, ask: 'its take-off velocity', u: [15, 30], a: [2, 4], step: 0.5, s: [200, 600], sstep: 50, v: [50, 80] },
-  { text: (u, a, s) => `A car joins a motorway from a slip road at ${u} m/s and accelerates at ${a} m/s² over ${s} m.`, ask: 'its velocity at the end of the slip road', u: [10, 20], a: [1, 3], step: 0.5, s: [50, 200], sstep: 10, v: [15, 32] },
+  { text: (u, a, s) => `A car joins a motorway from a slip road at ${u} m/s and accelerates at ${a} m/s² over ${s} m.`, ask: 'its velocity at the end of the slip road', u: [10, 20], a: [1, 3], step: 0.5, s: [50, 200], sstep: 10, v: [15, 31] },
   { text: (u, a, s) => `A train is moving at ${u} m/s as it leaves a station. It accelerates at ${a} m/s² over the next ${s} m.`, ask: 'its velocity at the end of that distance', u: [5, 15], a: [0.5, 1], step: 0.5, s: [200, 800], sstep: 50, v: [15, 42] },
   { text: (u, a, s) => `A cyclist crosses the top of a hill at ${u} m/s and accelerates down it at ${a} m/s² for ${s} m.`, ask: 'her velocity at the bottom', u: [3, 8], a: [0.5, 1.5], step: 0.5, s: [20, 100], sstep: 10, v: [6, 18] },
   { text: (u, a, s) => `A bobsleigh is pushed off at ${u} m/s and then accelerates at ${a} m/s² down a straight ${s} m long.`, ask: 'its velocity at the end of the straight', u: [5, 10], a: [1, 3], step: 0.5, s: [100, 300], sstep: 10, v: [15, 40] },
   { text: (u, a, s) => `A speedboat moving at ${u} m/s opens its throttle and accelerates at ${a} m/s² over ${s} m.`, ask: 'its final velocity', u: [5, 10], a: [1, 2], step: 0.5, s: [50, 200], sstep: 10, v: [12, 29] },
-  { text: (u, a, s) => `A ski jumper is moving at ${u} m/s part-way down the in-run and accelerates at ${a} m/s² over the remaining ${s} m.`, ask: 'his velocity at the take-off point', u: [5, 10], a: [2, 4], step: 0.5, s: [50, 100], sstep: 10, v: [15, 30] },
+  { text: (u, a, s) => `A ski jumper is moving at ${u} m/s part-way down the in-run and accelerates at ${a} m/s² over the remaining ${s} m.`, ask: 'his velocity at the take-off point', u: [5, 10], a: [2, 4], step: 0.5, s: [50, 100], sstep: 10, v: [15, 27] },
   { text: (u, a, s) => `A motorbike travelling at ${u} m/s accelerates at ${a} m/s² over ${s} m.`, ask: 'its final velocity', u: [10, 20], a: [2, 5], step: 0.5, s: [50, 200], sstep: 10, v: [20, 40] },
 ]
 
@@ -552,18 +571,18 @@ export const finalVelocityWithRunningStart: Generator = {
 
 interface HighwaySpeed {
   mph: number
-  /** Thinking distances at this speed, metres: a reaction of 0.2 s to 1 s. */
+  /** Thinking distances at this speed, metres: a reaction of about 0.3 s up to 0.9 s. */
   thinking: [number, number]
   /** The Highway Code's typical braking distance on a dry road, metres. */
   braking: number
 }
 const HIGHWAY: HighwaySpeed[] = [
-  { mph: 20, thinking: [3, 9], braking: 6 },
-  { mph: 30, thinking: [4, 13], braking: 14 },
-  { mph: 40, thinking: [5, 18], braking: 24 },
-  { mph: 50, thinking: [7, 22], braking: 38 },
-  { mph: 60, thinking: [8, 27], braking: 55 },
-  { mph: 70, thinking: [9, 31], braking: 75 },
+  { mph: 20, thinking: [3, 8], braking: 6 },
+  { mph: 30, thinking: [4, 12], braking: 14 },
+  { mph: 40, thinking: [5, 16], braking: 24 },
+  { mph: 50, thinking: [7, 20], braking: 38 },
+  { mph: 60, thinking: [8, 24], braking: 55 },
+  { mph: 70, thinking: [9, 28], braking: 75 },
 ]
 /** Road conditions, with how much they multiply the dry braking distance. */
 const ROADS: { text: string; factor: [number, number] }[] = [
@@ -572,6 +591,8 @@ const ROADS: { text: string; factor: [number, number] }[] = [
   { text: ' on an icy road', factor: [4, 10] },
 ]
 const VEHICLES = ['car', 'van', 'lorry', 'motorbike', 'taxi', 'coach']
+/** Lorries and coaches are limited to 60 mph. */
+const vehiclesAt = (mph: number) => (mph > 60 ? VEHICLES.filter((v) => v !== 'lorry' && v !== 'coach') : VEHICLES)
 
 /**
  * Stopping distance as thinking plus braking: written as q1 (9 m and 14 m at 30 mph, 2
@@ -586,11 +607,11 @@ export const stoppingDistanceFromParts: Generator = {
   build(r, slot, turn) {
     const h = HIGHWAY[turn % HIGHWAY.length]!
     const road = pick(r, ROADS)
-    const vehicle = pick(r, VEHICLES)
+    const vehicle = pick(r, vehiclesAt(h.mph))
     const { thinking, braking } = draw(
       r,
       (r) => ({ thinking: int(r, ...h.thinking), braking: int(r, Math.ceil(h.braking * road.factor[0]), Math.floor(h.braking * road.factor[1])) }),
-      ({ thinking, braking }) => thinking !== braking,
+      ({ thinking, braking }) => thinking !== braking && thinking + braking !== h.mph,
     )
     const answer = thinking + braking
     const prompt = pick(r, [
@@ -616,19 +637,21 @@ export const stoppingDistanceFromParts: Generator = {
 interface Driver {
   noun: string
   driver: string
-  /** Whose: "The driver's", or for a tired driver the prompt's own opening. */
   v: [number, number]
   /** Reaction times, seconds: alert 0.2–0.6, tired or distracted 0.7–0.9. Never 1.0, which would make the thinking distance the speed. */
   react: [number, number]
+  /** Why the reaction is slow, as a phrase after "is": "distracted by a phone". */
   state?: string
+  /** The same as a single adjective before "driver": "distracted". */
+  adj?: string
 }
 const DRIVERS: Driver[] = [
   { noun: 'a car', driver: 'driver', v: [10, 30], react: [0.2, 0.6] },
-  { noun: 'a car', driver: 'driver', v: [10, 30], react: [0.7, 0.9], state: 'tired' },
+  { noun: 'a car', driver: 'driver', v: [10, 30], react: [0.7, 0.9], state: 'tired', adj: 'tired' },
   { noun: 'a lorry', driver: 'driver', v: [10, 25], react: [0.3, 0.7] },
   { noun: 'a motorbike', driver: 'rider', v: [10, 30], react: [0.2, 0.6] },
   { noun: 'a bus', driver: 'driver', v: [8, 20], react: [0.3, 0.7] },
-  { noun: 'a van', driver: 'driver', v: [10, 25], react: [0.7, 0.9], state: 'distracted by a phone' },
+  { noun: 'a van', driver: 'driver', v: [10, 25], react: [0.7, 0.9], state: 'distracted by a phone', adj: 'distracted' },
   { noun: 'a bicycle', driver: 'rider', v: [4, 12], react: [0.2, 0.6] },
   { noun: 'a taxi', driver: 'driver', v: [10, 25], react: [0.3, 0.7] },
 ]
@@ -650,7 +673,7 @@ export const thinkingDistance: Generator = {
     const d = clean(v * react)
     const prompt = c.state
       ? pick(r, [
-          `A ${c.state} ${c.driver} has a reaction time of ${show(react)} s. ${cap(c.noun.replace(/^an? /, 'the '))} is travelling at ${v} m/s. Calculate the thinking distance, in metres.`,
+          `A ${c.adj} ${c.driver} has a reaction time of ${show(react)} s. ${cap(c.noun.replace(/^an? /, 'the '))} is travelling at ${v} m/s. Calculate the thinking distance, in metres.`,
           `${cap(c.noun)} travels at ${v} m/s. The ${c.driver} is ${c.state}, and has a reaction time of ${show(react)} s. Calculate the thinking distance.`,
         ])
       : pick(r, [
@@ -677,7 +700,9 @@ export const thinkingDistance: Generator = {
 /**
  * Reaction time = thinking distance ÷ speed: written as q5 (18 m at 24 m/s, 0.75 s, 2
  * marks). Reaction times in twentieths of a second, as the written 0.75 is, and the thinking
- * distance a whole number of metres.
+ * distance a whole number of metres. The reaction time is drawn first and the speed from
+ * the multiples that make the distance whole, so each reaction time is drawn evenly: 0.5 s
+ * needs only an even speed and was the answer in a quarter of draws.
  */
 export const reactionTimeFromThinkingDistance: Generator = {
   id: 'reaction-time-from-thinking-distance',
@@ -689,11 +714,12 @@ export const reactionTimeFromThinkingDistance: Generator = {
     const { v, react, d } = draw(
       r,
       (r) => {
-        const v = int(r, ...c.v)
         const react = stepped(r, c.react[0], c.react[1], 0.05)
+        // react is n/20 in lowest terms, so the distance is whole when the speed is a multiple of the denominator.
+        const v = multipleIn(r, 20 / gcd(Math.round(react * 20), 20), c.v[0], c.v[1])
         return { v, react, d: clean(v * react) }
       },
-      ({ v, react, d }) => Number.isInteger(d) && d !== v && react < 1,
+      ({ v, react, d }) => v > 0 && Number.isInteger(d) && d !== v && react < 1,
     )
     const prompt = pick(r, [
       `A ${c.driver} travelling at ${v} m/s has a thinking distance of ${d} m. Calculate the ${c.driver}'s reaction time.`,
@@ -749,7 +775,8 @@ function stopping(r: Rng, c: Massive, ok: (x: { m: number; v: number; a: number;
       const s = clean((v * v) / (2 * a))
       return { m, v, a, E, s, F: clean(m * a) }
     },
-    (x) => Number.isInteger(x.E) && Number.isInteger(x.s) && Number.isInteger(x.F) && x.s !== x.v && x.s !== x.m && ok(x),
+    // Never a = 1: the force would be the mass.
+    (x) => Number.isInteger(x.E) && Number.isInteger(x.s) && Number.isInteger(x.F) && x.s !== x.v && x.s !== x.m && x.a !== 1 && ok(x),
   )
 }
 
@@ -793,10 +820,10 @@ interface Scaled {
   a: [number, number]
 }
 const SCALED: Scaled[] = [
-  { noun: 'car', vmax: 30, a: [3, 10] },
+  { noun: 'car', vmax: 30, a: [3, 8] },
   { noun: 'lorry', vmax: 25, a: [1.5, 5] },
   { noun: 'van', vmax: 25, a: [2, 8] },
-  { noun: 'motorbike', vmax: 35, a: [3, 10] },
+  { noun: 'motorbike', vmax: 35, a: [3, 9] },
   { noun: 'bicycle', vmax: 12, a: [1, 4] },
   { noun: 'bus', vmax: 20, a: [1.5, 5] },
   { noun: 'train', vmax: 60, a: [0.5, 1.5] },
@@ -823,16 +850,17 @@ export const brakingDistanceAtAnotherSpeed: Generator = {
     const { v1, v2, d1, d2 } = draw(
       r,
       (r) => {
-        if (faster) {
-          const v1 = int(r, 3, Math.floor(c.vmax / k))
-          const d1 = int(r, Math.ceil((v1 * v1) / (2 * c.a[1])), Math.floor((v1 * v1) / (2 * c.a[0])))
-          return { v1, v2: clean(v1 * k), d1, d2: clean(d1 * k2) }
-        }
-        const v1 = int(r, Math.ceil(3 * k), c.vmax)
-        const d1 = int(r, Math.ceil((v1 * v1) / (2 * c.a[1])), Math.floor((v1 * v1) / (2 * c.a[0])))
-        return { v1, v2: clean(v1 / k), d1, d2: clean(d1 / k2) }
+        // The slow pair is drawn first whichever speed is asked for, and the fast pair scaled
+        // up from it, so both are whole by construction: scaling the fast pair down left
+        // almost nothing acceptable at a ratio of 4.
+        const slow = int(r, 3, Math.floor(c.vmax / k))
+        const dSlow = int(r, Math.ceil((slow * slow) / (2 * c.a[1])), Math.floor((slow * slow) / (2 * c.a[0])))
+        const fast = clean(slow * k)
+        const dFast = clean(dSlow * k2)
+        return faster ? { v1: slow, d1: dSlow, v2: fast, d2: dFast } : { v1: fast, d1: dFast, v2: slow, d2: dSlow }
       },
-      ({ v1, v2, d1, d2 }) => Number.isInteger(v2) && Number.isInteger(d2) && d1 >= 2 && d2 >= 2 && v2 >= 3 && d1 !== v1 && d2 !== v2 && d1 !== v2 && d2 !== v1,
+      // Never d1 = k²: squaring the given distance would give the answer.
+      ({ v1, v2, d1, d2 }) => Number.isInteger(v1) && Number.isInteger(v2) && Number.isInteger(d1) && Number.isInteger(d2) && d1 >= 2 && d2 >= 2 && d1 !== v1 && d2 !== v2 && d1 !== v2 && d2 !== v1 && d1 !== k2,
     )
     const prompt = pick(r, [
       `A ${c.noun}'s braking distance at ${v1} m/s is ${prose(d1)} m. Estimate its braking distance at ${v2} m/s with the same braking force.`,
@@ -867,7 +895,7 @@ interface Decelerating {
 }
 /** Vehicles braking hard, with the decelerations an emergency stop really gives and the times it takes. */
 const DECELERATING: Decelerating[] = [
-  { noun: 'car', mass: [900, 1800], step: 50, u: [10, 30], a: [5, 9], t: [2, 6] },
+  { noun: 'car', mass: [900, 1800], step: 50, u: [10, 30], a: [5, 8], t: [2, 6] },
   { noun: 'lorry', mass: [10000, 30000], step: 1000, u: [10, 25], a: [1.5, 5], t: [3, 12] },
   { noun: 'van', mass: [1800, 3000], step: 100, u: [10, 25], a: [3, 8], t: [2, 8] },
   { noun: 'bus', mass: [10000, 14000], step: 500, u: [8, 20], a: [1.5, 5], t: [2, 10] },
@@ -933,12 +961,12 @@ interface Full {
   a: [number, number]
 }
 const FULL: Full[] = [
-  { noun: 'a car', driver: 'driver', u: [10, 30], react: [0.2, 0.9], a: [2.5, 10] },
+  { noun: 'a car', driver: 'driver', u: [10, 30], react: [0.2, 0.9], a: [2.5, 8] },
   { noun: 'a lorry', driver: 'driver', u: [10, 25], react: [0.3, 0.9], a: [1.5, 5] },
   { noun: 'a van', driver: 'driver', u: [10, 25], react: [0.3, 0.9], a: [2, 8] },
-  { noun: 'a motorbike', driver: 'rider', u: [10, 30], react: [0.2, 0.8], a: [3, 10] },
+  { noun: 'a motorbike', driver: 'rider', u: [10, 30], react: [0.2, 0.8], a: [3, 9] },
   { noun: 'a bus', driver: 'driver', u: [8, 20], react: [0.3, 0.9], a: [1.5, 5] },
-  { noun: 'a taxi', driver: 'driver', u: [10, 25], react: [0.3, 0.9], a: [2.5, 10] },
+  { noun: 'a taxi', driver: 'driver', u: [10, 25], react: [0.3, 0.9], a: [2.5, 8] },
 ]
 
 /**
@@ -956,12 +984,11 @@ export const stoppingDistanceFromReactionAndDeceleration: Generator = {
     const { u, react, a, thinking, braking } = draw(
       r,
       (r) => {
-        const u = int(r, ...c.u)
+        const { u, a, s } = brakingPair(r, c.u, c.a)
         const react = stepped(r, c.react[0], c.react[1], 0.1)
-        const a = stepped(r, c.a[0], c.a[1], 0.25)
-        return { u, react, a, thinking: clean(u * react), braking: clean((u * u) / (2 * a)) }
+        return { u, react, a, thinking: clean(u * react), braking: s }
       },
-      ({ u, react, a, thinking, braking }) => Number.isInteger(thinking) && Number.isInteger(braking) && thinking !== braking && braking !== u && thinking !== u && react < 1 && a !== u,
+      ({ u, react, a, thinking, braking }) => cleanBraking({ u, a, s: braking }) && Number.isInteger(thinking) && thinking !== braking && thinking !== u && thinking + braking !== u && react < 1,
     )
     const u2 = u * u
     const a2 = clean(2 * a)
@@ -992,11 +1019,13 @@ const DROPS: ((d: number) => string)[] = [
   (d) => `A student measures a friend's reaction time with a ruler drop test. The ruler falls ${d} cm before it is caught.`,
   (d) => `In a ruler drop test the ruler is released from the 0 cm mark at the catcher's fingers and caught at the ${d} cm mark.`,
   (d) => `A student's reaction time is measured with a ruler drop test. The ruler drops ${d} cm before the student grabs it.`,
+  (d) => `A ruler is held just above a student's open fingers and let go without warning. The student catches it after it has dropped ${d} cm.`,
+  (d) => `In a reaction test a metre rule is dropped between a student's finger and thumb. It falls ${d} cm before the student catches it.`,
 ]
 
 /**
  * Reaction time from a ruler drop, to 2 significant figures: written as q15 (30 cm, 0.25 s,
- * 3 marks). A fall of 8 cm to 45 cm, as a ruler drop gives; the root is never clean, and
+ * 3 marks). A fall of 12 cm to 45 cm, as a ruler drop gives; the root is never clean, and
  * the drop is redrawn when the answer would round to a 0 the box cannot print (0.20 s).
  */
 export const reactionTimeFromRulerDrop: Generator = {
@@ -1009,7 +1038,8 @@ export const reactionTimeFromRulerDrop: Generator = {
     const { d, s, t2, t } = draw(
       r,
       (r) => {
-        const d = int(r, 8, 45)
+        // No drop under 12 cm: 8 cm would be 0.13 s, quicker than anyone reacts.
+        const d = int(r, 12, 45)
         const s = d / 100
         const t2 = (2 * s) / 9.8
         return { d, s, t2, t: Math.sqrt(t2) }
@@ -1060,7 +1090,7 @@ const CRASHES: Crash[] = [
   { text: (who, u, t) => `In a crash test, a ${who} moving at ${u} m/s is stopped by an airbag in ${t} s.`, noun: 'crash-test dummy', on: 'the dummy', why: 'The airbag lengthens the stopping time; stopped by the dashboard in a fraction of that time, the force would be far larger.', mass: [70, 80], step: 1, u: [10, 20], t: [0.1, 0.4] },
   { text: (who, u, t) => `A fielder catches a ${who} travelling at ${u} m/s, bringing it to rest in ${t} s.`, noun: 'cricket ball', on: 'the ball', why: 'A fielder draws the hands back as the ball arrives: a longer stopping time means a smaller force on the hands.', mass: [0.16, 0.16], step: 0.01, u: [20, 40], t: [0.1, 0.4] },
   { text: (who, u, t) => `A ${who} lands on a mat at ${u} m/s and is brought to rest in ${t} s.`, noun: 'gymnast', on: 'the gymnast', why: 'Bending the knees and a thick mat lengthen the stopping time and lower the force.', mass: [50, 80], step: 1, u: [4, 8], t: [0.1, 0.4] },
-  { text: (who, u, t) => `A ${who} rolls into the buffers at ${u} m/s and is brought to rest in ${t} s.`, noun: 'train', on: 'the train', why: 'The buffers compress to lengthen the stopping time and lower the force.', mass: [40000, 100000], step: 5000, u: [2, 10], t: [0.5, 2] },
+  { text: (who, u, t) => `A ${who} rolls into the buffers at ${u} m/s and is brought to rest in ${t} s.`, noun: 'train', on: 'the train', why: 'The buffers compress to lengthen the stopping time and lower the force.', mass: [40000, 100000], step: 5000, u: [2, 5], t: [0.5, 2] },
 ]
 
 /**
@@ -1085,7 +1115,7 @@ export const crashForce: Generator = {
         const a = clean(u / t)
         return { m, u, t, a, F: clean(m * a) }
       },
-      ({ u, t, a, F }) => Number.isInteger(a) && Number.isInteger(F) && F >= 10 && a !== u && t !== 1,
+      ({ u, t, a, F }) => Number.isInteger(a) && Number.isInteger(F) && F >= 10 && a !== u && t !== 1 && u !== t,
     )
     // Second route: the force over the mass gives the deceleration, and that times the time the speed.
     return numeric(

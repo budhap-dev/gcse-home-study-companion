@@ -137,7 +137,7 @@ describe("Newton's laws", () => {
   })
 
   it('takes the weight from the upward force and divides by the mass, upwards, within a believable margin', () => {
-    for (const [slotId, lo, hi] of [['q14', 1, 5], ['q19', 0.5, 3]] as const) {
+    for (const [slotId, lo, hi] of [['q14', 1, 60], ['q19', 0.3, 2]] as const) {
       const built = build('acceleration-against-weight', slotId)
       for (const b of built) {
         const { m, T } = values(b)
@@ -150,6 +150,8 @@ describe("Newton's laws", () => {
         expect(answer(b)).toBeCloseTo(R / m!, 9)
         expect(answer(b)).toBeGreaterThanOrEqual(lo)
         expect(answer(b)).toBeLessThanOrEqual(hi)
+        // Only a model rocket accelerates faster than 5 m/s².
+        if (answer(b) > 5) expect(String(b.values.context)).toContain('model rocket')
         expect(answer(b)).not.toBe(1)
         expect(decimals(answer(b))).toBeLessThanOrEqual(1)
         expect(b.question.solution).toContain(`Weight $= m g = ${tex(m!)} \\times 9.8 = ${tex(W)}$ N`)
@@ -261,7 +263,7 @@ describe('weight, work done and resultant forces', () => {
       expect(answer(b)).toBeGreaterThanOrEqual(27)
       expect(answer(b).toPrecision(2).endsWith('0')).toBe(false)
       expect(Math.abs(raw - answer(b))).toBeLessThanOrEqual(0.5)
-      expect(tolerance(b)).toBe(0.5)
+      expect(tolerance(b)).toBe(Number(Math.min(1, answer(b) * 0.019).toPrecision(10)))
       expect(b.question.solution).toContain(`$${F} \\cos ${angle}° = ${raw.toFixed(2)}$ N, which is **${answer(b)} N** to 2 s.f.`)
       expect(b.question.solution).toContain(`$${F} \\sin ${angle}° = `)
       expect(b.question.solution.includes('3, 4, 5 triangle')).toBe(angle === 37 || angle === 53)
@@ -270,7 +272,7 @@ describe('weight, work done and resultant forces', () => {
       expect(units(b)).toBe('N')
     }
     expect(new Set(built.map((b) => b.values.angle)).size).toBe(7)
-    expect(contexts(built)).toBe(6)
+    expect(contexts(built)).toBe(5)
   })
 
   it('subtracts the resistance, multiplies by the distance and names the kinetic store', () => {
@@ -326,7 +328,13 @@ describe('weight, work done and resultant forces', () => {
       const W = clean(m! * 9.8)
       expect(direction).toBe(F! > W ? 'upwards' : 'downwards')
       expect(answer(b)).toBeCloseTo(Math.abs(F! - W), 9)
-      expect(answer(b)).toBeGreaterThanOrEqual(W / 20)
+      // The upward force sits in the share of the weight each moment really has: a balloon's
+      // upthrust is no more than a tenth over, a skydiver who has just jumped meets at most half.
+      const ratio = F! / W
+      expect(ratio).toBeGreaterThanOrEqual(0.1 - 1e-9)
+      expect(ratio).toBeLessThanOrEqual(3 + 1e-9)
+      if (b.values.context === 'the balloon upwards') expect(ratio).toBeLessThanOrEqual(1.1 + 1e-9)
+      expect(answer(b)).toBeGreaterThanOrEqual(W / 50 - 1e-9)
       expect(answer(b)).not.toBe(m)
       expect(b.question.solution).toContain(`Weight $= ${tex(m!)} \\times 9.8 = ${tex(W)}$ N downwards`)
       expect(b.question.solution).toContain(`Resultant $= ${tex(Math.max(F!, W))} - ${tex(Math.min(F!, W))}`)

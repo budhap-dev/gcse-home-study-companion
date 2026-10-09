@@ -2,7 +2,7 @@ import { fixed, show } from '../format.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { G, G_STATED, atMost, cap, closes, near, numeric, prose, stepped, tex } from './build.ts'
-import { clearAtSigFigs, dpTolerance, sfTolerance, sigFigs, sigText } from './format.ts'
+import { clearAtSigFigs, dpTolerance, sigFigs, sigText } from './format.ts'
 
 /**
  * Forces (AQA 8463, topic 5): weight, resultant forces and work done, Newton's laws and
@@ -101,7 +101,7 @@ export const forceFromMassAndAcceleration: Generator = {
     const { m, a, F } = pushed(r, b, false)
     const prompt = pick(r, [
       `A resultant force acts on ${sized(b, m)} and gives ${them(b)} an acceleration of ${show(a)} m/s². Calculate the resultant force, in newtons.`,
-      `${cap(sized(b, m))} accelerates at ${show(a)} m/s². Calculate the resultant force on ${them(b)}, in newtons.`,
+      `${cap(sized(b, m))} ${b.plural ? 'accelerate' : 'accelerates'} at ${show(a)} m/s². Calculate the resultant force on ${them(b)}, in newtons.`,
     ])
     // Second route: the acceleration back from the force and the mass.
     const aBack = F / m
@@ -121,6 +121,9 @@ export const forceFromMassAndAcceleration: Generator = {
   },
 }
 
+/** Things a person pushes; a skateboarder or a go-kart and driver is not "pushed". */
+const PUSHABLE = ['trolley', 'box', 'shopping trolley', 'sledge']
+
 /**
  * a = F ÷ m: written as q3 (30 N on a 5 kg box, 2 marks, grade 4–5). The force given is a
  * whole number of newtons and the acceleration has at most one decimal place.
@@ -135,7 +138,9 @@ export const accelerationFromForce: Generator = {
     const { m, a, F } = pushed(r, b, true)
     const prompt = pick(r, [
       `A resultant force of ${prose(F)} N acts on ${sized(b, m)}. Calculate ${its(b)} acceleration, in m/s².`,
-      `${cap(sized(b, m))} ${b.plural ? 'are' : 'is'} pushed with a resultant force of ${prose(F)} N. What is ${its(b)} acceleration, in m/s²?`,
+      PUSHABLE.includes(b.name)
+        ? `${cap(sized(b, m))} is pushed with a resultant force of ${prose(F)} N. What is ${its(b)} acceleration, in m/s²?`
+        : `${cap(sized(b, m))} ${b.plural ? 'experience' : 'experiences'} a resultant force of ${prose(F)} N. What is ${its(b)} acceleration, in m/s²?`,
     ])
     // Second route: forwards, the mass times the acceleration found.
     const forward = m * a
@@ -199,10 +204,10 @@ export const massFromForceAndAcceleration: Generator = {
 
 /** Vehicles braking, with the decelerations their brakes really give. */
 const BRAKERS: Body[] = [
-  { name: 'car', mass: [900, 1800], step: 50, accel: [3, 10], aStep: 0.5 },
+  { name: 'car', mass: [900, 1800], step: 50, accel: [3, 8], aStep: 0.5 },
   { name: 'van', mass: [2000, 3500], step: 100, accel: [3, 8], aStep: 0.5 },
-  { name: 'lorry', mass: [10000, 30000], step: 1000, accel: [2, 6], aStep: 0.5 },
-  { name: 'train', mass: [100000, 400000], step: 10000, accel: [0.5, 2], aStep: 0.1 },
+  { name: 'lorry', mass: [10000, 30000], step: 1000, accel: [2, 5], aStep: 0.5 },
+  { name: 'train', mass: [100000, 400000], step: 10000, accel: [0.5, 1.5], aStep: 0.1 },
   { name: 'bicycle and rider', plural: true, mass: [70, 100], step: 1, accel: [2, 6], aStep: 0.5 },
   { name: 'motorbike and rider', plural: true, mass: [200, 350], step: 10, accel: [3, 9], aStep: 0.5 },
   { name: 'bus', mass: [10000, 14000], step: 500, accel: [2, 5], aStep: 0.5 },
@@ -282,8 +287,8 @@ export const drivingForceWithResistance: Generator = {
         return { m, v, t, a, R, F: clean(m * a) }
       },
       // Never a = 1 (the resultant would equal the mass) and never a resultant equal to the
-      // resistance, which would read as doubling.
-      ({ a, R, F }) => atMost(a, 1) && a >= c.accel[0] && a <= c.accel[1] && a !== 1 && Number.isInteger(F) && F !== R,
+      // resistance, which would read as doubling, nor a driving force that is the mass's figure.
+      ({ m, a, R, F }) => atMost(a, 1) && a >= c.accel[0] && a <= c.accel[1] && a !== 1 && Number.isInteger(F) && F !== R && F + R !== m,
     )
     const driving = F + R
     const prompt = pick(r, [
@@ -317,16 +322,16 @@ interface Lifted {
 /** Things that take off, for q14, with the initial accelerations their thrust really gives. */
 const THRUSTERS: Lifted[] = [
   { text: (m, F) => `A rocket of mass ${m} kg produces a thrust of ${F} N at launch.`, ask: "the rocket's initial acceleration", mass: [5000, 50000], step: 1000, accel: [1, 5] },
-  { text: (m, F) => `A model rocket of mass ${m} kg produces a thrust of ${F} N at launch.`, ask: "the model rocket's initial acceleration", mass: [0.5, 2], step: 0.5, accel: [2, 5] },
+  { text: (m, F) => `A model rocket of mass ${m} kg produces a thrust of ${F} N at launch.`, ask: "the model rocket's initial acceleration", mass: [0.5, 2], step: 0.5, accel: [20, 60] },
   { text: (m, F) => `A drone of mass ${m} kg takes off. Its rotors push it upwards with a force of ${F} N.`, ask: "the drone's initial acceleration", mass: [1, 5], step: 0.5, accel: [1, 4] },
   { text: (m, F) => `A helicopter of mass ${m} kg takes off. Its rotors provide an upward lift force of ${F} N.`, ask: "the helicopter's initial acceleration", mass: [2000, 5000], step: 500, accel: [1, 3] },
   { text: (m, F) => `A jump jet of mass ${m} kg takes off vertically with a thrust of ${F} N.`, ask: "the jet's initial acceleration", mass: [5000, 10000], step: 500, accel: [1, 4] },
 ]
 /** Things hauled up on a cable or rope, for q19. */
 const HAULED: Lifted[] = [
-  { text: (m, F) => `A lift of mass ${m} kg is pulled upwards by a cable with a tension of ${F} N.`, ask: 'the acceleration of the lift', mass: [600, 1500], step: 50, accel: [0.5, 3] },
-  { text: (m, F) => `A crane lifts a load of mass ${m} kg. The tension in the cable is ${F} N.`, ask: 'the acceleration of the load', mass: [500, 5000], step: 100, accel: [0.5, 2] },
-  { text: (m, F) => `A bucket of mass ${m} kg is hauled up a well by a rope with a tension of ${F} N.`, ask: 'the acceleration of the bucket', mass: [5, 20], step: 1, accel: [0.5, 3] },
+  { text: (m, F) => `A lift of mass ${m} kg is pulled upwards by a cable with a tension of ${F} N.`, ask: 'the acceleration of the lift', mass: [600, 1500], step: 50, accel: [0.5, 2] },
+  { text: (m, F) => `A crane lifts a load of mass ${m} kg. The tension in the cable is ${F} N.`, ask: 'the acceleration of the load', mass: [500, 5000], step: 100, accel: [0.3, 1] },
+  { text: (m, F) => `A bucket of mass ${m} kg is hauled up a well by a rope with a tension of ${F} N.`, ask: 'the acceleration of the bucket', mass: [5, 20], step: 1, accel: [0.5, 2] },
   { text: (m, F) => `A climber of mass ${m} kg is hauled upwards by a rope with a tension of ${F} N.`, ask: 'the acceleration of the climber', mass: [50, 90], step: 1, accel: [0.5, 2] },
   { text: (m, F) => `A helicopter winch lifts a person of mass ${m} kg. The tension in the winch cable is ${F} N.`, ask: 'the acceleration of the person', mass: [60, 100], step: 1, accel: [0.5, 2] },
 ]
@@ -553,7 +558,7 @@ const PUSHES: Push[] = [
   { text: (F, s) => `A horse pulls a cart ${s} m along a track with a steady force of ${F} N.`, force: [500, 1000], fStep: 50, dist: [50, 200], dStep: 10 },
   { text: (F, s) => `A crane lifts a load with a force of ${F} N through a height of ${s} m.`, force: [5000, 20000], fStep: 1000, dist: [5, 30], dStep: 1 },
   { text: (F, s) => `A cyclist pedals ${s} m along a flat road with a steady forward force of ${F} N.`, force: [40, 100], fStep: 10, dist: [100, 500], dStep: 50 },
-  { text: (F, s) => `A student lifts a box with a force of ${F} N through a height of ${s} m.`, force: [50, 200], fStep: 10, dist: [1, 2], dStep: 0.5 },
+  { text: (F, s) => `A student lifts a box with a force of ${F} N through a height of ${s} m.`, force: [50, 200], fStep: 10, dist: [0.8, 1.8], dStep: 0.1 },
   { text: (F, s) => `Three people push a broken-down car ${s} m along a road with a steady force of ${F} N.`, force: [300, 600], fStep: 50, dist: [5, 30], dStep: 5 },
 ]
 
@@ -575,7 +580,8 @@ export const workDone: Generator = {
         const s = stepped(r, c.dist[0], c.dist[1], c.dStep)
         return { F, s, W: clean(F * s) }
       },
-      ({ F, s, W }) => Number.isInteger(W) && F !== s,
+      // Never 1 m, where the work would be the force.
+      ({ F, s, W }) => Number.isInteger(W) && F !== s && s !== 1,
     )
     // Second route: the work over the force gives the distance back.
     const sBack = W / F
@@ -630,7 +636,8 @@ export const forceFromWorkDone: Generator = {
         const s = stepped(r, c.dist[0], c.dist[1], c.dStep)
         return { F, s, W: F * s }
       },
-      ({ F, s }) => F !== s,
+      // Never 10, 100 or 1000 m, where the division is only a shift of the digits.
+      ({ F, s }) => F !== s && ![10, 100, 1000].includes(s),
     )
     // Second route: forwards, the force found times the distance.
     const forward = F * s
@@ -666,7 +673,6 @@ const ANGLED: Angled[] = [
   { text: (F, a) => `A gardener pulls a trolley with a force of ${F} N through its handle at ${a}° above the horizontal.`, thing: 'trolley', force: [40, 100], step: 5 },
   { text: (F, a) => `A person pulls a wheeled bin with a force of ${F} N through its handle at ${a}° above the horizontal.`, thing: 'bin', force: [30, 80], step: 5 },
   { text: (F, a) => `A farmer pulls a hay bale with a force of ${F} N through a rope at ${a}° above the horizontal.`, thing: 'bale', force: [60, 150], step: 10 },
-  { text: (F, a) => `A dog walker is pulled by the lead with a force of ${F} N at ${a}° above the horizontal.`, thing: 'walker', force: [20, 60], step: 5 },
 ]
 /** Angles a rope or handle really makes, whose cosines are clean at two figures. */
 const ANGLES = [30, 37, 40, 45, 50, 53, 60]
@@ -698,7 +704,8 @@ export const resolvingAForce: Generator = {
       ({ raw, answer }) => raw >= 27 && clearAtSigFigs(raw, 2) && !sigText(answer, 2).endsWith('0') && sigFigs(Number(fixed(raw, 2)), 2) === answer,
     )
     const vertical = F * Math.sin(rad(angle))
-    const tolerance = sfTolerance(answer, 2)
+    // A scale drawing is read to about a newton, capped at the 2% the release check allows.
+    const tolerance = Number(Math.min(1, answer * 0.019).toPrecision(10))
     const triangle = angle === 37 || angle === 53 ? ', so the components make a 3, 4, 5 triangle' : ''
     // Second route: the sine of the other angle, and Pythagoras from the vertical component.
     const viaSin = F * Math.sin(rad(90 - angle))
@@ -733,9 +740,9 @@ interface Driving {
 const DRIVING: Driving[] = [
   { text: (D, R, s) => `A car's engine provides a forward force of ${D} N while resistive forces total ${R} N. The car travels ${s} m.`, store: "the car's kinetic store", drive: [500, 2000], dStep: 50, resist: [200, 800], rStep: 50, dist: [20, 200], sStep: 10 },
   { text: (D, R, s) => `A van's engine provides a forward force of ${D} N while resistive forces total ${R} N. The van travels ${s} m.`, store: "the van's kinetic store", drive: [1000, 3000], dStep: 100, resist: [400, 1200], rStep: 100, dist: [20, 200], sStep: 10 },
-  { text: (D, R, s) => `A cyclist pedals with a forward force of ${D} N while air resistance and friction total ${R} N. The cyclist travels ${s} m.`, store: 'the kinetic store of the cyclist and bike', drive: [50, 150], dStep: 10, resist: [20, 60], rStep: 5, dist: [50, 200], sStep: 10 },
+  { text: (D, R, s) => `A cyclist pedals with a forward force of ${D} N while air resistance and friction total ${R} N. The cyclist travels ${s} m.`, store: 'the kinetic store of the cyclist and bike', drive: [50, 100], dStep: 10, resist: [20, 60], rStep: 5, dist: [20, 60], sStep: 5 },
   { text: (D, R, s) => `A tug pulls a barge with a force of ${D} N while the drag of the water on the barge is ${R} N. The barge moves ${s} m.`, store: "the barge's kinetic store", drive: [3000, 8000], dStep: 500, resist: [1000, 3000], rStep: 500, dist: [100, 500], sStep: 50 },
-  { text: (D, R, s) => `A dog pulls a sledge with a force of ${D} N while friction on the sledge is ${R} N. The sledge moves ${s} m.`, store: "the sledge's kinetic store", drive: [60, 150], dStep: 10, resist: [20, 60], rStep: 10, dist: [10, 50], sStep: 5 },
+  { text: (D, R, s) => `A dog pulls a sledge with a force of ${D} N while friction on the sledge is ${R} N. The sledge moves ${s} m.`, store: "the sledge's kinetic store", drive: [40, 70], dStep: 5, resist: [20, 40], rStep: 5, dist: [10, 30], sStep: 5 },
   { text: (D, R, s) => `A lorry's engine provides a forward force of ${D} N while resistive forces total ${R} N. The lorry travels ${s} m.`, store: "the lorry's kinetic store", drive: [5000, 15000], dStep: 500, resist: [2000, 6000], rStep: 500, dist: [50, 300], sStep: 50 },
 ]
 
@@ -790,7 +797,7 @@ interface World {
 }
 /** Gravitational field strengths to one decimal place, never Earth's. */
 const WORLDS: World[] = [
-  { body: 'the Moon', where: 'on the surface of the Moon', at: 'on the Moon', g: 1.6, objects: ['probe', 'lander', 'rover', 'astronaut in a spacesuit'] },
+  { body: 'the Moon', where: 'on the surface of the Moon', at: 'on the Moon', g: 1.6, objects: ['probe', 'lander', 'rover', 'suited astronaut'] },
   { body: 'Mars', where: 'on the surface of Mars', at: 'on Mars', g: 3.7, objects: ['probe', 'lander', 'rover'] },
   { body: 'Mercury', where: 'on the surface of Mercury', at: 'on Mercury', g: 3.7, objects: ['probe', 'lander'] },
   { body: 'Venus', where: 'on the surface of Venus', at: 'on Venus', g: 8.9, objects: ['probe', 'lander'] },
@@ -804,7 +811,7 @@ const OBJECT_MASS: Record<string, { range: [number, number]; step: number }> = {
   probe: { range: [20, 200], step: 10 },
   lander: { range: [200, 1000], step: 50 },
   rover: { range: [100, 1000], step: 50 },
-  'astronaut in a spacesuit': { range: [80, 130], step: 5 },
+  'suited astronaut': { range: [80, 130], step: 5 },
 }
 
 /**
@@ -821,7 +828,8 @@ export const fieldStrengthFromWeight: Generator = {
     const w = WORLDS[turn % WORLDS.length]!
     const object = pick(r, w.objects)
     const { range, step } = OBJECT_MASS[object]!
-    const m = stepped(r, range[0], range[1], step)
+    // Never 100 or 1000 kg, where the weight is the field strength with its point moved.
+    const m = draw(r, (r) => stepped(r, range[0], range[1], step), (m) => m !== 100 && m !== 1000)
     const W = clean(m * w.g)
     const prompt = pick(r, [
       `${cap(an(object))} of mass ${prose(m)} kg has a weight of ${prose(W)} N ${w.where}. Calculate the gravitational field strength ${w.at}, in N/kg.`,
@@ -855,17 +863,19 @@ interface Vertical {
   then: string
   mass: [number, number]
   step: number
-  other: [number, number]
+  /** The upward force as a multiple of the weight, as each moment really has it. */
+  ratio: [number, number]
+  /** The upward force is a whole multiple of this many newtons. */
   oStep: number
 }
 const VERTICAL: Vertical[] = [
-  { text: (m, F) => `A skydiver of mass ${m} kg is falling at terminal velocity. The parachute opens and air resistance rises to ${F} N.`, who: 'the skydiver', force: 'Air resistance', up: true, then: 'the skydiver decelerates', mass: [60, 100], step: 1, other: [1000, 2000], oStep: 50 },
-  { text: (m, F) => `A skydiver of mass ${m} kg has just jumped from a plane. Air resistance on the skydiver is ${F} N.`, who: 'the skydiver', force: 'Air resistance', up: false, then: 'the skydiver speeds up', mass: [60, 100], step: 1, other: [100, 500], oStep: 50 },
-  { text: (m, F) => `A hot-air balloon and its basket have a total mass of ${m} kg. The hot air gives an upward force of ${F} N.`, who: 'the balloon', force: 'The hot air pushes with', up: true, then: 'the balloon accelerates upwards', mass: [400, 800], step: 50, other: [4000, 9000], oStep: 100 },
-  { text: (m, F) => `A drone of mass ${m} kg takes off. Its rotors push it upwards with a force of ${F} N.`, who: 'the drone', force: 'The rotors push with', up: true, then: 'the drone accelerates upwards', mass: [2, 5], step: 1, other: [25, 70], oStep: 1 },
-  { text: (m, F) => `A helicopter of mass ${m} kg is descending. Its rotors provide an upward lift of ${F} N.`, who: 'the helicopter', force: 'Lift', up: false, then: 'the helicopter speeds up as it descends', mass: [2000, 4000], step: 100, other: [15000, 40000], oStep: 1000 },
-  { text: (m, F) => `A bungee jumper of mass ${m} kg reaches the lowest point of the jump. The tension in the cord is ${F} N.`, who: 'the jumper', force: 'Tension', up: true, then: 'the jumper is pulled back upwards', mass: [60, 90], step: 1, other: [1500, 2500], oStep: 100 },
-  { text: (m, F) => `A crate of mass ${m} kg is lowered by a rope. The tension in the rope is ${F} N.`, who: 'the crate', force: 'Tension', up: false, then: 'the crate speeds up as it is lowered', mass: [50, 200], step: 10, other: [300, 2000], oStep: 50 },
+  { text: (m, F) => `A skydiver of mass ${m} kg is falling at terminal velocity. The parachute opens and air resistance rises to ${F} N.`, who: 'the skydiver', force: 'Air resistance', up: true, then: 'the skydiver decelerates', mass: [60, 100], step: 1, ratio: [1.5, 2.5], oStep: 50 },
+  { text: (m, F) => `A skydiver of mass ${m} kg has just jumped from a plane. Air resistance on the skydiver is ${F} N.`, who: 'the skydiver', force: 'Air resistance', up: false, then: 'the skydiver speeds up', mass: [60, 100], step: 1, ratio: [0.1, 0.5], oStep: 10 },
+  { text: (m, F) => `A hot-air balloon and its basket have a total mass of ${m} kg. The upthrust on the balloon is ${F} N.`, who: 'the balloon', force: 'Upthrust', up: true, then: 'the balloon accelerates upwards', mass: [400, 800], step: 50, ratio: [1.02, 1.1], oStep: 10 },
+  { text: (m, F) => `A drone of mass ${m} kg takes off. Its rotors push it upwards with a force of ${F} N.`, who: 'the drone', force: 'The rotors push with', up: true, then: 'the drone accelerates upwards', mass: [2, 5], step: 1, ratio: [1.2, 2], oStep: 1 },
+  { text: (m, F) => `A helicopter of mass ${m} kg is descending. Its rotors provide an upward lift of ${F} N.`, who: 'the helicopter', force: 'Lift', up: false, then: 'the helicopter speeds up as it descends', mass: [2000, 4000], step: 100, ratio: [0.8, 0.95], oStep: 100 },
+  { text: (m, F) => `A bungee jumper of mass ${m} kg reaches the lowest point of the jump. The tension in the cord is ${F} N.`, who: 'the jumper', force: 'Tension', up: true, then: 'the jumper is pulled back upwards', mass: [60, 90], step: 1, ratio: [1.5, 3], oStep: 50 },
+  { text: (m, F) => `A crate of mass ${m} kg is lowered by a rope. The tension in the rope is ${F} N.`, who: 'the crate', force: 'Tension', up: false, then: 'the crate speeds up as it is lowered', mass: [50, 200], step: 10, ratio: [0.7, 0.95], oStep: 10 },
 ]
 
 /**
@@ -885,13 +895,15 @@ export const resultantWithWeight: Generator = {
       r,
       (r) => {
         const m = stepped(r, c.mass[0], c.mass[1], c.step)
-        const F = stepped(r, c.other[0], c.other[1], c.oStep)
         const W = clean(m * G)
+        // The upward force from the multiples of oStep inside the context's share of the weight.
+        const lo = Math.ceil((W * c.ratio[0]) / c.oStep)
+        const hi = Math.floor((W * c.ratio[1]) / c.oStep)
+        const F = lo <= hi ? int(r, lo, hi) * c.oStep : 0
         return { m, F, W, R: clean(Math.abs(F - W)) }
       },
-      // The two forces differ by at least a twentieth of the weight, and the resultant is
-      // never the mass's own figure.
-      ({ m, F, W, R }) => (c.up ? F > W : F < W) && R >= W / 20 && R !== m && atMost(W, 1),
+      // The resultant is never the mass's own figure.
+      ({ m, F, W, R }) => F > 0 && (c.up ? F > W : F < W) && R !== m && R !== F && atMost(W, 1) && atMost(R, 1),
     )
     const direction = c.up ? 'upwards' : 'downwards'
     const [big, small] = c.up ? [F, W] : [W, F]
