@@ -443,8 +443,11 @@ $3.0 \times 10^{8}$, "to 2 significant figures", the written question's unit on 
   generators covering all 42 numeric slots in the six topics, each with structural tests on
   the printed working; `show()` now clears residue at twelve significant figures first, since
   a six-figure product like 750 × 9.8 × 47 kept its binary tail under the old ten decimal places.
-- [ ] **2. Forces A.** Describing motion (speed, acceleration, the SUVAT equation), Newton's laws,
-  resultant forces and work done, stopping distances and reaction time.
+- [x] **2. Forces A.** Describing motion (speed, acceleration, the SUVAT equation), Newton's laws,
+  resultant forces and work done, stopping distances and reaction time. Shipped 9 October 2026
+  (v10.89.0): 32 generators covering the 34 numeric slots without a diagram in the four topics (the
+  eight graph and free-body-diagram questions stay written); the helpers every Physics file
+  shares moved into `generators/physics/build.ts`.
 - [ ] **3. Forces B.** Hooke's law and elastic energy, moments, levers and gears, momentum and
   collisions, pressure in fluids and upthrust.
 - [ ] **4. Electricity, waves, magnetism, atoms and space.** Charge, current, resistance, power
