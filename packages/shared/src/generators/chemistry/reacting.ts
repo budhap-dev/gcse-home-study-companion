@@ -3,7 +3,7 @@ import { pick } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { atMost, cap, near, numeric } from '../physics/build.ts'
 import { dpTolerance } from '../physics/format.ts'
-import { atoms, balanced, clean, clearOf, coef, distinct, equation, evenly, mathrm, mr, noOnes, range, sub, tenfold, written, type Equation, type Term } from './build.ts'
+import { atoms, balanced, clean, clearOf, coef, distinct, equation, evenly, mathrm, mr, noOnes, range, sub, tenfold, threeFigures, type Equation, type Term, written } from './build.ts'
 import { nameOf } from './compounds.ts'
 
 /**
@@ -159,7 +159,7 @@ export const massFromMoles: Generator = {
         solution: `Mass $= \\text{moles} \\times M_r = ${show(n)} \\times ${show(Mr)} = $ ${bold(m, 'g')}.`,
         method: [],
         answer: m,
-        tolerance: dpTolerance(m),
+        tolerance: threeFigures(dpTolerance(m), m),
       },
       // Second route: the mass over the Mr gives back the moles.
       { agrees: near(m / Mr, n), detail: `${m} ÷ ${Mr} = ${show(m / Mr)} mol` },
@@ -277,7 +277,7 @@ export const massOfProduct: Generator = {
         solution: `Moles of ${sub(c.from)} $= \\dfrac{${show(m)}}{${show(M1)}} = ${show(n)}$; ${ratioOf(c.eq, c.from, c.to)}; mass of ${sub(c.to)} $= ${show(n)} \\times ${show(M2)} = $ ${bold(out, 'g')}.`,
         method: [`moles of ${sub(c.from)}: $\\dfrac{${show(m)}}{${show(M1)}} = ${show(n)}$`],
         answer: out,
-        tolerance: dpTolerance(out),
+        tolerance: threeFigures(dpTolerance(out), out),
       },
       // Second route: the reactant's mass scaled by the ratio of the two masses per mole.
       { agrees: near((m * M2) / M1, out) && coef(c.eq, c.from) === coef(c.eq, c.to), detail: `${m} × ${M2} ÷ ${M1} = ${show((m * M2) / M1)} g` },
@@ -344,7 +344,7 @@ export const massFromMolesByRatio: Generator = {
         solution: `${cap(ratioOf(c.eq, c.from, c.to))}, so ${so(s)} mol of ${nameOf(c.to)} forms: $${show(p)} \\times ${show(M)} = $ ${bold(out, 'g')}.`,
         method: [`$${show(p)}$ mol of ${sub(c.to)}`],
         answer: out,
-        tolerance: dpTolerance(out),
+        tolerance: threeFigures(dpTolerance(out), out),
       },
       // Second route: the mass per mole of reactant, n × (k × M ÷ a), without the moles of product.
       { agrees: near((n * k * M) / a, out), detail: `${n} × ${k} × ${M} ÷ ${a} = ${show((n * k * M) / a)} g` },
@@ -694,7 +694,7 @@ function productBuild(slotKey: string, contexts: ProductContext[], asMass: boole
     const direct = (mL / mr(L.f)) * (k / L.n) * (asMass ? M : 1)
     return numeric(
       slot,
-      { prompt, solution, method, answer: d.out, tolerance: dpTolerance(d.out) },
+      { prompt, solution, method, answer: d.out, tolerance: threeFigures(dpTolerance(d.out), d.out) },
       { agrees: near(direct, d.out) && limitHolds(eq, d), detail: `${mL} ÷ ${mr(L.f)} × ${k}/${L.n}${asMass ? ` × ${M}` : ''} = ${show(direct)}` },
       { context: `${eq.text}:${c.product}`, m1: d.m1, m2: d.m2, n1: d.n1, n2: d.n2, limit: L.f, out: d.out },
     )
@@ -785,7 +785,7 @@ export const excessLeft: Generator = {
         solution,
         method: [`$${show(d.used)}$ mol of ${sub(E.f)} reacts`, `$${show(d.left)}$ mol left`],
         answer: d.out,
-        tolerance: dpTolerance(d.out),
+        tolerance: threeFigures(dpTolerance(d.out), d.out),
       },
       { agrees: near(second, d.out) && limitHolds(eq, d) && d.limit !== c.left, detail: `${mE} − ${show(d.used * ME)} = ${show(second)} g` },
       { context: `${eq.text}:${E.f}`, m1: d.m1, m2: d.m2, used: d.used, left: d.left, out: d.out },

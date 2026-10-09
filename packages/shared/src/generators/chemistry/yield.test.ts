@@ -6,7 +6,10 @@ import { clearOfHalf, roundTo, show } from '../format.ts'
 import { GENERATORS, generate } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { dpTolerance } from '../physics/format.ts'
-import { atoms, mr } from './build.ts'
+import { mark } from '../../marking.ts'
+import { figures as sigCount } from '../physics/build.ts'
+import { sigFigs } from '../physics/format.ts'
+import { atoms, mr, threeFigures } from './build.ts'
 import { ATOM_ECONOMY, yieldGenerators } from './yield.ts'
 
 /**
@@ -85,6 +88,9 @@ function worstShare(built: Generated[], key: (b: Generated) => unknown) {
   return { worst, fewest }
 }
 
+/** The slots whose answer comes from multiplying or dividing, where a correct three-figure rounding is marked right. */
+const WRAPPED = new Set(['yield-theoretical-mass', 'yield-mass-from-atom-economy', 'yield-atom-economy-and-yield'])
+
 describe('every yield and atom economy build', () => {
   it('has a generator for each numeric written slot, and nothing else', () => {
     expect(yieldGenerators.flatMap((g) => g.replaces).sort()).toEqual(['q1', 'q11', 'q12', 'q15', 'q17', 'q3', 'q5', 'q6', 'q8'].sort())
@@ -97,7 +103,7 @@ describe('every yield and atom economy build', () => {
         for (const b of build(g.id, id, 150)) {
           noArticle(b.question.prompt)
           if (b.question.type === 'numeric') expect(b.question.units, b.seed).toBeUndefined()
-          expect(tolerance(b), b.seed).toBe(dpTolerance(answer(b)))
+          expect(tolerance(b), b.seed).toBe(WRAPPED.has(g.id) ? threeFigures(dpTolerance(answer(b)), answer(b)) : dpTolerance(answer(b)))
           expect(b.question.solution, b.seed).toContain(`**${show(answer(b))}`)
           expect(b.question.markScheme.at(-1)!.description).toBe(show(answer(b)))
           // A two-digit count in maths is braced: H_{18}, never H_18 (an H₁ then an 8).
@@ -341,5 +347,36 @@ describe('applying atom economy and yield to a mass of reactants', () => {
     const many = build('yield-atom-economy-and-yield', 'q17', 1000)
     for (const key of [answer, (b: Generated) => values(b).AE, (b: Generated) => values(b).Y, (b: Generated) => values(b).m]) expect(worstShare(many, key).worst).toBeLessThanOrEqual(0.4)
     expect(worstShare(many, answer).fewest).toBeGreaterThanOrEqual(10)
+  })
+})
+
+describe('three-figure answers', () => {
+  it('marks the three-figure rounding of every multiplied or divided answer right', () => {
+    let longer = 0
+    for (const g of yieldGenerators.filter((x) => WRAPPED.has(x.id))) {
+      for (const id of g.replaces) {
+        for (const b of build(g.id, id, 300)) {
+          if (b.question.type !== 'numeric') continue
+          const a = b.question.answer
+          expect(mark(b.question, String(sigFigs(a, 3))).correct, `${g.id} ${b.seed}: ${a}`).toBe(true)
+          if (sigCount(a) > 3) longer++
+        }
+      }
+    }
+    expect(longer).toBeGreaterThan(50)
+  })
+
+  it('keeps a summed Mr exact: 134.5 is not marked right as 135', () => {
+    let wide = 0
+    for (const b of build('yield-total-mr-of-reactants', 'q8', 300)) {
+      if (b.question.type !== 'numeric') continue
+      const a = b.question.answer
+      expect(tolerance(b), b.seed).toBe(dpTolerance(a))
+      if (sigCount(a) > 3) {
+        wide++
+        expect(mark(b.question, String(sigFigs(a, 3))).correct, `${b.seed}: ${a}`).toBe(false)
+      }
+    }
+    expect(wide).toBeGreaterThan(10)
   })
 })

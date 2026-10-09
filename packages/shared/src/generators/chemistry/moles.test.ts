@@ -6,7 +6,9 @@ import { fixed, show } from '../format.ts'
 import { GENERATORS, generate } from '../index.ts'
 import { dpTolerance, sfTolerance, sigFigs } from '../physics/format.ts'
 import type { Generated } from '../types.ts'
-import { atoms, equationTex, mr, toPlaces } from './build.ts'
+import { mark } from '../../marking.ts'
+import { figures as sigCount } from '../physics/build.ts'
+import { atoms, equationTex, mr, threeFigures, toPlaces } from './build.ts'
 import { MOLE_POOLS } from './moles.ts'
 
 /**
@@ -256,7 +258,8 @@ describe('moles, mass and Mr', () => {
       expect(places(m)).toBeLessThanOrEqual(2)
       expect(m >= 0.5 && m <= 200).toBe(true)
       expect(b.question.solution).toBe(`$${show(n!)} \\times ${show(M)} = ${show(m)}$ g.`)
-      expect(tolerance(b)).toBe(toPlaces(m, Math.max(places(m), places(n!))))
+      // A product: its three-figure rounding is marked right as well (10.32 g as 10.3 g).
+      expect(tolerance(b)).toBe(threeFigures(toPlaces(m, Math.max(places(m), places(n!))), m))
     }
     spread(built)
   })
@@ -296,7 +299,7 @@ describe('moles, mass and Mr', () => {
       expect(eq).toContain(`\\mathrm{${c.replace(/(\d+)/g, '_$1')}} \\rightarrow`)
       expect(b.question.solution).toContain(`$\\dfrac{${show(mass!)}}{${show(Mc)}} \\times ${show(Mp)} = ${show(ans)}$ g.`)
       expect(method(b)).toEqual([`scales by $\\dfrac{${show(mass!)}}{${show(Mc)}}$`])
-      expect(tolerance(b)).toBe(toPlaces(ans, Math.max(places(ans), places(mass!))))
+      expect(tolerance(b)).toBe(threeFigures(toPlaces(ans, Math.max(places(ans), places(mass!))), ans))
     }
     expect(contexts(built).size).toBe(8)
     for (const name of contexts(built)) {
@@ -425,6 +428,37 @@ describe('moles, mass and Mr', () => {
     }
   })
 
+  /** The slots whose answer is a product or quotient, whose three-figure rounding is marked right. */
+  const WIDENED = new Set(['mass-from-moles', 'reacting-mass-from-decomposition'])
+
+  it('marks the three-figure rounding of a product right, and keeps sums and differences exact', () => {
+    let longer = 0
+    for (const id of WIDENED) {
+      const slot = id === 'mass-from-moles' ? 'q8' : 'q10'
+      for (const b of build(id, slot, 600)) {
+        if (b.question.type !== 'numeric') continue
+        const a = b.question.answer
+        expect(mark(b.question, String(sigFigs(a, 3))).correct, `${id} ${b.seed}: ${a}`).toBe(true)
+        if (sigCount(a) > 3) longer++
+      }
+    }
+    expect(longer).toBeGreaterThan(100)
+    // A mass difference (23 − 12.88 = 10.12 g) and a closed system's mass are read, not
+    // calculated by multiplying: their three-figure rounding is wrong.
+    let exact = 0
+    for (const [id, slot] of [['mass-of-gas-escaping', 'q4'], ['closed-system-mass', 'q2']] as const) {
+      for (const b of build(id, slot, 600)) {
+        if (b.question.type !== 'numeric') continue
+        const a = b.question.answer
+        if (sigCount(a) > 3 && sigFigs(a, 3) !== a) {
+          exact++
+          expect(mark(b.question, String(sigFigs(a, 3))).correct, `${id} ${b.seed}: ${a}`).toBe(false)
+        }
+      }
+    }
+    expect(exact).toBeGreaterThan(100)
+  })
+
   it('never marks more loosely than half a unit in the last place of the figures it gives', () => {
     // The answer's printed places are not enough: 0.79, 0.83 and 0.78 g have a mean of 0.80,
     // printed 0.8, and half a unit in its last place would mark 0.81 right.
@@ -444,7 +478,10 @@ describe('moles, mass and Mr', () => {
         const given = (b.question.prompt.replace(/\(Mr.*$/, '').match(/\d+(?:\.\d+)?/g) ?? []).map((f) => (f.includes('.') ? f.split('.')[1]!.length : 0))
         const dp = Math.max(0, ...given)
         if (dp > places(answer(b))) trailing++
-        expect(tolerance(b), `${id} ${b.seed}: ${answer(b)} from figures to ${dp} places`).toBeLessThanOrEqual(dp === 0 && places(answer(b)) === 0 ? 0 : 0.5 * 10 ** -Math.max(dp, places(answer(b))) + 1e-12)
+        const exact = dp === 0 && places(answer(b)) === 0 ? 0 : 0.5 * 10 ** -Math.max(dp, places(answer(b)))
+        // A product or quotient may also take its three-figure rounding; nothing else is widened.
+        const bound = WIDENED.has(id) ? threeFigures(exact, answer(b)) : exact
+        expect(tolerance(b), `${id} ${b.seed}: ${answer(b)} from figures to ${dp} places`).toBeLessThanOrEqual(bound + 1e-12)
       }
     }
     // The case the rule is for turns up: an answer printed with fewer places than its givens.

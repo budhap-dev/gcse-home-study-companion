@@ -6,7 +6,10 @@ import { show } from '../format.ts'
 import { GENERATORS, generate } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { dpTolerance } from '../physics/format.ts'
-import { atoms, mr } from './build.ts'
+import { mark } from '../../marking.ts'
+import { figures as sigCount } from '../physics/build.ts'
+import { sigFigs } from '../physics/format.ts'
+import { atoms, mr, threeFigures } from './build.ts'
 import { reactingGenerators } from './reacting.ts'
 
 /**
@@ -107,6 +110,19 @@ function massesIn(prompt: string): Record<string, number> {
   return out
 }
 
+/**
+ * The slots whose answer comes from multiplying or dividing, where a correct three-figure
+ * rounding (10.3 for 10.32 g) is marked right; every other slot keeps its exact tolerance.
+ */
+const WRAPPED = new Set([
+  'reacting-mass-from-moles',
+  'reacting-mass-of-product',
+  'reacting-mass-by-ratio',
+  'reacting-limiting-moles-from-masses',
+  'reacting-limiting-mass-from-masses',
+  'reacting-excess-left',
+])
+
 describe('every reacting-masses build', () => {
   it('has a generator for each numeric written slot it claims, and nothing else', () => {
     expect(reactingGenerators.flatMap((g) => g.replaces).sort()).toEqual(['q11', 'q12', 'q13', 'q15', 'q17', 'q2', 'q4', 'q5', 'q8', 'q9'].sort())
@@ -120,7 +136,7 @@ describe('every reacting-masses build', () => {
           noArticle(b.question.prompt)
           expect(b.question.type).toBe('numeric')
           if (b.question.type === 'numeric') expect(b.question.units, b.seed).toBeUndefined()
-          expect(tolerance(b), b.seed).toBe(dpTolerance(answer(b)))
+          expect(tolerance(b), b.seed).toBe(WRAPPED.has(g.id) ? threeFigures(dpTolerance(answer(b)), answer(b)) : dpTolerance(answer(b)))
           expect(b.question.solution, b.seed).toContain(`**${show(answer(b))}`)
           expect(b.question.markScheme.at(-1)!.description).toBe(show(answer(b)))
           // A two-digit count in maths is braced: H_{18}, never H_18 (an H₁ then an 8).
@@ -452,4 +468,28 @@ describe('spread across builds', () => {
       expect(fewest).toBeGreaterThanOrEqual(10)
     })
   }
+})
+
+describe('three-figure answers', () => {
+  it('marks the three-figure rounding of every multiplied or divided answer right', () => {
+    let longer = 0
+    for (const g of reactingGenerators.filter((x) => WRAPPED.has(x.id))) {
+      for (const id of g.replaces) {
+        for (const b of build(g.id, id, 300)) {
+          if (b.question.type !== 'numeric') continue
+          const a = b.question.answer
+          expect(mark(b.question, String(sigFigs(a, 3))).correct, `${g.id} ${b.seed}: ${a}`).toBe(true)
+          if (sigCount(a) > 3) longer++
+        }
+      }
+    }
+    // The case the rule is for turns up.
+    expect(longer).toBeGreaterThan(100)
+  })
+
+  it('keeps an exact answer exact: a mass worked from moles alone is not widened', () => {
+    for (const g of reactingGenerators.filter((x) => !WRAPPED.has(x.id))) {
+      for (const id of g.replaces) for (const b of build(g.id, id, 100)) expect(tolerance(b), `${g.id} ${b.seed}`).toBe(dpTolerance(answer(b)))
+    }
+  })
 })

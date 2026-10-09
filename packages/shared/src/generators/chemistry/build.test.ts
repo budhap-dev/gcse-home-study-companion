@@ -21,6 +21,7 @@ import {
   range,
   sub,
   tenfold,
+  threeFigures,
   toPlaces,
   written,
 } from './build.ts'
@@ -169,5 +170,13 @@ describe('the one table of names', () => {
     expect(() => nameOf('XeF4')).toThrow()
     expect(factual('CaCO3').fact).toBe('is the main compound in limestone')
     expect(() => factual('CuO')).toThrow()
+  })
+
+  it('widens a calculated answer so its three-figure rounding is right', () => {
+    expect(threeFigures(0.005, 10.32)).toBe(0.05)
+    expect(Math.abs(10.3 - 10.32)).toBeLessThanOrEqual(threeFigures(0.005, 10.32))
+    expect(threeFigures(0.00005, 0.1755)).toBe(0.0005)
+    expect(threeFigures(0.05, 2.5)).toBe(0.05)
+    expect(threeFigures(0, 12)).toBe(0)
   })
 })

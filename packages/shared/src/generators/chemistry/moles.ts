@@ -3,7 +3,7 @@ import { cap, closes, near, numeric, prose, stepped, tex } from '../physics/buil
 import { clearAtSigFigs, dpTolerance, sfTolerance, sigFigs, sigText } from '../physics/format.ts'
 import { pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { clean, clearOf, equation, equationTex, evenly, mr, places, powerOfTen, range, sub, tenfold, toPlaces, type Equation } from './build.ts'
+import { clean, clearOf, equation, equationTex, evenly, mr, places, powerOfTen, range, sub, tenfold, threeFigures, toPlaces, type Equation } from './build.ts'
 import { nameOf } from './compounds.ts'
 
 /**
@@ -416,7 +416,7 @@ export const massFromMoles: Generator = {
         solution: closes(`${show(s.n)} \\times ${show(s.M)}`, s.m, 'g'),
         method: [],
         answer: s.m,
-        tolerance: toPlaces(s.m, Math.max(places(s.m), places(s.n))),
+        tolerance: threeFigures(toPlaces(s.m, Math.max(places(s.m), places(s.n))), s.m),
       },
       { agrees: near(s.m / s.M, s.n), detail: `${show(s.m)} ÷ ${s.M} = ${show(s.m / s.M)} mol` },
       { context: f.name, formula: s.formula, n: s.n, m: s.m },
@@ -467,7 +467,7 @@ export const reactingMassDecomposition: Generator = {
         solution: `The equation $${decomposition(c)}$ gives one ${sub(product)} for each ${sub(c.carbonate)}, so ${closes(`${scale} \\times ${show(Mp)}`, ans, 'g')}`,
         method: [`scales by $${scale}$`],
         answer: ans,
-        tolerance: toPlaces(ans, Math.max(places(ans), places(h.m))),
+        tolerance: threeFigures(toPlaces(ans, Math.max(places(ans), places(h.m))), ans),
       },
       // Second route: conservation of mass — the carbonate less the other product.
       { agrees: near(clean(h.m - other(h)), ans), detail: `${show(h.m)} − ${show(other(h))} = ${show(h.m - other(h))} g` },
