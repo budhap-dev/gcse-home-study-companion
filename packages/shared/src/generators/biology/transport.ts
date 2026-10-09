@@ -1,8 +1,8 @@
-import type { Question } from '../../content/questions.ts'
 import { clearOfHalf, fixed, roundTo, show } from '../format.ts'
 import { atMost, cap, figures, near, numeric, tex } from '../physics/build.ts'
 import { draw, int, pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
+import { between, layered, rich, unitsOf } from './build.ts'
 import { clean, clearOf, distinct, evenly, noOnes, powerOfTen, range, shiftFree, tenfold, threeFigures, toPlaces, word } from '../chemistry/build.ts'
 
 /**
@@ -35,43 +35,8 @@ const ms = (x: number) => (x < 0 ? `-${show(-x)}` : `+${show(x)}`)
 const term = (x: number) => (x < 0 ? `(${fixed(x, 1)})` : fixed(x, 1))
 /** Two decimal places, as a balance reading to 0.01 g prints a mass: 2.50. */
 const g2 = (x: number) => fixed(x, 2)
-/** The written slot's units field, which every generated question keeps. */
-const unitsOf = (slot: Question) => (slot.type === 'numeric' ? slot.units : undefined)
-/**
- * A candidate drawn evenly at each level in turn: among the values of the first key, then of the
- * second among the candidates left, and so on. The answer first then an input keeps one starting
- * mass that divides cleanly (4.00 g, 1.25 g) from filling a context, as drawing the answer alone
- * let it; an input first then the answer does the same for a time or a field of view. Pools are
- * built once per key.
- */
-const LAYERS = new Map<string, unknown[]>()
-function layered<T>(r: Rng, key: string, make: () => T[], ...levels: ((t: T) => number | string)[]): T {
-  let pool = LAYERS.get(key) as T[] | undefined
-  if (!pool) {
-    pool = make()
-    if (!pool.length) throw new Error(`no candidates for ${key}`)
-    LAYERS.set(key, pool)
-  }
-  for (const level of levels) {
-    const value: number | string = pick(r, [...new Set(pool.map(level))])
-    pool = pool.filter((t) => level(t) === value)
-  }
-  return pick(r, pool)
-}
-/**
- * Only the candidates whose first key has at least `n` values of the second (and of any further
- * keys): no answer that one mass, one edge or one thickness alone gives.
- */
-function rich<T>(pool: T[], first: (t: T) => number, second: (t: T) => number, n: number, ...more: ((t: T) => number)[]): T[] {
-  return [second, ...more].reduce((left, key) => {
-    const seen = new Map<number, Set<number>>()
-    for (const t of left) seen.set(first(t), (seen.get(first(t)) ?? new Set()).add(key(t)))
-    return left.filter((t) => seen.get(first(t))!.size >= n)
-  }, pool)
-}
 /** The factor in maths: exact if it ends within 4 places, else its first 4 places and an ellipsis. */
 const factorTex = (x: number) => (atMost(x, 4) ? show(x) : `${String(Math.floor(x * 1e4) / 1e4)}\\ldots`)
-const between = (x: number, [lo, hi]: readonly [number, number]) => x >= lo - 1e-9 && x <= hi + 1e-9
 
 // =============================================================================================
 // Diffusion, osmosis and active transport: the potato cylinders of required practical 3
@@ -890,7 +855,6 @@ const SCARRINGS: Scarring[] = AREA_LOSSES.flatMap((A) =>
 ).filter(
   (x) => x.k >= 0.11 && clearOfHalf(x.exact, 2, 0.05) && !powerOfTen(x.k) && distinct(x.k, x.A.f, x.T.f) && Math.abs(x.exact - x.k) <= toPlaces(x.k, 2),
 )
-
 
 /** Area factor ÷ thickness factor to 2 decimal places: written as q13 (0.5 ÷ 3, 0.17). */
 export const fickDisease: Generator = {

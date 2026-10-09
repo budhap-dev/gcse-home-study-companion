@@ -1,8 +1,9 @@
 import { fixed, show } from '../format.ts'
 import { atMost, cap, closes, figures, near, numeric, prose, sciExact, tex } from '../physics/build.ts'
-import { an, byFirst, clean, clearOf, distinct, evenly, noOnes, powerOfTen, range, shiftFree, tenfold, word } from '../chemistry/build.ts'
+import { byFirst, clean, clearOf, distinct, evenly, noOnes, powerOfTen, range, shiftFree, tenfold, word } from '../chemistry/build.ts'
 import { pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
+import { onGrid, whole, WithArticle as A, withArticle as a } from './build.ts'
 
 /**
  * Microscopy, microbes and cells (AQA 8461, 4.1.1.2 to 4.1.1.5, 4.1.2 and 4.6.1.2). Every
@@ -31,13 +32,6 @@ const SCALE = 'microscopes-magnification-and-scale'
 const MICROBES = 'microbes-and-microscopy'
 const CELLS = 'cells-and-how-they-are-specialised'
 const MITOSIS = 'cells-mitosis-and-growth'
-
-/** x lies on a grid of `step`: 12.5 is on the 0.5 grid, 12.3 is not. */
-const onGrid = (x: number, step: number) => Math.abs(x / step - Math.round(x / step)) < 1e-9
-const whole = (x: number) => Math.abs(x - Math.round(x)) < 1e-9
-/** "A cheek cell", "An onion epidermis cell", "A *Paramecium*". */
-const A = (noun: string) => cap(an(noun.replace(/^\*/, ''))) + ' ' + noun
-const a = (noun: string) => an(noun.replace(/^\*/, '')) + ' ' + noun
 
 // ---------------------------------------------------------------------------------------------
 // What is seen: real cells and organelles, with their real sizes
