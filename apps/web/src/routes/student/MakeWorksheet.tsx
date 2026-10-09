@@ -31,7 +31,11 @@ export function MakeWorksheet() {
   const [level, setLevel] = useState<WorksheetLevel>('higher')
   const [count, setCount] = useState<number>(10)
   const [versions, setVersions] = useState(1)
+  // The code fixes which questions and numbers the sheet has, so a link or a printout
+  // matches its answer sheet. It is printed on paper, not shown here: six random letters
+  // meant nothing on screen (9 October 2026), so "Different questions" counts sets instead.
   const [code, setCode] = useState(newSheetCode)
+  const [set, setSet] = useState(1)
   // One code per printed version; drawn once, so the print link does not change under the reader.
   const [more] = useState(() => [newSheetCode(), newSheetCode(), newSheetCode()])
 
@@ -124,7 +128,7 @@ export function MakeWorksheet() {
           {ready ? (
             <>
               <strong>{items.length} question{items.length === 1 ? '' : 's'}</strong> from {fromTopics} topics · {marks} marks
-              {fresh > 0 && <> · {fresh} with new numbers</>} · sheet <strong className="font-mono">{code}</strong>
+              {fresh > 0 && <> · {fresh} with new numbers</>}
               {items.length < count && <span className="block text-sm text-ink-2">Only {items.length} questions at this level can be marked on screen across these topics; tick more topics for {count}.</span>}
             </>
           ) : (
@@ -149,7 +153,8 @@ export function MakeWorksheet() {
         {ready && (
           <div className="flex flex-wrap items-start gap-2">
             <ShareSheet small path={mixedPath(spec)} title={`${subject.name} · mixed worksheet ${code}`} />
-            <button type="button" onClick={() => setCode(newSheetCode())} className="flex h-9 items-center rounded-lg border border-rule bg-surface px-3 text-sm font-bold">Different questions</button>
+            <button type="button" onClick={() => { setCode(newSheetCode()); setSet((n) => n + 1) }} className="flex h-9 items-center rounded-lg border border-rule bg-surface px-3 text-sm font-bold">Different questions</button>
+            {set > 1 && <span role="status" className="flex h-9 items-center text-sm text-ink-2">Set {set} picked: new questions and numbers.</span>}
           </div>
         )}
       </section>
