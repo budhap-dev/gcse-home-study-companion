@@ -448,8 +448,11 @@ $3.0 \times 10^{8}$, "to 2 significant figures", the written question's unit on 
   (v10.89.0): 32 generators covering the 34 numeric slots without a diagram in the four topics (the
   eight graph and free-body-diagram questions stay written); the helpers every Physics file
   shares moved into `generators/physics/build.ts`.
-- [ ] **3. Forces B.** Hooke's law and elastic energy, moments, levers and gears, momentum and
-  collisions, pressure in fluids and upthrust.
+- [x] **3. Forces B.** Hooke's law and elastic energy, moments, levers and gears, momentum and
+  collisions, pressure in fluids and upthrust. Shipped 9 October 2026 (v10.90.0): 35 generators
+  covering the 42 numeric slots without a diagram in the four topics (the five
+  questions drawn round a diagram stay written); collisions are drawn only where they can happen,
+  and vehicle crashes keep at most 70% of the kinetic energy.
 - [ ] **4. Electricity, waves, magnetism, atoms and space.** Charge, current, resistance, power
   and energy in circuits, series and parallel rules, mains and transformers; the wave equation,
   lenses, sound and echoes, the electromagnetic spectrum; the motor effect, half-life, red shift.

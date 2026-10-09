@@ -27,6 +27,10 @@ import { energyGenerators } from './physics/energy.ts'
 import { particleGenerators } from './physics/particles.ts'
 import { motionGenerators } from './physics/motion.ts'
 import { forceGenerators } from './physics/forces.ts'
+import { hookeGenerators } from './physics/hooke.ts'
+import { momentGenerators } from './physics/moments.ts'
+import { momentumGenerators } from './physics/momentum.ts'
+import { pressureGenerators } from './physics/pressure.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -77,6 +81,10 @@ export const GENERATORS: Generator[] = [
   ...particleGenerators,
   ...motionGenerators,
   ...forceGenerators,
+  ...hookeGenerators,
+  ...momentGenerators,
+  ...momentumGenerators,
+  ...pressureGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))
