@@ -1,7 +1,9 @@
 import type { Question } from '../../content/questions.ts'
-import { atMost, cap } from '../physics/build.ts'
+import { show } from '../format.ts'
+import { atMost, cap, figures } from '../physics/build.ts'
+import { clearAtSigFigs, sfTolerance, sigFigs, sigText } from '../physics/format.ts'
 import { pick, type Rng } from '../random.ts'
-import { an } from '../chemistry/build.ts'
+import { an, clean, places, toPlaces } from '../chemistry/build.ts'
 
 /**
  * What the Biology generator files share beyond the subject-free helpers in ../physics/build.ts,
@@ -25,6 +27,49 @@ export const whole = (x: number) => atMost(x, 0)
 export const onGrid = (x: number, step: number) => Math.abs(x / step - Math.round(x / step)) < 1e-9
 /** Greatest common divisor of two whole numbers. */
 export const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b))
+/** Least common multiple of two whole numbers. */
+export const lcm = (a: number, b: number) => (a * b) / gcd(a, b)
+
+// ---------------------------------------------------------------------------------------------
+// Answers: exact to three figures, or rounded to three
+// ---------------------------------------------------------------------------------------------
+
+/** Exact to `dp` decimal places, with at most three significant figures. */
+export const tidy = (x: number, dp = 2) => atMost(x, dp) && figures(clean(x)) <= 3
+/** An exact answer's room: half a unit in the last place it prints (capped at 1.9%), none for a whole number. */
+export const halfLastPlace = (x: number) => toPlaces(x, places(x))
+/** x cut (not rounded) to n significant figures, as a calculator display is read: 23.4375 to 5 is "23.437". */
+export function cut(x: number, n: number): string {
+  const e = Math.floor(Math.log10(Math.abs(x)))
+  const dp = Math.max(0, n - 1 - e)
+  return (Math.floor(x * 10 ** dp + 1e-9) / 10 ** dp).toFixed(dp)
+}
+/** x to `dp` places, with an ellipsis when it runs on: 20.761\ldots, or 20.8 when it ends there. */
+export const trail = (x: number, dp: number) => (atMost(x, dp) ? show(x) : `${(Math.floor(x * 10 ** dp + 1e-9) / 10 ** dp).toFixed(dp)}\\ldots`)
+/** The full value as a calculator shows it: all of it when it ends within six places, else cut to six figures. */
+export const full = (x: number) => (atMost(x, 6) ? show(x) : `${cut(x, 6)}\\ldots`)
+
+/** A calculated answer: itself when it has three figures at most, else its 3-figure rounding. */
+export interface Figure {
+  exact: number
+  answer: number
+  rounded: boolean
+}
+export const toThree = (x: number): Figure => (tidy(x, 4) ? { exact: x, answer: clean(x), rounded: false } : { exact: x, answer: sigFigs(x, 3), rounded: true })
+/** Rounds clearly, and does not end in a 0 the answer box would drop (24.0 prints as 24). */
+export const fair = (f: Figure) => !f.rounded || (clearAtSigFigs(f.exact, 3) && sigText(f.exact, 3) === show(f.answer))
+/** Half a unit in the last place of an exact answer, or in the third figure of a rounded one. */
+export const figureTolerance = (f: Figure) => (f.rounded ? sfTolerance(f.answer, 3) : halfLastPlace(f.answer))
+/** The end of a working in maths: "= 25$" or "= 23.4375$, which is 23.4 to 3 significant figures". */
+export const ending = (f: Figure, unit = '') =>
+  f.rounded ? `= ${full(f.exact)}$${unit}, which is ${show(f.answer)}${unit} to 3 significant figures` : `= ${show(f.answer)}$${unit}`
+
+/**
+ * The room for a student who uses π = 3.14: the gap from the answer to the unrounded 3.14 value,
+ * plus half a unit for each rounding the working may take (one for a circle; two for a ring, whose
+ * two areas may each be rounded first), and never less than half a unit at 1 decimal place.
+ */
+export const piRoom = (answer: number, raw314: number, roundings: number) => clean(Math.max(0.05, Math.abs(answer - raw314) + 0.05 * roundings))
 
 // ---------------------------------------------------------------------------------------------
 // Words

@@ -3,8 +3,8 @@ import { atMost, cap, figures, near, numeric, prose, tex } from '../physics/buil
 import { clearAtSigFigs, sfTolerance, sigFigs, sigText } from '../physics/format.ts'
 import { draw, int, pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { between, gcd, layered, rich, unitsOf } from './build.ts'
-import { clean, clearOf, distinct, noOnes, places, powerOfTen, range, tenfold, threeFigures, toPlaces } from '../chemistry/build.ts'
+import { between, cut, gcd, halfLastPlace, layered, rich, tidy, unitsOf } from './build.ts'
+import { clean, clearOf, distinct, noOnes, powerOfTen, range, tenfold, threeFigures, toPlaces } from '../chemistry/build.ts'
 
 /**
  * Bioenergetics and the food tests (AQA 8461, 4.1.4.1 enzymes and required practical 5, 4.2.2.1
@@ -35,10 +35,6 @@ const FOOD = 'food-tests-and-calorimetry'
 const PHOTO = 'photosynthesis-and-limiting-factors'
 const RESP = 'aerobic-and-anaerobic-respiration'
 
-/** Exact to `dp` decimal places, with at most three significant figures. */
-const tidy = (x: number, dp = 2) => atMost(x, dp) && figures(clean(x)) <= 3
-/** An exact answer: half a unit in the last place it prints, none for a whole number. */
-const exactTolerance = (x: number) => threeFigures(toPlaces(x, places(x)), x)
 /** A fraction in maths: its decimal when that ends within four places, else p/q. */
 const fracTex = (p: number, q: number) => (atMost(p / q, 4) ? show(p / q) : `\\dfrac{${p}}{${q}}`)
 
@@ -110,7 +106,7 @@ function rateAt(t: number): Rate {
   return tidy(e) && near(e * t, 1000) ? { t, exact: true, R: e } : { t, exact: false, R: sigFigs(1000 / t, 3) }
 }
 /** The marking room: half a unit in the last place of an exact rate, the 3-figure room of a rounded one. */
-const rateTolerance = (x: Rate) => (x.exact ? exactTolerance(x.R) : sfTolerance(x.R, 3))
+const rateTolerance = (x: Rate) => (x.exact ? halfLastPlace(x.R) : sfTolerance(x.R, 3))
 /** The rate as printed: 16.7, or 1.30 with its trailing zero. */
 const rateText = (x: Rate) => (x.exact ? show(x.R) : sigText(1000 / x.t, 3))
 /** The rate after its fraction in maths: "= 20" or "\approx 16.7". */
@@ -230,7 +226,7 @@ export const enzymeTimesFaster: Generator = {
           `and $\\dfrac{1000/${show(x.t1)}}{1000/${show(x.t2)}} = \\dfrac{${show(x.t2)}}{${show(x.t1)}} = ${show(x.k)}$. More simply, **${show(x.k)} times the time means a rate ${show(x.k)} times smaller**, so ${c.fast} is **${show(x.k)} times** faster: ${c.why}.`,
         method: [`converts both times to rates, or compares the times directly: ${show(x.t2)} ÷ ${show(x.t1)}`],
         answer: x.k,
-        tolerance: exactTolerance(x.k),
+        tolerance: halfLastPlace(x.k),
         units: unitsOf(slot),
         line: `${show(x.k)} times faster`,
       },
@@ -560,7 +556,8 @@ export const calorimetryPerGram: Generator = {
           ? [`temperature rise ${b.dT} °C, and energy = ${b.V} × 4.2 × ${b.dT} = ${prose(b.E)} J`, `divides by ${show(b.m)} g, the mass of the food`]
           : [`uses mass of water × 4.2 × temperature rise: ${b.V} × 4.2 × ${b.dT} = ${prose(b.E)} J`, `divides by ${show(b.m)} g, the mass of the food`],
         answer: b.L,
-        tolerance: exactTolerance(b.L),
+        // An energy per gram can run to five figures (24 500 J/g): its 3-figure rounding is right too.
+        tolerance: threeFigures(halfLastPlace(b.L), b.L),
         units: unitsOf(slot),
         line: `${prose(b.L)} J/g`,
       },
@@ -736,7 +733,7 @@ export const calorimetryPacket: Generator = {
           `The other ${show(clean(100 - x.pct))} % was lost to the air and the apparatus, or was never released because the ${f.noun} did not burn completely — a simple calorimeter is expected to read low.`,
         method: [`energy = ${b.V} × 4.2 × ${b.dT} = ${prose(b.E)} J, so ${prose(b.L)} J/g`, `converts ${prose(x.P)} kJ per 100 g to ${prose(perGram)} J/g and divides`],
         answer: x.pct,
-        tolerance: exactTolerance(x.pct),
+        tolerance: halfLastPlace(x.pct),
         units: unitsOf(slot),
         line: `${show(x.pct)} %`,
       },
@@ -800,7 +797,7 @@ export const bubbleRate: Generator = {
         solution: `Rate = number ÷ time = ${x.n} ÷ ${x.t} = ${show(x.rate)} bubbles per minute.`,
         method: [`${x.n} ÷ ${x.t}`],
         answer: x.rate,
-        tolerance: exactTolerance(x.rate),
+        tolerance: halfLastPlace(x.rate),
         units: unitsOf(slot),
       },
       { agrees: near(x.rate * x.t, x.n), detail: `${show(x.rate)} × ${x.t} = ${show(x.rate * x.t)}` },
@@ -869,7 +866,7 @@ export const lampMoved: Generator = {
         solution: `${m.says}. Rate is proportional to light intensity, so $${x.R} ${op} ${n} = ${show(x.A)}$ bubbles per minute.`,
         method: [`${x.R} ${m.f > 1 ? '÷' : '×'} ${n}, because ${m.because}`],
         answer: x.A,
-        tolerance: exactTolerance(x.A),
+        tolerance: halfLastPlace(x.A),
         units: unitsOf(slot),
         line: show(x.A),
       },
@@ -884,12 +881,6 @@ export const lampMoved: Generator = {
 // q10: 1/d² to 2 significant figures
 // ---------------------------------------------------------------------------------------------
 
-/** The first n significant figures of x, cut short rather than rounded, for "0.001111…". */
-function cut(x: number, n: number): string {
-  const e = Math.floor(Math.log10(x))
-  const dp = Math.max(0, n - 1 - e)
-  return (Math.floor(x * 10 ** dp + 1e-9) / 10 ** dp).toFixed(dp)
-}
 interface Inverse {
   d: number
   exact: number
@@ -988,7 +979,7 @@ export const photosynthesisIncrease: Generator = {
         solution: `Increase = ${x.b} − ${x.a} = ${d}. Percentage increase = ${d} ÷ ${x.a} × 100 = ${show(x.pct)}%.`,
         method: [`(${x.b} − ${x.a}) ÷ ${x.a}`],
         answer: x.pct,
-        tolerance: exactTolerance(x.pct),
+        tolerance: halfLastPlace(x.pct),
         units: unitsOf(slot),
       },
       // Second route: the new rate as a multiple of the old.
@@ -1051,7 +1042,7 @@ export const oxygenPerHour: Generator = {
         solution: `Rate $= \\dfrac{\\text{volume}}{\\text{time}}$. ${route}${alt} Measuring the volume of gas is more reliable than counting bubbles, because bubbles differ in size.`,
         method: [`divides ${show(x.v)} by ${x.t} and scales to an hour (×60)${Number.isInteger(lots) ? `, or multiplies ${show(x.v)} by ${lots}` : ''}`],
         answer: x.rate,
-        tolerance: exactTolerance(x.rate),
+        tolerance: halfLastPlace(x.rate),
         units: unitsOf(slot),
         line: `${show(x.rate)} cm³ per hour`,
       },
@@ -1145,7 +1136,7 @@ export const inverseSquarePrediction: Generator = {
           `multiplies ${x.R} by ${atMost((p * p) / (q * q), 4) ? `${show((p * p) / (q * q))} (or by ${s1}/${s2})` : `${s1}/${s2}`}`,
         ],
         answer: x.A,
-        tolerance: exactTolerance(x.A),
+        tolerance: halfLastPlace(x.A),
         units: unitsOf(slot),
       },
       // Second route: rate × d² is the same at both distances.
@@ -1216,7 +1207,7 @@ export const respirometerRate: Generator = {
         solution: `$\\dfrac{${d.D}}{${d.t}} = ${show(d.rate)}$ mm/min.`,
         method: ['divides the distance by the time'],
         answer: d.rate,
-        tolerance: exactTolerance(d.rate),
+        tolerance: halfLastPlace(d.rate),
         units: unitsOf(slot),
         line: `${show(d.rate)} mm/min`,
       },
@@ -1370,7 +1361,7 @@ export const yeastBubbles: Generator = {
           'Averaging the three counts first and then dividing by the time gives the same answer as working out three rates and averaging those, but it is quicker.',
         method: [`mean of the three counts = ${x.m}`, `divides by the ${x.t} minutes`],
         answer: x.rate,
-        tolerance: exactTolerance(x.rate),
+        tolerance: halfLastPlace(x.rate),
         units: unitsOf(slot),
       },
       // Second route: the three rates averaged.
@@ -1466,7 +1457,7 @@ export const respirometerControl: Generator = {
           'increase divided by the original rate, × 100',
         ],
         answer: y.pct,
-        tolerance: exactTolerance(y.pct),
+        tolerance: halfLastPlace(y.pct),
         units: unitsOf(slot),
         line: `${show(y.pct)} %`,
       },
