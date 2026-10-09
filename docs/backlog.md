@@ -464,6 +464,29 @@ $3.0 \times 10^{8}$, "to 2 significant figures", the written question's unit on 
 With item 4, generators cover 174 of the 191 numeric Physics questions; the other 17 ask about a
 diagram or a recalled fact.
 
+## 7. Chemistry generators (9 October 2026)
+
+Asked for by the owner on 9 October 2026 ("now chemistry"), after Physics. Story GEN-5
+(Chemistry half). Chemistry has 103 numeric questions in 25 topics, none drawn round a diagram.
+The Physics method carries over: generators per topic file under `generators/chemistry/`, the
+release check on 1,000 seeds per slot (the rule that a generated question keeps the written
+unit now covers Chemistry too), structural tests on the printed working, and a review of every
+slot's samples before it ships. Relative atomic masses come from the AQA periodic table insert
+as `elements.ts` holds it, and every Mr is computed from its formula
+(`generators/chemistry/build.ts`), never typed.
+
+- [x] **1. Chemistry framework, formulae and amounts.** The Ar table, formula reader, Mr working
+  in the written style; generators for formulae and relative formula mass, conservation of mass
+  and moles, reacting masses and limiting reactants, yield and atom economy (37 slots). Shipped
+  9 October 2026 (v10.92.0): 33 generators cover all 37 slots. Every equation is checked for
+  balance when its file loads; one name table (`chemistry/compounds.ts`) names each formula
+  once; which reactant runs out is drawn evenly, so "fewer moles runs out" pays half the time.
+- [ ] **2. Solutions, gases and acids.** Concentrations and titrations, gas volumes, potable
+  and waste water, strong and weak acids, carboxylic acids (31 slots).
+- [ ] **3. The rest of the specification.** Energy changes and bond energies, rates,
+  equilibria and the Haber process, atoms and bonding, nanoparticles, materials, extraction
+  and corrosion, the atmosphere, life-cycle assessment, chromatography, alcohols (35 slots).
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are

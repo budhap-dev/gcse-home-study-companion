@@ -35,6 +35,10 @@ import { circuitGenerators } from './physics/circuits.ts'
 import { mainsGenerators } from './physics/mains.ts'
 import { waveGenerators } from './physics/waves.ts'
 import { atomGenerators } from './physics/atoms.ts'
+import { formulaGenerators } from './chemistry/formulae.ts'
+import { moleGenerators } from './chemistry/moles.ts'
+import { reactingGenerators } from './chemistry/reacting.ts'
+import { yieldGenerators } from './chemistry/yield.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -93,6 +97,10 @@ export const GENERATORS: Generator[] = [
   ...mainsGenerators,
   ...waveGenerators,
   ...atomGenerators,
+  ...formulaGenerators,
+  ...moleGenerators,
+  ...reactingGenerators,
+  ...yieldGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))
