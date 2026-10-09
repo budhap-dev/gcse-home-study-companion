@@ -500,6 +500,33 @@ as `elements.ts` holds it, and every Mr is computed from its formula
 
 With item 3, generators cover 90 of the 103 numeric Chemistry questions.
 
+## 8. Biology generators (9 October 2026)
+
+Asked for by the owner on 9 October 2026 ("biology"), after Chemistry. Story GEN-6 (Biology
+half). Biology has 164 numeric questions in 36 topics; 2 ask about a diagram and stay written.
+The Physics and Chemistry method carries over: generators per topic file under
+`generators/biology/`, the release check on 1,000 seeds per slot (the keep-the-written-unit rule
+now covers Biology too), structural tests on the printed working, and a review of every slot's
+samples before it ships. The subject-free helpers in `generators/physics/build.ts` and
+`generators/chemistry/build.ts` are shared; a calculated answer the prompt gives no precision
+for accepts its three-figure rounding (`threeFigures`).
+
+- [x] **1. Cells, microscopy and transport.** Magnification and scale, microbes and doubling,
+  cells and mitosis, diffusion and osmosis, exchange surfaces and Fick's law, leaf and root
+  tissues, transpiration (41 slots). Shipped 9 October 2026 (v10.95.0): 40 generators cover all
+  41 slots. Cell sizes, lens powers and all 51 chromosome numbers are real; the two-sperm
+  question uses mammals only (birds are polyspermic); a potometer table changes 1.5 to 3.5 times
+  across its factor, each row inside its own condition's range.
+- [ ] **2. Enzymes, energy and ecology.** Enzyme rates, food tests and calorimetry,
+  photosynthesis and the inverse square law, respiration, ecosystems and sampling, material
+  cycles and decay, plant hormones (32 slots).
+- [ ] **3. The human body and health.** Blood glucose and BMI, the heart and cardiac output,
+  hormones, nerves and reaction time, the eye, thermoregulation and the kidneys, the menstrual
+  cycle, lifestyle disease, pathogens, immunity and antibiotics (47 slots).
+- [ ] **4. Genetics and evolution.** DNA and protein synthesis, genetic crosses and pedigrees,
+  genetic disorders, meiosis, variation and natural selection, fossils and classification,
+  selective breeding (44 slots).
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are

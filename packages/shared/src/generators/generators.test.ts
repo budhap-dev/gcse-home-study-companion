@@ -57,11 +57,10 @@ describe('question generators', () => {
             expect(q.gradeBand).toBe(slot!.gradeBand)
             expect(q.discriminators).toEqual(slot!.discriminators)
             expect(q.markScheme.reduce((s, l) => s + l.marks, 0), b.seed).toBe(q.marks)
-            // Physics and Chemistry answers are in the equation's unit, which the answer box
-            // prints after the number, so a generated question keeps the written one's. Maths
-            // changes units on purpose (a 2D Pythagoras in cm, then in m), so the rule is the
-            // sciences'.
-            if ((g.subjectId === 'physics' || g.subjectId === 'chemistry') && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
+            // Science answers are in the equation's unit, which the answer box prints after the
+            // number, so a generated question keeps the written one's. Maths changes units on
+            // purpose (a 2D Pythagoras in cm, then in m), so the rule is the sciences'.
+            if (['physics', 'chemistry', 'biology'].includes(g.subjectId) && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
           }
         })
 
@@ -87,8 +86,9 @@ describe('question generators', () => {
           }
         })
 
+        // A whole 1 only: "3.1 times" and "21 times" are right (a word boundary sits after a point).
         it('says "1 time", not "1 times"', () => {
-          for (const { question: q, seed } of built) expect(JSON.stringify(q), seed).not.toMatch(/\b1 times\b/)
+          for (const { question: q, seed } of built) expect(JSON.stringify(q), seed).not.toMatch(/(?<![\w.])1 times\b/)
         })
 
         // A tolerance is for rounding, not for being nearly right: 0.5 on an answer of 3 marked 2.6 correct.
