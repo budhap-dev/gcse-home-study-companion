@@ -72,7 +72,7 @@ export function MixedWorksheet() {
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · Mixed worksheet · {LEVEL[spec.level]}</p>
         <h1 className="text-3xl font-bold leading-tight">{sheet.length} questions, mixed</h1>
         <ul className="flex flex-col gap-1 text-ink-2">
-          <li>{marksAvailable} marks · sheet <strong className="font-mono text-ink">{spec.code}</strong></li>
+          <li>{marksAvailable} marks</li>
           <li>From {titles.length} topics: {titles.join(', ')}.</li>
           <li>The topic of each question is shown only once it is answered: deciding which method it needs is part of the question.</li>
           <li>It earns XP and adds to each topic's history; it does not change a topic's status. Wrong answers wait in Redo my mistakes.</li>
