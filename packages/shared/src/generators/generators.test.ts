@@ -57,10 +57,11 @@ describe('question generators', () => {
             expect(q.gradeBand).toBe(slot!.gradeBand)
             expect(q.discriminators).toEqual(slot!.discriminators)
             expect(q.markScheme.reduce((s, l) => s + l.marks, 0), b.seed).toBe(q.marks)
-            // Physics answers are in the equation's unit, which the answer box prints after the
-            // number, so a generated question keeps the written one's. Maths changes units on
-            // purpose (a 2D Pythagoras in cm, then in m), so the rule is Physics's.
-            if (g.subjectId === 'physics' && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
+            // Physics and Chemistry answers are in the equation's unit, which the answer box
+            // prints after the number, so a generated question keeps the written one's. Maths
+            // changes units on purpose (a 2D Pythagoras in cm, then in m), so the rule is the
+            // sciences'.
+            if ((g.subjectId === 'physics' || g.subjectId === 'chemistry') && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
           }
         })
 
@@ -72,8 +73,9 @@ describe('question generators', () => {
           }
         })
 
+        // NaN as a word: the formula of sodium nitrate, NaNO₃, contains the letters.
         it('prints no binary residue, NaN or undefined', () => {
-          for (const b of built) expect(strings(b.question), b.seed).not.toMatch(new RegExp(`${RESIDUE.source}|NaN|undefined|Infinity`))
+          for (const b of built) expect(strings(b.question), b.seed).not.toMatch(new RegExp(`${RESIDUE.source}|\\bNaN\\b|undefined|Infinity`))
         })
 
         // String(0.00000001) is "1e-8": a student reads it as nonsense. The accepted forms of a
