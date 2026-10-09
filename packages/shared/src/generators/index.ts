@@ -155,8 +155,15 @@ export function sheetQuestions(subjectId: string, topicId: string, written: Ques
   return written.map((question) => {
     const g = seed ? generatorFor(subjectId, topicId, question.id) : undefined
     if (!g) return { question }
-    const generated = generate(g, question, seed!)
-    return { question: generated.question, generated }
+    // A draw that finds no acceptable numbers throws. The release check runs fixed seeds, so a
+    // rare seed outside them could still hit one (multi-step fractions did, 2 in 3000): the
+    // sheet then keeps the written question rather than failing to open.
+    try {
+      const generated = generate(g, question, seed!)
+      return { question: generated.question, generated }
+    } catch {
+      return { question }
+    }
   })
 }
 
