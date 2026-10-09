@@ -298,6 +298,9 @@ equations and the unit conversions.
 - Chemistry: relative formula mass, moles, concentration, percentage yield, bond energies and
   rates from graphs.
 
+**Progress:** Physics half done 9 October 2026 (PRs #386–#389, v10.91.0): 147 generators cover
+174 of the 191 numeric Physics questions (docs/backlog.md section 6). Chemistry half not started.
+
 ### GEN-6 · Biology and Further Maths generators
 
 **Effort:** M · **Priority:** Later · **Depends on:** GEN-1, GEN-2
