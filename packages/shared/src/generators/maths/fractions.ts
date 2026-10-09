@@ -644,7 +644,7 @@ export const multiStepFractions: Generator = {
       const q = fDiv(fromMixed(A), [-improper(C), C.d])
       const res = plus ? fAdd(q, f) : fSub(q, f)
       return q[1] > 1 && q[1] !== f[1] && q[1] <= 12 && ok(res)
-    })
+    }, 5000)
     const pa = improper(A)
     const divisor: Frac = [-improper(C), C.d]
     const flipped: Frac = [-C.d, improper(C)]
