@@ -2,8 +2,8 @@ import { fixed, show } from '../format.ts'
 import { near, numeric } from '../physics/build.ts'
 import { pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { clean, distinct, noOnes, places, powerOfTen, range, toPlaces } from './build.ts'
-import { byFirst, dm3Text, shiftFree } from './concentration.ts'
+import { byFirst, clean, distinct, noOnes, places, powerOfTen, range, shiftFree, toPlaces } from './build.ts'
+import { dm3Text } from './concentration.ts'
 
 /**
  * Potable and waste water (AQA 8462, 4.10.1, required practical 8). The numeric written

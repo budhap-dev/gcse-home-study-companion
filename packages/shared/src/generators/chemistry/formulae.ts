@@ -4,7 +4,7 @@ import { cap, numeric } from '../physics/build.ts'
 import { dpTolerance } from '../physics/format.ts'
 import { pick } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { AR, arLine, atoms, clean, clearOf, evenly, mr, mrWorking, parse, range } from './build.ts'
+import { AR, arLine, atoms, clean, clearOf, evenly, mr, mrWorking, parse, range, word } from './build.ts'
 import { ORES, factual } from './compounds.ts'
 
 /** A compound with the fact a prompt may say about it. */
@@ -33,9 +33,6 @@ const ELEMENT_NAMES = Object.fromEntries(ELEMENTS.map((e) => [e.symbol, e.name])
 /** An element's name from its symbol: Cl is chlorine. */
 export const elementName = (symbol: string) => ELEMENT_NAMES[symbol]!
 
-const WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty']
-/** Small counts in words, as the written mark schemes put them: "multiplies oxygen by three". */
-export const word = (n: number) => WORDS[n] ?? String(n)
 
 /** Mr a second way: each element's atoms counted out with brackets multiplied, then weighed. */
 export const mrByAtoms = (formula: string) => clean(Object.entries(atoms(formula)).reduce((t, [s, n]) => t + n * AR[s]!, 0))

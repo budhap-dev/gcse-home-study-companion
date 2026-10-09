@@ -299,7 +299,9 @@ equations and the unit conversions.
   rates from graphs.
 
 **Progress:** Physics half done 9 October 2026 (PRs #386–#389, v10.91.0): 147 generators cover
-174 of the 191 numeric Physics questions (docs/backlog.md section 6). Chemistry half not started.
+174 of the 191 numeric Physics questions (docs/backlog.md section 6). Chemistry half done the
+same day (PRs #390, #392 and #393, v10.94.0): 85 generators cover 90 of the 103 numeric Chemistry
+questions (section 7). Story complete.
 
 ### GEN-6 · Biology and Further Maths generators
 
