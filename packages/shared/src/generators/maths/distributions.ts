@@ -664,7 +664,7 @@ function drawTable(r: Rng, k: [number, number], n: [number, number], ok: (d: Dra
       return { t, start, w, freqs, n: total_, bounds, cf }
     },
     (d) => (t.max === undefined || d.bounds[d.bounds.length - 1]! <= t.max) && ok(d),
-    3000,
+    20000,
   )
 }
 
