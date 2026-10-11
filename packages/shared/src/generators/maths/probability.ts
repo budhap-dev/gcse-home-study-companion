@@ -837,7 +837,7 @@ const repeatedOutcomes: Builder = (r, slot) => {
   const { size, k } = kind === 'coin' ? { size: 2, k: int(r, 3, 7) } : kind === 'dice' ? { size: pick(r, [4, 6]), k: int(r, 2, 3) } : { size: int(r, 3, 5), k: int(r, 2, 3) }
   const answer = size ** k
   const what = kind === 'coin' ? 'flip' : kind === 'dice' ? 'throw' : 'spin'
-  const thing = kind === 'coin' ? 'A fair coin is flipped' : kind === 'dice' ? `A fair ${WORDS[size]}-sided die is thrown` : `A fair spinner with ${size} equal sections is spun`
+  const thing = kind === 'coin' ? `A fair coin is ${pick(r, ['flipped', 'tossed'])}` : kind === 'dice' ? `A fair ${WORDS[size]}-sided die is ${pick(r, ['thrown', 'rolled'])}` : `A fair spinner with ${size} equal sections is spun`
   const prompt = r() < 0.5
     ? `${thing} ${k === 2 ? 'twice' : `${WORDS[k]} times`}. How many outcomes are in the sample space?`
     : `${name} ${kind === 'coin' ? 'flips a fair coin' : kind === 'dice' ? `throws a fair ${WORDS[size]}-sided die` : `spins a fair spinner with ${size} equal sections`} ${k === 2 ? 'twice' : `${WORDS[k]} times`} and records each result in order. How many outcomes are in the sample space?`
@@ -871,14 +871,15 @@ const TREE = 'combined-events-and-tree-diagrams'
 
 /** The same fair object twice, one named outcome both times: written as q3. */
 const sameTwice: Builder = (r, slot) => {
+  const colour = pick(r, ['blue', 'red', 'green', 'yellow'])
   const things = [
-    { m: 2, text: 'A coin is flipped twice.', outcome: () => pick(r, ['two heads', 'two tails']), name: 'flips a coin twice' },
+    { m: 2, text: pick(r, ['A coin is flipped twice.', 'A fair coin is tossed twice.', 'A coin is thrown twice.']), outcome: () => pick(r, ['two heads', 'two tails']), name: 'flips a coin twice' },
     { m: 4, text: 'A fair four-sided die is thrown twice.', outcome: () => `two ${int(r, 1, 4)}s`, name: 'throws a fair four-sided die twice' },
-    { m: 5, text: 'A fair spinner with 5 equal sections, one of them blue, is spun twice.', outcome: () => 'blue both times', name: 'spins a fair spinner with 5 equal sections, one of them blue, twice' },
+    { m: 5, text: `A fair spinner with 5 equal sections, one of them ${colour}, is spun twice.`, outcome: () => `${colour} both times`, name: `spins a fair spinner with 5 equal sections, one of them ${colour}, twice` },
     { m: 10, text: 'A fair ten-sided die is thrown twice.', outcome: () => `two ${int(r, 1, 10)}s`, name: 'throws a fair ten-sided die twice' },
     { m: 8, text: 'A fair eight-sided die is thrown twice.', outcome: () => `two ${int(r, 1, 8)}s`, name: 'throws a fair eight-sided die twice' },
   ]
-  const t = r() < 0.4 ? things[0]! : pick(r, things)
+  const t = pick(r, things)
   const outcome = t.outcome()
   const name = pick(r, NAMES)
   const setup = r() < 0.5 ? t.text : `${name} ${t.name}.`

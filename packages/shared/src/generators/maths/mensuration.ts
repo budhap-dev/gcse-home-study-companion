@@ -488,10 +488,10 @@ export const coneCurvedSurface: Generator = {
   },
 }
 
-const PYRAMIDS: { lead: (base: string, h: string) => string; unit: 'cm' | 'm'; a: [number, number]; h: [number, number]; rect: boolean }[] = [
+const PYRAMIDS: { lead: (base: string, h: string) => string; unit: 'cm' | 'm'; a: [number, number]; h: [number, number]; rect: boolean; min?: number }[] = [
   { lead: (b, h) => `A square-based pyramid has a base of side ${b} and vertical height ${h}.`, unit: 'cm', a: [3, 15], h: [4, 30], rect: false },
   { lead: (b, h) => `A glass paperweight is a square-based pyramid with a base of side ${b} and vertical height ${h}.`, unit: 'cm', a: [5, 10], h: [4, 9], rect: false },
-  { lead: (b, h) => `A tent is a square-based pyramid with a base of side ${b} and vertical height ${h}.`, unit: 'm', a: [2, 5], h: [2, 4], rect: false },
+  { lead: (b, h) => `A tent is a square-based pyramid with a base of side ${b} and vertical height ${h}.`, unit: 'm', a: [2, 6], h: [2, 4], rect: false, min: 12 },
   { lead: (b, h) => `A rectangle-based pyramid has a base ${b} and vertical height ${h}.`, unit: 'cm', a: [3, 15], h: [4, 30], rect: true },
   { lead: (b, h) => `A roof is a rectangle-based pyramid with a base ${b} and vertical height ${h}.`, unit: 'm', a: [4, 12], h: [2, 6], rect: true },
 ]
@@ -515,7 +515,7 @@ export const pyramidVolume: Generator = {
         const a = int(r, c.a[0], c.a[1])
         return { a, b: c.rect ? int(r, c.a[0], c.a[1]) : a, h: int(r, c.h[0], c.h[1]) }
       },
-      ({ a, b, h }) => (a * b * h) % 3 === 0 && a * b * h >= 75 && (!c.rect || a !== b),
+      ({ a, b, h }) => (a * b * h) % 3 === 0 && a * b * h >= (c.min ?? 75) && (!c.rect || a !== b),
     )
     const base = a * b
     const answer = (base * h) / 3

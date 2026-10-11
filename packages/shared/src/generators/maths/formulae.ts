@@ -929,7 +929,7 @@ function identityCoefficients(r: Rng, slot: Question): Draft {
 
 /** q7: y = (ax + b)/c, make x the subject. */
 function fractionSubject(r: Rng, slot: Question): Draft {
-  const [Y, X, A, B, C] = r() < 0.4 ? ['y', 'x', 'a', 'b', 'c'] : (letters(r, 5) as [string, string, string, string, string])
+  const [Y, X, A, B, C] = r() < 0.06 ? ['y', 'x', 'a', 'b', 'c'] : (letters(r, 5) as [string, string, string, string, string])
   const minus = r() < 0.4
   const op = minus ? '-' : '+'
   const undo = minus ? '+' : '-'
@@ -950,7 +950,7 @@ function fractionSubject(r: Rng, slot: Question): Draft {
 
 /** q8: s = ut + ½at², make a the subject. */
 function halfSquareSubject(r: Rng, slot: Question): Draft {
-  const [L, P, Q, S] = r() < 0.3 ? ['s', 'u', 't', 'a'] : (letters(r, 4) as [string, string, string, string])
+  const [L, P, Q, S] = r() < 0.06 ? ['s', 'u', 't', 'a'] : (letters(r, 4) as [string, string, string, string])
   const minus = r() < 0.35
   const original = `${L} = ${P}${Q} ${minus ? '-' : '+'} \\tfrac{1}{2}${S}${Q}^2`
   const diff = minus ? `${P}${Q} - ${L}` : `${L} - ${P}${Q}`
@@ -1080,7 +1080,7 @@ function squareRootSubject(r: Rng, slot: Question): Draft {
 
 /** q15: a = (b + c)/(b − c), make b the subject. */
 function collectAndFactorise(r: Rng, slot: Question): Draft {
-  const [A, S, B] = r() < 0.3 ? ['a', 'b', 'c'] : (letters(r, 3) as [string, string, string])
+  const [A, S, B] = r() < 0.1 ? ['a', 'b', 'c'] : (letters(r, 3) as [string, string, string])
   const k = pick(r, [1, 1, 2, 3])
   const minus = r() < 0.4
   const kB = coef(k, B)
