@@ -532,9 +532,21 @@ for accepts its three-figure rounding (`threeFigures`).
   stay written. Clear-zone areas accept the π = 3.14 answer the written mark scheme accepts;
   contraception figures are the NHS's typical-use rates; resting cardiac output stays within
   4000–7000 cm³/min; R0 values are each disease's own.
-- [ ] **4. Genetics and evolution.** DNA and protein synthesis, genetic crosses and pedigrees,
+- [x] **4. Genetics and evolution.** DNA and protein synthesis, genetic crosses and pedigrees,
   genetic disorders, meiosis, variation and natural selection, fossils and classification,
-  selective breeding (44 slots).
+  selective breeding (44 slots). Shipped 11 October 2026 (v10.98.0): 30 generators cover 34
+  slots; ten stay written: six recall a fact or give the same answer every time (23 pairs, 3
+  bases, 4 daughter cells, the chance of a girl, when Ardi lived, five kingdoms) and four have
+  too few real versions (a blood group unlike both parents', a hybrid's chromosome number, and
+  the two questions on the three fossils Edexcel names). Every family table has at most half its
+  children unlike their parents; sex-linked and ABO crosses are drawn evenly over the crosses,
+  not the answers; the dominant disorder is Huntington's disease, as in the written bank; shaded
+  leaves are always longer than sunny ones; and the bacterial doubling slot states the number of
+  doublings, as the written one does. The eight Biology generator headers had cited AQA 8461;
+  Biology is Edexcel 1BI0, and they now cite its topic numbers.
+
+With item 4, generators cover 151 of the 164 numeric Biology questions; the other 13 read a
+diagram, recall a fact or have too few real versions to vary.
 
 ## 9. Further Maths generators (planned 11 October 2026)
 

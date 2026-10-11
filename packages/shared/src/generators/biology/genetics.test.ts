@@ -11,9 +11,12 @@ import {
   DUCHENNE,
   geneticsGenerators,
   HAEMOPHILIA,
+  HUNTINGTONS,
   LINKED,
+  LINKED_ROUTES,
   PLANT_TRAITS,
   SEX_LINKED,
+  STARTS,
   STRETCHES,
   TRAITS,
   type Linked,
@@ -106,13 +109,22 @@ describe('every genetics build', () => {
     for (const s of left) expect(claimed).not.toContain(s)
   })
 
-  it('prints no article before a figure, keeps the written units, reaches its answer, and is marked right with it', () => {
+  it('prints no article before a figure, never calls a person "it", keeps the written units, reaches its answer, and is marked right with it', () => {
     for (const g of geneticsGenerators) {
       for (const id of g.replaces) {
         const slot = bankOf(g.topicId).find((q) => q.id === id)!
         for (const b of build(g.id, id, 150)) {
           expect(b.question.prompt, b.seed).not.toMatch(/\b(a|A|an|An) \d/)
           expect(b.question.prompt, b.seed).not.toMatch(/expected to not/)
+          // A person is never "it" in a prompt ("the mother ... it has"); "has it" is the condition, which is allowed.
+          expect(b.question.prompt, b.seed).not.toMatch(/\b(woman|man|mother|father|son|daughter|parent|child)\b[^.]*\bit (is|has|was|does|carries|gives)\b/)
+          for (const text of [b.question.prompt, b.question.solution]) {
+            // Nor does a sentence about a person start the next with "It" or "Its": "a human ... Its gametes".
+            expect(text, b.seed).not.toMatch(/\b(human|person|people|woman|man|mother|father|son|daughter|parent|child)s?\b[^.!?]*[.!?] It(s| is| has| was| does) /)
+            // Trees are trees, and the board's dominant example is the written bank's, not AQA's.
+            expect(text, b.seed).not.toMatch(/apple plant/)
+            expect(text, b.seed).not.toMatch(/polydactyly/i)
+          }
           expect(units(b), `${g.id} ${id}`).toBe(slot.type === 'numeric' ? slot.units : undefined)
           expect(b.question.solution, b.seed).toContain(String(answer(b)))
           expect(mark(b.question, String(answer(b))).correct, b.seed).toBe(true)
@@ -233,8 +245,9 @@ describe("a gene's share of its molecule", () => {
       expect(L).toBeLessThanOrEqual(L1)
       const exact = c((100 * g) / L)
       expect(answer(b)).toBe(exact)
-      expect(sigFigures(exact)).toBeLessThanOrEqual(3)
-      expect(exact).toBeGreaterThanOrEqual(0.5)
+      // A teacher's share: at least 1%, at most two significant figures (3%, 4.5%, 12%), and exact.
+      expect(sigFigures(exact)).toBeLessThanOrEqual(2)
+      expect(exact).toBeGreaterThanOrEqual(1)
       expect(exact).toBeLessThanOrEqual(40)
       expect(tolerance(b)).toBe(exactTol(exact))
       expect(b.question.solution).toContain(`$\\dfrac{${texed(g)}}{${texed(L)}} \\times 100 = ${exact}$%.`)
@@ -244,7 +257,20 @@ describe("a gene's share of its molecule", () => {
       expect(mark(b.question, String(c(g / L))).correct).toBe(false)
     }
     expect(contexts(built)).toBe(STRETCHES.length)
-    spread('gene-percentage-of-a-dna-molecule', 'q24', ['gene', 'length'])
+    const many = spread('gene-percentage-of-a-dna-molecule', 'q24', ['gene', 'length'])
+    // The molecule lengths spread: the ones that divide cleanly filled a quarter of a context.
+    expect(worstShare(many, (b) => b.values.length).worst).toBeLessThanOrEqual(0.15)
+    expect(worstShare(many, answer).worst).toBeLessThanOrEqual(0.08)
+    expect(worstShare(many, answer).fewest).toBeGreaterThanOrEqual(50)
+  })
+
+  it('DNA q24: a share with a decimal place is exact and marked to half a unit of it, as 4.5%', () => {
+    const b = build('gene-percentage-of-a-dna-molecule', 'q24', 3000, 'find').find((y) => y.values.share === 4.5)!
+    expect(b.question.solution).toContain('\\times 100 = 4.5$%. One gene is a small fraction of the whole molecule.')
+    expect(tolerance(b)).toBe(0.05)
+    expect(mark(b.question, '4.5').correct).toBe(true)
+    expect(mark(b.question, '4.50').correct).toBe(true)
+    expect(mark(b.question, '5').correct).toBe(false)
   })
 })
 
@@ -364,12 +390,35 @@ describe('ABO blood groups', () => {
         expect(method(b)).toEqual([`offspring ${boxes.join(', ')}`])
         // Two identical homozygous parents would make every child the same: never drawn.
         expect(p1 === p2 && p1![0] === p1![1]).toBe(false)
+        // Parents who share a genotype are "each", never "the BO parent ...; the BO parent".
+        expect(b.question.solution).not.toMatch(/The (\w\w) parent (gives|can only give)[^;]*; the \1 parent/)
+        if (p1 === p2) expect(b.question.solution.split('\n')[0]).toBe(`Each ${p1} parent gives **${p1![0]}** or **${p1![1]}**.`)
+        else expect(b.question.solution).toMatch(new RegExp(`^The ${p1} parent (gives|can only give) .*; the ${p2} parent (gives|can only give) `))
         if (slot === 'q20') expect(p).toMatch(/^In the ABO blood group system, (the alleles )?A and B are codominant and O is recessive to both\./)
       }
       expect(contexts(built)).toBe(2)
-      spread('abo-blood-group-chance', slot, ['p1'], 3)
+      // Every pair of parents as likely as every other (33 ordered pairs for a group, 31 for a genotype),
+      // so no one prompt fills a context; the answers then fall as the pairs give them (50% is the
+      // commonest, and 75% comes only from AO × AO and BO × BO), so they are not held to 40%.
+      const many = build('abo-blood-group-chance', slot, 3000, 'spread')
+      const pairs = worstShare(many, (b) => `${b.values.p1}×${b.values.p2}`)
+      expect(pairs.worst).toBeLessThanOrEqual(0.06)
+      expect(pairs.fewest).toBeGreaterThanOrEqual(31)
+      expect(worstShare(many, (b) => `${b.values.p1}×${b.values.p2}|${b.values.target}`).worst).toBeLessThanOrEqual(0.06)
+      expect(worstShare(many, (b) => b.values.p1).worst).toBeLessThanOrEqual(0.25)
+      expect(worstShare(many, answer).fewest).toBeGreaterThanOrEqual(3)
+      expect(worstShare(many, answer).worst).toBeLessThanOrEqual(0.62)
+      expect(share(many, (b) => answer(b) === 75)).toBeGreaterThan(0.01)
     })
   }
+
+  it('disorders q5: literal working for BO × BO, group B: "Each BO parent"', () => {
+    const b = build('abo-blood-group-chance', 'q5', 3000, 'find').find((y) => y.values.p1 === 'BO' && y.values.p2 === 'BO' && y.values.target === 'B')!
+    expect(b.question.solution).toBe(
+      'Each BO parent gives **B** or **O**.\n\n| | B | O |\n| --- | --- | --- |\n| B | BB | BO |\n| O | BO | OO |\n\nAs blood groups: BB → **B**, BO → **B**, BO → **B**, OO → **O**.\n\nGroup B is 3 boxes in 4: $3 \\div 4 \\times 100 = 75\\%$.',
+    )
+    expect(answer(b)).toBe(75)
+  })
 
   it('disorders q5: literal working for AO × BO, group AB', () => {
     const b = build('abo-blood-group-chance', 'q5', 3000, 'find').find((y) => y.values.p1 === 'AO' && y.values.p2 === 'BO' && y.values.target === 'AB')!
@@ -444,29 +493,72 @@ describe('X-linked crosses', () => {
         if (d === DUCHENNE) expect([m, f]).toEqual(['carrier', 'clear'])
         if (m === 'affected') expect([COLOUR_BLINDNESS, SEX_LINKED]).toContain(d)
         expect(m === 'clear' && f === 'clear').toBe(false)
+        // The full name once, then DMD.
+        if (d === DUCHENNE) {
+          expect(p.match(/Duchenne muscular dystrophy/g)!.length).toBe(1)
+          expect(p).toMatch(/^Duchenne muscular dystrophy \(DMD\) is caused by a recessive allele/)
+          expect(p).toMatch(/ DMD[ .?]/)
+          expect(b.question.solution).not.toMatch(/Duchenne/)
+        }
         const { group, outcome } = xAsk(d, p)
+        // Each slot keeps its written skill: q7 sons or daughters, q14 all four children, q19 a father with the condition.
+        if (slot === 'q7') expect(group, p).not.toBe('all')
+        if (slot === 'q14') expect(group, p).toBe('all')
+        if (slot === 'q19') expect(f, p).toBe('affected')
         expect(answer(b)).toBe(xCount(m, f, group, outcome))
         // Genotypes given in brackets match the description.
         if (p.includes('(X')) {
           const mg = m === 'clear' ? d.dom + d.dom : m === 'carrier' ? d.dom + d.rec : d.rec + d.rec
-          expect(p).toContain(`(${mg}) has children with a man who ${fText} (${f === 'affected' ? d.rec : d.dom}Y)`)
+          expect(p).toMatch(new RegExp(`\\(${mg}\\) (has children with|and) a man who ${fText.replace(/[-]/g, '\\-')} \\(${f === 'affected' ? d.rec : d.dom}Y\\)( have children)?\\. What percentage`))
         }
         const den = group === 'all' ? 4 : 2
         expect(b.question.solution).toContain(` of the ${den} ${group === 'all' ? '' : `${group.slice(0, -1)} `}boxes, so $`)
         expect(b.question.solution).toContain(`\\div ${den} \\times 100 = ${answer(b)}\\%$.`)
         expect(method(b)[1]).toMatch(group === 'all' ? /^uses all four children as the denominator: \d of 4$/ : new RegExp(`^considers ${group} only: \\d of the 2 ${group.slice(0, -1)} boxes$`))
       }
-      expect(contexts(built)).toBe(LINKED.length)
-      const many = spread('sex-linked-cross-percentage', slot, [], 3)
-      // Sons, daughters and all children about a third each, so "out of 4" pays only a third of the
-      // time; Duchenne muscular dystrophy gives 25% and 75% only over all children, so it asks those more.
-      for (const d of LINKED) {
+      const route = LINKED_ROUTES[slot]!
+      expect(contexts(built)).toBe(route.disorders.length)
+      // DMD has one cross, so it is left out of q7 (always 50%) and q19 (no affected father).
+      if (slot === 'q14') expect(route.disorders).toContain(DUCHENNE)
+      else expect(route.disorders).not.toContain(DUCHENNE)
+      // Every (question, cross) the slot allows as likely as every other: no one prompt over 15% of a
+      // named disorder's builds (DMD, with one cross, excepted), every cross the disorder allows drawn,
+      // and in q7 sons or daughters each about half. The four answers are not balanced, so they fall
+      // as the crosses give them (q7 haemophilia is 50% or 100%): evening them made one prompt a
+      // fifth to a third of a context.
+      const many = build('sex-linked-cross-percentage', slot, 4000, 'spread')
+      for (const d of route.disorders) {
         const mine = many.filter((b) => b.values.context === d.name)
-        expect(new Set(mine.map((b) => b.values.group))).toEqual(new Set(['sons', 'daughters', 'all']))
-        if (d !== DUCHENNE) expect(worstShare(mine, (b) => b.values.group).worst, d.name).toBeLessThanOrEqual(0.4)
+        expect(mine.length).toBeGreaterThan(800)
+        const candidate = worstShare(mine, (b) => `${b.values.ask}|${b.values.mother}×${b.values.father}`)
+        if (d !== DUCHENNE) expect(candidate.worst, `${slot} ${d.name}`).toBeLessThanOrEqual(0.15)
+        const crosses = new Set(mine.map((b) => `${b.values.mother}×${b.values.father}`))
+        const allowed = d.mothers.flatMap((m) => d.fathers.filter((f) => !(m === 'clear' && f === 'clear') && (slot !== 'q19' || f === 'affected')).map((f) => `${m}×${f}`))
+        expect([...crosses].sort()).toEqual(allowed.sort())
+        const groups = new Set(mine.map((b) => b.values.group))
+        if (slot === 'q7') {
+          expect(groups).toEqual(new Set(['sons', 'daughters']))
+          const sons = share(mine, (b) => b.values.group === 'sons')
+          if (d !== DUCHENNE) {
+            expect(sons, `${slot} ${d.name}`).toBeGreaterThan(0.4)
+            expect(sons, `${slot} ${d.name}`).toBeLessThan(0.6)
+          }
+        }
+        if (slot === 'q14') expect(groups).toEqual(new Set(['all']))
+        if (slot === 'q19') expect(groups).toEqual(new Set(['sons', 'daughters', 'all']))
+        if (d !== DUCHENNE) expect(new Set(mine.map(answer)).size).toBeGreaterThanOrEqual(2)
       }
     })
   }
+
+  it('disorders q14: literal DMD prompt, the full name once and then the short one', () => {
+    const b = build('sex-linked-cross-percentage', 'q14', 3000, 'find').find((y) => y.values.context === DUCHENNE.name && !y.question.prompt.includes('(d)') && !y.question.prompt.includes('(X'))!
+    expect(b.question.prompt).toMatch(
+      /^Duchenne muscular dystrophy \(DMD\) is caused by a recessive allele on the X chromosome\. A woman who is a carrier of DMD has children with a man who does not have DMD\. What percentage of all their children are expected (not )?to (have|be carriers of) DMD\?$/,
+    )
+    expect(b.question.solution).toMatch(/^A woman who is a carrier of DMD is XᴰXᵈ; a man who does not have DMD is XᴰY\. The cross is XᴰXᵈ × XᴰY\./)
+    expect(b.question.solution).toMatch(/ of the 4 boxes, so \$\d \\div 4 \\times 100 = (25|50|75)\\%\$\./)
+  })
 
   it('disorders q7: literal working for a carrier and a man without haemophilia, sons', () => {
     const b = build('sex-linked-cross-percentage', 'q7', 3000, 'find').find((y) => y.values.context === 'haemophilia' && y.values.mother === 'carrier' && y.values.father === 'clear' && y.values.ask === 'sons-affected')!
@@ -495,7 +587,10 @@ describe('X-linked crosses', () => {
       expect(p).toMatch(new RegExp(`A woman (who )?${d.isNot}`))
       const carrier = !p.includes('genetic test')
       if (carrier) expect(p).toMatch(new RegExp(`but her father ${d.did}\\.|but her mother ${d.is}\\.|already have a (son|daughter) who ${d.is}\\.`))
-      else expect(p).toContain(`Her father ${d.hadNot}, and a genetic test has shown that her mother does not carry the allele for ${d.of}.`)
+      else
+        expect(p).toMatch(
+          new RegExp(`Her father ${d.hadNot}, and a genetic test has shown that her mother does not carry the allele for ${d.of}\\.|Neither of her parents ${d.had}, and a genetic test has shown that her mother is not a carrier of ${d.of}\\.`),
+        )
       // A daughter who has it needs an affected father.
       if (/already have a daughter/.test(p)) expect(p).toContain(`her partner, who ${d.is},`)
       const fText = word(/(?:a man who|her partner, who) (.+?)[.,]/, p)
@@ -512,10 +607,34 @@ describe('X-linked crosses', () => {
     }
     expect(contexts(built)).toBe(3)
     const many = spread('sex-linked-carrier-from-the-family', 'q27', ['ask'], 3)
-    expect(new Set(many.map((b) => b.values.clue))).toEqual(new Set(['father', 'mother', 'son', 'daughter', 'tested']))
+    expect(new Set(many.map((b) => b.values.clue))).toEqual(new Set(['father', 'mother', 'son', 'daughter', 'tested', 'parents']))
+    // The clues evenly (six, or four for haemophilia, whose women are never affected), so no clue is
+    // over a quarter of the builds, and she is a carrier about 2 : 1; the 50% answer is well under 40%
+    // in every context, as the one non-carrier wording that was half of all prompts is no longer.
+    expect(worstShare(many, (b) => b.values.clue).worst).toBeLessThanOrEqual(0.3)
+    const clues = new Map<unknown, number>()
+    for (const b of many) clues.set(b.values.clue, (clues.get(b.values.clue) ?? 0) + 1)
+    expect(Math.max(...clues.values()) / many.length).toBeLessThanOrEqual(0.25)
+    for (const d of [HAEMOPHILIA, COLOUR_BLINDNESS, SEX_LINKED]) {
+      const mine = many.filter((b) => b.values.context === d.name)
+      expect(share(mine, (b) => answer(b) === 50), d.name).toBeLessThanOrEqual(0.35)
+      expect(worstShare(mine, (b) => `${b.values.clue}|${b.values.father}|${b.values.ask}`).worst, d.name).toBeLessThanOrEqual(0.15)
+    }
     const carriers = share(many, (b) => b.values.carrier === 'true')
-    expect(carriers).toBeGreaterThan(0.35)
-    expect(carriers).toBeLessThan(0.65)
+    expect(carriers).toBeGreaterThan(0.5)
+    expect(carriers).toBeLessThan(0.7)
+  })
+
+  it('disorders q27: literal deduction from two unaffected parents and a tested mother, crossed with a man who has haemophilia', () => {
+    const b = build('sex-linked-carrier-from-the-family', 'q27', 3000, 'find').find((y) => y.values.context === 'haemophilia' && y.values.clue === 'parents' && y.values.ask === 'daughters-carriers')!
+    expect(b.question.prompt).toMatch(
+      /A woman does not have haemophilia\. Neither of her parents had haemophilia, and a genetic test has shown that her mother is not a carrier of haemophilia\. She has children with a man who has haemophilia\. Calculate the percentage of their daughters expected to be carriers\.$/,
+    )
+    expect(b.question.solution).toContain(
+      "**The woman's genotype.** Neither of her parents had haemophilia: her father was XᴴY and gave her his only X, Xᴴ. Her mother is not a carrier, so she is XᴴXᴴ and could give her only Xᴴ. The woman is XᴴXᴴ: she is not a carrier.",
+    )
+    expect(method(b)[0]).toBe('deduces that the woman is not a carrier, XᴴXᴴ, because each parent could give her only Xᴴ')
+    expect(answer(b)).toBe(100)
   })
 
   it('disorders q27: literal deduction from her father, crossed with a man who has haemophilia', () => {
@@ -539,14 +658,41 @@ function monoBoxes(g1: string, g2: string): string[] {
 }
 
 describe('monohybrid crosses', () => {
-  it('every trait is a real dominant and recessive pair, and the people are cystic fibrosis (recessive) and polydactyly (dominant)', () => {
+  it("every trait is a real dominant and recessive pair, and the people are cystic fibrosis (recessive) and Huntington's disease (dominant), the written bank's examples", () => {
     const rules = TRAITS.map((t) => t.rule)
     expect(rules).toContain('In pea plants, the allele for tall stems (T) is dominant to the allele for short stems (t).')
     expect(rules).toContain('In guinea pigs, the allele for black fur (B) is dominant to the allele for white fur (b).')
     expect(rules).toContain('In fruit flies, the allele for normal wings (N) is dominant to the allele for vestigial wings (n).')
     expect(rules).toContain('Cystic fibrosis is caused by a recessive allele (f); the dominant allele (F) does not cause it.')
-    expect(rules).toContain('Polydactyly (extra fingers or toes) is caused by a dominant allele (D); the recessive allele (d) gives the usual number of fingers and toes.')
+    expect(rules).toContain("Huntington's disease is caused by a dominant allele (H); the recessive allele (h) does not cause it.")
+    expect(rules.join(' ')).not.toMatch(/polydactyly/i)
+    expect(AUTOSOMAL.map((d) => d.rule).join(' ')).not.toMatch(/polydactyly/i)
+    expect(AUTOSOMAL.find((d) => d.name === "Huntington's disease")!.dominant).toBe(true)
     expect(PLANT_TRAITS.every((t) => /plants$/.test(t.plural))).toBe(true)
+  })
+
+  it("inheritance q5 and q19: a parent who has Huntington's disease is heterozygous unless the prompt says otherwise, the genotype always given", () => {
+    for (const slot of ['q5', 'q19']) {
+      const mine = build('monohybrid-cross-percentage', slot, 2000, 'huntington').filter((b) => b.values.context === HUNTINGTONS.name)
+      expect(mine.length).toBeGreaterThan(100)
+      for (const b of mine) {
+        const p = b.question.prompt
+        expect(p).toMatch(/^Huntington's disease is caused by a dominant allele \(H\); the recessive allele \(h\) does not cause it\. /)
+        // Every parent with the condition carries its zygosity and genotype; every parent without it is hh.
+        for (const m of p.matchAll(/has Huntington's disease and is (heterozygous|homozygous) \((H[Hh])\)/g)) expect(m[2]).toBe(m[1] === 'heterozygous' ? 'Hh' : 'HH')
+        expect(p).not.toMatch(/has Huntington's disease \(/)
+        if (/does not have Huntington's disease \(/.test(p)) expect(p).toContain("does not have Huntington's disease (hh)")
+        expect(p).toMatch(/\(H[Hh]\)|\(hh\)/)
+      }
+      const b = mine.find((y) => y.values.cross === 'Aa × aa' && y.values.outcome === 'dominant')!
+      expect(b.question.prompt).toBe(
+        "Huntington's disease is caused by a dominant allele (H); the recessive allele (h) does not cause it. A parent who has Huntington's disease and is heterozygous (Hh) has children with a parent who does not have Huntington's disease (hh). What percentage of their children are expected to have Huntington's disease?",
+      )
+      expect(answer(b)).toBe(50)
+      const both = mine.find((y) => y.values.cross === 'Aa × Aa' && y.values.outcome === 'recessive')!
+      expect(both.question.prompt).toContain("Two parents who both have Huntington's disease and are heterozygous (Hh) have children. What percentage of their children are expected not to have Huntington's disease?")
+      expect(answer(both)).toBe(25)
+    }
   })
 
   for (const slot of ['q5', 'q19']) {
@@ -568,8 +714,8 @@ describe('monohybrid crosses', () => {
         if (/heterozygous|carriers/.test(q)) k = boxes.filter(isHet).length
         else if (/homozygous dominant/.test(q)) k = boxes.filter((x) => x === L + L).length
         else {
-          // The dominant phenotype: the trait's dominant adjective, or "have polydactyly", or "not have cystic fibrosis".
-          const dominant = tr.human ? (tr.name === 'polydactyly' ? q === 'to have polydactyly' : q === 'not to have cystic fibrosis') : q.includes(tr.domAdj)
+          // The dominant phenotype: the trait's dominant adjective, or "have Huntington's disease", or "not have cystic fibrosis".
+          const dominant = tr.human ? (tr === HUNTINGTONS ? q === "to have Huntington's disease" : q === 'not to have cystic fibrosis') : q.includes(tr.domAdj)
           k = boxes.filter((x) => (dominant ? !isRec(x) : isRec(x))).length
         }
         expect(answer(b), p).toBe((k / 4) * 100)
@@ -579,17 +725,31 @@ describe('monohybrid crosses', () => {
         expect(p).toMatch(tr.human ? /their children are expected/ : /of the offspring are expected/)
       }
       expect(contexts(built)).toBe(TRAITS.length)
-      const many = spread('monohybrid-cross-percentage', slot, [], 3)
-      // Only Aa × Aa gives 25% and 75%, so with the answers even it is about half; the rest spread over the others.
+      // The four crosses a quarter each in every trait, each in either order, and no one (cross, question)
+      // over a fifth of a trait; only Aa × Aa gives 25% and 75%, so those two answers are the rarer
+      // ones and 50% and 100% are about three-eighths each, which is why the answers are held to 42%
+      // over the slot and to half within a trait rather than to 40% in each.
+      const many = build('monohybrid-cross-percentage', slot, 3000, 'spread')
       for (const tr of TRAITS) {
         const mine = many.filter((b) => b.values.context === tr.name)
-        expect(share(mine, (b) => b.values.pair === 'Aa × Aa')).toBeLessThan(0.62)
-        expect(new Set(mine.map((b) => b.values.pair)).size).toBe(4)
+        expect(mine.length).toBeGreaterThan(200)
+        for (const pair of ['Aa × Aa', 'Aa × aa', 'AA × aa', 'AA × Aa']) {
+          expect(share(mine, (b) => b.values.pair === pair), `${tr.name} ${pair}`).toBeGreaterThan(0.15)
+          expect(share(mine, (b) => b.values.pair === pair), `${tr.name} ${pair}`).toBeLessThan(0.36)
+        }
+        expect(new Set(mine.map((b) => b.values.cross)).size).toBe(7)
+        expect(worstShare(mine, (b) => `${b.values.cross}|${b.values.outcome}`).worst, tr.name).toBeLessThanOrEqual(0.2)
+        expect(worstShare(mine, answer).worst, tr.name).toBeLessThanOrEqual(0.5)
+        expect(new Set(mine.map(answer)).size).toBe(4)
       }
+      const all = new Map<number, number>()
+      for (const b of many) all.set(answer(b), (all.get(answer(b)) ?? 0) + 1)
+      expect(Math.max(...all.values()) / many.length).toBeLessThanOrEqual(0.42)
+      expect(share(many, (b) => b.values.pair === 'Aa × Aa')).toBeLessThan(0.3)
       const phen = many.filter((b) => b.values.outcome === 'dominant' || b.values.outcome === 'recessive')
       const dom = share(phen, (b) => b.values.outcome === 'dominant')
-      expect(dom).toBeGreaterThan(0.35)
-      expect(dom).toBeLessThan(0.65)
+      expect(dom).toBeGreaterThan(0.4)
+      expect(dom).toBeLessThan(0.6)
     })
   }
 
@@ -663,6 +823,11 @@ describe('a family table', () => {
       expect(children.length).toBeLessThanOrEqual(4)
       // A daughter, not a son, differs from her parents: that rules out an X-linked gene.
       expect(children.some((r) => /daughter/i.test(r) && r.endsWith(mum ? '| no |' : '| yes |')), p).toBe(true)
+      // At most half the children are unlike their parents (1 of 2 or 3, 2 of 4): each has a 1 in 4
+      // chance, so three or four of them is a family no teacher would print.
+      const unlike = children.filter((r) => r.endsWith(mum ? '| no |' : '| yes |')).length
+      expect(unlike, p).toBeGreaterThanOrEqual(1)
+      expect(unlike, p).toBeLessThanOrEqual(Math.floor(children.length / 2))
       const dominant = mum
       const q = word(/chance that this child (.+)\?$/, p)
       const ans = q.startsWith('is ') ? 50 : (q === 'shows the condition') === dominant ? 75 : 25
@@ -678,6 +843,24 @@ describe('a family table', () => {
     expect(dom).toBeLessThan(0.6)
     // "Recessive, so 25%" is wrong for a dominant family asked who shows it.
     expect(many.some((b) => b.values.context === 'dominant' && b.values.ask === 'shows' && answer(b) === 75)).toBe(true)
+    // Two-, three- and four-child families each about a third (the pool is biggest at four), in both patterns.
+    for (const pattern of ['recessive', 'dominant']) {
+      const mine = many.filter((b) => b.values.context === pattern)
+      for (const n of [2, 3, 4]) {
+        expect(share(mine, (b) => b.values.children === n), `${pattern} ${n} children`).toBeGreaterThan(0.25)
+        expect(share(mine, (b) => b.values.children === n), `${pattern} ${n} children`).toBeLessThan(0.42)
+      }
+    }
+    // Over 2000 tables, the ratio of unlike children: never 3 of 3, 3 of 4 or 4 of 4, and 2 of 4 drawn.
+    const ratios = new Set(
+      many.map((b) => {
+        const p = b.question.prompt
+        const rows = p.split('\n').filter((l) => l.includes('| Mother and Father |'))
+        const mum = /\| Mother \| not known \| yes \|/.test(p)
+        return `${rows.filter((r) => r.endsWith(mum ? '| no |' : '| yes |')).length} of ${rows.length}`
+      }),
+    )
+    expect([...ratios].sort()).toEqual(['1 of 2', '1 of 3', '1 of 4', '2 of 4'])
   })
 })
 
@@ -762,6 +945,19 @@ describe('chromosome numbers', () => {
     spread('meiosis-gamete-chromosome-number', 'q4', ['species'])
   })
 
+  it('meiosis q4: a person is never "it", and an apple grows on a tree', () => {
+    const many = build('meiosis-gamete-chromosome-number', 'q4', 4000, 'wording')
+    const human = many.find((b) => b.values.species === 'human' && b.question.prompt.startsWith('A person'))!
+    expect(human.question.prompt).toMatch(/^A person's body cells each contain 46 chromosomes\. Human gametes are made by meiosis\. How many chromosomes does each human (sperm cell|egg cell|gamete) contain\?$/)
+    const apple = many.find((b) => b.values.species === 'apple' && b.question.prompt.startsWith('The leaf'))!
+    expect(apple.question.prompt).toMatch(/^The leaf cells of an apple tree each contain 34 chromosomes\. Its gametes are made by meiosis\. How many chromosomes does each apple (egg cell|pollen grain nucleus|gamete) contain\?$/)
+    for (const b of many) {
+      expect(b.question.prompt).not.toMatch(/human[^.]*\. Its /)
+      expect(b.question.prompt).not.toMatch(/apple plant/)
+      if (b.values.context === 'plant' && b.question.prompt.startsWith('The leaf')) expect(b.question.prompt).toMatch(/ (plant|tree) each contain /)
+    }
+  })
+
   it('meiosis q9: two haploid sets restore the body-cell number', () => {
     const built = build('fertilisation-zygote-chromosome-number', 'q9')
     for (const b of built) {
@@ -807,5 +1003,11 @@ describe('asexual reproduction', () => {
     }
     expect(contexts(built)).toBe(3)
     spread('asexual-reproduction-doubling', 'q25', ['d', 'n', 's'])
+    // The starting count spread: 1 to 9 cells, no start over 15% of a context (5 was a third).
+    const many = build('asexual-reproduction-doubling', 'q25', 3000, 'starts')
+    expect(STARTS).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    const starts = worstShare(many, (b) => b.values.s)
+    expect(starts.worst).toBeLessThanOrEqual(0.15)
+    expect(starts.fewest).toBe(STARTS.length)
   })
 })

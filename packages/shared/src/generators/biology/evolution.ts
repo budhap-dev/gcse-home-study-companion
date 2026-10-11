@@ -1,9 +1,9 @@
 import { fixed, show } from '../format.ts'
 import { atMost, cap, closes, figures, near, numeric, prose, tex } from '../physics/build.ts'
-import { clean, clearOf, distinct, evenly, noOnes, places, powerOfTen, range, shiftFree, tenfold, toPlaces, word } from '../chemistry/build.ts'
+import { clean, clearOf, distinct, hundredths, noOnes, places, powerOfTen, range, shiftFree, tenfold, threeFigures, toPlaces, word } from '../chemistry/build.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { balanced, between, cut, fair, figureTolerance, full, halfLastPlace, layered, list, memo, tidy, toThree, unitsOf, whole } from './build.ts'
+import { balanced, between, cut, fair, figureTolerance, full, halfLastPlace, layered, list, memo, rich, tidy, toThree, unitsOf, whole } from './build.ts'
 
 /**
  * Variation and evolution (Edexcel 1BI0: 3.20 to 3.22 variation, 4.2 natural selection, 4.3
@@ -21,9 +21,12 @@ import { balanced, between, cut, fair, figureTolerance, full, halfLastPlace, lay
  * carry resistance; 2 to 30% of brown rats on farms carry warfarin resistance and 2 to 20% of the
  * peppered moths in a clean-air wood are dark. *Escherichia coli* divides every 20 to 30 minutes in
  * ideal conditions, *Staphylococcus aureus* every 25 to 35 and *Streptococcus pneumoniae* every 30
- * to 40. Resistant hospital samples rise from 2 to 20% to at most 80%, at most eightfold between
- * two rows. Holly leaves are 40 to 95 mm long, beech 50 to 110 mm and oak 55 to 125 mm, the shade
- * leaves longer than the sun leaves. In
+ * to 40, and at most 25 survivors double 4 to 9 times, the doublings stated as the written slot
+ * states them. Resistant hospital samples rise from 2 to 20% to at most 80%, at most eightfold
+ * between the two rows asked about. Holly leaves are 40 to 95 mm long, beech 50 to 110 mm and oak
+ * 55 to 125 mm; the sun leaves of one tree average 45 to 62, 56 to 75 and 65 to 88 mm, and the
+ * shade leaves 12 to 22, 16 to 26 and 18 to 28 mm longer, at least twice the room one side's
+ * leaves spread over, so every shade leaf is longer than every sun leaf. In
  * an industrial wood of the 1800s or 1950s 75 to 98% of peppered moths were dark; after the clean
  * air laws, 70 to 95% fell to 5 to 35%. Warfarin resistance rose from 2 to 12% to 30 to 80% of
  * trapped rats, and methicillin resistance from 2 to 15% to 20 to 50% of samples. Fossil dates are
@@ -31,7 +34,7 @@ import { balanced, between, cut, fair, figureTolerance, full, halfLastPlace, lay
  * ago; *Hyracotherium* about 55, *Mesohippus* 35, *Merychippus* 15 and the first *Equus* 4 million;
  * *Pakicetus* about 50, *Rodhocetus* 47 and *Basilosaurus* 40 million. Generation times are
  * assumed at 15 to 30 years for human ancestors, 4 to 9 for horses and 6 to 15 for early whales.
- * Sediment builds up at 1 to 20 m every 100 000 years (Olduvai and Koobi Fora lie in this range);
+ * Sediment builds up at 1.5 to 20 m every 100 000 years (Olduvai and Koobi Fora lie in this range);
  * hand axes date from 1.7 million years ago to 0.5, Oldowan flakes from 2.6 to 1.8. Cubes standing
  * for animals have sides of 1.5 to 30 cm: 1.5 to 5 cm for a small desert animal or bird, 2.5 to 8
  * for a small Arctic mammal. Breeding raises wheat yields by 5 to 30% from 5.0 to 8.5
@@ -40,7 +43,7 @@ import { balanced, between, cut, fair, figureTolerance, full, halfLastPlace, lay
  * 300 to 800 kg/ha. A breeding programme adds 2 to 6% of the starting milk yield a generation:
  * Holstein-Friesians start at 5500 to 8000 litres, Jerseys 4000 to 5500, Saanen goats 600 to 1000
  * and East Friesian sheep 300 to 500. Caterpillars take 8 to 25% of ordinary maize (6 to 12 t/ha)
- * and 1 to 4% of Bt maize; 15 to 40% of ordinary cotton (1.5 to 4 t/ha) and 2 to 8% of Bt cotton;
+ * and 2 to 5% of Bt maize; 15 to 40% of ordinary cotton (1.5 to 4 t/ha) and 2 to 8% of Bt cotton;
  * 25 to 50% of ordinary brinjal (20 to 40 t/ha) and 2 to 6% of Bt brinjal.
  */
 const VARIATION = 'variation-and-natural-selection'
@@ -95,7 +98,7 @@ const CARRIERS: Carriers[] = [
   },
   {
     name: 'rats',
-    says: (n, p) => `A population of ${prose(n)} brown rats lives on a group of farms. ${cap(show(p))}% of them carry an allele that makes them resistant to the rat poison warfarin.`,
+    says: (n, p) => `A population of ${prose(n)} brown rats lives on a group of farms. Of these, ${show(p)}% carry an allele that makes them resistant to the rat poison warfarin.`,
     asks: 'How many of the rats are resistant to warfarin?',
     counted: 'resistant rats',
     why: 'Where warfarin is put down, these are the rats that survive and breed, so the allele for resistance becomes more common.',
@@ -104,7 +107,7 @@ const CARRIERS: Carriers[] = [
   },
   {
     name: 'moths',
-    says: (n, p) => `In a wood where the air is clean and the tree bark is pale, a survey records ${prose(n)} peppered moths. ${cap(show(p))}% of them are the dark form.`,
+    says: (n, p) => `In a wood where the air is clean and the tree bark is pale, a survey records ${prose(n)} peppered moths. Of these, ${show(p)}% are the dark form.`,
     asks: 'How many dark moths does the survey record?',
     counted: 'dark moths',
     why: 'Against pale bark the dark form is the one birds find most easily, which is why it is now the rare form.',
@@ -172,9 +175,10 @@ const BUGS: Bug[] = [
   { name: 'S. aureus', species: '*Staphylococcus aureus*', antibiotic: 'flucloxacillin', times: [25, 30, 35] },
   { name: 'S. pneumoniae', species: '*Streptococcus pneumoniae*', antibiotic: 'amoxicillin', times: [30, 35, 40] },
 ]
-/** Survivors: never 1, a power of two (the answer would be a bare power of two) or ten. */
-const SURVIVORS = range(3, 40).filter((n) => !Number.isInteger(Math.log2(n)) && !powerOfTen(n))
-const DOUBLINGS = range(4, 12)
+/** Survivors: at most 25, so the product is workable by hand; never 1, a power of two (the answer would be a bare power of two) or ten. */
+const SURVIVORS = range(3, 25).filter((n) => !Number.isInteger(Math.log2(n)) && !powerOfTen(n))
+/** How many times the population doubles: stated in the prompt, as the written slot states its 7. */
+const DOUBLINGS = range(4, 9)
 
 /** "2 hours 20 minutes", "1 hour 30 minutes", "3 hours". */
 export function duration(minutes: number): string {
@@ -184,14 +188,22 @@ export function duration(minutes: number): string {
   return m ? `${hours} ${m} minutes` : hours
 }
 
+/** The division time is context; the number of doublings is stated, as the written slot states it, never left to be found from a time. */
 const GROWTH_PROMPTS = [
   (b: Bug, n: number, t: number, k: number) =>
-    `A course of the antibiotic ${b.antibiotic} leaves ${n} resistant ${b.species} bacteria alive. In ideal conditions each bacterium divides into two every ${t} minutes. Assuming every bacterium survives and divides, how many bacteria will there be after ${duration(k * t)}?`,
+    `A course of the antibiotic ${b.antibiotic} leaves ${n} resistant ${b.species} bacteria alive. In ideal conditions each bacterium divides into two every ${t} minutes. Assuming every bacterium survives and divides, how many bacteria will there be once the population has doubled ${k} times?`,
   (b: Bug, n: number, t: number, k: number) =>
-    `After a course of ${b.antibiotic}, ${n} ${b.species} bacteria that are resistant to it survive. In ideal conditions the population doubles every ${t} minutes. How many bacteria will there be after ${duration(k * t)}, assuming none of them die?`,
+    `After a course of ${b.antibiotic}, ${n} ${b.species} bacteria that are resistant to it survive. In ideal conditions the population doubles every ${t} minutes. How many bacteria will there be after it has doubled ${k} times, assuming none of them die?`,
 ]
 
-/** n × 2^k, k from the time and the doubling time: written as q9 (10 bacteria doubling 7 times, 1280). */
+interface Growth {
+  n: number
+  t: number
+  k: number
+  answer: number
+}
+
+/** n × 2^k, the doublings stated: written as q9 (10 bacteria doubling 7 times, 1280). */
 export const resistantGrowth: Generator = {
   id: 'resistant-population-doubling',
   subjectId: 'biology',
@@ -199,11 +211,18 @@ export const resistantGrowth: Generator = {
   replaces: ['q9'],
   build(r, slot, turn) {
     const b = BUGS[turn % BUGS.length]!
-    const n = pick(r, SURVIVORS)
-    const t = pick(r, b.times)
-    const k = pick(r, DOUBLINGS)
-    const minutes = k * t
-    const answer = n * 2 ** k
+    // No two givens alike (the survivors never the division time or the doublings), and an answer
+    // that is none of them with the point moved, doubled or halved: 25 doubling 4 times is 400,
+    // which is 40 minutes or 4 doublings with the point moved.
+    const { n, t, k, answer }: Growth = draw(
+      r,
+      (q) => {
+        const survivors = pick(q, SURVIVORS)
+        const doublings = pick(q, DOUBLINGS)
+        return { n: survivors, t: pick(q, b.times), k: doublings, answer: survivors * 2 ** doublings }
+      },
+      (y) => y.n !== y.t && y.n !== y.k && shiftFree(y.answer, y.n, y.t, y.k),
+    )
     let grown = n
     for (let i = 0; i < k; i++) grown *= 2
     return numeric(
@@ -211,10 +230,10 @@ export const resistantGrowth: Generator = {
       {
         prompt: pick(r, GROWTH_PROMPTS)(b, n, t, k),
         solution:
-          `${cap(duration(minutes))} is ${minutes} minutes, so the population doubles $${minutes} \\div ${t} = ${k}$ times. ` +
           `${closes(`${n} \\times 2^{${k}} = ${n} \\times ${tex(2 ** k)}`, answer, 'bacteria')} ` +
+          `At one division every ${t} minutes, the ${k} doublings take ${duration(k * t)}. ` +
           `Every one of them carries the resistance, so ${b.antibiotic} will no longer clear the infection.`,
-        method: [`finds the number of doublings, ${minutes} ÷ ${t} = ${k}`, `uses 2 to the power ${k} and multiplies by ${n}`],
+        method: [`uses 2 to the power ${k}`, `multiplies by ${n}`],
         answer,
         units: unitsOf(slot),
       },
@@ -252,24 +271,65 @@ interface Rise {
   answer: number
 }
 /**
- * Two percentages whose ratio is exact with three figures at most, from 1.5 to 8 times, not either
- * figure itself and not their difference. The rows between need room, and a row outside the pair
- * must fit the same steady rise: at least 2.5% before it and at most 75% after it.
+ * Two percentages whose ratio is exact to 1 decimal place, as the written 7.5 is, from 1.5 to 8
+ * times, not either figure itself, nor either with the point moved, doubled or halved (so the
+ * earlier row is never 2, 5, 10 or 20, which make the answer the later row with the point moved),
+ * and not their difference. The rows between need room, a row outside the pair must fit the same
+ * steady rise (at least 2.5% before it and at most 75% after it), and every row not asked about
+ * must have a value it may take.
  */
 const rises = (ask: readonly [number, number]): Rise[] =>
   range(ask[0] === 1 ? 3 : 2, 20).flatMap((a) =>
     range(a + 1, 60)
       .map((b) => ({ a, b, answer: clean(b / a) }))
-      .filter((x) => tidy(x.answer, 2) && between(x.answer, [1.5, 8]) && !powerOfTen(x.answer) && ![x.a, x.b].includes(x.answer) && !near(x.answer, x.b - x.a) && x.b - x.a >= ask[1] - ask[0] + 1 && (ask[0] === 0 || x.a / Math.sqrt(x.answer) >= 2.5) && (ask[1] === 3 || x.b * Math.sqrt(x.answer) <= 75)),
+      .filter(
+        (x) =>
+          tidy(x.answer, 1) &&
+          between(x.answer, [1.5, 8]) &&
+          !powerOfTen(x.answer) &&
+          ![x.a, x.b].includes(x.answer) &&
+          shiftFree(x.answer, x.a, x.b) &&
+          !near(x.answer, x.b - x.a) &&
+          x.b - x.a >= ask[1] - ask[0] + 1 &&
+          (ask[0] === 0 || x.a / Math.sqrt(x.answer) >= 2.5) &&
+          (ask[1] === 3 || x.b * Math.sqrt(x.answer) <= 75) &&
+          fillable(ask, x),
+      ),
   )
 
 /**
+ * The whole numbers a row not asked about may take, given the row before it: inside the room the
+ * rows either side leave it (from 2, to 80), never the answer, and never the answer with the point
+ * moved, doubled or halved, so no row of the table is a short cut to the answer.
+ */
+function allowed(ask: readonly [number, number], x: Rise, i: number, prev: number): number[] {
+  const lo = i < ask[0] ? 2 : prev + 1
+  const hi = i > ask[1] ? 80 : (i < ask[0] ? x.a : x.b) - (i < ask[0] ? 1 : ask[1] - i)
+  return range(lo, Math.max(lo, hi)).filter((v) => v <= hi && v !== x.answer && shiftFree(x.answer, v))
+}
+/** Every row not asked about has a value it may take, each leaving the most room for the next. */
+function fillable(ask: readonly [number, number], x: Rise): boolean {
+  let prev = 0
+  for (const i of [0, 1, 2, 3]) {
+    if (i === ask[0] || i === ask[1]) {
+      prev = i === ask[0] ? x.a : x.b
+      continue
+    }
+    const room = allowed(ask, x, i, prev)
+    if (!room.length) return false
+    prev = room[0]!
+  }
+  return true
+}
+
+/**
  * Fills the four rows, rising year on year about as a steady multiplication would: each row not
- * asked about aims at the steady rise, jittered by up to 15%, and is kept inside the room the rows
- * either side leave it. No row is the answer.
+ * asked about aims at the steady rise, jittered by up to 15%, and takes the allowed value nearest
+ * the aim, leaving the next row, when that is not asked about either, a value of its own.
  */
 function rows(r: Rng, ask: readonly [number, number], x: Rise): number[] {
   const step = (x.b / x.a) ** (1 / (ask[1] - ask[0]))
+  const asked = (i: number) => i === ask[0] || i === ask[1]
   return draw(
     r,
     () => {
@@ -277,17 +337,14 @@ function rows(r: Rng, ask: readonly [number, number], x: Rise): number[] {
       out[ask[0]] = x.a
       out[ask[1]] = x.b
       for (const i of [0, 1, 2, 3]) {
-        if (i === ask[0] || i === ask[1]) continue
+        if (asked(i)) continue
         const aim = (i < ask[0] ? x.a / step : i > ask[1] ? x.b * step : x.a * step ** (i - ask[0])) * (0.85 + 0.3 * r())
-        const lo = i < ask[0] ? 2 : out[i - 1]! + 1
-        const hi = i > ask[1] ? 80 : (i < ask[0] ? x.a : x.b) - (i < ask[0] ? 1 : ask[1] - i)
-        // The whole number in the room nearest the aim, never the answer.
-        const room = range(lo, Math.max(lo, hi)).filter((v) => v <= hi && v !== x.answer)
+        const room = allowed(ask, x, i, out[i - 1] ?? 0).filter((v) => i === 3 || asked(i + 1) || allowed(ask, x, i + 1, v).length > 0)
         out[i] = room.length ? room.reduce((best, v) => (Math.abs(v - aim) < Math.abs(best - aim) ? v : best)) : 0
       }
       return out
     },
-    (out) => out.every((v, i) => i === 0 || v > out[i - 1]!) && out[0]! >= 2 && out[3]! <= 80 && !out.includes(x.answer),
+    (out) => out.every((v, i) => i === 0 || v > out[i - 1]!) && out[0]! >= 2 && out[3]! <= 80 && out.every((v) => v !== x.answer && shiftFree(x.answer, v)),
   )
 }
 
@@ -300,7 +357,11 @@ export const resistanceTable: Generator = {
   build(r, slot, turn) {
     const c = TESTED[turn % TESTED.length]!
     const ask = COMPARED[Math.floor(turn / TESTED.length) % COMPARED.length]!
-    const x = evenly(r, `resistance-table-ratio:${ask.join('-')}`, () => rises(ask), (y) => y.answer)
+    // The earlier row and the answer both spread, the earlier row matched exactly: the answer
+    // alone let an earlier row of 10 fill a third of a context, because every later row divides
+    // by 10 exactly, and the answer matched exactly let 15 fill 40%, because the ratios only a
+    // row of 15 gives (1.6, 2.2, 2.6) each count as much as 2 or 3.
+    const x = balanced(r, `resistance-table-ratio:${ask.join('-')}`, () => rises(ask), (y) => y.answer, (y) => y.a)
     const pcs = rows(r, ask, x)
     const gap = pick(r, [2, 3])
     const start = int(r, 2003, 2013)
@@ -337,26 +398,50 @@ interface Tree {
   tree: string
   /** Mean length of the sun leaves, mm: lowest, highest. */
   sunny: readonly [number, number]
-  /** How much longer the shade leaves are on average, mm: lowest, highest. */
+  /** How much longer the shade leaves are on average, mm: lowest, highest (the lowest is the least that clears both sides' rooms). */
   longer: readonly [number, number]
+  /** Leaf lengths the species has, mm: lowest, highest. */
+  limits: readonly [number, number]
 }
 const TREES: Tree[] = [
-  { name: 'holly', tree: 'holly tree', sunny: [45, 62], longer: [6, 22] },
-  { name: 'beech', tree: 'beech tree', sunny: [55, 75], longer: [6, 22] },
-  { name: 'oak', tree: 'oak tree', sunny: [65, 88], longer: [8, 24] },
+  { name: 'holly', tree: 'holly tree', sunny: [45, 62], longer: [12, 22], limits: [40, 95] },
+  { name: 'beech', tree: 'beech tree', sunny: [56, 75], longer: [16, 26], limits: [50, 110] },
+  { name: 'oak', tree: 'oak tree', sunny: [65, 88], longer: [18, 28], limits: [55, 125] },
 ]
 const LEAF_COUNTS = [4, 5, 6]
+/** How far a leaf may lie from its side's mean, as a share of the mean. */
+const LEAF_SPREAD = 0.12
+/** The whole millimetres either side of a mean that one side's leaves spread over. */
+const room = (mean: number) => Math.floor(mean * LEAF_SPREAD)
 
-/** n distinct whole lengths within 12% of the mean that add up to n × mean. */
-function lengths(r: Rng, n: number, mean: number): number[] {
-  const room = Math.floor(mean * 0.12)
+interface Sides {
+  sunny: number
+  shaded: number
+  answer: number
+}
+/**
+ * Every sun mean with every difference the tree allows whose shade mean lies at least twice the
+ * shade side's room above it, and more than both sides' rooms together, so every shade leaf is
+ * longer than every sun leaf and the difference is plain to see; and no leaf outside the lengths
+ * the species has.
+ */
+const sides = (t: Tree): Sides[] =>
+  range(...t.sunny).flatMap((sunny) =>
+    range(...t.longer)
+      .map((answer) => ({ sunny, shaded: sunny + answer, answer }))
+      .filter((x) => x.answer >= 2 * room(x.shaded) && x.answer > room(x.shaded) + room(x.sunny) && x.sunny - room(x.sunny) >= t.limits[0] && x.shaded + room(x.shaded) <= t.limits[1]),
+  )
+
+/** n distinct whole lengths within the room either side of the mean that add up to n × mean, not in order, and none the answer with the point moved, doubled or halved. */
+function lengths(r: Rng, n: number, mean: number, answer: number): number[] {
+  const w = room(mean)
   return draw(
     r,
     () => {
-      const xs = Array.from({ length: n - 1 }, () => int(r, mean - room, mean + room))
+      const xs = Array.from({ length: n - 1 }, () => int(r, mean - w, mean + w))
       return [...xs, n * mean - xs.reduce((s, x) => s + x, 0)]
     },
-    (xs) => new Set(xs).size === n && xs.every((x) => Math.abs(x - mean) <= room) && !xs.every((x, i) => i === 0 || x > xs[i - 1]!),
+    (xs) => new Set(xs).size === n && xs.every((x) => Math.abs(x - mean) <= w && clearOf(answer, x)) && !xs.every((x, i) => i === 0 || x > xs[i - 1]!),
   )
 }
 
@@ -369,11 +454,11 @@ export const leafMeans: Generator = {
   build(r, slot, turn) {
     const t = TREES[turn % TREES.length]!
     const n = pick(r, LEAF_COUNTS)
-    const answer = int(r, ...t.longer)
-    const sunny = int(r, ...t.sunny)
-    const shaded = sunny + answer
-    const sh = lengths(r, n, shaded)
-    const su = lengths(r, n, sunny)
+    // The difference first, then a sun mean it leaves clear: the largest sun means fit only the
+    // largest differences, so drawing the sun mean first would make those differences fill them.
+    const { sunny, shaded, answer } = layered(r, `sun-and-shade-leaf-means:${t.name}`, () => sides(t), (y) => y.answer, (y) => y.sunny)
+    const sh = lengths(r, n, shaded, answer)
+    const su = lengths(r, n, sunny, answer)
     const [shTotal, suTotal] = [n * shaded, n * sunny]
     return numeric(
       slot,
@@ -486,15 +571,26 @@ interface Points {
   p2: number
   answer: number
 }
-/** Two whole percentages whose difference is at least 10 points and neither of them. */
+/** Survey sizes that give a whole count at p%, never 100, 200 or 500, which make the count the percentage, doubled or halved. */
+const sizesFor = (s: Selection, p: number) => range(...s.sizes).filter((n) => whole((n * p) / 100) && (n * p) / 100 >= 2 && ![100, 200, 500].includes(n))
+/**
+ * Two survey sizes that fit a pair of percentages: the two sizes and two counts all differ (300
+ * resistant of 400 after 9 of 300 before repeats a figure), the change in the counts is not the
+ * answer (a student who subtracts the counts without turning them into percentages is marked
+ * wrong), and the answer is none of the sizes or counts, nor one with the point moved, doubled or
+ * halved (30 points from 300 rats, or 36 from 18 resistant).
+ */
+const fits = (x: Points, n1: number, n2: number) => {
+  const [d1, d2] = [(n1 * x.p1) / 100, (n2 * x.p2) / 100]
+  return new Set([n1, n2, d1, d2]).size === 4 && !near(Math.abs(d2 - d1), x.answer) && clearOf(x.answer, n1, n2, d1, d2)
+}
+/** Two whole percentages whose difference is at least 10 points and neither of them, with survey sizes that fit. */
 const pointsFor = (s: Selection): Points[] =>
   range(...s.before).flatMap((p1) =>
     range(...s.after)
       .map((p2) => ({ p1, p2, answer: Math.abs(p2 - p1) }))
-      .filter((x) => x.answer >= 10 && x.answer !== x.p1 && x.answer !== x.p2),
+      .filter((x) => x.answer >= 10 && x.answer !== x.p1 && x.answer !== x.p2 && sizesFor(s, x.p1).some((n1) => sizesFor(s, x.p2).some((n2) => fits(x, n1, n2)))),
   )
-/** Survey sizes that give a whole count at p%, never 100, 200 or 500, which make the count the percentage, doubled or halved. */
-const sizesFor = (s: Selection, p: number) => range(...s.sizes).filter((n) => whole((n * p) / 100) && (n * p) / 100 >= 2 && ![100, 200, 500].includes(n))
 
 /** Each survey to a percentage, then the difference: written as q26 (60 of 400, 345 of 500, 54 percentage points). */
 export const selectionPoints: Generator = {
@@ -505,13 +601,7 @@ export const selectionPoints: Generator = {
   build(r, slot, turn) {
     const s = SELECTIONS[turn % SELECTIONS.length]!
     const x = layered(r, `natural-selection-percentage-points:${s.name}`, () => pointsFor(s), (y) => y.answer, (y) => y.p1)
-    // The sizes differ, and the change in the counts is not the answer: a student who subtracts the
-    // counts without turning them into percentages is marked wrong.
-    const [n1, n2] = draw(
-      r,
-      (q) => [pick(q, sizesFor(s, x.p1)), pick(q, sizesFor(s, x.p2))],
-      ([a, b]) => a !== b && !near(Math.abs((b! * x.p2) / 100 - (a! * x.p1) / 100), x.answer) && ![(a! * x.p1) / 100, (b! * x.p2) / 100].includes(x.answer),
-    ) as [number, number]
+    const [n1, n2] = draw(r, (q) => [pick(q, sizesFor(s, x.p1)), pick(q, sizesFor(s, x.p2))] as [number, number], ([a, b]) => fits(x, a, b))
     const d1 = (n1 * x.p1) / 100
     const d2 = (n2 * x.p2) / 100
     const way = s.rises ? 'increased' : 'decreased'
@@ -551,13 +641,13 @@ interface Fossil {
   short: string
   /** Million years ago. */
   age: number
+  /** Whether the date is a rounded estimate, said with "about": the three fossils Edexcel names keep their dates as the specification gives them. */
+  about: boolean
 }
 interface Line {
   name: string
   /** After "generations of". */
   of: string
-  /** "about " where the date is a rounded one. */
-  about: string
   fossils: Fossil[]
   /** Generation times in years the prompt may assume. */
   times: number[]
@@ -566,39 +656,38 @@ const LINES: Line[] = [
   {
     name: 'human ancestors',
     of: 'human ancestors',
-    about: '',
     fossils: [
-      { full: '*Sahelanthropus*, one of the oldest fossils thought to be a human ancestor,', short: '*Sahelanthropus*', age: 7 },
-      { full: 'Ardi', short: 'Ardi', age: 4.4 },
-      { full: 'Lucy', short: 'Lucy', age: 3.2 },
-      { full: "Turkana Boy, the skeleton found by Richard Leakey's team,", short: 'Turkana Boy', age: 1.6 },
+      { full: '*Sahelanthropus*, one of the oldest fossils thought to be a human ancestor,', short: '*Sahelanthropus*', age: 7, about: true },
+      { full: 'Ardi', short: 'Ardi', age: 4.4, about: false },
+      { full: 'Lucy', short: 'Lucy', age: 3.2, about: false },
+      { full: "Turkana Boy, the skeleton found by Richard Leakey's team,", short: 'Turkana Boy', age: 1.6, about: false },
     ],
     times: range(15, 30),
   },
   {
     name: 'horses',
     of: 'horse ancestors',
-    about: 'about ',
     fossils: [
-      { full: '*Hyracotherium*, a fox-sized early relative of the horse,', short: '*Hyracotherium*', age: 55 },
-      { full: '*Mesohippus*, a three-toed horse,', short: '*Mesohippus*', age: 35 },
-      { full: '*Merychippus*, a grazing three-toed horse,', short: '*Merychippus*', age: 15 },
-      { full: 'the first *Equus*, the genus of modern horses,', short: '*Equus*', age: 4 },
+      { full: '*Hyracotherium*, a fox-sized early relative of the horse,', short: '*Hyracotherium*', age: 55, about: true },
+      { full: '*Mesohippus*, a three-toed horse,', short: '*Mesohippus*', age: 35, about: true },
+      { full: '*Merychippus*, a grazing three-toed horse,', short: '*Merychippus*', age: 15, about: true },
+      { full: 'the first *Equus*, the genus of modern horses,', short: '*Equus*', age: 4, about: true },
     ],
     times: range(4, 9),
   },
   {
     name: 'whales',
     of: 'whale ancestors',
-    about: 'about ',
     fossils: [
-      { full: '*Pakicetus*, a land mammal related to whales,', short: '*Pakicetus*', age: 50 },
-      { full: '*Rodhocetus*, which swam with its legs and lived partly on land,', short: '*Rodhocetus*', age: 47 },
-      { full: '*Basilosaurus*, a whale that lived wholly in the sea,', short: '*Basilosaurus*', age: 40 },
+      { full: '*Pakicetus*, a land mammal related to whales,', short: '*Pakicetus*', age: 50, about: true },
+      { full: '*Rodhocetus*, which swam with its legs and lived partly on land,', short: '*Rodhocetus*', age: 47, about: true },
+      { full: '*Basilosaurus*, a whale that lived wholly in the sea,', short: '*Basilosaurus*', age: 40, about: true },
     ],
     times: range(6, 15),
   },
 ]
+/** "about 7 million years ago", "4.4 million years ago". */
+const when = (f: Fossil) => `${f.about ? 'about ' : ''}${show(f.age)} million years ago`
 
 interface Span {
   older: Fossil
@@ -612,7 +701,8 @@ interface Span {
 }
 /**
  * Every pair of fossils, older first, with every generation time that rounds clearly: never 10, 5
- * or 20, which make the answer the gap in millions with the point moved, doubled or halved.
+ * or 20, which make the answer the gap in millions with the point moved, doubled or halved, and
+ * never a fossil's age in millions (the first *Equus* at 4 million years, a generation of 4 years).
  */
 const spans = (l: Line): Span[] =>
   l.fossils.flatMap((older, i) =>
@@ -622,16 +712,16 @@ const spans = (l: Line): Span[] =>
         const years = clean(gap * 1e6)
         const f = toThree(years / g)
         const x = { older, younger, gap, years, g, ...f }
-        return fair(f) && shiftFree(f.answer, gap, older.age, younger.age, g) ? [x] : []
+        return fair(f) && shiftFree(f.answer, gap, older.age, younger.age, g) && !near(g, older.age) && !near(g, younger.age) ? [x] : []
       }),
     ),
   )
 
 const SPAN_PROMPTS = [
   (l: Line, x: Span) =>
-    `${cap(x.older.full)} lived ${l.about}${show(x.older.age)} million years ago and ${x.younger.full} lived ${l.about}${show(x.younger.age)} million years ago. Assuming an average generation time of ${x.g} years, calculate how many generations of ${l.of} would fit into the time between ${x.older.short} and ${x.younger.short}.`,
+    `${cap(x.older.full)} lived ${when(x.older)} and ${x.younger.full} lived ${when(x.younger)}. Assuming an average generation time of ${x.g} years, calculate how many generations of ${l.of} would fit into the time between ${x.older.short} and ${x.younger.short}.`,
   (l: Line, x: Span) =>
-    `The fossil record shows that ${x.older.full} lived ${l.about}${show(x.older.age)} million years ago, and ${x.younger.full} ${l.about}${show(x.younger.age)} million years ago. If the average generation time of ${l.of} was ${x.g} years, how many generations would fit into the time between them?`,
+    `The fossil record shows that ${x.older.full} lived ${when(x.older)}, and ${x.younger.full} ${when(x.younger)}. If the average generation time of ${l.of} was ${x.g} years, how many generations would fit into the time between them?`,
 ]
 
 /** Years ÷ generation time: written as q25 (Ardi 4.4, Lucy 3.2, 20 years, 60 000). */
@@ -697,12 +787,16 @@ interface Layer {
   /** Million years. */
   t: number
 }
-/** A rate of 1 to 20 m per 100 000 years, a depth of 0.5 to 30 m, and 50 000 to 600 000 years between them that prints exactly; never the rate itself. */
+/**
+ * A rate of 1.5 to 20 m per 100 000 years (never 1 m, which makes the division no step), a depth
+ * of 0.5 to 30 m, and 1.5 to 6 lots of 100 000 years between them that print exactly (under one
+ * lot, "0.7 lots of 100 000 years" is no help to anyone); never the rate itself.
+ */
 const LAYERS: () => Layer[] = memo('tool-date-from-sediment:layers', () =>
-  range(1, 20, 0.5).flatMap((s) =>
+  range(1.5, 20, 0.5).flatMap((s) =>
     range(0.5, 30, 0.5)
       .map((h) => ({ s, h, q: clean(h / s), t: clean(h / s / 10) }))
-      .filter((x) => atMost(x.q, 1) && between(x.q, [0.5, 6]) && noOnes(x.q) && distinct(x.s, x.h)),
+      .filter((x) => atMost(x.q, 1) && between(x.q, [1.5, 6]) && noOnes(x.s, x.q) && distinct(x.s, x.h)),
   ),
 )
 
@@ -718,9 +812,11 @@ export const toolDate: Generator = {
     // one rate in half the builds), then the ash's date from those that leave the tool in the age
     // its kind was made.
     const L = balanced(r, 'tool-date-from-sediment:layers', LAYERS, (y) => y.s, (y) => y.h, (y) => y.t)
+    // The ash's date is never 1 million years, and the tool's date is none of the figures, nor the
+    // time the sediment took, nor the ash's date, with the point moved, doubled or halved.
     const dates = range(0.4, 2.8, 0.01).filter((d) => {
       const a = clean(f.above ? d - L.t : d + L.t)
-      return between(a, f.made) && clearOf(a, L.h, L.s, L.q) && !tenfold(d, L.h)
+      return between(a, f.made) && noOnes(d, a) && clearOf(a, L.h, L.s, L.q, L.t, d) && !tenfold(d, L.h)
     })
     const ash = pick(r, dates)
     const answer = clean(f.above ? ash - L.t : ash + L.t)
@@ -834,10 +930,13 @@ export const formRatio: Generator = {
     const big = m.majority ? p : 100 - p
     const small = 100 - big
     const f = toThree(big / small)
+    // A ratio that does not come out exactly is asked to 3 significant figures, so the student
+    // knows how far to take 87 ÷ 13; an exact one keeps the written wording.
+    const precision = f.rounded ? ' Give your answer to 3 significant figures.' : ''
     return numeric(
       slot,
       {
-        prompt: `${m.says(p)} ${pick(r, m.asks)}`,
+        prompt: `${m.says(p)} ${pick(r, m.asks)}${precision}`,
         solution:
           `If ${p} in every 100 were ${m.given}, ${100 - p} were ${m.other}. ` +
           (f.rounded
@@ -879,7 +978,7 @@ interface Count {
 const COUNTS: Count[] = [
   {
     name: 'clean-air moths',
-    says: (n, d) => `In a survey of a wood with clean air, ${n} peppered moths were recorded. ${d} of them were the dark form and the rest were pale. Calculate the percentage of the moths that were pale.`,
+    says: (n, d) => `In a survey of a wood with clean air, ${n} peppered moths were recorded. Of these, ${d} were the dark form and the rest were pale. Calculate the percentage of the moths that were pale.`,
     counted: 'dark',
     asked: 'pale',
     plural: 'moths',
@@ -891,7 +990,7 @@ const COUNTS: Count[] = [
   {
     name: 'industrial moths',
     says: (n, d) =>
-      `In a survey in the 1950s of a wood near an industrial town, where soot had blackened the bark, ${n} peppered moths were recorded. ${d} of them were the pale form and the rest were dark. Calculate the percentage of the moths that were dark.`,
+      `In a survey in the 1950s of a wood near an industrial town, where soot had blackened the bark, ${n} peppered moths were recorded. Of these, ${d} were the pale form and the rest were dark. Calculate the percentage of the moths that were dark.`,
     counted: 'pale',
     asked: 'dark',
     plural: 'moths',
@@ -922,12 +1021,14 @@ interface Survey {
 }
 /** A survey size that is not 10, 20, 25, 50, 100, 200, 250 or 500 (the percentage would be the count with the point moved, doubled or quartered). */
 const plainSize = (n: number) => ![1, 2, 2.5, 5].some((k) => tenfold(n, k))
-/** Every count whose other form's share is exact to 1 decimal place with three figures at most, and is not a count. */
+/** A share exact to 1 decimal place with three figures at most, or a quarter (76.25%, 93.75%), which the answer box takes as 76.3 or 93.8 too. */
+const quarter = (x: number) => tidy(x, 1) || (atMost(x, 2) && [25, 75].includes(hundredths(x)))
+/** Every count whose other form's share is a plain or quarter share, and is not a count. */
 const surveys = (c: Count): Survey[] =>
   range(...c.sizes).filter(plainSize).flatMap((n) =>
     range(1, n - 1)
       .map((d) => ({ n, d, m: n - d, answer: clean(((n - d) / n) * 100) }))
-      .filter((x) => between(x.answer, c.share) && tidy(x.answer, 1) && clearOf(x.answer, x.n, x.d, x.m) && x.d >= 2),
+      .filter((x) => between(x.answer, c.share) && quarter(x.answer) && clearOf(x.answer, x.n, x.d, x.m) && x.d >= 2),
   )
 
 /** (n − d) ÷ n × 100: written as q24 (18 dark of 120 moths, 85% pale). */
@@ -938,8 +1039,11 @@ export const formPercentage: Generator = {
   replaces: ['q24'],
   build(r, slot, turn) {
     const c = COUNTS[turn % COUNTS.length]!
-    // The survey size and the answer both spread: the answer alone let one size fill 45% of a context.
-    const x = balanced(r, `other-form-percentage:${c.name}`, () => surveys(c), (y) => y.answer, (y) => y.n)
+    // Only sizes that allow five or more shares, the size matched exactly and the answer as evenly
+    // as the sizes allow: every multiple of 4 allows 75% and little else, so spreading the sizes
+    // let 75 fill a quarter of a context, and spreading the answers let 80 or 400, which give every
+    // quarter share, fill 40%.
+    const x = balanced(r, `other-form-percentage:${c.name}`, () => rich(surveys(c), (y) => y.n, (y) => y.answer, 5), (y) => y.answer, (y) => y.n)
     const other = clean(100 - x.answer)
     return numeric(
       slot,
@@ -949,7 +1053,8 @@ export const formPercentage: Generator = {
           `${c.group} number $${x.n} - ${x.d} = ${x.m}$. As a percentage of all the ${c.plural} recorded, $\\dfrac{${x.m}}{${x.n}} \\times 100 = ${pc(x.answer)}$. ${c.why(other)}`,
         method: [`finds ${x.m} ${c.asked} ${c.plural} and divides by ${x.n}`],
         answer: x.answer,
-        tolerance: halfLastPlace(x.answer),
+        // A quarter share has four figures and no precision is asked, so its 3-figure rounding is right too.
+        tolerance: threeFigures(halfLastPlace(x.answer), x.answer),
         units: unitsOf(slot),
       },
       // Second route: 100 less the counted form's share.
@@ -996,12 +1101,12 @@ const PAIRS: Pair[] = [
     group: 'birds in winter',
     one: 'bird',
     small: [1.5, 5],
-    large: [4, 16],
+    large: [4, 15],
     why: 'A small bird has more surface for each unit of volume, so it loses heat faster relative to its size on a cold night. That is why wrens, among the smallest British birds, huddle together in roosts in winter, which cuts the surface each one exposes.',
   },
 ]
-/** Sides in cm whose ratio 6 ÷ side ends within three places; never 6, whose ratio is 1. */
-const SIDES = [1.5, 2, 2.5, 3, 4, 5, 7.5, 8, 10, 12, 12.5, 15, 16, 20, 24, 25, 30]
+/** Sides in cm whose ratio 6 ÷ side ends within two places (16 cm, whose ratio is 0.375, would be rounded to 0.38 and the comparison thrown out); never 6, whose ratio is 1. */
+const SIDES = [1.5, 2, 2.5, 3, 4, 5, 7.5, 8, 10, 12, 12.5, 15, 20, 24, 25, 30]
 
 interface Cubes {
   a: number
@@ -1211,7 +1316,11 @@ const programmes = (h: Herd): Programme[] =>
     ),
   )
 
-/** n readings on the grid within 12% of the mean, distinct and not in order, that average to it exactly. */
+/**
+ * n readings on the grid within 12% of the mean, distinct and not in order, that average to it
+ * exactly. One of them may equal the starting mean: ruling that out made 1 draw in 1000 run out
+ * of tries when eight readings share a narrow window, which the release check would catch.
+ */
 function readings(r: Rng, h: Herd, n: number, mean: number): number[] {
   const room = Math.floor((mean * SPREAD) / h.grid)
   const base = Math.round(mean / h.grid) * h.grid
@@ -1295,7 +1404,7 @@ const CROPS: Crop[] = [
     pest: 'caterpillars of the corn borer moth',
     potential: [6, 12, 0.5],
     ordinary: [8, 25],
-    modified: [1, 4],
+    modified: [2, 5],
     area: [15, 200, 5],
     dp: 1,
   },
@@ -1343,7 +1452,10 @@ export const btHarvest: Generator = {
   build(r, slot, turn) {
     const c = CROPS[turn % CROPS.length]!
     // An answer exact with three figures at most, not the extra per hectare with the point moved
-    // (an area of 10 or 100 hectares, or a gap of 10 points), and no two givens alike.
+    // (an area of 10 or 100 hectares, or a gap of 10 points), no two givens alike, and every
+    // printed intermediate (each harvest per hectare, the difference per hectare and the two farm
+    // totals) ending within 2 decimal places as the written 6.8, 7.84 and 1.04 do, so a student
+    // who rounds one of them to 2 places is not marked wrong.
     const x: Harvest = draw(
       r,
       (q) => {
@@ -1354,17 +1466,23 @@ export const btHarvest: Generator = {
         const per = clean((y * (p1 - p2)) / 100)
         return { y, p1, p2, a, per, answer: clean(a * per) }
       },
-      (h) =>
-        tidy(h.answer, 2) &&
-        h.answer >= 1 &&
-        noOnes(h.a) &&
-        !powerOfTen(h.a) &&
-        distinct(h.y, h.p1, h.p2, h.a) &&
-        h.p1 - h.p2 !== h.p2 &&
-        !powerOfTen(h.p1 - h.p2) &&
-        shiftFree(h.answer, h.per, h.y, h.a, h.p1, h.p2) &&
-        !near(h.answer, h.a * h.y * (1 - h.p1 / 100)) &&
-        !near(h.answer, h.a * h.y * (1 - h.p2 / 100)),
+      (h) => {
+        const kept1 = h.y * (1 - h.p1 / 100)
+        const kept2 = h.y * (1 - h.p2 / 100)
+        return (
+          tidy(h.answer, 2) &&
+          h.answer >= 1 &&
+          noOnes(h.a) &&
+          !powerOfTen(h.a) &&
+          distinct(h.y, h.p1, h.p2, h.a) &&
+          h.p1 - h.p2 !== h.p2 &&
+          !powerOfTen(h.p1 - h.p2) &&
+          shiftFree(h.answer, h.per, h.y, h.a, h.p1, h.p2) &&
+          !near(h.answer, h.a * kept1) &&
+          !near(h.answer, h.a * kept2) &&
+          [kept1, kept2, h.per, kept1 * h.a, kept2 * h.a].every((v) => atMost(v, 2))
+        )
+      },
     )
     const keep1 = clean(x.y * (1 - x.p1 / 100))
     const keep2 = clean(x.y * (1 - x.p2 / 100))

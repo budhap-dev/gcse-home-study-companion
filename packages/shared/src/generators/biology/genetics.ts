@@ -23,18 +23,28 @@ import { ANIMALS, duration, PLANTS } from './microscopy.ts'
  * runs from about 25% to 75% across living things), never 25%, which would make all four equal.
  * Bacterial plasmids are 2 to 60 kb and their antibiotic-resistance genes 0.6 to 1.5 kb; DNA
  * viruses that infect bacteria carry 30 to 170 kb and genes of 0.4 to 3 kb; a gene on a human
- * chromosome is 1 to 30 kb. A polypeptide has 100 to 800 amino acids, and the non-coding DNA where
- * RNA polymerase binds in front of a gene is 40 to 400 base pairs. Crosses are Mendel's: 3 : 1,
- * 1 : 2 : 1 and 1 : 1, with the traits really dominant (a pea's tall stem, purple flower and green
- * pod, a guinea pig's black fur). Cystic fibrosis is recessive and polydactyly dominant, both on
- * an autosome; haemophilia, red-green colour blindness and Duchenne muscular dystrophy are
- * X-linked recessive, and no man with Duchenne muscular dystrophy is a father here. Chromosome
- * numbers are each species' own (microscopy.ts holds them), and bacteria divide every 15 to 40
- * minutes.
+ * chromosome is 1 to 30 kb, and a gene's share of its molecule is 1 to 40% with at most two
+ * significant figures (3%, 4.5%, 12%), the lengths fitted to the share so the answer is exact. A
+ * polypeptide has 100 to 800 amino acids, and the non-coding DNA where RNA polymerase binds in
+ * front of a gene is 40 to 400 base pairs. Crosses are Mendel's: 3 : 1, 1 : 2 : 1 and 1 : 1, with
+ * the traits really dominant (a pea's tall stem, purple flower and green pod, a guinea pig's black
+ * fur). Cystic fibrosis is recessive and Huntington's disease dominant (the written bank's two
+ * examples; Edexcel names none), both on an autosome, and a parent who has Huntington's disease is
+ * heterozygous unless the prompt says otherwise; haemophilia, red-green colour blindness and
+ * Duchenne muscular dystrophy (DMD after its first mention) are X-linked recessive, and no man
+ * with DMD is a father here, so DMD has one cross and sits in the slots that read it over sons,
+ * daughters or all the children, not in the one whose father has the condition. A family table
+ * never shows more children unlike their parents than like them (at most 1 of 2 or 3, 2 of 4).
+ * Chromosome numbers are each species' own (microscopy.ts holds them), and bacteria divide every
+ * 15 to 40 minutes, starting from 1 to 9 cells.
  *
  * A choice the student makes is drawn so a lazy rule pays about half the time: the recessive or
- * the dominant phenotype, a recessive or a dominant family, a woman who is a carrier or is not,
- * a boy or a girl.
+ * the dominant phenotype, a recessive or a dominant family, a woman who is a carrier or is not
+ * (about 2 : 1, the clues drawn evenly), a boy or a girl, sons or daughters. Where the question
+ * is routed by slot (sons or daughters, all the children, a father with the condition), every
+ * (ask, cross) pair is as likely as every other, so the four answers fall as the crosses give
+ * them rather than one prompt filling a context. In genotype-and-sex-chance, both-heterozygous
+ * families are most of the builds because only they give 12.5% and 37.5%: left as it is.
  */
 const DNA = 'dna-chromosomes-and-genes'
 const PROTEIN = 'dna-genes-and-protein-synthesis'
@@ -192,12 +202,15 @@ interface Share {
   L: number
   f: ReturnType<typeof toThree>
 }
+/** A gene's share of its molecule, %: 1 to 40 with at most two significant figures, as a teacher's 3%, 4.5% or 12% is. */
+export const GENE_SHARES = [...range(1, 9.9, 0.1), ...range(10, 40)]
+/** Every (share, molecule) whose gene length is then a whole number in the range: the answer is exact, as the written 3% is. */
 const sharesOf = (s: Stretch): Share[] =>
-  s.genes.flatMap((g) =>
+  GENE_SHARES.flatMap((share) =>
     s.lengths
-      .map((L) => ({ g, L, f: toThree((100 * g) / L) }))
-      // Exact, as the written 3% is: an answer that ends within three figures, so no rounding to argue over.
-      .filter((x) => !x.f.rounded && x.f.exact >= 0.5 && x.f.exact <= 40 && clearOf(x.f.answer, x.g, x.L) && noOnes(x.f.answer) && !powerOfTen(x.L / x.g)),
+      .map((L) => ({ g: Math.round((L * share) / 100), L, f: toThree(share) }))
+      .filter((x) => Math.abs((100 * x.g) / x.L - share) < 1e-9 && x.g >= s.genes[0]! && x.g <= s.genes.at(-1)!)
+      .filter((x) => !x.f.rounded && clearOf(x.f.answer, x.g, x.L) && noOnes(x.f.answer) && !powerOfTen(x.L / x.g)),
   )
 
 /** gene ÷ molecule × 100: written as DNA q24 (1200 of 40 000 base pairs, 3%). */
@@ -208,7 +221,8 @@ export const geneShare: Generator = {
   replaces: ['q24'],
   build(r, slot, turn) {
     const s = STRETCHES[turn % STRETCHES.length]!
-    // Gene, molecule and answer each spread: the lengths that divide cleanly would fill a context.
+    // The share evenly, and the gene and the molecule spread: a long virus molecule fits only the
+    // small shares, so evening the lengths instead piled the answers up at 1.1 to 1.3%.
     const x = balanced(r, `genetics:gene-share:${s.name}`, () => sharesOf(s), (y) => y.g, (y) => y.L, (y) => y.f.answer)
     const tol = figureTolerance(x.f)
     return numeric(
@@ -462,6 +476,8 @@ const table = (top: string[], side: string[], cells: string[]) =>
   `| | ${top.join(' | ')} |\n| --- | ${top.map(() => '---').join(' | ')} |\n${side.map((s, i) => `| ${s} | ${cells.slice(i * top.length, (i + 1) * top.length).join(' | ')} |`).join('\n')}`
 
 const gives = (g: string) => (g[0] === g[1] ? `can only give **${g[0]}**` : `gives **${g[0]}** or **${g[1]}**`)
+/** "The AO parent gives A or O; the BO parent gives B or O.", or "Each BO parent gives B or O." when they share a genotype. */
+const parentsGive = (p1: string, p2: string) => (p1 === p2 ? `Each ${p1} parent ${gives(p1)}.` : `The ${p1} parent ${gives(p1)}; the ${p2} parent ${gives(p2)}.`)
 
 /** Boxes ÷ 4: written as disorders q5 (AO × BO, 25% AB) and q20 (AB × OO, 50% A). */
 export const aboChance: Generator = {
@@ -471,8 +487,10 @@ export const aboChance: Generator = {
   replaces: ['q5', 'q20'],
   build(r, slot, turn) {
     const kind = turn % 2 === 0 ? 'group' : 'genotype'
-    // Each answer (25, 50, 75, 100) as likely, then the parents and the target.
-    const c = balanced(r, `genetics:abo:${kind}`, () => aboCrosses().filter((x) => x.kind === kind), (x) => x.p1, (x) => x.answer)
+    // Every pair of parents as likely as every other, and the answers as even as the pairs allow:
+    // 75% comes only from AO × AO and BO × BO, so evening the answers made those two prompts a
+    // quarter of the group builds.
+    const c = balanced(r, `genetics:abo:${kind}`, () => aboCrosses().filter((x) => x.kind === kind), (x) => x.answer, (x) => `${x.p1}×${x.p2}`)
     const boxes = aboSquare(c.p1, c.p2)
     const k = boxes.filter((b) => (c.kind === 'group' ? bloodGroup(b) === c.target : b === c.target)).length
     const read = boxes.map((b) => `${b} → **${bloodGroup(b)}**`).join(', ')
@@ -487,7 +505,7 @@ export const aboChance: Generator = {
       {
         prompt: pick(r, prompts)(c),
         solution:
-          `The ${c.p1} parent ${gives(c.p1)}; the ${c.p2} parent ${gives(c.p2)}.\n\n${table([c.p2[0]!, c.p2[1]!], [c.p1[0]!, c.p1[1]!], boxes)}\n\n` +
+          `${parentsGive(c.p1, c.p2)}\n\n${table([c.p2[0]!, c.p2[1]!], [c.p1[0]!, c.p1[1]!], boxes)}\n\n` +
           `As blood groups: ${read}.\n\n` +
           (c.kind === 'group'
             ? `Group ${c.target} is ${k} box${k === 1 ? '' : 'es'} in 4: $${k} \\div 4 \\times 100 = ${c.answer}\\%$.`
@@ -574,23 +592,26 @@ export const COLOUR_BLINDNESS: Linked = {
   mothers: ['clear', 'carrier', 'affected'],
   fathers: ['clear', 'affected'],
 }
-/** Men with Duchenne muscular dystrophy seldom become fathers, so the father here never has it. */
+/**
+ * Men with Duchenne muscular dystrophy seldom become fathers, so the father here never has it: one
+ * cross. The full name once, in the opening sentence, then DMD, which the prompt defines.
+ */
 export const DUCHENNE: Linked = {
   name: 'Duchenne muscular dystrophy',
-  intro: 'Duchenne muscular dystrophy is caused by a recessive allele on the X chromosome.',
-  introAlleles: 'Duchenne muscular dystrophy is caused by a recessive allele (d) on the X chromosome; the dominant allele (D) gives normal muscle.',
+  intro: 'Duchenne muscular dystrophy (DMD) is caused by a recessive allele on the X chromosome.',
+  introAlleles: 'Duchenne muscular dystrophy (DMD) is caused by a recessive allele (d) on the X chromosome; the dominant allele (D) gives normal muscle.',
   dom: 'Xᴰ',
   rec: 'Xᵈ',
-  be: 'have Duchenne muscular dystrophy',
-  free: 'not have Duchenne muscular dystrophy',
-  are: 'have Duchenne muscular dystrophy',
-  areNot: 'do not have Duchenne muscular dystrophy',
-  is: 'has Duchenne muscular dystrophy',
-  isNot: 'does not have Duchenne muscular dystrophy',
-  had: 'had Duchenne muscular dystrophy',
-  hadNot: 'did not have Duchenne muscular dystrophy',
+  be: 'have DMD',
+  free: 'not have DMD',
+  are: 'have DMD',
+  areNot: 'do not have DMD',
+  is: 'has DMD',
+  isNot: 'does not have DMD',
+  had: 'had DMD',
+  hadNot: 'did not have DMD',
   did: 'did',
-  of: 'Duchenne muscular dystrophy',
+  of: 'DMD',
   mothers: ['carrier'],
   fathers: ['clear'],
 }
@@ -731,10 +752,24 @@ const LINKED_PROMPTS = [
     `${d.intro} A woman who ${motherSays(d, x.m)} has children with a man who ${fatherSays(d, x.f)}. What percentage of ${x.ask.whom('their')} are ${expected(x.ask.to(d))}?`,
   (d: Linked, x: LinkedCross) =>
     `${d.introAlleles} A woman who ${motherSays(d, x.m)} (${motherGenotype(d, x.m)}) has children with a man who ${fatherSays(d, x.f)} (${fatherGenotype(d, x.f)}). What percentage of ${x.ask.whom('their')} are ${expected(x.ask.to(d))}?`,
+  (d: Linked, x: LinkedCross) =>
+    `${d.introAlleles} A woman who ${motherSays(d, x.m)} (${motherGenotype(d, x.m)}) and a man who ${fatherSays(d, x.f)} (${fatherGenotype(d, x.f)}) have children. What percentage of ${x.ask.whom('their')} are ${expected(x.ask.to(d))}?`,
 ]
 
 /** "expected to have haemophilia", "expected not to have haemophilia": never a split infinitive. */
 const expected = (to: string) => (to.startsWith('not ') ? `expected not to ${to.slice(4)}` : `expected to ${to}`)
+
+/**
+ * Each slot keeps its written skill: q7 reads the cross over sons or daughters, q14 over all the
+ * children (the written "reading the denominator"), q19 crosses a man who has the condition. DMD,
+ * whose father never has it, is not in q19, nor in q7, where its one cross would answer 50% every
+ * time; it stays in q14, where the whole-family asks vary the answer.
+ */
+export const LINKED_ROUTES: Record<string, { fits: (x: LinkedCross) => boolean; disorders: Linked[] }> = {
+  q7: { fits: (x) => x.ask.group !== 'all', disorders: LINKED.filter((d) => d.fathers.includes('affected')) },
+  q14: { fits: (x) => x.ask.group === 'all', disorders: LINKED },
+  q19: { fits: (x) => x.f === 'affected', disorders: LINKED.filter((d) => d.fathers.includes('affected')) },
+}
 
 /** One X-linked cross, read over sons, daughters or all: written as disorders q7 (sons, 50%), q14 (all children, 25%) and q19 (daughters who are carriers, 100%). */
 export const sexLinkedCross: Generator = {
@@ -743,14 +778,13 @@ export const sexLinkedCross: Generator = {
   topicId: DISORDERS,
   replaces: ['q7', 'q14', 'q19'],
   build(r, slot, turn) {
-    const d = LINKED[turn % LINKED.length]!
-    // Sons, daughters and all children as likely, so "out of 4" pays only a third of the time, and each
-    // answer as nearly so as that allows. Duchenne gives 25% and 75% only over all children, so there
-    // the answers are matched and the denominators as nearly as they can be.
-    const x =
-      d === DUCHENNE
-        ? balanced(r, `genetics:sex-linked:${d.name}`, () => crossesOf(d), (y) => y.ask.group, (y) => y.answer)
-        : balanced(r, `genetics:sex-linked:${d.name}`, () => crossesOf(d), (y) => y.answer, (y) => y.ask.group)
+    const route = LINKED_ROUTES[slot.id] ?? LINKED_ROUTES.q7!
+    const d = route.disorders[turn % route.disorders.length]!
+    // Every (question, cross) pair the slot allows as likely as every other, never the answer: four
+    // answers cannot spread, and evening them made the one cross that gives 75% a fifth of a context.
+    // Sons and daughters then come out about half each in q7, and no pair passes 12% of a named
+    // disorder's builds, except DMD, which has one cross.
+    const x = pick(r, memo(`genetics:sex-linked:${slot.id}:${d.name}`, () => crossesOf(d).filter(route.fits))())
     const w = linkedWorking(d, x.m, x.f, x.ask, x.answer)
     const second = linkedChance(x.m, x.f, x.ask.key)
     return numeric(
@@ -845,6 +879,17 @@ export const CLUES: Clue[] = [
     because: (d) => `because each parent could give her only ${d.dom}`,
     whose: 'their',
   },
+  {
+    key: 'parents',
+    carrier: false,
+    fits: (d) => d !== DUCHENNE,
+    partners: ['affected'],
+    text: (d, p) => `A woman ${d.isNot}. Neither of her parents ${d.had}, and a genetic test has shown that her mother is not a carrier of ${d.of}. She has children with a man who ${p}.`,
+    why: (d) =>
+      `Neither of her parents ${d.had}: her father was ${d.dom}Y and gave her his only X, ${d.dom}. Her mother is not a carrier, so she is ${d.dom}${d.dom} and could give her only ${d.dom}. The woman is ${d.dom}${d.dom}: she is not a carrier.`,
+    because: (d) => `because each parent could give her only ${d.dom}`,
+    whose: 'their',
+  },
 ]
 
 interface Family {
@@ -876,17 +921,11 @@ export const deducedCarrier: Generator = {
   replaces: ['q27'],
   build(r, slot, turn) {
     const d = DEDUCED[turn % DEDUCED.length]!
-    // Carrier or not half each, so "she is a carrier" pays half the time. A carrier's answers (25, 50
-    // and 75%) a third each; a non-carrier's 100% three times in five and 50% twice, so no answer
-    // passes 40%, and the 50% a carrier gives (the written slot's) is still drawn. Then sons, daughters
-    // or all children evenly among the questions with that answer, then the question, then the family.
-    const all = familiesOf(d)
-    const carrier = pick(r, [true, false])
-    const answer = pick(r, carrier ? [25, 50, 75] : [100, 100, 100, 50, 50])
-    const same = all.filter((y) => y.clue.carrier === carrier && y.answer === answer)
-    const group = pick(r, [...new Set(same.map((y) => y.ask.group))])
-    const key = pick(r, [...new Set(same.filter((y) => y.ask.group === group).map((y) => y.ask.key))])
-    const x = pick(r, same.filter((y) => y.ask.key === key))
+    // The clue evenly (four carrier clues and two non-carrier ones, so she is a carrier about 2 : 1;
+    // haemophilia has two of each), and within that the question and the answer as even as the
+    // clues allow: a non-carrier crossed with a man who has it gives only 100% and 50%, a carrier
+    // 25, 50 and 75%, so evening the status alone made one non-carrier wording half of all prompts.
+    const x = balanced(r, `genetics:carrier-from-family:${d.name}`, () => familiesOf(d), (y) => y.ask.key, (y) => y.answer, (y) => y.clue.key)
     const m = statusOf(x.clue.carrier)
     const w = linkedWorking(d, m, x.f, x.ask, x.answer)
     const second = linkedChance(m, x.f, x.ask.key)
@@ -958,17 +997,20 @@ export const TRAITS: Trait[] = [
     human: true,
   },
   {
-    name: 'polydactyly',
+    name: "Huntington's disease",
     organism: '',
     plural: 'people',
-    letter: 'D',
+    letter: 'H',
     domAdj: '',
     recAdj: '',
     feature: '',
-    rule: 'Polydactyly (extra fingers or toes) is caused by a dominant allele (D); the recessive allele (d) gives the usual number of fingers and toes.',
+    rule: "Huntington's disease is caused by a dominant allele (H); the recessive allele (h) does not cause it.",
     human: true,
   },
 ]
+/** The human traits by their alleles: cystic fibrosis is the recessive one, Huntington's disease the dominant one. */
+export const CYSTIC_FIBROSIS = TRAITS.find((t) => t.name === 'cystic fibrosis')!
+export const HUNTINGTONS = TRAITS.find((t) => t.name === "Huntington's disease")!
 
 export type Genotype = 'AA' | 'Aa' | 'aa'
 /** A genotype in the trait's letters: Tt, tt, TT. */
@@ -980,16 +1022,17 @@ export const boxesOf = (g1: Genotype, g2: Genotype): Genotype[] =>
 const describe = (tr: Trait, adj: string, noun: string) => (tr.feature ? `${noun} with ${adj} ${tr.feature}` : `${adj} ${noun}`)
 /** The phenotype after "to": "be tall", "have purple flowers", "have cystic fibrosis". */
 export function phenotype(tr: Trait, dominant: boolean): string {
-  if (tr.name === 'cystic fibrosis') return dominant ? 'not have cystic fibrosis' : 'have cystic fibrosis'
-  if (tr.name === 'polydactyly') return dominant ? 'have polydactyly' : 'not have polydactyly'
+  if (tr === CYSTIC_FIBROSIS) return dominant ? 'not have cystic fibrosis' : 'have cystic fibrosis'
+  if (tr === HUNTINGTONS) return dominant ? "have Huntington's disease" : "not have Huntington's disease"
   const adj = dominant ? tr.domAdj : tr.recAdj
   return tr.feature ? `have ${adj} ${tr.feature}` : `be ${adj}`
 }
 /** One parent, as a clause after "a parent who" for people, or as a noun phrase with its genotype. */
 function parent(tr: Trait, g: Genotype, noun = tr.organism): string {
   const gt = spell(tr, g)
-  if (tr.name === 'cystic fibrosis') return g === 'aa' ? `has cystic fibrosis (${gt})` : g === 'Aa' ? `is a carrier (${gt})` : `does not carry the allele (${gt})`
-  if (tr.name === 'polydactyly') return g === 'aa' ? `does not have polydactyly (${gt})` : g === 'Aa' ? `has polydactyly and is heterozygous (${gt})` : `has polydactyly and is homozygous (${gt})`
+  if (tr === CYSTIC_FIBROSIS) return g === 'aa' ? `has cystic fibrosis (${gt})` : g === 'Aa' ? `is a carrier (${gt})` : `does not carry the allele (${gt})`
+  // A parent with the dominant condition is heterozygous unless the prompt says otherwise: the genotype is always given.
+  if (tr === HUNTINGTONS) return g === 'aa' ? `does not have Huntington's disease (${gt})` : g === 'Aa' ? `has Huntington's disease and is heterozygous (${gt})` : `has Huntington's disease and is homozygous (${gt})`
   const zyg = g === 'Aa' ? 'heterozygous ' : g === 'AA' ? 'homozygous ' : ''
   return `${a(`${zyg}${describe(tr, g === 'aa' ? tr.recAdj : tr.domAdj, noun)}`)} (${gt})`
 }
@@ -1021,7 +1064,7 @@ const outcomeText = (tr: Trait, o: Outcome) =>
   o === 'dominant' || o === 'recessive'
     ? phenotype(tr, o === 'dominant')
     : o === 'heterozygous'
-      ? tr.name === 'cystic fibrosis'
+      ? tr === CYSTIC_FIBROSIS
         ? 'be carriers (heterozygous)'
         : 'be heterozygous'
       : `be homozygous dominant (${spell(tr, 'AA')})`
@@ -1031,9 +1074,9 @@ function monoPrompt(tr: Trait, x: Mono): string {
   if (tr.human) {
     const pair =
       x.g1 === x.g2
-        ? tr.name === 'cystic fibrosis'
+        ? tr === CYSTIC_FIBROSIS
           ? `Two parents who are both carriers (${spell(tr, 'Aa')}) have children.`
-          : `Two parents who both have polydactyly and are heterozygous (${spell(tr, 'Aa')}) have children.`
+          : `Two parents who both have Huntington's disease and are heterozygous (${spell(tr, 'Aa')}) have children.`
         : `A parent who ${parent(tr, x.g1)} has children with a parent who ${parent(tr, x.g2)}.`
     return `${tr.rule} ${pair} What percentage of their children are ${expected(what)}?`
   }
@@ -1049,10 +1092,12 @@ export const monohybrid: Generator = {
   replaces: ['q5', 'q19'],
   build(r, slot, turn) {
     const tr = TRAITS[turn % TRAITS.length]!
-    // The dominant and the recessive phenotype about equally, so "the dominant one" pays half the phenotype questions; each answer as likely.
-    // Only Aa × Aa gives 25% and 75%, so with the answers even it is about half the crosses; the
-    // genotypes are given in the prompt, so no rule about the cross pays.
-    const x = balanced(r, 'genetics:monohybrid', monos, (y) => (y.outcome === 'dominant' || y.outcome === 'recessive' ? y.outcome : 'genotype'), (y) => y.answer)
+    // The four crosses (Aa × Aa, Aa × aa, AA × aa, AA × Aa) a quarter each, and each in either order;
+    // then the dominant and the recessive phenotype and a genotype as even as the crosses allow, so
+    // "the dominant one" pays half the phenotype questions, and the answers likewise. Only Aa × Aa
+    // gives 25% and 75%, so those two answers are the rarer ones: evening the answers instead made
+    // Aa × Aa half of every trait's builds.
+    const x = balanced(r, 'genetics:monohybrid', monos, (y) => (y.outcome === 'dominant' || y.outcome === 'recessive' ? y.outcome : 'genotype'), (y) => y.answer, (y) => `${y.g1} × ${y.g2}`, (y) => [y.g1, y.g2].sort().join(' × '))
     const boxes = boxesOf(x.g1, x.g2)
     const k = boxes.filter((b) => counts(x.outcome, b)).length
     const [s1, s2] = [spell(tr, x.g1), spell(tr, x.g2)]
@@ -1207,16 +1252,20 @@ interface Pedigree {
   ask: FamilyAsk
   answer: number
 }
+/** How many of the children are unlike their parents: the ones who show a recessive condition, or who do not show a dominant one. */
+export const unlikeParents = (pattern: Pattern, children: Child[]) => children.filter((c) => c.shows === (pattern === 'recessive')).length
 /**
  * The parents share a status and a daughter differs from them. A daughter, not a son: an affected
  * son of unaffected parents could be X-linked recessive, and an unaffected son of affected parents
  * X-linked dominant; a daughter rules both out (an unaffected father has no recessive X to give
- * her, and an affected father with a dominant X allele gives it to every daughter).
+ * her, and an affected father with a dominant X allele gives it to every daughter). At most half
+ * the children are unlike their parents (1 of 2 or 3, 2 of 4): each has a 1 in 4 chance, so three
+ * or four of them would be a family no teacher would print, and one that invites a wrong reading.
  */
 const pedigrees = memo('genetics:pedigrees', (): Pedigree[] =>
   (['recessive', 'dominant'] as const).flatMap((pattern) =>
     childLists()
-      .filter((l) => l.some((c) => !c.son && c.shows === (pattern === 'recessive')))
+      .filter((l) => l.some((c) => !c.son && c.shows === (pattern === 'recessive')) && unlikeParents(pattern, l) <= Math.floor(l.length / 2))
       .flatMap((children) =>
         (['shows', 'free', 'heterozygous'] as const).map((ask) => ({
           pattern,
@@ -1240,8 +1289,9 @@ export const familyTable: Generator = {
   topicId: INHERITANCE,
   replaces: ['q20'],
   build(r, slot) {
-    // Recessive or dominant half each, so "it must be recessive" pays about half the time; each answer as likely.
-    const x = balanced(r, 'genetics:pedigree', pedigrees, (y) => y.pattern, (y) => y.ask, (y) => y.answer)
+    // Recessive or dominant half each, so "it must be recessive" pays about half the time; two-, three-
+    // and four-child families alike (the pool is biggest at four); each question, so each answer, as likely.
+    const x = balanced(r, 'genetics:pedigree', pedigrees, (y) => y.pattern, (y) => y.children.length, (y) => y.ask)
     const parentsShow = x.pattern === 'dominant'
     const yn = (b: boolean) => (b ? 'yes' : 'no')
     const names = labels(x.children)
@@ -1313,14 +1363,14 @@ export const AUTOSOMAL: Autosomal[] = [
     haveNot: 'do not have the condition',
   },
   {
-    name: 'polydactyly',
+    name: "Huntington's disease",
     dominant: true,
-    letter: 'D',
-    rule: 'Polydactyly (extra fingers or toes) is caused by a dominant allele (D) of a gene that is not on a sex chromosome; the recessive allele (d) gives the usual number of fingers and toes.',
-    has: 'has polydactyly',
-    have: 'have polydactyly',
-    hasNot: 'does not have polydactyly',
-    haveNot: 'do not have polydactyly',
+    letter: 'H',
+    rule: "Huntington's disease is caused by a dominant allele (H) of a gene that is not on a sex chromosome; the recessive allele (h) does not cause it.",
+    has: "has Huntington's disease",
+    have: "have Huntington's disease",
+    hasNot: "does not have Huntington's disease",
+    haveNot: "do not have Huntington's disease",
   },
   {
     name: 'dominant condition',
@@ -1450,10 +1500,14 @@ const KINGDOMS: Kingdom[] = [
   { name: 'animal', species: ANIMALS, cell: 'body cell', gametes: ['sperm cell', 'egg cell', 'gamete'] },
   { name: 'plant', species: PLANTS, cell: 'leaf cell', gametes: ['egg cell', 'pollen grain nucleus', 'gamete'] },
 ]
+/** The whole organism: "an apple tree", "a potato plant", "a sheep"; a person is never "it". */
+const organism = (sp: string, plant: boolean) => (plant ? `${sp} ${sp === 'apple' ? 'tree' : 'plant'}` : sp)
 const HALF_PROMPTS = [
   (sp: string, two: number, cell: string, g: string, _plant: boolean) => `${A(`${sp} ${cell}`)} has ${two} chromosomes. How many chromosomes are in ${a(`${sp} ${g}`)}?`,
   (sp: string, two: number, cell: string, g: string, plant: boolean) =>
-    `The ${cell}s of ${a(plant ? `${sp} plant` : sp)} each contain ${two} chromosomes. Its gametes are made by meiosis. How many chromosomes does each ${sp} ${g} contain?`,
+    sp === 'human'
+      ? `A person's ${cell}s each contain ${two} chromosomes. Human gametes are made by meiosis. How many chromosomes does each human ${g} contain?`
+      : `The ${cell}s of ${a(organism(sp, plant))} each contain ${two} chromosomes. Its gametes are made by meiosis. How many chromosomes does each ${sp} ${g} contain?`,
 ]
 
 /** Half the body-cell number: written as meiosis q4 (human, 46, gamete 23). */
@@ -1535,7 +1589,8 @@ interface Growth {
   t: number
   answer: number
 }
-const STARTS = [1, 2, 3, 5, 6, 7]
+/** Starting cells, each as likely: the powers of two share their answers with the single cell, so evening the answers starved them. */
+export const STARTS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const growthsOf = (v: Divider): Growth[] =>
   v.doublings.flatMap((d) =>
     range(4, 11).flatMap((n) =>
@@ -1553,7 +1608,7 @@ export const asexualGrowth: Generator = {
   replaces: ['q25'],
   build(r, slot, turn) {
     const v = DIVIDERS[turn % DIVIDERS.length]!
-    const x = balanced(r, `genetics:asexual:${v.name}`, () => growthsOf(v), (y) => y.d, (y) => y.n, (y) => y.answer)
+    const x = balanced(r, `genetics:asexual:${v.name}`, () => growthsOf(v), (y) => y.d, (y) => y.n, (y) => y.answer, (y) => y.s)
     const start = x.s === 1 ? 'a single bacterium' : `${x.s} bacteria`
     const chain = Array.from({ length: x.n + 1 }, (_, i) => x.s * 2 ** i)
     const power = x.s === 1 ? `2^{${x.n}}` : `${x.s} \\times 2^{${x.n}}`

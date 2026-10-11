@@ -314,6 +314,11 @@ As a student, I want the calculation parts of Biology and Further Maths generate
 - Biology: magnification, percentage change, Punnett squares and ratios, mean rates.
 - Further Maths: matrices, differentiation, the factor theorem, coordinate geometry.
 
+**Progress:** Biology half done 11 October 2026 (PRs #394, #395, #397 and the genetics and
+evolution PR, v10.98.0): 143 generators cover 151 of the 164 numeric Biology questions
+(docs/backlog.md section 8). Further Maths is planned in section 9, five PRs, to start on the
+owner's word.
+
 ### GEN-7 · More typed answers in Maths and Science
 
 **Effort:** M · **Priority:** Next
