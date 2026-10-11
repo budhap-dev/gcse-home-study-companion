@@ -6,7 +6,9 @@ import type { Generator } from '../types.ts'
 import { onGrid, whole, WithArticle as A, withArticle as a } from './build.ts'
 
 /**
- * Microscopy, microbes and cells (AQA 8461, 4.1.1.2 to 4.1.1.5, 4.1.2 and 4.6.1.2). Every
+ * Microscopy, microbes and cells (Edexcel 1BI0: 1.3 to 1.6 microscopes, size, scale and
+ * magnification; 2.1 to 2.3 mitosis and the cell cycle; 3.3 haploid gametes; 5.17B to 5.19B culturing
+ * microbes and counting colonies). Every
  * numeric written slot in "Microscopes, magnification and scale" has a generator here; so do the
  * total magnification, bacterial doubling and colony-count slots of "Microbes and microscopy",
  * the haploid and polyspermy chromosome counts of "Cells, and how they are specialised", and

@@ -314,6 +314,11 @@ As a student, I want the calculation parts of Biology and Further Maths generate
 - Biology: magnification, percentage change, Punnett squares and ratios, mean rates.
 - Further Maths: matrices, differentiation, the factor theorem, coordinate geometry.
 
+**Progress:** Biology half done 11 October 2026 (PRs #394, #395, #397 and the genetics and
+evolution PR, v10.98.0): 143 generators cover 151 of the 164 numeric Biology questions
+(docs/backlog.md section 8). Further Maths is planned in section 9, five PRs, to start on the
+owner's word.
+
 ### GEN-7 · More typed answers in Maths and Science
 
 **Effort:** M · **Priority:** Next
@@ -350,6 +355,23 @@ hard.
 - A report lists questions whose correct rate disagrees with their band (for example over 85%
   right in the 8 to 9 band), for review.
 
+
+### GEN-10 · Business and Computer Science generators
+
+**Effort:** M · **Priority:** Later · **Depends on:** GEN-1, GEN-2
+
+As a student, I want fresh calculation questions in Business and Computer Science so that the
+formulae and the code tracing stick.
+
+**Acceptance criteria**
+
+- Business: every Appendix 3 formula and quantitative skill in the written questions (revenue,
+  costs, profit, break-even, margin of safety, cash flow, interest, exchange rates, market share,
+  margins, average rate of return, productivity, staff turnover) has a generator.
+- Computer Science: conversions, shifts, ASCII and file sizes, search and sort counts, and
+  pseudo-code traces whose answer is computed by running the fragment.
+- Together they replace at least 150 of the 164 written numeric questions (docs/backlog.md
+  sections 10 and 11).
 
 ## Epic 4 · UX
 

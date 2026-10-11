@@ -7,10 +7,11 @@ import { between, cut, gcd, halfLastPlace, layered, rich, tidy, unitsOf } from '
 import { clean, clearOf, distinct, noOnes, powerOfTen, range, tenfold, threeFigures, toPlaces } from '../chemistry/build.ts'
 
 /**
- * Bioenergetics and the food tests (AQA 8461, 4.1.4.1 enzymes and required practical 5, 4.2.2.1
- * the food tests and calorimetry, 4.4.1 photosynthesis and required practical 6, 4.4.2
- * respiration). Every numeric written slot in the four topics has a generator here but one: food
- * tests q4 asks the mass of 25 cm³ of water, which is the volume read again in grams, so its
+ * Bioenergetics and the food tests (Edexcel 1BI0: 1.7 to 1.11 enzymes, rate calculations and
+ * core practical 1.10; 1.13B and 1.14B the food tests and the energy in food; 6.2 to 6.6
+ * photosynthesis, the inverse square law and core practical 6.5; 8.9 to 8.11 respiration and core
+ * practical 8.11). Every numeric written slot in the four topics has a generator here but one:
+ * food tests q4 asks the mass of 25 cm³ of water, which is the volume read again in grams, so its
  * answer is the given figure by design and there is nothing to work.
  *
  * Every figure is one the practical really gives. The amylase and starch test samples into iodine
