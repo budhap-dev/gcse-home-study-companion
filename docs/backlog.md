@@ -574,7 +574,7 @@ reach 100 distinct prompts stay written.
   method line (a missing (−1)ʳ) and eighteen coincidences and skews, all fixed with tests: an
   answer equal to a printed term or coefficient, a constant of 3 that lets a slip pay, the
   middle of a Pascal row where the wrong end gives the same number, roots beyond recall.
-- [ ] **2. Number, calculus and Year 10 coordinate geometry.** Surds (a√b forms, expanding a
+- [x] **2. Number, calculus and Year 10 coordinate geometry.** Surds (a√b forms, expanding a
   square, equating rational and surd parts), the product rule for counting (meals, codes with
   and without repeats, arrangements of words with repeated letters, committees, odd and even
   numbers with no repeated digit, numbers not starting with 0 or a named digit), differentiation
@@ -582,6 +582,13 @@ reach 100 distinct prompts stay written.
   a given gradient), maxima and minima and optimisation (a stationary point, the greatest area or
   least surface area of a stated model), gradients, distances, perpendicular gradients, y = mx + c
   and the area of a triangle from its vertices. 31 slots in 6 topics.
+  Shipped 11 October 2026 (v10.100.0): 14 generators for all 31 slots (`surds`, `counting`,
+  `calculus`, `lines`). Two reviewers found thirteen skews and slips, all fixed with tests: the
+  written prompt itself in 23% of counting q11's builds, a surd side where the printed coefficient
+  also gives the answer, gardens 0.3 m wide, open-topped boxes that gave away the next question on
+  the same sheet, four calculations taking 59% of a triangle-area slot, square roots of 676 and 841
+  by hand. The release check now refuses any prompt in more than a tenth of a slot's builds, and
+  the written prompt in more than a twentieth; four Maths generators that broke it were fixed.
 - [ ] **3. Algebra B and circles (Year 11).** Functions (evaluating, a composite with an unknown
   constant, an exponential curve through two points, f(x) = f⁻¹(x)), a fractional equation, the
   value of a proved expression, simultaneous equations in two and three unknowns (including a

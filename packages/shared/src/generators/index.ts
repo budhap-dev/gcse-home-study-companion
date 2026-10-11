@@ -60,6 +60,10 @@ import { completingGenerators } from './further-maths/completing.ts'
 import { indexEquationGenerators } from './further-maths/indices.ts'
 import { factorTheoremGenerators } from './further-maths/factor.ts'
 import { limitingValueGenerators } from './further-maths/sequences.ts'
+import { surdGenerators } from './further-maths/surds.ts'
+import { countingGenerators } from './further-maths/counting.ts'
+import { calculusGenerators } from './further-maths/calculus.ts'
+import { lineGenerators } from './further-maths/lines.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -143,6 +147,10 @@ export const GENERATORS: Generator[] = [
   ...indexEquationGenerators,
   ...factorTheoremGenerators,
   ...limitingValueGenerators,
+  ...surdGenerators,
+  ...countingGenerators,
+  ...calculusGenerators,
+  ...lineGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))

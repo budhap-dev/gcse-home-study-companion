@@ -124,6 +124,16 @@ describe('question generators', () => {
         it('varies the question, not only a number or two', () => {
           expect(new Set(built.map((b) => b.question.prompt)).size).toBeGreaterThan(100)
         })
+
+        // A hundred distinct prompts can still hide one drawn a fifth of the time; when that one
+        // is the written question, a retry hands back the question the student just got wrong.
+        it('repeats no one prompt, the written one least of all, in a tenth of builds', () => {
+          const counts = new Map<string, number>()
+          for (const b of built) counts.set(b.question.prompt, (counts.get(b.question.prompt) ?? 0) + 1)
+          const [top, n] = [...counts].reduce((a, c) => (c[1] > a[1] ? c : a))
+          expect(n, top).toBeLessThanOrEqual(SEEDS / 10)
+          expect(counts.get(slot!.prompt) ?? 0).toBeLessThanOrEqual(SEEDS / 20)
+        })
       })
     }
   }
