@@ -562,12 +562,18 @@ working, and a review of every slot's samples before it ships. Slots that ask a 
 (the value of sin 30°), a count the structure fixes (how many real solutions), or that cannot
 reach 100 distinct prompts stay written.
 
-- [ ] **1. Algebra A (Year 10).** Binomial expansion coefficients from Pascal's triangle, the
+- [x] **1. Algebra A (Year 10).** Binomial expansion coefficients from Pascal's triangle, the
   difference of two squares by hand, completing the square (the minimum value, the b and c of
   a(x + b)² + c, a solution to 2 decimal places, the first time a projectile reaches a height),
   fractional and negative indices and index equations, the factor theorem (f(a), a coefficient
   from a known factor, deciding whether a factor), sequences and limiting values (which term has
   a value, the limit of a rational nth term, the difference of two terms). 26 slots in 6 topics.
+  Shipped 11 October 2026 (v10.99.0): 20 generators for 25 slots in `generators/further-maths/`
+  (expansion, completing, indices, factor, sequences), with shared helpers in `build.ts`. The
+  count of real solutions (factor theorem q14) stays written. Two reviewers found one wrong
+  method line (a missing (−1)ʳ) and eighteen coincidences and skews, all fixed with tests: an
+  answer equal to a printed term or coefficient, a constant of 3 that lets a slip pay, the
+  middle of a Pascal row where the wrong end gives the same number, roots beyond recall.
 - [ ] **2. Number, calculus and Year 10 coordinate geometry.** Surds (a√b forms, expanding a
   square, equating rational and surd parts), the product rule for counting (meals, codes with
   and without repeats, arrangements of words with repeated letters, committees, odd and even
