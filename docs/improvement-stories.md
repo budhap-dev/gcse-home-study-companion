@@ -351,6 +351,23 @@ hard.
   right in the 8 to 9 band), for review.
 
 
+### GEN-10 · Business and Computer Science generators
+
+**Effort:** M · **Priority:** Later · **Depends on:** GEN-1, GEN-2
+
+As a student, I want fresh calculation questions in Business and Computer Science so that the
+formulae and the code tracing stick.
+
+**Acceptance criteria**
+
+- Business: every Appendix 3 formula and quantitative skill in the written questions (revenue,
+  costs, profit, break-even, margin of safety, cash flow, interest, exchange rates, market share,
+  margins, average rate of return, productivity, staff turnover) has a generator.
+- Computer Science: conversions, shifts, ASCII and file sizes, search and sort counts, and
+  pseudo-code traces whose answer is computed by running the fragment.
+- Together they replace at least 150 of the 164 written numeric questions (docs/backlog.md
+  sections 10 and 11).
+
 ## Epic 4 · UX
 
 ### UXI-1 · Today plan

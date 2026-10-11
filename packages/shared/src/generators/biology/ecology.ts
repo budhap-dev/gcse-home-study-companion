@@ -6,8 +6,9 @@ import type { Generator } from '../types.ts'
 import { balanced, between, layered, list, memo, rich, unitsOf, whole } from './build.ts'
 
 /**
- * Ecology (AQA 8461, 4.7.2.1 quadrats, 4.7.4.3 decay, 4.7.5.2 to 4.7.5.6 energy transfer and
- * pyramids of biomass) and plant hormones (4.5.4.1 and 4.5.4.2). Every numeric written slot in
+ * Ecology (Edexcel 1BI0: 9.5 and 9.6 sampling with quadrats, 9.7B and 9.8B energy transfer
+ * between trophic levels, 9.12 to 9.19B material cycles and the rate of decay) and plant hormones
+ * (6.15B and 6.16B). Every numeric written slot in
  * "Ecosystems and interdependence" and "Material cycles" has a generator here, and so do the two
  * numeric slots of "Plant adaptations, defences and hormones" (ethene ripening and a shoot bending
  * towards light). None is left written.

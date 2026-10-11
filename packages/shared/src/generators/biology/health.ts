@@ -7,9 +7,10 @@ import type { Generator } from '../types.ts'
 import { balanced, between, cut, ending, fair, type Figure, figureTolerance, gcd, halfLastPlace, lcm, memo, piRoom, rich, toThree, unitsOf, whole } from './build.ts'
 
 /**
- * Health and disease (AQA 8461, 4.2.2.6 and 4.2.2.7 non-communicable disease and its risk factors,
- * 4.3.1.1 to 4.3.1.6 pathogens and their spread, 4.3.1.6 and 4.3.1.7 defences and vaccination,
- * 4.3.1.8 antibiotics). Every numeric written slot in "Non-communicable disease and lifestyle",
+ * Health and disease (Edexcel 1BI0: 5.23 to 5.25 non-communicable disease, lifestyle and its
+ * treatments; 5.4 to 5.8 pathogens and their spread; 5.12 to 5.14 defences, the immune system and
+ * immunisation; 5.16 to 5.19B antibiotics, cultures and clear zones; 5.20 to 5.22B medicines and
+ * monoclonal antibodies). Every numeric written slot in "Non-communicable disease and lifestyle",
  * "Pathogens and how disease spreads", "How the body fights infection", "The immune system and
  * immunisation" and "Antibiotics, new medicines and monoclonal antibodies" has a generator here.
  * None is left written.

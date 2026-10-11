@@ -7,7 +7,9 @@ import { balanced, ending, figureTolerance, gcd, memo, toThree, unitsOf, WithArt
 import { ANIMALS, duration, PLANTS } from './microscopy.ts'
 
 /**
- * Genetics (AQA 8461, 4.6.1.1 to 4.6.1.8): DNA and its bases, the triplet code, meiosis and
+ * Genetics (Edexcel 1BI0: 3.3 meiosis, 3.4 and 3.5 DNA and genes, 3.8B protein synthesis, 3.13
+ * to 3.16 monohybrid inheritance, Punnett squares, pedigrees and their probabilities, 3.17B the ABO
+ * blood groups, 3.18B sex-linked disorders; 3.1B asexual reproduction): DNA and its bases, the triplet code, meiosis and
  * fertilisation, asexual reproduction, monohybrid crosses, family trees, inherited disorders and
  * the ABO blood groups. The numeric written slots of "The genetic code: DNA, chromosomes and
  * genes", "DNA, genes and protein synthesis", "Genetic disorders and screening", "Inheritance and

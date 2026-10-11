@@ -7,7 +7,9 @@ import { balanced, between, layered, list, memo, rich, trail, unitsOf, whole, wi
 import { clean, distinct, evenly, noOnes, powerOfTen, range, shiftFree, tenfold, toPlaces, word } from '../chemistry/build.ts'
 
 /**
- * The human body's coordination and control (AQA 8461, 4.2.2 and 4.5): BMI and the waist to hip
+ * The human body's coordination and control (Edexcel 1BI0: 2.13 to 2.17B receptors, the reflex
+ * arc and the eye; 7.1 to 7.22B hormones, the menstrual cycle, contraception and ART, thermoregulation,
+ * blood glucose and BMI, the kidney; 8.6 to 8.8 and 8.12 the heart and cardiac output): BMI and the waist to hip
  * ratio, blood glucose and insulin, cardiac output, adrenalin, nerve impulses and the reflex arc,
  * the ruler-drop test, the pupil and colour blindness, thermoregulation, the kidney, and
  * contraception and IVF. Every numeric written slot in the nine topics has a generator here except

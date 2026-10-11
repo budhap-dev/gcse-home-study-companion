@@ -6,9 +6,10 @@ import type { Generator } from '../types.ts'
 import { balanced, between, cut, fair, figureTolerance, full, halfLastPlace, layered, list, memo, tidy, toThree, unitsOf, whole } from './build.ts'
 
 /**
- * Variation and evolution (AQA 8461, 4.6.2.1 variation, 4.6.2.2 evolution by natural selection,
- * 4.6.2.3 selective breeding, 4.6.2.4 genetic engineering, 4.6.3.5 fossils, 4.6.3.7 resistant
- * bacteria) and adaptation (4.7.1.4). Thirteen generators stand in for thirteen numeric written slots
+ * Variation and evolution (Edexcel 1BI0: 3.20 to 3.22 variation, 4.2 natural selection, 4.3
+ * resistant organisms, 4.4 the fossils Ardi, Lucy and Leakey's, 4.5 stone tools dated from their
+ * environment, 4.8 selective breeding, 4.10 to 4.12B genetic engineering and Bt crops) and
+ * adaptation (8.2 surface area to volume, 9.2 to 9.4 abiotic factors and interdependence). Thirteen generators stand in for thirteen numeric written slots
  * in "Variation and natural selection", "Evidence for evolution and classification", "Classification,
  * adaptation and evolution" and "Selective breeding and genetic engineering". Four slots of "Evidence
  * for evolution and classification" stay written: q1 (when Ardi lived) and q4 (how many kingdoms)

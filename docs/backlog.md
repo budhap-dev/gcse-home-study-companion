@@ -536,6 +536,125 @@ for accepts its three-figure rounding (`threeFigures`).
   genetic disorders, meiosis, variation and natural selection, fossils and classification,
   selective breeding (44 slots).
 
+## 9. Further Maths generators (planned 11 October 2026)
+
+Planned on 11 October 2026 at the owner's request ("plan these"), together with sections 10 and
+11, after Biology. **Each of these subjects starts only when the owner says so**, after reviewing
+the one before; the proposed order is Further Maths, then Business, then Computer Science. Story
+GEN-6 (Further Maths half). Further Maths (AQA 8365) has 127 numeric questions in 22 topics, none
+drawn round a diagram. Its answer box is the Maths one (MathLive), so the Maths method applies:
+generators per topic file under `generators/further-maths/`, KaTeX in prompts, the Maths marker
+with `sameMathsAnswer` where a slot asks for an exact form, non-calculator slots drawn so the
+numbers work by hand, the release check on 1,000 seeds per slot, structural tests on the printed
+working, and a review of every slot's samples before it ships. Slots that ask a fact to recall
+(the value of sin 30°), a count the structure fixes (how many real solutions), or that cannot
+reach 100 distinct prompts stay written.
+
+- [ ] **1. Algebra A (Year 10).** Binomial expansion coefficients from Pascal's triangle, the
+  difference of two squares by hand, completing the square (the minimum value, the b and c of
+  a(x + b)² + c, a solution to 2 decimal places, the first time a projectile reaches a height),
+  fractional and negative indices and index equations, the factor theorem (f(a), a coefficient
+  from a known factor, deciding whether a factor), sequences and limiting values (which term has
+  a value, the limit of a rational nth term, the difference of two terms). 26 slots in 6 topics.
+- [ ] **2. Number, calculus and Year 10 coordinate geometry.** Surds (a√b forms, expanding a
+  square, equating rational and surd parts), the product rule for counting (meals, codes with
+  and without repeats, arrangements of words with repeated letters, committees, odd and even
+  numbers with no repeated digit, numbers not starting with 0 or a named digit), differentiation
+  (the gradient at a point, the second derivative), tangents and normals (a horizontal tangent,
+  a given gradient), maxima and minima and optimisation (a stationary point, the greatest area or
+  least surface area of a stated model), gradients, distances, perpendicular gradients, y = mx + c
+  and the area of a triangle from its vertices. 31 slots in 6 topics.
+- [ ] **3. Algebra B and circles (Year 11).** Functions (evaluating, a composite with an unknown
+  constant, an exponential curve through two points, f(x) = f⁻¹(x)), a fractional equation, the
+  value of a proved expression, simultaneous equations in two and three unknowns (including a
+  tangent line to a parabola, three prices from three bills, a product with a difference), and
+  circles (radius and centre, the tangent gradient at a point, the radius from a diameter's ends,
+  where a line meets a circle, the c of a tangent line, the length of a tangent from a point, the
+  triangle a tangent cuts off). 22 slots in 5 topics.
+- [ ] **4. Trigonometry and geometrical proof (Year 11).** Pythagoras in 2D and 3D (a cuboid
+  diagonal, the angle a diagonal makes with the base, the angle between a sloping face or edge
+  and the base of a pyramid), the sine and cosine rules and the area formula (to 2 decimal
+  places, and the exact cos A = 3/5 cases), trigonometric equations in 0° to 360° (exact values,
+  a calculator solution, a sin x = b cos x, the sum of the solutions of sin²x = ¼, counting the
+  solutions of a quadratic in sin x), circle theorems by number (angle at the centre, cyclic
+  quadrilateral, angle in a semicircle, alternate segment, two tangents), polygon angles, a
+  trapezium, a cone's volume, a cylinder's radius from its surface area. 32 slots in 3 topics.
+- [ ] **5. Matrices and transformations (Year 11).** Scalar multiples and products of 2 × 2
+  matrices and column vectors, an entry of BA or A², unknown entries from a product, solving
+  Mx = v, C² = kI, the order of a rotation matrix, an entry of Pⁿ for a shear, images under
+  rotation and reflection, the area scale factor, the matrix of two reflections combined, the
+  order of a reflection. 16 slots in 2 topics.
+
+## 10. Business generators (planned 11 October 2026)
+
+Business (Edexcel 1BS0) has 69 numeric questions in 10 topics, every one a calculation from the
+specification's quantitative skills (Appendix 2) and formulae (Appendix 3, not given in the
+exam). They use the plain number box. Money stays in pounds in the written topic's own thousands
+style (£24 000 in Theme 1 topics, £600,000 in Theme 2 ones); percentages are rounded as the
+written slot rounds; a negative cash flow is printed as the written one is. Framework in
+`generators/business/build.ts`: money and percentage printing, a break-even draw that makes the
+output whole, and every formula checked a second way (profit from revenue minus total costs and
+from contribution; average rate of return as average yearly profit ÷ cost × 100; margin of
+safety; market share; percentage change; gross and net profit margins). Realism rules for the
+brief: price above variable cost; sales near break-even where a margin of safety is asked;
+interest rates 2 to 12%; exchange rates near real ones (£1 = $1.20 to $1.60, €1.05 to €1.40);
+tax rates in the UK's own range; staff and leavers consistent.
+
+- [ ] **1. Theme 1, Investigating small business.** Value added, profit from value added and
+  fixed costs, percentage change in profit and sales, what a founder gave up in salary (1.1);
+  survey percentages, market share and its change, percentage points, scaling a survey to a town
+  (1.2); revenue, total costs, profit, break-even and the new break-even after a price change,
+  margin of safety, net cash flow, opening and closing balances over one and two months, total
+  interest as a percentage (1.3); a franchise royalty, break-even in a business plan, comparing
+  two units (1.4); exchange-rate conversions and changes, refunds under consumer law,
+  interest-rate and tax-rate changes (1.5). 35 slots in 5 topics.
+- [ ] **2. Theme 2, Building a business.** Retained profit, a flotation, a tariff, percentage
+  growth, a funding shortfall, loan interest as a percentage, an overseas market share, the
+  founders' share after a share issue (2.1); mark-up to a selling price and to a profit,
+  percentage increase after an extension strategy, two-segment revenue, the revenue fall after a
+  price cut (2.2); productivity per worker and its percentage increase, buffer stock, reorder
+  level, delivery size, the unit cost of two production lines (2.3); gross profit and margin, net
+  profit and margin, average rate of return from a total and from yearly profits, percentage
+  change in net profit, net margin from a full set of figures (2.4); staff turnover and its
+  change in percentage points, managers from a span of control, pay with commission, the saving
+  from cutting leavers (2.5). 34 slots in 5 topics.
+
+## 11. Computer Science generators (planned 11 October 2026)
+
+Computer Science (AQA 8525) has 95 numeric questions in 21 topics. Seven stay written: six ask a
+fact to recall (8 bits in a byte, 1000 bytes in a kilobyte, 128 ASCII characters, 32 between the
+cases, two exits from a decision, eight rows for three inputs) and one reads a Huffman tree
+diagram. Conventions from the specification: decimal prefixes (1 kB = 1000 B), the 8-bit range
+0 to 255, logical shifts only, 7-bit ASCII, image size = W × H × D bits, sound size = rate ×
+resolution × seconds; AQA pseudo-code for every fragment (`←`, `DIV`, `MOD`, `FOR i ← 1 TO n`,
+`WHILE`/`ENDWHILE`, `REPEAT`/`UNTIL`, `SUBROUTINE`/`RETURN`, `LEN`, `SUBSTRING(i, j, s)`,
+`POSITION`, no string indexing, indexes from 0, the midpoint as (low + high) DIV 2). A trace
+question's answer is computed by running the fragment in a small interpreter of that pseudo-code
+subset (the second route), the solution prints the trace table, and the code is drawn so a loop
+runs two to eight times and the trace fits on a phone.
+
+- [ ] **1. Data representation.** Binary, hexadecimal and decimal conversions both ways; shifts
+  left and right and the multiply or divide they are; ASCII code arithmetic (one code from
+  another, bits for a word); image and sound file sizes in bits, bytes and kilobytes; files that
+  fit on a drive and copy times with decimal prefixes; clock cycles per second; run-length pairs,
+  Huffman bit counts from given codes and frequencies, ASCII totals and the bits saved. 32 slots
+  in 7 topics (storage units and binary, binary arithmetic, ASCII and Unicode, images and sound,
+  data compression, the CPU, secondary storage).
+- [ ] **2. Algorithms.** Linear and binary search counts for a value present or absent in a
+  sorted list, the worst case of binary search on n items; bubble sort comparisons in a pass and
+  in total, swaps on a short list, n from a total; merge sort rounds and merge comparisons; the
+  output of a described algorithm (a maximum, a total, repeated subtraction, loop counts, an
+  off-by-one on the last index, a vowel count); a mean of marks and simple flow-chart traces.
+  26 slots in 6 topics.
+- [ ] **3. Programming traces.** MOD and DIV arithmetic, FOR, WHILE and REPEAT loops with counts
+  and totals, nested loops, subroutines with return values and scope, array and 2D array sums and
+  counts, string length, position and substring loops, password-attempt loops; truth-table rows;
+  SQL result counts from a drawn student-and-club table. 37 slots in 8 topics.
+
+French, Music and English are not planned: their 30, 19 and 21 numeric questions are dates, bar
+numbers, counts from a set text and listening figures, which recall a fact or read a text and
+have nothing to vary.
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are

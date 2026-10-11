@@ -6,8 +6,9 @@ import { between, layered, rich, unitsOf } from './build.ts'
 import { clean, clearOf, distinct, evenly, noOnes, powerOfTen, range, shiftFree, tenfold, threeFigures, toPlaces, word } from '../chemistry/build.ts'
 
 /**
- * Transport in cells and plants (AQA 8461, 4.1.3 and 4.2.3): osmosis in potato cylinders
- * (required practical 3), surface area to volume ratio and Fick's law, magnification and
+ * Transport in cells and plants (Edexcel 1BI0: 1.15 to 1.17 diffusion, osmosis and percentage
+ * change in mass; 6.7 to 6.13 root hairs, xylem, phloem and the rate of transpiration; 8.2 to 8.5B
+ * exchange surfaces and Fick's law): osmosis in potato cylinders (core practical 1.16), surface area to volume ratio and Fick's law, magnification and
  * stomatal density in the leaf, and the potometer. Every numeric written slot in the four topics
  * has a generator here; none is left written.
  *
@@ -39,7 +40,7 @@ const g2 = (x: number) => fixed(x, 2)
 const factorTex = (x: number) => (atMost(x, 4) ? show(x) : `${String(Math.floor(x * 1e4) / 1e4)}\\ldots`)
 
 // =============================================================================================
-// Diffusion, osmosis and active transport: the potato cylinders of required practical 3
+// Diffusion, osmosis and active transport: the potato cylinders of core practical 1.16
 // =============================================================================================
 
 // ---------------------------------------------------------------------------------------------
