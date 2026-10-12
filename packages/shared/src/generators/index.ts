@@ -104,6 +104,8 @@ import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
 import { rng } from './random.ts'
+import { figures } from './physics/build.ts'
+import { sfTolerance } from './physics/format.ts'
 import type { Generated, Generator } from './types.ts'
 
 export type { Check, Generated, Generator } from './types.ts'
@@ -261,6 +263,21 @@ export function sheetQuestions(subjectId: string, topicId: string, written: Ques
   })
 }
 
+const ASKS_PRECISION = /significant figure|decimal place|d\.p\.|nearest|whole number|standard form/i
+
+/**
+ * The room a Physics answer leaves for rounding when its prompt asks for no precision: its
+ * three-figure rounding is marked right too (1764 J typed as 1760, 11.75 W as 11.8), as the
+ * Chemistry and Biology helpers already allow for their calculated answers (`threeFigures`).
+ * Before this, every Physics slot with a four-figure answer marked the rounded one wrong. A
+ * prompt that names a precision is marked at that precision, and a Chemistry sum such as an
+ * Mr stays exact, so the rule is Physics's alone.
+ */
+export function roundingRoom(subjectId: string, prompt: string, answer: number, tolerance: number): number {
+  if (subjectId !== 'physics' || answer === 0 || ASKS_PRECISION.test(prompt) || figures(answer) <= 3) return tolerance
+  return Math.max(tolerance, sfTolerance(answer, 3))
+}
+
 /**
  * A fresh version of the written question `slot`, built from `seed`.
  *
@@ -284,7 +301,7 @@ export function generate(generator: Generator, slot: Question, seed: string): Ge
   const b = draft.question
   const common = { ...kept, prompt: b.prompt, solution: b.solution, markScheme: b.markScheme, ...(b.visual ? { visual: b.visual } : {}) }
   const question: Question = b.type === 'numeric'
-    ? { ...common, type: 'numeric', answer: b.answer, tolerance: b.tolerance, unitsRequired: false, ...(b.units ? { units: b.units } : {}) }
+    ? { ...common, type: 'numeric', answer: b.answer, tolerance: roundingRoom(generator.subjectId, b.prompt, b.answer, b.tolerance), unitsRequired: false, ...(b.units ? { units: b.units } : {}) }
     : b.type === 'short-text'
       ? { ...common, type: 'short-text', accepted: b.accepted }
       : { ...common, type: 'multiple-choice', options: b.options, correct: b.correct }

@@ -1737,7 +1737,7 @@ export const reabsorbed: Generator = {
       slot,
       {
         prompt:
-          `${d.lead} ${x.f} litres of fluid out of the blood into the nephrons. ${d.then} ${show(x.u)} litres of urine. ` +
+          `${d.lead} ${x.f} litres of fluid out of the blood into the nephrons. ${d.then} ${show(x.u)} ${x.u === 1 ? 'litre' : 'litres'} of urine. ` +
           'Calculate the percentage of the filtered fluid that is reabsorbed back into the blood.',
         solution:
           `Reabsorbed $= ${x.f} - ${show(x.u)} = ${show(x.back)}$ litres. Percentage $= \\dfrac{${show(x.back)}}{${x.f}} \\times 100 = ${exactly ? show(x.p) : `${trail(x.exact, 4)} = ${sigText(x.p, 3)}`}\\%$${exactly ? '' : ' to 3 significant figures'}. Only about ${sigText(100 - x.exact, 2)}% of what is filtered leaves as urine. ` +

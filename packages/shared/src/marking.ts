@@ -659,8 +659,10 @@ function sameRearrangement(raw: string, accepted: string, prompt: string): boole
  * is the one its answer box shows after the number, which is why "£" was printed there.
  */
 export function numericText(answer: number, units?: string, places?: number): string {
-  if (units === '£') return `£${Number.isInteger(answer * 100) ? answer.toFixed(2) : answer}`
-  const n = places !== undefined && Number.isInteger(answer * 10 ** places) ? answer.toFixed(places) : String(answer)
+  // Binary floats: 2.2 × 100 is 220.00000000000003, so an exact integer test showed 2.20 as "2.2".
+  const whole = (x: number) => Math.abs(x - Math.round(x)) < 1e-9
+  if (units === '£') return `£${whole(answer * 100) ? answer.toFixed(2) : answer}`
+  const n = places !== undefined && whole(answer * 10 ** places) ? answer.toFixed(places) : String(answer)
   if (units === '%' || units === '°') return `${n}${units}`
   return units ? `${n} ${units}` : n
 }

@@ -1284,7 +1284,7 @@ export const respirometerComparison: Generator = {
           `In a respirometer holding ${x.text} at ${T1} °C, the drop moved ${y.c.D} mm in ${y.c.t} minutes. Warmed to ${T2} °C, the drop moved ${y.w.D} mm in ${y.w.t} minutes. ` +
           `A student says the warmed ${x.text} respired ${y.how} ${many} as fast, because ${y.w.D} mm is ${y.how} ${many} ${y.c.D} mm. Calculate how many times faster, to two decimal places, the warmed ${x.text} were actually respiring.`,
         solution:
-          `Rates are $\\dfrac{${y.c.D}}{${y.c.t}} = ${show(y.c.rate)}$ mm/min and $\\dfrac{${y.w.D}}{${y.w.t}} = ${show(y.w.rate)}$ mm/min, so $\\dfrac{${show(y.w.rate)}}{${show(y.c.rate)}} = ${atMost(exact, 2) ? show(exact) : `${cut(exact, 4)}\\ldots`}$${atMost(exact, 2) ? '' : `, which is **${fixed(y.k, 2)}** to two decimal places`}. ` +
+          `Rates are $\\dfrac{${y.c.D}}{${y.c.t}} = ${show(y.c.rate)}$ mm/min and $\\dfrac{${y.w.D}}{${y.w.t}} = ${show(y.w.rate)}$ mm/min, so $\\dfrac{${show(y.w.rate)}}{${show(y.c.rate)}} = ${atMost(exact, 2) ? `**${fixed(y.k, 2)}**` : `${cut(exact, 4)}\\ldots`}$${atMost(exact, 2) ? '' : `, which is **${fixed(y.k, 2)}** to two decimal places`}. ` +
           `Comparing the raw distances, ${y.w.D} against ${y.c.D}, would have suggested a much larger difference, because the **times were not the same**.`,
         method: [`converts both readings to rates: ${show(y.c.rate)} and ${show(y.w.rate)} mm/min`, `divides ${show(y.w.rate)} by ${show(y.c.rate)}`],
         answer: y.k,

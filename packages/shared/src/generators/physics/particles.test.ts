@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { fixed, show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { CONTAINERS, FLAT_SECTIONS, METALS, WATER_HOLDERS } from './particles.ts'
 
@@ -26,6 +26,8 @@ const clean = (x: number) => Number(x.toPrecision(12))
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 const values = (b: Generated) => b.values as Record<string, number>
 /** Thousands in prose as the generators print them: 334 000 from five digits. */
@@ -93,7 +95,7 @@ describe('specific heat capacity and latent heat', () => {
       expect(Number.isInteger(answer(b))).toBe(false)
       expect(d).toBeGreaterThanOrEqual(5)
       expect(d).toBeLessThanOrEqual(80)
-      expect(tolerance(b)).toBe(0.05)
+      expect(tolerance(b)).toBe(room(b, 0.05))
       expect(b.question.prompt).toContain(`${grouped(E!)} J`)
       expect(b.question.prompt).toContain('1 decimal place')
       // The unrounded value is shown before the rounding the mark is for.

@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { dpTolerance } from './format.ts'
 
@@ -26,6 +26,8 @@ const clean = (x: number) => Number(x.toPrecision(12))
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 const values = (b: Generated) => b.values as Record<string, number>
 /** A whole number inside maths as the generators print it: 12\,000 from five digits. */
@@ -82,7 +84,7 @@ describe('mains electricity', () => {
       expect(b.question.solution).toBe(`$${ends(`P = V I = 230 \\times ${show(I!)}`, P, 'W')}.`)
       expect(b.question.markScheme[0]!.description).toBe(`$P = V I = 230 \\times ${show(I!)}$`)
       expect(units(b)).toBe('W')
-      expect(tolerance(b)).toBe(dpTolerance(P))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(P)))
     }
     expect(contexts(built)).toBe(8)
   })
@@ -103,7 +105,7 @@ describe('mains electricity', () => {
       expect(b.question.solution).toBe(`$${ends(`I = P \\div V = ${tex(P!)} \\div 230`, I, 'A')}.`)
       expect(b.question.markScheme[0]!.description).toBe(`rearranges to $I = P \\div V$: $${tex(P!)} \\div 230$`)
       expect(units(b)).toBe('A')
-      expect(tolerance(b)).toBe(dpTolerance(I))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(I)))
     }
     expect(contexts(built)).toBe(8)
   })
@@ -136,7 +138,7 @@ describe('mains electricity', () => {
       expect(b.question.solution).toBe(`$${ends(`P = I^2 R = ${show(I!)}^2 \\times ${show(R!)} = ${tex(sq)} \\times ${show(R!)}`, P, 'W')}. Square the current first.`)
       expect(b.question.markScheme[0]!.description).toBe(`squares the current then multiplies by $R$: $${show(I!)}^2 \\times ${show(R!)}$`)
       expect(units(b)).toBe('W')
-      expect(tolerance(b)).toBe(dpTolerance(P))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(P)))
     }
     expect(contexts(built)).toBe(6)
   })
@@ -166,7 +168,7 @@ describe('mains electricity', () => {
       expect(b.question.solution).toContain(`${gerund} it makes the power **${times}**: ${prose(P1)} W becomes ${prose(P2)} W, not ${prose(clean(P1 * c))} W.`)
       expect(b.question.markScheme.map((l) => l.description)).toEqual([`squares the new current: $${show(I2!)}^2 = ${tex(sq)}$`, `multiplies by $R$: $${tex(sq)} \\times ${show(R!)}$`, show(P2)])
       expect(units(b)).toBeUndefined()
-      expect(tolerance(b)).toBe(dpTolerance(P2))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(P2)))
     }
     expect(new Set(built.map((b) => clean(values(b).I2! / values(b).I1!)))).toEqual(new Set([2, 3, 0.5]))
     expect(contexts(built)).toBe(3)
@@ -200,7 +202,7 @@ describe('electromagnetic devices', () => {
       expect(sumIsProduct(B!, I!) || sumIsProduct(B!, l!) || sumIsProduct(I!, l!) || F === clean(B! + I! + l!), b.seed).toBe(false)
       expect(b.question.solution).toBe(`$${ends(`F = B I l = ${show(B!)} \\times ${show(I!)} \\times ${show(l!)}`, F, 'N')}.`)
       expect(units(b)).toBe('N')
-      expect(tolerance(b)).toBe(dpTolerance(F))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(F)))
     }
     expect(contexts(built)).toBe(4)
   })
@@ -241,7 +243,7 @@ describe('electromagnetic devices', () => {
       }
       expect(last(b)).toBe(`${prose(Vs)} V`)
       expect(units(b)).toBe('V')
-      expect(tolerance(b)).toBe(dpTolerance(Vs))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(Vs)))
     }
     expect(contexts(built)).toBe(4)
   })
@@ -284,7 +286,7 @@ describe('electromagnetic devices', () => {
       expect(b.question.markScheme[0]!.description).toBe(`calculates the input power: $${tex(Vp!)} \\times ${tex(Ip!)} = ${tex(P)}$ W`)
       expect(b.question.markScheme[1]!.description).toBe(`divides by the secondary pd: $${tex(P)} \\div ${tex(Vs!)}$`)
       expect(units(b)).toBe('A')
-      expect(tolerance(b)).toBe(dpTolerance(Is))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(Is)))
     }
     expect(contexts(built)).toBe(4)
   })
@@ -311,7 +313,7 @@ describe('electromagnetic devices', () => {
       expect(b.question.markScheme[1]!.description).toBe(`divides to find the factor: $${tex(P1)} \\div ${tex(P2)}$`)
       expect(units(b)).toBeUndefined()
       expect(last(b)).toBe(String(k * k))
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
     }
     expect(contexts(built)).toBe(3)
   })
@@ -338,7 +340,7 @@ describe('electromagnetic devices', () => {
       expect(b.question.solution).toContain('The peak pd is not needed')
       expect(b.question.markScheme[0]!.description).toBe(N === 1 ? `$1 \\div ${printed}$` : `$${N} \\div ${printed}$`)
       expect(units(b)).toBeUndefined()
-      expect(tolerance(b)).toBe(dpTolerance(f))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(f)))
     }
     expect(new Set(built.map((b) => b.values.N === 1))).toEqual(new Set([true, false]))
     expect(contexts(built)).toBe(3)

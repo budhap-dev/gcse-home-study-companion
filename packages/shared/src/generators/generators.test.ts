@@ -80,6 +80,16 @@ describe('question generators', () => {
           }
         })
 
+        // Physics marks a calculated answer at its three-figure rounding too when no precision is
+        // asked (roundingRoom in index.ts): 1764 J typed as 1760 is right.
+        it('marks a Physics answer right at its three-figure rounding when no precision is asked', () => {
+          if (g.subjectId !== 'physics') return
+          for (const { question: q, seed } of built) {
+            if (q.type !== 'numeric' || q.answer === 0 || /significant figure|decimal place|d\.p\.|nearest|whole number|standard form/i.test(q.prompt)) continue
+            expect(mark(q, String(Number(q.answer.toPrecision(3)))).correct, `${seed}: ${q.answer}`).toBe(true)
+          }
+        })
+
         // NaN as a word: the formula of sodium nitrate, NaNO₃, contains the letters.
         it('prints no binary residue, NaN or undefined', () => {
           for (const b of built) expect(strings(b.question), b.seed).not.toMatch(new RegExp(`${RESIDUE.source}|\\bNaN\\b|undefined|Infinity`))
