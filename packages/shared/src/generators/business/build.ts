@@ -135,10 +135,10 @@ export function numericDraft(
 
 /**
  * Whether the answer can be read off a printed figure: equal to it, or equal to it with the
- * point moved (75 000 against 7.5, 2400 against 24).
+ * point moved either way (75 000 against 7.5, 2400 against 24, 46 against a £46,000 saving).
  */
 export const readsOff = (answer: number, printed: number[]) =>
-  printed.some((f) => [0, 1, 2, 3, 4, 5, 6].some((k) => Math.abs(f / 10 ** k - answer) < 1e-9))
+  printed.some((f) => [0, 1, 2, 3, 4, 5, 6].some((k) => near(f / 10 ** k, answer) || near(f * 10 ** k, answer)))
 
 /** A power of ten, which makes a division trivial (a market of £1 000 000). */
 export const powerOfTen = (x: number) => x > 0 && Number.isInteger(Math.log10(x))

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
-import { averageRateOfReturn, breakEven, gbp, interestPercent, marketShare, num, numericDraft, percentChange, staffTurnover, steps, styleOf, texGbp, texNum, texPounds } from './build.ts'
+import { averageRateOfReturn, breakEven, readsOff, gbp, interestPercent, marketShare, num, numericDraft, percentChange, staffTurnover, steps, styleOf, texGbp, texNum, texPounds } from './build.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content/business')
 const written = (topic: string, id: string) =>
@@ -52,6 +52,15 @@ describe('Business printing inside maths', () => {
     expect(texPounds(-12000, 'space')).toBe('-12\\,000')
   })
   it('steps without binary residue', () => expect(steps(0.1, 0.5, 0.1)).toEqual([0.1, 0.2, 0.3, 0.4, 0.5]))
+})
+
+describe('readsOff', () => {
+  it('sees the answer in a printed figure with the point moved either way', () => {
+    expect(readsOff(7.5, [75000])).toBe(true)
+    expect(readsOff(46000, [46])).toBe(true)
+    expect(readsOff(24, [2400])).toBe(true)
+    expect(readsOff(23, [46, 2300.5])).toBe(false)
+  })
 })
 
 describe('numericDraft', () => {
