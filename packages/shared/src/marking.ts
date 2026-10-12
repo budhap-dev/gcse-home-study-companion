@@ -406,6 +406,20 @@ function numericValue(s: string): number | undefined {
   }
 }
 
+/**
+ * An exact surd typed for a decimal answer: 33√3 for 57.16, √259 for 16.09, and the maths
+ * field's (165sqrt(3))/(4). The Further Maths mark schemes print "33√3 or 57.16", and the
+ * marker read the surd as no number at all. Only a root of a non-square counts, so √49 typed
+ * for "work out √49" is still not the 7 the question asks for.
+ */
+function surdValue(raw: string): number | undefined {
+  const s = mathsText(raw).replace(/^[a-z]\w*=/, '')
+  const roots = [...s.matchAll(/√(\d+)(?!\.)/g)].map((m) => Number(m[1]))
+  if (!roots.length || !/^[-+*/^().\d√×÷]+$/.test(s)) return undefined
+  if (roots.some((n) => Number.isInteger(Math.sqrt(n)))) return undefined
+  return numericValue(s)
+}
+
 /** The values in a list of solutions: "x = 3 or x = -3", "3, -3", "x = ±3", "-4 and 2". */
 function solutionItems(raw: string): string[] {
   return raw.split(/\s*(?:,(?!\d{3}\b)|;|\bor\b|\band\b)\s*/i).map(mathsText).filter(Boolean)
@@ -466,7 +480,7 @@ export function mark(question: Question, answer: unknown): MarkResult {
       return result(chosen.length === correct.length && chosen.every((v, i) => v === correct[i]))
     }
     case 'numeric': {
-      const value = typeof answer === 'string' ? parseNumber(answer, question.units) : typeof answer === 'number' ? answer : undefined
+      const value = typeof answer === 'string' ? parseNumber(answer, question.units) ?? surdValue(answer) : typeof answer === 'number' ? answer : undefined
       if (value === undefined) return result(false)
       return result(Math.abs(value - question.answer) <= question.tolerance + 1e-9)
     }

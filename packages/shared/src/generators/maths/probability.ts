@@ -1063,7 +1063,7 @@ function withoutReplacement(ask: 'both' | 'mixed' | 'at least one' | 'q15'): Bui
     if (which === 'both') {
       num = c * (c - 1)
       ask2 = `that both are ${colour}`
-      solution = `$${dfrac(c, n)} \\times ${dfrac(c - 1, n - 1)} = ${worked(num, den, false)}$. The second branch is ${c - 1} out of ${n - 1} because a ${colour} has gone.`
+      solution = `$${dfrac(c, n)} \\times ${dfrac(c - 1, n - 1)} = ${worked(num, den, false)}$. The second branch is ${c - 1} out of ${n - 1} because ${an(colour)} has gone.`
       method = [`second branch is ${c - 1}/${n - 1}`, 'multiplies along the path']
       listed = pairs((s, t) => s === colour && t === colour)
     } else if (which === 'mixed') {

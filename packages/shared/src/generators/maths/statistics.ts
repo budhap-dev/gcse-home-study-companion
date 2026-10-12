@@ -29,6 +29,8 @@ const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'sev
 /** A count as the pack writes it in a sentence: words up to twenty, digits after. */
 export const words = (n: number) => NUMBER_WORDS[n] ?? String(n)
 export const cap = (s: string) => s[0]!.toUpperCase() + s.slice(1)
+/** "an eighth", "an eleventh", "a ninth": the article goes by the word's first sound. */
+const anOrdinal = (n: number) => `${/^[aeiou]/.test(ordinalWord(n)) ? 'an' : 'a'} ${ordinalWord(n)}`
 const ORDINAL_WORDS = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth']
 /** 1st, 2nd, 3rd, 11th, 21st. */
 export function ordinal(n: number): string {
@@ -623,7 +625,7 @@ const MEAN_GROUPS: MeanGroup[] = [
   },
   {
     range: [30, 100],
-    added: (n, m1, m2) => `Sam's mean mark in ${words(n)} tests is ${m1}. After a ${ordinalWord(n + 1)} test, the mean of all ${words(n + 1)} marks is ${m2}. What did Sam score in the ${ordinalWord(n + 1)} test?`,
+    added: (n, m1, m2) => `Sam's mean mark in ${words(n)} tests is ${m1}. After ${anOrdinal(n + 1)} test, the mean of all ${words(n + 1)} marks is ${m2}. What did Sam score in the ${ordinalWord(n + 1)} test?`,
     removed: (n, m1, m2) => `Sam's mean mark in ${words(n)} tests is ${m1}. The teacher removes one test, and the mean of the other ${words(n - 1)} marks is ${m2}. What did Sam score in the test that was removed?`,
     unit: 'marks',
     addedIs: (n) => `Sam's ${ordinalWord(n + 1)} mark is`,
@@ -631,7 +633,7 @@ const MEAN_GROUPS: MeanGroup[] = [
   },
   {
     range: [18, 60],
-    added: (n, m1, m2) => `A runner's mean time for ${words(n)} park runs is ${m1} minutes. After a ${ordinalWord(n + 1)} run, the mean of all ${words(n + 1)} times is ${m2} minutes. How long did the ${ordinalWord(n + 1)} run take?`,
+    added: (n, m1, m2) => `A runner's mean time for ${words(n)} park runs is ${m1} minutes. After ${anOrdinal(n + 1)} run, the mean of all ${words(n + 1)} times is ${m2} minutes. How long did the ${ordinalWord(n + 1)} run take?`,
     removed: (n, m1, m2) => `A runner's mean time for ${words(n)} park runs is ${m1} minutes. One run is left out, and the mean of the other ${words(n - 1)} is ${m2} minutes. How long did the run that was left out take?`,
     unit: 'minutes',
     addedIs: (n) => `The ${ordinalWord(n + 1)} run took`,

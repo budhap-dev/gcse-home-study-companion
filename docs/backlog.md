@@ -604,7 +604,7 @@ reach 100 distinct prompts stay written.
   dearer than adult ones, a check line that turned a subtraction into an addition by dropping
   negative denominators, the other root paying when y was asked, tangents printed with every
   coefficient negative, and a radius equal to a centre coordinate.
-- [ ] **4. Trigonometry and geometrical proof (Year 11).** Pythagoras in 2D and 3D (a cuboid
+- [x] **4. Trigonometry and geometrical proof (Year 11).** Pythagoras in 2D and 3D (a cuboid
   diagonal, the angle a diagonal makes with the base, the angle between a sloping face or edge
   and the base of a pyramid), the sine and cosine rules and the area formula (to 2 decimal
   places, and the exact cos A = 3/5 cases), trigonometric equations in 0° to 360° (exact values,
@@ -612,6 +612,17 @@ reach 100 distinct prompts stay written.
   solutions of a quadratic in sin x), circle theorems by number (angle at the centre, cyclic
   quadrilateral, angle in a semicircle, alternate segment, two tangents), polygon angles, a
   trapezium, a cone's volume, a cylinder's radius from its surface area. 32 slots in 3 topics.
+  Shipped 12 October 2026 (v10.102.0): 10 generators for 29 of the 32 slots (`pythagoras`,
+  `trig-equations`, `geometry`). Three stay written: the value of sin 30° (recall), the sum of the
+  solutions of sin²x = k (always 720°), and a count of solutions. Three reviewers found sixteen
+  slips and skews, all fixed with tests: "a octagon", a 10-24-26 triangle the day before the
+  next question asks whether 10, 24, 26 is a triple, a pyramid as tall as it is wide in 8% of
+  builds, rounded intermediates that change a 2 d.p. answer (now named in the solution), a grade
+  4-5 sine equation that was mostly negative values and rearrangements, q11 and q14 sharing one
+  equation on a sheet, squat traffic cones. Class fixes: the marker now reads an exact surd
+  (33√3, √259) where the mark scheme allows one, and the release check refuses "a" before a
+  vowel sound and "an" before a consonant, which found "a orange" and "a eighth" in two Maths
+  generators.
 - [ ] **5. Matrices and transformations (Year 11).** Scalar multiples and products of 2 × 2
   matrices and column vectors, an entry of BA or A², unknown entries from a product, solving
   Mx = v, C² = kI, the order of a rotation matrix, an entry of Pⁿ for a shear, images under
