@@ -1,4 +1,4 @@
-import { clearOfHalf, fixed, roundTo, show } from '../format.ts'
+import { an, clearOfHalf, fixed, roundTo, show } from '../format.ts'
 import { draw, int, pick } from '../random.ts'
 import type { Rng } from '../random.ts'
 import { scheme } from '../scheme.ts'
@@ -745,7 +745,7 @@ const ADJ: Record<number, string> = { 3: 'triangular', 4: 'square', 5: 'pentagon
 
 function solidName(kind: 'prism' | 'pyramid', n: number): string {
   if (kind === 'prism') return n === 4 ? 'cuboid' : ADJ[n] ? `${ADJ[n]} prism` : `prism with ${n}-sided ends`
-  return n === 3 ? 'triangular-based pyramid' : n === 4 ? 'square-based pyramid' : ADJ[n] ? `${ADJ[n]} pyramid` : `pyramid on a ${n}-sided base`
+  return n === 3 ? 'triangular-based pyramid' : n === 4 ? 'square-based pyramid' : ADJ[n] ? `${ADJ[n]} pyramid` : `pyramid on ${an(n)} ${n}-sided base`
 }
 const article = (word: string) => (/^[aeiou]/.test(word) ? 'an' : 'a')
 

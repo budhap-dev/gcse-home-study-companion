@@ -82,6 +82,12 @@ import { marketingGenerators } from './business/marketing.ts'
 import { operationsGenerators } from './business/operations.ts'
 import { financeGenerators } from './business/finance.ts'
 import { peopleGenerators } from './business/people.ts'
+import { storageGenerators } from './computer-science/storage.ts'
+import { arithmeticGenerators } from './computer-science/arithmetic.ts'
+import { systemsGenerators } from './computer-science/systems.ts'
+import { asciiGenerators } from './computer-science/ascii.ts'
+import { mediaGenerators } from './computer-science/media.ts'
+import { compressionGenerators } from './computer-science/compression.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -187,6 +193,12 @@ export const GENERATORS: Generator[] = [
   ...operationsGenerators,
   ...financeGenerators,
   ...peopleGenerators,
+  ...storageGenerators,
+  ...arithmeticGenerators,
+  ...systemsGenerators,
+  ...asciiGenerators,
+  ...mediaGenerators,
+  ...compressionGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))

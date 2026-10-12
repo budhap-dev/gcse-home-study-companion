@@ -1,4 +1,4 @@
-import { clearOfHalf, fixed, money, pounds, roundTo, show } from '../format.ts'
+import { an, clearOfHalf, fixed, money, pounds, roundTo, show } from '../format.ts'
 import { draw, int, pick, shuffle } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Generator } from '../types.ts'
@@ -102,7 +102,7 @@ export const reversePercentage: Generator = {
     const percent = rise ? 100 + p : 100 - p
     const trap = roundTo(price * (rise ? 1 - p / 100 : 1 + p / 100), 2)
     const prompt = rise
-      ? `After a ${p}% price rise, a ${pick(r, RISE_ITEMS)} costs ${money(price)}. What was the price before the rise, in pounds?`
+      ? `After ${an(p)} ${p}% price rise, a ${pick(r, RISE_ITEMS)} costs ${money(price)}. What was the price before the rise, in pounds?`
       : `A ${pick(r, SALE_ITEMS)} costs ${money(price)} in a ${p}% sale. What was the original price, in pounds?`
     const wrongWay = rise
       ? `Taking ${p}% off ${money(price)} gives ${money(trap)}, which is wrong: the ${p}% was added to the original price, not to the new one.`

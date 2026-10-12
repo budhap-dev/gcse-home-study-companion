@@ -67,8 +67,8 @@ describe('question generators', () => {
             // Science answers are in the equation's unit, which the answer box prints after the
             // number, so a generated question keeps the written one's. Maths changes units on
             // purpose (a 2D Pythagoras in cm, then in m), so the rule is the sciences' and
-            // Business's (£, %, percentage points, units).
-            if (['physics', 'chemistry', 'biology', 'business'].includes(g.subjectId) && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
+            // Business's (£, %, percentage points, units) and Computer Science's.
+            if (['physics', 'chemistry', 'biology', 'business', 'computer-science'].includes(g.subjectId) && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
           }
         })
 
@@ -107,6 +107,9 @@ describe('question generators', () => {
             const words = `${q.prompt} ${q.solution}`.replace(/\$[^$]*\$/g, ' ')
             expect(words, seed).not.toMatch(/\ba (?!u|one)[aeio][a-z]+\b/)
             expect(words, seed).not.toMatch(/\ban (?!hour|honest|heir)[b-df-hj-np-tv-z][a-z]+\b/)
+            // A figure by how it is said: an 8-bit, an 80, an 11, an 18.5; a 7-bit, a 110, a 1100.
+            expect(words, seed).not.toMatch(/\ba (?:8|1[18](?!\d))/)
+            expect(words, seed).not.toMatch(/\b[Aa]n (?!8|1[18](?!\d))\d/)
           }
         })
 

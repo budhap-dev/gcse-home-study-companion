@@ -696,7 +696,7 @@ tax rates in the UK's own range; staff and leavers consistent.
 
   **Business complete, 12 October 2026: 68 generators cover all 69 of its numeric questions.**
 
-## 11. Computer Science generators (planned 11 October 2026)
+## 11. Computer Science generators (planned 11 October 2026, started 12 October)
 
 Computer Science (AQA 8525) has 95 numeric questions in 21 topics. Seven stay written: six ask a
 fact to recall (8 bits in a byte, 1000 bytes in a kilobyte, 128 ASCII characters, 32 between the
@@ -710,13 +710,26 @@ question's answer is computed by running the fragment in a small interpreter of 
 subset (the second route), the solution prints the trace table, and the code is drawn so a loop
 runs two to eight times and the trace fits on a phone.
 
-- [ ] **1. Data representation.** Binary, hexadecimal and decimal conversions both ways; shifts
+- [x] **1. Data representation.** Binary, hexadecimal and decimal conversions both ways; shifts
   left and right and the multiply or divide they are; ASCII code arithmetic (one code from
   another, bits for a word); image and sound file sizes in bits, bytes and kilobytes; files that
   fit on a drive and copy times with decimal prefixes; clock cycles per second; run-length pairs,
   Huffman bit counts from given codes and frequencies, ASCII totals and the bits saved. 32 slots
   in 7 topics (storage units and binary, binary arithmetic, ASCII and Unicode, images and sound,
   data compression, the CPU, secondary storage).
+  Shipped 12 October 2026 (v10.106.0): 19 generators for 27 slots (`storage`, `arithmetic`,
+  `systems`, `ascii`, `media`, `compression`) on a shared `computer-science/build.ts` (binary and
+  hex printing, counts grouped as the pack prints them, decimal prefixes); five stay written (four
+  facts to recall and the drawn Huffman tree). Huffman codes come from a real Huffman tree of the
+  word's own letter counts, checked optimal against a brute-force search. Three reviewers found
+  twenty-three slips, all fixed with tests: a flat 2-bit code paying in 37% of Huffman builds, the
+  higher sheet's cheese sum asked again in 20%, "tic tac toe" counted with one space, sound files of
+  34 million bits on a paper sat without a calculator, a copy rate of 125 MB/s in 43% of external
+  disks, unquoted capitals ("Given that I has the code 73"), a 9-bit console. Seven written
+  questions changed because a wrong route paid or a sheet gave an answer away (binary arithmetic
+  q7 and q14; images q4, q6 and q13; compression q12); the release check now holds "an 8-bit" and
+  "a 7-bit", which found "a 8% price rise", "a 11-sided base" and "a 8.1 m platform" in Maths and
+  Physics.
 - [ ] **2. Algorithms.** Linear and binary search counts for a value present or absent in a
   sorted list, the worst case of binary search on n items; bubble sort comparisons in a pass and
   in total, swaps on a short list, n from a total; merge sort rounds and merge comparisons; the

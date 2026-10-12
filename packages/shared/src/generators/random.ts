@@ -44,3 +44,10 @@ export function draw<T>(r: Rng, make: (r: Rng) => T, ok: (value: T) => boolean, 
   }
   throw new Error(`no acceptable draw in ${tries} tries`)
 }
+
+/** Picks by weight from [value, weight] pairs. */
+export function weighted<T>(r: Rng, items: readonly (readonly [T, number])[]): T {
+  let left = r() * items.reduce((s, [, w]) => s + w, 0)
+  for (const [v, w] of items) if ((left -= w) < 0) return v
+  return items[items.length - 1]![0]
+}

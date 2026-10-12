@@ -1,4 +1,4 @@
-import { show } from '../format.ts'
+import { ordinal, show } from '../format.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Draft, Generator } from '../types.ts'
@@ -11,7 +11,6 @@ import {
   commas,
   medianByStriking,
   medianOf,
-  ordinal,
   ordinalWord,
   places,
   quartileByPosition,

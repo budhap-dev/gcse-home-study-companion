@@ -1,5 +1,5 @@
 import type { Question } from '../../content/questions.ts'
-import { fixed, show } from '../format.ts'
+import { fixed, ordinal, show } from '../format.ts'
 import { draw, int, pick, shuffle, type Rng } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Draft, Generator } from '../types.ts'
@@ -32,12 +32,6 @@ export const cap = (s: string) => s[0]!.toUpperCase() + s.slice(1)
 /** "an eighth", "an eleventh", "a ninth": the article goes by the word's first sound. */
 const anOrdinal = (n: number) => `${/^[aeiou]/.test(ordinalWord(n)) ? 'an' : 'a'} ${ordinalWord(n)}`
 const ORDINAL_WORDS = ['zeroth', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelfth']
-/** 1st, 2nd, 3rd, 11th, 21st. */
-export function ordinal(n: number): string {
-  const t = n % 100
-  if (t >= 11 && t <= 13) return `${n}th`
-  return `${n}${['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`
-}
 export const ordinalWord = (n: number) => ORDINAL_WORDS[n] ?? ordinal(n)
 
 /** Whether `x` has at most `dp` decimal places, allowing for binary residue. */
