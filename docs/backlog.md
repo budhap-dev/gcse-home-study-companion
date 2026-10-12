@@ -656,7 +656,7 @@ brief: price above variable cost; sales near break-even where a margin of safety
 interest rates 2 to 12%; exchange rates near real ones (£1 = $1.20 to $1.60, €1.05 to €1.40);
 tax rates in the UK's own range; staff and leavers consistent.
 
-- [ ] **1. Theme 1, Investigating small business.** Value added, profit from value added and
+- [x] **1. Theme 1, Investigating small business.** Value added, profit from value added and
   fixed costs, percentage change in profit and sales, what a founder gave up in salary (1.1);
   survey percentages, market share and its change, percentage points, scaling a survey to a town
   (1.2); revenue, total costs, profit, break-even and the new break-even after a price change,
@@ -664,6 +664,16 @@ tax rates in the UK's own range; staff and leavers consistent.
   interest as a percentage (1.3); a franchise royalty, break-even in a business plan, comparing
   two units (1.4); exchange-rate conversions and changes, refunds under consumer law,
   interest-rate and tax-rate changes (1.5). 35 slots in 5 topics.
+  Shipped 12 October 2026 (v10.104.0): 35 generators for all 35 slots (`enterprise`,
+  `opportunity`, `practice`, `effective`, `external`), on a shared `business/build.ts` that prints
+  money in each written question's own thousands style (£26 000 or £24,000, by question, not by
+  theme) and holds the formulae. Three reviewers found twenty-one slips, all fixed with tests: a
+  homeware shop selling 1,410 kettles a month, a caterer keeping 56% of its takings, an
+  exchange-rate slot whose exact cost was £25, £50, £250 or £500 in half its builds, a 10% share
+  where market ÷ sales pays, a rounded percentage change equal to a percentage-points answer, a
+  price rise that doubled the contribution so the fall in break-even paid. The release check now
+  keeps Business's units and reads £3,500,000 and −£500 in a solution; the written 1.5 q11 now
+  says "to the nearest penny".
 - [ ] **2. Theme 2, Building a business.** Retained profit, a flotation, a tariff, percentage
   growth, a funding shortfall, loan interest as a percentage, an overseas market share, the
   founders' share after a share issue (2.1); mark-up to a selling price and to a profit,

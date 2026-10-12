@@ -99,9 +99,9 @@ describe('a printed sheet with new numbers', () => {
 
   it('offers a version with new numbers only where a generator exists', () => {
     expect(render(trig)).toContain('A version with new numbers')
-    // Business has no generators.
-    const business = render('/subjects/business/topics/enterprise-and-entrepreneurship/worksheet/higher/print')
-    expect(business).toContain('Higher worksheet')
-    expect(business).not.toContain('new numbers')
+    // French has no generators: its numeric questions recall facts.
+    const french = render('/subjects/french/topics/celebrations/worksheet/higher/print')
+    expect(french).toContain('Higher worksheet')
+    expect(french).not.toContain('new numbers')
   })
 })
