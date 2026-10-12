@@ -154,7 +154,8 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // so 1.8 × 10^5 in the middle is still standard form.
   s = s.replace(/^[x×]\s*(?=\d)/, '').replace(/(?<=\d)\s*×$/, '')
   s = standardForm(s)
-  s = s.replace(/[a-z°%/ ]+$/i, '').trim()
+  // The unit word after the number, hyphens included: "38 T-shirts" was read as no number.
+  s = s.replace(/[a-z°%/ -]+$/i, '').trim()
   // Brackets round the parts of a fraction: (3)/(4). Students write it, and it is what a
   // WYSIWYG maths editor produces, so it has to read as three quarters rather than as
   // nothing at all.

@@ -641,7 +641,7 @@ reach 100 distinct prompts stay written.
   questions.** The five left written ask a recalled value, a count, or an answer the structure
   fixes.
 
-## 10. Business generators (planned 11 October 2026)
+## 10. Business generators (12 October 2026, complete)
 
 Business (Edexcel 1BS0) has 69 numeric questions in 10 topics, every one a calculation from the
 specification's quantitative skills (Appendix 2) and formulae (Appendix 3, not given in the
@@ -674,7 +674,7 @@ tax rates in the UK's own range; staff and leavers consistent.
   price rise that doubled the contribution so the fall in break-even paid. The release check now
   keeps Business's units and reads £3,500,000 and −£500 in a solution; the written 1.5 q11 now
   says "to the nearest penny".
-- [ ] **2. Theme 2, Building a business.** Retained profit, a flotation, a tariff, percentage
+- [x] **2. Theme 2, Building a business.** Retained profit, a flotation, a tariff, percentage
   growth, a funding shortfall, loan interest as a percentage, an overseas market share, the
   founders' share after a share issue (2.1); mark-up to a selling price and to a profit,
   percentage increase after an extension strategy, two-segment revenue, the revenue fall after a
@@ -684,6 +684,17 @@ tax rates in the UK's own range; staff and leavers consistent.
   change in net profit, net margin from a full set of figures (2.4); staff turnover and its
   change in percentage points, managers from a span of control, pay with commission, the saving
   from cutting leavers (2.5). 34 slots in 5 topics.
+  Shipped 12 October 2026 (v10.105.0): 33 generators for all 34 slots (`growing`, `marketing`,
+  `operations`, `finance`, `people`). Three reviewers found twenty slips and skews, all fixed with
+  tests: "cut the leavers to 24" read as "cut by 24" paying in 32% of builds, a flotation whose
+  shares totalled exactly 20,000,000 in 39%, a car salesperson earning £11,500 a month, a delivery
+  van costing £30,000 in 58% of its builds, revenue a round £100,000 in two thirds of the margin
+  slots, a bottling plant whose answer was 5p in 28%. Four written mark schemes stated a figure
+  from an earlier draft ("A1 15%" under answers of 20, 28, 12.5 and 10); they are fixed, and a
+  content test now holds every numeric question's answer line to its answer. The marker reads
+  "38 T-shirts".
+
+  **Business complete, 12 October 2026: 68 generators cover all 69 of its numeric questions.**
 
 ## 11. Computer Science generators (planned 11 October 2026)
 

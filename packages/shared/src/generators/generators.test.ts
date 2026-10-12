@@ -27,7 +27,7 @@ const strings = (q: Question) => JSON.stringify(q)
  * prints £3,500,000, £24 000 and -£500 where the answer is 3500000, 24000 and -500, and
  * Maths prints 10\,000 inside maths.
  */
-const asPrinted = (solution: string) => solution.replace(/(\d)(?:,|\\,| )(?=\d{3}(?!\d))/g, '$1').replace(/[−-]\s*£/g, '-')
+const asPrinted = (solution: string) => solution.replace(/(\d)(?:\{,\}|,|\\,| )(?=\d{3}(?!\d))/g, '$1').replace(/[−-]\s*£/g, '-')
 
 describe('question generators', () => {
   it('have unique ids, and no written question is claimed twice', () => {

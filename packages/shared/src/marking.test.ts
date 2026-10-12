@@ -587,6 +587,16 @@ describe('maths answers in another correct form', () => {
   })
 })
 
+describe('a unit word with a hyphen', () => {
+  it('reads "38 T-shirts" as 38', () => {
+    const q: Question = { ...base, type: 'numeric', answer: 38, tolerance: 0, unitsRequired: false }
+    expect(mark(q, '38 T-shirts').correct).toBe(true)
+    expect(mark(q, '38 t-shirts a week').correct).toBe(true)
+    expect(mark(q, '-38').correct).toBe(false)
+    expect(parseNumber('-500')).toBe(-500)
+  })
+})
+
 describe('an exact surd for a decimal answer', () => {
   // Further Maths q4: "B1 33√3 or 57.16"; q6: "√259 or 16.09".
   const area: Question = { ...base, type: 'numeric', answer: 57.16, tolerance: 0.005, unitsRequired: false }
