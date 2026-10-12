@@ -93,6 +93,13 @@ import { sortGenerators } from './computer-science/sorts.ts'
 import { purposeGenerators } from './computer-science/purpose.ts'
 import { flowchartGenerators } from './computer-science/flowcharts.ts'
 import { problemGenerators } from './computer-science/problems.ts'
+import { operatorGenerators } from './computer-science/operators.ts'
+import { loopGenerators } from './computer-science/loops.ts'
+import { subroutineGenerators } from './computer-science/subroutines.ts'
+import { arrayGenerators } from './computer-science/arrays.ts'
+import { stringGenerators } from './computer-science/strings.ts'
+import { robustGenerators } from './computer-science/robust.ts'
+import { sqlGenerators } from './computer-science/sql.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -209,6 +216,13 @@ export const GENERATORS: Generator[] = [
   ...purposeGenerators,
   ...flowchartGenerators,
   ...problemGenerators,
+  ...operatorGenerators,
+  ...loopGenerators,
+  ...subroutineGenerators,
+  ...arrayGenerators,
+  ...stringGenerators,
+  ...robustGenerators,
+  ...sqlGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))

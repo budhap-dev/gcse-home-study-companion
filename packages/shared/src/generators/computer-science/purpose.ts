@@ -1,7 +1,7 @@
 import type { Question } from '../../content/questions.ts'
 import { draw, int, pick, shuffle, weighted, type Rng } from '../random.ts'
 import type { Draft, Generator } from '../types.ts'
-import { csBySlot, numericDraft } from './build.ts'
+import { andList, csBySlot, numericDraft } from './build.ts'
 
 /**
  * Computer Science (AQA 8525) generators for 3.1.1, determining the purpose of simple algorithms
@@ -42,8 +42,6 @@ const word = (n: number) => WORDS[n - 2]!
 
 /** "6, 2, 11, 8", as the written prompts list items. */
 const commaList = (xs: readonly (number | string)[]) => xs.join(', ')
-/** "i, i, o and a". */
-const andList = (xs: readonly (number | string)[]) => (xs.length < 2 ? String(xs[0] ?? '') : `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`)
 
 /** Distinct whole numbers from lo to hi, `n` of them, in random order. */
 function distinct(r: Rng, n: number, lo: number, hi: number): number[] {

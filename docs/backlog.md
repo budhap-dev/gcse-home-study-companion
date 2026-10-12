@@ -696,7 +696,7 @@ tax rates in the UK's own range; staff and leavers consistent.
 
   **Business complete, 12 October 2026: 68 generators cover all 69 of its numeric questions.**
 
-## 11. Computer Science generators (planned 11 October 2026, started 12 October)
+## 11. Computer Science generators (12 October 2026, complete)
 
 Computer Science (AQA 8525) has 95 numeric questions in 21 topics. Seven stay written: six ask a
 fact to recall (8 bits in a byte, 1000 bytes in a kilobyte, 128 ASCII characters, 32 between the
@@ -751,10 +751,26 @@ runs two to eight times and the trace fits on a phone.
   swaps in three passes let the passes pay), and binary search on a million (2¹⁹ < 1 000 000 < 2²⁰,
   without "to the nearest whole number").
 
-- [ ] **3. Programming traces.** MOD and DIV arithmetic, FOR, WHILE and REPEAT loops with counts
+- [x] **3. Programming traces.** MOD and DIV arithmetic, FOR, WHILE and REPEAT loops with counts
   and totals, nested loops, subroutines with return values and scope, array and 2D array sums and
   counts, string length, position and substring loops, password-attempt loops; truth-table rows;
   SQL result counts from a drawn student-and-club table. 37 slots in 8 topics.
+  Shipped 12 October 2026 (v10.108.0): 20 generators for 36 slots (`operators`, `loops`,
+  `subroutines`, `arrays`, `strings`, `robust`, `sql`); the truth-table row count stays written.
+  Every printed program is run by `computer-science/pseudo.ts`, a small interpreter of the AQA
+  pseudo-code the pack prints, and the answer is taken from the run: the second route. It refuses
+  string indexing, RETURN outside a subroutine, an unset variable, an index past the end and a
+  runaway loop, so code that would not run cannot ship, and its own tests run every written trace
+  question to its answer. SQL counts come from an evaluator over the printed tables. Three
+  reviewers found twenty-three slips, all fixed with tests: DIV and MOD swapped paying in 74% of one
+  slot (the written forms added the two, which commutes), "the figure in the first line" paying in
+  half the scope questions, a fee three times the cash withdrawn, a password list ending at the
+  accepted value so counting the failures paid, "< read as ≤" paying in 36%, one string shape whose
+  answer was always 2. Six written questions changed: operators q8 and q11 (a difference, so the
+  swap no longer pays), selection q11 (40, > 17, − 7; the old one copied the lesson's own practice
+  program), arrays q17 (one row, as the whole-grid loop was q21's answer on the same sheet) and
+  robust q18 (a value typed after the accepted one). **Computer Science complete: 52 generators
+  cover 88 of its 95 numeric questions; seven stay written.**
 
 French, Music and English are not planned: their 30, 19 and 21 numeric questions are dates, bar
 numbers, counts from a set text and listening figures, which recall a fact or read a text and

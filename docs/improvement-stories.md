@@ -380,7 +380,9 @@ formulae and the code tracing stick.
 v10.105.0, 68 generators for all 69 of its numeric questions (docs/backlog.md section 10).
 Computer Science (section 11) started the same day: data representation shipped in v10.106.0,
 19 generators for 27 of its 32 numeric questions; algorithms in v10.107.0, 13 generators for 25
-of 26; programming traces follow.
+of 26; programming traces in v10.108.0, 20 generators for 36 of 37, each answer reached by running
+the printed code. Computer Science complete: 52 generators for 88 of 95. GEN-10 complete: Business
+and Computer Science together replace 157 of 164 written numeric questions.
 
 ## Epic 4 · UX
 

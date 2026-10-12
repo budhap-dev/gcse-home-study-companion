@@ -1,7 +1,7 @@
 import type { Question } from '../../content/questions.ts'
 import { int, pick, shuffle, weighted, type Rng } from '../random.ts'
 import type { Draft, Generator } from '../types.ts'
-import { csBySlot, numericDraft } from './build.ts'
+import { andList, csBySlot, limits, numericDraft } from './build.ts'
 
 /**
  * Computer Science (AQA 8525) generators for 3.1.1, representing algorithms ("use a systematic
@@ -17,8 +17,6 @@ import { csBySlot, numericDraft } from './build.ts'
  * q3 (how many exits a decision symbol has) stays written: it is a fact to recall, not a calculation.
  */
 
-/** "3, 5 and 8". */
-const andList = (xs: readonly (number | string)[]) => `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`
 
 // ---------------------------------------------------------------------------------------------
 // q7: a loop that multiplies until it reaches a limit
@@ -35,18 +33,6 @@ export function grow(start: number, by: number, limit: number) {
   return { n, values, runs: values.length - 1 }
 }
 
-/**
- * A limit strictly between the last value below it and the answer: a multiple of 10 if there is
- * one (the written 50), else of 5, else any whole number.
- */
-export function limits(below: number, answer: number): number[] {
-  const inside = Array.from({ length: answer - below - 1 }, (_, i) => below + 1 + i)
-  for (const step of [10, 5, 1]) {
-    const round = inside.filter((x) => x % step === 0)
-    if (round.length) return round
-  }
-  return []
-}
 
 const VERB = { 2: 'doubles', 3: 'triples' } as const
 

@@ -1209,29 +1209,29 @@
     {
       "id": "q17",
       "type": "numeric",
-      "prompt": "What is output by this program?\n\n```\ngrid ← [[4, 1, 6],\n        [2, 5, 3]]\ngrid[1][0] ← grid[0][2] + 1\ntotal ← 0\nFOR r ← 0 TO LEN(grid) - 1\n   FOR c ← 0 TO LEN(grid[0]) - 1\n      total ← total + grid[r][c]\n   ENDFOR\nENDFOR\nOUTPUT total\n```",
+      "prompt": "What is output by this program?\n\n```\ngrid ← [[4, 1, 6],\n        [2, 5, 3]]\ngrid[1][0] ← grid[0][2] + 1\ntotal ← 0\nFOR c ← 0 TO LEN(grid[0]) - 1\n   total ← total + grid[1][c]\nENDFOR\nOUTPUT total\n```",
       "marks": 2,
       "gradeBand": "8-9",
       "skill": "2D array traversal",
       "calculator": "non-calculator",
       "tags": [],
-      "solution": "`grid[0][2]` is 6, so `grid[1][0]` becomes 6 + 1 = 7 and the grid is now [[4, 1, 6], [7, 5, 3]]. `LEN(grid)` is 2 rows and `LEN(grid[0])` is 3 columns, so the loops add all 6 cells: 4 + 1 + 6 = 11 and 7 + 5 + 3 = 15, which is **26**.",
+      "solution": "`grid[0][2]` is 6, so `grid[1][0]` becomes 6 + 1 = 7 and row 1 is now [7, 5, 3]. `LEN(grid[0])` is 3 columns, so the loop adds the three cells of row 1: 7 + 5 + 3 = **15**. Row 0 is never added, and the change counts because it happens before the loop.",
       "markScheme": [
         {
           "code": "M1",
           "marks": 1,
-          "description": "grid[1][0] becomes 7 before the loops run"
+          "description": "grid[1][0] becomes 7 before the loop runs"
         },
         {
           "code": "A1",
           "marks": 1,
-          "description": "26"
+          "description": "15"
         }
       ],
       "discriminators": [
         "multi-topic"
       ],
-      "answer": 26,
+      "answer": 15,
       "tolerance": 0
     },
     {
