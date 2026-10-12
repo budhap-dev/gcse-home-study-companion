@@ -88,6 +88,11 @@ import { systemsGenerators } from './computer-science/systems.ts'
 import { asciiGenerators } from './computer-science/ascii.ts'
 import { mediaGenerators } from './computer-science/media.ts'
 import { compressionGenerators } from './computer-science/compression.ts'
+import { searchGenerators } from './computer-science/search.ts'
+import { sortGenerators } from './computer-science/sorts.ts'
+import { purposeGenerators } from './computer-science/purpose.ts'
+import { flowchartGenerators } from './computer-science/flowcharts.ts'
+import { problemGenerators } from './computer-science/problems.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -199,6 +204,11 @@ export const GENERATORS: Generator[] = [
   ...asciiGenerators,
   ...mediaGenerators,
   ...compressionGenerators,
+  ...searchGenerators,
+  ...sortGenerators,
+  ...purposeGenerators,
+  ...flowchartGenerators,
+  ...problemGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))
