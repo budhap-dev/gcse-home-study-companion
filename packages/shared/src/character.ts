@@ -28,7 +28,7 @@ export const THEMES: Record<ThemeId, Theme> = {
   discipline: { label: 'Discipline', icon: 'clock', colour: '#1f3a93' },
   perseverance: { label: 'Perseverance', icon: 'sprout', colour: '#2e7d4f' },
   courage: { label: 'Courage', icon: 'bolt', colour: '#a83e6b' },
-  kindness: { label: 'Kindness', icon: 'heart', colour: '#d1436b' },
+  kindness: { label: 'Kindness', icon: 'heart', colour: '#d03d66' },
   honesty: { label: 'Honesty', icon: 'scales', colour: '#0b6e78' },
   learning: { label: 'Learning', icon: 'book-open', colour: '#5a4bd1' },
   patience: { label: 'Patience', icon: 'hourglass', colour: '#b35c00' },

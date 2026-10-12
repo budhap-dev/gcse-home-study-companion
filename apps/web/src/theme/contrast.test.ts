@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { SUBJECTS, STATUS_COLOUR } from '@study/shared'
+import { SUBJECTS, STATUS_COLOUR, THEMES as CHARACTER_THEMES } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { THEMES } from './themes.ts'
 
@@ -140,6 +140,28 @@ describe('every theme', () => {
       if (t.dark) expect(t.accentMin, t.id).toBeGreaterThan(0.5)
       else expect(t.accentMax, t.id).toBeLessThanOrEqual(0.5)
     }
+  })
+})
+
+/**
+ * A subject or character colour is also painted as a *fill* under white text, unclamped: the
+ * Start and Check answer buttons, and the "Another one" buttons on the thought and fact cards.
+ * styles.css keeps --subject the authored colour for this, so the authored colour itself must
+ * carry white. Kindness (4.44:1) and Biology (4.25:1) did not, and the Home walk failed on the
+ * day the thought card drew Kindness (12 October 2026); a Biology fact would have done the same.
+ */
+describe('a subject or character colour as a fill', () => {
+  const fills = [
+    ...SUBJECTS.map((s) => [s.id, s.colour] as const),
+    ...Object.entries(CHARACTER_THEMES).map(([id, t]) => [id, t.colour] as const),
+  ]
+
+  it('measures every subject and character theme', () => {
+    expect(fills.length).toBe(SUBJECTS.length + Object.keys(CHARACTER_THEMES).length)
+  })
+
+  it.each(fills)('carries white text: %s', (_id, colour) => {
+    expect(ratio([255, 255, 255], rgb(colour))).toBeGreaterThanOrEqual(WCAG_AA)
   })
 })
 

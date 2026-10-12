@@ -589,13 +589,21 @@ reach 100 distinct prompts stay written.
   the same sheet, four calculations taking 59% of a triangle-area slot, square roots of 676 and 841
   by hand. The release check now refuses any prompt in more than a tenth of a slot's builds, and
   the written prompt in more than a twentieth; four Maths generators that broke it were fixed.
-- [ ] **3. Algebra B and circles (Year 11).** Functions (evaluating, a composite with an unknown
+- [x] **3. Algebra B and circles (Year 11).** Functions (evaluating, a composite with an unknown
   constant, an exponential curve through two points, f(x) = f⁻¹(x)), a fractional equation, the
   value of a proved expression, simultaneous equations in two and three unknowns (including a
   tangent line to a parabola, three prices from three bills, a product with a difference), and
   circles (radius and centre, the tangent gradient at a point, the radius from a diameter's ends,
   where a line meets a circle, the c of a tangent line, the length of a tangent from a point, the
   triangle a tangent cuts off). 22 slots in 5 topics.
+  Shipped 12 October 2026 (v10.101.0): 10 generators for all 22 slots (`functions`,
+  `simultaneous`, `circles`; the fractional equation and the proof sit in `functions`). Two
+  reviewers found fifteen skews and slips, all fixed with tests: a fixed point of ±1 that let a
+  student who read f⁻¹ as 1/f score, an exponential shape whose answer was always 2, elimination
+  past the written arithmetic (37x = 111) and mirrored pairs that add to 9(x + y), child tickets
+  dearer than adult ones, a check line that turned a subtraction into an addition by dropping
+  negative denominators, the other root paying when y was asked, tangents printed with every
+  coefficient negative, and a radius equal to a centre coordinate.
 - [ ] **4. Trigonometry and geometrical proof (Year 11).** Pythagoras in 2D and 3D (a cuboid
   diagonal, the angle a diagonal makes with the base, the angle between a sloping face or edge
   and the base of a pyramid), the sine and cosine rules and the area formula (to 2 decimal
