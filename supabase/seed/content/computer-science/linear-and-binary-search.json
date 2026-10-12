@@ -988,13 +988,13 @@
     {
       "id": "q14",
       "type": "numeric",
-      "prompt": "A sorted list holds 1 000 000 names. What is the largest number of items binary search examines? Take the midpoint as (low + high) DIV 2. Give your answer to the nearest whole number.",
+      "prompt": "A sorted list holds 1 000 000 names. What is the largest number of items binary search examines? Take the midpoint as (low + high) DIV 2.",
       "marks": 3,
       "gradeBand": "8-9",
       "skill": "efficiency of binary search",
       "calculator": "either",
       "tags": [],
-      "solution": "Count the halvings: $2^{20} = 1\\,048\\,576$, which is just over a million, so **20** steps suffice. Linear search could examine all million. That ratio — 20 against 1 000 000 — is the strongest way to make the efficiency point.",
+      "solution": "Each item examined halves what is left. A million lies between $2^{19} = 524\\,288$ and $2^{20} = 1\\,048\\,576$, so 19 halvings leave one item, and examining that last item makes $19 + 1 = $ **20**. Linear search could examine all million. That ratio — 20 against 1 000 000 — is the strongest way to make the efficiency point.",
       "markScheme": [
         {
           "code": "M1",
@@ -1004,7 +1004,7 @@
         {
           "code": "M1",
           "marks": 1,
-          "description": "reaches 2²⁰ just over a million"
+          "description": "2¹⁹ < 1 000 000 < 2²⁰, so 19 halvings and the last item"
         },
         {
           "code": "A1",

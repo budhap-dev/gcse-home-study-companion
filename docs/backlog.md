@@ -730,12 +730,27 @@ runs two to eight times and the trace fits on a phone.
   q7 and q14; images q4, q6 and q13; compression q12); the release check now holds "an 8-bit" and
   "a 7-bit", which found "a 8% price rise", "a 11-sided base" and "a 8.1 m platform" in Maths and
   Physics.
-- [ ] **2. Algorithms.** Linear and binary search counts for a value present or absent in a
+- [x] **2. Algorithms.** Linear and binary search counts for a value present or absent in a
   sorted list, the worst case of binary search on n items; bubble sort comparisons in a pass and
   in total, swaps on a short list, n from a total; merge sort rounds and merge comparisons; the
   output of a described algorithm (a maximum, a total, repeated subtraction, loop counts, an
   off-by-one on the last index, a vowel count); a mean of marks and simple flow-chart traces.
   26 slots in 6 topics.
+  Shipped 12 October 2026 (v10.107.0): 13 generators for 25 slots (`search`, `sorts`, `purpose`,
+  `flowcharts`, `problems`), each answer reached a second way by running the algorithm (a search
+  with a step counter, bubble sort counting comparisons and swaps, a merge counting comparisons,
+  the described loop executed); the decision symbol's two exits stay written. Each algorithm is
+  the lesson's own: bubble sort with the swapped flag and shorter passes, binary search with the
+  midpoint (low + high) DIV 2 from 0, a merge counting only the fronts. Two reviewers found twelve
+  slips, all fixed with tests: "the first item bigger than a[0]" paying in two thirds of largest-item
+  builds, counting y and a repeated vowel once together paying in 65% of vowel counts, "the loop's
+  last i" paying in 81% of overrun questions, a binary search on 400 000 000 items, a bubble sort
+  whose early stop decided 73% of answers without being named, merges a merge sort never makes.
+  Three written questions changed: the largest-item list (6, 9, 2, 11, 8, so the first bigger item
+  is not the answer), the bubble-sort swaps (4, 3, 1, 2: five swaps over three passes, where three
+  swaps in three passes let the passes pay), and binary search on a million (2¹⁹ < 1 000 000 < 2²⁰,
+  without "to the nearest whole number").
+
 - [ ] **3. Programming traces.** MOD and DIV arithmetic, FOR, WHILE and REPEAT loops with counts
   and totals, nested loops, subroutines with return values and scope, array and 2D array sums and
   counts, string length, position and substring loops, password-attempt loops; truth-table rows;

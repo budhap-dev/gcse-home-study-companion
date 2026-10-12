@@ -95,6 +95,16 @@ describe('question generators', () => {
         })
 
         // A whole 1 only: "3.1 times" and "21 times" are right (a word boundary sits after a point).
+        // AQA pseudo-code has no RETURN outside a subroutine and no string indexing (a character
+        // is SUBSTRING(i, i, s)); both read as right to anyone thinking in Python, so only a rule sees them.
+        it('prints AQA pseudo-code: RETURN only inside a SUBROUTINE', () => {
+          for (const { question: q, seed } of built) {
+            for (const block of `${q.prompt}\n${q.solution}`.match(/```[\s\S]*?```/g) ?? []) {
+              if (/\bRETURN\b/.test(block)) expect(block, seed).toMatch(/\bSUBROUTINE\b/)
+            }
+          }
+        })
+
         it('says "1 time", not "1 times"', () => {
           for (const { question: q, seed } of built) expect(JSON.stringify(q), seed).not.toMatch(/(?<![\w.])1 times\b/)
         })
