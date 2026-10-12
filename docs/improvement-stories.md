@@ -318,8 +318,9 @@ As a student, I want the calculation parts of Biology and Further Maths generate
 evolution PR, v10.98.0): 143 generators cover 151 of the 164 numeric Biology questions
 (docs/backlog.md section 8). Further Maths started 11 October 2026 (section 9, five PRs):
 Algebra A shipped in v10.99.0, number, calculus and coordinate geometry in v10.100.0, and
-Algebra B and circles in v10.101.0, and trigonometry and geometrical proof in v10.102.0: 54
-generators for 107 of its 127 numeric questions.
+Algebra B and circles in v10.101.0, trigonometry and geometrical proof in v10.102.0, and
+matrices and transformations in v10.103.0. **Further Maths half done 12 October 2026: 60
+generators cover 122 of its 127 numeric questions. GEN-6 is complete.**
 
 ### GEN-7 · More typed answers in Maths and Science
 

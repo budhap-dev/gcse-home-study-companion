@@ -548,7 +548,7 @@ for accepts its three-figure rounding (`threeFigures`).
 With item 4, generators cover 151 of the 164 numeric Biology questions; the other 13 read a
 diagram, recall a fact or have too few real versions to vary.
 
-## 9. Further Maths generators (planned 11 October 2026)
+## 9. Further Maths generators (11–12 October 2026, complete)
 
 Planned on 11 October 2026 at the owner's request ("plan these"), together with sections 10 and
 11, after Biology. **Each of these subjects starts only when the owner says so**, after reviewing
@@ -623,11 +623,23 @@ reach 100 distinct prompts stay written.
   (33√3, √259) where the mark scheme allows one, and the release check refuses "a" before a
   vowel sound and "an" before a consonant, which found "a orange" and "a eighth" in two Maths
   generators.
-- [ ] **5. Matrices and transformations (Year 11).** Scalar multiples and products of 2 × 2
+- [x] **5. Matrices and transformations (Year 11).** Scalar multiples and products of 2 × 2
   matrices and column vectors, an entry of BA or A², unknown entries from a product, solving
   Mx = v, C² = kI, the order of a rotation matrix, an entry of Pⁿ for a shear, images under
   rotation and reflection, the area scale factor, the matrix of two reflections combined, the
   order of a reflection. 16 slots in 2 topics.
+  Shipped 12 October 2026 (v10.103.0): 6 generators for 15 of the 16 slots (`matrices`,
+  `transformations`). The order of a reflection stays written: it is always 2. Two reviewers found
+  ten slips and skews, all fixed with tests: dividing the product by the known matrix entry by
+  entry (the sheet's own distractor) gave the unknown in 11% of builds, simultaneous equations
+  from a matrix scaled both sides into the 90s where the written scales one into the 20s, a
+  combined transformation whose working printed the answer to a later question on the sheet,
+  plain enlargements only 38% of a grade 4-5 area slot, and letters A and S reused on the sheet
+  where the written questions define their own A and S.
+
+  **Further Maths complete, 12 October 2026: 60 generators cover 122 of its 127 numeric
+  questions.** The five left written ask a recalled value, a count, or an answer the structure
+  fixes.
 
 ## 10. Business generators (planned 11 October 2026)
 
