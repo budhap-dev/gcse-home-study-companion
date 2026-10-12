@@ -3,6 +3,7 @@ import { grouped } from '../format.ts'
 import type { Rng } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Check, Draft, Generator } from '../types.ts'
+import { run, type Value } from './pseudo.ts'
 
 /**
  * Computer Science (AQA 8525) generators: what every topic shares.
@@ -85,3 +86,33 @@ export const PREFIX = { k: 1, M: 2, G: 3, T: 4 } as const
 export type Prefix = keyof typeof PREFIX
 /** How many `to` units are in one `from` unit, both decimal prefixes ('' for plain bytes): perUnit('G', 'M') is 1000. */
 export const perUnit = (from: Prefix | '', to: Prefix | '') => 1000 ** ((from ? PREFIX[from] : 0) - (to ? PREFIX[to] : 0))
+
+/** A code block as the written questions print it: a string, or its lines. */
+export const fence = (code: string | readonly string[]) => '```\n' + (typeof code === 'string' ? code : code.join('\n')) + '\n```'
+
+/** The code inside the first fenced block of a prompt: what the student reads, and what is run. */
+export function printedCode(prompt: string): string {
+  const m = /```\n([\s\S]*?)\n```/.exec(prompt)
+  if (!m) throw new Error('no code block in the prompt')
+  return m[1]!
+}
+
+/** The last value the printed code outputs, as a number. */
+export function lastOutput(code: string, opts: Parameters<typeof run>[1] = {}): number {
+  const v: Value | undefined = run(code, opts).outputs.at(-1)
+  if (typeof v !== 'number') throw new Error(`the code output ${JSON.stringify(v)}, not a number`)
+  return v
+}
+
+/** "1, 2 and 4". */
+export const andList = (xs: readonly (number | string)[]) => (xs.length < 2 ? String(xs[0] ?? '') : `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`)
+
+/** Round limits strictly between `below` and `answer` (tens, then fives, then any), so a loop's limit is never a value it reaches. */
+export function limits(below: number, answer: number): number[] {
+  const inside = Array.from({ length: answer - below - 1 }, (_, i) => below + 1 + i)
+  for (const step of [10, 5, 1]) {
+    const round = inside.filter((x) => x % step === 0)
+    if (round.length) return round
+  }
+  return []
+}

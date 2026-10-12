@@ -1,7 +1,7 @@
 import type { Question } from '../../content/questions.ts'
 import { int, pick, shuffle, type Rng } from '../random.ts'
 import type { Draft, Generator } from '../types.ts'
-import { csBySlot, numericDraft } from './build.ts'
+import { andList, csBySlot, numericDraft } from './build.ts'
 
 /**
  * Computer Science (AQA 8525) generators for 3.1.1, explaining simple algorithms in terms of their
@@ -18,8 +18,6 @@ import { csBySlot, numericDraft } from './build.ts'
  * fixed 3 is asked about in words on the advanced sheet (q13).
  */
 
-/** "12, 15 and 18". */
-const andList = (xs: readonly number[]) => `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`
 
 const MEAN_PROMPTS = [
   (marks: string) => `An algorithm adds the marks ${marks}, then divides by 3. What does it output?`,
