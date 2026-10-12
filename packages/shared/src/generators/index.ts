@@ -72,6 +72,11 @@ import { trigEquationGenerators } from './further-maths/trig-equations.ts'
 import { geometryGenerators } from './further-maths/geometry.ts'
 import { matrixGenerators } from './further-maths/matrices.ts'
 import { transformationGenerators } from './further-maths/transformations.ts'
+import { enterpriseGenerators } from './business/enterprise.ts'
+import { opportunityGenerators } from './business/opportunity.ts'
+import { practiceGenerators } from './business/practice.ts'
+import { effectiveGenerators } from './business/effective.ts'
+import { externalGenerators } from './business/external.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -167,6 +172,11 @@ export const GENERATORS: Generator[] = [
   ...geometryGenerators,
   ...matrixGenerators,
   ...transformationGenerators,
+  ...enterpriseGenerators,
+  ...opportunityGenerators,
+  ...practiceGenerators,
+  ...effectiveGenerators,
+  ...externalGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))

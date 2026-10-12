@@ -22,6 +22,13 @@ const RESIDUE = /\d+\.\d*?(?:0{8,}[1-9]|9{8,})\d*/
 
 const strings = (q: Question) => JSON.stringify(q)
 
+/**
+ * A solution's figures as plain numbers, so it can be searched for the answer: Business
+ * prints £3,500,000, £24 000 and -£500 where the answer is 3500000, 24000 and -500, and
+ * Maths prints 10\,000 inside maths.
+ */
+const asPrinted = (solution: string) => solution.replace(/(\d)(?:,|\\,| )(?=\d{3}(?!\d))/g, '$1').replace(/[−-]\s*£/g, '-')
+
 describe('question generators', () => {
   it('have unique ids, and no written question is claimed twice', () => {
     expect(new Set(GENERATORS.map((g) => g.id)).size).toBe(GENERATORS.length)
@@ -59,8 +66,9 @@ describe('question generators', () => {
             expect(q.markScheme.reduce((s, l) => s + l.marks, 0), b.seed).toBe(q.marks)
             // Science answers are in the equation's unit, which the answer box prints after the
             // number, so a generated question keeps the written one's. Maths changes units on
-            // purpose (a 2D Pythagoras in cm, then in m), so the rule is the sciences'.
-            if (['physics', 'chemistry', 'biology'].includes(g.subjectId) && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
+            // purpose (a 2D Pythagoras in cm, then in m), so the rule is the sciences' and
+            // Business's (£, %, percentage points, units).
+            if (['physics', 'chemistry', 'biology', 'business'].includes(g.subjectId) && slot!.type === 'numeric' && q.type === 'numeric') expect(q.units, b.seed).toBe(slot!.units)
           }
         })
 
@@ -114,7 +122,7 @@ describe('question generators', () => {
               expect(mark(q, String(q.answer)).correct, seed).toBe(true)
               expect(mark(q, String(q.answer + q.tolerance * 3 + 1)).correct, seed).toBe(false)
               // The solution reaches the number it marks against.
-              expect(q.solution, seed).toContain(String(q.answer))
+              expect(asPrinted(q.solution), seed).toContain(String(q.answer))
             } else if (q.type === 'short-text') {
               expect(q.accepted.length, seed).toBeGreaterThan(0)
               for (const a of q.accepted) expect(mark(q, a).correct, `${seed}: ${a}`).toBe(true)
