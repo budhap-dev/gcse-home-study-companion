@@ -67,6 +67,9 @@ import { lineGenerators } from './further-maths/lines.ts'
 import { functionGenerators } from './further-maths/functions.ts'
 import { simultaneousGenerators } from './further-maths/simultaneous.ts'
 import { circleGenerators } from './further-maths/circles.ts'
+import { pythagorasGenerators } from './further-maths/pythagoras.ts'
+import { trigEquationGenerators } from './further-maths/trig-equations.ts'
+import { geometryGenerators } from './further-maths/geometry.ts'
 import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
@@ -157,6 +160,9 @@ export const GENERATORS: Generator[] = [
   ...functionGenerators,
   ...simultaneousGenerators,
   ...circleGenerators,
+  ...pythagorasGenerators,
+  ...trigEquationGenerators,
+  ...geometryGenerators,
 ]
 
 const BY_SLOT = new Map(GENERATORS.flatMap((g) => g.replaces.map((id) => [`${g.subjectId}/${g.topicId}/${id}`, g] as const)))

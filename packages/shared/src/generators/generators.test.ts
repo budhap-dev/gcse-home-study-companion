@@ -91,6 +91,17 @@ describe('question generators', () => {
           for (const { question: q, seed } of built) expect(JSON.stringify(q), seed).not.toMatch(/(?<![\w.])1 times\b/)
         })
 
+        // "a octagon", "a orange", "a eighth" all shipped from a hard-coded "a". Lower case only, so
+        // a point named A ("A and B") passes; u- and one- words ("a unit", "a one-off") and an
+        // hour take the other article by sound, and an acronym (an mRNA) is not a lower-case word.
+        it('puts "a" before a consonant sound and "an" before a vowel', () => {
+          for (const { question: q, seed } of built) {
+            const words = `${q.prompt} ${q.solution}`.replace(/\$[^$]*\$/g, ' ')
+            expect(words, seed).not.toMatch(/\ba (?!u|one)[aeio][a-z]+\b/)
+            expect(words, seed).not.toMatch(/\ban (?!hour|honest|heir)[b-df-hj-np-tv-z][a-z]+\b/)
+          }
+        })
+
         // A tolerance is for rounding, not for being nearly right: 0.5 on an answer of 3 marked 2.6 correct.
         it('marks no further from the answer than rounding allows', () => {
           for (const { question: q, seed } of built) if (q.type === 'numeric' && q.answer !== 0) expect(q.tolerance, seed).toBeLessThanOrEqual(Math.abs(q.answer) * 0.02)

@@ -587,6 +587,29 @@ describe('maths answers in another correct form', () => {
   })
 })
 
+describe('an exact surd for a decimal answer', () => {
+  // Further Maths q4: "B1 33√3 or 57.16"; q6: "√259 or 16.09".
+  const area: Question = { ...base, type: 'numeric', answer: 57.16, tolerance: 0.005, unitsRequired: false }
+  const side: Question = { ...base, type: 'numeric', answer: 16.09, tolerance: 0.005, unitsRequired: false }
+  it('reads the surd however it is typed', () => {
+    for (const typed of ['33√3', '33 √3', '33sqrt(3)', '33*sqrt(3)', '33√(3)', '(99√3)/(3)', '99√3/3']) expect(mark(area, typed).correct, typed).toBe(true)
+    for (const typed of ['√259', 'sqrt(259)', 'a = √259']) expect(mark(side, typed).correct, typed).toBe(true)
+  })
+  it('still marks a wrong surd wrong', () => {
+    expect(mark(area, '32√3').correct).toBe(false)
+    expect(mark(side, '√258').correct).toBe(false)
+  })
+  it('does not pay a root of a square, which is a sum left unworked', () => {
+    const q: Question = { ...base, type: 'numeric', answer: 7, tolerance: 0, unitsRequired: false }
+    expect(mark(q, '√49').correct).toBe(false)
+    expect(mark(q, '7').correct).toBe(true)
+  })
+  it('does not read letters or a plain sum as a surd', () => {
+    expect(mark(area, '33√x').correct).toBe(false)
+    expect(mark(area, '50+7.16').correct).toBe(false)
+  })
+})
+
 describe('expectedAnswer reads a numeric answer with its unit', () => {
   const num = (answer: number, units?: string): Question => ({ id: 'q', type: 'numeric', prompt: 'p', marks: 1, gradeBand: '4-5', skill: 's', calculator: 'either', tags: [], solution: 's', markScheme: [{ code: 'B1', marks: 1, description: 'd' }], discriminators: [], answer, tolerance: 0, unitsRequired: false, ...(units ? { units } : {}) })
   it('puts £ in front with the pence, and % and ° straight after', () => {
