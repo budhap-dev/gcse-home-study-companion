@@ -48,3 +48,23 @@ export function grouped(x: number): string {
 export function pounds(x: number): string {
   return money(x).slice(1)
 }
+
+/**
+ * The article for a word or a figure as it is said: an 8-bit, an 11-sided, an 18, an 80%, a 7-bit,
+ * a 16, an image, a unit. A figure takes "an" when said with a vowel first: every number starting
+ * "eight", and 11 and 18 alone (1100 is "one thousand one hundred"). Before a word it goes by the
+ * letter, with the u- words said "you" (a unit, a user) taking "a".
+ */
+export function an(next: string | number): 'a' | 'an' {
+  const text = String(next)
+  const figure = /^\d+/.exec(text)?.[0]
+  if (figure) return /^8/.test(figure) || figure === '11' || figure === '18' ? 'an' : 'a'
+  return /^(?:[aeio]|u(?!ni|s[eu]|r[aeiou]))/i.test(text) ? 'an' : 'a'
+}
+
+/** 1st, 2nd, 3rd, 4th, 11th, 12th, 13th, 21st, 111th. */
+export function ordinal(n: number): string {
+  const t = n % 100
+  if (t >= 11 && t <= 13) return `${n}th`
+  return `${n}${['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`
+}

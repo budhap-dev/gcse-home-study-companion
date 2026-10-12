@@ -4,7 +4,7 @@ import { draw, int, pick, type Rng } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Draft, Generator } from '../types.ts'
 import { evalTex, fracTex, fracText, gcd, near, reduce, sum } from '../maths/formulae.ts'
-import { ordinal } from '../maths/sequences.ts'
+import { ordinal } from '../format.ts'
 import { fmBySlot, minus } from './build.ts'
 
 /**

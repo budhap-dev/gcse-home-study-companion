@@ -1,5 +1,5 @@
 import type { Question } from '../../content/questions.ts'
-import { show } from '../format.ts'
+import { ordinal, show } from '../format.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Draft, Generator } from '../types.ts'
@@ -7,12 +7,6 @@ import { bySlot, coef, evalTex, sum } from './formulae.ts'
 
 const SEQ = 'linear-quadratic-and-geometric-sequences'
 
-/** 1st, 2nd, 3rd, 4th, 11th, 12th, 13th, 21st. */
-export function ordinal(n: number): string {
-  const teen = n % 100 >= 11 && n % 100 <= 13
-  const end = teen ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th'
-  return `${n}${end}`
-}
 
 const list = (xs: number[]) => xs.join(', ')
 /** The terms of a printed nth-term rule, read from its text: the second method for every nth term. */

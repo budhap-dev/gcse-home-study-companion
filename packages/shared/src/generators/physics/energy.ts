@@ -1,4 +1,4 @@
-import { roundTo, show } from '../format.ts'
+import { an, roundTo, show } from '../format.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Check, Generator } from '../types.ts'
 import { G, G_STATED, atMost, cap, closes, figures, near, numeric, prose, sciExact, stepped, tex } from './build.ts'
@@ -270,7 +270,7 @@ interface Drop {
 }
 /** Big drops, for q9: the speed at the bottom. */
 const FALLS: Drop[] = [
-  { setup: (m, h) => `A diver of mass ${m} kg steps off a ${h} m platform.`, ask: 'her speed as she reaches the water', mass: [50, 80], step: 1, n: [5, 10] },
+  { setup: (m, h) => `A diver of mass ${m} kg steps off ${an(h)} ${h} m platform.`, ask: 'her speed as she reaches the water', mass: [50, 80], step: 1, n: [5, 10] },
   { setup: (m, h) => `A stone of mass ${m} kg is dropped from a bridge ${h} m above the river.`, ask: 'its speed as it hits the water', mass: [0.5, 2], step: 0.1, n: [10, 20] },
   { setup: (m, h) => `A ball of mass ${m} kg is dropped from a window ${h} m above the ground.`, ask: 'its speed as it hits the ground', mass: [0.2, 1], step: 0.1, n: [4, 9] },
   { setup: (m, h) => `A sledge and rider of mass ${m} kg start from rest and slide down a slope with a vertical height of ${h} m.`, ask: 'their speed at the bottom', mass: [40, 80], step: 1, n: [5, 10] },

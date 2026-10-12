@@ -1,6 +1,6 @@
 import type { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { draw, int, pick, type Rng } from '../random.ts'
+import { draw, int, pick, type Rng, weighted } from '../random.ts'
 import { scheme } from '../scheme.ts'
 import type { Check, Draft, Generator } from '../types.ts'
 import { coef, evalEquation, evalTex, fracTex, near, reduce, sum } from '../maths/formulae.ts'
@@ -32,12 +32,7 @@ const pt = (x: number, y: number) => `(${x}, ${y})`
 /** None of the printed numbers has the answer's size. */
 export const notPrinted = (answer: number, printed: number[]) => !printed.some((v) => Math.abs(v) === Math.abs(answer))
 
-/** Picks by weight: [value, weight] pairs. */
-export function weighted<T>(r: Rng, items: readonly (readonly [T, number])[]): T {
-  let left = r() * items.reduce((s, [, w]) => s + w, 0)
-  for (const [v, w] of items) if ((left -= w) < 0) return v
-  return items[items.length - 1]![0]
-}
+export { weighted } from '../random.ts'
 
 /** The function names the written questions use, f most often. */
 const NAMES = ['f', 'f', 'f', 'g', 'h'] as const

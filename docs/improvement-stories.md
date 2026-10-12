@@ -378,7 +378,8 @@ formulae and the code tracing stick.
 
 **Progress:** Business complete 12 October 2026: Theme 1 shipped in v10.104.0 and Theme 2 in
 v10.105.0, 68 generators for all 69 of its numeric questions (docs/backlog.md section 10).
-Computer Science (section 11) is next, on the owner's word.
+Computer Science (section 11) started the same day: data representation shipped in v10.106.0,
+19 generators for 27 of its 32 numeric questions; algorithms and programming traces follow.
 
 ## Epic 4 · UX
 
