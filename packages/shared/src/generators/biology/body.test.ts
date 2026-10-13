@@ -755,7 +755,7 @@ describe('the kidneys', () => {
     for (const b of built) {
       const p = b.question.prompt
       const f = num(/filter (\d+) litres/, p)
-      const u = num(/produces? ([\d.]+) litres of urine/, p)
+      const u = num(/produces? ([\d.]+) litres? of urine/, p)
       const d = BODY.DAYS.find((x) => x.name === b.values.context)!
       expect(within(f, 150, 190) && within(u, ...d.urine)).toBe(true)
       const back = c(f - u)

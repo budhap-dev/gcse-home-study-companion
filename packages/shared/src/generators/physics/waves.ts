@@ -1,5 +1,5 @@
 import { clearOfHalf, fixed, show } from '../format.ts'
-import { draw, int, pick, type Rng } from '../random.ts'
+import { draw, int, pick, rng, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { atMost, cap, closes, near, numeric, prose, tex } from './build.ts'
 import { dpTolerance, sci, sfTolerance } from './format.ts'
@@ -124,12 +124,13 @@ const UNNAMED: Band[] = [
   { name: '100 to 1000 m', lambda: [100, 1000], text: (l) => l },
   { name: '1000 to 3000 m', lambda: [1000, 3000], text: (l) => l },
 ]
+// The speed is stated, as AQA states it: a worksheet prints without the lesson.
 const UNNAMED_PROMPTS = [
-  (l: string) => `An electromagnetic wave in air has a wavelength of ${l} m. What is its frequency, in Hz?`,
-  (l: string) => `An electromagnetic wave travelling through air has a wavelength of ${l} m. Calculate its frequency, in Hz.`,
-  (l: string) => `The wavelength of an electromagnetic wave in air is ${l} m. What is the frequency of the wave, in Hz?`,
-  (l: string) => `An aerial picks up an electromagnetic wave with a wavelength of ${l} m. Calculate the frequency of the wave, in Hz.`,
-  (l: string) => `A transmitter sends out electromagnetic waves of wavelength ${l} m through the air. What is their frequency, in Hz?`,
+  (l: string) => `An electromagnetic wave in air has a wavelength of ${l} m. Take the speed of light as 3 × 10⁸ m/s. What is its frequency, in Hz?`,
+  (l: string) => `An electromagnetic wave travelling through air has a wavelength of ${l} m. Electromagnetic waves travel at 3 × 10⁸ m/s. Calculate its frequency, in Hz.`,
+  (l: string) => `The wavelength of an electromagnetic wave in air is ${l} m. Take the speed of light as 3 × 10⁸ m/s. What is the frequency of the wave, in Hz?`,
+  (l: string) => `An aerial picks up an electromagnetic wave with a wavelength of ${l} m. Electromagnetic waves travel at 3 × 10⁸ m/s. Calculate the frequency of the wave, in Hz.`,
+  (l: string) => `A transmitter sends out electromagnetic waves of wavelength ${l} m through the air. Take the speed of light as 3 × 10⁸ m/s. What is their frequency, in Hz?`,
 ]
 const RADIO_SPEED = ['Take the wave speed as 3 × 10⁸ m/s.', 'Radio waves travel at 3 × 10⁸ m/s.']
 const RADIO_ASK = ['What is the frequency of the radio waves, in Hz?', 'Calculate the frequency of these waves, in Hz.']
@@ -211,8 +212,18 @@ export const wavelengthFromFrequency: Generator = {
   replaces: ['q6', 'q19'],
   build(r, slot, turn) {
     const standardForm = slot.id === 'q19'
-    const c = MICROWAVES[turn % MICROWAVES.length]!
-    const f = pick(r, c.values)
+    // q6 and q19 sit on one sheet and drew the same frequency on 1.8% of them. The sheet's start
+    // (turn less the slot's index) is the same for both, so both frequencies are drawn from it
+    // together, q19's never q6's.
+    const start = turn - (standardForm ? 1 : 0)
+    const sheet = rng(`microwave-wavelength:${start}`)
+    const c6 = MICROWAVES[start % MICROWAVES.length]!
+    // Never the written frequencies (3.0 × 10⁹ Hz for q6, 1.2 × 10¹⁰ Hz for q19): a retry would show the question just done.
+    const f6 = pick(sheet, c6.values.filter((x) => x !== 3e9))
+    const c19 = MICROWAVES[(start + 1) % MICROWAVES.length]!
+    const f19 = pick(sheet, c19.values.filter((x) => x !== f6 && x !== 1.2e10))
+    const c = standardForm ? c19 : c6
+    const f = standardForm ? f19 : f6
     const l = exact(C / f)
     const [m, e] = standard(f)
     const q = exact(3 / Number(m))
@@ -234,8 +245,8 @@ export const wavelengthFromFrequency: Generator = {
       line = `$${sciTex(l)}$ m`
     } else {
       prompt = pick(r, [
-        `${cap(an(c.noun))} has a frequency of ${sciProse(f)} Hz. What is its wavelength, in metres?`,
-        `What is the wavelength, in metres, of ${an(c.noun)} with a frequency of ${sciProse(f)} Hz?`,
+        `${cap(an(c.noun))} has a frequency of ${sciProse(f)} Hz. Take the speed of light as 3 × 10⁸ m/s. What is its wavelength, in metres?`,
+        `What is the wavelength, in metres, of ${an(c.noun)} with a frequency of ${sciProse(f)} Hz? Take the speed of light as 3 × 10⁸ m/s.`,
       ])
       solution = `Microwaves travel at the speed of light, $3 \\times 10^8$ m/s. ${closes(`\\lambda = \\dfrac{v}{f} = \\dfrac{3 \\times 10^8}{${sciTex(f)}}`, l, 'm')}`
       method = ['rearranges to $\\lambda = v \\div f$', `$3 \\times 10^8 \\div (${sciTex(f)})$`]
@@ -411,21 +422,21 @@ interface Lens {
   text: (o: string, i: string) => string
 }
 const MAGNIFYING: Lens[] = [
-  { name: 'magnifying glass', object: [0.3, 1.5], oStep: 0.1, mag: [1.5, 5], mStep: 0.5, iDp: 2, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `A magnifying glass is held over a printed letter ${o} cm tall. The image of the letter is ${i} cm tall. What is the magnification?` },
-  { name: 'convex lens and screen', object: [1, 5], oStep: 0.5, mag: [1.2, 4], mStep: 0.1, iDp: 2, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An illuminated object ${o} cm tall is placed in front of a convex lens. A sharp image ${i} cm tall forms on a screen. What is the magnification?` },
+  { name: 'magnifying glass', object: [0.3, 1.5], oStep: 0.1, mag: [1.5, 5], mStep: 0.5, iDp: 1, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `A magnifying glass is held over a printed letter ${o} cm tall. The image of the letter is ${i} cm tall. What is the magnification?` },
+  { name: 'convex lens and screen', object: [1, 5], oStep: 0.5, mag: [1.2, 4], mStep: 0.1, iDp: 1, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An illuminated object ${o} cm tall is placed in front of a convex lens. A sharp image ${i} cm tall forms on a screen. What is the magnification?` },
   { name: 'projector', object: [2, 4], oStep: 0.1, mag: [20, 80], mStep: 5, iDp: 1, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `A projector lens forms an image ${i} cm tall on a screen from a slide ${o} cm tall. What is the magnification?` },
-  { name: 'object and image', object: [1, 10], oStep: 0.5, mag: [1.5, 6], mStep: 0.5, iDp: 2, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An object ${o} cm tall forms an image ${i} cm tall. What is the magnification?` },
+  { name: 'object and image', object: [1, 10], oStep: 0.5, mag: [1.5, 6], mStep: 0.5, iDp: 1, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An object ${o} cm tall forms an image ${i} cm tall. What is the magnification?` },
 ]
 const DIMINISHING: Lens[] = [
-  { name: 'object and image', object: [2, 12], oStep: 0.5, mag: [0.2, 0.8], mStep: 0.05, iDp: 2, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An object ${o} cm tall forms an image ${i} cm tall. What is the magnification?` },
-  { name: 'convex lens and screen', object: [2, 10], oStep: 0.5, mag: [0.2, 0.9], mStep: 0.05, iDp: 2, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An illuminated object ${o} cm tall is placed far from a convex lens. A sharp image ${i} cm tall forms on a screen. What is the magnification?` },
-  { name: 'concave lens', object: [2, 8], oStep: 0.5, mag: [0.2, 0.8], mStep: 0.05, iDp: 2, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `A concave lens forms an image ${i} cm tall of an object ${o} cm tall. What is the magnification?` },
+  { name: 'object and image', object: [2, 12], oStep: 0.5, mag: [0.2, 0.8], mStep: 0.05, iDp: 1, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An object ${o} cm tall forms an image ${i} cm tall. What is the magnification?` },
+  { name: 'convex lens and screen', object: [2, 10], oStep: 0.5, mag: [0.2, 0.9], mStep: 0.05, iDp: 1, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `An illuminated object ${o} cm tall is placed far from a convex lens. A sharp image ${i} cm tall forms on a screen. What is the magnification?` },
+  { name: 'concave lens', object: [2, 8], oStep: 0.5, mag: [0.2, 0.8], mStep: 0.05, iDp: 1, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `A concave lens forms an image ${i} cm tall of an object ${o} cm tall. What is the magnification?` },
   { name: 'camera', object: [150, 190], oStep: 1, mag: [0.004, 0.014], mStep: 0.001, iDp: 2, oUnit: 'cm', iUnit: 'cm', factor: 1, text: (o, i) => `A camera lens forms an image of a person ${o} cm tall on its sensor. The image is ${i} cm tall. What is the magnification?` },
 ]
 /** q14 mixes units: the image's unit converts to the object's by `factor`. */
 const MIXED: Lens[] = [
   { name: 'mm and cm', object: [1.5, 5], oStep: 0.5, mag: [0.3, 4], mStep: 0.1, iDp: 0, oUnit: 'cm', iUnit: 'mm', factor: 0.1, text: (o, i) => `An image is ${i} mm tall and the object is ${o} cm tall. What is the magnification?` },
-  { name: 'ant', object: [3, 9], oStep: 1, mag: [1.5, 5], mStep: 0.5, iDp: 2, oUnit: 'mm', iUnit: 'cm', factor: 10, text: (o, i) => `An ant ${o} mm long is viewed through a magnifying glass. Its image is ${i} cm long. What is the magnification?` },
+  { name: 'ant', object: [3, 9], oStep: 1, mag: [1.5, 5], mStep: 0.5, iDp: 1, oUnit: 'mm', iUnit: 'cm', factor: 10, text: (o, i) => `An ant ${o} mm long is viewed through a magnifying glass. Its image is ${i} cm long. What is the magnification?` },
   { name: 'projector', object: [24, 36], oStep: 1, mag: [25, 80], mStep: 5, iDp: 2, oUnit: 'mm', iUnit: 'm', factor: 1000, text: (o, i) => `A projector forms an image ${i} m tall on a screen from a slide ${o} mm tall. What is the magnification?` },
   { name: 'convex lens and screen', object: [15, 60], oStep: 1, mag: [1.5, 4], mStep: 0.1, iDp: 1, oUnit: 'mm', iUnit: 'cm', factor: 10, text: (o, i) => `An object ${o} mm tall is placed in front of a convex lens. A sharp image ${i} cm tall forms on a screen. What is the magnification?` },
 ]
@@ -655,10 +666,12 @@ const UPPER = [
   'A dog whistle is tuned to the upper limit of human hearing. Calculate the wavelength of its sound in air.',
   'Calculate the wavelength in air of the highest-pitched sound that a young person with normal hearing can detect.',
 ]
+/** The air temperature at which sound travels at v: about 331 + 0.6T m/s, so the topic's 340 m/s is a mild day's. */
+const airAt = (v: number) => Math.round((v - 331) / 0.6)
 const SOUND_SPEED = [
-  (v: number) => `Take the speed of sound as ${v} m/s.`,
-  (v: number) => `Sound travels through air at ${v} m/s.`,
-  (v: number) => `The speed of sound in air is ${v} m/s.`,
+  (v: number) => `Take the speed of sound as ${v} m/s, its value in air at ${airAt(v)} °C.`,
+  (v: number) => `In air at ${airAt(v)} °C, sound travels at ${v} m/s.`,
+  (v: number) => `The speed of sound in air at ${airAt(v)} °C is ${v} m/s.`,
 ]
 /** Even speeds only: 335 ÷ 20 is 16.75, a fourth figure a student rounds away and is marked wrong for. */
 const AIR_SPEEDS = steps(330, 350, 2)

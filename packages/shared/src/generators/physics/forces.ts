@@ -2,6 +2,7 @@ import { fixed, show } from '../format.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { G, G_STATED, atMost, cap, closes, near, numeric, prose, stepped, tex } from './build.ts'
+import { powerOfTen } from '../chemistry/build.ts'
 import { clearAtSigFigs, dpTolerance, sigFigs, sigText } from './format.ts'
 
 /**
@@ -204,12 +205,13 @@ export const massFromForceAndAcceleration: Generator = {
 
 /** Vehicles braking, with the decelerations their brakes really give. */
 const BRAKERS: Body[] = [
-  { name: 'car', mass: [900, 1800], step: 50, accel: [3, 8], aStep: 0.5 },
-  { name: 'van', mass: [2000, 3500], step: 100, accel: [3, 8], aStep: 0.5 },
+  // Road tyres give about 7 m/s² at most.
+  { name: 'car', mass: [900, 1800], step: 50, accel: [3, 7], aStep: 0.5 },
+  { name: 'van', mass: [2000, 3500], step: 100, accel: [3, 7], aStep: 0.5 },
   { name: 'lorry', mass: [10000, 30000], step: 1000, accel: [2, 5], aStep: 0.5 },
   { name: 'train', mass: [100000, 400000], step: 10000, accel: [0.5, 1.5], aStep: 0.1 },
   { name: 'bicycle and rider', plural: true, mass: [70, 100], step: 1, accel: [2, 6], aStep: 0.5 },
-  { name: 'motorbike and rider', plural: true, mass: [200, 350], step: 10, accel: [3, 9], aStep: 0.5 },
+  { name: 'motorbike and rider', plural: true, mass: [200, 350], step: 10, accel: [3, 7], aStep: 0.5 },
   { name: 'bus', mass: [10000, 14000], step: 500, accel: [2, 5], aStep: 0.5 },
 ]
 
@@ -288,7 +290,8 @@ export const drivingForceWithResistance: Generator = {
       },
       // Never a = 1 (the resultant would equal the mass) and never a resultant equal to the
       // resistance, which would read as doubling, nor a driving force that is the mass's figure.
-      ({ m, a, R, F }) => atMost(a, 1) && a >= c.accel[0] && a <= c.accel[1] && a !== 1 && Number.isInteger(F) && F !== R && F + R !== m,
+      // Nor t = 10 s (the acceleration is the speed with its point moved) nor a = 0.5 (half the mass).
+      ({ m, t, a, R, F }) => atMost(a, 1) && a >= c.accel[0] && a <= c.accel[1] && a !== 1 && a !== 0.5 && !powerOfTen(t) && Number.isInteger(F) && F !== R && F + R !== m,
     )
     const driving = F + R
     const prompt = pick(r, [
@@ -324,7 +327,7 @@ const THRUSTERS: Lifted[] = [
   { text: (m, F) => `A rocket of mass ${m} kg produces a thrust of ${F} N at launch.`, ask: "the rocket's initial acceleration", mass: [5000, 50000], step: 1000, accel: [1, 5] },
   { text: (m, F) => `A model rocket of mass ${m} kg produces a thrust of ${F} N at launch.`, ask: "the model rocket's initial acceleration", mass: [0.5, 2], step: 0.5, accel: [20, 60] },
   { text: (m, F) => `A drone of mass ${m} kg takes off. Its rotors push it upwards with a force of ${F} N.`, ask: "the drone's initial acceleration", mass: [1, 5], step: 0.5, accel: [1, 4] },
-  { text: (m, F) => `A helicopter of mass ${m} kg takes off. Its rotors provide an upward lift force of ${F} N.`, ask: "the helicopter's initial acceleration", mass: [2000, 5000], step: 500, accel: [1, 3] },
+  { text: (m, F) => `A helicopter of mass ${m} kg takes off. Its rotors provide an upward lift force of ${F} N.`, ask: "the helicopter's initial acceleration", mass: [2000, 5000], step: 500, accel: [0.5, 1] },
   { text: (m, F) => `A jump jet of mass ${m} kg takes off vertically with a thrust of ${F} N.`, ask: "the jet's initial acceleration", mass: [5000, 10000], step: 500, accel: [1, 4] },
 ]
 /** Things hauled up on a cable or rope, for q19. */
@@ -332,8 +335,8 @@ const HAULED: Lifted[] = [
   { text: (m, F) => `A lift of mass ${m} kg is pulled upwards by a cable with a tension of ${F} N.`, ask: 'the acceleration of the lift', mass: [600, 1500], step: 50, accel: [0.5, 2] },
   { text: (m, F) => `A crane lifts a load of mass ${m} kg. The tension in the cable is ${F} N.`, ask: 'the acceleration of the load', mass: [500, 5000], step: 100, accel: [0.3, 1] },
   { text: (m, F) => `A bucket of mass ${m} kg is hauled up a well by a rope with a tension of ${F} N.`, ask: 'the acceleration of the bucket', mass: [5, 20], step: 1, accel: [0.5, 2] },
-  { text: (m, F) => `A climber of mass ${m} kg is hauled upwards by a rope with a tension of ${F} N.`, ask: 'the acceleration of the climber', mass: [50, 90], step: 1, accel: [0.5, 2] },
-  { text: (m, F) => `A helicopter winch lifts a person of mass ${m} kg. The tension in the winch cable is ${F} N.`, ask: 'the acceleration of the person', mass: [60, 100], step: 1, accel: [0.5, 2] },
+  { text: (m, F) => `A climber of mass ${m} kg is hauled upwards by a rope with a tension of ${F} N.`, ask: 'the acceleration of the climber', mass: [50, 90], step: 1, accel: [0.5, 1] },
+  { text: (m, F) => `A helicopter winch lifts a person of mass ${m} kg. The tension in the winch cable is ${F} N.`, ask: 'the acceleration of the person', mass: [60, 100], step: 1, accel: [0.5, 1] },
 ]
 
 /**
@@ -395,7 +398,7 @@ interface Estimate {
 }
 const ESTIMATES: Estimate[] = [
   { name: 'car', masses: [1000, 1200, 1500], speeds: [[9, 20], [13, 30], [18, 40]], time: [6, 12], accel: [1, 3] },
-  { name: 'van', masses: [2000, 2500, 3000], speeds: [[9, 20], [13, 30]], time: [8, 15], accel: [0.8, 2] },
+  { name: 'van', masses: [2000, 2500, 3000], speeds: [[9, 20], [13, 30], [18, 40]], time: [8, 15], accel: [0.7, 2] },
   { name: 'lorry', masses: [10000, 15000, 20000, 30000], speeds: [[9, 20], [13, 30]], time: [15, 30], accel: [0.3, 1] },
   { name: 'bus', masses: [10000, 12000, 15000], speeds: [[9, 20], [13, 30]], time: [10, 20], accel: [0.5, 1.2] },
   { name: 'motorbike and rider', plural: true, masses: [200, 250, 300], speeds: [[13, 30], [18, 40], [27, 60]], time: [4, 8], accel: [2, 5] },
@@ -423,7 +426,7 @@ export const estimatingAForce: Generator = {
         const a = clean(v / t)
         return { m, v, mph, t, a, F: clean(m * a) }
       },
-      ({ a, F }) => atMost(a, 2) && a >= c.accel[0] && a <= c.accel[1] && a !== 1 && Number.isInteger(F),
+      ({ t, a, F }) => atMost(a, 2) && a >= c.accel[0] && a <= c.accel[1] && a !== 1 && Number.isInteger(F) && !powerOfTen(t),
     )
     const who = sized(c, m)
     const prompt = pick(r, [
@@ -580,8 +583,8 @@ export const workDone: Generator = {
         const s = stepped(r, c.dist[0], c.dist[1], c.dStep)
         return { F, s, W: clean(F * s) }
       },
-      // Never 1 m, where the work would be the force.
-      ({ F, s, W }) => Number.isInteger(W) && F !== s && s !== 1,
+      // Never 1 m, where the work would be the force, nor a force or distance that only moves the point.
+      ({ F, s, W }) => Number.isInteger(W) && F !== s && !powerOfTen(s) && !powerOfTen(F),
     )
     // Second route: the work over the force gives the distance back.
     const sBack = W / F
@@ -674,8 +677,8 @@ const ANGLED: Angled[] = [
   { text: (F, a) => `A person pulls a wheeled bin with a force of ${F} N through its handle at ${a}° above the horizontal.`, thing: 'bin', force: [30, 80], step: 5 },
   { text: (F, a) => `A farmer pulls a hay bale with a force of ${F} N through a rope at ${a}° above the horizontal.`, thing: 'bale', force: [60, 150], step: 10 },
 ]
-/** Angles a rope or handle really makes, whose cosines are clean at two figures. */
-const ANGLES = [30, 37, 40, 45, 50, 53, 60]
+/** Angles a rope or handle really makes, whose cosines are clean at two figures. Not 45°, where sin and cos agree and the wrong component pays, nor 60°, where the component is just half. */
+const ANGLES = [30, 37, 40, 50, 53]
 const rad = (deg: number) => (deg * Math.PI) / 180
 
 /**

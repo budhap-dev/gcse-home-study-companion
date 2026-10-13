@@ -199,7 +199,8 @@ describe('half-life', () => {
       expect(b.question.solution).toContain(`$${tex(start!)} \\div 2^${n} = ${tex(start!)} \\div ${2 ** n!} = ${answer(b)}$.`)
       expect(units(b)).toBeUndefined()
     }
-    expect(contexts(built)).toBe(5)
+    // No seconds-to-minute row: a per-minute count rate cannot be read from a source that halves within the minute.
+    expect(contexts(built)).toBe(4)
   })
 
   it('q13 never asks one context the same span: no n or time is more than 40% of its builds', () => {

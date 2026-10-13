@@ -139,7 +139,7 @@ describe("Newton's laws", () => {
   })
 
   it('takes the weight from the upward force and divides by the mass, upwards, within a believable margin', () => {
-    for (const [slotId, lo, hi] of [['q14', 1, 60], ['q19', 0.3, 2]] as const) {
+    for (const [slotId, lo, hi] of [['q14', 0.5, 60], ['q19', 0.3, 2]] as const) {
       const built = build('acceleration-against-weight', slotId)
       for (const b of built) {
         const { m, T } = values(b)
@@ -273,7 +273,7 @@ describe('weight, work done and resultant forces', () => {
       expect(last(b)).toBe(`${answer(b)} N`)
       expect(units(b)).toBe('N')
     }
-    expect(new Set(built.map((b) => b.values.angle)).size).toBe(7)
+    expect(new Set(built.map((b) => b.values.angle)).size).toBe(5)
     expect(contexts(built)).toBe(5)
   })
 

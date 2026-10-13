@@ -157,8 +157,9 @@ function limitingValue(r: Rng, slot: Question): Draft {
 
 /** q8: which term of n^2 + bn + c has a given value. */
 function quadraticWhichTerm(r: Rng, slot: Question): Draft {
-  // Factor pairs a student can find by hand: the larger root is at most 22.
-  const N = int(r, 5, 15)
+  // Factor pairs a student can find by hand: the larger root is at most 22. N from 8, so the wanted
+  // term is never reached by counting on from the four printed (N = 5 is the next term).
+  const N = int(r, 8, 15)
   const { b, c } = draw(
     r,
     // b is never ±1, so the n term keeps a real coefficient; −2 is as low as it goes and the terms still rise.

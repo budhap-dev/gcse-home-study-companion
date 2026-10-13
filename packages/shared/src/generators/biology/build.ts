@@ -38,6 +38,12 @@ export const lcm = (a: number, b: number) => (a * b) / gcd(a, b)
 export const tidy = (x: number, dp = 2) => atMost(x, dp) && figures(clean(x)) <= 3
 /** An exact answer's room: half a unit in the last place it prints (capped at 1.9%), none for a whole number. */
 export const halfLastPlace = (x: number) => toPlaces(x, places(x))
+/**
+ * The precision a rounded answer is asked to, for the end of a prompt; nothing when the answer is
+ * exact. A solution that says "to 3 significant figures" while the prompt asked for no precision
+ * marked 1.3 wrong for 1.28 and showed an answer the student had no reason to expect.
+ */
+export const askFor = (rounded: boolean, to = '3 significant figures') => (rounded ? ` Give your answer to ${to}.` : '')
 /** x cut (not rounded) to n significant figures, as a calculator display is read: 23.4375 to 5 is "23.437". */
 export function cut(x: number, n: number): string {
   const e = Math.floor(Math.log10(Math.abs(x)))

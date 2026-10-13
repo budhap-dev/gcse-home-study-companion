@@ -230,7 +230,7 @@ describe('BMI', () => {
 
   it('q2, q10 and q14: literal builds, as a reader works them', () => {
     const a = one('lifestyle-bmi-from-mass-and-height', 'q2', 'review-b')
-    expect(a.question.prompt).toBe('A rugby player is 1.89 m tall and has a mass of 110 kg. Using BMI = mass ÷ height², calculate their body mass index (BMI).')
+    expect(a.question.prompt).toBe('A rugby player is 1.89 m tall and has a mass of 110 kg. Using BMI = mass ÷ height², calculate their body mass index (BMI). Give your answer to 3 significant figures.')
     expect(a.question.solution).toBe(
       'Height² $= 1.89^2 = 3.5721$. BMI $= 110 \\div 3.5721 = 30.7942\\ldots$, which is 30.8 to 3 significant figures. That is in the obese range, but a rugby player carries a lot of muscle, and BMI cannot tell muscle from fat. Under 18.5 is underweight, 18.5 to 24.9 healthy, 25 to 29.9 overweight and 30 or more obese.',
     )

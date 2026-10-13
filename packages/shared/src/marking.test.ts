@@ -20,6 +20,13 @@ describe('parseNumber', () => {
     expect(parseNumber('F = 20 N', 'N')).toBe(20)
     expect(parseNumber('area = 12 cm²', 'cm²')).toBe(12)
   })
+  it('reads a leading plus sign as the sign the question asked for', () => {
+    expect(parseNumber('+12.8')).toBe(12.8)
+    expect(parseNumber('+ 2.5%')).toBe(2.5)
+    expect(parseNumber('+£3.50')).toBe(3.5)
+    expect(parseNumber('+3/4')).toBe(0.75)
+  })
+
   it('forgives a currency symbol, because the solutions print one', () => {
     expect(parseNumber('£500')).toBe(500)
     expect(parseNumber('-£700')).toBe(-700)

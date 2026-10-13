@@ -92,13 +92,13 @@ describe('the electromagnetic spectrum', () => {
     expect(contexts(built)).toBe(5)
   })
 
-  it('q14 gives no speed, so the solution states it and names the radio group', () => {
+  it('q14 states the speed of light, and the solution names the radio group', () => {
     const built = build('radio-frequency-from-wavelength', 'q14')
     for (const b of built) {
       const { lambda: l } = values(b)
       expect(b.question.prompt, b.seed).toMatch(new RegExp(` ${prose(l!)} m\\b`))
       expect(b.question.prompt).toContain('electromagnetic wave')
-      expect(b.question.prompt).not.toContain('10⁸')
+      expect(b.question.prompt).toContain('3 × 10⁸ m/s')
       expect(l).toBeGreaterThanOrEqual(10)
       expect(answer(b)).toBe(clean(3e8 / l!))
       expect(b.question.solution).toMatch(/^Every electromagnetic wave travels at \$3 \\times 10\^8\$ m\/s in air\./)
@@ -137,7 +137,7 @@ describe('the electromagnetic spectrum', () => {
         expect(b.question.prompt).not.toMatch(/\ba \d/)
         if (slotId === 'q6') {
           expect(b.question.prompt).toContain(`frequency of ${prosed(f!)} Hz`)
-          expect(b.question.prompt).not.toContain('speed')
+          expect(b.question.prompt).toContain('Take the speed of light as 3 × 10⁸ m/s')
           expect(b.question.solution).toContain(`\\dfrac{3 \\times 10^8}{${texed(f!)}} = ${show(l)}$ m.`)
           expect(method(b, 1)).toBe(`$3 \\times 10^8 \\div (${texed(f!)})$`)
           expect(last(b)).toBe(`${show(l)} m`)

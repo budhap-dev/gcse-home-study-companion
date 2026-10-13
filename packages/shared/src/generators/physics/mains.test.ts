@@ -57,7 +57,7 @@ describe('mains electricity', () => {
     kettle: [2000, 3000],
     toaster: [800, 1500],
     hairdryer: [1000, 2200],
-    'microwave oven': [1000, 1500],
+    'microwave oven': [700, 1500],
     'vacuum cleaner': [500, 1600],
     television: [50, 200],
     'fan heater': [1500, 3000],
@@ -89,8 +89,9 @@ describe('mains electricity', () => {
     expect(contexts(built)).toBe(8)
   })
 
-  it('divides a rated power by 230 V, the power never "a 920 W"', () => {
+  it('divides a round rating by 230 V, the current to a decimal place unless it ends there, the power never "a 920 W"', () => {
     const built = build('mains-current-from-power', 'q6')
+    let rounded = 0
     for (const b of built) {
       const { P } = values(b)
       const name = String(b.values.context)
@@ -98,15 +99,30 @@ describe('mains electricity', () => {
       expect(b.question.prompt, b.seed).toContain(`${prose(P!)} W`)
       expect(b.question.prompt).toContain('230 V mains')
       expect(P! >= WATTS[name]![0] && P! <= WATTS[name]![1]).toBe(true)
-      const I = clean(P! / 230)
+      expect(P! % (name === 'television' ? 10 : 50), b.seed).toBe(0)
+      expect(isTen(P!)).toBe(false)
+      const dp = name === 'television' ? 2 : 1
+      const raw = P! / 230
+      const exact = decimals(clean(raw)) <= dp
+      const I = exact ? clean(raw) : Number(raw.toFixed(dp))
       expect(answer(b)).toBe(I)
-      expect(decimals(I)).toBeLessThanOrEqual(name === 'television' ? 2 : 1)
       expect(isTen(I)).toBe(false)
-      expect(b.question.solution).toBe(`$${ends(`I = P \\div V = ${tex(P!)} \\div 230`, I, 'A')}.`)
+      if (exact) {
+        expect(b.question.prompt).not.toContain('significant')
+        expect(b.question.solution).toBe(`$${ends(`I = P \\div V = ${tex(P!)} \\div 230`, I, 'A')}.`)
+        expect(tolerance(b)).toBe(room(b, dpTolerance(I)))
+      } else {
+        rounded++
+        expect(b.question.prompt).toContain(`Give your answer to ${dp} decimal place${dp === 1 ? '' : 's'}.`)
+        expect(b.question.solution).toContain(`$I = P \\div V = ${tex(P!)} \\div 230 = `)
+        expect(b.question.solution).toContain(`which is **${I.toFixed(dp)} A** to ${dp} decimal place${dp === 1 ? '' : 's'}.`)
+        expect(tolerance(b)).toBe(clean(Math.min(0.5 / 10 ** dp, 0.019 * I)))
+      }
       expect(b.question.markScheme[0]!.description).toBe(`rearranges to $I = P \\div V$: $${tex(P!)} \\div 230$`)
       expect(units(b)).toBe('A')
-      expect(tolerance(b)).toBe(room(b, dpTolerance(I)))
     }
+    // Ratings are round, so most currents run on.
+    expect(rounded / built.length).toBeGreaterThan(0.5)
     expect(contexts(built)).toBe(8)
   })
 
@@ -166,8 +182,8 @@ describe('mains electricity', () => {
       expect(sumIsProduct(I2!, I2!) || sumIsProduct(I2!, R!), b.seed).toBe(false)
       expect(b.question.solution).toContain(`$P = I^2 R = ${show(I2!)}^2 \\times ${show(R!)} = ${tex(sq)} \\times ${show(R!)} = ${show(P2)}$ W.`)
       expect(b.question.solution).toContain(`${gerund} it makes the power **${times}**: ${prose(P1)} W becomes ${prose(P2)} W, not ${prose(clean(P1 * c))} W.`)
-      expect(b.question.markScheme.map((l) => l.description)).toEqual([`squares the new current: $${show(I2!)}^2 = ${tex(sq)}$`, `multiplies by $R$: $${tex(sq)} \\times ${show(R!)}$`, show(P2)])
-      expect(units(b)).toBeUndefined()
+      expect(b.question.markScheme.map((l) => l.description)).toEqual([`squares the new current: $${show(I2!)}^2 = ${tex(sq)}$`, `multiplies by $R$: $${tex(sq)} \\times ${show(R!)}$`, `${show(P2)} W`])
+      expect(units(b)).toBe('W')
       expect(tolerance(b)).toBe(room(b, dpTolerance(P2)))
     }
     expect(new Set(built.map((b) => clean(values(b).I2! / values(b).I1!)))).toEqual(new Set([2, 3, 0.5]))

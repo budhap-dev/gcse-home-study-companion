@@ -240,8 +240,8 @@ describe('series and parallel circuits', () => {
       const moved = Rt2 > Rt ? `has fallen from ${show(I)} A to ${show(I2)} A, because the total resistance rose from ${Rt} Ω to ${Rt2} Ω` : `has risen from ${show(I)} A to ${show(I2)} A, because the total resistance fell from ${Rt} Ω to ${Rt2} Ω`
       expect(b.question.solution).toContain(moved)
       expect(b.question.markScheme[0]!.description).toBe(`new total resistance $= ${kept} + ${R3} = ${Rt2}$ Ω`)
-      expect(units(b)).toBeUndefined()
-      expect(last(b)).toBe(show(I2))
+      expect(units(b)).toBe('A')
+      expect(last(b)).toBe(`${show(I2)} A`)
       expect(tolerance(b)).toBe(room(b, dpTolerance(I2)))
     }
     expect(new Set(built.map((b) => b.values.replaced))).toEqual(new Set([1, 2]))

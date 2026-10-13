@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../content/questions.ts'
-import { mark } from '../marking.ts'
-import { GENERATORS, generate, generatorFor, sheetQuestions } from './index.ts'
+import { mark, significantFiguresOf } from '../marking.ts'
+import { GENERATORS, figuresOf, generate, generatorFor, sheetQuestions } from './index.ts'
 import type { Generated } from './types.ts'
 
 /**
@@ -82,12 +82,28 @@ describe('question generators', () => {
 
         // Physics marks a calculated answer at its three-figure rounding too when no precision is
         // asked (roundingRoom in index.ts): 1764 J typed as 1760 is right.
-        it('marks a Physics answer right at its three-figure rounding when no precision is asked', () => {
+        it('marks a Physics answer right at its three-figure rounding when no precision is asked, and at two figures when every given has two', () => {
           if (g.subjectId !== 'physics') return
           for (const { question: q, seed } of built) {
             if (q.type !== 'numeric' || q.answer === 0 || /significant figure|decimal place|d\.p\.|nearest|whole number|standard form/i.test(q.prompt)) continue
             expect(mark(q, String(Number(q.answer.toPrecision(3)))).correct, `${seed}: ${q.answer}`).toBe(true)
+            const givens = q.prompt.match(/(?<![\w.])\d+(?:\.\d+)?(?![\w.])/g) ?? []
+            // Within the 2% cap a tolerance may have: 225 rounds to 230, 2.2% away, and stays wrong.
+            const two = Number(q.answer.toPrecision(2))
+            if (givens.every((f) => significantFiguresOf(f) <= 2) && Math.abs(two - q.answer) <= Math.abs(q.answer) * 0.019) expect(mark(q, String(two)).correct, `${seed}: ${q.answer} at 2 s.f.`).toBe(true)
           }
+        })
+
+        // On a sheet, a fresh version never prints the written question's figures (it would show a retry the question just done).
+        it('never repeats the written figures on a sheet when another draw is possible', () => {
+          const written = figuresOf(slot!.prompt).join(' ')
+          if (!written) return
+          const same = (b: Generated) => figuresOf(b.question.prompt).join(' ') === written
+          // A slot whose figures are its constants (7-bit ASCII, a formula's own digits) repeats them in most builds by design.
+          const base = built.filter(same).length / built.length
+          if (base > 0.5) return
+          const sheet = Array.from({ length: 200 }, (_, i) => generate(g, slot!, `sheet-${i}`, { avoid: [slot!.prompt] }))
+          expect(sheet.filter(same).length / sheet.length, `${g.id} ${id} (${base} without)`).toBeLessThanOrEqual(Math.max(0.02, base ** 3))
         })
 
         // NaN as a word: the formula of sodium nitrate, NaNO₃, contains the letters.

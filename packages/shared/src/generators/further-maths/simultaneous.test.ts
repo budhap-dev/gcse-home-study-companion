@@ -143,7 +143,7 @@ function chainHolds(math: string, value: number, vars: Record<string, number> = 
   for (const part of math.split(' = ')) expect(tex(part, vars), math).toBeCloseTo(value, 9)
 }
 
-function common(built: Generated[], slot: Question, minDistinct = 10, options: { decimals?: boolean } = {}) {
+function common(built: Generated[], slot: Question, minDistinct = 10, options: { decimals?: boolean; money?: boolean } = {}) {
   for (const b of built) {
     const q = b.question
     expect(q.prompt, b.seed).not.toMatch(/\b(a|A|an|An) \d/)
@@ -155,7 +155,8 @@ function common(built: Generated[], slot: Question, minDistinct = 10, options: {
     expect(q.solution, b.seed).toContain(String(answer(b)))
     expect(b.check.agrees, `${b.seed}: ${b.check.detail}`).toBe(true)
     expect(q.markScheme.map((l) => l.code)).toEqual(['M1', 'A1'])
-    expect(q.markScheme[1]!.description).toBe(String(answer(b)).replace('-', '−'))
+    expect(q.markScheme[1]!.description).toBe(options.money ? `£${answer(b).toFixed(2)}` : String(answer(b)).replace('-', '−'))
+    if (options.money) expect(q.type === 'numeric' && q.units).toBe('£')
   }
   const counts = new Map<number, number>()
   const prompts = new Map<string, number>()
@@ -439,8 +440,10 @@ describe('fm-three-unknowns q10: three unknowns by substitution', () => {
       expect(share(built, (b) => asked(b) === l), l).toBeGreaterThan(0.25)
       expect(share(built, (b) => b.values.pivot === l), l).toBeGreaterThan(0.25)
     }
-    expect(share(built, (b) => equationsOf(b.question.prompt).slice(1).some((e) => e.includes('+')))).toBeGreaterThan(0.3)
-    expect(share(built, (b) => / so \$x = |, so \$y = |, so \$z = /.test(b.question.solution))).toBeGreaterThan(0.15)
+    // Differences only: an O + P tie beside the sum hands the third letter by one subtraction.
+    expect(share(built, (b) => equationsOf(b.question.prompt).slice(1).some((e) => e.includes('+')))).toBe(0)
+    // With two difference ties the substituted equation is always 3P + c = S, so the solution always collects a 3P line.
+    expect(share(built, (b) => /\$3[xyz] = /.test(b.question.solution))).toBe(1)
   })
   it('asks a different letter from q8 on every higher sheet', () => {
     const ids: string[] = sheetJson.worksheets.higher.questionIds
@@ -533,7 +536,7 @@ describe('fm-three-unknowns q14: three prices from three bills', () => {
     }
   })
   it('spreads shops, patterns, the item asked and the prices', () => {
-    common(built, slotOf('q14'), 20, { decimals: true })
+    common(built, slotOf('q14'), 20, { decimals: true, money: true })
     expect(new Set(built.map((b) => read(b).items[0])).size).toBe(6)
     const doubled = share(built, (b) => b.values.pattern === 'doubled')
     expect(doubled).toBeGreaterThan(0.45)
@@ -559,7 +562,7 @@ describe('fm-three-unknowns q14: three prices from three bills', () => {
     const b = seed('fm-three-unknowns', 'q14', 'review-a')
     expect(b.question.prompt).toBe('A pen, two pencils and a ruler cost £4.50. A pen, a pencil and two rulers cost £3.90. Two pens, a pencil and a ruler cost £4.80. Work out the price of a ruler in pounds.')
     expect(b.question.solution).toBe('With pen $x$, pencil $y$ and ruler $z$: $x + 2y + z = 4.5$, $x + y + 2z = 3.9$, $2x + y + z = 4.8$. Adding all three gives $4(x + y + z) = 13.2$, so $x + y + z = 3.3$. Subtracting that from the second equation leaves $z = 3.9 - 3.3 = 0.6$. Likewise $x = 1.5$ and $y = 1.2$; check the third: $3 + 1.2 + 0.6 = 4.8$.')
-    expect(b.question.markScheme.map((l) => l.description)).toEqual(['three equations', '0.6'])
+    expect(b.question.markScheme.map((l) => l.description)).toEqual(['three equations', '£0.60'])
     const plain = seed('fm-three-unknowns', 'q14', 'review-b')
     expect(plain.question.solution).toBe('With pen $x$, pencil $y$ and ruler $z$: $2x + y + z = 5.8$, $x + y + z = 3.4$, $x + 2y + z = 3.8$. The second equation gives $x + y + z = 3.4$ directly. Subtracting it from the first leaves $x = 5.8 - 3.4 = 2.4$, and from the third, $y = 3.8 - 3.4 = 0.4$. Then $z = 3.4 - 2.4 - 0.4 = 0.6$; check the first: $4.8 + 0.4 + 0.6 = 5.8$.')
   })

@@ -338,7 +338,7 @@ interface Counted {
  * technetium-99m (6 hours) only 1 day, so they would always ask the same thing.
  */
 const COUNTED: Counted[] = [
-  { name: null, small: 'seconds', big: 'minute', per: 60, halves: [15, 20, 24, 30, 36, 40, 45] },
+  // No half-life in seconds: a count rate per minute cannot be read from a source that halves within the minute.
   { name: null, small: 'minutes', big: 'hour', per: 60, halves: [15, 20, 24, 30, 36, 40, 45] },
   { name: null, small: 'hours', big: 'day', per: 24, halves: [8, 9, 12, 16, 18] },
   { name: 'phosphorus-32', small: 'days', big: 'week', per: 7, halves: [14] },

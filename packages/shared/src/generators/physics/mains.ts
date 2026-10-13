@@ -1,5 +1,5 @@
 import { show } from '../format.ts'
-import { draw, pick, type Rng } from '../random.ts'
+import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { atMost, cap, closes, figures, near, numeric, prose, tex } from './build.ts'
 import { dpTolerance, sigText } from './format.ts'
@@ -62,7 +62,7 @@ const APPLIANCES: Appliance[] = [
   { name: 'kettle', watts: [2000, 3000] },
   { name: 'toaster', watts: [800, 1500] },
   { name: 'hairdryer', watts: [1000, 2200] },
-  { name: 'microwave oven', watts: [1000, 1500] },
+  { name: 'microwave oven', watts: [700, 1500] },
   { name: 'vacuum cleaner', watts: [500, 1600] },
   { name: 'television', watts: [50, 200], step: 0.01 },
   { name: 'fan heater', watts: [1500, 3000] },
@@ -118,24 +118,47 @@ export const mainsCurrentFromPower: Generator = {
   replaces: ['q6'],
   build(r, slot, turn) {
     const a = APPLIANCES[turn % APPLIANCES.length]!
-    const { I, P } = mainsCurrent(r, a)
+    // A rating is the given here, so it is a round figure, as ratings are (1200 W, never the
+    // 1909 W a current to a tenth of an amp gave). The current then runs on, and is asked to one
+    // decimal place (two for a television, which draws under an amp), unless it ends there as
+    // the written 920 W = 4 A does. Never a rounding that sits within 0.02 of a half.
+    const step = a.step === 0.01 ? 10 : 50
+    const dp = a.step === 0.01 ? 2 : 1
+    const clearly = (raw: number) => Math.abs(((raw * 10 ** dp) % 1) - 0.5) > 0.02
+    const { P, raw, I, exact } = draw(
+      r,
+      (r) => {
+        const P = int(r, Math.ceil(a.watts[0] / step), Math.floor(a.watts[1] / step)) * step
+        const raw = P / MAINS_V
+        const exact = atMost(raw, dp)
+        return { P, raw, exact, I: exact ? clean(raw) : Number(raw.toFixed(dp)) }
+      },
+      ({ P, raw, I, exact }) => noTens(P, I) && distinct(I, MAINS_V) && (exact || clearly(raw)),
+    )
+    const places = `${dp} decimal place${dp === 1 ? '' : 's'}`
+    const ask = exact ? '' : ` Give your answer to ${places}.`
     // "Rated at 920 W" rather than "a 920 W kettle": the article cannot be chosen from the digits.
     const prompt = pick(r, [
-      `${cap(an(a.name))} rated at ${prose(P)} W runs from the 230 V mains. Calculate the current it draws, in amperes.`,
-      `${cap(an(a.name))} has a power of ${prose(P)} W on the 230 V mains. Calculate the current it draws, in amperes.`,
+      `${cap(an(a.name))} rated at ${prose(P)} W runs from the 230 V mains. Calculate the current it draws, in amperes.${ask}`,
+      `${cap(an(a.name))} has a power of ${prose(P)} W on the 230 V mains. Calculate the current it draws, in amperes.${ask}`,
     ])
+    const solution = exact
+      ? closes(`I = P \\div V = ${tex(P)} \\div 230`, I, 'A')
+      : `$I = P \\div V = ${tex(P)} \\div 230 = ${(Math.floor(raw * 10 ** (dp + 2)) / 10 ** (dp + 2)).toFixed(dp + 2)}\\ldots$, which is **${I.toFixed(dp)} A** to ${places}.`
+    const tolerance = exact ? dpTolerance(I) : clean(Math.min(0.5 / 10 ** dp, 0.019 * I))
     return numeric(
       slot,
       {
         prompt,
-        solution: closes(`I = P \\div V = ${tex(P)} \\div 230`, I, 'A'),
+        solution,
         method: [`rearranges to $I = P \\div V$: $${tex(P)} \\div 230$`],
         answer: I,
-        tolerance: dpTolerance(I),
+        tolerance,
         units: 'A',
       },
-      { agrees: near(I * MAINS_V, P), detail: `${I} × 230 = ${show(I * MAINS_V)} W` },
-      { context: a.name, P },
+      // Second route: the current found times 230 V is the rating, to the rounding.
+      { agrees: Math.abs(I * MAINS_V - P) <= tolerance * MAINS_V + 1e-9, detail: `${I} × 230 = ${show(I * MAINS_V)} W` },
+      { context: a.name, P, exact: String(exact) },
     )
   },
 }
@@ -312,6 +335,7 @@ export const powerAfterCurrentChange: Generator = {
         method: [`squares the new current: $${tex(I2)}^2 = ${tex(sq)}$`, `multiplies by $R$: $${tex(sq)} \\times ${tex(R)}$`],
         answer: P2,
         tolerance: dpTolerance(P2),
+        units: 'W',
       },
       // Second route: the old power times the change squared.
       { agrees: near(P1 * ch.c * ch.c, P2), detail: `${P1} × ${ch.c}² = ${show(P1 * ch.c * ch.c)} W` },

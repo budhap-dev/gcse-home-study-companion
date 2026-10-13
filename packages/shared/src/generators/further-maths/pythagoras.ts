@@ -587,7 +587,7 @@ function lineAndPlane(r: Rng, slot: Question): Draft {
   const tri = `${diag[0]}${foot}${diag[1]}`
   const solution =
     `The shadow of $${diag}$ on the base is $${shadow} = \\sqrt{${a}^2 + ${b}^2} = ${rootTex(n)}$. ` +
-    `In triangle $${tri}$, right-angled at $${foot}$: $\\tan \\theta = \\dfrac{${vertical}}{${shadow}} = \\dfrac{${h}}{${rootTex(n)}}$, so $\\theta = ${fixed(theta, 2)}°$.` +
+    `In triangle $${tri}$, right-angled at $${foot}$${height === vertical ? '' : ` ($${vertical} = ${height} = ${h}$ ${u}: the vertical edges of a cuboid are equal)`}: $\\tan \\theta = \\dfrac{${vertical}}{${shadow}} = \\dfrac{${h}}{${rootTex(n)}}$, so $\\theta = ${fixed(theta, 2)}°$.` +
     (isSquare(n) ? '' : keepExact(`$${shadow} = \\sqrt{${n}}$`, `it to $${fixed(Math.sqrt(n), 2)}$`, Math.atan(h / roundTo(Math.sqrt(n), 2)) / RAD, answer))
   return {
     question: {

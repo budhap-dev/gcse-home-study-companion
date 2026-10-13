@@ -140,6 +140,9 @@ export function parseNumber(input: string, units?: string): number | undefined {
   // "£500" and "-£700" themselves, so a student copying that format must be accepted.
   // The sign may sit either side of the symbol.
   s = s.replace(/^([-+]?)\s*[£$€]\s*/, '$1').replace(/^[£$€]\s*([-+]?)\s*/, '$1')
+  // A percentage change is asked "including the sign", and the scheme prints "+4.6%": a
+  // typed plus is the sign the question asked for, not a stray character.
+  s = s.replace(/^\+\s*/, '')
   // A keyboard has no ² or ³, so the unit arrives as m2 or m^2 as often as m². Every
   // spelling is tried, longest first, so kg/m^3 is taken whole rather than leaving a 3
   // behind to be read as part of the number.
@@ -658,13 +661,54 @@ function sameRearrangement(raw: string, accepted: string, prompt: string): boole
  * angle as 60°, and anything else with its unit after it. The unit a numeric question carries
  * is the one its answer box shows after the number, which is why "£" was printed there.
  */
-export function numericText(answer: number, units?: string, places?: number): string {
+export function numericText(answer: number, units?: string, places?: number, asked: { sigFigs?: number; standardForm?: boolean } = {}): string {
   // Binary floats: 2.2 × 100 is 220.00000000000003, so an exact integer test showed 2.20 as "2.2".
   const whole = (x: number) => Math.abs(x - Math.round(x)) < 1e-9
-  if (units === '£') return `£${whole(answer * 100) ? answer.toFixed(2) : answer}`
-  const n = places !== undefined && whole(answer * 10 ** places) ? answer.toFixed(places) : String(answer)
+  if (units === '£') return `£${grouped(whole(answer * 100) ? answer.toFixed(2) : String(answer))}`
+  // Standard form when the prompt asks for it, or when the digits would not be readable: a
+  // frequency of 250000000000000000000 Hz was shown as that, and 1e+21 past twenty-one digits.
+  const unreadable = Math.abs(answer) >= 1e7 || (answer !== 0 && Math.abs(answer) < 1e-4)
+  // An answer already between 1 and 10 (the front number asked "as a multiple of 10²³") stays as it is.
+  const standard = asked.standardForm || unreadable ? standardFormText(answer) : undefined
+  let n = standard ?? (places !== undefined && whole(answer * 10 ** places) ? answer.toFixed(places) : String(answer))
+  // "To 3 significant figures" shows its trailing zero: 87.0, not 87.
+  if (asked.sigFigs && places === undefined && !standard && significantFiguresOf(n) < asked.sigFigs) {
+    const padded = answer.toPrecision(asked.sigFigs)
+    if (!/e/.test(padded)) n = padded
+  }
+  n = grouped(n)
   if (units === '%' || units === '°') return `${n}${units}`
   return units ? `${n} ${units}` : n
+}
+
+/** Thousands grouped with spaces from five digits, as the content prints them: 16 250, 1 298 000; 1234 stays. */
+const grouped = (n: string) => n.replace(/^(-?)(\d{5,})(?=\.|$)/, (_, sign: string, digits: string) => sign + digits.replace(/\B(?=(\d{3})+(?!\d))/g, ' '))
+
+/** The significant figures a printed number carries: 87 has two, 8.0 two, 0.024 two, 1030 three. */
+export function significantFiguresOf(text: string): number {
+  const s = text.replace(/^-/, '').replace(/\s/g, '')
+  if (s.includes('.')) return s.replace('.', '').replace(/^0+/, '').length
+  return s.replace(/^0+/, '').replace(/0+$/, '').length || 1
+}
+
+/** An answer in standard form as maths: 2.5 × 10²⁰, 5 × 10⁻², for the answer box's reading; nothing for 0 or for a number already between 1 and 10. */
+function standardFormText(x: number): string | undefined {
+  if (x === 0) return undefined
+  let exp = Math.floor(Math.log10(Math.abs(x)))
+  let mantissa = Number((x / 10 ** exp).toPrecision(12))
+  if (Math.abs(mantissa) >= 10) {
+    exp += 1
+    mantissa = Number((x / 10 ** exp).toPrecision(12))
+  }
+  return exp === 0 ? undefined : `$${mantissa} \\times 10^{${exp}}$`
+}
+
+/** The significant figures a prompt asks for ("to 3 significant figures", "2 s.f."). */
+export function significantFiguresAsked(prompt: string): number | undefined {
+  const m = /\b(\d|one|two|three|four)\s+significant\s+figures?\b/i.exec(prompt) ?? /\b(\d)\s*s\.?\s*f\b/i.exec(prompt)
+  if (!m) return undefined
+  const words: Record<string, number> = { one: 1, two: 2, three: 3, four: 4 }
+  return words[m[1]!.toLowerCase()] ?? Number(m[1])
 }
 
 /** The decimal places a prompt asks for ("to 2 decimal places", "1 d.p."), so the answer is shown with them: 8.60, not 8.6. */
@@ -682,7 +726,7 @@ export function expectedAnswer(question: Question): string | undefined {
     case 'ordering':
       return question.items.join(' → ')
     case 'numeric':
-      return numericText(question.answer, question.units, decimalPlacesAsked(question.prompt))
+      return numericText(question.answer, question.units, decimalPlacesAsked(question.prompt), { sigFigs: significantFiguresAsked(question.prompt), standardForm: /standard form/i.test(question.prompt) })
     case 'short-text':
       return question.accepted[0]
     case 'labelling':

@@ -371,10 +371,11 @@ interface Hung {
 }
 /** Masses hung on springs, in grams, with the spring constants and stretches each really has. */
 const HUNG: Hung[] = [
-  { name: 'slotted mass', text: (m, k) => `A mass of ${m} g is hung from a spring with spring constant ${k} N/m.`, k: [12, 90], m: [50, 500], mStep: 50, e: [2, 30] },
-  { name: 'student', text: (m, k) => `A student hangs a mass of ${m} g from a spring of spring constant ${k} N/m.`, k: [12, 90], m: [50, 500], mStep: 50, e: [2, 30] },
+  // A lab spring stays proportional to about 15 cm.
+  { name: 'slotted mass', text: (m, k) => `A mass of ${m} g is hung from a spring with spring constant ${k} N/m.`, k: [12, 90], m: [50, 500], mStep: 50, e: [2, 15] },
+  { name: 'student', text: (m, k) => `A student hangs a mass of ${m} g from a spring of spring constant ${k} N/m.`, k: [12, 90], m: [50, 500], mStep: 50, e: [2, 15] },
   { name: 'apples', text: (m, k) => `A bag of apples of mass ${m} g hangs from a grocer's spring scale. The spring has a spring constant of ${k} N/m.`, k: [120, 500], m: [300, 2000], mStep: 100, e: [1, 10] },
-  { name: 'fish', text: (m, k) => `An angler hangs a fish of mass ${m} g from a spring balance whose spring has a spring constant of ${k} N/m.`, k: [120, 600], m: [200, 3000], mStep: 50, e: [1, 15] },
+  { name: 'fish', text: (m, k) => `An angler hangs a fish of mass ${m} g from a spring balance whose spring has a spring constant of ${k} N/m.`, k: [120, 600], m: [200, 950], mStep: 50, e: [1, 15] },
   { name: 'toy', text: (m, k) => `A toy of mass ${m} g hangs from a newton meter. The spring inside has a spring constant of ${k} N/m.`, k: [20, 200], m: [50, 900], mStep: 10, e: [2, 10] },
   { name: 'bird feeder', text: (m, k) => `A bird feeder of mass ${m} g hangs from a spring with spring constant ${k} N/m.`, k: [30, 150], m: [200, 1000], mStep: 50, e: [2, 20] },
 ]

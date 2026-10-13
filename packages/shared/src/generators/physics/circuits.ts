@@ -467,6 +467,7 @@ export const seriesPartReplaced: Generator = {
         method: [`new total resistance $= ${kept} + ${R3} = ${Rt2}$ Ω`, `$I = V \\div R_{\\text{total}} = ${tex(V)} \\div ${Rt2}$`],
         answer: I2,
         tolerance: dpTolerance(I2),
+        units: 'A',
       },
       // Second route: the current scales inversely with the total resistance.
       { agrees: near((I * Rt) / Rt2, I2), detail: `${I} × ${Rt} ÷ ${Rt2} = ${show((I * Rt) / Rt2)} A` },
