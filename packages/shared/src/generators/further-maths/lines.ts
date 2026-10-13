@@ -46,7 +46,9 @@ const FRACTIONS: [number, number][] = [[-1, 4], [-3, 4], [-5, 4], [-2, 5], [-3, 
 
 function negativeGradient(r: Rng, slot: Question): Draft {
   const whole = r() < 0.8
-  const [p, q] = whole ? [pick(r, WHOLE), 1] : pick(r, r() < 0.7 ? HALVES : FRACTIONS)
+  const [p0, q] = whole ? [pick(r, WHOLE), 1] : pick(r, r() < 0.7 ? HALVES : FRACTIONS)
+  // Positive a third of the time: always negative, a habitual minus on the sizes paid every retry.
+  const p = r() < 1 / 3 ? -p0 : p0
   const m = p / q
   const { x1, y1, x2, y2 } = draw(
     r,
@@ -74,7 +76,7 @@ function negativeGradient(r: Rng, slot: Question): Draft {
       : `Work out the gradient of the line through $${pt(x1, y1)}$ and $${pt(x2, y2)}$.`) + (whole ? '' : ' Give your answer as a decimal.')
   // −3/4 already in lowest terms goes straight to its decimal.
   const value = rq === 1 ? `${rp}` : rp === dy && rq === dx ? show(m) : `${fracTex(rp, rq, '\\dfrac')} = ${show(m)}`
-  const solution = `$m = \\dfrac{${y2} - ${sub(y1)}}{${x2} - ${sub(x1)}} = \\dfrac{${dy}}{${dx}} = ${value}$: down $${-rp}$ for every $${rq}$ along. Subtract in the same order on the top and the bottom.`
+  const solution = `$m = \\dfrac{${y2} - ${sub(y1)}}{${x2} - ${sub(x1)}} = \\dfrac{${dy}}{${dx}} = ${value}$: ${rp < 0 ? 'down' : 'up'} $${Math.abs(rp)}$ for every $${rq}$ along. Subtract in the same order on the top and the bottom.`
   return {
     question: {
       type: 'numeric',

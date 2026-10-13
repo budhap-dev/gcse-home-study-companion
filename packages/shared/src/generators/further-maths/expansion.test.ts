@@ -94,7 +94,7 @@ function common(built: Generated[]) {
     expect(Number.isInteger(answer(b)), b.seed).toBe(true)
     expect(mark(q, String(answer(b))).correct, b.seed).toBe(true)
     expect(mark(q, String(answer(b) + 1)).correct, b.seed).toBe(false)
-    expect(q.solution, b.seed).toContain(String(answer(b)))
+    expect(q.solution.replace(/(\d)\\,(?=\d{3})/g, '$1'), b.seed).toContain(String(answer(b)))
   }
   const counts = new Map<number, number>()
   for (const b of built) counts.set(answer(b), (counts.get(answer(b)) ?? 0) + 1)
@@ -202,7 +202,8 @@ describe('fm-binomial-coefficient (q6, q11)', () => {
       for (const b of built) powers.set(Number(b.values.r), (powers.get(Number(b.values.r)) ?? 0) + 1)
       expect(Math.max(...powers.values()) / built.length).toBeLessThanOrEqual(0.5)
       expect(powers.size).toBeGreaterThanOrEqual(4)
-      expect(share(built, (b) => answer(b) < 0)).toBeGreaterThanOrEqual(slotId === 'q6' ? 0.15 : 0.2)
+      // q11's constant-not-one calculations are all even powers now ((3 + 2x)⁵ and x³ is the written q16), so its negatives fall to about a seventh.
+      expect(share(built, (b) => answer(b) < 0)).toBeGreaterThanOrEqual(slotId === 'q6' ? 0.15 : 0.12)
     })
 
     it(`${slotId}: no one calculation, sign aside, is over a sixth of the builds`, () => {
@@ -219,7 +220,8 @@ describe('fm-binomial-coefficient (q6, q11)', () => {
       common(built)
       expect(new Set(built.map((b) => b.values.n)).size).toBeGreaterThanOrEqual(slotId === 'q6' ? 4 : 3)
       expect(share(built, (b) => Number(b.values.k) < 0)).toBeGreaterThan(0.2)
-      if (slotId === 'q11') expect(share(built, (b) => b.values.a !== 1)).toBeGreaterThan(0.3)
+      // A constant of 2 or 3 a quarter of the time: four calculations, so more would crowd x².
+      if (slotId === 'q11') expect(share(built, (b) => b.values.a !== 1)).toBeGreaterThan(0.2)
     })
   }
 
@@ -375,7 +377,7 @@ describe('fm-difference-of-squares-numbers (factorising q9)', () => {
       const [x, y] = [Number(m[1]), Number(m[2])]
       expect(answer(b)).toBe(x * x - y * y)
       expect([100, 200, 1000].includes(x + y) || [10, 100].includes(x - y), b.seed).toBe(true)
-      expect(b.question.solution).toBe(`$${x}^2 - ${y}^2 = (${x} - ${y})(${x} + ${y}) = ${x - y} \\times ${x + y} = ${x * x - y * y}$. No squaring needed.`)
+      expect(b.question.solution).toBe(`$${x}^2 - ${y}^2 = (${x} - ${y})(${x} + ${y}) = ${x - y} \\times ${x + y} = ${x * x - y * y >= 10000 ? String(x * x - y * y).replace(/\B(?=(\d{3})+(?!\d))/g, '\\,') : x * x - y * y}$. No squaring needed.`)
       expect(b.question.markScheme[0]!.description).toBe(`(${x} − ${y})(${x} + ${y})`)
       expect(x - y).toBeGreaterThanOrEqual(2)
     }
