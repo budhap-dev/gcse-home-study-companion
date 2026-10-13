@@ -345,7 +345,7 @@ const ASHES: Ash[] = [
       (p, m) => `Phytomining ash contains ${p}% copper by mass. What mass of copper, in kg, is in ${m} kg of ash?`,
       (p, m) => `Plants grown on a copper mine's spoil heap are harvested and burned. The ash is ${p}% copper by mass. What mass of copper, in kg, is in ${m} kg of the ash?`,
     ],
-    richer: 'far richer than the ore the plants grew on',
+    richer: 'far richer than the ground the plants grew on',
   },
   {
     name: 'nickel',

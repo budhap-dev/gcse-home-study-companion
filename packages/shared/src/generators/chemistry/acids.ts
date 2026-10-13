@@ -103,7 +103,8 @@ const FALLS: Framing[] = [
     dp: 0,
     lo: 0,
     hi: 7,
-    changes: [2, 3, 4, 5],
+    // q6 takes the even changes and q9 (ph-compare-factor) the odd, so the two never show the same factor on the higher sheet (they did on a quarter of its retries).
+    changes: [2, 4],
     ask: (r, high, low) =>
       pick(r, [
         `A solution's pH falls from ${high} to ${low}. By what factor does the hydrogen ion concentration increase?`,
@@ -116,7 +117,7 @@ const FALLS: Framing[] = [
     dp: 1,
     lo: 0.5,
     hi: 6.9,
-    changes: [2, 3, 4, 5],
+    changes: [2, 4],
     ask: (r, high, low) =>
       pick(r, [
         `A pH meter in a solution reads ${high}. A student adds more acid and the reading falls to ${low}. By what factor does the hydrogen ion concentration increase?`,
@@ -161,7 +162,7 @@ const COMPARED: Framing[] = [
     dp: 0,
     lo: 0,
     hi: 7,
-    changes: [2, 3, 4, 5],
+    changes: [3, 5],
     ask: (r, high, low) =>
       r() < 0.5
         ? `One solution has pH ${high} and another has pH ${low}. How many times greater is the hydrogen ion concentration in the pH ${low} solution?`
@@ -172,7 +173,7 @@ const COMPARED: Framing[] = [
     dp: 0,
     lo: 2,
     hi: 7,
-    changes: [2, 3, 4, 5],
+    changes: [3, 5],
     keep: (p) => LIQUIDS.some((l) => l.pH === p.high) && LIQUIDS.some((l) => l.pH === p.low),
     ask: (r, _high, _low, p) => {
       const [h, l] = [liquid(p.high), liquid(p.low)]
@@ -186,7 +187,7 @@ const COMPARED: Framing[] = [
     dp: 1,
     lo: 0.5,
     hi: 6.9,
-    changes: [2, 3, 4, 5],
+    changes: [3, 5],
     ask: (r, high, low) =>
       r() < 0.5
         ? `A pH meter reads ${high} in solution A and ${low} in solution B. How many times greater is the hydrogen ion concentration in solution B?`
@@ -294,8 +295,8 @@ const WEAK: Framing[] = [
     lo: 0,
     hi: 5,
     changes: [2, 3, 4, 5],
-    // Ethanoic acid from pH 3 to 5, hydrochloric acid from 0 to 2.
-    keep: (p) => p.high >= 3 && p.low <= 2,
+    // Ethanoic acid from pH 3 to 5, hydrochloric acid from 0 to 2; never pH 3 against pH 1, the written q17 on the same sheet.
+    keep: (p) => p.high >= 3 && p.low <= 2 && !(p.high === 3 && p.low === 1),
     ask: (r, high, low) =>
       r() < 0.5
         ? `A solution of ethanoic acid has pH ${high} and a solution of hydrochloric acid has pH ${low}. How many times greater is the hydrogen ion concentration in the hydrochloric acid?`

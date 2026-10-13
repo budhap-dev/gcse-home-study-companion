@@ -73,7 +73,7 @@ describe('counting atoms', () => {
     for (const b of built) {
       const { formula, symbol, k, n } = values(b)
       noArticle(b)
-      const written = /in (\d)([A-Za-z0-9()]+)\?|contains (\d)([A-Za-z0-9()]+)\.|shown by (\d)([A-Za-z0-9()]+)\?/.exec(b.question.prompt)
+      const written = /in (\d)([A-Za-z0-9()]+)\?|does (\d)([A-Za-z0-9()]+) stand for\?|shown by (\d)([A-Za-z0-9()]+)\?/.exec(b.question.prompt)
       expect(written, b.seed).not.toBeNull()
       const [kRead, fRead] = written![1] ? [written![1], written![2]] : written![3] ? [written![3], written![4]] : [written![5], written![6]]
       expect(Number(kRead)).toBe(k)

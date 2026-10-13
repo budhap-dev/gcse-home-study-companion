@@ -203,9 +203,12 @@ describe('repeat readings', () => {
       const mine = built.filter((b) => b.values.context === name)
       const k = MOLE_POOLS.READINGS.find((x) => x.name === name)!
       // The uncertainty comes from the ranges the context allows, each about as often.
-      expect(new Set(mine.map(answer))).toEqual(new Set(k.ranges.map((s) => clean((s * k.step) / 2))))
-      expect(k.ranges.length, String(name)).toBeGreaterThanOrEqual(10)
-      expect(share(mine.map(answer)), String(name)).toBeLessThanOrEqual(0.2)
+      // Only ranges within a tenth of some mean the context allows: wider, one reading is an anomaly.
+      const fits = k.ranges.filter((s) => s * k.step <= 0.1 * (k.hi - (k.hi - k.lo) / 4))
+      expect(new Set(mine.map(answer))).toEqual(new Set(fits.map((s) => clean((s * k.step) / 2))))
+      expect(fits.length, String(name)).toBeGreaterThanOrEqual(5)
+      // Five ranges fit a gas syringe, so each is about a fifth: no one answer over 1.3 times its even share.
+      expect(share(mine.map(answer)), String(name)).toBeLessThanOrEqual(Math.max(0.2, 1.3 / fits.length))
       expect(share(mine.map((b) => b.values.mean)), String(name)).toBeLessThanOrEqual(0.1)
     }
   })

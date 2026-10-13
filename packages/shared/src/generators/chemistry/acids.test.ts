@@ -80,7 +80,7 @@ function spread(built: Generated[], framings: number, changes: number[]) {
   for (const name of contexts(built)) {
     const mine = built.filter((b) => b.values.context === name)
     expect(new Set(mine.map(answer)), String(name)).toEqual(new Set(changes.map((d) => 10 ** d)))
-    expect(share(mine.map(answer)), String(name)).toBeLessThanOrEqual(changes.length === 3 ? 0.4 : 0.33)
+    expect(share(mine.map(answer)), String(name)).toBeLessThanOrEqual(changes.length === 2 ? 0.6 : changes.length === 3 ? 0.4 : 0.33)
   }
 }
 
@@ -88,7 +88,7 @@ describe('strong and weak acids', () => {
   it('q6: a fall in pH multiplies the hydrogen ions by ten for each unit', () => {
     const built = build('ph-fall-factor', 'strong-and-weak-acids', 'q6')
     for (const b of built) {
-      const { hi, lo, xs } = check(b, [2, 3, 4, 5])
+      const { hi, lo, xs } = check(b, [2, 4])
       // The framing: the pH falls, from the higher value to the lower.
       expect(b.question.prompt.indexOf(xs.find((x) => Number(x) === hi)!)).toBeLessThan(b.question.prompt.lastIndexOf(xs.find((x) => Number(x) === lo)!))
       expect(b.question.prompt).toMatch(/falls/)
@@ -97,13 +97,13 @@ describe('strong and weak acids', () => {
       expect(method(b)).toEqual(['uses ten to the power of the pH change'])
       expect(codes(b)).toEqual(['M1', 'A1'])
     }
-    spread(built, 2, [2, 3, 4, 5])
+    spread(built, 2, [2, 4])
   })
 
   it('q9: the solution with the lower pH has more hydrogen ions, by ten per unit', () => {
     const built = build('ph-compare-factor', 'strong-and-weak-acids', 'q9', 900)
     for (const b of built) {
-      const { lo, d } = check(b, [2, 3, 4, 5])
+      const { lo, d } = check(b, [3, 5])
       const p = b.question.prompt
       // The question asks about the solution with the lower pH, however it names it.
       if (b.values.context === 'two solutions') expect(p).toMatch(new RegExp(`in the pH ${show(lo)} solution\\?$`))
@@ -121,7 +121,7 @@ describe('strong and weak acids', () => {
       expect(b.question.solution).toContain(`Not ${WORDS[d]} times`)
       expect(method(b)).toEqual([`identifies a change of ${WORDS[d]} pH units`])
     }
-    spread(built, 3, [2, 3, 4, 5])
+    spread(built, 3, [3, 5])
     // The higher pH comes first about half the time, as the written question has it.
     const first = built.filter((b) => b.values.context !== 'pH meter' && Number(readings(b.question.prompt)[0]) === b.values.high).length
     const n = built.filter((b) => b.values.context !== 'pH meter').length
