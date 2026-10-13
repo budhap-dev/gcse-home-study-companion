@@ -96,11 +96,17 @@ const Q4_PROMPTS = {
   ],
 }
 
+/**
+ * q4 avoids the core sheet's values and the advanced written q14, 00010101 three places left to
+ * 10101000 (21 × 8 = 168): a core retry would print it worked in full before the student met it.
+ */
+const Q4_AVOID = new Set([...SHEET_VALUES.core, 21, 168])
+
 /** q4: 1 mark. Written: three places left multiplies by 2^3 = 8. */
 function shiftFactor(r: Rng, slot: Question): Draft {
   const dir = pick(r, ['left', 'right'] as const)
   const p = weighted(r, Q4_PLACES)
-  const n = pick(r, lossless(p, dir, SHEET_VALUES.core))
+  const n = pick(r, lossless(p, dir, Q4_AVOID))
   const factor = 2 ** p
   const b = bin(n)
   const after = shift(b, p, dir)

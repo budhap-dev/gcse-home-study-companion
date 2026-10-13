@@ -478,7 +478,9 @@ interface Applied {
   m: number
   out: number
 }
+let APPLIED: Applied[] | null = null
 function appliedDraws(): Applied[] {
+  if (APPLIED) return APPLIED
   const out: Applied[] = []
   for (const AE of PERCENTS) {
     for (const m of MASSES) {
@@ -487,6 +489,7 @@ function appliedDraws(): Applied[] {
       if (distinct(AE, m, product) && clearOf(product, AE, m) && noOnes(product) && !tenfold(product, clean(m - product))) out.push({ AE, m, out: product })
     }
   }
+  APPLIED = out
   return out
 }
 

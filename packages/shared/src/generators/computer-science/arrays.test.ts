@@ -307,6 +307,10 @@ describe('q14: how many values nested loops output', () => {
 
 describe('q17: a 2D array changed, then one row or column totalled', () => {
   const built = build('q17', 400)
+
+  it('puts the change and the new row or column in two sentences', () => {
+    for (const b of built) expect(b.question.solution, b.seed).toMatch(/\. (Row|Column) \d is now /)
+  })
   /** Reads the grid, the change line and the one loop back, and works each total out here. */
   const read = (b: Generated) => {
     const c = code(b)

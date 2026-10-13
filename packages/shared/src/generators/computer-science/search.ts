@@ -156,7 +156,7 @@ const fairAbsent = (n: number, gap: number) =>
 const Q4_PROMPTS = [
   (l: string, x: number) => `Using linear search on ${l}, how many items are examined to find ${x}?`,
   (l: string, x: number) => `Linear search is used to find ${x} in the list ${l}. How many items does it examine?`,
-  (l: string, x: number) => `A program uses linear search to look for ${x} in the list ${l}. How many items are examined before ${x} is found?`,
+  (l: string, x: number) => `A program uses linear search to look for ${x} in the list ${l}. How many items does it examine, counting the one that matches?`,
 ]
 
 function linearFound(r: Rng, slot: Question): Draft {
@@ -252,7 +252,7 @@ const Q5_PROMPTS = [
   (l: string, x: number) => `Using binary search on ${l}, how many items are examined to find ${x}? ${RULE}`,
   (l: string, x: number) => `Binary search is used to find ${x} in the sorted list ${l}. How many items does it examine? ${RULE}`,
   (l: string, x: number) =>
-    `A program uses binary search to look for ${x} in the sorted list ${l}. How many items are examined before ${x} is found? ${RULE}`,
+    `A program uses binary search to look for ${x} in the sorted list ${l}. How many items does it examine, counting the one that matches? ${RULE}`,
 ]
 
 function binaryFound(r: Rng, slot: Question, turn: number): Draft {

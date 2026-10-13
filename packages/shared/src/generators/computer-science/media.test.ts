@@ -123,7 +123,7 @@ describe('every images and sound build', () => {
       expect(many.filter((b) => b.question.prompt === slotOf(slotId).prompt).length, slotId).toBeLessThan(50)
       const answers = share(many, answer)
       expect(answers.worst, `${slotId} answer`).toBeLessThanOrEqual(0.4)
-      // q4 has nine honest depths (see COLOUR_DEPTHS); every other slot at least ten answers.
+      // q4 has seven honest depths (see COLOUR_DEPTHS); every other slot at least ten answers.
       expect(answers.distinct, `${slotId} answers`).toBeGreaterThanOrEqual(slotId === 'q4' ? MEDIA.COLOUR_DEPTHS.length : 10)
       const calc = (b: Generated) => JSON.stringify(Object.entries(b.values).filter(([k]) => !['picture', 'bitmap', 'sound', 'context'].includes(k)))
       expect(share(many, calc).worst, `${slotId} calculation`).toBeLessThan(1 / 6)
@@ -180,10 +180,13 @@ describe('images (3.3.6)', () => {
         for (const wrong of [w * h * d, w * h * colours, w * h]) expect(accepts(b, String(wrong))).toBe(false)
         expect([w, h]).not.toContain(colours)
         expect(b.question.solution).toContain(`The image's size does not come into it: each of its ${prose(w * h)} pixels can be any one of the ${prose(colours)} colours.`)
+        // An image of fewer pixels than colours cannot use them all: it is asked per pixel.
+        if (w * h < colours) expect(p).toMatch(/each pixel be\?$/)
       }
-      if (b.values.context === 'photo') expect(d).toBe(24)
+      // Doubled out by hand for one mark: 4096 colours at most.
+      expect(colours).toBeLessThanOrEqual(4096)
       // Displays at the depths displays use; an old machine's palette asked as a palette, never as its depth per pixel.
-      if (b.values.context === 'display') expect([8, 16, 24]).toContain(d)
+      if (b.values.context === 'display') expect([8, 12]).toContain(d)
       if (b.values.context === 'palette') {
         expect([3, 6]).toContain(d)
         expect(p).toMatch(/How many colours are in the palette\?$/)
@@ -191,7 +194,7 @@ describe('images (3.3.6)', () => {
       expect(p).not.toMatch(/\b9 bits|console from the 1980s|stores the colour of each pixel/)
     }
     const contexts = new Set(built.map((b) => b.values.context))
-    expect(contexts).toEqual(new Set(['bare', 'sized', 'display', 'photo', 'palette']))
+    expect(contexts).toEqual(new Set(['bare', 'sized', 'display', 'palette']))
     // One calculation is one depth: none over a sixth of the slot (24 bits was a fifth).
     expect(share(build('media-colours-from-depth', 'q4', 1000, 'depth'), (b) => b.values.depth).worst).toBeLessThan(1 / 6)
     expect(built.filter((b) => /pixels wide/.test(b.question.prompt)).length / built.length).toBeGreaterThan(0.3)

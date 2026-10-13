@@ -237,10 +237,10 @@ describe('q6: REPEAT … UNTIL', () => {
   })
 
   it('prints literal builds', () => {
-    const b = at('q6', 'lit-b')
-    expect(b.question.prompt).toBe('What is output?\n\n```\ncount ← 10\nREPEAT\n   count ← count + 3\nUNTIL count > 3\nOUTPUT count\n```')
-    expect(b.question.solution).toBe('The body runs before the condition is tested, so count becomes 13 first. Then `count > 3` is True, so the loop ends: **13**. A REPEAT loop always runs at least once, even when the condition is already True at the start.')
-    expect(lines(b)).toEqual(['M1 count becomes 13 before the first test', 'A1 13'])
+    const b = at('q6', 'lit-y')
+    expect(b.question.prompt).toBe('What is output?\n\n```\ncount ← 16\nREPEAT\n   count ← count + 9\nUNTIL count > 12\nOUTPUT count\n```')
+    expect(b.question.solution).toBe('The body runs before the condition is tested, so count becomes 25 first. Then `count > 12` is True, so the loop ends: **25**. A REPEAT loop always runs at least once, even when the condition is already True at the start.')
+    expect(lines(b)).toEqual(['M1 count becomes 25 before the first test', 'A1 25'])
     expect(at('q6', 'lit-c').question.prompt).toBe('What is output?\n\n```\nn ← 45\nREPEAT\n   n ← n - 2\nUNTIL n < 39\nOUTPUT n\n```')
     expect(at('q6', 'lit-c').question.solution).toBe('n starts at 45, then takes 43, 41, 39, 37. After 39 the condition `n < 39` is still False, because 39 is equal to 39, so the body runs again. After 37 the condition `n < 39` is True, so the loop ends: **37**. UNTIL stops when the condition becomes True.')
     expect(at('q6', 'lit-e').question.solution).toBe('x starts at 3, then takes 6, 12, 24. After 24 the condition `x ≥ 20` is True, so the loop ends: **24**. UNTIL stops when the condition becomes True.')
@@ -269,9 +269,10 @@ describe('q6: REPEAT … UNTIL', () => {
     expect(differs > 0.13 && differs < 0.3).toBe(true)
   })
 
-  it('starts with the condition already True in about a quarter of builds', () => {
-    const already = built.filter((b) => compare(read(b).start, read(b).cmp, read(b).limit)).length / built.length
-    expect(already > 0.15 && already < 0.35).toBe(true)
+  it('starts with the condition already True in about a tenth of builds, the limit within 6 of the start', () => {
+    const already = built.filter((b) => compare(read(b).start, read(b).cmp, read(b).limit))
+    expect(already.length / built.length > 0.05 && already.length / built.length < 0.15).toBe(true)
+    for (const b of already) expect(Math.abs(read(b).limit - read(b).start)).toBeLessThanOrEqual(6)
   })
 
   it('spreads answers, kinds and tests', () => {
