@@ -173,13 +173,18 @@ export function evenly<T>(r: Rng, key: string, make: () => T[], answerOf: (t: T)
  * 45% of a context (0.0500 mol/dm³ gives the most exact answers) and one volume 88% of the
  * sea-water samples: the value that divides most cleanly wins.
  */
+const MADE = new Map<string, unknown[]>()
 export function byFirst<T>(r: Rng, key: string, make: () => T[], first: (x: T) => number, answerOf: (x: T) => number, min = 1): T {
-  const usable = () => {
-    const all = make()
-    return [...new Set(all.map(first))].filter((f) => new Set(all.filter((x) => first(x) === f).map(answerOf)).size >= min)
+  // Every candidate, made once per key: each first value's pool filters it, and a fresh make()
+  // for each of 380 energies took recycling's first 200 builds to 29 ms apiece.
+  const all = () => {
+    let made = MADE.get(key) as T[] | undefined
+    if (!made) MADE.set(key, (made = make()))
+    return made
   }
+  const usable = () => [...new Set(all().map(first))].filter((f) => new Set(all().filter((x) => first(x) === f).map(answerOf)).size >= min)
   const f = evenly(r, `${key}:first`, usable, (x) => x)
-  return evenly(r, `${key}:${f}`, () => make().filter((x) => first(x) === f), answerOf)
+  return evenly(r, `${key}:${f}`, () => all().filter((x) => first(x) === f), answerOf)
 }
 
 // ---------------------------------------------------------------------------------------------
