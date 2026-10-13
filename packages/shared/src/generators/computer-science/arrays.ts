@@ -468,8 +468,8 @@ function gridSum(r: Rng, slot: Question): Draft {
   const otherText = others.length === 1 ? `${what} ${others[0]} is never added` : `${what}s ${andList(others)} are never added`
   const solution =
     along === 'row'
-      ? `${changeText} and row ${line.at} is now [${summed.join(', ')}]. \`LEN(${name}[0])\` is ${C} columns, so the loop adds the ${WORDS[C - 1]} cells of row ${line.at}: ${summed.join(' + ')} = **${answer}**. ${otherText}, and the change counts because it happens before the loop.`
-      : `${changeText} and column ${line.at} is now ${andList(summed)}, top to bottom. \`LEN(${name})\` is ${R} rows, so the loop adds the ${WORDS[R - 1]} cells of column ${line.at}: ${summed.join(' + ')} = **${answer}**. ${otherText}, and the change counts because it happens before the loop.`
+      ? `${changeText}. Row ${line.at} is now [${summed.join(', ')}]. \`LEN(${name}[0])\` is ${C} columns, so the loop adds the ${WORDS[C - 1]} cells of row ${line.at}: ${summed.join(' + ')} = **${answer}**. ${otherText}, and the change counts because it happens before the loop.`
+      : `${changeText}. Column ${line.at} is now ${andList(summed)}, top to bottom. \`LEN(${name})\` is ${R} rows, so the loop adds the ${WORDS[R - 1]} cells of column ${line.at}: ${summed.join(' + ')} = **${answer}**. ${otherText}, and the change counts because it happens before the loop.`
   const ran = run(code.join('\n'))
   return numericDraft(
     slot,

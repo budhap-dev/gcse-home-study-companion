@@ -17,7 +17,7 @@ import { run } from './pseudo.ts'
  *   five (where "add from 1" gives the same total) and total sometimes starts above 0.
  * - q5: WHILE n < L (or ≤ L) multiplying by 2 or 3, or adding 3 to 9; the loop overshoots the
  *   limit. Some ≤ loops hit the limit exactly and so run once more.
- * - q6: REPEAT … UNTIL counting up, down or doubling. One build in four starts with the condition
+ * - q6: REPEAT … UNTIL counting up, down or doubling. One build in ten starts with the condition
  *   already True, so the body runs once (REPEAT always runs at least once); in about a fifth the
  *   limit is a value the trace reaches under a strict test, so reading < as ≤ stops a pass early.
  * - q7: how many times a line inside nested FOR loops runs, the starts not always 1, so passes
@@ -177,16 +177,18 @@ export function repeatValues(start: number, step: (x: number) => number, done: (
 /**
  * q6: 2 marks. Written: count ← 0, REPEAT count ← count + 2 UNTIL count ≥ 7 gives 8. Counting up
  * (count, + 2 to 9, UNTIL ≥ or >), down (n, − 2 to 9, UNTIL ≤ or <) or doubling or tripling (x,
- * UNTIL > or ≥), 2 to 6 passes. One build in four starts with the condition already True: the body
- * still runs once. In about a quarter of the rest the test is strict and its limit is the value
+ * UNTIL > or ≥), 2 to 6 passes. One build in ten starts with the condition already True: the body
+ * still runs once, and the limit sits within 6 of the start, so the program reads as a near miss
+ * and not as counting down from 23 until below 37. A quarter was too many for a 2-mark trace; the
+ * advanced sheet's q17 asks the point as multiple choice. In about a fifth of the rest the test is strict and its limit is the value
  * before the last, which does not yet pass; otherwise the limit lies strictly between the last two
  * values. The answer is never the start, the step, the limit or the pass count, nor above 100.
  */
 function repeatUntil(r: Rng, slot: Question): Draft {
   const kind = weighted<RepeatKind>(r, [['plus', 45], ['minus', 30], ['times', 25]])
-  const already = r() < 0.25
+  const already = r() < 0.1
   // A strict test whose limit the trace reaches: the only case where < and ≤ (> and ≥) differ.
-  const hit = !already && r() < 0.27
+  const hit = !already && r() < 0.22
   const strict = hit || r() < 0.45
   const g = draw(
     r,
@@ -202,7 +204,7 @@ function repeatUntil(r: Rng, slot: Question): Draft {
       const below = kind === 'plus' ? answer - by : kind === 'minus' ? answer + by : answer / by
       // The limit: already True at the start, or passed only by the answer.
       let limit: number
-      if (already) limit = kind === 'minus' ? int(r, start + 1, start + 15) : int(r, Math.max(1, start - 15), start - 1)
+      if (already) limit = kind === 'minus' ? int(r, start + 1, start + 6) : int(r, Math.max(1, start - 6), start - 1)
       else if (hit) limit = below
       else limit = kind === 'minus' ? int(r, answer + 1, below - 1) : int(r, below + 1, answer - 1)
       return { by, start, runs, answer, below, limit, step }

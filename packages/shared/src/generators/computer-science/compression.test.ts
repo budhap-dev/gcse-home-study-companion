@@ -152,6 +152,8 @@ describe('the word lists', () => {
     for (const w of [...Q11_WORDS, ...SAVING_WORDS]) expect(['banana', 'bananas', 'mississippi', 'cheese', 'success']).not.toContain(w)
     for (const w of SAVING_WORDS) expect(w.length === 7 && leastBits(w) === 13, w).toBe(false)
     expect(Q7_WORDS).not.toContain('cheese')
+    // q7's own written banana, relabelled, and the advanced written q12's success.
+    for (const w of ['banana', 'bananas', 'success']) expect(Q7_WORDS).not.toContain(w)
   })
 
   it('keep q7 and q11 clear of a flat 2-bit total and q7 clear of q21\'s 3, 1, 1, 1 over six letters', () => {

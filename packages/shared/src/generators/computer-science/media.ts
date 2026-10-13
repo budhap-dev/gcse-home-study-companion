@@ -117,99 +117,84 @@ const imageBits = csBySlot('media-image-bits', TOPIC, {
  * squaring it does (D² = 2^D). That leaves eight depths, from 3 bits (8 colours, as written) to 24 (a
  * photo), so the slot has eight answers.
  */
-const COLOUR_DEPTHS = [3, 5, 6, 7, 8, 12, 16, 24]
+/**
+ * q4's depths. Every power of two here can be doubled out by hand for one mark on a
+ * non-calculator paper: 16 and 24 bits (65 536 and 16 777 216 colours) went, at 28% of builds,
+ * with the 24-bit camera photo. 1, 2 and 4 bits are out because 2D or D² is 2^D there, and 9
+ * bits is no depth anything uses.
+ */
+const COLOUR_DEPTHS = [3, 5, 6, 7, 8, 10, 12]
 
-type Colours = (r: Rng) => { name: string; d: number; prompt: string; w?: number; h?: number }
+interface ColourAsk {
+  name: string
+  /** The depths this way of asking fits. */
+  depths: number[]
+  weight: number
+  ask: (r: Rng, d: number) => { prompt: string; w?: number; h?: number }
+}
 
 /**
- * The ways q4 is asked. The bare question, as written; an image with its size beside its depth,
- * where a student who multiplies the size in is wrong; a display at the depths displays use (8, 16
- * and 24 bits); a camera photo at 24 bits, rare enough that 24 bits stays under a sixth of the slot;
- * and an old computer's palette, set by 3 or 6 bits, asked as a palette and not as a depth.
+ * The ways q4 is asked. The depth is drawn first, evenly, and then a way that fits it, so no one
+ * calculation fills the slot. The bare question, as written; an image with its size beside its
+ * depth, where a student who multiplies the size in is wrong; a display at the depths displays
+ * use (8 and 12 bits); and an old computer's palette, set by 3 or 6 bits, asked as a palette and
+ * not as a depth.
  */
-const COLOUR_ASKS: [Colours, number][] = [
-  [
-    (r) => {
-      const d = pick(r, COLOUR_DEPTHS)
-      return {
-        name: 'bare',
-        d,
-        prompt: pick(r, [
-          `How many colours can be represented with a colour depth of ${d} bits?`,
-          `An image has a colour depth of ${d} bits. How many different colours can it use?`,
-        ]),
-      }
-    },
-    3,
-  ],
-  [
-    (r) => {
-      const d = pick(r, [3, 5, 6, 7, 8, 12, 16])
+const COLOUR_ASKS: ColourAsk[] = [
+  {
+    name: 'bare',
+    depths: COLOUR_DEPTHS,
+    weight: 3,
+    ask: (r, d) => ({
+      prompt: pick(r, [
+        `How many colours can be represented with a colour depth of ${d} bits?`,
+        `An image has a colour depth of ${d} bits. How many different colours can it use?`,
+      ]),
+    }),
+  },
+  {
+    name: 'sized',
+    depths: COLOUR_DEPTHS,
+    weight: 3,
+    ask: (r, d) => {
       // No side equal to the number of colours: a 64-pixel side at 6 bits would read off.
       const [w, h] = draw(r, landscape([16, 20, 24, 30, 32, 40, 48, 50, 60, 64, 80, 100, 120, 200]), ([x, y]) => x !== 2 ** d && y !== 2 ** d)
-      return {
-        name: 'sized',
-        d,
-        w,
-        h,
-        prompt: pick(r, [
-          `An image is ${w} pixels wide and ${h} pixels high, with a colour depth of ${d} bits. How many different colours can each pixel be?`,
-          `A bitmap is ${w} pixels wide and ${h} pixels high and uses ${d} bits for each pixel. How many different colours can the image use?`,
-        ]),
-      }
+      // An image of fewer pixels than colours cannot use them all, so it is asked per pixel.
+      const asks = [`An image is ${w} pixels wide and ${h} pixels high, with a colour depth of ${d} bits. How many different colours can each pixel be?`]
+      if (w * h >= 2 ** d) asks.push(`A bitmap is ${w} pixels wide and ${h} pixels high and uses ${d} bits for each pixel. How many different colours can the image use?`)
+      return { w, h, prompt: pick(r, asks) }
     },
-    3,
-  ],
-  [
-    (r) => {
-      const d = pick(r, [8, 16, 24])
-      return {
-        name: 'display',
-        d,
-        prompt: pick(r, [
-          `A display shows each pixel with a colour depth of ${d} bits. How many different colours can a pixel show?`,
-          `A graphics card sends each pixel to the screen with a colour depth of ${d} bits. How many different colours are possible?`,
-        ]),
-      }
-    },
-    1,
-  ],
-  [
-    (r) => {
-      const [w, h] = pick(r, [[4000, 3000], [4032, 3024], [3264, 2448], [2592, 1944], [1920, 1080], [3840, 2160], [2048, 1536]] as const)
-      return {
-        name: 'photo',
-        d: 24,
-        w,
-        h,
-        prompt: pick(r, [
-          `A phone camera takes photos ${w} pixels wide and ${h} pixels high, with a colour depth of 24 bits. How many different colours can each pixel be?`,
-          `A digital photo is ${w} pixels wide and ${h} pixels high and has a colour depth of 24 bits. How many different colours can a pixel be?`,
-        ]),
-      }
-    },
-    0.3,
-  ],
-  [
-    (r) => {
-      const d = pick(r, [3, 6])
-      return {
-        name: 'palette',
-        d,
-        prompt: pick(r, [
-          `An old games console can choose each colour from a palette set by ${d} bits. How many colours are in the palette?`,
-          `An old home computer gives each colour in its palette ${an(`${d}-bit`)} ${d}-bit code. How many colours are in the palette?`,
-        ]),
-      }
-    },
-    0.7,
-  ],
+  },
+  {
+    name: 'display',
+    depths: [8, 12],
+    weight: 1,
+    ask: (r, d) => ({
+      prompt: pick(r, [
+        `A display shows each pixel with a colour depth of ${d} bits. How many different colours can a pixel show?`,
+        `A graphics card sends each pixel to the screen with a colour depth of ${d} bits. How many different colours are possible?`,
+      ]),
+    }),
+  },
+  {
+    name: 'palette',
+    depths: [3, 6],
+    weight: 1,
+    ask: (r, d) => ({
+      prompt: pick(r, [
+        `An old games console can choose each colour from a palette set by ${d} bits. How many colours are in the palette?`,
+        `An old home computer gives each colour in its palette ${an(`${d}-bit`)} ${d}-bit code. How many colours are in the palette?`,
+      ]),
+    }),
+  },
 ]
 
 /** q4: 2^D colours, 1 mark. Written: 2^3 = 8. */
 const colours = csBySlot('media-colours-from-depth', TOPIC, {
   q4(r, slot) {
-    const c = weighted(r, COLOUR_ASKS)(r)
+    const d = pick(r, COLOUR_DEPTHS)
+    const way = weighted(r, COLOUR_ASKS.filter((a) => a.depths.includes(d)).map((a) => [a, a.weight] as const))
+    const c = { name: way.name, d, ...way.ask(r, d) }
     const answer = 2 ** c.d
     // Second route: count the patterns of d bits by doubling once for each bit added.
     let patterns = 1

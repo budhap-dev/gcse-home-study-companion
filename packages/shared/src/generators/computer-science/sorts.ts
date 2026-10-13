@@ -211,8 +211,10 @@ function totalComparisons(r: Rng, slot: Question, turn: number): Draft {
   // 4 to 7 items, so the trace fits a 2-mark question.
   const n = pick(r, [4, 5, 6, 7].filter((n) => n % 2 === ((turn % 2) + 2) % 2))
   const groups = byPasses(n)
-  // The passes first, evenly, then an ordering that runs exactly that many.
-  const p = pick(r, [...groups.keys()].sort((a, b) => a - b))
+  // The passes first, then an ordering that runs exactly that many. All n − 1 passes is rare and
+  // never at 4 items: there the total is n(n − 1)/2, so ignoring the swapped flag paid in a third
+  // of builds.
+  const p = weighted(r, [...groups.keys()].sort((a, b) => a - b).filter((k) => k < n - 1 || n > 4).map((k) => [k, k < n - 1 ? 1 : 0.3] as const))
   const total = Array.from({ length: p }, (_, i) => n - 1 - i).reduce((s, x) => s + x, 0)
   const list = draw(
     r,
@@ -310,12 +312,13 @@ function totalSwaps(r: Rng, slot: Question): Draft {
 const FORMULA = '$\\frac{n(n-1)}{2}$'
 
 function worstComparisons(r: Rng, slot: Question, turn: number): Draft {
-  // 8 to 30 items, about the written 20, so n(n − 1) stays a product to do by hand.
-  const n = pick(r, Array.from({ length: 23 }, (_, i) => i + 8).filter((n) => n % 3 === ((turn % 3) + 3) % 3))
+  // 9 to 30 items, about the written 20, so n(n − 1) stays a product to do by hand. Not 8: the
+  // advanced sheet's written q17 is 28 comparisons back to 8 items, and a retry would ask it reversed.
+  const n = pick(r, Array.from({ length: 22 }, (_, i) => i + 9).filter((n) => n % 3 === ((turn % 3) + 3) % 3))
   const thing = pick(r, THINGS)
   const T = (n * (n - 1)) / 2
   const prompt = pick(r, [
-    () => `How many comparisons does a bubble sort make on a list of ${n} ${thing}, using ${FORMULA}?`,
+    () => `In the worst case, how many comparisons does a bubble sort make on a list of ${n} ${thing}, using ${FORMULA}?`,
     () => `A bubble sort is run on a list of ${n} ${thing} that is in reverse order, so every pass runs. Using ${FORMULA}, how many comparisons does it make?`,
     () => `In the worst case, how many comparisons does a bubble sort make on a list of ${n} ${thing}? Use ${FORMULA}.`,
   ])()
@@ -335,7 +338,8 @@ function worstComparisons(r: Rng, slot: Question, turn: number): Draft {
 // ---------------------------------------------------------------------------------------------
 
 function lengthFromComparisons(r: Rng, slot: Question, turn: number): Draft {
-  const n = pick(r, Array.from({ length: 21 }, (_, i) => i + 5).filter((n) => n % 3 === ((turn % 3) + 3) % 3))
+  // 5 to 25 items, but not 20: the written q11 is 20 items to 190, and a retry would ask it reversed.
+  const n = pick(r, Array.from({ length: 21 }, (_, i) => i + 5).filter((n) => n !== 20 && n % 3 === ((turn % 3) + 3) % 3))
   const T = (n * (n - 1)) / 2
   const thing = pick(r, THINGS)
   const prompt = pick(r, [

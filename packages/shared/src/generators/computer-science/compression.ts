@@ -193,8 +193,12 @@ function asciiBits(text: string): string {
 
 const distinct = (w: string) => new Set(w).size
 
-/** Higher sheet: q21 is cheese, and q23 asks for its code for c (110). */
-const HIGHER_BANNED = new Set(['cheese'])
+/**
+ * Higher sheet: q21 is cheese, and q23 asks for its code for c (110). q7's own written word is
+ * banana (9 bits), which came back with its codes relabelled in about 1 build in 75; success is
+ * the advanced sheet's written q12.
+ */
+const HIGHER_BANNED = new Set(['cheese', 'banana', 'bananas', 'success'])
 /**
  * Advanced sheet: q14 decodes 100110110 to banana with a = 0, b = 10, n = 11; q18 works
  * mississippi; the written q12 is success (13 bits against 49).

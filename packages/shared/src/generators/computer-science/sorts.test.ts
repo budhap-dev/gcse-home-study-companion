@@ -205,26 +205,30 @@ describe('bubble sort slots', () => {
       expect(rows.map((m) => [Number(m[2]), Number(m[3]), m[4]])).toEqual(own.passes.map((p) => [p.comparisons, p.swaps, p.after]))
       expect(b.question.solution).toContain(`Total comparisons: $${own.passes.map((p) => p.comparisons).join(' + ')} = ${own.comparisons}$, so **${own.comparisons}**.`)
       if (own.passes.length < n - 1) early++
+      // At 4 items every pass running makes the total n(n − 1)/2: the swapped flag ignored would pay.
+      if (n === 4) expect(own.passes.length, b.seed).toBeLessThan(3)
       // Slips: n per pass, n² or n(n + 1)/2 in all, n − 1 on every pass, swaps for comparisons.
       for (const wrong of [own.passes.length * n, n * n, (n * (n + 1)) / 2, own.passes.length * (n - 1), own.swaps]) expect(wrong, b.seed).not.toBe(own.comparisons)
     }
-    // The early stop changes the answer in a good share of builds (n(n − 1)/2 is then wrong).
-    expect(early / built.length).toBeGreaterThan(0.4)
+    // The early stop changes the answer in all but an eighth of builds (n(n − 1)/2 is then wrong).
+    expect(early / built.length).toBeGreaterThan(7 / 8)
     expect(differs(built, (b) => { const n = readList(b.question.prompt).length; return (n * (n - 1)) / 2 })).toBeGreaterThan(0.4)
     const s = share(built, answer)
     expect(s.worst).toBeLessThanOrEqual(0.4)
     expect(s.distinct).toBeGreaterThanOrEqual(10)
   })
 
-  it('q11: n(n − 1)/2 for 8 to 30 items; n², n(n + 1)/2 and the unhalved product never score', () => {
+  it('q11: n(n − 1)/2 for 9 to 30 items; n², n(n + 1)/2 and the unhalved product never score', () => {
     const built = buildB('q11')
     for (const b of built) {
       const n = firstNumber(b.question.prompt)
       expect(answer(b), b.seed).toBe((n * (n - 1)) / 2)
-      expect(n >= 8 && n <= 30).toBe(true)
+      // Not 8: the advanced sheet's written q17 (28 comparisons, 8 items) asked the other way round.
+      expect(n >= 9 && n <= 30).toBe(true)
       for (const wrong of [n * n, (n * (n + 1)) / 2, n * (n - 1), (n * n) / 2]) expect(wrong).not.toBe(answer(b))
       expect(b.question.solution.startsWith(`$\\frac{${n} \\times ${n - 1}}{2} = \\frac{${n * (n - 1)}}{2} = ${answer(b)}$`)).toBe(true)
-      expect(b.question.prompt).toMatch(/worst case|reverse order|using \$\\frac\{n\(n-1\)\}\{2\}\$/)
+      // The flag can stop the sort early, so every version says the formula is the worst case.
+      expect(b.question.prompt).toMatch(/worst case|reverse order/)
     }
     const s = share(built, answer)
     expect(s.worst).toBeLessThanOrEqual(0.4)
@@ -266,6 +270,8 @@ describe('bubble sort slots', () => {
       expect((n * (n - 1)) / 2).toBe(T)
       expect(answer(b), b.seed).toBe(n)
       expect(n >= 5 && n <= 25).toBe(true)
+      // Not 20: the written q11 (20 items, 190 comparisons) asked the other way round.
+      expect(n).not.toBe(20)
       for (const wrong of [n - 1, Math.floor(Math.sqrt(2 * T)), Math.round(Math.sqrt(2 * T)), Math.round(Math.sqrt(T))]) expect(wrong).not.toBe(n)
       expect(b.question.solution).toMatch(new RegExp(`Since \\$${n} \\\\times ${n - 1} = ${2 * T}\\$, the list has \\*\\*${n}\\*\\* (items|numbers|names|test scores|prices|high scores)\\.$`))
     }

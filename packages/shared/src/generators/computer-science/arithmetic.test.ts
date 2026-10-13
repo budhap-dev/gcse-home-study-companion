@@ -111,6 +111,8 @@ describe('q4: the number a shift multiplies or divides by', () => {
       expect(b.question.prompt).toContain(r.dir === 'left' ? 'multiplied' : 'divided')
       if (r.dir === 'left') expect(r.n * 2 ** r.p, b.seed).toBeLessThanOrEqual(255)
       else expect(r.n % 2 ** r.p, b.seed).toBe(0)
+      // Never the advanced written q14 worked in full: 21 three places left to 168, or back.
+      expect([21, 168], b.seed).not.toContain(r.n)
       expect(r.p).toBeGreaterThanOrEqual(3)
       expect(r.bits.replace(/0/g, '').length).toBeGreaterThanOrEqual(2)
       expect([58, 22, 80]).not.toContain(r.n)
