@@ -475,10 +475,11 @@ function interestChange(r: Rng, slot: Question): Draft {
   const g = pick(r, CHANGES)
   // The lower rate in half points, never equal to the change: a rise from 2% to 4% would make
   // the increase equal to the interest before it.
-  const lows = steps(LOAN_RATE[0] * 2, (LOAN_RATE[1] - g) * 2, 1).map((h) => h / 2).filter((a) => a !== g)
+  // Never a rate of 10%, nor a loan of £10 000 or £100 000: the interest would be a point move.
+  const lows = steps(LOAN_RATE[0] * 2, (LOAN_RATE[1] - g) * 2, 1).map((h) => h / 2).filter((a) => a !== g && a !== 10 && a + g !== 10)
   const low = pick(r, lows)
   const [a, c] = rises ? [low, low + g] : [low + g, low]
-  const L = stepped(r, b.loan[0], b.loan[1], 5000)
+  const L = draw(r, (rr) => stepped(rr, b.loan[0], b.loan[1], 5000), (x) => x !== 10000 && x !== 100000)
   const Ia = (L / 200) * (a * 2)
   const Ic = (L / 200) * (c * 2)
   const answer = (L / 200) * (g * 2)

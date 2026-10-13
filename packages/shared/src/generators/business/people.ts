@@ -220,7 +220,8 @@ const hierarchy = businessBySlot('people-hierarchy-managers', TOPIC, {
     const { s1, s2 } = draw(
       r,
       (rr) => ({ s2: int(rr, 3, 8), s1: int(rr, 4, 12) }),
-      (y) => new Set([m, y.s1, y.s2]).size === 3 && m * y.s2 !== y.s1 && m * y.s2 !== y.s2 && m * y.s1 * y.s2 <= h.most && !readsOff(m, [m * y.s1 * y.s2, m * y.s2]),
+      // No span of 10, where the division only moves the point.
+      (y) => y.s1 !== 10 && new Set([m, y.s1, y.s2]).size === 3 && m * y.s2 !== y.s1 && m * y.s2 !== y.s2 && m * y.s1 * y.s2 <= h.most && !readsOff(m, [m * y.s1 * y.s2, m * y.s2]),
     )
     const sup = m * s2
     const N = sup * s1
@@ -422,6 +423,7 @@ const trainingSaving = businessBySlot('people-training-saving', TOPIC, {
         y.S >= 1000 &&
         ![y.P, y.cost, y.L2 * y.cost, y.L2 * y.cost - y.P].includes(y.S) &&
         y.P !== y.cost &&
+        y.cost !== 1000 &&
         !readsOff(y.P, [N, y.L1, y.L2]) &&
         !readsOff(y.S, [N, y.L1, y.L2, y.cost, y.P]),
     )

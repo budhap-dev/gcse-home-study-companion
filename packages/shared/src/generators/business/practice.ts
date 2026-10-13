@@ -737,10 +737,10 @@ interface Borrower {
 const BORROWERS: Borrower[] = [
   { who: 'a business', why: '', loan: [3000, 50000] },
   { who: 'a café', why: ' to buy a new coffee machine', loan: [3000, 9000] },
-  { who: 'a builder', why: ' to buy a van', loan: [8000, 30000] },
+  { who: 'a building firm', why: ' to buy a van', loan: [8000, 30000] },
   { who: 'a bakery', why: ' to buy new ovens', loan: [5000, 25000] },
   { who: 'a gift shop', why: ' to refit the shop', loan: [5000, 20000] },
-  { who: 'a hairdresser', why: ' to open a second salon', loan: [20000, 60000] },
+  { who: 'a hair salon', why: ' to open a second salon', loan: [20000, 60000] },
 ]
 /** Loans in round sums: £500 steps under £10 000, then £1000 steps. */
 const loans = (b: Borrower) => [...steps(b.loan[0], Math.min(b.loan[1], 9500), 500).filter((x) => x <= b.loan[1]), ...(b.loan[1] >= 10000 ? steps(Math.max(10000, b.loan[0]), b.loan[1], 1000) : [])]

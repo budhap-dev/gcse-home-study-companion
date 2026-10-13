@@ -103,8 +103,8 @@ describe('every 2.4 build', () => {
     }
   })
 
-  it('keeps each slot\'s units (none on six), exact tolerance and codes, prints no article before a figure, and never fails to draw over 3000 seeds', () => {
-    expect(Object.keys(SLOTS).filter((id) => written(id).type === 'numeric' && (written(id) as { units?: string }).units === undefined).sort()).toEqual(['q11', 'q2', 'q4', 'q5', 'q6', 'q7'])
+  it('keeps each slot\'s units (every one has them since the validation pass), exact tolerance and codes, prints no article before a figure, and never fails to draw over 3000 seeds', () => {
+    expect(Object.keys(SLOTS).filter((id) => written(id).type === 'numeric' && (written(id) as { units?: string }).units === undefined)).toEqual([])
     for (const g of financeGenerators) {
       for (const id of g.replaces) {
         const slot = written(id)

@@ -59,7 +59,7 @@ const TEAMS: Team[] = [
   { name: 'chairs', place: 'a furniture workshop', workers: 'workers', verb: 'make', items: 'chairs', per: 'week', each: [6, 20], size: [2, 12] },
   { name: 'loaves', place: 'a bakery', workers: 'bakers', verb: 'bake', items: 'loaves', per: 'day', each: [20, 45], size: [2, 8] },
   { name: 'bicycles', place: 'a bicycle workshop', workers: 'mechanics', verb: 'assemble', items: 'bicycles', per: 'week', each: [8, 25], size: [2, 12] },
-  { name: 'T-shirts', place: 'a T-shirt printer', workers: 'printers', verb: 'print', items: 'T-shirts', per: 'day', each: [20, 40], size: [2, 9] },
+  { name: 'T-shirts', place: 'a T-shirt printing business', workers: 'printers', verb: 'print', items: 'T-shirts', per: 'day', each: [20, 40], size: [2, 9] },
   { name: 'repairs', place: 'a phone-repair shop', workers: 'technicians', verb: 'repair', items: 'phones', per: 'day', each: [5, 12], size: [2, 6] },
   { name: 'haircuts', place: 'a salon', workers: 'stylists', verb: 'give', items: 'haircuts', per: 'day', each: [6, 12], size: [2, 8] },
   { name: 'cakes', place: 'a cake shop', workers: 'decorators', verb: 'decorate', items: 'cakes', per: 'week', each: [10, 30], size: [2, 8] },
@@ -365,10 +365,10 @@ interface Plant {
  * bakery should install one.
  */
 const PLANTS: Plant[] = [
-  { name: 'factory', who: 'A factory makes', items: 'units', item: 'unit', outputs: [2000, 2500, 4000, 5000, 8000, 10000], variable: [2, 12, 1], fixed: [5000, 40000], fall: [20, 150, 5] },
+  { name: 'factory', who: 'A factory makes', items: 'units', item: 'unit', outputs: [2000, 2500, 4000, 5000, 8000], variable: [2, 12, 1], fixed: [5000, 40000], fall: [20, 150, 5] },
   { name: 'toys', who: 'A toy factory makes', items: 'toys', item: 'toy', outputs: [2000, 2500, 4000, 5000, 8000], variable: [3, 10, 1], fixed: [5000, 30000], fall: [20, 120, 5] },
-  { name: 'chairs', who: 'A furniture factory makes', items: 'chairs', item: 'chair', outputs: [400, 500, 800, 1000, 1250, 2000], variable: [20, 60, 2], fixed: [8000, 40000], fall: [50, 400, 10] },
-  { name: 'T-shirts', who: 'A clothing factory makes', items: 'T-shirts', item: 'T-shirt', outputs: [4000, 5000, 8000, 10000, 20000], variable: [2, 6, 0.5], fixed: [8000, 40000], fall: [10, 80, 5] },
+  { name: 'chairs', who: 'A furniture factory makes', items: 'chairs', item: 'chair', outputs: [400, 500, 800, 1250, 2000], variable: [20, 60, 2], fixed: [8000, 40000], fall: [50, 400, 10] },
+  { name: 'T-shirts', who: 'A clothing factory makes', items: 'T-shirts', item: 'T-shirt', outputs: [4000, 5000, 8000, 20000], variable: [2, 6, 0.5], fixed: [8000, 40000], fall: [10, 80, 5] },
   { name: 'shoes', who: 'A shoe factory makes', items: 'pairs of shoes', item: 'pair', outputs: [1000, 2000, 2500, 4000, 5000], variable: [10, 25, 1], fixed: [10000, 50000], fall: [30, 250, 10] },
   { name: 'bottles', who: 'A bottling plant fills', items: 'bottles', item: 'bottle', outputs: [20000, 25000, 40000, 50000], variable: [0.4, 1.2, 0.1], fixed: [5000, 30000], fall: [3, 15, 1] },
 ]

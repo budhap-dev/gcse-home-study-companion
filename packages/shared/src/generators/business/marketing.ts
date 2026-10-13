@@ -241,7 +241,7 @@ const extensionSales = businessBySlot('business-extension-sales-increase', TOPIC
         prompt,
         solution:
           `Percentage change $=$ change $\\div$ original $\\times 100$. The change is $${T(after)} - ${T(before)} = ${T(rise)}$ ${e.items}, so the increase is $${T(rise)} \\div ${T(before)} \\times 100 = ${show(p)}\\%$. ` +
-          `Divide by the figure **before** the change: $${T(rise)} \\div ${T(after)}$ gives a smaller, wrong answer. A ${show(p)}% rise in sales is what the extension strategy bought; whether it was worth it depends on what ${e.thing} cost.`,
+          `Divide by the figure **before** the change: $${T(rise)} \\div ${T(after)}$ gives a smaller, wrong answer. The rise in sales of ${show(p)}% is what the extension strategy bought; whether it was worth it depends on what ${e.thing} cost.`,
         method: [`$(${T(after)} - ${T(before)}) \\div ${T(before)} \\times 100$`],
         answer: p,
         line: `${show(p)}%`,

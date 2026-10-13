@@ -664,7 +664,11 @@ function sameRearrangement(raw: string, accepted: string, prompt: string): boole
 export function numericText(answer: number, units?: string, places?: number, asked: { sigFigs?: number; standardForm?: boolean } = {}): string {
   // Binary floats: 2.2 × 100 is 220.00000000000003, so an exact integer test showed 2.20 as "2.2".
   const whole = (x: number) => Math.abs(x - Math.round(x)) < 1e-9
-  if (units === '£') return `£${grouped(whole(answer * 100) ? answer.toFixed(2) : String(answer))}`
+  // Money: the symbol before the number and the sign before the symbol (−£200.00, not £-200.00), euros and dollars as pounds are.
+  if (units === '£' || units === '€' || units === '$') {
+    const size = Math.abs(answer)
+    return `${answer < 0 ? '−' : ''}${units}${grouped(whole(size * 100) ? size.toFixed(2) : String(size))}`
+  }
   // Standard form when the prompt asks for it, or when the digits would not be readable: a
   // frequency of 250000000000000000000 Hz was shown as that, and 1e+21 past twenty-one digits.
   const unreadable = Math.abs(answer) >= 1e7 || (answer !== 0 && Math.abs(answer) < 1e-4)

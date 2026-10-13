@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { claimAnswer, expectedAnswer, mark, normaliseText, parseNumber } from './marking.ts'
+import { claimAnswer, expectedAnswer, mark, normaliseText, numericText, parseNumber } from './marking.ts'
 import type { Question } from './content/questions.ts'
 
 const base = { id: 'q', prompt: 'p', marks: 2, gradeBand: '6-7' as const, skill: 's', calculator: 'either' as const, tags: [], solution: 's', markScheme: [{ code: 'M1', marks: 2, description: 'd' }], discriminators: [] }
@@ -27,6 +27,12 @@ describe('parseNumber', () => {
     expect(parseNumber('+3/4')).toBe(0.75)
   })
 
+  it('shows money with the sign before the symbol and the symbol before the number', () => {
+    expect(numericText(-200, '£')).toBe('−£200.00')
+    expect(numericText(3481.6, '£')).toBe('£3481.60')
+    expect(numericText(9, '€')).toBe('€9.00')
+    expect(numericText(12500, '£')).toBe('£12 500.00')
+  })
   it('forgives a currency symbol, because the solutions print one', () => {
     expect(parseNumber('£500')).toBe(500)
     expect(parseNumber('-£700')).toBe(-700)
