@@ -451,6 +451,8 @@ export const returnDraws = (v: Investment) => {
       Number.isInteger(R(d)) &&
       !SHEET_COSTS.includes(R(d)) &&
       R(d) !== SHEET_RETURN &&
+      // Never ARR × years = 100: the total profit would equal the cost, and cost ÷ years ÷ cost would score.
+      d.A * d.Y !== 100 &&
       d.A !== d.Y &&
       !readsOff(d.A, [d.I, R(d), R(d) * d.Y]) &&
       !arrReturnWrong(d.I, R(d), d.Y).flatMap(typed).includes(d.A),

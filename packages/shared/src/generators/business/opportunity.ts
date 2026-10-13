@@ -235,7 +235,8 @@ const OFFERS: { name: string; offer: string; price: [number, number] }[] = [
 ]
 /** First samples, small; second, large. No 30: q12 on the same sheet surveys 30 friends. */
 const SMALL = [20, 25, 40, 50]
-const LARGE = [200, 250, 300, 400, 500, 600, 800, 1000]
+/** Never 1000: the share would be the count with its point moved. */
+const LARGE = [200, 250, 300, 400, 500, 600, 800]
 
 /**
  * q11: first share − second share, 4 marks. Written: 30 of 40 (75%), 240 of 400 (60%), 15 points.
