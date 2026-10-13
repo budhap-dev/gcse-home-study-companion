@@ -36,7 +36,8 @@ const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b))
  * room for a student who gives three (42.72 dm³ marked right as 42.7). sfTolerance stays under
  * the release check's 2% cap.
  */
-const room = (x: number, dp: number) => (figures(x) > 3 ? Math.max(toPlaces(x, dp), sfTolerance(x, 3)) : toPlaces(x, dp))
+// A three-figure answer takes its two-figure rounding too (0.725 mol as 0.73), as an AQA scheme allows, within the same cap.
+const room = (x: number, dp: number) => (figures(x) > 3 ? Math.max(toPlaces(x, dp), sfTolerance(x, 3)) : figures(x) === 3 ? Math.max(toPlaces(x, dp), sfTolerance(x, 2)) : toPlaces(x, dp))
 
 // ---------------------------------------------------------------------------------------------
 // q2: moles to a volume in dm³

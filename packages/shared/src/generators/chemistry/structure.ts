@@ -214,7 +214,14 @@ export const relativeAtomicMass: Generator = {
   replaces: ['q6'],
   build(r, slot, turn) {
     const ctx = MEAN_CONTEXTS[turn % MEAN_CONTEXTS.length]!
-    const x = evenly(r, `relative-atomic-mass-from-abundance:${ctx.name}`, abundances, (y) => y.answer)
+    // Two isotopes, as the written question has, four times in five; counts of atoms only in every
+    // hundred, so a four-isotope sum per thousand never stands in for the written's two per cent.
+    const many = r() < 0.2
+    const pool = () => {
+      const fits = abundances().filter((y) => (y.masses.length > 2) === many && (!ctx.atoms || y.step === 1))
+      return fits.length ? fits : abundances().filter((y) => !ctx.atoms || y.step === 1)
+    }
+    const x = evenly(r, `relative-atomic-mass-from-abundance:${ctx.name}:${many ? 'many' : 'two'}`, pool, (y) => y.answer)
     const el = nameOf(x.symbol)
     const T = ctx.atoms ? per(x) : 100
     const k = T / 100

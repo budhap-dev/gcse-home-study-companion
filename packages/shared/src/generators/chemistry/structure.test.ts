@@ -163,9 +163,11 @@ describe('atoms, isotopes and ions', () => {
       }
     }
     expect(contexts(built).size).toBe(3)
-    spread('relative-atomic-mass-from-abundance', 'q6', ['symbol'], 15)
+    // Two isotopes four times in five, counts of atoms per hundred only: fewer answers in a context, still a dozen.
+    spread('relative-atomic-mass-from-abundance', 'q6', ['symbol'], 12)
     // Both roundings turn up in every context that can print them (atoms print whole counts of 100 or 1000).
-    for (const c of contexts(built)) expect(new Set(built.filter((b) => b.values.context === c).map((b) => values(b).step)).size, String(c)).toBe(2)
+    // Atoms are counted per hundred only, so that context prints whole per cents alone.
+    for (const c of contexts(built)) expect(new Set(built.filter((b) => b.values.context === c).map((b) => values(b).step)).size, String(c)).toBe(c === 'atoms' ? 1 : 2)
   })
 
   it('q6: every abundance set is real-looking: the masses ascend, the per cents total 100, and no answer sits on a half', () => {

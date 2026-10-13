@@ -1,7 +1,7 @@
 import { fixed, show } from '../format.ts'
 import { cap, closes, near, numeric, prose, stepped, tex } from '../physics/build.ts'
 import { clearAtSigFigs, dpTolerance, sfTolerance, sigFigs, sigText } from '../physics/format.ts'
-import { pick, shuffle, type Rng } from '../random.ts'
+import { draw, pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { clean, clearOf, equation, equationTex, evenly, mr, places, powerOfTen, range, sub, tenfold, threeFigures, toPlaces, type Equation } from './build.ts'
 import { nameOf } from './compounds.ts'
@@ -260,8 +260,17 @@ export const meanOfReadings: Generator = {
     const k = READINGS[turn % READINGS.length]!
     const sets = offsets(k.reach, false)
     const means = range(k.lo + k.reach * k.step, k.hi - k.reach * k.step, k.step)
-    const mean = pick(r, means)
-    const set = pick(r, sets)
+    // The readings span at most a tenth of their mean: wider, one reads as an anomaly a student
+    // would drop before taking the mean.
+    const { mean, set } = draw(
+      r,
+      (r) => {
+        const mean = pick(r, means)
+        const close = sets.filter((s) => (s[2]! - s[0]!) * k.step <= 0.1 * mean)
+        return close.length ? { mean, set: pick(r, close) } : null
+      },
+      (x) => x !== null,
+    )!
     const xs = readingsAbout(r, k, mean, set)
     const [a, b, c] = xs.map((x) => reading(x, k))
     const prompt = pick(r, [
@@ -285,6 +294,9 @@ export const meanOfReadings: Generator = {
   },
 }
 
+/** The ranges q6 draws: within a tenth of the means in the top three quarters of the context's span. */
+export const spreadsFor = (k: Readings) => k.ranges.filter((s) => s * k.step <= 0.1 * (k.hi - (k.hi - k.lo) / 4))
+
 /**
  * Half the range: written as q6 (18.4 to 18.6 cm³, ±0.1, 2 marks). The range is drawn first
  * from the ones a context allows, then readings with that range whose mean is a clean figure,
@@ -298,13 +310,23 @@ export const uncertaintyHalfRange: Generator = {
   replaces: ['q6'],
   build(r, slot, turn) {
     const k = READINGS[turn % READINGS.length]!
-    const spread = pick(r, k.ranges)
-    const set = pick(r, offsets(spread, true).filter((s) => s[2]! - s[0]! === spread))
-    const lowest = Math.min(...set)
-    const highest = Math.max(...set)
-    const means = range(k.lo - lowest * k.step, k.hi - highest * k.step, k.step)
-    const u = clean((spread * k.step) / 2)
-    const mean = pick(r, means.filter((m) => !set.some((d) => tenfold(u, clean(m + d * k.step))) && !tenfold(u, m)))
+    // The range is at most a tenth of the mean: wider, one reading is an anomaly a student would drop.
+    // The range is at most a tenth of the mean (wider, one reading is an anomaly a student would
+    // drop), and only ranges that leave the top three quarters of the means open, so no mean crowds.
+    const { set, u, mean } = draw(
+      r,
+      (r) => {
+        const spread = pick(r, spreadsFor(k))
+        const set = pick(r, offsets(spread, true).filter((s) => s[2]! - s[0]! === spread))
+        const lowest = Math.min(...set)
+        const highest = Math.max(...set)
+        const means = range(k.lo - lowest * k.step, k.hi - highest * k.step, k.step)
+        const u = clean((spread * k.step) / 2)
+        const fits = means.filter((m) => spread * k.step <= 0.1 * m && !set.some((d) => tenfold(u, clean(m + d * k.step))) && !tenfold(u, m))
+        return fits.length ? { set, u, mean: pick(r, fits) } : null
+      },
+      (x) => x !== null,
+    )!
     const xs = readingsAbout(r, k, mean, set)
     const [a, b, c] = xs.map((x) => reading(x, k))
     const [lo, hi] = [Math.min(...xs), Math.max(...xs)]
@@ -566,10 +588,11 @@ interface Bulk {
   ask: (f: string) => string
 }
 const FERTILISER: Record<string, string> = {
-  NH4NO3: 'ammonium nitrate fertiliser on a vegetable plot',
-  '(NH4)2SO4': 'ammonium sulfate fertiliser on a vegetable plot',
-  'CO(NH2)2': 'urea fertiliser on a vegetable plot',
-  'Ca(OH)2': 'calcium hydroxide (slaked lime) on a vegetable plot to neutralise acid soil',
+  // Sacks of 5 to 25 kg dress a whole allotment site, not one plot.
+  NH4NO3: 'ammonium nitrate fertiliser across an allotment site',
+  '(NH4)2SO4': 'ammonium sulfate fertiliser across an allotment site',
+  'CO(NH2)2': 'urea fertiliser across an allotment site',
+  'Ca(OH)2': 'calcium hydroxide (slaked lime) across an allotment site to neutralise acid soil',
 }
 const BULK: Bulk[] = [
   {

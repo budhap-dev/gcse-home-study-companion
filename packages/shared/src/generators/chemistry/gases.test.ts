@@ -5,6 +5,7 @@ import { Question } from '../../content/questions.ts'
 import { mark } from '../../marking.ts'
 import { fixed, show } from '../format.ts'
 import { sfTolerance, sigFigs } from '../physics/format.ts'
+import { figures } from '../physics/build.ts'
 import { GENERATORS, generate } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { atoms, mr } from './build.ts'
@@ -496,7 +497,10 @@ describe('every gas generator', () => {
         const byPlaces = dp === 0 ? 0 : 0.5 * 10 ** -dp
         const rounded = sigFigs(q.answer, 3)
         if (rounded !== q.answer) fourFigures++
-        expect(q.tolerance, `${id} ${b.seed}`).toBeLessThanOrEqual(Math.max(byPlaces, rounded !== q.answer ? sfTolerance(q.answer, 3) : 0) + 1e-12)
+        // Three figures take their two-figure rounding too (0.725 as 0.73), within the 2% cap.
+        const twoFig = figures(q.answer) === 3 ? sfTolerance(q.answer, 2) : 0
+        expect(q.tolerance, `${id} ${b.seed}`).toBeLessThanOrEqual(Math.max(byPlaces, twoFig, rounded !== q.answer ? sfTolerance(q.answer, 3) : 0) + 1e-12)
+        if (twoFig) expect(mark(q, String(sigFigs(q.answer, 2))).correct || Math.abs(sigFigs(q.answer, 2) - q.answer) > Math.abs(q.answer) * 0.019, `${id} ${b.seed}: ${q.answer} at 2 s.f.`).toBe(true)
         expect(q.tolerance).toBeLessThanOrEqual(Math.abs(q.answer) * 0.02)
         // A student who gives three significant figures is marked right.
         expect(mark(q, String(rounded)).correct, `${id} ${b.seed}: ${q.answer} as ${rounded}`).toBe(true)

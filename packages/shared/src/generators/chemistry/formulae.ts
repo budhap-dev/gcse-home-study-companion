@@ -103,7 +103,7 @@ function allCounts(c: CountContext): Count[] {
 
 const COUNT_PROMPTS = [
   (el: string, f: string) => `How many ${el} atoms are there in ${f}?`,
-  (el: string, f: string) => `A balanced equation contains ${f}. How many ${el} atoms does ${f} stand for?`,
+  (el: string, f: string) => `How many ${el} atoms does ${f} stand for?`,
   (el: string, f: string) => `How many atoms of ${el} are shown by ${f}?`,
 ]
 
