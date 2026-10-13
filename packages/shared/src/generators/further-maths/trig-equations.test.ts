@@ -222,15 +222,16 @@ describe('fm-trig-exact-equation q3: a sine equation by hand, the larger or smal
     const b = find(EXACT, 'q3', (b) => b.question.prompt === written('q3').prompt)
     expect(b.question.solution).toBe(written('q3').solution)
   })
-  it('mostly positive values, as the 4-5 band wants; no calculation over a quarter', () => {
+  it('mostly positive values, as the 4-5 band wants; no calculation over three tenths', () => {
     common(built, { minDistinct: 9 })
     const many = build(EXACT, 'q3', 3000, 'calc')
     // Only three positive calculations exist, so the band wins over the usual sixth.
-    expect(top(tally(many, (b) => `${b.values.kind} ${b.values.sign} ${b.values.which}`), many.length)).toBeLessThanOrEqual(0.25)
+    expect(top(tally(many, (b) => `${b.values.kind} ${b.values.sign} ${b.values.which}`), many.length)).toBeLessThanOrEqual(0.3)
     expect(tally(many, answer).size).toBe(9)
+    // A negative value one time in five: its quadrant work is the higher sheet's, so it stays rare here.
     const positive = share(many, (b) => b.values.sign === 1)
-    expect(positive).toBeGreaterThan(0.65)
-    expect(positive).toBeLessThan(0.8)
+    expect(positive).toBeGreaterThan(0.75)
+    expect(positive).toBeLessThan(0.85)
     expect(tally(many, (b) => b.values.form).size).toBe(5)
     promptsSpread(EXACT, 'q3')
   })

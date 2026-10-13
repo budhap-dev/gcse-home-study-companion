@@ -262,7 +262,9 @@ describe('fm-sequence-quadratic-which-term q8: which term of a quadratic sequenc
   })
 
   it('spreads the answer and the rule', () => {
-    spread(built.map(answer))
+    // N runs from 8 to 15: eight answers, none reached by counting on from the four printed terms.
+    spread(built.map(answer), 8)
+    expect(built.every((b) => answer(b) >= 8)).toBe(true)
     expect(new Set(built.map((b) => read(b).b))).toEqual(new Set([-2, 2, 3, 4, 5, 6, 7]))
     const withConstant = built.filter((b) => read(b).c !== 0).length / built.length
     expect(withConstant).toBeGreaterThan(0.25)
@@ -363,7 +365,7 @@ describe('sequences literal lines (worked by hand)', () => {
 
   it('q8 and q12', () => {
     expect(first('fm-sequence-quadratic-which-term', 'q8').solution).toBe(
-      '$n^2 + 2n + 1 = 144$, so $n^2 + 2n - 143 = 0$ and $(n + 13)(n - 11) = 0$. A position is positive, so $n = 11$: the 11th term.',
+      '$n^2 + 2n + 1 = 169$, so $n^2 + 2n - 168 = 0$ and $(n + 14)(n - 12) = 0$. A position is positive, so $n = 12$: the 12th term.',
     )
     expect(first('fm-sequence-term-difference', 'q12').solution).toBe(
       'The 20th term is $\\frac{60}{25} = \\frac{12}{5}$; the 7th is $\\frac{21}{12} = \\frac{7}{4}$. The difference is $\\frac{12}{5} - \\frac{7}{4} = \\frac{48}{20} - \\frac{35}{20} = \\frac{13}{20} = 0.65$.',

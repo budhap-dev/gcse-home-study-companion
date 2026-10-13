@@ -335,8 +335,10 @@ function fair(x: Route): boolean {
 }
 
 const SIMPLE = ROUTES.filter((x) => allOnes(x) && fair(x))
-const WITH_NUMBERS = ROUTES.filter((x) => !allOnes(x) && fair(x))
-const TOTALS: Route[] = [...ROUTES, ...ONE_PRODUCT].filter((x, i, all) => x.eq.left.some((t) => t.n > 1) && all.findIndex((y) => y.eq.text === x.eq.text) === i)
+/** The written q8 and q11 equation: a retry drawing it would print the question just done, word for word. */
+const writtenRoute = (x: Route) => x.eq.text === equation('Fe2O3 + 3CO -> 2Fe + 3CO2').text
+const WITH_NUMBERS = ROUTES.filter((x) => !allOnes(x) && fair(x) && !writtenRoute(x))
+const TOTALS: Route[] = [...ROUTES, ...ONE_PRODUCT].filter((x, i, all) => x.eq.left.some((t) => t.n > 1) && all.findIndex((y) => y.eq.text === x.eq.text) === i && !writtenRoute(x))
 
 /** "$160 + (3 \times 28) = 160 + 84 = 244$" without the last figure, which the caller bolds or not. */
 function sumWorking(terms: Term[]): { first: string; second: string | null } {

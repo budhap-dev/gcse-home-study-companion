@@ -286,7 +286,10 @@ function twoSolutions(r: Rng, slot: Question, fn: 'sin' | 'cos', sign: 1 | -1, w
  * asks either. Each positive calculation is about 23% of builds: there are only three.
  */
 function sineEquation(r: Rng, slot: Question): Draft {
-  if (r() < 0.7) return twoSolutions(r, slot, 'sin', 1, 'larger', true)
+  // Positive four times in five, as the written sin x = 0.5 is: this is the core, grade 4-5 slot, and
+  // the 180° + α and 360° − α work for a negative value is q6's, on the higher sheet. A positive value
+  // always asks the larger solution, the smaller being the calculator's own angle.
+  if (r() < 0.8) return twoSolutions(r, slot, 'sin', 1, 'larger', true)
   return twoSolutions(r, slot, 'sin', -1, r() < 0.5 ? 'larger' : 'smaller', true)
 }
 

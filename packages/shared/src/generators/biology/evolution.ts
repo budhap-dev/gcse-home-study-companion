@@ -3,7 +3,7 @@ import { atMost, cap, closes, figures, near, numeric, prose, tex } from '../phys
 import { clean, clearOf, distinct, hundredths, noOnes, places, powerOfTen, range, shiftFree, tenfold, threeFigures, toPlaces, word } from '../chemistry/build.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { balanced, between, cut, fair, figureTolerance, full, halfLastPlace, layered, list, memo, rich, tidy, toThree, unitsOf, whole } from './build.ts'
+import { askFor, balanced, between, cut, fair, figureTolerance, full, halfLastPlace, layered, list, memo, rich, tidy, toThree, unitsOf, whole } from './build.ts'
 
 /**
  * Variation and evolution (Edexcel 1BI0: 3.20 to 3.22 variation, 4.2 natural selection, 4.3
@@ -740,7 +740,7 @@ export const fossilGenerations: Generator = {
     return numeric(
       slot,
       {
-        prompt: pick(r, SPAN_PROMPTS)(l, x),
+        prompt: pick(r, SPAN_PROMPTS)(l, x) + askFor(x.rounded),
         solution:
           `Time between them: $${show(x.older.age)} - ${show(x.younger.age)} = ${show(x.gap)}$ million years $= ${tex(x.years)}$ years.\n\n` +
           `Number of generations = time ÷ generation time: ${result}\n\n` +
@@ -932,7 +932,7 @@ export const formRatio: Generator = {
     const f = toThree(big / small)
     // A ratio that does not come out exactly is asked to 3 significant figures, so the student
     // knows how far to take 87 ÷ 13; an exact one keeps the written wording.
-    const precision = f.rounded ? ' Give your answer to 3 significant figures.' : ''
+    const precision = askFor(f.rounded)
     return numeric(
       slot,
       {

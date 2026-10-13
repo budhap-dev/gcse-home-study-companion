@@ -1,5 +1,5 @@
 import { an, roundTo, show } from '../format.ts'
-import { draw, int, pick, type Rng } from '../random.ts'
+import { draw, int, pick, rng, type Rng } from '../random.ts'
 import type { Check, Generator } from '../types.ts'
 import { G, G_STATED, atMost, cap, closes, figures, near, numeric, prose, sciExact, stepped, tex } from './build.ts'
 import { clearAtSigFigs, dpTolerance, sfTolerance, sigFigs, sigText } from './format.ts'
@@ -285,9 +285,9 @@ const SWINGS: Drop[] = [
   { setup: (m, h) => `A child of mass ${m} kg sits on a swing. The seat is pulled back until it is ${h} m above its lowest point, then let go.`, ask: "the child's speed at the lowest point", mass: [20, 40], step: 1, n: [2, 4] },
   { setup: (m, h) => `A marble of mass ${m} kg is released from rest at the top of a curved track, ${h} m above the bottom.`, ask: 'its speed at the bottom of the track', mass: [0.01, 0.05], step: 0.01, n: [1, 3] },
   { setup: (m, h) => `A conker of mass ${m} kg hangs on a string. It is pulled up until it is ${h} m above its lowest point and released.`, ask: 'its speed at the lowest point', mass: [0.01, 0.03], step: 0.01, n: [1, 3] },
-  { setup: (m, h) => `A wrecking ball of mass ${m} kg is pulled back so that it is ${h} m above its lowest point, then released.`, ask: 'its speed at the lowest point', mass: [300, 1000], step: 50, n: [3, 5] },
+  { setup: (m, h) => `A wrecking ball of mass ${m} kg is pulled back so that it is ${h} m above its lowest point, then released.`, ask: 'its speed at the lowest point', mass: [300, 1000], step: 50, n: [3, 7] },
   { setup: (m, h) => `A toy car of mass ${m} kg is released from rest ${h} m above the bottom of a track.`, ask: 'its speed at the bottom', mass: [0.1, 0.5], step: 0.1, n: [2, 4] },
-  { setup: (m, h) => `A skateboarder of mass ${m} kg drops into a half-pipe from a point ${h} m above the bottom.`, ask: 'her speed at the bottom', mass: [40, 70], step: 1, n: [3, 5] },
+  { setup: (m, h) => `A skateboarder of mass ${m} kg drops into a half-pipe from a point ${h} m above the bottom.`, ask: 'her speed at the bottom', mass: [40, 70], step: 1, n: [3, 6] },
 ]
 /** Impacts, for q13: the height from the speed on landing. */
 const LANDINGS: Drop[] = [
@@ -300,7 +300,32 @@ const LANDINGS: Drop[] = [
   { setup: (m, v) => `A hammer of mass ${m} kg slips from a roof and hits the ground at ${v} m/s.`, ask: 'the height of the roof', mass: [1, 2], step: 0.1, n: [4, 10] },
 ]
 const DROP_LISTS: Record<string, Drop[]> = { q9: FALLS, q13: LANDINGS, q14: SWINGS }
+const DROP_INDEX: Record<string, number> = { q9: 0, q13: 1, q14: 2 }
 const CONDITIONS = ['Ignoring air resistance and taking $g = 9.8$ N/kg', 'Taking $g = 9.8$ N/kg and ignoring air resistance']
+/** Something that slides or rolls down a surface has friction to ignore as well. */
+const slides = (c: Drop) => /slide|slope|ramp|track|half-pipe|roller coaster/i.test(c.setup('1', '1'))
+
+/**
+ * The three slots sit on one sheet (q9, q13 and q14 on the advanced one), and each drew its n
+ * alone, so two of them shared it on 15% of sheets: a stone dropped from 10 m hitting the water
+ * at 14 m/s beside a hammer hitting the ground at 14 m/s from a 10 m roof. The sheet's start
+ * (turn less the slot's index) is the same for all three, so the three n are drawn together from
+ * it, each context's own range, all different. Never n = 14: the height 0.1n² and the speed
+ * 1.4n would both be 19.6, a coincidence that teaches a false rule.
+ */
+function sheetNs(start: number): Record<string, number> {
+  const s = rng(`falling-object:${start}`)
+  const taken: number[] = []
+  const out: Record<string, number> = {}
+  for (const [id, i] of Object.entries(DROP_INDEX)) {
+    const list = DROP_LISTS[id]!
+    const c = list[(start + i) % list.length]!
+    const n = draw(s, (s) => int(s, ...c.n), (n) => n !== 14 && !taken.includes(n))
+    taken.push(n)
+    out[id] = n
+  }
+  return out
+}
 
 /**
  * Energy transferred from the gravitational store to the kinetic store, or back: written as
@@ -318,10 +343,9 @@ export const fallingObject: Generator = {
     const task = slot.id === 'q13' ? 'height' : 'speed'
     const list = DROP_LISTS[slot.id] ?? FALLS
     const c = list[turn % list.length]!
-    // Never n = 14: the height 0.1n² and the speed 1.4n would both be 19.6, a coincidence
-    // that teaches a false rule.
-    const n = draw(r, (r) => int(r, ...c.n), (n) => n !== 14)
+    const n = sheetNs(turn - (DROP_INDEX[slot.id] ?? 0))[slot.id] ?? sheetNs(turn)['q9']!
     const m = stepped(r, c.mass[0], c.mass[1], c.step)
+    const conditions = pick(r, CONDITIONS).replace('air resistance', slides(c) ? 'friction and air resistance' : 'air resistance')
     const h = Number(show(0.1 * n * n))
     const v = Number(show(1.4 * n))
     const v2 = Number(show(1.96 * n * n))
@@ -334,7 +358,7 @@ export const fallingObject: Generator = {
       return numeric(
         slot,
         {
-          prompt: `${c.setup(prose(m), show(v))} ${pick(r, CONDITIONS)}, calculate ${c.ask}, in metres.`,
+          prompt: `${c.setup(prose(m), show(v))} ${conditions}, calculate ${c.ask}, in metres.`,
           solution: `$m g h = \\tfrac{1}{2} m v^2$, so $h = \\dfrac{v^2}{2 g}$. $v^2 = ${show(v)}^2 = ${tex(v2)}$, so $h = \\dfrac{${tex(v2)}}{19.6} = ${show(h)}$ m. The mass cancels, so the ${prose(m)} kg is not needed.`,
           method: ['$mgh = \\frac{1}{2} m v^2$, so $h = \\frac{v^2}{2g}$', `$h = \\frac{${tex(v2)}}{19.6}$`],
           answer: h,
@@ -348,7 +372,7 @@ export const fallingObject: Generator = {
     return numeric(
       slot,
       {
-        prompt: `${c.setup(prose(m), show(h))} ${pick(r, CONDITIONS)}, calculate ${c.ask}, in m/s.`,
+        prompt: `${c.setup(prose(m), show(h))} ${conditions}, calculate ${c.ask}, in m/s.`,
         solution: `All the gravitational potential energy becomes kinetic energy: $m g h = \\tfrac{1}{2} m v^2$, so $v^2 = 2 g h = 2 \\times 9.8 \\times ${tex(h)} = ${tex(v2)}$ and $v = \\sqrt{${tex(v2)}} = ${show(v)}$ m/s. The mass cancels, so the ${prose(m)} kg is not needed.`,
         method: ['$mgh = \\frac{1}{2} m v^2$, so $v^2 = 2gh$', `$v^2 = ${tex(v2)}$`],
         answer: v,
@@ -585,7 +609,7 @@ export const energyDissipated: Generator = {
       const answer = total - left
       const prompt = pick(r, [
         `A closed system contains ${total} J. After a change, ${left} J is in ${store} and the rest has been dissipated. How much, in joules, has been dissipated?`,
-        `A closed system holds ${total} J in total. After a change, ${left} J is in ${store}. How much energy, in joules, has been dissipated?`,
+        `A closed system holds ${total} J in total. After a change, ${left} J is in ${store} and the rest has been dissipated. How much energy, in joules, has been dissipated?`,
       ])
       return numeric(
         slot,
@@ -898,15 +922,16 @@ interface PoweredDevice {
   eff: [number, number]
 }
 const POWERED_DEVICES: PoweredDevice[] = [
-  { name: 'A motor', unit: 'W', total: [200, 250, 400, 500, 800, 1000, 1200, 1500, 2000, 2500, 3000], eff: [60, 90] },
+  // No total of 100 or 1000: the decimal would be the useful power with its point moved.
+  { name: 'A motor', unit: 'W', total: [200, 250, 400, 500, 800, 1200, 1500, 2000, 2500, 3000], eff: [60, 90] },
   { name: 'A kettle', unit: 'W', total: [2000, 2200, 2400, 2500, 3000], eff: [70, 90] },
   { name: 'An LED lamp', unit: 'W', total: [5, 8, 10, 12, 15, 20], eff: [80, 90] },
-  { name: 'A filament lamp', unit: 'W', total: [40, 60, 100], eff: [5, 10] },
-  { name: 'An electric car motor', unit: 'kW', total: [50, 60, 80, 100, 120, 150], eff: [85, 95] },
-  { name: 'A wind turbine', unit: 'kW', total: [500, 1000, 1500, 2000, 2500, 3000], eff: [30, 45] },
-  { name: 'A petrol engine', unit: 'kW', total: [50, 60, 80, 100, 120], eff: [25, 35] },
+  { name: 'A filament lamp', unit: 'W', total: [40, 60, 150], eff: [5, 10] },
+  { name: 'An electric car motor', unit: 'kW', total: [50, 60, 80, 120, 150], eff: [85, 95] },
+  { name: 'A wind turbine', unit: 'kW', total: [500, 1500, 2000, 2500, 3000], eff: [30, 45] },
+  { name: 'A petrol engine', unit: 'kW', total: [50, 60, 80, 120], eff: [25, 35] },
   { name: 'A solar panel', unit: 'W', total: [200, 250, 300, 400, 500], eff: [15, 22] },
-  { name: 'A loudspeaker', unit: 'W', total: [20, 40, 50, 100], eff: [5, 10] },
+  { name: 'A loudspeaker', unit: 'W', total: [20, 40, 50, 80], eff: [5, 10] },
 ]
 
 /**

@@ -533,7 +533,7 @@ describe('X-linked crosses', () => {
         const candidate = worstShare(mine, (b) => `${b.values.ask}|${b.values.mother}×${b.values.father}`)
         if (d !== DUCHENNE) expect(candidate.worst, `${slot} ${d.name}`).toBeLessThanOrEqual(0.15)
         const crosses = new Set(mine.map((b) => `${b.values.mother}×${b.values.father}`))
-        const allowed = d.mothers.flatMap((m) => d.fathers.filter((f) => !(m === 'clear' && f === 'clear') && (slot !== 'q19' || f === 'affected')).map((f) => `${m}×${f}`))
+        const allowed = d.mothers.filter((m) => slot !== 'q7' || m !== 'affected').flatMap((m) => d.fathers.filter((f) => !(m === 'clear' && f === 'clear') && (slot !== 'q19' || f === 'affected')).map((f) => `${m}×${f}`))
         expect([...crosses].sort()).toEqual(allowed.sort())
         const groups = new Set(mine.map((b) => b.values.group))
         if (slot === 'q7') {
@@ -552,7 +552,7 @@ describe('X-linked crosses', () => {
   }
 
   it('disorders q14: literal DMD prompt, the full name once and then the short one', () => {
-    const b = build('sex-linked-cross-percentage', 'q14', 3000, 'find').find((y) => y.values.context === DUCHENNE.name && !y.question.prompt.includes('(d)') && !y.question.prompt.includes('(X'))!
+    const b = build('sex-linked-cross-percentage', 'q14', 3000, 'find').find((y) => y.values.context === DUCHENNE.name && !y.question.prompt.includes('(d)') && !y.question.prompt.includes('(X') && /\. What percentage of all their children are expected (not )?to (have|be carriers of) DMD\?$/.test(y.question.prompt))!
     expect(b.question.prompt).toMatch(
       /^Duchenne muscular dystrophy \(DMD\) is caused by a recessive allele on the X chromosome\. A woman who is a carrier of DMD has children with a man who does not have DMD\. What percentage of all their children are expected (not )?to (have|be carriers of) DMD\?$/,
     )

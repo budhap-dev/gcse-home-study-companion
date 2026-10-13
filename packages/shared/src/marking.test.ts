@@ -20,6 +20,13 @@ describe('parseNumber', () => {
     expect(parseNumber('F = 20 N', 'N')).toBe(20)
     expect(parseNumber('area = 12 cm²', 'cm²')).toBe(12)
   })
+  it('reads a leading plus sign as the sign the question asked for', () => {
+    expect(parseNumber('+12.8')).toBe(12.8)
+    expect(parseNumber('+ 2.5%')).toBe(2.5)
+    expect(parseNumber('+£3.50')).toBe(3.5)
+    expect(parseNumber('+3/4')).toBe(0.75)
+  })
+
   it('forgives a currency symbol, because the solutions print one', () => {
     expect(parseNumber('£500')).toBe(500)
     expect(parseNumber('-£700')).toBe(-700)
@@ -637,6 +644,10 @@ describe('expectedAnswer reads a numeric answer with its unit', () => {
     expect(expectedAnswer(asked(-0.8, 'Solve, giving your answers to 2 decimal places.'))).toBe('-0.80')
     expect(expectedAnswer(asked(31, 'Find the angle to 1 decimal place.', '°'))).toBe('31.0°')
     expect(expectedAnswer(asked(2.5, 'Give your answer to 1 d.p.', 'cm'))).toBe('2.5 cm')
+    // 2.2 × 100 and 32.7 × 100 are not integers in binary; the places asked for still show.
+    expect(expectedAnswer(asked(2.2, 'Calculate how many times faster, to two decimal places.'))).toBe('2.20')
+    expect(expectedAnswer(asked(32.7, 'Give your answer to 2 decimal places.', 'cm'))).toBe('32.70 cm')
+    expect(expectedAnswer(num(1.1, '£'))).toBe('£1.10')
     expect(expectedAnswer(asked(2.345, 'Give your answer to 2 decimal places.'))).toBe('2.345')
     expect(expectedAnswer(asked(12, 'How many?'))).toBe('12')
   })

@@ -232,8 +232,10 @@ function threeByElimination(r: Rng, slot: Question, turn: number): Draft {
 type Letter = 'x' | 'y' | 'z'
 const LETTERS: Letter[] = ['x', 'y', 'z']
 /** How a letter O is tied to the pivot P: O − P = d, P − O = d, or O + P = s. */
-type Tie = 'O-P' | 'P-O' | 'O+P'
-const TIES = [['O-P', 40], ['P-O', 35], ['O+P', 25]] as const
+type Tie = 'O-P' | 'P-O'
+// Differences only, as written: an O + P tie beside x + y + z = S hands the third letter by one
+// subtraction, so the substitution the slot tests was never needed (17% of builds asked for that letter).
+const TIES = [['O-P', 55], ['P-O', 45]] as const
 
 /**
  * x + y + z = S with two equations each tying one other letter to a pivot, so both are
@@ -253,7 +255,7 @@ function threeBySubstitution(r: Rng, slot: Question, turn: number): Draft {
       return { vals, P, others, ties }
     },
     ({ vals, P, others, ties }) => {
-      const rhs = others.map((O, i) => (ties[i] === 'O-P' ? vals[O] - vals[P] : ties[i] === 'P-O' ? vals[P] - vals[O] : vals[O] + vals[P]))
+      const rhs = others.map((O, i) => (ties[i] === 'O-P' ? vals[O] - vals[P] : vals[P] - vals[O]))
       const S = vals.x + vals.y + vals.z
       return (
         new Set([vals.x, vals.y, vals.z]).size === 3 && S !== 0 && rhs.every((d) => d !== 0) && new Set([S, ...rhs].map(Math.abs)).size === 3 &&
@@ -265,9 +267,9 @@ function threeBySubstitution(r: Rng, slot: Question, turn: number): Draft {
   const S = vals.x + vals.y + vals.z
   const tied = others.map((O, i) => {
     const t = ties[i]!
-    const d = t === 'O-P' ? vals[O] - vals[P] : t === 'P-O' ? vals[P] - vals[O] : vals[O] + vals[P]
-    const equation = t === 'O-P' ? `${O} - ${P} = ${d}` : t === 'P-O' ? `${P} - ${O} = ${d}` : `${[O, P].sort().join(' + ')} = ${d}`
-    const parts: [number, string][] = t === 'O-P' ? [[1, P], [d, '']] : t === 'P-O' ? [[1, P], [-d, '']] : [[d, ''], [-1, P]]
+    const d = t === 'O-P' ? vals[O] - vals[P] : vals[P] - vals[O]
+    const equation = t === 'O-P' ? `${O} - ${P} = ${d}` : `${P} - ${O} = ${d}`
+    const parts: [number, string][] = t === 'O-P' ? [[1, P], [d, '']] : [[1, P], [-d, '']]
     return { O, d, equation, parts }
   })
   const e1 = `x + y + z = ${S}`
@@ -403,9 +405,11 @@ function threePrices(r: Rng, slot: Question): Draft {
       type: 'numeric',
       prompt,
       solution: `${setUp} ${working}`,
-      markScheme: scheme(slot, ['three equations'], show(answer)),
+      markScheme: scheme(slot, ['three equations'], `£${answer.toFixed(2)}`),
       answer,
       tolerance: 0,
+      // A price in pounds shows its pence: £4.50, not 4.5.
+      units: '£',
     },
     check: { agrees: gaps.length === 3 && gaps.every((g) => g === 0), detail: `bills read from the words against the prices ${prices.join(', ')}p: gaps ${gaps.join(', ')}` },
     values: { shop: shop.items[0]!, pattern, which, prices: prices.join(' '), order: order.join('') },

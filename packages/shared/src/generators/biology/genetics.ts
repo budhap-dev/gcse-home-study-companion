@@ -754,6 +754,10 @@ const LINKED_PROMPTS = [
     `${d.introAlleles} A woman who ${motherSays(d, x.m)} (${motherGenotype(d, x.m)}) has children with a man who ${fatherSays(d, x.f)} (${fatherGenotype(d, x.f)}). What percentage of ${x.ask.whom('their')} are ${expected(x.ask.to(d))}?`,
   (d: Linked, x: LinkedCross) =>
     `${d.introAlleles} A woman who ${motherSays(d, x.m)} (${motherGenotype(d, x.m)}) and a man who ${fatherSays(d, x.f)} (${fatherGenotype(d, x.f)}) have children. What percentage of ${x.ask.whom('their')} are ${expected(x.ask.to(d))}?`,
+  (d: Linked, x: LinkedCross) =>
+    `${d.intro} A woman who ${motherSays(d, x.m)} has children with a man who ${fatherSays(d, x.f)}. Work out what percentage of ${x.ask.whom('their')} are ${expected(x.ask.to(d))}.`,
+  (d: Linked, x: LinkedCross) =>
+    `${d.intro} A woman who ${motherSays(d, x.m)} has children with a man who ${fatherSays(d, x.f)}. Calculate the percentage of ${x.ask.whom('their')} ${expected(x.ask.to(d))}.`,
 ]
 
 /** "expected to have haemophilia", "expected not to have haemophilia": never a split infinitive. */
@@ -763,10 +767,11 @@ const expected = (to: string) => (to.startsWith('not ') ? `expected not to ${to.
  * Each slot keeps its written skill: q7 reads the cross over sons or daughters, q14 over all the
  * children (the written "reading the denominator"), q19 crosses a man who has the condition. DMD,
  * whose father never has it, is not in q19, nor in q7, where its one cross would answer 50% every
- * time; it stays in q14, where the whole-family asks vary the answer.
+ * time; it stays in q14, where the whole-family asks vary the answer. A mother who has the condition
+ * makes every son affected, so she stays out of q7 too, where 39% of builds answered 100%.
  */
 export const LINKED_ROUTES: Record<string, { fits: (x: LinkedCross) => boolean; disorders: Linked[] }> = {
-  q7: { fits: (x) => x.ask.group !== 'all', disorders: LINKED.filter((d) => d.fathers.includes('affected')) },
+  q7: { fits: (x) => x.ask.group !== 'all' && x.m !== 'affected', disorders: LINKED.filter((d) => d.fathers.includes('affected')) },
   q14: { fits: (x) => x.ask.group === 'all', disorders: LINKED },
   q19: { fits: (x) => x.f === 'affected', disorders: LINKED.filter((d) => d.fathers.includes('affected')) },
 }
@@ -1097,7 +1102,14 @@ export const monohybrid: Generator = {
     // "the dominant one" pays half the phenotype questions, and the answers likewise. Only Aa × Aa
     // gives 25% and 75%, so those two answers are the rarer ones: evening the answers instead made
     // Aa × Aa half of every trait's builds.
-    const x = balanced(r, 'genetics:monohybrid', monos, (y) => (y.outcome === 'dominant' || y.outcome === 'recessive' ? y.outcome : 'genotype'), (y) => y.answer, (y) => `${y.g1} × ${y.g2}`, (y) => [y.g1, y.g2].sort().join(' × '))
+    // The two slots sit on one sheet, and drew the same cross and question on 16% of sheets. One slot
+    // takes the crosses with no aa parent (Aa × Aa, AA × Aa) and the other those with one (Aa × aa,
+    // AA × aa), which way round by the sheet's start turn, so a sheet never repeats a cross while
+    // each slot still sees every cross across sheets, and every trait sees both families.
+    const index = Math.max(0, ['q5', 'q19'].indexOf(slot.id))
+    const start = turn - index
+    const family = Math.abs(Math.floor(start / TRAITS.length) + start + index) % 2
+    const x = balanced(r, `genetics:monohybrid:${family}`, () => monos().filter((y) => (y.g1 === 'aa' || y.g2 === 'aa' ? 1 : 0) === family), (y) => (y.outcome === 'dominant' || y.outcome === 'recessive' ? y.outcome : 'genotype'), (y) => y.answer, (y) => `${y.g1} × ${y.g2}`, (y) => [y.g1, y.g2].sort().join(' × '))
     const boxes = boxesOf(x.g1, x.g2)
     const k = boxes.filter((b) => counts(x.outcome, b)).length
     const [s1, s2] = [spell(tr, x.g1), spell(tr, x.g2)]
@@ -1193,7 +1205,7 @@ export const expectedPlants: Generator = {
       {
         prompt: `${tr.rule} ${crossText}, and ${x.N} of the seeds produced grow into plants. Calculate the number of these plants expected to ${phenotype(tr, x.dominant)}.`,
         solution:
-          `Each ${het} parent's gametes carry **${L}** or **${L.toLowerCase()}**${x.cross === 'Aa × aa' ? `; the ${rec} parent's carry only **${L.toLowerCase()}**` : ''}. ` +
+          `${x.cross === 'Aa × Aa' ? 'Each' : 'The'} ${het} parent's gametes carry **${L}** or **${L.toLowerCase()}**${x.cross === 'Aa × aa' ? `; the ${rec} parent's carry only **${L.toLowerCase()}**` : ''}. ` +
           `The Punnett square for ${x.cross === 'Aa × Aa' ? `${het} × ${het}` : `${het} × ${rec}`} gives **${square.join(', ')}**. ${cap(phen)}: ${why}, so ${share}.\n\n` +
           `Expected ${phen} = $${x.N} \\times ${x.k} \\div 4 = ${x.answer}$.\n\n` +
           `Check: the other plants are $${x.N} - ${x.answer} = ${other}$, and $${x.answer} + ${other} = ${x.N}$.`,

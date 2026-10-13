@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { dpTolerance } from './format.ts'
 
@@ -27,6 +27,8 @@ const clean = (x: number) => Number(x.toPrecision(12))
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 const method = (b: Generated, i: number) => b.question.markScheme[i]!.description
 /** A number inside maths as the generators print it: 12\,000 from five digits. */
@@ -44,7 +46,7 @@ const SHIFTS = [0.001, 0.01, 0.1, 1, 10, 100, 1000, 10000, 100000]
 function common(b: Generated, unit: string) {
   expect(b.question.prompt, b.seed).not.toMatch(/\ba \d/)
   expect(units(b)).toBe(unit)
-  expect(tolerance(b), b.seed).toBe(dpTolerance(answer(b)))
+  expect(tolerance(b), b.seed).toBe(room(b, dpTolerance(answer(b))))
 }
 
 describe('M = F d', () => {
@@ -206,7 +208,7 @@ describe('gears', () => {
       const { n1, n2, f1 } = values(b)
       expect(b.question.prompt, b.seed).not.toMatch(/\ba \d/)
       expect(units(b)).toBe('rpm')
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
       expect(b.question.prompt).toContain(`${n1} teeth`)
       expect(b.question.prompt).toContain(`${n2} teeth`)
       expect(b.question.prompt).toContain(`${prose(f1!)} revolutions per minute`)

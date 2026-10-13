@@ -191,8 +191,8 @@ const COUNTED: Patch[] = [
   { name: 'buttercups', organism: 'buttercups', at: 'in', place: 'in a meadow', noun: 'meadow', density: [4, 18], areas: range(300, 2500, 10) },
   { name: 'limpets', organism: 'limpets', at: 'on', place: 'on a rocky shore', noun: 'shore', density: [5, 25], areas: range(200, 1500, 10) },
 ]
-/** Never ten, whose mean is the total with the point moved. */
-const COUNT_NS = [5, 6, 8, 12]
+/** Never ten, whose mean is the total with the point moved; nor twelve, a sum on a phone well past the written five. */
+const COUNT_NS = [5, 6, 8]
 
 const COUNT_PROMPTS = [
   (p: Patch, counts: number[], area: number) =>

@@ -1,5 +1,6 @@
 import { clearOfHalf, fixed, grouped, roundTo, show } from '../format.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
+import { powerOfTen } from '../chemistry/build.ts'
 import { scheme } from '../scheme.ts'
 import type { Draft, Generator } from '../types.ts'
 import { dpTolerance, sci, sigFigs } from './format.ts'
@@ -81,7 +82,8 @@ function changeRange(holder: string | undefined, cooling: boolean): [number, num
   return h ? [h.rise[0], cooling ? h.fall : h.rise[1]] : [5, 80]
 }
 
-interface Heated { substance: string; label: string; holder?: string; m: number; c: number; article: string }
+/** `article` follows a determiner ("the 2 kg of water", "a 2 kg block of copper"); `opens` starts a sentence, never with a numeral. */
+interface Heated { substance: string; label: string; holder?: string; m: number; c: number; article: string; opens: string }
 
 /**
  * A block's mass in tenths of a kilogram, in even tenths when c is not a multiple of ten so
@@ -94,11 +96,11 @@ function heated(r: Rng, kind: 'water' | 'metal'): Heated {
   if (kind === 'water') {
     const h = pick(r, WATER_HOLDERS)
     const m = clean(int(r, ...h.mass) * h.step)
-    return { substance: 'water', label: 'water', holder: h.holder, m, c: C_WATER, article: `${show(m)} kg of water` }
+    return { substance: 'water', label: 'water', holder: h.holder, m, c: C_WATER, article: `${show(m)} kg of water`, opens: `A mass of ${show(m)} kg of water` }
   }
   const metal = pick(r, METALS)
   const m = blockMass(r, metal.c)
-  return { substance: metal.name, label: `block of ${metal.name}`, m, c: metal.c, article: `${show(m)} kg block of ${metal.name}` }
+  return { substance: metal.name, label: `block of ${metal.name}`, m, c: metal.c, article: `${show(m)} kg block of ${metal.name}`, opens: `A ${show(m)} kg block of ${metal.name}` }
 }
 
 /**
@@ -142,7 +144,7 @@ export const specificHeatEnergy: Generator = {
         ? cooling
           ? [
               `The ${s.article} in a ${s.holder} cools from ${t1} °C to ${t2} °C. How much energy does the water transfer to its surroundings? ${take} ${inJ}`,
-              `${cap(s.article)} cools from ${t1} °C to ${t2} °C. How much energy does it release? ${take} ${inJ}`,
+              `${s.opens} cools from ${t1} °C to ${t2} °C. How much energy does it release? ${take} ${inJ}`,
             ]
           : [
               `How much energy raises ${s.article} from ${t1} °C to ${t2} °C? ${take} ${inJ}`,
@@ -162,7 +164,7 @@ export const specificHeatEnergy: Generator = {
         ? cooling
           ? [
               `The ${s.article} in a ${s.holder} cools by ${d} °C. How much energy does the water transfer to its surroundings? ${take} ${inJ}`,
-              `${cap(s.article)} cools by ${d} °C. How much energy does it release? ${take} ${inJ}`,
+              `${s.opens} cools by ${d} °C. How much energy does it release? ${take} ${inJ}`,
             ]
           : [
               `How much energy is needed to raise ${s.article} by ${d} °C? ${take} ${inJ}`,
@@ -244,7 +246,7 @@ export const latentHeatEnergy: Generator = {
               `A block of ice of mass ${show(m)} kg is at 0 °C. Calculate the energy needed to melt it completely. ${takeWater} Give your answer in J.`,
             ]
         : reverse
-          ? [`${show(m)} kg of molten ${f.liquid} at ${f.at} solidifies. How much energy does it release? ${takeMetal} Give your answer in J.`]
+          ? [`A mass of ${show(m)} kg of molten ${f.liquid} at ${f.at} solidifies. How much energy does it release? ${takeMetal} Give your answer in J.`]
           : [
               `A block of ${f.solid} of mass ${show(m)} kg is at ${f.at}. How much energy is needed to melt it completely? ${takeMetal} Give your answer in J.`,
               `How much energy is needed to melt ${show(m)} kg of ${f.solid} that is already at ${f.at}? ${takeMetal} Give your answer in J.`,
@@ -260,7 +262,7 @@ export const latentHeatEnergy: Generator = {
       prompts = water
         ? reverse
           ? [
-              `${show(m)} kg of steam at 100 °C condenses to water at 100 °C. How much energy does it release? ${take} Give your answer in J.`,
+              `A mass of ${show(m)} kg of steam at 100 °C condenses to water at 100 °C. How much energy does it release? ${take} Give your answer in J.`,
               `How much energy is released when ${show(m)} kg of steam at 100 °C condenses? ${take} Give your answer in J.`,
             ]
           : [
@@ -268,7 +270,7 @@ export const latentHeatEnergy: Generator = {
               `A pan holds ${show(m)} kg of water at 100 °C. How much energy is needed to turn all of it into steam? ${take} Give your answer in J.`,
             ]
         : reverse
-          ? [`${show(m)} kg of ethanol vapour at ${v.at} condenses. How much energy does it release? ${take} Give your answer in J.`]
+          ? [`A mass of ${show(m)} kg of ethanol vapour at ${v.at} condenses. How much energy does it release? ${take} Give your answer in J.`]
           : [`How much energy is needed to boil away ${show(m)} kg of ethanol at ${v.at}? ${take} Give your answer in J.`]
     }
     const E = whole(m * L)
@@ -377,9 +379,9 @@ export const specificHeatRearranged: Generator = {
                 `A heater transfers ${grouped(E)} J to a metal block of mass ${show(m)} kg, and its temperature rises by ${d} °C. Calculate the specific heat capacity of the metal, in J/kg°C.`,
               ]
           : cooling
-            ? [`${show(m)} kg of a liquid cools by ${d} °C and releases ${grouped(E)} J. What is the specific heat capacity of the liquid, in J/kg°C?`]
+            ? [`A mass of ${show(m)} kg of a liquid cools by ${d} °C and releases ${grouped(E)} J. What is the specific heat capacity of the liquid, in J/kg°C?`]
             : [
-                `${show(m)} kg of a liquid is given ${grouped(E)} J and its temperature rises by ${d} °C. What is the specific heat capacity of the liquid, in J/kg°C?`,
+                `A mass of ${show(m)} kg of a liquid is given ${grouped(E)} J and its temperature rises by ${d} °C. What is the specific heat capacity of the liquid, in J/kg°C?`,
                 `A heater transfers ${grouped(E)} J to ${show(m)} kg of a liquid in a beaker. The temperature rises by ${d} °C. Calculate the specific heat capacity of the liquid, in J/kg°C.`,
               ]
     const md = clean(m * d)
@@ -490,7 +492,7 @@ export const heatingTwoStages: Generator = {
       second = 'cooling'
       prompt = pick(r, [
         `How much energy in total is released when ${show(m)} kg of steam at 100 °C condenses and the water then cools to ${t} °C? Take c = 4200 J/kg°C and L = 2 260 000 J/kg. Give your answer in J.`,
-        `${show(m)} kg of steam at 100 °C condenses, and the water formed cools to ${t} °C. Calculate the total energy released. Take c = 4200 J/kg°C and L = 2 260 000 J/kg. Give your answer in J.`,
+        `A mass of ${show(m)} kg of steam at 100 °C condenses, and the water formed cools to ${t} °C. Calculate the total energy released. Take c = 4200 J/kg°C and L = 2 260 000 J/kg. Give your answer in J.`,
       ])
     } else if (kind === 'melt-warm') {
       t = int(r, 10, 60)
@@ -503,7 +505,7 @@ export const heatingTwoStages: Generator = {
       second = 'heating'
       prompt = pick(r, [
         `How much energy in total turns ${show(m)} kg of ice at 0 °C into water at ${t} °C? Take c = 4200 J/kg°C for water and L = 334 000 J/kg. Give your answer in J.`,
-        `${show(m)} kg of ice at 0 °C melts and the water then warms to ${t} °C. Calculate the total energy needed. Take c = 4200 J/kg°C for water and L = 334 000 J/kg. Give your answer in J.`,
+        `A mass of ${show(m)} kg of ice at 0 °C melts and the water then warms to ${t} °C. Calculate the total energy needed. Take c = 4200 J/kg°C for water and L = 334 000 J/kg. Give your answer in J.`,
       ])
     } else {
       t = -int(r, 5, 30)
@@ -560,7 +562,8 @@ export const heaterTime: Generator = {
   replaces: ['q14'],
   build(r, slot): Draft {
     const h = pick(r, HEATERS)
-    const P = int(r, ...h.power) * 100
+    // Never 1000 W, where the time is the energy with its point moved.
+    const P = draw(r, (r) => int(r, ...h.power) * 100, (P) => !powerOfTen(P))
     const t = int(r, 20, 600)
     const E = P * t
     // "Rated at 800 W" rather than "a 800 W kettle": the article before a number read aloud
@@ -609,13 +612,14 @@ export const latentHeatHeaterTime: Generator = {
         const E = whole(m * L)
         return { m, P, E, t: E / P }
       },
-      ({ t }) => Number.isInteger(t) && t >= 30 && t <= 1500,
+      // Never 1000 W nor 1 kg, where a step only moves the point.
+      ({ m, P, t }) => Number.isInteger(t) && t >= 30 && t <= 1500 && !powerOfTen(P) && m !== 1,
     )
     const rated = `${cap(an(h.name))} rated at ${P} W`
     const prompt = melting
       ? pick(r, [
           `${rated} is used to melt ${show(m)} kg of ice at 0 °C. How long does it take, in seconds? Take L = ${grouped(L)} J/kg.`,
-          `${show(m)} kg of ice at 0 °C is melted by ${an(h.name)} rated at ${P} W. How long does this take, in seconds? Take the latent heat of fusion as ${grouped(L)} J/kg.`,
+          `A mass of ${show(m)} kg of ice at 0 °C is melted by ${an(h.name)} rated at ${P} W. How long does this take, in seconds? Take the latent heat of fusion as ${grouped(L)} J/kg.`,
         ])
       : h.name === 'hob ring'
         ? `A pan on a hob ring rated at ${P} W holds ${show(m)} kg of water at 100 °C. How long does it take to boil all of it away, in seconds? Take L = ${grouped(L)} J/kg.`
@@ -675,7 +679,8 @@ export const heatingGraphEnergy: Generator = {
         const hi = Math.min(200, Math.floor((f.mass[1] * f.L) / P / 10))
         return { P, t: lo <= hi ? int(r, lo, hi) * 10 : 0 }
       },
-      ({ P, t }) => t >= 60 && (P * t) / f.L >= f.mass[0] && (P * t) / f.L <= f.mass[1],
+      // Never 1000 W or 100 s, where the product only moves the point.
+      ({ P, t }) => t >= 60 && (P * t) / f.L >= f.mass[0] && (P * t) / f.L <= f.mass[1] && !powerOfTen(P) && !powerOfTen(t),
     )
     const E = P * t
     const noun = f.change === 'boils' ? 'boiling' : 'melting'
@@ -710,8 +715,9 @@ export const heatingGraphEnergy: Generator = {
  * past its plunger long before 1000 kPa.
  */
 export const CONTAINERS: { name: string; mover?: string; volume: [number, number]; step: number; maxP: number }[] = [
-  { name: 'gas syringe', mover: 'plunger', volume: [4, 40], step: 5, maxP: 400 },
-  { name: 'bicycle pump', mover: 'plunger', volume: [10, 50], step: 10, maxP: 800 },
+  // A school gas syringe is 100 cm³, its plunger held by hand: about two atmospheres at most. A pump is 300 cm³.
+  { name: 'gas syringe', mover: 'plunger', volume: [4, 20], step: 5, maxP: 200 },
+  { name: 'bicycle pump', mover: 'plunger', volume: [10, 30], step: 10, maxP: 800 },
   { name: 'cylinder fitted with a piston', mover: 'piston', volume: [20, 200], step: 10, maxP: 1000 },
   { name: 'gas', volume: [10, 200], step: 10, maxP: 1000 },
 ]
@@ -887,7 +893,8 @@ export const gasVolumeFromPv: Generator = {
 /* ------------------------------------------------------------------------------------------ */
 
 /** Densities as the content gives them, kg/m³, every one a multiple of 100 so a mass prints short. */
-export const SOLIDS: { name: string; rho: number; thing: string }[] = [
+/** `named` is the object as a sentence names it with its material, where "a brick block" would not do. */
+export const SOLIDS: { name: string; rho: number; thing: string; named?: string }[] = [
   { name: 'aluminium', rho: 2700, thing: 'block' },
   { name: 'iron', rho: 7900, thing: 'block' },
   { name: 'steel', rho: 7800, thing: 'bar' },
@@ -898,7 +905,7 @@ export const SOLIDS: { name: string; rho: number; thing: string }[] = [
   { name: 'pine', rho: 500, thing: 'plank' },
   { name: 'glass', rho: 2500, thing: 'block' },
   { name: 'concrete', rho: 2400, thing: 'block' },
-  { name: 'brick', rho: 1900, thing: 'block' },
+  { name: 'brick', rho: 1900, thing: 'block', named: 'brick' },
   { name: 'gold', rho: 19300, thing: 'bar' },
 ]
 export const RHO_WATER = 1000
@@ -932,7 +939,7 @@ export const densityFromMassAndVolume: Generator = {
       const m = clean(rho * V)
       prompt = pick(r, [
         `A container holds ${show(V)} m³ of water, which has a mass of ${show(m)} kg. What is the density of water, in kg/m³?`,
-        `${show(m)} kg of water fills a volume of ${show(V)} m³. Calculate the density of water, in kg/m³.`,
+        `A mass of ${show(m)} kg of water fills a volume of ${show(V)} m³. Calculate the density of water, in kg/m³.`,
       ])
     } else {
       const s = pick(r, SOLIDS)
@@ -942,8 +949,8 @@ export const densityFromMassAndVolume: Generator = {
       const m = clean(rho * V)
       prompt = kind === 'named'
         ? pick(r, [
-            `A ${s.thing} of ${s.name} has a mass of ${show(m)} kg and a volume of ${show(V)} m³. Calculate its density, in kg/m³.`,
-            `${cap(an(`${s.name} ${s.thing}`))} of mass ${show(m)} kg has a volume of ${show(V)} m³. What is the density of ${s.name}, in kg/m³?`,
+            `${cap(an(s.named ?? `${s.thing} of ${s.name}`))} has a mass of ${show(m)} kg and a volume of ${show(V)} m³. Calculate its density, in kg/m³.`,
+            `${cap(an(s.named ?? `${s.name} ${s.thing}`))} of mass ${show(m)} kg has a volume of ${show(V)} m³. What is the density of ${s.name}, in kg/m³?`,
           ])
         : pick(r, [
             `A block has a mass of ${show(m)} kg and a volume of ${show(V)} m³. What is its density, in kg/m³?`,
@@ -1026,8 +1033,10 @@ export const SUBMERGED: { object: string; material: string; rho: number }[] = [
   { object: 'glass stopper', material: 'glass', rho: 2500 },
   { object: 'lead sinker', material: 'lead', rho: 11300 },
   { object: 'iron nut', material: 'iron', rho: 7900 },
-  { object: 'granite pebble', material: 'granite', rho: 2700 },
-  { object: 'marble chip', material: 'marble', rho: 2700 },
+  { object: 'granite pebble', material: 'granite', rho: 2650 },
+  { object: 'silver ring', material: 'silver', rho: 10500 },
+  { object: 'titanium bolt', material: 'titanium', rho: 4500 },
+  { object: 'zinc block', material: 'zinc', rho: 7100 },
 ]
 const LOOSE_OBJECTS = ['stone', 'pebble', 'key', 'marble', 'small toy', 'lump of modelling clay', 'piece of rock', 'metal nut']
 

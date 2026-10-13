@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { dpTolerance } from './format.ts'
 
@@ -27,6 +27,8 @@ const clean = (x: number) => Number(x.toPrecision(12))
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 /** A whole number inside maths as the generators print it: 12\,000 from five digits. */
 const tex = (x: number) => (Math.abs(x) >= 10000 ? String(x).replace(/\B(?=(\d{3})+(?!\d))/g, '\\,') : show(x))
@@ -137,7 +139,7 @@ describe("Newton's laws", () => {
   })
 
   it('takes the weight from the upward force and divides by the mass, upwards, within a believable margin', () => {
-    for (const [slotId, lo, hi] of [['q14', 1, 60], ['q19', 0.3, 2]] as const) {
+    for (const [slotId, lo, hi] of [['q14', 0.5, 60], ['q19', 0.3, 2]] as const) {
       const built = build('acceleration-against-weight', slotId)
       for (const b of built) {
         const { m, T } = values(b)
@@ -213,7 +215,7 @@ describe('weight, work done and resultant forces', () => {
       expect(answer(b)).not.toBe(1)
       expect(b.question.solution).toContain(`m = W \\div g = ${tex(W!)} \\div 9.8 = ${show(answer(b))}$ kg`)
       expect(units(b)).toBe('kg')
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
     }
     expect(contexts(built)).toBeGreaterThanOrEqual(8)
   })
@@ -263,7 +265,7 @@ describe('weight, work done and resultant forces', () => {
       expect(answer(b)).toBeGreaterThanOrEqual(27)
       expect(answer(b).toPrecision(2).endsWith('0')).toBe(false)
       expect(Math.abs(raw - answer(b))).toBeLessThanOrEqual(0.5)
-      expect(tolerance(b)).toBe(Number(Math.min(1, answer(b) * 0.019).toPrecision(10)))
+      expect(tolerance(b)).toBe(room(b, Number(Math.min(1, answer(b) * 0.019).toPrecision(10))))
       expect(b.question.solution).toContain(`$${F} \\cos ${angle}° = ${raw.toFixed(2)}$ N, which is **${answer(b)} N** to 2 s.f.`)
       expect(b.question.solution).toContain(`$${F} \\sin ${angle}° = `)
       expect(b.question.solution.includes('3, 4, 5 triangle')).toBe(angle === 37 || angle === 53)
@@ -271,7 +273,7 @@ describe('weight, work done and resultant forces', () => {
       expect(last(b)).toBe(`${answer(b)} N`)
       expect(units(b)).toBe('N')
     }
-    expect(new Set(built.map((b) => b.values.angle)).size).toBe(7)
+    expect(new Set(built.map((b) => b.values.angle)).size).toBe(5)
     expect(contexts(built)).toBe(5)
   })
 
@@ -311,7 +313,7 @@ describe('weight, work done and resultant forces', () => {
       expect(answer(b)).toBeCloseTo(W! / m!, 9)
       expect(b.question.solution).toContain(`g = W \\div m = ${tex(W!)} \\div ${tex(m!)} = ${show(answer(b))}$ N/kg, ${answer(b) < 9.8 ? 'less' : 'more'} than Earth's 9.8 N/kg`)
       expect(units(b)).toBe('N/kg')
-      expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
       expect(tolerance(b)).toBeGreaterThan(0)
     }
     expect(contexts(built)).toBe(9)

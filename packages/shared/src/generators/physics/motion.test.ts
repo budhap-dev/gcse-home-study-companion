@@ -3,9 +3,9 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
-import { sigText } from './format.ts'
+import { dpTolerance, sigText } from './format.ts'
 
 /**
  * Structural tests for the Physics motion generators. The release check proves each answer
@@ -31,6 +31,8 @@ const clean = (x: number) => Number(x.toPrecision(12))
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 const method = (b: Generated, i: number) => b.question.markScheme[i]!.description
 /** A whole number inside maths as the generators print it: 12\,000 from five digits. */
@@ -88,7 +90,7 @@ describe('describing motion', () => {
         expect(b.question.solution).toContain(`$a = \\Delta v \\div t = ${v} \\div ${t} = ${show(answer(b))}$ m/s².`)
         expect(method(b, 0)).toBe(`$${v} \\div ${t}$`)
       }
-      expect(tolerance(b)).toBe(Number.isInteger(answer(b)) ? 0 : tolerance(b))
+      expect(tolerance(b)).toBe(room(b, Number.isInteger(answer(b)) ? 0 : tolerance(b)))
       expect(tolerance(b)).toBeLessThanOrEqual(answer(b) * 0.02)
       expect(units(b)).toBe('m/s²')
     }
@@ -260,7 +262,7 @@ describe('stopping distances', () => {
       expect(answer(b)).not.toBe(v)
       expect(b.question.solution).toContain(`Thinking distance $= ${v} \\times ${show(react!)} = ${show(answer(b))}$ m.`)
       expect(method(b, 0)).toBe(`$${v} \\times ${show(react!)}$`)
-      expect(tolerance(b) === 0).toBe(Number.isInteger(answer(b)))
+      expect(tolerance(b)).toBe(room(b, Number.isInteger(answer(b)) ? 0 : dpTolerance(answer(b))))
       expect(units(b)).toBe('m')
     }
     expect(built.some((b) => /tired|distracted/.test(String(b.values.context)))).toBe(true)

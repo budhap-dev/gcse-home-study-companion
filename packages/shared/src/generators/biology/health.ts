@@ -4,7 +4,7 @@ import { sfTolerance } from '../physics/format.ts'
 import { clean, clearOf, distinct, noOnes, powerOfTen, range, shiftFree, tenfold, threeFigures, toPlaces } from '../chemistry/build.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { balanced, between, cut, ending, fair, type Figure, figureTolerance, gcd, halfLastPlace, lcm, memo, piRoom, rich, toThree, unitsOf, whole } from './build.ts'
+import { askFor, balanced, between, cut, ending, fair, type Figure, figureTolerance, gcd, halfLastPlace, lcm, memo, piRoom, rich, toThree, unitsOf, whole } from './build.ts'
 
 /**
  * Health and disease (Edexcel 1BI0: 5.23 to 5.25 non-communicable disease, lifestyle and its
@@ -103,7 +103,7 @@ export const bmiFromMass: Generator = {
     return numeric(
       slot,
       {
-        prompt: pick(r, BMI_PROMPTS)(p, x),
+        prompt: pick(r, BMI_PROMPTS)(p, x) + askFor(x.f.rounded),
         solution: `Height² $= ${metres(x.k)}^2 = ${show(h2)}$. BMI $= ${x.m} \\div ${show(h2)} ${ending(x.f)}.${muscle} ${RANGES}`,
         method: [`squares the height and divides: ${x.m} ÷ ${metres(x.k)}²`],
         answer: x.f.answer,
@@ -156,7 +156,7 @@ export const massFromBmi: Generator = {
     return numeric(
       slot,
       {
-        prompt: pick(r, MASS_PROMPTS)(p, x),
+        prompt: pick(r, MASS_PROMPTS)(p, x) + askFor(x.f.rounded),
         solution:
           `Rearrange BMI = mass ÷ height²: mass = BMI × height² $= ${x.b} \\times ${metres(x.k)}^2 = ${x.b} \\times ${show(h2)} ${ending(x.f, ' kg')}. ` +
           `Dividing by the height instead of multiplying by its square is the usual slip.`,
@@ -294,7 +294,7 @@ export const waistToHip: Generator = {
     return numeric(
       slot,
       {
-        prompt: pick(r, RATIO_PROMPTS)(b, x),
+        prompt: pick(r, RATIO_PROMPTS)(b, x) + askFor(x.f.rounded),
         solution:
           `Ratio = waist ÷ hips $= ${x.w} \\div ${x.h} ${ending(x.f)}. Both are in cm, so the units cancel and the ratio has none. ` +
           `Doctors use ${fixed(b.limit, 2)} as the upper limit of the lower-risk range for ${b.group}, so this ratio is ${above ? 'above' : 'below'} it: ` +
@@ -1185,7 +1185,7 @@ export const clearZoneShare: Generator = {
     return numeric(
       slot,
       {
-        prompt: pick(r, SHARE_PROMPTS)(drug, x.D),
+        prompt: pick(r, SHARE_PROMPTS)(drug, x.D) + askFor(x.f.rounded),
         solution:
           `Radii first: the agar has $r = ${DISH / 2}$ mm and the clear zone $r = ${show(R)}$ mm. Area of agar $= \\pi \\times ${DISH / 2}^2 = ${fixed(DISH_AREA, 1)}$ mm². Area of clear zone $= \\pi \\times ${show(R)}^2 = ${fixed(zone, 1)}$ mm². ` +
           `Percentage clear $= \\dfrac{${fixed(zone, 1)}}{${fixed(DISH_AREA, 1)}} \\times 100$. Since π cancels, the exact value is $\\dfrac{${show(R * R)}}{${(DISH / 2) ** 2}} \\times 100 ${ending(x.f, '%')}. ` +

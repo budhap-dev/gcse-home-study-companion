@@ -3,7 +3,7 @@ import { atMost, cap, closes, figures, near, numeric, prose, tex } from '../phys
 import { clearAtSigFigs, sfTolerance, sigFigs, sigText } from '../physics/format.ts'
 import { draw, int, pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { balanced, between, layered, list, memo, rich, trail, unitsOf, whole, withArticle, WithArticle } from './build.ts'
+import { askFor, balanced, between, layered, list, memo, rich, trail, unitsOf, whole, withArticle, WithArticle } from './build.ts'
 import { clean, distinct, evenly, noOnes, powerOfTen, range, shiftFree, tenfold, toPlaces, word } from '../chemistry/build.ts'
 
 /**
@@ -295,7 +295,7 @@ export const glucoseFall: Generator = {
     return numeric(
       slot,
       {
-        prompt: f.prompt(x, u, r),
+        prompt: f.prompt(x, u, r) + askFor(!near(x.exact, x.p)),
         solution:
           `Decrease $= ${fixed(x.b, 1)} - ${fixed(x.a, 1)} = ${fixed(x.d, 1)}$ ${u}. As a percentage of the starting value, $\\dfrac{${fixed(x.d, 1)}}{${fixed(x.b, 1)}} \\times 100 = ${near(x.exact, x.p) ? show(x.p) : `${trail(x.exact, 3)} = ${sigText(x.p, 3)}`}\\%$${near(x.exact, x.p) ? '' : ' to 3 significant figures'}. ` +
           `Divide by the value before the fall, ${fixed(x.b, 1)}, not the value after it. ${f.why}`,
@@ -385,7 +385,7 @@ export const bmiLoss: Generator = {
       {
         prompt:
           `A ${a.noun} has a BMI of ${fixed(x.b1, 1)} and a height of ${fixed(x.h, 2)} m. ${a.he === 'she' ? 'She wants' : 'He wants'} to bring ${a.his} BMI down to ${fixed(t.to, 1)} ${t.aim(a.his)}. ` +
-          `Using BMI = mass (kg) ÷ height (m)², calculate the mass ${a.he} must lose, in kg.`,
+          `Using BMI = mass (kg) ÷ height (m)², calculate the mass ${a.he} must lose, in kg.${askFor(!near(x.exact, x.loss), '1 decimal place')}`,
         solution:
           `Rearrange: mass = BMI × height². Height squared: $${fixed(x.h, 2)}^2 = ${show(x.h2)}$. Mass now: $${fixed(x.b1, 1)} \\times ${show(x.h2)} = ${kg(x.m1, x.r1)}$ kg. ` +
           `Mass at a BMI of ${fixed(t.to, 1)}: $${fixed(t.to, 1)} \\times ${show(x.h2)} = ${kg(x.m2, x.r2)}$ kg. Mass to lose: $${fixed(x.r1, 1)} - ${fixed(x.r2, 1)} = ${show(x.loss)}$ kg. ` +
@@ -859,7 +859,7 @@ export const adrenalinTable: Generator = {
         prompt:
           `A person sitting quietly ${s.what} at ${t.minute} minutes, and adrenalin is released into their blood. Their heart rate and blood glucose concentration were measured every 5 minutes. The figures are illustrative.\n\n` +
           `| Time (min) | Heart rate (beats/min) | Blood glucose (mg per 100 cm³) |\n|---|---|---|\n${rows}\n\n` +
-          `Calculate the percentage increase in heart rate between the readings at ${before} minutes and ${before + 5} minutes.`,
+          `Calculate the percentage increase in heart rate between the readings at ${before} minutes and ${before + 5} minutes.${askFor(!near(x.exact, x.p))}`,
         solution: `Increase $= ${x.h1} - ${x.h0} = ${x.d}$ beats/min. $\\dfrac{${x.d}}{${x.h0}} \\times 100 = ${near(x.exact, x.p) ? show(x.p) : `${trail(x.exact, 3)} = ${sigText(x.p, 3)}`}\\%$${near(x.exact, x.p) ? '' : ' to 3 significant figures'}. Divide by the **starting** value, the reading before the ${s.short}.`,
         method: [`${x.d} ÷ ${x.h0} × 100`],
         answer: x.p,
@@ -1369,7 +1369,8 @@ export const reactionChange: Generator = {
       {
         prompt:
           'Reaction time can be worked out from how far a dropped ruler falls before it is caught. The time $t$, in seconds, for the ruler to fall a distance $d$, in metres, is $t = \\sqrt{2d \\div g}$, where $g = 10\\ \\text{m/s}^2$. ' +
-          c.prompt(show(a.d), show(b.d), rule, pick(r, c.people), pick(r, c.causes)),
+          c.prompt(show(a.d), show(b.d), rule, pick(r, c.people), pick(r, c.causes)) +
+          ' Give each reaction time to 2 decimal places.',
         solution:
           `The distances are in centimetres and the formula needs metres, so convert first: ${show(a.d)} cm is ${show(clean(a.d / 100))} m and ${show(b.d)} cm is ${show(clean(b.d / 100))} m. ` +
           `Before: ${rootLine(a)}. After: ${rootLine(b)}. ` +
@@ -1534,7 +1535,7 @@ export const pupilArea: Generator = {
         prompt:
           `${l.dim} a person's pupil is ${show(x.D)} mm in diameter. ${l.bright} the muscles of the iris constrict it to ${show(x.d)} mm in diameter. ` +
           'The amount of light entering the eye is proportional to the area of the pupil, where area $= \\pi r^2$. ' +
-          `Calculate how many times more light enters the eye through the ${show(x.D)} mm pupil than through the ${show(x.d)} mm pupil.`,
+          `Calculate how many times more light enters the eye through the ${show(x.D)} mm pupil than through the ${show(x.d)} mm pupil.${askFor(!exactly)}`,
         solution:
           `Radius first, not diameter: ${show(R)} mm and ${show(rr)} mm. Areas: $\\pi \\times ${show(R)}^2 = ${piTerm(R2)}$, about ${sigText(Math.PI * R2, 3)} mm², and $\\pi \\times ${show(rr)}^2 = ${piTerm(r2)}$, about ${sigText(Math.PI * r2, 3)} mm². ` +
           `Ratio $= \\dfrac{${piTerm(R2)}}{${piTerm(r2)}} = ${atMost(x.exact, 4) ? show(x.exact) : trail(x.exact, 4)}$${exactly ? '' : `, which is ${rText} to 3 significant figures`}. So ${about}${rText} times as much light enters through the wide pupil, not ${kText} times: the diameter is ${kText} times larger, and the area grows with the square of that. ` +
@@ -1737,8 +1738,8 @@ export const reabsorbed: Generator = {
       slot,
       {
         prompt:
-          `${d.lead} ${x.f} litres of fluid out of the blood into the nephrons. ${d.then} ${show(x.u)} litres of urine. ` +
-          'Calculate the percentage of the filtered fluid that is reabsorbed back into the blood.',
+          `${d.lead} ${x.f} litres of fluid out of the blood into the nephrons. ${d.then} ${show(x.u)} ${x.u === 1 ? 'litre' : 'litres'} of urine. ` +
+          `Calculate the percentage of the filtered fluid that is reabsorbed back into the blood.${askFor(!exactly)}`,
         solution:
           `Reabsorbed $= ${x.f} - ${show(x.u)} = ${show(x.back)}$ litres. Percentage $= \\dfrac{${show(x.back)}}{${x.f}} \\times 100 = ${exactly ? show(x.p) : `${trail(x.exact, 4)} = ${sigText(x.p, 3)}`}\\%$${exactly ? '' : ' to 3 significant figures'}. Only about ${sigText(100 - x.exact, 2)}% of what is filtered leaves as urine. ` +
           'The kidney filters indiscriminately by size and then selectively reabsorbs almost all of the water, along with all of the glucose, so that the urea is removed without the useful substances being lost.',

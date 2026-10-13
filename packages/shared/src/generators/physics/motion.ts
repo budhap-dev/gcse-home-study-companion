@@ -2,6 +2,7 @@ import { show } from '../format.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
 import { cap, closes, near, numeric, prose, stepped, tex } from './build.ts'
+import { powerOfTen } from '../chemistry/build.ts'
 import { clearAtSigFigs, dpTolerance, sfTolerance, sigFigs, sigText } from './format.ts'
 
 /**
@@ -262,8 +263,9 @@ export const finalVelocityFromRest: Generator = {
         const v = multipleIn(r, rootMultiple(Math.round(2 * a)), c.v[0], c.v[1])
         return { a, v, s: v ? clean((v * v) / (2 * a)) : 0 }
       },
-      // Never a = 1: "2 × 1 × s" makes the doubling a step in name only.
-      ({ a, v, s }) => v > 0 && Number.isInteger(s) && s >= 2 && s !== v && s !== a && a !== 1 && v !== a,
+      // Never a = 1: "2 × 1 × s" makes the doubling a step in name only. Nor a = 0.5, where 2a = 1
+      // and v² is the distance's figure, so v = √s pays.
+      ({ a, v, s }) => v > 0 && Number.isInteger(s) && s >= 2 && s !== v && s !== a && a !== 1 && a !== 0.5 && v !== a,
     )
     const v2 = v * v
     const prompt = pick(r, [
@@ -439,6 +441,9 @@ const JOURNEYS: Journey[] = [
   { text: (d1, v1, d2, v2) => `A passenger crosses ${d1} m of water on a ferry at ${v1} m/s, then walks ${d2} m at ${v2} m/s.`, whole: 'journey', first: 'ferry', second: 'walking', v1: [4, 8], step1: 1, t1: [300, 900], tstep1: 60, v2: [1, 2], step2: 0.5, t2: [300, 900], tstep2: 60 },
 ]
 
+/** A stage as "Time …" names it: "Time walking", "Time on the bus", "Time through the town". */
+const during = (stage: string) => ({ bus: 'on the bus', train: 'on the train', town: 'through the town', motorway: 'on the motorway', 'A-road': 'on the A-road', ferry: 'on the ferry' } as Record<string, string>)[stage] ?? stage
+
 /**
  * Average speed over two stages, to 3 significant figures: written as q16 (600 m at 5 m/s
  * then 900 m at 15 m/s, 8.33 m/s, 4 marks). The stages never take the same time, so the
@@ -479,7 +484,7 @@ export const averageSpeedOverStages: Generator = {
       slot,
       {
         prompt: `${c.text(prose(d1), show(v1), prose(d2), show(v2))} Calculate the average speed for the whole ${c.whole}, in m/s. Give your answer to 3 significant figures.`,
-        solution: `Time ${c.first} $= ${tex(d1)} \\div ${show(v1)} = ${t1}$ s. Time ${c.second} $= ${tex(d2)} \\div ${show(v2)} = ${t2}$ s. Total distance ${prose(D)} m in ${T} s. Average speed $= ${tex(D)} \\div ${T} = ${unrounded(rate, 4)}$, so **${sigText(answer, 3)} m/s** to 3 significant figures. Not the average of ${show(v1)} and ${show(v2)}: the two stages take different times.`,
+        solution: `Time ${during(c.first)} $= ${tex(d1)} \\div ${show(v1)} = ${t1}$ s. Time ${during(c.second)} $= ${tex(d2)} \\div ${show(v2)} = ${t2}$ s. Total distance ${prose(D)} m in ${T} s. Average speed $= ${tex(D)} \\div ${T} = ${unrounded(rate, 4)}$, so **${sigText(answer, 3)} m/s** to 3 significant figures. Not the average of ${show(v1)} and ${show(v2)}: the two stages take different times.`,
         method: [`${c.first} time ${t1} s`, `${c.second} time ${t2} s`, `$${tex(D)} \\div ${T}$`],
         answer,
         tolerance,
@@ -668,7 +673,8 @@ export const thinkingDistance: Generator = {
   replaces: ['q3'],
   build(r, slot, turn) {
     const c = DRIVERS[turn % DRIVERS.length]!
-    const v = int(r, ...c.v)
+    // Never 10 m/s, where the distance is the reaction time with its point moved.
+    const v = draw(r, (r) => int(r, ...c.v), (v) => !powerOfTen(v))
     const react = stepped(r, c.react[0], c.react[1], 0.1)
     const d = clean(v * react)
     const prompt = c.state
@@ -719,7 +725,8 @@ export const reactionTimeFromThinkingDistance: Generator = {
         const v = multipleIn(r, 20 / gcd(Math.round(react * 20), 20), c.v[0], c.v[1])
         return { v, react, d: clean(v * react) }
       },
-      ({ v, react, d }) => v > 0 && Number.isInteger(d) && d !== v && react < 1,
+      // Never a speed of 10 m/s, where the reaction time is the distance with its point moved.
+      ({ v, react, d }) => v > 0 && Number.isInteger(d) && d !== v && react < 1 && !powerOfTen(v),
     )
     const prompt = pick(r, [
       `A ${c.driver} travelling at ${v} m/s has a thinking distance of ${d} m. Calculate the ${c.driver}'s reaction time.`,
@@ -988,7 +995,7 @@ export const stoppingDistanceFromReactionAndDeceleration: Generator = {
         const react = stepped(r, c.react[0], c.react[1], 0.1)
         return { u, react, a, thinking: clean(u * react), braking: s }
       },
-      ({ u, react, a, thinking, braking }) => cleanBraking({ u, a, s: braking }) && Number.isInteger(thinking) && thinking !== braking && thinking !== u && thinking + braking !== u && react < 1,
+      ({ u, react, a, thinking, braking }) => cleanBraking({ u, a, s: braking }) && Number.isInteger(thinking) && thinking !== braking && thinking !== u && thinking + braking !== u && react < 1 && !powerOfTen(u),
     )
     const u2 = u * u
     const a2 = clean(2 * a)
@@ -1115,7 +1122,8 @@ export const crashForce: Generator = {
         const a = clean(u / t)
         return { m, u, t, a, F: clean(m * a) }
       },
-      ({ u, t, a, F }) => Number.isInteger(a) && Number.isInteger(F) && F >= 10 && a !== u && t !== 1 && u !== t,
+      // Nor 0.1 s, where the deceleration is the speed with its point moved.
+      ({ u, t, a, F }) => Number.isInteger(a) && Number.isInteger(F) && F >= 10 && a !== u && t !== 1 && u !== t && !powerOfTen(t),
     )
     // Second route: the force over the mass gives the deceleration, and that times the time the speed.
     return numeric(

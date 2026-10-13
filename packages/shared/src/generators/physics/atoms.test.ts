@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { atomGenerators } from './atoms.ts'
 
@@ -25,6 +25,8 @@ function build(generatorId: string, slotId: string, count = 300): Generated[] {
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 const method = (b: Generated, i: number) => b.question.markScheme[i]!.description
 const values = (b: Generated) => b.values as Record<string, number>
@@ -72,7 +74,7 @@ describe('the model of the atom', () => {
       expect(b.question.solution).toContain(`$${A} - ${z} = $ **${answer(b)}** neutrons.`)
       expect(method(b, 0)).toBe(`mass number minus atomic number: $${A} - ${z}$`)
       expect(last(b)).toBe(String(answer(b)))
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
       expect(units(b)).toBeUndefined()
     }
     expect(contexts(built)).toBe(3)
@@ -168,7 +170,7 @@ describe('half-life', () => {
       expect(method(b, 0)).toBe(`${COUNT[n!]} half-lives: $${tex(time)} \\div ${tex(half!)} = ${n}$`)
       expect(method(b, 1)).toBe(`halves ${HALVES[n!]}`)
       expect(last(b)).toBe(String(answer(b)))
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
       expect(units(b)).toBe('Bq')
     }
     expect(contexts(built)).toBe(14)
@@ -197,7 +199,8 @@ describe('half-life', () => {
       expect(b.question.solution).toContain(`$${tex(start!)} \\div 2^${n} = ${tex(start!)} \\div ${2 ** n!} = ${answer(b)}$.`)
       expect(units(b)).toBeUndefined()
     }
-    expect(contexts(built)).toBe(5)
+    // No seconds-to-minute row: a per-minute count rate cannot be read from a source that halves within the minute.
+    expect(contexts(built)).toBe(4)
   })
 
   it('q13 never asks one context the same span: no n or time is more than 40% of its builds', () => {

@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { dpTolerance } from './format.ts'
 
@@ -27,6 +27,8 @@ const clean = (x: number) => Number(x.toPrecision(12))
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 const values = (b: Generated) => b.values as Record<string, number>
 /** The end of a worked solution as closes() prints it, for answers under five digits. */
@@ -93,7 +95,7 @@ describe('series and parallel circuits', () => {
         if (slotId === 'q1') expect(b.question.markScheme[0]!.description).toBe(`adds the resistances: $${R1} + ${R2}$`)
         expect(last(b)).toBe(`${answer(b)} Ω`)
         expect(units(b)).toBe('Ω')
-        expect(tolerance(b)).toBe(0)
+        expect(tolerance(b)).toBe(room(b, 0))
       }
       expect(contexts(built)).toBe(3)
     }
@@ -121,7 +123,7 @@ describe('series and parallel circuits', () => {
         expect(b.question.markScheme.length).toBe(slotId === 'q5' && id === 'series-current-rules' ? 3 : 2)
         if (id === 'series-current-rules') expect(b.question.markScheme[1]!.description).toBe(`$I = V \\div R_{\\text{total}} = ${show(V!)} \\div ${Rt}$`)
         expect(units(b)).toBe('A')
-        expect(tolerance(b)).toBe(dpTolerance(I))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(I)))
       }
       expect(contexts(built)).toBe(6)
     }
@@ -154,7 +156,7 @@ describe('series and parallel circuits', () => {
         }
         expect(b.question.markScheme.at(-2)!.description).toContain(`$${show(I!)} \\times ${Rx}$`)
         expect(units(b)).toBe('V')
-        expect(tolerance(b)).toBe(dpTolerance(Vx))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(Vx)))
       }
       expect(new Set(built.map((b) => b.values.asked))).toEqual(new Set([1, 2]))
       expect(contexts(built)).toBe(6)
@@ -188,7 +190,7 @@ describe('series and parallel circuits', () => {
         expect(b.question.markScheme[0]!.description).toBe(`full ${show(V!)} V across each branch: ${branches}`)
         expect(b.question.markScheme[1]!.description).toBe(`adds the branch currents: $${show(I1)} + ${show(I2)}$`)
         expect(units(b)).toBe('A')
-        expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
       }
       expect(contexts(built)).toBe(6)
     }
@@ -208,7 +210,7 @@ describe('series and parallel circuits', () => {
       expect(b.question.solution).toContain(`Each branch has the full ${show(V!)} V, so $${ends(`I = V \\div R = ${show(V!)} \\div ${Rx}`, Ix, 'A')}`)
       expect(b.question.markScheme[0]!.description).toBe(`uses the full ${show(V!)} V on the branch: $${show(V!)} \\div ${Rx}$`)
       expect(units(b)).toBe('A')
-      expect(tolerance(b)).toBe(dpTolerance(Ix))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(Ix)))
     }
     expect(new Set(built.map((b) => b.values.asked))).toEqual(new Set([1, 2]))
     expect(contexts(built)).toBe(6)
@@ -238,9 +240,9 @@ describe('series and parallel circuits', () => {
       const moved = Rt2 > Rt ? `has fallen from ${show(I)} A to ${show(I2)} A, because the total resistance rose from ${Rt} Ω to ${Rt2} Ω` : `has risen from ${show(I)} A to ${show(I2)} A, because the total resistance fell from ${Rt} Ω to ${Rt2} Ω`
       expect(b.question.solution).toContain(moved)
       expect(b.question.markScheme[0]!.description).toBe(`new total resistance $= ${kept} + ${R3} = ${Rt2}$ Ω`)
-      expect(units(b)).toBeUndefined()
-      expect(last(b)).toBe(show(I2))
-      expect(tolerance(b)).toBe(dpTolerance(I2))
+      expect(units(b)).toBe('A')
+      expect(last(b)).toBe(`${show(I2)} A`)
+      expect(tolerance(b)).toBe(room(b, dpTolerance(I2)))
     }
     expect(new Set(built.map((b) => b.values.replaced))).toEqual(new Set([1, 2]))
     expect(contexts(built)).toBe(6)
@@ -280,7 +282,7 @@ describe('charge, V = IR and P = VI', () => {
         if (b.values.context === 'car starter motor') expect(t).toBeLessThanOrEqual(4)
         if (b.values.context === 'kettle') expect(I! >= 8.5 && I! <= 13).toBe(true)
         expect(units(b)).toBe('C')
-        expect(tolerance(b)).toBe(dpTolerance(Q))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(Q)))
       }
       expect(contexts(built)).toBe(slotId === 'q1' ? 6 : 5)
     }
@@ -310,7 +312,7 @@ describe('charge, V = IR and P = VI', () => {
         expect(b.question.markScheme[0]!.description).toContain(`$I = ${id === 'ohms-law-current' ? 'V \\div R = ' : ''}${show(V!)} \\div ${show(R!)}$`)
         if (id !== 'ohms-law-current') expect(b.question.markScheme[0]!.description).toContain('rearranges $V = IR$')
         expect(units(b)).toBe('A')
-        expect(tolerance(b)).toBe(dpTolerance(I))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(I)))
       }
       expect(contexts(built)).toBe(5)
     }
@@ -331,7 +333,7 @@ describe('charge, V = IR and P = VI', () => {
         expect(b.question.solution).toContain(ends(`R = V \\div I = ${show(V!)} \\div ${show(I!)}`, R, 'Ω'))
         if (id === 'ohms-law-resistance') expect(b.question.solution).toContain(`Check: $${show(I!)} \\times ${show(R)} = ${show(V!)}$ ✓`)
         expect(units(b)).toBe('Ω')
-        expect(tolerance(b)).toBe(dpTolerance(R))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(R)))
       }
       expect(contexts(built)).toBe(5)
     }
@@ -350,7 +352,7 @@ describe('charge, V = IR and P = VI', () => {
       expect(sumIsProduct(I!, R!), b.seed).toBe(false)
       expect(b.question.solution).toBe(`$${ends(`V = I R = ${show(I!)} \\times ${show(R!)}`, V, 'V')}.`)
       expect(units(b)).toBe('V')
-      expect(tolerance(b)).toBe(dpTolerance(V))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(V)))
     }
     expect(new Set(built.map((b) => b.values.context))).toEqual(new Set(['resistor', 'filament lamp', 'heating element']))
   })
@@ -373,7 +375,7 @@ describe('charge, V = IR and P = VI', () => {
       expect(b.question.solution).toContain(`the resistance is $${show(V!)} \\div ${show(I!)} = ${show(R)}$ Ω, and $P = I^2 R = ${show(I!)}^2 \\times ${show(R)} = ${show(P)}$ W ✓`)
       expect(b.question.markScheme[0]!.description).toBe(`$P = V I = ${show(V!)} \\times ${show(I!)}$`)
       expect(units(b)).toBe('W')
-      expect(tolerance(b)).toBe(dpTolerance(P))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(P)))
     }
     expect(contexts(built)).toBe(5)
   })
@@ -401,7 +403,7 @@ describe('charge, V = IR and P = VI', () => {
       expect(b.question.markScheme[1]!.description).toBe(`recognises the current ${effect}, from ${show(I1)} A`)
       expect(units(b)).toBeUndefined()
       expect(last(b)).toBe(show(I2))
-      expect(tolerance(b)).toBe(dpTolerance(I2))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(I2)))
     }
     expect(new Set(built.map((b) => b.values.change))).toEqual(new Set([2, 3, 4, 0.5]))
     expect(contexts(built)).toBe(4)

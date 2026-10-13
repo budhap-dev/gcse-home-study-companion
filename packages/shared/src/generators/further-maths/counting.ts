@@ -364,7 +364,8 @@ function lastDigit(r: Rng, slot: Question): Draft {
   // From 1 to 9 there are 5 odd digits and 4 even ones; half the digits fitting would make
   // "half of all the numbers" right by accident.
   const [fit, rest0] = odd ? [5, 4] : [4, 5]
-  const os = Array.from({ length: n - 1 }, (_, i) => i + 1).filter((o) => o <= fit && n - o <= rest0 && 2 * o !== n && o * product(falling(n - 1, k - 1)) <= 600)
+  // At least two digits can end: with one, the restriction is a single choice and the question is 4 × 3.
+  const os = Array.from({ length: n - 1 }, (_, i) => i + 1).filter((o) => o >= 2 && o <= fit && n - o <= rest0 && 2 * o !== n && o * product(falling(n - 1, k - 1)) <= 600)
   const o = pick(r, os)
   const digits = digitSet(r, n, 1, (ds) => ds.filter((d) => d % 2 === (odd ? 1 : 0)).length === o && !ds.includes(o * product(falling(n - 1, k - 1))))
   const ends = digits.filter((d) => d % 2 === (odd ? 1 : 0))

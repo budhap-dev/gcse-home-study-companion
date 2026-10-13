@@ -460,12 +460,12 @@ describe('the fossil timescale', () => {
   it('q25: literal builds, and the written slot\'s own figures', () => {
     const human = one('fossil-gap-generations', 'q25', 'review-c')
     expect(human.question.prompt).toBe(
-      '*Sahelanthropus*, one of the oldest fossils thought to be a human ancestor, lived about 7 million years ago and Lucy lived 3.2 million years ago. Assuming an average generation time of 23 years, calculate how many generations of human ancestors would fit into the time between *Sahelanthropus* and Lucy.',
+      '*Sahelanthropus*, one of the oldest fossils thought to be a human ancestor, lived about 7 million years ago and Lucy lived 3.2 million years ago. Assuming an average generation time of 23 years, calculate how many generations of human ancestors would fit into the time between *Sahelanthropus* and Lucy. Give your answer to 3 significant figures.',
     )
     expect(answer(human)).toBe(165000)
     const b = one('fossil-gap-generations', 'q25', 'review-b')
     expect(b.question.prompt).toBe(
-      '*Mesohippus*, a three-toed horse, lived about 35 million years ago and *Merychippus*, a grazing three-toed horse, lived about 15 million years ago. Assuming an average generation time of 6 years, calculate how many generations of horse ancestors would fit into the time between *Mesohippus* and *Merychippus*.',
+      '*Mesohippus*, a three-toed horse, lived about 35 million years ago and *Merychippus*, a grazing three-toed horse, lived about 15 million years ago. Assuming an average generation time of 6 years, calculate how many generations of horse ancestors would fit into the time between *Mesohippus* and *Merychippus*. Give your answer to 3 significant figures.',
     )
     expect(b.question.solution).toContain('$20\\,000\\,000 \\div 6 = 3\\,333\\,333.3\\ldots$, which is **3330000 generations** to 3 significant figures.')
     expect(answer(b)).toBe(3330000)

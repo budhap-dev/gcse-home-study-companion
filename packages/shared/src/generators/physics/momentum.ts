@@ -305,7 +305,8 @@ export const headOnSticking: Generator = {
     // range that give a clean velocity after: drawing all four and hoping met a clean answer
     // too rarely for the rugby players, whose combined mass divides little.
     const ok = ({ m1, u1, m2, u2, p1, p2, p, M, v }: Record<'m1' | 'u1' | 'm2' | 'u2' | 'p1' | 'p2' | 'p' | 'M' | 'v', number>) =>
-      p > 0 && p2 >= p1 / 6 && distinct(m1, m2, M) && distinct(u1, u2, v) && v !== m1 && v !== m2 && p !== p2 && atMost(v, 2) && v >= 0.1 && !SHIFTS.includes(m1) && !SHIFTS.includes(m2) && !SHIFTS.includes(u1) && !SHIFTS.includes(u2)
+      // Never a momentum equal to the combined mass (v = 1, and M ÷ p pays too), nor double or half of it.
+      p > 0 && p2 >= p1 / 6 && distinct(m1, m2, M) && distinct(u1, u2, v) && v !== m1 && v !== m2 && p !== p2 && v !== 1 && p !== 2 * M && M !== 2 * p && atMost(v, 2) && v >= 0.1 && !SHIFTS.includes(m1) && !SHIFTS.includes(m2) && !SHIFTS.includes(u1) && !SHIFTS.includes(u2)
     const { m1, u1, m2, u2, p1, p2, p, M, v } = draw(
       r,
       (r) => {

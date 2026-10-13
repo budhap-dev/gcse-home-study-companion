@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { GENERATORS, generate } from '../index.ts'
+import { GENERATORS, generate, roundingRoom } from '../index.ts'
 import type { Generated } from '../types.ts'
 import { dpTolerance } from './format.ts'
 import { waveGenerators } from './waves.ts'
@@ -28,6 +28,8 @@ const clean = (x: number) => Number(x.toPrecision(12))
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const units = (b: Generated) => (b.question.type === 'numeric' ? b.question.units : 'not numeric')
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
+/** The tolerance a build carries: the generator's own, widened to the answer's three-figure rounding where no precision is asked (roundingRoom in index.ts). */
+const room = (b: Generated, t: number) => (b.question.type === 'numeric' ? roundingRoom('physics', b.question.prompt, b.question.answer, t) : t)
 const last = (b: Generated) => b.question.markScheme.at(-1)!.description
 const method = (b: Generated, i: number) => b.question.markScheme[i]!.description
 const codes = (b: Generated) => b.question.markScheme.map((l) => l.code)
@@ -84,19 +86,19 @@ describe('the electromagnetic spectrum', () => {
       expect(codes(b)).toEqual(['M1', 'M1', 'A1'])
       expect(method(b, 1)).toBe(`$3 \\times 10^8 \\div ${tex(l!)}$`)
       expect(last(b)).toBe(f >= 1e6 ? `$${texed(f)}$ Hz` : `${prose(f)} Hz`)
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
       expect(units(b)).toBe('Hz')
     }
     expect(contexts(built)).toBe(5)
   })
 
-  it('q14 gives no speed, so the solution states it and names the radio group', () => {
+  it('q14 states the speed of light, and the solution names the radio group', () => {
     const built = build('radio-frequency-from-wavelength', 'q14')
     for (const b of built) {
       const { lambda: l } = values(b)
       expect(b.question.prompt, b.seed).toMatch(new RegExp(` ${prose(l!)} m\\b`))
       expect(b.question.prompt).toContain('electromagnetic wave')
-      expect(b.question.prompt).not.toContain('10⁸')
+      expect(b.question.prompt).toContain('3 × 10⁸ m/s')
       expect(l).toBeGreaterThanOrEqual(10)
       expect(answer(b)).toBe(clean(3e8 / l!))
       expect(b.question.solution).toMatch(/^Every electromagnetic wave travels at \$3 \\times 10\^8\$ m\/s in air\./)
@@ -130,12 +132,12 @@ describe('the electromagnetic spectrum', () => {
         expect(sigFigures(l)).toBeLessThanOrEqual(3)
         expect(echoes(l, 3e8)).toBe(false)
         expect(echoes(l, f!)).toBe(false)
-        expect(tolerance(b)).toBe(dpTolerance(l))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(l)))
         expect(units(b)).toBe('m')
         expect(b.question.prompt).not.toMatch(/\ba \d/)
         if (slotId === 'q6') {
           expect(b.question.prompt).toContain(`frequency of ${prosed(f!)} Hz`)
-          expect(b.question.prompt).not.toContain('speed')
+          expect(b.question.prompt).toContain('Take the speed of light as 3 × 10⁸ m/s')
           expect(b.question.solution).toContain(`\\dfrac{3 \\times 10^8}{${texed(f!)}} = ${show(l)}$ m.`)
           expect(method(b, 1)).toBe(`$3 \\times 10^8 \\div (${texed(f!)})$`)
           expect(last(b)).toBe(`${show(l)} m`)
@@ -170,7 +172,7 @@ describe('the electromagnetic spectrum', () => {
       expect(f).toBe(clean(3e8 / l!))
       expect(f).toBeLessThan(1e21)
       expect(sigFigures(f)).toBeLessThanOrEqual(3)
-      expect(tolerance(b)).toBe(Number((0.5 * 10 ** (power(f) - 2)).toPrecision(10)))
+      expect(tolerance(b)).toBe(room(b, Number((0.5 * 10 ** (power(f) - 2)).toPrecision(10))))
       expect(b.question.solution).toContain(`\\dfrac{3 \\times 10^8}{${texed(l!)}}`)
       expect(b.question.solution).toContain(`$3 \\div ${m} = ${show(clean(3 / Number(m)))}$`)
       expect(b.question.solution).toContain(`$10^{8-(${e})} = 10^{${8 - e}}$`)
@@ -201,7 +203,7 @@ describe('the electromagnetic spectrum', () => {
       expect(b.question.prompt).toContain('sieverts')
       expect(answer(b)).toBe(clean(d! / 1000))
       expect(b.question.solution).toBe(`1000 mSv = 1 Sv, so $${show(d!)} \\div 1000 = ${show(answer(b))}$ Sv.`)
-      expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
       expect(units(b)).toBe('Sv')
     }
     expect(contexts(built)).toBe(6)
@@ -232,7 +234,7 @@ describe('lenses', () => {
         expect(b.question.solution).toContain(`\\dfrac{${tex(i!)}}{${tex(o!)}} = ${show(answer(b))}$`)
         expect(b.question.solution).toContain(slotId === 'q5' ? 'Greater than 1' : 'Less than 1')
         expect(method(b, 0)).toBe(`image height over object height: $${tex(i!)} \\div ${tex(o!)}$`)
-        expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
         expect(units(b)).toBeUndefined()
       }
       expect(contexts(built)).toBe(4)
@@ -280,7 +282,7 @@ describe('light: required practical 9', () => {
       expect(answer(b)).toBe(a)
       expect(b.question.solution).toContain(`**${a}°**`)
       expect(codes(b)).toEqual(['B1'])
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
     }
     expect(contexts(built)).toBe(2)
   })
@@ -304,7 +306,7 @@ describe('light: required practical 9', () => {
       expect(b.question.solution).toContain(`$r = ${deg.toFixed(1)}°$, which is **${answer(b)}°** to the nearest degree`)
       expect(method(b, 0)).toBe(`$\\tan r = ${s!.toFixed(1)} \\div ${T!.toFixed(1)}$`)
       expect(last(b)).toBe(String(answer(b)))
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
     }
     expect(contexts(built)).toBe(2)
   })
@@ -334,7 +336,7 @@ describe('sound', () => {
       expect(echoes(answer(b), 340)).toBe(false)
       expect(echoes(answer(b), f!)).toBe(false)
       expect(b.question.solution).toBe(`$\\lambda = \\dfrac{v}{f} = \\dfrac{340}{${tex(f!)}} = ${show(answer(b))}$ m.`)
-      expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
       expect(units(b)).toBe('m')
     }
     expect(contexts(built)).toBe(6)
@@ -359,7 +361,7 @@ describe('sound', () => {
         expect(method(b, 1)).toBe(`uses $\\lambda = v \\div f$: $${v} \\div ${upper ? '20\\,000' : '20'}$`)
         expect(b.question.solution).toContain(upper ? `\\dfrac{${v}}{20\\,000} = ${show(answer(b))}$ m` : `\\dfrac{${v}}{20} = ${show(answer(b))}$ m`)
         if (upper) expect(b.question.solution).toContain(`gives ${show(v! / 20)} m, a thousand times too big`)
-        expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+        expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
         expect(units(b)).toBe('m')
       }
       expect(contexts(built)).toBe(6)
@@ -395,7 +397,7 @@ describe('wave properties', () => {
       expect(echoes(v, f!)).toBe(false)
       expect(echoes(v, l!)).toBe(false)
       expect(b.question.solution).toBe(`$v = f\\lambda = ${tex(f!)} \\times ${tex(l!)} = ${show(v)}$ m/s.`)
-      expect(tolerance(b)).toBe(dpTolerance(v))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(v)))
       expect(units(b)).toBe('m/s')
     }
     expect(contexts(built)).toBe(7)
@@ -409,7 +411,7 @@ describe('wave properties', () => {
       expect([1.25, 1.6, 2.5, 4, 6.25, 8]).toContain(front(T!))
       expect(answer(b)).toBe(clean(1 / T!))
       expect(b.question.solution).toBe(`$f = \\dfrac{1}{T} = \\dfrac{1}{${show(T!)}} = ${show(answer(b))}$ Hz. Period and frequency are reciprocals.`)
-      expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
       expect(units(b)).toBe('Hz')
     }
     expect(contexts(built)).toBe(7)
@@ -457,7 +459,7 @@ describe('wave properties', () => {
       expect(b.question.solution).toContain(`\\dfrac{${show(clean(2 * d!))}}{${t!.toFixed(2)}} = ${answer(b)}$ m/s`)
       expect(method(b, 0)).toBe(`doubles the distance to ${show(clean(2 * d!))} m`)
       expect(method(b, 1)).toBe(`divides by ${t!.toFixed(2)}`)
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
       expect(units(b)).toBe('m/s')
     }
     expect(contexts(built)).toBe(3)
@@ -505,7 +507,7 @@ describe('waves for detection', () => {
       expect(b.question.solution).toContain(`$${tex(whole)} \\div 2 = ${tex(answer(b))}$ m`)
       if (b.values.context === 'ocean floor') expect(answer(b)).toBeGreaterThanOrEqual(1500)
       else expect(answer(b)).toBeLessThanOrEqual(300)
-      expect(tolerance(b)).toBe(0)
+      expect(tolerance(b)).toBe(room(b, 0))
       expect(units(b)).toBe('m')
     }
     expect(contexts(built)).toBe(4)
@@ -523,7 +525,7 @@ describe('waves for detection', () => {
       expect(answer(b)).toBeLessThanOrEqual(0.15)
       expect(method(b, 0)).toBe(`speed times time: $1500 \\times ${show(t!)} = ${show(whole)}$ m`)
       expect(method(b, 1)).toBe('halves it')
-      expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
       expect(units(b)).toBe('m')
     }
     expect(contexts(built)).toBe(4)
@@ -542,7 +544,7 @@ describe('waves for detection', () => {
       expect(method(b, 0)).toBe(`doubles the distance for the return journey: $2 \\times ${show(d!)} = ${show(there)}$ m`)
       expect(method(b, 1)).toBe(`divides by the speed: $${show(there)} \\div 1500$`)
       expect(b.question.solution).toContain('**doubled**, not halved')
-      expect(tolerance(b)).toBe(dpTolerance(answer(b)))
+      expect(tolerance(b)).toBe(room(b, dpTolerance(answer(b))))
       expect(units(b)).toBe('s')
     }
     expect(contexts(built)).toBe(4)

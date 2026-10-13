@@ -3,7 +3,7 @@ import { atMost, cap, figures, near, numeric, prose, tex } from '../physics/buil
 import { clearAtSigFigs, sfTolerance, sigFigs, sigText } from '../physics/format.ts'
 import { draw, int, pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { between, cut, gcd, halfLastPlace, layered, rich, tidy, unitsOf } from './build.ts'
+import { askFor, between, cut, gcd, halfLastPlace, layered, rich, tidy, unitsOf } from './build.ts'
 import { clean, clearOf, distinct, noOnes, powerOfTen, range, tenfold, threeFigures, toPlaces } from '../chemistry/build.ts'
 
 /**
@@ -144,7 +144,7 @@ export const enzymeRate: Generator = {
     return numeric(
       slot,
       {
-        prompt: pick(r, RATE_PROMPTS)(p, show(x.t)),
+        prompt: pick(r, RATE_PROMPTS)(p, show(x.t)) + askFor(!x.exact),
         solution: `${rateWorking(x)}, in arbitrary units. The shorter the time, the higher the rate.`,
         method: ['divides 1000 by the time'],
         answer: x.R,
@@ -290,7 +290,7 @@ export const enzymeMeanRate: Generator = {
     return numeric(
       slot,
       {
-        prompt: pick(r, MEAN_PROMPTS)(p, list),
+        prompt: pick(r, MEAN_PROMPTS)(p, list) + askFor(!x.exact),
         solution:
           `Mean time first: $\\dfrac{${ts.map(show).join(' + ')}}{3} = \\dfrac{${show(sum)}}{3} = ${show(m)}$ s. Then the rate: ${rateWorking(x)}. ` +
           `A shorter time means a faster reaction, and the rate turns that round so that a bigger number means faster; here it is ${rateText(x)}.`,
@@ -552,7 +552,7 @@ export const calorimetryPerGram: Generator = {
       slot,
       {
         prompt,
-        solution: b.L >= 10000 ? solution.replace(`= ${tex(b.L)}$ J/g.`, `$, which is **${b.L} J/g**.`) : solution,
+        solution: b.L >= 10000 ? solution.replace(` = ${tex(b.L)}$ J/g.`, `$, which is **${b.L} J/g**.`) : solution,
         method: readings
           ? [`temperature rise ${b.dT} °C, and energy = ${b.V} × 4.2 × ${b.dT} = ${prose(b.E)} J`, `divides by ${show(b.m)} g, the mass of the food`]
           : [`uses mass of water × 4.2 × temperature rise: ${b.V} × 4.2 × ${b.dT} = ${prose(b.E)} J`, `divides by ${show(b.m)} g, the mass of the food`],
@@ -1233,8 +1233,8 @@ interface Warmed {
 }
 const WARMED = new Map<string, Warmed[]>()
 /**
- * A cool and a warm reading whose distances look about two or three times apart (1.75 to 1.95,
- * or 2.05 to 2.2, times n), while the rates differ by a factor 1.3 to 2.5 that is at least 0.3
+ * A cool and a warm reading whose distances look about two or three times apart (0.92 to 0.975
+ * of n, or 1.025 to 1.1 times it: 2.6 is not "almost three"), while the rates differ by a factor 1.3 to 2.5 that is at least 0.3
  * from it, rounds clearly to 2 places, and is not the time ratio. The warm reading is timed for
  * longer, as in the written question, so the raw distances overstate the difference; no distance or
  * time is a temperature, nor one with the point moved.
@@ -1252,7 +1252,7 @@ function warmed(x: Respirer): Warmed[] {
       const n = Math.round(dist)
       if (n < 2 || n > 3) continue
       const off = dist / n
-      const kind = off >= 0.875 && off <= 0.975 ? 'almost' : off >= 1.025 && off <= 1.1 ? 'just over' : null
+      const kind = off >= 0.92 && off <= 0.975 ? 'almost' : off >= 1.025 && off <= 1.1 ? 'just over' : null
       const k = Number(fixed(exact, 2))
       if (!kind || !between(exact, [1.3, 2.5]) || Math.abs(exact - n) < 0.3 || !clearOfHalf(exact, 2, 0.05)) continue
       if (w.t <= c.t || Math.abs(exact - w.t / c.t) < 0.05 || !distinct(c.D, w.D, c.t, w.t, ...x.temps) || !clearOf(k, c.D, w.D, c.t, w.t, c.rate, w.rate) || !noOnes(k)) continue
@@ -1284,7 +1284,7 @@ export const respirometerComparison: Generator = {
           `In a respirometer holding ${x.text} at ${T1} °C, the drop moved ${y.c.D} mm in ${y.c.t} minutes. Warmed to ${T2} °C, the drop moved ${y.w.D} mm in ${y.w.t} minutes. ` +
           `A student says the warmed ${x.text} respired ${y.how} ${many} as fast, because ${y.w.D} mm is ${y.how} ${many} ${y.c.D} mm. Calculate how many times faster, to two decimal places, the warmed ${x.text} were actually respiring.`,
         solution:
-          `Rates are $\\dfrac{${y.c.D}}{${y.c.t}} = ${show(y.c.rate)}$ mm/min and $\\dfrac{${y.w.D}}{${y.w.t}} = ${show(y.w.rate)}$ mm/min, so $\\dfrac{${show(y.w.rate)}}{${show(y.c.rate)}} = ${atMost(exact, 2) ? show(exact) : `${cut(exact, 4)}\\ldots`}$${atMost(exact, 2) ? '' : `, which is **${fixed(y.k, 2)}** to two decimal places`}. ` +
+          `Rates are $\\dfrac{${y.c.D}}{${y.c.t}} = ${show(y.c.rate)}$ mm/min and $\\dfrac{${y.w.D}}{${y.w.t}} = ${show(y.w.rate)}$ mm/min, so $\\dfrac{${show(y.w.rate)}}{${show(y.c.rate)}} = ${atMost(exact, 2) ? `**${fixed(y.k, 2)}**` : `${cut(exact, 4)}\\ldots`}$${atMost(exact, 2) ? '' : `, which is **${fixed(y.k, 2)}** to two decimal places`}. ` +
           `Comparing the raw distances, ${y.w.D} against ${y.c.D}, would have suggested a much larger difference, because the **times were not the same**.`,
         method: [`converts both readings to rates: ${show(y.c.rate)} and ${show(y.w.rate)} mm/min`, `divides ${show(y.w.rate)} by ${show(y.c.rate)}`],
         answer: y.k,

@@ -104,6 +104,9 @@ import { probabilityGenerators } from './maths/probability.ts'
 import { setsGenerators } from './maths/sets.ts'
 import { statisticsGenerators } from './maths/statistics.ts'
 import { rng } from './random.ts'
+import { figures } from './physics/build.ts'
+import { sfTolerance } from './physics/format.ts'
+import { significantFiguresOf } from '../marking.ts'
 import type { Generated, Generator } from './types.ts'
 
 export type { Check, Generated, Generator } from './types.ts'
@@ -253,13 +256,48 @@ export function sheetQuestions(subjectId: string, topicId: string, written: Ques
     // rare seed outside them could still hit one (multi-step fractions did, 2 in 3000): the
     // sheet then keeps the written question rather than failing to open.
     try {
-      const generated = generate(g, question, seed!)
+      // A fresh version never prints a written question's figures, its own or a neighbour's on the sheet.
+      const generated = generate(g, question, seed!, { avoid: written.map((q) => q.prompt) })
       return { question: generated.question, generated }
     } catch {
       return { question }
     }
   })
 }
+
+const ASKS_PRECISION = /significant figure|decimal place|d\.p\.|nearest|whole number|standard form/i
+
+/**
+ * The room a Physics answer leaves for rounding when its prompt asks for no precision: its
+ * three-figure rounding is marked right too (1764 J typed as 1760, 11.75 W as 11.8), as the
+ * Chemistry and Biology helpers already allow for their calculated answers (`threeFigures`).
+ * Before this, every Physics slot with a four-figure answer marked the rounded one wrong. A
+ * prompt that names a precision is marked at that precision, and a Chemistry sum such as an
+ * Mr stays exact, so the rule is Physics's alone.
+ */
+export function roundingRoom(subjectId: string, prompt: string, answer: number, tolerance: number): number {
+  if (subjectId !== 'physics' || answer === 0 || ASKS_PRECISION.test(prompt) || figures(answer) <= 2) return tolerance
+  // Two-figure givens earn a two-figure answer: 0.16 × 22 = 3.52 typed as 3.5 is right, as an AQA
+  // scheme's "an answer that rounds to" allows. A three-figure given (1030 kg/m³) keeps three.
+  const twoFigureGivens = promptFigures(prompt).every((f) => significantFiguresOf(f) <= 2)
+  // sfTolerance keeps the 1.9% cap, so a two-figure rounding further off than that (225 as 230) stays wrong.
+  const room = twoFigureGivens ? sfTolerance(answer, 2) : figures(answer) >= 4 ? sfTolerance(answer, 3) : 0
+  return Math.max(tolerance, room)
+}
+
+/** The numbers a prompt prints, as text: 230, 9.8, 0.024; an exponent's digits count too, harmlessly. */
+const promptFigures = (prompt: string) => prompt.match(/(?<![\w.])\d+(?:\.\d+)?(?![\w.])/g) ?? []
+
+/**
+ * The distinct figures a prompt prints, sorted, to tell a fresh version from a written question.
+ * A precision sentence ("to 1 decimal place") is not a figure of the question, and a version that
+ * lists a figure twice ("stamped 9ct, meaning 9 carat") is the written 9 carat still.
+ */
+export const figuresOf = (text: string) =>
+  [...new Set(text.replace(/\b(\d+|one|two|three)\s+(decimal places?|significant figures?|d\.p\.|s\.f\.)/gi, '').match(/\d+(?:\.\d+)?/g) ?? [])].sort()
+
+/** Whether a fresh version prints a written question's figures: the same set of distinct figures. */
+const repeats = (fresh: string[], written: string[]) => fresh.length === written.length && fresh.every((f) => written.includes(f))
 
 /**
  * A fresh version of the written question `slot`, built from `seed`.
@@ -268,9 +306,20 @@ export function sheetQuestions(subjectId: string, topicId: string, written: Ques
  * a whole worksheet, and the same seed always rebuilds the same one. The question keeps the
  * written one's id, marks, grade band, skill, calculator rule, tags and discriminators.
  */
-export function generate(generator: Generator, slot: Question, seed: string): Generated {
+export function generate(generator: Generator, slot: Question, seed: string, options: { avoid?: readonly string[] } = {}): Generated {
   const start = Math.floor(rng(`${seed}:${generator.id}`)() * 1000)
-  const draft = generator.build(rng(`${seed}:${generator.topicId}:${slot.id}`), slot, start + Math.max(0, generator.replaces.indexOf(slot.id)))
+  const turn = start + Math.max(0, generator.replaces.indexOf(slot.id))
+  let draft = generator.build(rng(`${seed}:${generator.topicId}:${slot.id}`), slot, turn)
+  // A fresh version with a written question's figures (`avoid`: the sheet passes every written
+  // prompt on it) shows a retry the question just done, or answers a neighbour: the written speed
+  // of sound came back in 9% of one slot's builds, and a generated q5 drew the written q10's acid.
+  // Draw again, from a seed of its own, up to three times. The turn stays: sibling slots on a
+  // sheet keep apart by it, so a draw the turn alone decides (a route list indexed by turn) is
+  // the generator's to vary, and a slot whose every version prints the written figures keeps them.
+  const avoid = (options.avoid ?? []).map(figuresOf).filter((f) => f.length)
+  for (let again = 1; again <= 3 && avoid.some((w) => repeats(figuresOf(draft.question.prompt), w)); again++) {
+    draft = generator.build(rng(`${seed}:${generator.topicId}:${slot.id}:again${again}`), slot, turn)
+  }
   const kept = {
     id: slot.id,
     marks: slot.marks,
@@ -284,7 +333,7 @@ export function generate(generator: Generator, slot: Question, seed: string): Ge
   const b = draft.question
   const common = { ...kept, prompt: b.prompt, solution: b.solution, markScheme: b.markScheme, ...(b.visual ? { visual: b.visual } : {}) }
   const question: Question = b.type === 'numeric'
-    ? { ...common, type: 'numeric', answer: b.answer, tolerance: b.tolerance, unitsRequired: false, ...(b.units ? { units: b.units } : {}) }
+    ? { ...common, type: 'numeric', answer: b.answer, tolerance: roundingRoom(generator.subjectId, b.prompt, b.answer, b.tolerance), unitsRequired: false, ...(b.units ? { units: b.units } : {}) }
     : b.type === 'short-text'
       ? { ...common, type: 'short-text', accepted: b.accepted }
       : { ...common, type: 'multiple-choice', options: b.options, correct: b.correct }

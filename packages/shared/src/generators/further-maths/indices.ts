@@ -87,8 +87,10 @@ export const fractionalIndex: Generator = {
  * With a power of 2 or 3 (8^(−2/3)) and, a third of the time, a power of 1 (64^(−1/3)): too
  * few of the first stop at three places to vary the question on their own.
  */
-export const NEGATIVE_POWER = indices([2, 5, 10], [2, 3, 4, 5], [2, 3], ({ base, root, m }) => base <= 10000 && places(1 / root ** m) <= 3)
-export const NEGATIVE_ROOT = indices([2, 4, 5, 8, 10, 20, 25, 40, 50], [2, 3, 4, 5], [1], ({ base, root }) => base <= 10000 && places(1 / root) <= 3)
+// Bases a student knows on sight: powers up to 1024, squares up to 50², powers of ten. 3125 (5⁵), 4096 (8⁴) and 8000 (20³) are not.
+const known = (base: number, root: number, n: number) => base <= 1024 || root === 10 || (n === 2 && base <= 2500)
+export const NEGATIVE_POWER = indices([2, 5, 10], [2, 3, 4, 5], [2, 3], ({ base, root, m, n }) => known(base, root, n) && places(1 / root ** m) <= 3)
+export const NEGATIVE_ROOT = indices([2, 4, 5, 8, 10, 20, 25, 40, 50], [2, 3, 4, 5], [1], ({ base, root, n }) => known(base, root, n) && places(1 / root) <= 3)
 
 /** A negative fractional index: written as q6, 8^(−2/3) = 0.25. */
 export const negativeFractionalIndex: Generator = {
