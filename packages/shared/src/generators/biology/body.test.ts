@@ -838,7 +838,7 @@ describe('fertility', () => {
     }
     expect(contexts(built)).toBe(BODY.METHODS.length)
     // Pregnancies in a year of typical use, as the NHS gives them: pill about 9%, injection 6%, male condom 18%, diaphragm 12 to 29%.
-    expect(Object.fromEntries(BODY.METHODS.map((m) => [m.name, m.p]))).toEqual({ pill: [7, 11], condom: [15, 21], diaphragm: [12, 29], injection: [4, 8] })
+    expect(Object.fromEntries(BODY.METHODS.map((m) => [m.name, m.p]))).toEqual({ pill: [7, 11], condom: [15, 21], diaphragm: [12, 18], injection: [4, 8] })
     // The perfect-use figures the NHS gives.
     expect(Object.fromEntries(BODY.METHODS.map((m) => [m.name, /in (over 99%|98%|92 to 96%) of women/.exec(m.perfect)![1]]))).toEqual({ pill: 'over 99%', condom: '98%', diaphragm: '92 to 96%', injection: 'over 99%' })
     spread('contraception-effectiveness', 'q28', ['n', 'k'])

@@ -112,7 +112,7 @@ describe('every evolution build', () => {
           // No sentence starts with a numeral: "Of these, 18% are the dark form", never "18% of them are".
           expect(b.question.prompt, b.seed).not.toMatch(/(^|[.!?] )\d/)
           expect(b.question.type === 'numeric' && b.question.units, `${g.id} ${id}`).toBe(slot.type === 'numeric' && slot.units)
-          expect(b.question.solution, b.seed).toContain(String(answer(b)))
+          expect(b.question.solution.replace(/(\d)(?:\\,| )(?=\d{3}(?!\d))/g, '$1'), b.seed).toContain(String(answer(b)))
           expect(mark(b.question, String(answer(b))).correct, b.seed).toBe(true)
           // A count of bacteria after doubling is exact, and nobody rounds it: only it is right.
           if (g.id !== 'resistant-population-doubling') expect(mark(b.question, String(threeSf(answer(b)))).correct, `${b.seed} ${answer(b)}`).toBe(true)

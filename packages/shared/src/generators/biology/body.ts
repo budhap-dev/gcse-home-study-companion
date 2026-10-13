@@ -409,7 +409,8 @@ export const bmiLoss: Generator = {
 // =============================================================================================
 
 /** A resting adult's cardiac output, in cm³/min. */
-const REST_OUTPUT = [4000, 7000] as const
+/** About five litres a minute, as the solution says: 4 to 6 litres. */
+const REST_OUTPUT = [4000, 6000] as const
 
 interface Pumping {
   name: string
@@ -1028,7 +1029,7 @@ const PATHS: Path[] = [
     d: [0.65, 0.9],
     v: [50, 100],
     step: 1,
-    note: 'Its myelin sheath insulates the axon and speeds the impulse along it.',
+    note: "The neurone's myelin sheath insulates the axon and speeds the impulse along it.",
   },
   {
     name: 'neurone without myelin',
@@ -1281,7 +1282,7 @@ const CHANGES: Change[] = [
     before: [0.22, 0.33],
     change: [0.03, 0.12],
     people: [['volunteer', 'volunteer'], ['student', 'student'], ['participant in a sleep study', 'participant']],
-    causes: ['a good night’s sleep', 'nine hours of sleep', 'a full night’s rest'],
+    causes: ["a good night's sleep", 'nine hours of sleep', "a full night's rest"],
     prompt: (d1, d2, rule, [who, same], cause) =>
       `After a night without sleep, ${withArticle(who)} catches a dropped ${rule} after it has fallen ${d1} cm. The next day, after ${cause}, the same ${same} catches it after it has fallen ${d2} cm. Calculate the decrease in the ${same}'s reaction time, in seconds.`,
     why: (dt) => `Tiredness slows the response of the nervous system, so a rested nervous system reacts more quickly; sleep cut ${show(dt)} s from the reaction time.`,
@@ -1467,7 +1468,7 @@ interface Light {
 }
 const LIGHTS: Light[] = [
   { name: 'dim and bright', dim: 'In dim light', bright: 'In bright light' },
-  { name: 'cinema', dim: 'In a dark cinema', bright: 'Outside in bright sunshine' },
+  { name: 'cinema', dim: 'In a dark cinema', bright: 'Outside in the daylight' },
   { name: 'torch', dim: 'In a darkened room', bright: 'When a doctor shines a torch into the eye' },
 ]
 interface Pupil {
@@ -1539,7 +1540,7 @@ export const pupilArea: Generator = {
         solution:
           `Radius first, not diameter: ${show(R)} mm and ${show(rr)} mm. Areas: $\\pi \\times ${show(R)}^2 = ${piTerm(R2)}$, about ${sigText(Math.PI * R2, 3)} mm², and $\\pi \\times ${show(rr)}^2 = ${piTerm(r2)}$, about ${sigText(Math.PI * r2, 3)} mm². ` +
           `Ratio $= \\dfrac{${piTerm(R2)}}{${piTerm(r2)}} = ${atMost(x.exact, 4) ? show(x.exact) : trail(x.exact, 4)}$${exactly ? '' : `, which is ${rText} to 3 significant figures`}. So ${about}${rText} times as much light enters through the wide pupil, not ${kText} times: the diameter is ${kText} times larger, and the area grows with the square of that. ` +
-          `This is why the pupil reflex protects the retina so effectively; constricting the pupil in bright light cuts the light reaching the rods and cones by a factor of ${about}${rText}.`,
+          `${x.ratio >= 4 ? 'This is why the pupil reflex protects the retina so effectively; c' : 'C'}onstricting the pupil in bright light cuts the light reaching the rods and cones by a factor of ${about}${rText}.`,
         method: [`uses the radii ${show(R)} mm and ${show(rr)} mm to find the areas, ${show(R2)}π and ${show(r2)}π`, 'divides the larger area by the smaller'],
         answer: x.ratio,
         tolerance: x.tol,
@@ -1902,7 +1903,8 @@ const METHODS: Method[] = [
   {
     name: 'diaphragm',
     study: (n) => `In a study, ${n} women used a diaphragm with spermicide for one year.`,
-    p: [12, 29],
+    // Typical use fails for about 12 to 18 in 100 women a year; 28% is spermicide alone.
+    p: [12, 18],
     slip: 'putting it in wrongly or taking it out too soon after sex',
     perfect: 'used perfectly, a diaphragm with spermicide prevents pregnancy in 92 to 96% of women in a year',
     last: 'It is a barrier method: it stops sperm reaching the egg, and the spermicide kills or disables the sperm.',
@@ -1954,7 +1956,7 @@ export const notPregnant: Generator = {
     return numeric(
       slot,
       {
-        prompt: `${m.study(x.n)} During the year, ${x.k} of them became pregnant. Calculate the percentage of the women who did not become pregnant.`,
+        prompt: `${m.study(x.n)} During the year, ${x.k} of them became pregnant. Calculate the percentage of the women who did not become pregnant.${askFor(!near(x.exact, x.ans))}`,
         solution:
           `Did not become pregnant: $${x.n} - ${x.k} = ${not}$. Percentage $= \\dfrac{${not}}{${x.n}} \\times 100 = ${threeWorking(x.exact, x.ans)}\\%$. ` +
           `Figures like this describe **typical use**, which includes everyday mistakes such as ${m.slip}; ${m.perfect}. ${m.last}`,
@@ -2061,7 +2063,7 @@ export const ivfRates: Generator = {
       {
         prompt:
           `Clinic A carried out ${A.n} cycles of IVF for ${a.who} in a year, and ${A.b} of them led to the birth of a baby. Clinic B carried out ${B.n} cycles for women of the same age, and ${B.b} of them led to a birth. ` +
-          `A patient says Clinic ${worse} must be better because it had more births. Calculate how many times greater the success rate of Clinic ${better} was than that of Clinic ${worse}.`,
+          `A patient says Clinic ${worse} must be better because it had more births. Calculate how many times greater the success rate of Clinic ${better} was than that of Clinic ${worse}.${askFor(!near(x.printed, x.ratio))}`,
         solution:
           `Success rates: Clinic A ${rateLine(A)}; Clinic B ${rateLine(B)}. So $\\dfrac{${sigText(x.hi.shown, 3)}}{${sigText(x.lo.shown, 3)}} = ${threeWorking(x.printed, x.ratio)}$ times. ` +
           `Comparing the raw numbers of births, ${x.lo.b} against ${x.hi.b}, misleads because Clinic ${worse} carried out ${x.lo.n - x.hi.n} more cycles. ` +

@@ -1,6 +1,6 @@
 import type { Question } from '../../content/questions.ts'
 import { show } from '../format.ts'
-import { atMost, cap, figures } from '../physics/build.ts'
+import { atMost, cap, figures, tex } from '../physics/build.ts'
 import { clearAtSigFigs, sfTolerance, sigFigs, sigText } from '../physics/format.ts'
 import { pick, type Rng } from '../random.ts'
 import { an, clean, places, toPlaces } from '../chemistry/build.ts'
@@ -38,6 +38,9 @@ export const lcm = (a: number, b: number) => (a * b) / gcd(a, b)
 export const tidy = (x: number, dp = 2) => atMost(x, dp) && figures(clean(x)) <= 3
 /** An exact answer's room: half a unit in the last place it prints (capped at 1.9%), none for a whole number. */
 export const halfLastPlace = (x: number) => toPlaces(x, places(x))
+/** A count's working closed with its answer grouped as the written questions print it: $2^{23} = 8\,388\,608$ bacteria. */
+export const counted = (expr: string, answer: number, unit: string) => `$${expr} = ${tex(answer)}$ ${unit}.`
+
 /**
  * The precision a rounded answer is asked to, for the end of a prompt; nothing when the answer is
  * exact. A solution that says "to 3 significant figures" while the prompt asked for no precision

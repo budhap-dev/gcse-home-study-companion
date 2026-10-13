@@ -491,8 +491,9 @@ const RISK_KS = range(11, 30, 0.5)
 const HIV_RATES = range(1, 8, 0.1)
 /** Without HIV, % a year: 0.05 to 0.6, as in a country where TB is common. */
 const NO_HIV: readonly [number, number] = [0.05, 0.6]
-const N1 = range(500, 5000, 100)
-const N2 = range(5000, 60000, 1000)
+// Never 1000 or 10 000 people, where the rate per hundred is the count with its point moved.
+const N1 = range(500, 5000, 100).filter((n) => !powerOfTen(n))
+const N2 = range(5000, 60000, 1000).filter((n) => !powerOfTen(n))
 /** Rates without HIV that make the division a doubling (0.5), or move the point (0.1, 0.05 halved). */
 const TRIVIAL_R2 = [0.5, 0.1, 0.05]
 
@@ -656,7 +657,8 @@ const CONTROLS: Control[] = [
   },
 ]
 /** Thousands of people: 2 000 to 15 000. */
-const LOTS = range(2, 15)
+/** Never ten lots (10 000 people), where the rate per 1000 is a point move. */
+const LOTS = range(2, 15).filter((l) => l !== 10)
 
 interface Malaria {
   r1: number
