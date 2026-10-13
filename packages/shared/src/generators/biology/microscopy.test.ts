@@ -87,7 +87,7 @@ describe('every microscopy build', () => {
         for (const b of build(g.id, id, 150)) {
           expect(b.question.prompt, b.seed).not.toMatch(/\b(a|A|an|An) \d/)
           expect(b.question.type === 'numeric' && b.question.units, `${g.id} ${id}`).toBe(slot.type === 'numeric' && slot.units)
-          expect(b.question.solution, b.seed).toContain(String(answer(b)))
+          expect(b.question.solution.replace(/(\d)(?:\\,| )(?=\d{3}(?!\d))/g, '$1'), b.seed).toContain(String(answer(b)))
           expect(mark(b.question, String(answer(b))).correct, b.seed).toBe(true)
           // Every answer is exact: a conversion, a magnification or size drawn with at most three
           // figures, or a count. Its three-figure rounding is itself, so the marker takes it.
@@ -195,6 +195,10 @@ describe('total magnification', () => {
         expect(b.question.solution).toContain(`adding them would give ${e! + o!}.`)
         // Adding the lenses is marked wrong.
         expect(mark(b.question, String(e! + o!)).correct).toBe(false)
+        // Bacteria need the oil-immersion lens, yeast high power; cells are never seen under oil.
+        if (/bacteria/.test(b.question.prompt)) expect(o).toBe(100)
+        if (/yeast/.test(b.question.prompt)) expect([40, 100]).toContain(o)
+        if (!/bacteria|yeast/.test(b.question.prompt)) expect(o).not.toBe(100)
       }
       expect(contexts(built)).toBe(6)
       // The written slot's lenses, word for word.
@@ -202,7 +206,8 @@ describe('total magnification', () => {
       expect(ten4.question.solution).toBe(
         'Eyepiece × objective: $10 \\times 4 = 40$, so the total magnification is **×40** (the low power used to find the specimen). The lenses **multiply**: adding them would give 14.',
       )
-      spread(id, slot, ['eyepiece', 'objective'])
+      // An objective the slide is seen with leaves a slide three to eight answers.
+      spread(id, slot, ['eyepiece'], 3)
     })
   }
 })
@@ -488,7 +493,7 @@ describe('bacteria and cells doubling', () => {
     const b = build('bacterial-doubling', 'q12', 3000, 'find').find((x) => x.values.n === 18 && x.values.d === 20)!
     expect(b.question.prompt).toContain('after 6 hours')
     expect(b.question.solution).toContain('6 hours is 360 minutes, and $360 \\div 20 = 18$ divisions.')
-    expect(b.question.solution).toContain('$2^{18}$, which is **262144 bacteria**')
+    expect(b.question.solution).toContain('$2^{18} = 262\\,144$ bacteria.')
   })
 
   it('microbes q25: N₀ × 2ⁿ for food left out, at most six hours', () => {
@@ -520,8 +525,8 @@ describe('bacteria and cells doubling', () => {
   it('microbes q25: the written figures read as the written solution does', () => {
     const b = build('bacterial-growth-from-a-count', 'q25', 6000, 'find').find((x) => x.values.n0 === 500 && x.values.d === 30 && x.values.n === 8)!
     expect(b.question.solution).toContain('4 hours is 240 minutes, and $240 \\div 30 = 8$ divisions')
-    expect(b.question.solution).toContain('multiplied by $2^{8} = 256$. Then $500 \\times 256$, which is **128000 bacteria**')
-    expect(b.question.solution).toContain('multiplying 500 by $8 \\times 2 = 16$ would give 8000')
+    expect(b.question.solution).toContain('multiplied by $2^{8} = 256$. Then $500 \\times 256 = 128\\,000$ bacteria.')
+    expect(b.question.solution).toContain('multiplying 500 by $8 \\times 2 = 16$ would give 8000, and miss most of the growth.')
     expect(last(b)).toBe('128 000')
   })
 

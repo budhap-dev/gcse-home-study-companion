@@ -3,7 +3,7 @@ import { atMost, cap, closes, figures, near, numeric, prose, tex } from '../phys
 import { clean, clearOf, distinct, hundredths, noOnes, places, powerOfTen, range, shiftFree, tenfold, threeFigures, toPlaces, word } from '../chemistry/build.ts'
 import { draw, int, pick, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
-import { askFor, balanced, between, cut, fair, figureTolerance, full, halfLastPlace, layered, list, memo, rich, tidy, toThree, unitsOf, whole } from './build.ts'
+import { askFor, balanced, counted, between, cut, fair, figureTolerance, full, halfLastPlace, layered, list, memo, rich, tidy, toThree, unitsOf, whole } from './build.ts'
 
 /**
  * Variation and evolution (Edexcel 1BI0: 3.20 to 3.22 variation, 4.2 natural selection, 4.3
@@ -230,7 +230,7 @@ export const resistantGrowth: Generator = {
       {
         prompt: pick(r, GROWTH_PROMPTS)(b, n, t, k),
         solution:
-          `${closes(`${n} \\times 2^{${k}} = ${n} \\times ${tex(2 ** k)}`, answer, 'bacteria')} ` +
+          `${counted(`${n} \\times 2^{${k}} = ${n} \\times ${tex(2 ** k)}`, answer, 'bacteria')} ` +
           `At one division every ${t} minutes, the ${k} doublings take ${duration(k * t)}. ` +
           `Every one of them carries the resistance, so ${b.antibiotic} will no longer clear the infection.`,
         method: [`uses 2 to the power ${k}`, `multiplies by ${n}`],

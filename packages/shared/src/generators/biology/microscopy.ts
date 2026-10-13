@@ -1,5 +1,6 @@
 import { fixed, show } from '../format.ts'
-import { atMost, cap, closes, figures, near, numeric, prose, sciExact, tex } from '../physics/build.ts'
+import { atMost, cap, figures, near, numeric, prose, sciExact, tex } from '../physics/build.ts'
+import { counted } from './build.ts'
 import { byFirst, clean, clearOf, distinct, evenly, noOnes, powerOfTen, range, shiftFree, tenfold, word } from '../chemistry/build.ts'
 import { pick, shuffle, type Rng } from '../random.ts'
 import type { Generator } from '../types.ts'
@@ -133,8 +134,18 @@ const EYEPIECES = [5, 10, 15]
 const OBJECTIVES = [4, 10, 40, 100]
 /** Every real pair but ×10 with ×10, two equal figures. */
 const LENSES = EYEPIECES.flatMap((e) => OBJECTIVES.map((o) => [e, o] as const)).filter(([e, o]) => e !== o)
-const CELL_SLIDES = ['onion epidermis cells', 'cheek cells', 'pondweed leaf cells', 'moss leaf cells', 'a thin slice of cork', 'a stained root tip squash']
-const MICROBE_SLIDES = ['a drop of pond water', 'a yeast suspension', 'a stained smear of bacteria from yoghurt', 'mould from a slice of bread', 'a strand of *Spirogyra*, a pond alga', 'a culture of *Paramecium*']
+/** Each slide with the objectives that show it: cells need no oil immersion, and bacteria cannot be resolved below about ×400. */
+interface Slide { name: string; objectives: number[] }
+const CELL_OBJECTIVES = [4, 10, 40]
+const CELL_SLIDES: Slide[] = ['onion epidermis cells', 'cheek cells', 'pondweed leaf cells', 'moss leaf cells', 'a thin slice of cork', 'a stained root tip squash'].map((name) => ({ name, objectives: CELL_OBJECTIVES }))
+const MICROBE_SLIDES: Slide[] = [
+  { name: 'a drop of pond water', objectives: CELL_OBJECTIVES },
+  { name: 'a yeast suspension', objectives: [40, 100] },
+  { name: 'a stained smear of bacteria from yoghurt', objectives: [100] },
+  { name: 'mould from a slice of bread', objectives: CELL_OBJECTIVES },
+  { name: 'a strand of *Spirogyra* (a pond alga)', objectives: CELL_OBJECTIVES },
+  { name: 'a culture of *Paramecium*', objectives: CELL_OBJECTIVES },
+]
 const OBJECTIVE_NOTE: Record<number, string> = {
   4: 'the low power used to find the specimen',
   10: 'a medium power',
@@ -145,23 +156,28 @@ const TOTAL_PROMPTS: Record<string, ((s: string, e: number, o: number) => string
   [SCALE]: [
     (s, e, o) => `A student looks at ${s} through a microscope with a ×${e} eyepiece lens and a ×${o} objective lens. Calculate the total magnification.`,
     (s, e, o) => `A microscope set up to view ${s} has a ×${e} eyepiece lens and a ×${o} objective lens. Calculate the total magnification.`,
+
+    (s, e, o) => `To look at ${s}, a student uses a ×${e} eyepiece lens with the ×${o} objective lens. What is the total magnification?`,
   ],
   [MICROBES]: [
     (s, e, o) => `A student views ${s} through a microscope with a ×${e} eyepiece, and the ×${o} objective is in use. What is the total magnification?`,
     (s, e, o) => `A microscope has a ×${e} eyepiece and the ×${o} objective is in use to look at ${s}. What is the total magnification?`,
+
+    (s, e, o) => `To examine ${s}, a microscope is fitted with a ×${e} eyepiece and the ×${o} objective. Calculate the total magnification.`,
   ],
 }
 
-const totalMagnification = (id: string, topicId: string, replaces: string[], slides: string[]): Generator => ({
+const totalMagnification = (id: string, topicId: string, replaces: string[], slides: Slide[]): Generator => ({
   id,
   subjectId: 'biology',
   topicId,
   replaces,
   build(r, slot, turn) {
-    const s = slides[turn % slides.length]!
-    // The eyepiece first, so each is a third of the builds, then an objective that is not the same figure.
-    const e = pick(r, EYEPIECES)
-    const o = pick(r, LENSES.filter(([x]) => x === e).map(([, y]) => y))
+    const slide = slides[turn % slides.length]!
+    const s = slide.name
+    // The eyepiece first, so each is a third of the builds, then an objective the slide is seen with that is not the same figure.
+    const e = pick(r, EYEPIECES.filter((x) => LENSES.some(([y, o]) => y === x && slide.objectives.includes(o))))
+    const o = pick(r, LENSES.filter(([x, y]) => x === e && slide.objectives.includes(y)).map(([, y]) => y))
     const m = e * o
     return numeric(
       slot,
@@ -801,7 +817,7 @@ export const bacterialDoubling: Generator = {
       slot,
       {
         prompt: pick(r, FROM_ONE_PROMPTS)(b, x) + (big ? ' Give a whole number.' : ''),
-        solution: `${inMinutes(x.t)}$${x.t} \\div ${x.d} = ${x.n}$ divisions. Each doubles the count, so the number after $n$ divisions is $2^n$: ${closes(`2^{${x.n}}`, count, 'bacteria')}`,
+        solution: `${inMinutes(x.t)}$${x.t} \\div ${x.d} = ${x.n}$ divisions. Each doubles the count, so the number after $n$ divisions is $2^n$: ${counted(`2^{${x.n}}`, count, 'bacteria')}`,
         method: [`${x.n} divisions`],
         answer: count,
         line: show(count),
@@ -871,8 +887,8 @@ export const bacterialGrowth: Generator = {
         prompt: `${f.text(d, prose(n0))} ${f.ask(when)}`,
         solution:
           `Count the divisions first: ${t < 120 ? `$${t} \\div ${d} = ${n}$ divisions` : `${when} is ${t} minutes, and $${t} \\div ${d} = ${n}$ divisions`}. ` +
-          `Each division doubles the number, so the count is multiplied by $2^{${n}} = ${tex(factor)}$. Then ${closes(`${tex(n0)} \\times ${tex(factor)}`, count, 'bacteria')} ` +
-          `Doubling is a power, not a multiple: multiplying ${prose(n0)} by $${n} \\times 2 = ${2 * n}$ would give ${prose(n0 * 2 * n)} and miss almost all of the growth.`,
+          `Each division doubles the number, so the count is multiplied by $2^{${n}} = ${tex(factor)}$. Then ${counted(`${tex(n0)} \\times ${tex(factor)}`, count, 'bacteria')} ` +
+          `Doubling is a power, not a multiple: multiplying ${prose(n0)} by $${n} \\times 2 = ${2 * n}$ would give ${prose(n0 * 2 * n)}, ${(2 * n) / 2 ** n < 0.25 ? 'and miss most of the growth' : `only ${Math.round((100 * 2 * n) / 2 ** n)}% of the true count`}.`,
         method: [`counts ${n} divisions in ${when}`, `multiplies the starting count by 2 to the power ${n}, which is ${prose(factor)}`],
         answer: count,
         line: prose(count),
@@ -902,7 +918,7 @@ const CULTURES: Culture[] = [
     name: 'skin cells',
     text: (h) => `Human skin cells grown in a laboratory to make a graft for a burns patient complete the cell cycle once every ${h} hours, each cell dividing by mitosis into two.`,
     cycles: [30, 36, 40, 48],
-    close: 'Every new cell is genetically identical to the cell it came from, so the graft is made of the patient’s own kind of skin cell.',
+    close: "Every new cell is genetically identical to the cell it came from, so the graft is made of the patient's own kind of skin cell.",
   },
   {
     name: 'stem cells',
@@ -935,7 +951,7 @@ export const cellCycleDoubling: Generator = {
         prompt: `${c.text(h)} A culture starts with ${prose(n0)} of these cells. Calculate how many cells the culture will contain after ${days} days, assuming that no cells die.`,
         solution:
           `First the number of cell cycles: ${days} days $= ${days} \\times 24 = ${hours}$ hours, and $\\dfrac{${hours}}{${h}} = ${n}$ cycles. ` +
-          `Each cycle doubles the number of cells, so ${word(n)} cycles multiply it by $${Array(n).fill('2').join(' \\times ')} = ${factor}$. Then ${closes(`${tex(n0)} \\times ${factor}`, cells, 'cells')} ` +
+          `Each cycle doubles the number of cells, so ${word(n)} cycles multiply it by $${Array(n).fill('2').join(' \\times ')} = ${factor}$. Then ${counted(`${tex(n0)} \\times ${factor}`, cells, 'cells')} ` +
           `The common slip is to multiply by ${n}, as if each cycle added one new cell per cell rather than doubling the total. ${c.close}`,
         method: [`converts ${days} days to ${hours} hours and finds ${n} cell cycles`, `doubles ${word(n)} times: multiplies by ${factor}`],
         answer: cells,

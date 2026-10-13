@@ -283,19 +283,19 @@ const CHAINS: Chain[] = [
   },
   {
     name: 'phytoplankton to zooplankton', has: 'contain', habitat: 'the sea', lower: 'the phytoplankton (the producers)', from: 'the phytoplankton', upper: 'the zooplankton (the primary consumers)', to: 'the zooplankton',
-    energy: [2000, 9000, 100], efficiency: [8, 20], losses: 'some is in cells that die and sink without being eaten, some passes out in the zooplankton’s faeces',
+    energy: [2000, 9000, 100], efficiency: [8, 20], losses: "some is in cells that die and sink without being eaten, some passes out in the zooplankton's faeces",
   },
   {
     name: 'oak leaves to caterpillars', has: 'contain', habitat: 'an oak woodland', lower: 'the oak leaves (the producers)', from: 'the oak leaves', upper: 'the caterpillars (the primary consumers)', to: 'the caterpillars',
-    energy: [3000, 12000, 100], efficiency: [2, 10], losses: 'some is in leaves that are not eaten, some passes out in the caterpillars’ droppings',
+    energy: [3000, 12000, 100], efficiency: [2, 10], losses: "some is in leaves that are not eaten, some passes out in the caterpillars' droppings",
   },
   {
     name: 'caterpillars to blue tits', has: 'contain', habitat: 'an oak woodland', lower: 'the caterpillars (the primary consumers)', from: 'the caterpillars', upper: 'the blue tits (the secondary consumers)', to: 'the blue tits',
-    energy: [200, 1200, 10], efficiency: [4, 10], losses: 'some is in caterpillars that are not eaten, some passes out in the birds’ droppings',
+    energy: [200, 1200, 10], efficiency: [4, 10], losses: "some is in caterpillars that are not eaten, some passes out in the birds' droppings",
   },
   {
     name: 'zooplankton to sticklebacks', has: 'contain', habitat: 'a lake', lower: 'the zooplankton (the primary consumers)', from: 'the zooplankton', upper: 'the sticklebacks (the secondary consumers)', to: 'the sticklebacks',
-    energy: [400, 2500, 10], efficiency: [8, 20], losses: 'some is in zooplankton that are not eaten, some passes out in the fishes’ faeces',
+    energy: [400, 2500, 10], efficiency: [8, 20], losses: "some is in zooplankton that are not eaten, some passes out in the fishes' faeces",
   },
   {
     name: 'rabbits to foxes', has: 'contain', habitat: 'a grassland', lower: 'the rabbits (the primary consumers)', from: 'the rabbits', upper: 'the foxes (the secondary consumers)', to: 'the foxes',
@@ -836,7 +836,7 @@ interface Bins {
 const BINS: Bins[] = [
   {
     name: 'warm and cold', material: 'grass cuttings', into: 'compost bins', a: 'a warm, well-aerated bin', b: 'a cold bin', aPerDay: [2, 6], bPerDay: [0.3, 1.5],
-    why: 'The warm bin speeds up the decomposers’ enzymes, and good aeration supplies the oxygen they need for aerobic respiration, which is why composters keep heaps warm, moist and turned.',
+    why: "The warm bin speeds up the decomposers' enzymes, and good aeration supplies the oxygen they need for aerobic respiration, which is why composters keep heaps warm, moist and turned.",
   },
   {
     name: 'moist and dry', material: 'leaf litter', into: 'compost heaps', a: 'a moist compost heap', b: 'a heap that is kept dry under a cover', aPerDay: [1, 4], bPerDay: [0.2, 0.8],
