@@ -313,12 +313,12 @@ function yCoordinate(r: Rng, slot: Question): Draft {
  * (dropping the 2), b/(2a) (the sign), the y value, a root of the curve (it never touches the
  * axis there), or a printed number, the written 2x² − 8x + 1 among them (x = 2 = a).
  */
-function drawTurning(r: Rng, leadOne: number): Quad & { y: number } {
+function drawTurning(r: Rng, leadOne: number, positive = false): Quad & { y: number } {
   return draw(
     r,
     (r) => {
       const x0 = r() < 0.12 ? pick(r, [-1, 1]) : pick(r, [-5, -4, -3, -2, 2, 3, 4, 5, 6, 7, 8])
-      const a = r() < leadOne ? 1 : pick(r, [2, 3, 4, 5, -1, -2, -3])
+      const a = r() < leadOne ? 1 : pick(r, positive ? [2, 3, 4, 5] : [2, 3, 4, 5, -1, -2, -3])
       const c = either(r, 1, 15)
       const b = -2 * a * x0
       return { a, b, c, x0, y: c - a * x0 * x0 }
@@ -336,7 +336,8 @@ function solveLinear(k: number, m: number, rhs: number, x: number): string {
 
 function horizontalTangent(r: Rng, slot: Question): Draft {
   const maxima = slot.id === 'q4'
-  const { a, b, c, x0 } = drawTurning(r, maxima ? 0.4 : 0.2)
+  // q4 is the core sheet's grade 4-5 slot: a minimum, as the written y = x² − 6x + 11, mostly monic.
+  const { a, b, c, x0 } = drawTurning(r, maxima ? 0.6 : 0.2, maxima)
   const p = [c, b, a]
   const d = deriv(p)
   const prompt = maxima
@@ -496,7 +497,8 @@ function optimumCheck(prompt: string, letter: string, x: number, answer: number,
  * is not a cube. Never x = 6, where the answer is V itself (216), nor 11 or more, whose cube
  * roots (∛1331) are beyond recall. Volumes from 8 cm³ to 1728 cm³.
  */
-export const BOX_SIDES = [2, 3, 4, 5, 7, 8, 9, 10, 12]
+/** Never 3: the box of side 3 is the written question's, its answer 54. */
+export const BOX_SIDES = [2, 4, 5, 7, 8, 9, 10, 12]
 const BOXES = ['A closed box', 'A closed cardboard box', 'A closed metal box', 'A closed gift box']
 
 function leastSurfaceArea(r: Rng, slot: Question): Draft {

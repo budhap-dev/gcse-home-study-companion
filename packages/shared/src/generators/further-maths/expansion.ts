@@ -139,7 +139,9 @@ function singles(ns: number[], ks: number[], as: number[], ok: (s: Single, size:
   for (const n of ns) for (let r = 2; r <= Math.min(5, n - 2); r++) for (const k of ks) for (const a of as) {
     const s = { n, r, k, a }
     const twoSquared = (k === 2 && r === 2) || (a === 2 && n - r === 2)
-    if (2 * r !== n && a !== k && !twoSquared && ok(s, choose(n, r) * a ** (n - r) * k ** r)) out.push(s)
+    // Never a neighbouring coefficient equal to the one asked: the term off by one would score.
+    const at = (j: number) => choose(n, j) * a ** (n - j) * k ** j
+    if (2 * r !== n && a !== k && !twoSquared && at(r - 1) !== at(r) && at(r + 1) !== at(r) && ok(s, at(r))) out.push(s)
   }
   return out
 }
@@ -148,7 +150,8 @@ export const SINGLE_Q6 = singles([5, 6, 7, 8], [2, 3, 4, 5, 6], [1], (_, size) =
 /** q11, grade 8-9: up to row 8, a constant of 1, 2 or 3, a coefficient from 150 to 3000. */
 export const SINGLE_Q11 = singles([5, 6, 7, 8], [2, 3, 4, 5], [1, 2, 3], (_, size) => size >= 150 && size <= 3000)
 const Q11_ONE = SINGLE_Q11.filter((s) => s.a === 1)
-const Q11_MORE = SINGLE_Q11.filter((s) => s.a !== 1)
+// Never (3 + 2x)⁵ and x³, the written q16 on the same sheet, nor (3 + 2x)⁶ and x⁴, whose 2160 is (2 + 3x)⁶ and x²'s too.
+const Q11_MORE = SINGLE_Q11.filter((s) => s.a !== 1 && !(s.a === 3 && s.k === 2 && ((s.n === 5 && s.r === 3) || (s.n === 6 && s.r === 4))))
 
 /**
  * The power asked first, then the row, then the rest. Picking from the whole list made x² most
@@ -158,7 +161,8 @@ const Q11_MORE = SINGLE_Q11.filter((s) => s.a !== 1)
  */
 function drawSingle(r: Rng, pool: Single[], weighted = false): Single {
   const powers = [...new Set(pool.map((s) => s.r))]
-  const weights = powers.map((p) => (weighted ? Math.sqrt(pool.filter((s) => s.r === p).length) : 1))
+  // Even, except that a power with a single calculation counts half, so that one calculation is not a sixth of the slot.
+  const weights = powers.map((p) => (weighted ? Math.sqrt(pool.filter((s) => s.r === p).length) : Math.min(1, pool.filter((s) => s.r === p).length / 2)))
   let left = r() * weights.reduce((a, b) => a + b, 0)
   const power = powers.find((_, i) => (left -= weights[i]!) < 0) ?? powers.at(-1)!
   const rows = pool.filter((s) => s.r === power)
@@ -178,8 +182,8 @@ export const binomialCoefficient: Generator = {
   replaces: ['q6', 'q11'],
   build(r, slot): Draft {
     const hard = slot.id === 'q11'
-    // q11: a constant of 2 or 3, as the specification's (3 + 2x)⁵, about a third of the time.
-    const s = hard ? drawSingle(r, r() < 0.35 ? Q11_MORE : Q11_ONE) : drawSingle(r, SINGLE_Q6, true)
+    // q11: a constant of 2 or 3, as the specification's (3 + 2x)⁵, a quarter of the time.
+    const s = hard ? (r() < 0.25 ? pick(r, Q11_MORE) : drawSingle(r, Q11_ONE)) : drawSingle(r, SINGLE_Q6, true)
     const v = pick(r, LETTERS)
     // Negative half the time: with odd powers about half the draws, a negative answer in a quarter.
     const k = (r() < 0.5 ? -1 : 1) * s.k
@@ -231,7 +235,7 @@ interface End {
 export const ENDS: End[] = [5, 6, 7, 8].flatMap((n) =>
   [2, 3, 4, 5].flatMap((b) =>
     Array.from({ length: n - 3 }, (_, i) => i + 2)
-      .filter((r) => r !== n - r && !(b === 2 && n - r === 2) && choose(n, r) * b ** (n - r) <= 2000)
+      .filter((r) => r !== n - r && !(b === 2 && n - r === 2) && choose(n, r) * b ** (n - r) <= 2000 && [r - 1, r + 1].every((j) => choose(n, j) * b ** (n - j) !== choose(n, r) * b ** (n - r)))
       .map((r) => ({ n, r, b })),
   ),
 )
@@ -400,7 +404,7 @@ export const differenceOfSquaresNumbers: Generator = {
       question: {
         type: 'numeric',
         prompt: `Work out $${a}^2 - ${b}^2$ without a calculator, using the difference of two squares.`,
-        solution: `$${a}^2 - ${b}^2 = (${a} - ${b})(${a} + ${b}) = ${a - b} \\times ${a + b} = ${answer}$. No squaring needed.`,
+        solution: `$${a}^2 - ${b}^2 = (${a} - ${b})(${a} + ${b}) = ${a - b} \\times ${a + b} = ${answer >= 10000 ? String(answer).replace(/\B(?=(\d{3})+(?!\d))/g, '\\,') : answer}$. No squaring needed.`,
         markScheme: scheme(slot, [`(${a} − ${b})(${a} + ${b})`], String(answer)),
         answer,
         tolerance: 0,

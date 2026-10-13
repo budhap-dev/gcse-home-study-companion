@@ -629,7 +629,8 @@ function cylinderRadius(r: Rng, slot: Question): Draft {
   const coef = ends + 2 * k
   // The radius never equals the height's multiple, and the area stays at most 1000π by hand.
   const top = Math.min(c.r[1], Math.floor(Math.sqrt(1000 / coef)))
-  const radii = Array.from({ length: top - c.r[0] + 1 }, (_, i) => c.r[0] + i).filter((x) => x !== k)
+  // Never the written closed tank of radius 5 with height 2r (150π).
+  const radii = Array.from({ length: top - c.r[0] + 1 }, (_, i) => c.r[0] + i).filter((x) => x !== k && !(c.closed && k === 2 && x === 5))
   const rad = pick(r, radii)
   const N = coef * rad * rad
   const area = c.closed ? 'Its total surface area is' : 'The total area of its base and curved surface is'

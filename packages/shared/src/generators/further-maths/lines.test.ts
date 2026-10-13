@@ -74,15 +74,15 @@ describe('fm-gradient-and-distance q1: a negative gradient', () => {
       const [[x1, y1], [x2, y2]] = points(b.question.prompt) as [[number, number], [number, number]]
       const m = (y2 - y1) / (x2 - x1)
       expect(answer(b), b.seed).toBe(m)
-      expect(m).toBeLessThan(0)
+      expect(m).not.toBe(0)
       // Run over rise, the sign lost, the orders mixed, adding: all differ.
       for (const s of [(x2 - x1) / (y2 - y1), -m, (y2 - y1) / (x1 - x2), (y1 + y2) / (x1 + x2)]) expect(answer(b), `${b.seed}: ${s}`).not.toBe(s)
       noPrintedAnswer(b)
       expect(new Set([x1, y1, x2, y2].map(Math.abs)).size).toBe(4)
       const sub = (v: number) => (v < 0 ? `(${v})` : `${v}`)
       expect(b.question.solution.startsWith(`$m = \\dfrac{${y2} - ${sub(y1)}}{${x2} - ${sub(x1)}} = \\dfrac{${y2 - y1}}{${x2 - x1}} = `), b.seed).toBe(true)
-      const m2 = /down \$(\d+)\$ for every \$(\d+)\$ along/.exec(b.question.solution)!
-      expect(-Number(m2[1]) / Number(m2[2])).toBe(m)
+      const m2 = /(down|up) \$(\d+)\$ for every \$(\d+)\$ along/.exec(b.question.solution)!
+      expect((m2[1] === 'down' ? -1 : 1) * Number(m2[2]) / Number(m2[3])).toBe(m)
     }
   })
   it('spreads answers, wholes and decimals, and which point comes first', () => {
@@ -94,6 +94,10 @@ describe('fm-gradient-and-distance q1: a negative gradient', () => {
     expect(decimals.length / many.length).toBeLessThan(0.26)
     expect(share(decimals, (b) => Number.isInteger(answer(b) * 2))).toBeGreaterThan(0.6)
     expect(share(built, (b) => { const [[a], [c]] = points(b.question.prompt); return a! > c! })).toBeGreaterThan(0.15)
+    // Positive about a third of the time, so a habitual minus does not pay.
+    const up = share(many, (b) => answer(b) > 0)
+    expect(up).toBeGreaterThan(0.25)
+    expect(up).toBeLessThan(0.42)
   })
   it('writes −2 as the written solution does, for (1, 9) and (4, 3); the written (2, 7) is left out, its 2 being the answer\'s size', () => {
     const b = find('fm-gradient-and-distance', 'q1', (b) => b.question.prompt === 'Work out the gradient of the line through $(1, 9)$ and $(4, 3)$.')

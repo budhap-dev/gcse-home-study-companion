@@ -676,11 +676,14 @@ const powerLine = (p: Mat, q: Mat) =>
   `top left $${dotTex(rowOf(p, 0), colOf(q, 0))} = ${at(mul(p, q), 0, 0)}$, top right $${dotTex(rowOf(p, 0), colOf(q, 1))} = ${at(mul(p, q), 0, 1)}$, ` +
   `bottom left $${dotTex(rowOf(p, 1), colOf(q, 0))} = ${at(mul(p, q), 1, 0)}$, bottom right $${dotTex(rowOf(p, 1), colOf(q, 1))} = ${at(mul(p, q), 1, 1)}$`
 
-function orderToIdentity(r: Rng, slot: Question): Draft {
-  let left = r()
+function orderToIdentity(r: Rng, slot: Question, turn = 0): Draft {
+  // The order comes from the sheet's turn, not the draw, so a redraw (one whose figures match a
+  // written question's) keeps it: redrawing the order made the written answer, 4, half the builds.
+  let left = (turn * 0.6180339887) % 1
   let n = 4
   for (const [o, w] of ORDERS) if ((left -= w) < 0) { n = o; break }
-  const m = pick(r, FINITE_ORDER[n]!)
+  // Never the written quarter turn or its transpose: the same question, or its mirror, again.
+  const m = pick(r, FINITE_ORDER[n]!.filter((x) => !same(x, [0, -1, 1, 0]) && !same(x, [0, 1, -1, 0])))
   // R only for the written quarter turn (q13 on the same sheet names it R); never A or S.
   const L = same(m, [0, -1, 1, 0]) ? pick(r, ['R', 'M', 'T', 'N']) : pick(r, ['M', 'T', 'N', 'Q'])
   const prompt = pick(r, [

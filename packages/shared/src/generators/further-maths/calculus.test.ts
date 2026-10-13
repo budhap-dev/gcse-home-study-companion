@@ -285,7 +285,9 @@ describe('fm-tangent-steps q8 and fm-stationary-points q4: where dy/dx = 0', () 
     it(`${id} ${slot}: spreads answers and both signs of the leading coefficient; x = ±1 is rare`, () => {
       common(built)
       expect(share(built, (b) => Math.abs(answer(b)) === 1)).toBeLessThanOrEqual(0.2)
-      expect(share(built, (b) => read(b.question.prompt).c[2]! < 0)).toBeGreaterThan(0.15)
+      // q4 is the core sheet's grade 4-5 slot: a minimum only; q5 and q12 keep both signs.
+      if (slot === 'q4') expect(share(built, (b) => read(b.question.prompt).c[2]! < 0)).toBe(0)
+      else expect(share(built, (b) => read(b.question.prompt).c[2]! < 0)).toBeGreaterThan(0.15)
     })
   }
   it('writes the written tangents q8 except for its x = 2 = a coincidence', () => {
@@ -434,14 +436,10 @@ describe('fm-optimisation q14: the least surface area of a closed box', () => {
       expect(b.question.prompt.startsWith('A closed ')).toBe(true)
     }
   })
-  it('spreads answers over all nine sides, and both ways of writing 4V/x', () => {
-    common(built, 9)
+  it('spreads answers over all eight sides (3, the written box, left out), and both ways of writing 4V/x', () => {
+    common(built, 8)
     expect(share(built, (b) => b.question.prompt.includes('x^{-1}'))).toBeGreaterThan(0.3)
     expect(share(built, (b) => b.question.prompt.includes('\\dfrac'))).toBeGreaterThan(0.3)
-  })
-  it('writes the written q14 for the closed box of 27 cm³', () => {
-    const b = find('fm-optimisation', 'q14', (b) => b.question.prompt === 'A closed box has a square base of side $x$ cm and volume $27$ cm³, so its surface area is $S = 2x^2 + 108x^{-1}$. Work out the least possible surface area, in cm².')
-    expect(b.question.solution).toBe('Differentiate: $\\frac{dS}{dx} = 4x - 108x^{-2}$. Set to zero: $4x^3 = 108$, so $x^3 = 27$ and $x = 3$. The second derivative there is $12$, positive, so it is a minimum. Substituting: $S = 2(9) + \\frac{108}{3} = 18 + 36 = 54$ cm². The box is a cube of side 3 cm.')
   })
 })
 
