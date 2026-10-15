@@ -1,4 +1,4 @@
-import { claimAnswer, getSubject, mark, XP, type MarkResult } from '@study/shared'
+import { claimAnswer, getSubject, mark, stepNumber, XP, type MarkResult } from '@study/shared'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -148,7 +148,7 @@ function LessonBody({ topic }: { topic: TopicRecord }) {
       <div className="flex flex-col gap-1">
         <span className="flex items-center gap-2">
           <KindChip kind={step.kind} />
-          <SpecNumber code={step.specPoint} className="text-xs" />
+          <SpecNumber code={stepNumber(step)} className="text-xs" />
         </span>
         <h1 className="text-2xl font-bold leading-tight">{step.title}</h1>
       </div>

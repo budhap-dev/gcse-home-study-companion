@@ -286,7 +286,7 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
           {status ? STATUS_LABEL[status] : 'Not started'}
         </span>
         <h2 ref={heading} tabIndex={-1} className="text-[26px] font-bold leading-[1.1] outline-none">
-          <SpecNumber code={t.specCode} /> {t.title}
+          {t.specCode && <><SpecNumber code={t.specCode} className="text-[0.6em]" />{' '}</>}{t.title}
         </h2>
         <p className="text-sm text-ink-2">
           Lesson of {steps} steps · Core, Higher and Advanced sheets of {t.worksheets.core.questionIds.length}, {t.worksheets.higher.questionIds.length} and {t.worksheets.advanced.questionIds.length} questions · a quiz of {t.quiz.sampleSize}
@@ -452,8 +452,11 @@ function ListView({ subject, progress, studied }: { subject: Subject; progress: 
                             className="flex min-h-11 items-center gap-3 rounded-lg px-2 py-2 text-sm hover:bg-panel"
                           >
                             <StatusIcon status={evidenceFor(entry.topicId, progress).status} />
-                            <SpecNumber code={specCodes.get(entry.topicId)} />
-                            <span>{entry.title}</span>
+                            {/* One run of text, so a long number wraps with the title rather than squeezing it. */}
+                            <span className="min-w-0">
+                              {specCodes.get(entry.topicId) && <><SpecNumber code={specCodes.get(entry.topicId)} />{' '}</>}
+                              {entry.title}
+                            </span>
                             <Parts done={partsDone(entry.topicId, progress)} />
                           </Link>
                         </li>

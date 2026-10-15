@@ -17,10 +17,12 @@ export const Topic = z.object({
   /** Specification references this topic covers, in the board's numbering. */
   specPoints: z.array(z.string().min(1)).min(1),
   /**
-   * The specification's number for the topic itself, such as "1.4", shown before the
-   * title wherever the topic is listed. Set only where the board numbers its sections
-   * and the app's topics line up with them one for one, which at the moment is Business.
-   * It must be a prefix of every one of this topic's `specPoints`.
+   * The specification's number for the topic itself, such as "1.4". Set only where the
+   * board numbers its sections and the app's topics line up with them one for one, which
+   * is Business. It must be a prefix of every one of this topic's `specPoints`.
+   *
+   * Every other numbered subject leaves it out: what is shown before the title there is
+   * the topic's own points, worked out by `topicNumber` (spec-number.ts).
    */
   specCode: z.string().min(1).optional(),
   /** Position within the unit in the school's teaching order. Topics without one sort last, by title. */
