@@ -1,4 +1,4 @@
-import { getSubject, STATUS_LABEL, WORKSHEET_LEVELS } from '@study/shared'
+import { getSubject, STATUS_LABEL, topicNumber, WORKSHEET_LEVELS } from '@study/shared'
 import { useState } from 'react'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link, useParams } from 'react-router'
@@ -14,6 +14,7 @@ import { ResetProgress } from '../../components/ResetProgress.tsx'
 import { suggestedLevel } from '../../progress/level.ts'
 import { openSession, quizKey, worksheetKey } from '../../progress/inProgress.ts'
 import { useTopic } from '../../content/load.ts'
+import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
 import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
@@ -97,6 +98,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
   const steps = topic.lesson.steps
   const underway = Boolean(lesson && !lesson.completedAt)
   const unit = subject.units.find((u) => u.id === topic.unitId)?.name
+  const number = topicNumber(topic)
   const fmt = (v?: number) => (v === undefined ? 'not yet' : `${Math.round(v)}%`)
   // The two most recent quiz scores, so the stat can show the direction of travel.
   const quizzes = progress.attempts.filter((a) => a.topicId === topic.id && a.kind === 'quiz').sort((a, b) => b.completedAt.localeCompare(a.completedAt))
@@ -120,7 +122,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
         <div className="relative flex min-w-0 max-w-3xl flex-grow flex-col gap-3">
           <p className="text-xs font-bold uppercase tracking-[0.12em]">{subject.name}{unit ? ` · ${unit}` : ''} · Year {topic.year}</p>
           <h1 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]">
-            {topic.specCode && <span className="opacity-80">{topic.specCode} </span>}
+            {number && <><SpecNumber code={number} tone="opacity-80" className="text-[0.6em]" />{' '}</>}
             {topic.title}
           </h1>
           <div className="flex flex-wrap items-center gap-2">

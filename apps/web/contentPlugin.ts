@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import type { Plugin } from 'vite'
+import { topicNumber } from '../../packages/shared/src/content/spec-number.ts'
 
 /**
  * Two small modules built from the content pack, so the app no longer ships every topic in
@@ -26,12 +27,22 @@ function topicFiles(): string[] {
     .sort()
 }
 
+/**
+ * The topic's specification number as the screens show it (spec-number.ts): Business's
+ * section code, or the compact list of points elsewhere. Worked out here once, so the
+ * topic map, the topic page, search and the resources pages cannot disagree.
+ */
+function numbered(t: Json): { specCode?: string } {
+  const code = topicNumber(t as { specCode?: string; specPoints: string[] })
+  return code ? { specCode: code } : {}
+}
+
 export function catalogueEntry(t: Json) {
   const worksheets: Json = {}
   for (const [level, w] of Object.entries<Json>(t.worksheets)) worksheets[level] = { questionIds: w.questionIds, suggestedMinutes: w.suggestedMinutes }
   return {
     id: t.id, subjectId: t.subjectId, unitId: t.unitId, title: t.title, year: t.year, specPoints: t.specPoints,
-    ...(t.specCode ? { specCode: t.specCode } : {}),
+    ...numbered(t),
     ...(t.order !== undefined ? { order: t.order } : {}),
     whyExamples: t.why?.examples?.length ?? 0,
     lesson: { steps: t.lesson.steps.map((s: Json) => ({ id: s.id, title: s.title, kind: s.kind, ...(s.check?.skill ? { checkSkill: s.check.skill } : {}) })) },
@@ -44,7 +55,7 @@ export function catalogueEntry(t: Json) {
 export function searchEntry(t: Json) {
   return {
     id: t.id, subjectId: t.subjectId, unitId: t.unitId, title: t.title, specPoints: t.specPoints,
-    ...(t.specCode ? { specCode: t.specCode } : {}),
+    ...numbered(t),
     steps: t.lesson.steps.map((s: Json) => ({ id: s.id, title: s.title, body: s.body, check: s.check?.prompt ?? '' })),
     examTechnique: { body: t.examTechnique.body, examinerErrors: t.examTechnique.examinerErrors, grade9Looks: t.examTechnique.grade9Looks },
     questions: t.questions.map((q: Json) => `${q.prompt} ${q.skill}`),

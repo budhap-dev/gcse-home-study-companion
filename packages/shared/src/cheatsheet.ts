@@ -1,4 +1,5 @@
 import type { Topic } from './content/topic.ts'
+import { topicNumber } from './content/spec-number.ts'
 
 /**
  * A one-page revision card, built from what the topic already holds.
@@ -112,7 +113,7 @@ export function cheatSheetOf(topic: Topic): CheatSheet {
   // shortcut above it.
   return {
     title: topic.title,
-    specCode: topic.specCode,
+    specCode: topicNumber(topic),
     memoryHooks: tips.filter((t) => t.kind === 'remember'),
     tactics: tips.filter((t) => t.kind !== 'remember'),
     formulae: formulaeOf(topic),

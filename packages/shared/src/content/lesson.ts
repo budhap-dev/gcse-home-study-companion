@@ -19,12 +19,17 @@ export const LessonStep = z.object({
   check: Question.optional(),
   /**
    * The specification point this step teaches, in the board's own numbering, such as
-   * "1.4.2". A step that belongs to no single point — a recap, a practice task, the
-   * summary — leaves it out, which is why it is optional.
+   * "1.4.2", "4.1.1.4", "5.17B" or "G14". A step that belongs to no single point — a
+   * recap, a practice task, the summary — leaves it out, which is why it is optional.
    *
-   * It has to be one of the topic's own `specPoints`; `spec-numbering.test.ts` holds that.
+   * Some boards number finer than a lesson can sensibly be cut: Edexcel Biology's 2.7 and
+   * 2.8 are one explanation, and AQA Chemistry's four gas tests are one table. A step that
+   * teaches two to four points, each as content of its own, lists them in specification
+   * order. Read it through `stepPoints`.
+   *
+   * Each has to be one of the topic's own `specPoints`; `spec-numbering.test.ts` holds that.
    */
-  specPoint: z.string().min(1).optional(),
+  specPoint: z.union([z.string().min(1), z.array(z.string().min(1)).min(2).max(4)]).optional(),
 })
 export type LessonStep = z.infer<typeof LessonStep>
 
