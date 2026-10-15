@@ -5,6 +5,7 @@ import { RichText } from '../../components/RichText.tsx'
 import { ResourceBadges, StatusBadge } from '../../components/resources/ResourceParts.tsx'
 import { RESOURCES } from '../../content/resources.ts'
 import { BackToTop } from '../../components/BackToTop.tsx'
+import { FilterChip } from '../../components/FilterChip.tsx'
 
 /** How long an entrance waits, in seconds: a step for each place in the list, up to a cap, so the last is not kept waiting. */
 export const stagger = (index: number, step = 0.05, from = 0, cap = 0.6) => `${Math.min(from + index * step, cap).toFixed(2)}s`
@@ -39,9 +40,9 @@ export function Resources() {
       </header>
 
       <div className="flex flex-wrap gap-1.5">
-        <Chip on={subjectId === ''} onClick={() => pick('')}>All subjects</Chip>
+        <FilterChip on={subjectId === ''} onClick={() => pick('')}>All subjects</FilterChip>
         {subjects.map((s) => (
-          <Chip key={s.id} on={subjectId === s.id} colour={s.colour} onClick={() => pick(s.id)}>{s.name}</Chip>
+          <FilterChip key={s.id} on={subjectId === s.id} colour={s.colour} onClick={() => pick(s.id)}>{s.name}</FilterChip>
         ))}
       </div>
 
@@ -75,20 +76,5 @@ export function Resources() {
       ))}
       <BackToTop />
     </article>
-  )
-}
-
-function Chip({ on, colour, onClick, children }: { on: boolean; colour?: string; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={on}
-      className={`min-h-9 rounded-full border px-3 text-sm font-bold ${on ? 'border-transparent' : 'border-rule bg-surface text-ink-2'}`}
-      // As on the glossary: a subject accent takes white, the theme's ink takes the surface.
-      style={on ? { background: colour ?? 'var(--color-ink)', color: colour ? '#fff' : 'var(--color-surface)' } : undefined}
-    >
-      {children}
-    </button>
   )
 }
