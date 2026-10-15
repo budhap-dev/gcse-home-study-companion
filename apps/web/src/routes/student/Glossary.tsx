@@ -5,6 +5,7 @@ import { TermCard } from '../../components/TermCard.tsx'
 import { GLOSSARY, termBySlug, type Term } from '../../content/glossary.ts'
 import { topicsForSubject } from '../../content/index.ts'
 import { BackToTop } from '../../components/BackToTop.tsx'
+import { FilterChip, knownSubject } from '../../components/FilterChip.tsx'
 import { keyboardToHand } from '../../components/keyboardToHand.ts'
 
 /**
@@ -29,7 +30,8 @@ const BATCH = 30
 export function Glossary() {
   const [params, setParams] = useSearchParams()
   const [query, setQuery] = useState(params.get('q') ?? '')
-  const [subjectId, setSubjectId] = useState('')
+  // `?subject=` opens the page narrowed, which is where the search results' glossary link lands.
+  const [subjectId, setSubjectId] = useState(() => knownSubject(params.get('subject')))
   // The letter the A to Z starts from, once one is pressed. `tick` makes a second press of
   // the same letter scroll again.
   const [jump, setJump] = useState<{ letter: string; tick: number } | null>(null)
@@ -51,8 +53,9 @@ export function Glossary() {
   useEffect(() => {
     const trimmed = query.trim()
     const next = new URLSearchParams(trimmed ? { q: trimmed } : focusSlug ? { term: focusSlug } : {})
+    if (subjectId) next.set('subject', subjectId)
     if (next.toString() !== params.toString()) setParams(next, { replace: true })
-  }, [query, focusSlug, params, setParams])
+  }, [query, focusSlug, subjectId, params, setParams])
 
   /**
    * A linked term is shown above the list, and the page is scrolled to it: on a phone the
@@ -129,11 +132,11 @@ export function Glossary() {
           className="h-12 w-full rounded-xl border border-rule bg-surface px-4 focus:border-[color:var(--subject)]"
         />
         <div className="flex flex-wrap gap-1.5">
-          <Chip on={subjectId === ''} onClick={() => setSubjectId('')}>All subjects</Chip>
+          <FilterChip on={subjectId === ''} onClick={() => setSubjectId('')}>All subjects</FilterChip>
           {subjects.map((s) => (
-            <Chip key={s.id} on={subjectId === s.id} colour={s.colour} onClick={() => setSubjectId(subjectId === s.id ? '' : s.id)}>
+            <FilterChip key={s.id} on={subjectId === s.id} colour={s.colour} onClick={() => setSubjectId(subjectId === s.id ? '' : s.id)}>
               {s.name}
-            </Chip>
+            </FilterChip>
           ))}
         </div>
       </div>
@@ -245,20 +248,3 @@ const TermList = memo(function TermList({ terms, query }: { terms: Term[]; query
     </>
   )
 })
-
-function Chip({ on, colour, onClick, children }: { on: boolean; colour?: string; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={on}
-      className={`min-h-9 rounded-full border px-3 text-sm font-bold ${on ? 'border-transparent' : 'border-rule bg-surface text-ink-2'}`}
-      // A subject accent is a mid-dark colour and takes white. The fallback is the theme's
-      // own ink, which is near-white on a dark theme, so that one takes the surface
-      // instead -- pinning white on both put white on white.
-      style={on ? { background: colour ?? 'var(--color-ink)', color: colour ? '#fff' : 'var(--color-surface)' } : undefined}
-    >
-      {children}
-    </button>
-  )
-}

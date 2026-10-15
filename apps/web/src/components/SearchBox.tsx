@@ -1,6 +1,6 @@
-import { entrySlug, searchGlossary } from '@study/shared'
+import { entrySlug, getSubject, searchGlossary } from '@study/shared'
 import { useEffect, useId, useRef, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { GLOSSARY } from '../content/glossary.ts'
 import { search, useSearchIndex } from '../search/index.ts'
 import { Highlight } from './Highlight.tsx'
@@ -13,9 +13,12 @@ const MAX_TOPICS = 5
  * The header search. Glossary terms come first, because "what does upthrust mean" is the
  * commonest thing to want and the answer is a definition, not a lesson. Below them are
  * the places in the content that mention it. Fully keyboard-driven: up, down, enter, escape.
+ * On a subject's pages the foot of the list also offers that subject's results alone.
  */
 export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const here = getSubject(/^\/subjects\/([^/]+)/.exec(pathname)?.[1] ?? '')
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(-1)
@@ -75,7 +78,7 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
     onNavigate?.()
     navigate(to)
   }
-  const seeAll = () => go(`/search?q=${encodeURIComponent(trimmed)}`)
+  const seeAll = (subjectId?: string) => go(`/search?q=${encodeURIComponent(trimmed)}${subjectId ? `&subject=${subjectId}` : ''}`)
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') { setOpen(false); return }
@@ -149,6 +152,18 @@ export function SearchBox({ onNavigate }: { onNavigate?: () => void }) {
             <li role="option" aria-selected={false} className="border-t border-rule">
               <button type="button" onMouseDown={(e) => { e.preventDefault(); seeAll() }} className="w-full px-3 py-2 text-left text-sm font-bold accent-ink">
                 See all results for “{trimmed}” →
+              </button>
+            </li>
+          )}
+          {rows.length > 0 && here && (
+            <li role="option" aria-selected={false}>
+              <button
+                type="button"
+                onMouseDown={(e) => { e.preventDefault(); seeAll(here.id) }}
+                className="w-full px-3 pb-2 pt-1 text-left text-sm font-bold accent-ink"
+                style={{ '--subject': here.colour } as React.CSSProperties}
+              >
+                Only in {here.name} →
               </button>
             </li>
           )}
