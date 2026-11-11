@@ -5,13 +5,14 @@ add the PR number; add new work here as it is found, not in a separate note. Sto
 (`LRN-2`, `PAR-4`) refer to [stories.md](stories.md), where the acceptance criteria live;
 [plan.md](plan.md) holds the delivery plan these came from.
 
-Last reviewed: 27 September 2026.
+Last reviewed: 11 November 2026.
 
 **Development closed on 27 September 2026**, at the owner's request, with content (1) and
 testing and validation (2) complete. The product features in section 3 are **not planned**:
 they stay listed as a record of what the stories asked for, not as work in progress.
 The improvement scope review of the same day, written as 71 stories with effort estimates, is in
-[improvement-stories.md](improvement-stories.md).
+[improvement-stories.md](improvement-stories.md). Section 12 reopens six of them on the owner's
+word of 11 November 2026: offline, exam readiness and spaced review.
 
 ## Order of work
 
@@ -775,6 +776,46 @@ runs two to eight times and the trace fits on a phone.
 French, Music and English are not planned: their 30, 19 and 21 numeric questions are dates, bar
 numbers, counts from a set text and listening figures, which recall a fact or read a text and
 have nothing to vary.
+
+## 12. Offline, exam readiness and spaced review (11 November 2026)
+
+Approved 11 November 2026. Asked "what are the areas to upgrade and enrich this app?", the owner
+picked going offline, working-at and target grade with timed papers, and skill-level spaced
+review, checked that all three cost nothing to run, then said "include exam readiness", which
+adds unit tests and grade 9 problem sets. Nothing here needs a paid service: the work runs in the
+browser on the progress already stored, and the account copy stays the one JSON row it is today.
+One PR per box, ticked in the PR that finishes it.
+
+- [ ] **1. Works offline and installs (UXI-5).** A service worker built with the app keeps its
+  code on the device after the first visit, keeps every topic opened, and can save a whole subject
+  for a journey. Signed in with no signal, the app opens on the last allow-list answer instead of
+  the sign-in page, and the progress written offline goes up when the signal returns. An Install
+  button where the browser offers one, and the Add to Home Screen steps on an iPhone.
+- [ ] **2. Target and working-at grade (MTV-2, LRN-6).** The student sets a target grade per
+  subject. The working-at grade is a range (for example 5 to 6) from recent answers by grade band,
+  with a sentence saying how it is worked out and which topics it rests on; with too few answers
+  it says how many more it needs rather than guess. Shown on the subject page, on Progress and
+  on the parent's Family page.
+- [ ] **3. Exam-style papers and unit tests (TOP-3).** One paper screen for every timed or untimed
+  sitting: move between questions freely, no marks or solutions until it is handed in, then the
+  mark, each question's solution and the time spent on it. A unit test draws two to four questions
+  from each topic in a unit. It is recorded per topic like a mixed worksheet: it counts as a visit
+  (so it stops a topic fading), sends wrong answers to Redo my mistakes, and shows on the parent's
+  page, but it does not replace a topic's quiz in the status rule. That differs from the story,
+  which asked it to feed status: two to four questions are too few to overrule a full quiz.
+- [ ] **4. Timed worksheets (WKP-4, WKS-5).** Any topic worksheet can be sat as a timed paper, at
+  the subject's own exam pace (its written papers' minutes over their marks, from the exam guide:
+  about 1.1 minutes a mark in Maths, 1.25 in Computer Science). Extended answers are written during
+  the paper and marked against the criteria after it.
+- [ ] **5. Grade 9 problem sets (WKP-5, WKS-6).** For each unit, eight grade 8 to 9 problems from
+  the reviewed questions, the longest and most multi-step first, spread across the unit's topics; a
+  new set on each press. Every unit in the pack has at least nine such questions. Full worked
+  solutions and mark schemes after hand-in; timed or not.
+- [ ] **6. Skill mastery and spaced review (TRK-2, TRK-3).** Each question answered gets its next
+  review date at growing intervals (1, 3, 7, 16, 35, 80 days; a wrong answer starts it again). The
+  daily recap asks what is due first, across subjects, then tops up by topic need as today. Home
+  says how many are due; each topic page lists its weakest skills, newer answers counting more.
+  Worked out from the attempts already stored, so the event log (TRK-1) is not needed first.
 
 ## 3. Product features (not planned)
 
