@@ -5,7 +5,8 @@ import { xpForQuestions } from './xp.ts'
 
 /** One question in a session that spans topics: Redo my mistakes, or the daily recap. */
 export interface SessionItem { topicId: string; questionId: string }
-export type SessionAnswers = Record<string, { answer: Answer; result: MarkResult }>
+/** `self`: marked by the student against the criteria, as an extended answer on a paper is. */
+export type SessionAnswers = Record<string, { answer: Answer; result: MarkResult; self?: boolean }>
 
 export const itemKey = (m: SessionItem) => `${m.topicId}/${m.questionId}`
 
@@ -17,7 +18,7 @@ export const itemKey = (m: SessionItem) => `${m.topicId}/${m.questionId}`
  * A mixed worksheet shows generated questions, so it passes `seen` (the question as asked,
  * for describing the answer) and `seed` (stored, so the parent's breakdown rebuilds them).
  */
-export function recordReview(sessionId: string, items: SessionItem[], answers: SessionAnswers, topicById: (id: string) => Topic | undefined, finishedAt: string, from?: AttemptRecord['from'], asked?: { seen: (m: SessionItem) => Question | undefined; seed: string }) {
+export function recordReview(sessionId: string, items: SessionItem[], answers: SessionAnswers, topicById: (id: string) => Topic | undefined, finishedAt: string, from?: AttemptRecord['from'], asked?: { seen: (m: SessionItem) => Question | undefined; seed: string }, extra: Pick<AttemptRecord, 'timed'> = {}) {
   const byTopic = new Map<string, SessionItem[]>()
   for (const m of items) byTopic.set(m.topicId, [...(byTopic.get(m.topicId) ?? []), m])
   for (const [topicId, its] of byTopic) {
@@ -28,7 +29,7 @@ export function recordReview(sessionId: string, items: SessionItem[], answers: S
       if (!q) return []
       const a = answers[itemKey(m)]
       const r = a?.result ?? { correct: false, marksScored: 0, marksAvailable: q.marks }
-      return [{ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct, answer: describeAnswer(q, a?.answer), ...(r.claimed ? { claimed: true } : {}) }]
+      return [{ id: q.id, skill: q.skill, gradeBand: q.gradeBand, marksScored: r.marksScored, marksAvailable: r.marksAvailable, correct: r.correct, ...(a?.self ? {} : { answer: describeAnswer(q, a?.answer) }), ...(r.claimed ? { claimed: true } : {}), ...(a?.self ? { self: true } : {}) }]
     })
     if (!results.length) continue
     recordAttempt({
@@ -38,11 +39,12 @@ export function recordReview(sessionId: string, items: SessionItem[], answers: S
       ...(from ? { from } : {}),
       marksScored: results.reduce((s, r) => s + r.marksScored, 0),
       marksAvailable: results.reduce((s, r) => s + r.marksAvailable, 0),
-      markedHow: results.some((r) => r.claimed) ? 'mixed' : 'auto',
+      markedHow: results.every((r) => r.self) ? 'self' : results.some((r) => r.claimed || r.self) ? 'mixed' : 'auto',
       completedAt: finishedAt,
       xp: xpForQuestions(results),
       questions: results,
       ...(asked ? { seed: asked.seed } : {}),
+      ...extra,
     })
   }
 }

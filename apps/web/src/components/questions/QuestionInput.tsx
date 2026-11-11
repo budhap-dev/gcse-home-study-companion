@@ -14,6 +14,8 @@ interface Props {
   /** Chooses the maths keypad: Physics writes standard form where Business writes pounds. */
   subjectId?: string
   onSubmit: (answer: Answer) => void
+  /** The submit button's words: "Check answer", or "Save answer" on a paper, which marks nothing yet. */
+  submitLabel?: string
 }
 
 /**
@@ -33,15 +35,15 @@ export function QuestionInput(props: Props) {
   )
 }
 
-function Input({ question, disabled = false, subjectId, onSubmit }: Props) {
+function Input({ question, disabled = false, subjectId, onSubmit, submitLabel }: Props) {
   switch (question.type) {
     case 'multiple-choice':
-      return <MultipleChoice question={question} disabled={disabled} onSubmit={onSubmit} />
+      return <MultipleChoice question={question} disabled={disabled} onSubmit={onSubmit} submitLabel={submitLabel} />
     case 'numeric':
     case 'short-text':
-      return <Typed question={question} disabled={disabled} subjectId={subjectId} onSubmit={onSubmit} />
+      return <Typed question={question} disabled={disabled} subjectId={subjectId} onSubmit={onSubmit} submitLabel={submitLabel} />
     case 'ordering':
-      return <Ordering question={question} disabled={disabled} onSubmit={onSubmit} />
+      return <Ordering question={question} disabled={disabled} onSubmit={onSubmit} submitLabel={submitLabel} />
     case 'extended':
       return <Extended question={question} disabled={disabled} onSubmit={onSubmit} />
     case 'labelling':
@@ -49,7 +51,7 @@ function Input({ question, disabled = false, subjectId, onSubmit }: Props) {
   }
 }
 
-function MultipleChoice({ question, disabled, onSubmit }: Props & { question: Extract<Question, { type: 'multiple-choice' }> }) {
+function MultipleChoice({ question, disabled, onSubmit, submitLabel }: Props & { question: Extract<Question, { type: 'multiple-choice' }> }) {
   const [chosen, setChosen] = useState<number[]>([])
   // Options are shown in a fresh order each time the question is mounted, so the
   // position of the right answer in the content file never becomes a pattern.
@@ -82,7 +84,7 @@ function MultipleChoice({ question, disabled, onSubmit }: Props & { question: Ex
           )
         })}
       </div>
-      {!disabled && <SubmitButton disabled={chosen.length === 0} onClick={() => onSubmit(chosen)} />}
+      {!disabled && <SubmitButton label={submitLabel} disabled={chosen.length === 0} onClick={() => onSubmit(chosen)} />}
     </div>
   )
 }
@@ -116,7 +118,7 @@ export function keypadFor(question: Extract<Question, { type: 'numeric' | 'short
   return 'number'
 }
 
-function Typed({ question, disabled, subjectId, onSubmit }: Props & { question: Extract<Question, { type: 'numeric' | 'short-text' }> }) {
+function Typed({ question, disabled, subjectId, onSubmit, submitLabel }: Props & { question: Extract<Question, { type: 'numeric' | 'short-text' }> }) {
   const [value, setValue] = useState('')
   const suggested = keypadFor(question, subjectId ?? '')
   const [kind, setKind] = useState<KeypadKind | undefined>(suggested)
@@ -164,7 +166,7 @@ function Typed({ question, disabled, subjectId, onSubmit }: Props & { question: 
           )}
           {french && <AccentKeys box={box} onType={setValue} />}
           <div className="flex items-center gap-2">
-            <SubmitButton disabled={!value.trim()} />
+            <SubmitButton label={submitLabel} disabled={!value.trim()} />
             {!french && (
               <button
                 type="button"
@@ -210,7 +212,7 @@ function AccentKeys({ box, onType }: { box: React.RefObject<HTMLInputElement | n
   )
 }
 
-function Ordering({ question, disabled, onSubmit }: Props & { question: Extract<Question, { type: 'ordering' }> }) {
+function Ordering({ question, disabled, onSubmit, submitLabel }: Props & { question: Extract<Question, { type: 'ordering' }> }) {
   // A fixed seed: the start order is scrambled but stays put across re-renders and
   // retakes, so the student is not re-reading a fresh arrangement of the same list.
   const [order, setOrder] = useState<number[]>(() => {
@@ -239,7 +241,7 @@ function Ordering({ question, disabled, onSubmit }: Props & { question: Extract<
           </li>
         ))}
       </ol>
-      {!disabled && <SubmitButton onClick={() => onSubmit(order)} />}
+      {!disabled && <SubmitButton label={submitLabel} onClick={() => onSubmit(order)} />}
     </div>
   )
 }

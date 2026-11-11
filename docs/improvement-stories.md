@@ -42,7 +42,7 @@ is left at a glance.
 
 ### TOP-3 · Unit tests
 
-**Effort:** M · **Priority:** Next
+**Effort:** M · **Priority:** Next · **Status:** done (11 November 2026)
 
 As a student, I want an end-of-unit test that mixes every topic in the unit so that I practise
 the way the exam asks.

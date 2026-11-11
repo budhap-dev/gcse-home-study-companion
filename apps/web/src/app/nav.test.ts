@@ -61,6 +61,8 @@ describe('focus screens', () => {
       '/subjects/maths/topics/laws-of-indices/worksheet/core',
       '/mistakes',
       '/recap',
+      '/subjects/physics/units/energy/test',
+      '/subjects/physics/units/energy/grade-9',
     ]) expect(isFocusRoute(p), p).toBe(true)
   })
 
