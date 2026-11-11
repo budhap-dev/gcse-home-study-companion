@@ -171,6 +171,35 @@ export interface ProgressState {
   deeds: Record<string, DeedRecord>
   /** The student's own answers from first-run setup (UXI-10); every field optional. */
   profile: Profile
+  /**
+   * The grade the student is aiming at in each subject (LRN-6, MTV-2), with when it was set,
+   * so two devices keep the later choice. A subject with no entry has no target.
+   */
+  targets: Record<string, TargetGrade>
+}
+
+export interface TargetGrade {
+  /** A GCSE grade, 4 to 9. */
+  grade: number
+  at: string
+  /** Cleared: kept, rather than deleted, so a device that still has the old target loses to it. */
+  cleared?: boolean
+}
+
+export const TARGET_GRADES = [4, 5, 6, 7, 8, 9] as const
+
+/** The subject's target grade, if one is set. */
+export function targetFor(state: ProgressState, subjectId: string): number | undefined {
+  const t = state.targets[subjectId]
+  return t && !t.cleared ? t.grade : undefined
+}
+
+/** Sets or, with undefined, clears the target grade for a subject. */
+export function setTarget(subjectId: string, grade: number | undefined) {
+  const state = read()
+  const at = new Date().toISOString()
+  state.targets = { ...state.targets, [subjectId]: grade === undefined ? { grade: state.targets[subjectId]?.grade ?? 0, at, cleared: true } : { grade, at } }
+  write(state)
 }
 
 /**
@@ -207,7 +236,7 @@ const OLD_DEFAULT_WEEKLY_GOAL = 180
 const clampDailyGoal = (m: number) => Math.max(10, Math.min(240, Math.round(m)))
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, dailyGoalMinutes: DEFAULT_DAILY_GOAL, daysOff: [], badges: {}, milestones: {}, deeds: {}, profile: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, dailyGoalMinutes: DEFAULT_DAILY_GOAL, daysOff: [], badges: {}, milestones: {}, deeds: {}, profile: {}, targets: {} }
 }
 
 /**
@@ -223,7 +252,7 @@ export function fromStored(stored: Partial<ProgressState> & { goalMinutes?: numb
   return {
     ...emptyState(), ...rest,
     // A state written before these existed has none, and every reader iterates them.
-    activities: rest.activities ?? [], time: rest.time ?? {}, milestones: rest.milestones ?? {}, deeds: rest.deeds ?? {},
+    activities: rest.activities ?? [], time: rest.time ?? {}, milestones: rest.milestones ?? {}, deeds: rest.deeds ?? {}, targets: rest.targets ?? {},
     dailyGoalMinutes: daily,
     profile: withoutSubjects(rest.profile),
   }

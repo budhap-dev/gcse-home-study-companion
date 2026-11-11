@@ -516,7 +516,7 @@ As a student, I want to see days to each exam and how ready I am so that my prog
 
 ### MTV-2 · Working-at grade
 
-**Effort:** M · **Priority:** Next · **Finishes:** LRN-6
+**Effort:** M · **Priority:** Next · **Finishes:** LRN-6 · **Status:** done (11 November 2026)
 
 As a student, I want an honest estimate of my grade per subject beside my target so that I know
 where I stand.

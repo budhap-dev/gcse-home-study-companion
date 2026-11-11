@@ -3,7 +3,7 @@ import { Link, useNavigationType, useSearchParams } from 'react-router'
 import { supabase } from '../../auth/client.ts'
 import { useAuth } from '../../auth/useAuth.ts'
 import { SectionLabel } from '../../components/KindChip.tsx'
-import { fromStored, type ProgressState } from '../../progress/store.ts'
+import { fromStored, targetFor, type ProgressState } from '../../progress/store.ts'
 import { firstNameOf, personName } from '../../auth/personName.ts'
 import { parentSummary, type ActivityEntry, type ParentSummary } from '../../progress/summary.ts'
 import { AssignPanel } from './Assign.tsx'
@@ -24,6 +24,7 @@ import { TrendTable } from '../../components/charts/Trend.tsx'
 import { topicsForSubject } from '../../content/index.ts'
 import { square } from '../../progress/map.ts'
 import { subjectTrend } from '../../progress/trend.ts'
+import { rangeLabel, workingAt } from '../../progress/grade.ts'
 
 export interface Child {
   email: string
@@ -319,6 +320,7 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
                   {sub.started} of {sub.total} started
                   {subjectMinutes[sub.id] ? ` · ${formatMinutes(subjectMinutes[sub.id]!)}` : ''}
                   {sub.lastActive ? ` · last opened ${day(sub.lastActive)}` : ''}
+                  {gradeNote(sub.id, child.state!)}
                 </span>
               </div>
               <MiniMap squares={topicsForSubject(sub.id).map((t) => square(t, child.state!))} name={sub.name} />
@@ -373,6 +375,14 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
   )
 }
 
+
+/** " · working at 5 to 6, target 7" for a subject row, or nothing when there is neither. */
+function gradeNote(subjectId: string, state: ProgressState): string {
+  const w = workingAt(topicsForSubject(subjectId), state)
+  const target = targetFor(state, subjectId)
+  const parts = [w.kind === 'estimate' ? `working at ${rangeLabel(w)}` : '', target ? `target ${target}` : ''].filter(Boolean)
+  return parts.length ? ` · ${parts.join(', ')}` : ''
+}
 
 /** The last eight weeks per subject (PAR-5): minutes and the average mark, week by week. */
 function EightWeeks({ state }: { state: ProgressState }) {

@@ -8,6 +8,8 @@ import { TopicBreakdown } from './TopicBreakdown.tsx'
 import { ChildMap } from './ChildMap.tsx'
 import { TrendBars } from '../../components/charts/Trend.tsx'
 import { subjectTrend } from '../../progress/trend.ts'
+import { GradePanel } from '../../components/GradePanel.tsx'
+import { topicsForSubject } from '../../content/index.ts'
 
 /** One glyph per kind, shared with the dashboard's Recent work so the two read alike. */
 export const STUDY_EMOJI: Record<StudyKind, string> = {
@@ -65,6 +67,8 @@ function SubjectBody({ d, state, first }: { d: Detail; state: ProgressState; fir
         <Tile label="Exam technique" value={d.examTechnique.days ? `${d.examTechnique.days} ${d.examTechnique.days === 1 ? 'day' : 'days'}` : '—'}
           note={d.examTechnique.last ? `${formatMinutes(d.examTechnique.minutes)} · last ${day(d.examTechnique.last)}` : 'Not opened yet'} />
       </section>
+
+      <GradePanel subjectId={d.id} topics={topicsForSubject(d.id)} progress={state} readOnly />
 
       <ChildMap state={state} subjectId={d.id} first={first} />
 

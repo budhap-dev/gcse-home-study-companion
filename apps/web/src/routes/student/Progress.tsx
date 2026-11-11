@@ -10,7 +10,8 @@ import { rankedSkills, statusTotals, weeklyMinutes } from '../../progress/charts
 import { Link } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { TOPICS, topicsForSubject } from '../../content/index.ts'
-import { attemptName, evidenceFor, goalDays, isoDate, streakDays, weekDays } from '../../progress/store.ts'
+import { attemptName, evidenceFor, goalDays, isoDate, streakDays, targetFor, weekDays } from '../../progress/store.ts'
+import { rangeLabel, workingAt } from '../../progress/grade.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { describeMilestone } from '../../progress/milestones.ts'
 import { SubjectIcon } from '../../components/SubjectIcon.tsx'
@@ -50,6 +51,28 @@ export function Progress() {
             )
           })}
         </div>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <SectionLabel colour="#1f3a93" emoji="🎯">Grades</SectionLabel>
+        <p className="text-sm text-ink-2">Working at is a range from your newest answers in each subject; set a target on the subject’s page.</p>
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
+            const w = workingAt(topicsForSubject(s.id), progress)
+            const target = targetFor(progress, s.id)
+            return (
+              <li key={s.id}>
+                <Link to={`/subjects/${s.id}`} className="lift flex items-center justify-between gap-3 rounded-xl border border-rule bg-surface px-4 py-3" style={{ '--subject': s.colour } as React.CSSProperties}>
+                  <span className="flex min-w-0 items-center gap-2 font-bold accent-ink"><SubjectIcon subjectId={s.id} width={18} height={18} className="shrink-0" /><span className="truncate">{s.name}</span></span>
+                  <span className="shrink-0 text-right text-sm">
+                    <span className="block font-bold">{w.kind === 'estimate' ? rangeLabel(w) : 'Not yet'}</span>
+                    <span className="block text-xs text-ink-2">{target ? `target ${target}` : 'no target'}</span>
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
       </section>
 
       <section className="grid grid-cols-1 gap-3 lg:grid-cols-2">
