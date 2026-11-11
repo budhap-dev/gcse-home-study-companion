@@ -1,7 +1,7 @@
 import { AUTO_MARKED_TYPES, SUBJECTS } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { getGuide, TOPICS, topicsForSubject, yearsForSubject } from './index.ts'
-import { minutesFor, minutesPerMark, parseYear, perTopic, unitTestItems, unitTestPath, unitTopics } from './paper.ts'
+import { GRADE_9_SET, grade9Items, grade9Path, minutesFor, minutesPerMark, parseYear, perTopic, unitTestItems, unitTestPath, unitTopics } from './paper.ts'
 
 const BAND = ['4-5', '6-7', '8-9']
 
@@ -83,5 +83,49 @@ describe('a unit test (TOP-3)', () => {
     expect(unitTestPath('maths', 'algebra', 'abc123', 10)).toBe('/subjects/maths/units/algebra/test?year=10&sheet=abc123')
     expect(unitTestPath('maths', 'algebra', 'abc123')).toBe('/subjects/maths/units/algebra/test?sheet=abc123')
     expect([parseYear('10'), parseYear('8'), parseYear(null)]).toEqual([10, undefined, undefined])
+  })
+})
+
+describe('a grade 9 set (WKP-5)', () => {
+  const forces = unitTopics(topicsForSubject('physics'), 'forces')
+  const q = (m: { topicId: string; questionId: string }) => TOPICS.find((t) => t.id === m.topicId)!.questions.find((x) => x.id === m.questionId)!
+
+  it('is eight grade 8–9 problems, none twice, building from fewest marks to most', () => {
+    const items = grade9Items(forces, 'abc123')
+    expect(items).toHaveLength(GRADE_9_SET)
+    expect(new Set(items.map((m) => `${m.topicId}/${m.questionId}`)).size).toBe(GRADE_9_SET)
+    for (const m of items) expect(q(m).gradeBand).toBe('8-9')
+    const marks = items.map((m) => q(m).marks)
+    expect(marks).toEqual([...marks].sort((a, b) => a - b))
+  })
+
+  it('spreads across the unit’s topics', () => {
+    const items = grade9Items(forces, 'abc123')
+    expect(new Set(items.map((m) => m.topicId)).size).toBe(Math.min(GRADE_9_SET, forces.length))
+  })
+
+  it('leans to the longer problems, and a new code makes a new mix', () => {
+    const all = forces.flatMap((t) => t.questions.filter((x) => x.gradeBand === '8-9'))
+    const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length
+    const sets = ['a1', 'b2', 'c3', 'd4', 'e5'].map((c) => grade9Items(forces, c))
+    expect(mean(sets.flat().map((m) => q(m).marks))).toBeGreaterThan(mean(all.map((x) => x.marks)))
+    expect(new Set(sets.map((s) => JSON.stringify(s))).size).toBe(5)
+  })
+
+  it('gives every unit card in the pack a full set', () => {
+    for (const s of SUBJECTS) {
+      const units = [...new Set(topicsForSubject(s.id).map((t) => t.unitId))]
+      for (const u of units) {
+        for (const y of [undefined, ...yearsForSubject(s.id)]) {
+          const topics = unitTopics(topicsForSubject(s.id), u, y)
+          if (!topics.length) continue
+          expect(grade9Items(topics, 'check1').length, `${s.id}/${u}/${y ?? 'all'}`).toBe(GRADE_9_SET)
+        }
+      }
+    }
+  })
+
+  it('has a link of its own', () => {
+    expect(grade9Path('physics', 'forces', 'abc123', 11)).toBe('/subjects/physics/units/forces/grade-9?year=11&sheet=abc123')
   })
 })

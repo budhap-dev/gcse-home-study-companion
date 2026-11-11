@@ -162,7 +162,7 @@ As a student, I want to sit a worksheet against the clock so that I learn the ex
 
 ### WKP-5 · Grade 9 problem sets
 
-**Effort:** M · **Priority:** Later · **Finishes:** WKS-6
+**Effort:** M · **Priority:** Later · **Finishes:** WKS-6 · **Status:** done (11 November 2026)
 
 As a student aiming at the top grades, I want unfamiliar multi-step problems per unit so that I
 am ready for the hardest questions.

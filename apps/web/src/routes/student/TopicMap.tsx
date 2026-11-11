@@ -15,7 +15,7 @@ import { MasteryLadder, SQUARES_GRID, TopicSquare } from '../../components/map/M
 import { useWide } from '../../components/useWide.ts'
 import { SheetsIcon } from '../../components/icons.tsx'
 import { GradePanel } from '../../components/GradePanel.tsx'
-import { unitTestPath } from '../../content/paper.ts'
+import { GRADE_9_SET, grade9Path, unitTestPath } from '../../content/paper.ts'
 import { newSheetCode } from '../../content/sheetCode.ts'
 
 /**
@@ -224,8 +224,9 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
 }
 
 /**
- * A unit's papers, under its squares: a unit test of the topics the card shows, so the year
- * tabs choose between a Year 10 test and the whole unit. Each press makes a new paper.
+ * A unit's papers, under its squares: a unit test and a grade 9 set of the topics the card
+ * shows, so the year tabs choose between Year 10 and the whole unit. Each press makes a new
+ * paper.
  */
 function UnitPractice({ subjectId, unitId, year, count }: { subjectId: string; unitId: string; year?: number; count: number }) {
   const navigate = useNavigate()
@@ -234,6 +235,10 @@ function UnitPractice({ subjectId, unitId, year, count }: { subjectId: string; u
       <button type="button" onClick={() => navigate(unitTestPath(subjectId, unitId, newSheetCode(), year))}
         className="press min-h-10 rounded-lg border border-rule bg-surface px-3 text-sm font-bold accent-ink">
         Unit test <span className="font-normal text-ink-2">· {count} {count === 1 ? 'topic' : 'topics'}</span>
+      </button>
+      <button type="button" onClick={() => navigate(grade9Path(subjectId, unitId, newSheetCode(), year))}
+        className="press min-h-10 rounded-lg border border-rule bg-surface px-3 text-sm font-bold accent-ink">
+        Grade 9 set <span className="font-normal text-ink-2">· {GRADE_9_SET} problems</span>
       </button>
     </div>
   )

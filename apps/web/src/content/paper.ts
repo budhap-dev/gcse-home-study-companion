@@ -80,3 +80,36 @@ export function parseYear(raw: string | null): 9 | 10 | 11 | undefined {
   const y = Number(raw)
   return y === 9 || y === 10 || y === 11 ? y : undefined
 }
+
+/** Problems in a grade 9 set (WKP-5). */
+export const GRADE_9_SET = 8
+
+/**
+ * A grade 9 set (WKP-5): GRADE_9_SET problems at grade 8–9 from the topics a unit card shows.
+ * Every question in that band was written as a multi-step, unfamiliar or show-that problem,
+ * with a full solution and mark scheme; the set prefers the ones worth most marks, the longest
+ * chains, but draws from the top of each topic's list by the code, so a new set is a new
+ * mix. Topics take turns, so a set spreads across the unit, and it runs from fewest marks to
+ * most, as a paper builds.
+ */
+export function grade9Items(topics: TopicSummary[], code: string): SessionItem[] {
+  const pools = seededShuffle(topics, code).map((t) => {
+    const hard = t.questions.filter((q) => q.gradeBand === '8-9')
+    const byMarks = seededShuffle(hard, `${code}:${t.id}`).sort((a, b) => b.marks - a.marks)
+    // The longer problems first, but not always the same ones: the top three fifths are drawn
+    // in the code's order, the rest after them.
+    const top = Math.ceil(byMarks.length * 0.6)
+    const ordered = [...seededShuffle(byMarks.slice(0, top), `${code}:${t.id}:top`), ...byMarks.slice(top)]
+    return ordered.map((q) => ({ item: { topicId: t.id, questionId: q.id }, marks: q.marks }))
+  })
+  const picked: { item: SessionItem; marks: number }[] = []
+  for (let round = 0; picked.length < GRADE_9_SET && pools.some((p) => p.length > round); round++) {
+    for (const p of pools) if (picked.length < GRADE_9_SET && p[round]) picked.push(p[round]!)
+  }
+  return picked.sort((a, b) => a.marks - b.marks).map((p) => p.item)
+}
+
+/** The link to a grade 9 set of the topics a unit card shows. */
+export function grade9Path(subjectId: string, unitId: string, code: string, year?: number): string {
+  return `/subjects/${subjectId}/units/${unitId}/grade-9?${year ? `year=${year}&` : ''}sheet=${code}`
+}
