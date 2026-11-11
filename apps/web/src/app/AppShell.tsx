@@ -9,6 +9,7 @@ import { ScrollToTop } from './ScrollToTop.tsx'
 import { useNewBuild } from './useNewBuild.ts'
 import { TopicLoading } from '../components/TopicLoading.tsx'
 import { useScreenOpening } from './screens.ts'
+import { useOnline } from './offline.ts'
 
 const MAIN = 'min-w-0 flex-1 px-4 pb-32 pt-6 md:px-10 lg:pb-10'
 
@@ -24,6 +25,7 @@ export function AppShell() {
   const auth = useAuth()
   const newBuild = useNewBuild()
   const opening = useScreenOpening()
+  const online = useOnline()
   // On a lesson, quiz and the like, the band and dock step aside below laptop width while
   // the student scrolls down (styles.css, `data-chrome`).
   const [chromeHidden, showChrome] = useChromeHidden(isFocusRoute(pathname), pathname)
@@ -41,6 +43,13 @@ export function AppShell() {
         <div role="status" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-b border-rule bg-[#fff4cc] px-4 py-2 text-sm text-[#6b4d00]">
           <span>A newer version of the app is available.</span>
           <button type="button" onClick={() => window.location.reload()} className="min-h-8 rounded-lg bg-[#6b4d00] px-3 py-1 font-bold text-[#fff4cc]">Reload</button>
+        </div>
+      )}
+
+      {/* No signal (UXI-5): said once, plainly, so a topic that will not open is not a surprise. */}
+      {!online && (
+        <div role="status" className="border-b border-rule bg-panel px-4 py-2 text-center text-sm text-ink-2">
+          No signal. Topics you have opened or saved still work, and your progress is kept on this device until the signal returns.
         </div>
       )}
 

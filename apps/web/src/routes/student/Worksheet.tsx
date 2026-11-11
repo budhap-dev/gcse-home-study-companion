@@ -21,6 +21,7 @@ import { MilestoneCard } from '../../components/MilestoneCard.tsx'
 import { ShareSheet } from '../../components/ShareSheet.tsx'
 import { newSheetCode, sheetParam, sheetPath } from '../../content/sheetCode.ts'
 import type { Milestone } from '../../progress/milestones.ts'
+import { TopicMissing } from '../../components/TopicMissing.tsx'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -378,6 +379,6 @@ export function Worksheet() {
   const { subjectId, topicId } = useParams()
   const topic = useTopic(subjectId, topicId)
   if (topic === undefined) return <TopicLoading />
-  if (topic === null) return <p>Unknown topic.</p>
+  if (topic === null) return <TopicMissing />
   return <WorksheetBody key={topic.id} topic={topic} />
 }

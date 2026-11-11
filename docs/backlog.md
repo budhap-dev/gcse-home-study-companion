@@ -786,11 +786,16 @@ adds unit tests and grade 9 problem sets. Nothing here needs a paid service: the
 browser on the progress already stored, and the account copy stays the one JSON row it is today.
 One PR per box, ticked in the PR that finishes it.
 
-- [ ] **1. Works offline and installs (UXI-5).** A service worker built with the app keeps its
+- [x] **1. Works offline and installs (UXI-5).** A service worker built with the app keeps its
   code on the device after the first visit, keeps every topic opened, and can save a whole subject
   for a journey. Signed in with no signal, the app opens on the last allow-list answer instead of
   the sign-in page, and the progress written offline goes up when the signal returns. An Install
-  button where the browser offers one, and the Add to Home Screen steps on an iPhone.
+  button where the browser offers one, and the Add to Home Screen steps on an iPhone. Shipped in
+  v10.111.0: `sw-worker.js`, built into `/sw.js` by `swPlugin.ts` with the build's file lists;
+  Settings, "Use without a signal". Checked in Chrome with the server stopped, since Playwright's
+  offline switch does not reach a service worker's own requests: an opened topic and its quiz
+  open, a saved subject's topics open, an unsaved topic says so, and a build that renames a saved
+  topic's file replaces it on the device.
 - [ ] **2. Target and working-at grade (MTV-2, LRN-6).** The student sets a target grade per
   subject. The working-at grade is a range (for example 5 to 6) from recent answers by grade band,
   with a sentence saying how it is worked out and which topics it rests on; with too few answers

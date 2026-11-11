@@ -8,6 +8,7 @@ import { applyPrefs } from './theme/prefs.ts'
 import { AuthGate } from './auth/AuthGate.tsx'
 import { installErrorReporting } from './auth/reports.ts'
 import { warmScreens } from './app/screens.ts'
+import { registerServiceWorker } from './app/offline.ts'
 
 applyTheme(currentThemeId())
 applyPrefs()
@@ -22,3 +23,4 @@ createRoot(document.getElementById('root')!).render(
 )
 
 warmScreens()
+registerServiceWorker()

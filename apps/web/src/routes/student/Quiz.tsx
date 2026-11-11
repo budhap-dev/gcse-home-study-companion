@@ -20,6 +20,7 @@ import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import { MilestoneCard } from '../../components/MilestoneCard.tsx'
 import type { Milestone } from '../../progress/milestones.ts'
+import { TopicMissing } from '../../components/TopicMissing.tsx'
 
 interface Answered {
   answer: Answer
@@ -293,6 +294,6 @@ export function Quiz() {
   const { subjectId, topicId } = useParams()
   const topic = useTopic(subjectId, topicId)
   if (topic === undefined) return <TopicLoading />
-  if (topic === null) return <p>Unknown topic.</p>
+  if (topic === null) return <TopicMissing />
   return <QuizBody key={topic.id} topic={topic} />
 }

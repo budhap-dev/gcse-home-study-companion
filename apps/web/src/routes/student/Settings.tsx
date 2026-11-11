@@ -7,12 +7,15 @@ import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
 import { clearProgress, isoDate, setDailyGoal, toggleDayOff, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { ProfileForm } from '../../components/ProfileForm.tsx'
+import { OfflinePanel } from '../../components/OfflinePanel.tsx'
 
 export function Settings() {
   const progress = useProgress()
-  // Home's "Set up" card links to #you; the router does not scroll to a hash by itself.
+  // Home's "Set up" card links to #you, a topic missing offline to #offline; the router does
+  // not scroll to a hash by itself.
   useEffect(() => {
-    if (location.hash === '#you') document.getElementById('you')?.scrollIntoView({ block: 'start' })
+    const id = location.hash.slice(1)
+    if (id === 'you' || id === 'offline') document.getElementById(id)?.scrollIntoView({ block: 'start' })
   }, [])
   const [goal, setGoal] = useState(String(progress.dailyGoalMinutes))
   const [confirmClear, setConfirmClear] = useState(false)
@@ -102,6 +105,11 @@ export function Settings() {
             )
           })}
         </div>
+      </section>
+
+      <section id="offline" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+        <h2 className="font-bold">Use without a signal</h2>
+        <OfflinePanel />
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
