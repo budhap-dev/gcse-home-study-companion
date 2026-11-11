@@ -433,7 +433,7 @@ As a student, I want a missed quiz question to take me to the step that teaches 
 
 ### UXI-5 · Works offline
 
-**Effort:** M · **Priority:** Next
+**Effort:** M · **Priority:** Next · **Status:** done (11 November 2026)
 
 As a student, I want to study without a signal so that a train journey is revision time.
 

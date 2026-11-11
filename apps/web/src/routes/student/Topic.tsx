@@ -20,6 +20,7 @@ import type { Topic as TopicRecord } from '@study/shared'
 import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
 import { useWide } from '../../components/useWide.ts'
 import { Listen } from '../../components/Listen.tsx'
+import { TopicMissing } from '../../components/TopicMissing.tsx'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -396,6 +397,6 @@ export function Topic() {
   const { subjectId, topicId } = useParams()
   const topic = useTopic(subjectId, topicId)
   if (topic === undefined) return <TopicLoading />
-  if (topic === null) return <p>Unknown topic.</p>
+  if (topic === null) return <TopicMissing />
   return <TopicBody key={topic.id} topic={topic} />
 }

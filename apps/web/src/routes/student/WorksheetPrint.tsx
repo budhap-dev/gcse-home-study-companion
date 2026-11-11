@@ -9,6 +9,7 @@ import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
 import { ShareSheet } from '../../components/ShareSheet.tsx'
 import { newSheetCode, sheetParam, sheetPath } from '../../content/sheetCode.ts'
+import { TopicMissing } from '../../components/TopicMissing.tsx'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 
@@ -166,6 +167,6 @@ export function WorksheetPrint() {
   const { subjectId, topicId } = useParams()
   const topic = useTopic(subjectId, topicId)
   if (topic === undefined) return <TopicLoading />
-  if (topic === null) return <p>Unknown worksheet.</p>
+  if (topic === null) return <TopicMissing label="worksheet" />
   return <WorksheetPrintBody key={topic.id} topic={topic} />
 }

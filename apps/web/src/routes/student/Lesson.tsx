@@ -18,6 +18,7 @@ import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
 import { MilestoneCard } from '../../components/MilestoneCard.tsx'
 import type { Milestone } from '../../progress/milestones.ts'
+import { TopicMissing } from '../../components/TopicMissing.tsx'
 
 
 /**
@@ -187,6 +188,6 @@ export function Lesson() {
   const { subjectId, topicId } = useParams()
   const topic = useTopic(subjectId, topicId)
   if (topic === undefined) return <TopicLoading />
-  if (topic === null) return <p>Unknown topic.</p>
+  if (topic === null) return <TopicMissing />
   return <LessonBody key={topic.id} topic={topic} />
 }

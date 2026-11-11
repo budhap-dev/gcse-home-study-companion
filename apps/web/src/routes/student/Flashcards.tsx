@@ -10,6 +10,7 @@ import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 import { useTopic } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
+import { TopicMissing } from '../../components/TopicMissing.tsx'
 
 /**
  * What to say at the end. Keyed to how the deck actually went rather than always
@@ -249,6 +250,6 @@ export function Flashcards() {
   const { subjectId, topicId } = useParams()
   const topic = useTopic(subjectId, topicId)
   if (topic === undefined) return <TopicLoading />
-  if (topic === null) return <p>Unknown topic.</p>
+  if (topic === null) return <TopicMissing />
   return <FlashcardsBody key={topic.id} topic={topic} />
 }

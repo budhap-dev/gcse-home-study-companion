@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Topic, type Topic as TopicRecord } from '@study/shared'
+import { useOnline } from '../app/offline.ts'
 
 /**
  * A topic's full content, fetched when the topic is opened (OPS-1). Each topic file is its
@@ -13,6 +14,11 @@ const byKey = new Map(Object.entries(files).map(([path, load]) => {
 }))
 const cache = new Map<string, TopicRecord>()
 const pending = new Map<string, Promise<TopicRecord | undefined>>()
+
+/** Whether the pack has this topic, whether or not its file has been fetched. */
+export function topicExists(subjectId: string, topicId: string): boolean {
+  return byKey.has(`${subjectId}/${topicId}`)
+}
 
 export function cachedTopic(subjectId: string, topicId: string): TopicRecord | undefined {
   return cache.get(`${subjectId}/${topicId}`)
@@ -44,6 +50,8 @@ export function loadTopic(subjectId: string, topicId: string): Promise<TopicReco
 export function useTopic(subjectId: string | undefined, topicId: string | undefined): TopicRecord | undefined | null {
   const key = subjectId && topicId ? `${subjectId}/${topicId}` : ''
   const [state, setState] = useState<{ key: string; topic: TopicRecord | undefined | null }>(() => ({ key, topic: key ? cache.get(key) : null }))
+  // A topic that failed for want of a signal is fetched again when the signal returns (UXI-5).
+  const online = useOnline()
   useEffect(() => {
     if (!subjectId || !topicId) { setState({ key, topic: null }); return }
     if (cache.has(key)) { setState({ key, topic: cache.get(key) }); return }
@@ -51,7 +59,7 @@ export function useTopic(subjectId: string | undefined, topicId: string | undefi
     setState({ key, topic: undefined })
     loadTopic(subjectId, topicId).then((t) => { if (live) setState({ key, topic: t ?? null }) }, () => { if (live) setState({ key, topic: null }) })
     return () => { live = false }
-  }, [key, subjectId, topicId])
+  }, [key, subjectId, topicId, online])
   // No such topic file: say so at once rather than show a loading state first.
   if (!key || !byKey.has(key)) return null
   // A render for a new key before the effect runs must not show the previous topic.
@@ -63,13 +71,14 @@ export function useTopics(keys: { subjectId: string; topicId: string }[]): Map<s
   const sig = keys.map((k) => `${k.subjectId}/${k.topicId}`).sort().join(',')
   const ready = () => keys.every((k) => cache.has(`${k.subjectId}/${k.topicId}`))
   const [, bump] = useState(0)
+  const online = useOnline()
   useEffect(() => {
     if (ready()) return
     let live = true
     Promise.all(keys.map((k) => loadTopic(k.subjectId, k.topicId))).finally(() => { if (live) bump((n) => n + 1) })
     return () => { live = false }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sig])
+  }, [sig, online])
   return ready() ? new Map(keys.map((k) => [k.topicId, cache.get(`${k.subjectId}/${k.topicId}`)!])) : undefined
 }
 
