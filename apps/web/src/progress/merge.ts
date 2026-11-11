@@ -56,7 +56,11 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
     const answered = [prev, d].filter((x) => x.answeredAt).sort((x, y) => (x.answeredAt! < y.answeredAt! ? 1 : -1))[0]
     deeds[day] = { id: prev.id, seen: prev.seen < d.seen ? prev.seen : d.seen, ...(answered ? { done: answered.done, answeredAt: answered.answeredAt } : {}) }
   }
+  // A target per subject: the one set more recently, a clearing included.
+  const targets: ProgressState['targets'] = { ...A.targets }
+  for (const [id, t] of Object.entries(B.targets)) if (!targets[id] || t.at > targets[id]!.at) targets[id] = t
   return {
+    targets,
     attempts: [...attempts.values()].sort((x, y) => x.completedAt.localeCompare(y.completedAt)),
     lessons,
     activities: [...activities.values()].sort((x, y) => x.at.localeCompare(y.at)),

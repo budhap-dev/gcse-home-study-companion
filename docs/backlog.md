@@ -796,11 +796,14 @@ One PR per box, ticked in the PR that finishes it.
   offline switch does not reach a service worker's own requests: an opened topic and its quiz
   open, a saved subject's topics open, an unsaved topic says so, and a build that renames a saved
   topic's file replaces it on the device.
-- [ ] **2. Target and working-at grade (MTV-2, LRN-6).** The student sets a target grade per
+- [x] **2. Target and working-at grade (MTV-2, LRN-6).** The student sets a target grade per
   subject. The working-at grade is a range (for example 5 to 6) from recent answers by grade band,
   with a sentence saying how it is worked out and which topics it rests on; with too few answers
   it says how many more it needs rather than guess. Shown on the subject page, on Progress and
-  on the parent's Family page.
+  on the parent's Family page. Shipped in v10.112.0 (`progress/grade.ts`): the newest answer to
+  each question in the last 12 weeks, at least 20 of them; a band with under five answers is read
+  from the band above it; 8 to 9 needs 70% of grade 8–9 marks and 80% of 6–7, down to 3 to 4. The
+  target is kept per subject with the time it was set, so two devices keep the later choice.
 - [ ] **3. Exam-style papers and unit tests (TOP-3).** One paper screen for every timed or untimed
   sitting: move between questions freely, no marks or solutions until it is handed in, then the
   mark, each question's solution and the time spent on it. A unit test draws two to four questions
@@ -867,7 +870,7 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [x] ~~**LRN-4:** exam dates per subject.~~ Dropped 28 September 2026. School exams follow the
   topics taught, so the dates are not known ahead, and a countdown to a guessed date would
   mislead. The field and the Home countdown were taken out; LRN-3 keeps subject order.
-- [ ] **LRN-6:** target grade per subject. There is a database column only.
+- [x] **LRN-6:** target grade per subject, with the working-at grade beside it (section 12, item 2).
 - [x] **QZ-3:** spaced recap quiz of 5–10 questions across subjects, started with one tap.
   The daily recap (`/recap`, on Home's Today plan), 6 October 2026.
 - [x] **QZ-4:** wrong-answer bank. Redo my mistakes (`/mistakes`, and a card on Home) asks up to 15

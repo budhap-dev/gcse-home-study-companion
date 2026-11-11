@@ -14,6 +14,7 @@ import { MAP_LEVEL_LABEL, countLevels, isSecure, nextRung, square, unitGroups, t
 import { MasteryLadder, SQUARES_GRID, TopicSquare } from '../../components/map/MapParts.tsx'
 import { useWide } from '../../components/useWide.ts'
 import { SheetsIcon } from '../../components/icons.tsx'
+import { GradePanel } from '../../components/GradePanel.tsx'
 
 /**
  * A year's note, relative to the student's own year (UXI-10). These were fixed for a Year
@@ -52,6 +53,7 @@ export function TopicMap() {
         <Link to="/subjects" className="-my-1 inline-block py-1 underline">Subjects</Link> <span aria-hidden>/</span> {subject.name}
       </p>
       <SubjectHeader subject={subject} squares={squares} />
+      <GradePanel subjectId={subject.id} topics={written} progress={progress} />
 
       <div role="group" aria-label="View" className="flex w-fit gap-1 rounded-xl bg-panel p-1">
         {(['map', 'list'] as const).map((v) => (
