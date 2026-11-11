@@ -1,6 +1,7 @@
 import type { TopicSummary as Topic } from '../content/index.ts'
 import type { AssignedTask } from './assignments.ts'
-import { recapDoneToday, recapItems, RECAP_SIZE } from './recap.ts'
+import { recapDoneToday, recapItems } from './recap.ts'
+import { dueQuestions } from './spaced.ts'
 import { recommend } from './recommend.ts'
 import { attemptName, evidenceFor, isoDate, type ProgressState } from './store.ts'
 
@@ -47,7 +48,13 @@ export function todayPlan(topics: Topic[], state: ProgressState, assigned: Assig
   const recap = faded || recapDoneToday(state, isoDate(now)) ? [] : recapItems(topics, state, now)
   const spread = new Set(recap.map((i) => i.topicId)).size
   if (faded) add({ label: 'Recap', subject: faded.subjectName, title: faded.title, topicTitle: faded.topic.title, reason: faded.reason, minutes: faded.minutes, to: faded.to })
-  else if (recap.length) add({ label: 'Recap', title: 'Daily recap', reason: `${recap.length} questions from ${spread} topics you have studied, a new mix each day.`, minutes: RECAP_SIZE, to: '/recap' })
+  else if (recap.length) {
+    const due = dueQuestions(topics, state, now).length
+    const reason = due > 0
+      ? `${due >= recap.length ? `${recap.length} questions` : `${due} of its ${recap.length} questions`} due for review, from ${spread} ${spread === 1 ? 'topic' : 'topics'}: asked again just before they slip.`
+      : `${recap.length} questions from ${spread} topics you have studied, a new mix each day.`
+    add({ label: 'Recap', title: 'Daily recap', reason, minutes: recap.length, to: '/recap' })
+  }
   else if (mistakes > 0) add({ label: 'Recap', title: 'Redo my mistakes', reason: `${mistakes} question${mistakes === 1 ? '' : 's'} you got wrong, newest first.`, minutes: Math.max(5, Math.round(mistakes * 1.5)), to: '/mistakes' })
 
   for (const t of [next, ...alternatives]) {

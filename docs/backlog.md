@@ -829,11 +829,15 @@ One PR per box, ticked in the PR that finishes it.
   pack, in each year and for all years, has enough for a full set. Full worked solutions and mark
   schemes after hand-in; timed or not. Shipped in v10.115.0: a "Grade 9 set" button beside each
   unit test, `grade9Items` in `content/paper.ts`, recorded per topic as a review.
-- [ ] **6. Skill mastery and spaced review (TRK-2, TRK-3).** Each question answered gets its next
+- [x] **6. Skill mastery and spaced review (TRK-2, TRK-3).** Each question answered gets its next
   review date at growing intervals (1, 3, 7, 16, 35, 80 days; a wrong answer starts it again). The
   daily recap asks what is due first, across subjects, then tops up by topic need as today. Home
   says how many are due; each topic page lists its weakest skills, newer answers counting more.
   Worked out from the attempts already stored, so the event log (TRK-1) is not needed first.
+  Shipped in v10.116.0 (`progress/spaced.ts`): right twice on one day counts as one recall, part
+  marks drop a box, and the most overdue for its gap come first; the recap grows from five to ten
+  when more are due and tops up by need when fewer are. A skill is listed as weak below 70% of its
+  marks, with answers halving in weight every 14 days, and links to the lesson step that checks it.
 
 ## 3. Product features (not planned)
 

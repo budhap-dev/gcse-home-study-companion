@@ -48,7 +48,8 @@ describe('the daily recap', () => {
   it("asks first a question the student last got wrong, then one they have not met", () => {
     const qs = physics.questions.filter((q) => q.type !== 'extended')
     const wrong = qs[3]!.id
-    const state: ProgressState = { ...twoTopics, attempts: [quiz(physics.id, '2026-09-10T11:00:00Z', [result(qs[0]!.id, true), result(wrong, false)])] }
+    // Right yesterday, so not due again yet (spaced.ts); wrong weeks ago, so due and first.
+    const state: ProgressState = { ...twoTopics, attempts: [quiz(physics.id, '2026-09-10T11:00:00Z', [result(wrong, false)]), quiz(physics.id, '2026-10-05T11:00:00Z', [result(qs[0]!.id, true)])] }
     const mine = recapItems(TOPICS, state, now).filter((i) => i.topicId === physics.id).map((i) => i.questionId)
     expect(mine[0]).toBe(wrong)
     expect(mine).not.toContain(qs[0]!.id)

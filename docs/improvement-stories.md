@@ -708,7 +708,7 @@ devices never overwrite each other and reports are queries.
 
 ### TRK-2 · Mastery per skill
 
-**Effort:** M · **Priority:** Next · **Depends on:** TRK-1
+**Effort:** M · **Priority:** Next · **Depends on:** TRK-1 · **Status:** done (11 November 2026), from the stored attempts; TRK-1 not needed
 
 As a student, I want to see which skills inside a topic are weak so that I practise the right
 thing.
@@ -720,7 +720,7 @@ thing.
 
 ### TRK-3 · Spaced review
 
-**Effort:** M · **Priority:** Next · **Finishes:** QZ-3 · **Depends on:** TRK-2
+**Effort:** M · **Priority:** Next · **Finishes:** QZ-3 · **Depends on:** TRK-2 · **Status:** done (11 November 2026), from the stored attempts; TRK-1 not needed
 
 As a student, I want a short daily recap of what is due so that I do not forget old topics.
 
