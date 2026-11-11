@@ -2,7 +2,7 @@ import { getSubject, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/share
 import type { Subject, SyllabusBlock } from '@study/shared'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Link, useParams, useSearchParams } from 'react-router'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { SpecNumber } from '../../components/SpecNumber.tsx'
 import { topicsForSubject, yearsForSubject } from '../../content/index.ts'
@@ -15,6 +15,8 @@ import { MasteryLadder, SQUARES_GRID, TopicSquare } from '../../components/map/M
 import { useWide } from '../../components/useWide.ts'
 import { SheetsIcon } from '../../components/icons.tsx'
 import { GradePanel } from '../../components/GradePanel.tsx'
+import { unitTestPath } from '../../content/paper.ts'
+import { newSheetCode } from '../../content/sheetCode.ts'
 
 /**
  * A year's note, relative to the student's own year (UXI-10). These were fixed for a Year
@@ -210,12 +212,29 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
                     onPick={() => { setPicked(s.topic.id); setSheet(true) }} />
                 ))}
               </div>
+              {g.id !== 'other' && <UnitPractice subjectId={subject.id} unitId={g.id} year={year === 'all' ? undefined : year} count={g.squares.length} />}
             </section>
           ))}
         </div>
       </section>
 
       {pickedSquare && <TopicPanel key={pickedSquare.id} square={square(pickedSquare, progress)} progress={progress} open={sheet} onClose={() => setSheet(false)} />}
+    </div>
+  )
+}
+
+/**
+ * A unit's papers, under its squares: a unit test of the topics the card shows, so the year
+ * tabs choose between a Year 10 test and the whole unit. Each press makes a new paper.
+ */
+function UnitPractice({ subjectId, unitId, year, count }: { subjectId: string; unitId: string; year?: number; count: number }) {
+  const navigate = useNavigate()
+  return (
+    <div className="flex flex-wrap items-center gap-2 border-t border-rule pt-2.5">
+      <button type="button" onClick={() => navigate(unitTestPath(subjectId, unitId, newSheetCode(), year))}
+        className="press min-h-10 rounded-lg border border-rule bg-surface px-3 text-sm font-bold accent-ink">
+        Unit test <span className="font-normal text-ink-2">· {count} {count === 1 ? 'topic' : 'topics'}</span>
+      </button>
     </div>
   )
 }

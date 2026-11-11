@@ -71,7 +71,7 @@ export function pickItems(spec: MixedSpec, summaries: TopicSummary[]): SessionIt
 export interface MixedQuestion { item: SessionItem; question: Question; generated?: Generated }
 
 /** The questions as the sheet shows them: new numbers wherever a generator exists. */
-export function sheetFor(spec: MixedSpec, items: SessionItem[], topics: Map<string, Topic>): MixedQuestion[] {
+export function sheetFor(spec: Pick<MixedSpec, 'subjectId' | 'code'>, items: SessionItem[], topics: Map<string, Topic>): MixedQuestion[] {
   const fresh = new Map<string, MixedQuestion>()
   for (const topicId of new Set(items.map((m) => m.topicId))) {
     const t = topics.get(topicId)

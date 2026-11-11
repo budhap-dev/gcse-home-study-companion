@@ -54,5 +54,7 @@ export function navFor(role: 'parent' | 'student' | undefined): NavItem[] {
  */
 export function isFocusRoute(pathname: string): boolean {
   if (pathname === '/mistakes' || pathname === '/recap') return true
+  // A paper too: its clock sits at the top of the screen once the band has stepped aside.
+  if (/^\/subjects\/[^/]+\/units\/[^/]+\/(test|grade-9)\/?$/.test(pathname)) return true
   return /^\/subjects\/[^/]+\/topics\/[^/]+\/(lesson|quiz|flashcards|worksheet\/[^/]+)\/?$/.test(pathname)
 }

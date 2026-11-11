@@ -20,6 +20,8 @@ export interface QuestionResult {
   answer?: string
   /** The marker rejected a typed answer and the student counted it as right. */
   claimed?: boolean
+  /** Marked by the student against the criteria: an extended answer written on a paper. */
+  self?: boolean
 }
 
 export interface AttemptRecord {
@@ -30,8 +32,14 @@ export interface AttemptRecord {
    * topic's status.
    */
   kind: 'quiz' | 'worksheet' | 'review'
-  /** Which kind of review: absent for Redo my mistakes, which came first. A mixed worksheet is one too (WKS-4). */
-  from?: 'recap' | 'mixed'
+  /**
+   * Which kind of review: absent for Redo my mistakes, which came first. A mixed worksheet is
+   * one too (WKS-4), and so are a unit test (TOP-3) and a grade 9 set (WKP-5): each counts as a
+   * visit to its topics without replacing their quiz in the status rule.
+   */
+  from?: 'recap' | 'mixed' | 'unit-test' | 'grade-9'
+  /** Sat against the clock (WKP-4), and how long it took, in whole seconds. */
+  timed?: { allowedSeconds: number; usedSeconds: number }
   level?: WorksheetLevel
   marksScored: number
   marksAvailable: number
@@ -51,6 +59,10 @@ export interface AttemptRecord {
   seed?: string
 }
 
+const REVIEW_NAME: Record<NonNullable<AttemptRecord['from']> | 'redo', string> = {
+  redo: 'Redo my mistakes', recap: 'Daily recap', mixed: 'Mixed worksheet', 'unit-test': 'Unit test', 'grade-9': 'Grade 9 set',
+}
+
 /**
  * What an attempt was, in words: "Quiz", "Core worksheet", "Redo my mistakes". A redo
  * session has no level, and a worksheet saved by an old build may lack one too, so the
@@ -58,7 +70,7 @@ export interface AttemptRecord {
  */
 export function attemptName(a: Pick<AttemptRecord, 'kind' | 'level' | 'from'>): string {
   if (a.kind === 'quiz') return 'Quiz'
-  if (a.kind === 'review') return a.from === 'recap' ? 'Daily recap' : a.from === 'mixed' ? 'Mixed worksheet' : 'Redo my mistakes'
+  if (a.kind === 'review') return REVIEW_NAME[a.from ?? 'redo']
   return a.level ? `${a.level[0]!.toUpperCase()}${a.level.slice(1)} worksheet` : 'Worksheet'
 }
 

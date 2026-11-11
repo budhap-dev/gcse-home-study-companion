@@ -27,6 +27,7 @@ const Flashcards = screen(study, 'Flashcards')
 const CheatSheet = screen(study, 'CheatSheet')
 const Mistakes = screen(study, 'Mistakes')
 const Recap = screen(study, 'Recap')
+const UnitTest = screen(study, 'UnitTest')
 const Glossary = screen(lookup, 'Glossary')
 const Search = screen(lookup, 'Search')
 const Resources = screen(reference, 'Resources')
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
       { path: 'subjects/:subjectId/make-worksheet', element: <SubjectTheme><MakeWorksheet /></SubjectTheme> },
       { path: 'subjects/:subjectId/mixed', element: <SubjectTheme><MixedWorksheet /></SubjectTheme> },
       { path: 'subjects/:subjectId/mixed/print', element: <SubjectTheme><MixedPrint /></SubjectTheme> },
+      { path: 'subjects/:subjectId/units/:unitId/test', element: <SubjectTheme><UnitTest /></SubjectTheme> },
       { path: 'subjects/:subjectId/exam-technique', element: <SubjectTheme><ExamTechnique /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId', element: <SubjectTheme><Topic /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/why', element: <SubjectTheme><WhyItExists /></SubjectTheme> },

@@ -804,13 +804,17 @@ One PR per box, ticked in the PR that finishes it.
   each question in the last 12 weeks, at least 20 of them; a band with under five answers is read
   from the band above it; 8 to 9 needs 70% of grade 8–9 marks and 80% of 6–7, down to 3 to 4. The
   target is kept per subject with the time it was set, so two devices keep the later choice.
-- [ ] **3. Exam-style papers and unit tests (TOP-3).** One paper screen for every timed or untimed
+- [x] **3. Exam-style papers and unit tests (TOP-3).** One paper screen for every timed or untimed
   sitting: move between questions freely, no marks or solutions until it is handed in, then the
   mark, each question's solution and the time spent on it. A unit test draws two to four questions
   from each topic in a unit. It is recorded per topic like a mixed worksheet: it counts as a visit
   (so it stops a topic fading), sends wrong answers to Redo my mistakes, and shows on the parent's
   page, but it does not replace a topic's quiz in the status rule. That differs from the story,
   which asked it to feed status: two to four questions are too few to overrule a full quiz.
+  Shipped in v10.113.0: `components/paper/PaperSession.tsx`, `content/paper.ts`, and a Unit test
+  button under each unit card on the map, covering the topics the card shows (so the year tabs
+  choose a Year 10 test or the whole unit). Two to four questions a topic, one each past twelve
+  topics; every card in the pack makes a test of 4 to 30 questions, easier bands first.
 - [ ] **4. Timed worksheets (WKP-4, WKS-5).** Any topic worksheet can be sat as a timed paper, at
   the subject's own exam pace (its written papers' minutes over their marks, from the exam guide:
   about 1.1 minutes a mark in Maths, 1.25 in Computer Science). Extended answers are written during
