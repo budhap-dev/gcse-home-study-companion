@@ -815,10 +815,14 @@ One PR per box, ticked in the PR that finishes it.
   button under each unit card on the map, covering the topics the card shows (so the year tabs
   choose a Year 10 test or the whole unit). Two to four questions a topic, one each past twelve
   topics; every card in the pack makes a test of 4 to 30 questions, easier bands first.
-- [ ] **4. Timed worksheets (WKP-4, WKS-5).** Any topic worksheet can be sat as a timed paper, at
+- [x] **4. Timed worksheets (WKP-4, WKS-5).** Any topic worksheet can be sat as a timed paper, at
   the subject's own exam pace (its written papers' minutes over their marks, from the exam guide:
   about 1.1 minutes a mark in Maths, 1.25 in Computer Science). Extended answers are written during
-  the paper and marked against the criteria after it.
+  the paper and marked against the criteria after it. Shipped in v10.114.0: a "Timed" button on
+  each worksheet's start screen opens `worksheet/:level/timed`; it records as that worksheet, so
+  it moves the topic's status as the untimed sheet does, with the time allowed and used. Method
+  marks for a wrong typed answer are given on the paper's result screen, by the worksheet's rule
+  (one short of the whole), for unit tests too.
 - [ ] **5. Grade 9 problem sets (WKP-5, WKS-6).** For each unit, eight grade 8 to 9 problems from
   the reviewed questions, the longest and most multi-step first, spread across the unit's topics; a
   new set on each press. Every unit in the pack has at least nine such questions. Full worked
@@ -881,7 +885,7 @@ listed below. Each box is the missing part of a story, not the whole story.
   questions got wrong, newest first; two right in a row clears one (WKP-1).
 - [x] **WKS-4:** mixed-topic worksheet. Make a worksheet (#381), section 5 item 8.
 - [ ] **WKS-6:** grade 9 problem set per unit.
-- [ ] **WKS-5:** timed paper mode.
+- [x] **WKS-5:** timed paper mode (section 12, item 4).
 - [ ] **PAR-3:** weekly email digest.
 - [x] **ADM-4:** report a mistake in content. A link under every lesson step and question sends
   a note to `content_reports`; parents review it on the Family page's Reports tab (OPS-3).

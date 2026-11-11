@@ -150,7 +150,7 @@ history and the mistakes list without moving its status.
 
 ### WKP-4 · Timed paper mode
 
-**Effort:** M · **Priority:** Later · **Finishes:** WKS-5
+**Effort:** M · **Priority:** Later · **Finishes:** WKS-5 · **Status:** done (11 November 2026)
 
 As a student, I want to sit a worksheet against the clock so that I learn the exam's pace.
 

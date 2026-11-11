@@ -39,6 +39,8 @@ export interface PaperState {
   timeUp?: boolean
   /** The criteria the student ticks for each extended answer, after handing in. */
   ticks: Record<string, boolean[]>
+  /** Method marks the student awards a wrong typed answer from its working, as on a worksheet. */
+  method?: Record<string, number>
   /** Set once the marks are recorded, so the result outlives a reload. */
   finishedAt?: string
 }
@@ -86,10 +88,24 @@ export function paperAnswers(s: PaperState, questions: PaperQuestion[]): Session
       const result = selfMark(pq.question, s.ticks[k])
       out[k] = { answer: result.marksScored, result, self: true }
     } else if (s.answers[k]) {
-      out[k] = s.answers[k]!
+      const a = s.answers[k]!
+      const m = s.method?.[k]
+      // Method marks only add to what the marker gave, and never make a wrong answer whole.
+      out[k] = m !== undefined && !a.result.correct && m > a.result.marksScored
+        ? { ...a, result: { ...a.result, marksScored: Math.min(m, methodTotal(pq.question)) }, methodMarked: true }
+        : a
     }
   }
   return out
+}
+
+/**
+ * The method marks a question offers: its mark scheme's lines other than accuracy, capped one
+ * below full marks, so a wrong final answer can never be self-awarded every mark. The same rule
+ * as the worksheet's.
+ */
+export function methodTotal(q: Question): number {
+  return Math.max(0, Math.min(q.markScheme.filter((l) => !/^A\d/.test(l.code)).reduce((n, l) => n + l.marks, 0), q.marks - 1))
 }
 
 /** Whether question `k` has an answer in: typed or chosen, or written (or written on paper). */
@@ -340,8 +356,11 @@ function PaperResult({ state: s, questions, kicker, title, subjectId, showTopic,
                 ) : (
                   <>
                     <p className="text-sm"><span className="font-bold">Your answer:</span> {s.answers[k] ? <RichText source={describeAnswer(q, s.answers[k]!.answer) ?? '—'} inline /> : 'none given'}</p>
-                    <Feedback question={q} result={a?.result ?? { correct: false, marksScored: 0, marksAvailable: q.marks }}
+                    <Feedback question={q} result={s.answers[k]?.result ?? { correct: false, marksScored: 0, marksAvailable: q.marks }}
                       onClaim={s.answers[k] ? () => onChange({ ...s, answers: { ...s.answers, [k]: { ...s.answers[k]!, result: claimAnswer(s.answers[k]!.result) } } }) : undefined} />
+                    {s.answers[k] && !s.answers[k]!.result.correct && methodTotal(q) > 0 && (
+                      <MethodMarks most={methodTotal(q)} given={s.method?.[k]} onGive={(n) => onChange({ ...s, method: { ...s.method, [k]: n } })} />
+                    )}
                   </>
                 )}
                 <ReportMistake item={{ subjectId, topicId: pq.item.topicId, itemKind: 'question', itemId: q.id, seenIn: 'worksheet', ...(pq.generated ? { generated: { generatorId: pq.generated.generatorId, seed: pq.generated.seed } } : {}) }} />
@@ -356,6 +375,21 @@ function PaperResult({ state: s, questions, kicker, title, subjectId, showTopic,
         <button type="button" onClick={onRestart} className={`${BUTTON} border border-rule bg-surface`}>Sit it again</button>
       </div>
     </article>
+  )
+}
+
+/** The method marks a wrong answer's working earned, chosen by the student against the scheme. */
+function MethodMarks({ most, given, onGive }: { most: number; given?: number; onGive: (n: number) => void }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <p className="text-sm font-bold">Method marks your working earned, by the mark scheme in the solution:</p>
+      <div role="radiogroup" aria-label="Method marks" className="flex flex-wrap gap-1.5">
+        {Array.from({ length: most + 1 }, (_, n) => (
+          <button key={n} type="button" role="radio" aria-checked={(given ?? 0) === n} onClick={() => onGive(n)}
+            className={`h-10 min-w-10 rounded-lg px-3 text-sm font-bold ${(given ?? 0) === n ? 'bg-ink text-surface' : 'border border-rule bg-surface'}`}>{n}</button>
+        ))}
+      </div>
+    </div>
   )
 }
 
