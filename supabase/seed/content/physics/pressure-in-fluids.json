@@ -661,6 +661,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "diver",
+      "body": "A diver is 12 m below the surface of fresh water, of density 1000 kg/m³. Atmospheric pressure is 101 000 Pa. ($g = 9.8$ N/kg)"
+    },
+    {
+      "id": "block-water",
+      "body": "A block of mass 0.50 kg and volume 0.00080 m³ is held completely under water, of density 1000 kg/m³. ($g = 9.8$ N/kg)"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1313,6 +1323,253 @@
       "tolerance": 0.005,
       "unitsRequired": false,
       "units": "m³"
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the pressure due to the water alone at the diver’s depth.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "pressure in a liquid",
+      "step": "s4",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$p = h\\rho g = 12 \\times 1000 \\times 9.8 = 117\\,600$ Pa.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12 \\times 1000 \\times 9.8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "117 600"
+        }
+      ],
+      "discriminators": [],
+      "context": "diver",
+      "type": "numeric",
+      "answer": 117600,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Pa"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the total pressure on the diver.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "adding atmospheric pressure",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Water: $12 \\times 1000 \\times 9.8 = 117\\,600$ Pa. Add the atmosphere: $117\\,600 + 101\\,000 = 218\\,600$ Pa.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "218 600"
+        }
+      ],
+      "discriminators": [],
+      "context": "diver",
+      "type": "numeric",
+      "answer": 218600,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Pa"
+    },
+    {
+      "id": "q21",
+      "prompt": "The window of the diver’s mask has an area of 0.020 m². Calculate the force on it from the water and air outside.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "force from pressure",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Total pressure $= 12 \\times 1000 \\times 9.8 + 101\\,000 = 218\\,600$ Pa. $F = pA = 218\\,600 \\times 0.020 = 4372$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total pressure"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4372"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "diver",
+      "type": "numeric",
+      "answer": 4372,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the weight of the block.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "weight",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$W = mg = 0.50 \\times 9.8 = 4.9$ N.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4.9"
+        }
+      ],
+      "discriminators": [],
+      "context": "block-water",
+      "type": "numeric",
+      "answer": 4.9,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the upthrust on the block.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "upthrust equals the weight of fluid displaced",
+      "step": "s9",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Upthrust = weight of the water pushed aside. That water has volume 0.00080 m³ and mass $0.00080 \\times 1000 = 0.80$ kg, so its weight is $0.80 \\times 9.8 = 7.84$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "mass of water 0.80 kg"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7.84"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "block-water",
+      "type": "numeric",
+      "answer": 7.84,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q24",
+      "prompt": "The block is let go. Calculate the resultant force on it at that moment.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "resultant of weight and upthrust",
+      "step": "s9",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Upthrust $= 0.00080 \\times 1000 \\times 9.8 = 7.84$ N up, weight $= 0.50 \\times 9.8 = 4.9$ N down. Resultant $= 7.84 - 4.9 = 2.94$ N upwards, so it rises.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both forces"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.94"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "block-water",
+      "type": "numeric",
+      "answer": 2.94,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q25",
+      "prompt": "A person of weight 600 N stands on one foot, of area 0.015 m². Wearing a snowshoe, the area is 0.25 m². How many times smaller is the pressure on the snow with the snowshoe? Give your answer to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "pressure and area",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Without: $600 \\div 0.015 = 40\\,000$ Pa. With: $600 \\div 0.25 = 2400$ Pa. $40\\,000 \\div 2400 = 16.7$ times smaller (the ratio of the areas, $0.25 \\div 0.015$).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both pressures"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "ratio"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16.7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 16.7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "Sea water has a density of 1030 kg/m³. At what depth is the pressure due to the sea water 300 000 Pa? Give your answer to 3 significant figures. ($g = 9.8$ N/kg)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "depth from pressure",
+      "step": "s4",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$p = h\\rho g$, so $h = \\dfrac{p}{\\rho g} = \\dfrac{300\\,000}{1030 \\times 9.8} = 29.72\\ldots$, which is 29.7 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$h = p \\div \\rho g$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$300\\,000 \\div 10\\,094$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "29.7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 29.7,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
     }
   ],
   "worksheets": {
@@ -1348,9 +1605,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 40
+      "suggestedMinutes": 58
     }
   },
   "examTechnique": {
@@ -1382,7 +1647,9 @@
       "q13",
       "q14",
       "q15",
-      "q18"
+      "q18",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

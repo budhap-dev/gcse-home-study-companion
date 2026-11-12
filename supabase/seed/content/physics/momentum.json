@@ -717,6 +717,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "trolleys-stick",
+      "body": "Trolley A, of mass 2.0 kg, moves at 3.0 m/s and collides with trolley B, of mass 1.0 kg, which is at rest. They stick together."
+    },
+    {
+      "id": "rifle-recoil",
+      "body": "A rifle of mass 4.0 kg fires a bullet of mass 0.010 kg at 400 m/s. Before firing, both are at rest."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1369,6 +1379,257 @@
         }
       ],
       "modelAnswer": "When a car stops suddenly, the passenger keeps moving with momentum $m v$ until something stops them. Their momentum has to change to zero, and that change in momentum is fixed by their mass and speed. The force needed is $F = \\Delta p / \\Delta t$, so the only way to make the force smaller is to make the change take longer. A seat belt stretches a little, so the passenger is slowed over a longer time than they would be by hitting the dashboard. An air bag inflates and then deflates as the passenger presses into it, which increases the stopping time further and spreads the force over a larger area of the body. A smaller force means less injury."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the momentum of trolley A before the collision.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "momentum",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$p = mv = 2.0 \\times 3.0 = 6.0$ kg m/s.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "context": "trolleys-stick",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kg m/s"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the velocity of the trolleys just after the collision.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "conservation of momentum",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Momentum is conserved: $6.0 = (2.0 + 1.0) \\times v$, so $v = 2.0$ m/s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$6.0 = 3.0v$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "context": "trolleys-stick",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the kinetic energy transferred to other stores in the collision.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "momentum conserved, kinetic energy not",
+      "step": "s9",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Before: $\\dfrac{1}{2} \\times 2.0 \\times 3.0^2 = 9.0$ J. After, the 3.0 kg move at $6.0 \\div 3.0 = 2.0$ m/s: $\\dfrac{1}{2} \\times 3.0 \\times 2.0^2 = 6.0$ J. 3.0 J goes to other stores, mostly heating and sound. Momentum is conserved; kinetic energy need not be.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "9.0 J before"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6.0 J after"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "trolleys-stick",
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the momentum of the bullet.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "momentum",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.010 \\times 400 = 4.0$ kg m/s.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "context": "rifle-recoil",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kg m/s"
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the speed at which the rifle recoils.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "recoil",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Total momentum was zero before, so it is zero after: the rifle has $-4.0$ kg m/s. $4.0 = 4.0 \\times v$, so the rifle recoils at 1.0 m/s, backwards.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "momenta equal and opposite"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "context": "rifle-recoil",
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q24",
+      "prompt": "The shooter’s shoulder brings the recoiling rifle to rest in 0.050 s. Calculate the average force on the shoulder.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "force as rate of change of momentum",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The rifle has momentum $0.010 \\times 400 = 4.0$ kg m/s (equal and opposite to the bullet’s). Force = change in momentum ÷ time $= 4.0 \\div 0.050 = 80$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\Delta p = 4.0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "80"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "rifle-recoil",
+      "type": "numeric",
+      "answer": 80,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q25",
+      "prompt": "A ball of mass 0.15 kg hits a wall at 20 m/s and bounces straight back at 15 m/s. It is in contact with the wall for 0.020 s. Calculate the average force on the ball.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "change of momentum with a change of direction",
+      "step": "s9",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Take the direction towards the wall as positive. Before: $0.15 \\times 20 = 3.0$ kg m/s. After: $0.15 \\times (-15) = -2.25$ kg m/s. Change $= 5.25$ kg m/s, and force $= 5.25 \\div 0.020 = 262.5$ N. Subtracting the speeds, $20 - 15$, ignores the change of direction.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "change of momentum 5.25"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\div 0.020$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "262.5"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 262.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q26",
+      "prompt": "A car of mass 1200 kg travelling at 15 m/s stops in a crash. Its crumple zone makes the stop last 0.60 s instead of 0.10 s. Calculate the average force on the car with the crumple zone.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "why safety features work",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Change of momentum $= 1200 \\times 15 = 18\\,000$ kg m/s either way. Force $= 18\\,000 \\div 0.60 = 30\\,000$ N, a sixth of the $18\\,000 \\div 0.10 = 180\\,000$ N without it.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "18 000 kg m/s"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\div 0.60$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30 000"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 30000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
     }
   ],
   "worksheets": {
@@ -1404,9 +1665,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 40
+      "suggestedMinutes": 59
     }
   },
   "examTechnique": {
@@ -1438,7 +1707,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

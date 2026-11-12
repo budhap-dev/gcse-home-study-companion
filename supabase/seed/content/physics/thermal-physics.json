@@ -1110,6 +1110,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "shc-rp",
+      "body": "In the required practical on specific heat capacity, a 1.0 kg aluminium block is heated by a 50 W heater for 300 s. Its temperature rises from 20.0 °C to 34.5 °C."
+    },
+    {
+      "id": "melt-ice",
+      "body": "0.40 kg of ice at 0 °C is melted, and the water is then heated to 20 °C. The specific latent heat of fusion of ice is 334 000 J/kg and the specific heat capacity of water is 4200 J/kg °C."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1814,6 +1824,237 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the energy supplied by the heater.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "energy from power and time",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$E = Pt = 50 \\times 300 = 15\\,000$ J.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "15 000"
+        }
+      ],
+      "discriminators": [],
+      "context": "shc-rp",
+      "type": "numeric",
+      "answer": 15000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the specific heat capacity of aluminium from these results, to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "specific heat capacity from data",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Energy $= 50 \\times 300 = 15\\,000$ J; temperature rise $= 34.5 - 20.0 = 14.5$ °C. $c = \\dfrac{E}{m\\Delta\\theta} = \\dfrac{15\\,000}{1.0 \\times 14.5} = 1034$, which is 1030 J/kg °C.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\Delta\\theta = 14.5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$15\\,000 \\div 14.5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1030"
+        }
+      ],
+      "discriminators": [],
+      "context": "shc-rp",
+      "type": "numeric",
+      "answer": 1030,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J/kg°C"
+    },
+    {
+      "id": "q24",
+      "prompt": "The accepted value for aluminium is about 900 J/kg °C. Why is the student’s value higher?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "evaluating the practical",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Not all of the 15 000 J heats the block: some heats the surroundings. So the block warms less than it should, and dividing by a smaller temperature rise gives a larger $c$. Insulating the block reduces this.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "energy lost to the surroundings"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "shc-rp",
+      "type": "multiple-choice",
+      "options": [
+        "The heater gave out more than its rated 50 W",
+        "Some energy heated the surroundings, not the block",
+        "The thermometer read every temperature too high",
+        "Aluminium has a higher value when it is warm"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Calculate the energy needed to melt the ice.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "specific latent heat",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$E = mL = 0.40 \\times 334\\,000 = 133\\,600$ J. The temperature stays at 0 °C while it melts.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.40 \\times 334\\,000$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "133 600"
+        }
+      ],
+      "discriminators": [],
+      "context": "melt-ice",
+      "type": "numeric",
+      "answer": 133600,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q26",
+      "prompt": "Calculate the total energy needed to melt the ice and heat the water to 20 °C.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "two stages: latent heat then heating",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Melting: $0.40 \\times 334\\,000 = 133\\,600$ J. Heating: $mc\\Delta\\theta = 0.40 \\times 4200 \\times 20 = 33\\,600$ J. Total 167 200 J. Melting takes four times as much energy as the warming.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "133 600 J"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "33 600 J"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "167 200"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "melt-ice",
+      "type": "numeric",
+      "answer": 167200,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q27",
+      "prompt": "A 2.0 kW heater warms 4.0 kg of water from 15 °C to 65 °C. It is 80% efficient. Calculate how long this takes. (Specific heat capacity of water = 4200 J/kg °C)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "heating with an efficiency",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Energy into the water: $4.0 \\times 4200 \\times 50 = 840\\,000$ J. Useful power: $0.80 \\times 2000 = 1600$ W. Time $= 840\\,000 \\div 1600 = 525$ s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "840 000 J"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "useful power 1600 W"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "525"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 525,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "s"
+    },
+    {
+      "id": "q28",
+      "prompt": "1.2 kg of water at 100 °C is boiled away completely. The specific latent heat of vaporisation of water is 2 260 000 J/kg. Calculate the energy needed.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "specific latent heat of vaporisation",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$E = mL = 1.2 \\times 2\\,260\\,000 = 2\\,712\\,000$ J. The water is already at 100 °C, so no energy goes into raising its temperature.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$mL$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.2 \\times 2\\,260\\,000$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2 712 000"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 2712000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
     }
   ],
   "worksheets": {
@@ -1852,9 +2093,16 @@
         "q16",
         "q17",
         "q18",
-        "q21"
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 63
     }
   },
   "examTechnique": {
@@ -1888,7 +2136,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q27",
+      "q28"
     ],
     "sampleSize": 10
   },

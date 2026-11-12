@@ -856,6 +856,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "trolley-rp",
+      "body": "In the required practical on force and acceleration, a trolley on a level track is pulled by a falling hanger. To change the force, masses are moved from the trolley to the hanger, so the total mass being accelerated stays the same.\n\n| Force (N) | 0.2 | 0.4 | 0.6 | 0.8 |\n|---|---|---|---|---|\n| Acceleration (m/s²) | 0.24 | 0.51 | 0.74 | 1.01 |"
+    },
+    {
+      "id": "car-forces",
+      "body": "A car of mass 1500 kg has a driving force of 4200 N. The resistive forces on it total 1200 N."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1578,6 +1588,257 @@
       "tolerance": 0,
       "unitsRequired": false,
       "units": "m/s²"
+    },
+    {
+      "id": "q20",
+      "prompt": "Why are masses moved from the trolley to the hanger, rather than new masses added to the hanger?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "controlling the mass in the practical",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The falling hanger and the trolley accelerate together, so the mass being accelerated is both. Moving masses keeps that total the same, so only the force changes. Adding new masses would change the force and the mass at once.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "to keep the total mass the same"
+        }
+      ],
+      "discriminators": [],
+      "context": "trolley-rp",
+      "type": "multiple-choice",
+      "options": [
+        "To make the trolley lighter so it goes faster",
+        "To keep the total mass being accelerated the same",
+        "To reduce friction on the track",
+        "To make the hanger fall straight down"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Use the result for a force of 0.6 N to calculate the total mass being accelerated, to 2 significant figures.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "mass from F = ma",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$m = \\dfrac{F}{a} = \\dfrac{0.6}{0.74} = 0.81$ kg.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.6 \\div 0.74$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.81"
+        }
+      ],
+      "discriminators": [],
+      "context": "trolley-rp",
+      "type": "numeric",
+      "answer": 0.81,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kg"
+    },
+    {
+      "id": "q22",
+      "prompt": "What do the results show about acceleration and force?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading the practical’s pattern",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Doubling the force from 0.2 N to 0.4 N roughly doubles the acceleration (0.24 to 0.51), and 0.4 N to 0.8 N doubles it again (0.51 to 1.01). The acceleration is (very nearly) directly proportional to the force, as $F = ma$ predicts with $m$ fixed. Small differences come from friction and measurement.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "acceleration is directly proportional to force"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "trolley-rp",
+      "type": "multiple-choice",
+      "options": [
+        "Acceleration is directly proportional to force",
+        "Acceleration is inversely proportional to force",
+        "Acceleration increases, but not in proportion",
+        "Acceleration is the same whatever the force"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the resultant force on the car.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "resultant force",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4200 - 1200 = 3000$ N forwards.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3000"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-forces",
+      "type": "numeric",
+      "answer": 3000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q24",
+      "prompt": "Calculate the acceleration of the car.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Newton’s second law",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$a = \\dfrac{F}{m} = \\dfrac{4200 - 1200}{1500} = 2.0$ m/s². Using the driving force alone gives 2.8.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "resultant ÷ mass"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-forces",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s²"
+    },
+    {
+      "id": "q25",
+      "prompt": "The car now tows a trailer of mass 500 kg. The driving force stays 4200 N and the total resistive force becomes 1800 N. Calculate the acceleration.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "resultant force on a combined mass",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Resultant $= 4200 - 1800 = 2400$ N on a total mass of $1500 + 500 = 2000$ kg: $a = 2400 \\div 2000 = 1.2$ m/s².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2400 N and 2000 kg"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "car-forces",
+      "type": "numeric",
+      "answer": 1.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s²"
+    },
+    {
+      "id": "q26",
+      "prompt": "A lift of mass 800 kg accelerates upwards at 1.5 m/s². Calculate the tension in the lift cable. ($g = 9.8$ N/kg)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "resultant force with weight",
+      "step": "s10",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Weight $= 800 \\times 9.8 = 7840$ N downwards. The resultant needed is $800 \\times 1.5 = 1200$ N upwards, so $T - 7840 = 1200$ and $T = 9040$ N. The cable must hold up the weight and provide the acceleration.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "weight 7840 N"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$T - 7840 = 1200$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9040"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 9040,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q27",
+      "prompt": "Two ice skaters stand still, facing each other. The 60 kg skater pushes the 40 kg skater, who accelerates at 1.5 m/s². Calculate the acceleration of the 60 kg skater.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Newton’s third law",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The force on the 40 kg skater is $40 \\times 1.5 = 60$ N. By Newton’s third law the 60 kg skater feels 60 N the other way: $a = 60 \\div 60 = 1.0$ m/s². Equal forces, unequal accelerations.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "60 N"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "equal and opposite force"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s²"
     }
   ],
   "worksheets": {
@@ -1614,9 +1875,17 @@
         "q16",
         "q17",
         "q18",
-        "q19"
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 61
     }
   },
   "examTechnique": {
@@ -1649,7 +1918,9 @@
       "q16",
       "q17",
       "q18",
-      "q19"
+      "q19",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },

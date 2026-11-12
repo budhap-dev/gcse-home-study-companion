@@ -584,6 +584,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "spring-rp",
+      "body": "In the required practical on force and extension, a student hangs weights from a spring and measures its length. The spring is 12.0 cm long with no load.\n\n| Load (N) | 0 | 1 | 2 | 3 | 4 | 5 |\n|---|---|---|---|---|---|---|\n| Length (cm) | 12.0 | 14.5 | 17.0 | 19.5 | 22.0 | 25.8 |"
+    },
+    {
+      "id": "spring-250",
+      "body": "A spring has a spring constant of 250 N/m and obeys Hooke’s law."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1183,6 +1193,289 @@
       "tolerance": 0.5,
       "units": "N/m",
       "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "prompt": "Calculate the extension of the spring with a load of 3 N.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "extension from length",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Extension = length − original length $= 19.5 - 12.0 = 7.5$ cm. The length itself is not the extension.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "7.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "spring-rp",
+      "type": "numeric",
+      "answer": 7.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q18",
+      "prompt": "Calculate the spring constant in N/m, using the results up to 4 N.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "spring constant from data",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Up to 4 N each newton adds 2.5 cm (extensions 2.5, 5.0, 7.5, 10.0 cm). $k = \\dfrac{F}{e} = \\dfrac{1}{0.025} = 40$ N/m, with the extension in metres.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$F \\div e$ with $e$ in m"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [],
+      "context": "spring-rp",
+      "type": "numeric",
+      "answer": 40,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N/m"
+    },
+    {
+      "id": "q19",
+      "prompt": "With 5 N the extension is 13.8 cm, not the 12.5 cm the pattern predicts. What does this show?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the limit of proportionality",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Up to 4 N the extension rises by 2.5 cm per newton: extension is proportional to force. At 5 N it jumps 3.8 cm, so the spring has gone past its limit of proportionality and no longer obeys Hooke’s law there.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "past the limit of proportionality"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "spring-rp",
+      "type": "multiple-choice",
+      "options": [
+        "The student read the ruler wrongly, so the result should be ignored",
+        "The spring has gone past its limit of proportionality",
+        "The spring constant has increased",
+        "The spring has stopped stretching"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the energy stored in the spring with a load of 4 N.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "elastic potential energy",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "From the table, 4 N gives an extension of $22.0 - 12.0 = 10.0$ cm $= 0.100$ m, and $k = 4 \\div 0.100 = 40$ N/m. $E = \\dfrac{1}{2}ke^2 = \\dfrac{1}{2} \\times 40 \\times 0.100^2 = 0.20$ J. Using the extension in cm gives 2000 J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$e = 0.100$ m"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "spring-rp",
+      "type": "numeric",
+      "answer": 0.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the force needed to stretch it by 6.0 cm.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Hooke’s law",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$F = ke = 250 \\times 0.060 = 15$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$250 \\times 0.060$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "context": "spring-250",
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the energy stored when it is stretched by 6.0 cm.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "elastic potential energy",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$E = \\dfrac{1}{2}ke^2 = \\dfrac{1}{2} \\times 250 \\times 0.060^2 = 0.45$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2} \\times 250 \\times 0.060^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.45"
+        }
+      ],
+      "discriminators": [],
+      "context": "spring-250",
+      "type": "numeric",
+      "answer": 0.45,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q23",
+      "prompt": "Two of these springs hang side by side and share a 30 N load equally. Calculate the extension of each, in cm.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "springs sharing a load",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each spring carries $30 \\div 2 = 15$ N. $e = \\dfrac{F}{k} = \\dfrac{15}{250} = 0.060$ m $= 6.0$ cm. One spring alone would stretch twice as far.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "15 N each"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "context": "spring-250",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q24",
+      "prompt": "A spring stores 0.50 J of energy when it is stretched by 5.0 cm. Calculate its spring constant.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "spring constant from stored energy",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$E = \\dfrac{1}{2}ke^2$, so $k = \\dfrac{2E}{e^2} = \\dfrac{2 \\times 0.50}{0.050^2} = \\dfrac{1.0}{0.0025} = 400$ N/m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "rearranges $E = \\dfrac{1}{2}ke^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$e = 0.050$ m"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "400"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 400,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N/m"
+    },
+    {
+      "id": "q25",
+      "prompt": "A 0.30 kg mass hangs from a spring with a spring constant of 49 N/m. Calculate the extension in cm. ($g = 9.8$ N/kg)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "weight and Hooke’s law",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Weight $= mg = 0.30 \\times 9.8 = 2.94$ N. $e = \\dfrac{F}{k} = \\dfrac{2.94}{49} = 0.060$ m $= 6.0$ cm. Using the mass, 0.30, as the force gives 0.6 cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "weight 2.94 N"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2.94 \\div 49$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
     }
   ],
   "worksheets": {
@@ -1216,9 +1509,18 @@
         "q14",
         "q12",
         "q15",
-        "q16"
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 36
+      "suggestedMinutes": 56
     }
   },
   "examTechnique": {
@@ -1247,7 +1549,9 @@
       "q12",
       "q13",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },
