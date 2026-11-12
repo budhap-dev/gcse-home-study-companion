@@ -995,6 +995,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "car-value-exp",
+      "body": "The value, £$V$, of a car $t$ years after it is bought new is $V = 18\\,000 \\times 0.8^t$."
+    },
+    {
+      "id": "cyclist-speed",
+      "body": "The table gives a cyclist’s speed, $v$ m/s, at times $t$ seconds after starting.\n\n| $t$ (s) | 0 | 2 | 4 | 6 | 8 |\n|---|---|---|---|---|---|\n| $v$ (m/s) | 0 | 3 | 5 | 6 | 6.5 |"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1600,6 +1610,272 @@
         }
       ],
       "modelAnswer": "For part a, the starting number is five and the multiplier is two, since the colony doubles each hour. So the formula is N equals five times two to the power t, where t is the number of hours. After three hours, two cubed is eight, so N equals five times eight, which is forty bacteria. For part b, the graph crosses the vertical axis at five, because at t equals zero, two to the power zero is one and five times one is five. That is the starting number, which is what the coefficient in front always represents. From there the curve rises, and it rises increasingly steeply: each hour it does not add a fixed amount but multiplies by two, so the steps get bigger and bigger. It is a smooth curve with no straight sections and no maximum, and it never comes back down. For part c, the student has treated the growth as though it were linear, adding the same amount each hour, and has multiplied the starting number by the number of hours. But doubling is multiplication repeated, not addition repeated, so the number of hours belongs in the power, not as a multiplier. The correct calculation is five times two to the power ten. Two to the power ten is one thousand and twenty four, so N equals five times one thousand and twenty four, which is five thousand one hundred and twenty. That is a hundred times the student's figure, which shows how quickly exponential growth outruns linear growth."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the value of the car after 2 years.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "evaluating an exponential model",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$18\\,000 \\times 0.8^2 = 18\\,000 \\times 0.64 = $ £11 520.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$18\\,000 \\times 0.8^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£11 520"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-value-exp",
+      "type": "numeric",
+      "answer": 11520,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q20",
+      "prompt": "After how many whole years is the car first worth less than £5000?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading an exponential model",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$18\\,000 \\times 0.8^5 = $ £5898.24 and $18\\,000 \\times 0.8^6 = $ £4718.59. So after 6 years.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "values at 5 and 6 years"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-value-exp",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "years"
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the average rate at which the car loses value over the first 3 years, in pounds per year.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "average rate of change as a chord gradient",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "New: £18 000. After 3 years: $18\\,000 \\times 0.8^3 = $ £9216. It loses £8784 in 3 years: $8784 \\div 3 = $ £2928 a year. That is the gradient of the chord from $t = 0$ to $t = 3$; the curve is steeper at the start and shallower later.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "£9216 after 3 years"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(18\\,000 - 9216) \\div 3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2928"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "car-value-exp",
+      "type": "numeric",
+      "answer": 2928,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the cyclist’s average acceleration over the first 4 seconds.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "average acceleration",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Speed rises from 0 to 5 m/s in 4 s: $5 \\div 4 = 1.25$ m/s².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5 \\div 4$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.25"
+        }
+      ],
+      "discriminators": [],
+      "context": "cyclist-speed",
+      "type": "numeric",
+      "answer": 1.25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s²"
+    },
+    {
+      "id": "q23",
+      "prompt": "Use four strips of equal width (trapezia) to estimate the distance travelled in the first 8 seconds.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "area under a curve by trapezia",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Strips 2 s wide. Areas: $\\dfrac{0 + 3}{2} \\times 2 = 3$, $\\dfrac{3 + 5}{2} \\times 2 = 8$, $\\dfrac{5 + 6}{2} \\times 2 = 11$, $\\dfrac{6 + 6.5}{2} \\times 2 = 12.5$. Total 34.5 m. The area under a speed–time graph is the distance.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "trapezium areas with width 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "four strips added"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "34.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "cyclist-speed",
+      "type": "numeric",
+      "answer": 34.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q24",
+      "prompt": "The cyclist’s speed rises quickly at first and then more slowly. Is the trapezium estimate of the distance too big or too small?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "judging an estimate from strips",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The speed curve bends downwards (its gradient falls), so it lies above the straight top of each trapezium. The trapezia leave out a sliver under the curve: the estimate is too small.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "too small: the curve is above the trapezia"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "cyclist-speed",
+      "type": "multiple-choice",
+      "options": [
+        "Too big, because the speed is increasing",
+        "Exactly right, because trapezia fit any curve",
+        "Too small, because the curve lies above the tops of the trapezia",
+        "Too big, because the curve lies below the tops of all four trapezia"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "The curve $y = 2 \\times 3^x$ passes through the point $(k, 162)$. Find $k$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "solving with an exponential",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2 \\times 3^k = 162$, so $3^k = 81 = 3^4$ and $k = 4$. Dividing 162 by 3 rather than 2 first is a common slip.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3^k = 81$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$81 = 3^4$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "The curve $y = ab^x$, with $b > 0$, passes through $(0, 5)$ and $(2, 45)$. Work out $y$ when $x = 3$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "finding an exponential from two points",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At $x = 0$, $b^0 = 1$, so $a = 5$. At $x = 2$: $5b^2 = 45$, $b^2 = 9$ and $b = 3$. When $x = 3$: $y = 5 \\times 3^3 = 135$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a = 5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$b = 3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "135"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 135,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "examTechnique": {
@@ -1648,9 +1924,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 66
     }
   },
   "quiz": {
@@ -1670,7 +1954,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

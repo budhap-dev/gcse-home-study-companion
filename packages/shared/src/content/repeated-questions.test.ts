@@ -18,9 +18,11 @@ const topics = jsonFiles(ROOT).map((f) => ({ file: f.split('/').pop()!, topic: T
  * items can share a generic stem like "Which is correct?" and still be entirely
  * different questions, so the options go into the key as well.
  */
-function key(q: { prompt: string; type?: string; options?: string[] }): string {
+function key(q: { prompt: string; type?: string; options?: string[]; stem?: { body: string } }): string {
   const norm = (s: string) => s.toLowerCase().replace(/[*_`$]/g, '').replace(/\s+/g, ' ').trim()
-  const stem = norm(q.prompt)
+  // A part of a multi-part question is read with its stem: "Solve the inequality." under two
+  // different inequalities is two questions.
+  const stem = norm(q.stem ? `${q.stem.body} ${q.prompt}` : q.prompt)
   return q.options ? `${stem} :: ${q.options.map(norm).join(' | ')}` : stem
 }
 

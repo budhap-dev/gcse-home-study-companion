@@ -978,6 +978,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "walk-run",
+      "body": "Sam walks and then runs along a path. The table shows how far Sam has gone at different times.\n\n| Time (s) | 0 | 60 | 120 | 180 | 240 |\n|---|---|---|---|---|---|\n| Distance (m) | 0 | 90 | 180 | 270 | 510 |"
+    },
+    {
+      "id": "car-vt",
+      "body": "A car starts from rest and accelerates steadily to 20 m/s in 8 seconds. It travels at 20 m/s for 12 seconds, then slows steadily to a stop in 5 seconds."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1573,6 +1583,259 @@
         }
       ],
       "modelAnswer": "**What the shape says.**\n\n- **Steep at the start**: the tea is cooling **quickly** — the biggest temperature drop happens in the first minute or two.\n- **Getting less steep**: the gradient is shrinking, so the tea is **still cooling but more slowly**. Note the distinction: the temperature is going down throughout; it is the *rate* that is falling.\n- **Flattening towards 50 °C**: the tea is approaching **room temperature**, and the rate of cooling approaches zero. It will not cool below the room.\n\n**Estimating the rate at 3 minutes.**\n\n1. Draw a **tangent** at the point where $t = 3$ — a ruled line that just touches the curve there, not a chord across it.\n2. Read **two points far apart** on the tangent, such as $(1, 68)$ and $(5, 44)$.\n3. Gradient $= \\dfrac{44 - 68}{5 - 1} = -6$.\n\nSo the tea is cooling at about **6 °C per minute** at that moment. The answer is **negative** because the temperature is falling, and it is an **estimate** because the tangent is drawn by eye — which is why reading two points far apart matters."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out Sam’s walking speed over the first 180 seconds.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "speed as a gradient",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$270 \\div 180 = 1.5$ m/s.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "walk-run",
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out Sam’s running speed in the last 60 seconds.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "speed as a gradient",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(510 - 270) \\div 60 = 240 \\div 60 = 4$ m/s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$240 \\div 60$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "context": "walk-run",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out Sam’s average speed for the whole 240 seconds.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "average speed is not the mean of speeds",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Total distance over total time: $510 \\div 240 = 2.125$ m/s. The mean of the two speeds, $(1.5 + 4) \\div 2 = 2.75$, is wrong: Sam walks for three times as long as he runs.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$510 \\div 240$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.125"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "walk-run",
+      "type": "numeric",
+      "answer": 2.125,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the car’s acceleration in the first 8 seconds.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "acceleration as a gradient",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$20 \\div 8 = 2.5$ m/s².",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-vt",
+      "type": "numeric",
+      "answer": 2.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s²"
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the total distance the car travels.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "distance as the area under a velocity–time graph",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Area under the velocity–time graph, in three parts: $\\dfrac{1}{2} \\times 8 \\times 20 = 80$, $12 \\times 20 = 240$, $\\dfrac{1}{2} \\times 5 \\times 20 = 50$. Total 370 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area under the graph"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "three areas"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "370"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "car-vt",
+      "type": "numeric",
+      "answer": 370,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q24",
+      "prompt": "Work out the car’s average speed for the whole journey.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "average speed from a velocity–time graph",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Distance: $\\dfrac{1}{2} \\times 8 \\times 20 + 12 \\times 20 + \\dfrac{1}{2} \\times 5 \\times 20 = 370$ m. Time: $8 + 12 + 5 = 25$ s. Average speed $= 370 \\div 25 = 14.8$ m/s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "370 m and 25 s"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "car-vt",
+      "type": "numeric",
+      "answer": 14.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q25",
+      "prompt": "The depth of water in a tank falls steadily from 120 cm to 30 cm in 45 minutes. If it keeps falling at the same rate, how many more minutes until the tank is empty?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a constant rate of change",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rate: $(120 - 30) \\div 45 = 2$ cm a minute. The last 30 cm take $30 \\div 2 = 15$ more minutes.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 cm a minute"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$30 \\div 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "minutes"
+    },
+    {
+      "id": "q26",
+      "prompt": "Taxi A charges £3.50 plus £1.80 a mile. Taxi B charges £2 a mile with no fixed charge. What is the longest journey, in whole miles, for which taxi B is cheaper?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "comparing two linear rates",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "B is cheaper when $2m < 3.5 + 1.8m$, so $0.2m < 3.5$ and $m < 17.5$. The longest whole-mile journey is 17 miles (£34 against £34.10).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2m < 3.5 + 1.8m$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$m < 17.5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "17"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 17,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "miles"
     }
   ],
   "worksheets": {
@@ -1608,9 +1871,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 64
     }
   },
   "examTechnique": {
@@ -1644,7 +1915,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

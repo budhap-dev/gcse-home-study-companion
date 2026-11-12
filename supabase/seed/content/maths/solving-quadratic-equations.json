@@ -850,6 +850,10 @@
     {
       "id": "garden",
       "body": "A rectangular garden is $(x + 3)$ m long and $(2x - 1)$ m wide. Its area is 52 m²."
+    },
+    {
+      "id": "ball-height",
+      "body": "A ball is thrown upwards. Its height, $h$ metres, $t$ seconds after it is thrown is $h = 2 + 9t - 5t^2$."
     }
   ],
   "questions": [
@@ -1799,6 +1803,178 @@
       "tolerance": 0,
       "units": "m",
       "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the height of the ball after 1 second.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "substituting into a quadratic",
+      "step": "s9",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2 + 9 - 5 = 6$ m.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "context": "ball-height",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q24",
+      "prompt": "Work out the time at which the ball hits the ground.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "quadratic from a context, rejecting a root",
+      "step": "s10",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At the ground $h = 0$: $5t^2 - 9t - 2 = 0$, so $(5t + 1)(t - 2) = 0$ and $t = 2$ or $t = -0.2$. A time before the throw makes no sense, so 2 seconds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5t^2 - 9t - 2 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2, rejecting $-0.2$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ball-height",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "seconds"
+    },
+    {
+      "id": "q25",
+      "prompt": "Solve $2 + 9t - 5t^2 = 6$ to find the two times when the ball is 6 m high.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "two solutions in context",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5t^2 - 9t + 4 = 0$, so $(5t - 4)(t - 1) = 0$: $t = 0.8$ or $t = 1$. The ball passes 6 m going up at 0.8 s and coming down at 1 s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5t^2 - 9t + 4 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.8 and 1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ball-height",
+      "type": "short-text",
+      "accepted": [
+        "0.8, 1",
+        "t=0.8, t=1"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "Solve $3x^2 - 4x - 2 = 0$. Give your answers to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "quadratic formula to 2 d.p.",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$x = \\dfrac{4 \\pm \\sqrt{16 + 24}}{6} = \\dfrac{4 \\pm \\sqrt{40}}{6}$. $\\sqrt{40} = 6.3245\\ldots$, so $x = 1.72$ or $x = -0.39$. The $-4ac$ term is $-4 \\times 3 \\times (-2) = +24$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes into the formula"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{40}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.72 and $-0.39$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "1.72, -0.39",
+        "x=1.72, x=-0.39"
+      ]
+    },
+    {
+      "id": "q27",
+      "prompt": "Solve $x^4 - 13x^2 + 36 = 0$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a hidden quadratic",
+      "step": "s10",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let $u = x^2$: $u^2 - 13u + 36 = 0$, so $(u - 4)(u - 9) = 0$ and $u = 4$ or 9. Then $x^2 = 4$ or $x^2 = 9$: $x = \\pm 2$ or $\\pm 3$. Stopping at 4 and 9 answers for $x^2$, not $x$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes $u = x^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$u = 4$ or 9"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\pm 2$ and $\\pm 3$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "-3, -2, 2, 3",
+        "x=±2, x=±3",
+        "2, -2, 3, -3"
+      ]
     }
   ],
   "worksheets": {
@@ -1838,9 +2014,14 @@
         "q19",
         "q20",
         "q21",
-        "q22"
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 55
+      "suggestedMinutes": 69
     }
   },
   "examTechnique": {
@@ -1872,7 +2053,9 @@
       "q15",
       "q16",
       "q18",
-      "q19"
+      "q19",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },
