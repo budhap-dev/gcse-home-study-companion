@@ -819,6 +819,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "big-cats",
+      "body": "The lion is Panthera leo and the tiger is Panthera tigris."
+    },
+    {
+      "id": "moths",
+      "body": "In a population of 500 peppered moths, 40% were dark. Years later, after soot darkened the trees, there were 600 moths and 85% were dark."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1700,6 +1710,280 @@
         }
       ],
       "modelAnswer": "**The key.** A dichotomous key asks a series of questions, each with exactly two answers, and each answer either names the animal or sends you on to another question.\n\n1. Does the animal have legs? No: go to question 2. Yes: go to question 3.\n2. Does it have a shell? Yes: it is the snail. No: it is the earthworm.\n3. Does it have eight legs? Yes: it is the spider. No: it is the beetle.\n\nThree questions are enough for four animals, because each question splits the remaining possibilities in two.\n\n**Why these features.** Legs, a shell and the number of legs are features of **structure**: they are easy to see without any equipment, and every member of the species has them. Every spider has eight legs and every beetle six, so whoever uses the key, and whichever individual they have found, they reach the same name. That is the test of a good feature: it must send every member of a species down the same branch. Wings would also have worked to separate the beetle from the spider.\n\nColour and size are rejected for the same reason. Snails of one species come in different shades, a young beetle is smaller than an old one, and an earthworm's size depends on its age and how well fed it is, so a question such as *is it brown?* or *is it longer than 3 cm?* would send different individuals of the same species down different branches.\n\n**Checking it.** The key is tested by following it for each animal in turn: the earthworm goes 1 no, 2 no, earthworm; the snail 1 no, 2 yes, snail; the spider 1 yes, 3 yes, spider; the beetle 1 yes, 3 no, beetle. Each reaches its own name and no other."
+    },
+    {
+      "id": "q29",
+      "prompt": "Which genus do lions and tigers belong to?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the binomial system",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first part of the name is the genus: Panthera.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Panthera"
+        }
+      ],
+      "discriminators": [],
+      "context": "big-cats",
+      "type": "multiple-choice",
+      "options": [
+        "Leo",
+        "Tigris",
+        "Panthera",
+        "Felidae (cat family)"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q30",
+      "prompt": "What does sharing a genus tell you?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "classification",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "They are closely related, with a recent common ancestor.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "closely related"
+        }
+      ],
+      "discriminators": [],
+      "context": "big-cats",
+      "type": "multiple-choice",
+      "options": [
+        "They are the same species",
+        "They are closely related",
+        "They live in the same place",
+        "They can always interbreed"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q31",
+      "prompt": "A lion and a tiger can produce cubs, but the cubs are usually infertile. Why are lions and tigers still separate species?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what a species is",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A species is a group that can breed to produce fertile offspring. Infertile cubs show they are separate species.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "their offspring are infertile"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "big-cats",
+      "type": "multiple-choice",
+      "options": [
+        "They look different",
+        "Their offspring are infertile",
+        "They live on different continents",
+        "They hunt different prey"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q32",
+      "prompt": "Why did the dark moths become more common?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "natural selection in action",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "On sooty bark the dark moths were better camouflaged, so fewer were eaten by birds; more survived to breed and pass on the dark form.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "better camouflaged, more survived to breed"
+        }
+      ],
+      "discriminators": [],
+      "context": "moths",
+      "type": "multiple-choice",
+      "options": [
+        "They chose to become dark",
+        "Better camouflaged, so more survived and bred",
+        "Soot settled on the light moths and dyed them dark",
+        "Dark moths can fly faster"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q33",
+      "prompt": "How many dark moths were there in the later population?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading data",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.85 \\times 600 = 510$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "510"
+        }
+      ],
+      "discriminators": [],
+      "context": "moths",
+      "type": "numeric",
+      "answer": 510,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q34",
+      "prompt": "Calculate the percentage increase in the number of dark moths.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "percentage change in a population",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Before: $0.40 \\times 500 = 200$. After: $0.85 \\times 600 = 510$. Increase $= \\dfrac{510 - 200}{200} \\times 100 = 155\\%$. The change in percentage points, 45, is a different measure.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "200 and 510"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "155"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "moths",
+      "type": "numeric",
+      "answer": 155,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q35",
+      "prompt": "Explain two reasons why a species may become extinct.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "extinction",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A new predator or disease it cannot survive; a change in its environment, such as climate change or habitat destruction, that it cannot adapt to quickly enough; or competition from another species for food or space.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Gave a first reason (e.g. habitat loss, climate change)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Gave a second reason (e.g. new predator, disease, competition)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Explained why the species cannot survive it"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Gave a first reason (e.g. habitat loss, climate change)",
+          "marks": 1
+        },
+        {
+          "text": "Gave a second reason (e.g. new predator, disease, competition)",
+          "marks": 1
+        },
+        {
+          "text": "Explained why the species cannot survive it",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "e.g. habitat destroyed or climate changed faster than it can adapt; a new predator or disease; competition for resources."
+    },
+    {
+      "id": "q36",
+      "prompt": "Describe how to use a dichotomous key to identify an organism.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "using a key",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Start at the first question and look at the organism. Each question has two choices; follow the one that matches, which leads to another question or to a name. Keep going until a name is reached.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Start at the first question"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Choose between two options using a feature of the organism"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Follow on until the organism is named"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Start at the first question",
+          "marks": 1
+        },
+        {
+          "text": "Choose between two options using a feature of the organism",
+          "marks": 1
+        },
+        {
+          "text": "Follow on until the organism is named",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Start at question 1, choose the matching option of the two, follow the pointer, repeat until named."
     }
   ],
   "worksheets": {
@@ -1745,9 +2029,17 @@
         "q22",
         "q25",
         "q27",
-        "q28"
+        "q28",
+        "q29",
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36"
       ],
-      "suggestedMinutes": 43
+      "suggestedMinutes": 57
     }
   },
   "examTechnique": {

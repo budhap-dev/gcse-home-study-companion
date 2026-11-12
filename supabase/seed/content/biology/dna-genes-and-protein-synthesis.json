@@ -631,6 +631,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "gene-900",
+      "body": "The coding part of a gene is 900 bases long. Each group of three bases codes for one amino acid."
+    },
+    {
+      "id": "variants",
+      "body": "A genetic variant is a change in the DNA."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1618,6 +1628,236 @@
         }
       ],
       "modelAnswer": "Each step does one job, and together they get the DNA out of the nucleus, away from the rest of the cell, and out of solution where it can be seen.\n\n**Mashing.** Crushing the strawberries breaks up the fruit tissue and separates the cells, so the detergent and salt solution can reach every cell rather than only those on the surface.\n\n**Detergent.** The DNA is inside the nucleus, behind two barriers: the cell membrane and the nuclear membrane. Washing-up liquid breaks open both membranes, so the DNA is released into the solution.\n\n**Salt.** The salt makes the long DNA strands clump together, which helps them come out of solution in a mass large enough to see later.\n\n**Filtering.** The mixture still contains solid pieces of fruit, such as cell walls and other debris. Filtering removes these, while the DNA, which is dissolved, passes through into the filtrate.\n\n**Ice-cold ethanol.** DNA dissolves in the watery filtrate but is insoluble in ethanol, and keeping the ethanol cold also slows any enzymes that would break the DNA down. Where the ethanol meets the filtrate, the DNA comes out of solution.\n\n**Pouring gently.** Running the ethanol slowly down the side of the tube keeps it as a separate layer on top of the filtrate, so the DNA collects at the boundary between the two layers. A single DNA molecule is far too thin to see, but many thousands clumped together form the white strands, which can be wound onto a glass rod and lifted out."
+    },
+    {
+      "id": "q31",
+      "prompt": "How many amino acids does it code for?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the triplet code",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$900 \\div 3 = 300$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "300"
+        }
+      ],
+      "discriminators": [],
+      "context": "gene-900",
+      "type": "numeric",
+      "answer": 300,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q32",
+      "prompt": "A part of the template strand of the DNA reads TACGGA. Write the mRNA made from it.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "transcription",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "mRNA is complementary to the template, with uracil (U) in place of thymine: T→A, A→U, C→G, G→C. TACGGA gives AUGCCU.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "complementary bases"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "AUGCCU, with U not T"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "gene-900",
+      "type": "short-text",
+      "accepted": [
+        "AUGCCU"
+      ]
+    },
+    {
+      "id": "q33",
+      "prompt": "Where in the cell are amino acids joined to make the protein?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "translation",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At the ribosomes, in the cytoplasm (translation).",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "ribosomes"
+        }
+      ],
+      "discriminators": [],
+      "context": "gene-900",
+      "type": "multiple-choice",
+      "options": [
+        "In the nucleus",
+        "At the ribosomes",
+        "In the mitochondria",
+        "On the cell membrane"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q34",
+      "prompt": "A variant swaps one base for another in the coding part of a gene. What is the most it can do?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "how variants change the protein",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It can change one amino acid, which may change the protein’s shape and how it works, or may change nothing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "change one amino acid"
+        }
+      ],
+      "discriminators": [],
+      "context": "variants",
+      "type": "multiple-choice",
+      "options": [
+        "Change every amino acid after it",
+        "Change one amino acid, or none",
+        "Stop the cell dividing",
+        "Change the number of chromosomes"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q35",
+      "prompt": "How can a variant in the non-coding DNA before a gene change how much protein is made?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "non-coding variants",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It can change how well RNA polymerase binds there, so the gene is transcribed more or less.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "it changes RNA polymerase binding"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "variants",
+      "type": "multiple-choice",
+      "options": [
+        "It changes the order of amino acids in the protein",
+        "It changes how well RNA polymerase binds",
+        "It removes the ribosomes",
+        "It cannot have any effect at all"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q36",
+      "prompt": "A protein is made of 150 amino acids. How many bases of mRNA code for it, leaving out the stop signal?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting codons",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Three bases per amino acid: $150 \\times 3 = 450$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3 per amino acid"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "450"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 450,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q37",
+      "prompt": "Describe how a gene is transcribed into mRNA.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "transcription",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In the nucleus, RNA polymerase binds to the non-coding DNA in front of the gene. The two DNA strands separate, and RNA polymerase builds an mRNA strand complementary to the template strand, with uracil in place of thymine. The mRNA then leaves the nucleus.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said RNA polymerase binds to the DNA in front of the gene"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said it makes mRNA complementary to the template strand"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Said the mRNA leaves the nucleus (U replaces T)"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Said RNA polymerase binds to the DNA in front of the gene",
+          "marks": 1
+        },
+        {
+          "text": "Said it makes mRNA complementary to the template strand",
+          "marks": 1
+        },
+        {
+          "text": "Said the mRNA leaves the nucleus (U replaces T)",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "RNA polymerase binds before the gene; strands part; complementary mRNA (U for T) is built on the template; it leaves the nucleus."
     }
   ],
   "examTechnique": {
@@ -1679,9 +1919,16 @@
         "q24",
         "q27",
         "q29",
-        "q30"
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37"
       ],
-      "suggestedMinutes": 64
+      "suggestedMinutes": 77
     }
   },
   "quiz": {
@@ -1710,7 +1957,8 @@
       "q24",
       "q25",
       "q26",
-      "q27"
+      "q27",
+      "q36"
     ],
     "sampleSize": 10
   },

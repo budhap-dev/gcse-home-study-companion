@@ -38,6 +38,8 @@ const num = (re: RegExp, s: string) => {
   return Number(m[1]!.replace(/ /g, ''))
 }
 const nums = (re: RegExp, s: string) => [...s.matchAll(re)].map((m) => Number(m[1]!.replace(/ /g, '')))
+// The numeric slots a generator replaces; section 13's harder questions carry a lesson step and stay fixed.
+const written = (q: { type: string; step?: string }) => q.type === 'numeric' && !q.step
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
 const method = (b: Generated) => b.question.markScheme.slice(0, -1).map((l) => l.description)
@@ -101,7 +103,7 @@ const SLOTS: Record<string, string[]> = {
 describe('every bioenergetics build', () => {
   it('has a generator for every numeric written slot in the four topics but food tests q4', () => {
     for (const [topic, ids] of Object.entries(SLOTS)) {
-      const numeric = bankOf(topic).filter((q) => q.type === 'numeric').map((q) => q.id)
+      const numeric = bankOf(topic).filter(written).map((q) => q.id)
       expect(numeric.filter((id) => !(topic === 'food-tests-and-calorimetry' && id === 'q4')).sort(), topic).toEqual(ids)
       expect(bioenergeticsGenerators.filter((g) => g.topicId === topic).flatMap((g) => g.replaces).sort(), topic).toEqual(ids)
     }

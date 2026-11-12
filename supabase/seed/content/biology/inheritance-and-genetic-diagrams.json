@@ -640,6 +640,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "peas",
+      "body": "In pea plants, the allele for tall (T) is dominant to the allele for short (t). Two heterozygous plants are crossed, and 240 seeds grow."
+    },
+    {
+      "id": "baby-sex",
+      "body": "Sex is decided by the X and Y chromosomes."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1626,6 +1636,218 @@
         }
       ],
       "modelAnswer": "**The genotypes.** D is dominant, so a single copy is enough to cause the condition. Anyone who does not have it cannot have any D: the grandfather, Ben, Carl and Dee are all **dd**. Ann has the condition, so she has at least one D. Her father is dd and could only give her d, so Ann is **Dd**. (The grandmother must be Dd too, since she had Ben, who is dd.)\n\n**Ann and Carl.** Dd × dd. Ann's gametes carry D or d, equally often; Carl's all carry d.\n\n| | D (Ann) | d (Ann) |\n| --- | --- | --- |\n| d (Carl) | Dd | dd |\n| d (Carl) | Dd | dd |\n\nTwo of the four equally likely outcomes are Dd, so each child has a **50%** (1 in 2) chance of having the condition. That chance is the same for every child, whatever happened to earlier ones.\n\n**Ben and Dee.** dd × dd. Every gamete from both parents carries d, so every child is dd: a **0%** chance.\n\n**Why Ben cannot pass it on.** Ben's mother is Dd, and each of her children had an equal chance of receiving D or d from her. Ben received **d**; if he had received D he would have the condition himself. So Ben has no D allele at all, and an allele that is not in his genotype cannot be in any of his gametes. Unlike a recessive allele, a dominant allele cannot be carried hidden by someone who does not show it, so the condition cannot pass down Ben's side of the family."
+    },
+    {
+      "id": "q31",
+      "prompt": "What is the genotype of a short plant?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "genotypes",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Short shows only without T: tt.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "tt"
+        }
+      ],
+      "discriminators": [],
+      "context": "peas",
+      "type": "short-text",
+      "accepted": [
+        "tt"
+      ],
+      "matchCase": true
+    },
+    {
+      "id": "q32",
+      "prompt": "How many of the 240 plants would be expected to be tall?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Punnett squares",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Tt × Tt gives TT, Tt, Tt, tt: 3 in 4 tall. $\\dfrac{3}{4} \\times 240 = 180$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3 : 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "180"
+        }
+      ],
+      "discriminators": [],
+      "context": "peas",
+      "type": "numeric",
+      "answer": 180,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q33",
+      "prompt": "What fraction of the tall plants are heterozygous? Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "conditional fractions from a cross",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Of the three tall outcomes (TT, Tt, Tt), two are heterozygous: $\\dfrac{2}{3}$. $\\dfrac{1}{2}$ is the fraction of all the plants that are Tt.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "three tall outcomes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{3}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "peas",
+      "type": "short-text",
+      "accepted": [
+        "2/3"
+      ]
+    },
+    {
+      "id": "q34",
+      "prompt": "What is the probability that a couple’s next baby is a girl? Give your answer as a decimal.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "sex determination",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "XX × XY gives XX or XY equally: 0.5.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "baby-sex",
+      "type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q35",
+      "prompt": "What is the probability that their next two babies are both boys? Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "independent probabilities",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each baby is independent: $0.5 \\times 0.5 = 0.25$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.5 \\times 0.5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "baby-sex",
+      "type": "numeric",
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q36",
+      "prompt": "A tall pea plant is crossed with a short plant (tt). Half the offspring are short. What is the genotype of the tall parent?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a test cross",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Short offspring are tt, so each got t from the tall parent too: it must be Tt. A TT parent would give all tall offspring.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "short offspring are tt"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tall parent carries t"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Tt"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "Tt"
+      ],
+      "matchCase": true
+    },
+    {
+      "id": "q37",
+      "prompt": "Two parents are both carriers (Ff) of cystic fibrosis, a recessive disorder. What is the probability that a child is a carrier? Give your answer as a fraction.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "carriers in a cross",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Ff × Ff gives FF, Ff, Ff, ff: 2 of 4 are carriers: $\\dfrac{1}{2}$. ($\\dfrac{1}{4}$ is the chance of a child with the disorder.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Punnett square"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 of 4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "1/2",
+        "2/4"
+      ]
     }
   ],
   "examTechnique": {
@@ -1687,9 +1909,16 @@
         "q24",
         "q27",
         "q29",
-        "q30"
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37"
       ],
-      "suggestedMinutes": 63
+      "suggestedMinutes": 78
     }
   },
   "quiz": {
@@ -1718,7 +1947,9 @@
       "q24",
       "q25",
       "q26",
-      "q27"
+      "q27",
+      "q36",
+      "q37"
     ],
     "sampleSize": 10
   },

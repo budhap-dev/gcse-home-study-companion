@@ -718,6 +718,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "dog-cells",
+      "body": "A dog’s body cells have 78 chromosomes."
+    },
+    {
+      "id": "compare-division",
+      "body": "Mitosis and meiosis are two kinds of cell division."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1643,6 +1653,231 @@
         }
       ],
       "modelAnswer": "**Comparing the cells.** The two divisions differ in three ways.\n\n- *Number*: mitosis turns one cell into **two** daughter cells; meiosis turns one cell into **four**.\n- *Chromosome number*: the cells from mitosis are **diploid**, with the full 46 chromosomes of a human body cell; the cells from meiosis are **haploid**, with half the number, 23.\n- *Genetics*: the cells from mitosis are **genetically identical** to each other and to the parent cell; the cells from meiosis are **genetically different** from each other and from the parent cell.\n\n**Why mitosis suits growth and repair.** A new skin cell replacing a damaged one, or a new cell in a growing bone, has to do the same job as the cells around it. It can only do that if it carries the same full set of genetic information, so the daughter cells must be identical to the parent cell and keep all 46 chromosomes.\n\n**Why meiosis suits making gametes.** At fertilisation, two gametes fuse to form a zygote. Because each gamete is haploid, the zygote has 23 + 23 = 46 chromosomes, the normal number for a human. If gametes were made by mitosis, each would carry 46, the zygote would have 92, and the number would double in every generation.\n\nThe genetic differences matter too. Each gamete carries a different combination of alleles, so every offspring receives a new combination from its two parents. This produces **variation** in the population, which makes it more likely that some individuals will survive if conditions change. So mitosis is suited to copying cells exactly, and meiosis is suited to halving the chromosome number and producing variety."
+    },
+    {
+      "id": "q29",
+      "prompt": "How many chromosomes are in a dog’s sperm cell?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "chromosome numbers",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Gametes have half: 39.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "39"
+        }
+      ],
+      "discriminators": [],
+      "context": "dog-cells",
+      "type": "numeric",
+      "answer": 39,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q30",
+      "prompt": "How many cells are made from one cell dividing by meiosis?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "what meiosis does",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two divisions give 4 cells, each genetically different.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "context": "dog-cells",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q31",
+      "prompt": "Why must gametes have half the number of chromosomes?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why meiosis halves the number",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "So that when two gametes join at fertilisation, the full number (78) is restored, not doubled.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "fertilisation restores the full number"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "dog-cells",
+      "type": "multiple-choice",
+      "options": [
+        "So that they can swim faster towards the egg",
+        "So fertilisation restores the full number",
+        "So they can divide by mitosis",
+        "So that they live for longer"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q32",
+      "prompt": "Which describes the cells made by mitosis?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "meiosis against mitosis",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two cells, genetically identical to the parent cell, with the full number of chromosomes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "two identical cells"
+        }
+      ],
+      "discriminators": [],
+      "context": "compare-division",
+      "type": "multiple-choice",
+      "options": [
+        "Four different cells with half the chromosomes",
+        "Two identical cells with the full number",
+        "Two different cells with half the number",
+        "Four identical cells with the full number"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q33",
+      "prompt": "Why does meiosis produce genetically different cells?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "variation from meiosis",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Chromosomes from each pair are shared out at random, so each gamete gets a different mix.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "random mixing of chromosomes"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "compare-division",
+      "type": "multiple-choice",
+      "options": [
+        "Each cell gets a random mix of chromosomes",
+        "DNA is copied wrongly every time",
+        "The four cells come from two different parents",
+        "Each cell loses some of its genes"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q34",
+      "prompt": "Humans have 23 pairs of chromosomes. Counting only how one chromosome from each pair can be chosen, how many genetically different egg cells can one woman make?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting combinations in meiosis",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Each of the 23 pairs gives 2 choices: $2^{23} = 8\\,388\\,608$. That is before any crossing over, so the true variety is greater still.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 per pair"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2^{23}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8 388 608"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 8388608,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q35",
+      "prompt": "Explain one advantage of sexual reproduction and one advantage of asexual reproduction.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "two ways of reproducing",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sexual reproduction produces variation, so if the environment changes some offspring may survive, and selective breeding is possible. Asexual reproduction needs only one parent and is quicker, so a population can grow fast when conditions are good.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Gave an advantage of sexual reproduction (variation)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Gave an advantage of asexual reproduction (speed, one parent)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Explained why each helps"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Gave an advantage of sexual reproduction (variation)",
+          "marks": 1
+        },
+        {
+          "text": "Gave an advantage of asexual reproduction (speed, one parent)",
+          "marks": 1
+        },
+        {
+          "text": "Explained why each helps",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Sexual: variation, so survival if conditions change. Asexual: one parent, fast, many offspring when conditions suit."
     }
   ],
   "examTechnique": {
@@ -1702,9 +1937,16 @@
         "q22",
         "q25",
         "q27",
-        "q28"
+        "q28",
+        "q29",
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35"
       ],
-      "suggestedMinutes": 63
+      "suggestedMinutes": 75
     }
   },
   "quiz": {
@@ -1731,7 +1973,8 @@
       "q22",
       "q23",
       "q24",
-      "q25"
+      "q25",
+      "q34"
     ],
     "sampleSize": 10
   },

@@ -38,6 +38,8 @@ function build(generatorId: string, slotId: string, count = 300, prefix = 'struc
 
 const num = (s: string) => Number(s.replace('−', '-'))
 const clean = (x: number) => Number(x.toPrecision(12))
+// The numeric slots a generator replaces; section 13's harder questions carry a lesson step and stay fixed.
+const written = (q: { type: string; step?: string }) => q.type === 'numeric' && !q.step
 const answer = (b: Generated) => (b.question.type === 'numeric' ? b.question.answer : NaN)
 const tolerance = (b: Generated) => (b.question.type === 'numeric' ? b.question.tolerance : NaN)
 const method = (b: Generated) => b.question.markScheme.slice(0, -1).map((l) => l.description)
@@ -83,7 +85,7 @@ const SLOTS: Record<string, string[]> = {
 describe('every transport build', () => {
   it('has a generator for every numeric written slot in the four topics', () => {
     for (const [topic, ids] of Object.entries(SLOTS)) {
-      expect(bankOf(topic).filter((q) => q.type === 'numeric').map((q) => q.id).sort(), topic).toEqual(ids)
+      expect(bankOf(topic).filter(written).map((q) => q.id).sort(), topic).toEqual(ids)
       // A multi-part question's generator writes its multiple-choice part too, so only numeric slots are compared.
       const numericSlot = (id: string) => bankOf(topic).find((q) => q.id === id)?.type === 'numeric'
       expect(transportGenerators.filter((g) => g.topicId === topic).flatMap((g) => g.replaces).filter(numericSlot).sort(), topic).toEqual(ids)
