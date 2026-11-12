@@ -782,6 +782,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "spinner-200",
+      "body": "A spinner with four equal sections, coloured red, blue, green and yellow, is spun 200 times.\n\n| Colour | Red | Blue | Green | Yellow |\n|---|---|---|---|---|\n| Frequency | 46 | 58 | 34 | 62 |"
+    },
+    {
+      "id": "fair-game",
+      "body": "At a fair, a game costs 50p to play. You spin a fair spinner with five equal sections. Three sections win nothing, one wins £1 and one wins £2."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1469,6 +1479,246 @@
       ],
       "modelAnswer": "Leo's arithmetic is correct: the relative frequency of red is $\\dfrac{8}{20} = 0.4$, and $0.4 \\times 500 = 200$.\n\nIf the spinner is fair, the five sections are equally likely and $P(\\text{red}) = \\frac{1}{5} = 0.2$, so the expected number of reds in 500 spins is $0.2 \\times 500 = 100$, half of Leo's figure.\n\nA fair spinner would be expected to give $\\dfrac{1}{5} \\times 20 = 4$ reds in 20 spins, and it gives 8 or more only about 3% of the time. So Leo's result is **some evidence** that the spinner may be biased towards red. It is not enough to rely on: 20 spins is few, relative frequency only settles near the true probability over many trials, and results this far out do happen by chance.\n\nLeo should spin it many more times, a few hundred at least, and use the relative frequency from all of those spins. If that settles near 0.2, expect about 100 reds; if it stays near 0.4, his figure of 200 becomes reasonable.",
       "suggestedMinutes": 5
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the relative frequency of blue.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "relative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$58 \\div 200 = 0.29$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.29"
+        }
+      ],
+      "discriminators": [],
+      "context": "spinner-200",
+      "type": "numeric",
+      "answer": 0.29,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "The spinner is spun another 500 times. Use the results to estimate how many times it lands on yellow.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "expected outcomes from relative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Relative frequency of yellow $= 62 \\div 200 = 0.31$. Estimate $= 0.31 \\times 500 = 155$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.31 \\times 500$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "155"
+        }
+      ],
+      "discriminators": [],
+      "context": "spinner-200",
+      "type": "numeric",
+      "answer": 155,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "Mia says the results prove the spinner is biased. Which is the best response?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "judging fairness from data",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A fair spinner would give about $200 \\div 4 = 50$ of each colour. Green (34) and yellow (62) are some way from 50, which is evidence of bias, but chance alone can give results like these in 200 spins, so it is not proof. More spins would make the evidence stronger.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "evidence, not proof"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "spinner-200",
+      "type": "multiple-choice",
+      "options": [
+        "She is right: a fair spinner would give exactly 50 of each colour",
+        "She is right, because yellow came up more often than any other colour",
+        "She is wrong: each colour came up at least 30 times, so it must be fair",
+        "The results suggest bias, as 34 and 62 are far from 50, but do not prove it"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "What is the probability of winning some money? Give your answer as a fraction.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "probability of an event",
+      "calculator": "either",
+      "tags": [],
+      "solution": "2 of the 5 sections win something: $\\dfrac{2}{5}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{5}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "fair-game",
+      "type": "short-text",
+      "accepted": [
+        "2/5"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "Ali plays the game 100 times. How much money should he expect to gain or lose overall? Give a gain as a positive number and a loss as a negative number, in pounds.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "expected value of a game",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In 100 games each section comes up about 20 times: $20 \\times £1 + 20 \\times £2 = $ £60 won. He pays $100 \\times 50\\text{p} = $ £50. Expected gain $= 60 - 50 = $ £10. Per game the expected win is $\\dfrac{0 + 0 + 0 + 1 + 2}{5} = $ £0.60, against a 50p cost.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20 of each section, or £0.60 a game"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "winnings less the cost"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "context": "fair-game",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q27",
+      "prompt": "What should the game cost, in pence, for a player to expect to break even?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a fair price from expected value",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The expected win per game is $\\dfrac{0 + 0 + 0 + 100 + 200}{5} = 60$p, so the game is fair at 60p.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "mean win per game"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "fair-game",
+      "type": "numeric",
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "p"
+    },
+    {
+      "id": "q28",
+      "prompt": "A biased dice is rolled. The numbers 1 to 5 are equally likely, and a 6 is three times as likely as a 1. The dice is rolled 240 times. Work out the expected number of sixes.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "probabilities that add to 1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let P(1) $= x$. Then P(1) to P(5) are each $x$ and P(6) $= 3x$, and $5x + 3x = 1$, so $x = \\dfrac{1}{8}$ and P(6) $= \\dfrac{3}{8}$. Expected sixes $= \\dfrac{3}{8} \\times 240 = 90$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5x + 3x = 1$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P(6) $= \\dfrac{3}{8}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "90"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 90,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q29",
+      "prompt": "After 40 spins, the relative frequency of red on a spinner is 0.35. After 60 more spins, the relative frequency of red over all 100 spins is 0.32. How many times did the spinner land on red in the last 60 spins?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "relative frequency as a running total",
+      "calculator": "either",
+      "tags": [],
+      "solution": "After 40 spins: $0.35 \\times 40 = 14$ reds. After 100: $0.32 \\times 100 = 32$ reds. So $32 - 14 = 18$ in the last 60. Working with 0.32 and 0.35 on their own, without the numbers of spins, gives nothing to subtract.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "14"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "32"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "18"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 18,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1507,9 +1757,17 @@
         "q18",
         "q19",
         "q20",
-        "q21"
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28",
+        "q29"
       ],
-      "suggestedMinutes": 40
+      "suggestedMinutes": 58
     }
   },
   "examTechnique": {
@@ -1545,7 +1803,9 @@
       "q16",
       "q17",
       "q18",
-      "q19"
+      "q19",
+      "q28",
+      "q29"
     ],
     "sampleSize": 10
   },

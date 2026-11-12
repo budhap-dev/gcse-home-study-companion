@@ -786,6 +786,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "puzzle-times",
+      "body": "The table shows the times, $t$ minutes, that 50 people took to finish a puzzle.\n\n| Time (minutes) | 0 < t ≤ 10 | 10 < t ≤ 20 | 20 < t ≤ 30 | 30 < t ≤ 40 | 40 < t ≤ 50 |\n|---|---|---|---|---|---|\n| Frequency | 6 | 14 | 18 | 8 | 4 |"
+    },
+    {
+      "id": "plant-heights",
+      "body": "The table shows cumulative frequencies for the heights, $h$ cm, of 80 plants.\n\n| Height (cm) | h ≤ 10 | h ≤ 20 | h ≤ 30 | h ≤ 40 | h ≤ 50 | h ≤ 60 |\n|---|---|---|---|---|---|---|\n| Cumulative frequency | 5 | 18 | 42 | 66 | 76 | 80 |"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1341,6 +1351,250 @@
         }
       ],
       "modelAnswer": "To **estimate the mean**, I assume every value sits at the **midpoint** of its class: 5, 15, 25, 35 and 45 minutes. Multiplying each midpoint by its frequency gives $4 \\times 5 = 20$, $10 \\times 15 = 150$, $16 \\times 25 = 400$, $8 \\times 35 = 280$ and $2 \\times 45 = 90$, which add to $\\sum fx = 940$. This is the estimated total of all forty times. Dividing by the total frequency — 40, the number of students, not 5, the number of classes — gives\n\n$$\\frac{940}{40} = 23.5 \\text{ minutes}$$\n\nThis is an **estimate**, because the grouping has hidden the actual times; the midpoint assumption is the best available, but it is an assumption. A quick check: 23.5 sits inside the modal class 20–30, which holds the most students, so it is plausible.\n\nTo find how many students took **longer than 35 minutes**, I would use the **cumulative frequency graph**, plotted at the upper bounds: (10, 4), (20, 14), (30, 30), (40, 38), (50, 40), starting from (0, 0).\n\nThis time the known value is on the **horizontal** axis. I read **up** from 35 minutes to the curve, then **across** to the cumulative frequency axis. Between (30, 30) and (40, 38) the curve rises by 8 over 10 minutes, and 35 is halfway, so the reading is about $30 + 4 = 34$.\n\nHere is the step students most often miss. That 34 is the number of students who took **35 minutes or less**, because a cumulative frequency always counts values **up to** a point. The question asks for **longer** than 35, which is everyone else:\n\n$$40 - 34 = 6 \\text{ students}$$\n\nHanding over 34 answers the opposite question and loses the final mark, even though the graph has been read correctly. Whenever the question says *more than*, *longer than* or *at least*, the reading has to be subtracted from $n$.\n\nAs with the mean, the answer is an estimate: the curve assumes the eight students in the 30–40 class are spread evenly through it, and the true number over 35 could be anywhere from 2 to 10. Six is the best estimate the graph can give."
+    },
+    {
+      "id": "q19",
+      "prompt": "How many people took more than 30 minutes?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "reading a grouped table",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$8 + 4 = 12$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "context": "puzzle-times",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out an estimate for the mean time.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "estimated mean from grouped data",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Use each class’s midpoint: $5 \\times 6 + 15 \\times 14 + 25 \\times 18 + 35 \\times 8 + 45 \\times 4 = 30 + 210 + 450 + 280 + 180 = 1150$. Estimate $= 1150 \\div 50 = 23$ minutes. It is an estimate because the exact times in each class are not known.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "midpoints used"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1150"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "23"
+        }
+      ],
+      "discriminators": [],
+      "context": "puzzle-times",
+      "type": "numeric",
+      "answer": 23,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "minutes"
+    },
+    {
+      "id": "q21",
+      "prompt": "Estimate the median time, to 1 decimal place, assuming the times in each class are spread evenly.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "median of grouped data by interpolation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The median is the 25th time. Running totals: 6, 20, 38, so it lies in $20 < t \\le 30$, the 5th of the 18 times there. $20 + 10 \\times \\dfrac{5}{18} = 22.77\\ldots$, which is 22.8 minutes.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the 25th value in the 20–30 class"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$20 + 10 \\times \\dfrac{5}{18}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "22.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "puzzle-times",
+      "type": "numeric",
+      "answer": 22.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "minutes"
+    },
+    {
+      "id": "q22",
+      "prompt": "How many plants have a height of more than 20 cm and up to 30 cm?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "frequency from cumulative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$42 - 18 = 24$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [],
+      "context": "plant-heights",
+      "type": "numeric",
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Estimate the median height, to 1 decimal place, assuming the heights are spread evenly within each class.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "median from cumulative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The median is the 40th plant. 18 plants are 20 cm or less and 42 are 30 cm or less, so it is $40 - 18 = 22$ of the way into those 24: $20 + 10 \\times \\dfrac{22}{24} = 29.16\\ldots$, which is 29.2 cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$20 + 10 \\times \\dfrac{22}{24}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "29.2"
+        }
+      ],
+      "discriminators": [],
+      "context": "plant-heights",
+      "type": "numeric",
+      "answer": 29.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q24",
+      "prompt": "Estimate the interquartile range of the heights, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "interquartile range from cumulative frequency",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Lower quartile: the 20th plant, 2 into the 24 plants between 20 and 30 cm: $20 + 10 \\times \\dfrac{2}{24} = 20.83\\ldots$ cm. Upper quartile: the 60th plant, 18 into the 24 between 30 and 40 cm: $30 + 10 \\times \\dfrac{18}{24} = 37.5$ cm. Interquartile range $= 37.5 - 20.83\\ldots = 16.66\\ldots$, which is 16.7 cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the 20th and 60th plants"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both quartiles by interpolation"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16.7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "plant-heights",
+      "type": "numeric",
+      "answer": 16.7,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q25",
+      "prompt": "A grouped frequency table has three classes: $0 < x \\le 10$ with frequency 4, $10 < x \\le 20$ with frequency $k$, and $20 < x \\le 30$ with frequency 6. The estimated mean, using midpoints, is 16. Find $k$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "an unknown frequency from an estimated mean",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Midpoints 5, 15 and 25. $\\dfrac{5 \\times 4 + 15k + 25 \\times 6}{4 + k + 6} = 16$, so $170 + 15k = 16(10 + k) = 160 + 16k$, giving $k = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "midpoints used"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$170 + 15k = 16(10 + k)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "In a grouped frequency table, the class $30 < t \\le 40$ has frequency 8 and the class $40 < t \\le 50$ has frequency 4. No values are above 50. Assuming the values are spread evenly within each class, estimate how many values are greater than 35.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "estimating within a class",
+      "calculator": "either",
+      "tags": [],
+      "solution": "35 is halfway through $30 < t \\le 40$, so about half its 8 values, 4, are above 35. All 4 in $40 < t \\le 50$ are too: $4 + 4 = 8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "half of the 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1376,9 +1630,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1412,7 +1674,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

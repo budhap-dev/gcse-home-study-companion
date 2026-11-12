@@ -908,13 +908,17 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   generator (`osmosis-results-table`), the other three get theirs in their subject's box. Every
   practice set now says how hard it is: Core grades 4–5, Higher 6–7, Advanced 8–9 (hardest),
   quiz all grades, unit test grades 4–9, grade 9 set hardest.
-- [ ] **2. Maths: number, ratio, probability and statistics.** 29 topics. In four PRs, one per
-  unit. Number (10 topics, 78 questions: two multi-part questions and two longer problems per
+- [x] **2. Maths: number, ratio, probability and statistics.** 29 topics. In two PRs. Number (10 topics, 78 questions: two multi-part questions and two longer problems per
   topic, on each Advanced sheet) in v10.118.0. Writing them found a marker fault older than
   them: brackets round a bottom of several factors were dropped, so y = −1/(2x) + 3, a curve,
   was marked right for the line y = −½x + 3 on five questions, and 3/(2√2) for 3√2/2. A bracket
   after a / or before a ^ that holds more than one factor now stays. The new questions are
   written, not generated; whether to add generators for them is the owner's call after Maths.
+  Ratio (6 topics, 46 questions), Probability (6, 50) and Statistics (7, 56) in v10.119.0: 230
+  questions over the box in all. Data for statistics comes in tables, as many exam questions
+  give it. A fraction answer is now always asked for as a fraction or also takes its exact
+  decimal: six older questions marked 0.5 wrong for "the exact value of sin 30°" and 0.7 wrong
+  for a probability of 7/10.
 - [ ] **3. Maths: algebra.** 23 topics, including graphs and sequences.
 - [ ] **4. Maths: geometry and measures.** 20 topics.
 - [ ] **5. Physics: energy, the particle model and forces.** 15 topics.

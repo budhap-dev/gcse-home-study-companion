@@ -677,6 +677,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "driving-test",
+      "body": "160 people took a driving test. 90 of them had more than 20 lessons, and 63 of those 90 passed. Of the people who had 20 lessons or fewer, 30 passed."
+    },
+    {
+      "id": "pets-siblings",
+      "body": "In a year group of 200 students, $\\dfrac{3}{5}$ have a pet. 25% of the students with a pet have a younger brother or sister. 40% of the students without a pet have a younger brother or sister."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -920,7 +930,7 @@
     {
       "id": "q11",
       "type": "short-text",
-      "prompt": "A student who walks is chosen at random. 35 of the 77 walkers are girls. What is the probability the student is a girl, in its lowest terms?",
+      "prompt": "A student who walks is chosen at random. 35 of the 77 walkers are girls. What is the probability the student is a girl, in its lowest terms? Give your answer as a fraction.",
       "marks": 1,
       "gradeBand": "8-9",
       "skill": "conditional probability from a tree",
@@ -1204,6 +1214,283 @@
         }
       ],
       "modelAnswer": "First I fill in the counts the question leaves out. Girls: $120 - 70 = 50$. Boys who walk: 60% of the boys is $0.6 \\times 70 = 42$, so $70 - 42 = 28$ do not. Girls who walk: 35, so $50 - 35 = 15$ do not. Check: $42 + 28 + 35 + 15 = 120$ ✓.\n\nThe question chooses **a student who walks**. So the group being chosen from is the **walkers**, and that is the denominator. Walkers are spread across two end boxes — 42 boys and 35 girls — so the total is\n\n$$42 + 35 = 77$$\n\nOf those 77, the girls are 35. So\n\n$$P(\\text{girl} \\mid \\text{walks}) = \\frac{35}{77} = \\frac{5}{11}$$\n\ndividing top and bottom by 7.\n\n**Why not $\\frac{35}{50}$.** That fraction has the right number on top but the wrong group on the bottom. 50 is the number of **girls**, so $\\frac{35}{50}$ answers a different question: *a girl is chosen at random; what is the probability she walks?* It chooses from the girls and asks about walking. The question asked chooses from the **walkers** and asks about being a girl. Both use the same box, the 35 girls who walk, which is why they are easy to confuse — but the denominator is always the group the choice was made from, and the question names it: *a student who walks*.\n\nThe two answers are also numerically different, $\\frac{7}{10}$ against $\\frac{5}{11}$, so it is not a matter of writing the same thing two ways.\n\n**How a two-way table helps.** Laid out with rows for boys and girls and columns for walks and does not walk, the table has a **totals row** along the bottom: 77 walk and 43 do not. The denominator I needed is printed there directly. On the frequency tree, which splits by sex first, the walkers are in two separate boxes on opposite sides and their total appears nowhere — it has to be added up, and forgetting to is how $\\frac{35}{42}$ turns up as a wrong answer. Whenever a question chooses from a category on the **second** split, the table shows the denominator and the tree does not, so the table is the better view for that kind of question."
+    },
+    {
+      "id": "q19",
+      "prompt": "How many people had 20 lessons or fewer and failed?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "completing a frequency tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$160 - 90 = 70$ people had 20 lessons or fewer. 30 of them passed, so $70 - 30 = 40$ failed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "70 with 20 or fewer"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [],
+      "context": "driving-test",
+      "type": "numeric",
+      "answer": 40,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "One of the 160 people is chosen at random. What is the probability that they passed? Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "probability from a frequency tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$63 + 30 = 93$ passed out of 160: $\\dfrac{93}{160}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$63 + 30$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{93}{160}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "driving-test",
+      "type": "short-text",
+      "accepted": [
+        "93/160"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "One of the people who passed is chosen at random. What is the probability that they had more than 20 lessons? Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "conditional probability from a frequency tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$63 + 30 = 93$ people passed, and 63 of them had more than 20 lessons. $\\dfrac{63}{93} = \\dfrac{21}{31}$. Dividing by 160 instead answers a different question: the chance of choosing someone who both passed and had more than 20 lessons.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "93 passed"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{21}{31}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "driving-test",
+      "type": "short-text",
+      "accepted": [
+        "21/31"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Which statement compares the two groups correctly?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing proportions, not counts",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Compare pass rates, not numbers of passes: more than 20 lessons, $\\dfrac{63}{90} = 70\\%$; 20 or fewer, $\\dfrac{30}{70} \\approx 43\\%$ ($160 - 90 = 70$ people). The counts 63 and 30 come from groups of different sizes, so on their own they show nothing about the rate.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "pass rates 70% against 43%"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "driving-test",
+      "type": "multiple-choice",
+      "options": [
+        "More passes came from the group with more lessons, 63 against 30, so that group did better",
+        "The pass rate was 70% with more than 20 lessons and about 43% with 20 or fewer",
+        "The two groups cannot be compared because they are different sizes",
+        "The pass rate was higher with fewer lessons, because 30 out of 93 is about 32%"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "How many students have a pet?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "a fraction of an amount",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{3}{5} \\times 200 = 120$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "120"
+        }
+      ],
+      "discriminators": [],
+      "context": "pets-siblings",
+      "type": "numeric",
+      "answer": 120,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "How many students have a pet and a younger brother or sister?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "filling a frequency tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{3}{5} \\times 200 = 120$ have a pet, and 25% of 120 is 30.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "120 with a pet"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [],
+      "context": "pets-siblings",
+      "type": "numeric",
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "A student is chosen at random from the year group. Work out the probability that they have a younger brother or sister. Give your answer as a decimal.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "probability from two branches",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With a pet: $\\dfrac{3}{5} \\times 200 = 120$, and 25% of them, 30, have a younger sibling. Without a pet: 80, and 40% of them, 32. In all $30 + 32 = 62$ of 200: $62 \\div 200 = 0.31$. Averaging 25% and 40% gives 0.325, which ignores that more students have pets.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "30 and 32"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$62 \\div 200$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.31"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "pets-siblings",
+      "type": "numeric",
+      "answer": 0.31,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "In a swimming club the ratio of adults to children is 3 : 5. 40% of the adults swim in races. Overall, 50% of the club’s members swim in races. What percentage of the children swim in races?",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "working back through a frequency tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Imagine 80 members: 30 adults and 50 children. 40% of 30 is 12 adults. 50% of 80 is 40 racers, so $40 - 12 = 28$ are children. $28 \\div 50 = 56\\%$. Any total gives the same answer; using 60% so that 40% and 60% average to 50% ignores that there are more children.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a total split 3 : 5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "racing adults found"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "racing children found"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "56%"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 56,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q27",
+      "prompt": "Of 300 patients, 120 had a flu vaccine. 6 of the vaccinated patients and 36 of the unvaccinated patients caught flu. How many times more likely was an unvaccinated patient to catch flu than a vaccinated one?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "comparing risks",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Vaccinated: $6 \\div 120 = 0.05$. Unvaccinated: there were $300 - 120 = 180$, and $36 \\div 180 = 0.2$. $0.2 \\div 0.05 = 4$ times as likely. Comparing the counts, 36 and 6, gives 6 times, which ignores the different group sizes.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$6 \\div 120$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$36 \\div 180$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1239,9 +1526,18 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 67
     }
   },
   "examTechnique": {
@@ -1275,7 +1571,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },

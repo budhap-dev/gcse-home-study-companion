@@ -817,6 +817,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "flapjacks",
+      "body": "A recipe for 12 flapjacks uses 180 g of oats, 120 g of butter and 90 g of sugar."
+    },
+    {
+      "id": "juice-offers",
+      "body": "Orange juice is sold in three shops.\n\n| Shop | Offer |\n|---|---|\n| A | 750 ml for £1.35 |\n| B | 1.2 litres for £2.10 |\n| C | 500 ml bottles at 90p each, 3 for the price of 2 |"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1428,6 +1438,268 @@
         }
       ],
       "modelAnswer": "**Test one: divide.** Work out $\\dfrac{y}{x}$ for every pair.\n\n- **Constant** → **direct** proportion, and that value **is** $k$, so $y = kx$.\n\n**Test two: multiply.** If the quotient was not constant, work out $x \\times y$ for every pair.\n\n- **Constant** → **inverse** proportion, and that product is $k$, so $y = \\dfrac{k}{x}$.\n\n**Neither constant** → the relationship is neither kind.\n\n**A quick extra check:** doubling $x$ **doubles** $y$ in direct proportion and **halves** it in inverse."
+    },
+    {
+      "id": "q19",
+      "prompt": "How many grams of oats are needed for 30 flapjacks?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "scaling a recipe",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Per flapjack: $180 \\div 12 = 15$ g of oats. For 30: $15 \\times 30 = 450$ g.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$180 \\div 12 \\times 30$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "450"
+        }
+      ],
+      "discriminators": [],
+      "context": "flapjacks",
+      "type": "numeric",
+      "answer": 450,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "g"
+    },
+    {
+      "id": "q20",
+      "prompt": "Kai has 500 g of oats, 300 g of butter and 250 g of sugar. What is the greatest number of flapjacks Kai can make?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the ingredient that runs out first",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Per flapjack: oats 15 g, butter 10 g, sugar 7.5 g. Oats allow $500 \\div 15 = 33.3$, butter $300 \\div 10 = 30$, sugar $250 \\div 7.5 = 33.3$. The butter runs out first, so 30 flapjacks.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "each ingredient checked"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [],
+      "context": "flapjacks",
+      "type": "numeric",
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "Butter costs £2.40 for 250 g, oats cost £1.10 per kg and sugar costs 90p for 500 g. Paying only for the amounts used, work out the cost of the ingredients for 12 flapjacks, to the nearest penny.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "unit costs in mixed units",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Butter: $\\dfrac{120}{250} \\times 2.40 = $ £1.152. Oats: $0.18 \\text{ kg} \\times 1.10 = $ £0.198. Sugar: $\\dfrac{90}{500} \\times 0.90 = $ £0.162. Total £1.512, which is £1.51 to the nearest penny.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "one cost found correctly"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "all three, with oats in kg"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£1.51"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "flapjacks",
+      "type": "numeric",
+      "answer": 1.51,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the price of 100 ml of juice in shop A, in pence.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "unit price",
+      "calculator": "either",
+      "tags": [],
+      "solution": "£1.35 is 135p for 750 ml. 100 ml costs $135 \\div 7.5 = 18$p.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$135 \\div 7.5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "18"
+        }
+      ],
+      "discriminators": [],
+      "context": "juice-offers",
+      "type": "numeric",
+      "answer": 18,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "p"
+    },
+    {
+      "id": "q23",
+      "prompt": "Which is better value, shop A or shop B?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "comparing unit prices",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A: $135 \\div 7.5 = 18$p per 100 ml. B: 1.2 litres is 1200 ml, and $210 \\div 12 = 17.5$p per 100 ml. B is cheaper per 100 ml, so better value, even though the bottle costs more.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "B, with unit prices"
+        }
+      ],
+      "discriminators": [],
+      "context": "juice-offers",
+      "type": "multiple-choice",
+      "options": [
+        "A, because £1.35 is less than £2.10",
+        "B, because 100 ml costs 17.5p rather than 18p",
+        "They are the same value",
+        "A, because 100 ml costs 17.5p rather than 18p"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Buying 3 bottles in shop C, how much less per litre do you pay than in shop B?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "best buys with an offer",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Shop C: 3 bottles for the price of 2 is $2 \\times 90 = 180$p for 1.5 litres, so $180 \\div 1.5 = 120$p, £1.20, per litre. Shop B: $2.10 \\div 1.2 = $ £1.75 per litre. C is $1.75 - 1.20 = $ £0.55 a litre cheaper.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "C: £1.80 for 1.5 litres"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "£1.20 and £1.75 per litre"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£0.55"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "juice-offers",
+      "type": "numeric",
+      "answer": 0.55,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q25",
+      "prompt": "A map has a scale of 1 : 25 000. A lake on the map has an area of 12 cm². Work out the real area of the lake in km².",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "scales and area",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Each 1 cm on the map is 25 000 cm in real life, so each 1 cm² is $25\\,000^2 = 625\\,000\\,000$ cm². The lake is $12 \\times 625\\,000\\,000 = 7\\,500\\,000\\,000$ cm². A km is $100\\,000$ cm, so 1 km² is $10\\,000\\,000\\,000$ cm², and the lake is $7.5 \\times 10^{9} \\div 10^{10} = 0.75$ km². Scaling the area by 25 000 rather than its square gives an answer 25 000 times too small.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area scale factor $25\\,000^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$7.5 \\times 10^{9}$ cm²"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by $10^{10}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "km²"
+    },
+    {
+      "id": "q26",
+      "prompt": "Green paint is made by mixing blue and yellow paint in the ratio 2 : 3. Tom has 1.5 litres of blue and 2 litres of yellow. What is the greatest amount of green paint he can make? Give your answer to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the limiting amount in a ratio",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Using all the blue (1.5 litres = 2 parts) needs 2.25 litres of yellow, more than Tom has. So the yellow runs out first: 2 litres is 3 parts, so a part is $\\dfrac{2}{3}$ litre and the 5 parts of green are $5 \\times \\dfrac{2}{3} = 3.33$ litres. Starting from the blue gives 3.75 litres, which needs yellow Tom does not have.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "checks which colour runs out"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{3}$ litre per part"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3.33"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 3.33,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "litres"
     }
   ],
   "worksheets": {
@@ -1463,9 +1735,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 67
     }
   },
   "examTechnique": {
@@ -1499,7 +1779,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

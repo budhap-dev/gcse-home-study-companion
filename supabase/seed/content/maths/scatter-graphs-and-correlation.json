@@ -894,6 +894,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "revision-marks",
+      "body": "The table shows how many hours eight students revised and the mark each scored in a test out of 100. A line of best fit for the data passes through the points (2, 34) and (10, 82).\n\n| Hours revised | 2 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |\n|---|---|---|---|---|---|---|---|---|\n| Mark | 35 | 48 | 50 | 61 | 64 | 70 | 78 | 82 |"
+    },
+    {
+      "id": "engine-mpg",
+      "body": "For cars with engines from 1.0 to 3.0 litres, the line of best fit between engine size, $e$ litres, and fuel economy, $m$ miles per gallon, is $m = 62 - 12e$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1503,6 +1513,243 @@
       ],
       "modelAnswer": "The gradient of the line is 5, and on this graph y is the mark and x is the hours of revision. So the gradient is the change in mark for each extra hour: on average, a student who revises for one hour longer scores about 5 marks more.\n\nThe intercept is 31, which is the value of y when x is zero. In context that is the mark the line predicts for a student who did no revision at all: about 31 out of 100.\n\nThat second figure needs caution. The data collected covers 2 to 12 hours, so x = 0 lies outside it: no student in the sample did no revision. Reading the line there is extrapolation, and it assumes the straight-line trend continues below 2 hours when nothing was measured to show that it does. The intercept is a property of the line, not a finding about students who do not revise.",
       "suggestedMinutes": 6
+    },
+    {
+      "id": "q19",
+      "prompt": "What type of correlation does the data show?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "describing correlation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "As the hours go up, the marks go up: positive correlation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "positive"
+        }
+      ],
+      "discriminators": [],
+      "context": "revision-marks",
+      "type": "multiple-choice",
+      "options": [
+        "Positive correlation",
+        "Negative correlation",
+        "No correlation",
+        "It cannot be told from a table"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Use the line of best fit to estimate the mark of a student who revised for 3 hours.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "estimating from a line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The line rises $82 - 34 = 48$ marks over $10 - 2 = 8$ hours, 6 marks an hour. At 3 hours: $34 + 6 = 40$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "gradient 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [],
+      "context": "revision-marks",
+      "type": "numeric",
+      "answer": 40,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "The line of best fit gives an estimate of 112 marks for a student who revised for 15 hours. Why should this estimate not be trusted?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "the limits of a line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "15 hours is outside the data, which runs from 2 to 10 hours, so the trend may not carry on; and the test is out of 100, so 112 is impossible. Estimating outside the data is extrapolation.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "outside the data, and above 100"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "revision-marks",
+      "type": "multiple-choice",
+      "options": [
+        "The correlation is negative",
+        "15 hours is beyond the data, and the test is out of only 100",
+        "The line of best fit should pass through every point",
+        "Eight students are too few to draw any line"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Estimate the fuel economy of a car with a 2.5-litre engine.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "using the equation of a line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$62 - 12 \\times 2.5 = 62 - 30 = 32$ mpg.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "32"
+        }
+      ],
+      "discriminators": [],
+      "context": "engine-mpg",
+      "type": "numeric",
+      "answer": 32,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "mpg"
+    },
+    {
+      "id": "q23",
+      "prompt": "Estimate the engine size of a car that does 44 miles per gallon.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "rearranging a line of best fit",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$44 = 62 - 12e$, so $12e = 18$ and $e = 1.5$ litres.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12e = 18$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "engine-mpg",
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "litres"
+    },
+    {
+      "id": "q24",
+      "prompt": "What does the number $-12$ in $m = 62 - 12e$ tell you?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "interpreting a gradient in context",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$-12$ is the gradient: for each extra litre of engine size, the line predicts 12 fewer miles per gallon. 62 would be the mpg at 0 litres, which is outside the data and means nothing for a real car.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "each extra litre, about 12 mpg fewer"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "engine-mpg",
+      "type": "multiple-choice",
+      "options": [
+        "A car with a 12-litre engine does 0 mpg",
+        "The smallest engine in the data does 12 mpg",
+        "Fuel economy falls by 12% for each litre",
+        "Each extra litre of engine size goes with about 12 fewer miles per gallon"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "A line of best fit passes through the mean point of the data. The $x$ values are 2, 4, 6, 8 and 10, and the $y$ values are 15, 21, 30, 34 and 40. The line has gradient 3.2. Find where it crosses the $y$-axis.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a line of best fit through the mean point",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Mean point: $\\bar{x} = 30 \\div 5 = 6$ and $\\bar{y} = 140 \\div 5 = 28$. The line $y = 3.2x + c$ passes through (6, 28): $28 = 3.2 \\times 6 + c = 19.2 + c$, so $c = 8.8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "mean point (6, 28)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$28 = 3.2 \\times 6 + c$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 8.8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "A line of best fit passes through (20, 140) and (50, 80). Use it to estimate $y$ when $x = 35$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "interpolating along a line",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The gradient is $\\dfrac{80 - 140}{50 - 20} = -2$. From $x = 20$ to $x = 35$ is 15, so $y = 140 - 2 \\times 15 = 110$. (35 is halfway, and 110 is halfway between 140 and 80.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "gradient $-2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "110"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 110,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1538,9 +1785,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 59
     }
   },
   "examTechnique": {
@@ -1574,7 +1829,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

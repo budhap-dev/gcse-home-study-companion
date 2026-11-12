@@ -781,6 +781,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "counters-5-7",
+      "body": "A bag holds 5 red counters and 7 blue counters. Ella takes a counter at random and does not put it back. She then takes a second counter at random."
+    },
+    {
+      "id": "rain-late",
+      "body": "The probability that it rains on a school day is 0.3. If it rains, the probability that Sam is late for school is 0.4. If it does not rain, the probability that Sam is late is 0.1."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1350,6 +1360,291 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q19",
+      "prompt": "What is the probability that the first counter is red? Give your answer as a fraction.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "single-event probability",
+      "calculator": "either",
+      "tags": [],
+      "solution": "5 of the 12 counters are red: $\\dfrac{5}{12}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\dfrac{5}{12}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "counters-5-7",
+      "type": "short-text",
+      "accepted": [
+        "5/12"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "What is the probability that both counters are red? Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "without replacement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "First red: $\\dfrac{5}{12}$. Then 4 red are left of 11: $\\dfrac{4}{11}$. Both: $\\dfrac{5}{12} \\times \\dfrac{4}{11} = \\dfrac{20}{132} = \\dfrac{5}{33}$. Using $\\dfrac{5}{12}$ twice treats the first counter as put back.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{5}{12} \\times \\dfrac{4}{11}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{5}{33}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "counters-5-7",
+      "type": "short-text",
+      "accepted": [
+        "5/33"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "What is the probability that the two counters are different colours? Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "two routes through a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Red then blue: $\\dfrac{5}{12} \\times \\dfrac{7}{11} = \\dfrac{35}{132}$. Blue then red: $\\dfrac{7}{12} \\times \\dfrac{5}{11} = \\dfrac{35}{132}$. Either order: $\\dfrac{70}{132} = \\dfrac{35}{66}$. Counting only red then blue misses the other order.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "red then blue, or blue then red"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds both orders"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{35}{66}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "counters-5-7",
+      "type": "short-text",
+      "accepted": [
+        "35/66"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Ella takes a third counter, again without putting any back. What is the probability that all three counters are the same colour? Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "three events without replacement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "All red: $\\dfrac{5}{12} \\times \\dfrac{4}{11} \\times \\dfrac{3}{10} = \\dfrac{60}{1320}$. All blue: $\\dfrac{7}{12} \\times \\dfrac{6}{11} \\times \\dfrac{5}{10} = \\dfrac{210}{1320}$. Together $\\dfrac{270}{1320} = \\dfrac{9}{44}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "one of the two products"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds all red and all blue"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{9}{44}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "counters-5-7",
+      "type": "short-text",
+      "accepted": [
+        "9/44"
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the probability that it rains and Sam is late.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "dependent events on a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.3 \\times 0.4 = 0.12$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.3 \\times 0.4$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.12"
+        }
+      ],
+      "discriminators": [],
+      "context": "rain-late",
+      "type": "numeric",
+      "answer": 0.12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "Work out the probability that Sam is late.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "adding branches of a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rain and late: $0.3 \\times 0.4 = 0.12$. No rain and late: $0.7 \\times 0.1 = 0.07$. Late either way: $0.12 + 0.07 = 0.19$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.3 \\times 0.4 + 0.7 \\times 0.1$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.19"
+        }
+      ],
+      "discriminators": [],
+      "context": "rain-late",
+      "type": "numeric",
+      "answer": 0.19,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Sam is late one day. What is the probability that it rained that day? Give your answer as a fraction.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "conditional probability from a tree",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Of all the ways Sam can be late (probability $0.3 \\times 0.4 + 0.7 \\times 0.1 = 0.19$), the rainy one has probability $0.12$. So the probability it rained, given that Sam is late, is $\\dfrac{0.12}{0.19} = \\dfrac{12}{19}$. Answering 0.3 ignores that lateness makes rain more likely; 0.12 is the chance of rain and lateness together.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "P(late) = 0.19"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.12 \\div 0.19$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{12}{19}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "rain-late",
+      "type": "short-text",
+      "accepted": [
+        "12/19"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "A bag holds $n$ counters, 3 of which are red. Two counters are taken at random without replacement. The probability that both are red is $\\dfrac{1}{15}$. Find $n$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "forming an equation from a probability",
+      "calculator": "either",
+      "tags": [],
+      "solution": "P(both red) $= \\dfrac{3}{n} \\times \\dfrac{2}{n - 1} = \\dfrac{6}{n(n - 1)}$. Setting this to $\\dfrac{1}{15}$ gives $n(n - 1) = 90$, and $10 \\times 9 = 90$, so $n = 10$. (As a quadratic, $n^2 - n - 90 = 0$, $(n - 10)(n + 9) = 0$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{3}{n} \\times \\dfrac{2}{n - 1}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n(n - 1) = 90$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "solves"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "Asha and Ben each take one shot at a target. The probability that Asha hits it is 0.7, and the probability that Ben hits it is 0.6, independently. Work out the probability that exactly one of them hits the target.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "exactly one of two independent events",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Asha hits and Ben misses: $0.7 \\times 0.4 = 0.28$. Asha misses and Ben hits: $0.3 \\times 0.6 = 0.18$. Exactly one: $0.28 + 0.18 = 0.46$. $0.7 \\times 0.6 = 0.42$ is the chance both hit.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.7 \\times 0.4$ or $0.3 \\times 0.6$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the two"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.46"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 0.46,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1385,9 +1680,18 @@
         "q15",
         "q18",
         "q16",
-        "q17"
+        "q17",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 70
     }
   },
   "examTechnique": {
@@ -1421,7 +1725,9 @@
       "q13",
       "q14",
       "q15",
-      "q18"
+      "q18",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },
