@@ -950,8 +950,12 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   practicals 1.6 (microscope), 1.10 (amylase and pH) and 1.13B (food tests) each have a
   multi-part question. Genotype answers (tt, Tt) are marked case-sensitive, and the genetics
   stems use the topic's own allele notation (A, B, O; Xᴺ, Xⁿ) and cases the bank did not have.
-- [ ] **10. Biology: health, plants, animal coordination, exchange and ecosystems.** 19 topics.
+- [x] **10. Biology: health, plants, animal coordination, exchange and ecosystems.** 19 topics.
   Every Edexcel core practical has at least one multi-part question by the end of this box.
+  146 questions in v10.128.0: 38 multi-part questions and 38 longer grade 8 to 9 problems.
+  Core practicals 5.18B (antiseptics), 6.5 (light and photosynthesis), 8.11 (respirometer) and
+  9.5 (belt transect) each have one, so all eight core practicals the pack teaches are covered. Biology
+  is complete: 287 new questions over 38 topics, and section 13's four subjects are done.
 - [ ] **11. Further Maths.** Multi-part problems in the style of the 8365 papers' longer
   questions, including proof and show that.
 - [ ] **12. Challenge problems across topics.** Ten to twenty problems per subject for Maths and

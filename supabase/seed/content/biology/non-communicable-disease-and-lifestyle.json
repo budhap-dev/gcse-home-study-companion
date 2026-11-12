@@ -844,6 +844,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "smoking-study",
+      "body": "In a ten-year study of 10 000 men, 500 of the 2000 smokers and 400 of the 8000 non-smokers developed cardiovascular disease."
+    },
+    {
+      "id": "alcohol",
+      "body": "Alcohol is broken down in the liver. Units of alcohol = volume (cm³) × alcohol content (%) ÷ 1000."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1893,6 +1903,263 @@
         }
       ],
       "modelAnswer": "**Smoking.** Chemicals in cigarette smoke damage the lining of the arteries. **Fatty deposits** build up where the lining is damaged, and the arteries narrow, including the **coronary arteries** that supply the heart muscle. **Nicotine** raises the heart rate and the blood pressure, which damages the artery walls further, and **carbon monoxide** reduces the amount of oxygen the blood can carry, so the heart has to work harder for the same supply. Twenty cigarettes a day means this damage is happening continuously.\n\n**BMI.** BMI is mass divided by height squared, and 31 is above 30, so he is in the **obese** range. Energy taken in beyond what he uses has been stored as fat. Obesity raises **blood pressure** and the level of **cholesterol** in the blood, both of which speed the build-up of fatty deposits in the arteries, so it raises the risk of cardiovascular disease, as well as of type 2 diabetes, itself a risk factor for heart disease.\n\n**Waist-to-hip ratio.** A ratio of 1.02 is well above 0.90, so his waist is wider than his hips and the fat is stored around the **abdomen**. Fat stored there is linked to a higher risk of cardiovascular disease than fat stored elsewhere. The ratio tells the doctor something BMI cannot: BMI uses only mass and height, so it cannot say where the fat is stored. Here the two measures agree.\n\n**What is at stake.** Narrowed coronary arteries can be blocked completely by a clot. The heart muscle beyond the blockage receives no oxygen, cannot respire and stops working: a **heart attack**.\n\n**Why the doctor is right.** Non-communicable diseases are caused by the **interaction of a number of factors**. Each of these three raises the risk on its own, and together they act on the same arteries at once: smoking damages the lining, while the fat and the strain on the heart make the deposits build up faster. The combined risk is therefore greater than any single figure suggests. It is still a **risk, not a certainty**: these factors make a heart attack more likely, not inevitable, and because they are lifestyle factors they can be changed. Stopping smoking, eating less saturated fat and taking more exercise would lower all three risks at once, which is why the doctor raises them together."
+    },
+    {
+      "id": "q31",
+      "prompt": "What percentage of the smokers developed the disease?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "risk from data",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$500 \\div 2000 \\times 100 = 25\\%$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "25"
+        }
+      ],
+      "discriminators": [],
+      "context": "smoking-study",
+      "type": "numeric",
+      "answer": 25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q32",
+      "prompt": "What percentage of the non-smokers developed the disease?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "risk from data",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$400 \\div 8000 \\times 100 = 5\\%$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "context": "smoking-study",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q33",
+      "prompt": "How many times more likely were smokers to develop the disease?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "relative risk",
+      "step": "s11",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$25\\% \\div 5\\% = 5$ times. Comparing the raw counts, 500 and 400, would mislead, because the groups are different sizes.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "compares percentages"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "smoking-study",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q34",
+      "prompt": "Does this study prove that smoking causes cardiovascular disease?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "correlation and cause",
+      "step": "s11",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It shows a strong correlation. On its own it cannot rule out other factors, but together with a known mechanism (chemicals in smoke damage blood vessels and raise blood pressure) it is strong evidence of cause.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "correlation, made stronger by a mechanism"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "smoking-study",
+      "type": "multiple-choice",
+      "options": [
+        "Yes: a higher percentage of smokers became ill, which proves it",
+        "No, because some non-smokers became ill too",
+        "It shows a correlation; a known mechanism makes cause likely",
+        "No, because the study lasted only ten years"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q35",
+      "prompt": "What is cirrhosis of the liver?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "alcohol and the liver",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Long-term damage in which liver cells die and are replaced by scar tissue, so the liver works less well.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "liver cells replaced by scar tissue"
+        }
+      ],
+      "discriminators": [],
+      "context": "alcohol",
+      "type": "multiple-choice",
+      "options": [
+        "The liver grows extra cells and becomes larger",
+        "The liver stores too much glycogen",
+        "A bacterial infection of the liver",
+        "Liver cells are replaced by scar tissue"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q36",
+      "prompt": "Calculate the units of alcohol in a 568 cm³ drink that is 5.0% alcohol, to 2 decimal places.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "units of alcohol",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$568 \\times 5.0 \\div 1000 = 2.84$ units.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$568 \\times 5.0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.84"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "alcohol",
+      "type": "numeric",
+      "answer": 2.84,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q37",
+      "prompt": "A person’s waist-to-hip ratio is 0.95, with hips of 100 cm. They lose 8 cm from the waist, and the hips stay the same. What is the new ratio, to 2 decimal places?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "waist-to-hip ratio",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Waist $= 0.95 \\times 100 = 95$ cm, so now 87 cm. $87 \\div 100 = 0.87$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "waist 95 cm"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "87 cm"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.87"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 0.87,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q38",
+      "prompt": "Cardiovascular disease is said to have many causes. Explain this using two risk factors.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "risk factors",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "No single factor causes it; several raise the risk together. A diet high in saturated fat raises cholesterol, which builds up in artery walls. Smoking damages artery walls and raises blood pressure. Each adds to the risk, and someone with both is at much higher risk.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Named a first risk factor with how it acts"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Named a second risk factor with how it acts"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Said risk factors add to each other, none being the only cause"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Named a first risk factor with how it acts",
+          "marks": 1
+        },
+        {
+          "text": "Named a second risk factor with how it acts",
+          "marks": 1
+        },
+        {
+          "text": "Said risk factors add to each other, none being the only cause",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "e.g. saturated fat → cholesterol in arteries; smoking → damaged arteries, higher blood pressure; risks combine."
     }
   ],
   "worksheets": {
@@ -1940,9 +2207,17 @@
         "q24",
         "q27",
         "q29",
-        "q30"
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37",
+        "q38"
       ],
-      "suggestedMinutes": 59
+      "suggestedMinutes": 74
     }
   },
   "examTechnique": {
@@ -1980,7 +2255,8 @@
       "q24",
       "q25",
       "q26",
-      "q27"
+      "q27",
+      "q37"
     ],
     "sampleSize": 10
   },

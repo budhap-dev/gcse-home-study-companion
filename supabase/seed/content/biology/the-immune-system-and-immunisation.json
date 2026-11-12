@@ -742,6 +742,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "measles",
+      "body": "A town has 40 000 people, and 92% are vaccinated against measles. About 95% must be vaccinated to stop measles spreading (herd immunity)."
+    },
+    {
+      "id": "antibodies",
+      "body": "Lymphocytes make antibodies."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1791,6 +1801,243 @@
         }
       ],
       "modelAnswer": "**The first response.** When the pathogen entered the body for the first time, the antigens on its surface were recognised as foreign. This triggered the specific immune system: the few lymphocytes able to make an antibody complementary to that antigen were activated and began to divide and produce antibodies. That takes time, which is why no antibody could be detected for 7 days and why the peak, on day 14, was only 15 units. During that week the pathogen was multiplying unchecked, so the person was ill. The antigens also triggered the production of memory lymphocytes. Once the infection was over the antibodies were broken down and had disappeared by day 50, but the memory lymphocytes stayed in the blood.\n\n**The second response.** On day 90 the same antigens arrived again. This time the memory lymphocytes recognised them immediately and divided rapidly into antibody-producing cells, so antibodies were detectable within a day and the peak on day 94 was 240 units, sixteen times the first peak and reached in 4 days rather than 14. The pathogen was destroyed before it could multiply enough to damage cells, so there were no symptoms: the person was immune.\n\n**How vaccination uses this.** A vaccine contains an inactive form of the pathogen, killed or weakened so that it cannot cause the disease, but still carrying the same antigens. Injecting it triggers the slow primary response, including the production of memory lymphocytes, while the person stays well. If the real pathogen ever arrives, it meets the fast, large secondary response rather than the slow primary one, exactly as on day 90, and the disease never develops. Vaccination gives a person the second response without having had the first illness."
+    },
+    {
+      "id": "q32",
+      "prompt": "How many people are not vaccinated?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading vaccination data",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "8% of 40 000 $= 3200$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8%"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3200"
+        }
+      ],
+      "discriminators": [],
+      "context": "measles",
+      "type": "numeric",
+      "answer": 3200,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q33",
+      "prompt": "How many more people must be vaccinated to reach 95%?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "reaching a coverage target",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "95% is 38 000 and 92% is 36 800: 1200 more.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "38 000 and 36 800"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1200"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "measles",
+      "type": "numeric",
+      "answer": 1200,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q34",
+      "prompt": "How does high vaccination coverage protect someone who cannot be vaccinated?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "herd immunity",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "So few people can catch and pass on measles that the pathogen is unlikely to reach them.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the pathogen is unlikely to reach them"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "measles",
+      "type": "multiple-choice",
+      "options": [
+        "They catch immunity from vaccinated people",
+        "Vaccines spread through the air to them",
+        "The pathogen is unlikely to reach them",
+        "They make antibodies from others’ memory cells"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q35",
+      "prompt": "Why does each antibody work against only one kind of pathogen?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "specific antibodies",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Its shape is complementary to one specific antigen.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "complementary to one antigen"
+        }
+      ],
+      "discriminators": [],
+      "context": "antibodies",
+      "type": "multiple-choice",
+      "options": [
+        "It is made in only one organ of the body",
+        "It only works at one temperature",
+        "Pathogens all have the same antigens",
+        "Its shape fits only one specific antigen"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q36",
+      "prompt": "Why is a new flu vaccine needed every year?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why some vaccines change",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The flu virus mutates, so its antigens change and memory cells from before no longer recognise it.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the virus’s antigens change"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "antibodies",
+      "type": "multiple-choice",
+      "options": [
+        "The virus mutates, so its antigens change",
+        "Memory cells all die after a year",
+        "Antibodies from last year poison the body",
+        "Vaccines stop working when they are stored"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q37",
+      "prompt": "After a vaccination, the antibody level is 5 units on day 4 and then doubles every day. On which day does it first go above 300 units?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "growth of the immune response",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Day 4: 5; 5: 10; 6: 20; 7: 40; 8: 80; 9: 160; 10: 320. Day 10.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "doubles each day"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "160 on day 9"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q38",
+      "prompt": "Describe what happens in the body after a pathogen enters it for the first time, from antigen to immunity.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the immune response",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Lymphocytes with antibodies complementary to the pathogen’s antigens recognise it. They divide many times and make large amounts of the antibody, which binds to the pathogen so it can be destroyed. Memory lymphocytes remain, so a second infection is met quickly.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Lymphocytes recognise the antigen"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "They divide and make specific antibodies"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Memory lymphocytes remain for later"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Lymphocytes recognise the antigen",
+          "marks": 1
+        },
+        {
+          "text": "They divide and make specific antibodies",
+          "marks": 1
+        },
+        {
+          "text": "Memory lymphocytes remain for later",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Antigen recognised → lymphocytes divide → antibodies made → pathogen destroyed → memory lymphocytes remain."
     }
   ],
   "worksheets": {
@@ -1839,9 +2086,16 @@
         "q25",
         "q28",
         "q30",
-        "q31"
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37",
+        "q38"
       ],
-      "suggestedMinutes": 60
+      "suggestedMinutes": 74
     }
   },
   "examTechnique": {
@@ -1880,7 +2134,8 @@
       "q25",
       "q26",
       "q27",
-      "q28"
+      "q28",
+      "q37"
     ],
     "sampleSize": 10
   },
