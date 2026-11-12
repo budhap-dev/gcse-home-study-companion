@@ -5,7 +5,7 @@ add the PR number; add new work here as it is found, not in a separate note. Sto
 (`LRN-2`, `PAR-4`) refer to [stories.md](stories.md), where the acceptance criteria live;
 [plan.md](plan.md) holds the delivery plan these came from.
 
-Last reviewed: 11 November 2026.
+Last reviewed: 12 November 2026.
 
 **Development closed on 27 September 2026**, at the owner's request, with content (1) and
 testing and validation (2) complete. The product features in section 3 are **not planned**:
@@ -838,6 +838,79 @@ One PR per box, ticked in the PR that finishes it.
   marks drop a box, and the most overdue for its gap come first; the recap grows from five to ten
   when more are due and tops up by need when fewer are. A skill is listed as weak below 70% of its
   marks, with answers halving in weight every 14 days, and links to the lesson step that checks it.
+
+## 13. Harder questions for Maths and the sciences (12 November 2026)
+
+Asked 12 November 2026: "I want some more questions and answers - may even more complex -
+especially sciences and maths - can you plan for that". Waiting for the owner's go-ahead.
+
+**Where the bank stands.** Maths has 1,345 questions over 72 topics, Physics 653 over 34,
+Chemistry 854 over 47, Biology 1,129 over 38 and Further Maths 397 over 22. The generators
+already give new numbers on every retry for most numeric questions, so a retry is not a repeat.
+What the bank lacks is the shape of a real paper question:
+
+- **Almost everything is one short question.** 54% of Maths questions and 80% of Chemistry
+  questions are worth 1 mark. Only 10% of Maths, 10% of Chemistry and 15% of Physics questions
+  are worth 4 marks or more, and Chemistry has just 26 three-mark questions.
+- **There are no multi-part questions.** A paper question gives a context, a table or a graph,
+  then asks (a), (b), (c), each part building on the one before. The schema has no way to do
+  that, so the few that try it put "(a)" and "(b)" inside one prompt with one answer box.
+- **Few questions show data.** 23 Maths, 16 Physics, 2 Biology and no Chemistry questions carry
+  a graph or diagram, though reading data is a large share of every science paper.
+- **Required practicals are thin.** Only 40 Physics, 22 Chemistry and 44 Biology questions
+  mention a practical at all. The boards examine method, variables, errors and data from each one.
+- **Grade 8–9 is mostly multiple choice.** 44% of each bank is labelled 8–9, but many of those
+  are one-mark options. A grade 9 question is usually a 4–6 mark problem in an unfamiliar context.
+
+**What is added.** About 1,000 new questions, written and checked one subject at a time:
+
+| Subject | Topics | New per topic | About | Kinds |
+|---|---|---|---|---|
+| Maths (Edexcel 1MA1) | 72 | 4 | 290 | 2 multi-part, 2 problem-solving (4–6 marks) |
+| Physics (AQA 8463) | 34 | 6 | 200 | multi-part with data, calculation chains, required practicals |
+| Chemistry (AQA 8462) | 47 | 6 | 280 | multi-step moles, data, 6-mark explain, required practicals |
+| Biology (Edexcel 1BI0) | 38 | 5 | 190 | data and graphs, maths skills, core practicals, 6-mark |
+| Further Maths (AQA 8365) | 22 | 4 | 90 | multi-part 6–8 mark problems, proof |
+
+Every new question follows the content rules already held by tests and memory: it stands
+alone without the lesson, its figures are checked by a script before it is written, any claim
+about the specification traces to the board's PDF, accepted answers are checked against the
+prompt, and its examples cannot make a false rule look true. The numeric parts get generators
+with a second-method check, so a retry draws new numbers as the rest of the bank does. Each
+subject is read by reviewer agents before it ships, and walked in the browser at phone and
+laptop width. New questions join the topic's question list, its Advanced worksheet, unit tests,
+grade 9 sets and spaced review; ids and progress for existing questions do not change.
+
+Nothing here needs a paid service: the questions are bundled with the app as the rest are.
+One PR per box, ticked in the PR that finishes it. Stop and report after each subject.
+
+- [ ] **1. Multi-part questions.** A new question type: a shared stem with an optional table,
+  graph or diagram, then two to five parts, each one an existing type (numeric, short text,
+  multiple choice, ordering or a self-marked extended answer). The question's marks are the
+  sum of its parts. Each part is marked on its own when it is answered, so a slip in (a) does
+  not cost (b), and an extended part is self-marked by its criteria as today. Works on the
+  topic page, on worksheets (printed with the stem once and space per part), on the paper
+  screen, in unit tests and grade 9 sets, and in spaced review. Content validation checks that
+  the marks add up, part letters run in order and the stem holds every figure a part needs.
+  Ships with one example per subject below, so the type is proved before the bulk is written.
+- [ ] **2. Maths: number, ratio, probability and statistics.** 29 topics.
+- [ ] **3. Maths: algebra.** 23 topics, including graphs and sequences.
+- [ ] **4. Maths: geometry and measures.** 20 topics.
+- [ ] **5. Physics: energy, the particle model and forces.** 15 topics.
+- [ ] **6. Physics: electricity, waves, magnetism, atoms and space.** 19 topics. Every AQA
+  required practical has at least one multi-part question by the end of this box.
+- [ ] **7. Chemistry: atoms, bonding, quantities and chemical changes.** 22 topics. Most of
+  the multi-step mole and concentration problems sit here.
+- [ ] **8. Chemistry: energy, rates, organic, analysis, atmosphere and resources.** 25 topics.
+  Every AQA required practical has at least one multi-part question by the end of this box.
+- [ ] **9. Biology: key concepts, cells and control, genetics and natural selection.** 19 topics.
+- [ ] **10. Biology: health, plants, animal coordination, exchange and ecosystems.** 19 topics.
+  Every Edexcel core practical has at least one multi-part question by the end of this box.
+- [ ] **11. Further Maths.** Multi-part problems in the style of the 8365 papers' longer
+  questions, including proof and show that.
+- [ ] **12. Challenge problems across topics.** Ten to twenty problems per subject for Maths and
+  the three sciences that need two or more units at once (for example forces with energy, or
+  algebra with geometry), as a "Challenge" set on the subject page beside the grade 9 sets.
 
 ## 3. Product features (not planned)
 
