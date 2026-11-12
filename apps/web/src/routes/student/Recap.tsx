@@ -8,6 +8,7 @@ import { useTopics } from '../../content/load.ts'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import { loadInProgress, RECAP_KEY, saveInProgress } from '../../progress/inProgress.ts'
 import { RECAP_MIN_TOPICS, recapItems, studied } from '../../progress/recap.ts'
+import { dueQuestions } from '../../progress/spaced.ts'
 import { itemKey, recordReview, type SessionAnswers, type SessionItem } from '../../progress/reviewSession.ts'
 import { isoDate, type ProgressState } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
@@ -74,10 +75,12 @@ export function Recap() {
 
   if (!session) {
     const roundDone = done.asked.size > 0
+    const due = dueQuestions(TOPICS, progress, new Date(), done.asked).length
+    const next = ready ? recapItems(TOPICS, progress, new Date(), done.asked).length : 0
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">Daily recap</p>
-        <h1 className="text-3xl font-bold leading-tight">{roundDone ? "Today's recap is done" : 'Five questions, mixed'}</h1>
+        <h1 className="text-3xl font-bold leading-tight">{roundDone ? "Today's recap is done" : `${next || 'Five'} questions, mixed`}</h1>
         {!ready ? (
           <>
             <p className="text-ink-2">The recap asks about topics you have already studied. Finish a lesson or a quiz in {RECAP_MIN_TOPICS} topics and it starts.</p>
@@ -85,17 +88,19 @@ export function Recap() {
           </>
         ) : roundDone ? (
           <>
-            <p className="text-ink-2"><strong className="text-ink">{done.right} of {done.asked.size}</strong> right today. A new mix is ready tomorrow, or have another five now.</p>
+            <p className="text-ink-2"><strong className="text-ink">{done.right} of {done.asked.size}</strong> right today. {due > 0 ? `${due} more ${due === 1 ? 'question is' : 'questions are'} due for review: have another round now, or leave them for tomorrow.` : 'A new mix is ready tomorrow, or have another round now.'}</p>
             <div className="flex flex-col gap-2 sm:flex-row">
-              <button type="button" onClick={start} className={`${BUTTON} bg-ink text-surface`}>Another five</button>
+              <button type="button" onClick={start} className={`${BUTTON} bg-ink text-surface`}>Another round</button>
               <Link to="/" className={`${BUTTON} border border-rule bg-surface`}>Home</Link>
             </div>
           </>
         ) : (
           <>
             <p className="text-ink-2">
-              One question from each of the topics you have studied that most need bringing back: the ones you saw longest ago, and the weaker ones sooner.
-              Remembering something after a gap is what makes it stay. About five minutes.
+              {due > 0
+                ? `${Math.min(due, next)} ${Math.min(due, next) === 1 ? 'is a question' : 'are questions'} due for review today: each one you get right comes back after a longer gap (3 days, then a week, two weeks, a month), and one you get wrong comes back tomorrow. `
+                : 'Questions from the topics you have studied that most need bringing back: the ones you saw longest ago, and the weaker ones sooner. '}
+              Remembering something after a gap is what makes it stay. About {next || 5} minutes.
             </p>
             <p className="text-sm text-ink-2">It earns XP and does not change any topic's status. A question you get wrong waits for you in Redo my mistakes.</p>
             <button type="button" onClick={start} className={LONE}>Start</button>
@@ -131,7 +136,7 @@ export function Recap() {
         <p className="text-ink-2">{wrong ? `The ${wrong === 1 ? 'one' : wrong} you got wrong ${wrong === 1 ? 'is' : 'are'} waiting in Redo my mistakes.` : 'All right. That is what remembering looks like.'} A new mix is ready tomorrow.</p>
         <div className="flex flex-col gap-2 sm:flex-row">
           <Link to="/" onClick={() => setSession(null)} className={`${BUTTON} bg-ink text-surface`}>Home</Link>
-          <button type="button" onClick={start} className={`${BUTTON} border border-rule bg-surface`}>Another five</button>
+          <button type="button" onClick={start} className={`${BUTTON} border border-rule bg-surface`}>Another round</button>
         </div>
       </article>
     )

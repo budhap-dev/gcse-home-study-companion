@@ -9,7 +9,7 @@ import { summaryById, totalMarks } from '../../content/index.ts'
 import { nextRung, square } from '../../progress/map.ts'
 import { MasteryLadder } from '../../components/map/MapParts.tsx'
 import { useProgress } from '../../progress/useProgress.ts'
-import { decayNote, evidenceFor } from '../../progress/store.ts'
+import { decayNote, evidenceFor, type ProgressState } from '../../progress/store.ts'
 import { ResetProgress } from '../../components/ResetProgress.tsx'
 import { suggestedLevel } from '../../progress/level.ts'
 import { openSession, quizKey, worksheetKey } from '../../progress/inProgress.ts'
@@ -21,6 +21,7 @@ import { SubjectTile, useRandomIcon } from '../../components/SubjectTile.tsx'
 import { useWide } from '../../components/useWide.ts'
 import { Listen } from '../../components/Listen.tsx'
 import { TopicMissing } from '../../components/TopicMissing.tsx'
+import { weakestSkills } from '../../progress/spaced.ts'
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -220,6 +221,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
                 </div>
               ))}
             </dl>
+            <WeakSkills topic={topic} progress={progress} />
           </section>
 
           <nav aria-label="Practise" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -331,6 +333,36 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
  * subject's pictures drifting round it, different ones on each visit. It takes the width the
  * text leaves, rather than sitting beside the text and leaving a gap at the end.
  */
+/**
+ * The skills in this topic that recent answers say are weakest (TRK-2), each with the lesson
+ * step that practises it where there is one. Nothing is shown until a skill has slipped.
+ */
+function WeakSkills({ topic, progress }: { topic: TopicRecord; progress: ProgressState }) {
+  const weak = weakestSkills(topic.id, progress)
+  if (!weak.length) return null
+  const stepFor = (skill: string) => topic.lesson.steps.findIndex((st) => st.check?.skill === skill)
+  return (
+    <div className="flex flex-col gap-1.5">
+      <h3 className="text-sm font-bold">Skills to work on</h3>
+      <ul className="flex flex-col gap-1.5">
+        {weak.map((w) => {
+          const step = stepFor(w.skill)
+          return (
+            <li key={w.skill} className="flex items-center justify-between gap-3 rounded-lg bg-panel px-3 py-2 text-sm">
+              <span className="min-w-0">
+                <span className="font-bold first-letter:uppercase">{w.skill}</span>
+                {step >= 0 && <> · <Link to={`/subjects/${topic.subjectId}/topics/${topic.id}/lesson?step=${step + 1}`} className="underline">lesson step {step + 1}</Link></>}
+              </span>
+              <span className="shrink-0 tabular-nums text-ink-2">{Math.round(w.score * 100)}% · {w.answers} {w.answers === 1 ? 'answer' : 'answers'}</span>
+            </li>
+          )
+        })}
+      </ul>
+      <p className="text-xs text-ink-2">Share of marks on each skill, newer answers counting more. The daily recap brings these back.</p>
+    </div>
+  )
+}
+
 function HeroPicture({ subject, done, total }: { subject: { id: string; colour: string }; done: number; total: number }) {
   const first = useRandomIcon(subject.id)
   const spots = ['-translate-x-[130px] -translate-y-[92px]', 'translate-x-[118px] translate-y-[8px]', '-translate-x-[112px] translate-y-[84px]']

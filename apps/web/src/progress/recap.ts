@@ -1,9 +1,11 @@
 import type { GradeBand, TopicStatus } from '@study/shared'
 import type { TopicSummary as Topic } from '../content/index.ts'
 import { evidenceFor, isoDate, lastActivity, type ProgressState } from './store.ts'
+import { dueQuestions } from './spaced.ts'
 
-/** Questions in one day's recap. */
+/** Questions in one day's recap, and the most it grows to when more than that are due (TRK-3). */
 export const RECAP_SIZE = 5
+export const RECAP_MAX = 10
 /** Fewer studied topics than this and a recap would be one topic's quiz under another name. */
 export const RECAP_MIN_TOPICS = 2
 
@@ -48,18 +50,38 @@ function hash(s: string): number {
 }
 
 /**
- * The day's recap (QZ-3, TRK-3): RECAP_SIZE questions spread across the topics the student
- * has studied, one per topic while there are topics to go round. Topics are taken by need
- * (see WEIGHT), skipping any touched today, which is fresh already. Within a topic: a
- * question last got wrong first, then one never answered, then the one answered longest
- * ago, from the grade band nearest the topic's status. Only questions the app marks.
+ * The day's recap (QZ-3, TRK-3). First the questions due for review (spaced.ts), the most
+ * overdue first and the topics taking turns; when more than RECAP_SIZE are due the recap grows
+ * to RECAP_MAX, and anything still due waits for another round. The rest of the places are
+ * filled by need, as before the schedule existed (`byNeed`).
  *
  * Empty when fewer than RECAP_MIN_TOPICS topics are studied. `exclude` holds questions
- * already asked today, so a second round is a new five.
+ * already asked today, so a second round is a new set.
  */
 export function recapItems(topics: Topic[], state: ProgressState, now = new Date(), exclude: ReadonlySet<string> = new Set()): RecapItem[] {
+  if (studied(topics, state).length < RECAP_MIN_TOPICS) return []
+  const due = dueQuestions(topics, state, now, exclude)
+  const size = Math.min(RECAP_MAX, Math.max(RECAP_SIZE, due.length))
+  const queues = new Map<string, string[]>()
+  for (const d of due) queues.set(d.topicId, [...(queues.get(d.topicId) ?? []), d.questionId])
+  const out: RecapItem[] = []
+  for (let round = 0; out.length < size && [...queues.values()].some((q) => q.length > round); round++) {
+    for (const [topicId, ids] of queues) if (out.length < size && ids[round]) out.push({ topicId, questionId: ids[round]! })
+  }
+  if (out.length >= size) return out
+  const taken = new Set([...exclude, ...out.map((m) => `${m.topicId}/${m.questionId}`)])
+  return [...out, ...byNeed(topics, state, now, taken, size - out.length)]
+}
+
+/**
+ * Questions chosen by need: `size` of them spread across the topics the student has studied,
+ * one per topic while there are topics to go round. Topics are taken by need (see WEIGHT),
+ * skipping any touched today, which is fresh already. Within a topic: a question last got
+ * wrong first, then one never answered, then the one answered longest ago, from the grade band
+ * nearest the topic's status. Only questions the app marks.
+ */
+function byNeed(topics: Topic[], state: ProgressState, now: Date, exclude: ReadonlySet<string>, size: number): RecapItem[] {
   const pool = studied(topics, state)
-  if (pool.length < RECAP_MIN_TOPICS) return []
   const today = isoDate(now)
 
   // The last time each question was answered, and whether that answer was right.
@@ -97,9 +119,9 @@ export function recapItems(topics: Topic[], state: ProgressState, now = new Date
 
   // Round robin: the neediest topic's best question, then the next topic's, and round again.
   const out: RecapItem[] = []
-  for (let round = 0; out.length < RECAP_SIZE && queues.some((q) => q.ids.length > round); round++) {
+  for (let round = 0; out.length < size && queues.some((q) => q.ids.length > round); round++) {
     for (const q of queues) {
-      if (out.length >= RECAP_SIZE) break
+      if (out.length >= size) break
       const id = q.ids[round]
       if (id) out.push({ topicId: q.topicId, questionId: id })
     }
