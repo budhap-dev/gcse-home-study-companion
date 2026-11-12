@@ -823,10 +823,12 @@ One PR per box, ticked in the PR that finishes it.
   it moves the topic's status as the untimed sheet does, with the time allowed and used. Method
   marks for a wrong typed answer are given on the paper's result screen, by the worksheet's rule
   (one short of the whole), for unit tests too.
-- [ ] **5. Grade 9 problem sets (WKP-5, WKS-6).** For each unit, eight grade 8 to 9 problems from
-  the reviewed questions, the longest and most multi-step first, spread across the unit's topics; a
-  new set on each press. Every unit in the pack has at least nine such questions. Full worked
-  solutions and mark schemes after hand-in; timed or not.
+- [x] **5. Grade 9 problem sets (WKP-5, WKS-6).** For each unit card, eight grade 8 to 9 problems
+  from the reviewed questions, spread across the card's topics, leaning to the ones worth most
+  marks and running from fewest marks to most; a new mix on each press. Every unit card in the
+  pack, in each year and for all years, has enough for a full set. Full worked solutions and mark
+  schemes after hand-in; timed or not. Shipped in v10.115.0: a "Grade 9 set" button beside each
+  unit test, `grade9Items` in `content/paper.ts`, recorded per topic as a review.
 - [ ] **6. Skill mastery and spaced review (TRK-2, TRK-3).** Each question answered gets its next
   review date at growing intervals (1, 3, 7, 16, 35, 80 days; a wrong answer starts it again). The
   daily recap asks what is due first, across subjects, then tops up by topic need as today. Home
@@ -884,7 +886,7 @@ listed below. Each box is the missing part of a story, not the whole story.
 - [x] **QZ-4:** wrong-answer bank. Redo my mistakes (`/mistakes`, and a card on Home) asks up to 15
   questions got wrong, newest first; two right in a row clears one (WKP-1).
 - [x] **WKS-4:** mixed-topic worksheet. Make a worksheet (#381), section 5 item 8.
-- [ ] **WKS-6:** grade 9 problem set per unit.
+- [x] **WKS-6:** grade 9 problem set per unit (section 12, item 5).
 - [x] **WKS-5:** timed paper mode (section 12, item 4).
 - [ ] **PAR-3:** weekly email digest.
 - [x] **ADM-4:** report a mistake in content. A link under every lesson step and question sends
