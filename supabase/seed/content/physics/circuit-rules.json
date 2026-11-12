@@ -759,6 +759,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "series-4-8",
+      "body": "A 12 V battery is connected in series with a 4.0 Ω resistor and an 8.0 Ω resistor."
+    },
+    {
+      "id": "parallel-3-6",
+      "body": "A 6.0 V battery is connected to a 3.0 Ω resistor and a 6.0 Ω resistor in parallel."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1357,6 +1367,277 @@
         }
       ],
       "modelAnswer": "**Step 1 — the total resistance.** The resistors are in series, so their resistances add:\n\n$$R_{total} = 4 + 8 = \\mathbf{12\\ \\Omega}$$\n\nThis is the **equivalent resistance**: the whole circuit now behaves exactly as a single 12 Ω resistor would.\n\n**Step 2 — the current.** Using $V = IR$ rearranged, with the **supply** potential difference and the **total** resistance:\n\n$$I = \\frac{V}{R_{total}} = \\frac{12}{12} = \\mathbf{1\\ A}$$\n\nIt is essential to use the **total** resistance here. Dividing 12 V by just the 4 Ω resistor would give 3 A, which is three times too large, because the current is opposed by **everything** in the single path — not by one component at a time.\n\n**Step 3 — the current through each resistor.** In a series circuit there is only **one path**, so the **same current flows through every component**. Both resistors therefore carry **1 A**. This is the step that makes the rest possible: one current, used twice.\n\n**Step 4 — the potential difference across each.** Now apply $V = IR$ to each resistor separately, using the **individual** resistance and the current just found:\n\nAcross the 4 Ω resistor: $V = 1 \\times 4 = \\mathbf{4\\ V}$\n\nAcross the 8 Ω resistor: $V = 1 \\times 8 = \\mathbf{8\\ V}$\n\nNotice that the **larger resistance takes the larger share** of the potential difference. That follows directly from $V = IR$ with a common current: the pd divides in **proportion to the resistance**. The 8 Ω resistor has twice the resistance, so it takes twice the pd.\n\n**How to check.** The strongest check is that in a series circuit the **potential differences across the components must add up to the supply potential difference**, since the supply pd is shared between them:\n\n$$4 + 8 = 12\\ \\text{V} \\quad \\checkmark$$\n\nThis matches the 12 V supply, so the answers are consistent. The check is free, takes seconds, and catches almost every arithmetic or rearrangement slip in a series calculation — if the pds had come to 10 V or 16 V, there would be a mistake to find.\n\nA second check is on **plausibility**: 1 A through 12 Ω requires 12 V, which is what the supply provides. A third would be to verify with power: $P = VI = 12 \\times 1 = 12$ W for the whole circuit, and $4 \\times 1 + 8 \\times 1 = 12$ W across the two resistors — the energy transferred in the components accounts for all the energy supplied."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the total resistance of the circuit.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "resistance in series",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In series the resistances add: $4.0 + 8.0 = 12$ Ω.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "context": "series-4-8",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the current in the circuit.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "current in a series circuit",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$I = \\dfrac{V}{R} = \\dfrac{12}{4.0 + 8.0} = 1.0$ A, the same everywhere in a series circuit.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12 \\div 12$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "context": "series-4-8",
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the potential difference across the 8.0 Ω resistor.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "sharing potential difference in series",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The current is $12 \\div 12 = 1.0$ A, so $V = IR = 1.0 \\times 8.0 = 8.0$ V. The bigger resistor takes the bigger share of the 12 V.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "context": "series-4-8",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "V"
+    },
+    {
+      "id": "q22",
+      "prompt": "A third resistor is added in series, and the current falls to 0.75 A. Calculate its resistance.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "working back to a missing resistance",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "New total resistance $= 12 \\div 0.75 = 16$ Ω. The first two make 12 Ω, so the third is $16 - 12 = 4.0$ Ω.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total 16 Ω"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "series-4-8",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the current through the 3.0 Ω resistor.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "current in a parallel branch",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each branch has the full 6.0 V across it: $I = 6.0 \\div 3.0 = 2.0$ A.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "context": "parallel-3-6",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q24",
+      "prompt": "Calculate the total current from the battery.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "adding currents in parallel",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Branches: $6.0 \\div 3.0 = 2.0$ A and $6.0 \\div 6.0 = 1.0$ A. The currents add: 3.0 A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both branch currents"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "context": "parallel-3-6",
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q25",
+      "prompt": "Calculate the total resistance of the circuit.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "total resistance of a parallel circuit",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Total current $= 6.0 \\div 3.0 + 6.0 \\div 6.0 = 3.0$ A, so the total resistance is $6.0 \\div 3.0 = 2.0$ Ω. It is less than either resistor: a second path lets more current flow. Adding them, 9 Ω, is the series rule.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total current 3.0 A"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "parallel-3-6",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q26",
+      "prompt": "A 9.0 V supply is connected across a 6.0 Ω resistor and a 12 Ω resistor in parallel. Calculate the current from the supply.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "parallel circuits by branch currents",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each branch has 9.0 V across it: $9.0 \\div 6.0 = 1.5$ A and $9.0 \\div 12 = 0.75$ A. Total $1.5 + 0.75 = 2.25$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "full 9.0 V across each"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both currents"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 2.25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q27",
+      "prompt": "Two identical lamps in series across a 12 V supply draw 0.50 A. They are reconnected in parallel across the same supply. Assuming their resistance does not change, calculate the current from the supply now.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "series against parallel",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In series the total resistance is $12 \\div 0.50 = 24$ Ω, so each lamp is 12 Ω. In parallel each has the full 12 V: $12 \\div 12 = 1.0$ A each, 2.0 A in total, four times the series current.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "each lamp 12 Ω"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1.0 A each"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
     }
   ],
   "examTechnique": {
@@ -1406,9 +1687,18 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 64
     }
   },
   "quiz": {
@@ -1428,7 +1718,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },

@@ -951,6 +951,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "wire-field",
+      "body": "A straight wire 0.25 m long carries a current of 3.0 A at right angles to a uniform magnetic field of flux density 0.40 T."
+    },
+    {
+      "id": "transformer-230",
+      "body": "A step-down transformer has 4600 turns on its primary coil. Its primary is connected to 230 V a.c., and its secondary gives 23 V."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1934,6 +1944,246 @@
         }
       ],
       "modelAnswer": "In both machines a **coil rotates in a magnetic field**. Its two long sides cut across the field lines, so a **pd is induced** across the coil. The pd is **largest** when the sides are cutting **straight across** the field and **zero** a quarter turn later when they move **along** it; on the second half of the turn each side moves the opposite way, so the pd **reverses**. The pd in the coil is therefore alternating.\n\nAn **alternator** connects the coil to the circuit through two **slip rings**, one for each end, with a **brush** on each. The connection never changes, so the circuit receives the alternating pd as it is. Its graph is a **wave** that rises to a peak, falls through **zero** at half a turn, reaches an equal **negative** peak, and returns to zero after **one turn**.\n\nA **dynamo** uses a **split-ring commutator**. The two halves of the ring swap brushes every **half turn**, at the instant the pd reverses, so the reversal is cancelled and the circuit always sees the **same sign**: **dc**. Its graph is the same wave **folded** above the axis: it rises to a peak and falls to zero **twice** every turn, **never going negative**, but it is not steady."
+    },
+    {
+      "id": "q31",
+      "prompt": "Calculate the force on the wire.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the motor effect",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$F = BIl = 0.40 \\times 3.0 \\times 0.25 = 0.30$ N.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.40 \\times 3.0 \\times 0.25$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.3"
+        }
+      ],
+      "discriminators": [],
+      "context": "wire-field",
+      "type": "numeric",
+      "answer": 0.3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q32",
+      "prompt": "What current would make the force on the wire 0.60 N?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "rearranging F = BIl",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$I = \\dfrac{F}{Bl} = \\dfrac{0.60}{0.40 \\times 0.25} = 6.0$ A: double the force needs double the current.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "context": "wire-field",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q33",
+      "prompt": "The wire is turned so that it lies along the field lines, with the same current. What is the force on it now?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "when the motor effect is zero",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The motor effect needs the current to cut across the field. With the wire parallel to the field lines, the force is 0 N.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "wire-field",
+      "type": "numeric",
+      "answer": 0,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q34",
+      "prompt": "Calculate the number of turns on the secondary coil.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the transformer equation",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{V_p}{V_s} = \\dfrac{n_p}{n_s}$: $\\dfrac{230}{23} = \\dfrac{4600}{n_s}$, so $n_s = 460$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "ratio 10 : 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "460"
+        }
+      ],
+      "discriminators": [],
+      "context": "transformer-230",
+      "type": "numeric",
+      "answer": 460,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q35",
+      "prompt": "The secondary coil supplies 2.0 A. Calculate the power output.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "power from p.d. and current",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P = VI = 23 \\times 2.0 = 46$ W.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "46"
+        }
+      ],
+      "discriminators": [],
+      "context": "transformer-230",
+      "type": "numeric",
+      "answer": 46,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q36",
+      "prompt": "Assuming the transformer is 100% efficient, calculate the current in the primary coil when the secondary supplies 2.0 A.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "power in equals power out",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$V_pI_p = V_sI_s$: $230 \\times I_p = 23 \\times 2.0 = 46$, so $I_p = 0.20$ A. Stepping the p.d. down by 10 steps the current up by 10, so the primary current is the smaller one.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$V_pI_p = V_sI_s$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "transformer-230",
+      "type": "numeric",
+      "answer": 0.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q37",
+      "prompt": "500 kW is sent along a cable of total resistance 5.0 Ω at 25 000 V. Calculate the power wasted heating the cable.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "why the grid uses high potential difference",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Current $= P \\div V = 500\\,000 \\div 25\\,000 = 20$ A. Power wasted $= I^2R = 20^2 \\times 5.0 = 2000$ W. At 250 000 V the current would be 2 A and only 20 W would be wasted: a hundredth.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "current 20 A"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$I^2R$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2000"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 2000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q38",
+      "prompt": "A transformer has 200 turns on its primary coil and 5000 on its secondary. 12 V a.c. is applied to the primary. Calculate the secondary potential difference.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a step-up transformer",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$V_s = V_p \\times \\dfrac{n_s}{n_p} = 12 \\times \\dfrac{5000}{200} = 300$ V. With d.c. the output would be zero: a transformer needs a changing field.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "turns ratio 25"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12 \\times 25$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "300"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 300,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "V"
     }
   ],
   "examTechnique": {
@@ -1997,9 +2247,17 @@
         "q25",
         "q28",
         "q29",
-        "q30"
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37",
+        "q38"
       ],
-      "suggestedMinutes": 65
+      "suggestedMinutes": 81
     }
   },
   "quiz": {
@@ -2029,7 +2287,9 @@
       "q26",
       "q27",
       "q28",
-      "q29"
+      "q29",
+      "q37",
+      "q38"
     ],
     "sampleSize": 10
   },

@@ -980,6 +980,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "three-lamps",
+      "body": "Three identical lamps, each of resistance 6.0 Ω, are connected in parallel across a 9.0 V battery."
+    },
+    {
+      "id": "divider",
+      "body": "A 12 V supply is connected across a 2.0 kΩ resistor and a 4.0 kΩ resistor in series."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1589,6 +1599,222 @@
         }
       ],
       "modelAnswer": "**In series.** There is only **one path** for the charge. Every component in that path is a further **obstacle** to the flow, so adding one adds to the total opposition: the **total resistance increases** and the current falls for the same supply pd.\n\n**In parallel.** Each resistor is connected **directly across the supply**, so every branch has the **full supply pd** across it.\n\nAdding another resistor in parallel gives the charge **another path**. The supply pd has **not** changed, but there is now an extra route, so **more current** flows out of the supply altogether.\n\nSince\n\n$$R = \\frac{V}{I}$$\n\nmore current for the **same** pd means the **total resistance has fallen**.\n\n**Why it must be below the smallest branch.** That branch on its own was already carrying its own current; the other branches add **further** current on top. So the total current is larger than any single branch's, and the total resistance smaller than any single branch's.\n\nThat last paragraph is what separates an explanation from a restatement: it gives a reason for the *less than the smallest* rule rather than quoting it."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the current through one lamp.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a parallel branch",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each lamp has the full 9.0 V across it: $9.0 \\div 6.0 = 1.5$ A.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "three-lamps",
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the current from the battery.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "currents add in parallel",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3 \\times 1.5 = 4.5$ A.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "three-lamps",
+      "type": "numeric",
+      "answer": 4.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the total power transferred by the three lamps.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "power in a parallel circuit",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each lamp takes $9.0 \\div 6.0 = 1.5$ A, so the battery supplies 4.5 A. $P = VI = 9.0 \\times 4.5 = 40.5$ W (13.5 W per lamp). In series the same lamps would take only 4.5 W in all.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4.5 A"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "three-lamps",
+      "type": "numeric",
+      "answer": 40.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the potential difference across the 4.0 kΩ resistor.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a potential divider",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 12 V divides in the ratio of the resistances, 2 : 4. The 4.0 kΩ resistor takes $\\dfrac{4}{6} \\times 12 = 8.0$ V.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "ratio of resistances"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "context": "divider",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "V"
+    },
+    {
+      "id": "q23",
+      "prompt": "The 4.0 kΩ resistor is replaced by a light-dependent resistor (LDR). In bright light its resistance is 1.0 kΩ. Calculate the potential difference across the LDR in bright light.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "an LDR in a potential divider",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Now the ratio is 2.0 : 1.0. The LDR takes $\\dfrac{1}{3} \\times 12 = 4.0$ V. More light, lower resistance, smaller share of the p.d.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "ratio 2 : 1"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "divider",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "V"
+    },
+    {
+      "id": "q24",
+      "prompt": "Three resistors are in parallel. Two branches carry 0.30 A and 0.50 A, and the supply current is 1.2 A. Calculate the current in the third branch.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "currents in parallel branches",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The branch currents add up to the supply current: $1.2 - 0.30 - 0.50 = 0.40$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "currents add to the total"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 0.4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q25",
+      "prompt": "Two resistors are connected in series across a 12 V supply. The current is 0.30 A and the potential difference across one resistor is 4.5 V. Calculate the resistance of the other resistor.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "series circuit rules",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The p.d.s add to 12 V, so the other resistor has $12 - 4.5 = 7.5$ V across it, with the same 0.30 A: $R = 7.5 \\div 0.30 = 25$ Ω.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7.5 V"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$7.5 \\div 0.30$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
     }
   ],
   "worksheets": {
@@ -1624,9 +1850,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 60
     }
   },
   "examTechnique": {
@@ -1660,7 +1893,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

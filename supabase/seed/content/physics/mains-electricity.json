@@ -689,6 +689,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "kettle-mains",
+      "body": "A kettle is connected to the 230 V mains and draws a current of 10 A."
+    },
+    {
+      "id": "heater-fault",
+      "body": "A 1.5 kW heater runs from the 230 V mains. It has a metal case connected to the earth wire, and a fuse in the plug."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1259,6 +1269,257 @@
         }
       ],
       "modelAnswer": "**Direct potential difference (dc)** drives the current in **one direction only**. The potential difference has a fixed polarity — one terminal stays positive — and the current does not reverse. **Cells and batteries** supply dc.\n\n**Alternating potential difference (ac)** **repeatedly changes direction**. The potential difference rises, falls, and reverses, so the current flows first one way and then the other, over and over.\n\nIt is worth being precise here, because a common answer is that \"ac means the voltage changes\". A dc supply can change in **size** too — turning a variable supply up alters the pd without making it alternating. The defining feature of ac is the change of **direction**.\n\n**Mains electricity is an ac supply.** In the United Kingdom the domestic supply is about **230 V** with a frequency of **50 Hz**, meaning it completes **50 full cycles every second**, so each cycle lasts 20 milliseconds. On an oscilloscope, dc gives a flat horizontal line while ac gives a wave crossing zero twice per cycle.\n\n**Why an open switch does not make a live wire safe.** Opening a switch **breaks the circuit**. No complete path exists, so no current flows and the appliance stops working. That much is true, and it is why people assume a switched-off appliance is safe to work on.\n\nWhat the switch does **not** do is disconnect the live wire from the **supply**. The section of live wire between the consumer unit and the switch remains connected to the mains, and therefore remains at about **230 V relative to earth**. Only the far side of the switch is dead.\n\n**The danger follows from that potential difference.** Earth is at **0 V**, and a person standing on the floor is effectively connected to earth. If they touch the live conductor on the supply side, their body becomes a **path from 230 V to 0 V** — a complete circuit, even though the switch is open, because the circuit is completed **through them and the ground** rather than through the appliance.\n\nUsing $I = V \\div R$, the size of that current depends on the resistance of the path. Skin resistance can be high when dry, but falls sharply when wet, and at 230 V the resulting current can easily be enough to be **fatal**.\n\nThis is why mains work must be done with the supply **isolated at the consumer unit**, not merely switched off at the wall. It is also why any connection between live and earth is dangerous in general: a large potential difference across a low resistance produces a very large current, which endangers people directly and causes enough **heating** in the wiring to start a fire."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the power of the kettle.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "power from p.d. and current",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P = VI = 230 \\times 10 = 2300$ W.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2300"
+        }
+      ],
+      "discriminators": [],
+      "context": "kettle-mains",
+      "type": "numeric",
+      "answer": 2300,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the energy transferred in 3.0 minutes.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "energy from power and time",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$E = Pt = 2300 \\times 180 = 414\\,000$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2300 \\times 180$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "414 000"
+        }
+      ],
+      "discriminators": [],
+      "context": "kettle-mains",
+      "type": "numeric",
+      "answer": 414000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q21",
+      "prompt": "Electricity costs 28p per kilowatt hour (kWh). Calculate the cost of running the kettle for 3.0 minutes, to the nearest 0.01p.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "energy in kWh and cost",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Power 2.3 kW for $3 \\div 60 = 0.05$ h: $2.3 \\times 0.05 = 0.115$ kWh. Cost $= 0.115 \\times 28 = 3.22$p.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.115 kWh"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3.22"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "kettle-mains",
+      "type": "numeric",
+      "answer": 3.22,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "p"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the normal current drawn by the heater, to 3 significant figures.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "current from power",
+      "step": "s4",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$I = \\dfrac{P}{V} = \\dfrac{1500}{230} = 6.52$ A.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1500 \\div 230$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6.52"
+        }
+      ],
+      "discriminators": [],
+      "context": "heater-fault",
+      "type": "numeric",
+      "answer": 6.52,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q23",
+      "prompt": "Which fuse should the plug have? Fuses come in 3 A, 5 A and 13 A.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "choosing a fuse",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The fuse must be a little above the normal current, $1500 \\div 230 = 6.52$ A, or it would blow in normal use: 13 A.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "13 A"
+        }
+      ],
+      "discriminators": [],
+      "context": "heater-fault",
+      "type": "multiple-choice",
+      "options": [
+        "3 A",
+        "5 A",
+        "13 A",
+        "No fuse is needed with an earth wire"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "A fault makes the live wire touch the metal case. What happens?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "how the earth wire and fuse protect",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The earth wire gives a low-resistance path from the case to earth. A large current flows through the live and earth wires, which melts the fuse and cuts off the supply, so the case is no longer live.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "a large current flows to earth and the fuse melts"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "heater-fault",
+      "type": "multiple-choice",
+      "options": [
+        "The metal case becomes live and stays live",
+        "A large current flows to earth; the fuse melts",
+        "The neutral wire carries the current away safely",
+        "The heater senses the fault and switches itself off"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "A 2.3 kW heater runs from the 230 V mains for 1 hour. Calculate the charge that flows through it.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "charge from power and time",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Current $= 2300 \\div 230 = 10$ A. Charge $= It = 10 \\times 3600 = 36\\,000$ C.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "current 10 A"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\times 3600$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36 000"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 36000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "C"
+    },
+    {
+      "id": "q26",
+      "prompt": "60 C of charge flows through a mains appliance at 230 V. Calculate the energy transferred.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "energy from charge and p.d.",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$E = QV = 60 \\times 230 = 13\\,800$ J. Each coulomb transfers 230 J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$E = QV$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$60 \\times 230$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13 800"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 13800,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
     }
   ],
   "examTechnique": {
@@ -1308,9 +1569,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 61
     }
   },
   "quiz": {
@@ -1330,7 +1599,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

@@ -871,6 +871,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "half-life-6h",
+      "body": "A radioactive sample has an activity of 3200 Bq. Its half-life is 6.0 hours."
+    },
+    {
+      "id": "radium-decay",
+      "body": "A radium-226 nucleus, with 88 protons, decays by emitting an alpha particle."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1551,6 +1561,245 @@
       "correct": [
         1
       ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the activity after 12 hours.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "half-life",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "12 hours is 2 half-lives: $3200 \\to 1600 \\to 800$ Bq.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 half-lives"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "800"
+        }
+      ],
+      "discriminators": [],
+      "context": "half-life-6h",
+      "type": "numeric",
+      "answer": 800,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Bq"
+    },
+    {
+      "id": "q23",
+      "prompt": "How many hours until the activity has fallen to 100 Bq?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "counting half-lives",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3200 \\to 1600 \\to 800 \\to 400 \\to 200 \\to 100$: 5 half-lives, so $5 \\times 6.0 = 30$ hours.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5 half-lives"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "half-life-6h",
+      "type": "numeric",
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "hours"
+    },
+    {
+      "id": "q24",
+      "prompt": "What fraction of the original unstable nuclei are left after 24 hours? Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "fraction remaining after half-lives",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "24 hours is $24 \\div 6.0 = 4$ half-lives: $\\left(\\dfrac{1}{2}\\right)^4 = \\dfrac{1}{16}$. A quarter is what is left after 2 half-lives.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4 half-lives"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{16}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "half-life-6h",
+      "type": "short-text",
+      "accepted": [
+        "1/16"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "What is the mass number of the new nucleus?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "alpha decay",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An alpha particle has mass number 4: $226 - 4 = 222$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "222"
+        }
+      ],
+      "discriminators": [],
+      "context": "radium-decay",
+      "type": "numeric",
+      "answer": 222,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "What is the atomic number of the new nucleus?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "alpha decay",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An alpha particle has 2 protons: $88 - 2 = 86$ (radon).",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "86"
+        }
+      ],
+      "discriminators": [],
+      "context": "radium-decay",
+      "type": "numeric",
+      "answer": 86,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "A later nucleus in the chain has atomic number 86 and decays by beta emission. What is the atomic number of the nucleus it becomes?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "beta decay",
+      "step": "s3b",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In beta decay a neutron becomes a proton and an electron is emitted, so the atomic number goes up by 1: $86 + 1 = 87$. The mass number does not change.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "87"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "radium-decay",
+      "type": "numeric",
+      "answer": 87,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q28",
+      "prompt": "The count rate of a sample falls from 640 counts per minute to 40 counts per minute in 20 days. Calculate the half-life.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "half-life from count rates",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$640 \\to 320 \\to 160 \\to 80 \\to 40$: 4 half-lives in 20 days, so the half-life is 5 days. Dividing 20 days by the 16 times it fell gives the wrong figure.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4 halvings"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$20 \\div 4$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "days"
+    },
+    {
+      "id": "q29",
+      "prompt": "A detector shows 270 counts per minute near a source, and the background count is 30 counts per minute. After 8 hours the reading is 90 counts per minute. Calculate the half-life of the source.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "correcting for background radiation",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Subtract the background: from the source, $270 - 30 = 240$ and then $90 - 30 = 60$. $240 \\to 120 \\to 60$ is 2 half-lives in 8 hours, so 4 hours. Ignoring the background, 270 to 90 is fewer than 2 halvings.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts background"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 half-lives"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "hours"
     }
   ],
   "examTechnique": {
@@ -1603,9 +1852,17 @@
         "q16",
         "q17",
         "q18",
-        "q21"
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28",
+        "q29"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 61
     }
   },
   "quiz": {
@@ -1628,7 +1885,9 @@
       "q16",
       "q19",
       "q20",
-      "q21"
+      "q21",
+      "q28",
+      "q29"
     ],
     "sampleSize": 10
   },
