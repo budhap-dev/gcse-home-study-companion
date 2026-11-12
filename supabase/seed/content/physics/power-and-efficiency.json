@@ -623,6 +623,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "crane",
+      "body": "A crane lifts a 600 kg load through a height of 15 m in 30 s. The motor takes 4.0 kW from its supply. ($g = 9.8$ N/kg)"
+    },
+    {
+      "id": "kettle-power",
+      "body": "A 2.4 kW kettle is switched on for 3.0 minutes."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1221,6 +1231,262 @@
         }
       ],
       "modelAnswer": "**Power is the rate at which energy is transferred**, or the rate at which work is done. **Rate means per second**: power measures not how much energy but **how quickly** it is moved.\n\n$$P = \\frac{E}{t}$$\n\nmeasured in **watts** — an energy transfer of **one joule per second** is **one watt**.\n\n**Why two motors differ.** Lifting the same load through the same height is **the same job**, so the work done, and the energy transferred, is the **same** for both. If one takes less time, then in $P = E/t$ the energy is unchanged and the time is smaller — so the power is **greater**.\n\nWith 3000 J each: $\\dfrac{3000}{10} = 300$ W against $\\dfrac{3000}{30} = 100$ W. The faster motor is **three times** as powerful.\n\n**The point most often misunderstood**, and the one that earns the last mark: the more powerful motor does **not do more work**. It does exactly the **same** work, **sooner**. That is what it means for power to be a rate."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the work done on the load.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "work done lifting",
+      "step": "s1",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$mgh = 600 \\times 9.8 \\times 15 = 88\\,200$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$600 \\times 9.8 \\times 15$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "88 200"
+        }
+      ],
+      "discriminators": [],
+      "context": "crane",
+      "type": "numeric",
+      "answer": 88200,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the useful power output of the crane.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "power as energy per second",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$P = \\dfrac{E}{t} = \\dfrac{88\\,200}{30} = 2940$ W.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$88\\,200 \\div 30$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2940"
+        }
+      ],
+      "discriminators": [],
+      "context": "crane",
+      "type": "numeric",
+      "answer": 2940,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the efficiency of the crane as a percentage, to 3 significant figures.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "efficiency from powers",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Useful power $= 600 \\times 9.8 \\times 15 \\div 30 = 2940$ W. Input 4.0 kW $= 4000$ W. Efficiency $= 2940 \\div 4000 = 0.735$, which is 73.5%.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both powers in W"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "73.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "crane",
+      "type": "numeric",
+      "answer": 73.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the energy it transfers from the mains.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "energy from power and time",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$E = Pt = 2400 \\times 180 = 432\\,000$ J, with the power in watts and the time in seconds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2400 \\times 180$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "432 000"
+        }
+      ],
+      "discriminators": [],
+      "context": "kettle-power",
+      "type": "numeric",
+      "answer": 432000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q23",
+      "prompt": "The kettle is 90% efficient. How much energy goes into the water?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "useful energy from efficiency",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.90 \\times 2400 \\times 180 = 388\\,800$ J.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "388 800"
+        }
+      ],
+      "discriminators": [],
+      "context": "kettle-power",
+      "type": "numeric",
+      "answer": 388800,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q24",
+      "prompt": "A 3.0 kW kettle that is 80% efficient puts the same energy into the water. Calculate how long it takes, in seconds.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "comparing appliances by useful power",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Energy into the water: $0.90 \\times 2400 \\times 180 = 388\\,800$ J. The new kettle’s useful power is $0.80 \\times 3000 = 2400$ W. Time $= 388\\,800 \\div 2400 = 162$ s, barely quicker despite the higher power.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "useful power 2400 W"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$388\\,800 \\div 2400$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "162"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "kettle-power",
+      "type": "numeric",
+      "answer": 162,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "s"
+    },
+    {
+      "id": "q25",
+      "prompt": "An electric motor lifts a 20 kg mass through 3.0 m in 4.0 s. It takes 250 W from its supply. Calculate its efficiency as a percentage, to 3 significant figures. ($g = 9.8$ N/kg)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "efficiency of a motor",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Useful energy $= 20 \\times 9.8 \\times 3.0 = 588$ J. Energy supplied $= 250 \\times 4.0 = 1000$ J. Efficiency $= 588 \\div 1000 = 58.8\\%$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "588 J"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1000 J"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "58.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 58.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q26",
+      "prompt": "A motor is 75% efficient and has a useful power output of 1.5 kW. Calculate the power it wastes.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "wasted power",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Input power $= 1500 \\div 0.75 = 2000$ W, so the wasted power is $2000 - 1500 = 500$ W. Taking 25% of the output, 375 W, uses the wrong whole.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "input 2000 W"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "500"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 500,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
     }
   ],
   "worksheets": {
@@ -1256,9 +1522,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1292,7 +1566,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

@@ -962,6 +962,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "train-vt",
+      "body": "A train accelerates uniformly from rest to 24 m/s in 40 s. It travels at 24 m/s for 120 s, then decelerates uniformly to rest in 30 s."
+    },
+    {
+      "id": "car-brakes",
+      "body": "A car travelling at 20 m/s brakes with a steady deceleration of 5.0 m/s²."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1872,6 +1882,269 @@
         },
         "alt": "A velocity-time graph with two lines: car A rising from 0 to 20 m/s over 10 s then flat at 20 m/s to 20 s, and car B flat at 15 m/s throughout"
       }
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the acceleration of the train in the first 40 s.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "acceleration",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$a = \\dfrac{\\Delta v}{t} = \\dfrac{24}{40} = 0.6$ m/s².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$24 \\div 40$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.6"
+        }
+      ],
+      "discriminators": [],
+      "context": "train-vt",
+      "type": "numeric",
+      "answer": 0.6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s²"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the total distance the train travels.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "distance from a velocity–time graph",
+      "step": "s8",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The distance is the area under the velocity–time graph: $\\dfrac{1}{2} \\times 40 \\times 24 = 480$ m, $120 \\times 24 = 2880$ m, and $\\dfrac{1}{2} \\times 30 \\times 24 = 360$ m. Total 3720 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area under the graph"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "three areas"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3720"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "train-vt",
+      "type": "numeric",
+      "answer": 3720,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the average speed of the train for the whole journey, to 3 significant figures.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "average speed",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Distance $= 480 + 2880 + 360 = 3720$ m in $40 + 120 + 30 = 190$ s. Average speed $= 3720 \\div 190 = 19.57\\ldots$, which is 19.6 m/s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3720 m and 190 s"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "19.6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "train-vt",
+      "type": "numeric",
+      "answer": 19.6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the distance the car travels while braking to a stop.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "using v² − u² = 2as",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$v^2 - u^2 = 2as$ with $v = 0$, $u = 20$ and $a = -5.0$: $0 - 400 = -10s$, so $s = 40$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0 - 20^2 = 2 \\times (-5) \\times s$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "40"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-brakes",
+      "type": "numeric",
+      "answer": 40,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q24",
+      "prompt": "Calculate the time the car takes to stop.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "time from acceleration",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$t = \\dfrac{\\Delta v}{a} = \\dfrac{20}{5.0} = 4.0$ s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$20 \\div 5.0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-brakes",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "s"
+    },
+    {
+      "id": "q25",
+      "prompt": "With the same deceleration, calculate the braking distance from 30 m/s.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "braking distance and the square of speed",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$s = \\dfrac{u^2}{2a} = \\dfrac{30^2}{2 \\times 5.0} = 90$ m. The speed is 1.5 times as great but the distance is $1.5^2 = 2.25$ times as great (40 m at 20 m/s): it goes with the square of the speed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{30^2}{10}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "90"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "car-brakes",
+      "type": "numeric",
+      "answer": 90,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q26",
+      "prompt": "An object is dropped from rest and falls 45 m. Ignoring air resistance, calculate its speed as it reaches the ground, to 3 significant figures. ($g = 9.8$ m/s²)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "free fall with v² = u² + 2as",
+      "step": "s9",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$v^2 = u^2 + 2as = 0 + 2 \\times 9.8 \\times 45 = 882$, so $v = \\sqrt{882} = 29.69\\ldots$, which is 29.7 m/s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$v^2 = 2 \\times 9.8 \\times 45$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{882}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "29.7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 29.7,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q27",
+      "prompt": "A cyclist rides 600 m at 4.0 m/s and then another 600 m at 6.0 m/s. Calculate the average speed for the whole 1200 m.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "average speed over two stages",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Times: $600 \\div 4.0 = 150$ s and $600 \\div 6.0 = 100$ s. Average speed $= 1200 \\div 250 = 4.8$ m/s. The mean of the speeds, 5.0 m/s, is wrong: more time is spent at the slower speed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "150 s and 100 s"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1200 \\div 250$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4.8"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 4.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
     }
   ],
   "worksheets": {
@@ -1908,9 +2181,17 @@
         "q16",
         "q17",
         "q18",
-        "q19"
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 66
     }
   },
   "examTechnique": {
@@ -1943,7 +2224,9 @@
       "q15",
       "q16",
       "q17",
-      "q18"
+      "q18",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },

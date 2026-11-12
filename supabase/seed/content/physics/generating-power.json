@@ -760,6 +760,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "uk-mix",
+      "body": "The table shows where the electricity generated in one country in one year came from, in terawatt hours (TWh).\n\n| Source | Gas | Wind | Nuclear | Solar | Biomass | Coal | Other |\n|---|---|---|---|---|---|---|---|\n| Energy (TWh) | 115 | 82 | 41 | 14 | 36 | 2 | 10 |"
+    },
+    {
+      "id": "wind-turbine",
+      "body": "A wind turbine has a maximum (rated) power output of 3.0 MW. Over a year it produces, on average, 35% of that."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1362,6 +1372,263 @@
         }
       ],
       "modelAnswer": "**The science is clear** — burning fossil fuels releases **carbon dioxide**, which contributes to climate change. What slows the change is mostly not scientific.\n\n**Technical:**\n\n- **Reliability.** Wind and solar generate when conditions allow, not when electricity is wanted, and **electricity cannot be stored at scale**. So conventional stations must be kept available for low-output periods, reducing the saving.\n- **Cost and time.** Stations, barrages and grid connections take **years** and very large sums.\n- **Existing infrastructure.** Gas boilers and petrol engines are already installed; replacing them takes decades.\n- **Transport is hardest**, because a vehicle must **carry its energy** — so it needs a portable, energy-dense fuel. Oil is; wind and tides are not.\n\n**And beyond the technical:** jobs and regional economies depend on existing industries, people object to turbines near their homes, and countries disagree about who should cut emissions first.\n\n**The general point the spec wants**, and the one to finish on: **science has the ability to identify environmental issues arising from the use of energy resources, but not always the power to deal with them**, because of political, social, ethical and economic considerations."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the percentage of the electricity that came from wind, solar and biomass together.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading data on energy resources",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Total $= 300$ TWh. Wind, solar and biomass: $82 + 14 + 36 = 132$ TWh. $132 \\div 300 \\times 100 = 44\\%$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total 300"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "44"
+        }
+      ],
+      "discriminators": [],
+      "context": "uk-mix",
+      "type": "numeric",
+      "answer": 44,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q20",
+      "prompt": "Why does the country still use gas-fired power stations, even though wind provides a large share?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reliability of energy resources",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Wind output depends on the weather, but demand has to be met all the time. Gas stations can be started and stopped quickly to fill the gaps. Gas is not renewable and does release carbon dioxide.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "gas can be switched on quickly when the wind drops"
+        }
+      ],
+      "discriminators": [],
+      "context": "uk-mix",
+      "type": "multiple-choice",
+      "options": [
+        "Gas is a renewable resource, so it will never run out",
+        "Gas power stations release no carbon dioxide",
+        "Gas stations can start quickly when the wind drops",
+        "Wind turbines only generate electricity at night"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "The next year, wind output rises by 25% and gas output falls by the same number of TWh. The total stays at 300 TWh. Calculate the new percentage from gas, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "interpreting changes in energy data",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Wind rises by $0.25 \\times 82 = 20.5$ TWh, so gas falls by 20.5 TWh to $115 - 20.5 = 94.5$ TWh. $94.5 \\div 300 \\times 100 = 31.5\\%$. Taking 25% off gas instead is a different change.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20.5 TWh"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "gas 94.5 TWh"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "31.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "uk-mix",
+      "type": "numeric",
+      "answer": 31.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate its average power output in MW.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "average output of a variable resource",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.35 \\times 3.0 = 1.05$ MW.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1.05"
+        }
+      ],
+      "discriminators": [],
+      "context": "wind-turbine",
+      "type": "numeric",
+      "answer": 1.05,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MW"
+    },
+    {
+      "id": "q23",
+      "prompt": "There are 8760 hours in a year. Calculate the energy the turbine supplies in a year, in megawatt hours (MWh).",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "energy from power and time",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Average power $0.35 \\times 3.0 = 1.05$ MW. Energy $= 1.05 \\times 8760 = 9198$ MWh. Using 3.0 MW gives 26 280 MWh, as if the wind always blew hard enough.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1.05 MW"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9198"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "wind-turbine",
+      "type": "numeric",
+      "answer": 9198,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MWh"
+    },
+    {
+      "id": "q24",
+      "prompt": "A house uses 3600 kWh of electricity a year. About how many houses could the turbine supply, to the nearest whole number?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "energy in different units",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The turbine supplies $0.35 \\times 3.0 \\times 8760 = 9198$ MWh $= 9\\,198\\,000$ kWh a year. $9\\,198\\,000 \\div 3600 = 2555$ houses.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "MWh to kWh"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2555"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "wind-turbine",
+      "type": "numeric",
+      "answer": 2555,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "At a hydroelectric power station, 500 m³ of water falls 80 m every second. Water has a density of 1000 kg/m³. Calculate the power transferred from the water’s gravitational potential store, in MW. ($g = 9.8$ N/kg)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "power from a falling mass of water",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Mass each second $= 500 \\times 1000 = 500\\,000$ kg. Energy each second $= mgh = 500\\,000 \\times 9.8 \\times 80 = 392\\,000\\,000$ J, so the power is 392 000 000 W $= 392$ MW.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "mass 500 000 kg"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$mgh$ each second"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "392"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 392,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MW"
+    },
+    {
+      "id": "q26",
+      "prompt": "A solar panel has an area of 1.6 m². Sunlight delivers 1000 W to each square metre, and the panel is 20% efficient. Calculate its electrical power output.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "power from a solar panel",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Power arriving $= 1.6 \\times 1000 = 1600$ W. Output $= 0.20 \\times 1600 = 320$ W.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1600 W arriving"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\times 0.20$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "320"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 320,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
     }
   ],
   "worksheets": {
@@ -1397,9 +1664,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 64
     }
   },
   "examTechnique": {
@@ -1433,7 +1708,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

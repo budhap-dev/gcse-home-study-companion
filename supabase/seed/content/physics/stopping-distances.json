@@ -759,6 +759,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "stop-25",
+      "body": "A driver has a reaction time of 0.60 s. Her car travels at 25 m/s, and its brakes give a deceleration of 6.25 m/s²."
+    },
+    {
+      "id": "ruler-drop",
+      "body": "In a reaction test, a ruler falls 0.20 m from rest before it is caught. ($g = 9.8$ m/s²)"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1468,6 +1478,244 @@
       "tolerance": 0.06,
       "unitsRequired": false,
       "units": "°C"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the thinking distance.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "thinking distance",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Thinking distance = speed × reaction time $= 25 \\times 0.60 = 15$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$25 \\times 0.60$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "context": "stop-25",
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the braking distance.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "braking distance",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$s = \\dfrac{u^2}{2a} = \\dfrac{25^2}{2 \\times 6.25} = 50$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{25^2}{12.5}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [],
+      "context": "stop-25",
+      "type": "numeric",
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q22",
+      "prompt": "Calculate the total stopping distance from half the speed, 12.5 m/s, with the same driver and brakes.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "how stopping distance scales with speed",
+      "step": "s8",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Thinking: $12.5 \\times 0.60 = 7.5$ m (half of 15). Braking: $\\dfrac{12.5^2}{2 \\times 6.25} = 12.5$ m (a quarter of 50). Total 20 m, less than half of the 65 m at 25 m/s, because braking distance goes with the square of the speed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "thinking 7.5 m"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "braking 12.5 m"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "stop-25",
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the reaction time, to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "reaction time from a ruler drop",
+      "step": "s4",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "From $s = \\dfrac{1}{2}gt^2$ (it starts from rest): $t = \\sqrt{\\dfrac{2s}{g}} = \\sqrt{\\dfrac{0.40}{9.8}} = 0.2020\\ldots$, which is 0.202 s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$s = \\dfrac{1}{2}gt^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{0.40 \\div 9.8}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.202"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ruler-drop",
+      "type": "numeric",
+      "answer": 0.202,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "s"
+    },
+    {
+      "id": "q24",
+      "prompt": "With this reaction time, calculate the thinking distance of a driver at 30 m/s, to 2 significant figures.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "thinking distance from a measured reaction time",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Reaction time $= \\sqrt{2 \\times 0.20 \\div 9.8} = 0.202$ s. Thinking distance $= 30 \\times 0.202 = 6.06$ m, which is 6.1 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reaction time 0.202 s"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6.1"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ruler-drop",
+      "type": "numeric",
+      "answer": 6.1,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q25",
+      "prompt": "A car of mass 1200 kg travelling at 20 m/s brakes to a stop in 32 m. Calculate the average braking force.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "braking force",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Deceleration: $a = \\dfrac{u^2}{2s} = \\dfrac{400}{64} = 6.25$ m/s². Force $= ma = 1200 \\times 6.25 = 7500$ N. (Or: work done by the brakes, $F \\times 32$, equals the kinetic store, $\\dfrac{1}{2} \\times 1200 \\times 400 = 240\\,000$ J.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "deceleration 6.25"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$F = ma$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7500"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 7500,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q26",
+      "prompt": "A car of mass 900 kg brakes from 30 m/s to rest. How much energy is dissipated by its brakes?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "what braking does to the energy",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "All of its kinetic store: $\\dfrac{1}{2} \\times 900 \\times 30^2 = 405\\,000$ J, transferred by heating the brakes and then the surroundings.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2}mv^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2} \\times 900 \\times 900$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "405 000"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 405000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
     }
   ],
   "worksheets": {
@@ -1504,9 +1752,16 @@
         "q16",
         "q17",
         "q18",
-        "q19"
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1539,7 +1794,9 @@
       "q15",
       "q17",
       "q18",
-      "q19"
+      "q19",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

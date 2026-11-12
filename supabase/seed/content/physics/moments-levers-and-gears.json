@@ -640,6 +640,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "seesaw",
+      "body": "A uniform plank 4.0 m long is balanced on a pivot at its centre. Child A, of weight 300 N, sits 1.6 m to the left of the pivot."
+    },
+    {
+      "id": "gears-20-60",
+      "body": "Gear A has 20 teeth and drives gear B, which has 60 teeth."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1314,6 +1324,256 @@
         }
       ],
       "modelAnswer": "The hinge is the pivot. The bolt is gripped in the jaws, close to the hinge, so the cutting force acts at a short distance from the pivot. The hands push on the ends of the long handles, a long way from the pivot. The moment of the effort must equal the moment of the force on the bolt: effort × long distance = cutting force × short distance. Because the handles are so much longer than the jaws, the force on the bolt is many times larger than the effort. Pliers have short handles, so the force is multiplied far less and the bolt is not cut."
+    },
+    {
+      "id": "q18",
+      "prompt": "Calculate the moment of child A about the pivot.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "moment of a force",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Moment = force × perpendicular distance $= 300 \\times 1.6 = 480$ N m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$300 \\times 1.6$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "480"
+        }
+      ],
+      "discriminators": [],
+      "context": "seesaw",
+      "type": "numeric",
+      "answer": 480,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N m"
+    },
+    {
+      "id": "q19",
+      "prompt": "Child B, of weight 400 N, sits on the right so that the plank balances. How far from the pivot does child B sit?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the principle of moments",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Balanced: clockwise moment = anticlockwise moment. $400 \\times d = 300 \\times 1.6 = 480$, so $d = 1.2$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$400d = 480$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.2"
+        }
+      ],
+      "discriminators": [],
+      "context": "seesaw",
+      "type": "numeric",
+      "answer": 1.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q20",
+      "prompt": "A dog of weight 150 N sits on the left, 0.8 m from the pivot, with child A still in place. How far from the pivot must child B now sit to balance the plank?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the principle of moments with several forces",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Anticlockwise moments add: $300 \\times 1.6 + 150 \\times 0.8 = 480 + 120 = 600$ N m. $400 \\times d = 600$, so $d = 1.5$ m, which is on the plank (it reaches 2.0 m).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the two moments"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$400d = 600$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "seesaw",
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q21",
+      "prompt": "How many times does gear A turn for each complete turn of gear B?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "gear ratios",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "One turn of B passes 60 teeth, which is $60 \\div 20 = 3$ turns of A.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "context": "gears-20-60",
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Gear A turns at 90 revolutions per minute. How fast does gear B turn?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "gear ratios",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "B turns once for every 3 turns of A: $90 \\div 3 = 30$ revolutions per minute.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [],
+      "context": "gears-20-60",
+      "type": "numeric",
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "rpm"
+    },
+    {
+      "id": "q23",
+      "prompt": "A turning moment of 4.0 N m is applied to gear A. Calculate the moment produced by gear B.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "how gears change a moment",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The teeth push on each other with the same force, but B’s radius is 3 times A’s (60 teeth against 20), so its moment is 3 times as large: $4.0 \\times 3 = 12$ N m. B turns more slowly but with a bigger turning effect.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "same force at 3 times the radius"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "gears-20-60",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N m"
+    },
+    {
+      "id": "q24",
+      "prompt": "A wheelbarrow carries a load of 600 N, acting 0.50 m from the axle of the wheel. The handles are lifted 1.5 m from the axle. Calculate the upward force needed at the handles to hold the wheelbarrow level.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "levers as force multipliers",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Take moments about the axle: $F \\times 1.5 = 600 \\times 0.50 = 300$, so $F = 200$ N. The longer distance to the handles means a smaller force than the load.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "moments about the axle"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.5F = 300$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "200"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 200,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
+    },
+    {
+      "id": "q25",
+      "prompt": "A uniform beam 6.0 m long weighs 900 N and rests on supports at each end. A load of 300 N sits 2.0 m from the left end. Calculate the upward force from the right-hand support.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a beam on two supports",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Take moments about the left support, which removes its force. The beam’s weight acts at its middle, 3.0 m along. Clockwise: $900 \\times 3.0 + 300 \\times 2.0 = 3300$ N m. Anticlockwise: $R \\times 6.0$. So $R = 550$ N. (The left support takes $1200 - 550 = 650$ N.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "moments about one support"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "weight at the centre"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "550"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 550,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "N"
     }
   ],
   "worksheets": {
@@ -1348,9 +1608,17 @@
         "q13",
         "q14",
         "q16",
-        "q17"
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 38
+      "suggestedMinutes": 57
     }
   },
   "examTechnique": {
@@ -1380,7 +1648,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

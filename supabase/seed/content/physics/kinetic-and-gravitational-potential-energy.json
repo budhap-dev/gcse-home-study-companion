@@ -502,6 +502,10 @@
     {
       "id": "roller-coaster",
       "body": "A roller-coaster car of mass 450 kg is at rest at the top of a slope, 32 m above the ground. It rolls down the slope to a point 12 m above the ground.\n\nGravitational field strength = 9.8 N/kg"
+    },
+    {
+      "id": "climber",
+      "body": "A climber of mass 60 kg climbs a vertical rock face 25 m high. ($g = 9.8$ N/kg)"
     }
   ],
   "questions": [
@@ -1128,6 +1132,145 @@
       "tolerance": 0,
       "units": "%",
       "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the increase in the climber’s gravitational potential store.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "gravitational potential energy",
+      "step": "s4",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$E_p = mgh = 60 \\times 9.8 \\times 25 = 14\\,700$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$60 \\times 9.8 \\times 25$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14 700"
+        }
+      ],
+      "discriminators": [],
+      "context": "climber",
+      "type": "numeric",
+      "answer": 14700,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q20",
+      "prompt": "On another climb she drops 3.2 m from rest onto a crash mat. Ignoring air resistance, calculate her speed as she reaches the mat, to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "energy conservation to find a speed",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Her gravitational potential store falls by $mgh$, and her kinetic store gains it: $\\dfrac{1}{2}mv^2 = mgh$. The mass cancels: $v = \\sqrt{2gh} = \\sqrt{2 \\times 9.8 \\times 3.2} = \\sqrt{62.72} = 7.919\\ldots$, which is 7.92 m/s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2}mv^2 = mgh$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{62.72}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7.92"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "climber",
+      "type": "numeric",
+      "answer": 7.92,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m/s"
+    },
+    {
+      "id": "q21",
+      "prompt": "A car of mass 1200 kg speeds up from 10 m/s to 20 m/s. Calculate the increase in its kinetic store.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "change in kinetic energy",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Before: $\\dfrac{1}{2} \\times 1200 \\times 10^2 = 60\\,000$ J. After: $\\dfrac{1}{2} \\times 1200 \\times 20^2 = 240\\,000$ J. Increase 180 000 J. Using the change in speed, $\\dfrac{1}{2} \\times 1200 \\times 10^2$, gives only 60 000 J: kinetic energy goes with the square of the speed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both kinetic energies"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "subtracts"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "180 000"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 180000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J"
+    },
+    {
+      "id": "q22",
+      "prompt": "A ball is thrown straight up at 14 m/s. Ignoring air resistance, calculate the greatest height it reaches above the point where it was thrown. ($g = 9.8$ N/kg)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "energy conservation to find a height",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "At the top its kinetic store has all gone into the gravitational potential store: $\\dfrac{1}{2}mv^2 = mgh$, so $h = \\dfrac{v^2}{2g} = \\dfrac{196}{19.6} = 10$ m. The mass is not needed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2}mv^2 = mgh$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$h = \\dfrac{v^2}{2g}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
     }
   ],
   "worksheets": {
@@ -1163,9 +1306,13 @@
         "q14",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22"
       ],
-      "suggestedMinutes": 39
+      "suggestedMinutes": 51
     }
   },
   "examTechnique": {
@@ -1193,7 +1340,9 @@
       "q11",
       "q13",
       "q14",
-      "q15"
+      "q15",
+      "q21",
+      "q22"
     ],
     "sampleSize": 10
   },
