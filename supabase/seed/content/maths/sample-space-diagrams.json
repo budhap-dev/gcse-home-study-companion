@@ -825,6 +825,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "dice-product",
+      "body": "A fair six-sided dice numbered 1 to 6 and a fair four-sided dice numbered 1 to 4 are thrown. The two scores are multiplied."
+    },
+    {
+      "id": "two-spinners",
+      "body": "Spinner A has three equal sections numbered 1, 2 and 3. Spinner B has four equal sections numbered 2, 4, 6 and 8. Both are spun and the two numbers are added."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1381,6 +1391,256 @@
       "answer": 16,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "prompt": "How many outcomes are there in the sample space?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "size of a sample space",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$6 \\times 4 = 24$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [],
+      "context": "dice-product",
+      "type": "numeric",
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the probability that the product is 12. Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading a sample space",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Products of 12: $3 \\times 4$, $4 \\times 3$ and $6 \\times 2$, with the six-sided score first. That is 3 of the 24 outcomes: $\\dfrac{3}{24} = \\dfrac{1}{8}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the 3 outcomes found"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{8}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "dice-product",
+      "type": "short-text",
+      "accepted": [
+        "1/8"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the probability that the product is a square number. Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting outcomes with a property",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Square products up to 24 are 1, 4, 9 and 16. With the six-sided score first: 1 from $1 \\times 1$; 4 from $1 \\times 4$, $2 \\times 2$, $4 \\times 1$; 9 from $3 \\times 3$; 16 from $4 \\times 4$. That is 6 of the 24 outcomes: $\\dfrac{6}{24} = \\dfrac{1}{4}$. Counting $1 \\times 4$ and $4 \\times 1$ once only gives $\\dfrac{5}{24}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "square numbers 1, 4, 9, 16"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6 outcomes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{4}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "dice-product",
+      "type": "short-text",
+      "accepted": [
+        "1/4"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the probability that the total is 7. Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "sample space of two spinners",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "There are $3 \\times 4 = 12$ outcomes. A total of 7 comes from $1 + 6$ and $3 + 4$: $\\dfrac{2}{12} = \\dfrac{1}{6}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2 of 12"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{6}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "two-spinners",
+      "type": "short-text",
+      "accepted": [
+        "1/6",
+        "2/12"
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the probability that the total is more than 8. Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "sample space of two spinners",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Of the 12 outcomes, totals above 8 are $1 + 8$, $2 + 8$, $3 + 8$ and $3 + 6$: $\\dfrac{4}{12} = \\dfrac{1}{3}$. A total of exactly 8 does not count.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4 of 12"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{3}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "two-spinners",
+      "type": "short-text",
+      "accepted": [
+        "1/3",
+        "4/12"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Both spinners are spun twice. Work out the probability that the total is 7 both times. Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "independent repeated events",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each time, a total of 7 ($1 + 6$ or $3 + 4$) has probability $\\dfrac{2}{12} = \\dfrac{1}{6}$. Twice, independently: $\\dfrac{1}{6} \\times \\dfrac{1}{6} = \\dfrac{1}{36}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{6} \\times \\dfrac{1}{6}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{36}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "two-spinners",
+      "type": "short-text",
+      "accepted": [
+        "1/36"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Two fair six-sided dice are thrown and the scores are added. Work out the probability that the total is a prime number. Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "sample space with a property",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The prime totals possible are 2, 3, 5, 7 and 11. Ways: 2 (1), 3 (2), 5 (4), 7 (6), 11 (2): 15 of the 36 outcomes. $\\dfrac{15}{36} = \\dfrac{5}{12}$. Forgetting that 2 is prime gives $\\dfrac{14}{36}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "prime totals 2, 3, 5, 7, 11"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "15 outcomes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{5}{12}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "5/12"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "Five counters numbered 1 to 5 are in a bag. Two are taken at random without replacement and their numbers are added. Work out the probability that the total is even. Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "sample space without replacement",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An even total needs two odds or two evens. There are $5 \\times 4 = 20$ ordered pairs. Two odds: $3 \\times 2 = 6$. Two evens: $2 \\times 1 = 2$. So $\\dfrac{8}{20} = \\dfrac{2}{5}$. A grid with repeats allowed gives $\\dfrac{13}{25}$, which lets a counter be taken twice.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "two odds or two evens"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8 of 20"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{5}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "2/5"
+      ]
     }
   ],
   "worksheets": {
@@ -1416,9 +1676,17 @@
         "q15",
         "q18",
         "q16",
-        "q17"
+        "q17",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1451,7 +1719,9 @@
       "q13",
       "q14",
       "q15",
-      "q18"
+      "q18",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

@@ -774,6 +774,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "stratified-years",
+      "body": "A school has 300 students in Year 9, 280 in Year 10 and 220 in Year 11. A stratified sample of 40 students is taken, by year group."
+    },
+    {
+      "id": "gym-pool",
+      "body": "A gym has 1200 members. In a random sample of 50 members, 18 use the swimming pool."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1474,6 +1484,231 @@
       "answer": 300,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "How many Year 9 students should be in the sample?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "stratified sampling",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Year 9 is $\\dfrac{300}{800}$ of the school: $\\dfrac{300}{800} \\times 40 = 15$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{300}{800} \\times 40$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "context": "stratified-years",
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Ella suggests taking all 40 from Year 11, because they are easiest to find. Why would that sample be biased?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bias in a sample",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A sample stands for the whole school only if every group can be in it in the right proportion. All Year 11 leaves out Years 9 and 10, whose views may differ.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "leaves out Years 9 and 10"
+        }
+      ],
+      "discriminators": [],
+      "context": "stratified-years",
+      "type": "multiple-choice",
+      "options": [
+        "40 is too small a sample for any school",
+        "Year 11 has the fewest students, so its views count least",
+        "It leaves out Years 9 and 10, who may answer differently",
+        "Stratified samples must always be chosen at random from the whole school"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "In the stratified sample, 5 of the Year 9 students say they would join a new sports club. Estimate how many of all the Year 9 students would join.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "estimating a population from a stratum",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sample has $\\dfrac{300}{800} \\times 40 = 15$ Year 9 students, and 5 of 15 is a third. A third of the 300 in Year 9 is 100. Using the whole sample of 40 gives 37.5, which mixes in the other years.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "15 Year 9 students in the sample"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "100"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "stratified-years",
+      "type": "numeric",
+      "answer": 100,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Estimate how many of the gym’s members use the pool.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "estimating from a sample",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{18}{50} \\times 1200 = 432$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{18}{50} \\times 1200$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "432"
+        }
+      ],
+      "discriminators": [],
+      "context": "gym-pool",
+      "type": "numeric",
+      "answer": 432,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "A second random sample of 80 members finds 26 who use the pool. Using both samples together, estimate how many members use the pool. Give your answer to the nearest whole number.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "combining samples",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Together: $18 + 26 = 44$ pool users in $50 + 80 = 130$ members. $\\dfrac{44}{130} \\times 1200 = 406.15\\ldots$, about 406. Averaging the two estimates (432 and 390) gives 411, which counts the smaller sample as much as the larger.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "44 out of 130"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{44}{130} \\times 1200$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "406"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "gym-pool",
+      "type": "numeric",
+      "answer": 406,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "A club of 300 members has 48 men under 40, 72 men aged 40 or over, 108 women under 40 and 72 women aged 40 or over. A stratified sample of 50 is taken by gender and age group. How many women under 40 should be in it?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "stratified sampling with two variables",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each group is sampled in proportion: $\\dfrac{108}{300} \\times 50 = 18$. (The four groups give 8, 12, 18 and 12, which add to 50.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{108}{300}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\times 50$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "18"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 18,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q28",
+      "prompt": "A stratified sample of 50 students is taken from a school by year group. There are 12 Year 7 students in the sample, and there are 180 Year 7 students in the school. How many students are in the school?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back from a stratified sample",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sample takes the same fraction of every year: $\\dfrac{12}{180} = \\dfrac{1}{15}$. So 50 is $\\dfrac{1}{15}$ of the school, which has $50 \\times 15 = 750$ students.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{12}{180}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$50 \\times 15$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "750"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 750,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1512,9 +1747,16 @@
         "q18",
         "q19",
         "q20",
-        "q21"
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 63
     }
   },
   "examTechnique": {
@@ -1549,7 +1791,9 @@
       "q15",
       "q16",
       "q17",
-      "q18"
+      "q18",
+      "q27",
+      "q28"
     ],
     "sampleSize": 10
   },

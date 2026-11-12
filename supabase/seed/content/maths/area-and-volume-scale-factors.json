@@ -761,6 +761,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "similar-jugs",
+      "body": "Two jugs are mathematically similar. The small jug is 12 cm tall and holds 400 cm³. The large jug is 18 cm tall."
+    },
+    {
+      "id": "similar-cylinders",
+      "body": "Two cylinders are mathematically similar. Their surface areas are 50 cm² and 72 cm²."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1360,6 +1370,240 @@
         }
       ],
       "modelAnswer": "**Strength follows area.** A beam's strength depends on its **cross-sectional area**, which scales as $k^2$. At one tenth size:\n\n$$\\left(\\tfrac{1}{10}\\right)^2 = \\tfrac{1}{100}$$\n\n**Weight follows volume.** Weight depends on **volume**, which scales as $k^3$:\n\n$$\\left(\\tfrac{1}{10}\\right)^3 = \\tfrac{1}{1000}$$\n\n**The comparison.** The model has $\\tfrac{1}{100}$ of the strength but only $\\tfrac{1}{1000}$ of the weight — so **ten times** as much strength for each unit of weight it must carry.\n\nThat is why a model can be built from materials that would collapse at full size, and it follows directly from **area and volume scaling by different powers**."
+    },
+    {
+      "id": "q19",
+      "prompt": "Write down the linear scale factor from the small jug to the large jug.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "linear scale factor",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$18 \\div 12 = 1.5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "similar-jugs",
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out how much the large jug holds.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "volume scale factor",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The linear scale factor is $18 \\div 12 = 1.5$, so volumes scale by $1.5^3 = 3.375$: $400 \\times 3.375 = 1350$ cm³. Multiplying by 1.5 gives 600, which treats volume like length.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.5^3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1350"
+        }
+      ],
+      "discriminators": [],
+      "context": "similar-jugs",
+      "type": "numeric",
+      "answer": 1350,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q21",
+      "prompt": "A third jug, similar to the other two, holds 3.2 litres. How tall is it?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back from a volume scale factor",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "3.2 litres is 3200 cm³, which is $3200 \\div 400 = 8$ times the small jug. The volume scale factor is 8, so the linear scale factor is $\\sqrt[3]{8} = 2$, and the jug is $12 \\times 2 = 24$ cm tall.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3200 cm³ and volume factor 8"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt[3]{8} = 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "similar-jugs",
+      "type": "numeric",
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the linear scale factor from the smaller cylinder to the larger.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "linear scale factor from areas",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The area scale factor is $72 \\div 50 = 1.44$, and the linear scale factor is its square root: $\\sqrt{1.44} = 1.2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{72 \\div 50}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.2"
+        }
+      ],
+      "discriminators": [],
+      "context": "similar-cylinders",
+      "type": "numeric",
+      "answer": 1.2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "The smaller cylinder has a volume of 125 cm³. Work out the volume of the larger cylinder.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "area factor to volume factor",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Area scale factor $72 \\div 50 = 1.44$, so linear scale factor $\\sqrt{1.44} = 1.2$ and volume scale factor $1.2^3 = 1.728$. Volume $= 125 \\times 1.728 = 216$ cm³. Multiplying by 1.44 gives 180, which uses the area factor for a volume.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "linear factor 1.2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.2^3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "216"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "similar-cylinders",
+      "type": "numeric",
+      "answer": 216,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q24",
+      "prompt": "Two similar solids have volumes of 54 cm³ and 128 cm³. The surface area of the larger solid is 112 cm². Work out the surface area of the smaller solid.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "volume factor to area factor",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Volume scale factor from small to large: $\\dfrac{128}{54} = \\dfrac{64}{27}$. Linear: $\\sqrt[3]{\\dfrac{64}{27}} = \\dfrac{4}{3}$. Area: $\\left(\\dfrac{4}{3}\\right)^2 = \\dfrac{16}{9}$. The smaller area is $112 \\div \\dfrac{16}{9} = 112 \\times \\dfrac{9}{16} = 63$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{64}{27}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "linear $\\dfrac{4}{3}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area $\\dfrac{16}{9}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "63"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 63,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q25",
+      "prompt": "A model of a statue is made to a scale of 1 : 20. Painting the model uses 0.15 litres of paint. How many litres of paint would the statue need, painted the same way?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "area scale factor in context",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Paint covers area. The linear scale factor is 20, so the area scale factor is $20^2 = 400$. The statue needs $0.15 \\times 400 = 60$ litres. Multiplying by 20 gives 3 litres, and by $20^3$ gives 1200, which treats paint as a volume.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "area factor $20^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.15 \\times 400$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "litres"
     }
   ],
   "worksheets": {
@@ -1395,9 +1639,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1431,7 +1682,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

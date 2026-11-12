@@ -790,6 +790,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "savings",
+      "body": "£4000 is invested at 3.5% per year compound interest."
+    },
+    {
+      "id": "car-value",
+      "body": "A car loses 15% of its value each year. It is worth £12 000 now."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1415,6 +1425,252 @@
         }
       ],
       "modelAnswer": "**Why the customer is wrong.** The two percentages are **of different amounts**. The rise is 20% of the **original** price; the fall is 20% of the **new, higher** price, so it removes more than was added.\n\n**With multipliers.**\n\n$$1.2 \\times 0.8 = 0.96$$\n\nThe final price is **96%** of the original: an overall **4% decrease**.\n\n**A concrete example.** £100 rises to £120. Then 20% of £120 is £24, leaving **£96** — not £100.\n\nThe general point is that percentages **multiply**, they do not add, which is why no sequence of a rise and an equal fall ever returns to the start."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the value of the investment after 1 year.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "a percentage increase",
+      "step": "s1",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$4000 \\times 1.035 = $ £4140.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4000 \\times 1.035$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£4140"
+        }
+      ],
+      "discriminators": [],
+      "context": "savings",
+      "type": "numeric",
+      "answer": 4140,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the value of the investment after 5 years, to the nearest penny.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "compound interest",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$4000 \\times 1.035^5 = 4750.7475\\ldots$, which is £4750.75. Simple interest, $4000 + 5 \\times 140 = $ £4700, misses the interest earned on interest.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.035^5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4000 \\times 1.035^5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£4750.75"
+        }
+      ],
+      "discriminators": [],
+      "context": "savings",
+      "type": "numeric",
+      "answer": 4750.75,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q21",
+      "prompt": "After how many whole years will the investment first be worth more than £6000?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "solving a growth problem by trial",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Need $4000 \\times 1.035^n > 6000$, so $1.035^n > 1.5$. $1.035^{11} = 1.460\\ldots$ (£5840.27) and $1.035^{12} = 1.511\\ldots$ (£6044.68). So 12 years.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.035^n > 1.5$ or trials of $4000 \\times 1.035^n$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "11 and 12 years both checked"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "savings",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "years"
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out its value in 3 years’ time.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "depreciation",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Each year it keeps 85%: $12\\,000 \\times 0.85^3 = $ £7369.50.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12\\,000 \\times 0.85^3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£7369.50"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-value",
+      "type": "numeric",
+      "answer": 7369.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out what the car was worth one year ago, to the nearest penny.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "reversing a percentage decrease",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "A year ago its value $V$ fell by 15% to £12 000: $0.85V = 12\\,000$, so $V = 12\\,000 \\div 0.85 = $ £14 117.65. Adding 15% of £12 000 gives £13 800, which is wrong because the 15% was of the larger, earlier value.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.85V = 12\\,000$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12\\,000 \\div 0.85$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£14 117.65"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "car-value",
+      "type": "numeric",
+      "answer": 14117.65,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q24",
+      "prompt": "A colony of bacteria doubles in number every 20 minutes. At 9 am there are 500 bacteria. How many minutes after 9 am is the number of bacteria first more than 1 million?",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "exponential growth",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "After $m$ doublings there are $500 \\times 2^m$. Need $500 \\times 2^m > 1\\,000\\,000$, so $2^m > 2000$. $2^{10} = 1024$ is too few and $2^{11} = 2048$ is enough, so 11 doublings, which take $11 \\times 20 = 220$ minutes. (That is at 12:40 pm.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$500 \\times 2^m$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2^{11} > 2000$, with $2^{10}$ checked"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$11 \\times 20$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "220"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 220,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "minutes"
+    },
+    {
+      "id": "q25",
+      "prompt": "A savings account pays $x$% per year compound interest. £2000 grows to £2163.20 in 2 years. Find $x$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "finding a compound interest rate",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The multiplier $m$ for one year satisfies $2000m^2 = 2163.20$, so $m^2 = 1.0816$ and $m = \\sqrt{1.0816} = 1.04$. That is 4% a year. Halving the total growth of 8.16% gives 4.08%, which ignores interest on interest.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2000m^2 = 2163.20$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{1.0816}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
     }
   ],
   "worksheets": {
@@ -1450,9 +1706,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 67
     }
   },
   "examTechnique": {
@@ -1486,7 +1749,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

@@ -168,6 +168,11 @@ describe('multi-part questions', () => {
     const apart = topic(); apart.questions[0] = { ...apart.questions[0]!, context: 'trolley' }; apart.questions[2] = { ...apart.questions[2]!, context: 'trolley' }
     expect(errors({ contexts: [stem], ...apart }).some((i) => i.message.includes('next to each other'))).toBe(true)
 
+    const step = topic(); step.questions[0] = { ...step.questions[0]!, step: 's9' }
+    expect(errors(step).some((i) => i.message.includes('lesson step s9'))).toBe(true)
+    step.questions[0] = { ...step.questions[0]!, step: 's2' }
+    expect(errors(step)).toEqual([])
+
     const check = parted(); check.lesson.steps[0]!.check = { ...check.lesson.steps[0]!.check!, context: 'trolley' }
     expect(errors(check).some((i) => i.message.includes('lesson check'))).toBe(true)
   })

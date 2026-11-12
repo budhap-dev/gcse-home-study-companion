@@ -926,6 +926,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "goals-30",
+      "body": "The table shows the number of goals a team scored in each of its 30 matches.\n\n| Goals | 0 | 1 | 2 | 3 | 4 | 5 |\n|---|---|---|---|---|---|---|\n| Number of matches | 4 | 9 | 8 | 5 | 3 | 1 |"
+    },
+    {
+      "id": "five-numbers",
+      "body": "The mean of five numbers is 12. The numbers are 6, 13, $x$, 11 and $2x$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1587,6 +1597,283 @@
       ],
       "modelAnswer": "The total pay is £240 000, so the mean is $240\\,000 \\div 6 = 40\\,000$, that is £40 000. In order, the two middle values are £24 000 and £26 000, so the median is £25 000. The mode is £24 000, the only value that appears twice.\n\nThe median best describes a typical person's pay. The mean is pulled upwards by the one very large salary, £115 000, which is an outlier: five of the six people earn less than the mean, so it describes almost nobody. The mode is simply the salary that two people happen to share. It sits near the bottom of the list and would change completely if one of them had a small pay rise, so it is not a fair summary of all six.",
       "suggestedMinutes": 8
+    },
+    {
+      "id": "q21",
+      "prompt": "Write down the mode.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "mode from a frequency table",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The most common number of goals is 1, in 9 matches. The mode is the value, 1, not its frequency, 9.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1"
+        }
+      ],
+      "discriminators": [],
+      "context": "goals-30",
+      "type": "numeric",
+      "answer": 1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Find the median number of goals.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "median from a frequency table",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With 30 matches the median is halfway between the 15th and 16th values. Running totals: 4 with 0 goals, 13 with up to 1, 21 with up to 2. The 15th and 16th are both 2, so the median is 2.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "running totals to the 15th and 16th"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "context": "goals-30",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the mean number of goals per match.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "mean from a frequency table",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Total goals: $0 \\times 4 + 1 \\times 9 + 2 \\times 8 + 3 \\times 5 + 4 \\times 3 + 5 \\times 1 = 57$. Mean $= 57 \\div 30 = 1.9$. Dividing by 6, the number of columns, is a common slip.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total 57"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.9"
+        }
+      ],
+      "discriminators": [],
+      "context": "goals-30",
+      "type": "numeric",
+      "answer": 1.9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "In its next 10 matches the team scores 28 goals. Work out the mean number of goals per match for all 40 matches.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "combining means",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The first 30 matches have $0 \\times 4 + 1 \\times 9 + 2 \\times 8 + 3 \\times 5 + 4 \\times 3 + 5 \\times 1 = 57$ goals. Add 28: 85 goals in 40 matches, and $85 \\div 40 = 2.125$. Averaging the two means, 1.9 and 2.8, gives 2.35, which counts 10 matches as much as 30.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$57 + 28$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.125"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "goals-30",
+      "type": "numeric",
+      "answer": 2.125,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Find $x$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "working back from a mean",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The five numbers total $5 \\times 12 = 60$. So $6 + 13 + x + 11 + 2x = 60$, giving $30 + 3x = 60$ and $x = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$30 + 3x = 60$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "context": "five-numbers",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "Find the median of the five numbers.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "median",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "From $30 + 3x = 60$, $x = 10$, so the numbers are 6, 13, 10, 11 and 20. In order: 6, 10, 11, 13, 20. The median is 11.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "numbers in order"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11"
+        }
+      ],
+      "discriminators": [],
+      "context": "five-numbers",
+      "type": "numeric",
+      "answer": 11,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "Two more numbers, both equal to $y$, are added. The mean of the seven numbers is 13. Find $y$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a mean changed by new values",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The five numbers total $5 \\times 12 = 60$. Seven numbers with mean 13 total $7 \\times 13 = 91$. So $60 + 2y = 91$ and $y = 15.5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$7 \\times 13 = 91$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$60 + 2y = 91$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "five-numbers",
+      "type": "numeric",
+      "answer": 15.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q28",
+      "prompt": "Class A has 20 students, whose mean test mark is 64. One student in class A, who scored 80, moves to another class. Work out the new mean mark of class A, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a mean after removing a value",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Class A’s marks total $20 \\times 64 = 1280$. Without the 80: $1280 - 80 = 1200$ over 19 students. $1200 \\div 19 = 63.15\\ldots$, so 63.2. Dividing by 20 again forgets the class is smaller.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total 1280"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1200 \\div 19$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "63.2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 63.2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q29",
+      "prompt": "Four whole numbers have a mode of 5, a median of 6 and a mean of 7. Find the largest of the four numbers.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "building a data set from averages",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "In order call them $a \\le b \\le c \\le d$. Their mean is 7, so they total 28. The median is the mean of the middle two, $\\dfrac{b + c}{2} = 6$, so $b + c = 12$. The mode is 5, so 5 appears at least twice, and with $b + c = 12$ only $a = b = 5$ works (then $c = 7$). So $d = 28 - 5 - 5 - 7 = 11$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total 28"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a = b = 5$ and $c = 7$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 11,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1624,9 +1911,18 @@
         "q17",
         "q18",
         "q19",
-        "q20"
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28",
+        "q29"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 67
     }
   },
   "examTechnique": {
@@ -1662,7 +1958,9 @@
       "q15",
       "q16",
       "q17",
-      "q18"
+      "q18",
+      "q28",
+      "q29"
     ],
     "sampleSize": 10
   },

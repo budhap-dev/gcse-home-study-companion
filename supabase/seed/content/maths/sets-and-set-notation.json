@@ -804,6 +804,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "sets-1-15",
+      "body": "$\\xi$ = {whole numbers from 1 to 15}, $A$ = {multiples of 3} and $B$ = {odd numbers}."
+    },
+    {
+      "id": "music-choir",
+      "body": "In a group of 50 students, 26 play an instrument, 22 sing in a choir and 9 do neither."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1374,6 +1384,246 @@
         }
       ],
       "modelAnswer": "**Why it is usually wrong.** Adding $n(A)$ and $n(B)$ counts every element of the **overlap twice**, once as a member of A and once as a member of B, so the total is too large.\n\n**The correct rule** subtracts the overlap once:\n\n$$n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$$\n\n**When it is right.** Only when the two sets have **no elements in common**, so $A \\cap B$ is empty and the sets are mutually exclusive. Then nothing has been counted twice and subtracting zero changes nothing."
+    },
+    {
+      "id": "q19",
+      "prompt": "Find $n(A)$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "listing a set",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$A = \\{3, 6, 9, 12, 15\\}$, so $n(A) = 5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "context": "sets-1-15",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Find $n(A \\cap B)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "intersection",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$A \\cap B$ is the odd multiples of 3 from 1 to 15: $\\{3, 9, 15\\}$, so 3.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "context": "sets-1-15",
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "A number is chosen at random from $\\xi$. Work out $P(A' \\cap B)$. Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "complement and intersection",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$A' \\cap B$ is the odd numbers from 1 to 15 that are not multiples of 3: $\\{1, 5, 7, 11, 13\\}$, 5 of the 15. $\\dfrac{5}{15} = \\dfrac{1}{3}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\{1, 5, 7, 11, 13\\}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{3}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "sets-1-15",
+      "type": "short-text",
+      "accepted": [
+        "1/3",
+        "5/15"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "How many students both play an instrument and sing in a choir?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding an overlap",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$50 - 9 = 41$ do at least one. $26 + 22 = 48$ counts the students who do both twice, so $48 - 41 = 7$ do both.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$26 + 22 - 41$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [],
+      "context": "music-choir",
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "A student is chosen at random. What is the probability that they sing in a choir but do not play an instrument? Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "reading a Venn diagram",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$26 + 22 - (50 - 9) = 7$ do both, so $22 - 7 = 15$ sing only. $\\dfrac{15}{50} = \\dfrac{3}{10}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "15 sing only"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{3}{10}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "music-choir",
+      "type": "short-text",
+      "accepted": [
+        "3/10",
+        "15/50"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "A student who plays an instrument is chosen at random. What is the probability that they also sing in a choir? Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "conditional probability from a Venn diagram",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$26 + 22 - (50 - 9) = 7$ do both. Out of the 26 who play an instrument, 7 sing: $\\dfrac{7}{26}$. $\\dfrac{7}{50}$ answers a different question, choosing from all 50.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7 do both"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{7}{26}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "music-choir",
+      "type": "short-text",
+      "accepted": [
+        "7/26"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "$n(\\xi) = 40$, $n(A) = 25$, $n(B) = 18$ and $n((A \\cup B)') = 5$. Find $n(A \\cap B')$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "set notation with a Venn diagram",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$n(A \\cup B) = 40 - 5 = 35$. Then $n(A \\cap B) = 25 + 18 - 35 = 8$. $A \\cap B'$ is the part of $A$ outside $B$: $25 - 8 = 17$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n(A \\cup B) = 35$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n(A \\cap B) = 8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "17"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 17,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "$\\xi$ = {whole numbers from 1 to 30}, $P$ = {prime numbers} and $Q$ = {multiples of 5}. Find $n(P \\cup Q)$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "union of overlapping sets",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P = \\{2, 3, 5, 7, 11, 13, 17, 19, 23, 29\\}$, 10 numbers. $Q = \\{5, 10, 15, 20, 25, 30\\}$, 6 numbers. Only 5 is in both. $n(P \\cup Q) = 10 + 6 - 1 = 15$. Adding 10 and 6 counts 5 twice.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both sets listed"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5 in both"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1409,9 +1659,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 63
     }
   },
   "examTechnique": {
@@ -1445,7 +1703,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

@@ -744,6 +744,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "tea-coffee",
+      "body": "80 people were asked whether they like tea and whether they like coffee. 45 like tea, 38 like coffee and 15 like both."
+    },
+    {
+      "id": "three-sports",
+      "body": "In a survey of 60 students about three sports: 30 play football, 25 play tennis and 20 swim. 12 play football and tennis, 9 play football and swim, and 7 play tennis and swim. Each of these pair numbers includes the 5 students who do all three."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1311,6 +1321,266 @@
       "answer": 20,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "prompt": "How many people like neither?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "completing a Venn diagram",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "At least one: $45 + 38 - 15 = 68$, since the 15 who like both are counted in each. Neither: $80 - 68 = 12$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$45 + 38 - 15$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "context": "tea-coffee",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "A person is chosen at random. What is the probability that they like coffee but not tea? Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "probability from a Venn diagram",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Coffee only: $38 - 15 = 23$. $\\dfrac{23}{80}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$38 - 15$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{23}{80}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "tea-coffee",
+      "type": "short-text",
+      "accepted": [
+        "23/80"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "A person who likes tea is chosen at random. What is the probability that they also like coffee? Give your answer as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "conditional probability from a Venn diagram",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Of the 45 who like tea, 15 like coffee too: $\\dfrac{15}{45} = \\dfrac{1}{3}$. $\\dfrac{15}{80}$ chooses from everyone, not from the tea drinkers.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{15}{45}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{3}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "tea-coffee",
+      "type": "short-text",
+      "accepted": [
+        "1/3"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "How many students play football only?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "three-set Venn diagram",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Fill from the middle out. All three: 5. Football and tennis only: $12 - 5 = 7$. Football and swimming only: $9 - 5 = 4$. Football only: $30 - 7 - 4 - 5 = 14$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7 and 4 for the pair regions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14"
+        }
+      ],
+      "discriminators": [],
+      "context": "three-sports",
+      "type": "numeric",
+      "answer": 14,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "How many students do none of the three sports?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "completing a three-set Venn diagram",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Middle 5. Pairs only: $12 - 5 = 7$, $9 - 5 = 4$, $7 - 5 = 2$. Singles: football $30 - 7 - 4 - 5 = 14$, tennis $25 - 7 - 2 - 5 = 11$, swimming $20 - 4 - 2 - 5 = 9$. In the circles: $5 + 7 + 4 + 2 + 14 + 11 + 9 = 52$. None: $60 - 52 = 8$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "pair-only regions 7, 4, 2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "single regions 14, 11, 9"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "three-sports",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "A student is chosen at random. What is the probability that they do exactly two of the sports? Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "reading regions of a three-set Venn diagram",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Exactly two leaves out the 5 who do all three: $(12 - 5) + (9 - 5) + (7 - 5) = 7 + 4 + 2 = 13$. $\\dfrac{13}{60}$. Adding 12, 9 and 7 counts the middle three times.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7, 4 and 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{13}{60}$"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "three-sports",
+      "type": "short-text",
+      "accepted": [
+        "13/60"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "In a Venn diagram for 50 people, the region for $A$ only holds $2x$ people, $A \\cap B$ holds $x$, $B$ only holds $x + 5$, and 9 people are outside both circles. A person is chosen at random. Work out $P(A)$ as a decimal.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "algebra in a Venn diagram",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "All four regions add to 50: $2x + x + (x + 5) + 9 = 50$, so $4x = 36$ and $x = 9$. $A$ holds $2x + x = 27$ people, so $P(A) = 27 \\div 50 = 0.54$. Using $A$ only, 18, misses the overlap.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4x + 14 = 50$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x = 9$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n(A) = 27$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.54"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 0.54,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "$A$ and $B$ are independent events. $P(A) = 0.4$ and $P(A \\cup B) = 0.7$. Find $P(B)$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "independence and the addition rule",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For independent events $P(A \\cap B) = P(A)P(B)$. So $P(A \\cup B) = P(A) + P(B) - P(A)P(B)$: $0.7 = 0.4 + p - 0.4p$, so $0.3 = 0.6p$ and $p = 0.5$. Subtracting, $0.7 - 0.4 = 0.3$, forgets the overlap.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$P(A \\cap B) = 0.4p$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.7 = 0.4 + p - 0.4p$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1346,9 +1616,17 @@
         "q15",
         "q18",
         "q16",
-        "q17"
+        "q17",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 67
     }
   },
   "examTechnique": {
@@ -1381,7 +1659,9 @@
       "q13",
       "q14",
       "q15",
-      "q18"
+      "q18",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

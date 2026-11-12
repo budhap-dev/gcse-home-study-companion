@@ -662,6 +662,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "homework-times",
+      "body": "The table summarises the times, in minutes, that students in two classes spent on homework.\n\n|  | Lowest | Lower quartile | Median | Upper quartile | Highest |\n|---|---|---|---|---|---|\n| Class P | 12 | 20 | 26 | 34 | 50 |\n| Class Q | 15 | 24 | 29 | 31 | 41 |"
+    },
+    {
+      "id": "outlier-rule",
+      "body": "In one data set, the lower quartile is 18 and the upper quartile is 30. A value counts as an outlier if it is more than $1.5 \\times$ the interquartile range above the upper quartile, or more than $1.5 \\times$ the interquartile range below the lower quartile."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1207,6 +1217,241 @@
         }
       ],
       "modelAnswer": "A comparison of two distributions needs two things: a statement about **average** and a statement about **spread**, each interpreted in the context of the question.\n\n**Average.** Class B’s median is 25 and Class A’s is 22. B’s median is **higher**, so **on average, Class B scored better on the test**. Simply writing that B’s median is 25 would be a reading, not a comparison, and would earn nothing; the mark is for saying what the difference means.\n\n**Spread.** Class B’s interquartile range is 7.5 and Class A’s is 12. B’s IQR is **smaller**, so the middle half of B’s marks are bunched more tightly together: **Class B’s marks were more consistent**. It is important to say *more consistent* rather than *better*. A smaller spread is not a good thing in itself — it means the class performed more uniformly, which may or may not be what a teacher wants. Here it means fewer very low marks in B, but also fewer very high ones relative to their median.\n\nPutting the two together: Class B did better on average and more consistently than Class A.\n\n**What a box plot could tell you about scoring over 30.** A box plot is drawn from the five-number summary, and each section of it holds a **quarter of the data**. So if 30 happened to be one of the plotted values — say Class A’s upper quartile — the plot would say that **25% of Class A** scored above 30. It would also show whether **anyone** in each class scored over 30 at all, from where the maximum whisker ends. Those are statements about **proportions**.\n\n**What it could not tell you** is **how many** students that is. The plot has no scale for the number of values; two classes of 12 and 120 could produce identical plots. To turn 25% into a count you would need to know the **size of the class**, which is not on the diagram. Nor could it tell you how many scored over 30 if 30 fell somewhere inside a section, because within a quarter the individual values are not shown at all.\n\nSo from the plots alone the honest claim is that *a larger proportion* of one class scored over 30, never that *more students* did."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the interquartile range for class P.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "interquartile range",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$34 - 20 = 14$ minutes.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "14"
+        }
+      ],
+      "discriminators": [],
+      "context": "homework-times",
+      "type": "numeric",
+      "answer": 14,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "minutes"
+    },
+    {
+      "id": "q20",
+      "prompt": "Class P has 32 students. About how many of them spent more than 34 minutes?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "what the quartiles split",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For class P, 34 minutes is the upper quartile, and a quarter of the data lies above it: $32 \\div 4 = 8$ students.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a quarter above the upper quartile"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "context": "homework-times",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "Which statement compares the two classes correctly?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing distributions",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Compare an average and a spread. Medians: Q 29, P 26, so Q spent longer on average. Interquartile ranges: Q $31 - 24 = 7$, P $34 - 20 = 14$, so Q’s times were more consistent. The highest times compare only one student each.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "median and IQR compared"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "homework-times",
+      "type": "multiple-choice",
+      "options": [
+        "Class P spent longer, because its highest time, 50, is above class Q’s, 41",
+        "Class Q spent longer on average and its times were more consistent",
+        "Class P spent longer on average and its times were more consistent",
+        "The classes cannot be compared without every student’s time"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the interquartile range.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "interquartile range",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$30 - 18 = 12$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "context": "outlier-rule",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Above what value is a data value an outlier?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "an outlier boundary",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The interquartile range is $30 - 18 = 12$, and $1.5 \\times 12 = 18$. Upper boundary: $30 + 18 = 48$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.5 \\times 12$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "48"
+        }
+      ],
+      "discriminators": [],
+      "context": "outlier-rule",
+      "type": "numeric",
+      "answer": 48,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "How many of these values are outliers? 52, 3, 46, 49",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "applying an outlier rule both ways",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Interquartile range $30 - 18 = 12$ and $1.5 \\times 12 = 18$. Upper boundary $30 + 18 = 48$, lower boundary $18 - 18 = 0$. 52 and 49 are above 48, so they are outliers. 46 is not, and 3 is above 0, so it is not either. That is 2.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both boundaries, 48 and 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "outlier-rule",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "A box plot has a lowest value of 20 and a range of 50. Its upper quartile is 18 less than its highest value, and its interquartile range is 16. Find the lower quartile.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "rebuilding a box plot",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Highest value $= 20 + 50 = 70$. Upper quartile $= 70 - 18 = 52$. Lower quartile $= 52 - 16 = 36$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "highest value 70"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "upper quartile 52"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 36,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "A box plot shows the marks of 60 students. The lower quartile is 42, the median is 55 and the upper quartile is 63. About how many students scored between 42 and 63?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "reading a box plot as proportions",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Between the lower and upper quartiles lies the middle half of the data: $60 \\div 2 = 30$ students. The median is not needed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "half the data between the quartiles"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1242,9 +1487,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 60
     }
   },
   "examTechnique": {
@@ -1278,7 +1531,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },
