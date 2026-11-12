@@ -119,7 +119,13 @@ describe('a grade 9 set (WKP-5)', () => {
         for (const y of [undefined, ...yearsForSubject(s.id)]) {
           const topics = unitTopics(topicsForSubject(s.id), u, y)
           if (!topics.length) continue
-          expect(grade9Items(topics, 'check1').length, `${s.id}/${u}/${y ?? 'all'}`).toBe(GRADE_9_SET)
+          // A multi-part question comes whole and counts as one problem.
+          const items = grade9Items(topics, 'check1')
+          const problems = new Set(items.map((m) => {
+            const stem = topics.find((t) => t.id === m.topicId)!.questions.find((q) => q.id === m.questionId)!.stemId
+            return stem ? `${m.topicId}/${stem}` : `${m.topicId}/${m.questionId}`
+          }))
+          expect(problems.size, `${s.id}/${u}/${y ?? 'all'}`).toBe(GRADE_9_SET)
         }
       }
     }

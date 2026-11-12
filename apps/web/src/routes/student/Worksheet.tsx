@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { ScratchCanvas, type Stroke } from '../../components/ScratchCanvas.tsx'
-import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
@@ -24,6 +23,7 @@ import type { Milestone } from '../../progress/milestones.ts'
 import { TopicMissing } from '../../components/TopicMissing.tsx'
 import { timedPath } from './TimedWorksheet.tsx'
 import { minutesFor, minutesPerMark } from '../../content/paper.ts'
+import { QuestionPrompt } from '../../components/questions/QuestionPrompt.tsx'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -315,8 +315,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
             </span>
             <span>{question.marks} mark{question.marks > 1 ? 's' : ''} · grade {question.gradeBand}{question.calculator === 'non-calculator' ? ' · non-calculator' : question.calculator === 'calculator' ? ' · calculator' : ''}</span>
           </div>
-          {question.visual && <Visual visual={question.visual} />}
-          <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
+          <QuestionPrompt question={question} />
           <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
           {answered && typed && (
             <p className="text-sm font-bold" style={{ color: answered.result.correct ? 'var(--color-status-secure)' : answered.result.marksScored > 0 ? 'var(--color-status-developing)' : 'var(--color-status-not-secure)' }}>

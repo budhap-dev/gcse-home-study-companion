@@ -103,13 +103,78 @@ export const Topic = z.object({
     })
     .optional(),
   lesson: Lesson,
+  /**
+   * The stems of multi-part questions: a context, table or drawing set once, which two to
+   * five questions in the bank name as their `context` and are asked as its parts (a), (b),
+   * (c). Parsing attaches the stem to each of its parts (`attachStems`).
+   */
+  contexts: z.array(z.object({ id: Slug, body: RichText, visual: Visual.optional() })).optional(),
   questions: z.array(Question).min(1),
   worksheets: z.object({ core: Worksheet, higher: Worksheet, advanced: Worksheet }),
   examTechnique: ExamTechniqueNote,
   quiz: Quiz,
   provenance: Provenance,
 })
+  .superRefine((t, ctx) => {
+    for (const issue of stemIssues(t)) ctx.addIssue({ code: 'custom', path: issue.path, message: issue.message })
+  })
+  .transform(attachStems)
 export type Topic = z.infer<typeof Topic>
+
+type Context = { id: string; body: string; visual?: z.infer<typeof Visual> }
+type Bank = { contexts?: Context[]; questions: Question[]; lesson?: z.infer<typeof Lesson> }
+
+/** The letters of a stem's parts, in order. */
+const LETTERS = 'abcde'
+
+/**
+ * What makes a multi-part question malformed: a part naming a stem that is not there, a stem
+ * with fewer than two parts or more than five, parts not next to each other in the bank, or a
+ * lesson check that tries to be a part. Run by the schema, so a topic like that never loads.
+ */
+export function stemIssues(t: Bank): { path: (string | number)[]; message: string }[] {
+  const out: { path: (string | number)[]; message: string }[] = []
+  const contexts = t.contexts ?? []
+  const ids = new Set<string>()
+  contexts.forEach((c, i) => {
+    if (ids.has(c.id)) out.push({ path: ['contexts', i], message: `context ${c.id} is defined twice` })
+    ids.add(c.id)
+  })
+  t.questions.forEach((q, i) => {
+    if (q.context && !ids.has(q.context)) out.push({ path: ['questions', i], message: `${q.id} names context ${q.context}, which is not in contexts` })
+    if (q.stem && !q.context) out.push({ path: ['questions', i], message: `${q.id} has a stem but no context: stems are attached from contexts` })
+  })
+  for (const c of contexts) {
+    const at = t.questions.flatMap((q, i) => (q.context === c.id ? [i] : []))
+    if (at.length < 2 || at.length > LETTERS.length) out.push({ path: ['contexts'], message: `context ${c.id} has ${at.length} part(s); a multi-part question has 2 to ${LETTERS.length}` })
+    if (at.some((x, k) => k > 0 && x !== at[k - 1]! + 1)) out.push({ path: ['contexts'], message: `the parts of context ${c.id} must sit next to each other in the bank` })
+  }
+  for (const [i, s] of (t.lesson?.steps ?? []).entries()) {
+    if (s.check?.context) out.push({ path: ['lesson', 'steps', i], message: 'a lesson check is asked on its own, so it cannot be part of a multi-part question' })
+  }
+  return out
+}
+
+/**
+ * Each part of a multi-part question, with its stem attached: the context's text and drawing,
+ * its letter, and how many parts there are. Running it again gives the same result, so a
+ * topic parsed twice (cached, then read back) is unchanged.
+ */
+export function attachStems<T extends Bank>(t: T): T {
+  if (!t.contexts?.length) return t
+  const byId = new Map(t.contexts.map((c) => [c.id, c]))
+  const count = new Map<string, number>()
+  for (const q of t.questions) if (q.context) count.set(q.context, (count.get(q.context) ?? 0) + 1)
+  const seen = new Map<string, number>()
+  const questions = t.questions.map((q) => {
+    const c = q.context ? byId.get(q.context) : undefined
+    if (!c) return q
+    const n = seen.get(c.id) ?? 0
+    seen.set(c.id, n + 1)
+    return { ...q, stem: { id: c.id, part: LETTERS[n]!, parts: count.get(c.id)!, body: c.body, ...(c.visual ? { visual: c.visual } : {}) } }
+  })
+  return { ...t, questions }
+}
 
 /** Subject-level exam technique guide: papers, timing, command words, and what a grade 9 answer looks like. */
 export const SubjectGuide = z.object({

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { canPublish, validateTopicForPublish } from './validate.ts'
 import type { Question, Topic } from './index.ts'
+import { Topic as TopicSchema } from './topic.ts'
 
 function numeric(id: string, gradeBand: '4-5' | '6-7' | '8-9'): Question {
   return {
@@ -137,4 +138,79 @@ describe('listening questions', () => {
   it('keeps listening off a worksheet, which prints', () => {
     expect(errorsFor(dictation(), 'core')).toContainEqual(expect.stringMatching(/cannot be printed/))
   })
+})
+
+describe('multi-part questions', () => {
+  const stem = { id: 'trolley', body: 'A 2 kg trolley is pushed along a level bench with a resultant force of 6 N.' }
+  // q1 to q3 become parts (a) to (c) of one stem, ramping from 4–5 to 8–9 as a paper's question does.
+  const parted = (overrides: Partial<Topic> = {}) => {
+    const t = topic(overrides)
+    t.questions = t.questions.map((q, i) => (i < 3 ? { ...q, context: 'trolley' } : q))
+    return { contexts: [stem], ...t }
+  }
+  const errors = (input: unknown) => validateTopicForPublish(input).filter((i) => i.severity === 'error')
+
+  it('attach the stem to each part, lettered in bank order', () => {
+    const parsed = TopicSchema.parse(parted())
+    expect(parsed.questions.slice(0, 4).map((q) => q.stem && `${q.stem.part}/${q.stem.parts}`)).toEqual(['a/3', 'b/3', 'c/3', undefined])
+    expect(parsed.questions[1]!.stem!.body).toBe(stem.body)
+    // Parsing the parsed topic again changes nothing, so a cached topic reads back the same.
+    expect(TopicSchema.parse(parsed)).toEqual(parsed)
+  })
+
+  it('refuse a part naming a missing stem, a stem with one part, parts apart, and a lesson check as a part', () => {
+    const missing = parted(); missing.questions[0] = { ...missing.questions[0]!, context: 'nothing' }
+    expect(errors(missing).some((i) => i.message.includes('not in contexts'))).toBe(true)
+
+    const single = topic(); single.questions[0] = { ...single.questions[0]!, context: 'trolley' }
+    expect(errors({ contexts: [stem], ...single }).some((i) => i.message.includes('1 part(s)'))).toBe(true)
+
+    const apart = topic(); apart.questions[0] = { ...apart.questions[0]!, context: 'trolley' }; apart.questions[2] = { ...apart.questions[2]!, context: 'trolley' }
+    expect(errors({ contexts: [stem], ...apart }).some((i) => i.message.includes('next to each other'))).toBe(true)
+
+    const check = parted(); check.lesson.steps[0]!.check = { ...check.lesson.steps[0]!.check!, context: 'trolley' }
+    expect(errors(check).some((i) => i.message.includes('lesson check'))).toBe(true)
+  })
+
+  it('let the earlier parts sit on the Advanced sheet when a later part is grade 8 to 9', () => {
+    const t = parted()
+    t.worksheets.core.questionIds = ['q5']
+    t.worksheets.higher.questionIds = ['q7']
+    t.worksheets.advanced.questionIds = ['q1', 'q2', 'q3', 'q4']
+    expect(errors(t)).toEqual([])
+    const lone = topic()
+    lone.worksheets.advanced.questionIds = ['q1', 'q3']
+    expect(errors(lone).some((i) => i.path === 'worksheets.advanced')).toBe(true)
+  })
+
+  it('ask every part on a sheet, together and in order', () => {
+    for (const ids of [['q1', 'q3'], ['q1', 'q4', 'q2', 'q3'], ['q2', 'q1', 'q3']]) {
+      const t = parted()
+      t.worksheets.core.questionIds = ['q5']
+      t.worksheets.higher.questionIds = ['q7']
+      t.worksheets.advanced.questionIds = [...ids, 'q4'].filter((x, i, a) => a.indexOf(x) === i)
+      expect(errors(t).some((i) => i.message.includes('together and in order')), ids.join(',')).toBe(true)
+    }
+  })
+
+  it('count a multi-part question once, at its top part, towards the grade 8 to 9 share', () => {
+    // Twelve questions: q1 to q3 are one problem whose top part is 8–9, so there are ten
+    // problems. With two more 8–9 questions that is 3 of 12 questions (25%) and 3 of 10
+    // problems (30%), under 40% either way. With three more it is 4 of 12 questions (33%),
+    // which would fail, but 4 of 10 problems (40%), which passes.
+    const banded = (top: number) => {
+      const t = parted()
+      t.questions = t.questions.map((q, i) => {
+        const band = i === 0 ? '4-5' : i === 1 ? '6-7' : i === 2 || (i >= 3 && i < 3 + top) ? '8-9' : '6-7'
+        return { ...q, gradeBand: band, discriminators: band === '8-9' ? ['unfamiliar-context' as const] : [] }
+      })
+      t.worksheets = { core: { level: 'core', questionIds: ['q11'], suggestedMinutes: 5 }, higher: { level: 'higher', questionIds: ['q12'], suggestedMinutes: 5 }, advanced: { level: 'advanced', questionIds: ['q1', 'q2', 'q3'], suggestedMinutes: 5 } }
+      return t
+    }
+    const share = (x: unknown) => errors(x).filter((i) => i.message.includes('grade 8 to 9'))
+    expect(share(banded(2))).toHaveLength(1)
+    expect(share(banded(3))).toEqual([])
+  })
+
+
 })

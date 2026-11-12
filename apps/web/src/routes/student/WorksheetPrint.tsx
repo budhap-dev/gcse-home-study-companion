@@ -91,18 +91,40 @@ function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
 }
 
 /**
+ * How each printed question is numbered: 1., 2., then a multi-part question's parts as
+ * (a), (b) under one number, its stem printed once above part (a).
+ */
+export function printedNumbers(questions: Pick<Question, 'stem'>[]): { n: number; label: string }[] {
+  let n = 0
+  return questions.map((q, i) => {
+    if (!q.stem || q.stem.id !== questions[i - 1]?.stem?.id) n++
+    return { n, label: q.stem ? `(${q.stem.part})` : `${n}.` }
+  })
+}
+
+/**
  * The questions of a printed sheet, numbered, with ruled working space or, on the answer
  * sheet, the answer, the working and the mark scheme. Shared by a topic's worksheet and a
  * mixed worksheet, so the two print alike.
  */
 export function PrintedQuestions({ questions, answers }: { questions: Question[]; answers: boolean }) {
+  const numbers = printedNumbers(questions)
   return (
   <ol className="flex flex-col">
     {questions.map((q, i) => (
       <li key={i} className="question break-inside-avoid border-b border-rule py-3 last:border-b-0">
+        {q.stem && q.stem.id !== questions[i - 1]?.stem?.id && (
+          <div className="mb-2 flex min-w-0 gap-2">
+            <span className="font-bold tabular-nums">{numbers[i]!.n}.</span>
+            <div className="flex min-w-0 flex-col gap-2">
+              <RichText source={q.stem.body} className="text-[15px]" />
+              {q.stem.visual && <div className="max-w-md"><Visual visual={q.stem.visual} /></div>}
+            </div>
+          </div>
+        )}
         <div className="flex items-start justify-between gap-4">
-          <span className="flex min-w-0 gap-2">
-            <span className="font-bold tabular-nums">{i + 1}.</span>
+          <span className={`flex min-w-0 gap-2 ${q.stem ? 'pl-6' : ''}`}>
+            <span className="font-bold tabular-nums">{numbers[i]!.label}</span>
             <RichText source={q.prompt} className="text-[15px]" />
           </span>
           <span className="shrink-0 text-sm text-ink-2">({q.marks})</span>

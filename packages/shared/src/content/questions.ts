@@ -2,6 +2,22 @@ import { z } from 'zod'
 import { Calculator, Discriminator, GradeBand, RichText, Slug } from './common.ts'
 import { Visual } from './visuals.ts'
 
+/**
+ * A multi-part question's shared stem, as attached to each of its parts: the context with its
+ * table or drawing, which part this is, and how many there are. Every place a question is
+ * shown prints the stem above the part, so a part met alone (in a recap, a unit test or the
+ * mistakes list) still carries every figure it needs.
+ */
+export const Stem = z.object({
+  id: Slug,
+  /** 'a', 'b', 'c': the part's letter, from its place among the stem's parts. */
+  part: z.string().regex(/^[a-e]$/),
+  parts: z.number().int().min(2).max(5),
+  body: RichText,
+  visual: Visual.optional(),
+})
+export type Stem = z.infer<typeof Stem>
+
 /** One line of a mark scheme in the board's style: M for method, A for accuracy, B for independent, C for communication. */
 export const MarkSchemeLine = z.object({
   code: z.string().regex(/^[MABC]\d+$/, 'M1, A1, B1, or C1 style code'),
@@ -38,6 +54,16 @@ const base = {
   /** Optional visual shown with the prompt: a graph, a diagram, a data table image. */
   visual: Visual.optional(),
   listen: Listen.optional(),
+  /**
+   * The shared stem this question is a part of (`contexts` on the topic): a multi-part
+   * question in the style of a paper's, where a context, a table or a graph is set once and
+   * parts (a), (b), (c) ask about it. Each part is an ordinary question with its own id,
+   * marks, band and mark scheme, so it is marked, recorded, generated and reviewed as one;
+   * only the stem is shared. Parts sit next to each other in the bank, in letter order.
+   */
+  context: Slug.optional(),
+  /** The stem itself, attached when the topic is parsed (topic.ts); never written by hand. */
+  stem: Stem.optional(),
 }
 
 const MultipleChoice = z.object({

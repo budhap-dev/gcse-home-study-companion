@@ -668,6 +668,12 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "titration-results",
+      "body": "A student titrates 25.0 cm³ of sodium hydroxide solution with hydrochloric acid of concentration 0.100 mol/dm³.\n\nNaOH + HCl → NaCl + H₂O\n\nThese are the student’s burette readings.\n\n| Titration | Rough | 1 | 2 | 3 |\n|---|---|---|---|---|\n| Final burette reading (cm³) | 24.90 | 24.70 | 25.30 | 25.30 |\n| Initial burette reading (cm³) | 0.00 | 0.50 | 1.20 | 0.80 |"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1299,6 +1305,102 @@
       "correct": [
         1
       ]
+    },
+    {
+      "id": "q21",
+      "type": "numeric",
+      "context": "titration-results",
+      "prompt": "Calculate the mean titre. Use only the concordant results: titres within 0.10 cm³ of each other.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding a mean titre from concordant results",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Each titre is the final reading minus the initial reading: Rough 24.90, 1: 24.20, 2: 24.10, 3: 24.50 cm³. The rough titration is never used, and titration 3 is more than 0.10 cm³ from the others. Titrations 1 and 2 are concordant, so the mean is $\\dfrac{24.20 + 24.10}{2} = 24.15$ cm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "titres 24.20 and 24.10 chosen, the rough and 24.50 left out"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24.15 cm³"
+        }
+      ],
+      "discriminators": [],
+      "answer": 24.15,
+      "tolerance": 0,
+      "units": "cm³",
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "type": "numeric",
+      "context": "titration-results",
+      "prompt": "Calculate the concentration of the sodium hydroxide solution in mol/dm³. Give your answer to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "titration calculation in mol/dm³",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Mean of the concordant titres (titrations 1 and 2): 24.15 cm³. Moles of HCl $= 0.100 \\times \\dfrac{24.15}{1000} = 0.002415$ mol. The equation is 1 : 1, so 0.002415 mol of NaOH were in 25.0 cm³. Concentration $= \\dfrac{0.002415}{0.0250} = 0.0966$ mol/dm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "moles HCl $= 0.100 \\times 24.15 \\div 1000$ (0.002415)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "their moles $\\div 0.0250$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.0966 mol/dm³"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.0966,
+      "tolerance": 0,
+      "units": "mol/dm³",
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "type": "numeric",
+      "context": "titration-results",
+      "prompt": "Calculate the concentration of the sodium hydroxide solution in g/dm³. Give your answer to 3 significant figures. (Mr of NaOH = 40)",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "converting mol/dm³ to g/dm³",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "From the concordant mean titre of 24.15 cm³, the concentration is $0.100 \\times \\dfrac{24.15}{1000} \\div 0.0250 = 0.0966$ mol/dm³. Mass concentration = moles per dm³ × Mr $= 0.0966 \\times 40 = 3.864$, which is **3.86 g/dm³** to 3 significant figures. Averaging all three titrations instead (24.27 cm³) gives 3.88 g/dm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "their mol/dm³ × 40"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3.86 g/dm³"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 3.86,
+      "tolerance": 0.005,
+      "units": "g/dm³",
+      "unitsRequired": false
     }
   ],
   "examTechnique": {
@@ -1348,9 +1450,12 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q21",
+        "q22",
+        "q23"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 53
     }
   },
   "quiz": {

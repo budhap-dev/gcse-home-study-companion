@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../../content/questions.ts'
+import { attachStems } from '../../content/topic.ts'
 import { mark } from '../../marking.ts'
 import { fixed, show } from '../format.ts'
 import { figures } from '../physics/build.ts'
@@ -22,7 +23,10 @@ import { TRANSPORT, transportGenerators } from './transport.ts'
 const ROOT = join(import.meta.dirname, '../../../../../supabase/seed/content/biology')
 const banks = new Map<string, Question[]>()
 const bankOf = (topic: string) => {
-  if (!banks.has(topic)) banks.set(topic, Question.array().parse(JSON.parse(readFileSync(join(ROOT, `${topic}.json`), 'utf8')).questions))
+  if (!banks.has(topic)) {
+    const raw = JSON.parse(readFileSync(join(ROOT, `${topic}.json`), 'utf8'))
+    banks.set(topic, attachStems({ contexts: raw.contexts, questions: Question.array().parse(raw.questions) }).questions)
+  }
   return banks.get(topic)!
 }
 
@@ -70,7 +74,7 @@ function spread(id: string, slot: string, keys: string[], fewest = 10) {
 }
 
 const SLOTS: Record<string, string[]> = {
-  'diffusion-osmosis-and-active-transport': ['q14', 'q24', 'q25', 'q5'],
+  'diffusion-osmosis-and-active-transport': ['q14', 'q24', 'q25', 'q29', 'q30', 'q5'],
   'exchange-surfaces-and-gas-exchange': ['q12', 'q13', 'q2', 'q20', 'q26', 'q27', 'q5'],
   'leaf-root-and-transport-tissues': ['q13', 'q24', 'q25'],
   'transpiration-and-translocation': ['q13', 'q17', 'q24', 'q25', 'q6', 'q9'],
@@ -80,7 +84,9 @@ describe('every transport build', () => {
   it('has a generator for every numeric written slot in the four topics', () => {
     for (const [topic, ids] of Object.entries(SLOTS)) {
       expect(bankOf(topic).filter((q) => q.type === 'numeric').map((q) => q.id).sort(), topic).toEqual(ids)
-      expect(transportGenerators.filter((g) => g.topicId === topic).flatMap((g) => g.replaces).sort(), topic).toEqual(ids)
+      // A multi-part question's generator writes its multiple-choice part too, so only numeric slots are compared.
+      const numericSlot = (id: string) => bankOf(topic).find((q) => q.id === id)?.type === 'numeric'
+      expect(transportGenerators.filter((g) => g.topicId === topic).flatMap((g) => g.replaces).filter(numericSlot).sort(), topic).toEqual(ids)
     }
   })
 
@@ -88,6 +94,7 @@ describe('every transport build', () => {
     for (const g of transportGenerators) {
       for (const id of g.replaces) {
         const slot = bankOf(g.topicId).find((q) => q.id === id)!
+        if (slot.type !== 'numeric') continue
         for (const b of build(g.id, id, 150)) {
           const q = b.question
           expect(q.prompt, b.seed).not.toMatch(/\b(a|A|an|An) \d/)
@@ -757,5 +764,47 @@ describe('transpiration and the potometer', () => {
     }
     expect(contexts(built)).toBe(3)
     spread('plant-mass-loss', 'q13', ['m0', 'm1'])
+  })
+})
+
+describe('the multi-part osmosis question (q29 to q31)', () => {
+  /** The table's masses, read back from the printed stem. */
+  const table = (stem: string) => {
+    const row = (name: string) => stem.split('\n').find((l) => l.startsWith(`| ${name}`))!.split('|').slice(2, -1).map((c) => Number(c.trim()))
+    return { start: row('Mass at start'), end: row('Mass at end') }
+  }
+  it('works every part from the printed table alone, and prints one table for all three', () => {
+    const xs = new Map<number, number>()
+    for (let i = 0; i < 400; i++) {
+      const [a, b, c] = ['q29', 'q30', 'q31'].map((id) => build('osmosis-results-table', id, 1, `table-${i}`)[0]!)
+      expect(new Set([a, b, c].map((x) => x!.question.stem!.body)).size).toBe(1)
+      const { start, end } = table(a!.question.stem!.body)
+      const exact = start.map((s, k) => ((end[k]! - s) / s) * 100)
+      const pct = exact.map((p) => Math.round(p * 10) / 10)
+      // Cylinders cut alike: different starting masses of 2.00 to 3.20 g. Each change falls by at
+      // least 2 points on the one before, and crosses zero between 0.2 and 0.4.
+      expect(new Set(start).size).toBe(5)
+      for (const s of start) expect(s >= 2 && s <= 3.2).toBe(true)
+      for (let k = 1; k < 5; k++) expect(pct[k]!).toBeLessThanOrEqual(pct[k - 1]! - 2)
+      expect(pct[1]! > 0 && pct[2]! < 0).toBe(true)
+      // (a): the cylinder the prompt names.
+      const asked = Number(/in (\d\.\d) mol/.exec(a!.question.prompt)![1])
+      expect(answer(a!)).toBe(pct[[0, 0.2, 0.4, 0.6, 0.8].indexOf(asked)])
+      // (b): the straight line between 0.2 and 0.4, never the midpoint.
+      const x = Math.round((0.2 + (0.2 * pct[1]!) / (pct[1]! - pct[2]!)) * 100) / 100
+      expect(answer(b!)).toBe(x)
+      // From the unrounded changes the crossing is the same to 2 places.
+      expect(Math.round((0.2 + (0.2 * exact[1]!) / (exact[1]! - exact[2]!)) * 100) / 100).toBe(x)
+      // (a) is marked right unrounded too.
+      expect(mark(a!.question, String(exact[[0, 0.2, 0.4, 0.6, 0.8].indexOf(Number(/in (\d\.\d) mol/.exec(a!.question.prompt)![1]))]!.toFixed(3))).correct).toBe(true)
+      expect(x).not.toBe(0.3)
+      expect(mark(b!.question, '0.3').correct).toBe(false)
+      xs.set(x, (xs.get(x) ?? 0) + 1)
+      // (c): the written question, unchanged under the new table.
+      expect(c!.question.type === 'multiple-choice' && c!.question.correct).toEqual([2])
+    }
+    // The crossing spreads: no value in more than a fifth of builds.
+    expect(Math.max(...xs.values()) / 400).toBeLessThanOrEqual(0.2)
+    expect(xs.size).toBeGreaterThanOrEqual(6)
   })
 })

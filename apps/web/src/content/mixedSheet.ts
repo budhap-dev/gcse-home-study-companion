@@ -1,6 +1,7 @@
 import { AUTO_MARKED_TYPES, seededShuffle, sheetQuestions, type Generated, type Question, type Topic, type WorksheetLevel } from '@study/shared'
 import type { SessionItem } from '../progress/reviewSession.ts'
 import type { TopicSummary } from './index.ts'
+import { groupParts } from './parts.ts'
 
 /**
  * A mixed worksheet (WKS-4, WKP-3): questions from several topics at one level, so the
@@ -65,7 +66,7 @@ export function pickItems(spec: MixedSpec, summaries: TopicSummary[]): SessionIt
   for (let round = 0; items.length < spec.count && pools.some((p) => p.ids.length > round); round++) {
     for (const p of pools) if (items.length < spec.count && p.ids[round]) items.push({ topicId: p.topicId, questionId: p.ids[round]! })
   }
-  return items
+  return groupParts(items, summaries)
 }
 
 export interface MixedQuestion { item: SessionItem; question: Question; generated?: Generated }

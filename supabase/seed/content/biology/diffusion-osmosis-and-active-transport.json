@@ -849,6 +849,12 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "potato-osmosis",
+      "body": "In the osmosis core practical, a student puts one potato cylinder in each of five sucrose solutions for 30 minutes, then blots and weighs it.\n\n| Sucrose concentration (mol/dm³) | 0.0 | 0.2 | 0.4 | 0.6 | 0.8 |\n|---|---|---|---|---|---|\n| Mass at start (g) | 2.50 | 2.50 | 2.40 | 2.60 | 2.50 |\n| Mass at end (g) | 2.78 | 2.60 | 2.28 | 2.34 | 2.16 |"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1772,6 +1778,102 @@
         }
       ],
       "modelAnswer": "The plan has the right idea, potato in a range of sucrose solutions, but as written it is neither a fair test nor able to answer the question.\n\n**The cylinders.** A knife and several potatoes give pieces of different sizes, and different potatoes may not have the same concentration in their cells, so results would differ for reasons unrelated to the sucrose. Cut the cylinders with a cork borer, from a single potato, trimmed to the same length with the skin removed, since skin slows the movement of water.\n\n**Weighing.** Weighing only at the end leaves no change to calculate. Each cylinder must be weighed before and after, on a balance reading to 0.01 g because the changes are small, and blotted dry in the same way each time so that surface water is not weighed as if the cells had taken it in. Weigh straight away, before the cylinder dries in the air.\n\n**Repeats and controls.** One cylinder per solution means an odd result cannot be spotted. Three at each concentration give a mean, and a result far from the other two stands out as anomalous and can be left out. Leaving each cylinder for as long as is convenient breaks the fair test: all must have the same time, at the same temperature, in the same volume of solution, so that only the sucrose concentration differs.\n\n**Processing.** Grams mislead, because the cylinders do not start at the same mass: a loss of 0.3 g is 15% of a 2 g cylinder and 5% of a 6 g one. Each change is turned into a percentage change, change divided by original mass times 100, keeping the sign, and the mean of the three is taken at each concentration.\n\n**Finding the cell concentration.** The cylinder that lost most mass only shows which solution was strongest, which was already known. Plot the mean percentage change against concentration and draw a line of best fit. Where it crosses 0% there is no net movement of water, so the solution matches the cell contents. That crossing point is the answer, and it usually falls between two tested concentrations, which is why it is read from the line and not from any single cylinder."
+    },
+    {
+      "id": "q29",
+      "type": "numeric",
+      "context": "potato-osmosis",
+      "prompt": "Calculate the percentage change in mass of the cylinder in 0.8 mol/dm³ sucrose. Give your answer to 1 decimal place, including the sign.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "calculating percentage change in mass",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Change $= 2.16 - 2.50 = -0.34$ g. Percentage change $= \\dfrac{-0.34}{2.50} \\times 100 = -13.6\\%$. The minus sign shows the cylinder lost mass: water left its cells by osmosis.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{2.16 - 2.50}{2.50} \\times 100$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "−13.6%"
+        }
+      ],
+      "discriminators": [],
+      "answer": -13.6,
+      "tolerance": 0,
+      "units": "%",
+      "unitsRequired": false
+    },
+    {
+      "id": "q30",
+      "type": "numeric",
+      "context": "potato-osmosis",
+      "prompt": "Estimate the sucrose concentration at which the cylinder’s mass would not change. Take the line between the two concentrations either side of no change as straight. Give your answer to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "finding the concentration of no change",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Percentage changes: +11.2% (0.0), +4.0% (0.2), −5.0% (0.4), −10.0% (0.6), −13.6% (0.8). The change goes from positive to negative between 0.2 and 0.4 mol/dm³. Across that 0.2 mol/dm³ the change falls by $4.0 + 5.0 = 9.0$ percentage points, so it reaches zero $\\dfrac{4.0}{9.0}$ of the way along: $0.2 + 0.2 \\times \\dfrac{4.0}{9.0} = 0.2 + 0.0889 = 0.29$ mol/dm³. Halfway, 0.30, would be right only if the two changes were the same size.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "+4.0% and −5.0% found for 0.2 and 0.4 mol/dm³"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.2 + 0.2 \\times \\dfrac{4.0}{9.0}$ or a graph read between 0.2 and 0.4"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.29 mol/dm³"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.29,
+      "tolerance": 0,
+      "units": "mol/dm³",
+      "unitsRequired": false
+    },
+    {
+      "id": "q31",
+      "type": "multiple-choice",
+      "context": "potato-osmosis",
+      "prompt": "Which change to the method would most improve the estimate of the concentration at which the mass does not change?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "improving the osmosis core practical",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The estimate depends on the straight line between 0.2 and 0.4 mol/dm³, where the change in mass crosses zero. More concentrations between those two, each repeated, put measured points either side of no change, so far less of the answer rests on the straight-line assumption. Longer cylinders or a longer time change every result alike, and the end points (0.0 and 0.8) are already far from where the line crosses.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "more concentrations between 0.2 and 0.4 mol/dm³, repeated"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Use longer cylinders of potato at every concentration",
+        "Add a 1.0 mol/dm³ solution to extend the range",
+        "Add repeated concentrations between 0.2 and 0.4 mol/dm³",
+        "Leave every cylinder in its solution for 60 minutes"
+      ],
+      "correct": [
+        2
+      ]
     }
   ],
   "examTechnique": {
@@ -1831,9 +1933,12 @@
         "q22",
         "q25",
         "q27",
-        "q28"
+        "q28",
+        "q29",
+        "q30",
+        "q31"
       ],
-      "suggestedMinutes": 63
+      "suggestedMinutes": 70
     }
   },
   "quiz": {

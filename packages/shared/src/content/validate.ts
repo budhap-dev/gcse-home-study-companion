@@ -31,7 +31,13 @@ export function validateTopicForPublish(input: unknown): Issue[] {
   const ids = new Map(topic.questions.map((q) => [q.id, q]))
   if (ids.size !== topic.questions.length) error('questions', 'question ids must be unique within a topic')
   const grade89 = topic.questions.filter((q) => q.gradeBand === '8-9')
-  if (grade89.length / topic.questions.length < GRADE_8_9_MINIMUM_SHARE) {
+  // A multi-part question is one problem, ramping as a paper's does: it counts once, at its top part.
+  const problems = new Map<string, boolean>()
+  for (const q of topic.questions) {
+    const key = q.stem ? `stem:${q.stem.id}` : q.id
+    problems.set(key, (problems.get(key) ?? false) || q.gradeBand === '8-9')
+  }
+  if ([...problems.values()].filter(Boolean).length / problems.size < GRADE_8_9_MINIMUM_SHARE) {
     error('questions', `at least ${GRADE_8_9_MINIMUM_SHARE * 100}% of questions must be tagged grade 8 to 9`)
   }
   for (const q of grade89) {
@@ -89,9 +95,21 @@ export function validateTopicForPublish(input: unknown): Issue[] {
     const q = ids.get(id)
     if (q && q.gradeBand === '8-9') warn('worksheets.higher', `${id} is grade 8 to 9; the Higher worksheet is grade 6 to 8`)
   }
+  // A multi-part question ramps as a paper's does, (a) easier than (c), so its earlier parts may
+  // sit on the Advanced sheet below grade 8 when a later part reaches it.
+  const reachesTop = new Set(topic.questions.filter((q) => q.stem && q.gradeBand === '8-9').map((q) => q.stem!.id))
   for (const id of topic.worksheets.advanced.questionIds) {
     const q = ids.get(id)
-    if (q && q.gradeBand !== '8-9') error('worksheets.advanced', 'the Advanced worksheet is built only from grade 8 to 9 questions')
+    if (q && q.gradeBand !== '8-9' && !(q.stem && reachesTop.has(q.stem.id))) error('worksheets.advanced', 'the Advanced worksheet is built only from grade 8 to 9 questions')
+  }
+  // A sheet prints a stem once with its parts beneath, so it asks all of them, together and in order.
+  for (const level of ['core', 'higher', 'advanced'] as const) {
+    const sheet = topic.worksheets[level].questionIds
+    for (const stemId of new Set(sheet.map((id) => ids.get(id)?.stem?.id).filter(Boolean))) {
+      const parts = topic.questions.filter((q) => q.stem?.id === stemId).map((q) => q.id)
+      const at = sheet.indexOf(parts[0]!)
+      if (at < 0 || parts.some((id, k) => sheet[at + k] !== id)) error(`worksheets.${level}`, `the parts of ${stemId} (${parts.join(', ')}) must all be on the sheet, together and in order`)
+    }
   }
   for (const id of topic.quiz.questionIds) {
     if (!ids.has(id)) error('quiz', `unknown question ${id}`)

@@ -2,7 +2,6 @@ import { claimAnswer, describeAnswer, mark, type Generated, type MarkResult, typ
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router'
 import { RichText } from '../RichText.tsx'
-import { Visual } from '../Visual.tsx'
 import { Feedback } from '../questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../questions/QuestionInput.tsx'
 import { ReportMistake } from '../ReportMistake.tsx'
@@ -12,6 +11,7 @@ import { loadInProgress, saveInProgress } from '../../progress/inProgress.ts'
 import { itemKey, type SessionAnswers, type SessionItem } from '../../progress/reviewSession.ts'
 import type { StudyKind } from '../../progress/store.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
+import { QuestionPrompt } from '../questions/QuestionPrompt.tsx'
 
 export interface PaperQuestion { item: SessionItem; question: Question; generated?: Generated }
 
@@ -240,8 +240,7 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
 
       <section className="flex flex-col gap-4">
         <p className="text-right text-xs text-ink-2">{at.question.marks} mark{at.question.marks > 1 ? 's' : ''}</p>
-        {at.question.visual && <Visual visual={at.question.visual} />}
-        <RichText source={at.question.prompt} className="text-[17px] leading-relaxed" />
+        <QuestionPrompt question={at.question} />
         {at.question.type === 'extended' ? (
           <div className="flex flex-col gap-2">
             <textarea value={s.texts[k] ?? ''} onChange={(e) => setState({ ...s, texts: { ...s.texts, [k]: e.target.value } })} rows={8} aria-label="Your answer"
@@ -349,8 +348,7 @@ function PaperResult({ state: s, questions, kicker, title, subjectId, showTopic,
                 <span className="flex shrink-0 gap-3 tabular-nums"><span className="font-bold">{a?.result.marksScored ?? 0} / {q.marks}</span><span className="text-ink-2" title="Time spent">{minSec(s.spent[k] ?? 0)}</span></span>
               </summary>
               <div className="flex flex-col gap-3 border-t border-rule p-4">
-                {q.visual && <Visual visual={q.visual} />}
-                <RichText source={q.prompt} className="text-[15px] leading-relaxed" />
+                <QuestionPrompt question={q} size="medium" />
                 {q.type === 'extended' ? (
                   <WrittenMarking question={q} text={s.texts[k]} onPaper={Boolean(s.onPaper[k])} ticks={s.ticks[k]} onTicks={(t) => onChange({ ...s, ticks: { ...s.ticks, [k]: t } })} />
                 ) : (
