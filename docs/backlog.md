@@ -945,7 +945,11 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   questions in v10.126.0: temperature changes, rates, chromatography, identifying ions and water
   purification each have one. Chemistry is complete: 354 new questions over 47 topics. A grade 9
   set now takes one part per multi-part question, so two picks cannot merge and leave it short.
-- [ ] **9. Biology: key concepts, cells and control, genetics and natural selection.** 19 topics.
+- [x] **9. Biology: key concepts, cells and control, genetics and natural selection.** 19 topics.
+  141 questions in v10.127.0: 37 multi-part questions and 38 longer grade 8 to 9 problems. Core
+  practicals 1.6 (microscope), 1.10 (amylase and pH) and 1.13B (food tests) each have a
+  multi-part question. Genotype answers (tt, Tt) are marked case-sensitive, and the genetics
+  stems use the topic's own allele notation (A, B, O; Xᴺ, Xⁿ) and cases the bank did not have.
 - [ ] **10. Biology: health, plants, animal coordination, exchange and ecosystems.** 19 topics.
   Every Edexcel core practical has at least one multi-part question by the end of this box.
 - [ ] **11. Further Maths.** Multi-part problems in the style of the 8365 papers' longer

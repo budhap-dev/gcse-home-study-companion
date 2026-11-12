@@ -618,6 +618,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "resistant-bacteria",
+      "body": "An infection contains 1 000 000 000 bacteria. About 1 in every 10 000 000 has a variant that makes it resistant to an antibiotic."
+    },
+    {
+      "id": "darwin",
+      "body": "Darwin and Wallace explained evolution by natural selection."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1592,6 +1602,273 @@
         }
       ],
       "modelAnswer": "**Darwin's work.** Charles Darwin spent years gathering evidence, much of it on the five-year voyage of the *Beagle*. He saw that individuals of the same species **vary**, that organisms on different islands were **suited to their particular conditions**, and he studied **fossils** of extinct species. He also learned from **selective breeding**: breeders who choose which animals breed can change a variety a great deal over generations, which showed that characteristics are inherited and that populations can change.\n\n**Wallace's work.** Alfred Wallace, working **independently** in south-east Asia, reached **the same idea**. His letter to Darwin setting out the theory prompted Darwin to publish, their work was presented **jointly** in 1858, and Darwin's *On the Origin of Species* followed in 1859.\n\n**The theory.** There is variation within every population. More offspring are produced than can survive, so they compete for limited resources. Those whose characteristics best suit their environment are **more likely to survive and reproduce**, and they pass those characteristics on, so over many generations the characteristics become more common.\n\n**The impact.** Evolution by natural selection became the **unifying explanation** in biology. It explains why organisms are suited to their environments and why species share features, because they share ancestors, which is the basis of modern classification and was later confirmed by genetics. It also has practical uses. Doctors understand that each use of an antibiotic selects for resistant bacteria, so antibiotics are not prescribed when they are not needed and new ones are continually developed. The same reasoning explains why pests become resistant to pesticides."
+    },
+    {
+      "id": "q30",
+      "prompt": "How many resistant bacteria are expected?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "variation in a population",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$1\\,000\\,000\\,000 \\div 10\\,000\\,000 = 100$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "100"
+        }
+      ],
+      "discriminators": [],
+      "context": "resistant-bacteria",
+      "type": "numeric",
+      "answer": 100,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q31",
+      "prompt": "The antibiotic kills all the others. The resistant ones divide every 30 minutes. How many resistant bacteria are there after 5 hours?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "how resistance spreads",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 100 resistant bacteria ($10^{9} \\div 10^{7}$) divide 10 times in 5 hours: $100 \\times 2^{10} = 102\\,400$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "10 divisions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "102 400"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "resistant-bacteria",
+      "type": "numeric",
+      "answer": 102400,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q32",
+      "prompt": "Why are patients told to finish the whole course of antibiotics?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "slowing resistance",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To kill all the bacteria, including the less sensitive ones, so none survive to multiply and pass on resistance.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "so no partly resistant bacteria survive"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "resistant-bacteria",
+      "type": "multiple-choice",
+      "options": [
+        "To use up the medicine",
+        "So no partly resistant bacteria survive",
+        "To build up the patient’s own immunity to the bacteria",
+        "Because the first doses are weak"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q33",
+      "prompt": "Which sequence describes natural selection?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "how natural selection works",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Variation; competition; the best adapted survive and breed; their alleles are passed on and become more common.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "variation, competition, survival, inheritance"
+        }
+      ],
+      "discriminators": [],
+      "context": "darwin",
+      "type": "multiple-choice",
+      "options": [
+        "Variation, competition, survival, inheritance",
+        "Organisms change during their lives to suit their needs",
+        "All offspring survive and breed",
+        "Parents pass on features they used"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q34",
+      "prompt": "Who developed the theory of natural selection at the same time as Darwin?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "Darwin and Wallace",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Alfred Russel Wallace.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Wallace"
+        }
+      ],
+      "discriminators": [],
+      "context": "darwin",
+      "type": "multiple-choice",
+      "options": [
+        "Gregor Mendel",
+        "Alfred Russel Wallace",
+        "Jean-Baptiste de Lamarck",
+        "James Watson"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q35",
+      "prompt": "Darwin could not explain where new variation comes from. What, discovered later, explains it?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "where variation comes from",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Mutations in DNA produce new alleles; sexual reproduction then mixes them. Darwin knew nothing of genes or DNA.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "mutations make new alleles"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "darwin",
+      "type": "multiple-choice",
+      "options": [
+        "Mutations in DNA create new alleles",
+        "Animals pass on the features they used most",
+        "The environment changes genes to suit it",
+        "Fossils form in layers of rock"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q36",
+      "prompt": "Explain how a population of bacteria becomes resistant to an antibiotic.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "antibiotic resistance",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A random mutation makes a few bacteria resistant. When the antibiotic is used, the non-resistant bacteria die but the resistant ones survive. They reproduce without competition, passing on the resistance allele, so the population becomes mostly resistant.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Resistance comes from a random mutation"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "The antibiotic kills the others; resistant ones survive"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "They reproduce and pass on the allele"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Resistance comes from a random mutation",
+          "marks": 1
+        },
+        {
+          "text": "The antibiotic kills the others; resistant ones survive",
+          "marks": 1
+        },
+        {
+          "text": "They reproduce and pass on the allele",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Random mutation → antibiotic kills the rest → resistant bacteria multiply and pass it on."
+    },
+    {
+      "id": "q37",
+      "prompt": "A mutation happens in about 1 in every 10 million cell divisions. How many mutations would be expected in 500 million divisions?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "mutation rates",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$500\\,000\\,000 \\div 10\\,000\\,000 = 50$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "powers of ten"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "examTechnique": {
@@ -1652,9 +1929,17 @@
         "q23",
         "q26",
         "q28",
-        "q29"
+        "q29",
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37"
       ],
-      "suggestedMinutes": 63
+      "suggestedMinutes": 78
     }
   },
   "quiz": {
@@ -1682,7 +1967,8 @@
       "q23",
       "q24",
       "q25",
-      "q26"
+      "q26",
+      "q37"
     ],
     "sampleSize": 10
   },

@@ -759,6 +759,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "bacteria-grow",
+      "body": "A population of 100 bacteria divides every 20 minutes."
+    },
+    {
+      "id": "microbe-groups",
+      "body": "Microbes include bacteria, fungi, protists and viruses."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1644,6 +1654,274 @@
         }
       ],
       "modelAnswer": "Raw chicken can carry pathogenic bacteria such as *Salmonella*. If they reach the gut they multiply there and release toxins, which is food poisoning. The three rules each deal with one part of the danger.\n\n**Keep it in the fridge.** Bacteria reproduce by splitting in two, and in warm conditions with food some do so about every 20 minutes. Each division doubles the number, so after $n$ divisions there are $2^n$: a single bacterium becomes 8 in an hour, 512 in three hours and over 16 million in eight. A chicken that starts with a few hundred bacteria is a dangerous dose by the evening. Cold does not kill bacteria; it slows the chemical reactions inside them, so the doublings come hours apart instead of minutes. That is why chicken in a fridge keeps for days, and also why it does not keep forever.\n\n**Cook it thoroughly.** Heat does what cold cannot: a high enough temperature kills the bacteria. Chicken that has been heated right through contains none alive, which is why cooked chicken is safe to eat and raw chicken is not. Cooking only the outside leaves the middle warm, which is the condition in which bacteria divide fastest.\n\n**Wash the knife and board.** Pathogens travel by touch as well as in food. Cutting the raw chicken leaves bacteria on the knife and the board; cutting salad with them next moves those bacteria onto the salad. The salad is eaten raw, so nothing will ever kill them, and the first two rules are undone. Washing the knife, the board and the hands before touching anything eaten uncooked blocks that route.\n\nThe three rules are linked: the first slows the multiplying, the second kills what has multiplied, and the third stops the bacteria escaping to a food where neither of the others will reach them."
+    },
+    {
+      "id": "q29",
+      "prompt": "How many bacteria are there after 1 hour?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "how fast bacteria multiply",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "3 divisions: $100 \\times 2^3 = 800$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3 divisions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "800"
+        }
+      ],
+      "discriminators": [],
+      "context": "bacteria-grow",
+      "type": "numeric",
+      "answer": 800,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q30",
+      "prompt": "How many bacteria are there after 4 hours, if none die?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "exponential growth",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "12 divisions: $100 \\times 2^{12} = 409\\,600$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "12 divisions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "409 600"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "bacteria-grow",
+      "type": "numeric",
+      "answer": 409600,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q31",
+      "prompt": "Why does the population stop growing like this in real life?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "limits to growth",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Nutrients run out, waste builds up, and space is limited, so division slows and cells die.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "nutrients run out and waste builds up"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "bacteria-grow",
+      "type": "multiple-choice",
+      "options": [
+        "The bacteria get too big",
+        "Nutrients run out and waste builds up",
+        "Each bacterium can only divide 12 times in its life",
+        "They turn into viruses"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q32",
+      "prompt": "Which group does yeast belong to?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the four groups",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Yeast is a single-celled fungus.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "fungi"
+        }
+      ],
+      "discriminators": [],
+      "context": "microbe-groups",
+      "type": "multiple-choice",
+      "options": [
+        "Bacteria",
+        "Fungi",
+        "Viruses",
+        "Protists"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q33",
+      "prompt": "Which is a use of microbes in making food?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "useful microbes",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Yeast in bread and brewing; bacteria in yoghurt and cheese.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "yeast in bread"
+        }
+      ],
+      "discriminators": [],
+      "context": "microbe-groups",
+      "type": "multiple-choice",
+      "options": [
+        "Yeast in making bread",
+        "Viruses in making cheese",
+        "Protists in making flour",
+        "Bacteria in making salt"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q34",
+      "prompt": "Why are viruses not counted as living cells?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "what a virus is",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A virus has no cell structure of its own and can only reproduce inside a host cell, using the host’s machinery.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "they reproduce only inside a host cell"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "microbe-groups",
+      "type": "multiple-choice",
+      "options": [
+        "They can only reproduce inside a host cell",
+        "They are too small to see with any microscope",
+        "They have no genetic material at all",
+        "They are made of a cell wall only"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q35",
+      "prompt": "Bacteria divide every 30 minutes. How many minutes does it take for 50 bacteria to become 6400?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back from growth",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$6400 \\div 50 = 128 = 2^7$, so 7 divisions: $7 \\times 30 = 210$ minutes.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$128 = 2^7$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7 divisions"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "210"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 210,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "minutes"
+    },
+    {
+      "id": "q36",
+      "prompt": "Describe how to culture bacteria safely on an agar plate (aseptic technique).",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "aseptic technique",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Sterilise the inoculating loop in a flame and the plates beforehand. Open the lid only a little and briefly, work near a Bunsen flame, then tape the lid on with a few strips (not sealed all round). Incubate at 25 °C or below, upside down.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Sterilised the loop and equipment"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Kept the lid mostly closed and taped (not sealed)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Incubated at no more than 25 °C"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Sterilised the loop and equipment",
+          "marks": 1
+        },
+        {
+          "text": "Kept the lid mostly closed and taped (not sealed)",
+          "marks": 1
+        },
+        {
+          "text": "Incubated at no more than 25 °C",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Flame the loop; sterile plates; lift the lid briefly near a flame; tape the lid; incubate at ≤25 °C upside down."
     }
   ],
   "worksheets": {
@@ -1689,9 +1967,17 @@
         "q22",
         "q25",
         "q27",
-        "q28"
+        "q28",
+        "q29",
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36"
       ],
-      "suggestedMinutes": 43
+      "suggestedMinutes": 58
     }
   },
   "examTechnique": {
@@ -1731,7 +2017,8 @@
       "q22",
       "q23",
       "q24",
-      "q25"
+      "q25",
+      "q35"
     ],
     "sampleSize": 10
   },
