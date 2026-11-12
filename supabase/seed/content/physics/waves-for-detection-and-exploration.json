@@ -645,6 +645,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "ultrasound-scan",
+      "body": "In a medical scan, an ultrasound pulse travels through body tissue at 1500 m/s. Its echo from an organ returns 80 μs (80 microseconds) after the pulse is sent."
+    },
+    {
+      "id": "echo-sounder",
+      "body": "A ship’s echo sounder sends a pulse down to the seabed. Sound travels at 1500 m/s in sea water."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1250,6 +1260,234 @@
         }
       ],
       "modelAnswer": "**The two waves.** An earthquake produces **P-waves**, which are **longitudinal**, and **S-waves**, which are **transverse**.\n\n**The observation.** Detectors around the Earth record what arrives where. Over a large region on the far side, **no S-waves arrive at all** — the S-wave shadow.\n\n**The physics.** S-waves are **transverse**, and a transverse wave **cannot travel through a liquid**: a liquid cannot resist being sheared sideways, it simply flows.\n\n**The conclusion.** The only explanation for their absence is that the S-waves met **liquid** on the way. So **part of the Earth's core is liquid**.\n\n**The size.** P-waves are longitudinal and **do** get through, but they travel at **different speeds in different materials**, so their paths **refract** at each boundary. Recording where they emerge and working back along those paths gives the **size** of the liquid region.\n\nThe wider point the specification asks for: all of this concerns a part of the Earth **nobody has ever observed directly**. The evidence came from waves — and in the S-wave case, from waves that **failed to arrive**."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the total distance the pulse travels, in m.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "distance from speed and time",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$1500 \\times 80 \\times 10^{-6} = 0.12$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "time in seconds"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.12"
+        }
+      ],
+      "discriminators": [],
+      "context": "ultrasound-scan",
+      "type": "numeric",
+      "answer": 0.12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q20",
+      "prompt": "How deep is the organ below the surface, in cm?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the factor of two in echoes",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The pulse travels $1500 \\times 80 \\times 10^{-6} = 0.12$ m there and back, so the organ is $0.06$ m $= 6.0$ cm deep.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "halves"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ultrasound-scan",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q21",
+      "prompt": "The ultrasound has a frequency of 2.0 MHz. Calculate its wavelength in tissue, in mm.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "wavelength of ultrasound",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\lambda = \\dfrac{1500}{2.0 \\times 10^{6}} = 7.5 \\times 10^{-4}$ m $= 0.75$ mm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1500 \\div 2.0 \\times 10^{6}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ultrasound-scan",
+      "type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "mm"
+    },
+    {
+      "id": "q22",
+      "prompt": "The echo returns after 0.40 s. Calculate the depth of the sea.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "echo sounding",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Down and back: $1500 \\times 0.40 = 600$ m, so the depth is 300 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1500 \\times 0.40$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "300"
+        }
+      ],
+      "discriminators": [],
+      "context": "echo-sounder",
+      "type": "numeric",
+      "answer": 300,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q23",
+      "prompt": "After an earthquake, S-waves are not detected on the far side of the Earth. What does this show?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "evidence from seismic waves",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "S-waves are transverse and cannot travel through liquids. Their shadow shows that part of the Earth’s core, the outer core, is liquid.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the outer core is liquid"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "echo-sounder",
+      "type": "multiple-choice",
+      "options": [
+        "The Earth is solid all the way through",
+        "Part of the Earth’s core is liquid",
+        "S-waves are too weak to travel far",
+        "The crust absorbs all S-waves"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "After an earthquake, P-waves travel at 8.0 km/s and S-waves at 4.5 km/s. At a station the S-waves arrive 70 s after the P-waves. Calculate the distance to the earthquake, in km.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "distance from the gap in arrival times",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "For distance $d$: $\\dfrac{d}{4.5} - \\dfrac{d}{8.0} = 70$. $d\\left(\\dfrac{1}{4.5} - \\dfrac{1}{8.0}\\right) = d \\times 0.09722 = 70$, so $d = 720$ km. Check: P takes 90 s, S takes 160 s.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "time difference equation"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "solves for $d$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "720"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 720,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "km"
+    },
+    {
+      "id": "q25",
+      "prompt": "Ultrasound of frequency 3.0 MHz travels through tissue at 1500 m/s. Calculate its wavelength in mm.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "wavelength of ultrasound",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\lambda = 1500 \\div (3.0 \\times 10^{6}) = 5.0 \\times 10^{-4}$ m $= 0.50$ mm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "frequency in Hz"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1500 \\div 3.0 \\times 10^{6}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "mm"
     }
   ],
   "worksheets": {
@@ -1285,9 +1523,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 61
     }
   },
   "examTechnique": {
@@ -1321,7 +1566,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

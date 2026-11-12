@@ -929,8 +929,12 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
 - [x] **5. Physics: energy, the particle model and forces.** 15 topics. 122 questions in
   v10.123.0, with a multi-part question on each required practical in these topics (specific
   heat capacity, thermal insulation, density, force and extension, force and acceleration).
-- [ ] **6. Physics: electricity, waves, magnetism, atoms and space.** 19 topics. Every AQA
-  required practical has at least one multi-part question by the end of this box.
+- [x] **6. Physics: electricity, waves, magnetism, atoms and space.** 19 topics. Every AQA
+  required practical has at least one multi-part question by the end of this box. 148 questions
+  in v10.124.0: resistance, I–V characteristics, waves (ripple tank and string), refraction and
+  infrared radiation each have one. Physics is complete: 270 new questions over 34 topics.
+  Where AQA expects explanation rather than calculation (magnetism, static, the Big Bang), the
+  longer problems are self-marked explanations.
 - [ ] **7. Chemistry: atoms, bonding, quantities and chemical changes.** 22 topics. Most of
   the multi-step mole and concentration problems sit here.
 - [ ] **8. Chemistry: energy, rates, organic, analysis, atmosphere and resources.** 25 topics.

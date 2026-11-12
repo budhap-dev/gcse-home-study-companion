@@ -690,6 +690,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "wire-length",
+      "body": "In the required practical on resistance, a student keeps the current through a wire at 0.50 A and measures the potential difference across different lengths of it.\n\n| Length (cm) | 20 | 40 | 60 | 80 | 100 |\n|---|---|---|---|---|---|\n| Potential difference (V) | 0.32 | 0.65 | 0.96 | 1.29 | 1.60 |"
+    },
+    {
+      "id": "resistor-24",
+      "body": "A 24 Ω resistor is connected to a 6.0 V supply."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1280,6 +1290,289 @@
         }
       ],
       "modelAnswer": "**The resistor at constant temperature** gives a **straight line through the origin**. This shows that the current is **directly proportional** to the potential difference: doubling the pd doubles the current.\n\nBecause $R = V \\div I$, and $V$ and $I$ rise in the same ratio, the **resistance is constant** however large the current becomes. This is what makes it an **ohmic conductor** — though only while the temperature really is held constant, which is why that condition is always stated.\n\n**The filament lamp** gives a **curve** which is steep near the origin and **flattens** as the potential difference increases.\n\nThe explanation is a chain. As the pd rises, the current rises, and the current **heats the filament**. In a hotter metal the **ions vibrate more**, so the electrons flowing through **collide with them more often** and find it harder to pass. The **resistance therefore increases** with temperature.\n\nSince $I = V \\div R$ and $R$ is now larger, each extra volt produces **less** extra current than the volt before it — which is exactly what a flattening curve looks like. The lamp is **not** an ohmic conductor, because its resistance does not stay constant.\n\n**Comparing them.** Near the origin the lamp's filament is still cool, so its graph is close to straight — the lamp behaves almost ohmically at very low currents and departs from it as it warms. That is a useful observation, because it shows the lamp is not a different kind of thing from the resistor; it is the same physics with the temperature no longer controlled.\n\n**Reading resistance from either graph** is done the same way: take a point on the line, read off $V$ and $I$, and calculate $R = V \\div I$. For the resistor any point gives the same answer; for the lamp the answer **depends which point you choose**, which is another way of saying the resistance is changing.\n\nOne comparison is easy to get backwards: a **steeper** line means **more current for the same pd**, and therefore a **lower** resistance. So where the lamp's curve has flattened, its resistance is at its highest."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the resistance of 60 cm of the wire.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "resistance from V and I",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$R = \\dfrac{V}{I} = \\dfrac{0.96}{0.50} = 1.92$ Ω.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.96 \\div 0.50$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.92"
+        }
+      ],
+      "discriminators": [],
+      "context": "wire-length",
+      "type": "numeric",
+      "answer": 1.92,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q20",
+      "prompt": "What does the data show about resistance and length?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "reading the resistance practical",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Doubling the length (20 to 40 cm, or 40 to 80 cm) doubles the p.d. at the same current, so doubles the resistance: resistance is directly proportional to length.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "directly proportional"
+        }
+      ],
+      "discriminators": [],
+      "context": "wire-length",
+      "type": "multiple-choice",
+      "options": [
+        "Resistance is directly proportional to length",
+        "Resistance is inversely proportional to length",
+        "Resistance does not depend on length",
+        "Resistance rises, but not in proportion"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Estimate the resistance of 150 cm of the same wire.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "extending a proportional relationship",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "100 cm has resistance $1.60 \\div 0.50 = 3.2$ Ω, so 1 cm is 0.032 Ω and 150 cm is $0.032 \\times 150 = 4.8$ Ω.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3.2 Ω for 100 cm"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "wire-length",
+      "type": "numeric",
+      "answer": 4.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q22",
+      "prompt": "Why does the student keep the current small and switch off between readings?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "controlling temperature in the practical",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A current heats the wire, and a hotter wire has a higher resistance. That would change the resistance for a reason other than length. Small currents and short times keep the temperature steady.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "to stop the wire heating up"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "wire-length",
+      "type": "multiple-choice",
+      "options": [
+        "To save the battery from running down too quickly",
+        "To stop the wire heating, changing its resistance",
+        "So the voltmeter can be read more easily",
+        "Because the ammeter cannot read large currents"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the current in the resistor.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "Ohm’s law",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$I = \\dfrac{V}{R} = \\dfrac{6.0}{24} = 0.25$ A.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.25"
+        }
+      ],
+      "discriminators": [],
+      "context": "resistor-24",
+      "type": "numeric",
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "A"
+    },
+    {
+      "id": "q24",
+      "prompt": "Calculate the power transferred in the resistor.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "power in a resistor",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P = VI = 6.0 \\times 0.25 = 1.5$ W.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$6.0 \\times 0.25$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "resistor-24",
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q25",
+      "prompt": "The current through the same resistor is doubled. Calculate the new power.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "power goes with the square of current",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The current was $6.0 \\div 24 = 0.25$ A; doubled, 0.50 A. $P = I^2R = 0.50^2 \\times 24 = 6.0$ W, four times as much, not twice.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$P = I^2R$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "resistor-24",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "W"
+    },
+    {
+      "id": "q26",
+      "prompt": "A resistor transfers 2.0 W when the current through it is 0.10 A. Calculate its resistance.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "resistance from power and current",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P = I^2R$, so $R = \\dfrac{P}{I^2} = \\dfrac{2.0}{0.010} = 200$ Ω.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$R = P \\div I^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.10^2 = 0.010$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "200"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 200,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "Ω"
+    },
+    {
+      "id": "q27",
+      "prompt": "A current of 0.15 A flows through an ohmic resistor when the potential difference across it is 3.0 V. What potential difference gives a current of 0.40 A?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "ohmic conductors",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "An ohmic resistor has a constant resistance: $3.0 \\div 0.15 = 20$ Ω. For 0.40 A: $V = 0.40 \\times 20 = 8.0$ V.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20 Ω"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.40 \\times 20$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "V"
     }
   ],
   "examTechnique": {
@@ -1329,9 +1622,18 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 64
     }
   },
   "quiz": {
@@ -1351,7 +1653,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },
