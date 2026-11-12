@@ -55,7 +55,7 @@ export function Progress() {
 
       <section className="flex flex-col gap-3">
         <SectionLabel colour="#1f3a93" emoji="🎯">Grades</SectionLabel>
-        <p className="text-sm text-ink-2">Working at is a range from your newest answers in each subject; set a target on the subject’s page.</p>
+        <p className="text-sm text-ink-2">Working at is a range from your newest answers in each subject. Every subject aims at grade 9; change a target on the subject’s page.</p>
         <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {SUBJECTS.filter((s) => topicsForSubject(s.id).length > 0).map((s) => {
             const w = workingAt(topicsForSubject(s.id), progress)
@@ -65,8 +65,8 @@ export function Progress() {
                 <Link to={`/subjects/${s.id}`} className="lift flex items-center justify-between gap-3 rounded-xl border border-rule bg-surface px-4 py-3" style={{ '--subject': s.colour } as React.CSSProperties}>
                   <span className="flex min-w-0 items-center gap-2 font-bold accent-ink"><SubjectIcon subjectId={s.id} width={18} height={18} className="shrink-0" /><span className="truncate">{s.name}</span></span>
                   <span className="shrink-0 text-right text-sm">
-                    <span className="block font-bold">{w.kind === 'estimate' ? rangeLabel(w) : 'Not yet'}</span>
-                    <span className="block text-xs text-ink-2">{target ? `target ${target}` : 'no target'}</span>
+                    <span className={`block ${w.kind === 'estimate' ? 'font-bold' : 'text-ink-2'}`}>{w.kind === 'estimate' ? `working at ${rangeLabel(w)}` : `${w.answers} of ${w.answers + w.need} answers`}</span>
+                    <span className="block text-xs text-ink-2">{`target ${target}`}</span>
                   </span>
                 </Link>
               </li>

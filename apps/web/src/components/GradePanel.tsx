@@ -23,37 +23,51 @@ export function targetLine(w: WorkingAt, target: number | undefined, you = true)
 }
 
 /**
- * Working-at grade beside the target, for one subject (MTV-2, LRN-6). The student sets the
- * target here; a parent's copy (`readOnly`) shows it without the choice.
+ * Working-at grade beside the target, for one subject (MTV-2, LRN-6), as two matching columns:
+ * a label and a value of the same size on one line, so the pair reads at a glance. Until there
+ * are enough answers for an estimate, the working-at side shows how far there is to go, with a
+ * bar, rather than a grey "Not yet". The target is grade 9 unless the student picks another;
+ * a parent's copy (`readOnly`) shows it without the choice.
  */
 export function GradePanel({ subjectId, topics, progress, readOnly = false, now }: { subjectId: string; topics: TopicSummary[]; progress: ProgressState; readOnly?: boolean; now?: Date }) {
   const w = workingAt(topics, progress, now)
   const target = targetFor(progress, subjectId)
   const id = useId()
   const line = targetLine(w, target, !readOnly)
+  const label = 'text-xs font-bold uppercase tracking-[0.08em] text-ink-2'
+  const value = 'flex h-12 items-center text-3xl font-bold leading-none'
   return (
     <section aria-label="Grade" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
-      <div className="flex flex-wrap items-end gap-x-8 gap-y-3">
-        <div className="flex flex-col">
-          <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Working at</span>
-          <span className="text-3xl font-bold leading-tight" data-working-at={w.kind === 'estimate' ? rangeLabel(w) : ''}>
-            {w.kind === 'estimate' ? rangeLabel(w) : <span className="text-ink-3">Not yet</span>}
-          </span>
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor={id} className="text-xs font-bold uppercase tracking-[0.08em] text-ink-2">Target</label>
-          {readOnly ? (
-            <span className="text-3xl font-bold leading-tight">{target ?? <span className="text-ink-3">None set</span>}</span>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex min-w-0 flex-col gap-1">
+          <span className={label}>Working at</span>
+          {w.kind === 'estimate' ? (
+            <span className={value} data-working-at={rangeLabel(w)}>{rangeLabel(w)}</span>
           ) : (
-            <select
-              id={id}
-              value={target ?? ''}
-              onChange={(e) => setTarget(subjectId, e.target.value ? Number(e.target.value) : undefined)}
-              className="h-11 min-w-28 rounded-lg border border-rule bg-surface px-3 text-lg font-bold"
-            >
-              <option value="">None set</option>
-              {TARGET_GRADES.map((g) => <option key={g} value={g}>Grade {g}</option>)}
-            </select>
+            <div className="flex h-12 flex-col justify-center gap-1.5" data-working-at="">
+              <span className="text-base font-bold leading-none">{w.answers} of {w.answers + w.need} answers</span>
+              <span className="h-2 w-full max-w-40 overflow-hidden rounded-full bg-panel" role="progressbar" aria-label="Answers towards an estimate" aria-valuemin={0} aria-valuemax={w.answers + w.need} aria-valuenow={w.answers}>
+                <span className="block h-full rounded-full bg-[color:var(--subject)]" style={{ width: `${Math.round((100 * w.answers) / (w.answers + w.need))}%` }} />
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="flex min-w-0 flex-col gap-1">
+          <label htmlFor={id} className={label}>Target</label>
+          {readOnly ? (
+            <span className={value}>{target}</span>
+          ) : (
+            <span className="relative w-fit">
+              <select
+                id={id}
+                value={target}
+                onChange={(e) => setTarget(subjectId, Number(e.target.value))}
+                className="h-12 appearance-none rounded-xl border border-rule bg-surface py-0 pl-3 pr-9 text-3xl font-bold leading-none"
+              >
+                {TARGET_GRADES.map((g) => <option key={g} value={g}>{g}</option>)}
+              </select>
+              <svg aria-hidden width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-2"><path d="M6 9l6 6 6-6" /></svg>
+            </span>
           )}
         </div>
       </div>
