@@ -11,6 +11,9 @@ import type { Generated } from '../types.ts'
 import { clearOf, distinct, places, toPlaces } from './build.ts'
 import { RATES, rateGenerators } from './rates.ts'
 
+/** A numeric question from the first bank. The harder questions of backlog section 13 name their lesson step and are written, not generated. */
+const written = (q: { type: string; step?: string }) => q.type === 'numeric' && !q.step
+
 /**
  * Structural tests for the rate generators. Each reads the prompt's volume and time, or the
  * tangent's rise and run, back and works the rate again from them alone; checks the reaction's
@@ -58,7 +61,7 @@ function spread(id: string, slot: string, keys: string[], fewest = 10) {
 describe('every rate build', () => {
   it('has a generator for each numeric written slot it can vary; the equilibrium and Haber slots stay written', () => {
     expect(rateGenerators.flatMap((g) => g.replaces).sort()).toEqual(['q2', 'q6'])
-    expect(bank.filter((q) => q.type === 'numeric').map((q) => q.id).sort()).toEqual(['q2', 'q6'])
+    expect(bank.filter(written).map((q) => q.id).sort()).toEqual(['q2', 'q6'])
     // Recall (200 atm, 450 °C, the same energy both ways) and one fixed equation each: nothing to vary.
     for (const t of ['equilibria-and-le-chateliers-principle', 'the-haber-process-and-fertilisers']) expect(GENERATORS.some((g) => g.topicId === t)).toBe(false)
   })

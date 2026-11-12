@@ -742,6 +742,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "hcl-bonds",
+      "body": "Hydrogen reacts with chlorine to form hydrogen chloride: H₂ + Cl₂ → 2HCl. Bond energies, in kJ/mol: H–H 436, Cl–Cl 243, H–Cl 432."
+    },
+    {
+      "id": "methane-bonds",
+      "body": "Methane burns: CH₄ + 2O₂ → CO₂ + 2H₂O. Bond energies, in kJ/mol: C–H 413, O=O 498, C=O 805, O–H 464."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1342,6 +1352,239 @@
         }
       ],
       "modelAnswer": "**Reading the profile.** Energy runs up the vertical axis, progress of the reaction along the horizontal. The **reactants** are a level line on the left, the **products** a level line on the right. **Products below reactants** means the chemicals have **lost** energy to the surroundings, so the reaction is **exothermic**. The **overall change** is the vertical gap between the two levels.\n\n**The hump.** The curve joining them rises to a **peak**. Its height **above the reactants level** is the **activation energy**: the minimum energy colliding particles must have to react.\n\n**Why a spark is needed.** Burning petrol has products far below the reactants, so it releases a great deal of energy — but it also has a **large activation energy**, and at room temperature the particles do not have it. A **spark supplies it** to a few particles; the energy those release then supplies the activation energy for the rest, and the reaction sustains itself.\n\nThe two quantities are **independent**: a large release and a large push to start are perfectly compatible."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the energy needed to break the bonds in the reactants.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bonds broken",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$436 + 243 = 679$ kJ/mol.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "679"
+        }
+      ],
+      "discriminators": [],
+      "context": "hcl-bonds",
+      "type": "numeric",
+      "answer": 679,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kJ/mol"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the energy released forming the bonds in the products.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bonds formed",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two H–Cl bonds: $2 \\times 432 = 864$ kJ/mol.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "864"
+        }
+      ],
+      "discriminators": [],
+      "context": "hcl-bonds",
+      "type": "numeric",
+      "answer": 864,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kJ/mol"
+    },
+    {
+      "id": "q21",
+      "prompt": "Calculate the overall energy change of the reaction.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "energy change from bond energies",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Broken − formed $= 679 - 864 = -185$ kJ/mol. Negative: more energy is released forming bonds than taken in breaking them, so it is exothermic.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "broken − formed"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "−185"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "hcl-bonds",
+      "type": "numeric",
+      "answer": -185,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kJ/mol"
+    },
+    {
+      "id": "q22",
+      "prompt": "Which describes the reaction profile for this exothermic reaction?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "drawing a reaction profile",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The products are lower in energy than the reactants, with a hump (activation energy) between them.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "products lower, with a hump"
+        }
+      ],
+      "discriminators": [],
+      "context": "methane-bonds",
+      "type": "multiple-choice",
+      "options": [
+        "Products lower than reactants, with a hump",
+        "Products higher than reactants, with a hump",
+        "Products level with reactants",
+        "A straight line downwards with no hump"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the energy change for the reaction.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "bond energy calculation with several bonds",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Broken: 4 C–H and 2 O=O: $4 \\times 413 + 2 \\times 498 = 2648$. Formed: 2 C=O and 4 O–H: $2 \\times 805 + 4 \\times 464 = 3466$. Change $= 2648 - 3466 = -818$ kJ/mol.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "broken 2648"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "formed 3466"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "−818"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "methane-bonds",
+      "type": "numeric",
+      "answer": -818,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kJ/mol"
+    },
+    {
+      "id": "q24",
+      "prompt": "N₂ + 3H₂ → 2NH₃. Bond energies, in kJ/mol: N≡N 945, H–H 436, N–H 391. Calculate the energy change.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "bond energy calculation",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Broken: $945 + 3 \\times 436 = 2253$. Formed: 2 NH₃ have 6 N–H: $6 \\times 391 = 2346$. Change $= 2253 - 2346 = -93$ kJ/mol.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "broken 2253"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "formed 2346"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "−93"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": -93,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kJ/mol"
+    },
+    {
+      "id": "q25",
+      "prompt": "Explain, using a reaction profile, how a catalyst speeds up a reaction.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "catalysts on a profile",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The profile shows a hump between reactants and products: the activation energy. A catalyst gives a route with a lower hump, so more colliding particles have enough energy to react. The energies of the reactants and products, and the overall change, are not altered.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said the hump is the activation energy"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said a catalyst gives a lower hump"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Said the overall energy change is unchanged"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Said the hump is the activation energy",
+          "marks": 1
+        },
+        {
+          "text": "Said a catalyst gives a lower hump",
+          "marks": 1
+        },
+        {
+          "text": "Said the overall energy change is unchanged",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Activation energy is the hump; a catalyst lowers it, so more collisions succeed; the overall energy change is the same."
     }
   ],
   "worksheets": {
@@ -1377,9 +1620,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 60
     }
   },
   "examTechnique": {
@@ -1413,7 +1663,8 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24"
     ],
     "sampleSize": 10
   },
