@@ -783,6 +783,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "field-fence",
+      "body": "A rectangular field is 72 m long and 28 m wide. Each length is correct to the nearest metre."
+    },
+    {
+      "id": "car-journey",
+      "body": "A car travels 125 km, correct to the nearest 5 km. The journey takes 1.5 hours, correct to the nearest 0.1 hour."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1402,6 +1412,259 @@
         }
       ],
       "modelAnswer": "**The measurements.**\n\n$$199.5 \\leqslant d < 200.5 \\qquad 24.5 \\leqslant t < 25.5$$\n\n**The bounds of the speed.** Speed is a **division**, so the bounds **cross over**. Fastest means the greatest distance in the shortest time:\n\n$$\\text{upper} = \\frac{200.5}{24.5} = \\mathbf{8.18} \\text{ m/s (2 d.p.)}$$\n$$\\text{lower} = \\frac{199.5}{25.5} = \\mathbf{7.82} \\text{ m/s}$$\n\n**A suitable accuracy.** Round **both** bounds and compare:\n\n- to **2 s.f.**: $7.8$ and $8.2$ — different;\n- to **1 s.f.**: $8$ and $8$ — the same.\n\nSo the speed is **8 m/s to 1 significant figure**, and no more precisely. Quoting 8.18 would claim a precision the measurements cannot support.\n\nThe sentence *the bounds agree to n significant figures, so the answer may be given to n* is what earns the final mark."
+    },
+    {
+      "id": "q19",
+      "prompt": "Write down the lower bound of the length of the field.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "bounds of a rounded measurement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To the nearest metre, 72 m could be anything from 71.5 m up to (but not including) 72.5 m. The lower bound is 71.5 m.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "71.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "field-fence",
+      "type": "numeric",
+      "answer": 71.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the upper bound of the perimeter of the field.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "upper bound of a sum",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Upper bounds: length 72.5 m and width 28.5 m. Perimeter $= 2 \\times (72.5 + 28.5) = 202$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2 \\times (72.5 + 28.5)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "202"
+        }
+      ],
+      "discriminators": [],
+      "context": "field-fence",
+      "type": "numeric",
+      "answer": 202,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q21",
+      "prompt": "Fencing is sold in rolls that are exactly 50 m long. How many rolls must be bought to be sure of fencing the whole perimeter?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "choosing the right bound",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To be sure, plan for the longest the perimeter could be: the upper bound, $2 \\times (72.5 + 28.5) = 202$ m. $202 \\div 50 = 4.04$, so 4 rolls (200 m) might fall short and 5 are needed. Using the rounded perimeter, 200 m, gives exactly 4 rolls, which may not be enough.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "upper bound 202"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$202 \\div 50$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "field-fence",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Write down the upper bound of the distance.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "bounds to the nearest 5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "To the nearest 5 km, 125 km lies from 122.5 km to 127.5 km. The upper bound is 127.5 km.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "127.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "car-journey",
+      "type": "numeric",
+      "answer": 127.5,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "km"
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the lower bound of the car’s average speed. Give your answer to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "lower bound of a quotient",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Speed = distance ÷ time. The smallest speed comes from the smallest distance over the longest time: distance lower bound 122.5 km, time upper bound 1.55 h. $122.5 \\div 1.55 = 79.03\\ldots$, which is 79.0 km/h to 1 decimal place.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lower distance 122.5 and upper time 1.55"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$122.5 \\div 1.55$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "79.0"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "car-journey",
+      "type": "numeric",
+      "answer": 79.0,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "km/h"
+    },
+    {
+      "id": "q24",
+      "prompt": "Can you be sure the car’s average speed was more than 80 km/h?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "deciding with bounds",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The lower bound of the speed is $122.5 \\div 1.55 = 79.0$ km/h, below 80, so the speed could have been under 80 km/h: no. $125 \\div 1.5 = 83.3$ uses the rounded figures, and an upper bound above 80 only shows it could have been more.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "No, with the lower bound 79.0 km/h"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "car-journey",
+      "type": "multiple-choice",
+      "options": [
+        "Yes: $125 \\div 1.5 = 83.3$ km/h, which is more than 80 km/h",
+        "No: the lower bound of the speed, 79.0 km/h, is under 80 km/h",
+        "Yes: the upper bound of the speed, 87.9 km/h, is more than 80 km/h",
+        "No: the upper bound of the time, 1.55 hours, is more than 1.5 hours"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "$x = 6.4$ correct to 1 decimal place and $y = 2.15$ correct to 2 decimal places. Work out the upper bound of $\\dfrac{x + y}{x - y}$. Give your answer to 3 significant figures.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "bounds of a fraction with sums and differences",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Bounds: $6.35 \\le x < 6.45$ and $2.145 \\le y < 2.155$. A fraction is biggest with the biggest top and the smallest bottom. Raising $y$ makes the top bigger and the bottom smaller, so take $y = 2.155$. Raising $x$ adds the same to top and bottom, which pulls the fraction towards 1, so take $x = 6.35$. $\\dfrac{6.35 + 2.155}{6.35 - 2.155} = \\dfrac{8.505}{4.195} = 2.027\\ldots$, which is 2.03 to 3 significant figures.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "bounds 6.35, 6.45, 2.145, 2.155"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "uses $x = 6.35$ and $y = 2.155$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{8.505}{4.195}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.03"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 2.03,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "A square has an area of 50 cm², correct to the nearest cm². Work out the lower bound of the length of its side. Give your answer to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "bounds through a square root",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The area is at least 49.5 cm². The side is the square root of the area, so its lower bound is $\\sqrt{49.5} = 7.035\\ldots$, which is 7.04 cm to 3 significant figures. Finding $\\sqrt{50}$ and then rounding down is not the same thing.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "49.5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{49.5}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7.04"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 7.04,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
     }
   ],
   "worksheets": {
@@ -1437,9 +1700,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1473,7 +1744,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

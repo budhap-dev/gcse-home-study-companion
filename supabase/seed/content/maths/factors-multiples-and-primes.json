@@ -883,6 +883,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "lighthouses",
+      "body": "Lighthouse A flashes every 18 seconds and lighthouse B flashes every 24 seconds. They flash together at exactly 9 pm."
+    },
+    {
+      "id": "floor-tiles",
+      "body": "A rectangular floor is 3.6 m long and 2.4 m wide. It is to be covered with square tiles, all the same size, with no gaps and no tiles cut."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1656,6 +1666,259 @@
       ],
       "modelAnswer": "(a) The shared primes are one 2 and one 3, so HCF $= 2 \\times 3 = 6$. The LCM takes every prime at its highest power: $2^{2} \\times 3^{2} \\times 5 \\times 7 = 1260$.\n\n(b) $6 \\times 1260 = 7560$ and $84 \\times 90 = 7560$, so they are equal.\n\nIn a Venn diagram of the prime factors, the overlap holds the shared primes and each circle holds the rest of its number. Multiplying the two numbers uses the overlap **twice** (once in each number) and each outer region once. HCF × LCM also uses the overlap twice (once as the HCF, once inside the LCM) and each outer region once. The same primes, the same number of times, so the products are equal for any two numbers.\n\n(c) For 4, 6 and 8 the HCF is 2 and the LCM is 24, so HCF × LCM = 48, but $4 \\times 6 \\times 8 = 192$. Here the prime 2 is shared: $4 = 2^{2}$, $6 = 2 \\times 3$ and $8 = 2^{3}$ hold $2 + 1 + 3 = 6$ twos between them, but HCF × LCM $= 2 \\times (2^{3} \\times 3)$ holds only $1 + 3 = 4$. With three numbers, the HCF and LCM keep only the lowest and highest power of each prime, so any prime in two or more of the numbers is undercounted and the identity breaks. It can still hold when no prime is shared: for 2, 3 and 5, HCF × LCM $= 1 \\times 30 = 30 = 2 \\times 3 \\times 5$.",
       "suggestedMinutes": 8
+    },
+    {
+      "id": "q25",
+      "prompt": "After how many seconds do they next flash together?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "lowest common multiple",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$18 = 2 \\times 3^2$ and $24 = 2^3 \\times 3$. The LCM takes the highest power of each prime: $2^3 \\times 3^2 = 72$ seconds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiples of 18 and 24, or both as products of primes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "72"
+        }
+      ],
+      "discriminators": [],
+      "context": "lighthouses",
+      "type": "numeric",
+      "answer": 72,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "seconds"
+    },
+    {
+      "id": "q26",
+      "prompt": "How many times do they flash together after 9 pm and up to 9:30 pm?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "using the LCM",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "They flash together every 72 seconds (the LCM of 18 and 24). Half an hour is $30 \\times 60 = 1800$ seconds, and $1800 \\div 72 = 25$, so 25 times, the last at exactly 9:30 pm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1800 \\div 72$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25"
+        }
+      ],
+      "discriminators": [],
+      "context": "lighthouses",
+      "type": "numeric",
+      "answer": 25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "A third lighthouse, C, flashes every $n$ seconds, where $n$ is a whole number between 25 and 40. All three flash together at 9 pm and next flash together 360 seconds later. Find $n$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back from an LCM",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A and B flash together every 72 seconds. All three next flash together at 360 seconds, so 360 is the LCM of 72 and $n$. That means $n$ divides $360 = 2^3 \\times 3^2 \\times 5$, and since $72 = 2^3 \\times 3^2$ has no 5, $n$ must bring it. The factors of 360 between 25 and 40 are 30 and 36. LCM(72, 36) = 72, so they would meet sooner; LCM(72, 30) = 360. So $n = 30$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "A and B together every 72 s"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factors of 360 between 25 and 40: 30, 36"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "lighthouses",
+      "type": "numeric",
+      "answer": 30,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q28",
+      "prompt": "What is the side length, in cm, of the largest square tile that can be used?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "highest common factor",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "In centimetres the floor is 360 by 240. The tile’s side must divide both, and the largest such number is the HCF: $360 = 2^3 \\times 3^2 \\times 5$, $240 = 2^4 \\times 3 \\times 5$, so the HCF is $2^3 \\times 3 \\times 5 = 120$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "360 and 240 in cm, or as products of primes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "120"
+        }
+      ],
+      "discriminators": [],
+      "context": "floor-tiles",
+      "type": "numeric",
+      "answer": 120,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q29",
+      "prompt": "Square tiles of side 40 cm are used instead. How many tiles are needed?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "fitting tiles along each side",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$360 \\div 40 = 9$ tiles along the length and $240 \\div 40 = 6$ across the width: $9 \\times 6 = 54$ tiles.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "9 and 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "54"
+        }
+      ],
+      "discriminators": [],
+      "context": "floor-tiles",
+      "type": "numeric",
+      "answer": 54,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q30",
+      "prompt": "The floor is made longer, so it is now 3.6 m by $x$ cm, where $x$ is between 240 and 400. The largest square tile that fits with no cutting now has side 72 cm. Find $x$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back from an HCF",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The HCF of 360 and $x$ must be 72, so $x$ is a multiple of 72: between 240 and 400 that is 288 or 360. HCF(360, 360) = 360, not 72. HCF(360, 288): $360 = 2^3 \\times 3^2 \\times 5$ and $288 = 2^5 \\times 3^2$, giving $2^3 \\times 3^2 = 72$. So $x = 288$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiples of 72: 288, 360"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "HCF checked for each"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "288"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "floor-tiles",
+      "type": "numeric",
+      "answer": 288,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q31",
+      "prompt": "$A = 2^3 \\times 3^2 \\times 5$ and $B = 2^2 \\times 3^4 \\times 7$. Find the smallest whole number $k$ so that $A \\times k$ is a multiple of $B$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "comparing prime factorisations",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$A \\times k$ needs every prime power in $B$. $A$ already has $2^3$ (enough for $2^2$) but only $3^2$ of the $3^4$, and no 7. So $k$ must supply $3^2 \\times 7 = 63$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "compares powers of each prime"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "needs $3^2$ and 7"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "63"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 63,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q32",
+      "prompt": "Find the smallest whole number $k$ so that $360k$ is a cube number.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "prime factors and cube numbers",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$360 = 2^3 \\times 3^2 \\times 5$. In a cube every prime’s power is a multiple of 3. $2^3$ is already, $3^2$ needs one more 3, and $5^1$ needs $5^2$. So $k = 3 \\times 5^2 = 75$, giving $360 \\times 75 = 27\\,000 = 30^3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2^3 \\times 3^2 \\times 5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "powers raised to multiples of 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 75,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1697,9 +1960,17 @@
         "q21",
         "q22",
         "q23",
-        "q24"
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28",
+        "q29",
+        "q30",
+        "q31",
+        "q32"
       ],
-      "suggestedMinutes": 50
+      "suggestedMinutes": 72
     }
   },
   "examTechnique": {
@@ -1739,7 +2010,9 @@
       "q19",
       "q20",
       "q21",
-      "q22"
+      "q22",
+      "q31",
+      "q32"
     ],
     "sampleSize": 10
   },

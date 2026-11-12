@@ -707,6 +707,8 @@ describe('slots sharing a sheet ask different questions', () => {
       if (q.type !== 'numeric' && q.type !== 'short-text') continue
       if (!GENERATORS.some((g) => g.topicId === topicId && g.replaces.includes(q.id))) skipped.push(`${topicId}/${q.id}`)
     }
-    expect(skipped).toEqual(['relative-frequency-and-expected-outcomes/q10'])
+    // The harder questions of backlog section 13 are written, as the bank's longer problems are.
+    const harder = ['choices-and-outcomes/q19', 'choices-and-outcomes/q20', 'choices-and-outcomes/q21', 'choices-and-outcomes/q22', 'choices-and-outcomes/q23', 'choices-and-outcomes/q24', 'choices-and-outcomes/q25']
+    expect(skipped).toEqual([...harder, 'relative-frequency-and-expected-outcomes/q10'])
   })
 })
