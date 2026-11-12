@@ -18,5 +18,7 @@ export default defineConfig({
     __APP_COMMIT__: JSON.stringify(sha || 'local'),
     __APP_BUILT__: JSON.stringify(new Date().toISOString().slice(0, 10)),
   },
-  test: { setupFiles: ['./src/test-clock.ts'] },
+  // Whole-pack tests read every string in the content, which grows; the CI runner is about
+  // twice as slow as a laptop (richtext's pack scan took 5.1 s there against vitest's 5 s).
+  test: { setupFiles: ['./src/test-clock.ts'], testTimeout: 30_000 },
 })

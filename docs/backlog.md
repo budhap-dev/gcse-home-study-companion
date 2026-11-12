@@ -935,8 +935,11 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   infrared radiation each have one. Physics is complete: 270 new questions over 34 topics.
   Where AQA expects explanation rather than calculation (magnetism, static, the Big Bang), the
   longer problems are self-marked explanations.
-- [ ] **7. Chemistry: atoms, bonding, quantities and chemical changes.** 22 topics. Most of
-  the multi-step mole and concentration problems sit here.
+- [x] **7. Chemistry: atoms, bonding, quantities and chemical changes.** 22 topics. Most of
+  the multi-step mole and concentration problems sit here. 168 questions in v10.125.0, with
+  multi-part questions on making salts and electrolysis (titration had one already). The marker
+  dropped the brackets in a formula, so Al2SO43 passed for Al₂(SO₄)₃ and CaNO32 for Ca(NO₃)₂;
+  a bracket with a count after it now stays.
 - [ ] **8. Chemistry: energy, rates, organic, analysis, atmosphere and resources.** 25 topics.
   Every AQA required practical has at least one multi-part question by the end of this box.
 - [ ] **9. Biology: key concepts, cells and control, genetics and natural selection.** 19 topics.
