@@ -67,8 +67,14 @@ describe('target grade (LRN-6)', () => {
     const b = { ...emptyState(), targets: { maths: { grade: 8, at: '2026-11-02T10:00:00Z' }, physics: { grade: 6, at: '2026-11-06T10:00:00Z', cleared: true } } }
     const m = mergeProgress(a, b)
     expect(targetFor(m, 'maths')).toBe(8)
-    expect(targetFor(m, 'physics')).toBeUndefined()
+    // A cleared target falls back to the default, grade 9.
+    expect(targetFor(m, 'physics')).toBe(9)
     expect(targetFor(mergeProgress(b, a), 'maths')).toBe(8)
+  })
+
+  it('aims every subject at grade 9 until the student picks another', () => {
+    expect(targetFor(emptyState(), 'maths')).toBe(9)
+    expect(targetFor(emptyState(), 'french')).toBe(9)
   })
 
   it('says where the student stands, and which questions carry the marks', () => {

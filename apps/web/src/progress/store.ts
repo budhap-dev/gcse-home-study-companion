@@ -185,7 +185,7 @@ export interface ProgressState {
   profile: Profile
   /**
    * The grade the student is aiming at in each subject (LRN-6, MTV-2), with when it was set,
-   * so two devices keep the later choice. A subject with no entry has no target.
+   * so two devices keep the later choice. A subject with no entry aims at grade 9 (`targetFor`).
    */
   targets: Record<string, TargetGrade>
 }
@@ -200,10 +200,13 @@ export interface TargetGrade {
 
 export const TARGET_GRADES = [4, 5, 6, 7, 8, 9] as const
 
-/** The subject's target grade, if one is set. */
-export function targetFor(state: ProgressState, subjectId: string): number | undefined {
+/** Every subject aims at grade 9 until the student picks another target (owner's choice, 12 November 2026). */
+export const DEFAULT_TARGET = 9
+
+/** The subject's target grade: the one the student set, or grade 9. */
+export function targetFor(state: ProgressState, subjectId: string): number {
   const t = state.targets[subjectId]
-  return t && !t.cleared ? t.grade : undefined
+  return t && !t.cleared ? t.grade : DEFAULT_TARGET
 }
 
 /** Sets or, with undefined, clears the target grade for a subject. */

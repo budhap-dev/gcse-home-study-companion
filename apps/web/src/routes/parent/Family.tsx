@@ -376,11 +376,11 @@ export function ChildReport({ child, summary }: { child: Child; summary: ParentS
 }
 
 
-/** " · working at 5 to 6, target 7" for a subject row, or nothing when there is neither. */
+/** " · working at 5 to 6, target 7" for a subject row; the target is always there (grade 9 unless changed). */
 function gradeNote(subjectId: string, state: ProgressState): string {
   const w = workingAt(topicsForSubject(subjectId), state)
   const target = targetFor(state, subjectId)
-  const parts = [w.kind === 'estimate' ? `working at ${rangeLabel(w)}` : '', target ? `target ${target}` : ''].filter(Boolean)
+  const parts = [w.kind === 'estimate' ? `working at ${rangeLabel(w)}` : '', `target ${target}`].filter(Boolean)
   return parts.length ? ` · ${parts.join(', ')}` : ''
 }
 
