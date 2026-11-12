@@ -571,6 +571,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "sides-7-8",
+      "body": "A triangle has sides of 7 cm, 8 cm and $x$ cm, where $x$ is a whole number."
+    },
+    {
+      "id": "sas-construct",
+      "body": "Triangle ABC is to be constructed with AB = 8 cm, angle BAC = 60° and AC = 5 cm."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1102,6 +1112,229 @@
         }
       ],
       "modelAnswer": "The arcs are drawn with the same radius from $A$ and from $B$, so each crossing point is the same distance from $A$ as from $B$. The line through them passes through the midpoint $M$ of $AB$ at right angles. For any point $P$ on that line, triangles $PMA$ and $PMB$ have $AM = MB$, a right angle at $M$, and $PM$ in common, so they are congruent by SAS and $PA = PB$."
+    },
+    {
+      "id": "q17",
+      "prompt": "What is the greatest possible value of $x$?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the triangle inequality",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Any side must be shorter than the other two together: $x < 7 + 8 = 15$, so the greatest whole number is 14.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x < 15$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14"
+        }
+      ],
+      "discriminators": [],
+      "context": "sides-7-8",
+      "type": "numeric",
+      "answer": 14,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q18",
+      "prompt": "What is the least possible value of $x$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the triangle inequality",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 8 cm side must be shorter than the other two: $8 < 7 + x$, so $x > 1$, and the least whole number is 2.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "context": "sides-7-8",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q19",
+      "prompt": "How many different whole-number values can $x$ take?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "counting possible triangles",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x$ must satisfy $1 < x < 15$ (each side shorter than the other two together), so $x = 2, 3, \\ldots, 14$: 13 values. $x = 1$ and $x = 15$ make the sides lie flat.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1 < x < 15$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "sides-7-8",
+      "type": "numeric",
+      "answer": 13,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Which instruments are needed?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "choosing instruments for a construction",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two sides and the angle between them: a ruler for the lengths and a protractor for the 60° angle. (A 60° angle can also be made with compasses alone, but the protractor is the usual way.)",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "ruler and protractor"
+        }
+      ],
+      "discriminators": [],
+      "context": "sas-construct",
+      "type": "multiple-choice",
+      "options": [
+        "Ruler and protractor",
+        "Compasses only",
+        "Protractor only",
+        "Ruler only"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the length of BC.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "checking a construction by calculation",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "By the cosine rule: $BC^2 = 8^2 + 5^2 - 2 \\times 8 \\times 5 \\times \\cos 60° = 64 + 25 - 40 = 49$, so BC $= 7$ cm. Measuring the construction should give 7 cm too.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "cosine rule set up"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$64 + 25 - 40$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "sas-construct",
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q22",
+      "prompt": "In triangle ABC, AB = 10 cm, angle BAC = 30° and BC = 6 cm. How many different triangles fit this description?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the ambiguous case",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The distance from B to the line AC is $10 \\sin 30° = 5$ cm. BC = 6 cm is longer than 5 cm but shorter than AB, so an arc of radius 6 from B cuts the line from A twice: 2 different triangles.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "height $10 \\sin 30° = 5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "compares 6 with 5 and 10"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "A is the point (2, 1) and B is the point (8, 5). The perpendicular bisector of AB crosses the $x$-axis at P. Find the $x$-coordinate of P.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "perpendicular bisector by coordinates",
+      "step": "s6b",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The midpoint of AB is (5, 3). AB has gradient $\\dfrac{4}{6} = \\dfrac{2}{3}$, so the bisector has gradient $-\\dfrac{3}{2}$: $y - 3 = -\\dfrac{3}{2}(x - 5)$. At $y = 0$: $-3 = -\\dfrac{3}{2}(x - 5)$, so $x - 5 = 2$ and $x = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "midpoint (5, 3)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "gradient $-\\dfrac{3}{2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1135,9 +1368,16 @@
         "q13",
         "q14",
         "q16",
-        "q12"
+        "q12",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23"
       ],
-      "suggestedMinutes": 35
+      "suggestedMinutes": 51
     }
   },
   "examTechnique": {
@@ -1165,7 +1405,9 @@
       "q11",
       "q12",
       "q13",
-      "q15"
+      "q15",
+      "q22",
+      "q23"
     ],
     "sampleSize": 10
   },

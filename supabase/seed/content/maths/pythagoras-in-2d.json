@@ -661,6 +661,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "ladder-wall",
+      "body": "A ladder 6.5 m long leans against a vertical wall. Its foot is on level ground, 2.5 m from the wall."
+    },
+    {
+      "id": "ab-points",
+      "body": "A is the point $(-3, 4)$ and B is the point $(5, -2)$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1322,6 +1332,210 @@
         }
       ],
       "id": "q20"
+    },
+    {
+      "id": "q21",
+      "prompt": "How far up the wall does the ladder reach?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding a shorter side",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\sqrt{6.5^2 - 2.5^2} = \\sqrt{42.25 - 6.25} = \\sqrt{36} = 6$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$6.5^2 - 2.5^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [],
+      "context": "ladder-wall",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q22",
+      "prompt": "The foot of the ladder slides 1 m further from the wall. How far down the wall does the top slide? Give your answer to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Pythagoras twice in context",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "At first the top is $\\sqrt{6.5^2 - 2.5^2} = 6$ m up. With the foot 3.5 m out: $\\sqrt{6.5^2 - 3.5^2} = \\sqrt{30} = 5.477\\ldots$ m. It slides $6 - 5.477 = 0.52$ m, not the 1 m the foot moved.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6 m first"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{30}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.52"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "context": "ladder-wall",
+      "type": "numeric",
+      "answer": 0.52,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the length of AB.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "distance between two points",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Across 8, down 6: $\\sqrt{8^2 + 6^2} = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{8^2 + 6^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "context": "ab-points",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "O is the origin. Work out the area of triangle OAB.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "area of a triangle from coordinates",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A$(-3, 4)$ and B$(5, -2)$ are opposite corners of the box from $(-3, -2)$ to $(5, 4)$, so AB cuts the box into two triangles of $\\dfrac{1}{2} \\times 8 \\times 6 = 24$. O lies in the half with the corner $(-3, -2)$. Take away the two triangles between O and that corner: $\\dfrac{1}{2} \\times 6 \\times 3 = 9$ (on the side $x = -3$) and $\\dfrac{1}{2} \\times 8 \\times 2 = 8$ (on the side $y = -2$). Area $= 24 - 9 - 8 = 7$. (The formula $\\dfrac{1}{2}|x_1y_2 - x_2y_1| = \\dfrac{1}{2}|6 - 20|$ gives 7 too.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a method for the area from coordinates"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2}|6 - 20|$ or equivalent"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ab-points",
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "An isosceles triangle has sides of 13 cm, 13 cm and 10 cm. Work out its area.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "height of an isosceles triangle",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The height to the 10 cm base bisects it: $\\sqrt{13^2 - 5^2} = 12$ cm. Area $= \\dfrac{1}{2} \\times 10 \\times 12 = 60$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "half the base, 5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "height 12"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q26",
+      "prompt": "A rectangle has a diagonal of 17 cm and one side of 8 cm. Work out its perimeter.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Pythagoras for a missing side",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The other side is $\\sqrt{17^2 - 8^2} = \\sqrt{225} = 15$ cm. Perimeter $= 2 \\times (8 + 15) = 46$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{17^2 - 8^2}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "15"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "46"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 46,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
     }
   ],
   "examTechnique": {
@@ -1373,9 +1587,15 @@
         "q16",
         "q17",
         "q18",
-        "q20"
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 51
+      "suggestedMinutes": 69
     }
   },
   "quiz": {
@@ -1397,7 +1617,9 @@
       "q15",
       "q16",
       "q19",
-      "q20"
+      "q20",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

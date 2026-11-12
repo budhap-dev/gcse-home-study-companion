@@ -787,6 +787,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "ship-route",
+      "body": "A ship sails 12 km due east, on a bearing of 090°, from port P to point A. It then sails 5 km due south, on a bearing of 180°, to point B."
+    },
+    {
+      "id": "map-50000",
+      "body": "A map has a scale of 1 : 50 000."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1370,6 +1380,254 @@
         }
       ],
       "modelAnswer": "**The three rules.** A bearing is measured **from north**, **clockwise**, and written with **three figures**: $70°$ becomes $070°$.\n\n**Finding the back bearing.**\n\n- Bearing **under $180°$** → **add** $180°$\n- Bearing **$180°$ or more** → **subtract** $180°$\n\nYou never need to remember which: a bearing must lie between $000°$ and $360°$, so only one of the two keeps the answer valid. Adding 180 to $250°$ gives $430°$, which is impossible.\n\n**Why it works.** North at A and north at B are **parallel**. The two bearings are not co-interior ($070 + 250 = 320$); the angles **between each north line and $AB$** are: $70°$ at A, so $180 - 70 = 110°$ at B. Measured clockwise from north at B that is $360 - 110 = 250°$, the bearing of A from B."
+    },
+    {
+      "id": "q19",
+      "prompt": "How far is B from P?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Pythagoras in a bearings problem",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "East then south makes a right angle at A: $\\sqrt{12^2 + 5^2} = 13$ km.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{12^2 + 5^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13"
+        }
+      ],
+      "discriminators": [],
+      "context": "ship-route",
+      "type": "numeric",
+      "answer": 13,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "km"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the bearing of B from P, to the nearest degree.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "calculating a bearing with trigonometry",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "From P the ship is 12 km east and 5 km south of where it started. The angle below the east line is $\\tan^{-1}\\dfrac{5}{12} = 22.6°$. Bearings are measured clockwise from north, and east is 090°, so the bearing is $90° + 22.6° = 112.6°$, which is 113°.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tan^{-1}\\dfrac{5}{12}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds to 90°"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "113"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ship-route",
+      "type": "numeric",
+      "answer": 113,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the bearing of P from B, to the nearest degree.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "back bearings",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The bearing of B from P is $90° + \\tan^{-1}\\dfrac{5}{12} = 112.6°$. The back bearing is $112.6° + 180° = 292.6°$, which is 293°.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds 180°"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "293"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ship-route",
+      "type": "numeric",
+      "answer": 293,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q22",
+      "prompt": "Two villages are 4 cm apart on the map. How far apart are they in real life, in km?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "using a map scale",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4 \\times 50\\,000 = 200\\,000$ cm $= 2000$ m $= 2$ km.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [],
+      "context": "map-50000",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "km"
+    },
+    {
+      "id": "q23",
+      "prompt": "A path is 7.5 km long. How long is it on the map, in cm?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "using a map scale backwards",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "7.5 km $= 750\\,000$ cm, and $750\\,000 \\div 50\\,000 = 15$ cm.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [],
+      "context": "map-50000",
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q24",
+      "prompt": "A lake covers 3 cm² of the map. Work out its real area in km².",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "area on a scale drawing",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each 1 cm on the map is 0.5 km, so each 1 cm² is $0.5 \\times 0.5 = 0.25$ km². The lake is $3 \\times 0.25 = 0.75$ km². Using 0.5 instead of its square gives 1.5 km².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "1 cm² is 0.25 km²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "map-50000",
+      "type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "km²"
+    },
+    {
+      "id": "q25",
+      "prompt": "The bearing of B from A is 064°. Work out the bearing of A from B.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "back bearings",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The back bearing differs by 180°: $64° + 180° = 244°$. Subtracting from 360°, which gives 296°, is the common slip.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$64 + 180$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "244"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 244,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q26",
+      "prompt": "Town Q is 30 km north and 40 km east of town P. Work out the bearing of P from Q, to the nearest degree.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "bearing from components",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "From P, Q is at $\\tan^{-1}\\dfrac{40}{30} = 53.1°$ east of north: bearing 053°. The bearing of P from Q is $53.1° + 180° = 233.1°$, which is 233°.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tan^{-1}\\dfrac{40}{30}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds 180°"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "233"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 233,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
     }
   ],
   "worksheets": {
@@ -1405,9 +1663,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 40
+      "suggestedMinutes": 58
     }
   },
   "examTechnique": {
@@ -1441,7 +1707,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

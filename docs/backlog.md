@@ -924,7 +924,8 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
 - [x] **3. Maths: algebra.** 23 topics, including graphs and sequences. 178 questions in
   v10.120.0, each naming the lesson step it rests on. The repeat check now reads a part with
   its stem, since "Solve the inequality." under two different inequalities is two questions.
-- [ ] **4. Maths: geometry and measures.** 20 topics.
+- [x] **4. Maths: geometry and measures.** 20 topics. 149 questions in v10.122.0, each figure
+  described in words and coordinates. Maths is complete: about 557 new questions over 72 topics.
 - [ ] **5. Physics: energy, the particle model and forces.** 15 topics.
 - [ ] **6. Physics: electricity, waves, magnetism, atoms and space.** 19 topics. Every AQA
   required practical has at least one multi-part question by the end of this box.

@@ -899,6 +899,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "hex-prism",
+      "body": "A prism has a cross-section that is a hexagon."
+    },
+    {
+      "id": "cuboid-corner",
+      "body": "A cuboid 4 cm long, 3 cm wide and 2 cm tall stands on its 4 cm by 3 cm face."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1824,6 +1834,255 @@
       "tolerance": 0.05,
       "unitsRequired": false,
       "units": "cm³"
+    },
+    {
+      "id": "q24",
+      "prompt": "How many faces does the prism have?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "faces of a prism",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two hexagonal ends and one rectangular face for each of the 6 sides: $2 + 6 = 8$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "context": "hex-prism",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "How many edges does the prism have?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "edges of a prism",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "6 edges round each hexagonal end, plus 6 running between the ends: $6 + 6 + 6 = 18$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "18"
+        }
+      ],
+      "discriminators": [],
+      "context": "hex-prism",
+      "type": "numeric",
+      "answer": 18,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "How many vertices does the prism have?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "vertices of a prism",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "6 at each end: 12. Check with Euler: $F + V - E = 8 + 12 - 18 = 2$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "context": "hex-prism",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "A pyramid has 30 edges. How many faces does it have?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "counting a pyramid from its edges",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A pyramid on an $n$-sided base has $n$ edges round the base and $n$ up to the apex: $2n = 30$, so $n = 15$. Faces: the base and 15 triangles, 16 in all. (A hexagonal prism has $6 + 6 + 6 = 18$ edges, so prisms and pyramids count differently.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2n = 30$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "hex-prism",
+      "type": "numeric",
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q28",
+      "prompt": "Work out the area of its plan view.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "plan view",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "From above you see the 4 cm by 3 cm face: 12 cm².",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "context": "cuboid-corner",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q29",
+      "prompt": "Its front elevation is the 4 cm by 2 cm face. Work out its area.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "front elevation",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4 \\times 2 = 8$ cm².",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "context": "cuboid-corner",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q30",
+      "prompt": "A 1 cm cube is cut out of one top corner of the cuboid. How many faces does the new solid have?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "faces after cutting a solid",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The cuboid had 6 faces. The three faces that met at that corner each lose a square notch but are still one face each. The cut opens up 3 new square faces inside the notch. $6 + 3 = 9$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the 6 original faces kept"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "context": "cuboid-corner",
+      "type": "numeric",
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q31",
+      "prompt": "A solid has 7 faces and 10 vertices. Use Euler’s formula, $F + V - E = 2$, to find how many edges it has.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "Euler’s formula",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$7 + 10 - E = 2$, so $E = 15$. (A pentagonal prism has these counts.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$7 + 10 - E = 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q32",
+      "prompt": "A solid is built from 1 cm cubes on a 3 by 3 grid, no more than 3 cubes high. Its plan view is a full 3 by 3 square, and its front and side elevations are both full 3 by 3 squares. What is the least number of cubes it can contain?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back from plans and elevations",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The plan needs a cube in each of the 9 columns. The front needs a column 3 high in each of its 3 columns, and the side needs one in each of its 3 rows. Three towers of 3 placed on a diagonal fill both elevations at once; the other 6 grid squares need just 1 cube each. $3 \\times 3 + 6 \\times 1 = 15$. Fewer is impossible: each elevation needs 3 towers of 3, and one tower can serve one row and one column only.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "every column has at least one cube"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "three towers of 3 on a diagonal"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1864,9 +2123,18 @@
         "q19",
         "q20",
         "q21",
-        "q23"
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28",
+        "q29",
+        "q30",
+        "q31",
+        "q32"
       ],
-      "suggestedMinutes": 40
+      "suggestedMinutes": 55
     }
   },
   "examTechnique": {
@@ -1905,7 +2173,9 @@
       "q18",
       "q19",
       "q20",
-      "q23"
+      "q23",
+      "q31",
+      "q32"
     ],
     "sampleSize": 10
   },

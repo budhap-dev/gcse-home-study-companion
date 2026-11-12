@@ -746,6 +746,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "ab-vectors",
+      "body": "$\\mathbf{a} = \\begin{pmatrix} 3 \\\\ -2 \\end{pmatrix}$ and $\\mathbf{b} = \\begin{pmatrix} -1 \\\\ 4 \\end{pmatrix}$."
+    },
+    {
+      "id": "oab-midpoint",
+      "body": "$\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. M is the midpoint of AB."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1303,6 +1313,227 @@
         }
       ],
       "modelAnswer": "**Factorise.** Two divides both 4 and 6:\n\n$$\\overrightarrow{PQ} = 4\\mathbf{a} + 6\\mathbf{b} = 2(2\\mathbf{a} + 3\\mathbf{b})$$\n\n**Recognise the bracket.** $2\\mathbf{a} + 3\\mathbf{b}$ is exactly $\\overrightarrow{RS}$, so\n\n$$\\overrightarrow{PQ} = 2\\overrightarrow{RS}$$\n\n**Conclude — and this is a separate mark.** One vector is a **scalar multiple** of the other, **therefore PQ is parallel to RS**.\n\n**Lengths.** The scalar is 2, so **PQ is twice as long as RS**.\n\nShowing the multiple without writing the parallel conclusion is the commonest lost mark in vector questions."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the magnitude of $\\mathbf{a}$, to 2 decimal places.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "magnitude of a vector",
+      "step": "s1",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$|\\mathbf{a}| = \\sqrt{3^2 + (-2)^2} = \\sqrt{13} = 3.605\\ldots$, which is 3.61.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{13}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3.61"
+        }
+      ],
+      "discriminators": [],
+      "context": "ab-vectors",
+      "type": "numeric",
+      "answer": 3.61,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the magnitude of $2\\mathbf{a} + \\mathbf{b}$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "combining vectors",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$2\\mathbf{a} + \\mathbf{b} = \\begin{pmatrix} 6 \\\\ -4 \\end{pmatrix} + \\begin{pmatrix} -1 \\\\ 4 \\end{pmatrix} = \\begin{pmatrix} 5 \\\\ 0 \\end{pmatrix}$, which has magnitude 5.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\begin{pmatrix} 5 \\\\ 0 \\end{pmatrix}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "context": "ab-vectors",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "Find the number $k$ for which $\\mathbf{a} + k\\mathbf{b}$ is parallel to the $x$-axis.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a vector parallel to an axis",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\mathbf{a} + k\\mathbf{b} = \\begin{pmatrix} 3 - k \\\\ -2 + 4k \\end{pmatrix}$. Parallel to the $x$-axis means its bottom number is 0: $-2 + 4k = 0$, so $k = 0.5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "bottom number $-2 + 4k$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ab-vectors",
+      "type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Which is $\\overrightarrow{AB}$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a vector between two points",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Go from A back to O, then out to B: $\\overrightarrow{AB} = -\\mathbf{a} + \\mathbf{b} = \\mathbf{b} - \\mathbf{a}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\mathbf{b} - \\mathbf{a}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "oab-midpoint",
+      "type": "multiple-choice",
+      "options": [
+        "$\\mathbf{a} - \\mathbf{b}$",
+        "$\\mathbf{a} + \\mathbf{b}$",
+        "$\\mathbf{b} - \\mathbf{a}$",
+        "$\\dfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Which is $\\overrightarrow{OM}$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "vector to a midpoint",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{OM} = \\overrightarrow{OA} + \\dfrac{1}{2}\\overrightarrow{AB} = \\mathbf{a} + \\dfrac{1}{2}(\\mathbf{b} - \\mathbf{a}) = \\dfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "oab-midpoint",
+      "type": "multiple-choice",
+      "options": [
+        "$\\dfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$",
+        "$\\dfrac{1}{2}(\\mathbf{b} - \\mathbf{a})$",
+        "$\\mathbf{a} + \\mathbf{b}$",
+        "$\\mathbf{a} + \\dfrac{1}{2}\\mathbf{b}$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "$\\mathbf{p} = \\begin{pmatrix} 2 \\\\ k \\end{pmatrix}$ and $\\mathbf{q} = \\begin{pmatrix} 6 \\\\ 9 \\end{pmatrix}$. $\\mathbf{p}$ is parallel to $\\mathbf{q}$. Find $k$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "parallel vectors",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Parallel vectors are multiples of each other. $\\mathbf{q}$ is 3 times as long across ($6 = 3 \\times 2$), so it is 3 times $\\mathbf{p}$: $9 = 3k$ and $k = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\mathbf{q} = 3\\mathbf{p}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$9 = 3k$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "$\\mathbf{c} = \\begin{pmatrix} 5 \\\\ 12 \\end{pmatrix}$. Work out the magnitude of $3\\mathbf{c}$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "magnitude of a multiple",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$|\\mathbf{c}| = \\sqrt{5^2 + 12^2} = 13$, and multiplying a vector by 3 multiplies its length by 3: 39. (Or $3\\mathbf{c} = \\begin{pmatrix} 15 \\\\ 36 \\end{pmatrix}$, with magnitude $\\sqrt{225 + 1296} = 39$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$|\\mathbf{c}| = 13$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "times 3"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "39"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 39,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1338,9 +1569,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 60
     }
   },
   "examTechnique": {
@@ -1374,7 +1612,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },
