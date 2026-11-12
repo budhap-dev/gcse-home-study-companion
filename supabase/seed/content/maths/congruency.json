@@ -843,6 +843,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "sas-pair",
+      "body": "Triangle ABC has AB = 7 cm, BC = 9 cm and angle ABC = 52°. Triangle PQR has PQ = 7 cm, QR = 9 cm and angle PQR = 52°."
+    },
+    {
+      "id": "rhs-pair",
+      "body": "Triangle XYZ has a right angle at Y, XY = 10 cm and XZ = 26 cm."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1654,6 +1664,256 @@
         }
       ],
       "modelAnswer": "Angle $ABC$ = angle $CDA$ = $90°$ because they are angles of a rectangle. $AC$ is common to both triangles and is the hypotenuse of each, since it is opposite the right angle. $AB = CD$ because opposite sides of a rectangle are equal. Right angle, hypotenuse and one side match, so triangle $ABC$ is congruent to triangle $CDA$ by RHS."
+    },
+    {
+      "id": "q18",
+      "prompt": "Which condition shows the two triangles are congruent?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "conditions for congruence",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two sides and the angle between them match: AB = PQ, BC = QR, and the 52° angles are the ones between those sides. That is SAS.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "SAS"
+        }
+      ],
+      "discriminators": [],
+      "context": "sas-pair",
+      "type": "multiple-choice",
+      "options": [
+        "SSS",
+        "SAS",
+        "ASA",
+        "RHS"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q19",
+      "prompt": "Angle BAC = 68°. Work out angle QRP.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "using corresponding parts of congruent triangles",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The triangles are congruent by SAS (7 cm, the 52° angle, 9 cm), with A matching P, B matching Q and C matching R. In triangle ABC, angle BCA $= 180° - 52° - 68° = 60°$, so angle QRP, which matches it, is 60°.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "angle BCA = 60°"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "sas-pair",
+      "type": "numeric",
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out YZ.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Pythagoras in a right-angled triangle",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "XZ is the hypotenuse: $YZ = \\sqrt{26^2 - 10^2} = \\sqrt{576} = 24$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{26^2 - 10^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [],
+      "context": "rhs-pair",
+      "type": "numeric",
+      "answer": 24,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q21",
+      "prompt": "Another triangle has a right angle, a hypotenuse of 26 cm and a side of 10 cm. Which condition shows it is congruent to XYZ?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the RHS condition",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Right angle, hypotenuse and one other side: RHS. (The third side is then fixed by Pythagoras, so this is really SSS in disguise.)",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "RHS"
+        }
+      ],
+      "discriminators": [],
+      "context": "rhs-pair",
+      "type": "multiple-choice",
+      "options": [
+        "SAS",
+        "ASA",
+        "RHS",
+        "AAA"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Without a right angle, two sides and an angle that is not between them do not prove two triangles congruent. Why?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "why SSA fails",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With the angle not between the two sides, the third side can swing to two different positions, making two different triangles with the same two sides and angle. (A right angle removes the second position, which is why RHS works.)",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "two different triangles are possible"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "rhs-pair",
+      "type": "multiple-choice",
+      "options": [
+        "The angle could be measured wrongly",
+        "Two different triangles can have those two sides and that angle",
+        "Congruence always needs all three sides",
+        "It does prove congruence, but only for acute angles"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "ABCD is a parallelogram. Prove that triangles ABC and CDA are congruent.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "writing a congruence proof",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "AB = CD and BC = DA, because opposite sides of a parallelogram are equal. AC is a side of both triangles. So all three sides match, and the triangles are congruent by SSS.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "AB = CD and BC = DA, with the reason"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "AC common"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "SSS stated"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Stated AB = CD and BC = DA, as opposite sides of a parallelogram",
+          "marks": 1
+        },
+        {
+          "text": "Stated that AC is shared by both triangles",
+          "marks": 1
+        },
+        {
+          "text": "Concluded congruent by SSS",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "AB = CD (opposite sides of a parallelogram)\n\nBC = DA (opposite sides of a parallelogram)\n\nAC is common\n\nSo triangle ABC is congruent to triangle CDA (SSS)."
+    },
+    {
+      "id": "q24",
+      "prompt": "Triangle ABC is isosceles with AB = AC. M is the midpoint of BC. Prove that triangles ABM and ACM are congruent, and hence that AM is perpendicular to BC.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "congruence leading to a right angle",
+      "step": "s8",
+      "calculator": "either",
+      "tags": [],
+      "solution": "AB = AC (given), BM = CM (M is the midpoint) and AM is common, so the triangles are congruent by SSS. So angle AMB = angle AMC. They lie on the straight line BC, so they add to 180°, and each is 90°: AM is perpendicular to BC.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "three pairs of equal sides with reasons"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "SSS"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "equal angles on a straight line, so 90°"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Gave AB = AC, BM = CM and AM common, with reasons",
+          "marks": 1
+        },
+        {
+          "text": "Concluded congruent by SSS",
+          "marks": 1
+        },
+        {
+          "text": "Used the equal angles AMB and AMC on a straight line to show each is 90°",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "AB = AC (given); BM = CM (M is the midpoint); AM common. Congruent by SSS. So angle AMB = angle AMC, and since they add to 180° on line BC, each is 90°."
     }
   ],
   "worksheets": {
@@ -1688,9 +1948,16 @@
         "q12",
         "q13",
         "q15",
-        "q14"
+        "q14",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24"
       ],
-      "suggestedMinutes": 35
+      "suggestedMinutes": 49
     }
   },
   "examTechnique": {

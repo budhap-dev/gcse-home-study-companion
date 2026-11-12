@@ -1001,6 +1001,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "parallelogram-oabc",
+      "body": "OABC is a parallelogram with $\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OC} = \\mathbf{c}$. M is the midpoint of AB. N is the point on OB with ON : NB = 2 : 1."
+    },
+    {
+      "id": "ab-ratio",
+      "body": "$\\overrightarrow{OA} = \\mathbf{a}$ and $\\overrightarrow{OB} = \\mathbf{b}$. P is the point on AB with AP : PB = 1 : 3. $\\overrightarrow{OP} = m\\mathbf{a} + n\\mathbf{b}$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1582,6 +1592,253 @@
         }
       ],
       "modelAnswer": "**The diagonal $OC$.** In a parallelogram $\\overrightarrow{AC} = \\overrightarrow{OB} = \\mathbf{b}$, so\n\n$$\\overrightarrow{OC} = \\mathbf{a} + \\mathbf{b}$$\n\n**Midpoint of $OC$.** Call it $M$:\n\n$$\\overrightarrow{OM} = \\tfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$$\n\n**Midpoint of $AB$.** Call it $N$. Since $\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$,\n\n$$\\overrightarrow{ON} = \\overrightarrow{OA} + \\tfrac{1}{2}\\overrightarrow{AB} = \\mathbf{a} + \\tfrac{1}{2}(\\mathbf{b} - \\mathbf{a}) = \\tfrac{1}{2}(\\mathbf{a} + \\mathbf{b})$$\n\n**Compare.** $\\overrightarrow{OM} = \\overrightarrow{ON}$, so $M$ and $N$ are **the same point**.\n\n**Conclude.** The midpoint of each diagonal is the same point, therefore **the diagonals bisect each other**.\n\nThe structure is worth noticing: to prove two points coincide, find the vector to each from the same starting point and show they are equal."
+    },
+    {
+      "id": "q19",
+      "prompt": "$\\overrightarrow{OM} = \\mathbf{a} + k\\mathbf{c}$. Find $k$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "midpoints with vectors",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{AB} = \\overrightarrow{OC} = \\mathbf{c}$ (opposite sides of a parallelogram). M is halfway along AB, so $\\overrightarrow{OM} = \\mathbf{a} + \\dfrac{1}{2}\\mathbf{c}$ and $k = 0.5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "0.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "parallelogram-oabc",
+      "type": "numeric",
+      "answer": 0.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "$\\overrightarrow{ON} = \\lambda(\\mathbf{a} + \\mathbf{c})$. Find $\\lambda$. Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a point dividing a line in a ratio",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{OB} = \\mathbf{a} + \\mathbf{c}$. ON : NB = 2 : 1 means N is $\\dfrac{2}{3}$ of the way from O to B, so $\\lambda = \\dfrac{2}{3}$. ($\\dfrac{2}{1}$ uses the ratio as a fraction of the part, not the whole.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\overrightarrow{OB} = \\mathbf{a} + \\mathbf{c}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{3}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "parallelogram-oabc",
+      "type": "short-text",
+      "accepted": [
+        "2/3"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Prove that C, N and M lie on a straight line.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "proving points are collinear",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{CN} = \\overrightarrow{ON} - \\overrightarrow{OC} = \\dfrac{2}{3}(\\mathbf{a} + \\mathbf{c}) - \\mathbf{c} = \\dfrac{2}{3}\\mathbf{a} - \\dfrac{1}{3}\\mathbf{c}$. $\\overrightarrow{CM} = \\overrightarrow{OM} - \\overrightarrow{OC} = \\mathbf{a} + \\dfrac{1}{2}\\mathbf{c} - \\mathbf{c} = \\mathbf{a} - \\dfrac{1}{2}\\mathbf{c} = \\dfrac{3}{2}\\left(\\dfrac{2}{3}\\mathbf{a} - \\dfrac{1}{3}\\mathbf{c}\\right)$. So $\\overrightarrow{CM} = \\dfrac{3}{2}\\overrightarrow{CN}$: the two are parallel and share the point C, so C, N and M are collinear.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\overrightarrow{CN} = \\dfrac{2}{3}\\mathbf{a} - \\dfrac{1}{3}\\mathbf{c}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\overrightarrow{CM} = \\mathbf{a} - \\dfrac{1}{2}\\mathbf{c}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "one a multiple of the other, with a shared point"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "parallelogram-oabc",
+      "type": "extended",
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Found $\\overrightarrow{CN} = \\dfrac{2}{3}\\mathbf{a} - \\dfrac{1}{3}\\mathbf{c}$",
+          "marks": 1
+        },
+        {
+          "text": "Found $\\overrightarrow{CM} = \\mathbf{a} - \\dfrac{1}{2}\\mathbf{c}$",
+          "marks": 1
+        },
+        {
+          "text": "Showed one is a multiple of the other and said they share C, so the points are collinear",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$\\overrightarrow{CN} = \\dfrac{2}{3}\\mathbf{a} - \\dfrac{1}{3}\\mathbf{c}$\n\n$\\overrightarrow{CM} = \\mathbf{a} - \\dfrac{1}{2}\\mathbf{c} = \\dfrac{3}{2}\\overrightarrow{CN}$\n\nParallel, with C in common, so C, N and M lie on a straight line."
+    },
+    {
+      "id": "q22",
+      "prompt": "Find $n$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a point dividing a line in a ratio",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$, and P is $\\dfrac{1}{4}$ of the way from A to B. $\\overrightarrow{OP} = \\mathbf{a} + \\dfrac{1}{4}(\\mathbf{b} - \\mathbf{a}) = \\dfrac{3}{4}\\mathbf{a} + \\dfrac{1}{4}\\mathbf{b}$, so $n = 0.25$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\mathbf{a} + \\dfrac{1}{4}(\\mathbf{b} - \\mathbf{a})$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.25"
+        }
+      ],
+      "discriminators": [],
+      "context": "ab-ratio",
+      "type": "numeric",
+      "answer": 0.25,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Find $m$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a point dividing a line in a ratio",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{OP} = \\mathbf{a} + \\dfrac{1}{4}(\\mathbf{b} - \\mathbf{a}) = \\dfrac{3}{4}\\mathbf{a} + \\dfrac{1}{4}\\mathbf{b}$, so $m = 0.75$. P is nearer A, so it has more of $\\mathbf{a}$ in it; $m = \\dfrac{1}{4}$ has the two the wrong way round.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands $\\mathbf{a} - \\dfrac{1}{4}\\mathbf{a}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.75"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ab-ratio",
+      "type": "numeric",
+      "answer": 0.75,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "$\\overrightarrow{XY} = 3\\mathbf{p} - 6\\mathbf{q}$ and $\\overrightarrow{ZW} = \\mathbf{p} - 2\\mathbf{q}$. How many times as long as ZW is XY?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "parallel vectors and their lengths",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3\\mathbf{p} - 6\\mathbf{q} = 3(\\mathbf{p} - 2\\mathbf{q})$, so $\\overrightarrow{XY} = 3\\overrightarrow{ZW}$: the lines are parallel and XY is 3 times as long.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises out 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\overrightarrow{XY} = 3\\overrightarrow{ZW}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "$\\overrightarrow{OA} = \\mathbf{a}$, $\\overrightarrow{OB} = \\mathbf{b}$ and $\\overrightarrow{OC} = 3\\mathbf{a} - 2\\mathbf{b}$. Prove that A, B and C lie on a straight line.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "proving collinearity",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$. $\\overrightarrow{AC} = \\overrightarrow{OC} - \\overrightarrow{OA} = 2\\mathbf{a} - 2\\mathbf{b} = -2(\\mathbf{b} - \\mathbf{a})$. So $\\overrightarrow{AC} = -2\\overrightarrow{AB}$: parallel, and both start at A, so A, B and C are collinear.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\overrightarrow{AC} = 2\\mathbf{a} - 2\\mathbf{b}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "a multiple, with A shared"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 5,
+      "criteria": [
+        {
+          "text": "Found $\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$",
+          "marks": 1
+        },
+        {
+          "text": "Found $\\overrightarrow{AC} = 2\\mathbf{a} - 2\\mathbf{b}$",
+          "marks": 1
+        },
+        {
+          "text": "Showed $\\overrightarrow{AC} = -2\\overrightarrow{AB}$ and said they share A",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$\\overrightarrow{AB} = \\mathbf{b} - \\mathbf{a}$, $\\overrightarrow{AC} = 2\\mathbf{a} - 2\\mathbf{b} = -2\\overrightarrow{AB}$. They are parallel and share A, so A, B and C are collinear."
     }
   ],
   "worksheets": {
@@ -1617,9 +1874,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 63
     }
   },
   "examTechnique": {
@@ -1653,7 +1917,8 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24"
     ],
     "sampleSize": 10
   },

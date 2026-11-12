@@ -742,6 +742,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "ramp",
+      "body": "A wheelchair ramp rises 1.2 m over a horizontal distance of 9 m."
+    },
+    {
+      "id": "building-35",
+      "body": "From a point on level ground 40 m from the base of a building, the angle of elevation of the top of the building is 35°."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1315,6 +1325,242 @@
         }
       ],
       "modelAnswer": "The **right angle** in this situation is between the **wall and the ground**, since the wall is vertical. The **ladder** lies opposite that right angle, so the ladder is the **hypotenuse**, 6 m. Reasoning from the right angle rather than from which line looks slanted is what makes this reliable.\n\nRelative to the angle at the ground, the 1.5 m along the ground is the **adjacent** side, and the height up the wall is the **opposite**.\n\n**The angle.** I know the adjacent (1.5) and the hypotenuse (6), so I use **CAH**:\n\n$$\\cos\\theta = \\frac{1.5}{6} = 0.25$$\n\nThe angle is missing, so I undo the cosine with the **inverse**:\n\n$$\\theta = \\cos^{-1}(0.25) = 75.5°$$\n\n**The height.** I could use $\\sin$ with the angle I have just found, but it is better to use the sides the **question** gave me. Pythagoras does exactly that:\n\n$$h = \\sqrt{6^2 - 1.5^2} = \\sqrt{36 - 2.25} = \\sqrt{33.75} = 5.81 \\text{ m (2 d.p.)}$$\n\nThe reason for preferring this is that it keeps the two answers **independent**. If my angle were wrong, using it to find the height would carry that error forward and lose marks twice over. Working from the original 6 m and 1.5 m means a mistake in one part cannot contaminate the other.\n\n**Checking both answers.**\n\nThe angle is **75.5°**, which is under 90° as any angle in a right-angled triangle other than the right angle must be. It is also a large angle, which fits: the foot is only 1.5 m out from a 6 m ladder, so the ladder is steep. Had I found something like 14°, that would describe a ladder lying almost flat and would not match the numbers.\n\nThe height is **5.81 m**, comfortably **less than the 6 m ladder**, as it has to be — a ladder cannot reach higher than its own length. If it had come out above 6 m, I would know the ratio had been used upside down or Pythagoras applied the wrong way round.\n\nAs a further confirmation, running the trigonometry forwards gives $6\\cos 75.5° = 1.50$ m, recovering the distance along the ground that the question started with."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the angle the ramp makes with the horizontal, to 1 decimal place.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "finding an angle with tan",
+      "step": "s3",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\tan \\theta = \\dfrac{1.2}{9}$, so $\\theta = 7.59\\ldots°$, which is 7.6°.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tan^{-1}\\dfrac{1.2}{9}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7.6"
+        }
+      ],
+      "discriminators": [],
+      "context": "ramp",
+      "type": "numeric",
+      "answer": 7.6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the length of the sloping surface of the ramp, to 2 decimal places.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the hypotenuse",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\sqrt{9^2 + 1.2^2} = \\sqrt{82.44} = 9.079\\ldots$, which is 9.08 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{9^2 + 1.2^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9.08"
+        }
+      ],
+      "discriminators": [],
+      "context": "ramp",
+      "type": "numeric",
+      "answer": 9.08,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q21",
+      "prompt": "A rule says the ramp must make an angle of at most 5° with the horizontal. Work out the least horizontal distance for a 1.2 m rise, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "finding a side from an angle",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\tan 5° = \\dfrac{1.2}{d}$, so $d = \\dfrac{1.2}{\\tan 5°} = 13.71\\ldots$, which is 13.7 m. A smaller angle needs a longer run, so this is the least distance.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tan 5° = \\dfrac{1.2}{d}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.2 \\div \\tan 5°$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13.7"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "context": "ramp",
+      "type": "numeric",
+      "answer": 13.7,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the height of the building, to 1 decimal place.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "angle of elevation",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$h = 40 \\tan 35° = 28.00\\ldots$, which is 28.0 m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$40 \\tan 35°$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28.0"
+        }
+      ],
+      "discriminators": [],
+      "context": "building-35",
+      "type": "numeric",
+      "answer": 28.0,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
+    },
+    {
+      "id": "q23",
+      "prompt": "Lily walks 15 m straight towards the building. Work out the new angle of elevation of the top, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "two right-angled triangles",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Height $= 40 \\tan 35° = 28.008\\ldots$ m (kept unrounded). She is now $40 - 15 = 25$ m away. $\\tan \\theta = \\dfrac{28.008}{25}$, so $\\theta = 48.24\\ldots°$, which is 48.2°.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "height from the first triangle"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tan^{-1}\\dfrac{28.0}{25}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "48.2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "building-35",
+      "type": "numeric",
+      "answer": 48.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q24",
+      "prompt": "An isosceles triangle has a base of 10 cm, and both base angles are 65°. Work out its area, to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "trigonometry for an area",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The height splits it into two right-angled triangles with a 5 cm base: height $= 5 \\tan 65° = 10.72\\ldots$ cm. Area $= \\dfrac{1}{2} \\times 10 \\times 10.72\\ldots = 53.61\\ldots$, which is 53.6 cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "half the base, 5"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5 \\tan 65°$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "53.6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 53.6,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q25",
+      "prompt": "A kite’s string is 60 m long, held taut, and makes an angle of 52° with the level ground. How high is the kite above the point where the string is held? Give your answer to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "finding a side with sin",
+      "step": "s2",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The string is the hypotenuse and the height is opposite the 52° angle: $60 \\sin 52° = 47.28\\ldots$, which is 47.3 m. $60 \\cos 52°$ is the distance along the ground.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sin chosen"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$60 \\sin 52°$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "47.3"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 47.3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "m"
     }
   ],
   "examTechnique": {
@@ -1364,9 +1610,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "quiz": {
@@ -1386,7 +1639,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },
