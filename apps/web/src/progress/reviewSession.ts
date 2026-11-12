@@ -6,7 +6,7 @@ import { xpForQuestions } from './xp.ts'
 /** One question in a session that spans topics: Redo my mistakes, or the daily recap. */
 export interface SessionItem { topicId: string; questionId: string }
 /** `self`: marked by the student against the criteria, as an extended answer on a paper is. */
-export type SessionAnswers = Record<string, { answer: Answer; result: MarkResult; self?: boolean }>
+export type SessionAnswers = Record<string, { answer: Answer; result: MarkResult; self?: boolean; methodMarked?: boolean }>
 
 export const itemKey = (m: SessionItem) => `${m.topicId}/${m.questionId}`
 
@@ -39,7 +39,7 @@ export function recordReview(sessionId: string, items: SessionItem[], answers: S
       ...(from ? { from } : {}),
       marksScored: results.reduce((s, r) => s + r.marksScored, 0),
       marksAvailable: results.reduce((s, r) => s + r.marksAvailable, 0),
-      markedHow: results.every((r) => r.self) ? 'self' : results.some((r) => r.claimed || r.self) ? 'mixed' : 'auto',
+      markedHow: results.every((r) => r.self) ? 'self' : results.some((r) => r.claimed || r.self) || its.some((m) => answers[itemKey(m)]?.methodMarked) ? 'mixed' : 'auto',
       completedAt: finishedAt,
       xp: xpForQuestions(results),
       questions: results,

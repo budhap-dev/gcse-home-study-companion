@@ -63,6 +63,7 @@ describe('focus screens', () => {
       '/recap',
       '/subjects/physics/units/energy/test',
       '/subjects/physics/units/energy/grade-9',
+      '/subjects/maths/topics/laws-of-indices/worksheet/higher/timed',
     ]) expect(isFocusRoute(p), p).toBe(true)
   })
 

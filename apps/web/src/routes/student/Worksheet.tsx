@@ -7,7 +7,7 @@ import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import { ReportMistake } from '../../components/ReportMistake.tsx'
-import { totalMarks } from '../../content/index.ts'
+import { getGuide, totalMarks } from '../../content/index.ts'
 import { getState, recordAttempt, type AttemptRecord } from '../../progress/store.ts'
 import { settle, type Settlement } from '../../progress/settle.ts'
 import { Celebration } from '../../components/Celebration.tsx'
@@ -22,6 +22,8 @@ import { ShareSheet } from '../../components/ShareSheet.tsx'
 import { newSheetCode, sheetParam, sheetPath } from '../../content/sheetCode.ts'
 import type { Milestone } from '../../progress/milestones.ts'
 import { TopicMissing } from '../../components/TopicMissing.tsx'
+import { timedPath } from './TimedWorksheet.tsx'
+import { minutesFor, minutesPerMark } from '../../content/paper.ts'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -151,6 +153,13 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
           {freshCount > 0 && !sent && (
             <Link to={sheetPath(subject.id, topic.id, level, printCode, true)} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Print one with new numbers</Link>
           )}
+        </div>
+        <div className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-ink-2">Or sit it as a timed paper, at the exam’s pace: nothing marked until you hand it in.</p>
+          <Link to={timedPath(subject.id, topic.id, level, freshCount ? sent ?? (triedBefore(getState().attempts, topic.id, level) ? printCode : undefined) : undefined)}
+            className="flex h-12 shrink-0 items-center justify-center rounded-xl bg-ink px-5 font-bold text-surface">
+            Timed: {minutesFor(marksAvailable, minutesPerMark(getGuide(subject.id)))} minutes
+          </Link>
         </div>
       </article>
     )
