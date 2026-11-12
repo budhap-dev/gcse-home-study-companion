@@ -906,6 +906,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "after-a-meal",
+      "body": "A person’s blood glucose is 90 mg per 100 cm³ before a meal. It rises to 144 mg per 100 cm³ an hour after the meal, then falls back to 90 within two hours."
+    },
+    {
+      "id": "bmi-waist",
+      "body": "A person has a mass of 92 kg and a height of 1.75 m. Their waist is 104 cm and their hips are 100 cm. BMI = mass (kg) ÷ height² (m²)."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1897,6 +1907,297 @@
         }
       ],
       "modelAnswer": "**What the data show.** There is a clear correlation between body mass and type 2 diabetes. As the BMI group rises, so does the proportion who developed the condition: 3% of those with a BMI below 25, 7% of those between 25 and 30, and 15% of those above 30. The rise is steady rather than jumping about, and the study is a strong one: 10 000 adults is a large sample, and following them for ten years means the researchers saw who actually developed the condition rather than relying on a snapshot. Chance is a very unlikely explanation for a pattern this regular in a group this large.\n\n**What the data do not show.** A correlation, however strong, does not by itself prove that one thing causes the other. A third factor could be responsible for both: a diet high in sugar and fat, or a lack of exercise, would raise a person's body mass and could also raise their risk of type 2 directly, so the two would rise together without body mass itself being the cause. The figures also show that body mass cannot be the whole explanation. Even in the heaviest group, 85% of adults did not develop type 2 diabetes in ten years, and 3% of the lightest group did, so something other than body mass decides who is affected.\n\n**The evidence beside the table.** What makes a causal link more than a guess is evidence of a different kind. There is a mechanism: excess fat is thought to make body cells less responsive to insulin, and failing to respond to insulin is exactly the fault in type 2 diabetes. And there is the effect of changing the supposed cause: people who lose weight reduce their risk, which is what would be expected if body mass were contributing and not if the correlation were a coincidence.\n\n**Judgement.** The researchers have overstated what their study shows. Taken with the mechanism and the effect of weight loss, the correlation supports the view that a high body mass contributes to type 2 diabetes, but as a risk factor that raises the chance of developing it, not as its sole cause; many people with a high BMI never develop it and some with a low BMI do. The conclusion should read that a high body mass increases the risk of type 2 diabetes. The study could also be strengthened by measuring the waist to hip ratio as well as BMI, since fat carried around the abdomen is more strongly linked to type 2 than fat elsewhere, and BMI alone cannot tell the two apart."
+    },
+    {
+      "id": "q30",
+      "prompt": "Which hormone is released as the level rises?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "insulin",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Insulin, from the pancreas.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "insulin"
+        }
+      ],
+      "discriminators": [],
+      "context": "after-a-meal",
+      "type": "multiple-choice",
+      "options": [
+        "Glucagon",
+        "Adrenalin",
+        "Insulin",
+        "Thyroxine"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q31",
+      "prompt": "Calculate the percentage increase in blood glucose after the meal.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "percentage change",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(144 - 90) \\div 90 \\times 100 = 60\\%$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$54 \\div 90$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60"
+        }
+      ],
+      "discriminators": [],
+      "context": "after-a-meal",
+      "type": "numeric",
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q32",
+      "prompt": "How does insulin bring the level back down?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "how insulin works",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "It makes cells take in glucose, and the liver and muscles convert glucose into glycogen to store.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "cells take up glucose; stored as glycogen"
+        }
+      ],
+      "discriminators": [],
+      "context": "after-a-meal",
+      "type": "multiple-choice",
+      "options": [
+        "It breaks glycogen down into glucose",
+        "It makes the kidneys excrete all of the extra glucose",
+        "It stops the gut absorbing food",
+        "Cells take up glucose; liver stores it as glycogen"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q33",
+      "prompt": "How would the curve differ for a person with untreated type 1 diabetes?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "type 1 diabetes",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The pancreas makes no insulin, so the level rises higher and stays high for much longer.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "rises higher and stays high"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "after-a-meal",
+      "type": "multiple-choice",
+      "options": [
+        "It rises higher and stays high for longer",
+        "It would not rise at all after the meal",
+        "It falls below 90 straight after eating",
+        "It rises the same but falls back more quickly"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q34",
+      "prompt": "Calculate their BMI to 1 decimal place.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "calculating BMI",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$92 \\div 1.75^2 = 92 \\div 3.0625 = 30.0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "height squared"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "30.0"
+        }
+      ],
+      "discriminators": [],
+      "context": "bmi-waist",
+      "type": "numeric",
+      "answer": 30.0,
+      "tolerance": 0.05,
+      "unitsRequired": false
+    },
+    {
+      "id": "q35",
+      "prompt": "Calculate their waist-to-hip ratio to 2 decimal places.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "waist-to-hip ratio",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$104 \\div 100 = 1.04$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "1.04"
+        }
+      ],
+      "discriminators": [],
+      "context": "bmi-waist",
+      "type": "numeric",
+      "answer": 1.04,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q36",
+      "prompt": "What mass, to the nearest kg, would give a BMI of 25 at the same height?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "rearranging the BMI formula",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "mass = BMI × height² $= 25 \\times 3.0625 = 76.6$, which is 77 kg: a loss of about 15 kg.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$25 \\times 1.75^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "77"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "bmi-waist",
+      "type": "numeric",
+      "answer": 77,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "kg"
+    },
+    {
+      "id": "q37",
+      "prompt": "Explain how the body brings blood glucose back up during a long walk without food.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "glucagon and negative feedback",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The pancreas detects the fall and releases glucagon. Glucagon makes the liver convert glycogen back into glucose, which is released into the blood. As the level returns to normal, less glucagon is released: negative feedback.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said the pancreas releases glucagon"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said the liver converts glycogen to glucose"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Said less glucagon is released as the level recovers (negative feedback)"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Said the pancreas releases glucagon",
+          "marks": 1
+        },
+        {
+          "text": "Said the liver converts glycogen to glucose",
+          "marks": 1
+        },
+        {
+          "text": "Said less glucagon is released as the level recovers (negative feedback)",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Fall detected → pancreas releases glucagon → liver turns glycogen into glucose → level rises → less glucagon."
+    },
+    {
+      "id": "q38",
+      "prompt": "In one country, the number of adults with type 2 diabetes rose from 2.6 million to 3.9 million over ten years. Calculate the percentage increase.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "interpreting health data",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(3.9 - 2.6) \\div 2.6 \\times 100 = 50\\%$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "increase 1.3 million"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "÷ 2.6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "50"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 50,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
     }
   ],
   "worksheets": {
@@ -1943,9 +2244,18 @@
         "q23",
         "q26",
         "q28",
-        "q29"
+        "q29",
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34",
+        "q35",
+        "q36",
+        "q37",
+        "q38"
       ],
-      "suggestedMinutes": 63
+      "suggestedMinutes": 81
     }
   },
   "examTechnique": {
@@ -1987,7 +2297,8 @@
       "q23",
       "q24",
       "q25",
-      "q26"
+      "q26",
+      "q38"
     ],
     "sampleSize": 10
   },
