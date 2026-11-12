@@ -43,14 +43,15 @@ const SUBSCRIPTS = '₀₁₂₃₄₅₆₇₈₉'
  * hold it together: `1/(2x)` is a half over x, not `1/2x`, which is half of x, and `(2x)^2`
  * is 4x², not `2x^2`. Dropping them marked y = −1/(2x) + 3, a curve, right for the line
  * y = −½x + 3 on five questions. One number, letter or root alone is still unwrapped, so the
- * maths field's `(1)/(2)x` reads as `1/2x`.
+ * maths field's `(1)/(2)x` reads as `1/2x`. The same holds for a group with a count after it:
+ * in a formula, Ca(NO₃)₂ is not CaNO₃₂, and AQA marks the formula without its brackets wrong.
  */
 const ATOM = /^(?:[\d.]+|[a-z]|sqrt[\d.]+|sqrt[a-z])$/
 function dropRedundantBrackets(s: string): string {
   let out = s
   for (let pass = 0; pass < 5; pass++) {
-    const next = out.replace(/(\/?)\(([^()+\-*/^]+)\)(\^?)/g, (whole, before: string, inner: string, after: string) =>
-      (before || after) && !ATOM.test(inner) ? whole : `${before}${inner}${after}`)
+    const next = out.replace(/(\/?)\(([^()+\-*/^]+)\)(\^?)(?=(\d?))/g, (whole, before: string, inner: string, after: string, digit: string) =>
+      (before || after || digit) && !ATOM.test(inner) ? whole : `${before}${inner}${after}`)
     if (next === out) break
     out = next
   }

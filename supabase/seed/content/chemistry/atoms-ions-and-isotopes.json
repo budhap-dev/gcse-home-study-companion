@@ -858,6 +858,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "chlorine-isotopes",
+      "body": "Chlorine has two isotopes: 75% of its atoms are chlorine-35 and 25% are chlorine-37. Chlorine has 17 protons."
+    },
+    {
+      "id": "ions-mg-al",
+      "body": "Magnesium has atomic number 12 and aluminium has atomic number 13."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1533,6 +1543,239 @@
       "correct": [
         2
       ]
+    },
+    {
+      "id": "q22",
+      "prompt": "How many neutrons are in an atom of chlorine-37?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "neutrons from mass number",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$37 - 17 = 20$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "context": "chlorine-isotopes",
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Calculate the relative atomic mass of chlorine.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "relative atomic mass from isotopes",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{35 \\times 75 + 37 \\times 25}{100} = \\dfrac{2625 + 925}{100} = 35.5$. It is nearer 35 because most atoms are chlorine-35.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$35 \\times 75 + 37 \\times 25$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "35.5"
+        }
+      ],
+      "discriminators": [],
+      "context": "chlorine-isotopes",
+      "type": "numeric",
+      "answer": 35.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "Another element has two isotopes: 69% of mass number 63 and 31% of mass number 65. Calculate its relative atomic mass to 1 decimal place.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "relative atomic mass from isotopes",
+      "step": "s5",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "$\\dfrac{63 \\times 69 + 65 \\times 31}{100} = \\dfrac{4347 + 2015}{100} = 63.62$, which is 63.6 (copper). The mean of 63 and 65, 64, ignores how common each is.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "weighted mean"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "63.6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "chlorine-isotopes",
+      "type": "numeric",
+      "answer": 63.6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Write the electronic structure of a magnesium atom.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "electronic structure",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "12 electrons: 2 in the first shell, 8 in the second, 2 in the third: 2,8,2.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2,8,2"
+        }
+      ],
+      "discriminators": [],
+      "context": "ions-mg-al",
+      "type": "short-text",
+      "accepted": [
+        "2,8,2",
+        "2.8.2"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "How many electrons does a magnesium ion, Mg²⁺, have?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "forming ions",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The atom loses its 2 outer electrons: $12 - 2 = 10$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "context": "ions-mg-al",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "An ion X³⁺ has 10 electrons and a mass number of 27. How many neutrons does it have?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "working back from an ion",
+      "step": "s9",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 3+ charge means the atom lost 3 electrons, so it had $10 + 3 = 13$, and 13 protons (aluminium). Neutrons $= 27 - 13 = 14$. Using the 10 electrons as the protons gives 17.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "13 protons"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "14"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ions-mg-al",
+      "type": "numeric",
+      "answer": 14,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q28",
+      "prompt": "Boron has two isotopes, boron-10 and boron-11, and a relative atomic mass of 10.8. Calculate the percentage of boron atoms that are boron-10.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back from a relative atomic mass",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let $x$% be boron-10: $\\dfrac{10x + 11(100 - x)}{100} = 10.8$, so $1100 - x = 1080$ and $x = 20$. So 20% are boron-10 and 80% boron-11.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "weighted mean equation"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1100 - x = 1080$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q29",
+      "prompt": "An atom has a radius of about $1 \\times 10^{-10}$ m. Its nucleus is about 10 000 times smaller. What is the radius of the nucleus? Give your answer in standard form.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "size of the nucleus",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{1 \\times 10^{-10}}{10\\,000} = \\dfrac{1 \\times 10^{-10}}{1 \\times 10^{4}} = 1 \\times 10^{-14}$ m.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by $10^{4}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$1 \\times 10^{-14}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "1 x 10^-14",
+        "1 × 10^-14",
+        "1e-14",
+        "1 x 10-14"
+      ]
     }
   ],
   "worksheets": {
@@ -1571,9 +1814,17 @@
         "q16",
         "q17",
         "q18",
-        "q21"
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27",
+        "q28",
+        "q29"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 60
     }
   },
   "examTechnique": {
@@ -1610,7 +1861,9 @@
       "q16",
       "q19",
       "q20",
-      "q21"
+      "q21",
+      "q28",
+      "q29"
     ],
     "sampleSize": 10
   },

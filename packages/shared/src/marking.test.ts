@@ -702,6 +702,12 @@ describe('brackets that hold a term together', () => {
     expect(mark(area, '3/(2√2)').correct).toBe(false)
     expect(mark(area, '(3)/(2sqrt(2))').correct).toBe(false)
   })
+  it('keeps the brackets in a formula: Ca(NO3)2 is not CaNO32', () => {
+    const formula = typed('Write the formula of calcium nitrate.', ['Ca(NO3)2'])
+    expect(mark(formula, 'Ca(NO₃)₂').correct).toBe(true)
+    expect(mark(formula, 'Ca(NO3)2').correct).toBe(true)
+    expect(mark(formula, 'CaNO32').correct).toBe(false)
+  })
   it('keeps a bracket under a power: (2x)^2 is not 2x^2', () => {
     expect(normaliseText('(2x)^2')).not.toBe(normaliseText('2x^2'))
     expect(normaliseText('(x)^2')).toBe(normaliseText('x^2'))
