@@ -10,6 +10,9 @@ import type { Generated } from '../types.ts'
 import { atoms, balanced, clearOf, count, toPlaces } from './build.ts'
 import { BOND_ENERGY, BONDS, ENERGY, bondsOf, energyGenerators, printed, total } from './energy.ts'
 
+/** A numeric question from the first bank. The harder questions of backlog section 13 name their lesson step and are written, not generated. */
+const written = (q: { type: string; step?: string }) => q.type === 'numeric' && !q.step
+
 /**
  * Structural tests for the energy-change generators. Each reads the prompt's own temperatures or
  * totals back, works the answer again from them alone, and checks every printed step: the
@@ -59,8 +62,8 @@ describe('every energy build', () => {
   it('has a generator for each numeric written slot it can vary, and leaves the alcohols written', () => {
     const claimed = energyGenerators.map((g) => `${g.topicId}/${[...g.replaces].sort().join(',')}`).sort()
     expect(claimed).toEqual(['exothermic-and-endothermic-reactions/q11', 'exothermic-and-endothermic-reactions/q5,q7', 'reaction-profiles-and-bond-energies/q11', 'reaction-profiles-and-bond-energies/q7'])
-    expect(bankOf('exothermic-and-endothermic-reactions').filter((q) => q.type === 'numeric').map((q) => q.id).sort()).toEqual(['q11', 'q5', 'q7'])
-    expect(bankOf('reaction-profiles-and-bond-energies').filter((q) => q.type === 'numeric').map((q) => q.id).sort()).toEqual(['q11', 'q7'])
+    expect(bankOf('exothermic-and-endothermic-reactions').filter(written).map((q) => q.id).sort()).toEqual(['q11', 'q5', 'q7'])
+    expect(bankOf('reaction-profiles-and-bond-energies').filter(written).map((q) => q.id).sort()).toEqual(['q11', 'q7'])
     // Balancing an alcohol's combustion: four alcohols, four equations, nothing to vary.
     expect(GENERATORS.some((g) => g.topicId === 'alcohols')).toBe(false)
   })

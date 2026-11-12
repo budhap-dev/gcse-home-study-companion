@@ -940,8 +940,11 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   multi-part questions on making salts and electrolysis (titration had one already). The marker
   dropped the brackets in a formula, so Al2SO43 passed for Al₂(SO₄)₃ and CaNO32 for Ca(NO₃)₂;
   a bracket with a count after it now stays.
-- [ ] **8. Chemistry: energy, rates, organic, analysis, atmosphere and resources.** 25 topics.
-  Every AQA required practical has at least one multi-part question by the end of this box.
+- [x] **8. Chemistry: energy, rates, organic, analysis, atmosphere and resources.** 25 topics.
+  Every AQA required practical has at least one multi-part question by the end of this box. 186
+  questions in v10.126.0: temperature changes, rates, chromatography, identifying ions and water
+  purification each have one. Chemistry is complete: 354 new questions over 47 topics. A grade 9
+  set now takes one part per multi-part question, so two picks cannot merge and leave it short.
 - [ ] **9. Biology: key concepts, cells and control, genetics and natural selection.** 19 topics.
 - [ ] **10. Biology: health, plants, animal coordination, exchange and ecosystems.** 19 topics.
   Every Edexcel core practical has at least one multi-part question by the end of this box.

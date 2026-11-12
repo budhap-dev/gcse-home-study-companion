@@ -103,7 +103,11 @@ export function grade9Items(topics: TopicSummary[], code: string): SessionItem[]
     // in the code's order, the rest after them.
     const top = Math.ceil(byMarks.length * 0.6)
     const ordered = [...seededShuffle(byMarks.slice(0, top), `${code}:${t.id}:top`), ...byMarks.slice(top)]
-    return ordered.map((q) => ({ item: { topicId: t.id, questionId: q.id }, marks: q.marks }))
+    // A multi-part question is one problem: once one of its parts is in the list, its others are
+    // left out, or two picks would merge into one and the set come up short.
+    const stems = new Set<string>()
+    const problems = ordered.filter((q) => !q.stemId || (!stems.has(q.stemId) && stems.add(q.stemId)))
+    return problems.map((q) => ({ item: { topicId: t.id, questionId: q.id }, marks: q.marks }))
   })
   const picked: { item: SessionItem; marks: number }[] = []
   for (let round = 0; picked.length < GRADE_9_SET && pools.some((p) => p.length > round); round++) {

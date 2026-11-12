@@ -659,6 +659,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "rust-tubes",
+      "body": "Three iron nails are set up: A in tap water open to the air, B in boiled water with a layer of oil on top, C in dry air with a drying agent."
+    },
+    {
+      "id": "sacrificial",
+      "body": "Iron can be protected by a more reactive metal."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1205,6 +1215,251 @@
         }
       ],
       "modelAnswer": "Steel is mostly **iron**, and rusting requires **both air and water**. An estuary pier is permanently in contact with water and with the air above it, so both conditions are met continuously. The water is **salty**, and dissolved salt makes it a better conductor, which **speeds rusting up** considerably. The structure would therefore corrode far faster than the same steel inland.\n\n**Painting** is a **barrier only**. It is cheap over a large area, but any **chip or scratch** — likely on a pier struck by boats and debris — exposes bare iron to salt water, and rusting then spreads beneath the paint as the rust flakes away. Over fifty years it would need repainting many times, which is exactly the maintenance to be avoided.\n\n**Galvanising** coats the steel with **zinc**, and does two jobs. It is a **barrier**, and because **zinc is more reactive than iron** it also gives **sacrificial protection**: even where the coating is scratched, the **zinc corrodes in preference to the iron**. This is a decisive advantage in a location where damage to the coating is certain.\n\n**Magnesium blocks** bolted to the structure work on the same principle and are even more strongly sacrificial, since magnesium is above zinc in the reactivity series. Their advantage is that they can be **inspected and replaced** without treating the whole structure; their drawback is that they **corrode away** and so must be renewed periodically.\n\nFor a fifty-year life with minimal maintenance, **galvanising the steel and fitting magnesium blocks** is the strongest combination: the zinc protects the whole surface including any scratches, while the blocks take the brunt of the attack and can be swapped out. Painting alone would not survive the conditions."
+    },
+    {
+      "id": "q19",
+      "prompt": "Which nail rusts?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "conditions for rusting",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Rusting needs both water and oxygen: only A has both.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "A"
+        }
+      ],
+      "discriminators": [],
+      "context": "rust-tubes",
+      "type": "multiple-choice",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "All of them"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Why is the water in tube B boiled, with oil on top?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "showing that air is needed",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Boiling drives out dissolved air, and the oil stops air dissolving back in. So B has water without oxygen.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "removes air and keeps it out"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "rust-tubes",
+      "type": "multiple-choice",
+      "options": [
+        "To make it rust faster",
+        "To remove air and keep it out",
+        "To kill bacteria in the water",
+        "To keep the nail warm"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "5.6 g of iron rusts completely to iron(III) oxide, Fe₂O₃. Calculate the increase in mass. (Ar: Fe = 56, O = 16)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "mass change on corrosion",
+      "step": "s1",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5.6 \\div 56 = 0.10$ mol of Fe gives 0.050 mol of Fe₂O₃ (Mr 160): $0.050 \\times 160 = 8.0$ g. Increase $= 8.0 - 5.6 = 2.4$ g, the oxygen gained.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.050 mol Fe₂O₃"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8.0 g"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2.4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "rust-tubes",
+      "type": "numeric",
+      "answer": 2.4,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "g"
+    },
+    {
+      "id": "q22",
+      "prompt": "Galvanised iron is coated with zinc. Why does it still not rust when scratched?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "sacrificial protection",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Zinc is more reactive, so it corrodes instead of the iron (sacrificial protection).",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "zinc corrodes instead"
+        }
+      ],
+      "discriminators": [],
+      "context": "sacrificial",
+      "type": "multiple-choice",
+      "options": [
+        "The zinc reflects all the oxygen away",
+        "The more reactive zinc corrodes instead",
+        "Zinc makes the iron unreactive forever",
+        "Scratches quickly fill up with zinc oxide"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Why are blocks of magnesium attached to the steel hulls of ships?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "sacrificial protection in use",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Magnesium is more reactive than iron, so it corrodes in its place; the blocks are replaced as they wear away.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "magnesium corrodes in place of the iron"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "sacrificial",
+      "type": "multiple-choice",
+      "options": [
+        "Magnesium makes the ship lighter",
+        "Magnesium corrodes in place of the iron",
+        "Magnesium stops the water touching the steel",
+        "Magnesium is a catalyst for rust"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Zn → Zn²⁺ + 2e⁻. How many moles of electrons are released when 0.65 g of zinc corrodes? (Ar of Zn = 65)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "electrons in corrosion",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.65 \\div 65 = 0.010$ mol of Zn, each giving 2 electrons: 0.020 mol.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.010 mol"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "× 2"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "0.02"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 0.02,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "mol"
+    },
+    {
+      "id": "q25",
+      "prompt": "Explain why tin-plated iron rusts quickly once scratched, but galvanised (zinc-coated) iron does not.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "barrier and sacrificial methods",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Tin is less reactive than iron, so it only works as a barrier: once scratched, the iron is exposed and, being more reactive, corrodes. Zinc is more reactive than iron, so even when scratched the zinc corrodes instead of the iron (sacrificial protection).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said tin is only a barrier and is less reactive than iron"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said zinc is more reactive than iron"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Said zinc corrodes instead, so iron is protected even when scratched"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Said tin is only a barrier and is less reactive than iron",
+          "marks": 1
+        },
+        {
+          "text": "Said zinc is more reactive than iron",
+          "marks": 1
+        },
+        {
+          "text": "Said zinc corrodes instead, so iron is protected even when scratched",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Tin: barrier only, less reactive, so exposed iron rusts. Zinc: more reactive, corrodes sacrificially, protecting the iron."
     }
   ],
   "examTechnique": {
@@ -1254,9 +1509,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 59
     }
   },
   "quiz": {
@@ -1276,7 +1538,8 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24"
     ],
     "sampleSize": 10
   },

@@ -691,6 +691,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "bags-lca",
+      "body": "A life cycle assessment compares the energy, in MJ, used for a paper bag and a plastic bag.\n\n| Stage | Raw materials | Manufacture | Use | Disposal |\n|---|---|---|---|---|\n| Paper bag | 1.7 | 2.1 | 0 | 0.2 |\n| Plastic bag | 1.0 | 0.8 | 0 | 0.4 |"
+    },
+    {
+      "id": "al-recycle",
+      "body": "Extracting 1 kg of aluminium from its ore uses about 200 MJ. Recycling uses only 5% of that."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1237,6 +1247,261 @@
         }
       ],
       "modelAnswer": "A life cycle assessment would examine four stages: **extracting and processing the raw materials**, **manufacturing and packaging**, **use and operation during the bag's lifetime**, and **disposal at the end of its useful life** — with **transport and distribution counted at each stage**.\n\nApplied to the bags: the plastic comes from **crude oil**, a **finite** resource, while paper comes from **timber**, which is renewable if forests are replanted — so paper wins the first stage. But **manufacturing** paper uses **more energy and much more water**, so plastic wins the second. In **use**, a plastic bag is stronger and waterproof and can be **reused many times**, while a paper bag often tears after one trip. On **disposal**, paper is **biodegradable and easily recycled**, whereas plastic **does not biodegrade** and may persist for a very long time.\n\nMuch of this can be **quantified fairly easily** — the **water, resources and energy** used, and the **wastes produced**. That part of the assessment is objective.\n\nTwo assessors can still disagree, because **allocating numerical values to pollutant effects requires value judgements**. How many litres of water saved is worth one plastic bag persisting in the sea? There is no measurement that settles it, so an assessor who weights water use heavily will favour plastic, and one who weights persistent waste heavily will favour paper. This is why an LCA is **not a purely objective process**.\n\nThe supermarket's claim should therefore be checked for which stages its assessment covered. A **selective or abbreviated LCA** omitting the manufacturing stage would flatter paper, and such assessments **can be misused to reach pre-determined conclusions in support of advertising claims**."
+    },
+    {
+      "id": "q19",
+      "prompt": "Calculate the total energy for the paper bag.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "adding up a life cycle",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$1.7 + 2.1 + 0 + 0.2 = 4.0$ MJ.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "context": "bags-lca",
+      "type": "numeric",
+      "answer": 4.0,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MJ"
+    },
+    {
+      "id": "q20",
+      "prompt": "Calculate the total energy for the plastic bag.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "adding up a life cycle",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$1.0 + 0.8 + 0 + 0.4 = 2.2$ MJ.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2.2"
+        }
+      ],
+      "discriminators": [],
+      "context": "bags-lca",
+      "type": "numeric",
+      "answer": 2.2,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MJ"
+    },
+    {
+      "id": "q21",
+      "prompt": "A plastic bag is used 5 times, replacing 5 paper bags used once each. How much energy is saved?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "comparing products over their life",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Five paper bags: $5 \\times 4.0 = 20$ MJ. One plastic bag: 2.2 MJ. Saving $= 20 - 2.2 = 17.8$ MJ.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "20 MJ"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "17.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "bags-lca",
+      "type": "numeric",
+      "answer": 17.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MJ"
+    },
+    {
+      "id": "q22",
+      "prompt": "Why can a life cycle assessment not be fully objective?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "limits of life cycle assessment",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Energy and water use can be measured, but the harm from pollutants has to be given a value by judgement.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "pollution effects are judged"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "bags-lca",
+      "type": "multiple-choice",
+      "options": [
+        "Energy use cannot be measured at all",
+        "Harm from pollution needs value judgements",
+        "Products do not have a life cycle",
+        "It always leaves out the raw materials stage"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "How much energy does recycling 1 kg of aluminium use?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "energy saved by recycling",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$0.05 \\times 200 = 10$ MJ.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [],
+      "context": "al-recycle",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MJ"
+    },
+    {
+      "id": "q24",
+      "prompt": "How much energy is saved by recycling 3.0 kg of cans instead of extracting new aluminium?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "energy saved by recycling",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each kg saves $200 - 10 = 190$ MJ: $3.0 \\times 190 = 570$ MJ.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "190 MJ per kg"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "570"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "al-recycle",
+      "type": "numeric",
+      "answer": 570,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "MJ"
+    },
+    {
+      "id": "q25",
+      "prompt": "Recycling each tonne of glass saves 0.30 tonnes of carbon dioxide emissions. A town recycles 120 tonnes of glass. Calculate the saving.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "benefits of recycling",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$120 \\times 0.30 = 36$ tonnes of CO₂.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.30 per tonne"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 36,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "tonnes"
+    },
+    {
+      "id": "q26",
+      "prompt": "Explain how a life cycle assessment can be misused.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "misusing life cycle assessment",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A company can carry out a shortened or selective assessment, leaving out the stages that make its product look bad, and use it in advertising. Because some values are judgements, they can be chosen to favour the product.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said stages can be left out (selective)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Said value judgements can be biased"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "Linked this to advertising or support for a claim"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Said stages can be left out (selective)",
+          "marks": 1
+        },
+        {
+          "text": "Said value judgements can be biased",
+          "marks": 1
+        },
+        {
+          "text": "Linked this to advertising or support for a claim",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Selective or shortened LCAs, biased value judgements, used to support advertising claims."
     }
   ],
   "examTechnique": {
@@ -1286,9 +1551,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 60
     }
   },
   "quiz": {
@@ -1308,7 +1581,8 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25"
     ],
     "sampleSize": 10
   },

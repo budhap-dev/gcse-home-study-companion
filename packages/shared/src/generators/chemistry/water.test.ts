@@ -8,6 +8,9 @@ import type { Generated } from '../types.ts'
 import { toPlaces } from './build.ts'
 import { WATER, waterGenerators } from './water.ts'
 
+/** A numeric question from the first bank. The harder questions of backlog section 13 name their lesson step and are written, not generated. */
+const written = (q: { type: string; step?: string }) => q.type === 'numeric' && !q.step
+
 /**
  * Structural tests for the dissolved-solids generators (required practical 8). Each reads the
  * prompt's own masses and volumes back, works the answer again from them alone, and checks the
@@ -60,7 +63,7 @@ function spread(id: string, slot: string, keys: string[], fewest = 10) {
 describe('every potable water build', () => {
   it('has a generator for each numeric written slot', () => {
     expect(waterGenerators.flatMap((g) => g.replaces).sort()).toEqual(['q13', 'q17', 'q5', 'q8'])
-    expect(bank.filter((q) => q.type === 'numeric').map((q) => q.id).sort()).toEqual(['q13', 'q17', 'q5', 'q8'])
+    expect(bank.filter(written).map((q) => q.id).sort()).toEqual(['q13', 'q17', 'q5', 'q8'])
   })
 
   it('prints no article before a figure, keeps the written units, and ends on the answer', () => {
