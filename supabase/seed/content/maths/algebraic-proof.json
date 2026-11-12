@@ -797,6 +797,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "six-apart",
+      "body": "$n$ is a whole number. The numbers $n - 3$ and $n + 3$ differ by 6."
+    },
+    {
+      "id": "consecutive-odds",
+      "body": "$n$ is a whole number, so $2n + 1$ and $2n + 3$ are consecutive odd numbers."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1404,6 +1414,294 @@
         }
       ],
       "modelAnswer": "For part a, factorise rather than expanding. n squared minus n is n times, bracket, n minus one. Now n minus one and n are consecutive integers, and integers alternate between odd and even, so exactly one of the two must be even. An even number multiplied by any integer is even, so the product n times n minus one is always even. Therefore n squared minus n is always even, for every integer n. For part b, the student has gone too far. Take n equal to three. Then n squared minus n is nine minus three, which is six. Six is even, so it agrees with part a, but six is not a multiple of four, because six divided by four is one and a half. So the claim is disproved by a single counter-example. The reason the reasoning fails is that being even only guarantees one factor of two. A multiple of four needs two factors of two, and nothing in the argument in part a provides a second one. The product of two consecutive integers contains exactly one even number, and that even number might itself only be two times an odd number, as it is here."
+    },
+    {
+      "id": "q19",
+      "prompt": "Show that $(n + 3)^2 - (n - 3)^2 = 12n$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "expanding to show an identity",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(n + 3)^2 = n^2 + 6n + 9$ and $(n - 3)^2 = n^2 - 6n + 9$. Subtracting: $n^2 + 6n + 9 - n^2 + 6n - 9 = 12n$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both brackets expanded"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$12n$ with the subtraction shown"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "six-apart",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Expanded both squares correctly",
+          "marks": 1
+        },
+        {
+          "text": "Subtracted, with the minus sign on every term, to reach $12n$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(n + 3)^2 - (n - 3)^2 = (n^2 + 6n + 9) - (n^2 - 6n + 9) = 12n$"
+    },
+    {
+      "id": "q20",
+      "prompt": "Prove that the difference between the squares of any two whole numbers that differ by 6 is a multiple of 12.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "turning an identity into a proof",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Two whole numbers that differ by 6 are both odd or both even, so the number halfway between them, $n$, is a whole number, and the two numbers are $n - 3$ and $n + 3$. Then $(n + 3)^2 - (n - 3)^2 = 12n$, and since $n$ is a whole number, $12n$ is a multiple of 12.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "writes the numbers as $n - 3$ and $n + 3$, with $n$ whole"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$12n$, a multiple of 12, with a conclusion"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "six-apart",
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Wrote the two numbers in terms of one whole number, such as $n - 3$ and $n + 3$",
+          "marks": 1
+        },
+        {
+          "text": "Showed the difference is $12n$ and concluded it is a multiple of 12 because $n$ is a whole number",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Let the numbers be $n - 3$ and $n + 3$, where $n$ is a whole number (two numbers 6 apart have a whole-number midpoint). Then $(n + 3)^2 - (n - 3)^2 = 12n$. As $n$ is a whole number, $12n$ is a multiple of 12."
+    },
+    {
+      "id": "q21",
+      "prompt": "Amir says the difference between the squares of two whole numbers that differ by 6 is always a multiple of 24. Which example shows he is wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "disproving by counterexample",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The difference is $12n$, where $n$ is the midpoint, so it is a multiple of 24 only when $n$ is even. $10^2 - 4^2 = 84$ has midpoint 7, and $84 = 3.5 \\times 24$. The others are $72 = 3 \\times 24$, $48 = 2 \\times 24$ and $144 = 6 \\times 24$, which agree with Amir, and one example that agrees proves nothing.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$10^2 - 4^2 = 84$"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "six-apart",
+      "type": "multiple-choice",
+      "options": [
+        "$9^2 - 3^2 = 72$",
+        "$7^2 - 1^2 = 48$",
+        "$15^2 - 9^2 = 144$",
+        "$10^2 - 4^2 = 84$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Show that $(2n + 1)^2 + (2n + 3)^2 = 8n^2 + 16n + 10$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "expanding and collecting",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(2n + 1)^2 = 4n^2 + 4n + 1$ and $(2n + 3)^2 = 4n^2 + 12n + 9$. Adding: $8n^2 + 16n + 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both squares expanded"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$8n^2 + 16n + 10$"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "consecutive-odds",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Expanded both squares correctly",
+          "marks": 1
+        },
+        {
+          "text": "Collected terms to $8n^2 + 16n + 10$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(2n + 1)^2 + (2n + 3)^2 = 4n^2 + 4n + 1 + 4n^2 + 12n + 9 = 8n^2 + 16n + 10$"
+    },
+    {
+      "id": "q23",
+      "prompt": "Prove that the sum of the squares of two consecutive odd numbers is always 2 more than a multiple of 8.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "proving a remainder",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sum is $(2n + 1)^2 + (2n + 3)^2 = 8n^2 + 16n + 10 = 8n^2 + 16n + 8 + 2 = 8(n^2 + 2n + 1) + 2$. As $n$ is a whole number, $n^2 + 2n + 1$ is a whole number, so the sum is a multiple of 8 plus 2.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$8n^2 + 16n + 10$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$8(n^2 + 2n + 1) + 2$ with a conclusion"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "consecutive-odds",
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Reached $8n^2 + 16n + 10$",
+          "marks": 1
+        },
+        {
+          "text": "Wrote it as $8(n^2 + 2n + 1) + 2$ and explained why that is 2 more than a multiple of 8",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(2n + 1)^2 + (2n + 3)^2 = 8n^2 + 16n + 10 = 8(n^2 + 2n + 1) + 2$, and $n^2 + 2n + 1$ is a whole number, so the sum is 2 more than a multiple of 8."
+    },
+    {
+      "id": "q24",
+      "prompt": "Prove that $(2n + 1)^2 - (2n - 1)^2$ is a multiple of 8 for every whole number $n$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "proving a multiple",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(2n + 1)^2 = 4n^2 + 4n + 1$ and $(2n - 1)^2 = 4n^2 - 4n + 1$. The difference is $8n$, which is a multiple of 8 because $n$ is a whole number. (As a difference of two squares: $(2n + 1 - (2n - 1))(2n + 1 + 2n - 1) = 2 \\times 4n = 8n$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both squares expanded, or difference of two squares"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$8n$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "conclusion: a multiple of 8 as $n$ is whole"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Expanded both brackets or used the difference of two squares",
+          "marks": 1
+        },
+        {
+          "text": "Reached $8n$",
+          "marks": 1
+        },
+        {
+          "text": "Concluded it is a multiple of 8 because $n$ is a whole number",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(2n + 1)^2 - (2n - 1)^2 = (4n^2 + 4n + 1) - (4n^2 - 4n + 1) = 8n$, and $8n$ is a multiple of 8 for every whole number $n$."
+    },
+    {
+      "id": "q25",
+      "prompt": "Prove that the difference between the squares of two consecutive whole numbers is equal to the sum of the two numbers.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a proof with two consecutive numbers",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Call the numbers $n$ and $n + 1$. The difference of their squares is $(n + 1)^2 - n^2 = n^2 + 2n + 1 - n^2 = 2n + 1$. Their sum is $n + (n + 1) = 2n + 1$. These are equal, for every whole number $n$. Checking examples ($5^2 - 4^2 = 9 = 4 + 5$) shows it is plausible but proves nothing.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n$ and $n + 1$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(n + 1)^2 - n^2 = 2n + 1$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "sum $2n + 1$ and conclusion"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Called the numbers $n$ and $n + 1$",
+          "marks": 1
+        },
+        {
+          "text": "Showed the difference of the squares is $2n + 1$",
+          "marks": 1
+        },
+        {
+          "text": "Showed the sum is also $2n + 1$ and concluded",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Let the numbers be $n$ and $n + 1$. $(n + 1)^2 - n^2 = 2n + 1$, and $n + (n + 1) = 2n + 1$, so the difference of the squares equals the sum."
     }
   ],
   "examTechnique": {
@@ -1452,9 +1750,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 61
     }
   },
   "quiz": {

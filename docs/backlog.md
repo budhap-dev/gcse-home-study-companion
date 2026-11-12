@@ -921,7 +921,9 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   for a probability of 7/10. A question can now name the lesson step that teaches it (`step`),
   which a missed question links to: the new problems set scenes, and only 46 of 240 were
   linked by their words, so every new Maths question names its step.
-- [ ] **3. Maths: algebra.** 23 topics, including graphs and sequences.
+- [x] **3. Maths: algebra.** 23 topics, including graphs and sequences. 178 questions in
+  v10.120.0, each naming the lesson step it rests on. The repeat check now reads a part with
+  its stem, since "Solve the inequality." under two different inequalities is two questions.
 - [ ] **4. Maths: geometry and measures.** 20 topics.
 - [ ] **5. Physics: energy, the particle model and forces.** 15 topics.
 - [ ] **6. Physics: electricity, waves, magnetism, atoms and space.** 19 topics. Every AQA

@@ -737,6 +737,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "fraction-f",
+      "body": "Let $f = \\dfrac{x^2 - 9}{x^2 + 5x + 6}$."
+    },
+    {
+      "id": "two-fractions",
+      "body": "This question is about $\\dfrac{3}{x + 1} - \\dfrac{2}{x - 2}$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1344,6 +1354,248 @@
         }
       ],
       "modelAnswer": "For part a, the denominators x minus one and x plus one share nothing, so the common denominator is their product, x minus one times x plus one, which is x squared minus one. The first numerator becomes three times x plus one, and the second becomes two times x minus one. Because this is a subtraction, bracket the second one before expanding: three x plus three, minus the whole of two x minus two. That gives three x plus three minus two x plus two, which collects to x plus five. So the single fraction is x plus five over x squared minus one. For part b, set that equal to one. Multiplying both sides by x squared minus one gives x plus five equals x squared minus one. Bringing everything to one side gives x squared minus x minus six equals zero, which factorises to x minus three, times x plus two, equals zero. So x equals three or x equals minus two. Check both: the original denominators are x minus one and x plus one. At x equals three these are two and four, and at x equals minus two they are minus three and minus one. None is zero, so both answers are genuine solutions."
+    },
+    {
+      "id": "q19",
+      "prompt": "Factorise $x^2 - 9$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "difference of two squares",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x^2 - 9 = x^2 - 3^2 = (x - 3)(x + 3)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$(x - 3)(x + 3)$"
+        }
+      ],
+      "discriminators": [],
+      "context": "fraction-f",
+      "type": "short-text",
+      "accepted": [
+        "(x-3)(x+3)"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Simplify $f$ fully.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "simplifying an algebraic fraction",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Factorise top and bottom: $\\dfrac{(x - 3)(x + 3)}{(x + 2)(x + 3)}$. Cancel the common factor $(x + 3)$: $\\dfrac{x - 3}{x + 2}$. The $x^2$ terms cannot be cancelled on their own, because they are terms, not factors.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both factorised"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{x - 3}{x + 2}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "fraction-f",
+      "type": "short-text",
+      "accepted": [
+        "(x-3)/(x+2)"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Solve $f = \\dfrac{1}{2}$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "solving with an algebraic fraction",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$f = \\dfrac{(x - 3)(x + 3)}{(x + 2)(x + 3)} = \\dfrac{x - 3}{x + 2}$. So $\\dfrac{x - 3}{x + 2} = \\dfrac{1}{2}$, giving $2(x - 3) = x + 2$, $2x - 6 = x + 2$ and $x = 8$. Check: $\\dfrac{55}{110} = \\dfrac{1}{2}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "simplified to $\\dfrac{x - 3}{x + 2}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2(x - 3) = x + 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "fraction-f",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Write $\\dfrac{3}{x + 1} - \\dfrac{2}{x - 2}$ as a single fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "subtracting algebraic fractions",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Common denominator $(x + 1)(x - 2)$: $\\dfrac{3(x - 2) - 2(x + 1)}{(x + 1)(x - 2)} = \\dfrac{3x - 6 - 2x - 2}{(x + 1)(x - 2)} = \\dfrac{x - 8}{(x + 1)(x - 2)}$. The slip to watch is the minus sign before $2(x + 1)$, which changes both its terms.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "common denominator $(x + 1)(x - 2)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3(x - 2) - 2(x + 1)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{x - 8}{(x + 1)(x - 2)}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "two-fractions",
+      "type": "short-text",
+      "accepted": [
+        "(x-8)/((x+1)(x-2))",
+        "(x-8)/(x^2-x-2)"
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Solve $\\dfrac{3}{x + 1} - \\dfrac{2}{x - 2} = -\\dfrac{1}{6}$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "equations with algebraic fractions",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "As one fraction the left side is $\\dfrac{x - 8}{(x + 1)(x - 2)}$. So $6(x - 8) = -(x + 1)(x - 2)$, that is $6x - 48 = -x^2 + x + 2$, giving $x^2 + 5x - 50 = 0$ and $(x + 10)(x - 5) = 0$. So $x = 5$ or $x = -10$, and neither makes a denominator zero.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "single fraction"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 + 5x - 50 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises or uses the formula"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 5$ and $x = -10$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "two-fractions",
+      "type": "short-text",
+      "accepted": [
+        "x=5, x=-10",
+        "5, -10"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Simplify fully $\\dfrac{2x^2 + 7x + 3}{4x^2 - 1}$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "simplifying with harder factorising",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Top: $2x^2 + 7x + 3 = (2x + 1)(x + 3)$. Bottom: $4x^2 - 1 = (2x + 1)(2x - 1)$, a difference of two squares. Cancel $(2x + 1)$: $\\dfrac{x + 3}{2x - 1}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(2x + 1)(x + 3)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(2x + 1)(2x - 1)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{x + 3}{2x - 1}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(x+3)/(2x-1)"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Solve $\\dfrac{2}{x - 1} + \\dfrac{3}{x + 1} = 1$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "equations with algebraic fractions",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply through by $(x - 1)(x + 1)$: $2(x + 1) + 3(x - 1) = (x - 1)(x + 1)$, so $5x - 1 = x^2 - 1$ and $x^2 - 5x = 0$. $x(x - 5) = 0$ gives $x = 0$ or $x = 5$. Both are allowed: neither makes a denominator zero. Dividing by $x$ to reach $x = 5$ loses the solution $x = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies by $(x - 1)(x + 1)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 - 5x = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 0$ and $x = 5$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "x=0, x=5",
+        "0, 5"
+      ]
     }
   ],
   "examTechnique": {
@@ -1392,9 +1644,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 67
     }
   },
   "quiz": {
@@ -1414,7 +1673,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

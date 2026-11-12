@@ -782,6 +782,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "region-r",
+      "body": "The region R is the set of points that satisfy all three of $y \\ge 1$, $x + y \\le 6$ and $y \\le 2x$."
+    },
+    {
+      "id": "region-s",
+      "body": "The region S is the set of points that satisfy all three of $y < 3$, $x > -1$ and $y > x$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1374,6 +1384,239 @@
         }
       ],
       "modelAnswer": "**The error.** $y > 2x - 1$ is **strict**, so the boundary is **not** part of the region and is drawn **dashed**.\n\n**Why $(1, 1)$ is out.** It lies exactly **on** the line: $2(1) - 1 = 1$. The inequality needs $y$ **strictly greater** than that, and $1 > 1$ is **false**.\n\n**The check.** Substitute the point into the original inequality before including it. $(1, 1)$ gives $1 > 1$ ✗ — caught in seconds.\n\nThis is the two-variable version of the **open circle** on a number line: a strict inequality always excludes its own boundary."
+    },
+    {
+      "id": "q19",
+      "prompt": "Which of these points lies in R?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "testing a point against inequalities",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Test each inequality. (2, 3): $3 \\ge 1$, $2 + 3 = 5 \\le 6$, $3 \\le 4$: all hold. (1, 3) fails $y \\le 2x$ ($3 > 2$); (4, 3) fails $x + y \\le 6$; (3, 0) fails $y \\ge 1$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "(2, 3)"
+        }
+      ],
+      "discriminators": [],
+      "context": "region-r",
+      "type": "multiple-choice",
+      "options": [
+        "(1, 3)",
+        "(2, 3)",
+        "(4, 3)",
+        "(3, 0)"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "How many points with whole-number coordinates lie in R, including any on its boundary lines?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "integer points in a region",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Go row by row. $y = 1$: $y \\le 2x$ needs $x \\ge 0.5$ and $x + y \\le 6$ needs $x \\le 5$, so $x = 1$ to 5 (5 points). $y = 2$: $x = 1$ to 4 (4). $y = 3$: $x \\ge 1.5$ and $x \\le 3$, so $x = 2, 3$ (2). $y = 4$: $x \\ge 2$ and $x \\le 2$, so $x = 2$ (1). $y = 5$: $x \\ge 2.5$ and $x \\le 1$, none. Total $5 + 4 + 2 + 1 = 12$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a systematic count by rows or columns"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "correct limits on at least two rows"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "region-r",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "Find the greatest value of $2x + y$ for points with whole-number coordinates in R.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "optimising over a region",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The whole-number points in R are, by rows: $y = 1$, $x = 1$ to 5; $y = 2$, $x = 1$ to 4; $y = 3$, $x = 2, 3$; $y = 4$, $x = 2$. $2x + y$ is largest where $x$ is largest: (5, 1) gives 11, (4, 2) gives 10, (3, 3) gives 9. So 11.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tests points near the edge of R"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "(5, 1)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "region-r",
+      "type": "numeric",
+      "answer": 11,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Which statement about the boundary lines of S is correct?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "solid and dashed boundaries",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "All three inequalities are strict ($<$ or $>$), so no boundary line is part of S, and each is drawn dashed. A solid line shows $\\le$ or $\\ge$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "all three dashed"
+        }
+      ],
+      "discriminators": [],
+      "context": "region-s",
+      "type": "multiple-choice",
+      "options": [
+        "All three lines are solid",
+        "All three lines are dashed",
+        "Only $y = x$ is dashed",
+        "Only $y = 3$ is solid"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "How many points with whole-number coordinates lie in S?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "integer points in a region with strict boundaries",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x > -1$ means $x \\ge 0$ for whole numbers, $y < 3$ means $y \\le 2$, and $y > x$. $x = 0$: $y = 1, 2$. $x = 1$: $y = 2$. $x = 2$: $y$ would need to be more than 2 and less than 3, none. So 3 points: (0, 1), (0, 2) and (1, 2).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "whole-number limits $x \\ge 0$, $y \\le 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "region-s",
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "The point $(a, 4)$ lies in the region given by $y \\le 2x + 1$ and $x + y < 10$. $a$ is a whole number. How many possible values of $a$ are there?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a point in a region, worked backwards",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4 \\le 2a + 1$ gives $a \\ge 1.5$. $a + 4 < 10$ gives $a < 6$. So $a = 2, 3, 4$ or 5: 4 values.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a \\ge 1.5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a < 6$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Work out the area of the region satisfied by $x \\ge 0$, $y \\ge 0$ and $2x + y \\le 8$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the area of a region",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The region is a triangle with corners at the origin and where $2x + y = 8$ meets the axes: (4, 0) and (0, 8). Area $= \\dfrac{1}{2} \\times 4 \\times 8 = 16$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "corners (4, 0) and (0, 8)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{2} \\times 4 \\times 8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "16"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 16,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1409,9 +1652,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 63
     }
   },
   "examTechnique": {
@@ -1445,7 +1695,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

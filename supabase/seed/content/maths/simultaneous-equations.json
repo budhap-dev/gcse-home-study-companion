@@ -638,6 +638,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "tickets",
+      "body": "At a cinema, 3 adult tickets and 2 child tickets cost £36. 2 adult tickets and 5 child tickets cost £35."
+    },
+    {
+      "id": "line-parabola",
+      "body": "The curve $y = x^2 - 3$ and the line $y = 2x + 5$ meet at two points."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1214,6 +1224,280 @@
         }
       ],
       "modelAnswer": "First, **define the letters** in writing. Let $c$ be the cost of a coffee in pounds, and $t$ the cost of a tea in pounds. This is worth doing explicitly — it is worth a mark, and everything that follows is unreadable without it.\n\nNow **translate one sentence at a time**. Three coffees and two teas cost £11 gives\n\n$$3c + 2t = 11$$\n\nand one coffee and two teas cost £7 gives\n\n$$c + 2t = 7$$\n\nThe $t$ terms are **$+2t$ in both** — matching coefficients with the **same sign** — so the equations are **subtracted**:\n\n$$(3c - c) + (2t - 2t) = 11 - 7$$\n\nwhich gives $2c = 4$, so $c = 2$.\n\n**Substitute back** into the simpler equation: $2 + 2t = 7$, so $2t = 5$ and $t = 2.5$.\n\n**Interpret the answer in the units the question used.** A coffee costs **£2** and a tea costs **£2.50**. Stopping at *c = 2, t = 2.5* has completed the algebra but not answered a question about money, and that final translation carries a mark of its own.\n\nFor the **check**, there are two things worth doing, and they are not the same. Substituting into the equation I did not use tests the algebra: $3(2) + 2(2.5) = 6 + 5 = 11$ ✓.\n\nBut the more valuable check is against the **original words**: three coffees at £2 and two teas at £2.50 come to £6 + £5 = **£11**, and one coffee and two teas come to £2 + £5 = **£7**. Both sentences are satisfied.\n\nThat second check matters because it tests something the first cannot. Substituting into my **own** equations only confirms my arithmetic — if I had translated the sentences wrongly, my answer would fit those wrong equations perfectly and the check would still pass. Only going back to the situation itself can catch a mistranslation."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the price of a child ticket.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "solving simultaneous equations from a context",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$3a + 2c = 36$ and $2a + 5c = 35$. Multiply the first by 2 and the second by 3: $6a + 4c = 72$ and $6a + 15c = 105$. Subtract: $11c = 33$, so $c = 3$: £3.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "two equations"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "eliminates $a$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£3"
+        }
+      ],
+      "discriminators": [],
+      "context": "tickets",
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the price of an adult ticket.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "back-substituting",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Solving $3a + 2c = 36$ and $2a + 5c = 35$ gives $c = 3$. Then $3a + 6 = 36$, so $a = 10$: £10.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "£10"
+        }
+      ],
+      "discriminators": [],
+      "context": "tickets",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q21",
+      "prompt": "A family has £80. They buy 4 adult tickets. What is the greatest number of child tickets they can also buy?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "using solutions in context",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Adult £10, child £3 (from $3a + 2c = 36$, $2a + 5c = 35$). Four adults cost £40, leaving £40. $40 \\div 3 = 13.3$, so 13 child tickets.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "£40 left"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "context": "tickets",
+      "type": "numeric",
+      "answer": 13,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Show that the $x$-coordinates of the points satisfy $x^2 - 2x - 8 = 0$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "eliminating y",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Where they meet the $y$ values are equal: $x^2 - 3 = 2x + 5$, so $x^2 - 2x - 8 = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 - 3 = 2x + 5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x^2 - 2x - 8 = 0$"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "line-parabola",
+      "type": "extended",
+      "suggestedMinutes": 2,
+      "criteria": [
+        {
+          "text": "Set $x^2 - 3$ equal to $2x + 5$",
+          "marks": 1
+        },
+        {
+          "text": "Rearranged to $x^2 - 2x - 8 = 0$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$x^2 - 3 = 2x + 5$\n\n$x^2 - 2x - 8 = 0$"
+    },
+    {
+      "id": "q23",
+      "prompt": "Solve $x^2 - 2x - 8 = 0$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "solving a quadratic",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(x - 4)(x + 2) = 0$, so $x = 4$ or $x = -2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x - 4)(x + 2)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4 and $-2$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "line-parabola",
+      "type": "short-text",
+      "accepted": [
+        "4, -2",
+        "x=4, x=-2"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Work out the distance between the two points where the line meets the curve, to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "distance between intersection points",
+      "step": "s6",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "From $x^2 - 3 = 2x + 5$: $(x - 4)(x + 2) = 0$. At $x = 4$, $y = 13$; at $x = -2$, $y = 1$. Distance $= \\sqrt{6^2 + 12^2} = \\sqrt{180} = 13.416\\ldots$, which is 13.42.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "points (4, 13) and (−2, 1)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{6^2 + 12^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13.42"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "line-parabola",
+      "type": "numeric",
+      "answer": 13.42,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Solve the simultaneous equations $4x + 3y = 7$ and $6x - 5y = 39$. Give the value of $x$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "elimination with scaling both equations",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply the first by 3 and the second by 2: $12x + 9y = 21$ and $12x - 10y = 78$. Subtract: $19y = -57$, so $y = -3$. Then $4x - 9 = 7$, so $x = 4$. Check: $24 + 15 = 39$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "scales to match a coefficient"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$y = -3$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes back"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "$x + y = 7$ and $xy = 12$. Work out $x^2 + y^2$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "using an identity with simultaneous facts",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(x + y)^2 = x^2 + 2xy + y^2$, so $x^2 + y^2 = (x + y)^2 - 2xy = 49 - 24 = 25$. (Here $x$ and $y$ are 3 and 4, and $9 + 16 = 25$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x + y)^2 = x^2 + 2xy + y^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$49 - 24$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 25,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1249,9 +1533,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 67
     }
   },
   "examTechnique": {
@@ -1285,7 +1577,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

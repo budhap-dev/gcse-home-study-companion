@@ -848,6 +848,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "quad-seq",
+      "body": "Here are the first five terms of a sequence: 4, 11, 22, 37, 56, …"
+    },
+    {
+      "id": "geo-seq",
+      "body": "A geometric sequence has a second term of 12 and a fifth term of 324."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1412,6 +1422,256 @@
         }
       ],
       "modelAnswer": "**Start with the first differences.**\n\n- All the **same** → **linear**, and that difference is the coefficient of $n$.\n- **Not** the same → take the **second** differences.\n\n**Second differences all the same** → **quadratic**, and half of that second difference is the coefficient of $n^2$.\n\n**Neither constant** → divide each term by the one before. If that **ratio** is constant the sequence is **geometric**, and the ratio is what you multiply by each time.\n\n**Check every time** by putting a value of $n$ back into the rule you found and confirming it gives the right term. One substitution catches almost every slip."
+    },
+    {
+      "id": "q19",
+      "prompt": "Write down the next term.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "continuing a quadratic sequence",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differences 7, 11, 15, 19 go up by 4, so the next difference is 23: $56 + 23 = 79$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "79"
+        }
+      ],
+      "discriminators": [],
+      "context": "quad-seq",
+      "type": "numeric",
+      "answer": 79,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Find an expression for the $n$th term.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "nth term of a quadratic sequence",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Second difference 4, so the $n^2$ coefficient is 2. Subtract $2n^2$ (2, 8, 18, 32, 50): 2, 3, 4, 5, 6, which is $n + 1$. So the $n$th term is $2n^2 + n + 1$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2n^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "remainder $n + 1$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$2n^2 + n + 1$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "quad-seq",
+      "type": "short-text",
+      "accepted": [
+        "2n^2+n+1"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Which term of the sequence is 211?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "is a number in the sequence?",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The $n$th term is $2n^2 + n + 1$ (second difference 4, remainder $n + 1$). $2n^2 + n + 1 = 211$ gives $2n^2 + n - 210 = 0$, $(2n + 21)(n - 10) = 0$, so $n = 10$. Check: $200 + 10 + 1 = 211$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2n^2 + n + 1 = 211$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "solves the quadratic"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "quad-seq",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Find the common ratio.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "common ratio from two terms",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "From the 2nd to the 5th term is three multiplications by $r$: $12r^3 = 324$, so $r^3 = 27$ and $r = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12r^3 = 324$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "3"
+        }
+      ],
+      "discriminators": [],
+      "context": "geo-seq",
+      "type": "numeric",
+      "answer": 3,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Find the first term.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "first term of a geometric sequence",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$12r^3 = 324$ gives $r = 3$. The first term is $12 \\div 3 = 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "context": "geo-seq",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "Which term is the first to be greater than 10 000?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "growth of a geometric sequence",
+      "step": "s7",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The ratio is 3 ($12r^3 = 324$) and the first term $12 \\div 3 = 4$, so the terms are $4 \\times 3^{n-1}$: 4, 12, 36, 108, 324, 972, 2916, 8748, 26 244. The 9th term is the first over 10 000.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4 \\times 3^{n-1}$ or continues the terms"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "geo-seq",
+      "type": "numeric",
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Two sequences have $n$th terms $5n - 3$ and $2n + 40$. Find the smallest value of $n$ for which the first sequence’s term is greater than the second’s.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "comparing two linear sequences",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$5n - 3 > 2n + 40$ gives $3n > 43$ and $n > 14.3$. The smallest whole number is $n = 15$ (72 against 70). At $n = 14$ it is 67 against 68.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5n - 3 > 2n + 40$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n > 14.3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "The first three terms of a quadratic sequence are 5, 12 and 23. The second difference is constant. Work out the 10th term.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "nth term of a quadratic sequence",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Differences 7 and 11, so the second difference is 4 and the $n^2$ coefficient is 2. $2n^2$ gives 2, 8, 18; subtracting leaves 3, 4, 5, which is $n + 2$. So the $n$th term is $2n^2 + n + 2$, and the 10th is $200 + 10 + 2 = 212$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2n^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2n^2 + n + 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "212"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 212,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1447,9 +1707,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1483,7 +1751,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },
