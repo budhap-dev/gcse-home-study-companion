@@ -25,6 +25,12 @@ describe('the lesson step that teaches a question', () => {
     expect(placed / total).toBeGreaterThanOrEqual(0.6)
   })
 
+  it('follows the step a question names, before any guess', () => {
+    const named = TOPICS.flatMap((t) => t.questions.filter((q) => q.step).map((q) => [t, q] as const))
+    expect(named.length).toBeGreaterThan(200)
+    for (const [t, q] of named) expect(t.lesson.steps[teachingStep(t, q)!]!.id).toBe(q.step)
+  })
+
   it('never points at the summary step', () => {
     for (const t of TOPICS) for (const q of t.questions) {
       const i = teachingStep(t, q, { bySkill: false })

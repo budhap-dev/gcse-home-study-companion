@@ -149,6 +149,10 @@ export function stemIssues(t: Bank): { path: (string | number)[]; message: strin
     if (at.length < 2 || at.length > LETTERS.length) out.push({ path: ['contexts'], message: `context ${c.id} has ${at.length} part(s); a multi-part question has 2 to ${LETTERS.length}` })
     if (at.some((x, k) => k > 0 && x !== at[k - 1]! + 1)) out.push({ path: ['contexts'], message: `the parts of context ${c.id} must sit next to each other in the bank` })
   }
+  const stepIds = new Set((t.lesson?.steps ?? []).map((s) => s.id))
+  t.questions.forEach((q, i) => {
+    if (q.step && t.lesson && !stepIds.has(q.step)) out.push({ path: ['questions', i], message: `${q.id} names lesson step ${q.step}, which the topic does not have` })
+  })
   for (const [i, s] of (t.lesson?.steps ?? []).entries()) {
     if (s.check?.context) out.push({ path: ['lesson', 'steps', i], message: 'a lesson check is asked on its own, so it cannot be part of a multi-part question' })
   }

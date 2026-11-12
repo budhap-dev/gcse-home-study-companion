@@ -22,15 +22,21 @@ const isSummary = (s: Step, i: number, steps: Step[]) => s.kind === 'summary' ||
  * The lesson step that teaches what a question tests, as a 0-based index, or undefined
  * when no step stands out, in which case a link goes to the start of the lesson as before.
  *
- * First a step whose own check practises the same skill, by name. Otherwise the step
+ * First the step the question names, if it names one. Then a step whose own check practises
+ * the same skill, by name. Otherwise the step
  * whose words the question's skill and prompt share most, counting the skill twice;
  * the summary step is left out, since it mentions everything. Failing that, the step whose
  * words the skill alone shares most, by a wider lead, since a long prompt that sets a scene
  * dilutes the words that name the idea. `bySkill: false` skips the first rule, which is how
  * the word rules' accuracy is measured against the questions the first rule can answer.
  */
-export function teachingStep(topic: TopicRecord, q: Pick<Question, 'skill' | 'prompt'>, { bySkill = true, minScore = MIN_SCORE, minMargin = MIN_MARGIN } = {}): number | undefined {
+export function teachingStep(topic: TopicRecord, q: Pick<Question, 'skill' | 'prompt' | 'step'>, { bySkill = true, minScore = MIN_SCORE, minMargin = MIN_MARGIN } = {}): number | undefined {
   const steps = topic.lesson.steps
+  // A step named by the question itself is the author's answer, and beats every guess.
+  if (bySkill && q.step) {
+    const i = steps.findIndex((s) => s.id === q.step)
+    if (i >= 0) return i
+  }
   if (bySkill) {
     const skill = q.skill.trim().toLowerCase()
     const i = steps.findIndex((s) => s.check?.skill?.trim().toLowerCase() === skill)

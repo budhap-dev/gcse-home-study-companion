@@ -918,7 +918,9 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   questions over the box in all. Data for statistics comes in tables, as many exam questions
   give it. A fraction answer is now always asked for as a fraction or also takes its exact
   decimal: six older questions marked 0.5 wrong for "the exact value of sin 30°" and 0.7 wrong
-  for a probability of 7/10.
+  for a probability of 7/10. A question can now name the lesson step that teaches it (`step`),
+  which a missed question links to: the new problems set scenes, and only 46 of 240 were
+  linked by their words, so every new Maths question names its step.
 - [ ] **3. Maths: algebra.** 23 topics, including graphs and sequences.
 - [ ] **4. Maths: geometry and measures.** 20 topics.
 - [ ] **5. Physics: energy, the particle model and forces.** 15 topics.

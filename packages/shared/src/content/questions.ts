@@ -64,6 +64,12 @@ const base = {
   context: Slug.optional(),
   /** The stem itself, attached when the topic is parsed (topic.ts); never written by hand. */
   stem: Stem.optional(),
+  /**
+   * The lesson step that teaches this question, by its id, where neither the skill's name nor
+   * the words show it: a problem that sets a scene shares few words with the step it rests on.
+   * A missed question links to this step (teachingStep.ts).
+   */
+  step: Slug.optional(),
 }
 
 const MultipleChoice = z.object({
