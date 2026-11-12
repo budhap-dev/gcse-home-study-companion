@@ -695,6 +695,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "two-sales",
+      "body": "In a sale, every price in a shop is reduced by 20%. On the last day of the sale, every sale price is reduced by a further 15%."
+    },
+    {
+      "id": "recurring-45",
+      "body": "Let $x = 0.\\dot{4}\\dot{5}$, the decimal 0.454545… with 45 repeating for ever."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1228,6 +1238,278 @@
         }
       ],
       "modelAnswer": "Let $x = 0.\\dot{2}\\dot{7} = 0.272727\\ldots$\n\nThe repeating block is **27**, two digits long, so I multiply by **100** to shift the decimal by one whole block:\n\n$$100x = 27.272727\\ldots$$\n\nNow subtract the original:\n\n$$100x - x = 27.272727\\ldots - 0.272727\\ldots$$\n$$99x = 27$$\n\nThe recurring parts are identical after the decimal point in both lines, so they cancel exactly and leave a whole number. Then\n\n$$x = \\frac{27}{99} = \\frac{3}{11}$$\n\ndividing top and bottom by 9. So $0.\\dot{2}\\dot{7} = \\frac{3}{11}$, as required.\n\n**Why 100 and not 10.** The subtraction only works if the digits after the decimal point **line up** in the two rows. That happens when the shift is exactly **one whole repeating block**. The block here is two digits, so the shift must be two places, which is multiplying by 100. Multiplying by 10 would give $10x = 2.7272\\ldots$, and subtracting $x = 0.2727\\ldots$ leaves $9x = 2.4545\\ldots$ — the recurring parts are out of step and do not cancel, so nothing has been gained. In general the power of ten matches the block length: 10 for one recurring digit, 100 for two, 1000 for three.\n\n**Why 0.33 gives a wrong answer.** $\\frac{1}{3}$ is exactly $0.\\dot{3}$, recurring without end. Writing 0.33 **cuts the decimal off** after two places, which discards $0.00333\\ldots$. That is a small error, but it is a real one, and a calculation multiplies it up. For example, a third of 300 is exactly 100, but $0.33 \\times 300 = 99$. The rounded value has produced an answer that is simply wrong, and in an exam that costs the accuracy mark. The safe methods are to keep $\\frac{1}{3}$ **as a fraction** throughout the calculation, or to use the calculator's fraction key, and to round only once, at the very end, if a rounded answer is what the question asks for."
+    },
+    {
+      "id": "q19",
+      "prompt": "A coat costs £85 before the sale. What is its sale price?",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "percentage decrease",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A 20% reduction leaves 80%: $0.8 \\times 85 = 68$, so £68.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.8 \\times 85$ or $85 - 17$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£68"
+        }
+      ],
+      "discriminators": [],
+      "context": "two-sales",
+      "type": "numeric",
+      "answer": 68,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q20",
+      "prompt": "What does the £85 coat cost on the last day?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "successive percentage changes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The sale price is $0.8 \\times 85 = $ £68. A further 15% off leaves 85% of that: $0.85 \\times 68 = $ £57.80.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.85 \\times 68$ or $0.8 \\times 0.85 \\times 85$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "£57.80"
+        }
+      ],
+      "discriminators": [],
+      "context": "two-sales",
+      "type": "numeric",
+      "answer": 57.8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the overall percentage reduction on the last day, compared with the price before the sale.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "combining percentage changes",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Each price is multiplied by $0.8$ and then by $0.85$: $0.8 \\times 0.85 = 0.68$ of the original. That is a reduction of $1 - 0.68 = 0.32$, or 32%. Adding the two reductions gives 35%, which is wrong: the 15% is taken from the smaller sale price.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$0.8 \\times 0.85$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.68 of the original"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "32%"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "two-sales",
+      "type": "numeric",
+      "answer": 32,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q22",
+      "prompt": "Show that $x = \\dfrac{5}{11}$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "recurring decimal to a fraction",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$x = 0.4545\\ldots$ and $100x = 45.4545\\ldots$. Subtracting, $99x = 45$, so $x = \\dfrac{45}{99} = \\dfrac{5}{11}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$100x = 45.45\\ldots$ and subtracts"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{45}{99} = \\dfrac{5}{11}$"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "recurring-45",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Wrote $100x = 45.4545\\ldots$ and subtracted $x$ to get $99x = 45$",
+          "marks": 1
+        },
+        {
+          "text": "Simplified $\\dfrac{45}{99}$ to $\\dfrac{5}{11}$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$x = 0.4545\\ldots$\n\n$100x = 45.4545\\ldots$\n\n$100x - x = 45$, so $99x = 45$\n\n$x = \\dfrac{45}{99} = \\dfrac{5}{11}$"
+    },
+    {
+      "id": "q23",
+      "prompt": "Write $0.0\\dot{4}\\dot{5}$, which is 0.0454545…, as a fraction in its simplest form.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "recurring decimals by scaling",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$0.0\\dot{4}\\dot{5}$ is $0.\\dot{4}\\dot{5}$ divided by 10. Since $0.\\dot{4}\\dot{5} = \\dfrac{45}{99} = \\dfrac{5}{11}$, this is $\\dfrac{5}{110} = \\dfrac{1}{22}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{5}{11} \\div 10$ or $\\dfrac{45}{990}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1}{22}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "recurring-45",
+      "type": "short-text",
+      "accepted": [
+        "1/22"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Work out $0.\\dot{4}\\dot{5} \\times 0.\\dot{6}$. Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "calculating with recurring decimals",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$0.\\dot{4}\\dot{5} = \\dfrac{45}{99} = \\dfrac{5}{11}$ and $0.\\dot{6} = \\dfrac{2}{3}$. $\\dfrac{5}{11} \\times \\dfrac{2}{3} = \\dfrac{10}{33}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{3}$ for $0.\\dot{6}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{5}{11} \\times \\dfrac{2}{3}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{10}{33}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "recurring-45",
+      "type": "short-text",
+      "accepted": [
+        "10/33"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "In a school, 45% of the students are girls. $\\dfrac{2}{9}$ of the girls and $\\dfrac{3}{11}$ of the boys walk to school. What percentage of all the students walk to school?",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "combining fractions and percentages",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Girls who walk: $\\dfrac{2}{9}$ of 45% $= 10\\%$ of all students. Boys are 55%, and $\\dfrac{3}{11}$ of 55% $= 15\\%$. Altogether $10\\% + 15\\% = 25\\%$. Adding $\\dfrac{2}{9} + \\dfrac{3}{11}$ ignores how many girls and boys there are.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{9} \\times 45$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{3}{11} \\times 55$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$10 + 15$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "25%"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 25,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "%"
+    },
+    {
+      "id": "q26",
+      "prompt": "The price of a bike goes up by 25%. Later the new price goes down by $x$%, and the bike is back to its original price. Find $x$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "reversing a percentage change",
+      "calculator": "either",
+      "tags": [],
+      "solution": "After the rise the price is $1.25$ times the original. To return to the original it must be multiplied by $\\dfrac{1}{1.25} = 0.8$, a decrease of 20%. So $x = 20$. Taking 25% off gives $1.25 \\times 0.75 = 0.9375$, below the original.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1.25 \\times m = 1$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$m = 0.8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1263,9 +1545,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 68
     }
   },
   "examTechnique": {
@@ -1299,7 +1589,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

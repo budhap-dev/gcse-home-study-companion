@@ -632,6 +632,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "cube-512",
+      "body": "A cube has a volume of 512 cm³."
+    },
+    {
+      "id": "two-to-ten",
+      "body": "You are told that $2^{10} = 1024$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1211,6 +1221,244 @@
         }
       ],
       "id": "q19"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the length of one edge of the cube.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "cube roots",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\sqrt[3]{512} = 8$, since $8 \\times 8 \\times 8 = 512$. Each edge is 8 cm.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [],
+      "context": "cube-512",
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the total surface area of the cube.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "surface area from a cube root",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The edge is $\\sqrt[3]{512} = 8$ cm. Each face is $8^2 = 64$ cm², and a cube has 6 faces: $6 \\times 64 = 384$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$6 \\times 8^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "384"
+        }
+      ],
+      "discriminators": [],
+      "context": "cube-512",
+      "type": "numeric",
+      "answer": 384,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q22",
+      "prompt": "A second cube has a surface area 4 times the surface area of this cube. Work out the volume of the second cube.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "how area and volume scale",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first cube has edge $\\sqrt[3]{512} = 8$ cm and surface area $6 \\times 64 = 384$ cm². Four times that is 1536 cm², so each face is $1536 \\div 6 = 256$ cm² and the edge is $\\sqrt{256} = 16$ cm, twice as long. Volume $= 16^3 = 4096$ cm³, which is 8 times the first. Multiplying the volume by 4 gives 2048, which forgets that volume grows as the cube of length.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "face 256 or edge doubled"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "edge 16"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4096"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "cube-512",
+      "type": "numeric",
+      "answer": 4096,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out $2^{11}$.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "powers of 2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2^{11} = 2 \\times 2^{10} = 2 \\times 1024 = 2048$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "2048"
+        }
+      ],
+      "discriminators": [],
+      "context": "two-to-ten",
+      "type": "numeric",
+      "answer": 2048,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "Write $2^{10} \\times 5^{10}$ as a power of 10.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "multiplying powers with the same index",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2^{10} \\times 5^{10} = (2 \\times 5)^{10} = 10^{10}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(2 \\times 5)^{10}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$10^{10}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "two-to-ten",
+      "type": "short-text",
+      "accepted": [
+        "10^10"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Find $n$ when $4^n = 1024 \\times 16$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "writing numbers as powers of the same base",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$1024 = 2^{10}$ and $16 = 2^4$, so $1024 \\times 16 = 2^{14}$. And $4^n = (2^2)^n = 2^{2n}$. So $2n = 14$ and $n = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2^{14}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4^n = 2^{2n}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "two-to-ten",
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "Work out $\\sqrt[3]{27 \\times 8^2} + \\left(\\sqrt{2}\\right)^6$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "roots and powers together",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$27 \\times 8^2 = 27 \\times 64$, and $\\sqrt[3]{27 \\times 64} = \\sqrt[3]{27} \\times \\sqrt[3]{64} = 3 \\times 4 = 12$. $\\left(\\sqrt{2}\\right)^6 = \\left(\\left(\\sqrt{2}\\right)^2\\right)^3 = 2^3 = 8$. Total $12 + 8 = 20$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt[3]{27} \\times \\sqrt[3]{64}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(\\sqrt{2})^6 = 8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "$n$ is a prime number and $n^2$ is between 300 and 400. Find $n$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "squares and primes",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$17^2 = 289$, $18^2 = 324$, $19^2 = 361$, $20^2 = 400$. So $n^2$ between 300 and 400 means $n = 18$ or 19. 18 is not prime, 19 is. So $n = 19$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "18 and 19 found"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "19"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 19,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1247,9 +1495,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 35
+      "suggestedMinutes": 54
     }
   },
   "examTechnique": {
@@ -1282,7 +1538,9 @@
       "q14",
       "q15",
       "q16",
-      "q19"
+      "q19",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },

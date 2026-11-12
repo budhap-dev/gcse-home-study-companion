@@ -908,7 +908,13 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   generator (`osmosis-results-table`), the other three get theirs in their subject's box. Every
   practice set now says how hard it is: Core grades 4–5, Higher 6–7, Advanced 8–9 (hardest),
   quiz all grades, unit test grades 4–9, grade 9 set hardest.
-- [ ] **2. Maths: number, ratio, probability and statistics.** 29 topics.
+- [ ] **2. Maths: number, ratio, probability and statistics.** 29 topics. In four PRs, one per
+  unit. Number (10 topics, 78 questions: two multi-part questions and two longer problems per
+  topic, on each Advanced sheet) in v10.118.0. Writing them found a marker fault older than
+  them: brackets round a bottom of several factors were dropped, so y = −1/(2x) + 3, a curve,
+  was marked right for the line y = −½x + 3 on five questions, and 3/(2√2) for 3√2/2. A bracket
+  after a / or before a ^ that holds more than one factor now stays. The new questions are
+  written, not generated; whether to add generators for them is the owner's call after Maths.
 - [ ] **3. Maths: algebra.** 23 topics, including graphs and sequences.
 - [ ] **4. Maths: geometry and measures.** 20 topics.
 - [ ] **5. Physics: energy, the particle model and forces.** 15 topics.

@@ -815,6 +815,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "cafe-menu",
+      "body": "A café sells 4 starters, 6 main courses and 3 desserts. A meal is one main course, with or without a starter, and with or without a dessert."
+    },
+    {
+      "id": "pin-codes",
+      "body": "A phone PIN is four digits, each from 0 to 9. The first digit can be 0."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1361,6 +1371,218 @@
         }
       ],
       "modelAnswer": "**What 5 × 4 counts.** It counts the ways of choosing two people **in order**, as if being picked first were different from being picked second.\n\n**Why that is wrong here.** For a **team**, order does not matter: choosing Amy then Ben gives the **same team** as choosing Ben then Amy. So every team has been counted **twice**, once in each order.\n\n$$20 \\div 2 = \\mathbf{10}$$"
+    },
+    {
+      "id": "q19",
+      "prompt": "How many different meals have a starter, a main course and a dessert?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the product rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$4 \\times 6 \\times 3 = 72$ meals.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "72"
+        }
+      ],
+      "discriminators": [],
+      "context": "cafe-menu",
+      "type": "numeric",
+      "answer": 72,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "How many different meals are possible altogether?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the product rule with a \"none\" choice",
+      "calculator": "either",
+      "tags": [],
+      "solution": "For the starter there are 5 choices: one of the 4, or none. For dessert, 4 choices: one of the 3, or none. The main course has 6. So $5 \\times 6 \\times 4 = 120$ meals. Adding the cases ($72 + 24 + 18 + 6$) gives 120 too.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5 starter choices and 4 dessert choices"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5 \\times 6 \\times 4$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "120"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "cafe-menu",
+      "type": "numeric",
+      "answer": 120,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "How many different PINs are there?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "the product rule",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$10 \\times 10 \\times 10 \\times 10 = 10\\,000$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "10 000"
+        }
+      ],
+      "discriminators": [],
+      "context": "pin-codes",
+      "type": "numeric",
+      "answer": 10000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "How many PINs have four different digits?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "choices without repeats",
+      "calculator": "either",
+      "tags": [],
+      "solution": "10 choices for the first digit, then 9 left, then 8, then 7: $10 \\times 9 \\times 8 \\times 7 = 5040$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$10 \\times 9 \\times 8 \\times 7$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5040"
+        }
+      ],
+      "discriminators": [],
+      "context": "pin-codes",
+      "type": "numeric",
+      "answer": 5040,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "How many PINs have four different digits, do not start with 0, and end with an even digit?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting with restrictions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Fill the most restricted places first, and split by the last digit. Last digit 0: the first can be any of 1 to 9 (9 ways), then $8 \\times 7$ for the middle: $9 \\times 8 \\times 7 = 504$. Last digit 2, 4, 6 or 8 (4 ways): the first can be 1 to 9 except the last digit (8 ways), and the middle two come from the 8 digits left: $4 \\times 8 \\times 8 \\times 7 = 1792$. Total $504 + 1792 = 2296$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "splits on whether the last digit is 0"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "504 or 1792"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2296"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "pin-codes",
+      "type": "numeric",
+      "answer": 2296,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "A club has $n$ members. There are 132 ways to choose a captain and a different vice-captain. Find $n$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting leading to an equation",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The captain can be any of $n$ members and the vice-captain any of the other $n - 1$, so $n(n - 1) = 132$. $12 \\times 11 = 132$, so $n = 12$. (As a quadratic, $n^2 - n - 132 = 0$ gives $(n - 12)(n + 11) = 0$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n(n - 1) = 132$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12 \\times 11$ or factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "How many three-digit odd numbers have three different digits?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "counting with restrictions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The last digit is odd: 5 ways (1, 3, 5, 7, 9). The first digit cannot be 0 or the last digit: 8 ways. The middle digit can be anything except those two: 8 ways. $5 \\times 8 \\times 8 = 320$. Starting with the first digit (9 ways) runs into trouble, because how many odd digits are left depends on whether it was odd.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "last digit first: 5 ways"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5 \\times 8 \\times 8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "320"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "type": "numeric",
+      "answer": 320,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1396,9 +1618,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 63
     }
   },
   "examTechnique": {
@@ -1432,7 +1661,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q24",
+      "q25"
     ],
     "sampleSize": 10
   },

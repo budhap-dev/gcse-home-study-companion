@@ -686,3 +686,25 @@ describe('a rearranged formula in another right form', () => {
     wrong(st('Factorise $x^2 + 7x + 12$.', ['(x+3)(x+4)']), 'x^2+7x+12')
   })
 })
+
+describe('brackets that hold a term together', () => {
+  const typed = (prompt: string, accepted: string[]): Question => ({
+    id: 'q1', type: 'short-text', prompt, marks: 2, gradeBand: '8-9', skill: 's', calculator: 'either', tags: [],
+    solution: 's', markScheme: [{ code: 'B1', marks: 2, description: 's' }], discriminators: ['evaluate'], accepted,
+  })
+  it('keeps a bottom of several factors together: 1/(2x) is not half of x', () => {
+    const line = typed('Find the equation of the line.', ['y=-1/2x+3'])
+    expect(mark(line, 'y = -1/2x + 3').correct).toBe(true)
+    expect(mark(line, 'y = -(1)/(2)x + 3').correct).toBe(true)
+    expect(mark(line, 'y = -1/(2x) + 3').correct).toBe(false)
+    const area = typed('Give your answer in the form $a\\sqrt{2}$.', ['3/2√2', '3√2/2'])
+    expect(mark(area, '(3)/(2)sqrt(2)').correct).toBe(true)
+    expect(mark(area, '3/(2√2)').correct).toBe(false)
+    expect(mark(area, '(3)/(2sqrt(2))').correct).toBe(false)
+  })
+  it('keeps a bracket under a power: (2x)^2 is not 2x^2', () => {
+    expect(normaliseText('(2x)^2')).not.toBe(normaliseText('2x^2'))
+    expect(normaliseText('(x)^2')).toBe(normaliseText('x^2'))
+    expect(normaliseText('(√3)/2')).toBe(normaliseText('√3/2'))
+  })
+})

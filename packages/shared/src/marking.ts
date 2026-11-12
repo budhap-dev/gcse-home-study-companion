@@ -38,11 +38,19 @@ const SUBSCRIPTS = '₀₁₂₃₄₅₆₇₈₉'
  * `√3/2`. Only groups holding no `+`, `−`, `*`, `/` or `^` are dropped, because those are
  * exactly the brackets that change what an expression means — `(1+3)/4` is not `1+3/4`,
  * and `(2/3)^2` is not `2/3^2`. Runs repeatedly so `((3))` collapses too.
+ *
+ * A term of more than one factor keeps its brackets after a `/` or before a `^`, where they
+ * hold it together: `1/(2x)` is a half over x, not `1/2x`, which is half of x, and `(2x)^2`
+ * is 4x², not `2x^2`. Dropping them marked y = −1/(2x) + 3, a curve, right for the line
+ * y = −½x + 3 on five questions. One number, letter or root alone is still unwrapped, so the
+ * maths field's `(1)/(2)x` reads as `1/2x`.
  */
+const ATOM = /^(?:[\d.]+|[a-z]|sqrt[\d.]+|sqrt[a-z])$/
 function dropRedundantBrackets(s: string): string {
   let out = s
   for (let pass = 0; pass < 5; pass++) {
-    const next = out.replace(/\(([^()+\-*/^]+)\)/g, '$1')
+    const next = out.replace(/(\/?)\(([^()+\-*/^]+)\)(\^?)/g, (whole, before: string, inner: string, after: string) =>
+      (before || after) && !ATOM.test(inner) ? whole : `${before}${inner}${after}`)
     if (next === out) break
     out = next
   }
@@ -607,14 +615,16 @@ const wholeBracket = (s: string) => {
  * One side of a fraction with its sign pushed inside: -(8n+1) is (-8n-1). Null when the
  * side is a sum that is not bracketed, since 8n+1/3 is not a fraction with 8n+1 on top.
  */
-function sideOf(s: string, negate: boolean): string | null {
+function sideOf(s: string, negate: boolean, bottom = false): string | null {
   let t = s, neg = negate
   if (t.startsWith('-') && wholeBracket(t.slice(1))) { t = t.slice(1); neg = !neg }
   const inner = wholeBracket(t) ? t.slice(1, -1) : t
   const terms = termsOf(inner)
   if (terms.length === 0 || (terms.length > 1 && !wholeBracket(t))) return null
   const flipped = terms.map(([sign, body], i) => `${(sign === '-') !== neg ? '-' : i === 0 ? '' : '+'}${body}`).join('')
-  return terms.length > 1 ? `(${flipped})` : flipped
+  // A bottom of several factors keeps its brackets: 3/(2√2) is not 3/2√2 (dropRedundantBrackets).
+  const held = bottom && wholeBracket(t) && !ATOM.test(terms[0]![1])
+  return terms.length > 1 || held ? `(${flipped})` : flipped
 }
 
 /** A fraction and the same fraction with both its top and bottom negated: (8n+1)/(3-n) and (-8n-1)/(n-3). */
@@ -630,7 +640,7 @@ function fractionForms(s: string): string[] {
   const num = s.slice(0, at), den = s.slice(at + 1)
   const forms: string[] = []
   for (const neg of [false, true]) {
-    const n = sideOf(num, neg), d = sideOf(den, neg)
+    const n = sideOf(num, neg), d = sideOf(den, neg, true)
     if (n !== null && d !== null) forms.push(`${n}/${d}`)
   }
   return forms
