@@ -6,8 +6,6 @@ import { settle, type Settlement } from '../../progress/settle.ts'
 import { xpForQuestions } from '../../progress/xp.ts'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
-import { RichText } from '../../components/RichText.tsx'
-import { Visual } from '../../components/Visual.tsx'
 import { Feedback } from '../../components/questions/Feedback.tsx'
 import { QuestionInput, type Answer } from '../../components/questions/QuestionInput.tsx'
 import type { Topic as TopicRecord } from '@study/shared'
@@ -21,6 +19,7 @@ import { TopicLoading } from '../../components/TopicLoading.tsx'
 import { MilestoneCard } from '../../components/MilestoneCard.tsx'
 import type { Milestone } from '../../progress/milestones.ts'
 import { TopicMissing } from '../../components/TopicMissing.tsx'
+import { QuestionPrompt } from '../../components/questions/QuestionPrompt.tsx'
 
 interface Answered {
   answer: Answer
@@ -166,8 +165,7 @@ function QuizBody({ topic }: { topic: TopicRecord }) {
           <span className="rounded bg-panel px-2 py-0.5 font-bold">Grade {question.gradeBand}</span>
           <span>{question.marks} mark{question.marks > 1 ? 's' : ''}{question.calculator === 'non-calculator' ? ' · non-calculator' : question.calculator === 'calculator' ? ' · calculator' : ''}</span>
         </div>
-        {question.visual && <Visual visual={question.visual} />}
-        <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
+        <QuestionPrompt question={question} />
         <QuestionInput subjectId={subjectId} key={question.id} question={question} disabled={Boolean(answered)} onSubmit={submit} />
         {answered && <Feedback question={question} result={answered.result} onClaim={claim} />}
         <ReportMistake key={`r-${question.id}`} item={{ subjectId: subjectId!, topicId: topicId!, itemKind: 'question', itemId: question.id, seenIn: 'quiz' }} />
@@ -255,7 +253,7 @@ function Summary({ topic, questions, state, backTo, onRetake }: { topic: TopicRe
               const r = state.answers[q.id]?.result
               return (
                 <li key={q.id} className="flex flex-col gap-1 rounded-xl border border-rule bg-surface px-4 py-3">
-                  <RichText source={q.prompt} className="text-sm" />
+                  <QuestionPrompt question={q} size="small" />
                   <div className="flex items-center justify-between text-xs text-ink-2">
                     <span>{r ? `${r.marksScored} of ${r.marksAvailable}` : 'not answered'} · grade {q.gradeBand} · {q.skill}</span>
                     {(() => {

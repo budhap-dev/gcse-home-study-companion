@@ -498,6 +498,12 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "roller-coaster",
+      "body": "A roller-coaster car of mass 450 kg is at rest at the top of a slope, 32 m above the ground. It rolls down the slope to a point 12 m above the ground.\n\nGravitational field strength = 9.8 N/kg"
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1023,6 +1029,105 @@
         }
       ],
       "id": "q15"
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "context": "roller-coaster",
+      "prompt": "Calculate the decrease in the car’s gravitational potential store between the top of the slope and the point 12 m above the ground.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "calculating a change in gravitational potential energy",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "The car falls $32 - 12 = 20$ m. $\\Delta E_p = mg\\Delta h = 450 \\times 9.8 \\times 20 = 88\\,200$ J. Using 32 m or 12 m on its own gives the store at one height, not the change.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$450 \\times 9.8 \\times (32 - 12)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "88 200 J"
+        }
+      ],
+      "discriminators": [],
+      "answer": 88200,
+      "tolerance": 0,
+      "units": "J",
+      "unitsRequired": false
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "context": "roller-coaster",
+      "prompt": "Assume no energy is dissipated. Calculate the speed of the car at the point 12 m above the ground. Give your answer to 3 significant figures.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "energy conservation between stores",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "With nothing dissipated, the kinetic store gains all that the gravitational potential store loses: $\\tfrac{1}{2}mv^2 = mg\\Delta h$. The mass cancels, so $v^2 = 2 \\times 9.8 \\times 20 = 392$ and $v = \\sqrt{392} = 19.79\\ldots$, which is **19.8 m/s** to 3 significant figures.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tfrac{1}{2} \\times 450 \\times v^2 = 88\\,200$ or $v^2 = 2 \\times 9.8 \\times 20$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$v^2 = 392$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "19.8 m/s"
+        }
+      ],
+      "discriminators": [],
+      "answer": 19.8,
+      "tolerance": 0,
+      "units": "m/s",
+      "unitsRequired": false
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "context": "roller-coaster",
+      "prompt": "The car’s measured speed at the point 12 m above the ground is 17.5 m/s. Calculate the percentage of the decrease in its gravitational potential store that ends up in its kinetic store. Give your answer to 2 significant figures.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "efficiency of an energy transfer",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Kinetic store at the 12 m point: $E_k = \\tfrac{1}{2} \\times 450 \\times 17.5^2 = 68\\,906.25$ J. Decrease in the gravitational potential store: $450 \\times 9.8 \\times 20 = 88\\,200$ J. Percentage: $\\dfrac{68\\,906.25}{88\\,200} \\times 100 = 78.125\\%$, which is **78%** to 2 significant figures. The rest is dissipated, mostly by friction and air resistance, heating the track, the car and the air. Dividing the speeds instead, $17.5 \\div 19.8$, gives 88%, which is wrong because kinetic energy goes as the square of the speed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tfrac{1}{2} \\times 450 \\times 17.5^2$ or 68 906 J"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "their $E_k \\div$ their 88 200"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "78%"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "answer": 78,
+      "tolerance": 0,
+      "units": "%",
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1055,9 +1160,12 @@
         "q11",
         "q12",
         "q13",
-        "q14"
+        "q14",
+        "q16",
+        "q17",
+        "q18"
       ],
-      "suggestedMinutes": 30
+      "suggestedMinutes": 39
     }
   },
   "examTechnique": {

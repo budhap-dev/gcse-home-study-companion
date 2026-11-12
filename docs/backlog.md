@@ -842,7 +842,9 @@ One PR per box, ticked in the PR that finishes it.
 ## 13. Harder questions for Maths and the sciences (12 November 2026)
 
 Asked 12 November 2026: "I want some more questions and answers - may even more complex -
-especially sciences and maths - can you plan for that". Waiting for the owner's go-ahead.
+especially sciences and maths - can you plan for that". Approved the same day in the order
+Maths, Physics, Chemistry, Biology, with Further Maths left out of this round (box 11 waits),
+and with a label on every practice set saying how hard it is.
 
 **Where the bank stands.** Maths has 1,345 questions over 72 topics, Physics 653 over 34,
 Chemistry 854 over 47, Biology 1,129 over 38 and Further Maths 397 over 22. The generators
@@ -884,7 +886,7 @@ grade 9 sets and spaced review; ids and progress for existing questions do not c
 Nothing here needs a paid service: the questions are bundled with the app as the rest are.
 One PR per box, ticked in the PR that finishes it. Stop and report after each subject.
 
-- [ ] **1. Multi-part questions.** A new question type: a shared stem with an optional table,
+- [x] **1. Multi-part questions.** A new question type: a shared stem with an optional table,
   graph or diagram, then two to five parts, each one an existing type (numeric, short text,
   multiple choice, ordering or a self-marked extended answer). The question's marks are the
   sum of its parts. Each part is marked on its own when it is answered, so a slip in (a) does
@@ -893,6 +895,19 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   screen, in unit tests and grade 9 sets, and in spaced review. Content validation checks that
   the marks add up, part letters run in order and the stem holds every figure a part needs.
   Ships with one example per subject below, so the type is proved before the bulk is written.
+  Shipped in v10.117.0. A part is an ordinary question with a `context`; the topic's `contexts`
+  hold each stem once, and parsing attaches it to its parts with their letter, so marking,
+  progress, spaced review and the mistakes list needed no change. `QuestionPrompt` prints the
+  stem above "Part (b) of 3" on every screen; a printed sheet numbers the parts 3(a), 3(b) under
+  one stem. Unit tests and mixed sheets keep drawn parts together; a grade 9 set asks the whole
+  question and counts it as one problem. A multi-part question counts once, at its top part,
+  towards a topic's 40% grade 8–9 share, and its earlier parts may sit on the Advanced sheet.
+  Generators: the parts of one stem build from one seed and may rewrite the stem, and the
+  release check holds every part to the same stem. Examples: Maths quadratic garden, Physics
+  roller coaster, Chemistry titration table, Biology osmosis table; the osmosis one has a
+  generator (`osmosis-results-table`), the other three get theirs in their subject's box. Every
+  practice set now says how hard it is: Core grades 4–5, Higher 6–7, Advanced 8–9 (hardest),
+  quiz all grades, unit test grades 4–9, grade 9 set hardest.
 - [ ] **2. Maths: number, ratio, probability and statistics.** 29 topics.
 - [ ] **3. Maths: algebra.** 23 topics, including graphs and sequences.
 - [ ] **4. Maths: geometry and measures.** 20 topics.

@@ -74,6 +74,8 @@ export function previewOf(body: string, max = 150): string {
 export const WHY_PREVIEW = 200
 
 const LEVEL_LABEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const
+/** How hard each sheet is, on its card, so the hardest is plain without opening it. */
+const LEVEL_GRADES = { core: 'Grades 4–5', higher: 'Grades 6–7', advanced: 'Grades 8–9 · hardest' } as const
 const LEVEL_NOTE = {
   core: 'Prerequisites only. Short, done once.',
   higher: 'Exam-style questions on the main ideas.',
@@ -238,6 +240,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
                   n={i + 1}
                   colour={LEVEL_COLOUR[level]}
                   title={`${LEVEL_LABEL[level]} worksheet`}
+                  grades={LEVEL_GRADES[level]}
                   note={`${open ? `Started: on question ${open.index + 1} of ${sheet.questionIds.length}. ` : suggested ? 'Suggested for where you are. ' : ''}${sheet.questionIds.length} questions · ${totalMarks(topic, sheet.questionIds)} marks · about ${sheet.suggestedMinutes} min. ${LEVEL_NOTE[level]}`}
                   action={open ? 'Resume' : suggested ? 'Start here' : 'Open'}
                   highlight={suggested}
@@ -248,7 +251,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
             {(() => {
               // An unfinished quiz is kept on the device, so the card offers to carry on with it.
               const open = openSession(quizKey(topic.id))
-              return <PracticeCard to="quiz" n={4} colour="#b5451b" title="Quiz" note={open ? `Started: on question ${open.index + 1} of ${open.total}. Your answers so far are kept.` : `${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action={open ? 'Resume' : 'Start'} delay={0.31} />
+              return <PracticeCard to="quiz" n={4} colour="#b5451b" title="Quiz" grades="All grades" note={open ? `Started: on question ${open.index + 1} of ${open.total}. Your answers so far are kept.` : `${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action={open ? 'Resume' : 'Start'} delay={0.31} />
             })()}
           </nav>
 
@@ -410,7 +413,7 @@ const TIP_LABEL: Record<string, string> = { remember: 'Remember it', spot: 'Spot
 const LEVEL_COLOUR = { core: '#237a4d', higher: '#1f3a93', advanced: '#6b4e9b' } as const
 
 /** A worksheet or the quiz: a numbered card with its colour along the top. */
-function PracticeCard({ to, n, colour, title, note, action, highlight = false, delay }: { to: string; n: number; colour: string; title: string; note: string; action: string; highlight?: boolean; delay: number }) {
+function PracticeCard({ to, n, colour, title, grades, note, action, highlight = false, delay }: { to: string; n: number; colour: string; title: string; grades: string; note: string; action: string; highlight?: boolean; delay: number }) {
   return (
     <Link to={to} style={{ '--subject': colour, '--d': `${delay.toFixed(2)}s` } as React.CSSProperties}
       className={`anim-rise lift card-top flex flex-col gap-2 rounded-2xl bg-surface p-3.5 ${highlight ? 'border-2 border-[color:var(--subject)]' : 'border border-rule'}`}>
@@ -418,6 +421,7 @@ function PracticeCard({ to, n, colour, title, note, action, highlight = false, d
         <span aria-hidden className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[13px] font-bold text-white" style={{ background: colour }}>{n}</span>
         <span className="flex-grow font-bold leading-tight">{title}</span>
       </span>
+      <span className="w-fit rounded-full bg-panel px-2 py-0.5 text-xs font-bold accent-ink">{grades}</span>
       <RichText source={note} inline className="text-xs text-ink-2" />
       <span className="mt-auto w-fit rounded-lg bg-[color:var(--subject)] px-3 py-1.5 text-sm font-bold text-white">{action}</span>
     </Link>

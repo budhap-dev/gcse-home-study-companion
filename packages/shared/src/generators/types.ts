@@ -12,6 +12,13 @@ interface BuiltBase {
   solution: string
   markScheme: Line[]
   visual?: Visual
+  /**
+   * A part of a multi-part question: its stem with this draw's figures. Every part of one stem
+   * is built from the same seed, so a generator that draws its figures before it looks at which
+   * part it is writing prints the same stem for each (the release check holds it to that).
+   */
+  stem?: string
+  stemVisual?: Visual
 }
 
 export interface BuiltNumeric extends BuiltBase {

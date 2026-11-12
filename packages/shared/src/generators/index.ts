@@ -257,13 +257,16 @@ export function sheetQuestions(subjectId: string, topicId: string, written: Ques
     // sheet then keeps the written question rather than failing to open.
     try {
       // A fresh version never prints a written question's figures, its own or a neighbour's on the sheet.
-      const generated = generate(g, question, seed!, { avoid: written.map((q) => q.prompt) })
+      const generated = generate(g, question, seed!, { avoid: written.map(shown) })
       return { question: generated.question, generated }
     } catch {
       return { question }
     }
   })
 }
+
+/** What a question prints: the prompt, after its stem when it is a part of a multi-part question. */
+const shown = (q: Pick<Question, 'prompt' | 'stem'>) => (q.stem ? `${q.stem.body}\n\n${q.prompt}` : q.prompt)
 
 const ASKS_PRECISION = /significant figure|decimal place|d\.p\.|nearest|whole number|standard form/i
 
@@ -309,7 +312,9 @@ const repeats = (fresh: string[], written: string[]) => fresh.length === written
 export function generate(generator: Generator, slot: Question, seed: string, options: { avoid?: readonly string[] } = {}): Generated {
   const start = Math.floor(rng(`${seed}:${generator.id}`)() * 1000)
   const turn = start + Math.max(0, generator.replaces.indexOf(slot.id))
-  let draft = generator.build(rng(`${seed}:${generator.topicId}:${slot.id}`), slot, turn)
+  // The parts of one stem share its draw, so (a), (b) and (c) ask about the same figures.
+  const key = slot.stem ? slot.stem.id : slot.id
+  let draft = generator.build(rng(`${seed}:${generator.topicId}:${key}`), slot, turn)
   // A fresh version with a written question's figures (`avoid`: the sheet passes every written
   // prompt on it) shows a retry the question just done, or answers a neighbour: the written speed
   // of sound came back in 9% of one slot's builds, and a generated q5 drew the written q10's acid.
@@ -317,8 +322,10 @@ export function generate(generator: Generator, slot: Question, seed: string, opt
   // sheet keep apart by it, so a draw the turn alone decides (a route list indexed by turn) is
   // the generator's to vary, and a slot whose every version prints the written figures keeps them.
   const avoid = (options.avoid ?? []).map(figuresOf).filter((f) => f.length)
-  for (let again = 1; again <= 3 && avoid.some((w) => repeats(figuresOf(draft.question.prompt), w)); again++) {
-    draft = generator.build(rng(`${seed}:${generator.topicId}:${slot.id}:again${again}`), slot, turn)
+  // A part is judged by its stem, which every part prints alike, so all the parts redraw together.
+  const judged = () => (slot.stem ? draft.question.stem ?? slot.stem.body : draft.question.prompt)
+  for (let again = 1; again <= 3 && avoid.some((w) => repeats(figuresOf(judged()), w)); again++) {
+    draft = generator.build(rng(`${seed}:${generator.topicId}:${key}:again${again}`), slot, turn)
   }
   const kept = {
     id: slot.id,
@@ -331,7 +338,15 @@ export function generate(generator: Generator, slot: Question, seed: string, opt
     ...(slot.boardNotes ? { boardNotes: slot.boardNotes } : {}),
   }
   const b = draft.question
-  const common = { ...kept, prompt: b.prompt, solution: b.solution, markScheme: b.markScheme, ...(b.visual ? { visual: b.visual } : {}) }
+  const stem = slot.stem && {
+    ...(slot.context ? { context: slot.context } : {}),
+    stem: {
+      ...slot.stem,
+      body: b.stem ?? slot.stem.body,
+      ...(b.stemVisual ? { visual: b.stemVisual } : {}),
+    },
+  }
+  const common = { ...kept, ...stem, prompt: b.prompt, solution: b.solution, markScheme: b.markScheme, ...(b.visual ? { visual: b.visual } : {}) }
   const question: Question = b.type === 'numeric'
     ? { ...common, type: 'numeric', answer: b.answer, tolerance: roundingRoom(generator.subjectId, b.prompt, b.answer, b.tolerance), unitsRequired: false, ...(b.units ? { units: b.units } : {}) }
     : b.type === 'short-text'

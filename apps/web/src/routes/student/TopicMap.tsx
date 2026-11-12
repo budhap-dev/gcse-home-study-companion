@@ -234,11 +234,11 @@ function UnitPractice({ subjectId, unitId, year, count }: { subjectId: string; u
     <div className="flex flex-wrap items-center gap-2 border-t border-rule pt-2.5">
       <button type="button" onClick={() => navigate(unitTestPath(subjectId, unitId, newSheetCode(), year))}
         className="press min-h-10 rounded-lg border border-rule bg-surface px-3 text-sm font-bold accent-ink">
-        Unit test <span className="font-normal text-ink-2">· {count} {count === 1 ? 'topic' : 'topics'}</span>
+        Unit test <span className="font-normal text-ink-2">· {count} {count === 1 ? 'topic' : 'topics'} · grades 4–9</span>
       </button>
       <button type="button" onClick={() => navigate(grade9Path(subjectId, unitId, newSheetCode(), year))}
         className="press min-h-10 rounded-lg border border-rule bg-surface px-3 text-sm font-bold accent-ink">
-        Grade 9 set <span className="font-normal text-ink-2">· {GRADE_9_SET} problems</span>
+        Grade 9 set <span className="font-normal text-ink-2">· {GRADE_9_SET} problems · hardest</span>
       </button>
     </div>
   )

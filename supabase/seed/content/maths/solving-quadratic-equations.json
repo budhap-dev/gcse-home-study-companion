@@ -846,6 +846,12 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "garden",
+      "body": "A rectangular garden is $(x + 3)$ m long and $(2x - 1)$ m wide. Its area is 52 m²."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1682,6 +1688,114 @@
         }
       ],
       "id": "q19"
+    },
+    {
+      "id": "q20",
+      "type": "extended",
+      "context": "garden",
+      "prompt": "Show that $2x^2 + 5x - 55 = 0$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "forming a quadratic equation from a context",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Area = length × width, so $(x + 3)(2x - 1) = 52$. Expanding, $2x^2 - x + 6x - 3 = 52$, which is $2x^2 + 5x - 3 = 52$. Subtracting 52 from both sides gives $2x^2 + 5x - 55 = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x + 3)(2x - 1) = 52$ expanded to $2x^2 + 5x - 3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$2x^2 + 5x - 55 = 0$ with no errors seen"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Wrote $(x + 3)(2x - 1) = 52$ and expanded the brackets to $2x^2 + 5x - 3$",
+          "marks": 1
+        },
+        {
+          "text": "Rearranged to $2x^2 + 5x - 55 = 0$, every step shown",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(x + 3)(2x - 1) = 52$\n\n$2x^2 - x + 6x - 3 = 52$\n\n$2x^2 + 5x - 3 = 52$\n\n$2x^2 + 5x - 55 = 0$"
+    },
+    {
+      "id": "q21",
+      "type": "numeric",
+      "context": "garden",
+      "prompt": "Solve $2x^2 + 5x - 55 = 0$. Give the solution that fits the garden, correct to 2 decimal places.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "solving with the quadratic formula",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "It does not factorise, so use the formula with $a = 2$, $b = 5$, $c = -55$: $x = \\dfrac{-5 \\pm \\sqrt{5^2 - 4 \\times 2 \\times (-55)}}{2 \\times 2} = \\dfrac{-5 \\pm \\sqrt{465}}{4}$. So $x = 4.1409\\ldots$ or $x = -6.6409\\ldots$. A length of $x + 3$ cannot be negative, so the garden needs $x = 4.14$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{-5 \\pm \\sqrt{5^2 - 4 \\times 2 \\times (-55)}}{2 \\times 2}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{465}$ or 21.56… seen"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4.14"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4.14,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "type": "numeric",
+      "context": "garden",
+      "prompt": "Work out the perimeter of the garden. Give your answer correct to 1 decimal place.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "using the solution of a quadratic in context",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "First find $x$: $(x + 3)(2x - 1) = 52$ gives $2x^2 + 5x - 55 = 0$, and the positive solution is $x = \\dfrac{-5 + \\sqrt{465}}{4} = 4.1409\\ldots$. The garden is $x + 3 = 7.1409\\ldots$ m by $2x - 1 = 7.2819\\ldots$ m, so the perimeter is $2(7.1409\\ldots + 7.2819\\ldots) = 28.845\\ldots$, which is **28.8 m** to 1 decimal place. Adding the two sides without doubling gives 14.4, half the perimeter.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x = 4.14$ (or better) from the positive root"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2(x + 3) + 2(2x - 1)$ or $6x + 4$ with their $x$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "28.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 28.8,
+      "tolerance": 0,
+      "units": "m",
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1718,9 +1832,12 @@
         "q13",
         "q14",
         "q17",
-        "q19"
+        "q19",
+        "q20",
+        "q21",
+        "q22"
       ],
-      "suggestedMinutes": 46
+      "suggestedMinutes": 55
     }
   },
   "examTechnique": {

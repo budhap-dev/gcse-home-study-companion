@@ -410,6 +410,179 @@ export const osmosisCrossing: Generator = {
   },
 }
 
+// ---------------------------------------------------------------------------------------------
+// q29 to q31: the multi-part osmosis question, a five-row results table set once in its stem
+// ---------------------------------------------------------------------------------------------
+
+/** The concentrations in the table, in mol/dm³: 0 to 0.8 in steps of 0.2, as the written stem. */
+const TABLE_CONCS = [0, 0.2, 0.4, 0.6, 0.8]
+/**
+ * Each row's percentage change, in percent: potato gains in water and dilute sucrose and loses
+ * more the stronger the solution, crossing no change between 0.2 and 0.4 mol/dm³.
+ */
+const TABLE_BANDS: [number, number][] = [[8, 16], [2, 7], [-8, -2], [-13, -8], [-18, -12]]
+/** Starting masses of cylinders cut alike: 2.00 to 3.20 g, to the hundredth. */
+const TABLE_STARTS = Array.from({ length: 121 }, (_, k) => 200 + k)
+
+interface TableRow { start: number; end: number; exact: number; p: number }
+/**
+ * Every end mass for a start mass whose change falls in the band, with the change rounded to 1
+ * decimal place as a student rounds it, and kept clear of a half so no way of keying it rounds
+ * the other way.
+ */
+function tableRows(start: number, [lo, hi]: [number, number]): TableRow[] {
+  const out: TableRow[] = []
+  for (let end = Math.ceil(start * (1 + lo / 100)); end <= Math.floor(start * (1 + hi / 100)); end++) {
+    const exact = ((end - start) / start) * 100
+    if (end === start || !clearOfHalf(exact, 1, 0.05)) continue
+    out.push({ start: start / 100, end: end / 100, exact, p: roundTo(exact, 1) })
+  }
+  return out
+}
+
+/**
+ * Where the line between the 0.2 and 0.4 mol/dm³ rows crosses no change, to 2 places: the same
+ * from the rounded changes as from the unrounded, clear of a half, never 0.30, and the two
+ * changes never the same size (the crossing would be the midpoint, and halving would pay). The
+ * fall is 30 to 70 points per mol/dm³, as potato's is.
+ */
+function tableCrossing(a: TableRow, b: TableRow): number | undefined {
+  const fall = (a.p - b.p) / 0.2
+  if (fall < 30 || fall > 70 || a.p === -b.p) return undefined
+  const exact = 0.2 + (0.2 * a.exact) / (a.exact - b.exact)
+  const rounded = 0.2 + (0.2 * a.p) / (a.p - b.p)
+  const x = roundTo(rounded, 2)
+  if (!clearOfHalf(rounded, 2, 0.1) || roundTo(exact, 2) !== x || x === 0.3) return undefined
+  return x
+}
+
+/** (c)'s options as written, the right one third. */
+const TABLE_OPTIONS = [
+  'Use longer cylinders of potato at every concentration',
+  'Add a 1.0 mol/dm³ solution to extend the range',
+  'Add repeated concentrations between 0.2 and 0.4 mol/dm³',
+  'Leave every cylinder in its solution for 60 minutes',
+]
+/** What each wrong option misses. */
+const TABLE_MISTAKES = [
+  'a longer cylinder changes every result alike and moves no point nearer the crossing',
+  'a stronger solution adds a point even further from where the line crosses zero',
+  null,
+  'a longer time changes every result alike and moves no point nearer the crossing',
+]
+
+/**
+ * The multi-part osmosis question (q29 to q31): a fresh results table for every attempt, and
+ * the same table for all three parts, since each part draws every figure before it looks at
+ * which part it is writing. (a) one cylinder's percentage change, (b) where the line between
+ * 0.2 and 0.4 mol/dm³ crosses no change, (c) which change to the method improves (b) most.
+ */
+export const osmosisTable: Generator = {
+  id: 'osmosis-results-table',
+  subjectId: 'biology',
+  topicId: OSMOSIS,
+  replaces: ['q29', 'q30', 'q31'],
+  build(r, slot) {
+    // Every figure first, in one order, so each part prints the same table: five different
+    // starting masses, then each row's end mass, the middle two drawn to cross between them.
+    const starts: number[] = []
+    while (starts.length < 5) {
+      const s0 = pick(r, TABLE_STARTS)
+      if (!starts.includes(s0)) starts.push(s0)
+    }
+    const rows: TableRow[] = []
+    let x: number | undefined
+    for (let tries = 0; x === undefined; tries++) {
+      if (tries > 200) throw new Error('osmosis-results-table: no crossing found')
+      rows.length = 0
+      for (const [k, band] of TABLE_BANDS.entries()) {
+        // Each row loses more than the one before it, by at least 2 points.
+        const before = rows[k - 1]
+        const options = tableRows(starts[k]!, band).filter((row) => !before || row.p <= before.p - 2)
+        rows.push(pick(r, options))
+      }
+      x = tableCrossing(rows[1]!, rows[2]!)
+    }
+    const changes = rows.map((row) => row.p)
+    const masses = rows.map((row) => [row.start, row.end] as const)
+    const ask = pick(r, [0, 3, 4])
+    const cross = { p1: changes[1]!, p2: changes[2]!, x }
+    const stem =
+      'In the osmosis core practical, a student puts one potato cylinder in each of five sucrose solutions for 30 minutes, then blots and weighs it.\n\n' +
+      `| Sucrose concentration (mol/dm³) | ${TABLE_CONCS.map((c) => fixed(c, 1)).join(' | ')} |\n|---|---|---|---|---|---|\n` +
+      `| Mass at start (g) | ${masses.map(([a]) => fixed(a, 2)).join(' | ')} |\n` +
+      `| Mass at end (g) | ${masses.map(([, b]) => fixed(b, 2)).join(' | ')} |`
+    const values = { context: 'table', p0: changes[0]!, p1: cross.p1, p2: cross.p2, p3: changes[3]!, p4: changes[4]!, ask: TABLE_CONCS[ask]!, x: cross.x }
+    const all = changes.map((p, i) => `${pm1(p)}% (${fixed(TABLE_CONCS[i]!, 1)})`).join(', ')
+
+    if (slot.id === 'q29') {
+      const [m0, m1] = masses[ask]!
+      const p = changes[ask]!
+      const change = roundTo(m1 - m0, 2)
+      const draft = numeric(
+        slot,
+        {
+          prompt: `Calculate the percentage change in mass of the cylinder in ${fixed(TABLE_CONCS[ask]!, 1)} mol/dm³ sucrose. Give your answer to 1 decimal place, including the sign.`,
+          solution:
+            `Change $= ${fixed(m1, 2)} - ${fixed(m0, 2)} = ${change < 0 ? '-' : ''}${fixed(Math.abs(change), 2)}$ g. ` +
+            `Percentage change $= \\dfrac{${change < 0 ? '-' : ''}${fixed(Math.abs(change), 2)}}{${fixed(m0, 2)}} \\times 100 = ${show(p)}\\%$ to 1 decimal place. ` +
+            (p < 0 ? 'The minus sign shows the cylinder lost mass: water left its cells by osmosis.' : 'The plus sign shows the cylinder gained mass: water entered its cells by osmosis.'),
+          method: [`$\\dfrac{${fixed(m1, 2)} - ${fixed(m0, 2)}}{${fixed(m0, 2)}} \\times 100$`],
+          answer: p,
+          // Marked right unrounded too, as q5 is: the prompt's 1 decimal place is how it is printed.
+          tolerance: Math.min(0.05, Math.abs(p) * 0.019),
+          units: unitsOf(slot),
+          line: `${pm1(p)}%`,
+        },
+        { agrees: roundTo(((m1 - m0) / m0) * 100, 1) === p, detail: `(${m1} − ${m0}) ÷ ${m0} × 100` },
+        values,
+      )
+      return { ...draft, question: { ...draft.question, stem } }
+    }
+
+    if (slot.id === 'q30') {
+      const drop = roundTo(cross.p1 - cross.p2, 1)
+      const draft = numeric(
+        slot,
+        {
+          prompt: slot.prompt,
+          solution:
+            `Percentage changes: ${all}. The change goes from positive to negative between 0.2 and 0.4 mol/dm³. ` +
+            `Across that 0.2 mol/dm³ the change falls by $${fixed(cross.p1, 1)} + ${fixed(-cross.p2, 1)} = ${fixed(drop, 1)}$ percentage points, so it reaches zero $\\dfrac{${fixed(cross.p1, 1)}}{${fixed(drop, 1)}}$ of the way along: ` +
+            `$0.2 + 0.2 \\times \\dfrac{${fixed(cross.p1, 1)}}{${fixed(drop, 1)}} = ${show(cross.x)}$ mol/dm³ to 2 decimal places. Halfway, 0.30, would be right only if the two changes were the same size.`,
+          method: [
+            `${pm1(cross.p1)}% and ${pm1(cross.p2)}% found for 0.2 and 0.4 mol/dm³`,
+            `$0.2 + 0.2 \\times \\dfrac{${fixed(cross.p1, 1)}}{${fixed(drop, 1)}}$ or a graph read between 0.2 and 0.4`,
+          ],
+          answer: cross.x,
+          tolerance: 0,
+          units: unitsOf(slot),
+          line: `${show(cross.x)} mol/dm³`,
+        },
+        // Second route: back from the 0.4 end, by the size of its change.
+        { agrees: roundTo(0.4 + (0.2 * cross.p2) / drop, 2) === cross.x, detail: `0.4 − 0.2 × ${-cross.p2} ÷ ${drop}` },
+        values,
+      )
+      return { ...draft, question: { ...draft.question, stem } }
+    }
+
+    return {
+      question: {
+        type: 'multiple-choice',
+        prompt: slot.prompt,
+        options: TABLE_OPTIONS,
+        correct: [2],
+        mistakes: TABLE_MISTAKES,
+        solution: slot.solution,
+        markScheme: slot.markScheme,
+        stem,
+      },
+      check: { agrees: changes[1]! > 0 && changes[2]! < 0, detail: 'the change crosses zero between 0.2 and 0.4 mol/dm³' },
+      values,
+    }
+  },
+}
+
 // =============================================================================================
 // Exchange surfaces: surface area to volume ratio and Fick's law
 // =============================================================================================
@@ -1990,6 +2163,7 @@ export const transportGenerators: Generator[] = [
   osmosisComparison,
   osmosisMean,
   osmosisCrossing,
+  osmosisTable,
   cubeArea,
   cubeRatio,
   cuboidRatio,

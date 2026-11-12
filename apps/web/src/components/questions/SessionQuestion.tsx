@@ -2,8 +2,7 @@ import type { MarkResult, Question } from '@study/shared'
 import { Feedback } from './Feedback.tsx'
 import { QuestionInput, type Answer } from './QuestionInput.tsx'
 import { ReportMistake } from '../ReportMistake.tsx'
-import { RichText } from '../RichText.tsx'
-import { Visual } from '../Visual.tsx'
+import { QuestionPrompt } from './QuestionPrompt.tsx'
 
 /**
  * One question in a session that spans topics (Redo my mistakes, the daily recap): its
@@ -24,8 +23,7 @@ export function SessionQuestion({ subjectId, topicId, question, answered, onSubm
         <span className="rounded bg-panel px-2 py-0.5 font-bold">Grade {question.gradeBand}</span>
         <span>{question.marks} mark{question.marks > 1 ? 's' : ''}</span>
       </div>
-      {question.visual && <Visual visual={question.visual} />}
-      <RichText source={question.prompt} className="text-[17px] leading-relaxed" />
+      <QuestionPrompt question={question} />
       <QuestionInput subjectId={subjectId} key={key} question={question} disabled={Boolean(answered)} onSubmit={onSubmit} />
       {answered && <Feedback question={question} result={answered.result} onClaim={onClaim} />}
       <ReportMistake key={`r-${key}`} item={{ subjectId, topicId, itemKind: 'question', itemId: question.id, seenIn: 'worksheet' }} />

@@ -1,6 +1,7 @@
 import { AUTO_MARKED_TYPES, seededShuffle, type GradeBand, type SubjectGuide } from '@study/shared'
 import type { SessionItem } from '../progress/reviewSession.ts'
 import type { TopicSummary } from './index.ts'
+import { groupParts } from './parts.ts'
 
 /**
  * Exam-style papers (TOP-3, WKP-4, WKP-5): which questions a paper asks, and how long it gives.
@@ -60,9 +61,11 @@ export function unitTestItems(topics: TopicSummary[], code: string): SessionItem
   }
   // Easiest band first; within a band, the topics take turns in teaching order.
   const order = new Map(topics.map((t, i) => [t.id, i]))
-  return picked
+  const sorted = picked
     .sort((a, b) => BAND_ORDER.indexOf(a.band) - BAND_ORDER.indexOf(b.band) || a.turn - b.turn || order.get(a.item.topicId)! - order.get(b.item.topicId)!)
     .map((p) => p.item)
+  // Two parts of one multi-part question sit together, in letter order, under their stem.
+  return groupParts(sorted, topics)
 }
 
 /** The topics a unit test covers: the unit's, in one school year or in all of them. */
@@ -106,7 +109,8 @@ export function grade9Items(topics: TopicSummary[], code: string): SessionItem[]
   for (let round = 0; picked.length < GRADE_9_SET && pools.some((p) => p.length > round); round++) {
     for (const p of pools) if (picked.length < GRADE_9_SET && p[round]) picked.push(p[round]!)
   }
-  return picked.sort((a, b) => a.marks - b.marks).map((p) => p.item)
+  // A part drawn here is the grade 9 end of a multi-part question: the set asks all of it.
+  return groupParts(picked.sort((a, b) => a.marks - b.marks).map((p) => p.item), topics, { whole: true })
 }
 
 /** The link to a grade 9 set of the topics a unit card shows. */

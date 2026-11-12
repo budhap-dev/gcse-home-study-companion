@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Question } from '../content/questions.ts'
+import { attachStems } from '../content/topic.ts'
 import { mark, significantFiguresOf } from '../marking.ts'
 import { GENERATORS, figuresOf, generate, generatorFor, sheetQuestions } from './index.ts'
 import type { Generated } from './types.ts'
@@ -14,13 +15,18 @@ import type { Generated } from './types.ts'
  */
 const SEEDS = 1000
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
-const topic = (subjectId: string, topicId: string) =>
-  Question.array().parse(JSON.parse(readFileSync(join(ROOT, subjectId, `${topicId}.json`), 'utf8')).questions)
+const topic = (subjectId: string, topicId: string) => {
+  const raw = JSON.parse(readFileSync(join(ROOT, subjectId, `${topicId}.json`), 'utf8'))
+  return attachStems({ contexts: raw.contexts, questions: Question.array().parse(raw.questions) }).questions
+}
 
 /** Binary residue printed from a computed figure (float-residue.test.ts). */
 const RESIDUE = /\d+\.\d*?(?:0{8,}[1-9]|9{8,})\d*/
 
 const strings = (q: Question) => JSON.stringify(q)
+
+/** What a student reads: a part of a multi-part question prints its stem first, where its figures are. */
+const shown = (q: Pick<Question, 'prompt' | 'stem'>) => (q.stem ? `${q.stem.body}\n\n${q.prompt}` : q.prompt)
 
 /**
  * A solution's figures as plain numbers, so it can be searched for the answer: Business
@@ -38,6 +44,20 @@ describe('question generators', () => {
 
   for (const g of GENERATORS) {
     const bank = topic(g.subjectId, g.topicId)
+
+    // The parts of one multi-part question share a stem, so every part a generator writes for
+    // it must print the same stem from the same seed, or (b) asks about other figures than (a).
+    const stems = [...new Set(g.replaces.map((id) => bank.find((q) => q.id === id)?.stem?.id).filter(Boolean))]
+    for (const stemId of stems) {
+      it(`${g.id} prints one stem for every part of ${g.topicId} ${stemId}`, () => {
+        const parts = bank.filter((q) => q.stem?.id === stemId)
+        expect(parts.every((q) => g.replaces.includes(q.id)), 'a generator writes all the parts of a stem or none').toBe(true)
+        for (let i = 0; i < SEEDS; i++) {
+          const printed = new Set(parts.map((q) => generate(g, q, `release-${i}`).question.stem?.body))
+          expect(printed.size, `release-${i}`).toBe(1)
+        }
+      })
+    }
 
     for (const id of g.replaces) {
       const slot = bank.find((q) => q.id === id)
@@ -87,7 +107,7 @@ describe('question generators', () => {
           for (const { question: q, seed } of built) {
             if (q.type !== 'numeric' || q.answer === 0 || /significant figure|decimal place|d\.p\.|nearest|whole number|standard form/i.test(q.prompt)) continue
             expect(mark(q, String(Number(q.answer.toPrecision(3)))).correct, `${seed}: ${q.answer}`).toBe(true)
-            const givens = q.prompt.match(/(?<![\w.])\d+(?:\.\d+)?(?![\w.])/g) ?? []
+            const givens = shown(q).match(/(?<![\w.])\d+(?:\.\d+)?(?![\w.])/g) ?? []
             // Within the 2% cap a tolerance may have: 225 rounds to 230, 2.2% away, and stays wrong.
             const two = Number(q.answer.toPrecision(2))
             if (givens.every((f) => significantFiguresOf(f) <= 2) && Math.abs(two - q.answer) <= Math.abs(q.answer) * 0.019) expect(mark(q, String(two)).correct, `${seed}: ${q.answer} at 2 s.f.`).toBe(true)
@@ -96,13 +116,13 @@ describe('question generators', () => {
 
         // On a sheet, a fresh version never prints the written question's figures (it would show a retry the question just done).
         it('never repeats the written figures on a sheet when another draw is possible', () => {
-          const written = figuresOf(slot!.prompt).join(' ')
+          const written = figuresOf(shown(slot!)).join(' ')
           if (!written) return
-          const same = (b: Generated) => figuresOf(b.question.prompt).join(' ') === written
+          const same = (b: Generated) => figuresOf(shown(b.question)).join(' ') === written
           // A slot whose figures are its constants (7-bit ASCII, a formula's own digits) repeats them in most builds by design.
           const base = built.filter(same).length / built.length
           if (base > 0.5) return
-          const sheet = Array.from({ length: 200 }, (_, i) => generate(g, slot!, `sheet-${i}`, { avoid: [slot!.prompt] }))
+          const sheet = Array.from({ length: 200 }, (_, i) => generate(g, slot!, `sheet-${i}`, { avoid: [shown(slot!)] }))
           expect(sheet.filter(same).length / sheet.length, `${g.id} ${id} (${base} without)`).toBeLessThanOrEqual(Math.max(0.02, base ** 3))
         })
 
@@ -115,7 +135,7 @@ describe('question generators', () => {
         // standard-form answer may say 7.3e4 on purpose, so only the text a student reads is scanned.
         it('prints no number in e-notation', () => {
           for (const { question: q, seed } of built) {
-            const read = [q.prompt, q.solution, ...q.markScheme.map((l) => l.description), ...(q.type === 'multiple-choice' ? q.options : [])].join(' ')
+            const read = [shown(q), q.solution, ...q.markScheme.map((l) => l.description), ...(q.type === 'multiple-choice' ? q.options : [])].join(' ')
             expect(read, seed).not.toMatch(/\d(?:\.\d+)?e[-+]?\d/)
           }
         })
@@ -140,7 +160,7 @@ describe('question generators', () => {
         // hour take the other article by sound, and an acronym (an mRNA) is not a lower-case word.
         it('puts "a" before a consonant sound and "an" before a vowel', () => {
           for (const { question: q, seed } of built) {
-            const words = `${q.prompt} ${q.solution}`.replace(/\$[^$]*\$/g, ' ')
+            const words = `${shown(q)} ${q.solution}`.replace(/\$[^$]*\$/g, ' ')
             expect(words, seed).not.toMatch(/\ba (?!u|one)[aeio][a-z]+\b/)
             expect(words, seed).not.toMatch(/\ban (?!hour|honest|heir)[b-df-hj-np-tv-z][a-z]+\b/)
             // A figure by how it is said: an 8-bit, an 80, an 11, an 18.5; a 7-bit, a 110, a 1100.
@@ -180,17 +200,17 @@ describe('question generators', () => {
         })
 
         it('varies the question, not only a number or two', () => {
-          expect(new Set(built.map((b) => b.question.prompt)).size).toBeGreaterThan(100)
+          expect(new Set(built.map((b) => shown(b.question))).size).toBeGreaterThan(100)
         })
 
         // A hundred distinct prompts can still hide one drawn a fifth of the time; when that one
         // is the written question, a retry hands back the question the student just got wrong.
         it('repeats no one prompt, the written one least of all, in a tenth of builds', () => {
           const counts = new Map<string, number>()
-          for (const b of built) counts.set(b.question.prompt, (counts.get(b.question.prompt) ?? 0) + 1)
+          for (const b of built) counts.set(shown(b.question), (counts.get(shown(b.question)) ?? 0) + 1)
           const [top, n] = [...counts].reduce((a, c) => (c[1] > a[1] ? c : a))
           expect(n, top).toBeLessThanOrEqual(SEEDS / 10)
-          expect(counts.get(slot!.prompt) ?? 0).toBeLessThanOrEqual(SEEDS / 20)
+          expect(counts.get(shown(slot!)) ?? 0).toBeLessThanOrEqual(SEEDS / 20)
         })
       })
     }
