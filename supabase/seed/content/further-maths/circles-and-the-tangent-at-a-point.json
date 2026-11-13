@@ -999,6 +999,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "circ-c",
+      "body": "A circle has centre $C(3, -1)$ and passes through the point $P(7, 2)$."
+    },
+    {
+      "id": "circ-line",
+      "body": "The line $y = x + k$, where $k$ is a constant, and the circle $x^2 + y^2 = 18$ are drawn on the same axes."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1591,6 +1601,338 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the radius of the circle.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "radius as a distance",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$r = \\sqrt{(7 - 3)^2 + (2 - (-1))^2} = \\sqrt{16 + 9} = 5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{4^2 + 3^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "context": "circ-c",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Find the equation of the circle.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "equation of a circle with any centre",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The radius is $\\sqrt{4^2 + 3^2} = 5$, so $(x - 3)^2 + (y + 1)^2 = 25$. The signs in the brackets are opposite to the centre's coordinates.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "radius $\\sqrt{4^2 + 3^2} = 5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(x - 3)^2 + (y + 1)^2 = 25$"
+        }
+      ],
+      "discriminators": [],
+      "context": "circ-c",
+      "type": "short-text",
+      "accepted": [
+        "(x-3)^2+(y+1)^2=25",
+        "(y+1)^2+(x-3)^2=25",
+        "(x-3)^2+(y+1)^2=5^2",
+        "x^2+y^2-6x+2y=15",
+        "x^2+y^2-6x+2y-15=0"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Find the equation of the tangent to the circle at $P$. Give your answer in the form $ax + by = c$, where $a$, $b$ and $c$ are integers.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "tangent perpendicular to the radius",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The radius $CP$ has gradient $\\dfrac{2 - (-1)}{7 - 3} = \\dfrac{3}{4}$, so the tangent has gradient $-\\dfrac{4}{3}$. Through $(7, 2)$: $y - 2 = -\\dfrac{4}{3}(x - 7)$, so $3y - 6 = -4x + 28$ and $4x + 3y = 34$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "radius gradient $\\dfrac{3}{4}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tangent gradient $-\\dfrac{4}{3}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$4x + 3y = 34$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "circ-c",
+      "type": "short-text",
+      "accepted": [
+        "4x+3y=34",
+        "3y+4x=34",
+        "-4x-3y=-34"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "The tangent to the circle at $P$ meets the $x$-axis at $Q$. Work out the $x$-coordinate of $Q$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "where a tangent meets an axis",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Radius gradient $\\dfrac{3}{4}$, so the tangent at $P(7, 2)$ has gradient $-\\dfrac{4}{3}$ and equation $4x + 3y = 34$. On the $x$-axis $y = 0$, so $4x = 34$ and $x = 8.5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "tangent equation"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$y = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "circ-c",
+      "type": "numeric",
+      "answer": 8.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Show that where the line meets the circle, $2x^2 + 2kx + k^2 - 18 = 0$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "substituting a line into a circle",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Substitute $y = x + k$: $x^2 + (x + k)^2 = 18$, so $x^2 + x^2 + 2kx + k^2 = 18$ and $2x^2 + 2kx + k^2 - 18 = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 + (x + k)^2 = 18$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "expands and rearranges"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "circ-line",
+      "type": "extended",
+      "suggestedMinutes": 2,
+      "criteria": [
+        {
+          "text": "Substituted to get $x^2 + (x + k)^2 = 18$",
+          "marks": 1
+        },
+        {
+          "text": "Expanded $(x + k)^2$ correctly and rearranged to $2x^2 + 2kx + k^2 - 18 = 0$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$x^2 + (x + k)^2 = 18 \\Rightarrow 2x^2 + 2kx + k^2 - 18 = 0$"
+    },
+    {
+      "id": "q24",
+      "prompt": "The line is a tangent to the circle and $k > 0$. Work out the value of $k$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a tangent by the discriminant",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Substituting gives $2x^2 + 2kx + k^2 - 18 = 0$. A tangent meets once, so $b^2 - 4ac = 0$: $4k^2 - 8(k^2 - 18) = 0$, so $144 - 4k^2 = 0$, $k^2 = 36$ and $k = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "discriminant $= 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$144 - 4k^2 = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "circ-line",
+      "type": "numeric",
+      "answer": 6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "The line is a tangent to the circle and $k > 0$. Find the coordinates of the point where the line touches the circle.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the point of contact",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Substituting gives $2x^2 + 2kx + k^2 - 18 = 0$, and a tangent needs $4k^2 - 8(k^2 - 18) = 0$, so $k = 6$. Then $2x^2 + 12x + 18 = 0$, so $x^2 + 6x + 9 = (x + 3)^2 = 0$ and $x = -3$. $y = -3 + 6 = 3$: the point is $(-3, 3)$. Check: $9 + 9 = 18$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x + 3)^2 = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(-3, 3)$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "circ-line",
+      "type": "short-text",
+      "accepted": [
+        "(-3, 3)",
+        "x=-3, y=3"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "$A(-2, 2)$ and $B(6, 6)$ are the ends of a diameter of a circle. The circle passes through the origin and meets the $y$-axis at one other point. Work out the $y$-coordinate of that point.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "a circle from a diameter",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The centre is the midpoint of $AB$, $(2, 4)$, and the radius is $\\sqrt{4^2 + 2^2} = \\sqrt{20}$. The circle is $(x - 2)^2 + (y - 4)^2 = 20$. On the $y$-axis, $x = 0$: $4 + (y - 4)^2 = 20$, so $(y - 4)^2 = 16$ and $y = 0$ or $y = 8$. The other point is $(0, 8)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "centre $(2, 4)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "radius $\\sqrt{20}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x = 0$ substituted"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 8,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "$A$ is $(1, 1)$, $B$ is $(7, 9)$ and $C$ is $(8, 2)$. Show that $C$ lies on the circle with diameter $AB$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the angle in a semicircle on a grid",
+      "step": "s7",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Gradient $AC = \\dfrac{2 - 1}{8 - 1} = \\dfrac{1}{7}$ and gradient $BC = \\dfrac{2 - 9}{8 - 7} = -7$. Their product is $-1$, so angle $ACB = 90°$, and a right angle subtended by $AB$ puts $C$ on the circle with diameter $AB$. (Or: centre $(4, 5)$, radius 5, and $C$ is $\\sqrt{16 + 9} = 5$ from the centre.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both gradients, or the centre and radius"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "product $-1$, or the distance 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "conclusion with the reason"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Found the gradients $\\dfrac{1}{7}$ and $-7$ (or the centre $(4, 5)$ and radius 5)",
+          "marks": 1
+        },
+        {
+          "text": "Showed the product is $-1$ (or $C$ is 5 from the centre)",
+          "marks": 1
+        },
+        {
+          "text": "Concluded with the angle in a semicircle (or the radius) as the reason",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$m_{AC} \\times m_{BC} = \\dfrac{1}{7} \\times (-7) = -1$, so $\\angle ACB = 90°$ and $C$ lies on the circle with diameter $AB$ (angle in a semicircle)."
     }
   ],
   "worksheets": {
@@ -1626,9 +1968,18 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 31
+      "suggestedMinutes": 57
     }
   },
   "examTechnique": {
@@ -1661,7 +2012,8 @@
       "q14",
       "q15",
       "q16",
-      "q18"
+      "q18",
+      "q26"
     ],
     "sampleSize": 10
   },

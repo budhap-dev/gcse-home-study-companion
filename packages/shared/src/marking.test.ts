@@ -595,6 +595,25 @@ describe('maths answers in another correct form', () => {
     for (const a of ['2, 3, 4', '1, 2, 3, 4, 5']) wrong(ints, a)
   })
 
+  it('takes one point written any of the usual ways', () => {
+    const q = st('Find the coordinates of the point where the line touches the circle.', ['(-3, 3)', 'x=-3, y=3'])
+    for (const a of ['x = -3 and y = 3', 'y = 3, x = -3', '(-3,3)', 'x=-3,y=3']) right(q, a)
+    for (const a of ['(3, -3)', 'x = 3 and y = -3', 'y = -3, x = 3', '(-3, 3), (1, 1)']) wrong(q, a)
+  })
+
+  it('takes dy/dx = in front of a derivative', () => {
+    const q = st('Find $\\dfrac{dy}{dx}$.', ['6x^2+8x^-2'])
+    for (const a of ['dy/dx = 6x^2 + 8x^-2', 'dy/dx=8x^-2+6x^2']) right(q, a)
+    wrong(q, 'dy/dx = 6x^2 - 8x^-2')
+  })
+
+  it('reads x-coordinates and values of sin x as sets', () => {
+    right(st('Find the $x$-coordinates of the stationary points of the curve.', ['-1, 3']), '3, -1')
+    wrong(st('Find the $x$-coordinates of the stationary points of the curve.', ['-1, 3']), '1, -3')
+    right(st('Find the two possible values of $\\sin x$.', ['1, -1/2']), '-1/2, 1')
+    wrong(st('Find the two possible values of $\\sin x$.', ['1, -1/2']), '1/2, -1')
+  })
+
   it('takes surd solutions with their terms in another order, but keeps the form asked for', () => {
     const q = st('Solve $f(x) = -6$. Give your answers in exact form.', ['0, -1 ± √6'])
     for (const a of ['0, √6-1, -1-√6', '-1 - √6, 0, -1 + √6']) right(q, a)

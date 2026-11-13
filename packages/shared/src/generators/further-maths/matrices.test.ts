@@ -246,13 +246,15 @@ describe('routing', () => {
     }
   })
 
+  const HARDER = Array.from({ length: 8 }, (_, i) => `q${19 + i}`)
   it('fills every sheet, the written multiple-choice and extended questions left as they were', () => {
     for (const level of ['core', 'higher', 'advanced']) {
       const ids: string[] = topic.worksheets[level].questionIds
       for (let i = 0; i < 100; i++) {
         const sheet = sheetQuestions('further-maths', TOPIC, ids.map(written), `sheet-${level}-${i}`)
         for (const s of sheet) {
-          if (['q3', 'q5', 'q9', 'q12', 'q13', 'q17', 'q18'].includes(s.question.id)) expect(s.generated).toBeUndefined()
+          // q19 to q26 are the harder written questions of 13 November 2026 (section 13, box 11).
+          if (['q3', 'q5', 'q9', 'q12', 'q13', 'q17', 'q18', ...HARDER].includes(s.question.id)) expect(s.generated).toBeUndefined()
           else expect(s.generated, `${level} ${s.question.id}`).toBeDefined()
         }
       }

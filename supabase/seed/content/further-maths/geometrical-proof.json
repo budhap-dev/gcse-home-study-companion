@@ -1071,6 +1071,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "gp-centre",
+      "body": "$A$, $B$ and $C$ lie on a circle with centre $O$, and $O$ lies inside triangle $ABC$. $\\angle OAB = x$ and $\\angle OCB = y$."
+    },
+    {
+      "id": "gp-kite",
+      "body": "$PA$ and $PB$ are tangents from a point $P$ to a circle with centre $O$, touching it at $A$ and $B$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1688,6 +1698,326 @@
       "answer": 5,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q19",
+      "prompt": "Prove that $\\angle ABC = x + y$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "isosceles triangles from radii",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$OA = OB$ (radii), so triangle $OAB$ is isosceles and $\\angle OBA = \\angle OAB = x$ (base angles of an isosceles triangle). $OB = OC$ (radii), so $\\angle OBC = \\angle OCB = y$ (base angles). $O$ is inside the triangle, so $\\angle ABC = \\angle OBA + \\angle OBC = x + y$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\angle OBA = x$ with reason"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\angle OBC = y$ with reason"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "adds, with the reasons complete"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "gp-centre",
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "$\\angle OBA = x$, giving radii equal and base angles of an isosceles triangle",
+          "marks": 1
+        },
+        {
+          "text": "$\\angle OBC = y$, with the same reasons",
+          "marks": 1
+        },
+        {
+          "text": "Added to $\\angle ABC = x + y$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$OA = OB$ (radii), so $\\angle OBA = x$ (base angles, isosceles). $OB = OC$ (radii), so $\\angle OBC = y$. So $\\angle ABC = x + y$."
+    },
+    {
+      "id": "q20",
+      "prompt": "$x = 25°$ and $y = 30°$. Work out the size of the angle $AOC$ at the centre (not the reflex angle).",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the angle at the centre",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$OA = OB = OC$ (radii) make triangles $OAB$ and $OBC$ isosceles, so $\\angle ABC = x + y = 55°$. The angle at the centre is twice the angle at the circumference on the same arc: $\\angle AOC = 110°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\angle ABC = 55°$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "110"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "gp-centre",
+      "type": "numeric",
+      "answer": 110,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q21",
+      "prompt": "Which reason completes the line \"$\\angle AOC = 2 \\times \\angle ABC$ because …\"?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "naming a circle theorem",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The theorem is that the angle at the centre is twice the angle at the circumference standing on the same arc. \"Angles in the same segment are equal\" compares two angles at the circumference, not one at the centre.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "angle at the centre is twice the angle at the circumference"
+        }
+      ],
+      "discriminators": [],
+      "context": "gp-centre",
+      "type": "multiple-choice",
+      "options": [
+        "angles in the same segment are equal",
+        "angle at centre is twice angle at circumference",
+        "opposite angles of a cyclic quadrilateral add to 180°",
+        "the angle in a semicircle is a right angle"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Prove that triangles $OAP$ and $OBP$ are congruent.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "congruence with a tangent",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\angle OAP = \\angle OBP = 90°$ (a tangent is perpendicular to the radius). $OA = OB$ (radii). $OP$ is common. So the triangles are congruent (RHS).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both right angles, with reason"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$OA = OB$ and $OP$ common"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "RHS"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "gp-kite",
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Both right angles, because a tangent is perpendicular to the radius",
+          "marks": 1
+        },
+        {
+          "text": "$OA = OB$ as radii, and $OP$ shared",
+          "marks": 1
+        },
+        {
+          "text": "Concluded congruent by RHS",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$\\angle OAP = \\angle OBP = 90°$ (tangent ⟂ radius), $OA = OB$ (radii), $OP$ common: congruent by RHS."
+    },
+    {
+      "id": "q23",
+      "prompt": "$OA = 5$ cm and $OP = 13$ cm. Work out the length $PA$, in cm.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "Pythagoras with a tangent",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Angle $OAP = 90°$ because the tangent is perpendicular to the radius, so $PA = \\sqrt{13^2 - 5^2} = \\sqrt{144} = 12$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "right angle at $A$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "12"
+        }
+      ],
+      "discriminators": [],
+      "context": "gp-kite",
+      "type": "numeric",
+      "answer": 12,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm"
+    },
+    {
+      "id": "q24",
+      "prompt": "$OA = 5$ cm and $OP = 13$ cm. Work out the area of the kite $OAPB$, in cm².",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "area from two congruent triangles",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The tangent is perpendicular to the radius, so triangle $OAP$ has a right angle at $A$ and $PA = \\sqrt{169 - 25} = 12$ cm. Its area is $\\dfrac{1}{2} \\times 5 \\times 12 = 30$ cm². $OBP$ is congruent to it, so the kite is $60$ cm².",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$PA = 12$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "one triangle $30$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "60"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "gp-kite",
+      "type": "numeric",
+      "answer": 60,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q25",
+      "prompt": "The vertices of triangle $ABC$ lie on a circle, with $AB = AC$. The tangent to the circle at $A$ is drawn. Prove that the tangent at $A$ is parallel to $BC$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "the alternate segment theorem in a proof",
+      "step": "s7",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Let the tangent be $TAS$, with $T$ on the side of $B$. By the alternate segment theorem, $\\angle TAB = \\angle ACB$. $AB = AC$, so $\\angle ACB = \\angle ABC$ (base angles of an isosceles triangle). So $\\angle TAB = \\angle ABC$. These are alternate angles between the tangent and $BC$ with $AB$ as the transversal, so the tangent is parallel to $BC$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "alternate segment theorem"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "isosceles base angles"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\angle TAB = \\angle ABC$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "alternate angles, so parallel"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Used the alternate segment theorem: $\\angle TAB = \\angle ACB$",
+          "marks": 1
+        },
+        {
+          "text": "Used $AB = AC$: $\\angle ACB = \\angle ABC$",
+          "marks": 1
+        },
+        {
+          "text": "Combined to $\\angle TAB = \\angle ABC$",
+          "marks": 1
+        },
+        {
+          "text": "Concluded parallel because alternate angles are equal",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$\\angle TAB = \\angle ACB$ (alternate segment) $= \\angle ABC$ (isosceles). Equal alternate angles, so the tangent is parallel to $BC$."
+    },
+    {
+      "id": "q26",
+      "prompt": "A solid hemisphere has radius $r$. A cylinder also has radius $r$, height $h$ and the same volume as the hemisphere. Find $\\dfrac{h}{r}$. Give your answer as a fraction. (Volume of a sphere $= \\dfrac{4}{3}\\pi r^3$.)",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "equating two volume formulae",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The hemisphere is half a sphere: $\\dfrac{2}{3}\\pi r^3$. The cylinder is $\\pi r^2 h$. Setting them equal: $\\pi r^2 h = \\dfrac{2}{3}\\pi r^3$, so $h = \\dfrac{2}{3}r$ and $\\dfrac{h}{r} = \\dfrac{2}{3}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{3}\\pi r^3$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "equates and cancels"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{2}{3}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "2/3",
+        "h/r=2/3"
+      ]
     }
   ],
   "worksheets": {
@@ -1723,9 +2053,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 42
+      "suggestedMinutes": 65
     }
   },
   "examTechnique": {
@@ -1758,7 +2096,8 @@
       "q14",
       "q15",
       "q16",
-      "q18"
+      "q18",
+      "q26"
     ],
     "sampleSize": 10
   },
