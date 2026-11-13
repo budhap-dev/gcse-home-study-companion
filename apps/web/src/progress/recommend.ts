@@ -1,5 +1,6 @@
 import { DEFAULT_THRESHOLDS, getSubject, type WorksheetLevel } from '@study/shared'
-import type { TopicSummary as Topic } from '../content/index.ts'
+import { getGuide, type TopicSummary as Topic } from '../content/index.ts'
+import { minutesFor, minutesPerMark } from '../content/paper.ts'
 import { evidenceFor, lastActivity, type ProgressState } from './store.ts'
 
 export interface Task {
@@ -19,11 +20,18 @@ export interface Task {
  * Exported because an assigned task is the same object with a different reason for
  * existing, and it should route and be timed identically to a recommended one.
  */
+/** A worksheet's time at the exam's pace, as its start page and timed paper give it. */
+function sheetMinutes(topic: Topic, level: WorksheetLevel): number {
+  const ids = new Set(topic.worksheets[level].questionIds)
+  const marks = topic.questions.filter((q) => ids.has(q.id)).reduce((s, q) => s + q.marks, 0)
+  return minutesFor(marks, minutesPerMark(getGuide(topic.subjectId)))
+}
+
 export function buildTask(topic: Topic, kind: Task['kind'], reason: string, level?: WorksheetLevel): Task {
   const subject = getSubject(topic.subjectId)
   const base = `/subjects/${topic.subjectId}/topics/${topic.id}`
   const title = kind === 'lesson' ? 'Lesson' : kind === 'quiz' ? 'Quiz' : `${level === 'core' ? 'Core' : level === 'higher' ? 'Higher' : 'Advanced'} worksheet`
-  const minutes = kind === 'lesson' ? Math.round(topic.lesson.steps.length * 1.5) : kind === 'quiz' ? Math.max(5, Math.round(topic.quiz.sampleSize * 0.8)) : topic.worksheets[level!].suggestedMinutes
+  const minutes = kind === 'lesson' ? Math.round(topic.lesson.steps.length * 1.5) : kind === 'quiz' ? Math.max(5, Math.round(topic.quiz.sampleSize * 0.8)) : sheetMinutes(topic, level!)
   return {
     kind, level, topic, title, reason, minutes,
     subjectName: subject?.name ?? topic.subjectId,

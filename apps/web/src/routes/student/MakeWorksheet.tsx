@@ -2,8 +2,9 @@ import { generatorFor, getSubject, type WorksheetLevel } from '@study/shared'
 import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { ShareSheet } from '../../components/ShareSheet.tsx'
-import { topicsForSubject } from '../../content/index.ts'
-import { MIXED_COUNTS, MIXED_MIN_TOPICS, mixedPath, pickItems, type MixedSpec } from '../../content/mixedSheet.ts'
+import { getGuide, topicsForSubject } from '../../content/index.ts'
+import { minutesFor, minutesPerMark } from '../../content/paper.ts'
+import { LENGTH_LABEL, LENGTHS, MIXED_MIN_TOPICS, mixedPath, pickItems, type MixedSpec } from '../../content/mixedSheet.ts'
 import { newSheetCode } from '../../content/sheetCode.ts'
 
 const LEVELS: { id: WorksheetLevel; label: string; note: string }[] = [
@@ -29,7 +30,8 @@ export function MakeWorksheet() {
   // Opens on the first unit with enough topics to mix, all chosen, so the page starts ready to use.
   const [chosen, setChosen] = useState<Set<string>>(() => new Set((units.find((u) => u.topics.length >= MIXED_MIN_TOPICS) ?? units[0])?.topics.map((t) => t.id) ?? []))
   const [level, setLevel] = useState<WorksheetLevel>('higher')
-  const [count, setCount] = useState<number>(10)
+  // How long the sheet should take, at the exam's pace; it replaced a count of questions (13 November 2026).
+  const [minutes, setMinutes] = useState<number>(30)
   const [versions, setVersions] = useState(1)
   // The code fixes which questions and numbers the sheet has, so a link or a printout
   // matches its answer sheet. It is printed on paper, not shown here: six random letters
@@ -41,11 +43,12 @@ export function MakeWorksheet() {
 
   if (!subject) return <p>Unknown subject.</p>
 
-  const spec: MixedSpec = { subjectId, topicIds: topics.filter((t) => chosen.has(t.id)).map((t) => t.id), level, count, code }
+  const spec: MixedSpec = { subjectId, topicIds: topics.filter((t) => chosen.has(t.id)).map((t) => t.id), level, minutes, code }
   const items = pickItems(spec, topics)
   const fresh = items.filter((m) => generatorFor(subjectId, m.topicId, m.questionId)).length
   const marks = items.reduce((s, m) => s + (topics.find((t) => t.id === m.topicId)?.questions.find((q) => q.id === m.questionId)?.marks ?? 0), 0)
   const fromTopics = new Set(items.map((m) => m.topicId)).size
+  const takes = minutesFor(marks, minutesPerMark(getGuide(subjectId)))
   const ready = spec.topicIds.length >= MIXED_MIN_TOPICS && items.length > 0
   const toggle = (id: string) => setChosen((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n })
   const setUnit = (ids: string[], all: boolean) => setChosen((s) => { const n = new Set(s); for (const id of ids) if (all) n.add(id); else n.delete(id); return n })
@@ -102,10 +105,11 @@ export function MakeWorksheet() {
       </section>
 
       <section className="flex flex-col gap-2" aria-labelledby="mk-count">
-        <h2 id="mk-count" className="text-lg font-bold">How many questions</h2>
+        <h2 id="mk-count" className="text-lg font-bold">How long</h2>
+        <p className="text-sm text-ink-2">The sheet takes as many questions as fit, at the exam’s pace.</p>
         <div className="flex flex-wrap gap-2" role="group" aria-labelledby="mk-count">
-          {MIXED_COUNTS.map((n) => (
-            <button key={n} type="button" aria-pressed={count === n} onClick={() => setCount(n)} className={`${CHIP} min-w-11 tabular-nums ${on(count === n)}`}>{n}</button>
+          {LENGTHS.map((m) => (
+            <button key={m} type="button" aria-pressed={minutes === m} onClick={() => setMinutes(m)} className={`${CHIP} min-w-20 tabular-nums ${on(minutes === m)}`}>{LENGTH_LABEL[m]}</button>
           ))}
         </div>
       </section>
@@ -127,9 +131,9 @@ export function MakeWorksheet() {
         <p aria-live="polite" className="text-[15px]">
           {ready ? (
             <>
-              <strong>{items.length} question{items.length === 1 ? '' : 's'}</strong> from {fromTopics} topics · {marks} marks
+              <strong>{items.length} question{items.length === 1 ? '' : 's'}</strong> from {fromTopics} topics · {marks} marks · about {takes} min
               {fresh > 0 && <> · {fresh} with new numbers</>}
-              {items.length < count && <span className="block text-sm text-ink-2">Only {items.length} questions at this level can be marked on screen across these topics; tick more topics for {count}.</span>}
+              {takes < minutes - 5 && <span className="block text-sm text-ink-2">These topics hold only about {takes} minutes at this level that can be marked on screen; tick more topics for a longer sheet.</span>}
             </>
           ) : (
             <strong>{spec.topicIds.length === 0 ? `Tick at least ${MIXED_MIN_TOPICS} topics above to make a worksheet.` : `Tick ${MIXED_MIN_TOPICS - spec.topicIds.length} more topic${MIXED_MIN_TOPICS - spec.topicIds.length === 1 ? '' : 's'} above: with fewer than ${MIXED_MIN_TOPICS}, the topic gives the method away.`}</strong>

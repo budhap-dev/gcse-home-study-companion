@@ -5,7 +5,9 @@ import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
 import { termsForTopic } from '../../content/glossary.ts'
 import { StatusIcon } from '../../components/StatusChip.tsx'
-import { summaryById, totalMarks } from '../../content/index.ts'
+import { getGuide, summaryById, totalMarks } from '../../content/index.ts'
+import { minutesFor, minutesPerMark } from '../../content/paper.ts'
+import { PracticeLengths } from '../../components/PracticeLengths.tsx'
 import { nextRung, square } from '../../progress/map.ts'
 import { MasteryLadder } from '../../components/map/MapParts.tsx'
 import { useProgress } from '../../progress/useProgress.ts'
@@ -241,7 +243,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
                   colour={LEVEL_COLOUR[level]}
                   title={`${LEVEL_LABEL[level]} worksheet`}
                   grades={LEVEL_GRADES[level]}
-                  note={`${open ? `Started: on question ${open.index + 1} of ${sheet.questionIds.length}. ` : suggested ? 'Suggested for where you are. ' : ''}${sheet.questionIds.length} questions · ${totalMarks(topic, sheet.questionIds)} marks · about ${sheet.suggestedMinutes} min. ${LEVEL_NOTE[level]}`}
+                  note={`${open ? `Started: on question ${open.index + 1} of ${sheet.questionIds.length}. ` : suggested ? 'Suggested for where you are. ' : ''}${sheet.questionIds.length} questions · ${totalMarks(topic, sheet.questionIds)} marks · about ${minutesFor(totalMarks(topic, sheet.questionIds), minutesPerMark(getGuide(subject.id)))} min. ${LEVEL_NOTE[level]}`}
                   action={open ? 'Resume' : suggested ? 'Start here' : 'Open'}
                   highlight={suggested}
                   delay={0.16 + i * 0.05}
@@ -254,6 +256,8 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
               return <PracticeCard to="quiz" n={4} colour="#b5451b" title="Quiz" grades="All grades" note={open ? `Started: on question ${open.index + 1} of ${open.total}. Your answers so far are kept.` : `${topic.quiz.sampleSize} questions drawn from ${topic.quiz.questionIds.length}, marked instantly`} action={open ? 'Resume' : 'Start'} delay={0.31} />
             })()}
           </nav>
+
+          <PracticeLengths topic={topic} />
 
           <nav aria-label="Revise" className="anim-rise grid grid-cols-3 gap-2" style={{ '--d': '0.36s' } as React.CSSProperties}>
             {[

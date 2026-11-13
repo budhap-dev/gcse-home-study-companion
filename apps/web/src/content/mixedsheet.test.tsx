@@ -3,8 +3,9 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { getFullTopic } from './all.ts'
-import { topicsForSubject } from './index.ts'
-import { MIXED_MIN_TOPICS, mixedPath, parseSpec, pickItems, sheetFor, versionCodes, type MixedSpec } from './mixedSheet.ts'
+import { getGuide, topicsForSubject } from './index.ts'
+import { LENGTHS, MIXED_MIN_TOPICS, mixedPath, parseSpec, pickForTime, pickItems, sheetFor, versionCodes, type MixedSpec } from './mixedSheet.ts'
+import { minutesPerMark } from './paper.ts'
 import { recordReview } from '../progress/reviewSession.ts'
 import { getState, replaceState } from '../progress/store.ts'
 import { MixedPrint } from '../routes/student/MixedPrint.tsx'
@@ -120,5 +121,59 @@ describe('a printed mixed sheet', () => {
     const answers = render(mixedPath(spec, { codes, answers: true }))
     expect(answers).toContain('Answers for sheet abcd23 only')
     expect(answers).toContain('Answer:')
+  })
+})
+
+/**
+ * A sheet with a length (13 November 2026): "how long have you got?" fills 10 minutes, 30 or an
+ * hour at the exam's pace, from one topic across its levels or from several at one level.
+ */
+describe('a sheet with a length', () => {
+  const perMark = minutesPerMark(getGuide('maths'))
+  const minutesOf = (items: { topicId: string; questionId: string }[]) =>
+    items.reduce((s, m) => s + (maths.find((t) => t.id === m.topicId)!.questions.find((q) => q.id === m.questionId)!.marks), 0) * perMark
+
+  it('reads back from its link, and a one-topic practice needs a length', () => {
+    const one: MixedSpec = { subjectId: 'maths', topicIds: [unit[0]!], level: 'all', minutes: 10, code: 'k7m2qp' }
+    expect(parseSpec('maths', new URL(`https://x${mixedPath(one)}`).searchParams)).toEqual(one)
+    expect(parseSpec('maths', new URLSearchParams(`topics=${unit[0]}&level=all&n=10&sheet=k7m2qp`))).toBeUndefined()
+    expect(parseSpec('maths', new URLSearchParams(`topics=${unit[0]}&level=all&min=15&sheet=k7m2qp`))).toBeUndefined()
+    expect(parseSpec('maths', new URLSearchParams(`topics=${unit[0]}&level=higher&min=10&sheet=k7m2qp`))).toBeUndefined()
+  })
+
+  it('fills its time without going over, for every Maths topic and length', () => {
+    for (const t of maths) for (const minutes of LENGTHS) {
+      const items = pickForTime({ subjectId: 'maths', topicIds: [t.id], level: 'all', minutes, code: 'k7m2qp' }, minutes, maths)
+      expect(items.length, `${t.id} ${minutes}`).toBeGreaterThan(0)
+      // Over only when a single question is longer than the whole length.
+      if (items.length > 1) expect(minutesOf(items), `${t.id} ${minutes}`).toBeLessThanOrEqual(minutes + 1e-9)
+      for (const m of items) expect(AUTO_MARKED_TYPES).toContain(t.questions.find((q) => q.id === m.questionId)!.type)
+    }
+  })
+
+  it('climbs from Core to Advanced, and keeps the parts of a question together in letter order', () => {
+    for (const t of maths) {
+      const items = pickForTime({ subjectId: 'maths', topicIds: [t.id], level: 'all', minutes: 60, code: 'abcd23' }, 60, maths)
+      const levelOf = (id: string) => (['core', 'higher', 'advanced'] as const).findIndex((l) => t.worksheets[l].questionIds.includes(id))
+      const ranks = items.map((m) => levelOf(m.questionId))
+      expect(ranks, t.id).toEqual([...ranks].sort((a, b) => a - b))
+      const stems = items.map((m) => t.questions.find((q) => q.id === m.questionId)!.stemId)
+      for (const stem of new Set(stems.filter(Boolean))) {
+        const at = stems.flatMap((s, i) => (s === stem ? [i] : []))
+        expect(at[at.length - 1]! - at[0]!, `${t.id} ${stem}`).toBe(at.length - 1)
+        const order = at.map((i) => t.questions.findIndex((q) => q.id === items[i]!.questionId))
+        expect(order, `${t.id} ${stem}`).toEqual([...order].sort((a, b) => a - b))
+      }
+    }
+  })
+
+  it('a longer length never asks fewer questions, and the code changes the questions', () => {
+    const t = unit[0]!
+    const pick = (minutes: number, code = 'k7m2qp') => pickForTime({ subjectId: 'maths', topicIds: [t], level: 'all', minutes, code }, minutes, maths)
+    expect(pick(30).length).toBeGreaterThanOrEqual(pick(10).length)
+    expect(pick(60).length).toBeGreaterThanOrEqual(pick(30).length)
+    expect(pick(10)).toEqual(pick(10))
+    expect(pickItems({ subjectId: 'maths', topicIds: unit, level: 'higher', minutes: 30, code: 'k7m2qp' }, maths)).not.toEqual(
+      pickItems({ subjectId: 'maths', topicIds: unit, level: 'higher', minutes: 30, code: 'abcd23' }, maths))
   })
 })
