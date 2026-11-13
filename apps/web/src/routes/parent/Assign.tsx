@@ -119,7 +119,7 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
           <span className="font-bold">Note <span className="font-normal text-ink-2">(optional, shown to {name})</span></span>
           <input value={note} onChange={(e) => setNote(e.target.value)} maxLength={300} placeholder="You scored 42% last time" className={field} />
         </label>
-        <button type="submit" disabled={busy || !topicId} className="h-11 w-full rounded-lg bg-ink px-4 font-bold text-surface disabled:opacity-50 sm:w-40">
+        <button type="submit" disabled={busy || !topicId} className="btn btn-primary w-full sm:w-40">
           {busy ? 'Setting…' : 'Set task'}
         </button>
         {message && <p className="text-sm" role="status">{message}</p>}
@@ -137,10 +137,10 @@ export function AssignPanel({ email, name, state }: { email: string; name: strin
                     the attempt that completed the old one does not count towards it. */}
                 {t.status === 'done' && (
                   <button type="button" onClick={() => void again(t)}
-                    className="h-11 rounded-lg border border-rule px-3 text-xs font-bold text-ink">Set again</button>
+                    className="btn btn-secondary btn-sm">Set again</button>
                 )}
                 <button type="button" onClick={() => void remove(t.assignment.id, t.topicTitle)}
-                  className="h-11 rounded-lg border border-rule px-3 text-xs font-bold text-[color:var(--status-not-secure-ink)]">Remove</button>
+                  className="btn btn-danger-quiet btn-sm">Remove</button>
               </span>
             </li>
           ))}

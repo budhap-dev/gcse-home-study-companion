@@ -30,8 +30,8 @@ export function MilestoneCard({ milestone: m, onDone }: { milestone: Milestone; 
         <span className="text-sm text-ink-2">{m.detail}</span>
         <span className="text-xs text-ink-3">Kept on your Progress page.</span>
         <div className="mt-2 flex w-full gap-2">
-          <button type="button" onClick={() => void share()} className="h-11 flex-1 rounded-xl border border-rule font-bold">{shared === 'copied' ? 'Copied' : 'Share'}</button>
-          <button type="button" onClick={onDone} className="h-11 flex-1 rounded-xl bg-ink font-bold text-surface" autoFocus>Close</button>
+          <button type="button" onClick={() => void share()} className="btn btn-secondary flex-1">{shared === 'copied' ? 'Copied' : 'Share'}</button>
+          <button type="button" onClick={onDone} className="btn btn-primary flex-1" autoFocus>Close</button>
         </div>
       </div>
     </div>

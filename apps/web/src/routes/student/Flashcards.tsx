@@ -164,9 +164,9 @@ function FlashcardsBody({ topic }: { topic: TopicRecord }) {
         <p className="text-lg font-bold">{praise.line}</p>
         <p className="text-ink-2">{deck.length} cards, {seen} turns. {seen > deck.length ? `${seen - deck.length} came back round before you knew them.` : 'Every card known first time.'}</p>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
-          <button type="button" onClick={restart} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Go again</button>
-          <Link to={`${backTo}/quiz`} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Take the quiz</Link>
-          <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
+          <button type="button" onClick={restart} className="btn btn-primary btn-lg">Go again</button>
+          <Link to={`${backTo}/quiz`} className="btn btn-secondary btn-lg">Take the quiz</Link>
+          <Link to={backTo} className="btn btn-secondary btn-lg">Back to topic</Link>
         </div>
       </article>
     )
@@ -234,10 +234,10 @@ function FlashcardsBody({ topic }: { topic: TopicRecord }) {
       </div>
 
       <div className="grid grid-cols-2 gap-2">
-        <button type="button" onClick={() => answer(false)} disabled={!flipped || Boolean(leaving)} className="flex h-12 items-center justify-center gap-2 rounded-xl border border-rule bg-surface font-bold disabled:opacity-40">
+        <button type="button" onClick={() => answer(false)} disabled={!flipped || Boolean(leaving)} className="btn btn-secondary btn-lg">
           <Smiley>🔁</Smiley> Again
         </button>
-        <button type="button" onClick={() => answer(true)} disabled={!flipped || Boolean(leaving)} className="flex h-12 items-center justify-center gap-2 rounded-xl bg-[color:var(--subject)] font-bold text-white disabled:opacity-40">
+        <button type="button" onClick={() => answer(true)} disabled={!flipped || Boolean(leaving)} className="btn btn-primary btn-lg">
           <Smiley>✅</Smiley> Got it
         </button>
       </div>

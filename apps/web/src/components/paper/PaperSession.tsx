@@ -255,7 +255,7 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
         ) : s.answers[k] ? (
           <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface p-4">
             <p className="text-sm"><span className="font-bold">Your answer:</span> <RichText source={describeAnswer(at.question, s.answers[k]!.answer) ?? '—'} inline /></p>
-            <button type="button" onClick={() => { const { [k]: _gone, ...rest } = s.answers; setState({ ...s, answers: rest }) }} className="min-h-10 w-fit rounded-lg border border-rule px-3 text-sm font-bold">Change answer</button>
+            <button type="button" onClick={() => { const { [k]: _gone, ...rest } = s.answers; setState({ ...s, answers: rest }) }} className="btn btn-secondary btn-sm w-fit">Change answer</button>
           </div>
         ) : (
           <QuestionInput key={`${k}:${Object.keys(s.answers).length}`} subjectId={subjectId} question={at.question} submitLabel="Save answer" onSubmit={(answer) => {
@@ -384,7 +384,7 @@ function MethodMarks({ most, given, onGive }: { most: number; given?: number; on
       <div role="radiogroup" aria-label="Method marks" className="flex flex-wrap gap-1.5">
         {Array.from({ length: most + 1 }, (_, n) => (
           <button key={n} type="button" role="radio" aria-checked={(given ?? 0) === n} onClick={() => onGive(n)}
-            className={`h-10 min-w-10 rounded-lg px-3 text-sm font-bold ${(given ?? 0) === n ? 'bg-ink text-surface' : 'border border-rule bg-surface'}`}>{n}</button>
+            className={`btn btn-sm min-w-10 ${(given ?? 0) === n ? 'btn-primary' : 'btn-secondary'}`}>{n}</button>
         ))}
       </div>
     </div>

@@ -43,7 +43,7 @@ export function SetForYou({ className = '' }: { className?: string }) {
       </ul>
       {tasks.length > SHOWN && (
         <button type="button" onClick={() => setAll((a) => !a)} aria-expanded={all}
-          className="min-h-11 rounded-xl border border-rule bg-surface px-4 text-sm font-bold hover:bg-panel lg:self-start">
+          className="btn btn-secondary btn-sm hover:bg-panel lg:self-start">
           {all ? 'Show fewer' : `Show all ${tasks.length}`}
         </button>
       )}

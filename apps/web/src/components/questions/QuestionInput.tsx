@@ -171,7 +171,7 @@ function Typed({ question, disabled, subjectId, onSubmit, submitLabel }: Props &
               <button
                 type="button"
                 onClick={() => setKind(kind ? undefined : (suggested ?? 'algebra'))}
-                className="h-11 shrink-0 rounded-lg border border-rule bg-surface px-3 text-sm font-bold text-ink-2"
+                className="btn btn-secondary btn-sm shrink-0 text-ink-2"
               >
                 {kind ? 'Use my keyboard' : 'Maths keys'}
               </button>
@@ -278,7 +278,7 @@ function Extended({ question, disabled, onSubmit }: Props & { question: Extract<
       {!revealed && answerBox}
       {!revealed && !disabled && (
         <div className="flex flex-col gap-2">
-          <button type="button" onClick={() => setRevealed(true)} disabled={!attempted} className="h-11 rounded-lg bg-[color:var(--subject)] px-4 font-bold text-white disabled:opacity-40">
+          <button type="button" onClick={() => setRevealed(true)} disabled={!attempted} className="btn btn-primary">
             Show the mark scheme
           </button>
           {!attempted && (
@@ -322,7 +322,7 @@ function Extended({ question, disabled, onSubmit }: Props & { question: Extract<
 
 function SubmitButton({ label = 'Check answer', disabled = false, onClick }: { label?: string; disabled?: boolean; onClick?: () => void }) {
   return (
-    <button type={onClick ? 'button' : 'submit'} onClick={onClick} disabled={disabled} className="h-12 rounded-xl bg-[color:var(--subject)] px-4 text-base font-bold text-white disabled:opacity-40">
+    <button type={onClick ? 'button' : 'submit'} onClick={onClick} disabled={disabled} className="btn btn-primary btn-lg">
       {label}
     </button>
   )

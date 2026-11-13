@@ -74,7 +74,8 @@ describe('the good deed card', () => {
   it('gives every button a 44px height', () => {
     for (const now of [morning, new Date(2026, 9, 5, 18, 0)]) {
       const html = card({ deeds: {} }, now)
-      for (const button of html.match(/<button[^>]*>/g) ?? []) expect(button).toMatch(/min-h-11/)
+      // min-h-11, or the shared .btn, whose own min-height is 2.75rem (44px); .btn-sm is 40px.
+      for (const button of html.match(/<button[^>]*>/g) ?? []) expect(button).toMatch(/min-h-11|class="btn (?![^"]*btn-sm)/)
     }
   })
 })

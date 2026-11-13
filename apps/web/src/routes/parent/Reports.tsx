@@ -56,9 +56,9 @@ export function ReportsPanel() {
               <p className="text-[15px]">“{r.note}”</p>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">{STATUS_LABEL[r.status]}</span>
-                {r.status !== 'fixed' && <button type="button" onClick={() => void mark(r.id, 'fixed')} className="h-9 rounded-lg border border-rule px-3 text-sm font-bold">Mark fixed</button>}
-                {r.status !== 'not-a-fault' && <button type="button" onClick={() => void mark(r.id, 'not-a-fault')} className="h-9 rounded-lg border border-rule px-3 text-sm font-bold">Not a fault</button>}
-                {r.status !== 'open' && <button type="button" onClick={() => void mark(r.id, 'open')} className="h-9 rounded-lg border border-rule px-3 text-sm font-bold">Reopen</button>}
+                {r.status !== 'fixed' && <button type="button" onClick={() => void mark(r.id, 'fixed')} className="btn btn-secondary btn-sm">Mark fixed</button>}
+                {r.status !== 'not-a-fault' && <button type="button" onClick={() => void mark(r.id, 'not-a-fault')} className="btn btn-secondary btn-sm">Not a fault</button>}
+                {r.status !== 'open' && <button type="button" onClick={() => void mark(r.id, 'open')} className="btn btn-secondary btn-sm">Reopen</button>}
               </div>
             </li>
           )

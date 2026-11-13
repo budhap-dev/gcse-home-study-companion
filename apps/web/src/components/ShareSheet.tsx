@@ -23,7 +23,7 @@ export function ShareSheet({ path, title, small }: { path: string; title: string
   }
   return (
     <span className="flex flex-col gap-1">
-      <button type="button" onClick={() => void share()} className={`flex items-center rounded-lg border border-rule bg-surface font-bold ${small ? 'h-9 px-3 text-sm' : 'h-11 px-4'}`}>
+      <button type="button" onClick={() => void share()} className={`btn btn-secondary ${small ? 'btn-sm' : ''}`}>
         {state === 'copied' ? 'Link copied' : 'Share this sheet'}
       </button>
       {state === 'shown' && <span className="select-all break-all text-xs text-ink-2">{url()}</span>}

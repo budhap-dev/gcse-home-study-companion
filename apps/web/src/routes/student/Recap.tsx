@@ -183,7 +183,7 @@ export function Recap() {
       </header>
       <SessionQuestion subjectId={topic.subjectId} topicId={topic.id} question={question} answered={answered} onSubmit={submit} onClaim={claim} />
       {answered && (
-        <button type="button" onClick={next} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface">
+        <button type="button" onClick={next} className="btn btn-primary btn-lg">
           {last ? 'See how it went' : 'Next question'}
         </button>
       )}

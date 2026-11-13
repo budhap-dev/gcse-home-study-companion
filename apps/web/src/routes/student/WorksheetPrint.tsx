@@ -54,17 +54,17 @@ function WorksheetPrintBody({ topic }: { topic: TopicRecord }) {
     <article className="print-sheet mx-auto w-full max-w-3xl">
       {/* Not printed: the controls that only make sense on screen. */}
       <div className="no-print mb-4 flex flex-wrap items-center gap-2">
-        <button type="button" onClick={() => window.print()} className="h-11 rounded-lg bg-ink px-4 font-bold text-surface">Print this sheet</button>
-        <Link to={here(!answers)} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">
+        <button type="button" onClick={() => window.print()} className="btn btn-primary">Print this sheet</button>
+        <Link to={here(!answers)} className="btn btn-secondary">
           {answers ? 'Print the questions instead' : 'Print the answers instead'}
         </Link>
         {generators > 0 && (
-          <Link to={sheetPath(topic.subjectId, topic.id, lvl, next, true)} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">
+          <Link to={sheetPath(topic.subjectId, topic.id, lvl, next, true)} className="btn btn-secondary">
             {code ? 'New numbers' : 'A version with new numbers'}
           </Link>
         )}
         {code && <ShareSheet path={sheetPath(topic.subjectId, topic.id, lvl, code, true)} title={`${topic.title} · sheet ${code}`} />}
-        <Link to={back} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">{code ? 'Do it on screen' : 'Back'}</Link>
+        <Link to={back} className="btn btn-secondary">{code ? 'Do it on screen' : 'Back'}</Link>
       </div>
 
       <header className="mb-4 border-b border-rule pb-3">

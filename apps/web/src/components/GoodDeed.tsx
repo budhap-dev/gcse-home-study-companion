@@ -66,8 +66,8 @@ export function DeedCard({ prompt, count, days, onAnswer }: { prompt: DeedPrompt
         <div className="flex flex-col gap-2">
           <p className="text-sm font-bold">{yesterday ? 'Did you manage it yesterday?' : 'Did you do it today?'}</p>
           <div className="grid grid-cols-2 gap-2">
-            <button type="button" onClick={() => onAnswer(true)} className="press flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-[color:var(--subject)] px-3 font-bold text-white"><Smiley>✅</Smiley> Yes, I did</button>
-            <button type="button" onClick={() => onAnswer(false)} className="press flex min-h-11 items-center justify-center rounded-xl border border-rule bg-surface px-3 font-bold">{yesterday ? 'Not that day' : 'Not today'}</button>
+            <button type="button" onClick={() => onAnswer(true)} className="btn btn-primary gap-1.5"><Smiley>✅</Smiley> Yes, I did</button>
+            <button type="button" onClick={() => onAnswer(false)} className="btn btn-secondary">{yesterday ? 'Not that day' : 'Not today'}</button>
           </div>
         </div>
       )}
