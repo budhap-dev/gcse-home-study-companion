@@ -796,6 +796,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "sim-tickets",
+      "body": "At a cinema an adult ticket costs £$a$, a child ticket £$c$ and a senior ticket £$s$.\n\n| Tickets | Total cost |\n|---|---|\n| 2 adult, 1 child, 1 senior | £33 |\n| 1 adult, 3 child, 2 senior | £43 |\n| 3 adult, 2 child, 1 senior | £50 |"
+    },
+    {
+      "id": "sim-circle",
+      "body": "The line $y = 2x - 5$ meets the circle $x^2 + y^2 = 10$ at two points, $P$ and $Q$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1389,6 +1399,296 @@
         }
       ],
       "modelAnswer": "**(a)** At a meeting point the $y$ values are equal, so $x^2 = x + c$. Rearranging, $x^2 - x - c = 0$.\n\n**(b)** A tangent touches at one point, so the quadratic has a repeated root and its discriminant is zero: $(-1)^2 - 4(1)(-c) = 1 + 4c = 0$, giving $c = -\\dfrac{1}{4}$. The repeated root is $x = \\dfrac{1}{2}$, and on the curve $y = \\dfrac{1}{4}$; the line $y = x - \\dfrac{1}{4}$ agrees. The point of contact is $\\left(\\dfrac{1}{2}, \\dfrac{1}{4}\\right)$.\n\n**(c)** With $c = 2$: $x^2 - x - 2 = 0$, so $(x - 2)(x + 1) = 0$ and $x = 2$ or $x = -1$. From the line $y = x + 2$: $x = 2$ gives $y = 4$ and $x = -1$ gives $y = 1$. The points are $(2, 4)$ and $(-1, 1)$, and both lie on $y = x^2$.\n\n**(d)** The line and curve do not meet when the quadratic has no real roots, that is, when the discriminant is negative: $1 + 4c < 0$, so $c < -\\dfrac{1}{4}$. The line then lies entirely below the parabola. For $c > -\\dfrac{1}{4}$ there are two meeting points, and $c = -\\dfrac{1}{4}$ is the single touching case from part (b)."
+    },
+    {
+      "id": "q19",
+      "prompt": "Show that $a + c = 17$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "eliminating one letter",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first and third rows give $2a + c + s = 33$ and $3a + 2c + s = 50$. Subtracting the first from the third removes $s$: $a + c = 17$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "two equations with $s$ once each"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "subtracts to $a + c = 17$"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "sim-tickets",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Wrote $2a + c + s = 33$ and $3a + 2c + s = 50$",
+          "marks": 1
+        },
+        {
+          "text": "Subtracted to eliminate $s$ and reach $a + c = 17$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(3a + 2c + s) - (2a + c + s) = 50 - 33$, so $a + c = 17$."
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the price of an adult ticket, in pounds.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "three unknowns",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Third row minus first: $a + c = 17$. Second row minus twice the first: $(a + 3c + 2s) - (4a + 2c + 2s) = 43 - 66$, so $-3a + c = -23$. Subtracting: $4a = 40$, $a = 10$. Then $c = 7$ and $s = 33 - 20 - 7 = 6$. Check row 2: $10 + 21 + 12 = 43$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "eliminates $s$ twice"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "solves the pair"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "sim-tickets",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the total cost, in pounds, of one adult, one child and one senior ticket.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "using all three values",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Eliminating $s$ twice gives $a + c = 17$ and $-3a + c = -23$, so $a = 10$, $c = 7$, and from the first row $s = 33 - 20 - 7 = 6$. One of each costs $10 + 7 + 6 = £23$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "all three prices"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "23"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "sim-tickets",
+      "type": "numeric",
+      "answer": 23,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "£"
+    },
+    {
+      "id": "q22",
+      "prompt": "Show that the $x$-coordinates of $P$ and $Q$ satisfy $x^2 - 4x + 3 = 0$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "substituting a line into a circle",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Substitute $y = 2x - 5$: $x^2 + (2x - 5)^2 = 10$, so $x^2 + 4x^2 - 20x + 25 = 10$, $5x^2 - 20x + 15 = 0$, and dividing by 5, $x^2 - 4x + 3 = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 + (2x - 5)^2 = 10$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "expands and divides by 5"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "sim-circle",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Substituted to get $x^2 + (2x - 5)^2 = 10$",
+          "marks": 1
+        },
+        {
+          "text": "Expanded correctly and divided by 5 to reach $x^2 - 4x + 3 = 0$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$x^2 + (2x - 5)^2 = 10 \\Rightarrow 5x^2 - 20x + 15 = 0 \\Rightarrow x^2 - 4x + 3 = 0$."
+    },
+    {
+      "id": "q23",
+      "prompt": "Find the coordinates of $P$ and $Q$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "pairing each x with its y",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Substituting the line into the circle gives $x^2 - 4x + 3 = 0$, so $(x - 1)(x - 3) = 0$ and $x = 1$ or $3$. Using $y = 2x - 5$: $(1, -3)$ and $(3, 1)$. Each $y$ must come from its own $x$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x = 1$, $x = 3$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "both pairs"
+        }
+      ],
+      "discriminators": [],
+      "context": "sim-circle",
+      "type": "short-text",
+      "accepted": [
+        "(1, -3), (3, 1)",
+        "(3, 1), (1, -3)",
+        "(1, -3) and (3, 1)",
+        "(3, 1) and (1, -3)"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Work out the length $PQ$. Give your answer as a simplified surd.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a chord length from the intersections",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The points are $(1, -3)$ and $(3, 1)$, from $x^2 - 4x + 3 = 0$ and $y = 2x - 5$. $PQ = \\sqrt{2^2 + 4^2} = \\sqrt{20} = 2\\sqrt{5}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\sqrt{2^2 + 4^2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$2\\sqrt{5}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "sim-circle",
+      "type": "short-text",
+      "accepted": [
+        "2√5"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Solve the simultaneous equations $x + y = 7$ and $x^2 + xy + y^2 = 37$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "a linear and a quadratic in two letters",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$y = 7 - x$, so $x^2 + x(7 - x) + (7 - x)^2 = 37$: $x^2 + 7x - x^2 + 49 - 14x + x^2 = 37$, so $x^2 - 7x + 12 = 0$ and $(x - 3)(x - 4) = 0$. $x = 3, y = 4$ or $x = 4, y = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes $y = 7 - x$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 - 7x + 12 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "solves"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "both pairs"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(3, 4), (4, 3)",
+        "x=3, y=4 or x=4, y=3",
+        "x=4, y=3 or x=3, y=4",
+        "x = 3, y = 4 and x = 4, y = 3"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "The line $y = kx - 1$ is a tangent to the curve $y = x^2 + 3$, and $k > 0$. Work out the value of $k$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a tangent by the discriminant",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Where they meet, $x^2 + 3 = kx - 1$, so $x^2 - kx + 4 = 0$. A tangent touches once, so the discriminant is 0: $k^2 - 16 = 0$, $k = \\pm 4$, and $k > 0$ gives $k = 4$. Check: $x^2 - 4x + 4 = (x - 2)^2$, touching at $(2, 7)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 - kx + 4 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$k^2 - 16 = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1424,9 +1724,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 35
+      "suggestedMinutes": 57
     }
   },
   "examTechnique": {
@@ -1459,7 +1767,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

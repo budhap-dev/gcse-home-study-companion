@@ -792,6 +792,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "ft-f",
+      "body": "$f(x) = x^3 + 2x^2 - 5x - 6$."
+    },
+    {
+      "id": "ft-g",
+      "body": "$g(x) = x^3 + ax^2 + bx - 12$, where $a$ and $b$ are constants. Both $(x - 1)$ and $(x + 2)$ are factors of $g(x)$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1373,6 +1383,295 @@
         }
       ],
       "modelAnswer": "**(a)** Since $(x + 2)$ is a factor, the factor theorem gives $f(-2) = 0$:\n\n$$(-2)^3 + k(-2)^2 - 4(-2) - 8 = -8 + 4k + 8 - 8 = 4k - 8$$\n\nSetting this to zero, $4k = 8$ and $k = 2$, as required. The substitution turns the unknown coefficient into a linear equation, and that is the entire method.\n\n**(b)** With $k = 2$, $f(x) = x^3 + 2x^2 - 4x - 8$. Write $f(x) = (x + 2)(x^2 + ax + b)$: the ends give $2b = -8$, so $b = -4$; the $x^2$ terms give $a + 2 = 2$, so $a = 0$; check the $x$ terms, $b + 2a = -4$, which matches. So $f(x) = (x + 2)(x^2 - 4)$. The quadratic is a difference of two squares, $x^2 - 4 = (x - 2)(x + 2)$, and *fully* means it must be split:\n\n$$f(x) = (x + 2)^2(x - 2)$$\n\nGrouping gives the same result more quickly: $x^2(x + 2) - 4(x + 2) = (x + 2)(x^2 - 4)$.\n\n**(c)** The factor $(x + 2)$ appears **twice**. A squared factor is never negative, so as $x$ passes through $-2$ the sign of $f(x)$ does not change: the curve comes down to the axis, touches it at $(-2, 0)$, and goes back the way it came. The factor $(x - 2)$ appears once, so $f(x)$ changes sign at $x = 2$ and the curve **crosses** the axis at $(2, 0)$. A squared linear factor is a touch; a single one is a crossing, and the factorised form shows which is which before any sketch is drawn."
+    },
+    {
+      "id": "q19",
+      "prompt": "Show that $(x - 2)$ is a factor of $f(x)$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the factor theorem",
+      "step": "s1",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(2) = 8 + 8 - 10 - 6 = 0$. By the factor theorem, $f(2) = 0$ means $(x - 2)$ is a factor.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$f(2)$ worked out"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "= 0, with the conclusion"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "ft-f",
+      "type": "extended",
+      "suggestedMinutes": 2,
+      "criteria": [
+        {
+          "text": "Worked out $f(2) = 8 + 8 - 10 - 6$",
+          "marks": 1
+        },
+        {
+          "text": "Showed it is 0 and said so $(x - 2)$ is a factor",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$f(2) = 2^3 + 2(2^2) - 5(2) - 6 = 0$, so $(x - 2)$ is a factor."
+    },
+    {
+      "id": "q20",
+      "prompt": "Factorise $f(x)$ fully.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the quadratic factor, then factorise it",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(2) = 0$, so $(x - 2)$ is a factor. $f(x) = (x - 2)(x^2 + 4x + 3)$: compare $x^2$ terms, $-2 + 4 = 2$. Then $x^2 + 4x + 3 = (x + 1)(x + 3)$, so $f(x) = (x - 2)(x + 1)(x + 3)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x - 2)(x^2 + 4x + 3)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "three factors"
+        }
+      ],
+      "discriminators": [],
+      "context": "ft-f",
+      "type": "short-text",
+      "accepted": [
+        "(x-2)(x+1)(x+3)"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Solve $f(x) = -6$. Give your answers in exact form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a cubic that does not need the factor theorem",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$x^3 + 2x^2 - 5x - 6 = -6$ gives $x^3 + 2x^2 - 5x = 0$, so $x(x^2 + 2x - 5) = 0$. $x = 0$, or $x = \\dfrac{-2 \\pm \\sqrt{4 + 20}}{2} = -1 \\pm \\sqrt{6}$. Using the factors of $f(x)$ here does not help: they solve $f(x) = 0$, not $-6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x(x^2 + 2x - 5) = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "formula"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$0$, $-1 \\pm \\sqrt{6}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ft-f",
+      "type": "short-text",
+      "accepted": [
+        "0, -1 ± √6",
+        "x = 0, x = -1 ± √6",
+        "0, -1 + √6, -1 - √6"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Show that $a + b = 11$ and $2a - b = 10$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "two equations from two factors",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$g(1) = 1 + a + b - 12 = 0$, so $a + b = 11$. $g(-2) = -8 + 4a - 2b - 12 = 0$, so $4a - 2b = 20$ and $2a - b = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$g(1) = 0$ to $a + b = 11$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$g(-2) = 0$ to $2a - b = 10$"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "ft-g",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Used $g(1) = 0$ to get $a + b = 11$",
+          "marks": 1
+        },
+        {
+          "text": "Used $g(-2) = 0$ to get $4a - 2b = 20$, so $2a - b = 10$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$g(1) = a + b - 11 = 0$; $g(-2) = 4a - 2b - 20 = 0$, so $2a - b = 10$."
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the value of $a$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "solving for the constants",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$g(1) = 0$ gives $a + b = 11$ and $g(-2) = 0$ gives $2a - b = 10$. Adding: $3a = 21$, so $a = 7$ (and $b = 4$).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "two equations"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ft-g",
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "$g(x) = 0$ has three roots, two of which are 1 and $-2$. Work out the third root.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the third factor from the constant term",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "From $g(1) = 0$ and $g(-2) = 0$, $a = 7$ and $b = 4$, so $g(x) = x^3 + 7x^2 + 4x - 12$. $(x - 1)(x + 2) = x^2 + x - 2$, and matching the constant term, $-2 \\times (\\text{last}) = -12$, so the third factor is $(x + 6)$ and the root is $-6$. Check $x^2$: $1 + 6 = 7$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a$ and $b$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x^2 + x - 2)(x + 6)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-6$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "ft-g",
+      "type": "numeric",
+      "answer": -6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "$(2x + 1)$ is a factor of $2x^3 + px^2 - 7x - 3$. Work out the value of $p$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a factor with a coefficient",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$2x + 1 = 0$ when $x = -\\dfrac{1}{2}$, so substitute that: $2\\left(-\\dfrac{1}{8}\\right) + \\dfrac{p}{4} + \\dfrac{7}{2} - 3 = 0$, that is $-\\dfrac{1}{4} + \\dfrac{p}{4} + \\dfrac{1}{2} = 0$, so $p = -1$. Check: $(2x + 1)(x^2 - x - 3) = 2x^3 - x^2 - 7x - 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes $x = -\\dfrac{1}{2}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "sets equal to 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-1$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": -1,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "The equation $x^3 - 3x^2 + 4 = 0$ has a repeated root. Work out the repeated root.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "a repeated root from the factors",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Try factors of 4: $f(-1) = -1 - 3 + 4 = 0$ and $f(2) = 8 - 12 + 4 = 0$. Dividing by $(x + 1)$ leaves $x^2 - 4x + 4 = (x - 2)^2$, so $x^3 - 3x^2 + 4 = (x + 1)(x - 2)^2$ and the repeated root is 2. The curve touches the $x$ axis there.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "a root found"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "quadratic factor"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x - 2)^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1408,9 +1707,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 33
+      "suggestedMinutes": 56
     }
   },
   "examTechnique": {
@@ -1443,7 +1750,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

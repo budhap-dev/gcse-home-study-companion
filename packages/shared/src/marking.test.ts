@@ -578,6 +578,34 @@ describe('maths answers in another correct form', () => {
     for (const a of ['3', 'x = 3', '±9']) wrong(pm, a)
   })
 
+  it('keeps each coordinate pair together while taking the pairs in any order', () => {
+    const q = st('Solve $x + y = 7$ and $x^2 + xy + y^2 = 37$. Give both solutions as coordinate pairs.', ['(3, 4), (4, 3)'])
+    for (const a of ['(4, 3), (3, 4)', '(3,4),(4,3)', '(3, 4) and (4, 3)']) right(q, a)
+    for (const a of ['(3, 3), (4, 4)', '(4, 4), (3, 3)', '(3, 4)', '(3, 4), (4, 3), (0, 7)']) wrong(q, a)
+    const xy = st('Solve $x + y = 7$ and $x^2 + xy + y^2 = 37$.', ['x = 3, y = 4 or x = 4, y = 3'])
+    for (const a of ['x = 4, y = 4 or x = 3, y = 3', 'x = 3, y = 3 or x = 4, y = 4']) wrong(xy, a)
+  })
+
+  it('reads a letter inside $ signs, and a list of values that satisfy a condition, as a set', () => {
+    const k = st('Find the two possible values of $k$.', ['1, 9'])
+    for (const a of ['9, 1', 'k = 9 or k = 1']) right(k, a)
+    for (const a of ['1', '1, -9']) wrong(k, a)
+    const ints = st('List the integers that satisfy both $x^2 - 3x - 10 \\leqslant 0$ and $2x + 1 > 4$.', ['2, 3, 4, 5'])
+    right(ints, '5, 4, 3, 2')
+    for (const a of ['2, 3, 4', '1, 2, 3, 4, 5']) wrong(ints, a)
+  })
+
+  it('takes surd solutions with their terms in another order, but keeps the form asked for', () => {
+    const q = st('Solve $f(x) = -6$. Give your answers in exact form.', ['0, -1 ± √6'])
+    for (const a of ['0, √6-1, -1-√6', '-1 - √6, 0, -1 + √6']) right(q, a)
+    for (const a of ['0, √6+1, -1-√6', '0, -1 ± √5', '-1 ± √6']) wrong(q, a)
+    const half = st('Solve $g(x) = x$. Give your answers in surd form.', ['(1 ± √11)/2'])
+    right(half, '(√11+1)/2, (1-√11)/2')
+    wrong(half, '(√11+1)/2, (1+√11)/2')
+    wrong(st('Solve $x^2 = 24$. Give the positive solution in the form $a\\sqrt{b}$.', ['2√6']), '√24')
+    wrong(st('Solve $x^2 = 24$. Give your answers in surd form.', ['±2√6']), '±√6×2√2')
+  })
+
   it('takes one solution with its letter in front', () => {
     const q = st('Solve $x^2 + 3x - 5 = 0$ using the quadratic formula. Give the positive solution in exact surd form.', ['(-3+√29)/2'])
     for (const a of ['x = (-3+√29)/2', 'x=(-3+sqrt(29))/2']) right(q, a)

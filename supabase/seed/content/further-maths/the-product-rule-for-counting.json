@@ -767,6 +767,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "count-code",
+      "body": "A code is two letters followed by three digits, such as AB 123. Letters are chosen from the 26 letters A to Z and digits from 0 to 9."
+    },
+    {
+      "id": "count-number",
+      "body": "The six letters of the word NUMBER are arranged in a row. Each arrangement uses every letter once. The vowels are U and E."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1348,6 +1358,290 @@
         }
       ],
       "modelAnswer": "**(a) All the codes.** Each of the three positions can take any of the six digits, because repeats are allowed, so the number of codes is $6 \\times 6 \\times 6 = 216$. The *show that* is answered by the reasoning: three positions, six choices at each, and the product rule.\n\n**(b) At least one 6.** Count the opposite. A code with no 6 uses only the digits 1 to 5, so $5 \\times 5 \\times 5 = 125$ codes contain no 6. Every other code contains at least one: $216 - 125 = 91$. Counting the cases directly, exactly one 6 gives 75, exactly two gives $3 \\times 5 = 15$, and all three gives 1, and $75 + 15 + 1 = 91$ agrees, which is the check.\n\n**(c) Exactly one 6.** This is a direct count, not a complement. The single 6 can sit in any of the 3 positions; the other two positions each take one of the 5 digits that are not 6. So there are $3 \\times 5 \\times 5 = 75$ such codes.\n\nEvery code is equally likely, so the probability is favourable over total:\n\n$$\\frac{75}{216} = \\frac{25}{72}$$\n\nThe difference between (b) and (c) is the difference between *at least one*, which is easiest as total minus none, and *exactly one*, which is a direct product with the position of the 6 counted first. Using the complement for (c) would need both the two-6 and the three-6 cases subtracted as well, which is why the direct count is the safer route."
+    },
+    {
+      "id": "q19",
+      "prompt": "How many codes are possible if letters and digits may repeat?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the product rule",
+      "step": "s1",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$26 \\times 26 \\times 10 \\times 10 \\times 10 = 676\\,000$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "676000"
+        }
+      ],
+      "discriminators": [],
+      "context": "count-code",
+      "type": "numeric",
+      "answer": 676000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "How many codes are possible if no letter and no digit is repeated?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "choices shrink as they are used",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$26 \\times 25$ for the letters and $10 \\times 9 \\times 8$ for the digits: $650 \\times 720 = 468\\,000$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$26 \\times 25 \\times 10 \\times 9 \\times 8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "468000"
+        }
+      ],
+      "discriminators": [],
+      "context": "count-code",
+      "type": "numeric",
+      "answer": 468000,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "Letters may repeat. How many codes have at least one digit repeated?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "at least one: count the opposite",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Digit strings with no repeat: $10 \\times 9 \\times 8 = 720$ of the 1000, so $280$ have a repeat. The letters can be anything: $26 \\times 26 = 676$. Codes: $676 \\times 280 = 189\\,280$. Counting \"exactly two the same\" and \"all three the same\" separately reaches the same, with more chances to slip.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1000 - 720$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\times 676$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "189280"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "count-code",
+      "type": "numeric",
+      "answer": 189280,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "How many different arrangements are there?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "arranging distinct letters",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Six different letters: $6! = 720$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "720"
+        }
+      ],
+      "discriminators": [],
+      "context": "count-number",
+      "type": "numeric",
+      "answer": 720,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "How many arrangements start and end with a vowel?",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "deal with the restriction first",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The two ends are U and E in either order: 2 ways. The other four letters fill the middle in $4! = 24$ ways. $2 \\times 24 = 48$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2 \\times 4!$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "48"
+        }
+      ],
+      "discriminators": [],
+      "context": "count-number",
+      "type": "numeric",
+      "answer": 48,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "How many arrangements have the two vowels next to each other?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "gluing letters together",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Treat UE as one block: 5 items to arrange, $5! = 120$ ways, and the block can be UE or EU, so $120 \\times 2 = 240$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$5!$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\times 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "240"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "count-number",
+      "type": "numeric",
+      "answer": 240,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "How many arrangements have the two vowels apart, not next to each other?",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "counting the opposite",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "All arrangements: $6! = 720$. Vowels together: $5! \\times 2 = 240$. Apart: $720 - 240 = 480$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$720 - $ together"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "480"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "count-number",
+      "type": "numeric",
+      "answer": 480,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "How many four-digit odd numbers greater than 5000 can be made from the digits 0 to 9 if no digit is repeated?",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "two restrictions: split into cases",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The first digit is 5, 6, 7, 8 or 9 and the last is odd, and these two interact. Case 1, first digit odd (5, 7 or 9): 3 ways, then the last digit is one of the 4 odd digits left, and the middle two $8 \\times 7$: $3 \\times 4 \\times 56 = 672$. Case 2, first digit even (6 or 8): 2 ways, last digit any of 5 odd digits, middle $8 \\times 7$: $2 \\times 5 \\times 56 = 560$. Total $672 + 560 = 1232$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "splits by the first digit"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3 \\times 4 \\times 8 \\times 7$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2 \\times 5 \\times 8 \\times 7$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1232"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 1232,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "A team of 4 is chosen from 5 boys and 4 girls. How many different teams include at least one girl?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "unordered choices and the opposite",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Teams of 4 from 9 people, order not mattering: $\\dfrac{9 \\times 8 \\times 7 \\times 6}{4 \\times 3 \\times 2 \\times 1} = 126$. Teams with no girl, all from the 5 boys: $\\dfrac{5 \\times 4 \\times 3 \\times 2}{24} = 5$. At least one girl: $126 - 5 = 121$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "126"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5 all-boy teams"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "121"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 121,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1383,9 +1677,18 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 35
+      "suggestedMinutes": 58
     }
   },
   "examTechnique": {
@@ -1418,7 +1721,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },

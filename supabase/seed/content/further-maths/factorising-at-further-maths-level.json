@@ -760,6 +760,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "fact-p",
+      "body": "$p(x) = 2x^3 - 3x^2 - 8x + 12$."
+    },
+    {
+      "id": "fact-xy",
+      "body": "This question is about the expression $6x^2 - xy - 12y^2$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1324,6 +1334,277 @@
         }
       ],
       "modelAnswer": "**(a)** Both terms are squares, so use $a^2 - b^2 = (a - b)(a + b)$ with $a = 2x + 3$ and $b = 2x - 5$.\n\n$a - b = (2x + 3) - (2x - 5) = 2x + 3 - 2x + 5 = 8$.\n\n$a + b = (2x + 3) + (2x - 5) = 4x - 2$.\n\nSo the expression is $8(4x - 2)$. That is not yet full, because $4x - 2 = 2(2x - 1)$: the answer is $16(2x - 1)$. Expanding both squares and subtracting gives $32x - 16$, which agrees.\n\n**(b)** Four terms and no overall common factor, so group in pairs: $(x^3 + 2x^2) + (-9x - 18) = x^2(x + 2) - 9(x + 2)$. The bracket $(x + 2)$ appears in both, so it is a factor: $(x + 2)(x^2 - 9)$. Then $x^2 - 9$ is a difference of two squares: $(x + 2)(x - 3)(x + 3)$.\n\n**(c)** A product is zero only when a factor is, so $x + 2 = 0$, $x - 3 = 0$ or $x + 3 = 0$: the solutions are $x = -2$, $x = 3$ and $x = -3$. *Hence* means they are to be read from part (b), not found afresh; a check by substitution confirms one of them, since $x = 3$ gives $27 + 18 - 27 - 18 = 0$."
+    },
+    {
+      "id": "q19",
+      "prompt": "Show, by grouping, that $p(x) = (2x - 3)(x^2 - 4)$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "factorising four terms by grouping",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Group in pairs: $x^2(2x - 3) - 4(2x - 3)$. The bracket $(2x - 3)$ is common, so $p(x) = (2x - 3)(x^2 - 4)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2(2x - 3)$ and $-4(2x - 3)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(2x - 3)(x^2 - 4)$"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "fact-p",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Factorised each pair: $x^2(2x - 3)$ and $-4(2x - 3)$",
+          "marks": 1
+        },
+        {
+          "text": "Took out the common bracket to reach $(2x - 3)(x^2 - 4)$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$2x^3 - 3x^2 - 8x + 12 = x^2(2x - 3) - 4(2x - 3) = (2x - 3)(x^2 - 4)$"
+    },
+    {
+      "id": "q20",
+      "prompt": "Factorise $p(x)$ fully.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "grouping, then the difference of two squares",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "By grouping, $p(x) = x^2(2x - 3) - 4(2x - 3) = (2x - 3)(x^2 - 4)$, and $x^2 - 4 = (x - 2)(x + 2)$. So $p(x) = (2x - 3)(x - 2)(x + 2)$. Stopping at $(2x - 3)(x^2 - 4)$ is not fully factorised.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "grouping"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(2x - 3)(x - 2)(x + 2)$"
+        }
+      ],
+      "discriminators": [],
+      "context": "fact-p",
+      "type": "short-text",
+      "accepted": [
+        "(2x-3)(x-2)(x+2)"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "By writing the left-hand side in terms of $p(y + 1)$, solve $2(y + 1)^3 - 3(y + 1)^2 - 8(y + 1) + 12 = 0$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a factorisation reused with a substitution",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The left side is $p(y + 1)$, and $p(x) = (2x - 3)(x - 2)(x + 2)$ is 0 when $x = \\dfrac{3}{2}$, $2$ or $-2$. So $y + 1 = \\dfrac{3}{2}$, $2$ or $-2$, giving $y = \\dfrac{1}{2}$, $1$ or $-3$. Expanding everything first works but takes far longer.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "recognises $p(y + 1)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$y + 1 = \\dfrac{3}{2}, 2, -2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$y = \\dfrac{1}{2}, 1, -3$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "fact-p",
+      "type": "short-text",
+      "accepted": [
+        "1/2, 1, -3",
+        "y=1/2, y=1, y=-3",
+        "0.5, 1, -3"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Factorise $6x^2 - xy - 12y^2$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a quadratic in two variables",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Look for $(3x + ?y)(2x - ?y)$ with the $y$ numbers multiplying to $-12$ and the cross terms adding to $-xy$: $(3x + 4y)(2x - 3y)$ gives $-9xy + 8xy = -xy$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "correct form"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(3x + 4y)(2x - 3y)$"
+        }
+      ],
+      "discriminators": [],
+      "context": "fact-xy",
+      "type": "short-text",
+      "accepted": [
+        "(3x+4y)(2x-3y)"
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Given that $6x^2 - xy - 12y^2 = 0$ and $y \\neq 0$, find the positive value of $\\dfrac{x}{y}$. Give your answer as a decimal.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a ratio from a factorised quadratic",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$6x^2 - xy - 12y^2 = (3x + 4y)(2x - 3y) = 0$, so $3x = -4y$ or $2x = 3y$. That is $\\dfrac{x}{y} = -\\dfrac{4}{3}$ or $\\dfrac{3}{2}$; the positive value is 1.5.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorised and each factor set to 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1.5"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "fact-xy",
+      "type": "numeric",
+      "answer": 1.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "Use the factorised form of $6x^2 - xy - 12y^2$ to work out $6 \\times 50^2 - 50 \\times 10 - 12 \\times 10^2$ without a calculator.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "factorising to calculate",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$6x^2 - xy - 12y^2 = (3x + 4y)(2x - 3y)$. With $x = 50$ and $y = 10$: $(150 + 40)(100 - 30) = 190 \\times 70 = 13\\,300$. Check directly: $15\\,000 - 500 - 1200 = 13\\,300$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x = 50$, $y = 10$ in the factors"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13300"
+        }
+      ],
+      "discriminators": [],
+      "context": "fact-xy",
+      "type": "numeric",
+      "answer": 13300,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Factorise fully $16x^4 - 1$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the difference of two squares twice",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$16x^4 - 1 = (4x^2 - 1)(4x^2 + 1)$, and $4x^2 - 1$ is again a difference of two squares: $(2x - 1)(2x + 1)$. $4x^2 + 1$ is a sum of squares and does not factorise. So $(2x - 1)(2x + 1)(4x^2 + 1)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(4x^2 - 1)(4x^2 + 1)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(2x - 1)(2x + 1)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "all three factors"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(2x-1)(2x+1)(4x^2+1)"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "Use the difference of two squares to write $3^8 - 1$ as a product, and hence work out its largest prime factor.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "factorising a number",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$3^8 - 1 = (3^4 - 1)(3^4 + 1) = 80 \\times 82$. $80 = 2^4 \\times 5$ and $82 = 2 \\times 41$, so $3^8 - 1 = 2^5 \\times 5 \\times 41$. The largest prime factor is 41.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(3^4 - 1)(3^4 + 1)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$80 \\times 82$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "prime factors"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "41"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 41,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1359,9 +1640,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 32
+      "suggestedMinutes": 54
     }
   },
   "examTechnique": {
@@ -1394,7 +1683,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },
