@@ -936,6 +936,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "trig-quad",
+      "body": "This question is about the equation $2\\sin^2 x - \\sin x - 1 = 0$."
+    },
+    {
+      "id": "trig-cos2",
+      "body": "This question is about the equation $\\cos^2 x + 3\\sin x = 3$, for $0° \\leqslant x \\leqslant 360°$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1517,6 +1527,278 @@
       "correct": [
         0
       ]
+    },
+    {
+      "id": "q19",
+      "prompt": "Solve the equation to find the two possible values of $\\sin x$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a quadratic in sin x",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Let $s = \\sin x$: $2s^2 - s - 1 = 0$, so $(2s + 1)(s - 1) = 0$ and $\\sin x = 1$ or $\\sin x = -\\dfrac{1}{2}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(2s + 1)(s - 1)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$1$ and $-\\dfrac{1}{2}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "trig-quad",
+      "type": "short-text",
+      "accepted": [
+        "1, -1/2",
+        "1, -0.5",
+        "sin x = 1 or sin x = -1/2"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Solve the equation for $0° \\leqslant x \\leqslant 360°$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "solving a trig quadratic in an interval",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(2\\sin x + 1)(\\sin x - 1) = 0$. $\\sin x = 1$ gives $x = 90°$. $\\sin x = -\\dfrac{1}{2}$: the acute angle with $\\sin = \\dfrac{1}{2}$ is $30°$, and sine is negative in the third and fourth quarters, so $x = 180° + 30° = 210°$ and $x = 360° - 30° = 330°$. The solutions are $90°$, $210°$ and $330°$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises"
+        },
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$90°$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "one of $210°$, $330°$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "all three, no extras"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "trig-quad",
+      "type": "short-text",
+      "accepted": [
+        "90, 210, 330",
+        "90°, 210°, 330°",
+        "x = 90°, 210°, 330°"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Show that the equation can be written as $\\sin^2 x - 3\\sin x + 2 = 0$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "using sin² + cos² = 1",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Replace $\\cos^2 x$ by $1 - \\sin^2 x$: $1 - \\sin^2 x + 3\\sin x = 3$, so $0 = \\sin^2 x - 3\\sin x + 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\cos^2 x = 1 - \\sin^2 x$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "rearranged"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "trig-cos2",
+      "type": "extended",
+      "suggestedMinutes": 2,
+      "criteria": [
+        {
+          "text": "Replaced $\\cos^2 x$ with $1 - \\sin^2 x$",
+          "marks": 1
+        },
+        {
+          "text": "Rearranged to $\\sin^2 x - 3\\sin x + 2 = 0$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$1 - \\sin^2 x + 3\\sin x = 3 \\Rightarrow \\sin^2 x - 3\\sin x + 2 = 0$"
+    },
+    {
+      "id": "q22",
+      "prompt": "Solving the equation leads to $\\sin x = 1$ or $\\sin x = 2$. Why does $\\sin x = 2$ give no solutions?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the range of sine",
+      "step": "s1",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\sin x$ only takes values from $-1$ to $1$, so $\\sin x = 2$ is impossible. That is a fact about every angle, not about the interval given.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "sin x is between −1 and 1"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "trig-cos2",
+      "type": "multiple-choice",
+      "options": [
+        "$\\sin x = 2$ has solutions only above $360°$",
+        "$\\sin x$ is never more than 1 for any angle",
+        "Because 2 is not one of the exact values",
+        "$\\sin x = 2$ has only negative solutions"
+      ],
+      "correct": [
+        1
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Solve the equation for $0° \\leqslant x \\leqslant 360°$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "an identity, then a quadratic in sin x",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Using $\\cos^2 x = 1 - \\sin^2 x$: $\\sin^2 x - 3\\sin x + 2 = 0$, $(\\sin x - 1)(\\sin x - 2) = 0$. $\\sin x = 2$ is impossible, and $\\sin x = 1$ gives $x = 90°$ only.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "the identity"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$90°$ only"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "trig-cos2",
+      "type": "numeric",
+      "answer": 90,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "°"
+    },
+    {
+      "id": "q24",
+      "prompt": "Solve $\\tan x = 2\\sin x$ for $0° \\leqslant x \\leqslant 360°$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "never divide by sin x",
+      "step": "s7",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\dfrac{\\sin x}{\\cos x} = 2\\sin x$, so $\\sin x = 2\\sin x\\cos x$ and $\\sin x(1 - 2\\cos x) = 0$. $\\sin x = 0$ gives $0°$, $180°$, $360°$. $\\cos x = \\dfrac{1}{2}$ gives $60°$, $300°$. Dividing by $\\sin x$ loses the first three.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tan x = \\dfrac{\\sin x}{\\cos x}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "factorises, not divides"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\cos x = \\dfrac{1}{2}$: $60°$, $300°$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$0°$, $180°$, $360°$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "0, 60, 180, 300, 360",
+        "0°, 60°, 180°, 300°, 360°"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Prove that $\\dfrac{1 - \\cos^2 x}{\\tan x} \\equiv \\sin x \\cos x$, for values of $x$ where $\\tan x$ is defined and not zero.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "proving an identity",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$1 - \\cos^2 x = \\sin^2 x$, and dividing by $\\tan x$ is multiplying by $\\dfrac{\\cos x}{\\sin x}$. So the left side is $\\sin^2 x \\times \\dfrac{\\cos x}{\\sin x} = \\sin x\\cos x$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1 - \\cos^2 x = \\sin^2 x$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\tan x = \\dfrac{\\sin x}{\\cos x}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "simplifies to $\\sin x\\cos x$"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Replaced $1 - \\cos^2 x$ by $\\sin^2 x$",
+          "marks": 1
+        },
+        {
+          "text": "Replaced $\\tan x$ by $\\dfrac{\\sin x}{\\cos x}$",
+          "marks": 1
+        },
+        {
+          "text": "Simplified to $\\sin x \\cos x$, working on one side only",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$\\dfrac{1 - \\cos^2 x}{\\tan x} = \\dfrac{\\sin^2 x}{\\sin x / \\cos x} = \\sin^2 x \\times \\dfrac{\\cos x}{\\sin x} = \\sin x\\cos x$"
     }
   ],
   "worksheets": {
@@ -1552,9 +1834,16 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25"
       ],
-      "suggestedMinutes": 33
+      "suggestedMinutes": 54
     }
   },
   "examTechnique": {
@@ -1588,7 +1877,8 @@
       "q14",
       "q15",
       "q16",
-      "q18"
+      "q18",
+      "q24"
     ],
     "sampleSize": 10
   },

@@ -990,6 +990,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "mm-cubic",
+      "body": "A curve has equation $y = x^3 - 3x^2 - 9x + 5$."
+    },
+    {
+      "id": "mm-box",
+      "body": "A square sheet of card has sides of 12 cm. A square of side $x$ cm is cut from each corner, and the sides are folded up to make an open box."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1563,6 +1573,295 @@
         }
       ],
       "modelAnswer": "**(a) Deriving the formula.**\n\nLet the height be $h$. The tank is **open-topped**, so the metal covers the square base and the four sides but not the top:\n\n$$A = x^2 + 4xh$$\n\nThe volume is fixed at $32$ m³, and for a square base that is\n\n$$x^2 h = 32 \\implies h = \\frac{32}{x^2}$$\n\nSubstituting to eliminate $h$:\n\n$$A = x^2 + 4x \\times \\frac{32}{x^2} = x^2 + \\frac{128}{x}$$\n\nas required. Note that the constraint was used to remove $h$ **before** any calculus — with two variables there is nothing to differentiate.\n\n**(b) The least metal.**\n\nRewrite the fraction as a negative power so the rule applies:\n\n$$A = x^2 + 128x^{-1}$$\n\nDifferentiate:\n\n$$\\frac{dA}{dx} = 2x - 128x^{-2}$$\n\nSet it to zero:\n\n$$2x = \\frac{128}{x^2} \\implies 2x^3 = 128 \\implies x^3 = 64 \\implies x = 4$$\n\nOnly the positive root is taken, since $x$ is a length.\n\n**Justifying the minimum.** Differentiate again:\n\n$$\\frac{d^2A}{dx^2} = 2 + 256x^{-3}$$\n\nAt $x = 4$: $2 + \\frac{256}{64} = 2 + 4 = 6$. **Positive**, so $x = 4$ gives a **minimum**. That line is part of the answer: the question asked for the least metal, so it has to be shown to be least.\n\n**(c) The tank, and why it is not a cube.**\n\n$$h = \\frac{32}{4^2} = \\frac{32}{16} = 2$$\n\nSo the tank is **4 m by 4 m by 2 m**, and the least area of metal is\n\n$$A = 16 + \\frac{128}{4} = 16 + 32 = 48 \\text{ m}^2$$\n\n**Why not a cube.** For a **closed** box the optimum is a cube, because every one of the six faces costs the same and the shape that minimises surface area for a given volume is the most symmetric one available.\n\nHere the top is **free**. That changes the economics: making the tank wider and shallower is now cheaper than the symmetric answer would suggest, because the extra width costs only base area while the height saved would have cost four side walls. The optimum settles at a height of exactly **half** the base edge — $4$ by $4$ by $2$ — rather than at equal sides.\n\nThe general lesson is worth keeping. The optimum shape depends on what is being counted, not only on the volume: change which faces cost something and the answer moves. It is why real drinks cans are not the shape calculus predicts for a plain cylinder — their ends are made of thicker metal, so the costs are not equal either."
+    },
+    {
+      "id": "q19",
+      "prompt": "Find the values of $x$ at the stationary points of the curve.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "stationary points of a cubic",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 3x^2 - 6x - 9 = 3(x^2 - 2x - 3) = 3(x - 3)(x + 1)$. Setting it to 0: $x = 3$ or $x = -1$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "derivative set to 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-1$ and 3"
+        }
+      ],
+      "discriminators": [],
+      "context": "mm-cubic",
+      "type": "short-text",
+      "accepted": [
+        "-1, 3",
+        "x=-1, x=3",
+        "x = -1 or x = 3"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Find the coordinates of the maximum point.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the nature of a stationary point",
+      "step": "s2",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 3(x - 3)(x + 1) = 0$ at $x = -1$ and $x = 3$. $\\dfrac{d^2y}{dx^2} = 6x - 6$, which is $-12 < 0$ at $x = -1$, so that is the maximum. $y = -1 - 3 + 9 + 5 = 10$: the maximum is $(-1, 10)$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "second derivative"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "negative at $x = -1$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(-1, 10)$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "mm-cubic",
+      "type": "short-text",
+      "accepted": [
+        "(-1, 10)",
+        "x=-1, y=10"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Find the values of $k$ for which the equation $x^3 - 3x^2 - 9x + 5 = k$ has three real solutions.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "stationary values and the number of solutions",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The stationary points are $(-1, 10)$, a maximum, and $(3, -22)$, a minimum ($\\dfrac{dy}{dx} = 3(x - 3)(x + 1)$). A horizontal line $y = k$ cuts the curve three times only when it lies strictly between them: $-22 < k < 10$. At $k = 10$ or $k = -22$ it touches, giving two solutions.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both stationary values"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reads the graph with a horizontal line"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-22 < k < 10$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "mm-cubic",
+      "type": "short-text",
+      "accepted": [
+        "-22 < k < 10",
+        "10 > k > -22",
+        "k > -22 and k < 10"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Show that the volume of the box is $V = 4x^3 - 48x^2 + 144x$ cm³.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "setting up an optimisation",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The base is a square of side $12 - 2x$ and the height is $x$, so $V = x(12 - 2x)^2 = x(144 - 48x + 4x^2) = 4x^3 - 48x^2 + 144x$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x(12 - 2x)^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "expanded"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "mm-box",
+      "type": "extended",
+      "suggestedMinutes": 2,
+      "criteria": [
+        {
+          "text": "Wrote the volume as $x(12 - 2x)^2$",
+          "marks": 1
+        },
+        {
+          "text": "Expanded to $4x^3 - 48x^2 + 144x$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$V = x(12 - 2x)^2 = 4x^3 - 48x^2 + 144x$"
+    },
+    {
+      "id": "q23",
+      "prompt": "Use calculus to find the value of $x$ that gives the greatest volume.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "optimising a volume",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$V = x(12 - 2x)^2 = 4x^3 - 48x^2 + 144x$, so $\\dfrac{dV}{dx} = 12x^2 - 96x + 144 = 12(x - 2)(x - 6)$. $x = 6$ uses up the whole sheet and gives $V = 0$, so $x = 2$. $\\dfrac{d^2V}{dx^2} = 24x - 96 = -48 < 0$ there: a maximum.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "derivative"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x = 2$ or 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2, with 6 rejected"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "mm-box",
+      "type": "numeric",
+      "answer": 2,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "Work out the greatest volume of the box, in cm³.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the optimum value",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dV}{dx} = 12x^2 - 96x + 144 = 0$ gives $x = 2$ (as $x = 6$ leaves no card). $V = 2 \\times (12 - 4)^2 = 2 \\times 64 = 128$ cm³.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x = 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "128"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "mm-box",
+      "type": "numeric",
+      "answer": 128,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm³"
+    },
+    {
+      "id": "q25",
+      "prompt": "Positive numbers $x$ and $y$ satisfy $x + 2y = 12$. Use calculus to find the greatest value of $xy^2$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "optimisation with a constraint",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$x = 12 - 2y$, so $P = xy^2 = 12y^2 - 2y^3$. $\\dfrac{dP}{dy} = 24y - 6y^2 = 6y(4 - y) = 0$ gives $y = 4$ (as $y > 0$). $\\dfrac{d^2P}{dy^2} = 24 - 12y = -24 < 0$: a maximum. Then $x = 4$ and $xy^2 = 4 \\times 16 = 64$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "one variable"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "derivative $= 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$y = 4$ with a check"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "64"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 64,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "The curve $y = x^3 + ax^2 + 24x$ has a stationary point at $x = 2$. Work out the $x$-coordinate of its other stationary point.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a constant from a stationary point",
+      "step": "s3",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 3x^2 + 2ax + 24$. At $x = 2$: $12 + 4a + 24 = 0$, so $a = -9$. Then $3x^2 - 18x + 24 = 3(x - 2)(x - 4) = 0$, and the other stationary point is at $x = 4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "derivative at $x = 2$ is 0"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a = -9$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "examTechnique": {
@@ -1611,9 +1910,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 69
     }
   },
   "quiz": {
@@ -1633,7 +1940,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

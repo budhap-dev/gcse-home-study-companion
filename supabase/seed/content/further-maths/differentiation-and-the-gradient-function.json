@@ -994,6 +994,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "diff-neg",
+      "body": "A curve has equation $y = 2x^3 - \\dfrac{8}{x}$, for $x \\neq 0$."
+    },
+    {
+      "id": "diff-tidy",
+      "body": "A curve has equation $y = \\dfrac{(2x + 3)^2}{x}$, for $x \\neq 0$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1556,6 +1566,297 @@
         }
       ],
       "modelAnswer": "**(a) The derivatives.**\n\nDifferentiating term by term: $x^3$ gives $3x^2$; $-6x^2$ gives $-12x$; $9x$ gives $9$.\n\n$$\\frac{dy}{dx} = 3x^{2}-12x+9$$\n\nDifferentiating again: $3x^2$ gives $6x$; $-12x$ gives $-12$; the constant $9$ gives $0$.\n\n$$\\frac{d^2y}{dx^2} = 6x-12$$\n\n**(b) The gradient at two points.**\n\nAt $x = 0$: $3(0)^2 - 12(0) + 9 = 9$. The curve is rising steeply there.\n\nAt $x = 3$: $3(9) - 12(3) + 9 = 27 - 36 + 9 = 0$. The curve is flat there.\n\n**(c) Showing the curve is flat at both points.**\n\n\"Flat\" means the gradient is zero, so the thing to show is that $\\frac{dy}{dx} = 0$ at each value.\n\nAt $x = 1$: $3(1)^2 - 12(1) + 9 = 3 - 12 + 9 = 0$. Zero, so the curve is flat.\n\nAt $x = 3$: computed above, also $0$. Zero, so the curve is flat.\n\n**What the second derivative says.** $\\frac{d^2y}{dx^2}$ measures the rate of change of the gradient, so its sign says which way the curve is bending.\n\nAt $x = 1$: $6(1) - 12 = -6$, which is **negative**. The gradient is decreasing — the curve is rising before this point and falling after it — so the curve bends downwards here, like the top of a hill.\n\nAt $x = 3$: $6(3) - 12 = 6$, which is **positive**. The gradient is increasing — falling before, rising after — so the curve bends upwards, like the bottom of a valley.\n\n**Putting it together.** The curve climbs steeply from the left (gradient $9$ at $x = 0$), levels off at $x = 1$ at the top of a hill, falls away, levels off again at $x = 3$ at the bottom of a valley, and then climbs again. The two derivatives between them have described the whole shape without a single value of $y$ being plotted, which is what makes calculus worth having."
+    },
+    {
+      "id": "q19",
+      "prompt": "Find $\\dfrac{dy}{dx}$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "differentiating a negative power",
+      "step": "s4",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Write $\\dfrac{8}{x}$ as $8x^{-1}$. Then $\\dfrac{dy}{dx} = 6x^2 - 8 \\times (-1)x^{-2} = 6x^2 + 8x^{-2} = 6x^2 + \\dfrac{8}{x^2}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$8x^{-1}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$6x^2 + 8x^{-2}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "diff-neg",
+      "type": "short-text",
+      "accepted": [
+        "6x^2+8x^-2",
+        "6x^2+8/x^2",
+        "dy/dx=6x^2+8/x^2",
+        "dy/dx=6x^2+8x^-2"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the gradient of the curve at the point where $x = 2$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "gradient at a point",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 6x^2 + 8x^{-2}$. At $x = 2$: $24 + \\dfrac{8}{4} = 26$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes into the derivative"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "26"
+        }
+      ],
+      "discriminators": [],
+      "context": "diff-neg",
+      "type": "numeric",
+      "answer": 26,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the value of $\\dfrac{d^2y}{dx^2}$ when $x = 2$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "the second derivative with a negative power",
+      "step": "s7",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 6x^2 + 8x^{-2}$, so $\\dfrac{d^2y}{dx^2} = 12x - 16x^{-3}$. At $x = 2$: $24 - \\dfrac{16}{8} = 22$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$12x - 16x^{-3}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "22"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "diff-neg",
+      "type": "numeric",
+      "answer": 22,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Which statement explains why the gradient of the curve is positive at every point?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading a gradient function",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 6x^2 + \\dfrac{8}{x^2}$. For $x \\neq 0$ both terms are squares times positive numbers, so both are positive, and so is their sum. $y$ itself is negative for small positive $x$, so the sign of $y$ says nothing about the gradient.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "both terms of dy/dx are positive"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "diff-neg",
+      "type": "multiple-choice",
+      "options": [
+        "$6x^2 > 0$ and $\\dfrac{8}{x^2} > 0$ whenever $x \\neq 0$",
+        "$2x^3$ is larger than $\\dfrac{8}{x}$ for every $x$",
+        "$y$ is positive everywhere, so its gradient must be positive",
+        "A cubic always has a positive gradient"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Write $y$ in the form $ax + b + cx^{-1}$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "tidying before differentiating",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$(2x + 3)^2 = 4x^2 + 12x + 9$. Dividing each term by $x$: $y = 4x + 12 + 9x^{-1}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$4x + 12 + 9x^{-1}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "diff-tidy",
+      "type": "short-text",
+      "accepted": [
+        "4x+12+9x^-1",
+        "4x+12+9/x"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Find $\\dfrac{dy}{dx}$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "differentiating the tidied form",
+      "step": "s5",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Tidied, $y = 4x + 12 + 9x^{-1}$, so $\\dfrac{dy}{dx} = 4 - 9x^{-2}$. Differentiating the top and bottom separately is not a rule.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by $x$ first"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$4 - 9x^{-2}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "diff-tidy",
+      "type": "short-text",
+      "accepted": [
+        "4-9x^-2",
+        "4-9/x^2",
+        "dy/dx=4-9/x^2",
+        "dy/dx=4-9x^-2"
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Find the values of $x$ at which the gradient of the curve is zero. Give your answers as decimals.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "solving dy/dx = 0 with a negative power",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$y = 4x + 12 + 9x^{-1}$, so $\\dfrac{dy}{dx} = 4 - \\dfrac{9}{x^2}$. Setting it to 0: $x^2 = \\dfrac{9}{4}$, so $x = 1.5$ or $x = -1.5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4 - \\dfrac{9}{x^2} = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\pm 1.5$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "diff-tidy",
+      "type": "short-text",
+      "accepted": [
+        "1.5, -1.5",
+        "x = ±1.5",
+        "x=1.5, x=-1.5"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "A curve has equation $y = ax^3 + bx$. Its gradient is 5 at $x = 1$ and 41 at $x = 2$. Work out the value of $a$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "unknowns from gradients",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 3ax^2 + b$. At $x = 1$: $3a + b = 5$. At $x = 2$: $12a + b = 41$. Subtracting: $9a = 36$, so $a = 4$ (and $b = -7$).",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3ax^2 + b$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "two equations"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "prompt": "The gradient of the curve $y = x^3 - 9x^2 + 30x$ is 6 at two points. Find the values of $x$ at those points.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "solving for a given gradient",
+      "step": "s6",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$\\dfrac{dy}{dx} = 3x^2 - 18x + 30$. Setting it to 6: $3x^2 - 18x + 24 = 0$, so $x^2 - 6x + 8 = 0$ and $(x - 2)(x - 4) = 0$: $x = 2$ or $x = 4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "derivative"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3x^2 - 18x + 24 = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "2 and 4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "2, 4",
+        "x=2, x=4",
+        "x = 2 or x = 4"
+      ]
     }
   ],
   "examTechnique": {
@@ -1604,9 +1905,18 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
       ],
-      "suggestedMinutes": 45
+      "suggestedMinutes": 66
     }
   },
   "quiz": {
@@ -1626,7 +1936,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q26",
+      "q27"
     ],
     "sampleSize": 10
   },

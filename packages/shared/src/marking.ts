@@ -351,6 +351,22 @@ function genotypesMatch(rawGiven: string, rawAccepted: string, prompt: string): 
   return genotypes(rawAccepted, prompt).every((g) => words.has(g))
 }
 
+/**
+ * One point written any of the usual ways: (3, -1), "x = 3, y = -1", "x = 3 and y = -1" or
+ * "y = -1, x = 3". Accepted lists held one or two of these, so "x = -3 and y = 3" was marked
+ * wrong for the point (-3, 3) (13 Nov 2026).
+ */
+function onePoint(raw: string): [string, string] | null {
+  const s = mathsText(raw)
+  const m = s.match(/^\(([^,()]+),([^,()]+)\)$/) ?? s.match(/^x=([^,]+?)(?:,|and)y=([^,]+)$/)
+  if (m) return [m[1]!, m[2]!]
+  const r = s.match(/^y=([^,]+?)(?:,|and)x=([^,]+)$/)
+  return r ? [r[2]!, r[1]!] : null
+}
+
+/** "dy/dx =" typed before a derivative the accepted list holds bare. */
+const DERIVATIVE_SIDE = /^\s*(?:dy\/dx|d\^?2y\/dx\^?2|d²y\/dx²)\s*=\s*/i
+
 /** Whether a typed answer matches any of `list`, with every allowance the marker makes. */
 function matchesShortText(question: Extract<Question, { type: 'short-text' }>, raw: string, list: string[]): boolean {
   const given = normaliseText(raw)
@@ -361,6 +377,14 @@ function matchesShortText(question: Extract<Question, { type: 'short-text' }>, r
   // as either twin, so compare with the accents folded away on both sides.
   const accentFree = question.accepted.some((a, i) => withoutAccents(a) !== a && question.accepted.some((b, j) => j !== i && normaliseText(b) === normaliseText(withoutAccents(a))))
   return list.some((a) => {
+    if (!strict && /dy\}\{dx|dy\/dx/.test(question.prompt) && DERIVATIVE_SIDE.test(raw) && !DERIVATIVE_SIDE.test(a)) {
+      return matchesShortText(question, raw.replace(DERIVATIVE_SIDE, ''), [a])
+    }
+    const pa = strict ? null : onePoint(a)
+    if (pa) {
+      const pg = onePoint(raw)
+      if (pg && pg[0] === pa[0] && pg[1] === pa[1]) return true
+    }
     if (!genotypesMatch(raw, a, question.prompt)) return false
     if (strict && lettersByWord(raw) !== lettersByWord(a)) return false
     const accepted = normaliseText(a)
@@ -500,7 +524,8 @@ function sameMathsAnswer(raw: string, accepted: string, prompt: string): boolean
   if (/[<>]/.test(a)) return chainFacingUp(mathsText(raw)) === chainFacingUp(a)
   // The prompt is read without its $ signs, so "values of $k$" counts as "values of k". A list
   // of the integers or values that satisfy a condition is a set, as solutions are.
-  if (!/\bsolve\b|\broots?\b|\bsolutions?\b|\bvalues? of [a-z]\b|\bsatisf(?:y|ies)\b/i.test(prompt.replace(/\$/g, ''))) return false
+  // So are the x-coordinates of the points where something happens, and the values of sin x.
+  if (!/\bsolve\b|\broots?\b|\bsolutions?\b|\bvalues? of (?:(?:sin|cos|tan) )?[a-z]\b|\bsatisf(?:y|ies)\b|\b[a-z]-coordinates\b/i.test(prompt.replace(/\$/g, '').replace(/\\(sin|cos|tan)\b/g, '$1'))) return false
   // Solutions in two letters pair up: as a bag of values, "x = 4, y = 4 or x = 3, y = 3" would
   // pass for "x = 3, y = 4 or x = 4, y = 3". Those are matched only as the accepted list writes them.
   if (assignedLetters(accepted).size > 1) return false

@@ -707,6 +707,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "mx-ab",
+      "body": "$A = \\begin{pmatrix} 3 & 1 \\\\ -2 & 4 \\end{pmatrix}$ and $B = \\begin{pmatrix} 1 & 2 \\\\ 0 & -1 \\end{pmatrix}$."
+    },
+    {
+      "id": "mx-unknown",
+      "body": "$M = \\begin{pmatrix} a & 2 \\\\ 4 & b \\end{pmatrix}$ and $M\\begin{pmatrix} 2 \\\\ -1 \\end{pmatrix} = \\begin{pmatrix} 8 \\\\ 13 \\end{pmatrix}$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1276,6 +1286,264 @@
       "correct": [
         3
       ]
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the top-right entry of $AB$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a matrix product",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Top row of $A$ times right column of $B$: $3 \\times 2 + 1 \\times (-1) = 5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "row times column"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "context": "mx-ab",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the top-right entry of $BA$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "the product the other way round",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Top row of $B$ times right column of $A$: $1 \\times 1 + 2 \\times 4 = 9$. It differs from the 5 in $AB$: the order of a matrix product matters.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "row times column"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "9"
+        }
+      ],
+      "discriminators": [],
+      "context": "mx-ab",
+      "type": "numeric",
+      "answer": 9,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the bottom-right entry of $A^2B$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a product of three matrices",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$A^2 = \\begin{pmatrix} 3 & 1 \\\\ -2 & 4 \\end{pmatrix}\\begin{pmatrix} 3 & 1 \\\\ -2 & 4 \\end{pmatrix} = \\begin{pmatrix} 7 & 7 \\\\ -14 & 14 \\end{pmatrix}$. The bottom-right entry of $A^2B$ is the bottom row of $A^2$ times the right column of $B$: $-14 \\times 2 + 14 \\times (-1) = -42$. Working out $BA^2$ instead gives a different matrix.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$A^2$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "bottom row times right column of $B$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-42$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "mx-ab",
+      "type": "numeric",
+      "answer": -42,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Work out the value of $a$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "an unknown entry",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Top row: $2a + 2 \\times (-1) = 8$, so $2a = 10$ and $a = 5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2a - 2 = 8$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [],
+      "context": "mx-unknown",
+      "type": "numeric",
+      "answer": 5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q23",
+      "prompt": "Work out the value of $b$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "an unknown entry",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Bottom row: $4 \\times 2 + b \\times (-1) = 13$, so $8 - b = 13$ and $b = -5$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$8 - b = 13$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-5$"
+        }
+      ],
+      "discriminators": [],
+      "context": "mx-unknown",
+      "type": "numeric",
+      "answer": -5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "$M^2 = kI$, where $I$ is the $2 \\times 2$ identity matrix. Work out the value of $k$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a power of a matrix",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "From the two rows, $2a - 2 = 8$ and $8 - b = 13$, so $M = \\begin{pmatrix} 5 & 2 \\\\ 4 & -5 \\end{pmatrix}$. $M^2 = \\begin{pmatrix} 25 + 8 & 10 - 10 \\\\ 20 - 20 & 8 + 25 \\end{pmatrix} = \\begin{pmatrix} 33 & 0 \\\\ 0 & 33 \\end{pmatrix} = 33I$, so $k = 33$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a$ and $b$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$M^2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "33"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "mx-unknown",
+      "type": "numeric",
+      "answer": 33,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "$A = \\begin{pmatrix} p & 1 \\\\ 2 & q \\end{pmatrix}$, where $p$ and $q$ are positive integers, and $A^2 = \\begin{pmatrix} 3 & 5 \\\\ 10 & 18 \\end{pmatrix}$. Work out the value of $q$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "unknowns from a square",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$A^2 = \\begin{pmatrix} p^2 + 2 & p + q \\\\ 2p + 2q & 2 + q^2 \\end{pmatrix}$. Top-left: $p^2 + 2 = 3$, so $p = 1$. Bottom-right: $q^2 + 2 = 18$, so $q = 4$. Check: $p + q = 5$ and $2p + 2q = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$A^2$ in terms of $p$ and $q$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "equates entries"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "$C = \\begin{pmatrix} 0 & 2 \\\\ 2 & 0 \\end{pmatrix}$. Work out the top-right entry of $C^5$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "powers through the identity",
+      "step": "s7",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$C^2 = \\begin{pmatrix} 4 & 0 \\\\ 0 & 4 \\end{pmatrix} = 4I$. So $C^4 = 16I$ and $C^5 = 16C = \\begin{pmatrix} 0 & 32 \\\\ 32 & 0 \\end{pmatrix}$. The top-right entry is 32.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$C^2 = 4I$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$C^5 = 16C$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "32"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 32,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1311,9 +1579,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 32
+      "suggestedMinutes": 54
     }
   },
   "examTechnique": {
@@ -1346,7 +1622,9 @@
       "q14",
       "q15",
       "q16",
-      "q18"
+      "q18",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

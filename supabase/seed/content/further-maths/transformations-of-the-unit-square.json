@@ -915,6 +915,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "tr-enlarge-turn",
+      "body": "$T = \\begin{pmatrix} 0 & 3 \\\\ -3 & 0 \\end{pmatrix}$."
+    },
+    {
+      "id": "tr-reflect-turn",
+      "body": "$R$ is a reflection in the $x$-axis. $Q$ is a rotation of $90°$ clockwise about the origin."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1495,6 +1505,280 @@
       "correct": [
         3
       ]
+    },
+    {
+      "id": "q19",
+      "prompt": "Write down the image of the point $(2, 3)$ under the transformation $T$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "a matrix acting on a point",
+      "step": "s1",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\begin{pmatrix} 0 & 3 \\\\ -3 & 0 \\end{pmatrix}\\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix} = \\begin{pmatrix} 0 \\times 2 + 3 \\times 3 \\\\ -3 \\times 2 + 0 \\times 3 \\end{pmatrix} = \\begin{pmatrix} 9 \\\\ -6 \\end{pmatrix}$, so the image is $(9, -6)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$(9, -6)$"
+        }
+      ],
+      "discriminators": [],
+      "context": "tr-enlarge-turn",
+      "type": "short-text",
+      "accepted": [
+        "(9, -6)",
+        "x=9, y=-6"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Which describes the transformation $T$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading a combined transformation",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The columns are the images of $(1, 0)$ and $(0, 1)$: $(0, -3)$ and $(3, 0)$. Each is turned $90°$ clockwise and tripled, so $T = 3\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$: an enlargement, scale factor 3, with a rotation of $90°$ clockwise, both about the origin.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "enlargement 3 with rotation 90° clockwise"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "tr-enlarge-turn",
+      "type": "multiple-choice",
+      "options": [
+        "Enlargement, scale factor 3, and rotation $90°$ anticlockwise",
+        "Enlargement, scale factor $-3$, and a reflection in the line $y = x$",
+        "Enlargement, scale factor 3, and rotation $90°$ clockwise",
+        "Enlargement, scale factor 3, and rotation $180°$"
+      ],
+      "correct": [
+        2
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "$T^4 = kI$, where $I$ is the $2 \\times 2$ identity matrix. Work out the value of $k$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "a repeated transformation",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$T^2 = \\begin{pmatrix} 0 & 3 \\\\ -3 & 0 \\end{pmatrix}^2 = \\begin{pmatrix} -9 & 0 \\\\ 0 & -9 \\end{pmatrix} = -9I$, so $T^4 = (-9I)^2 = 81I$ and $k = 81$. In words: four quarter-turns are a full turn, and four enlargements by 3 make $3^4 = 81$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$T^2 = -9I$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "81"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "tr-enlarge-turn",
+      "type": "numeric",
+      "answer": 81,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q22",
+      "prompt": "Which matrix represents $Q$?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the matrix of a rotation",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A $90°$ clockwise turn sends $(1, 0)$ to $(0, -1)$ and $(0, 1)$ to $(1, 0)$. Those are the columns: $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "columns (0, −1) and (1, 0)"
+        }
+      ],
+      "discriminators": [],
+      "context": "tr-reflect-turn",
+      "type": "multiple-choice",
+      "options": [
+        "$\\begin{pmatrix} 0 & -1 \\\\ 1 & 0 \\end{pmatrix}$",
+        "$\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}$",
+        "$\\begin{pmatrix} -1 & 0 \\\\ 0 & -1 \\end{pmatrix}$",
+        "$\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "The point $(2, 5)$ is transformed by $R$, and the image is then transformed by $Q$. Write down the coordinates of the final image.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "two transformations in order",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$R$ sends $(2, 5)$ to $(2, -5)$. $Q$, a quarter-turn clockwise, sends $(x, y)$ to $(y, -x)$, so $(2, -5)$ goes to $(-5, -2)$. As one matrix: $QR = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$, and $QR\\begin{pmatrix} 2 \\\\ 5 \\end{pmatrix} = \\begin{pmatrix} -5 \\\\ -2 \\end{pmatrix}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(2, -5)$ after $R$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$(-5, -2)$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "tr-reflect-turn",
+      "type": "short-text",
+      "accepted": [
+        "(-5, -2)",
+        "x=-5, y=-2"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Which single transformation is the same as $R$ followed by $Q$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "naming a combined transformation",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$R$ followed by $Q$ is the product $QR$, the later one on the left: $\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}\\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix} = \\begin{pmatrix} 0 & -1 \\\\ -1 & 0 \\end{pmatrix}$, which swaps the coordinates and changes both signs: a reflection in $y = -x$. Working out $RQ$ instead gives a reflection in $y = x$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "reflection in y = −x"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "tr-reflect-turn",
+      "type": "multiple-choice",
+      "options": [
+        "A reflection in the line $y = -x$",
+        "A reflection in the line $y = x$",
+        "A rotation of $90°$ anticlockwise about the origin",
+        "A rotation of $180°$ about the origin"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "A point $P$ is reflected in the line $y = x$, and the image is then enlarged with scale factor 3, centre the origin. The final image is $(6, -12)$. Work out the $x$-coordinate of $P$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "working back through two transformations",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Undo the steps in reverse order. Undo the enlargement: divide by 3 to get $(2, -4)$. Undo the reflection in $y = x$ (it is its own inverse): swap the coordinates to get $(-4, 2)$. So $P = (-4, 2)$ and its $x$-coordinate is $-4$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides by 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "swaps the coordinates"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-4$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": -4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "The unit square $OABC$ has vertices $O(0, 0)$, $A(1, 0)$, $B(1, 1)$ and $C(0, 1)$. It is transformed by the matrix $\\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$. Show that the image is a rhombus, and work out its area.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "the shape and area of an image",
+      "step": "s7",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The images are $O'(0, 0)$, $A'(2, 1)$, $B'(3, 3)$ and $C'(1, 2)$. Each side has length $\\sqrt{1^2 + 2^2} = \\sqrt{5}$ (for example $O'A' = \\sqrt{4 + 1}$ and $A'B' = \\sqrt{1 + 4}$), so it is a rhombus. Its diagonals are $O'B' = 3\\sqrt{2}$ and $A'C' = \\sqrt{2}$, so the area is $\\dfrac{1}{2} \\times 3\\sqrt{2} \\times \\sqrt{2} = 3$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "all four image points"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "four sides $\\sqrt{5}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "diagonals $3\\sqrt{2}$ and $\\sqrt{2}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "area 3"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Found the images $(0, 0)$, $(2, 1)$, $(3, 3)$, $(1, 2)$",
+          "marks": 1
+        },
+        {
+          "text": "Showed all four sides are $\\sqrt{5}$, so a rhombus",
+          "marks": 1
+        },
+        {
+          "text": "Found the diagonals $3\\sqrt{2}$ and $\\sqrt{2}$",
+          "marks": 1
+        },
+        {
+          "text": "Worked out the area as 3",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Image vertices $(0, 0)$, $(2, 1)$, $(3, 3)$, $(1, 2)$; every side $\\sqrt{5}$, so a rhombus. Area $= \\dfrac{1}{2} \\times 3\\sqrt{2} \\times \\sqrt{2} = 3$."
     }
   ],
   "worksheets": {
@@ -1530,9 +1814,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 32
+      "suggestedMinutes": 48
     }
   },
   "examTechnique": {
@@ -1565,7 +1857,8 @@
       "q14",
       "q15",
       "q16",
-      "q18"
+      "q18",
+      "q25"
     ],
     "sampleSize": 10
   },

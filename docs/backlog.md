@@ -956,13 +956,18 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
   Core practicals 5.18B (antiseptics), 6.5 (light and photosynthesis), 8.11 (respirometer) and
   9.5 (belt transect) each have one, so all eight core practicals the pack teaches are covered. Biology
   is complete: 287 new questions over 38 topics, and section 13's four subjects are done.
-- [ ] **11. Further Maths.** Multi-part problems in the style of the 8365 papers' longer
+- [x] **11. Further Maths.** Multi-part problems in the style of the 8365 papers' longer
   questions, including proof and show that. In two PRs. Number and algebra (12 topics, 98
   questions: two multi-part questions and two longer grade 8 to 9 problems per topic) in
   v10.129.0. Writing them found two marker faults older than them: a "solve" answer was split
   at every comma, so "(3, 3), (4, 4)" passed for "(3, 4), (4, 3)", and a list of surd
   solutions written in another order, such as √6 − 1 for −1 + √6, was marked wrong. Pairs now
   stay together, and surd terms may come in any order while the form asked for still counts.
+  Coordinate geometry, calculus, matrices and trigonometry (10 topics, 83 questions) in
+  v10.130.0, with proofs on circle theorems and tangents, optimisation, and 3D trigonometry.
+  The marker now takes one point written any usual way ("x = −3 and y = 3", "y = 3, x = −3"),
+  "dy/dx =" in front of a derivative, and x-coordinates or values of sin x in any order.
+  Further Maths is complete: 181 new questions over 22 topics.
 - [ ] **12. Challenge problems across topics.** Ten to twenty problems per subject for Maths and
   the three sciences that need two or more units at once (for example forces with energy, or
   algebra with geometry), as a "Challenge" set on the subject page beside the grade 9 sets.
