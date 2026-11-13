@@ -34,6 +34,7 @@ const Glossary = screen(lookup, 'Glossary')
 const Search = screen(lookup, 'Search')
 const Resources = screen(reference, 'Resources')
 const ResourcePage = screen(reference, 'ResourcePage')
+const PastPapers = screen(reference, 'PastPapers')
 const Family = screen(() => import('../routes/parent/Family.tsx'), 'Family')
 
 /**
@@ -55,6 +56,7 @@ export const router = createBrowserRouter([
       { path: 'subjects/:subjectId/units/:unitId/test', element: <SubjectTheme><UnitTest /></SubjectTheme> },
       { path: 'subjects/:subjectId/units/:unitId/grade-9', element: <SubjectTheme><Grade9Set /></SubjectTheme> },
       { path: 'subjects/:subjectId/exam-technique', element: <SubjectTheme><ExamTechnique /></SubjectTheme> },
+      { path: 'subjects/:subjectId/past-papers', element: <SubjectTheme><PastPapers /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId', element: <SubjectTheme><Topic /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/why', element: <SubjectTheme><WhyItExists /></SubjectTheme> },
       { path: 'subjects/:subjectId/topics/:topicId/lesson', element: <SubjectTheme><Lesson /></SubjectTheme> },

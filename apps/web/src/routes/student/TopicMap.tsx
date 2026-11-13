@@ -119,6 +119,9 @@ function SubjectHeader({ subject, squares }: { subject: Subject; squares: MapSqu
         <Link to={`/subjects/${subject.id}/exam-technique`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <span aria-hidden>✎</span> Exam technique guide
         </Link>
+        <Link to={`/subjects/${subject.id}/past-papers`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
+          <span aria-hidden>▤</span> Past papers
+        </Link>
         <Link to={`/resources?subject=${subject.id}`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <SheetsIcon width={18} height={18} /> Resources
         </Link>
