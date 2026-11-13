@@ -23,11 +23,11 @@ export default function InPastPapers({ subjectId, topicId }: { subjectId: string
     <section aria-labelledby="past-heading" className="flex flex-col gap-2">
       <h2 id="past-heading" className="chip w-fit" style={{ '--chip': '#7a4b00' } as React.CSSProperties}><Smiley>📝</Smiley>In past papers</h2>
       {uses.length === 0 ? (
-        <p className="text-sm text-ink-2">Not asked on any of the board’s Higher papers listed here.</p>
+        <p className="text-sm text-ink-2">Not asked on any of the board’s papers listed here.</p>
       ) : (
         <>
           <p className="text-sm text-ink-2">
-            Asked {uses.length === 1 ? 'once' : `${uses.length} times`} on the board’s Higher papers{first ? ` since ${first.series}` : ''}. Each opens the board’s question paper: find the question by its number, then mark it with the mark scheme on the{' '}
+            Asked {uses.length === 1 ? 'once' : `${uses.length} times`} on the board’s papers listed here{first ? ` since ${first.series}` : ''}. Each opens the board’s question paper: find the question by its number, then mark it with the mark scheme on the{' '}
             <Link to={`/subjects/${subjectId}/past-papers`} className="font-bold underline">Past papers</Link> page.
           </p>
           <ul className="flex flex-col divide-y divide-rule rounded-2xl border border-rule bg-surface">

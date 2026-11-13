@@ -55,8 +55,14 @@ describe('the past papers index', () => {
 
   it('gives Computer Science the C# Paper 1 only, the version the school enters', () => {
     const cs = indexes.find((x) => x.index.subjectId === 'computer-science')!.index
-    const ids = new Set(cs.series.flatMap((s) => s.papers.map((p) => p.id)))
+    // 8525 papers: the C# Paper 1 and Paper 2. November 2021 was the last series of the course
+    // before (8520), which had one Paper 1 for every language; it is listed, marked as such.
+    const ids = new Set(cs.series.filter((s) => s.id !== '2021-11').flatMap((s) => s.papers.map((p) => p.id)))
     expect([...ids].sort()).toEqual(['1A', '2'])
+    const old = cs.series.find((s) => s.id === '2021-11')!
+    expect(old.papers.map((p) => p.id)).toEqual(['1', '2'])
+    expect(old.papers.every((p) => p.name.includes('(8520)'))).toBe(true)
+    expect(old.note).toContain('8520')
     expect(cs.practice?.url).toBe('https://red-dune-0f7372e10.7.azurestaticapps.net/')
   })
 
@@ -86,6 +92,28 @@ describe('the past papers index', () => {
     // polygons, stem and leaf diagrams, linear equations), and they were written on 13 November
     // 2026. A question with no topic is a gap in the content, not a tag to leave empty.
     expect(qs.filter((q) => q.topics.length === 0)).toEqual([])
+  })
+
+  // Box 4. Further Maths papers are 80 marks; Computer Science 8525 papers 90, the two 8520
+  // papers of November 2021 80. Marks per question were read from the paper and checked
+  // against a second extraction or the mark scheme.
+  it.each([
+    ['further-maths', 12, 259],
+    ['computer-science', 12, 186],
+  ])('tags every %s paper, every question to a topic (box 4)', (subjectId, paperCount, questionCount) => {
+    const index = indexes.find((x) => x.index.subjectId === subjectId)!.index
+    const papers = index.series.flatMap((s) => s.papers.map((p) => ({ s: s.id, p })))
+    expect(papers.length).toBe(paperCount)
+    for (const { s, p } of papers) {
+      const total = subjectId === 'further-maths' ? 80 : s === '2021-11' ? 80 : 90
+      expect(p.marks, `${s} ${p.id}`).toBe(total)
+    }
+    const qs = papers.flatMap(({ p }) => p.questions ?? [])
+    expect(qs.length).toBe(questionCount)
+    expect(qs.filter((q) => q.topics.length === 0)).toEqual([])
+    const asked = new Set(qs.flatMap((q) => q.topics))
+    const ids = readdirSync(new URL(`${subjectId}/`, CONTENT)).filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', ''))
+    expect(ids.filter((id) => !asked.has(id))).toEqual([])
   })
 
   // Box 3. Each question's marks are the total its mark scheme prints (AQA) or the paper's own
