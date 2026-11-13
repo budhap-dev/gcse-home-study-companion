@@ -1013,6 +1013,12 @@ specification, and are left out by decision.
 | English Language | AQA 8700 | 2 (one tier), each with a source insert | November 2020 to November 2025, June and November |
 | English Literature | AQA 8702 | 2 (one tier) | November 2020 to June 2025 |
 
+**Approved 13 November 2026**, with three choices: French shows the papers Pearson has (none
+yet, see box 1); Computer Science shows the **C#** version of Paper 1, the one the school
+enters, and links the family's own Learn C# app for its programming; box 6, logging a past
+paper with a grade, is in. Grade boundaries are set for a whole qualification, so a grade from
+one paper is a scaled estimate and says so, and a full series gives the real grade.
+
 **What is built.** Each subject page gets a **Past papers** list, newest first: one row per
 paper with links to the question paper, mark scheme, examiner report and any insert (the
 Physics equations sheet, the English Language source texts), each opening the board's PDF.
@@ -1029,9 +1035,26 @@ withdrawn paper keeps its row and tags, marked "no longer on the board's site". 
 from the board's own PDF, never recalled, and each subject's tags are checked by a reviewer
 agent before they ship.
 
-- [ ] **1. Index of papers for every subject.** The data files, the Past papers list on each
-  subject page and the link checks. Box 1 confirms the series for Biology, Business and Music,
-  and every Maths series, from Pearson's finder.
+- [x] **1. Index of papers for every subject.** The data files, the Past papers list on each
+  subject page and the link checks. 507 links, every one opening a PDF on the board's site
+  when checked; `node supabase/scripts/check-past-papers.mjs` checks them again before a
+  release. Read from the boards' finders on 13 November 2026, Higher only:
+  - **Maths:** June 2019 to June 2025 and the November series (11). The 2017 and 2018 papers
+    are no longer public, November 2025 and June 2026 are still locked for teachers, and six
+    examiner's report links that are broken on Pearson's own site are left out.
+  - **Biology:** November 2020 to June 2025 (6). **Business:** June 2019 to June 2025 (7).
+    **Music:** Component 3 from June 2018 (8). Pearson does not publish the listening audio,
+    and the page says how to work with that.
+  - **Physics, Chemistry:** June 2018 to June 2025 (8 each, 2018 to 2019 partly).
+    **Further Maths, Computer Science:** November 2021 to June 2025 (5 each), plus the sample
+    sets. **English Language:** November 2020 to November 2025 (10). **English Literature:**
+    November 2020 to June 2025 (6).
+  - **French: none.** 1FR1 was first sat in June 2026 and is locked until about mid-2027, and
+    the papers of the course before it (1FR0) are no longer on Pearson's site. The page says
+    so and links Pearson's finder.
+  - AQA changes Computer Science Paper 2 for exams from 2027, which is when this student sits.
+    Its sample papers are listed, with a note. Whether the app's own Computer Science content
+    needs updating for 2027 is a separate check, not done here.
 - [ ] **2. Maths tags.** Every question of every Higher paper, about 1,000 questions, tagged
   to the 1MA1 topics; topic pages show where each was asked.
 - [ ] **3. Science tags.** Physics, Chemistry and Biology, about 450 questions.

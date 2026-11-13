@@ -4,3 +4,4 @@
  */
 export { Resources } from './student/Resources.tsx'
 export { ResourcePage } from './student/ResourcePage.tsx'
+export { PastPapers } from './student/PastPapers.tsx'
