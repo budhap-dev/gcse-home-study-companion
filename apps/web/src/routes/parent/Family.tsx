@@ -124,7 +124,7 @@ export function Family() {
         <div className="flex flex-wrap gap-2">
           {children.map((c) => (
             <button key={c.email} type="button" onClick={() => setChosen(c.email)} aria-pressed={c.email === child.email}
-              className={`min-h-11 rounded-xl px-4 font-bold ${c.email === child.email ? 'bg-ink text-surface' : 'border border-rule'}`}>{c.name}</button>
+              className={`btn ${c.email === child.email ? 'btn-primary' : 'btn-secondary'}`}>{c.name}</button>
           ))}
         </div>
       )}

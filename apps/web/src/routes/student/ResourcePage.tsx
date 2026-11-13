@@ -48,7 +48,7 @@ export function ResourcePage() {
       ) : (
         <>
           <div className="no-print flex flex-wrap gap-2">
-            <button type="button" onClick={() => window.print()} className="h-11 rounded-lg bg-ink px-4 font-bold text-surface">Print this sheet</button>
+            <button type="button" onClick={() => window.print()} className="btn btn-primary">Print this sheet</button>
           </div>
           <Blocks blocks={resource.blocks} />
         </>

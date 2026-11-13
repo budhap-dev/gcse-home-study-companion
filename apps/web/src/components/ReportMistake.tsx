@@ -45,10 +45,10 @@ export function ReportMistake({ item }: { item: Omit<MistakeReport, 'note'> }) {
       />
       {state === 'failed' && <p className="text-sm" style={{ color: 'var(--color-status-not-secure)' }}>It could not be sent just now. Try again in a moment.</p>}
       <div className="flex gap-2">
-        <button type="button" onClick={send} disabled={!note.trim() || state === 'sending'} className="h-10 rounded-lg bg-ink px-4 text-sm font-bold text-surface disabled:opacity-40">
+        <button type="button" onClick={send} disabled={!note.trim() || state === 'sending'} className="btn btn-primary btn-sm">
           {state === 'sending' ? 'Sending…' : 'Send report'}
         </button>
-        <button type="button" onClick={() => { setOpen(false); setState('idle') }} className="h-10 rounded-lg border border-rule px-4 text-sm font-bold">
+        <button type="button" onClick={() => { setOpen(false); setState('idle') }} className="btn btn-secondary btn-sm">
           Cancel
         </button>
       </div>

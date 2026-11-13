@@ -74,8 +74,8 @@ export function MakeWorksheet() {
               </summary>
               <div className="flex flex-col gap-1 border-t border-rule px-4 py-3">
                 <div className="flex gap-2 pb-1">
-                  <button type="button" onClick={() => setUnit(ids, true)} className="min-h-9 rounded-md border border-rule px-3 text-sm font-bold">All</button>
-                  <button type="button" onClick={() => setUnit(ids, false)} className="min-h-9 rounded-md border border-rule px-3 text-sm font-bold">None</button>
+                  <button type="button" onClick={() => setUnit(ids, true)} className="btn btn-secondary btn-sm">All</button>
+                  <button type="button" onClick={() => setUnit(ids, false)} className="btn btn-secondary btn-sm">None</button>
                 </div>
                 {u.topics.map((t) => (
                   <label key={t.id} className="flex min-h-10 cursor-pointer items-center gap-3 text-[15px]">
@@ -138,27 +138,27 @@ export function MakeWorksheet() {
         <div className="grid grid-cols-2 gap-2">
           {ready ? (
             <>
-              <Link to={mixedPath(spec)} className="flex h-12 items-center justify-center rounded-xl bg-[color:var(--subject)] px-3 text-center font-bold text-white">Do it on screen</Link>
-              <Link to={mixedPath(spec, { codes: [code, ...more].slice(0, versions) })} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-3 text-center font-bold">
+              <Link to={mixedPath(spec)} className="btn btn-primary btn-lg">Do it on screen</Link>
+              <Link to={mixedPath(spec, { codes: [code, ...more].slice(0, versions) })} className="btn btn-secondary btn-lg">
                 {versions === 1 ? 'Print or save as PDF' : `Print ${versions} versions`}
               </Link>
             </>
           ) : (
             <>
-              <button type="button" disabled className="h-12 rounded-xl bg-[color:var(--subject)] px-3 font-bold text-white opacity-40">Do it on screen</button>
-              <button type="button" disabled className="h-12 rounded-xl border border-rule bg-surface px-3 font-bold opacity-40">Print or save as PDF</button>
+              <button type="button" disabled className="btn btn-primary btn-lg opacity-40">Do it on screen</button>
+              <button type="button" disabled className="btn btn-secondary btn-lg opacity-40">Print or save as PDF</button>
             </>
           )}
         </div>
         {ready && (
           <div className="flex flex-wrap items-start gap-2">
             <ShareSheet small path={mixedPath(spec)} title={`${subject.name} · mixed worksheet ${code}`} />
-            <button type="button" onClick={() => { setCode(newSheetCode()); setSet((n) => n + 1) }} className="flex h-9 items-center rounded-lg border border-rule bg-surface px-3 text-sm font-bold">Different questions</button>
+            <button type="button" onClick={() => { setCode(newSheetCode()); setSet((n) => n + 1) }} className="btn btn-secondary btn-sm">Different questions</button>
             {set > 1 && <span role="status" className="flex h-9 items-center text-sm text-ink-2">Set {set} picked: new questions and numbers.</span>}
           </div>
         )}
       </section>
-      <Link to={`/subjects/${subjectId}`} className="flex h-11 w-fit items-center rounded-lg border border-rule bg-surface px-4 font-bold">Back to {subject.name}</Link>
+      <Link to={`/subjects/${subjectId}`} className="btn btn-secondary w-fit">Back to {subject.name}</Link>
     </article>
   )
 }

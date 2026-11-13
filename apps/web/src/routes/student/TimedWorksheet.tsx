@@ -16,7 +16,6 @@ import { describeAnswer } from '@study/shared'
 
 const LEVELS: WorksheetLevel[] = ['core', 'higher', 'advanced']
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
-const BUTTON = 'flex min-h-12 items-center justify-center rounded-xl px-5 font-bold'
 
 /** The link to a worksheet sat as a timed paper: with a sheet code on a retry, which draws new numbers. */
 export function timedPath(subjectId: string, topicId: string, level: WorksheetLevel, code?: string): string {
@@ -102,7 +101,7 @@ function TimedBody({ topic, level }: { topic: TopicRecord; level?: WorksheetLeve
       studyKind="worksheet"
       showTopic={false}
       record={(r) => recordTimedWorksheet(topic, level, questions.map((q) => q.question), r, seed)}
-      after={<Link to={backTo} className={`${BUTTON} bg-[color:var(--subject)] text-white`}>Back to topic</Link>}
+      after={<Link to={backTo} className="btn btn-primary btn-lg">Back to topic</Link>}
     />
   )
 }

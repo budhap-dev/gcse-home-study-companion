@@ -434,6 +434,56 @@ figure[data-diagram] {
 [data-motion="off"] .screen-opening { animation: none; }
 .press { transition: transform 0.12s ease; }
 .press:active { transform: scale(0.97); }
+
+/* Buttons (13 November 2026). One shape for every action, in three weights and three sizes,
+   instead of the fifty hand-set variants there were: four heights, two corner radii and three
+   fills, each with its own padding, and fixed heights that let a long label wrap out of its box.
+   - .btn-primary: the one thing the screen is for. The subject colour inside a subject, under
+     white text; elsewhere the theme's ink under its surface, so it follows the dark themes.
+   - .btn-secondary: every other action. Surface, a hairline, the accent on hover.
+   - .btn-danger and .btn-danger-quiet: removing or resetting something.
+   - Sizes: .btn-lg for a screen's main actions (48px), .btn (44px, the smallest comfortable
+     tap) and .btn-sm (40px) for dense toolbars.
+   A label may wrap, balanced and centred, and the button grows to hold it; .btn-row lays a set
+   of them out as a column on a phone and a wrapping row wider up, so they share the width
+   instead of squeezing their labels. In the components layer, so a utility on the element
+   (w-full, flex-1, ml-auto) still wins. */
+:root { --btn-fill: var(--color-ink); --btn-on: var(--color-surface); --btn-accent: var(--color-ink); }
+[data-subject] { --btn-fill: var(--subject); --btn-on: #fff; --btn-accent: var(--subject); }
+@layer components {
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 2.75rem; padding: 0.5rem 1rem; border: 1px solid transparent; border-radius: 0.75rem;
+    font-weight: 700; line-height: 1.2; text-align: center; text-wrap: balance; text-decoration: none;
+    cursor: pointer; user-select: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+  }
+  .btn:active:not(:disabled):not([aria-disabled="true"]) { transform: scale(0.98); }
+  .btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--btn-accent) 55%, transparent); outline-offset: 2px; }
+  .btn:disabled, .btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+  .btn-lg { min-height: 3rem; padding: 0.625rem 1.25rem; font-size: 1rem; }
+  .btn-sm { min-height: 2.5rem; padding: 0.375rem 0.75rem; font-size: 0.875rem; border-radius: 0.625rem; }
+
+  .btn-primary {
+    background: var(--btn-fill); color: var(--btn-on);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 6px 16px -10px rgb(0 0 0 / 0.35);
+  }
+  .btn-primary:hover:not(:disabled) { background: color-mix(in srgb, var(--btn-fill) 86%, #000); }
+  .btn-secondary { background: var(--color-surface); color: var(--color-ink); border-color: var(--color-rule); }
+  .btn-secondary:hover:not(:disabled) { border-color: var(--btn-accent); background: color-mix(in srgb, var(--btn-accent) 6%, var(--color-surface)); }
+  .btn-danger { background: var(--color-status-not-secure); color: #fff; }
+  .btn-danger:hover:not(:disabled) { background: color-mix(in srgb, var(--color-status-not-secure) 86%, #000); }
+  .btn-danger-quiet { background: var(--color-surface); color: var(--status-not-secure-ink); border-color: var(--color-rule); }
+  .btn-danger-quiet:hover:not(:disabled) { border-color: var(--status-not-secure-ink); }
+
+  .btn-row { display: flex; flex-direction: column; gap: 0.5rem; }
+  @media (min-width: 40rem) {
+    .btn-row { flex-direction: row; flex-wrap: wrap; }
+    .btn-row > .btn { flex: 1 1 auto; }
+  }
+}
+[data-motion="off"] .btn { transition: none; }
+[data-motion="off"] .btn:active { transform: none; }
 [data-motion="off"] .accordion::details-content { transition: none !important; }
 [data-motion="off"] .accordion summary > span:first-child { transition: none !important; }
 [data-motion="off"] .anim-fade-up, [data-motion="off"] .anim-pop, [data-motion="off"] .anim-bounce, [data-motion="off"] .anim-shake, [data-motion="off"] .anim-float, [data-motion="off"] .anim-flicker, [data-motion="off"] .anim-bar, [data-motion="off"] .confetti, [data-motion="off"] .flashcard-inner, [data-motion="off"] .is-leaving-known, [data-motion="off"] .is-leaving-again, [data-motion="off"] .anim-streak { animation: none !important; transition: none !important; }

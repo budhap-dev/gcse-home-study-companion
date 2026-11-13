@@ -52,7 +52,6 @@ export interface PaperRecord {
   timed?: { allowedSeconds: number; usedSeconds: number }
 }
 
-const BUTTON = 'flex min-h-12 items-center justify-center rounded-xl px-5 font-bold'
 /** Under this, a written answer reads as not attempted, as in the worksheet. */
 const MIN_WRITTEN = 40
 
@@ -187,8 +186,8 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
           <li>Nothing is marked until you hand it in: move between the questions as you like, and change an answer before then.</li>
         </ul>
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <button type="button" onClick={() => start(true)} className={`${BUTTON} bg-[color:var(--subject)] text-white`}>Start, timed: {allowedMinutes} minutes</button>
-          <button type="button" onClick={() => start(false)} className={`${BUTTON} border border-rule bg-surface`}>Start without the clock</button>
+          <button type="button" onClick={() => start(true)} className="btn btn-primary btn-lg">Start, timed: {allowedMinutes} minutes</button>
+          <button type="button" onClick={() => start(false)} className="btn btn-secondary btn-lg">Start without the clock</button>
         </div>
         <p className="text-sm text-ink-2">The time is the exam’s own pace for this subject, about {perMark.toFixed(1).replace(/\.0$/, '')} {perMark === 1 ? 'minute' : 'minutes'} a mark. When it runs out the paper is handed in as it stands.</p>
       </article>
@@ -205,7 +204,7 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
         <p className="text-ink-2">This paper has changed since it was started.</p>
-        <button type="button" onClick={() => setState(null)} className={`${BUTTON} w-fit bg-ink text-surface`}>Start again</button>
+        <button type="button" onClick={() => setState(null)} className="btn btn-primary btn-lg w-fit">Start again</button>
       </article>
     )
   }
@@ -255,7 +254,7 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
         ) : s.answers[k] ? (
           <div className="flex flex-col gap-2 rounded-xl border border-rule bg-surface p-4">
             <p className="text-sm"><span className="font-bold">Your answer:</span> <RichText source={describeAnswer(at.question, s.answers[k]!.answer) ?? '—'} inline /></p>
-            <button type="button" onClick={() => { const { [k]: _gone, ...rest } = s.answers; setState({ ...s, answers: rest }) }} className="min-h-10 w-fit rounded-lg border border-rule px-3 text-sm font-bold">Change answer</button>
+            <button type="button" onClick={() => { const { [k]: _gone, ...rest } = s.answers; setState({ ...s, answers: rest }) }} className="btn btn-secondary btn-sm w-fit">Change answer</button>
           </div>
         ) : (
           <QuestionInput key={`${k}:${Object.keys(s.answers).length}`} subjectId={subjectId} question={at.question} submitLabel="Save answer" onSubmit={(answer) => {
@@ -268,8 +267,8 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
 
       <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
         <div className="flex gap-2">
-          <button type="button" disabled={s.index === 0} onClick={() => go(s.index - 1)} className={`${BUTTON} flex-1 border border-rule bg-surface disabled:opacity-40`}>Previous</button>
-          <button type="button" disabled={last} onClick={() => go(s.index + 1)} className={`${BUTTON} flex-1 border border-rule bg-surface disabled:opacity-40`}>Next</button>
+          <button type="button" disabled={s.index === 0} onClick={() => go(s.index - 1)} className="btn btn-secondary btn-lg flex-1">Previous</button>
+          <button type="button" disabled={last} onClick={() => go(s.index + 1)} className="btn btn-secondary btn-lg flex-1">Next</button>
         </div>
         <HandIn left={left} onHandIn={() => handIn(s)} />
       </div>
@@ -285,11 +284,11 @@ function timing(s: PaperState): Pick<PaperRecord, 'timed'> {
 /** Hand in, with a second press when questions are still unanswered. */
 function HandIn({ left, onHandIn }: { left: number; onHandIn: () => void }) {
   const [sure, setSure] = useState(false)
-  if (left > 0 && !sure) return <button type="button" onClick={() => setSure(true)} className={`${BUTTON} bg-ink text-surface`}>Hand in</button>
+  if (left > 0 && !sure) return <button type="button" onClick={() => setSure(true)} className="btn btn-primary btn-lg">Hand in</button>
   return (
     <div className="flex flex-col gap-1.5 sm:items-end">
       {left > 0 && <p className="text-sm font-bold">{left} {left === 1 ? 'question has' : 'questions have'} no answer yet and will score nothing.</p>}
-      <button type="button" onClick={onHandIn} className={`${BUTTON} bg-ink text-surface`}>{left > 0 ? 'Hand in anyway' : 'Hand in'}</button>
+      <button type="button" onClick={onHandIn} className="btn btn-primary btn-lg">{left > 0 ? 'Hand in anyway' : 'Hand in'}</button>
     </div>
   )
 }
@@ -370,7 +369,7 @@ function PaperResult({ state: s, questions, kicker, title, subjectId, showTopic,
       <p className="text-ink-2">Wrong answers wait in Redo my mistakes. A topic where marks went is the one to go back to: its lesson and worksheets are a tap away.</p>
       <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         {after}
-        <button type="button" onClick={onRestart} className={`${BUTTON} border border-rule bg-surface`}>Sit it again</button>
+        <button type="button" onClick={onRestart} className="btn btn-secondary btn-lg">Sit it again</button>
       </div>
     </article>
   )
@@ -384,7 +383,7 @@ function MethodMarks({ most, given, onGive }: { most: number; given?: number; on
       <div role="radiogroup" aria-label="Method marks" className="flex flex-wrap gap-1.5">
         {Array.from({ length: most + 1 }, (_, n) => (
           <button key={n} type="button" role="radio" aria-checked={(given ?? 0) === n} onClick={() => onGive(n)}
-            className={`h-10 min-w-10 rounded-lg px-3 text-sm font-bold ${(given ?? 0) === n ? 'bg-ink text-surface' : 'border border-rule bg-surface'}`}>{n}</button>
+            className={`btn btn-sm min-w-10 ${(given ?? 0) === n ? 'btn-primary' : 'btn-secondary'}`}>{n}</button>
         ))}
       </div>
     </div>

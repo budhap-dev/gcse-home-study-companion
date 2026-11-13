@@ -31,15 +31,15 @@ export function MixedPrint() {
   return (
     <article className="print-sheet mx-auto w-full max-w-3xl">
       <div className="no-print mb-4 flex flex-wrap items-center gap-2">
-        <button type="button" onClick={() => window.print()} className="h-11 rounded-lg bg-ink px-4 font-bold text-surface">
+        <button type="button" onClick={() => window.print()} className="btn btn-primary">
           {codes.length > 1 ? `Print all ${codes.length}` : 'Print this sheet'}
         </button>
-        <Link to={mixedPath(spec, { codes, answers: !answers })} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">
+        <Link to={mixedPath(spec, { codes, answers: !answers })} className="btn btn-secondary">
           {answers ? 'Print the questions instead' : 'Print the answers instead'}
         </Link>
         <ShareSheet path={mixedPath(spec, { codes })} title={`${subject.name} · mixed worksheet ${spec.code}`} />
-        <Link to={mixedPath(spec)} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">Do sheet {spec.code} on screen</Link>
-        <Link to={`/subjects/${subjectId}/make-worksheet`} className="flex h-11 items-center rounded-lg border border-rule px-4 font-bold">Make another</Link>
+        <Link to={mixedPath(spec)} className="btn btn-secondary">Do sheet {spec.code} on screen</Link>
+        <Link to={`/subjects/${subjectId}/make-worksheet`} className="btn btn-secondary">Make another</Link>
       </div>
 
       {versions.map((v, i) => {

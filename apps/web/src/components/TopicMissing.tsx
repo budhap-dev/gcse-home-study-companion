@@ -20,8 +20,8 @@ export function TopicMissing({ label = 'topic' }: { label?: string }) {
           : 'With no signal, the app shows the topics opened before and the subjects saved for offline. Open this one again with a signal, or save its subject in Settings before a journey.'}
       </p>
       <div className="flex flex-wrap gap-2">
-        {online && <button type="button" onClick={() => window.location.reload()} className="h-11 rounded-xl bg-ink px-4 font-bold text-surface">Try again</button>}
-        <Link to="/settings#offline" className="flex h-11 items-center rounded-xl border border-rule bg-surface px-4 font-bold">Save subjects for offline</Link>
+        {online && <button type="button" onClick={() => window.location.reload()} className="btn btn-primary">Try again</button>}
+        <Link to="/settings#offline" className="btn btn-secondary">Save subjects for offline</Link>
       </div>
     </article>
   )

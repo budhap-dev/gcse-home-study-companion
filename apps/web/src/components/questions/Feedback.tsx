@@ -49,7 +49,7 @@ export function Feedback({ question, result, onClaim, slip }: { question: Questi
       <RichText source={question.solution} className="text-sm" />
       {onClaim && question.type === 'short-text' && !result.correct && !question.listen?.dictation && (
         <div className="flex flex-col gap-1.5 border-t border-rule pt-3">
-          <button type="button" onClick={onClaim} className="min-h-11 w-fit rounded-lg border border-rule bg-surface px-4 text-sm font-bold">
+          <button type="button" onClick={onClaim} className="btn btn-secondary btn-sm w-fit">
             My answer means the same
           </button>
           <p className="text-xs text-ink-2">Only if it says the same thing in different words. It counts as marked by you.</p>

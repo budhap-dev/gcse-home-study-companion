@@ -63,7 +63,7 @@ export function VocabList({ config, alt }: { config: Record<string, unknown>; al
         <button
           type="button"
           onClick={() => setShown(all ? new Set() : new Set(words.map((_, i) => i)))}
-          className="h-10 rounded-lg border border-rule bg-surface px-3 text-sm font-bold"
+          className="btn btn-secondary btn-sm"
         >
           {all ? 'Hide them all' : 'Reveal them all'}
         </button>

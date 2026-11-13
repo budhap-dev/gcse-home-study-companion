@@ -87,7 +87,7 @@ export function Settings() {
         <form className="flex items-center gap-2" onSubmit={(e) => { e.preventDefault(); setDailyGoal(Number(goal)) }}>
           <input type="number" inputMode="numeric" min={10} max={240} step={5} value={goal} onChange={(e) => setGoal(e.target.value)} className="h-11 w-28 rounded-lg border border-rule px-3 text-lg" aria-label="Daily goal in minutes" />
           <span className="text-sm text-ink-2">minutes a day</span>
-          <button type="submit" className="ml-auto h-11 rounded-lg bg-ink px-4 font-bold text-surface">Save</button>
+          <button type="submit" className="btn btn-primary ml-auto">Save</button>
         </form>
       </section>
 
@@ -122,11 +122,11 @@ export function Settings() {
         <p className="text-sm text-ink-2">Removes every attempt, lesson position, and study minute from this device. Cannot be undone.</p>
         {confirmClear ? (
           <div className="flex gap-2">
-            <button type="button" onClick={() => { clearProgress(); setConfirmClear(false) }} className="h-11 rounded-lg bg-status-not-secure px-4 font-bold text-white">Yes, clear everything</button>
-            <button type="button" onClick={() => setConfirmClear(false)} className="h-11 rounded-lg border border-rule px-4 font-bold">Keep it</button>
+            <button type="button" onClick={() => { clearProgress(); setConfirmClear(false) }} className="btn btn-danger">Yes, clear everything</button>
+            <button type="button" onClick={() => setConfirmClear(false)} className="btn btn-secondary">Keep it</button>
           </div>
         ) : (
-          <button type="button" onClick={() => setConfirmClear(true)} className="h-11 w-fit rounded-lg border border-rule px-4 font-bold">Clear progress on this device</button>
+          <button type="button" onClick={() => setConfirmClear(true)} className="btn btn-secondary w-fit">Clear progress on this device</button>
         )}
       </section>
 
@@ -150,7 +150,7 @@ function AccountPanel() {
         {auth.avatar && <img src={auth.avatar} alt="" className="h-9 w-9 rounded-full" referrerPolicy="no-referrer" />}
         <span>Signed in as <strong>{auth.name ?? auth.email}</strong> ({auth.email}, {auth.role}). Progress is saved to this account and follows you between devices.</span>
       </p>
-      <button type="button" onClick={() => void signOut()} className="h-11 shrink-0 rounded-xl border border-rule bg-surface px-4 font-bold">Sign out</button>
+      <button type="button" onClick={() => void signOut()} className="btn btn-secondary shrink-0">Sign out</button>
     </div>
   )
 }

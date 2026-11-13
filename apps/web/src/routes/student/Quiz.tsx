@@ -172,7 +172,7 @@ function QuizBody({ topic }: { topic: TopicRecord }) {
       </section>
 
       {answered && (
-        <button type="button" onClick={next} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface">
+        <button type="button" onClick={next} className="btn btn-primary btn-lg">
           {last ? 'See your score' : 'Next question'}
         </button>
       )}
@@ -192,8 +192,8 @@ function Intro({ subjectName, title, count, pool, minutes, onStart, backTo }: { 
         <li>The point is to find out what has clicked and what has not. Wrong answers come with the full solution.</li>
       </ul>
       <div className="flex flex-col gap-2 sm:flex-row">
-        <button type="button" onClick={onStart} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Start quiz</button>
-        <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
+        <button type="button" onClick={onStart} className="btn btn-primary btn-lg">Start quiz</button>
+        <Link to={backTo} className="btn btn-secondary btn-lg">Back to topic</Link>
       </div>
     </article>
   )
@@ -271,8 +271,8 @@ function Summary({ topic, questions, state, backTo, onRetake }: { topic: TopicRe
         </section>
       )}
       <div className="flex flex-col gap-2 sm:flex-row">
-        <button type="button" onClick={onRetake} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Retake with new questions</button>
-        <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
+        <button type="button" onClick={onRetake} className="btn btn-primary btn-lg">Retake with new questions</button>
+        <Link to={backTo} className="btn btn-secondary btn-lg">Back to topic</Link>
       </div>
     </article>
   )

@@ -156,7 +156,7 @@ export function ScratchCanvas({ strokes, onChange, disabled = false }: Props) {
 
 function ToolButton({ label, active = false, disabled = false, onClick }: { label: string; active?: boolean; disabled?: boolean; onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} disabled={disabled} aria-pressed={active} className={`h-9 rounded-lg px-3 text-sm font-bold ${active ? 'bg-ink text-surface' : 'border border-rule bg-surface'} disabled:opacity-40`}>
+    <button type="button" onClick={onClick} disabled={disabled} aria-pressed={active} className={`btn btn-sm ${active ? 'btn-primary' : 'btn-secondary'}`}>
       {label}
     </button>
   )

@@ -24,6 +24,7 @@ import { TopicMissing } from '../../components/TopicMissing.tsx'
 import { timedPath } from './TimedWorksheet.tsx'
 import { minutesFor, minutesPerMark } from '../../content/paper.ts'
 import { QuestionPrompt } from '../../components/questions/QuestionPrompt.tsx'
+import { ChevronIcon } from '../../components/icons.tsx'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -130,6 +131,10 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
   if (!state) {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
+        <Link to={backTo} className="btn btn-secondary btn-sm w-fit">
+          <ChevronIcon width={16} height={16} className="rotate-180" aria-hidden />
+          Back to topic
+        </Link>
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · {topic.title}</p>
         <h1 className="text-3xl font-bold leading-tight">{LEVEL_LABEL[level]} worksheet</h1>
         <ul className="flex flex-col gap-1 text-ink-2">
@@ -146,20 +151,21 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
           )}
           <li>Write your working on the canvas, type the final answer, then reveal the solution and award your method marks.</li>
         </ul>
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <button type="button" onClick={start} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Start worksheet</button>
-          <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
-          <Link to={sent ? sheetPath(subject.id, topic.id, level, sent, true) : `${backTo}/worksheet/${level}/print`} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Print or save as PDF</Link>
-          {freshCount > 0 && !sent && (
-            <Link to={sheetPath(subject.id, topic.id, level, printCode, true)} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Print one with new numbers</Link>
-          )}
+        <div className="flex flex-col gap-2">
+          <div className="btn-row">
+            <button type="button" onClick={start} className="btn btn-primary btn-lg">Start worksheet</button>
+            <Link to={timedPath(subject.id, topic.id, level, freshCount ? sent ?? (triedBefore(getState().attempts, topic.id, level) ? printCode : undefined) : undefined)}
+              className="btn btn-secondary btn-lg">
+              Timed paper · {minutesFor(marksAvailable, minutesPerMark(getGuide(subject.id)))} min
+            </Link>
+          </div>
+          <p className="text-sm text-ink-2">A timed paper runs at the exam’s pace, with nothing marked until you hand it in.</p>
         </div>
-        <div className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-ink-2">Or sit it as a timed paper, at the exam’s pace: nothing marked until you hand it in.</p>
-          <Link to={timedPath(subject.id, topic.id, level, freshCount ? sent ?? (triedBefore(getState().attempts, topic.id, level) ? printCode : undefined) : undefined)}
-            className="flex h-12 shrink-0 items-center justify-center rounded-xl bg-ink px-5 font-bold text-surface">
-            Timed: {minutesFor(marksAvailable, minutesPerMark(getGuide(subject.id)))} minutes
-          </Link>
+        <div className="flex flex-wrap gap-2 border-t border-rule pt-4">
+          <Link to={sent ? sheetPath(subject.id, topic.id, level, sent, true) : `${backTo}/worksheet/${level}/print`} className="btn btn-secondary btn-sm">Print or save as PDF</Link>
+          {freshCount > 0 && !sent && (
+            <Link to={sheetPath(subject.id, topic.id, level, printCode, true)} className="btn btn-secondary btn-sm">Print with new numbers</Link>
+          )}
         </div>
       </article>
     )
@@ -215,14 +221,14 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
           ))}
         </ul>
         <div className="flex flex-col gap-2 sm:flex-row">
-          <button type="button" onClick={start} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Do it again</button>
-          <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
+          <button type="button" onClick={start} className="btn btn-primary btn-lg">Do it again</button>
+          <Link to={backTo} className="btn btn-secondary btn-lg">Back to topic</Link>
         </div>
         {state.seed && (
           <section className="flex flex-col gap-2 rounded-2xl border border-rule bg-surface p-4">
             <p className="text-sm">This was sheet <strong className="font-mono">{state.seed}</strong>. Print it with its answers, or send it to someone: the link opens the same numbers.</p>
             <div className="flex flex-wrap gap-2">
-              <Link to={sheetPath(subject.id, topic.id, level, state.seed, true)} className="flex h-11 items-center rounded-lg border border-rule bg-surface px-4 font-bold">Print this sheet</Link>
+              <Link to={sheetPath(subject.id, topic.id, level, state.seed, true)} className="btn btn-secondary">Print this sheet</Link>
               <ShareSheet path={sheetPath(subject.id, topic.id, level, state.seed)} title={`${topic.title} · sheet ${state.seed}`} />
             </div>
           </section>
@@ -323,7 +329,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
             </p>
           )}
           {answered && typed && !revealed && (
-            <button type="button" onClick={reveal} className="h-11 rounded-lg border border-rule bg-surface font-bold">Reveal worked solution</button>
+            <button type="button" onClick={reveal} className="btn btn-secondary">Reveal worked solution</button>
           )}
           {answered && (revealed || !typed) && (
             <div className="flex flex-col gap-3">
@@ -339,7 +345,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
                   </ul>
                   <div className="flex flex-wrap gap-1.5">
                     {Array.from({ length: methodTotal + 1 }, (_, n) => (
-                      <button key={n} type="button" onClick={() => setMethod(n)} aria-pressed={answered.methodMarks === n} className={`h-10 min-w-10 rounded-lg px-3 text-sm font-bold ${answered.methodMarks === n ? 'bg-ink text-surface' : 'border border-rule bg-surface'}`}>{n}</button>
+                      <button key={n} type="button" onClick={() => setMethod(n)} aria-pressed={answered.methodMarks === n} className={`btn btn-sm min-w-10 ${answered.methodMarks === n ? 'btn-primary' : 'btn-secondary'}`}>{n}</button>
                     ))}
                     <span className="self-center text-xs text-ink-2">of {methodTotal} method mark{methodTotal > 1 ? 's' : ''}</span>
                   </div>
@@ -357,10 +363,10 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
 
       <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
         <div className="flex gap-2">
-          <button type="button" onClick={() => go(state.index - 1)} disabled={state.index === 0} className="h-12 rounded-xl border border-rule bg-surface px-4 font-bold disabled:opacity-40">Previous</button>
-          <button type="button" onClick={() => go(state.index + 1)} disabled={state.index === questions.length - 1} className="h-12 rounded-xl border border-rule bg-surface px-4 font-bold disabled:opacity-40">Next</button>
+          <button type="button" onClick={() => go(state.index - 1)} disabled={state.index === 0} className="btn btn-secondary btn-lg">Previous</button>
+          <button type="button" onClick={() => go(state.index + 1)} disabled={state.index === questions.length - 1} className="btn btn-secondary btn-lg">Next</button>
         </div>
-        <button type="button" onClick={finish} disabled={!allAnswered} className="h-12 rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white disabled:opacity-40">
+        <button type="button" onClick={finish} disabled={!allAnswered} className="btn btn-primary btn-lg">
           {allAnswered ? 'Finish and record score' : `${questions.filter((q) => state.answers[q.id]).length} of ${questions.length} answered`}
         </button>
       </div>

@@ -29,7 +29,7 @@ export function Listen({ recording: r }: { recording: Recording }) {
         <p className="text-sm text-ink-2">The recording Pearson names for the exam. Others differ in speed and detail, so pick the result by these performers.</p>
         <div className="flex flex-wrap gap-2">
           {listenLinks(r).map((l) => (
-            <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="lift flex min-h-11 items-center rounded-lg bg-[color:var(--subject)] px-4 text-sm font-bold text-white">
+            <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm lift">
               Search {l.label}<span className="sr-only"> (opens in a new tab)</span>
             </a>
           ))}

@@ -45,9 +45,8 @@ function today(state: ProgressState) {
   return { asked, right }
 }
 
-const BUTTON = 'flex h-12 items-center justify-center rounded-xl px-5 font-bold'
 /** A lone button keeps its own width; a pair stacks full width on a phone, as on Redo my mistakes. */
-const LONE = `${BUTTON} w-fit bg-ink text-surface`
+const LONE = 'btn btn-primary btn-lg w-fit'
 
 /**
  * The daily recap (QZ-3, TRK-3): five questions from topics already studied, a different mix
@@ -90,8 +89,8 @@ export function Recap() {
           <>
             <p className="text-ink-2"><strong className="text-ink">{done.right} of {done.asked.size}</strong> right today. {due > 0 ? `${due} more ${due === 1 ? 'question is' : 'questions are'} due for review: have another round now, or leave them for tomorrow.` : 'A new mix is ready tomorrow, or have another round now.'}</p>
             <div className="flex flex-col gap-2 sm:flex-row">
-              <button type="button" onClick={start} className={`${BUTTON} bg-ink text-surface`}>Another round</button>
-              <Link to="/" className={`${BUTTON} border border-rule bg-surface`}>Home</Link>
+              <button type="button" onClick={start} className="btn btn-primary btn-lg">Another round</button>
+              <Link to="/" className="btn btn-secondary btn-lg">Home</Link>
             </div>
           </>
         ) : (
@@ -135,8 +134,8 @@ export function Recap() {
         </ul>
         <p className="text-ink-2">{wrong ? `The ${wrong === 1 ? 'one' : wrong} you got wrong ${wrong === 1 ? 'is' : 'are'} waiting in Redo my mistakes.` : 'All right. That is what remembering looks like.'} A new mix is ready tomorrow.</p>
         <div className="flex flex-col gap-2 sm:flex-row">
-          <Link to="/" onClick={() => setSession(null)} className={`${BUTTON} bg-ink text-surface`}>Home</Link>
-          <button type="button" onClick={start} className={`${BUTTON} border border-rule bg-surface`}>Another round</button>
+          <Link to="/" onClick={() => setSession(null)} className="btn btn-primary btn-lg">Home</Link>
+          <button type="button" onClick={start} className="btn btn-secondary btn-lg">Another round</button>
         </div>
       </article>
     )
@@ -183,7 +182,7 @@ export function Recap() {
       </header>
       <SessionQuestion subjectId={topic.subjectId} topicId={topic.id} question={question} answered={answered} onSubmit={submit} onClaim={claim} />
       {answered && (
-        <button type="button" onClick={next} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface">
+        <button type="button" onClick={next} className="btn btn-primary btn-lg">
           {last ? 'See how it went' : 'Next question'}
         </button>
       )}

@@ -58,12 +58,12 @@ export function EquationEntry({ config, alt }: { config: Record<string, unknown>
 
       <div className="flex flex-wrap items-center gap-2">
         {!done && (
-          <button type="button" onClick={() => setShown((n) => n + 1)} className="press h-11 rounded-lg bg-[color:var(--subject)] px-4 text-sm font-bold text-white">
+          <button type="button" onClick={() => setShown((n) => n + 1)} className="btn btn-primary btn-sm">
             Show the next line
           </button>
         )}
         {shown > 1 && (
-          <button type="button" onClick={() => setShown(1)} className="h-11 rounded-lg border border-rule bg-surface px-4 text-sm font-bold">
+          <button type="button" onClick={() => setShown(1)} className="btn btn-secondary btn-sm">
             Start again
           </button>
         )}

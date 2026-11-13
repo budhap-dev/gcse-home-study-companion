@@ -120,8 +120,8 @@ function LessonBody({ topic }: { topic: TopicRecord }) {
           </ul>
         </section>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
-          <Link to={`${backTo}/quiz`} className="flex h-12 items-center justify-center rounded-xl bg-[color:var(--subject)] px-5 font-bold text-white">Take the quiz</Link>
-          <Link to={backTo} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Back to topic</Link>
+          <Link to={`${backTo}/quiz`} className="btn btn-primary btn-lg">Take the quiz</Link>
+          <Link to={backTo} className="btn btn-secondary btn-lg">Back to topic</Link>
         </div>
       </article>
     )
@@ -176,7 +176,7 @@ function LessonBody({ topic }: { topic: TopicRecord }) {
 
       <ReportMistake item={{ subjectId: subjectId!, topicId: topicId!, itemKind: 'step', itemId: step.id, seenIn: 'lesson' }} />
 
-      <button type="button" onClick={next} disabled={!canAdvance} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface disabled:opacity-40">
+      <button type="button" onClick={next} disabled={!canAdvance} className="btn btn-primary btn-lg">
         {last ? 'Finish lesson' : 'Next step'}
       </button>
     </article>

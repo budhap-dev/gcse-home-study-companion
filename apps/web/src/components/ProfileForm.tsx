@@ -28,13 +28,13 @@ export function ProfileForm({ profile, onSaved, saveLabel = 'Save', legend = 'sh
         <div className="flex gap-2">
           {([9, 10, 11] as const).map((y) => (
             <button key={y} type="button" aria-pressed={year === y} onClick={() => { setSaved(false); setYear(y) }}
-              className={`h-11 min-w-20 rounded-xl px-4 font-bold ${year === y ? 'bg-ink text-surface' : 'border border-rule bg-surface'}`}>Year {y}</button>
+              className={`btn min-w-20 ${year === y ? 'btn-primary' : 'btn-secondary'}`}>Year {y}</button>
           ))}
         </div>
       </fieldset>
 
       <div className="flex items-center gap-3">
-        <button type="button" onClick={save} className="h-12 rounded-xl bg-ink px-5 font-bold text-surface">{saveLabel}</button>
+        <button type="button" onClick={save} className="btn btn-primary btn-lg">{saveLabel}</button>
         {saved && <span className="text-sm text-ink-2" role="status">Saved.</span>}
       </div>
     </div>

@@ -10,7 +10,6 @@ import { grade9Items, grade9Path, minutesPerMark, parseYear, unitTestItems, unit
 import { newSheetCode, sheetParam } from '../../content/sheetCode.ts'
 import { itemKey, recordReview } from '../../progress/reviewSession.ts'
 
-const BUTTON = 'flex min-h-12 items-center justify-center rounded-xl px-5 font-bold'
 
 /** The two papers a unit card offers: what each is called, picks and says about itself. */
 const KINDS = {
@@ -62,7 +61,7 @@ export function UnitPaper({ kind }: { kind: keyof typeof KINDS }) {
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
         <h1 className="text-2xl font-bold">This {k.name.toLowerCase()} link is not complete</h1>
         <p className="text-ink-2">It is started from a unit on the subject’s map.</p>
-        <Link to={subject ? `/subjects/${subjectId}` : '/subjects'} className={`${BUTTON} w-fit bg-ink text-surface`}>Go to the map</Link>
+        <Link to={subject ? `/subjects/${subjectId}` : '/subjects'} className="btn btn-primary btn-lg w-fit">Go to the map</Link>
       </article>
     )
   }
@@ -87,8 +86,8 @@ export function UnitPaper({ kind }: { kind: keyof typeof KINDS }) {
       after={
         <>
           <ShareSheet path={`${pathname}${search}`} title={`${subject.name} · ${k.name.toLowerCase()} · ${name}`} />
-          <Link to={k.path(subjectId, unitId, newSheetCode(), year)} className={`${BUTTON} bg-[color:var(--subject)] text-white`}>{k.another}</Link>
-          <Link to={`/subjects/${subjectId}`} className={`${BUTTON} border border-rule bg-surface`}>Back to the map</Link>
+          <Link to={k.path(subjectId, unitId, newSheetCode(), year)} className="btn btn-primary btn-lg">{k.another}</Link>
+          <Link to={`/subjects/${subjectId}`} className="btn btn-secondary btn-lg">Back to the map</Link>
         </>
       }
     />

@@ -37,17 +37,17 @@ export function ResetProgress({ label, what, topicIds, hasProgress, onDone }: {
             <button
               type="button"
               onClick={() => { clearTopicProgress(topicIds); setConfirming(false); onDone?.() }}
-              className="h-11 rounded-lg bg-status-not-secure px-4 font-bold text-white"
+              className="btn btn-danger"
             >
               Yes, reset {what}
             </button>
-            <button type="button" onClick={() => setConfirming(false)} className="h-11 rounded-lg border border-rule px-4 font-bold">
+            <button type="button" onClick={() => setConfirming(false)} className="btn btn-secondary">
               Keep it
             </button>
           </div>
         </>
       ) : (
-        <button type="button" onClick={() => setConfirming(true)} className="h-11 w-fit rounded-lg border border-rule px-4 text-sm font-bold text-ink-2 hover:border-[color:var(--subject)] hover:text-ink">
+        <button type="button" onClick={() => setConfirming(true)} className="btn btn-secondary btn-sm w-fit text-ink-2">
           {label}
         </button>
       )}

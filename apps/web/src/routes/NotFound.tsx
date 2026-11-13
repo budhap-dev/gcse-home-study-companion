@@ -25,7 +25,7 @@ export function NotFound() {
           ? 'The app hit a fault. Go back home and carry on from there; if it happens again, tell a parent which page it was.'
           : 'The page may have moved. Go back home and the app will suggest a next step.'}
       </p>
-      <Link to="/" className="mx-auto mt-2 rounded-lg bg-ink px-4 py-2 font-bold text-surface">Home</Link>
+      <Link to="/" className="btn btn-primary mx-auto mt-2">Home</Link>
     </div>
   )
 }

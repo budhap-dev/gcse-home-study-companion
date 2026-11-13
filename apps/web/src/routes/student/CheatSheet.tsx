@@ -49,9 +49,9 @@ function CheatSheetBody({ topic }: { topic: TopicRecord }) {
 
       {/* Screen only. Paper carries the sheet and nothing else. */}
       <div className="no-print flex flex-wrap items-center gap-2">
-        <button type="button" onClick={() => window.print()} className="h-11 rounded-lg bg-ink px-4 font-bold text-surface">Print this sheet</button>
-        <Link to={`${backTo}/flashcards`} className="flex h-11 items-center rounded-lg border border-rule bg-surface px-4 font-bold">Test yourself with flashcards</Link>
-        <Link to={backTo} className="flex h-11 items-center rounded-lg border border-rule bg-surface px-4 font-bold">Back to topic</Link>
+        <button type="button" onClick={() => window.print()} className="btn btn-primary">Print this sheet</button>
+        <Link to={`${backTo}/flashcards`} className="btn btn-secondary">Test yourself with flashcards</Link>
+        <Link to={backTo} className="btn btn-secondary">Back to topic</Link>
       </div>
 
       {sheet.memoryHooks.length > 0 && (
@@ -116,7 +116,7 @@ function CheatSheetBody({ topic }: { topic: TopicRecord }) {
         </Section>
       )}
 
-      <Link to={`${backTo}/quiz`} className="no-print w-fit rounded-lg bg-[color:var(--subject)] px-4 py-2 font-bold text-white">
+      <Link to={`${backTo}/quiz`} className="btn btn-primary no-print w-fit">
         Take the quiz
       </Link>
     </article>

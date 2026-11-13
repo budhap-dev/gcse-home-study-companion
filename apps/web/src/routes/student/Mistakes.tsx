@@ -56,7 +56,7 @@ export function Mistakes() {
         {queue.length === 0 ? (
           <>
             <p className="text-ink-2">Nothing to redo. Questions you get wrong in quizzes and worksheets come here, and leave once you get them right twice in a row.</p>
-            <Link to="/" className="w-fit rounded-lg bg-ink px-4 py-2 font-bold text-surface">Home</Link>
+            <Link to="/" className="btn btn-primary w-fit">Home</Link>
           </>
         ) : (
           <>
@@ -64,7 +64,7 @@ export function Mistakes() {
               {queue.length} question{queue.length === 1 ? '' : 's'} you got wrong, newest first, from {new Set(queue.map((m) => m.topicId)).size} topic{new Set(queue.map((m) => m.topicId)).size === 1 ? '' : 's'}.
               Get one right twice in a row and it leaves the list. It earns XP, and it does not change any topic's status.
             </p>
-            <button type="button" onClick={start} className="h-12 w-fit rounded-xl bg-ink px-5 font-bold text-surface">Start</button>
+            <button type="button" onClick={start} className="btn btn-primary btn-lg w-fit">Start</button>
           </>
         )}
       </article>
@@ -82,8 +82,8 @@ export function Mistakes() {
           {queue.length ? `${queue.length} still to redo.` : 'Nothing left to redo.'}
         </p>
         <div className="flex flex-col gap-2 sm:flex-row">
-          {queue.length > 0 && <button type="button" onClick={start} className="h-12 rounded-xl bg-ink px-5 font-bold text-surface">Go again</button>}
-          <Link to="/" onClick={() => setSession(null)} className="flex h-12 items-center justify-center rounded-xl border border-rule bg-surface px-5 font-bold">Home</Link>
+          {queue.length > 0 && <button type="button" onClick={start} className="btn btn-primary btn-lg">Go again</button>}
+          <Link to="/" onClick={() => setSession(null)} className="btn btn-secondary btn-lg">Home</Link>
         </div>
       </article>
     )
@@ -96,7 +96,7 @@ export function Mistakes() {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
         <p className="text-ink-2">This set of questions has changed since it was started.</p>
-        <button type="button" onClick={() => setSession(null)} className="h-12 w-fit rounded-xl bg-ink px-5 font-bold text-surface">Start again</button>
+        <button type="button" onClick={() => setSession(null)} className="btn btn-primary btn-lg w-fit">Start again</button>
       </article>
     )
   }
@@ -128,7 +128,7 @@ export function Mistakes() {
       </header>
       <SessionQuestion subjectId={topic.subjectId} topicId={topic.id} question={question} answered={answered} onSubmit={submit} onClaim={claim} />
       {answered && (
-        <button type="button" onClick={next} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface">
+        <button type="button" onClick={next} className="btn btn-primary btn-lg">
           {last ? 'See how it went' : 'Next question'}
         </button>
       )}

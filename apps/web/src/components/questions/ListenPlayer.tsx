@@ -73,7 +73,7 @@ export function ListenPlayer({ text, dictation = false, answered = false }: { te
         type="button"
         onClick={playing ? stop : play}
         disabled={!voice || (spent && !playing)}
-        className="press inline-flex h-11 items-center gap-2 rounded-lg bg-[color:var(--subject)] px-4 font-bold text-white disabled:opacity-40"
+        className="btn btn-primary"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
           {playing ? <path d="M7 5h4v14H7zM13 5h4v14h-4z" /> : <path d="M8 5v14l11-7z" />}

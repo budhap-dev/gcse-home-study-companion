@@ -87,8 +87,8 @@ export function FamilyPanel() {
               <span className="flex flex-col gap-2 rounded-lg bg-panel p-2 sm:flex-row">
                 <input value={draft} onChange={(e) => setDraft(e.target.value)} maxLength={60} placeholder="Leave empty to use their own sign-in name"
                   aria-label={`Name for ${r.email}`} className="h-11 flex-grow rounded-lg border border-rule bg-surface px-3" />
-                <button type="button" onClick={() => void rename(r.email)} className="h-11 rounded-lg bg-ink px-4 font-bold text-surface">Save</button>
-                <button type="button" onClick={() => setEditing(null)} className="h-11 rounded-lg border border-rule px-4 font-bold">Cancel</button>
+                <button type="button" onClick={() => void rename(r.email)} className="btn btn-primary">Save</button>
+                <button type="button" onClick={() => setEditing(null)} className="btn btn-secondary">Cancel</button>
               </span>
             )}
           </li>
@@ -103,7 +103,7 @@ export function FamilyPanel() {
             <option value="parent">Parent</option>
           </select>
           <input value={note} onChange={(e) => setNote(e.target.value)} maxLength={60} aria-label="Name" placeholder="Name (optional)" className="h-11 flex-grow rounded-lg border border-rule bg-surface px-3" />
-          <button type="submit" className="h-11 rounded-lg bg-[color:var(--subject,#1f3a93)] px-4 font-bold text-white">Add</button>
+          <button type="submit" className="btn btn-primary">Add</button>
         </div>
         <p className="text-xs text-ink-2">Students see their own progress and lessons. Parents can also manage this list. The name is optional: once someone signs in, their own Google name is used.</p>
       </form>

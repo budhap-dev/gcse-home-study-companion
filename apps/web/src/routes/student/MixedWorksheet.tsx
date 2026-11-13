@@ -13,7 +13,6 @@ import { itemKey, recordReview, type SessionAnswers } from '../../progress/revie
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
 const LEVEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const
-const BUTTON = 'flex h-12 items-center justify-center rounded-xl px-5 font-bold'
 
 interface Session {
   /** The sheet's own link, so an unfinished session only comes back for the same sheet. */
@@ -55,7 +54,7 @@ export function MixedWorksheet() {
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
         <h1 className="text-2xl font-bold">This worksheet link is not complete</h1>
         <p className="text-ink-2">It needs at least three topics, a level, a number of questions and a sheet code.</p>
-        <Link to={subject ? `/subjects/${subjectId}/make-worksheet` : '/subjects'} className={`${BUTTON} w-fit bg-ink text-surface`}>Make a worksheet</Link>
+        <Link to={subject ? `/subjects/${subjectId}/make-worksheet` : '/subjects'} className="btn btn-primary btn-lg w-fit">Make a worksheet</Link>
       </article>
     )
   }
@@ -78,10 +77,10 @@ export function MixedWorksheet() {
           <li>It earns XP and adds to each topic's history; it does not change a topic's status. Wrong answers wait in Redo my mistakes.</li>
         </ul>
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <button type="button" onClick={() => setSession({ path, id: crypto.randomUUID(), index: 0, answers: {} })} className={`${BUTTON} bg-[color:var(--subject)] text-white`}>Start</button>
-          <Link to={printPath} className={`${BUTTON} border border-rule bg-surface`}>Print or save as PDF</Link>
+          <button type="button" onClick={() => setSession({ path, id: crypto.randomUUID(), index: 0, answers: {} })} className="btn btn-primary btn-lg">Start</button>
+          <Link to={printPath} className="btn btn-secondary btn-lg">Print or save as PDF</Link>
           <ShareSheet path={path} title={`${subject.name} · mixed worksheet ${spec.code}`} />
-          <Link to={makePath} className={`${BUTTON} border border-rule bg-surface`}>Make a different one</Link>
+          <Link to={makePath} className="btn btn-secondary btn-lg">Make a different one</Link>
         </div>
       </article>
     )
@@ -109,9 +108,9 @@ export function MixedWorksheet() {
         </ul>
         <p className="text-ink-2">A topic where marks were lost is the one to go back to: its lesson and worksheets are a tap away.</p>
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <Link to={printPath} className={`${BUTTON} border border-rule bg-surface`}>Print this sheet</Link>
+          <Link to={printPath} className="btn btn-secondary btn-lg">Print this sheet</Link>
           <ShareSheet path={path} title={`${subject.name} · mixed worksheet ${spec.code}`} />
-          <Link to={makePath} onClick={() => setSession(null)} className={`${BUTTON} bg-[color:var(--subject)] text-white`}>Make another</Link>
+          <Link to={makePath} onClick={() => setSession(null)} className="btn btn-primary btn-lg">Make another</Link>
         </div>
       </article>
     )
@@ -122,7 +121,7 @@ export function MixedWorksheet() {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
         <p className="text-ink-2">This set of questions has changed since it was started.</p>
-        <button type="button" onClick={() => setSession(null)} className={`${BUTTON} w-fit bg-ink text-surface`}>Start again</button>
+        <button type="button" onClick={() => setSession(null)} className="btn btn-primary btn-lg w-fit">Start again</button>
       </article>
     )
   }
@@ -157,7 +156,7 @@ export function MixedWorksheet() {
       </header>
       <SessionQuestion subjectId={subjectId} topicId={at.item.topicId} question={at.question} answered={answered} onSubmit={submit} onClaim={claim} />
       {answered && (
-        <button type="button" onClick={next} className="h-12 rounded-xl bg-ink px-4 text-base font-bold text-surface">
+        <button type="button" onClick={next} className="btn btn-primary btn-lg">
           {last ? 'See how it went' : 'Next question'}
         </button>
       )}
