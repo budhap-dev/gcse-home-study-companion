@@ -82,6 +82,7 @@ export function UnitPaper({ kind }: { kind: keyof typeof KINDS }) {
       questions={questions}
       perMark={minutesPerMark(getGuide(subjectId))}
       studyKind="review"
+      back={{ to: `/subjects/${subjectId}`, label: `Back to ${subject.name}` }}
       record={(r) => recordReview(r.id, items, r.answers, (id) => loaded.get(id), r.finishedAt, kind, { seen: (m) => seen.get(itemKey(m)), seed: code }, r.timed ? { timed: r.timed } : {})}
       after={
         <>

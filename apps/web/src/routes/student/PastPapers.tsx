@@ -1,6 +1,6 @@
 import { getSubject, PastPaperIndex, type PastPaperLink, type PastPaperLinkKind } from '@study/shared'
-import { Link, useParams } from 'react-router'
-import { ChevronIcon } from '../../components/icons.tsx'
+import { useParams } from 'react-router'
+import { BackLink } from '../../components/BackLink.tsx'
 
 const files = import.meta.glob('../../../../../supabase/seed/past-papers/*.json', { eager: true, import: 'default' })
 export const PAST_PAPERS: PastPaperIndex[] = Object.values(files).map((raw) => PastPaperIndex.parse(raw))
@@ -41,10 +41,7 @@ export function PastPapers() {
 
   return (
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-      <Link to={back} className="btn btn-secondary btn-sm w-fit">
-        <ChevronIcon width={16} height={16} className="rotate-180" aria-hidden />
-        Back to {subject.name}
-      </Link>
+      <BackLink to={back} label={`Back to ${subject.name}`} />
       <header className="flex flex-col gap-2">
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · {index?.board ?? subject.board}</p>
         <h1 className="text-3xl font-bold leading-tight">Past papers</h1>

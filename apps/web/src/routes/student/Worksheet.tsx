@@ -24,7 +24,7 @@ import { TopicMissing } from '../../components/TopicMissing.tsx'
 import { timedPath } from './TimedWorksheet.tsx'
 import { minutesFor, minutesPerMark } from '../../content/paper.ts'
 import { QuestionPrompt } from '../../components/questions/QuestionPrompt.tsx'
-import { ChevronIcon } from '../../components/icons.tsx'
+import { BackLink } from '../../components/BackLink.tsx'
 import { PracticeLengths } from '../../components/PracticeLengths.tsx'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
@@ -134,10 +134,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
   if (!state) {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
-        <Link to={backTo} className="btn btn-secondary btn-sm w-fit">
-          <ChevronIcon width={16} height={16} className="rotate-180" aria-hidden />
-          Back to topic
-        </Link>
+        <BackLink to={backTo} label="Back to topic" />
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · {topic.title}</p>
         <h1 className="text-3xl font-bold leading-tight">{LEVEL_LABEL[level]} worksheet</h1>
         <ul className="flex flex-col gap-1 text-ink-2">
