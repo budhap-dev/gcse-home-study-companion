@@ -1065,7 +1065,19 @@ agent before they ship.
   equations**, a new Year 9 topic (A17, A21), each with its questions; every question is now
   tagged, and a test keeps it so. Two topics never come up on a Higher paper: constructing
   triangles and frequency trees.
-- [ ] **3. Science tags.** Physics, Chemistry and Biology, about 450 questions.
+- [x] **3. Science tags.** Every question of every Higher paper listed, specimens included,
+  tagged to the app's topics, main topic first: Physics 156 questions on 16 papers, Chemistry
+  157 on 17, Biology 120 on 12, each paper adding to 100. Marks come from each AQA mark
+  scheme's per-question totals (the question paper text cannot always be read in order, and the
+  Chemistry specimen Paper 1 would otherwise have swapped Q1 and Q2) and from Pearson's own
+  "Total for Question" lines. One reviewer agent per subject read every question: 52, 54 and 49
+  tags changed. Every science topic now comes up at least once, and a test keeps it so. Where
+  the app teaches a spec point twice (Physics circuits in Years 10 and 11, the Year 9 bridging
+  topics in Biology), a question is tagged to both. Gaps the reviewers found, not yet acted on:
+  **E = QV** (Physics 4.2.4.2) is asked for 15 marks across four papers but no lesson step
+  teaches it; Biology **5.10B** (detecting plant disease) is listed on Plant adaptations but
+  taught in Pathogens; doubling of bacteria is taught only in the Year 9 Microbes topic; and the
+  temperature-change practicals ask for ± uncertainty, taught only in Conservation of mass.
 - [ ] **4. Further Maths and Computer Science tags.** About 350 questions; one set of tags
   serves all three Paper 1 language versions, which share their questions.
 - [ ] **5. Business, English and Music tags.** English Literature questions are tagged to the

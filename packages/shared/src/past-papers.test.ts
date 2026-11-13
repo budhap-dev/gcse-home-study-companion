@@ -87,4 +87,27 @@ describe('the past papers index', () => {
     // 2026. A question with no topic is a gap in the content, not a tag to leave empty.
     expect(qs.filter((q) => q.topics.length === 0)).toEqual([])
   })
+
+  // Box 3. Each question's marks are the total its mark scheme prints (AQA) or the paper's own
+  // "Total for Question" line (Pearson), so a paper adds up to 100 only if the split is right.
+  it.each([
+    ['physics', 16, 156],
+    ['chemistry', 17, 157],
+    ['biology', 12, 120],
+  ])('tags every %s paper, 100 marks each, every question to a topic (box 3)', (subjectId, paperCount, questionCount) => {
+    const index = indexes.find((x) => x.index.subjectId === subjectId)!.index
+    const papers = index.series.flatMap((s) => s.papers.map((p) => ({ s: s.id, p })))
+    expect(papers.length).toBe(paperCount)
+    for (const { s, p } of papers) {
+      expect(p.marks, `${s} ${p.id}`).toBe(100)
+      expect(p.questions?.length, `${s} ${p.id}`).toBeGreaterThanOrEqual(7)
+    }
+    const qs = papers.flatMap(({ p }) => p.questions ?? [])
+    expect(qs.length).toBe(questionCount)
+    expect(qs.filter((q) => q.topics.length === 0)).toEqual([])
+    // Every topic the subject teaches comes up at least once on these papers.
+    const asked = new Set(qs.flatMap((q) => q.topics))
+    const ids = readdirSync(new URL(`${subjectId}/`, CONTENT)).filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', ''))
+    expect(ids.filter((id) => !asked.has(id))).toEqual([])
+  })
 })

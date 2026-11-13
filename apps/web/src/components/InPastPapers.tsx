@@ -16,7 +16,8 @@ export default function InPastPapers({ subjectId, topicId }: { subjectId: string
   const uses = pastUses(subjectId, topicId)
   const tagged = pastPapersFor(subjectId)?.series.some((s) => s.papers.some((p) => p.questions))
   if (!tagged) return null
-  const first = uses.at(-1)
+  // The oldest sitting, not a specimen paper: "since Sample papers" says nothing.
+  const first = uses.filter((u) => /^\d{4}-/.test(u.seriesId)).at(-1)
   const shown = all ? uses : uses.slice(0, SHOWN)
   return (
     <section aria-labelledby="past-heading" className="flex flex-col gap-2">
