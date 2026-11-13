@@ -320,6 +320,104 @@
         "specPoint": "S4"
       },
       {
+        "id": "s10",
+        "kind": "worked-example",
+        "title": "Stem and leaf diagrams",
+        "body": "**A stem and leaf diagram is a list that has been sorted for you.** Each value is split into a **stem**, its leading digits, and a **leaf**, its last digit. The leaves for each stem go along one row, **in order**.\n\nThat order is the point of it. The **median and quartiles can be counted off** the leaves, the **range** is the last leaf against the first, and the rows give the shape of the data like a sideways bar chart, while every value survives.\n\n**It needs a key**, such as *3 | 4 means 34*. Without one, nobody can tell 34 from 3.4 or 340.\n\nA **back-to-back** diagram shares one column of stems between two groups: one group's leaves run to the right, the other's to the left, each read outwards from the stem.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Stem",
+                "Leaf"
+              ],
+              "rows": [
+                [
+                  "2",
+                  "3 7"
+                ],
+                [
+                  "3",
+                  "1 4 4 8"
+                ],
+                [
+                  "4",
+                  "0 2 5 6 7"
+                ],
+                [
+                  "5",
+                  "1 3 8"
+                ],
+                [
+                  "6",
+                  "2"
+                ]
+              ],
+              "title": "Key: 3 | 4 means 34 marks",
+              "highlight": 2
+            },
+            "alt": "A stem and leaf diagram of fifteen test marks with stems 2 to 6: 2 | 3 7, 3 | 1 4 4 8, 4 | 0 2 5 6 7, 5 | 1 3 8, 6 | 2, and the key 3 | 4 means 34"
+          },
+          {
+            "type": "worked-example",
+            "problem": "The diagram shows the marks of 15 students in a test. Find the median, the range and the mode.",
+            "steps": [
+              {
+                "text": "There are 15 values, so the median is the $\\frac{15 + 1}{2} = 8$th",
+                "note": "count the leaves first"
+              },
+              {
+                "text": "Row 2 holds values 1 and 2, row 3 holds 3 to 6, so row 4 starts at the 7th: 40, then **42** is the 8th",
+                "note": "count along the rows, in order"
+              },
+              {
+                "text": "Median $= 42$ marks",
+                "note": "seven values below it, seven above ✓"
+              },
+              {
+                "text": "Range $= 62 - 23 = 39$ marks",
+                "note": "the last leaf against the first"
+              },
+              {
+                "text": "Mode: 34, the only value written twice",
+                "note": "a repeated leaf in one row"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c10",
+          "type": "multiple-choice",
+          "prompt": "A stem and leaf diagram shows 15 values. Which of them is the median?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "stem and leaf diagrams",
+          "calculator": "either",
+          "tags": [],
+          "solution": "With 15 values the median is at position $\\frac{15 + 1}{2} = 8$, and because the leaves are already in order, the 8th leaf counted along the rows is the median.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "the 8th value"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "The 8th value",
+            "The 7th value",
+            "The 7.5th value",
+            "The 15th value"
+          ],
+          "correct": [
+            0
+          ]
+        },
+        "specPoint": "S4"
+      },
+      {
         "id": "s3",
         "kind": "worked-example",
         "title": "Averages from a frequency table",
@@ -857,7 +955,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Mean**: add the values, divide by how many.\n- **Median**: **sort**, then take the middle; with an even count, halfway between the middle two.\n- **Mode**: the value that appears most often; for grouped data, the **modal class**.\n- **Range**: largest minus smallest. It measures **spread**, not average.\n- From a frequency table: add a **value × frequency** column, total it, and divide by the **total frequency**.\n- For the median, run down the frequencies to position $\\dfrac{n + 1}{2}$.\n- The mode is the **value**, never its frequency.\n- An **outlier** drags the mean and stretches the range; the median barely moves.\n- **Mode** for categories and \"most popular\", **median** with outliers, **mean** when values are close.\n- Compare with **one average and one spread**, each **in context**.\n- **Total = mean × number of values**, forwards and backwards.\n- Combine two means through their **totals**, never by averaging the means.\n- Adding a constant moves the averages, not the range; multiplying scales both.",
+        "body": "- **Mean**: add the values, divide by how many.\n- **Median**: **sort**, then take the middle; with an even count, halfway between the middle two.\n- **Mode**: the value that appears most often; for grouped data, the **modal class**.\n- **Range**: largest minus smallest. It measures **spread**, not average.\n- **Stem and leaf**: an ordered list with a **key**; count along the leaves to the median and quartiles.\n- From a frequency table: add a **value × frequency** column, total it, and divide by the **total frequency**.\n- For the median, run down the frequencies to position $\\dfrac{n + 1}{2}$.\n- The mode is the **value**, never its frequency.\n- An **outlier** drags the mean and stretches the range; the median barely moves.\n- **Mode** for categories and \"most popular\", **median** with outliers, **mean** when values are close.\n- Compare with **one average and one spread**, each **in context**.\n- **Total = mean × number of values**, forwards and backwards.\n- Combine two means through their **totals**, never by averaging the means.\n- Adding a constant moves the averages, not the range; multiplying scales both.",
         "visuals": [
           {
             "type": "diagram",
@@ -1874,6 +1972,320 @@
       "answer": 11,
       "tolerance": 0,
       "unitsRequired": false
+    },
+    {
+      "id": "q30",
+      "type": "numeric",
+      "prompt": "The stem and leaf diagram shows the ages, in years, of 11 people at a party.\n\nWork out the range of the ages.",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "stem and leaf diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Read the first and last values with the key: the youngest is 18 and the oldest is 45. Range $= 45 - 18 = 27$ years.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "27"
+        }
+      ],
+      "discriminators": [],
+      "answer": 27,
+      "tolerance": 0,
+      "visual": {
+        "type": "diagram",
+        "component": "trace-table",
+        "props": {
+          "columns": [
+            "Stem",
+            "Leaf"
+          ],
+          "rows": [
+            [
+              "1",
+              "8 9"
+            ],
+            [
+              "2",
+              "0 3 3 7"
+            ],
+            [
+              "3",
+              "1 4 6"
+            ],
+            [
+              "4",
+              "2 5"
+            ]
+          ],
+          "title": "Key: 2 | 3 means 23 years"
+        },
+        "alt": "A stem and leaf diagram of eleven ages: 1 | 8 9, 2 | 0 3 3 7, 3 | 1 4 6, 4 | 2 5, with the key 2 | 3 means 23"
+      },
+      "step": "s10"
+    },
+    {
+      "id": "q31",
+      "type": "numeric",
+      "prompt": "The stem and leaf diagram shows the scores of 14 players in a quiz.\n\nWork out the median score.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "stem and leaf diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With 14 values the median is halfway between the 7th and 8th. Counting along the leaves: the 7th is 47 and the 8th is 49, so the median is $\\frac{47 + 49}{2} = 48$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "identifies the 7th and 8th values, 47 and 49"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "48"
+        }
+      ],
+      "discriminators": [],
+      "answer": 48,
+      "tolerance": 0,
+      "visual": {
+        "type": "diagram",
+        "component": "trace-table",
+        "props": {
+          "columns": [
+            "Stem",
+            "Leaf"
+          ],
+          "rows": [
+            [
+              "3",
+              "2 5 8"
+            ],
+            [
+              "4",
+              "1 1 4 7 9"
+            ],
+            [
+              "5",
+              "0 3 6 8"
+            ],
+            [
+              "6",
+              "4 5"
+            ]
+          ],
+          "title": "Key: 4 | 1 means 41 points"
+        },
+        "alt": "A stem and leaf diagram of fourteen quiz scores: 3 | 2 5 8, 4 | 1 1 4 7 9, 5 | 0 3 6 8, 6 | 4 5, with the key 4 | 1 means 41"
+      },
+      "step": "s10"
+    },
+    {
+      "id": "q32",
+      "type": "numeric",
+      "prompt": "The stem and leaf diagram shows the times, in seconds, that 19 students took to answer a question.\n\nWork out the interquartile range.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "stem and leaf diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "With 19 values the lower quartile is the $\\frac{19 + 1}{4} = 5$th value and the upper quartile the $\\frac{3(19 + 1)}{4} = 15$th.\n\nCounting along the leaves: the 5th is 20 and the 15th is 40.\n\nInterquartile range $= 40 - 20 = 20$ seconds.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "lower quartile 20 (the 5th value)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "upper quartile 40 (the 15th value)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0,
+      "visual": {
+        "type": "diagram",
+        "component": "trace-table",
+        "props": {
+          "columns": [
+            "Stem",
+            "Leaf"
+          ],
+          "rows": [
+            [
+              "1",
+              "2 5 7 9"
+            ],
+            [
+              "2",
+              "0 3 3 6 8"
+            ],
+            [
+              "3",
+              "1 1 4 5 9"
+            ],
+            [
+              "4",
+              "0 2 6"
+            ],
+            [
+              "5",
+              "1 3"
+            ]
+          ],
+          "title": "Key: 2 | 3 means 23 seconds"
+        },
+        "alt": "A stem and leaf diagram of nineteen times: 1 | 2 5 7 9, 2 | 0 3 3 6 8, 3 | 1 1 4 5 9, 4 | 0 2 6, 5 | 1 3, with the key 2 | 3 means 23"
+      },
+      "step": "s10"
+    },
+    {
+      "id": "q33",
+      "type": "multiple-choice",
+      "prompt": "The back-to-back stem and leaf diagram shows the marks of 11 students in Class A and 11 in Class B. Class A's leaves run to the left of the stem and Class B's to the right.\n\nWhich comparison is correct?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "comparing with stem and leaf diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Class A's median is the 6th value, **56**, and Class B's is **53**, so Class A did better on average. Class A's range is $70 - 41 = 29$ and Class B's is $60 - 38 = 22$, so Class A's marks were **more spread out**. Read Class A's leaves outwards from the stem: 8 5 1 in the 4 row means 41, 45 and 48.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "Class A higher median (56 against 53) and larger range (29 against 22)"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "Class B did better on average, and their marks were more spread out",
+        "Class A did better on average, and their marks were less spread out",
+        "Class A did better on average, and their marks were more spread out",
+        "Class B did better on average, and their marks were less spread out"
+      ],
+      "correct": [
+        2
+      ],
+      "visual": {
+        "type": "diagram",
+        "component": "trace-table",
+        "props": {
+          "columns": [
+            "Class A",
+            "Stem",
+            "Class B"
+          ],
+          "rows": [
+            [
+              "",
+              "3",
+              "8"
+            ],
+            [
+              "8 5 1",
+              "4",
+              "2 7 9"
+            ],
+            [
+              "8 6 5 2",
+              "5",
+              "1 3 4 4 7 9"
+            ],
+            [
+              "7 3 1",
+              "6",
+              "0"
+            ],
+            [
+              "0",
+              "7",
+              ""
+            ]
+          ],
+          "title": "Key: 1 | 4 | 2 means 41 for A and 42 for B"
+        },
+        "alt": "A back-to-back stem and leaf diagram. Class A, read leftwards: 41, 45, 48, 52, 55, 56, 58, 61, 63, 67, 70. Class B, read rightwards: 38, 42, 47, 49, 51, 53, 54, 54, 57, 59, 60"
+      },
+      "step": "s10"
+    },
+    {
+      "id": "q34",
+      "type": "numeric",
+      "prompt": "A stem and leaf diagram shows the marks of 15 students. One leaf has been smudged and is shown as ?. The mean of the 15 marks is 42.\n\nWork out the smudged mark.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "stem and leaf diagrams",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The total of all 15 marks is mean × number of marks $= 42 \\times 15 = 630$.\n\nThe 14 marks that can be read add up to $23 + 27 + 31 + 34 + 34 + 38 + 40 + 42 + 45 + 47 + 51 + 53 + 58 + 61 = 584$.\n\nThe smudged mark is $630 - 584 = 46$. Check: it sits in the 4 row between 45 and 47, where a leaf of 6 belongs ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "42 × 15 = 630"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "630 − 584"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "46"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 46,
+      "tolerance": 0,
+      "visual": {
+        "type": "diagram",
+        "component": "trace-table",
+        "props": {
+          "columns": [
+            "Stem",
+            "Leaf"
+          ],
+          "rows": [
+            [
+              "2",
+              "3 7"
+            ],
+            [
+              "3",
+              "1 4 4 8"
+            ],
+            [
+              "4",
+              "0 2 5 ? 7"
+            ],
+            [
+              "5",
+              "1 3 8"
+            ],
+            [
+              "6",
+              "1"
+            ]
+          ],
+          "title": "Key: 3 | 4 means 34 marks"
+        },
+        "alt": "A stem and leaf diagram of fifteen marks with one leaf smudged: 2 | 3 7, 3 | 1 4 4 8, 4 | 0 2 5 ? 7, 5 | 1 3 8, 6 | 1"
+      },
+      "step": "s10"
     }
   ],
   "worksheets": {
@@ -1884,7 +2296,8 @@
         "q2",
         "q3",
         "q4",
-        "q5"
+        "q5",
+        "q30"
       ],
       "suggestedMinutes": 10
     },
@@ -1896,7 +2309,9 @@
         "q8",
         "q9",
         "q10",
-        "q11"
+        "q11",
+        "q31",
+        "q32"
       ],
       "suggestedMinutes": 20
     },
@@ -1920,7 +2335,9 @@
         "q26",
         "q27",
         "q28",
-        "q29"
+        "q29",
+        "q33",
+        "q34"
       ],
       "suggestedMinutes": 67
     }
@@ -1960,7 +2377,10 @@
       "q17",
       "q18",
       "q28",
-      "q29"
+      "q29",
+      "q30",
+      "q31",
+      "q33"
     ],
     "sampleSize": 10
   },
