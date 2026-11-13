@@ -4,6 +4,7 @@ import { Link, useLocation, useParams, useSearchParams } from 'react-router'
 import type { Answer } from '../../components/questions/QuestionInput.tsx'
 import { SessionQuestion } from '../../components/questions/SessionQuestion.tsx'
 import { ShareSheet } from '../../components/ShareSheet.tsx'
+import { BackLink } from '../../components/BackLink.tsx'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
 import { getGuide, summaryById, topicsForSubject } from '../../content/index.ts'
 import { useTopics } from '../../content/load.ts'
@@ -90,7 +91,7 @@ export function MixedWorksheet() {
   if (!session) {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
-        <Link to={makePath} className="btn btn-secondary btn-sm w-fit">{oneTopic ? 'Back to topic' : 'Back'}</Link>
+        <BackLink to={makePath} label={oneTopic ? 'Back to topic' : 'Back to Make a worksheet'} />
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · {kind} · {LEVEL[spec.level]}</p>
         <h1 className="text-3xl font-bold leading-tight">{oneTopic ? titles[0] : `${sheet.length} questions, mixed`}</h1>
         <ul className="flex flex-col gap-1 text-ink-2">

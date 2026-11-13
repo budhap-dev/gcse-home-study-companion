@@ -102,6 +102,7 @@ function TimedBody({ topic, level }: { topic: TopicRecord; level?: WorksheetLeve
       showTopic={false}
       record={(r) => recordTimedWorksheet(topic, level, questions.map((q) => q.question), r, seed)}
       after={<Link to={backTo} className="btn btn-primary btn-lg">Back to topic</Link>}
+      back={{ to: `${backTo}/worksheet/${level}${seed ? `?sheet=${seed}` : ''}`, label: 'Back to the worksheet' }}
     />
   )
 }

@@ -1,3 +1,4 @@
+import { BackLink } from '../BackLink.tsx'
 import { claimAnswer, describeAnswer, mark, type Generated, type MarkResult, type Question } from '@study/shared'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router'
@@ -121,7 +122,7 @@ function answered(s: PaperState, pq: PaperQuestion): boolean {
  * by itself when the time is up. What the questions are, and where the result is recorded,
  * belong to the caller.
  */
-export function PaperSession({ storageKey, path, subjectId, kicker, title, intro, questions, perMark, studyKind, record, after, showTopic = true }: {
+export function PaperSession({ storageKey, path, subjectId, kicker, title, intro, questions, perMark, studyKind, record, after, back, showTopic = true }: {
   storageKey: string
   path: string
   subjectId: string
@@ -133,6 +134,8 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
   studyKind: StudyKind
   record: (r: PaperRecord) => void
   after: ReactNode
+  /** Where the start page's Back button goes. */
+  back: { to: string; label: string }
   showTopic?: boolean
 }) {
   const [state, setStateRaw] = useState<PaperState | null>(() => {
@@ -178,6 +181,7 @@ export function PaperSession({ storageKey, path, subjectId, kicker, title, intro
     }
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
+        <BackLink to={back.to} label={back.label} />
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{kicker}</p>
         <h1 className="text-3xl font-bold leading-tight">{title}</h1>
         <ul className="flex list-disc flex-col gap-1 pl-5 text-ink-2">
