@@ -1078,8 +1078,21 @@ agent before they ship.
   teaches it; Biology **5.10B** (detecting plant disease) is listed on Plant adaptations but
   taught in Pathogens; doubling of bacteria is taught only in the Year 9 Microbes topic; and the
   temperature-change practicals ask for ± uncertainty, taught only in Conservation of mass.
-- [ ] **4. Further Maths and Computer Science tags.** About 350 questions; one set of tags
-  serves all three Paper 1 language versions, which share their questions.
+- [x] **4. Further Maths and Computer Science tags.** Further Maths 259 questions on 12
+  papers (80 marks each); Computer Science 186 on 12, the C# Paper 1 and Paper 2. Every topic
+  of both subjects comes up at least once, and a test keeps it so. Marks were read from the
+  question papers; where text extraction dropped a label (Further Maths June 2025 Paper 1 Q16,
+  the second sample paper's Q19, ten part-less questions of the 2027 sample Paper 1 in Computer
+  Science) the split was settled by a second extraction, the paper's own labels and the mark
+  scheme. One reviewer agent per subject read every question: 19 and 33 tags changed.
+  **November 2021 Computer Science is the previous specification, 8520**, not 8525, which box 1
+  had listed it as: it is kept, its papers named as 8520 (Paper 1 has no language versions) with
+  a note, as was agreed for French. Topic pages now say "the board's papers listed here" rather
+  than "Higher papers", since these subjects have one tier. Gaps found, not yet acted on:
+  Further Maths has no topic for **percentage change into an equation** or **standard form**
+  (two questions each, tagged to the nearest topic); Computer Science's **efficiency** of two
+  algorithms (3.1.2) is taught only inside the sort and search topics, and the term
+  **"white-box"** penetration testing is never used.
 - [ ] **5. Business, English and Music tags.** English Literature questions are tagged to the
   set texts the school teaches; a question on a text the family is not studying is listed
   without a tag.
