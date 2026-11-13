@@ -25,6 +25,7 @@ import { timedPath } from './TimedWorksheet.tsx'
 import { minutesFor, minutesPerMark } from '../../content/paper.ts'
 import { QuestionPrompt } from '../../components/questions/QuestionPrompt.tsx'
 import { ChevronIcon } from '../../components/icons.tsx'
+import { PracticeLengths } from '../../components/PracticeLengths.tsx'
 
 const LEVEL_LABEL: Record<WorksheetLevel, string> = { core: 'Core', higher: 'Higher', advanced: 'Advanced' }
 const LEVEL_NOTE: Record<WorksheetLevel, string> = {
@@ -120,6 +121,8 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
   const sheet = topic.worksheets[level]
   const backTo = `/subjects/${subject.id}/topics/${topic.id}`
   const marksAvailable = totalMarks(topic, sheet.questionIds)
+  // One time for the sheet, at the exam's pace: the start page and the timed paper agree.
+  const sheetMinutes = minutesFor(marksAvailable, minutesPerMark(getGuide(subject.id)))
   const start = () => {
     const attemptId = crypto.randomUUID()
     // Read at the moment of starting, so "Do it again" sees the attempt just recorded.
@@ -138,7 +141,7 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
         <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · {topic.title}</p>
         <h1 className="text-3xl font-bold leading-tight">{LEVEL_LABEL[level]} worksheet</h1>
         <ul className="flex flex-col gap-1 text-ink-2">
-          <li>{questions.length} questions · {marksAvailable} marks · about {sheet.suggestedMinutes} minutes.</li>
+          <li>{questions.length} questions · {marksAvailable} marks · about {sheetMinutes} minutes at the exam’s pace.</li>
           <li>{LEVEL_NOTE[level]}</li>
           {freshCount > 0 && (
             <li>
@@ -156,11 +159,12 @@ function WorksheetBody({ topic }: { topic: TopicRecord }) {
             <button type="button" onClick={start} className="btn btn-primary btn-lg">Start worksheet</button>
             <Link to={timedPath(subject.id, topic.id, level, freshCount ? sent ?? (triedBefore(getState().attempts, topic.id, level) ? printCode : undefined) : undefined)}
               className="btn btn-secondary btn-lg">
-              Timed paper · {minutesFor(marksAvailable, minutesPerMark(getGuide(subject.id)))} min
+              Timed paper · {sheetMinutes} min
             </Link>
           </div>
           <p className="text-sm text-ink-2">A timed paper runs at the exam’s pace, with nothing marked until you hand it in.</p>
         </div>
+        <PracticeLengths topic={topic} heading="Short on time? Pick a length" />
         <div className="flex flex-wrap gap-2 border-t border-rule pt-4">
           <Link to={sent ? sheetPath(subject.id, topic.id, level, sent, true) : `${backTo}/worksheet/${level}/print`} className="btn btn-secondary btn-sm">Print or save as PDF</Link>
           {freshCount > 0 && !sent && (

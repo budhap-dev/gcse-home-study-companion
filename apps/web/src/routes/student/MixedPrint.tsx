@@ -7,7 +7,7 @@ import { useTopics } from '../../content/load.ts'
 import { mixedPath, parseSpec, pickItems, sheetFor, versionCodes } from '../../content/mixedSheet.ts'
 import { PrintedQuestions } from './WorksheetPrint.tsx'
 
-const LEVEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const
+const LEVEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced', all: 'Core to Advanced' } as const
 
 /**
  * A mixed worksheet laid out for A4: one sheet per version, each on a new page with its own
@@ -51,7 +51,7 @@ export function MixedPrint() {
             <header className="mb-4 border-b border-rule pb-3">
               <p className="text-sm text-ink-2">{subject.name} · {subject.board}</p>
               <h1 className="text-2xl font-bold leading-tight">
-                Mixed worksheet · {LEVEL[spec.level]}{codes.length > 1 ? ` · version ${i + 1}` : ''}{answers ? ' · answers' : ''}
+                {spec.minutes ? `${spec.minutes}-minute practice` : 'Mixed worksheet'} · {LEVEL[spec.level]}{codes.length > 1 ? ` · version ${i + 1}` : ''}{answers ? ' · answers' : ''}
               </h1>
               <p className="text-sm text-ink-2">
                 Sheet <strong className="font-mono text-ink">{v.code}</strong> · {questions.length} questions · {marks} marks

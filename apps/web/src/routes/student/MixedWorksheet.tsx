@@ -1,18 +1,19 @@
 import { claimAnswer, getSubject, mark } from '@study/shared'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router'
 import type { Answer } from '../../components/questions/QuestionInput.tsx'
 import { SessionQuestion } from '../../components/questions/SessionQuestion.tsx'
 import { ShareSheet } from '../../components/ShareSheet.tsx'
 import { TopicLoading } from '../../components/TopicLoading.tsx'
-import { summaryById, topicsForSubject } from '../../content/index.ts'
+import { getGuide, summaryById, topicsForSubject } from '../../content/index.ts'
 import { useTopics } from '../../content/load.ts'
-import { mixedPath, parseSpec, pickItems, sheetFor } from '../../content/mixedSheet.ts'
+import { LENGTH_LABEL, mixedPath, parseSpec, pickItems, sheetFor } from '../../content/mixedSheet.ts'
+import { minutesFor, minutesPerMark } from '../../content/paper.ts'
 import { loadInProgress, saveInProgress } from '../../progress/inProgress.ts'
 import { itemKey, recordReview, type SessionAnswers } from '../../progress/reviewSession.ts'
 import { useActivityTimer } from '../../progress/useActivityTimer.ts'
 
-const LEVEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced' } as const
+const LEVEL = { core: 'Core', higher: 'Higher', advanced: 'Advanced', all: 'Core to Advanced' } as const
 
 interface Session {
   /** The sheet's own link, so an unfinished session only comes back for the same sheet. */
@@ -20,7 +21,24 @@ interface Session {
   id: string
   index: number
   answers: SessionAnswers
+  /** When a sheet with a length was started, for its countdown. */
+  startedAt?: string
   finishedAt?: string
+}
+
+/**
+ * Time left on a sheet with a length, as m:ss, ticking once a second. It never stops the
+ * sheet: at zero it says so, and the question in hand can still be finished.
+ */
+function Countdown({ startedAt, minutes }: { startedAt: string; minutes: number }) {
+  const [now, setNow] = useState(() => Date.now())
+  useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t) }, [])
+  const left = Math.max(0, minutes * 60 - Math.floor((now - Date.parse(startedAt)) / 1000))
+  return (
+    <span className={`whitespace-nowrap rounded-full px-2.5 py-0.5 font-bold tabular-nums ${left ? 'bg-panel text-ink' : 'bg-[color:var(--color-status-not-secure)] text-white'}`} aria-live={left ? 'off' : 'polite'}>
+      {left ? `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')} left` : 'Time’s up: finish this one'}
+    </span>
+  )
 }
 
 const key = (subjectId: string) => `study-companion.mixed.${subjectId}`
@@ -53,7 +71,7 @@ export function MixedWorksheet() {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
         <h1 className="text-2xl font-bold">This worksheet link is not complete</h1>
-        <p className="text-ink-2">It needs at least three topics, a level, a number of questions and a sheet code.</p>
+        <p className="text-ink-2">It needs its topics, a level, a length or a number of questions, and a sheet code.</p>
         <Link to={subject ? `/subjects/${subjectId}/make-worksheet` : '/subjects'} className="btn btn-primary btn-lg w-fit">Make a worksheet</Link>
       </article>
     )
@@ -63,24 +81,32 @@ export function MixedWorksheet() {
   const titles = [...new Set(items.map((m) => m.topicId))].map((id) => summaryById(id)?.title ?? id)
   const marksAvailable = sheet.reduce((s, q) => s + q.question.marks, 0)
   const printPath = mixedPath(spec, { codes: [spec.code] })
-  const makePath = `/subjects/${subjectId}/make-worksheet`
+  // A one-topic practice goes back to its topic; a mix goes back to make another.
+  const oneTopic = spec.topicIds.length === 1
+  const makePath = oneTopic ? `/subjects/${subjectId}/topics/${spec.topicIds[0]}` : `/subjects/${subjectId}/make-worksheet`
+  const minutes = minutesFor(marksAvailable, minutesPerMark(getGuide(subjectId)))
+  const kind = spec.minutes ? `${LENGTH_LABEL[spec.minutes as 10 | 30 | 60]} practice` : 'Mixed worksheet'
 
   if (!session) {
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · Mixed worksheet · {LEVEL[spec.level]}</p>
-        <h1 className="text-3xl font-bold leading-tight">{sheet.length} questions, mixed</h1>
+        <Link to={makePath} className="btn btn-secondary btn-sm w-fit">{oneTopic ? 'Back to topic' : 'Back'}</Link>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{subject.name} · {kind} · {LEVEL[spec.level]}</p>
+        <h1 className="text-3xl font-bold leading-tight">{oneTopic ? titles[0] : `${sheet.length} questions, mixed`}</h1>
         <ul className="flex flex-col gap-1 text-ink-2">
-          <li>{marksAvailable} marks</li>
-          <li>From {titles.length} topics: {titles.join(', ')}.</li>
-          <li>The topic of each question is shown only once it is answered: deciding which method it needs is part of the question.</li>
+          <li>{sheet.length} questions · {marksAvailable} marks · about {minutes} minutes at the exam’s pace.</li>
+          {spec.minutes && minutes < spec.minutes - 2 && <li>That is every question this topic has that the app can mark on screen.</li>}
+          {spec.level === 'all' && <li>It starts with Core questions and climbs to Advanced.</li>}
+          {spec.minutes && <li>A clock counts down the {LENGTH_LABEL[spec.minutes as 10 | 30 | 60]}; it never stops you finishing.</li>}
+          {!oneTopic && <li>From {titles.length} topics: {titles.join(', ')}.</li>}
+          {!oneTopic && <li>The topic of each question is shown only once it is answered: deciding which method it needs is part of the question.</li>}
           <li>It earns XP and adds to each topic's history; it does not change a topic's status. Wrong answers wait in Redo my mistakes.</li>
         </ul>
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <button type="button" onClick={() => setSession({ path, id: crypto.randomUUID(), index: 0, answers: {} })} className="btn btn-primary btn-lg">Start</button>
+          <button type="button" onClick={() => setSession({ path, id: crypto.randomUUID(), index: 0, answers: {}, startedAt: new Date().toISOString() })} className="btn btn-primary btn-lg">Start</button>
           <Link to={printPath} className="btn btn-secondary btn-lg">Print or save as PDF</Link>
-          <ShareSheet path={path} title={`${subject.name} · mixed worksheet ${spec.code}`} />
-          <Link to={makePath} className="btn btn-secondary btn-lg">Make a different one</Link>
+          <ShareSheet path={path} title={`${subject.name} · ${kind.toLowerCase()} ${spec.code}`} />
+          {!oneTopic && <Link to={makePath} className="btn btn-secondary btn-lg">Make a different one</Link>}
         </div>
       </article>
     )
@@ -96,7 +122,7 @@ export function MixedWorksheet() {
     })
     return (
       <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
-        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">Mixed worksheet finished</p>
+        <p className="text-xs font-bold uppercase tracking-[0.08em] accent-ink">{kind} finished</p>
         <h1 className="text-3xl font-bold leading-tight">{total} of {marksAvailable} marks</h1>
         <ul className="flex flex-col gap-2">
           {byTopic.map((t) => (
@@ -110,7 +136,7 @@ export function MixedWorksheet() {
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <Link to={printPath} className="btn btn-secondary btn-lg">Print this sheet</Link>
           <ShareSheet path={path} title={`${subject.name} · mixed worksheet ${spec.code}`} />
-          <Link to={makePath} onClick={() => setSession(null)} className="btn btn-primary btn-lg">Make another</Link>
+          <Link to={makePath} onClick={() => setSession(null)} className="btn btn-primary btn-lg">{oneTopic ? 'Back to topic' : 'Make another'}</Link>
         </div>
       </article>
     )
@@ -146,8 +172,11 @@ export function MixedWorksheet() {
     <article className="mx-auto flex w-full max-w-3xl flex-col gap-5">
       <header className="flex flex-col gap-1.5">
         <div className="flex justify-between gap-2 text-xs text-ink-2">
-          <span className="font-bold uppercase tracking-[0.08em]">Mixed worksheet · {LEVEL[spec.level]}</span>
-          <span>{session.index + 1} of {sheet.length}</span>
+          <span className="font-bold uppercase tracking-[0.08em]">{kind} · {LEVEL[spec.level]}</span>
+          <span className="flex shrink-0 items-center gap-2">
+            {spec.minutes && session.startedAt && <Countdown startedAt={session.startedAt} minutes={spec.minutes} />}
+            <span className="whitespace-nowrap">{session.index + 1} of {sheet.length}</span>
+          </span>
         </div>
         <div className="grid gap-0.5" style={{ gridTemplateColumns: `repeat(${sheet.length}, minmax(0, 1fr))` }} role="progressbar" aria-valuemin={1} aria-valuemax={sheet.length} aria-valuenow={session.index + 1}>
           {sheet.map((s, i) => <span key={itemKey(s.item)} className="h-1.5 rounded-full" style={{ background: i <= session.index ? 'var(--subject)' : 'var(--color-rule)' }} />)}
