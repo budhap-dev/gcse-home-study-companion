@@ -5,7 +5,7 @@ add the PR number; add new work here as it is found, not in a separate note. Sto
 (`LRN-2`, `PAR-4`) refer to [stories.md](stories.md), where the acceptance criteria live;
 [plan.md](plan.md) holds the delivery plan these came from.
 
-Last reviewed: 12 November 2026.
+Last reviewed: 13 November 2026.
 
 **Development closed on 27 September 2026**, at the owner's request, with content (1) and
 testing and validation (2) complete. The product features in section 3 are **not planned**:
@@ -971,6 +971,79 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
 - [ ] **12. Challenge problems across topics.** Ten to twenty problems per subject for Maths and
   the three sciences that need two or more units at once (for example forces with energy, or
   algebra with geometry), as a "Challenge" set on the subject page beside the grade 9 sets.
+
+## 14. Past papers by subject and year (13 November 2026)
+
+Asked 13 November 2026: "can you create a section which can have per year per subject last
+10-15 years higher tier GCSE questions?" Agreed the same day: an index of the boards' own
+papers with each question tagged to our topics, 9–1 papers only, built after section 13
+box 11 and before box 12.
+
+**Why links, not copies.** The papers belong to AQA and Pearson, and this app and its
+repository are public, so no question text is copied in. Each paper links to the board's own
+question paper, mark scheme and examiner report, and our part is the index: which question
+tests which topic, and how many marks it carries. Checked on the boards' sites on 13 November
+2026:
+
+- **AQA** keeps a series off its public site for about a year after the exam (summer 2026
+  appears on 9 July 2027) and says most papers stay up "for a period of three years", "due to
+  copyright restrictions". Its finder still lists more than that today, back to November 2020.
+  Newer files have hashed addresses (`aqa.org.uk/files/…`), so links are taken from the
+  finder, never guessed.
+- **Pearson** locks a series for 9 to 12 months for teachers' mocks, then keeps it: June 2019
+  Mathematics 1H, 2H and 3H are all there, each with its mark scheme and examiner report.
+
+**"Last 10–15 years" is not possible on these specifications.** The 9–1 GCSEs were first sat
+in 2017 (Maths and English) and later for the other subjects, and Computer Science 8525 and
+French 1FR1 are newer specifications again. There was no summer series in 2020 or 2021, but
+the boards list November 2020 and November 2021 papers. Older A*–G papers test a different
+specification, and are left out by decision.
+
+| Subject | Board | Higher papers per series | Series on the board's site (13 Nov 2026) |
+|---|---|---|---|
+| Maths | Pearson 1MA1 | 3 (1H, 2H, 3H) | June 2017 to June 2025 and the November series; each confirmed in box 1 |
+| Physics | AQA 8463 | 2 | November 2020 to June 2025 complete; June 2018 and 2019 Paper 2 only |
+| Chemistry | AQA 8462 | 2 | November 2020 to June 2025 complete; June 2018; June 2019 Paper 1 only |
+| Biology | Pearson 1BI0 | 2 | Confirmed in box 1 |
+| Further Maths | AQA 8365 | 2 (one tier) | November 2021 to June 2025 |
+| Computer Science | AQA 8525 | 2 (Paper 1 in C#, Python and VB.NET) | November 2021 to June 2025 |
+| Business | Pearson 1BS0 | 2 (one tier) | Confirmed in box 1 |
+| French | Pearson 1FR1 | 4 (Higher) | None yet: first sat June 2026, which Pearson keeps locked until 2027 |
+| Music | Pearson 1MU0 | Component 3 | Confirmed in box 1 |
+| English Language | AQA 8700 | 2 (one tier), each with a source insert | November 2020 to November 2025, June and November |
+| English Literature | AQA 8702 | 2 (one tier) | November 2020 to June 2025 |
+
+**What is built.** Each subject page gets a **Past papers** list, newest first: one row per
+paper with links to the question paper, mark scheme, examiner report and any insert (the
+Physics equations sheet, the English Language source texts), each opening the board's PDF.
+Tiered subjects show Higher only. Once a subject is tagged, a paper row opens to its questions
+(number, marks, topics), and each topic page gains **In past papers**: "June 2023 Paper 2H
+Q14, 4 marks", linking to that paper. The links need a signal; the list and the tags work
+offline. Nothing here needs a paid service.
+
+Rules held by tests: every link is `https` on `aqa.org.uk` or `qualifications.pearson.com`,
+never a mirror; no Foundation paper; every tag names a topic that exists; the marks of a
+tagged paper add up to its total (80 for each Maths paper). A link-check script, run before
+each release rather than in CI, reports a board file that has moved or been withdrawn; a
+withdrawn paper keeps its row and tags, marked "no longer on the board's site". Tags are read
+from the board's own PDF, never recalled, and each subject's tags are checked by a reviewer
+agent before they ship.
+
+- [ ] **1. Index of papers for every subject.** The data files, the Past papers list on each
+  subject page and the link checks. Box 1 confirms the series for Biology, Business and Music,
+  and every Maths series, from Pearson's finder.
+- [ ] **2. Maths tags.** Every question of every Higher paper, about 1,000 questions, tagged
+  to the 1MA1 topics; topic pages show where each was asked.
+- [ ] **3. Science tags.** Physics, Chemistry and Biology, about 450 questions.
+- [ ] **4. Further Maths and Computer Science tags.** About 350 questions; one set of tags
+  serves all three Paper 1 language versions, which share their questions.
+- [ ] **5. Business, English and Music tags.** English Literature questions are tagged to the
+  set texts the school teaches; a question on a text the family is not studying is listed
+  without a tag.
+- [ ] **6. Optional, the owner's call: log a past paper.** The student marks a paper from the
+  board's mark scheme and enters the score; the published grade boundaries for that series
+  turn it into a grade, kept with their attempts. Grade boundaries are figures the boards
+  publish, so they can be stored.
 
 ## 3. Product features (not planned)
 
