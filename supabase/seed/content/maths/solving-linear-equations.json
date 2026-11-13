@@ -1,0 +1,1680 @@
+{
+  "id": "solving-linear-equations",
+  "subjectId": "maths",
+  "unitId": "algebra",
+  "title": "Solving linear equations",
+  "specPoints": [
+    "A17",
+    "A21"
+  ],
+  "order": 9,
+  "year": 9,
+  "tips": [
+    {
+      "kind": "remember",
+      "title": "Same to both sides",
+      "body": "Every step must happen to **both** sides of the equation. Subtracting 5 from the left only is the commonest slip in the topic, and it changes the answer without any warning."
+    },
+    {
+      "kind": "spot",
+      "title": "The bracket multiplies every term",
+      "body": "$4(x - 3)$ is $4x - 12$, not $4x - 3$. When you expand, multiply the number outside by **each** term inside, and keep its sign."
+    },
+    {
+      "kind": "shortcut",
+      "title": "Move the smaller x term",
+      "body": "With $x$ on both sides, subtract the **smaller** $x$ term from both sides. The $x$ term that is left is positive, and there is one fewer negative sign to lose."
+    },
+    {
+      "kind": "check",
+      "title": "Put it back in",
+      "body": "Substitute your answer into **each side separately**. If they are equal, it is right. If not, an earlier line has a slip, and the check tells you before the examiner does."
+    },
+    {
+      "kind": "spot",
+      "title": "Multiply every term",
+      "body": "To clear $\\frac{x}{3} + \\frac{x}{5} = 16$, multiply **every** term by 15, including the 16: $5x + 3x = 240$. Multiplying only the fractions leaves the 16 unchanged, and the answer wrong."
+    }
+  ],
+  "why": {
+    "matters": "An equation is a question written in symbols: which number makes these two things equal? Solving it means **undoing** what was done to the unknown, in reverse order, while keeping both sides balanced.\n\nAlmost every algebra question at GCSE ends with this step. A perimeter, an angle fact or two prices become an equation, and the equation becomes a number.\n\nIt is also the one place in maths where you can **mark your own work**: put the answer back in, and the two sides either agree or they do not.",
+    "examples": [
+      {
+        "title": "Two phone deals, one break-even point",
+        "body": "Deal A costs £12 a month plus 5p a text. Deal B costs £20 a month plus 1p a text. Which is cheaper depends on how many texts you send, and an equation finds the turning point.\n\nFor $t$ texts the deals cost the same when $12 + 0.05t = 20 + 0.01t$. Subtract $0.01t$ and 12: $0.04t = 8$, so $t = 200$. Below 200 texts a month, Deal A is cheaper; above it, Deal B.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Texts",
+              "Deal A",
+              "Deal B"
+            ],
+            "rows": [
+              [
+                "100",
+                "£17",
+                "£21"
+              ],
+              [
+                "200",
+                "£22",
+                "£22"
+              ],
+              [
+                "300",
+                "£27",
+                "£23"
+              ]
+            ],
+            "title": "12 + 0.05t against 20 + 0.01t",
+            "highlight": 1
+          },
+          "alt": "A table of monthly costs: at 100 texts Deal A is 17 pounds and Deal B 21; at 200 texts both are 22; at 300 texts Deal A is 27 and Deal B 23"
+        }
+      },
+      {
+        "title": "What did each book cost?",
+        "body": "An online order of three books, all the same price, comes to £34.96, and the receipt shows £4.99 for delivery. The price of one book is hidden in that total.\n\nWrite it as an equation: $3b + 4.99 = 34.96$. Undo the delivery first: $3b = 29.97$. Then undo the three: $b = 9.99$. Each book was £9.99, and $3 \\times 9.99 + 4.99 = 34.96$ checks it.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Step",
+              "Equation"
+            ],
+            "rows": [
+              [
+                "The receipt",
+                "3b + 4.99 = 34.96"
+              ],
+              [
+                "− 4.99",
+                "3b = 29.97"
+              ],
+              [
+                "÷ 3",
+                "b = 9.99"
+              ]
+            ],
+            "title": "Undo the delivery, then the three"
+          },
+          "alt": "Solving 3b + 4.99 = 34.96: subtract 4.99 to get 3b = 29.97, then divide by 3 to get b = 9.99"
+        }
+      },
+      {
+        "title": "Fencing a garden",
+        "body": "A rectangular garden is to be 3 m longer than it is wide, and there are 46 m of fencing to go round it. How wide can it be?\n\nCall the width $w$, so the length is $w + 3$. The fence is the perimeter: $2(w + w + 3) = 46$, which is $4w + 6 = 46$. So $4w = 40$ and $w = 10$. The garden is 10 m by 13 m, an area of 130 m², and $2(10 + 13) = 46$ uses exactly the fencing there is.",
+        "visual": {
+          "type": "diagram",
+          "component": "trace-table",
+          "props": {
+            "columns": [
+              "Side",
+              "In terms of w",
+              "Length"
+            ],
+            "rows": [
+              [
+                "Width",
+                "w",
+                "10 m"
+              ],
+              [
+                "Length",
+                "w + 3",
+                "13 m"
+              ],
+              [
+                "Perimeter",
+                "4w + 6",
+                "46 m"
+              ]
+            ],
+            "title": "Name the unknown, then write the rest"
+          },
+          "alt": "A table: width w is 10 metres, length w plus 3 is 13 metres, and the perimeter 4w plus 6 is 46 metres"
+        }
+      }
+    ]
+  },
+  "lesson": {
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "explain",
+        "title": "An equation is a balance",
+        "specPoint": "A17",
+        "body": "**An equation says two things are equal**, and solving it means finding the value of the letter that makes them so. Think of the two sides as a balance: **whatever you do to one side, do to the other**, and it stays level.\n\nTo get $x$ on its own, **undo what was done to it, in reverse order**. In $3x + 5 = 20$, the $x$ was multiplied by 3 and then had 5 added. So take away 5 first, then divide by 3.\n\n**Then check, by putting the answer back in.** If both sides come out equal, it is right. No other topic lets you mark your own answer so easily.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Step",
+                "Left side",
+                "Right side"
+              ],
+              "rows": [
+                [
+                  "Start",
+                  "3x + 5",
+                  "20"
+                ],
+                [
+                  "− 5 from both sides",
+                  "3x",
+                  "15"
+                ],
+                [
+                  "÷ 3 on both sides",
+                  "x",
+                  "5"
+                ],
+                [
+                  "Check: 3 × 5 + 5",
+                  "20",
+                  "20 ✓"
+                ]
+              ],
+              "title": "Undo the + 5, then the × 3",
+              "highlight": 2
+            },
+            "alt": "Solving 3x + 5 = 20: subtract 5 from both sides to get 3x = 15, divide by 3 to get x = 5, and check that 3 times 5 plus 5 is 20"
+          }
+        ],
+        "check": {
+          "id": "c1",
+          "type": "multiple-choice",
+          "prompt": "What is the first step in solving $5x - 4 = 21$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "inverse operations",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The 4 was subtracted last, so undo it first by **adding** 4: $5x = 25$. Then divide by 5: $x = 5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "add 4 to both sides"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "Subtract 4 from both sides",
+            "Divide both sides by 4",
+            "Add 4 to both sides",
+            "Subtract 5 from both sides"
+          ],
+          "correct": [
+            2
+          ]
+        }
+      },
+      {
+        "id": "s2",
+        "kind": "worked-example",
+        "title": "Brackets, and answers below zero",
+        "specPoint": "A17",
+        "body": "**A number outside a bracket multiplies everything inside it.** Either expand the bracket first, or, when the number divides the other side exactly, divide both sides by it.\n\n**Negative answers are as good as any other.** When the $x$ term is being subtracted, the last step is a division by a negative number, and the signs must be watched.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $4(2x - 3) = 28$, and then $5 - 2x = 11$.",
+            "steps": [
+              {
+                "text": "Expand: $8x - 12 = 28$",
+                "note": "the 4 multiplies the 3 as well"
+              },
+              {
+                "text": "Add 12: $8x = 40$, so $x = 5$",
+                "note": "check: $4(10 - 3) = 28$ ✓"
+              },
+              {
+                "text": "$5 - 2x = 11$: subtract 5 from both sides, $-2x = 6$",
+                "note": "the minus sign stays with the $2x$"
+              },
+              {
+                "text": "Divide by $-2$: $x = -3$",
+                "note": "a positive divided by a negative is negative"
+              },
+              {
+                "text": "Check: $5 - 2(-3) = 5 + 6 = 11$ ✓",
+                "note": "brackets round the negative value"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c2",
+          "type": "numeric",
+          "prompt": "Solve $3(x + 4) = 27$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "equations with brackets",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Divide both sides by 3: $x + 4 = 9$, so $x = 5$. Or expand: $3x + 12 = 27$, $3x = 15$, $x = 5$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = 5"
+            }
+          ],
+          "discriminators": [],
+          "answer": 5,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s3",
+        "kind": "worked-example",
+        "title": "The unknown on both sides",
+        "specPoint": "A17",
+        "body": "**Collect the $x$ terms on one side and the numbers on the other.** The tidy way is to **subtract the smaller $x$ term from both sides**, so the $x$ term that is left is positive.\n\nAfter that it is an ordinary two-step equation. Answers do not have to be whole numbers: give a decimal or a fraction, exactly.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $7x - 4 = 3x + 18$.",
+            "steps": [
+              {
+                "text": "Subtract $3x$ from both sides: $4x - 4 = 18$",
+                "note": "3x is the smaller x term"
+              },
+              {
+                "text": "Add 4: $4x = 22$",
+                "note": "numbers to the right"
+              },
+              {
+                "text": "Divide by 4: $x = 5.5$",
+                "note": "or $\\frac{11}{2}$; both are exact"
+              },
+              {
+                "text": "Check: $7(5.5) - 4 = 34.5$ and $3(5.5) + 18 = 34.5$ ✓",
+                "note": "both sides, separately"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c3",
+          "type": "numeric",
+          "prompt": "Solve $9x - 2 = 4x + 28$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "unknown on both sides",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Subtract $4x$: $5x - 2 = 28$. Add 2: $5x = 30$, so $x = 6$. Check: $52 = 52$ ✓",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = 6"
+            }
+          ],
+          "discriminators": [],
+          "answer": 6,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s4",
+        "kind": "worked-example",
+        "title": "Fractions: multiply them away",
+        "specPoint": "A17",
+        "body": "**Clear the fractions first, by multiplying both sides by the denominator.** With a fraction on each side, multiply by both denominators, which is the same as cross-multiplying.\n\nPut **brackets** round each top as you do it. The bar of a fraction groups everything above it, and the bracket keeps that grouping when the bar goes.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "Solve $\\dfrac{x + 4}{3} = 5$, and then $\\dfrac{2x - 1}{5} = \\dfrac{x + 3}{2}$.",
+            "steps": [
+              {
+                "text": "Multiply by 3: $x + 4 = 15$, so $x = 11$",
+                "note": "check: $15 \\div 3 = 5$ ✓"
+              },
+              {
+                "text": "Cross-multiply: $2(2x - 1) = 5(x + 3)$",
+                "note": "brackets round each top"
+              },
+              {
+                "text": "Expand: $4x - 2 = 5x + 15$",
+                "note": "both brackets, every term"
+              },
+              {
+                "text": "Subtract $4x$ and 15: $-17 = x$",
+                "note": "the smaller x term was 4x"
+              },
+              {
+                "text": "Check: $\\frac{-35}{5} = -7$ and $\\frac{-14}{2} = -7$ ✓",
+                "note": "a negative answer, and right"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c4",
+          "type": "numeric",
+          "prompt": "Solve $\\dfrac{x - 3}{4} = 2$.",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "equations with fractions",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Multiply both sides by 4: $x - 3 = 8$, so $x = 11$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = 11"
+            }
+          ],
+          "discriminators": [],
+          "answer": 11,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s5",
+        "kind": "worked-example",
+        "title": "Forming an equation from a situation",
+        "specPoint": "A21",
+        "body": "**Most exam equations are not printed; you write them.** Name the unknown, write each quantity in terms of it, and use the fact the question gives you: angles in a triangle make 180°, a perimeter is the sum of the sides, two prices are equal.\n\nThen **answer the question that was asked**. Finding $x$ is often only the middle of it.",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "The angles of a triangle are $x°$, $(2x + 10)°$ and $(3x - 40)°$. Work out the size of the largest angle.",
+            "steps": [
+              {
+                "text": "Angles in a triangle add up to 180°: $x + 2x + 10 + 3x - 40 = 180$",
+                "note": "the fact that makes the equation"
+              },
+              {
+                "text": "Collect: $6x - 30 = 180$, so $6x = 210$",
+                "note": "x terms together, numbers together"
+              },
+              {
+                "text": "$x = 35$",
+                "note": "not the answer yet"
+              },
+              {
+                "text": "Angles: $35°$, $2(35) + 10 = 80°$ and $3(35) - 40 = 65°$",
+                "note": "they add to 180 ✓"
+              },
+              {
+                "text": "The largest angle is **80°**",
+                "note": "the question asked for this"
+              }
+            ]
+          }
+        ],
+        "check": {
+          "id": "c5",
+          "type": "numeric",
+          "prompt": "The angles of a triangle are $x°$, $(x + 20)°$ and $2x°$. Work out the value of $x$.",
+          "marks": 1,
+          "gradeBand": "6-7",
+          "skill": "forming equations",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$x + x + 20 + 2x = 180$, so $4x + 20 = 180$, $4x = 160$ and $x = 40$. The angles are 40°, 60° and 80°.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = 40"
+            }
+          ],
+          "discriminators": [],
+          "answer": 40,
+          "tolerance": 0
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "explain",
+        "title": "Solving with a graph",
+        "specPoint": "A17",
+        "body": "**An equation can be solved by reading a graph.** The solution of $2x + 1 = 6$ is where the line $y = 2x + 1$ reaches a height of 6: go across from 6 on the $y$ axis to the line, then down. Here that is $x = 2.5$.\n\nA graph gives an **approximate** answer, as exact as you can read it. That is its use when the algebra is hard, and it is a picture of what *solving* means: the $x$ where two things are equal.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "line-graph",
+            "props": {
+              "xRange": [
+                0,
+                4
+              ],
+              "yRange": [
+                0,
+                9
+              ],
+              "xStep": 1,
+              "yStep": 1,
+              "grid": true,
+              "lines": [
+                {
+                  "m": 2,
+                  "c": 1,
+                  "label": "y = 2x + 1"
+                },
+                {
+                  "m": 0,
+                  "c": 6,
+                  "label": "y = 6",
+                  "dashed": true
+                }
+              ],
+              "points": [
+                {
+                  "x": 2.5,
+                  "y": 6,
+                  "label": "(2.5, 6)",
+                  "labelBelow": true
+                }
+              ]
+            },
+            "alt": "The line y = 2x + 1 and the dashed horizontal line y = 6 crossing at the point (2.5, 6), so the solution of 2x + 1 = 6 is x = 2.5"
+          }
+        ],
+        "check": {
+          "id": "c6",
+          "type": "multiple-choice",
+          "prompt": "The lines $y = 2x + 1$ and $y = 7$ cross at the point (3, 7). What is the solution of $2x + 1 = 7$?",
+          "marks": 1,
+          "gradeBand": "4-5",
+          "skill": "solving with a graph",
+          "calculator": "either",
+          "tags": [],
+          "solution": "The solution is the $x$ value where the two sides are equal, which is where the lines cross: $x = 3$. Check: $2(3) + 1 = 7$ ✓",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "x = 3"
+            }
+          ],
+          "discriminators": [],
+          "options": [
+            "$x = 7$",
+            "$x = 3$",
+            "$y = 3$",
+            "$x = 1$"
+          ],
+          "correct": [
+            1
+          ]
+        }
+      },
+      {
+        "id": "s7",
+        "kind": "your-turn",
+        "title": "Your turn",
+        "body": "**Part A.**\n\n1. Solve $2x + 9 = 21$.\n2. Solve $\\dfrac{x}{5} + 1 = 4$.\n3. Solve $3(x - 4) = 18$.\n\n**Part B.**\n\n4. Solve $5x + 3 = 2x + 21$.\n5. Solve $10 - 3x = 1$.\n6. Solve $\\dfrac{x + 7}{2} = \\dfrac{x + 1}{3}$.\n\n**Part C.**\n\n7. The perimeter of a triangle with sides $x$, $x + 3$ and $2x - 1$ cm is 30 cm. Find the longest side.\n8. Ben says $4(x + 2) = 4x + 8$ has no solution. Is he right?\n9. Solve $\\dfrac{x}{2} + \\dfrac{x}{3} = 10$.\n\nCheck every answer by putting it back in.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Question",
+                "Answer",
+                "Check: left side",
+                "Check: right side"
+              ],
+              "rows": [
+                [
+                  "4",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "6",
+                  "",
+                  "",
+                  ""
+                ],
+                [
+                  "9",
+                  "",
+                  "",
+                  ""
+                ]
+              ],
+              "title": "Put each answer back in"
+            },
+            "alt": "An empty table for questions 4, 6 and 9, with columns for the answer and for each side of the equation when the answer is put back in"
+          }
+        ]
+      },
+      {
+        "id": "s8",
+        "kind": "grade-9",
+        "title": "Going deeper: one answer, none, or every one",
+        "body": "**Most linear equations have exactly one solution, but not all.** When the $x$ terms cancel, look at what is left.\n\n- If what is left is **false**, such as $6 = 5$, there is **no solution**: no value of $x$ balances it.\n- If what is left is **true**, such as $6 = 6$, **every value works**. That is an **identity**, written with $\\equiv$, and it says the two sides are the same expression.\n\n**Words into equations is where the marks are.** Choose the unknown that makes the other quantities easiest to write: for three consecutive odd numbers, $n$, $n + 2$ and $n + 4$. Write each fact as one side of an equation, solve, and then **answer the question**, because it rarely asks for $n$.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "Equation",
+                "After expanding",
+                "Solutions"
+              ],
+              "rows": [
+                [
+                  "2(x + 3) = x + 5",
+                  "2x + 6 = x + 5",
+                  "one: x = −1"
+                ],
+                [
+                  "2(x + 3) = 2x + 5",
+                  "6 = 5, false",
+                  "none"
+                ],
+                [
+                  "2(x + 3) = 2x + 6",
+                  "6 = 6, true",
+                  "every x"
+                ]
+              ],
+              "title": "When the x terms cancel, read what is left"
+            },
+            "alt": "Three equations: 2(x + 3) = x + 5 has one solution, x = −1; 2(x + 3) = 2x + 5 leaves 6 = 5, so it has none; 2(x + 3) = 2x + 6 leaves 6 = 6, so every x works"
+          }
+        ],
+        "check": {
+          "id": "c8",
+          "type": "multiple-choice",
+          "prompt": "Which of these is true for every value of $x$?",
+          "marks": 1,
+          "gradeBand": "8-9",
+          "skill": "identities",
+          "calculator": "either",
+          "tags": [],
+          "solution": "Expanding $3(x - 2)$ gives $3x - 6$ exactly, so that equation is an identity and every $x$ works. $3x - 2$ and $3x + 6$ leave a false statement, so they have no solution, and $x - 6$ gives the single answer $x = 0$.",
+          "markScheme": [
+            {
+              "code": "B1",
+              "marks": 1,
+              "description": "3(x − 2) = 3x − 6"
+            }
+          ],
+          "discriminators": [
+            "evaluate"
+          ],
+          "options": [
+            "$3(x - 2) = 3x - 2$",
+            "$3(x - 2) = x - 6$",
+            "$3(x - 2) = 3x + 6$",
+            "$3(x - 2) = 3x - 6$"
+          ],
+          "correct": [
+            3
+          ]
+        }
+      },
+      {
+        "id": "s9",
+        "kind": "summary",
+        "title": "Summary",
+        "body": "- **Do the same to both sides**, and the equation stays balanced.\n- **Undo in reverse order**: the last thing done to $x$ is the first thing undone.\n- A number outside a **bracket** multiplies every term inside it.\n- **Unknown on both sides**: subtract the smaller $x$ term from both sides.\n- **Fractions**: multiply every term by the denominator, with brackets round each top.\n- Negative and fraction answers are fine; give them **exactly**.\n- **Form the equation** from the fact the question gives: angle sums, perimeters, equal costs.\n- **Answer the question asked**: finding $x$ is often only the middle.\n- On a **graph**, the solution is the $x$ where the two sides meet.\n- If the $x$ terms cancel: a false statement means **no solution**, a true one means **every $x$**.\n- **Check** every answer by putting it back into both sides.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "",
+                ""
+              ],
+              "rows": [
+                [
+                  "Balance",
+                  "same to both sides"
+                ],
+                [
+                  "Order",
+                  "undo in reverse"
+                ],
+                [
+                  "Brackets",
+                  "multiply every term"
+                ],
+                [
+                  "Both sides",
+                  "move the smaller x term"
+                ],
+                [
+                  "Fractions",
+                  "multiply by the denominator"
+                ],
+                [
+                  "Words",
+                  "form, solve, then answer"
+                ],
+                [
+                  "Graph",
+                  "x where the sides meet"
+                ],
+                [
+                  "Check",
+                  "put it back in"
+                ]
+              ],
+              "title": "Everything in one place"
+            },
+            "alt": "A summary table of the methods for solving linear equations"
+          }
+        ]
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "numeric",
+      "prompt": "Solve $3x + 7 = 22$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "two-step equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Subtract 7 from both sides: $3x = 15$.\n\nDivide both sides by 3: $x = 5$.\n\nCheck: $3(5) + 7 = 22$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3x = 15"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "step": "s1"
+    },
+    {
+      "id": "q2",
+      "type": "numeric",
+      "prompt": "Solve $\\dfrac{x}{4} - 3 = 2$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "two-step equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Add 3 to both sides: $\\dfrac{x}{4} = 5$.\n\nMultiply both sides by 4: $x = 20$.\n\nCheck: $20 \\div 4 - 3 = 2$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x/4 = 5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0,
+      "step": "s1"
+    },
+    {
+      "id": "q3",
+      "type": "numeric",
+      "prompt": "Solve $5(x - 2) = 35$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "equations with brackets",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Divide both sides by 5: $x - 2 = 7$.\n\nAdd 2: $x = 9$.\n\nCheck: $5(9 - 2) = 35$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x − 2 = 7 or 5x − 10 = 35"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 9"
+        }
+      ],
+      "discriminators": [],
+      "answer": 9,
+      "tolerance": 0,
+      "step": "s2"
+    },
+    {
+      "id": "q4",
+      "type": "numeric",
+      "prompt": "Solve $9 - 2x = 15$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "negative solutions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Subtract 9 from both sides: $-2x = 6$.\n\nDivide both sides by $-2$: $x = -3$.\n\nCheck: $9 - 2(-3) = 9 + 6 = 15$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "−2x = 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = −3"
+        }
+      ],
+      "discriminators": [],
+      "answer": -3,
+      "tolerance": 0,
+      "step": "s2"
+    },
+    {
+      "id": "q5",
+      "type": "multiple-choice",
+      "prompt": "What is the best first step in solving $4x + 9 = 33$?",
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "inverse operations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Undo the operations in the reverse order they were done to $x$. It was multiplied by 4 and then had 9 added, so take the 9 away first: $4x = 24$, then divide by 4: $x = 6$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "subtract 9 from both sides"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "Divide both sides by 9",
+        "Subtract 4 from both sides",
+        "Subtract 9 from both sides",
+        "Add 9 to both sides"
+      ],
+      "correct": [
+        2
+      ],
+      "step": "s1"
+    },
+    {
+      "id": "q6",
+      "type": "numeric",
+      "prompt": "Solve $6x + 5 = 2x + 37$.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "unknown on both sides",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Subtract $2x$ from both sides: $4x + 5 = 37$.\n\nSubtract 5: $4x = 32$, so $x = 8$.\n\nCheck: $6(8) + 5 = 53$ and $2(8) + 37 = 53$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "4x + 5 = 37 or 4x = 32"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 8"
+        }
+      ],
+      "discriminators": [],
+      "answer": 8,
+      "tolerance": 0,
+      "step": "s3"
+    },
+    {
+      "id": "q7",
+      "type": "numeric",
+      "prompt": "Solve $8x - 3 = 5x + 15$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "unknown on both sides",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Subtract $5x$ from both sides: $3x - 3 = 15$.\n\nAdd 3: $3x = 18$, so $x = 6$.\n\nCheck: $8(6) - 3 = 45$ and $5(6) + 15 = 45$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3x = 18"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 6"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6,
+      "tolerance": 0,
+      "step": "s3"
+    },
+    {
+      "id": "q8",
+      "type": "numeric",
+      "prompt": "Solve $3(2x + 1) = 4x + 17$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "equations with brackets",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Expand: $6x + 3 = 4x + 17$.\n\nSubtract $4x$: $2x + 3 = 17$, so $2x = 14$ and $x = 7$.\n\nCheck: $3(15) = 45$ and $4(7) + 17 = 45$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6x + 3"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2x = 14"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 7"
+        }
+      ],
+      "discriminators": [],
+      "answer": 7,
+      "tolerance": 0,
+      "step": "s3"
+    },
+    {
+      "id": "q9",
+      "type": "numeric",
+      "prompt": "Solve $\\dfrac{x + 5}{3} = 4$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "equations with fractions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply both sides by 3: $x + 5 = 12$.\n\nSubtract 5: $x = 7$.\n\nCheck: $(7 + 5) \\div 3 = 4$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x + 5 = 12"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 7"
+        }
+      ],
+      "discriminators": [],
+      "answer": 7,
+      "tolerance": 0,
+      "step": "s4"
+    },
+    {
+      "id": "q10",
+      "type": "numeric",
+      "prompt": "Solve $2(4x - 5) = 3(x + 5)$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "equations with brackets",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Expand both sides: $8x - 10 = 3x + 15$.\n\nSubtract $3x$: $5x - 10 = 15$, so $5x = 25$ and $x = 5$.\n\nCheck: $2(20 - 5) = 30$ and $3(5 + 5) = 30$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8x − 10 = 3x + 15"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5x = 25"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 5,
+      "tolerance": 0,
+      "step": "s3"
+    },
+    {
+      "id": "q11",
+      "type": "numeric",
+      "prompt": "Solve $7 - 4x = 3x - 21$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "unknown on both sides",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Add $4x$ to both sides, so the $x$ term stays positive: $7 = 7x - 21$.\n\nAdd 21: $28 = 7x$, so $x = 4$.\n\nCheck: $7 - 16 = -9$ and $12 - 21 = -9$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7 = 7x − 21 or −7x = −28"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "7x = 28"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 4"
+        }
+      ],
+      "discriminators": [],
+      "answer": 4,
+      "tolerance": 0,
+      "step": "s3"
+    },
+    {
+      "id": "q12",
+      "type": "numeric",
+      "prompt": "A rectangle has sides of length $(x + 4)$ cm and $(2x - 1)$ cm. Its perimeter is 42 cm.\n\nWork out the length of the longer side.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "forming equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Perimeter: $2(x + 4) + 2(2x - 1) = 42$, so $6x + 6 = 42$.\n\nThen $6x = 36$ and $x = 6$.\n\nThe sides are $6 + 4 = 10$ cm and $2(6) - 1 = 11$ cm, so the longer side is 11 cm. Check: $2(10 + 11) = 42$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2(x + 4) + 2(2x − 1) = 42"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "x = 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "11"
+        }
+      ],
+      "discriminators": [],
+      "answer": 11,
+      "tolerance": 0,
+      "step": "s5",
+      "units": "cm"
+    },
+    {
+      "id": "q13",
+      "type": "numeric",
+      "prompt": "Two angles on a straight line are $(3x + 15)°$ and $(2x - 10)°$.\n\nWork out the value of $x$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "forming equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Angles on a straight line add up to $180°$: $3x + 15 + 2x - 10 = 180$.\n\nSo $5x + 5 = 180$, $5x = 175$ and $x = 35$.\n\nCheck: $120° + 60° = 180°$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3x + 15 + 2x − 10 = 180"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 35"
+        }
+      ],
+      "discriminators": [],
+      "answer": 35,
+      "tolerance": 0,
+      "step": "s5"
+    },
+    {
+      "id": "q14",
+      "type": "multiple-choice",
+      "prompt": "A student solves $4(x - 3) = 20$. Their first line is $4x - 3 = 20$. What has gone wrong?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "equations with brackets",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The 4 multiplies **everything** in the bracket: $4(x - 3) = 4x - 12$. The correct line is $4x - 12 = 20$, giving $4x = 32$ and $x = 8$. Dividing both sides by 4 first works too: $x - 3 = 5$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "only x multiplied by 4"
+        }
+      ],
+      "discriminators": [],
+      "options": [
+        "The 4 should have been subtracted, not multiplied",
+        "Only the $x$ was multiplied by 4, not the 3",
+        "Both sides should have been divided by 3 first",
+        "The 20 should have been multiplied by 4 as well"
+      ],
+      "correct": [
+        1
+      ],
+      "step": "s2"
+    },
+    {
+      "id": "q15",
+      "type": "numeric",
+      "prompt": "The graph of $y = 3x - 2$ is drawn on the grid.\n\nUse the graph to solve $3x - 2 = 5.5$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "solving with a graph",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Find 5.5 on the $y$ axis, go across to the line, then down to the $x$ axis: $x = 2.5$.\n\nCheck by algebra: $3x = 7.5$, so $x = 2.5$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "reads across from y = 5.5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 2.5"
+        }
+      ],
+      "discriminators": [],
+      "answer": 2.5,
+      "tolerance": 0.1,
+      "visual": {
+        "type": "diagram",
+        "component": "line-graph",
+        "props": {
+          "xRange": [
+            0,
+            4
+          ],
+          "yRange": [
+            -2,
+            10
+          ],
+          "xStep": 1,
+          "yStep": 1,
+          "grid": true,
+          "lines": [
+            {
+              "m": 3,
+              "c": -2,
+              "label": "y = 3x − 2"
+            }
+          ]
+        },
+        "alt": "The straight line y = 3x − 2 drawn on a grid with x from 0 to 4 and y from −2 to 10"
+      },
+      "step": "s6"
+    },
+    {
+      "id": "q16",
+      "type": "numeric",
+      "prompt": "Solve $0.4(x - 3) = 0.25x + 0.6$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "decimal coefficients",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Expand: $0.4x - 1.2 = 0.25x + 0.6$.\n\nSubtract $0.25x$: $0.15x - 1.2 = 0.6$, so $0.15x = 1.8$.\n\n$x = 1.8 \\div 0.15 = 12$. Check: $0.4 \\times 9 = 3.6$ and $3 + 0.6 = 3.6$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.4x − 1.2"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.15x = 1.8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 12"
+        }
+      ],
+      "discriminators": [],
+      "answer": 12,
+      "tolerance": 0,
+      "step": "s3"
+    },
+    {
+      "id": "q17",
+      "type": "numeric",
+      "prompt": "Solve $\\dfrac{3x - 2}{4} = \\dfrac{x + 6}{3}$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "equations with fractions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply both sides by 12, or cross-multiply: $3(3x - 2) = 4(x + 6)$.\n\nExpand: $9x - 6 = 4x + 24$, so $5x = 30$ and $x = 6$.\n\nCheck: $16 \\div 4 = 4$ and $12 \\div 3 = 4$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3(3x − 2) = 4(x + 6)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5x = 30"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "step": "s4"
+    },
+    {
+      "id": "q18",
+      "type": "numeric",
+      "prompt": "Solve $\\dfrac{x}{3} + \\dfrac{x}{5} = 16$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "equations with fractions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply every term by 15, the lowest common multiple of 3 and 5: $5x + 3x = 240$.\n\nSo $8x = 240$ and $x = 30$.\n\nCheck: $10 + 6 = 16$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies every term by 15"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8x = 240"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 30"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 30,
+      "tolerance": 0,
+      "step": "s4"
+    },
+    {
+      "id": "q19",
+      "type": "numeric",
+      "prompt": "Solve $\\dfrac{2x + 1}{3} - \\dfrac{x - 2}{4} = 2$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "equations with fractions",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Multiply every term by 12: $4(2x + 1) - 3(x - 2) = 24$.\n\nExpand, keeping the minus sign on both terms of the second bracket: $8x + 4 - 3x + 6 = 24$.\n\nSo $5x + 10 = 24$, $5x = 14$ and $x = 2.8$.\n\nCheck: $6.6 \\div 3 - 0.8 \\div 4 = 2.2 - 0.2 = 2$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies every term by 12"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8x + 4 − 3x + 6"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5x = 14"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 2.8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 2.8,
+      "tolerance": 0,
+      "step": "s4"
+    },
+    {
+      "id": "q20",
+      "type": "numeric",
+      "prompt": "Amir is three times as old as his sister Bea. In 8 years' time, Amir will be twice as old as Bea.\n\nHow old is Amir now?",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "forming equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let Bea be $b$ years old, so Amir is $3b$.\n\nIn 8 years: $3b + 8 = 2(b + 8)$, so $3b + 8 = 2b + 16$ and $b = 8$.\n\nAmir is $3 \\times 8 = 24$ years old. Check: in 8 years they are 32 and 16, and 32 is twice 16 ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3b + 8"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3b + 8 = 2(b + 8)"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "b = 8"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "24"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 24,
+      "tolerance": 0,
+      "step": "s5"
+    },
+    {
+      "id": "q21",
+      "type": "numeric",
+      "prompt": "An isosceles triangle has sides of $(3x + 2)$ cm, $(5x - 6)$ cm and $2x$ cm. The two equal sides are $(3x + 2)$ cm and $(5x - 6)$ cm.\n\nWork out the perimeter of the triangle.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "forming equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The equal sides give $3x + 2 = 5x - 6$, so $8 = 2x$ and $x = 4$.\n\nThe sides are $3(4) + 2 = 14$ cm, $5(4) - 6 = 14$ cm and $2(4) = 8$ cm.\n\nPerimeter $= 14 + 14 + 8 = 36$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3x + 2 = 5x − 6"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 4"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "adds the three sides"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "36"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 36,
+      "tolerance": 0,
+      "step": "s5",
+      "units": "cm"
+    },
+    {
+      "id": "q22",
+      "type": "numeric",
+      "prompt": "The sum of three consecutive odd numbers is 147.\n\nWork out the largest of the three numbers.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "forming equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Call the numbers $n$, $n + 2$ and $n + 4$: consecutive odd numbers are 2 apart.\n\n$3n + 6 = 147$, so $3n = 141$ and $n = 47$.\n\nThe numbers are 47, 49 and 51, so the largest is 51. Check: $47 + 49 + 51 = 147$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n + (n + 2) + (n + 4)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "n = 47"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "51"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 51,
+      "tolerance": 0,
+      "step": "s5"
+    },
+    {
+      "id": "q23",
+      "type": "numeric",
+      "prompt": "The mean of the four numbers $x$, $2x + 3$, $3x - 1$ and 16 is 15.\n\nWork out the value of $x$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "forming equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "The total is mean × number of values: $4 \\times 15 = 60$.\n\nSo $x + 2x + 3 + 3x - 1 + 16 = 60$, giving $6x + 18 = 60$, $6x = 42$ and $x = 7$.\n\nCheck: $7 + 17 + 20 + 16 = 60$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "total = 60"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "6x + 18 = 60"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 7"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 7,
+      "tolerance": 0,
+      "step": "s5"
+    },
+    {
+      "id": "q24",
+      "type": "multiple-choice",
+      "prompt": "How many solutions does $4(x + 3) = 4x + 10$ have?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "equations with no solution",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Expanding gives $4x + 12 = 4x + 10$. Subtracting $4x$ leaves $12 = 10$, which is false whatever $x$ is, so there is **no** solution. If the two sides had expanded to the same thing, every value would work: that is an identity.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "none"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "options": [
+        "None",
+        "One",
+        "Two",
+        "Every value of $x$"
+      ],
+      "correct": [
+        0
+      ],
+      "step": "s8"
+    },
+    {
+      "id": "q25",
+      "type": "numeric",
+      "prompt": "Taxi firm A charges £3.50 plus £1.80 for each mile. Taxi firm B charges £6 plus £1.30 for each mile.\n\nFor how many miles do the two firms charge the same?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "forming equations",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Let the journey be $m$ miles: $3.5 + 1.8m = 6 + 1.3m$.\n\nSubtract $1.3m$ and 3.5: $0.5m = 2.5$, so $m = 5$.\n\nCheck: firm A charges $3.50 + 9.00 = £12.50$ and firm B charges $6 + 6.50 = £12.50$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "3.5 + 1.8m = 6 + 1.3m"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "0.5m = 2.5"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "5"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 5,
+      "tolerance": 0,
+      "step": "s5",
+      "units": "miles"
+    },
+    {
+      "id": "q26",
+      "type": "numeric",
+      "prompt": "Sam thinks of a number. Doubling it and then subtracting 7 gives the same answer as subtracting it from 20 and multiplying the result by 3.\n\nWhat is Sam's number?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "forming equations",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Let the number be $n$: $2n - 7 = 3(20 - n)$.\n\nExpand: $2n - 7 = 60 - 3n$, so $5n = 67$ and $n = 13.4$.\n\nCheck: $2(13.4) - 7 = 19.8$ and $3(20 - 13.4) = 3 \\times 6.6 = 19.8$ ✓",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "2n − 7 = 3(20 − n)"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "5n = 67"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "13.4"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "answer": 13.4,
+      "tolerance": 0,
+      "step": "s5"
+    },
+    {
+      "id": "q27",
+      "type": "extended",
+      "prompt": "A rectangle has sides of $(3x - 1)$ cm and $(x + 2)$ cm. A square has sides of $(x + 4)$ cm. The rectangle and the square have the same perimeter.\n\n(a) Show that $x = 3.5$.\n\n(b) Which shape has the larger area, and by how much?",
+      "marks": 5,
+      "gradeBand": "8-9",
+      "skill": "forming equations",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "(a) Rectangle: $2(3x - 1) + 2(x + 2) = 8x + 2$. Square: $4(x + 4) = 4x + 16$. Equal perimeters give $8x + 2 = 4x + 16$, so $4x = 14$ and $x = 3.5$.\n\n(b) The rectangle is $9.5$ cm by $5.5$ cm, with area $9.5 \\times 5.5 = 52.25$ cm². The square has side $7.5$ cm and area $7.5^2 = 56.25$ cm². The **square** is larger, by $56.25 - 52.25 = 4$ cm². Both perimeters are 30 cm, as they should be.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "8x + 2 = 4x + 16"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "x = 3.5 shown"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "9.5 × 5.5 or 7.5²"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "52.25 and 56.25"
+        },
+        {
+          "code": "C1",
+          "marks": 1,
+          "description": "the square, by 4 cm²"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Forms the equation $8x + 2 = 4x + 16$ from the two perimeters",
+          "marks": 1
+        },
+        {
+          "text": "Solves it to show $x = 3.5$",
+          "marks": 1
+        },
+        {
+          "text": "Finds the rectangle's sides, 9.5 cm and 5.5 cm, or the square's side, 7.5 cm, and multiplies",
+          "marks": 1
+        },
+        {
+          "text": "Gets both areas, 52.25 cm² and 56.25 cm²",
+          "marks": 1
+        },
+        {
+          "text": "States the square is larger, by 4 cm²",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "(a) $2(3x - 1) + 2(x + 2) = 4(x + 4)$, so $8x + 2 = 4x + 16$, $4x = 14$, $x = 3.5$.\n\n(b) Rectangle $9.5 \\times 5.5 = 52.25$ cm². Square $7.5^2 = 56.25$ cm². The square is larger, by 4 cm².",
+      "step": "s5"
+    }
+  ],
+  "worksheets": {
+    "core": {
+      "level": "core",
+      "questionIds": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "suggestedMinutes": 12
+    },
+    "higher": {
+      "level": "higher",
+      "questionIds": [
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16"
+      ],
+      "suggestedMinutes": 26
+    },
+    "advanced": {
+      "level": "advanced",
+      "questionIds": [
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
+      ],
+      "suggestedMinutes": 45
+    }
+  },
+  "examTechnique": {
+    "body": "**Write each step on its own line, with the equals signs lined up.** Every line is a method mark, and a slip in one line still earns the marks before it.\n\n**Do the same to both sides, and say so if it helps**: *subtract $3x$ from both sides*.\n\n**When the equation is not printed, write it down first.** Show the sum of the angles or the perimeter as an equation before solving; that line is usually a mark on its own.\n\n**Answer the question asked.** If it wants the longest side or the largest angle, finding $x$ is not the end.\n\n**Check by substituting**, and give the answer exactly: a fraction or a decimal, not a rounded one, unless you are told to round.",
+    "examinerErrors": [
+      "Doing something to one side only.",
+      "Multiplying only the first term in a bracket: $4(x - 3)$ written as $4x - 3$.",
+      "Dividing by a negative and losing the sign: $-2x = 6$ answered as $x = 3$.",
+      "Clearing fractions by multiplying the fractions but not the whole-number term.",
+      "Losing the minus sign in front of a second fraction once it is cleared: $-3(x - 2)$ written as $-3x - 6$ instead of $-3x + 6$.",
+      "Stopping at $x$ when the question asked for a length, an angle or an age.",
+      "Rounding an exact answer such as $x = 13.4$ to 13."
+    ],
+    "grade9Looks": "A top answer forms the equation from the situation in one clear line, naming its unknown, and chooses that unknown so the other quantities are easy to write. It clears fractions by multiplying every term, keeps brackets round each numerator and handles the minus sign in front of a second fraction. It solves line by line, gives an exact answer, checks it by substituting into both sides, and then answers the question that was actually asked. When the $x$ terms cancel, it reads what is left and says whether there is no solution or every value works."
+  },
+  "quiz": {
+    "questionIds": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q17",
+      "q20",
+      "q22",
+      "q24"
+    ],
+    "sampleSize": 10
+  },
+  "provenance": {
+    "draftedBy": {
+      "kind": "model",
+      "model": "claude-opus-5-5",
+      "promptVersion": "topic-1"
+    }
+  }
+}

@@ -82,8 +82,9 @@ describe('the past papers index', () => {
     }
     const qs = papers.flatMap(({ p }) => p.questions ?? [])
     expect(qs.length).toBe(740)
-    // No topic in the app teaches these yet: five frequency polygons and one plain linear
-    // equation (November 2023 2H Q4). A new untagged question is a gap to look at, not a slip.
-    expect(qs.filter((q) => q.topics.length === 0).length).toBe(6)
+    // Every question has a topic. Tagging first found three skills no topic taught (frequency
+    // polygons, stem and leaf diagrams, linear equations), and they were written on 13 November
+    // 2026. A question with no topic is a gap in the content, not a tag to leave empty.
+    expect(qs.filter((q) => q.topics.length === 0)).toEqual([])
   })
 })

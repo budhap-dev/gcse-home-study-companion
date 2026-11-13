@@ -55,6 +55,8 @@ The overview starts at Year 9 and lists what the school teaches from there. Pear
 | Sampling and populations | S1, S5 | Year 10 term 3, beside scatter graphs (S6, written 23 September 2026 for the same reason) |
 | 3D shapes: faces, edges, plans and elevations | G12, G13 | Year 10 term 6, beside surface areas and volumes |
 
+On 13 November 2026 tagging the board's past papers to topics (backlog section 14) found three skills the papers ask that no topic taught: **solving linear equations** (A17, A21), until then only the last step of Algebraic fractions, now its own Year 9 topic beside the school's equations row; **frequency polygons**, now a step in Grouped and cumulative frequency; and **stem and leaf diagrams**, now a step in Averages and range. Neither diagram is named in the specification: both come under S4's "appropriate graphical representation".
+
 Three codes were already taught but not declared, and now are: R2 (scale drawings), G19 (similar figures) and R15 (instantaneous rate of change, taught with tangents). A8 (coordinates in four quadrants) is used throughout the pack and has no topic of its own. A2 (substitution) was left the same way on 23 September, since every algebra topic substitutes; on 28 September it got a topic, because none of them teaches the skill itself (brackets round negative values, a power on the letter alone, fraction bars and roots as grouping, scientific formulae), and papers ask for it directly.
 
 ## Mapping to the app

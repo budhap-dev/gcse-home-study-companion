@@ -1059,11 +1059,12 @@ agent before they ship.
   topics, main topic first: 740 questions on 33 papers (June 2019 to June 2025), read from
   Pearson's PDFs, each paper's marks adding to 80. A reviewer agent read all 740 and 21 tags
   were changed. Each paper on the Past papers page now lists what each question tests, and
-  each topic page has **In past papers**, newest first, opening the board's PDF. Gaps found:
-  **no topic teaches frequency polygons** (five questions untagged, one more in part) **or
-  stem and leaf diagrams** (read in three questions), and plain linear equations have no
-  topic of their own (one question). Two topics never come up on a Higher paper:
-  constructing triangles and frequency trees.
+  each topic page has **In past papers**, newest first, opening the board's PDF. Gaps found
+  and filled the same day: **frequency polygons** (a step in Grouped and cumulative
+  frequency), **stem and leaf diagrams** (a step in Averages and range), and **Solving linear
+  equations**, a new Year 9 topic (A17, A21), each with its questions; every question is now
+  tagged, and a test keeps it so. Two topics never come up on a Higher paper: constructing
+  triangles and frequency trees.
 - [ ] **3. Science tags.** Physics, Chemistry and Biology, about 450 questions.
 - [ ] **4. Further Maths and Computer Science tags.** About 350 questions; one set of tags
   serves all three Paper 1 language versions, which share their questions.

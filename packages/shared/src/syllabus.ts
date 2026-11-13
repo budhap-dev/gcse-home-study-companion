@@ -67,6 +67,9 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Surds', topicId: 'surds' },
       { title: 'Grouped and cumulative frequency', topicId: 'grouped-and-cumulative-frequency' },
       { title: 'Box plots', topicId: 'box-plots' },
+      // Equations and inequalities: the algebraic methods row starts with one unknown (A17, A21),
+      // written 13 November 2026 when the past-paper tags showed no topic taught it.
+      { title: 'Solving linear equations', topicId: 'solving-linear-equations' },
       { title: 'Simultaneous equations', topicId: 'simultaneous-equations' },
       { title: 'Inequalities', topicId: 'inequalities-on-a-number-line' },
       { title: 'Frequency trees', topicId: 'frequency-trees' },
