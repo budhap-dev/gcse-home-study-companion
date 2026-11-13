@@ -1,13 +1,8 @@
-import { getSubject, PastPaperIndex, type PastPaperLink, type PastPaperLinkKind } from '@study/shared'
-import { useParams } from 'react-router'
+import { getSubject, type PastPaper, type PastPaperLink, type PastPaperLinkKind } from '@study/shared'
+import { Link, useParams } from 'react-router'
 import { BackLink } from '../../components/BackLink.tsx'
-
-const files = import.meta.glob('../../../../../supabase/seed/past-papers/*.json', { eager: true, import: 'default' })
-export const PAST_PAPERS: PastPaperIndex[] = Object.values(files).map((raw) => PastPaperIndex.parse(raw))
-
-export function pastPapersFor(subjectId: string): PastPaperIndex | undefined {
-  return PAST_PAPERS.find((p) => p.subjectId === subjectId)
-}
+import { summaryById } from '../../content/index.ts'
+import { pastPapersFor } from '../../content/pastPapers.ts'
 
 const KIND_LABEL: Record<PastPaperLinkKind, string> = {
   'question-paper': 'Question paper',
@@ -76,6 +71,7 @@ export function PastPapers() {
                   <div className="flex flex-wrap gap-2">
                     {p.links.map((l) => <BoardLink key={l.url} link={l} quiet={l.kind === 'examiner-report'} />)}
                   </div>
+                  {p.questions && <QuestionTopics paper={p} subjectId={subject.id} />}
                 </li>
               ))}
             </ul>
@@ -98,3 +94,36 @@ export function PastPapers() {
     </article>
   )
 }
+
+/**
+ * What each question of a tagged paper tests (section 14, box 2): its number, its marks and
+ * the app's topics, each a link to the topic. Folded away until asked for, as most visits
+ * are for the PDF links.
+ */
+function QuestionTopics({ paper, subjectId }: { paper: PastPaper; subjectId: string }) {
+  const questions = paper.questions ?? []
+  return (
+    <details className="group rounded-xl border border-rule">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 px-3 text-sm font-bold">
+        What each question tests
+        <span className="text-ink-2 transition-transform group-open:rotate-180" aria-hidden>▾</span>
+      </summary>
+      <ol className="flex flex-col divide-y divide-rule border-t border-rule">
+        {questions.map((q) => (
+          <li key={q.n} className="flex gap-3 px-3 py-2 text-sm">
+            <span className="w-16 shrink-0 font-bold tabular-nums">Q{q.n}<span className="block text-xs font-normal text-ink-2">{q.marks} {q.marks === 1 ? 'mark' : 'marks'}</span></span>
+            <span className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
+              {q.topics.length === 0 && <span className="text-ink-2">Not in the app’s topics yet</span>}
+              {q.topics.map((t) => (
+                <Link key={t} to={`/subjects/${subjectId}/topics/${t}`} className="font-bold underline decoration-rule underline-offset-2 hover:decoration-current">
+                  {summaryById(t)?.title ?? t}
+                </Link>
+              ))}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </details>
+  )
+}
+
