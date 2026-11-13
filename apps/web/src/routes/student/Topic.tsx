@@ -1,5 +1,5 @@
 import { getSubject, STATUS_LABEL, topicNumber, WORKSHEET_LEVELS } from '@study/shared'
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { Smiley } from '../../components/Smiley.tsx'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -24,6 +24,8 @@ import { useWide } from '../../components/useWide.ts'
 import { Listen } from '../../components/Listen.tsx'
 import { TopicMissing } from '../../components/TopicMissing.tsx'
 import { weakestSkills } from '../../progress/spaced.ts'
+
+const InPastPapers = lazy(() => import('../../components/InPastPapers.tsx'))
 
 /**
  * A short preview of a rich-text body, cut on a sentence end that is outside any
@@ -320,6 +322,10 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
               ))}
             </section>
           )}
+
+          <Suspense fallback={null}>
+            <InPastPapers subjectId={subject.id} topicId={topic.id} />
+          </Suspense>
         </div>
       </div>
 

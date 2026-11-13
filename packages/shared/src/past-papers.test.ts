@@ -4,6 +4,7 @@ import { PastPaperIndex } from './pastPapers.ts'
 import { SUBJECTS } from './subjects.ts'
 
 const DIR = new URL('../../../supabase/seed/past-papers/', import.meta.url)
+const CONTENT = new URL('../../../supabase/seed/content/', import.meta.url)
 const files = readdirSync(DIR).filter((f) => f.endsWith('.json'))
 const indexes = files.map((f) => ({ file: f, index: PastPaperIndex.parse(JSON.parse(readFileSync(new URL(f, DIR), 'utf8'))) }))
 
@@ -57,5 +58,32 @@ describe('the past papers index', () => {
     const ids = new Set(cs.series.flatMap((s) => s.papers.map((p) => p.id)))
     expect([...ids].sort()).toEqual(['1A', '2'])
     expect(cs.practice?.url).toBe('https://red-dune-0f7372e10.7.azurestaticapps.net/')
+  })
+
+  it('tags questions only with topics the subject has', () => {
+    for (const { index } of indexes) {
+      const ids = new Set(readdirSync(new URL(`${index.subjectId}/`, CONTENT)).filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', '')))
+      for (const s of index.series) {
+        for (const p of s.papers) {
+          for (const q of p.questions ?? []) {
+            for (const t of q.topics) expect(ids.has(t), `${index.subjectId} ${s.id} ${p.id} Q${q.n}: ${t}`).toBe(true)
+          }
+        }
+      }
+    }
+  })
+
+  it('tags every Maths paper, 80 marks each, nearly every question to a topic (box 2)', () => {
+    const maths = indexes.find((x) => x.index.subjectId === 'maths')!.index
+    const papers = maths.series.flatMap((s) => s.papers.map((p) => ({ s: s.id, p })))
+    for (const { s, p } of papers) {
+      expect(p.questions?.length, `${s} ${p.id}`).toBeGreaterThan(15)
+      expect(p.marks, `${s} ${p.id}`).toBe(80)
+    }
+    const qs = papers.flatMap(({ p }) => p.questions ?? [])
+    expect(qs.length).toBe(740)
+    // No topic in the app teaches these yet: five frequency polygons and one plain linear
+    // equation (November 2023 2H Q4). A new untagged question is a gap to look at, not a slip.
+    expect(qs.filter((q) => q.topics.length === 0).length).toBe(6)
   })
 })
