@@ -1093,9 +1093,24 @@ agent before they ship.
   (two questions each, tagged to the nearest topic); Computer Science's **efficiency** of two
   algorithms (3.1.2) is taught only inside the sort and search topics, and the term
   **"white-box"** penetration testing is never used.
-- [ ] **5. Business, English and Music tags.** English Literature questions are tagged to the
-  set texts the school teaches; a question on a text the family is not studying is listed
-  without a tag.
+- [x] **5. Business, English and Music tags.** Business 98 questions on 14 papers (90 marks
+  each), English Language 95 on 19 (80), Music Component 3 72 on 8 (80), every question
+  tagged; English Literature 281 questions on 18 papers, each listed with the text it is on, the
+  42 on the school's texts (Macbeth, Jekyll and Hyde, An Inspector Calls, Power and conflict,
+  unseen poetry) tagged to their topics and the rest left untagged by design. Literature papers
+  are choice papers, so the schema gained a paper's `answer` instruction (its questions then
+  need not add up to the total) and a question's `title`; the Past papers page shows both.
+  English Language's marks are the specification's fixed 4/8/8/20/40 and 4/8/12/16/40, and
+  "reading 19th-century non-fiction" goes on the questions that use Source B, the 19th-century
+  source in every insert. Music's Section B essay also carries its area-of-study topic. A
+  reviewer agent read Business (13 changes) and one read Literature, Language and Music (5).
+  **Corrected from box 1:** November 2021 and June 2022 English Literature were sat as four
+  papers (1M, 1N, 1P and 2, Shakespeare and unseen poetry), not two; they are now listed so,
+  with a note, where the index had three unlabelled question papers under one "Paper 1". The
+  June 2024 Literature Paper 2 file reads "Jun23 8702/2R": its mark scheme confirms it is the
+  reserve paper sat in 2024, so it stays. Not acted on: November 2023 English Language Paper 2 is
+  published only in enlarged-print versions, so the index still lacks it; no Business topic
+  teaches **percentage change or a simple average**, which about 16 two-mark parts ask for.
 - [ ] **6. Optional, the owner's call: log a past paper.** The student marks a paper from the
   board's mark scheme and enters the score; the published grade boundaries for that series
   turn it into a grade, kept with their attempts. Grade boundaries are figures the boards

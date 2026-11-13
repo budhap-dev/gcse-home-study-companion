@@ -37,6 +37,12 @@ export type PastPaperLink = z.infer<typeof PastPaperLink>
 export const PastQuestion = z.object({
   n: z.number().int().positive(),
   marks: z.number().int().positive(),
+  /**
+   * What the question is on, where the paper offers a choice of texts or pieces: "Macbeth",
+   * "Unseen poetry". A question on a text the school does not teach keeps its title and has
+   * no topics (section 14, box 5).
+   */
+  title: z.string().min(1).optional(),
   topics: z.array(z.string().regex(/^[a-z0-9-]+$/)),
 })
 export type PastQuestion = z.infer<typeof PastQuestion>
@@ -52,6 +58,12 @@ export const PastPaper = z
     marks: z.number().int().positive().optional(),
     /** Every question in order, once the paper is tagged. */
     questions: z.array(PastQuestion).optional(),
+    /**
+     * The paper's instruction when students choose which questions to answer, as it prints it:
+     * "Answer one question from Section A and one question from Section B." Its questions are
+     * alternatives, so their marks do not add up to the paper's total.
+     */
+    answer: z.string().min(1).optional(),
   })
   .superRefine((p, ctx) => {
     if (!p.questions) return
@@ -60,6 +72,10 @@ export const PastPaper = z
       if (q.n !== i + 1) ctx.addIssue({ code: 'custom', message: `paper ${p.id}: question ${i + 1} is numbered ${q.n}` })
       if (new Set(q.topics).size !== q.topics.length) ctx.addIssue({ code: 'custom', message: `paper ${p.id} Q${q.n}: a topic twice` })
     })
+    if (p.answer) {
+      for (const q of p.questions) if (p.marks !== undefined && q.marks > p.marks) ctx.addIssue({ code: 'custom', message: `paper ${p.id} Q${q.n}: more marks than the paper` })
+      return
+    }
     const sum = p.questions.reduce((t, q) => t + q.marks, 0)
     if (p.marks !== undefined && sum !== p.marks) ctx.addIssue({ code: 'custom', message: `paper ${p.id}: questions add up to ${sum}, not ${p.marks}` })
   })

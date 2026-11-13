@@ -108,12 +108,14 @@ function QuestionTopics({ paper, subjectId }: { paper: PastPaper; subjectId: str
         What each question tests
         <span className="text-ink-2 transition-transform group-open:rotate-180" aria-hidden>▾</span>
       </summary>
+      {paper.answer && <p className="border-t border-rule px-3 py-2 text-sm text-ink-2">{paper.answer} Each question is on one text: answer the ones on the texts you study.</p>}
       <ol className="flex flex-col divide-y divide-rule border-t border-rule">
         {questions.map((q) => (
           <li key={q.n} className="flex gap-3 px-3 py-2 text-sm">
             <span className="w-16 shrink-0 font-bold tabular-nums">Q{q.n}<span className="block text-xs font-normal text-ink-2">{q.marks} {q.marks === 1 ? 'mark' : 'marks'}</span></span>
             <span className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
-              {q.topics.length === 0 && <span className="text-ink-2">Not in the app’s topics yet</span>}
+              {q.title && <span className={q.topics.length ? 'w-full' : 'w-full text-ink-2'}>{q.title}</span>}
+              {q.topics.length === 0 && <span className="text-ink-2">{q.title ? 'Not one of the texts in the app' : 'Not in the app’s topics yet'}</span>}
               {q.topics.map((t) => (
                 <Link key={t} to={`/subjects/${subjectId}/topics/${t}`} className="font-bold underline decoration-rule underline-offset-2 hover:decoration-current">
                   {summaryById(t)?.title ?? t}

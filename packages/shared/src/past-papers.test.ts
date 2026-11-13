@@ -94,6 +94,49 @@ describe('the past papers index', () => {
     expect(qs.filter((q) => q.topics.length === 0)).toEqual([])
   })
 
+  // Box 5. Business 90 a paper, English Language and Music 80; every question tagged. English
+  // Language's spoken language endorsement is coursework, so no paper asks it; Music's two
+  // background topics are listening context no question names.
+  it.each([
+    ['business', 14, 98, 90, []],
+    ['english-language', 19, 95, 80, ['spoken-language-endorsement']],
+    ['music', 8, 72, 80, ['analysing-a-set-work', 'theme-and-variations']],
+  ])('tags every %s paper, every question to a topic (box 5)', (subjectId, paperCount, questionCount, total, unasked) => {
+    const index = indexes.find((x) => x.index.subjectId === subjectId)!.index
+    const papers = index.series.flatMap((s) => s.papers.map((p) => ({ s: s.id, p })))
+    expect(papers.length).toBe(paperCount)
+    for (const { s, p } of papers) expect(p.marks, `${s} ${p.id}`).toBe(total)
+    const qs = papers.flatMap(({ p }) => p.questions ?? [])
+    expect(qs.length).toBe(questionCount)
+    expect(qs.filter((q) => q.topics.length === 0)).toEqual([])
+    const asked = new Set(qs.flatMap((q) => q.topics))
+    const ids = readdirSync(new URL(`${subjectId}/`, CONTENT)).filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', ''))
+    expect(ids.filter((id) => !asked.has(id))).toEqual(unasked)
+  })
+
+  // English Literature: every question is listed with the text it is on; only the school's set
+  // texts and the unseen poetry carry topics, and every one of those questions does.
+  it('lists every English Literature question by its text, and tags the set texts (box 5)', () => {
+    const index = indexes.find((x) => x.index.subjectId === 'english-literature')!.index
+    const papers = index.series.flatMap((s) => s.papers.map((p) => ({ s: s.id, p })))
+    expect(papers.length).toBe(18)
+    const qs = papers.flatMap(({ p }) => p.questions ?? [])
+    expect(qs.length).toBe(281)
+    for (const { s, p } of papers) {
+      expect(p.answer, `${s} ${p.id}`).toMatch(/^Answer /)
+      expect(p.questions?.every((q) => q.title), `${s} ${p.id}`).toBe(true)
+    }
+    const SET = ['Macbeth', 'The Strange Case of Dr Jekyll and Mr Hyde', 'An Inspector Calls', 'Power and conflict', 'Unseen poetry']
+    for (const q of qs) expect(q.topics.length > 0, `${q.title} Q${q.n}`).toBe(SET.includes(q.title!))
+    expect(qs.filter((q) => q.topics.length > 0).length).toBe(42)
+    // November 2021 and June 2022 were sat as four papers, each with its own links.
+    for (const id of ['2021-11', '2022-06']) {
+      const s = index.series.find((x) => x.id === id)!
+      expect(s.papers.map((p) => p.id)).toEqual(['1M', '1N', '1P', '2'])
+      for (const p of s.papers) expect(p.links.filter((l) => l.kind === 'question-paper')).toHaveLength(1)
+    }
+  })
+
   // Box 4. Further Maths papers are 80 marks; Computer Science 8525 papers 90, the two 8520
   // papers of November 2021 80. Marks per question were read from the paper and checked
   // against a second extraction or the mark scheme.
