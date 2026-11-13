@@ -784,6 +784,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "cs-f",
+      "body": "$f(x) = 3x^2 - 12x + 5$."
+    },
+    {
+      "id": "cs-repeated",
+      "body": "The equation $x^2 + (k + 3)x + 4k = 0$, where $k$ is a constant, has a repeated root."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1366,6 +1376,282 @@
         }
       ],
       "modelAnswer": "**(a)** The whole garden is $x$ metres wide and $3$ metres longer than it is wide, so its length is $x + 3$. The path runs along one long side and is $1$ m wide, so it takes $1$ m off the **width**, leaving a garden $(x - 1)$ m wide and still $(x + 3)$ m long. Its area is $40$:\n\n$$(x + 3)(x - 1) = 40$$\n\nExpand: $x^2 - x + 3x - 3 = 40$, so $x^2 + 2x - 3 = 40$, and rearranging to zero, $x^2 + 2x - 43 = 0$, as required. In a *show that* each of those lines is written; the target equation is given, so the marks are for reaching it.\n\n**(b)** $x^2 + 2x - 43$ does not factorise, since no pair of integers multiplies to $-43$ and adds to $2$. Use the formula with $a = 1$, $b = 2$, $c = -43$:\n\n$$x = \\frac{-2 \\pm \\sqrt{4 - 4(1)(-43)}}{2} = \\frac{-2 \\pm \\sqrt{176}}{2}$$\n\n$\\sqrt{176} = 4\\sqrt{11}$, so exactly $x = -1 \\pm 2\\sqrt{11}$. As decimals, $x = 5.63$ or $x = -7.63$ to 2 decimal places. So the width of the garden is $5.63$ m, and the length is $8.63$ m.\n\n**(c)** The root $x = -7.63$ is rejected because $x$ is a width, and a length cannot be negative. The algebra produces two numbers that satisfy the equation; the context accepts only the one that describes a real garden. The check: $(5.63 + 3)(5.63 - 1) = 8.63 \\times 4.63 \\approx 40.0$, as it should."
+    },
+    {
+      "id": "q19",
+      "prompt": "Write $f(x)$ in the form $a(x + b)^2 + c$.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "completing the square with a coefficient",
+      "step": "s1",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Take out the 3 from the $x$ terms: $3(x^2 - 4x) + 5 = 3[(x - 2)^2 - 4] + 5 = 3(x - 2)^2 - 12 + 5 = 3(x - 2)^2 - 7$. The $-4$ inside the bracket is multiplied by 3, which is the slip to watch.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3(x^2 - 4x)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3(x - 2)^2 - 12$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$3(x - 2)^2 - 7$"
+        }
+      ],
+      "discriminators": [],
+      "context": "cs-f",
+      "type": "short-text",
+      "accepted": [
+        "3(x-2)^2-7"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Write down the coordinates of the turning point of $y = f(x)$.",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "the turning point from the completed square",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$f(x) = 3(x - 2)^2 - 7$. The squared bracket is least, 0, when $x = 2$, so the minimum point is $(2, -7)$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$(2, -7)$"
+        }
+      ],
+      "discriminators": [],
+      "context": "cs-f",
+      "type": "short-text",
+      "accepted": [
+        "(2, -7)",
+        "x=2, y=-7"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Solve $f(x) = 0$. Give your answers in exact form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "solving from the completed square",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$3(x - 2)^2 - 7 = 0$, so $(x - 2)^2 = \\dfrac{7}{3}$ and $x = 2 \\pm \\sqrt{\\dfrac{7}{3}} = 2 \\pm \\dfrac{\\sqrt{21}}{3}$, since $\\sqrt{\\dfrac{7}{3}} = \\dfrac{\\sqrt{7}\\sqrt{3}}{3}$. The formula gives the same: $\\dfrac{12 \\pm \\sqrt{84}}{6} = \\dfrac{6 \\pm \\sqrt{21}}{3}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x - 2)^2 = \\dfrac{7}{3}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "square root of both sides, with $\\pm$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$2 \\pm \\dfrac{\\sqrt{21}}{3}$ or equivalent"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "cs-f",
+      "type": "short-text",
+      "accepted": [
+        "2 ± √21/3",
+        "(6 ± √21)/3",
+        "2 ± √(7/3)",
+        "x = 2 ± √21/3",
+        "2 + √21/3 or 2 - √21/3"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Show that $k^2 - 10k + 9 = 0$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a repeated root means a zero discriminant",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "A repeated root means $b^2 - 4ac = 0$. Here $a = 1$, $b = k + 3$, $c = 4k$, so $(k + 3)^2 - 16k = 0$: $k^2 + 6k + 9 - 16k = k^2 - 10k + 9 = 0$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(k + 3)^2 - 4 \\times 4k = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$k^2 - 10k + 9 = 0$"
+        }
+      ],
+      "discriminators": [
+        "show-that"
+      ],
+      "context": "cs-repeated",
+      "type": "extended",
+      "suggestedMinutes": 3,
+      "criteria": [
+        {
+          "text": "Set the discriminant $(k + 3)^2 - 16k$ equal to 0",
+          "marks": 1
+        },
+        {
+          "text": "Expanded and collected to $k^2 - 10k + 9 = 0$",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "Repeated root, so $b^2 - 4ac = 0$: $(k + 3)^2 - 4(1)(4k) = k^2 + 6k + 9 - 16k = k^2 - 10k + 9 = 0$."
+    },
+    {
+      "id": "q23",
+      "prompt": "Find the two possible values of $k$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "solving for the constant",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The discriminant $(k + 3)^2 - 16k$ must be 0, giving $k^2 - 10k + 9 = 0$, so $(k - 1)(k - 9) = 0$ and $k = 1$ or $k = 9$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "discriminant set to 0"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "1 and 9"
+        }
+      ],
+      "discriminators": [],
+      "context": "cs-repeated",
+      "type": "short-text",
+      "accepted": [
+        "1, 9",
+        "k=1, k=9",
+        "k = 1 or k = 9"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "$k$ takes the larger of its two possible values. Work out the repeated root.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "the root once the constant is known",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The discriminant condition $k^2 - 10k + 9 = 0$ gives $k = 1$ or $k = 9$, so $k = 9$. The equation is $x^2 + 12x + 36 = 0$, which is $(x + 6)^2 = 0$, so the repeated root is $x = -6$. (With $k = 1$ it would be $(x + 2)^2 = 0$.)",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$k = 9$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 + 12x + 36 = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-6$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "cs-repeated",
+      "type": "numeric",
+      "answer": -6,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "The turning point of the curve $y = x^2 - 6x + c$ lies on the line $y = 2x$. Work out the value of $c$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "turning point meets a line",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$x^2 - 6x + c = (x - 3)^2 - 9 + c$, so the turning point is $(3, c - 9)$. On $y = 2x$, its $y$-coordinate is $2 \\times 3 = 6$, so $c - 9 = 6$ and $c = 15$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x - 3)^2 - 9 + c$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$c - 9 = 6$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "15"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 15,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "The product of two consecutive positive odd numbers is 323. Work out the smaller number.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a quadratic from a context",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Call them $m$ and $m + 2$. $m(m + 2) = 323$, so $m^2 + 2m - 323 = 0$. Completing the square: $(m + 1)^2 = 324$, so $m + 1 = 18$ (it is positive) and $m = 17$. Check: $17 \\times 19 = 323$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$m(m + 2) = 323$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(m + 1)^2 = 324$ or factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "17"
+        }
+      ],
+      "discriminators": [
+        "unfamiliar-context"
+      ],
+      "type": "numeric",
+      "answer": 17,
+      "tolerance": 0,
+      "unitsRequired": false
     }
   ],
   "worksheets": {
@@ -1401,9 +1687,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 33
+      "suggestedMinutes": 55
     }
   },
   "examTechnique": {
@@ -1436,7 +1730,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

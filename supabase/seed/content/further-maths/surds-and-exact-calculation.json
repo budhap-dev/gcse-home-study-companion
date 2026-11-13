@@ -786,6 +786,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "surd-rect",
+      "body": "A rectangle is $(3 + \\sqrt{2})$ cm long and $(3 - \\sqrt{2})$ cm wide."
+    },
+    {
+      "id": "surd-frac",
+      "body": "This question is about the number $\\dfrac{6}{\\sqrt{7} - 1}$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1354,6 +1364,272 @@
         }
       ],
       "modelAnswer": "**(a) Simplify each surd, then collect.**\n\n$\\sqrt{200} = \\sqrt{100 \\times 2} = 10\\sqrt{2}$. $\\sqrt{72} = \\sqrt{36 \\times 2} = 6\\sqrt{2}$. $3\\sqrt{162} = 3\\sqrt{81 \\times 2} = 3 \\times 9\\sqrt{2} = 27\\sqrt{2}$.\n\nSo the expression is $10\\sqrt{2} - 6\\sqrt{2} + 27\\sqrt{2} = 31\\sqrt{2}$, and $a = 31$. Each surd had to be taken down to $\\sqrt{2}$ before anything could be added; the largest square factor does that in one step.\n\n**(b) Rationalise with the conjugate.**\n\nThe conjugate of $3\\sqrt{3} - 5$ is $3\\sqrt{3} + 5$. Multiplying top and bottom by it does not change the value of the fraction, because it is multiplying by $1$.\n\nDenominator: $(3\\sqrt{3} - 5)(3\\sqrt{3} + 5) = (3\\sqrt{3})^2 - 5^2 = 27 - 25 = 2$.\n\nNumerator: $(3\\sqrt{3} + 7)(3\\sqrt{3} + 5) = 27 + 15\\sqrt{3} + 21\\sqrt{3} + 35 = 62 + 36\\sqrt{3}$.\n\nSo the fraction is $\\dfrac{62 + 36\\sqrt{3}}{2} = 31 + 18\\sqrt{3}$, with $a = 31$ and $b = 18$.\n\nWorking the denominator first is the check: it came out as the integer $2$, which confirms the conjugate had the right sign. Had it come out with a surd in it, the sign would have been wrong and the numerator not worth expanding."
+    },
+    {
+      "id": "q19",
+      "prompt": "Work out the area of the rectangle, in cm².",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "a product of conjugates",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(3 + \\sqrt{2})(3 - \\sqrt{2}) = 9 - 3\\sqrt{2} + 3\\sqrt{2} - 2 = 7$. The surd terms cancel, as they always do for a pair like this.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "expands"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "7"
+        }
+      ],
+      "discriminators": [],
+      "context": "surd-rect",
+      "type": "numeric",
+      "answer": 7,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "cm²"
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out the exact length of a diagonal of the rectangle.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "Pythagoras with surds",
+      "step": "s4",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$d^2 = (3 + \\sqrt{2})^2 + (3 - \\sqrt{2})^2 = (11 + 6\\sqrt{2}) + (11 - 6\\sqrt{2}) = 22$, so $d = \\sqrt{22}$ cm.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both squares expanded"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$d^2 = 22$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\sqrt{22}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "surd-rect",
+      "type": "short-text",
+      "accepted": [
+        "√22",
+        "√22 cm"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Work out the length divided by the width. Give your answer in the form $\\dfrac{a + b\\sqrt{2}}{c}$, where $a$, $b$ and $c$ are integers.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "rationalising a two-term denominator",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$\\dfrac{3 + \\sqrt{2}}{3 - \\sqrt{2}} \\times \\dfrac{3 + \\sqrt{2}}{3 + \\sqrt{2}} = \\dfrac{(3 + \\sqrt{2})^2}{9 - 2} = \\dfrac{11 + 6\\sqrt{2}}{7}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies by $\\dfrac{3 + \\sqrt{2}}{3 + \\sqrt{2}}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "denominator 7"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{11 + 6\\sqrt{2}}{7}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "surd-rect",
+      "type": "short-text",
+      "accepted": [
+        "(11+6√2)/7",
+        "11/7+6√2/7"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Write $\\dfrac{6}{\\sqrt{7} - 1}$ with a rational denominator, in its simplest form.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "rationalising",
+      "step": "s3",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Multiply top and bottom by $\\sqrt{7} + 1$: $\\dfrac{6(\\sqrt{7} + 1)}{7 - 1} = \\sqrt{7} + 1$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\times \\dfrac{\\sqrt{7} + 1}{\\sqrt{7} + 1}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$1 + \\sqrt{7}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "surd-frac",
+      "type": "short-text",
+      "accepted": [
+        "1+√7",
+        "√7+1"
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Write $\\left(\\dfrac{6}{\\sqrt{7} - 1}\\right)^2$ in the form $a + b\\sqrt{7}$.",
+      "marks": 2,
+      "gradeBand": "8-9",
+      "skill": "rationalise first, then square",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Rationalised, $\\dfrac{6}{\\sqrt{7} - 1} = \\sqrt{7} + 1$. Squaring: $(1 + \\sqrt{7})^2 = 1 + 2\\sqrt{7} + 7 = 8 + 2\\sqrt{7}$. Squaring first gives $\\dfrac{36}{8 - 2\\sqrt{7}}$, which rationalises to the same.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$1 + \\sqrt{7}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$8 + 2\\sqrt{7}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "surd-frac",
+      "type": "short-text",
+      "accepted": [
+        "8+2√7"
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "Between which two consecutive whole numbers does $\\dfrac{6}{\\sqrt{7} - 1}$ lie?",
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "estimating a surd without a calculator",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Rationalised, it is $1 + \\sqrt{7}$. As $4 < 7 < 9$, $2 < \\sqrt{7} < 3$, so $3 < 1 + \\sqrt{7} < 4$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "3 and 4"
+        }
+      ],
+      "discriminators": [],
+      "context": "surd-frac",
+      "type": "multiple-choice",
+      "options": [
+        "2 and 3",
+        "1 and 2",
+        "4 and 5",
+        "3 and 4"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "$(a + \\sqrt{3})^2 = 28 + b\\sqrt{3}$, where $a$ and $b$ are positive integers. Work out the value of $b$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "matching the rational and surd parts",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(a + \\sqrt{3})^2 = a^2 + 3 + 2a\\sqrt{3}$. Matching the whole-number parts: $a^2 + 3 = 28$, so $a = 5$. Matching the surd parts: $b = 2a = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a^2 + 3 + 2a\\sqrt{3}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$a = 5$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q26",
+      "prompt": "Solve $x(\\sqrt{5} + 2) = \\sqrt{5} - 2$. Give $x$ in the form $a + b\\sqrt{5}$, where $a$ and $b$ are integers.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "an equation with a surd coefficient",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$x = \\dfrac{\\sqrt{5} - 2}{\\sqrt{5} + 2} \\times \\dfrac{\\sqrt{5} - 2}{\\sqrt{5} - 2} = \\dfrac{(\\sqrt{5} - 2)^2}{5 - 4} = 5 - 4\\sqrt{5} + 4 = 9 - 4\\sqrt{5}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "divides"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "rationalises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$9 - 4\\sqrt{5}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "9-4√5",
+        "x=9-4√5"
+      ]
     }
   ],
   "worksheets": {
@@ -1389,9 +1665,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 33
+      "suggestedMinutes": 54
     }
   },
   "examTechnique": {
@@ -1424,7 +1708,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },

@@ -433,11 +433,54 @@ function surdValue(raw: string): number | undefined {
   return numericValue(s)
 }
 
-/** The values in a list of solutions: "x = 3 or x = -3", "3, -3", "x = ±3", "-4 and 2". */
+/**
+ * The values in a list of solutions: "x = 3 or x = -3", "3, -3", "x = ±3", "-4 and 2".
+ * A comma inside brackets belongs to a coordinate, so "(3, 4), (4, 3)" is two items, not four:
+ * split at every comma, it let "(3, 3), (4, 4)" through as the same four halves (13 Nov 2026).
+ */
 function solutionItems(raw: string): string[] {
-  return raw.split(/\s*(?:,(?!\d{3}\b)|;|\bor\b|\band\b)\s*/i).map(mathsText).filter(Boolean)
+  const parts: string[] = []
+  let depth = 0, from = 0
+  const sep = /\s*(?:,(?!\d{3}\b)|;|\bor\b|\band\b)\s*/iy
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i]!
+    if ('([{'.includes(c)) depth++
+    else if (')]}'.includes(c)) depth = Math.max(0, depth - 1)
+    else if (depth === 0) {
+      sep.lastIndex = i
+      const m = sep.exec(raw)
+      // A word separator must start a word: "or" inside "for" is not one.
+      if (m && m[0].length && (!/^\s*(or|and)/i.test(m[0]) || i === 0 || !/[a-z]/i.test(raw[i - 1]!))) {
+        parts.push(raw.slice(from, i)); from = i + m[0].length; i = from - 1
+      }
+    }
+  }
+  parts.push(raw.slice(from))
+  return parts.map(mathsText).filter(Boolean)
     .map((p) => p.replace(/^[a-z]=/, ''))
-    .flatMap((p) => (p.startsWith('±') ? [p.slice(1), `-${p.slice(1)}`] : [p]))
+    // ±3 is 3 and -3; -1±√6 and (1±√11)/2 are two solutions each as well.
+    .flatMap((p) => (p.startsWith('±') ? [p.slice(1), `-${p.slice(1)}`] : p.includes('±') ? [p.replace('±', '+'), p.replace('±', '-')] : [p]))
+}
+
+/**
+ * Two solutions in the same form with their terms in another order: √6-1 for -1+√6, or
+ * (√11+1)/2 for (1+√11)/2 (13 Nov 2026). The algebra comparison only folds expressions with a
+ * letter in them, so each different surd stands in as its own letter first; √24 and 2√6 keep
+ * different letters, so a form the question asks for is still the answer.
+ */
+function sameSurdForm(g: string, x: string): boolean {
+  if (/[a-z]/.test(g + x) || !/√/.test(g + x)) return false
+  const letters = new Map<string, string>()
+  const swap = (s: string) => s.replace(/√(\d+)/g, (_, n: string) => {
+    if (!letters.has(n)) letters.set(n, 'pqrstuvw'[letters.size] ?? 'z')
+    return letters.get(n)!
+  })
+  return sameAlgebra(swap(g), swap(x))
+}
+
+/** The letters a list of solutions assigns to, as in "x = 3, y = 4 or x = 4, y = 3". */
+function assignedLetters(raw: string): Set<string> {
+  return new Set([...mathsText(raw).matchAll(/(?:^|[,;(]|or|and)([a-z])=/g)].map((m) => m[1]!))
 }
 
 /**
@@ -455,12 +498,17 @@ function solutionItems(raw: string): string[] {
 function sameMathsAnswer(raw: string, accepted: string, prompt: string): boolean {
   const a = mathsText(accepted)
   if (/[<>]/.test(a)) return chainFacingUp(mathsText(raw)) === chainFacingUp(a)
-  if (!/\bsolve\b|\broots?\b|\bsolutions?\b|\bvalues? of [a-z]\b/i.test(prompt)) return false
+  // The prompt is read without its $ signs, so "values of $k$" counts as "values of k". A list
+  // of the integers or values that satisfy a condition is a set, as solutions are.
+  if (!/\bsolve\b|\broots?\b|\bsolutions?\b|\bvalues? of [a-z]\b|\bsatisf(?:y|ies)\b/i.test(prompt.replace(/\$/g, ''))) return false
+  // Solutions in two letters pair up: as a bag of values, "x = 4, y = 4 or x = 3, y = 3" would
+  // pass for "x = 3, y = 4 or x = 4, y = 3". Those are matched only as the accepted list writes them.
+  if (assignedLetters(accepted).size > 1) return false
   // "Surd form", "as a fraction" and "in terms of π" ask for a form as much as "simplest" does.
   const formAsked = /simplest|lowest terms|simplif|exact|in the form|surd|in terms of|as an? (?:fraction|decimal|mixed number|power|multiple)|standard form/i.test(prompt)
   const same = (g: string, x: string) => {
     if (g === x) return true
-    if (formAsked) return false
+    if (formAsked) return sameSurdForm(g, x)
     const gv = numericValue(g), xv = numericValue(x)
     return gv !== undefined && xv !== undefined && Math.abs(gv - xv) < 1e-9
   }

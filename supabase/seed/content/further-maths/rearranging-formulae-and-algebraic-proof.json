@@ -731,6 +731,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "rf-emf",
+      "body": "A formula used for a battery is $E = \\dfrac{mR}{R + r}$."
+    },
+    {
+      "id": "rf-three-sq",
+      "body": "$n$ is an integer, so $n - 1$, $n$ and $n + 1$ are three consecutive integers."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1299,6 +1309,314 @@
         }
       ],
       "modelAnswer": "**(a)** $(n + 5)^2 - (n + 3)^2 = (n^2 + 10n + 25) - (n^2 + 6n + 9) = 4n + 16 = 4(n + 4)$. Since $n$ is an integer, $n + 4$ is an integer, so $4(n + 4)$ is $4$ times an integer: the expression is divisible by $4$ for every integer $n$. Alternatively, by the difference of two squares, $(n + 5 - n - 3)(n + 5 + n + 3) = 2(2n + 8) = 4(n + 4)$.\n\n**(b)** Let the consecutive odd numbers be $2n + 1$ and $2n + 3$, where $n$ is any integer. Then\n\n$$(2n + 1)^2 + (2n + 3)^2 = 4n^2 + 4n + 1 + 4n^2 + 12n + 9 = 8n^2 + 16n + 10 = 8(n^2 + 2n + 1) + 2$$\n\n$n^2 + 2n + 1$ is an integer, so the sum is $2$ more than a multiple of $8$. Check: $3^2 + 5^2 = 34 = 32 + 2$.\n\n**(c)** One counterexample is enough. When $n = 40$: $40^2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41^2$, which has the factor $41$ and so is not prime. The claim is false. (The expression is prime for every $n$ from $1$ to $39$, which is why examples alone would have been misleading; $n = 41$ also fails, giving $41 \\times 43$.)"
+    },
+    {
+      "id": "q19",
+      "prompt": "Make $R$ the subject of the formula.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "the subject appears twice",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$E(R + r) = mR$, so $ER + Er = mR$. Collect the $R$ terms: $Er = mR - ER = R(m - E)$. So $R = \\dfrac{Er}{m - E}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "multiplies out"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "collects $R$ terms and factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{Er}{m - E}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "rf-emf",
+      "type": "short-text",
+      "accepted": [
+        "R=Er/(m-E)",
+        "Er/(m-E)",
+        "R=-Er/(E-m)"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Work out $R$ when $E = 6$, $m = 9$ and $r = 2$.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "using a rearranged formula",
+      "step": "s1",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Rearranged, $R = \\dfrac{Er}{m - E} = \\dfrac{6 \\times 2}{9 - 6} = 4$. Check in the original: $\\dfrac{9 \\times 4}{4 + 2} = 6$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "substitutes"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "4"
+        }
+      ],
+      "discriminators": [],
+      "context": "rf-emf",
+      "type": "numeric",
+      "answer": 4,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q21",
+      "prompt": "$m$, $R$ and $r$ are all positive. Why can $E$ never equal $m$?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "reading a formula",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$E = m \\times \\dfrac{R}{R + r}$, and $\\dfrac{R}{R + r} < 1$ when $r > 0$, so $E < m$. The rearranged form says the same: $R = \\dfrac{Er}{m - E}$ has no value when $E = m$.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "R/(R + r) < 1"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "rf-emf",
+      "type": "multiple-choice",
+      "options": [
+        "Because $R$ would have to be negative for them to be equal",
+        "Because a battery formula can only give whole numbers",
+        "Because $m$ is always zero when $r$ is positive",
+        "$\\dfrac{R}{R + r} < 1$, so $E$ is always less than $m$"
+      ],
+      "correct": [
+        3
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Prove that the sum of the squares of three consecutive integers is 2 more than a multiple of 3.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a proof about consecutive integers",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$(n - 1)^2 + n^2 + (n + 1)^2 = n^2 - 2n + 1 + n^2 + n^2 + 2n + 1 = 3n^2 + 2$. $n^2$ is an integer, so $3n^2$ is a multiple of 3 and the sum is 2 more than a multiple of 3.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "three squares written and expanded"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3n^2 + 2$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "conclusion"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "rf-three-sq",
+      "type": "extended",
+      "suggestedMinutes": 4,
+      "criteria": [
+        {
+          "text": "Wrote the sum as $(n - 1)^2 + n^2 + (n + 1)^2$ and expanded",
+          "marks": 1
+        },
+        {
+          "text": "Simplified to $3n^2 + 2$",
+          "marks": 1
+        },
+        {
+          "text": "Concluded: $3n^2$ is a multiple of 3, so the sum is 2 more",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(n - 1)^2 + n^2 + (n + 1)^2 = 3n^2 + 2$, and $3n^2$ is a multiple of 3 since $n^2$ is an integer."
+    },
+    {
+      "id": "q23",
+      "prompt": "Kai says the sum of the squares of three consecutive integers is always odd. Which example shows he is wrong?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "disproving by counterexample",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "$1^2 + 2^2 + 3^2 = 14$, which is even. The others, $2^2 + 3^2 + 4^2 = 29$, $4^2 + 5^2 + 6^2 = 77$ and $0^2 + 1^2 + 2^2 = 5$, are odd and agree with Kai, and agreeing examples prove nothing. (The sum is $3n^2 + 2$, which is even when $n$ is even.)",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "$1, 2, 3$ gives 14"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "context": "rf-three-sq",
+      "type": "multiple-choice",
+      "options": [
+        "$1^2 + 2^2 + 3^2$",
+        "$2^2 + 3^2 + 4^2$",
+        "$4^2 + 5^2 + 6^2$",
+        "$0^2 + 1^2 + 2^2$"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q24",
+      "prompt": "The sum of the squares of three consecutive positive integers is 245. Work out the largest of the three.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "an equation from a proof result",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "The sum is $(n - 1)^2 + n^2 + (n + 1)^2 = 3n^2 + 2$. So $3n^2 + 2 = 245$, $n^2 = 81$ and $n = 9$. The integers are 8, 9 and 10, and the largest is 10. Check: $64 + 81 + 100 = 245$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3n^2 + 2 = 245$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n = 9$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "rf-three-sq",
+      "type": "numeric",
+      "answer": 10,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q25",
+      "prompt": "Prove that the difference between the squares of any two odd numbers is a multiple of 8.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "a proof with two independent letters",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Let the odd numbers be $2a + 1$ and $2b + 1$, with $a$ and $b$ integers (two different letters, as the numbers need not be consecutive). $(2a + 1)^2 - (2b + 1)^2 = 4a^2 + 4a - 4b^2 - 4b = 4[a(a + 1) - b(b + 1)]$. $a(a + 1)$ and $b(b + 1)$ are each a product of consecutive integers, so each is even, and so is their difference. So the expression is $4 \\times$ an even number, a multiple of 8.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2a + 1$ and $2b + 1$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$4[a(a + 1) - b(b + 1)]$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "consecutive products are even"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "conclusion"
+        }
+      ],
+      "discriminators": [
+        "proof"
+      ],
+      "type": "extended",
+      "suggestedMinutes": 6,
+      "criteria": [
+        {
+          "text": "Used two different letters: $2a + 1$ and $2b + 1$",
+          "marks": 1
+        },
+        {
+          "text": "Expanded and factorised to $4[a(a + 1) - b(b + 1)]$",
+          "marks": 1
+        },
+        {
+          "text": "Explained that $a(a + 1)$ and $b(b + 1)$ are even",
+          "marks": 1
+        },
+        {
+          "text": "Concluded the expression is a multiple of 8",
+          "marks": 1
+        }
+      ],
+      "modelAnswer": "$(2a + 1)^2 - (2b + 1)^2 = 4[a(a + 1) - b(b + 1)]$. Each of $a(a + 1)$ and $b(b + 1)$ is even, so the bracket is even and the whole is a multiple of 8."
+    },
+    {
+      "id": "q26",
+      "prompt": "Make $x$ the subject of $\\sqrt{\\dfrac{x + a}{x}} = b$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "square, then collect the subject",
+      "step": "s2",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Square: $\\dfrac{x + a}{x} = b^2$, so $x + a = b^2x$. Collect: $a = b^2x - x = x(b^2 - 1)$, so $x = \\dfrac{a}{b^2 - 1}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "squares both sides"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "collects $x$ and factorises"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{a}{b^2 - 1}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "x=a/(b^2-1)",
+        "a/(b^2-1)",
+        "x=-a/(1-b^2)"
+      ]
     }
   ],
   "worksheets": {
@@ -1334,9 +1652,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 32
+      "suggestedMinutes": 54
     }
   },
   "examTechnique": {
@@ -1369,7 +1695,8 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q26"
     ],
     "sampleSize": 10
   },

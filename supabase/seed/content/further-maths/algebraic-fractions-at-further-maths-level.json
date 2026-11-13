@@ -687,6 +687,16 @@
       }
     ]
   },
+  "contexts": [
+    {
+      "id": "af-g",
+      "body": "$g(x) = \\dfrac{x^2 + 2x - 15}{2x^2 - 7x + 3}$, where $x \\neq 3$ and $x \\neq \\dfrac{1}{2}$."
+    },
+    {
+      "id": "af-divide",
+      "body": "This question is about $\\dfrac{x^2 - 4}{x^2 + 3x} \\div \\dfrac{x^2 + x - 6}{x^2 - 9}$."
+    }
+  ],
   "questions": [
     {
       "id": "q1",
@@ -1241,6 +1251,287 @@
         }
       ],
       "modelAnswer": "**(a)** The common denominator is $(x + 1)(x + 2)$:\n\n$$\\frac{1}{x + 1} - \\frac{1}{x + 2} = \\frac{(x + 2) - (x + 1)}{(x + 1)(x + 2)} = \\frac{1}{(x + 1)(x + 2)}$$\n\nThe bracket after the minus sign matters: $-(x + 1) = -x - 1$, and the $x$ terms cancel to leave $1$.\n\n**(b)** Part (a) says $\\dfrac{1}{(x + 1)(x + 2)} = \\dfrac{1}{x + 1} - \\dfrac{1}{x + 2}$, and replacing $x$ by $x + 1$ gives $\\dfrac{1}{(x + 2)(x + 3)} = \\dfrac{1}{x + 2} - \\dfrac{1}{x + 3}$. Adding,\n\n$$\\frac{1}{x + 1} - \\frac{1}{x + 2} + \\frac{1}{x + 2} - \\frac{1}{x + 3} = \\frac{1}{x + 1} - \\frac{1}{x + 3}$$\n\nThe two middle terms cancel. Combining what is left over $(x + 1)(x + 3)$: $\\dfrac{(x + 3) - (x + 1)}{(x + 1)(x + 3)} = \\dfrac{2}{(x + 1)(x + 3)}$. The common-denominator route, with denominator $(x + 1)(x + 2)(x + 3)$ and numerator $(x + 3) + (x + 1) = 2x + 4 = 2(x + 2)$, cancels the $(x + 2)$ and reaches the same.\n\n**(c)** By part (a) the left side is $\\dfrac{1}{(x + 1)(x + 2)}$, so $(x + 1)(x + 2) = 12$. Expanding, $x^2 + 3x + 2 = 12$, so $x^2 + 3x - 10 = 0$ and $(x + 5)(x - 2) = 0$: $x = 2$ or $x = -5$. Neither is $-1$ or $-2$, so both are valid. Check $x = 2$: $\\dfrac{1}{3} - \\dfrac{1}{4} = \\dfrac{1}{12}$. Check $x = -5$: $-\\dfrac{1}{4} + \\dfrac{1}{3} = \\dfrac{1}{12}$."
+    },
+    {
+      "id": "q19",
+      "prompt": "Simplify $g(x)$ fully.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "factorise top and bottom, then cancel",
+      "step": "s1",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Top: $x^2 + 2x - 15 = (x + 5)(x - 3)$. Bottom: $2x^2 - 7x + 3 = (2x - 1)(x - 3)$. Cancel the common factor $(x - 3)$: $g(x) = \\dfrac{x + 5}{2x - 1}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "both factorised"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{x + 5}{2x - 1}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "af-g",
+      "type": "short-text",
+      "accepted": [
+        "(x+5)/(2x-1)"
+      ]
+    },
+    {
+      "id": "q20",
+      "prompt": "Solve $g(x) = 2$. Give your answer as a fraction.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "an equation with an algebraic fraction",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Simplified, $g(x) = \\dfrac{x + 5}{2x - 1}$. So $x + 5 = 2(2x - 1) = 4x - 2$, giving $3x = 7$ and $x = \\dfrac{7}{3}$. It is not 3 or $\\dfrac{1}{2}$, so it is allowed. Check: $\\dfrac{22/3}{11/3} = 2$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x + 5 = 2(2x - 1)$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{7}{3}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "af-g",
+      "type": "short-text",
+      "accepted": [
+        "7/3",
+        "x=7/3"
+      ]
+    },
+    {
+      "id": "q21",
+      "prompt": "Solve $g(x) = x$. Give your answers in surd form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a fraction equation that becomes a quadratic",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Simplified, $g(x) = \\dfrac{x + 5}{2x - 1}$. So $x + 5 = x(2x - 1) = 2x^2 - x$, giving $2x^2 - 2x - 5 = 0$. The formula gives $x = \\dfrac{2 \\pm \\sqrt{4 + 40}}{4} = \\dfrac{2 \\pm 2\\sqrt{11}}{4} = \\dfrac{1 \\pm \\sqrt{11}}{2}$. Neither is 3 or $\\dfrac{1}{2}$, so both stand.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x + 5 = x(2x - 1)$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2x^2 - 2x - 5 = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{1 \\pm \\sqrt{11}}{2}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "af-g",
+      "type": "short-text",
+      "accepted": [
+        "(1 ± √11)/2",
+        "x = (1 ± √11)/2",
+        "(1 + √11)/2 or (1 - √11)/2",
+        "1/2 ± √11/2"
+      ]
+    },
+    {
+      "id": "q22",
+      "prompt": "Simplify $\\dfrac{x^2 - 4}{x^2 + 3x} \\div \\dfrac{x^2 + x - 6}{x^2 - 9}$ fully.",
+      "marks": 3,
+      "gradeBand": "6-7",
+      "skill": "dividing algebraic fractions",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Flip the second fraction and multiply: $\\dfrac{(x - 2)(x + 2)}{x(x + 3)} \\times \\dfrac{(x - 3)(x + 3)}{(x + 3)(x - 2)}$. Cancel $(x - 2)$ and one $(x + 3)$: $\\dfrac{(x + 2)(x - 3)}{x(x + 3)}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "flips the second fraction"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "all four parts factorised"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{(x + 2)(x - 3)}{x(x + 3)}$"
+        }
+      ],
+      "discriminators": [],
+      "context": "af-divide",
+      "type": "short-text",
+      "accepted": [
+        "(x+2)(x-3)/(x(x+3))",
+        "(x^2-x-6)/(x^2+3x)",
+        "(x+2)(x-3)/(x^2+3x)",
+        "(x^2-x-6)/(x(x+3))"
+      ]
+    },
+    {
+      "id": "q23",
+      "prompt": "Solve $\\dfrac{x^2 - 4}{x^2 + 3x} \\div \\dfrac{x^2 + x - 6}{x^2 - 9} = 1$. Give your answer as a decimal.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "simplify, then solve",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Simplified, the left side is $\\dfrac{(x + 2)(x - 3)}{x(x + 3)}$. So $(x + 2)(x - 3) = x(x + 3)$: $x^2 - x - 6 = x^2 + 3x$, the $x^2$ terms cancel, $-4x = 6$ and $x = -1.5$. It is not $0$, $2$, $3$ or $-3$, so it is allowed.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "simplified first"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 - x - 6 = x^2 + 3x$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$-1.5$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "context": "af-divide",
+      "type": "numeric",
+      "answer": -1.5,
+      "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q24",
+      "prompt": "The simplified form is $\\dfrac{(x + 2)(x - 3)}{x(x + 3)}$, which has a value at $x = 2$. Why is $x = 2$ still not allowed in the original division?",
+      "marks": 1,
+      "gradeBand": "8-9",
+      "skill": "values a division rules out",
+      "step": "s5",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "At $x = 2$ the second fraction is $\\dfrac{4 + 2 - 6}{4 - 9} = 0$, and dividing by 0 is undefined. Cancelling $(x - 2)$ hides this, so the restriction has to be read from the original.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "the divisor is 0 there"
+        }
+      ],
+      "discriminators": [
+        "evaluate"
+      ],
+      "context": "af-divide",
+      "type": "multiple-choice",
+      "options": [
+        "It means dividing by 0, as the second fraction is 0",
+        "The first fraction is 0 there, so the answer would be 0",
+        "The simplified form has a zero denominator at $x = 2$",
+        "Every value that was cancelled is allowed, so it is fine"
+      ],
+      "correct": [
+        0
+      ]
+    },
+    {
+      "id": "q25",
+      "prompt": "Simplify fully $\\dfrac{\\frac{2}{x} - \\frac{1}{x + 1}}{\\frac{1}{x} + \\frac{1}{x + 1}}$.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "a fraction inside a fraction",
+      "step": "s8",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Top: $\\dfrac{2(x + 1) - x}{x(x + 1)} = \\dfrac{x + 2}{x(x + 1)}$. Bottom: $\\dfrac{(x + 1) + x}{x(x + 1)} = \\dfrac{2x + 1}{x(x + 1)}$. Dividing, the $x(x + 1)$ cancels: $\\dfrac{x + 2}{2x + 1}$. Multiplying top and bottom of the big fraction by $x(x + 1)$ gets there in one step.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "top as one fraction"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "bottom as one fraction"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\dfrac{x + 2}{2x + 1}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "(x+2)/(2x+1)"
+      ]
+    },
+    {
+      "id": "q26",
+      "prompt": "Solve $\\dfrac{x + 1}{x - 1} - \\dfrac{x - 1}{x + 1} = \\dfrac{8}{3}$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "two fractions, then a quadratic",
+      "step": "s6",
+      "calculator": "non-calculator",
+      "tags": [],
+      "solution": "Over $(x - 1)(x + 1)$ the left side is $\\dfrac{(x + 1)^2 - (x - 1)^2}{x^2 - 1} = \\dfrac{4x}{x^2 - 1}$. So $12x = 8(x^2 - 1)$, $8x^2 - 12x - 8 = 0$, $2x^2 - 3x - 2 = 0$ and $(2x + 1)(x - 2) = 0$. $x = 2$ or $x = -\\dfrac{1}{2}$; neither is $\\pm 1$. Check $x = 2$: $3 - \\dfrac{1}{3} = \\dfrac{8}{3}$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "common denominator"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\dfrac{4x}{x^2 - 1}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2x^2 - 3x - 2 = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$x = 2$ and $x = -\\dfrac{1}{2}$"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "type": "short-text",
+      "accepted": [
+        "x=2, x=-1/2",
+        "2, -1/2",
+        "2, -0.5",
+        "x = 2 or x = -1/2"
+      ]
     }
   ],
   "worksheets": {
@@ -1276,9 +1567,17 @@
         "q15",
         "q16",
         "q17",
-        "q18"
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26"
       ],
-      "suggestedMinutes": 32
+      "suggestedMinutes": 55
     }
   },
   "examTechnique": {
@@ -1311,7 +1610,9 @@
       "q13",
       "q14",
       "q15",
-      "q16"
+      "q16",
+      "q25",
+      "q26"
     ],
     "sampleSize": 10
   },
