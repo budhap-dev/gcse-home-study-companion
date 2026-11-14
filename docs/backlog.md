@@ -1208,9 +1208,18 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
 - [ ] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**
-- [ ] **6. Part C, the marks themselves** (circle, underline, highlight; the tag in lesson text;
+- [x] **6. Part C, the marks themselves** (circle, underline, highlight; the tag in lesson text;
   drawing on view; wrapping on a phone; print and screen reader), tried on a few Maths and
   Physics lessons first. After it, each subject's Part A PR adds that subject's marks.
+  **Built 14 November 2026:** `{{circle|…}}`, `{{underline|…}}` and `{{highlight|…}}` in
+  lesson text (handMarks.ts, RichText); hand.ts draws each as a stretched SVG background,
+  cloned onto every line it wraps across, with its own seeded wobble, in the subject's
+  text-safe accent (the highlight in the theme's highlight colour), once as it comes into
+  view, already drawn with motion off, and repainted when the theme changes. A circled word
+  is bold and a highlight a `<mark>`; print drops the drawing and keeps those. Search, the
+  teaching-step matcher and flashcards read the words without the tag. Tried on Resistance and
+  Ohm's law (Physics) and Pythagoras in 2D (Maths); `hand-marks.test.ts` holds at most two
+  marks a step, only the three kinds, none round display maths.
 
 ## 3. Product features (not planned)
 

@@ -1,4 +1,4 @@
-import { getSubject } from '@study/shared'
+import { getSubject, stripHands } from '@study/shared'
 import { useEffect, useState } from 'react'
 
 /**
@@ -38,7 +38,7 @@ export interface SearchHit {
 
 /** Strips the markdown and maths that would otherwise clutter a snippet. */
 function plain(source: string): string {
-  return source
+  return stripHands(source)
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/\$\$([\s\S]+?)\$\$/g, ' $1 ')
     .replace(/\$([^$\n]+?)\$/g, ' $1 ')

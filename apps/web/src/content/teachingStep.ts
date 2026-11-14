@@ -1,4 +1,4 @@
-import type { Topic as TopicRecord } from '@study/shared'
+import { stripHands, type Topic as TopicRecord } from '@study/shared'
 
 type Step = TopicRecord['lesson']['steps'][number]
 type Question = TopicRecord['questions'][number]
@@ -43,7 +43,7 @@ export function teachingStep(topic: TopicRecord, q: Pick<Question, 'skill' | 'pr
     if (i >= 0) return i
   }
   const haves = steps.map((s, i) => isSummary(s, i, steps) ? undefined
-    : new Set([...words(s.title), ...words(s.title), ...words(s.body), ...words(s.check?.skill), ...words(s.check?.prompt)]))
+    : new Set([...words(s.title), ...words(s.title), ...words(stripHands(s.body)), ...words(s.check?.skill), ...words(s.check?.prompt)]))
   const winner = (want: string[], minScore: number, minMargin: number) => {
     if (want.length === 0) return undefined
     let best = -1, bestScore = 0, second = 0
