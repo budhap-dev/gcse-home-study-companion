@@ -971,7 +971,7 @@ One PR per box, ticked in the PR that finishes it. Stop and report after each su
 - [ ] **12. Challenge problems across topics.** Ten to twenty problems per subject for Maths and
   the three sciences that need two or more units at once (for example forces with energy, or
   algebra with geometry), as a "Challenge" set on the subject page beside the grade 9 sets.
-  **Maths done 14 November 2026:** 12 multi-part problems (26 parts, 68 marks), each in its
+  **Maths done 14 November 2026:** 12 multi-part problems (26 parts, 74 marks; a reviewer agent recomputed every answer and ran the marker on likely inputs), each in its
   home topic with `challenge.draws` naming the topics in other units it needs; a Challenge set
   (four problems, drawn by its link's code) opens from the subject page once a subject has
   four. Challenge problems stay out of unit tests, grade 9 sets and made worksheets, and off

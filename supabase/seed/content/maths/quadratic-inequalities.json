@@ -1590,35 +1590,40 @@
     {
       "id": "q27",
       "type": "numeric",
-      "prompt": "The diagonal of the rectangle is 13 cm. Work out the value of $x$, to 2 decimal places.",
-      "marks": 3,
+      "prompt": "A different rectangle of the same form, $(x + 5)$ cm by $(x - 1)$ cm, has a diagonal shorter than 15 cm. $x$ is a whole number. Work out the largest value $x$ can take.",
+      "marks": 4,
       "gradeBand": "8-9",
-      "skill": "a diagonal gives a quadratic",
+      "skill": "a diagonal bound gives a quadratic inequality",
       "calculator": "calculator",
       "tags": [],
-      "solution": "Pythagoras: $(x + 5)^2 + (x - 1)^2 = 13^2$, so $2x^2 + 8x + 26 = 169$, $2x^2 + 8x - 143 = 0$. The formula: $x = \\frac{-8 + \\sqrt{64 + 1144}}{4} = \\frac{-8 + 34.756\\ldots}{4} = 6.689\\ldots$, so $x = 6.69$ (the other root is negative).",
+      "solution": "Pythagoras: $(x + 5)^2 + (x - 1)^2 < 15^2$, so $2x^2 + 8x + 26 < 225$ and $2x^2 + 8x - 199 < 0$. The roots of $2x^2 + 8x - 199 = 0$ are $x = \\frac{-8 \\pm \\sqrt{64 + 1592}}{4}$, that is $-12.17\\ldots$ and $8.17\\ldots$, and the quadratic is negative between them. With $x > 1$ for a positive width, $1 < x < 8.17\\ldots$, so the largest whole number is 8. Check: $13^2 + 7^2 = 218 < 225$, but $x = 9$ gives $14^2 + 8^2 = 260$.",
       "markScheme": [
         {
           "code": "M1",
           "marks": 1,
-          "description": "$(x + 5)^2 + (x - 1)^2 = 169$"
+          "description": "$(x + 5)^2 + (x - 1)^2 < 225$"
         },
         {
           "code": "M1",
           "marks": 1,
-          "description": "$2x^2 + 8x - 143 = 0$ solved by the formula"
+          "description": "$2x^2 + 8x - 199 < 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "critical value $8.17\\ldots$"
         },
         {
           "code": "A1",
           "marks": 1,
-          "description": "6.69"
+          "description": "8"
         }
       ],
       "discriminators": [
         "multi-topic"
       ],
-      "answer": 6.69,
-      "tolerance": 0.005,
+      "answer": 8,
+      "tolerance": 0,
       "step": "s4",
       "context": "challenge-rectangle-bounds",
       "challenge": {
