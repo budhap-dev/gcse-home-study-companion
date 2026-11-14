@@ -48,4 +48,15 @@ describe('mergeProgress', () => {
     const b = { activities: [{ id: 'surds:why:2026-09-07', topicId: 'surds', subjectId: 'maths', kind: 'why' as const, at: '2026-09-07T10:00:00.000Z' }] }
     expect(mergeProgress(a, b).activities.map((x) => x.id)).toEqual(['surds:why:2026-09-06', 'surds:why:2026-09-07'])
   })
+  it('unites past paper scores by id, and a score taken back on either device stays taken back', () => {
+    const log = (id: string, at: string, removed?: boolean) => ({ id, subjectId: 'maths', seriesId: '2024-06', paperId: '1H', score: 50, at, ...(removed ? { removed } : {}) })
+    const a = { pastPapers: [log('x', '2026-11-14T10:00:00Z'), log('y', '2026-11-14T11:00:00Z', true)] }
+    const b = { pastPapers: [log('y', '2026-11-14T11:00:00Z'), log('z', '2026-11-13T09:00:00Z')] }
+    const m = mergeProgress(a, b)
+    expect(m.pastPapers.map((x) => x.id)).toEqual(['z', 'x', 'y'])
+    expect(m.pastPapers.find((x) => x.id === 'y')!.removed).toBe(true)
+    // A state from before box 6 has none.
+    expect(mergeProgress({}, {}).pastPapers).toEqual([])
+  })
 })
+

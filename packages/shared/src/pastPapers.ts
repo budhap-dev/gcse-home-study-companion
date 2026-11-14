@@ -30,6 +30,44 @@ export const PastPaperLink = z.object({
 export type PastPaperLink = z.infer<typeof PastPaperLink>
 
 /**
+ * Where a grade boundary figure was read (box 6): the board's own files, which for AQA include
+ * its file store. Paper links keep to BOARD_HOSTS.
+ */
+const BoundarySource = z
+  .string()
+  .url()
+  .refine((u) => {
+    const url = new URL(u)
+    return url.protocol === 'https:' && ['www.aqa.org.uk', 'filestore.aqa.org.uk', 'qualifications.pearson.com'].includes(url.hostname)
+  }, 'an https link to the board’s own grade boundaries')
+
+/**
+ * A grade boundary table: the lowest raw mark for each grade the board lists, "9" down to the
+ * lowest it prints (a Higher paper stops at 3 or 4). Read from the board's PDF, never worked out.
+ */
+export const GradeBoundaries = z
+  .partialRecord(z.enum(['9', '8', '7', '6', '5', '4', '3', '2', '1']), z.number().int().nonnegative())
+  .refine((g) => {
+    const v = ['9', '8', '7', '6', '5', '4', '3', '2', '1'].filter((k) => k in g).map((k) => g[k as keyof typeof g]!)
+    return '9' in g && v.every((x, i) => i === 0 || x < v[i - 1]!)
+  }, 'grades from 9 down, each needing fewer marks than the one above')
+export type GradeBoundaries = z.infer<typeof GradeBoundaries>
+
+/** The grade a raw mark earns on a boundary table, or null below the lowest grade it lists. */
+export function gradeFor(mark: number, grades: GradeBoundaries): number | null {
+  for (const g of [9, 8, 7, 6, 5, 4, 3, 2, 1]) {
+    const min = grades[String(g) as keyof GradeBoundaries]
+    if (min !== undefined && mark >= min) return g
+  }
+  return null
+}
+
+/** The lowest grade a boundary table lists: below its mark, the board gives no grade on this tier. */
+export function lowestGrade(grades: GradeBoundaries): number {
+  return Math.min(...Object.keys(grades).map(Number))
+}
+
+/**
  * One question of a paper and what it tests (section 14, boxes 2 to 5): its number, the marks
  * the paper prints for it, and the app's topics it draws on, the main one first. Read from the
  * board's own PDF; an empty list means no topic in the app teaches it yet.
@@ -64,8 +102,11 @@ export const PastPaper = z
      * alternatives, so their marks do not add up to the paper's total.
      */
     answer: z.string().min(1).optional(),
+    /** The board's notional boundaries for this paper in its series (box 6). */
+    grades: GradeBoundaries.optional(),
   })
   .superRefine((p, ctx) => {
+    if (p.grades && (p.marks === undefined || p.grades['9']! > p.marks)) ctx.addIssue({ code: 'custom', message: `paper ${p.id}: grade 9 needs more marks than the paper has` })
     if (!p.questions) return
     if (p.marks === undefined) ctx.addIssue({ code: 'custom', message: `paper ${p.id}: a tagged paper needs its total marks` })
     p.questions.forEach((q, i) => {
@@ -91,7 +132,21 @@ export const PastSeries = z.object({
   papers: z.array(PastPaper).min(1),
   /** Sheets for the whole series rather than one paper: an equation sheet, a periodic table. */
   sheets: z.array(PastPaperLink).default([]),
+  /**
+   * The board's grade boundaries for this series (box 6): where they were read, and the
+   * subject's own table when the papers listed make up the whole subject, so a full set of
+   * scores gives the real grade. Each paper's notional boundaries sit on the paper.
+   */
+  boundaries: z.object({
+    source: z.array(BoundarySource).min(1),
+    subject: z.object({ max: z.number().int().positive(), grades: GradeBoundaries }).optional(),
+  }).optional(),
 })
+  .superRefine((s, ctx) => {
+    const sub = s.boundaries?.subject
+    if (sub && sub.max !== s.papers.reduce((t, p) => t + (p.marks ?? 0), 0)) ctx.addIssue({ code: 'custom', message: `series ${s.id}: subject boundaries out of ${sub.max}, papers out of something else` })
+    if (s.boundaries && !s.papers.some((p) => p.grades)) ctx.addIssue({ code: 'custom', message: `series ${s.id}: boundaries with no paper graded` })
+  })
 export type PastSeries = z.infer<typeof PastSeries>
 
 export const PastPaperIndex = z.object({

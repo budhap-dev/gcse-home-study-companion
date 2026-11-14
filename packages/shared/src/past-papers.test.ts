@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { PastPaperIndex } from './pastPapers.ts'
+import { gradeFor, PastPaperIndex } from './pastPapers.ts'
 import { SUBJECTS } from './subjects.ts'
 
 const DIR = new URL('../../../supabase/seed/past-papers/', import.meta.url)
@@ -180,5 +180,38 @@ describe('the past papers index', () => {
     const asked = new Set(qs.flatMap((q) => q.topics))
     const ids = readdirSync(new URL(`${subjectId}/`, CONTENT)).filter((f) => f.endsWith('.json')).map((f) => f.replace('.json', ''))
     expect(ids.filter((id) => !asked.has(id))).toEqual([])
+  })
+
+  // Box 6. Grade boundaries read from the boards' own files (14 November 2026). The schema
+  // holds their order and that the subject table covers exactly the papers listed; these pin
+  // the coverage and a few figures to the lines they were read from.
+  it('has the boards\' boundaries wherever the board publishes them (box 6)', () => {
+    const series = indexes.flatMap(({ index }) => index.series.map((s) => ({ subject: index.subjectId, s })))
+    const withB = series.filter(({ s }) => s.boundaries)
+    expect(withB.length).toBe(58)
+    expect(withB.flatMap(({ s }) => s.papers.filter((p) => p.grades)).length).toBe(119)
+    expect(withB.filter(({ s }) => s.boundaries!.subject).length).toBe(46)
+    // No sample paper has boundaries: no one sat it.
+    expect(series.filter(({ s }) => s.id === 'sample' && s.boundaries)).toEqual([])
+    const find = (subject: string, sid: string) => series.find((x) => x.subject === subject && x.s.id === sid)!.s
+    // AQA-GCSE-GDE-BDY-JUN-2024: "8463/1H PHYSICS PAPER 1 TIER H 100 79 72 66 57 48 39 34 - -"
+    expect(find('physics', '2024-06').papers.find((p) => p.id === '1')!.grades).toEqual({ 9: 79, 8: 72, 7: 66, 6: 57, 5: 48, 4: 39, 3: 34 })
+    // grade-boundaries-june-2024-notional-component-gcse: "1MA1 Mathematics (Higher) Raw 80 65 55 45 34 24 14 9 0 Paper 1H"
+    expect(find('maths', '2024-06').papers.find((p) => p.id === '1H')!.grades).toEqual({ 9: 65, 8: 55, 7: 45, 6: 34, 5: 24, 4: 14, 3: 9 })
+    // AQA-L2-CERT-GDE-BDY-JUN-2024: "8365 FURTHER MATHEMATICS 160 136 119 103 86 69 60", grades 9 to 4
+    expect(find('further-maths', '2024-06').boundaries!.subject).toEqual({ max: 160, grades: { 9: 136, 8: 119, 7: 103, 6: 86, 5: 69, 4: 60 } })
+    // English Literature in 2021-11 and 2022-06 was graded by option (two of 1M, 1N, 1P), so no
+    // single subject table covers the four papers listed.
+    expect(find('english-literature', '2022-06').boundaries!.subject).toBeUndefined()
+  })
+
+  it('turns a raw mark into the grade on a boundary table', () => {
+    const g = { 9: 79, 8: 72, 7: 66, 6: 57, 5: 48, 4: 39, 3: 34 }
+    expect(gradeFor(100, g)).toBe(9)
+    expect(gradeFor(79, g)).toBe(9)
+    expect(gradeFor(78, g)).toBe(8)
+    expect(gradeFor(39, g)).toBe(4)
+    expect(gradeFor(34, g)).toBe(3)
+    expect(gradeFor(33, g)).toBeNull()
   })
 })
