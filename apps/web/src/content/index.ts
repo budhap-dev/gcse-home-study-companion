@@ -24,8 +24,11 @@ export interface TopicSummary {
   lesson: { steps: { id: string; title: string; kind: string; checkSkill?: string }[] }
   worksheets: Record<WorksheetLevel, { questionIds: string[]; suggestedMinutes: number }>
   quiz: { questionIds: string[]; sampleSize: number }
-  /** `stemId`: the multi-part question a question is a part of, by its context id. */
-  questions: { id: string; type: Question['type']; marks: number; skill: string; gradeBand: GradeBand; stemId?: string }[]
+  /**
+   * `stemId`: the multi-part question a question is a part of, by its context id.
+   * `challenge`: the other topics a Challenge problem draws on (section 13, box 12).
+   */
+  questions: { id: string; type: Question['type']; marks: number; skill: string; gradeBand: GradeBand; stemId?: string; challenge?: { draws: string[] } }[]
 }
 
 /** Subject order, then unit order within the subject, then the topic's own order in the unit, then title: the order topics are met. */

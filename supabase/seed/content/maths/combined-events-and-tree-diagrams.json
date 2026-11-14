@@ -789,6 +789,10 @@
     {
       "id": "rain-late",
       "body": "The probability that it rains on a school day is 0.3. If it rains, the probability that Sam is late for school is 0.4. If it does not rain, the probability that Sam is late is 0.1."
+    },
+    {
+      "id": "challenge-unknown-bag",
+      "body": "A bag holds $n$ counters. 3 of them are red and the rest are blue. Two counters are taken at random, without replacement. The probability that both are red is $\\frac{1}{15}$."
     }
   ],
   "questions": [
@@ -1653,6 +1657,93 @@
       "type": "numeric",
       "answer": 0.46,
       "tolerance": 0,
+      "unitsRequired": false
+    },
+    {
+      "id": "q28",
+      "type": "numeric",
+      "prompt": "Work out the value of $n$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "unknown total from a probability",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$P(\\text{both red}) = \\frac{3}{n} \\times \\frac{2}{n - 1} = \\frac{6}{n(n - 1)} = \\frac{1}{15}$, so $n(n - 1) = 90$, $n^2 - n - 90 = 0$, $(n - 10)(n + 9) = 0$. A count cannot be negative, so $n = 10$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$\\frac{3}{n} \\times \\frac{2}{n - 1}$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n^2 - n - 90 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(n - 10)(n + 9) = 0$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "10"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 10,
+      "tolerance": 0,
+      "step": "s3",
+      "context": "challenge-unknown-bag",
+      "challenge": {
+        "draws": [
+          "solving-quadratic-equations"
+        ]
+      },
+      "unitsRequired": false
+    },
+    {
+      "id": "q29",
+      "type": "numeric",
+      "prompt": "Work out the probability that the two counters are different colours. Give your answer as a fraction in its simplest form.",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "different colours without replacement",
+      "calculator": "either",
+      "tags": [],
+      "solution": "From $\\frac{3}{n} \\times \\frac{2}{n - 1} = \\frac{1}{15}$, $n^2 - n - 90 = 0$, so $n = 10$: 3 red and 7 blue. Red then blue or blue then red: $2 \\times \\frac{3}{10} \\times \\frac{7}{9} = \\frac{42}{90} = \\frac{7}{15}$ or about 0.4667.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n = 10$ from $n^2 - n - 90 = 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2 \\times \\frac{3}{10} \\times \\frac{7}{9}$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$\\frac{7}{15}$ (0.4667)"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 0.4667,
+      "tolerance": 0.001,
+      "step": "s3",
+      "context": "challenge-unknown-bag",
+      "challenge": {
+        "draws": [
+          "solving-quadratic-equations"
+        ]
+      },
       "unitsRequired": false
     }
   ],

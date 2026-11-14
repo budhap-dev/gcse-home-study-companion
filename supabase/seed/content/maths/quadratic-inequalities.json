@@ -747,6 +747,10 @@
     {
       "id": "x2-2x-15",
       "body": "This question is about the inequality $x^2 \\ge 2x + 15$."
+    },
+    {
+      "id": "challenge-rectangle-bounds",
+      "body": "A rectangle is $(x + 5)$ cm long and $(x - 1)$ cm wide."
     }
   ],
   "questions": [
@@ -1535,6 +1539,100 @@
         "0.5≤x≤3",
         "1/2≤x≤3"
       ]
+    },
+    {
+      "id": "q26",
+      "type": "numeric",
+      "prompt": "The area of the rectangle is more than 40 cm² and its perimeter is less than 36 cm. $x$ is a whole number. Work out the value of $x$.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "two conditions on a rectangle",
+      "calculator": "either",
+      "tags": [],
+      "solution": "Area: $(x + 5)(x - 1) > 40$, so $x^2 + 4x - 45 > 0$, $(x + 9)(x - 5) > 0$. The width $x - 1$ must be positive, so $x > 5$. Perimeter: $2(x + 5 + x - 1) < 36$, so $4x + 8 < 36$ and $x < 7$. So $5 < x < 7$, and the whole number is 6.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x^2 + 4x - 45 > 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x > 5$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$x < 7$ from the perimeter"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 6,
+      "tolerance": 0,
+      "step": "s3",
+      "context": "challenge-rectangle-bounds",
+      "challenge": {
+        "draws": [
+          "pythagoras-in-2d",
+          "solving-quadratic-equations"
+        ]
+      },
+      "unitsRequired": false
+    },
+    {
+      "id": "q27",
+      "type": "numeric",
+      "prompt": "A different rectangle of the same form, $(x + 5)$ cm by $(x - 1)$ cm, has a diagonal shorter than 15 cm. $x$ is a whole number. Work out the largest value $x$ can take.",
+      "marks": 4,
+      "gradeBand": "8-9",
+      "skill": "a diagonal bound gives a quadratic inequality",
+      "calculator": "calculator",
+      "tags": [],
+      "solution": "Pythagoras: $(x + 5)^2 + (x - 1)^2 < 15^2$, so $2x^2 + 8x + 26 < 225$ and $2x^2 + 8x - 199 < 0$. The roots of $2x^2 + 8x - 199 = 0$ are $x = \\frac{-8 \\pm \\sqrt{64 + 1592}}{4}$, that is $-12.17\\ldots$ and $8.17\\ldots$, and the quadratic is negative between them. With $x > 1$ for a positive width, $1 < x < 8.17\\ldots$, so the largest whole number is 8. Check: $13^2 + 7^2 = 218 < 225$, but $x = 9$ gives $14^2 + 8^2 = 260$.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$(x + 5)^2 + (x - 1)^2 < 225$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2x^2 + 8x - 199 < 0$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "critical value $8.17\\ldots$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "8"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 8,
+      "tolerance": 0,
+      "step": "s4",
+      "context": "challenge-rectangle-bounds",
+      "challenge": {
+        "draws": [
+          "pythagoras-in-2d",
+          "solving-quadratic-equations"
+        ]
+      },
+      "unitsRequired": false
     }
   ],
   "worksheets": {

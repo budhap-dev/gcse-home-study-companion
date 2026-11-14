@@ -78,7 +78,8 @@ export function pickItems(spec: MixedSpec, summaries: TopicSummary[]): SessionIt
   const pools = seededShuffle(spec.topicIds, spec.code).flatMap((topicId) => {
     const t = summaries.find((s) => s.id === topicId && s.subjectId === spec.subjectId)
     if (!t) return []
-    const markable = new Set(t.questions.filter((q) => AUTO_MARKED_TYPES.includes(q.type)).map((q) => q.id))
+    // Challenge problems need topics beyond the ones chosen: they live in the Challenge set.
+    const markable = new Set(t.questions.filter((q) => AUTO_MARKED_TYPES.includes(q.type) && !q.challenge).map((q) => q.id))
     return [{ topicId, ids: seededShuffle(t.worksheets[level].questionIds.filter((id) => markable.has(id)), `${spec.code}:${topicId}`) }]
   })
   const items: SessionItem[] = []

@@ -48,7 +48,7 @@ export function catalogueEntry(t: Json) {
     lesson: { steps: t.lesson.steps.map((s: Json) => ({ id: s.id, title: s.title, kind: s.kind, ...(s.check?.skill ? { checkSkill: s.check.skill } : {}) })) },
     worksheets,
     quiz: { questionIds: t.quiz.questionIds, sampleSize: t.quiz.sampleSize },
-    questions: t.questions.map((q: Json) => ({ id: q.id, type: q.type, marks: q.marks, skill: q.skill, gradeBand: q.gradeBand, ...(q.context ? { stemId: q.context } : {}) })),
+    questions: t.questions.map((q: Json) => ({ id: q.id, type: q.type, marks: q.marks, skill: q.skill, gradeBand: q.gradeBand, ...(q.context ? { stemId: q.context } : {}), ...(q.challenge ? { challenge: { draws: q.challenge.draws } } : {}) })),
   }
 }
 

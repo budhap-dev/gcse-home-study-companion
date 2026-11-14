@@ -798,6 +798,10 @@
     {
       "id": "car-value",
       "body": "A car loses 15% of its value each year. It is worth £12 000 now."
+    },
+    {
+      "id": "challenge-bacteria",
+      "body": "A colony of bacteria is counted every 20 minutes, starting at noon, and each count is double the one before. At noon there are $3.2 \\times 10^5$ bacteria."
     }
   ],
   "questions": [
@@ -1671,6 +1675,86 @@
       "tolerance": 0,
       "unitsRequired": false,
       "units": "%"
+    },
+    {
+      "id": "q26",
+      "type": "short-text",
+      "prompt": "How many bacteria are there 2 hours after noon? Give your answer in standard form.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "growth over whole periods",
+      "calculator": "either",
+      "tags": [],
+      "solution": "2 hours is 6 lots of 20 minutes, so the number doubles 6 times: $3.2 \\times 10^5 \\times 2^6 = 3.2 \\times 10^5 \\times 64 = 2.048 \\times 10^7$, written 2.048 x 10^7.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$3.2 \\times 10^5 \\times 2^6$"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "$2.048 \\times 10^7$"
+        }
+      ],
+      "discriminators": [],
+      "accepted": [
+        "2.048 x 10^7",
+        "2.048 × 10^7",
+        "2.048e7",
+        "2.048 x 107"
+      ],
+      "step": "s1",
+      "context": "challenge-bacteria",
+      "challenge": {
+        "draws": [
+          "standard-form",
+          "laws-of-indices"
+        ]
+      }
+    },
+    {
+      "id": "q27",
+      "type": "numeric",
+      "prompt": "How many minutes after noon is the first count above $1 \\times 10^9$?",
+      "marks": 3,
+      "gradeBand": "8-9",
+      "skill": "periods until a threshold",
+      "calculator": "either",
+      "tags": [],
+      "solution": "After $n$ doublings there are $3.2 \\times 10^5 \\times 2^n$. This passes $10^9$ when $2^n > \\frac{10^9}{3.2 \\times 10^5} = 3125$. $2^{11} = 2048$ is too few and $2^{12} = 4096$ is enough, so 12 doublings: $12 \\times 20 = 240$ minutes.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$2^n > 3125$"
+        },
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "$n = 12$ doublings"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "240"
+        }
+      ],
+      "discriminators": [
+        "multi-topic"
+      ],
+      "answer": 240,
+      "tolerance": 0,
+      "step": "s5",
+      "context": "challenge-bacteria",
+      "challenge": {
+        "draws": [
+          "standard-form",
+          "laws-of-indices"
+        ]
+      },
+      "unitsRequired": false
     }
   ],
   "worksheets": {

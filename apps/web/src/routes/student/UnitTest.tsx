@@ -6,7 +6,7 @@ import { ShareSheet } from '../../components/ShareSheet.tsx'
 import { getGuide, topicsForSubject } from '../../content/index.ts'
 import { useTopics } from '../../content/load.ts'
 import { sheetFor } from '../../content/mixedSheet.ts'
-import { grade9Items, grade9Path, minutesPerMark, parseYear, unitTestItems, unitTestPath, unitTopics } from '../../content/paper.ts'
+import { CHALLENGE_SET, challengeItems, challengePath, grade9Items, grade9Path, minutesPerMark, parseYear, unitTestItems, unitTestPath, unitTopics } from '../../content/paper.ts'
 import { newSheetCode, sheetParam } from '../../content/sheetCode.ts'
 import { itemKey, recordReview } from '../../progress/reviewSession.ts'
 
@@ -102,3 +102,61 @@ export function UnitTest() {
 export function Grade9Set() {
   return <UnitPaper kind="grade-9" />
 }
+
+/**
+ * A Challenge set (section 13, box 12): CHALLENGE_SET problems from across the subject, each
+ * needing topics from more than one unit, on the paper screen. Fixed by its link like a
+ * unit's papers, and recorded the same way, per topic each part sits in.
+ */
+export function ChallengeSet() {
+  const { subjectId = '' } = useParams()
+  const [params] = useSearchParams()
+  const { pathname, search } = useLocation()
+  const code = sheetParam(params)
+  const subject = getSubject(subjectId)
+  const topics = topicsForSubject(subjectId)
+  const items = code ? challengeItems(topics, code) : []
+  const loaded = useTopics(items.map((m) => ({ subjectId, topicId: m.topicId })))
+
+  if (!subject || !code || items.length === 0) {
+    return (
+      <article className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+        <h1 className="text-2xl font-bold">This challenge set link is not complete</h1>
+        <p className="text-ink-2">It is started from the subject’s map.</p>
+        <Link to={subject ? `/subjects/${subjectId}` : '/subjects'} className="btn btn-primary btn-lg w-fit">Go to the map</Link>
+      </article>
+    )
+  }
+  if (!loaded) return <TopicLoading />
+  const questions = sheetFor({ subjectId, code }, items, loaded)
+  const seen = new Map(questions.map((q) => [itemKey(q.item), q.question]))
+  const units = new Set(topics.filter((t) => items.some((m) => m.topicId === t.id) || items.some((m) => loaded.get(m.topicId)?.questions.some((q) => q.challenge?.draws.includes(t.id)))).map((t) => t.unitId))
+  return (
+    <PaperSession
+      key={`${pathname}${search}`}
+      storageKey={`study-companion.paper.challenge.${subjectId}`}
+      path={`${pathname}${search}`}
+      subjectId={subjectId}
+      kicker={`${subject.name} · Challenge set`}
+      title={`${CHALLENGE_SET} problems across ${units.size} units`}
+      intro={[
+        'Each problem needs topics from more than one unit at once, as the hardest questions on a paper do. Grade 8 to 9, in parts.',
+        'Each comes with a full worked solution and its mark scheme once the set is handed in.',
+        'It adds to each topic’s history; a topic’s quiz and Advanced worksheet still decide its status.',
+      ]}
+      questions={questions}
+      perMark={minutesPerMark(getGuide(subjectId))}
+      studyKind="review"
+      back={{ to: `/subjects/${subjectId}`, label: `Back to ${subject.name}` }}
+      record={(r) => recordReview(r.id, items, r.answers, (id) => loaded.get(id), r.finishedAt, 'challenge', { seen: (m) => seen.get(itemKey(m)), seed: code }, r.timed ? { timed: r.timed } : {})}
+      after={
+        <>
+          <ShareSheet path={`${pathname}${search}`} title={`${subject.name} · challenge set`} />
+          <Link to={challengePath(subjectId, newSheetCode())} className="btn btn-primary btn-lg">A new set</Link>
+          <Link to={`/subjects/${subjectId}`} className="btn btn-secondary btn-lg">Back to the map</Link>
+        </>
+      }
+    />
+  )
+}
+
