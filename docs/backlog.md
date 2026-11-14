@@ -1135,7 +1135,9 @@ agent before they ship.
 
 Asked 14 November 2026: "in all the subjects area can we go through the topics and try to find
 out if those are understandable fully with real life examples. Also can we do some animations
-on the images wherever applicable." Planned here; not started until approved.
+on the images wherever applicable." **Approved 14 November 2026** ("approved"), with Part C added
+the same day; starting with Part C on a few Maths and Physics lessons, then Part A by subject
+with each subject's marks, and Part B alongside.
 
 **Where things stand (measured 14 November 2026).** Every one of the 360 topics has a "why it
 matters" page with real-life examples, 994 in all: two or more per topic everywhere except 28
