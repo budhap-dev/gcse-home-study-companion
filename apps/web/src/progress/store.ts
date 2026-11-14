@@ -148,6 +148,24 @@ export interface DeedRecord {
   answeredAt?: string
 }
 
+/**
+ * A board past paper the student sat and marked themselves (section 14, box 6): the score is
+ * theirs, from the board's mark scheme; the grade is read from the board's boundaries when the
+ * page shows it, so a correction to a boundary never needs a migration.
+ */
+export interface PastPaperLog {
+  id: string
+  subjectId: string
+  /** The series and paper ids in the past paper index: "2024-06", "1H". */
+  seriesId: string
+  paperId: string
+  score: number
+  /** ISO time it was logged. */
+  at: string
+  /** Taken back: kept, so a device that still has it does not bring it back. */
+  removed?: boolean
+}
+
 export interface ProgressState {
   attempts: AttemptRecord[]
   lessons: Record<string, LessonRecord>
@@ -188,6 +206,8 @@ export interface ProgressState {
    * so two devices keep the later choice. A subject with no entry aims at grade 9 (`targetFor`).
    */
   targets: Record<string, TargetGrade>
+  /** Board past papers the student has logged a score for (box 6), oldest first. */
+  pastPapers: PastPaperLog[]
 }
 
 export interface TargetGrade {
@@ -251,7 +271,7 @@ const OLD_DEFAULT_WEEKLY_GOAL = 180
 const clampDailyGoal = (m: number) => Math.max(10, Math.min(240, Math.round(m)))
 
 export function emptyState(): ProgressState {
-  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, dailyGoalMinutes: DEFAULT_DAILY_GOAL, daysOff: [], badges: {}, milestones: {}, deeds: {}, profile: {}, targets: {} }
+  return { attempts: [], lessons: {}, activities: [], minutes: {}, time: {}, dailyGoalMinutes: DEFAULT_DAILY_GOAL, daysOff: [], badges: {}, milestones: {}, deeds: {}, profile: {}, targets: {}, pastPapers: [] }
 }
 
 /**
@@ -267,7 +287,7 @@ export function fromStored(stored: Partial<ProgressState> & { goalMinutes?: numb
   return {
     ...emptyState(), ...rest,
     // A state written before these existed has none, and every reader iterates them.
-    activities: rest.activities ?? [], time: rest.time ?? {}, milestones: rest.milestones ?? {}, deeds: rest.deeds ?? {}, targets: rest.targets ?? {},
+    activities: rest.activities ?? [], time: rest.time ?? {}, milestones: rest.milestones ?? {}, deeds: rest.deeds ?? {}, targets: rest.targets ?? {}, pastPapers: rest.pastPapers ?? [],
     dailyGoalMinutes: daily,
     profile: withoutSubjects(rest.profile),
   }
@@ -443,6 +463,20 @@ export function addStudyMinutes(minutes: number, day = isoDate(), place?: StudyP
     state.time[key] = (state.time[key] ?? 0) + minutes
   }
   write(state)
+}
+
+/** Logs a score on a board past paper (box 6). */
+export function logPastPaper(entry: Omit<PastPaperLog, 'id' | 'at'>, at = new Date().toISOString()): PastPaperLog {
+  const log: PastPaperLog = { ...entry, id: crypto.randomUUID(), at }
+  const state = getState()
+  replaceState({ ...state, pastPapers: [...state.pastPapers, log] })
+  return log
+}
+
+/** Takes a logged past paper score back; it stays, marked, so a merge does not restore it. */
+export function removePastPaper(id: string) {
+  const state = getState()
+  replaceState({ ...state, pastPapers: state.pastPapers.map((x) => (x.id === id ? { ...x, removed: true } : x)) })
 }
 
 export function setDailyGoal(minutes: number) {

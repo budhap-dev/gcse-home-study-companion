@@ -1,6 +1,7 @@
 import { getSubject, type PastPaper, type PastPaperLink, type PastPaperLinkKind } from '@study/shared'
 import { Link, useParams } from 'react-router'
 import { BackLink } from '../../components/BackLink.tsx'
+import { PastPaperScore, SeriesGrade } from '../../components/PastPaperScore.tsx'
 import { summaryById } from '../../content/index.ts'
 import { pastPapersFor } from '../../content/pastPapers.ts'
 
@@ -44,6 +45,11 @@ export function PastPapers() {
           The board’s own papers{index?.series.some((s) => s.papers.some((p) => /H$/.test(p.id))) ? ', Higher tier' : ''}, newest first. Each link opens the board’s PDF on its own site: sit the paper on paper, then mark it with the mark scheme beside it.
         </p>
         {index?.note && <p className="rounded-xl border border-rule bg-panel px-4 py-3 text-sm">{index.note}</p>}
+        {index?.series.some((s) => s.boundaries) && (
+          <p className="text-sm text-ink-2">
+            Sat one? Mark it with the mark scheme and log your score: the board’s grade boundaries for that series turn it into a grade. One paper’s grade uses the board’s boundary for that paper, so it is an estimate; with every paper of a series logged, the board’s boundaries for the whole subject give the grade you would have been given.
+          </p>
+        )}
         {index?.practice && (
           <a href={index.practice.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary w-fit">
             {index.practice.label} <span aria-hidden>↗</span>
@@ -72,9 +78,11 @@ export function PastPapers() {
                     {p.links.map((l) => <BoardLink key={l.url} link={l} quiet={l.kind === 'examiner-report'} />)}
                   </div>
                   {p.questions && <QuestionTopics paper={p} subjectId={subject.id} />}
+                  {s.id !== 'sample' && <PastPaperScore subjectId={subject.id} series={s} paper={p} />}
                 </li>
               ))}
             </ul>
+            <SeriesGrade subjectId={subject.id} series={s} />
             {s.sheets.length > 0 && (
               <div className="flex flex-wrap items-center gap-2 border-t border-rule pt-3">
                 <span className="text-sm text-ink-2">For every paper in this series:</span>

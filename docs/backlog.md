@@ -1111,10 +1111,19 @@ agent before they ship.
   reserve paper sat in 2024, so it stays. Not acted on: November 2023 English Language Paper 2 is
   published only in enlarged-print versions, so the index still lacks it; no Business topic
   teaches **percentage change or a simple average**, which about 16 two-mark parts ask for.
-- [ ] **6. Optional, the owner's call: log a past paper.** The student marks a paper from the
-  board's mark scheme and enters the score; the published grade boundaries for that series
-  turn it into a grade, kept with their attempts. Grade boundaries are figures the boards
-  publish, so they can be stored.
+- [x] **6. Log a past paper.** Each paper on a Past papers page has **Log your score**: the
+  student marks the paper with the board's mark scheme and enters the total, which is kept
+  with their progress (`pastPapers`, synced and merged by id; a score taken back stays taken
+  back). The board's notional boundary for that paper in that series gives a grade, shown as
+  an estimate; once every paper of a series has a score, the board's boundaries for the whole
+  subject give the grade the student would have been given. Built 14 November 2026 from the
+  boards' own files: 119 papers in 58 series carry boundaries, 46 series a subject table, read
+  from AQA's file store and site and Pearson's notional component and subject files, with a
+  few figures pinned in tests to the lines they came from. **Not found on the boards' sites:**
+  AQA June 2025 and November 2025 GCSE (Further Maths June 2025 was), Pearson June 2018 and
+  November 2020 to 2022; a score on those papers is kept with no grade, and the page says why.
+  No subject grade where the papers listed are not the whole subject: Music (coursework), and
+  English Literature in 2021-22, graded by which two of 1M, 1N and 1P a student sat.
 
 ## 3. Product features (not planned)
 

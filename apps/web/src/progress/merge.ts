@@ -59,8 +59,15 @@ export function mergeProgress(a: Partial<ProgressState>, b: Partial<ProgressStat
   // A target per subject: the one set more recently, a clearing included.
   const targets: ProgressState['targets'] = { ...A.targets }
   for (const [id, t] of Object.entries(B.targets)) if (!targets[id] || t.at > targets[id]!.at) targets[id] = t
+  // Past paper scores: united by id, and taken back if either copy took it back.
+  const pastPapers = new Map<string, ProgressState['pastPapers'][number]>()
+  for (const x of [...A.pastPapers, ...B.pastPapers]) {
+    const prev = pastPapers.get(x.id)
+    pastPapers.set(x.id, prev ? { ...prev, ...(prev.removed || x.removed ? { removed: true } : {}) } : x)
+  }
   return {
     targets,
+    pastPapers: [...pastPapers.values()].sort((x, y) => x.at.localeCompare(y.at)),
     attempts: [...attempts.values()].sort((x, y) => x.completedAt.localeCompare(y.completedAt)),
     lessons,
     activities: [...activities.values()].sort((x, y) => x.at.localeCompare(y.at)),
