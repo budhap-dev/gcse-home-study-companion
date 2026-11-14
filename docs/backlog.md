@@ -1180,12 +1180,35 @@ worksheets and the screens checks see the same thing; nothing loops forever; not
 sideways off the page (#351); the motion setting and the phone's reduce-motion preference turn
 it off. One PR per group of figures, each checked on a phone and in both themes.
 
+**Part C: hand-drawn marks on what to remember.** Asked the same day: "add a handwritten line
+circular mark drawn on the important words, sentences and keywords. It will be easier for a
+student to emphasise the topic or word or something to remember." Three marks, each drawn
+like a pen stroke, with a slight wobble so it reads as handwriting rather than a box:
+- a **circle** round a keyword where it is first explained (resistance, osmosis, a sine rule);
+- an **underline** under the one sentence to remember in a step (the rule, the definition);
+- a **highlight** behind a figure or formula worth learning by heart.
+They are written into the lesson text with a short tag that the page turns into the mark, so
+a writer chooses them; nothing is marked automatically. Rules:
+- At most two marks in a step, so a mark still means "this one".
+- A circled word is also bold, so the emphasis survives with marks off, in print and for a
+  screen reader (which reads it as emphasised, not as a drawing).
+- Each mark draws itself once, stroke by stroke, as the step comes into view (Part B's rules:
+  motion off shows it already drawn).
+- A mark wraps with its words across lines on a phone and never covers other text.
+- Colours meet the contrast rule in both themes.
+Placed as part of Part A's review of each subject: the reviewer, reading as a student, chooses
+the words and the sentence worth marking in each step, and the summary step's points get
+marked too. The cheat sheet, built from the same lesson points, shows the marks as well.
+
 - [ ] **1. Part A, Maths.** 73 topics, and a second example for the 28 single-example topics.
 - [ ] **2. Part A, Physics, Chemistry and Biology.** One PR each.
 - [ ] **3. Part A, the other seven subjects.** One PR each.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
 - [ ] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**
+- [ ] **6. Part C, the marks themselves** (circle, underline, highlight; the tag in lesson text;
+  drawing on view; wrapping on a phone; print and screen reader), tried on a few Maths and
+  Physics lessons first. After it, each subject's Part A PR adds that subject's marks.
 
 ## 3. Product features (not planned)
 
