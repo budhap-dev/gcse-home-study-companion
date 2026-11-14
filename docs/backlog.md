@@ -1131,6 +1131,62 @@ agent before they ship.
   No subject grade where the papers listed are not the whole subject: Music (coursework), and
   English Literature in 2021-22, graded by which two of 1M, 1N and 1P a student sat.
 
+## 15. Understanding and motion (14 November 2026)
+
+Asked 14 November 2026: "in all the subjects area can we go through the topics and try to find
+out if those are understandable fully with real life examples. Also can we do some animations
+on the images wherever applicable." Planned here; not started until approved.
+
+**Where things stand (measured 14 November 2026).** Every one of the 360 topics has a "why it
+matters" page with real-life examples, 994 in all: two or more per topic everywhere except 28
+Maths topics, which have one (histograms, compound measures, equations of straight lines and
+25 more). What has not been checked is whether a student can follow each **lesson** on its own:
+whether every new word is explained before it is used, whether each idea is tied to something
+they have seen, and whether the real-life example appears in the lesson where it helps rather
+than only on the separate "why" page. The lessons hold about 3,000 diagrams: 2,195 are tables,
+and about 860 are drawn figures (graphs, circuits, ray diagrams, forces, cells, fields). Only
+three figures animate today (the pH scale, the heart and the electromagnetic spectrum).
+
+**Part A: can a student follow it? (one PR per subject).** A reviewer agent reads every lesson
+as a Year 10 student meeting it for the first time and reports, step by step:
+- a word or symbol used before it is explained;
+- a step that jumps (a result with no reason, two ideas at once);
+- an idea with nothing familiar to hang it on, where a real-life example would help;
+- an example that is wrong, dated or unlikely for a teenager in England.
+Each finding is fixed in the lesson itself: a sentence of explanation, a reordered step, or a
+short real-life example inside the step (for instance a phone charger in the power step, a
+football's bounce in the energy step). Maths's 28 single-example topics get a second "why"
+example. Facts follow the existing rules: board claims traced to the specification, figures
+asserted in a script, a second reviewer reading the fixes. Order proposed: Maths, Physics,
+Chemistry, Biology, then Computer Science, Business, Further Maths, English Language, English
+Literature, Music, French.
+
+**Part B: animations where the idea is movement or change.** About twenty figure types, each
+animated so the animation shows the idea, not decoration:
+- Physics: current moving round a circuit, rays travelling through a lens or bending at a
+  block, field lines drawing outward, a coil turning while its voltage trace builds, a collision
+  before and after, forces appearing on a free-body diagram, a beam tipping to balance,
+  pressure arrows growing with depth.
+- Chemistry: ions moving to the electrodes, electrons passing in a dot-and-cross diagram, the
+  path over a reaction profile.
+- Biology: water moving through a plant.
+- Maths: a line or curve drawing itself, tree branches growing, a vector being drawn, an angle
+  highlighted in a circle theorem.
+- Computer Science: a signal passing through a logic circuit, a flowchart stepping through, a
+  Huffman tree being built.
+Rules, held by tests and the browser checks: an animation plays once when the figure scrolls
+into view, with a replay button; the final frame is the figure as it is today, so printing,
+worksheets and the screens checks see the same thing; nothing loops forever; nothing moves
+sideways off the page (#351); the motion setting and the phone's reduce-motion preference turn
+it off. One PR per group of figures, each checked on a phone and in both themes.
+
+- [ ] **1. Part A, Maths.** 73 topics, and a second example for the 28 single-example topics.
+- [ ] **2. Part A, Physics, Chemistry and Biology.** One PR each.
+- [ ] **3. Part A, the other seven subjects.** One PR each.
+- [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
+  Physics figures.
+- [ ] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are
