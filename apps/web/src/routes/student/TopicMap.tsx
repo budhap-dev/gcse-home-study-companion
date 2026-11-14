@@ -115,7 +115,7 @@ function SubjectHeader({ subject, squares }: { subject: Subject; squares: MapSqu
           ))}
         </ul>
       </div>
-      <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 xl:flex-col xl:gap-2">
+      <div className="flex shrink-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 xl:flex-col xl:flex-nowrap xl:gap-2">
         <Link to={`/subjects/${subject.id}/exam-technique`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <span aria-hidden>✎</span> Exam technique guide
         </Link>
@@ -234,9 +234,9 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
 function ChallengeLink({ subjectId }: { subjectId: string }) {
   const navigate = useNavigate()
   return (
-    <button type="button" onClick={() => navigate(challengePath(subjectId, newSheetCode()))}
+    <button type="button" onClick={() => navigate(challengePath(subjectId, newSheetCode()))} title={`${CHALLENGE_SET} problems, each across more than one unit`}
       className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
-      <span aria-hidden>★</span> Challenge set <span className="font-normal text-ink-2">· {CHALLENGE_SET} problems across units</span>
+      <span aria-hidden>★</span> Challenge set
     </button>
   )
 }
