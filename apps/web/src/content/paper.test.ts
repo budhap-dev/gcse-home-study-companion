@@ -1,7 +1,7 @@
 import { AUTO_MARKED_TYPES, SUBJECTS } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { getGuide, TOPICS, topicsForSubject, yearsForSubject } from './index.ts'
-import { GRADE_9_SET, grade9Items, grade9Path, minutesFor, minutesPerMark, parseYear, perTopic, unitTestItems, unitTestPath, unitTopics } from './paper.ts'
+import { CHALLENGE_SET, challengeItems, challengePath, challengeProblems, GRADE_9_SET, grade9Items, grade9Path, minutesFor, minutesPerMark, parseYear, perTopic, unitTestItems, unitTestPath, unitTopics } from './paper.ts'
 
 const BAND = ['4-5', '6-7', '8-9']
 
@@ -135,3 +135,44 @@ describe('a grade 9 set (WKP-5)', () => {
     expect(grade9Path('physics', 'forces', 'abc123', 11)).toBe('/subjects/physics/units/forces/grade-9?year=11&sheet=abc123')
   })
 })
+
+describe('a Challenge set (section 13, box 12)', () => {
+  const maths = topicsForSubject('maths')
+  const isChallenge = (m: { topicId: string; questionId: string }) => maths.find((t) => t.id === m.topicId)!.questions.find((q) => q.id === m.questionId)!.challenge !== undefined
+
+  it('draws from the subject’s Challenge problems only, a multi-part one whole', () => {
+    expect(challengeProblems(maths).length).toBe(12)
+    for (const code of ['a1', 'b2', 'c3', 'd4']) {
+      const items = challengeItems(maths, code)
+      expect(items.every(isChallenge)).toBe(true)
+      const stems = new Set(items.map((m) => maths.find((t) => t.id === m.topicId)!.questions.find((q) => q.id === m.questionId)!.stemId))
+      expect(stems.size).toBe(CHALLENGE_SET)
+      // every part of each problem drawn is asked
+      for (const m of items) {
+        const t = maths.find((x) => x.id === m.topicId)!
+        const stem = t.questions.find((q) => q.id === m.questionId)!.stemId
+        for (const q of t.questions.filter((x) => x.stemId === stem)) expect(items.some((x) => x.topicId === t.id && x.questionId === q.id), `${t.id} ${q.id}`).toBe(true)
+      }
+    }
+  })
+
+  it('is fixed by its code, and a new code is a new mix', () => {
+    expect(challengeItems(maths, 'same')).toEqual(challengeItems(maths, 'same'))
+    const mixes = new Set(['a1', 'b2', 'c3', 'd4', 'e5', 'f6'].map((c) => challengeItems(maths, c).map((m) => `${m.topicId}/${m.questionId}`).sort().join()))
+    expect(mixes.size).toBeGreaterThan(1)
+  })
+
+  it('is kept out of every unit’s test and grade 9 set', () => {
+    const units = [...new Set(maths.map((t) => t.unitId))]
+    for (const u of units) for (const code of ['x1', 'y2', 'z3']) {
+      const topics = unitTopics(maths, u)
+      expect(unitTestItems(topics, code).filter(isChallenge), `${u} test`).toEqual([])
+      expect(grade9Items(topics, code).filter(isChallenge), `${u} grade 9`).toEqual([])
+    }
+  })
+
+  it('has a link of its own', () => {
+    expect(challengePath('maths', 'k7q2')).toBe('/subjects/maths/challenge?sheet=k7q2')
+  })
+})
+

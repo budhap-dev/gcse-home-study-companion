@@ -37,7 +37,7 @@ export interface AttemptRecord {
    * one too (WKS-4), and so are a unit test (TOP-3) and a grade 9 set (WKP-5): each counts as a
    * visit to its topics without replacing their quiz in the status rule.
    */
-  from?: 'recap' | 'mixed' | 'unit-test' | 'grade-9'
+  from?: 'recap' | 'mixed' | 'unit-test' | 'grade-9' | 'challenge'
   /** Sat against the clock (WKP-4), and how long it took, in whole seconds. */
   timed?: { allowedSeconds: number; usedSeconds: number }
   level?: WorksheetLevel
@@ -60,7 +60,7 @@ export interface AttemptRecord {
 }
 
 const REVIEW_NAME: Record<NonNullable<AttemptRecord['from']> | 'redo', string> = {
-  redo: 'Redo my mistakes', recap: 'Daily recap', mixed: 'Mixed worksheet', 'unit-test': 'Unit test', 'grade-9': 'Grade 9 set',
+  redo: 'Redo my mistakes', recap: 'Daily recap', mixed: 'Mixed worksheet', 'unit-test': 'Unit test', 'grade-9': 'Grade 9 set', challenge: 'Challenge set',
 }
 
 /**

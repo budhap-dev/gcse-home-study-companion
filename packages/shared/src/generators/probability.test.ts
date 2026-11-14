@@ -733,6 +733,9 @@ describe('slots sharing a sheet ask different questions', () => {
       'combined-events-and-tree-diagrams/q25',
       'combined-events-and-tree-diagrams/q26',
       'combined-events-and-tree-diagrams/q27',
+      // Challenge problem (box 12): written, not generated.
+      'combined-events-and-tree-diagrams/q28',
+      'combined-events-and-tree-diagrams/q29',
       'relative-frequency-and-expected-outcomes/q22',
       'relative-frequency-and-expected-outcomes/q23',
       'relative-frequency-and-expected-outcomes/q25',
@@ -756,6 +759,9 @@ describe('slots sharing a sheet ask different questions', () => {
       'venn-diagrams/q24',
       'venn-diagrams/q25',
       'venn-diagrams/q26',
+      // Challenge problem (box 12): written, not generated.
+      'venn-diagrams/q27',
+      'venn-diagrams/q28',
       'sets-and-set-notation/q19',
       'sets-and-set-notation/q20',
       'sets-and-set-notation/q21',

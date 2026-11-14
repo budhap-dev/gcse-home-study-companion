@@ -15,7 +15,7 @@ import { MasteryLadder, SQUARES_GRID, TopicSquare } from '../../components/map/M
 import { useWide } from '../../components/useWide.ts'
 import { SheetsIcon } from '../../components/icons.tsx'
 import { GradePanel } from '../../components/GradePanel.tsx'
-import { GRADE_9_SET, grade9Path, unitTestPath } from '../../content/paper.ts'
+import { CHALLENGE_SET, challengePath, challengeProblems, GRADE_9_SET, grade9Path, unitTestPath } from '../../content/paper.ts'
 import { newSheetCode } from '../../content/sheetCode.ts'
 
 /**
@@ -128,6 +128,7 @@ function SubjectHeader({ subject, squares }: { subject: Subject; squares: MapSqu
         <Link to={`/subjects/${subject.id}/make-worksheet`} className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
           <span aria-hidden>⊞</span> Make a worksheet
         </Link>
+        {challengeProblems(topicsForSubject(subject.id)).length >= CHALLENGE_SET && <ChallengeLink subjectId={subject.id} />}
       </div>
     </header>
   )
@@ -223,6 +224,20 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
 
       {pickedSquare && <TopicPanel key={pickedSquare.id} square={square(pickedSquare, progress)} progress={progress} open={sheet} onClose={() => setSheet(false)} />}
     </div>
+  )
+}
+
+/**
+ * The subject's Challenge set (section 13, box 12): problems that need more than one unit at
+ * once, beside the other ways in. Each press makes a new set.
+ */
+function ChallengeLink({ subjectId }: { subjectId: string }) {
+  const navigate = useNavigate()
+  return (
+    <button type="button" onClick={() => navigate(challengePath(subjectId, newSheetCode()))}
+      className="lift flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-rule bg-surface px-5 font-bold accent-ink">
+      <span aria-hidden>★</span> Challenge set <span className="font-normal text-ink-2">· {CHALLENGE_SET} problems across units</span>
+    </button>
   )
 }
 

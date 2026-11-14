@@ -47,7 +47,7 @@ export function unitTestItems(topics: TopicSummary[], code: string): SessionItem
   const k = perTopic(topics.length)
   const picked: { item: SessionItem; band: GradeBand; turn: number }[] = []
   for (const t of topics) {
-    const markable = t.questions.filter((q) => AUTO_MARKED_TYPES.includes(q.type))
+    const markable = t.questions.filter((q) => AUTO_MARKED_TYPES.includes(q.type) && !q.challenge)
     const byBand = new Map(BAND_ORDER.map((b) => [b, seededShuffle(markable.filter((q) => q.gradeBand === b).map((q) => q.id), `${code}:${t.id}:${b}`)]))
     const rest = seededShuffle(markable.map((q) => q.id), `${code}:${t.id}`)
     const taken = new Set<string>()
@@ -97,7 +97,8 @@ export const GRADE_9_SET = 8
  */
 export function grade9Items(topics: TopicSummary[], code: string): SessionItem[] {
   const pools = seededShuffle(topics, code).map((t) => {
-    const hard = t.questions.filter((q) => q.gradeBand === '8-9')
+    // A Challenge problem needs other units too, so it is not a unit's own grade 9 problem.
+    const hard = t.questions.filter((q) => q.gradeBand === '8-9' && !q.challenge)
     const byMarks = seededShuffle(hard, `${code}:${t.id}`).sort((a, b) => b.marks - a.marks)
     // The longer problems first, but not always the same ones: the top three fifths are drawn
     // in the code's order, the rest after them.
@@ -121,3 +122,40 @@ export function grade9Items(topics: TopicSummary[], code: string): SessionItem[]
 export function grade9Path(subjectId: string, unitId: string, code: string, year?: number): string {
   return `/subjects/${subjectId}/units/${unitId}/grade-9?${year ? `year=${year}&` : ''}sheet=${code}`
 }
+
+/** Problems in a Challenge set (section 13, box 12): long multi-part problems, so fewer than a grade 9 set. */
+export const CHALLENGE_SET = 4
+
+/** The subject's Challenge problems, one entry per problem (a multi-part one counts once). */
+export function challengeProblems(subjectTopics: TopicSummary[]): { topicId: string; questionId: string; stemId?: string; marks: number }[] {
+  const out: { topicId: string; questionId: string; stemId?: string; marks: number }[] = []
+  for (const t of subjectTopics) {
+    const seen = new Set<string>()
+    for (const q of t.questions) {
+      if (!q.challenge) continue
+      if (q.stemId) {
+        if (seen.has(q.stemId)) continue
+        seen.add(q.stemId)
+        const marks = t.questions.filter((x) => x.stemId === q.stemId).reduce((n, x) => n + x.marks, 0)
+        out.push({ topicId: t.id, questionId: q.id, stemId: q.stemId, marks })
+      } else out.push({ topicId: t.id, questionId: q.id, marks: q.marks })
+    }
+  }
+  return out
+}
+
+/**
+ * A Challenge set (section 13, box 12): CHALLENGE_SET of the subject's Challenge problems,
+ * each needing topics from more than one unit, drawn by the code so a new set is a new mix,
+ * from fewest marks to most. A multi-part problem is asked whole.
+ */
+export function challengeItems(subjectTopics: TopicSummary[], code: string): SessionItem[] {
+  const picked = seededShuffle(challengeProblems(subjectTopics), code).slice(0, CHALLENGE_SET).sort((a, b) => a.marks - b.marks)
+  return groupParts(picked.map((p) => ({ topicId: p.topicId, questionId: p.questionId })), subjectTopics, { whole: true })
+}
+
+/** The link to a Challenge set of a subject. */
+export function challengePath(subjectId: string, code: string): string {
+  return `/subjects/${subjectId}/challenge?sheet=${code}`
+}
+

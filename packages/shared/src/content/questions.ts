@@ -70,6 +70,13 @@ const base = {
    * A missed question links to this step (teachingStep.ts).
    */
   step: Slug.optional(),
+  /**
+   * A Challenge problem (section 13, box 12): one that needs topics from other units of the
+   * subject as well as its own, named here by id. Challenge problems make up a subject's
+   * Challenge set and are left out of single-unit papers (unit tests, grade 9 sets) and of
+   * worksheets made from chosen topics, where they would ask for something not chosen.
+   */
+  challenge: z.object({ draws: z.array(Slug).min(1) }).optional(),
 }
 
 const MultipleChoice = z.object({
