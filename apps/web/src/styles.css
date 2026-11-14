@@ -659,3 +659,20 @@ figure[data-diagram] {
 /* Native search inputs draw a clear button that ignores the theme; hide it. */
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/* Hand-drawn marks on what to remember (section 15, Part C; hand.ts draws them). The SVG is
+   the background, stretched to the element, and cloned onto every line a mark wraps across.
+   Room is made round a circled word so the loop clears its letters; a negative margin gives
+   the line its spacing back. A highlight is a <mark> that shows no colour of its own until
+   it is drawn, except in print, where backgrounds are dropped and the <mark> keeps a tint. */
+.hand { -webkit-box-decoration-break: clone; box-decoration-break: clone; background-repeat: no-repeat; background-size: 100% 100%; }
+.hand-circle { padding: 0.2em 0.4em; margin: -0.2em -0.15em; }
+.hand-underline { padding-bottom: 0.18em; }
+mark.hand-highlight { background-color: transparent; color: inherit; padding: 0.05em 0.2em; margin: 0 -0.05em; }
+.hand-highlight-probe { background-color: var(--highlight); }
+@media print {
+  .hand { background-image: none !important; }
+  mark.hand-highlight { background-color: #fff2a8; }
+  .hand-underline { text-decoration: underline; }
+}
+

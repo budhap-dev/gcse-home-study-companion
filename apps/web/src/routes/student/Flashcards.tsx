@@ -1,4 +1,4 @@
-import { getSubject, seededShuffle, type Question } from '@study/shared'
+import { getSubject, seededShuffle, stripHands, type Question } from '@study/shared'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { RichText } from '../../components/RichText.tsx'
@@ -68,7 +68,7 @@ export function buildCards(topic: TopicRecord): Card[] {
   const summary = topic.lesson.steps.find((s) => s.kind === 'summary')
   if (summary) {
     summary.body.split('\n').filter((l) => l.trim().startsWith('- ')).forEach((l, i) => {
-      const cue = cueAndDetail(l.trim().slice(2))
+      const cue = cueAndDetail(stripHands(l.trim().slice(2)))
       // A bullet with no cue in it makes no card. It used to make one headed
       // "Key point 7 of ...", which asks the reader nothing: 56% of the summary cards in
       // the pack were that. A shorter deck of real prompts is worth more than a long one.
