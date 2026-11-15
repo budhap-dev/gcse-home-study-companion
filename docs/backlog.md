@@ -1217,6 +1217,19 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   function and its inverse need not meet on y = x; the bounds example's "tenth of the
   length". A browser scan of every Maths step checks each tag draws as a mark.
 - [ ] **2. Part A, Physics, Chemistry and Biology.** One PR each.
+  **Physics done 15 November 2026:** six reviewers read all 34 lessons (298 steps). 418 edits:
+  215 marks, 92 terms explained where first used, 66 real-life examples in the steps, 16
+  jumps given their reason, 21 corrections. What was wrong: the gradient of an I–V graph is
+  1/R only for a straight line through the origin; "doubling the current quadruples the power"
+  only in the same resistance; an echo-sounding "sanity check" called the doubled depth (60 m
+  for a 30 m seabed) plausible; a nebula heats because its particles speed up as they fall,
+  not because they collide more; "every atom heavier than hydrogen was made in a star" (most
+  helium is older); a compass "points the same way everywhere"; the practical's string must
+  run parallel to a tilted bench, not horizontal; polystyrene is below 100 kg/m³; and an ear
+  to a railway line was swapped for a railing. Found on the way: an LED lamp turning 95% of
+  its input into light (about 40% is real), in the lesson, a 6-mark question and three
+  generator tables; and "V = IR and the power equations are not given", which
+  equation-sheet.test.ts now catches.
 - [ ] **3. Part A, the other seven subjects.** One PR each.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.

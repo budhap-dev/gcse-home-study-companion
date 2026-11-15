@@ -564,8 +564,9 @@ const DEVICES: Device[] = [
   { name: 'A motor', useful: (y) => `transfers ${y} J usefully`, eff: [60, 90] },
   { name: 'An electric drill', useful: (y) => `transfers ${y} J usefully to the kinetic store of the drill bit`, eff: [50, 80] },
   { name: 'A kettle', useful: (y) => `transfers ${y} J to the water`, eff: [70, 90] },
-  { name: 'A filament lamp', useful: (y) => `transfers ${y} J usefully as light`, eff: [5, 20] },
-  { name: 'An LED lamp', useful: (y) => `transfers ${y} J usefully as light`, eff: [80, 95] },
+  { name: 'A filament lamp', useful: (y) => `transfers ${y} J usefully as light`, eff: [5, 10] },
+  // A white LED lamp turns roughly a third to a half of its input into light, not 80-95%.
+  { name: 'An LED lamp', useful: (y) => `transfers ${y} J usefully as light`, eff: [30, 50] },
   { name: 'A hairdryer', useful: (y) => `transfers ${y} J usefully`, eff: [60, 90] },
   { name: 'A loudspeaker', useful: (y) => `transfers ${y} J usefully as sound`, eff: [5, 15] },
   { name: 'A toaster', useful: (y) => `transfers ${y} J to the bread`, eff: [50, 80] },
@@ -816,7 +817,7 @@ export const powerFromEnergy: Generator = {
 
 const EFFICIENT: Device[] = [
   { name: 'A filament lamp', useful: (y) => `transfers ${y} J usefully as light`, eff: [5, 10] },
-  { name: 'An LED lamp', useful: (y) => `transfers ${y} J usefully as light`, eff: [80, 90] },
+  { name: 'An LED lamp', useful: (y) => `transfers ${y} J usefully as light`, eff: [30, 50] },
   { name: 'A motor', useful: (y) => `transfers ${y} J usefully`, eff: [60, 90] },
   { name: 'A kettle', useful: (y) => `transfers ${y} J to the water`, eff: [70, 90] },
   { name: 'A petrol engine', useful: (y) => `transfers ${y} J usefully to the kinetic store of the car`, eff: [25, 35] },
@@ -925,7 +926,7 @@ const POWERED_DEVICES: PoweredDevice[] = [
   // No total of 100 or 1000: the decimal would be the useful power with its point moved.
   { name: 'A motor', unit: 'W', total: [200, 250, 400, 500, 800, 1200, 1500, 2000, 2500, 3000], eff: [60, 90] },
   { name: 'A kettle', unit: 'W', total: [2000, 2200, 2400, 2500, 3000], eff: [70, 90] },
-  { name: 'An LED lamp', unit: 'W', total: [5, 8, 10, 12, 15, 20], eff: [80, 90] },
+  { name: 'An LED lamp', unit: 'W', total: [5, 8, 10, 12, 15, 20], eff: [30, 50] },
   { name: 'A filament lamp', unit: 'W', total: [40, 60, 150], eff: [5, 10] },
   { name: 'An electric car motor', unit: 'kW', total: [50, 60, 80, 120, 150], eff: [85, 95] },
   { name: 'A wind turbine', unit: 'kW', total: [500, 1500, 2000, 2500, 3000], eff: [30, 45] },
