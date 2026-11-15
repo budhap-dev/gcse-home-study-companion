@@ -1230,6 +1230,20 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   its input into light (about 40% is real), in the lesson, a 6-mark question and three
   generator tables; and "V = IR and the power equations are not given", which
   equation-sheet.test.ts now catches.
+  **Chemistry done 15 November 2026:** seven reviewers read all 47 lessons (358 steps). 498
+  edits: 285 marks, 135 terms explained where first used (mole, aqueous, delocalised, bond
+  energy, titre, ore, isotope...), 78 real-life examples in the steps, 26 jumps given their
+  reason. What was wrong: "the smallest nanoparticles contain a few hundred atoms" (a 1 nm one
+  holds about 30); "copper(II) compounds are blue" as a rule (the oxide is black, anhydrous
+  copper sulfate white); the Haber process recycling its gases "because equilibrium needs a
+  closed system" (only part reacts on each pass); a protein "built from one amino acid
+  repeated"; and a back-reference to a polymer lesson that never said it. Found on the way, by
+  hand: the ionic lesson listed different limits of the particle model from States of matter;
+  H⁺ + OH⁻ → H₂O "covers every neutralisation" (only acid with alkali); a Core practical
+  (Edexcel's word) title; ships' hulls protected only by magnesium (sea-going ships mostly use
+  zinc or aluminium); ground water with "few dissolved solids"; and an engine's air given as
+  9,000, nearly 10,000 and 9,750 litres in one card. Highlights cannot wrap a formula with
+  braces (\dfrac, \text, subscripts), so seven such marks were left out.
 - [ ] **3. Part A, the other seven subjects.** One PR each.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
