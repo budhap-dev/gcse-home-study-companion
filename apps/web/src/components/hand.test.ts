@@ -38,6 +38,23 @@ describe('hand-drawn marks (section 15, Part C)', () => {
     expect(handSvg('underline', 1, '#123456', true, 412)).toContain('stroke-dasharray:412 412')
   })
 
+  it('keeps every stroke inside its box, so no mark is cut off flat', () => {
+    // half the stroke (about 1 unit across, 1.5 up) must fit inside the 100 by 40 box as well
+    for (let seed = 1; seed <= 500; seed++) {
+      for (const k of ['circle', 'underline'] as const) {
+        const d = handSvg(k, seed * 7919, '#123456', false).match(/ d="([^"]+)"/)![1]
+        const n = d.match(/-?\d+(\.\d+)?/g)!.map(Number)
+        expect(n.length).toBeGreaterThan(5)
+        for (let i = 0; i < n.length; i += 2) {
+          expect(n[i]).toBeGreaterThanOrEqual(1)
+          expect(n[i]).toBeLessThanOrEqual(99)
+          expect(n[i + 1]).toBeGreaterThanOrEqual(1.5)
+          expect(n[i + 1]).toBeLessThanOrEqual(38.5)
+        }
+      }
+    }
+  })
+
   it('makes a CSS url of the SVG', () => {
     expect(svgUrl('<svg/>')).toBe('url("data:image/svg+xml,%3Csvg%2F%3E")')
   })

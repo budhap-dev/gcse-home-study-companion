@@ -46,7 +46,9 @@ export function handSvg(kind: HandKind, seed: number, colour: string, animate: b
     for (let i = 0; i <= 28; i++) {
       const a = start + (turn * i) / 28
       const wob = 1 + j(0.035) + (i / 28) * 0.04
-      pts.push(`${r1(50 + 47 * wob * Math.cos(a))} ${r1(20 + 17.5 * wob * Math.sin(a))}`)
+      // Radii leave room for the widest wobble (1.075) and half the stroke inside the 100 by 40
+      // box: a loop that runs past the box is cut off flat at its sides.
+      pts.push(`${r1(50 + 45 * wob * Math.cos(a))} ${r1(20 + 16.5 * wob * Math.sin(a))}`)
     }
     shape = `<path d="M${pts.join(' L')}" fill="none" stroke="${colour}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`
   } else if (kind === 'underline') {
