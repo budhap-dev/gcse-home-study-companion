@@ -70,6 +70,10 @@
           },
           "alt": "A table of four iteration steps starting from one, showing the guess settling on one point four one four two one three five six two, the square root of two"
         }
+      },
+      {
+        "title": "Sizing a storage tub",
+        "body": "A manufacturer wants a 3-litre tub, which is 3000 cm³, with a square base and a height 10 cm more than its width. With a width of $x$ cm the volume is $x^2(x + 10) = 3000$, a cubic with no whole-number answer and no formula on the GCSE course.\n\nDivide both sides by $x + 10$ and take the square root: $x = \\sqrt{\\tfrac{3000}{x + 10}}$. Start with a guess of 10 cm. The iterates are 12.25, 11.61, 11.78, 11.74, 11.75, 11.74, 11.75, swinging above and below the answer and closing in each time.\n\nFrom the fourth iterate on they all round to 11.7, so the tub is about 11.7 cm wide and 21.7 cm tall. Check: $11.75^2 \\times 21.75 \\approx 3003$, close to 3000. A spreadsheet's goal-seek tool finds answers like this in the same way."
       }
     ]
   },
@@ -79,7 +83,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "When you cannot solve it exactly",
-        "body": "Some equations have no neat solution. $x^3 - 2x - 5 = 0$ cannot be factorised and has no formula you are given, yet it certainly has a solution: the graph crosses the $x$-axis.\n\n**Iteration** finds that solution to as many decimal places as you like, by guessing and improving. The method is:\n\n1. **Rearrange** the equation into the form $x = \\text{something involving } x$.\n2. Put a **starting value** $x_0$ into the right-hand side.\n3. The answer out is $x_1$. Put **that** back in to get $x_2$, and keep going.\n\nWritten as a formula this is $x_{n+1} = f(x_n)$, and the subscripts are just labels: $x_0$ is the guess you were given, $x_1$ the first answer out, and so on.\n\nWhen the values stop changing to the accuracy you want, you have your solution.",
+        "body": "Some equations have no neat solution. $x^3 - 2x - 5 = 0$ cannot be factorised and has no formula you are given, yet it certainly has a solution: the graph crosses the $x$-axis.\n\n{{circle|Iteration}} finds that solution to as many decimal places as you like, by guessing and improving, the way you set a shower: try a position, feel the water, nudge the dial, and stop when it no longer needs changing. The method is:\n\n1. **Rearrange** the equation into the form $x = \\text{something involving } x$.\n2. Put a **starting value** $x_0$ into the right-hand side.\n3. The answer out is $x_1$. Put **that** back in to get $x_2$, and keep going.\n\nWritten as a formula this is $x_{n+1} = f(x_n)$, and the subscripts are only labels: $x_0$ is the guess you were given, $x_1$ the first answer out, and so on.\n\n{{underline|When the values stop changing to the accuracy you want, you have your solution.}}",
         "visuals": [
           {
             "type": "diagram",
@@ -358,7 +362,7 @@
         "id": "s4",
         "kind": "worked-example",
         "title": "Showing a solution lies between two values",
-        "body": "Before or after iterating, a question often asks you to **show** that a solution lies between two numbers. That is a different method: the **sign change**.\n\nIf $f(a)$ and $f(b)$ have **opposite signs**, and the graph is unbroken between them, it must cross zero somewhere in between. So there is a solution between $a$ and $b$.",
+        "body": "Before or after iterating, a question often asks you to **show** that a solution lies between two numbers. That is a different method: the **sign change**.\n\nWrite the equation as $f(x) = 0$, with everything on one side. {{underline|If $f(a)$ and $f(b)$ have opposite signs}}, and the graph is unbroken between them, it must cross zero somewhere in between. So there is a solution between $a$ and $b$.",
         "visuals": [
           {
             "type": "worked-example",
@@ -449,7 +453,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Rounding, and when to stop",
-        "body": "Two habits decide whether you get the marks.\n\n**Never round part way through.** Every rounding error feeds into the next iterate and grows. Use the **ANS** key: type the formula once with ANS in place of $x$, then press equals repeatedly.\n\n**Stop when the answer is stable to the accuracy asked for.** If a question wants 3 decimal places, keep going until two consecutive iterates **agree to 3 decimal places**, then give that value. For the first example, $x_4 = 0.6967$ and $x_5 = 0.6971$ both round to 0.697, so 0.697 is the answer.\n\nWrite the iterates down as you go. A question asking for $x_1$, $x_2$ and $x_3$ wants all three, and they carry the marks even if the last one slips.",
+        "body": "Two habits decide whether you get the marks.\n\n{{underline|Never round part way through.}} Each value the formula gives out is an {{circle|iterate}}, and every rounding error feeds into the next iterate and grows. Use the **ANS** key: type the formula once with ANS in place of $x$, then press equals repeatedly.\n\n**Stop when the answer is stable to the accuracy asked for.** If a question wants 3 decimal places, keep going until two consecutive iterates **agree to 3 decimal places**, then give that value. For the first example, $x_4 = 0.6967$ and $x_5 = 0.6971$ both round to 0.697, so 0.697 is the answer.\n\nWrite the iterates down as you go. A question asking for $x_1$, $x_2$ and $x_3$ wants all three, and they carry the marks even if the last one slips.",
         "visuals": [
           {
             "type": "diagram",
@@ -587,7 +591,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: when the iteration runs away",
-        "body": "Not every rearrangement works. The same equation can be rearranged several ways, and some of them **diverge**: the values grow instead of settling.\n\nTake $x^3 - 2x - 5 = 0$ again, but rearranged the other way: $2x = x^3 - 5$, so $x = \\dfrac{x^3 - 5}{2}$. Starting at $x_0 = 2$ that gives 2, 1.5, -0.813, -2.768, and it keeps running away. The solution is still 2.0946, but this formula will never find it.\n\n**Why.** Near the solution, an iteration converges when the right-hand side changes **more slowly** than $x$ does, and diverges when it changes faster. Cubing makes it change much faster, so that version diverges; taking a cube root makes it change more slowly, so that version converges.\n\nYou are not asked to prove this. You are asked to **notice** it: if the values are growing or jumping about, the rearrangement is wrong for the job, and the mark comes from saying so and trying another.",
+        "body": "Not every rearrangement works. The same equation can be rearranged several ways, and some of them **diverge**: the values grow instead of settling.\n\nTake $x^3 - 2x - 5 = 0$ again, but rearranged the other way: $2x = x^3 - 5$, so $x = \\dfrac{x^3 - 5}{2}$. Starting at $x_0 = 2$ that gives 2, 1.5, -0.813, -2.768, and it keeps running away. The solution is still 2.0946, but this formula will never find it.\n\n**Why.** Near the solution, an iteration converges, settling on one value, when the right-hand side changes **more slowly** than $x$ does, and diverges when it changes faster. Cubing makes it change much faster, so that version diverges; taking a cube root makes it change more slowly, so that version converges.\n\nYou are not asked to prove this. You are asked to **notice** it: if the values are growing or jumping about, the rearrangement is wrong for the job, and the mark comes from saying so and trying another.",
         "visuals": [
           {
             "type": "diagram",
@@ -692,7 +696,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Iteration** finds a solution numerically when the equation cannot be solved exactly.\n- Rearrange to $x = \\text{something in } x$, then run $x_{n+1} = f(x_n)$ from the given $x_0$.\n- $x_0$ is the **starting value given to you**; $x_1$ is the first value out.\n- **Never round part way through.** Use ANS and round only the final answer.\n- **Stop** when two consecutive iterates agree to the accuracy asked for.\n- A **sign change** in $f(x)$ between $a$ and $b$ shows a solution lies between them. Substitute both, state both signs, and say *sign change*.\n- Some rearrangements **diverge**. If the values grow or jump about, say so and use a different rearrangement.\n- Worked here: $x = \\dfrac{x^2+3}{5}$ from $x_0 = 0.6$ settles at **0.697**, and $x = \\sqrt[3]{2x+5}$ from $x_0 = 2$ settles at **2.095** to 3 d.p..",
+        "body": "- **Iteration** finds a solution numerically when the equation cannot be solved exactly.\n- Rearrange to $x = \\text{something in } x$, then run $x_{n+1} = f(x_n)$ from the given $x_0$.\n- $x_0$ is the **starting value given to you**; $x_1$ is the first value out.\n- {{underline|Never round part way through.}} Use ANS and round only the final answer.\n- **Stop** when two consecutive iterates agree to the accuracy asked for.\n- A **sign change** in $f(x)$ between $a$ and $b$ shows a solution lies between them. Substitute both, state both signs, and say *sign change*.\n- Some rearrangements **diverge**. If the values grow or jump about, say so and use a different rearrangement.\n- Worked here: $x = \\dfrac{x^2+3}{5}$ from $x_0 = 0.6$ settles at **0.697**, and $x = \\sqrt[3]{2x+5}$ from $x_0 = 2$ settles at **2.095** to 3 d.p.",
         "visuals": [
           {
             "type": "diagram",

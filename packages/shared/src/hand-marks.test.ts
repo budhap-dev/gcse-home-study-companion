@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { HAND_ANY, HAND_TAG } from './handMarks.ts'
+import { HAND_ANY, HAND_TAG, parkMaths } from './handMarks.ts'
 
 /**
  * Hand-drawn marks in lesson text (section 15, Part C). A mark means "this one", so a step
@@ -12,7 +12,8 @@ const ROOT = join(import.meta.dirname, '../../../supabase/seed/content')
 const steps = readdirSync(ROOT).filter((d) => statSync(join(ROOT, d)).isDirectory()).flatMap((d) =>
   readdirSync(join(ROOT, d)).filter((f) => f.endsWith('.json')).flatMap((f) => {
     const t = JSON.parse(readFileSync(join(ROOT, d, f), 'utf8')) as { id: string; lesson: { steps: { id: string; body: string }[] } }
-    return t.lesson.steps.map((s) => ({ where: `${d}/${t.id} ${s.id}`, body: s.body }))
+    // Read as RichText reads it: maths parked first, so its braces never split a tag.
+    return t.lesson.steps.map((s) => ({ where: `${d}/${t.id} ${s.id}`, body: parkMaths(s.body).text, raw: s.body }))
   }))
 
 describe('hand-drawn marks in lessons', () => {
@@ -36,6 +37,6 @@ describe('hand-drawn marks in lessons', () => {
   })
 
   it('never wrap display maths', () => {
-    for (const s of marked) for (const m of s.body.matchAll(HAND_TAG)) expect(m[2]!.includes('$$'), s.where).toBe(false)
+    for (const s of marked) for (const m of s.raw.matchAll(/\{\{(?:circle|underline|highlight)\|([\s\S]*?)\}\}/g)) expect(m[1]!.includes('$$'), s.where).toBe(false)
   })
 })
