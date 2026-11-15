@@ -37,7 +37,7 @@ describe('the Physics equation sheet', () => {
    */
   it('is never said to leave an equation off, anywhere in the Physics content', () => {
     // A multiple-choice distractor is false on purpose, so the options are not scanned.
-    const FALSE_CLAIM = /not(?:\*\*)? on the (?:AQA )?(?:physics )?(?:equation )?sheet|neither is on the sheet|on the recall list|does not give it on|must be recalled|has to be recalled|not given in the exam|had not been confirmed/i
+    const FALSE_CLAIM = /not(?:\*\*)? on the (?:AQA )?(?:physics )?(?:equation )?sheet|neither is on the sheet|on the recall list|does not give it on|must be recalled|has to be recalled|not given in the exam|equations? (?:are|is) (?:\*\*)?not(?:\*\*)? given|had not been confirmed/i
     const dir = join(ROOT, 'content/physics')
     const found = readdirSync(dir)
       .filter((f) => f.endsWith('.json'))
@@ -48,8 +48,8 @@ describe('the Physics equation sheet', () => {
   })
 
   it('catches the phrasings it was written for', () => {
-    const FALSE_CLAIM = /not(?:\*\*)? on the (?:AQA )?(?:physics )?(?:equation )?sheet|neither is on the sheet|on the recall list|does not give it on|must be recalled|has to be recalled|not given in the exam|had not been confirmed/i
-    for (const s of ['This equation is **not** on the AQA equation sheet.', 'it is not on the sheet', 'v = fλ must be recalled', 'both on the recall list']) expect(FALSE_CLAIM.test(s), s).toBe(true)
+    const FALSE_CLAIM = /not(?:\*\*)? on the (?:AQA )?(?:physics )?(?:equation )?sheet|neither is on the sheet|on the recall list|does not give it on|must be recalled|has to be recalled|not given in the exam|equations? (?:are|is) (?:\*\*)?not(?:\*\*)? given|had not been confirmed/i
+    for (const s of ['This equation is **not** on the AQA equation sheet.', 'it is not on the sheet', 'v = fλ must be recalled', 'both on the recall list', 'the power equations are **not** given']) expect(FALSE_CLAIM.test(s), s).toBe(true)
     expect(FALSE_CLAIM.test('It is on the equation sheet, marked HT.')).toBe(false)
   })
 })
