@@ -35,7 +35,7 @@
     "examples": [
       {
         "title": "The chart that flatters the wide band",
-        "body": "A report groups 786 people by age: 120 aged under 10, 96 from 10 to 18, 470 from 18 to 65, and 100 over 65.\n\nPlot those as heights and the 18–65 bar towers over everything — 470 against 120. It looks as though the population is overwhelmingly adult in a way the other bars cannot touch.\n\nBut that band is 47 years wide and the first is 10. Divide to get people per year and the ranking reverses: 12 a year under 10, 12 a year for teenagers, and only 10 a year through the whole of adulthood. The crowded years are the early ones.\n\nNothing was made up. The wide bar simply had 47 years to accumulate people in, and drawing frequency as height gave it credit for all of them at once.",
+        "body": "A report groups 786 people by age: 120 aged under 10, 96 from 10 to 18, 470 from 18 to 65, and 100 over 65.\n\nPlot those as heights and the 18–65 bar towers over everything — 470 against 120. It looks as though the population is overwhelmingly adult in a way the other bars cannot touch.\n\nBut that band is 47 years wide and the first is 10. Divide to get people per year and the ranking reverses: 12 a year under 10, 12 a year for teenagers, and only 10 a year through the whole of adulthood. The crowded years are the early ones.\n\nNothing was made up. The wide bar had 47 years to accumulate people in, and drawing frequency as height gave it credit for all of them at once.",
         "visual": {
           "type": "diagram",
           "component": "histogram",
@@ -69,6 +69,10 @@
           },
           "alt": "A histogram of four age bands of very different widths, drawn with frequency density so the wide adult band is a long low bar and the narrow childhood bands are short but taller"
         }
+      },
+      {
+        "title": "Where the parkrun field is packed",
+        "body": "A Saturday parkrun, 5 km, has 300 finishers, and the results are summarised in time bands. 90 runners finished in 25 to 30 minutes and 100 in 30 to 40 minutes.\n\nAs bars of frequency, the 30 to 40 band looks the busier. Per minute it is not: $90 \\div 5 = 18$ runners a minute against $100 \\div 10 = 10$. Those frequency densities are the heights on a histogram, and they show that the field was most tightly packed just under half an hour.\n\nThe histogram also answers questions the table cannot. A runner who finished in 32 minutes wants to know how many came in between 30 and 32 minutes. Assuming the 100 in that band are spread evenly, that is $10 \\times 2 = 20$ runners: an estimate, but a fair one."
       }
     ]
   },
@@ -78,7 +82,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Why a histogram is not a bar chart",
-        "body": "A **bar chart** shows separate categories and its bars have gaps. A **histogram** shows **continuous** data grouped into classes, so its bars touch.\n\nThe real difference is what the bars mean.\n\n- On a bar chart the **height** is the frequency.\n- On a histogram the **area** is the frequency, and the height is the **frequency density**.\n\nThat is because the classes can be different widths. A class twice as wide collects roughly twice as many values just by being wider, so plotting frequency as height would make it look twice as common when it is not. Dividing by the width undoes that.\n\n$$\\text{frequency density} = \\dfrac{\\text{frequency}}{\\text{class width}}$$",
+        "body": "A **bar chart** shows separate categories and its bars have gaps. A **histogram** shows **continuous** data grouped into classes, so its bars touch. Continuous data is measured, such as times or heights, and can take any value in a range, so one class runs straight on into the next.\n\nThe real difference is what the bars mean.\n\n- On a bar chart the **height** is the frequency.\n- {{underline|On a histogram the area is the frequency}}, and the height is the {{circle|frequency density}}.\n\nThat is because the classes can be different widths. A class twice as wide can collect twice as many values only because it is wider, so plotting frequency as height would make it look twice as common when it is not. Dividing by the width undoes that, and gives the frequency for each unit of width.\n\nSuppose 20 students take 0 to 10 minutes to get to school and 20 take 10 to 30 minutes. As heights the two bars would match, yet the second 20 are spread over twice as many minutes: 1 student per minute against 2. Those are the frequency densities.\n\n$$\\text{frequency density} = \\dfrac{\\text{frequency}}{\\text{class width}}$$",
         "visuals": [
           {
             "type": "diagram",
@@ -222,7 +226,7 @@
                 "note": "wide and quiet, so the shortest bar"
               },
               {
-                "text": "The second class has the **highest bar** but not the highest frequency",
+                "text": "The second class has the **highest bar** by far, though its frequency is only a little above the others",
                 "note": "that is exactly what frequency density is for"
               }
             ]
@@ -261,7 +265,7 @@
         "id": "s3",
         "kind": "worked-example",
         "title": "Drawing it",
-        "body": "Now the bars. The **width** of each bar is the class, and the **height** is the frequency density you just worked out.\n\nNotice the shape: the tallest bar is the narrow $10 < t \\le 15$ class, even though the widest class is not the busiest. A bar chart of the same figures would have been misleading.",
+        "body": "Now the bars. The **width** of each bar is the class, and the **height** is the frequency density you just worked out.\n\nNotice the shape: the narrow $10 < t \\le 15$ class gives by far the tallest bar, more than twice the height of any other, though its frequency of 20 is only a little above 18 and 15. A bar chart of the frequencies would have made those three classes look almost equal.",
         "visuals": [
           {
             "type": "diagram",
@@ -446,7 +450,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "When the classes are equal",
-        "body": "If every class has the **same width**, dividing them all by the same number changes nothing about the shape. The bars are then in the same proportions as the frequencies, so the histogram looks like a bar chart with the gaps closed.\n\nThat is why histograms with equal classes rarely appear at Higher tier: there is nothing to test. Edexcel sets **unequal** classes precisely so that frequency density has to be used.\n\nSo when a question gives equal classes, expect the difficulty to be somewhere else: reading an estimate, comparing two distributions, or finding a missing frequency.",
+        "body": "If every class has the **same width**, {{underline|dividing them all by the same number changes nothing about the shape}}. The bars are then in the same proportions as the frequencies, so the histogram looks like a bar chart with the gaps closed.\n\nThat is why histograms with equal classes rarely appear at Higher tier: there is nothing to test. Edexcel sets **unequal** classes precisely so that frequency density has to be used.\n\nSo when a question gives equal classes, expect the difficulty to be somewhere else: reading an estimate, comparing two distributions, or finding a missing frequency.",
         "visuals": [
           {
             "type": "diagram",
@@ -638,7 +642,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: working backwards, and the median",
-        "body": "**Working backwards.** A question may give the histogram and one frequency, and ask for the scale. Find the bar whose frequency you know, divide by its width to get its density, and that fixes the vertical axis for every other bar.\n\n**Estimating the median.** The median of $60$ values is the $30$th. Add the frequencies until you pass it: $15$, then $35$, which has gone past $30$. So the median lies in the class $10 < t \\le 15$. You cannot say more than the class without assuming an even spread, and the exam accepts the class.\n\n**Comparing two histograms.** Compare the **shapes** and quote figures: which is more spread out, where each peaks, and what fraction lies above some value. Saying \"the first one is bigger\" earns nothing.",
+        "body": "**Working backwards.** A question may give the histogram and one frequency, and ask for the scale. Find the bar whose frequency you know, divide by its width to get its density, and that fixes the vertical axis for every other bar.\n\n**Estimating the median.** The median of $60$ values is the $30$th. Add the frequencies until you pass it: $15$, then $35$, which has gone past $30$. So the median lies in the class $10 < t \\le 15$. If the question asks only which class, that is the answer. If it asks for an estimate, assume the 20 values in that class are spread evenly: the 30th value is the 15th of them, so the median is about $10 + \\dfrac{15}{20} \\times 5 = 13.75$ minutes.\n\n**Comparing two histograms.** Compare the **shapes** and quote figures: which is more spread out, where each peaks, and what fraction lies above some value. Saying \"the first one is bigger\" earns nothing.",
         "visuals": [
           {
             "type": "diagram",
@@ -736,7 +740,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- A **histogram** shows continuous grouped data, so its bars **touch**. A bar chart shows categories and has gaps.\n- **Area is frequency.** The height is the **frequency density**.\n- $\\text{frequency density} = \\dfrac{\\text{frequency}}{\\text{class width}}$, and $\\text{frequency} = \\text{density} \\times \\text{width}$.\n- Unequal classes are the point: dividing by the width stops a wide class looking busier than it is.\n- To read a frequency over part of a bar, multiply that bar's density by the **width you want**, not the whole class.\n- Any frequency read this way is an **estimate**, because the values are assumed evenly spread inside the class. Say so.\n- Check the areas add back to the total. If they do not, a density is wrong.\n- To find the scale from one known frequency, divide it by its class width and use that height as the unit.\n- The journey data: densities 1.5, 4.0, 1.8, 0.35, total 60, median in $10 < t \\le 15$.",
+        "body": "- A **histogram** shows continuous grouped data, so its bars **touch**. A bar chart shows categories and has gaps.\n- {{underline|Area is frequency.}} The height is the **frequency density**.\n- $\\text{frequency density} = \\dfrac{\\text{frequency}}{\\text{class width}}$, and $\\text{frequency} = \\text{density} \\times \\text{width}$.\n- Unequal classes are the point: dividing by the width stops a wide class looking busier than it is.\n- To read a frequency over part of a bar, multiply that bar's density by the **width you want**, not the whole class.\n- Any frequency read this way is an **estimate**, because the values are assumed evenly spread inside the class. Say so.\n- Check the areas add back to the total. If they do not, a density is wrong.\n- To find the scale from one known frequency, divide it by its class width and use that height as the unit.\n- The journey data: densities 1.5, 4.0, 1.8, 0.35, total 60, median in $10 < t \\le 15$.",
         "visuals": [
           {
             "type": "diagram",

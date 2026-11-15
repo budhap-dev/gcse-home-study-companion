@@ -1202,7 +1202,20 @@ Placed as part of Part A's review of each subject: the reviewer, reading as a st
 the words and the sentence worth marking in each step, and the summary step's points get
 marked too. The cheat sheet, built from the same lesson points, shows the marks as well.
 
-- [ ] **1. Part A, Maths.** 73 topics, and a second example for the 28 single-example topics.
+- [x] **1. Part A, Maths.** 73 topics, and a second example for the 28 single-example topics.
+  **Done 15 November 2026:** seven reviewers read all 73 lessons (611 steps) as a Year 10
+  student. 640 edits: 370 marks, 93 terms explained where first used, 65 real-life examples in
+  the steps, 30 jumps given their reason, 56 corrections, and 28 second "why" examples. What
+  was wrong: the bearings lesson measured the back angle the wrong way round and said
+  subtracting bearings gives the angle inside the triangle; "multiplying instead of dividing
+  is always too small" (sin and cos only); the triangle inequality backwards; a geometric
+  sequence "always overtakes" (only for a ratio above 1); sin x = 0 and tan x = 0 have three
+  solutions on 0° to 360°, not two; cone, sphere and pyramid formulae said to be on the
+  formulae sheet (they are printed in the question); rounding errors overstated in 3D trig;
+  `4^1.5` rendering as 4 to the power 1. On the why pages: 1/3 is 33⅓%, not 33.3%; a bike
+  valve that "touches the road"; three satellite spheres meet at two points, not one; a
+  function and its inverse need not meet on y = x; the bounds example's "tenth of the
+  length". A browser scan of every Maths step checks each tag draws as a mark.
 - [ ] **2. Part A, Physics, Chemistry and Biology.** One PR each.
 - [ ] **3. Part A, the other seven subjects.** One PR each.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
