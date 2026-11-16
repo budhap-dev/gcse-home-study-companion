@@ -1244,6 +1244,17 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   zinc or aluminium); ground water with "few dissolved solids"; and an engine's air given as
   9,000, nearly 10,000 and 9,750 litres in one card. Highlights cannot wrap a formula with
   braces (\dfrac, \text, subscripts), so seven such marks were left out.
+  **Biology done 16 November 2026:** six reviewers read all 38 lessons (323 steps), Edexcel
+  1BI0. 578 edits: 299 marks, 189 terms explained where first used, 97 real-life examples in
+  the steps, 25 jumps given their reason, 11 house-style fixes. What was wrong: lactic acid
+  "converted back into glucose" offered as proof it still holds energy (that takes energy in;
+  it can be broken down further with oxygen); a follicle called the egg; dialysis said to keep
+  every ion (excess ions diffuse out); the Nobel Prize "never" given after death; exactly a
+  quarter of DNA from each grandparent; potatoes grown from cuttings; eye colour as one gene;
+  a vaccine as the only medicine for a viral disease (antivirals exist); immune memory "for
+  ever"; root hair cells shaped by the dark. Every tier and Biology-only label was checked
+  against the 1BI0 text and is right. The reviewers' notes on why pages, questions and
+  visuals (about 30 fixes) follow in the next PR.
 - [ ] **3. Part A, the other seven subjects.** One PR each.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
