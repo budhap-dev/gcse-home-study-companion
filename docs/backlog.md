@@ -1278,7 +1278,16 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   after"; "determine the nature" as the second-derivative test only; $\tan\theta \equiv
   \sin\theta / \cos\theta$ "for every angle"; a trig "hence solve" with no interval; GCSE
   "stopping at two brackets"; dividing by $a - c$ without $a \neq c$; "exact" as unsimplified;
-  $x^4 - 5x^2 + 4$ called four terms; Pascal's rows never said to start at row 0.
+  $x^4 - 5x^2 + 4$ called four terms; Pascal's rows never said to start at row 0. From the
+  reviewers' notes, by hand: a wheelchair ramp at "1 in 12" (the US rule; England's Approved
+  Document M ties the limit to the length, 1 in 20 at 10 m); a stopping-distance model whose
+  limit came out at 5.4 (now fitted to the Highway Code, about 43 mph); a satellite that drifts
+  off along a tangent when its engine cuts; the wheel table's up and down swapped below the
+  axle; mains current "reversing" between the two solutions of $\sin x = k$; a 12 m tall
+  "room"; a cost model that was negative below 200 items; a trigonometry example called the
+  hardest on Paper 1 (the non-calculator paper) that needs a calculator; three geometry
+  prompts naming points they never introduced. Every "specification's example" in the lessons
+  is in the 8365 text word for word.
 - [ ] **3. Part A, the other seven subjects.** One PR each.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
