@@ -12,7 +12,7 @@ import { ANIMALS, duration, PLANTS } from './microscopy.ts'
  * blood groups, 3.18B sex-linked disorders; 3.1B asexual reproduction): DNA and its bases, the triplet code, meiosis and
  * fertilisation, asexual reproduction, monohybrid crosses, family trees, inherited disorders and
  * the ABO blood groups. The numeric written slots of "The genetic code: DNA, chromosomes and
- * genes", "DNA, genes and protein synthesis", "Genetic disorders and screening", "Inheritance and
+ * genes", "DNA, genes and protein synthesis", "Blood groups, sex linkage and the genome", "Inheritance and
  * genetic diagrams" and "Meiosis and sexual reproduction" have a generator here, except six left
  * written: three ask a fact to recall (23 pairs, 3 bases, 4 daughter cells), one is the same 50%
  * every time (the chance of a girl), and two have too few real versions to vary (a blood group
