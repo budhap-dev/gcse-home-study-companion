@@ -376,7 +376,7 @@ export const SYLLABUS: Record<SubjectId, SyllabusBlock[]> = {
       { title: 'Meiosis and sexual reproduction', topicId: 'meiosis-and-sexual-reproduction' },
       { title: 'DNA, genes and protein synthesis', topicId: 'dna-genes-and-protein-synthesis' },
       { title: 'Inheritance and genetic diagrams', topicId: 'inheritance-and-genetic-diagrams' },
-      { title: 'Genetic disorders and screening', topicId: 'genetic-disorders-and-screening' },
+      { title: 'Blood groups, sex linkage and the genome', topicId: 'genetic-disorders-and-screening' },
     ] },
     { year: 11, term: 'Spring', topics: [
       { title: 'Variation and natural selection', topicId: 'variation-and-natural-selection' },
