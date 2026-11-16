@@ -1255,6 +1255,19 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   ever"; root hair cells shaped by the dark. Every tier and Biology-only label was checked
   against the 1BI0 text and is right. The reviewers' notes on why pages, questions and
   visuals (about 30 fixes) follow in the next PR.
+  **Biology notes fixed 16 November 2026 (10.145.1):** the genetic-disorders why page and its
+  embryo-screening question taught AQA content (cystic fibrosis, Huntington's, screening) that
+  neither the lesson nor 1BI0 has; rewritten round blood groups, colour blindness and a gene
+  test before chemotherapy. Four claims the 1BI0 text does not support were removed: the
+  National Curriculum naming all four DNA scientists, the specification asking for energy per
+  gram, algal balls as "the specification's own method", and accommodation untaught though a
+  question asked for it (the suspensory ligaments are now in the lesson). Also: potato tissue's
+  no-change point moved from 0.5 to 0.3 mol/dm³ (the topic's own questions find 0.29 and
+  0.32); "cheek cell, 20 µm" renamed a typical animal cell (cheek cells are 40 to 75 µm, as the
+  generators have it); lactic acid evidence in a check and a 6-mark answer; a fertile-window
+  question whose prompt gave 7 days and whose answer was 6; the Nobel rule in a question; HGP
+  "complete" sequence; sperm carrying "half a set"; tiredness after a jab; and smaller slips.
+  Not done: the "just" and "simply" left in question solutions (most are plain English).
 - [ ] **3. Part A, the other seven subjects.** One PR each.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
