@@ -59,6 +59,10 @@ const ROUTES = [
   '/subjects/maths/topics/circle-theorems',
   '/subjects/physics',
   '/subjects/english-literature/topics/an-inspector-calls-themes',
+  // Two lesson steps, for the Notebook theme's ruled lines: one with inline code and marks,
+  // one with fractions in its running text.
+  '/subjects/computer-science/topics/bubble-sort/lesson?step=2',
+  '/subjects/maths/topics/averages-and-range/lesson?step=2',
   '/progress',
   // The daily recap: its opening page, then its first question once Start is pressed.
   { path: '/recap', tap: ['main article > button'] },
@@ -179,6 +183,24 @@ const scan = ({ phone }) => {
     const ratio = (hi + 0.05) / (lo + 0.05)
     const large = size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700)
     if (ratio < (large ? 3 : 4.5)) push('low contrast', el, `${ratio.toFixed(2)}:1 at ${size}px`)
+  }
+
+  // Notebook (section 16): each ruled paragraph rules its own lines from its top, so its
+  // text must fill a whole number of them, or the writing has drifted off the ruling. And
+  // handwriting is small for its size: a lesson's running text is 18px or more on a phone.
+  if (document.documentElement.dataset.theme === 'notebook') {
+    for (const el of document.querySelectorAll('main .rich-text p, main .rich-text li')) {
+      const cs = getComputedStyle(el)
+      if (cs.backgroundImage === 'none' || !visible(el)) continue
+      const lines = (el.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom)) / parseFloat(cs.lineHeight)
+      if (Math.abs(lines - Math.round(lines)) > 0.04) push('writing off its ruled lines', el, `${lines.toFixed(2)} lines`)
+    }
+    if (phone) {
+      for (const el of document.querySelectorAll('main article > .rich-text')) {
+        const size = parseFloat(getComputedStyle(el).fontSize)
+        if (visible(el) && size < 18) push('handwriting under 18px', el, `${size}px`)
+      }
+    }
   }
 
   for (const el of document.querySelectorAll('main .formula-line')) {

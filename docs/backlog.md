@@ -1421,11 +1421,23 @@ examiner errors, common-trap steps. A writer chooses them; nothing is marked aut
 3. Yes: in Notebook, Settings offers a pen for the student's own answers, **blue** (default) or
    **black**, kept in browser storage like the other settings.
 
-- [ ] **1. The theme.** White ruled paper, red margin, handwriting typeface loaded on demand,
+- [x] **1. The theme.** White ruled paper, red margin, handwriting typeface loaded on demand,
   the four inks and three highlighters as tokens, existing marks redrawn in the inks; plain
   white panels for diagrams, maths, code, tables and answer fields; print unchanged. Checked by
   `contrast.test.ts`, the screens check at three widths, rendered text sizes, and a contact
   sheet of ten lessons across subjects.
+  **Built 17 November 2026 (10.148.0):** Notebook in `themes.ts`, with Kalam (writing) and
+  Caveat (headings) fetched only when it is chosen; the font tokens themselves become the
+  hand, and `--font-plain` keeps the printed face for diagrams, tables and fields. Every
+  subject writes in the blue pen; a banner keeps its white writing. Each paragraph and list
+  item rules its own lines from its top, so the writing sits on them however the blocks round
+  it are sized; inline code is held to the line. Maths taller than a line (a fraction, a
+  column vector, an arrow over a vector, a root) cannot be, so a paragraph holding one is on
+  plain paper: 553 of 22,600 blocks, measured across seven subjects before the rule and none
+  off their lines after it. Running text is 19px, a tip 17px; a formula line on a resource
+  sheet keeps the size it shrinks itself to. `notebook.test.ts` holds the inks; the screens
+  check runs Notebook in CI and fails writing off its ruled lines and lesson handwriting under
+  18px on a phone.
 - [ ] **2. Strikethrough and caret.** The two tags in `handMarks.ts`, drawing in `hand.ts`,
   `<del>`/`<ins>` in RichText for Notebook and plain corrected text elsewhere, `stripHands`
   reading them as the corrected words (search, flashcards, the teaching-step matcher), the
