@@ -1311,7 +1311,9 @@ Asked 17 November 2026: "Create a requirement for a theme - which would looks li
 handwritten in ruled lines and white paper (wherever applicable). There should be
 highlighters, strikethroughs, carets to write something important but missed, apply the
 already circular rings. The text, marker and highlight colours should be Black, blue, red and
-green." **Proposed, awaiting approval.**
+green." **Approved 17 November 2026**, with the owner's answers to the three questions
+below (ink roles as proposed; strikethrough and caret in Notebook only; a pen choice for
+answers).
 
 **Where things stand.** There are eleven themes (Paper, Midnight, Ocean, Sunset, Forest, Candy,
 Space, Jungle, Sunshine, Aurora, Nebula) plus Match my device. Each is a set of colour tokens
@@ -1369,8 +1371,10 @@ written into lesson text in the same way:
   was left out, with the missed words written small above it, for instance the units in
   "the current is 2 ^amperes". It is the omission examiners most often punish, shown where it
   happens. The words are an `<ins>`, so they are read out and printed in line.
-The two new marks are content, like the others, so they show in **every** theme, drawn in that
-theme's mark colour; in Notebook they are red. Rules, held by `hand-marks.test.ts`: still at
+The two new marks are drawn **only in Notebook** (owner's answer). In every other theme the
+sentence reads as plain corrected text: a strikethrough shows only its right version, and a
+caret's words sit in the line as ordinary words. So each sentence must read correctly that way,
+and a lesson must never depend on the struck words to make its point. Rules, held by `hand-marks.test.ts`: still at
 most two marks in a step; a strikethrough's wrong version must be one the lesson says is wrong;
 neither new mark goes inside maths, code, a table or a heading; a caret's words are four words
 or fewer. They are placed where a mistake or an omission is the point: worked examples,
@@ -1391,11 +1395,12 @@ examiner errors, common-trap steps. A writer chooses them; nothing is marked aut
 - Paper stays the default. Notebook is opt-in: handwriting is slower to read for some students,
   including those with dyslexia, and Atkinson Hyperlegible was chosen for that reason.
 
-**Questions for the owner.**
-1. The ink roles above (black writing, blue headings and answers, red corrections, green to
-   remember), or a different allocation?
-2. Strikethrough and caret in every theme (proposed), or only in Notebook?
-3. Should the student be able to pick a pen colour for their own typed answers (blue or black)?
+**The owner's answers (17 November 2026).**
+1. Ink roles as proposed: black writing, blue headings and answers, red corrections, green to
+   remember.
+2. Strikethrough and caret only in Notebook.
+3. Yes: in Notebook, Settings offers a pen for the student's own answers, **blue** (default) or
+   **black**, kept in browser storage like the other settings.
 
 - [ ] **1. The theme.** White ruled paper, red margin, handwriting typeface loaded on demand,
   the four inks and three highlighters as tokens, existing marks redrawn in the inks; plain
@@ -1403,8 +1408,9 @@ examiner errors, common-trap steps. A writer chooses them; nothing is marked aut
   `contrast.test.ts`, the screens check at three widths, rendered text sizes, and a contact
   sheet of ten lessons across subjects.
 - [ ] **2. Strikethrough and caret.** The two tags in `handMarks.ts`, drawing in `hand.ts`,
-  `<del>`/`<ins>` in RichText, `stripHands` reading them as words (search, flashcards, the
-  teaching-step matcher), the rules in `hand-marks.test.ts`, drawn once on view.
+  `<del>`/`<ins>` in RichText for Notebook and plain corrected text elsewhere, `stripHands`
+  reading them as the corrected words (search, flashcards, the teaching-step matcher), the
+  rules in `hand-marks.test.ts`, drawn once on view; the answer pen setting.
 - [ ] **3. Placing the new marks.** Folded into Part A of the subjects still to review
   (Business, English, French, Music); for the six already reviewed, one pass over their worked
   examples and examiner errors, one PR per subject.
