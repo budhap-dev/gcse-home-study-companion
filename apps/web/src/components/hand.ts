@@ -13,8 +13,8 @@
  * survives in print, with no script and for a screen reader.
  */
 
-export type HandKind = 'circle' | 'underline' | 'highlight'
-export const HAND_KINDS: HandKind[] = ['circle', 'underline', 'highlight']
+export type HandKind = 'circle' | 'underline' | 'highlight' | 'strike'
+export const HAND_KINDS: HandKind[] = ['circle', 'underline', 'highlight', 'strike']
 
 /** A small deterministic generator, so a mark's wobble is fixed by its words. */
 function rng(seed: number): () => number {
@@ -54,6 +54,10 @@ export function handSvg(kind: HandKind, seed: number, colour: string, animate: b
   } else if (kind === 'underline') {
     const y = 36 + j(1)
     shape = `<path d="M${r1(1 + rand() * 2)} ${r1(y + j(1.2))} Q ${r1(50 + j(8))} ${r1(y - 2.5 + j(1.5))} ${r1(98 + j(1))} ${r1(y + j(1.2))}" fill="none" stroke="${colour}" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`
+  } else if (kind === 'strike') {
+    // A line through the words at the height of the small letters, run a little past each end.
+    const y = 23 + j(1)
+    shape = `<path d="M${r1(0.5 + rand())} ${r1(y + j(1.5))} Q ${r1(50 + j(8))} ${r1(y + 1.5 + j(1.5))} ${r1(99 + j(0.5))} ${r1(y - 1 + j(1.5))}" fill="none" stroke="${colour}" stroke-width="2.2" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`
   } else {
     // A marker swipe: a rough band a little uneven at its ends.
     const top = 7 + j(2), bottom = 35 + j(2)

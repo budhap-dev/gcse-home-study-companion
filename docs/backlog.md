@@ -1438,10 +1438,22 @@ examiner errors, common-trap steps. A writer chooses them; nothing is marked aut
   sheet keeps the size it shrinks itself to. `notebook.test.ts` holds the inks; the screens
   check runs Notebook in CI and fails writing off its ruled lines and lesson handwriting under
   18px on a phone.
-- [ ] **2. Strikethrough and caret.** The two tags in `handMarks.ts`, drawing in `hand.ts`,
+- [x] **2. Strikethrough and caret.** The two tags in `handMarks.ts`, drawing in `hand.ts`,
   `<del>`/`<ins>` in RichText for Notebook and plain corrected text elsewhere, `stripHands`
   reading them as the corrected words (search, flashcards, the teaching-step matcher), the
   rules in `hand-marks.test.ts`, drawn once on view; the answer pen setting.
+  **Built 17 November 2026 (10.149.0):** `{{strike|mistake|correction}}` renders a `<del>`
+  drawn through with a red pen line, then the correction as a red `<ins>`; outside Notebook
+  the `<del>` is hidden and the sentence reads as the correction. Until the pen line is
+  painted, and on paper, the mistake carries an ordinary line-through, so it is never shown
+  unstruck. `{{caret|words}}` is an `<ins>`: in Notebook the words are small, raised and red
+  over a ^, held to the line so the ruling does not drift; elsewhere they are ordinary words.
+  `stripHands` keeps a strike's correction. `hand-marks.test.ts` holds: two halves to a
+  strike, four words at most to a caret, neither in a table row, a heading or code. Settings
+  offers the blue (default) or black pen for the student's answers while Notebook is chosen.
+  Tried on two lessons: the square in $2x^2$ is on the {{strike|$2x$|$x$}} (Maths,
+  substituting into formulae) and resistance {{caret|in ohms}} in the Ohm's law practical
+  (Physics).
 - [ ] **3. Placing the new marks.** Folded into Part A of the subjects still to review
   (Business, English, French, Music); for the six already reviewed, one pass over their worked
   examples and examiner errors, one PR per subject.

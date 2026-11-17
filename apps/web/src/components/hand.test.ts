@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { stripHands } from '@study/shared'
 import { describe, expect, it } from 'vitest'
 import { handSvg, HAND_KINDS, seedOf, svgUrl } from './hand.ts'
@@ -55,7 +56,42 @@ describe('hand-drawn marks (section 15, Part C)', () => {
     }
   })
 
+  it('keeps a strike inside its box, through the middle of the words', () => {
+    for (let seed = 1; seed <= 500; seed++) {
+      const n = handSvg('strike', seed * 7919, '#123456', false).match(/ d="([^"]+)"/)![1]!.match(/-?\d+(\.\d+)?/g)!.map(Number)
+      for (let i = 0; i < n.length; i += 2) {
+        expect(n[i]).toBeGreaterThanOrEqual(0.5)
+        expect(n[i]).toBeLessThanOrEqual(99.5)
+        expect(n[i + 1]).toBeGreaterThanOrEqual(18)
+        expect(n[i + 1]).toBeLessThanOrEqual(28)
+      }
+    }
+  })
+
   it('makes a CSS url of the SVG', () => {
     expect(svgUrl('<svg/>')).toBe('url("data:image/svg+xml,%3Csvg%2F%3E")')
+  })
+})
+
+describe('strikethrough and caret (section 16, drawn only in Notebook)', () => {
+  it('renders a strike as the mistake and its correction, and a caret as inserted words', () => {
+    expect(renderRichText('So {{strike|16|11}} is the answer.')).toContain('<del class="hand hand-strike" data-hand="strike">16</del><span class="hand-gap"> </span><ins class="hand-fix">11</ins>')
+    expect(renderRichText('The current is 2 {{caret|amperes}}.')).toContain('2 <ins class="hand-caret">amperes</ins>.')
+  })
+
+  it('leaves a strike without exactly two halves as written, for the content test to catch', () => {
+    expect(renderRichText('{{strike|16}}')).toContain('{{strike|16}}')
+    expect(renderRichText('{{strike|a|b|c}}')).toContain('{{strike|a|b|c}}')
+  })
+
+  it('reads as the corrected sentence for anything that reads text', () => {
+    expect(stripHands('So {{strike|16|11}} is the answer, in {{caret|amperes}}.')).toBe('So 11 is the answer, in amperes.')
+  })
+
+  it('hides the mistake outside Notebook, and never shows it unstruck inside it', () => {
+    const css = readFileSync(new URL('../styles.css', import.meta.url), 'utf8')
+    expect(css).toContain('del.hand-strike, .hand-gap { display: none; }')
+    expect(css).toMatch(/\[data-theme="notebook"\] del\.hand-strike:not\(\[data-drawn\]\) \{ text-decoration: line-through;/)
+    expect(css).toMatch(/@media print \{\n  \[data-theme="notebook"\] del\.hand-strike \{ text-decoration: line-through; \}/)
   })
 })

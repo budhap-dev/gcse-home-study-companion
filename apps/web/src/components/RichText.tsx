@@ -1,6 +1,7 @@
 import katex from 'katex'
 import { marked } from 'marked'
 import { useEffect, useMemo, useRef } from 'react'
+import { strikeParts } from '@study/shared'
 import { drawHands } from './hand.ts'
 
 /**
@@ -26,10 +27,19 @@ export function renderRichText(source: string): string {
     // circled word is bold and a highlight is a <mark>, so the emphasis is there without
     // the drawing; hand.ts draws over them. An unknown kind is left as written for the
     // content tests to catch.
-    .replace(/\{\{(circle|underline|highlight)\|([^{}]+?)\}\}/g, (_, kind: string, text: string) =>
-      kind === 'circle' ? `<span class="hand hand-circle" data-hand="circle"><strong>${text}</strong></span>`
+    // Section 16 adds two drawn only in Notebook: a strike is the mistake (a <del>, hidden in
+    // the other themes) then its correction (an <ins>); a caret's missed words are an <ins>
+    // that reads as ordinary words outside Notebook.
+    .replace(/\{\{(circle|underline|highlight|strike|caret)\|([^{}]+?)\}\}/g, (whole: string, kind: string, text: string) => {
+      if (kind === 'strike') {
+        const parts = strikeParts(text)
+        return parts ? `<del class="hand hand-strike" data-hand="strike">${parts[0]}</del><span class="hand-gap"> </span><ins class="hand-fix">${parts[1]}</ins>` : whole
+      }
+      if (kind === 'caret') return `<ins class="hand-caret">${text}</ins>`
+      return kind === 'circle' ? `<span class="hand hand-circle" data-hand="circle"><strong>${text}</strong></span>`
         : kind === 'highlight' ? `<mark class="hand hand-highlight" data-hand="highlight">${text}</mark>`
-          : `<span class="hand hand-underline" data-hand="underline">${text}</span>`)
+          : `<span class="hand hand-underline" data-hand="underline">${text}</span>`
+    })
   const html = marked.parse(withTokens, { async: false, gfm: true, breaks: false }) as string
   return (
     html

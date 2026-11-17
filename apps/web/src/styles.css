@@ -755,7 +755,27 @@ mark.hand-highlight { background-color: transparent; color: inherit; padding: 0.
 [data-theme="notebook"] .hand-underline > .accent-ink { color: var(--pen-green); }
 [data-theme="notebook"] .hand-circle strong { background: transparent; }
 [data-theme="notebook"] .chip { font-family: var(--font-plain); }
+/* Strikethrough and caret (section 16, box 2): drawn only in Notebook. Elsewhere a strike
+   shows only its correction and a caret's words sit in the line as ordinary words. */
+del.hand-strike, .hand-gap { display: none; }
+ins.hand-fix, ins.hand-caret { text-decoration: none; }
+[data-theme="notebook"] del.hand-strike { display: inline; text-decoration: none; padding: 0 0.1em; }
+/* Never a mistake shown unstruck: until the pen line is painted (or with no script, or on
+   paper), the words carry an ordinary line through them. */
+[data-theme="notebook"] del.hand-strike:not([data-drawn]) { text-decoration: line-through; text-decoration-color: var(--pen-red); text-decoration-thickness: 2px; }
+[data-theme="notebook"] .hand-strike > .accent-ink { color: var(--pen-red); }
+[data-theme="notebook"] .hand-gap { display: inline; }
+[data-theme="notebook"] ins.hand-fix { color: var(--pen-red); font-weight: 700; }
+/* A caret: the missed words written small and raised in red, with a ^ under where they go.
+   Held to the line (line-height 0), so the ruling does not drift. */
+[data-theme="notebook"] ins.hand-caret { position: relative; color: var(--pen-red); font-size: 0.82em; font-weight: 700; line-height: 0; vertical-align: 0.6em; margin-left: 0.2em; }
+[data-theme="notebook"] ins.hand-caret::before { content: '^' / ''; position: absolute; left: -0.45em; top: 0.55em; font-family: var(--font-hand-head); font-size: 1.35em; font-weight: 700; line-height: 1; color: var(--pen-red); }
+/* The student's own answers, in the pen they chose in Settings: blue unless they picked black. */
+[data-theme="notebook"] :is(main input:not([type="checkbox"], [type="radio"], [type="range"]), main textarea, main math-field) { color: var(--pen-blue); }
+[data-theme="notebook"][data-pen="black"] :is(main input:not([type="checkbox"], [type="radio"], [type="range"]), main textarea, main math-field) { color: var(--pen-black); }
+
 @media print {
+  [data-theme="notebook"] del.hand-strike { text-decoration: line-through; }
   [data-theme="notebook"] { --font-sans: var(--font-plain); --font-display: 'Bricolage Grotesque', var(--font-plain); }
   [data-theme="notebook"] :is(body, h1, h2, h3) { font-family: var(--font-plain); }
   [data-theme="notebook"] .rich-text :is(p, li) { background-image: none; }

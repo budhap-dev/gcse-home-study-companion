@@ -1,6 +1,37 @@
 import { useSyncExternalStore } from 'react'
 
 const KEYS = { motion: 'study-companion.motion', smileys: 'study-companion.smileys' } as const
+const PEN_KEY = 'study-companion.pen'
+
+/** The pen the student's own answers are written in, in the Notebook theme (section 16). */
+export type Pen = 'blue' | 'black'
+export const PENS: { id: Pen; name: string }[] = [{ id: 'blue', name: 'Blue pen' }, { id: 'black', name: 'Black pen' }]
+
+function readPen(): Pen {
+  try {
+    return localStorage.getItem(PEN_KEY) === 'black' ? 'black' : 'blue'
+  } catch {
+    return 'blue'
+  }
+}
+
+export function setPen(pen: Pen) {
+  try {
+    localStorage.setItem(PEN_KEY, pen)
+  } catch {
+    // no storage
+  }
+  applyPrefs()
+  listeners.forEach((fn) => fn())
+}
+
+export function usePen(): Pen {
+  return useSyncExternalStore(
+    (fn) => { listeners.add(fn); return () => listeners.delete(fn) },
+    readPen,
+    () => 'blue',
+  )
+}
 type Pref = keyof typeof KEYS
 const listeners = new Set<() => void>()
 
@@ -26,6 +57,7 @@ export function setPref(pref: Pref, on: boolean) {
 export function applyPrefs() {
   document.documentElement.dataset.motion = read('motion') ? 'on' : 'off'
   document.documentElement.dataset.smileys = read('smileys') ? 'on' : 'off'
+  document.documentElement.dataset.pen = readPen()
 }
 
 export function usePref(pref: Pref): boolean {
