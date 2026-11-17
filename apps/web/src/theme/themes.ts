@@ -5,6 +5,8 @@ export interface Theme {
   /** Overrides for the Tailwind colour tokens declared in styles.css. */
   vars: Record<string, string>
   dark?: boolean
+  /** A stylesheet of extra fonts, fetched only when this theme is chosen (Notebook's hand). */
+  fonts?: string
 }
 
 /**
@@ -48,6 +50,13 @@ export const THEMES: Theme[] = [
     vars: { '--color-paper': '#f4f5fa', '--color-surface': '#ffffff', '--color-ink': '#1e2330', '--color-ink-2': '#545b6e', '--color-ink-3': '#5d6475', '--color-rule': '#e1e4ee', '--color-panel': '#eceef6', ...look(['#2f5fb8', '#5a4bd1', '#a83e6b'], ['rgb(168 62 107 / 0.16)', 'rgb(90 75 209 / 0.12)'], '#c8cbd8') } },
   { id: 'nebula', name: 'Nebula', blurb: 'Deep violet with a pink glow. Bold after dark.', dark: true,
     vars: { '--color-paper': '#120f24', '--color-surface': '#1c1836', '--color-ink': '#f2efff', '--color-ink-2': '#bdb6e0', '--color-ink-3': '#9a93c4', '--color-rule': '#2f2954', '--color-panel': '#262046', '--subject-soft': '#2b2550', ...DARK_ACCENT, ...look(['#3b2fa8', '#6d2f99', '#a3305f'], ['rgb(163 48 95 / 0.24)', 'rgb(90 75 209 / 0.22)'], DARK_EMPTY) } },
+  /* Section 16: a page of an exercise book written up by hand. Four inks only (black writing,
+     blue headings and secondary text, red corrections, green to remember); styles.css under
+     [data-theme="notebook"] does the ruling, the handwriting and the marks. The banner is
+     blue pen into green pen, so white text on it clears AA at every blend. */
+  { id: 'notebook', name: 'Notebook', blurb: 'Handwritten on ruled white paper, in four pens.',
+    fonts: 'https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&display=swap',
+    vars: { '--color-paper': '#ffffff', '--color-surface': '#ffffff', '--color-ink': '#1c1c1e', '--color-ink-2': '#1f4fbf', '--color-ink-3': '#3a3a3e', '--color-rule': '#c9d7ec', '--color-panel': '#f2f6fc', '--subject-soft': '#e8effa', ...look(['#1f4fbf', '#1a3f99', '#1e7b3c'], ['rgb(255 255 255 / 0)', 'rgb(255 255 255 / 0)'], '#c9d7ec') } },
 ]
 
 const KEY = 'study-companion.theme'
@@ -86,6 +95,13 @@ export function applyTheme(id: string) {
   root.style.removeProperty('--bg-pattern')
   root.style.removeProperty('--bg-size')
   for (const [k, v] of Object.entries(theme.vars)) root.style.setProperty(k, v)
+  if (theme.fonts && !document.querySelector(`link[data-theme-fonts="${theme.id}"]`)) {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = theme.fonts
+    link.dataset.themeFonts = theme.id
+    document.head.appendChild(link)
+  }
   root.dataset.theme = theme.id
   root.style.colorScheme = theme.dark ? 'dark' : 'light'
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme.vars['--color-paper'] ?? '#f7f5ef')

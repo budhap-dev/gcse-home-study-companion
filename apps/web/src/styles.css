@@ -676,3 +676,88 @@ mark.hand-highlight { background-color: transparent; color: inherit; padding: 0.
   .hand-underline { text-decoration: underline; }
 }
 
+
+/* Notebook (backlog section 16): a page of an exercise book written up by hand.
+   Four inks: black writing, blue headings and secondary text, red corrections, green to
+   remember; highlighters are pale blue, red and green, and only black or blue words sit on
+   them (red and green fall under 4.5:1 there). Handwriting and ruled lines go where writing
+   would go in a book. Diagrams, maths, code, tables, answer fields and print keep the normal
+   face: a diagram's labels are laid out against it, and exact symbols matter more than looks.
+   Each paragraph and list item carries its own ruling, starting at its own top, so the text
+   always sits on its lines however the blocks around it are sized. */
+[data-theme="notebook"] {
+  --pen-black: #1c1c1e;
+  --pen-blue: #1f4fbf;
+  --pen-red: #c4262e;
+  --pen-green: #1e7b3c;
+  --hl-blue: #cfe2ff;
+  --hl-red: #ffd3d8;
+  --hl-green: #cdeec8;
+  /* The tokens every font utility reads become the hand; --font-plain keeps the normal face
+     for what stays printed (diagrams, tables, fields, chips). */
+  --font-plain: 'Atkinson Hyperlegible', 'Helvetica Neue', Arial, sans-serif;
+  --font-hand: 'Kalam', var(--font-plain);
+  --font-hand-head: 'Caveat', 'Kalam', var(--font-plain);
+  --font-sans: var(--font-hand);
+  --font-display: var(--font-hand-head);
+  --rule-line: #b8cdea;
+  --margin-line: #e79a9a;
+  --highlight: var(--hl-green);
+  --hook-card: #ffffff;
+  --hook-card-rule: var(--rule-line);
+}
+/* One pen for every subject: the accent is the blue pen. !important so it beats the inline
+   --subject a subject's pages set on their own elements. */
+[data-theme="notebook"] [style*="--subject"], [data-theme="notebook"] body { --subject: var(--pen-blue) !important; --subject-soft: #e8effa !important; }
+[data-theme="notebook"] body { font-size: 1.0625rem; }
+[data-theme="notebook"] :is(h1, h2, h3) { font-family: var(--font-hand-head); font-weight: 700; letter-spacing: 0.01em; }
+/* A banner keeps its white writing; everywhere else a heading is in blue pen. */
+[data-theme="notebook"] :is(h1, h2, h3):not(.hero-gradient *) { color: var(--pen-blue); }
+[data-theme="notebook"] h1 { font-size: 1.3em; }
+[data-theme="notebook"] :is(figure[data-diagram], svg, table, input, textarea, select, math-field, [data-plain-face]) { --font-sans: var(--font-plain); --font-display: 'Bricolage Grotesque', var(--font-plain); font-family: var(--font-plain); }
+[data-theme="notebook"] :is(table, pre) { background-color: var(--color-surface); }
+[data-theme="notebook"] .rich-text {
+  --lh: 1.8em;
+  line-height: var(--lh);
+}
+/* Handwriting is small for its size, so running text is set larger; a formula line on a
+   resource sheet keeps the size it shrinks itself to, to fit its card. */
+[data-theme="notebook"] .rich-text:not(.formula-line .rich-text) { font-size: max(1em, 1.1875rem); }
+[data-theme="notebook"] .rich-text.text-sm, [data-theme="notebook"] .rich-text.text-xs { font-size: 1.0625rem; }
+[data-theme="notebook"] .rich-text :is(p, li):not(.hero-gradient *) {
+  line-height: var(--lh);
+  background-image: linear-gradient(to bottom, transparent calc(var(--lh) - 0.32em - 1px), var(--rule-line) calc(var(--lh) - 0.32em - 1px), var(--rule-line) calc(var(--lh) - 0.32em), transparent calc(var(--lh) - 0.32em));
+  background-size: 100% var(--lh);
+  background-repeat: repeat-y;
+}
+[data-theme="notebook"] .rich-text p { margin: 0; padding-bottom: calc(var(--lh) * 0.5); }
+[data-theme="notebook"] .rich-text p:last-child { padding-bottom: 0; }
+[data-theme="notebook"] .rich-text li { margin: 0; }
+/* A list item holding paragraphs leaves the ruling to them, or the two sets of lines double up. */
+[data-theme="notebook"] .rich-text li:has(> p):not(.hero-gradient *) { background-image: none; }
+[data-theme="notebook"] .rich-text li::marker { color: var(--pen-blue); }
+/* Inline code keeps to the line: its own face would make each line a little taller and the
+   writing would drift off the ruling. Maths taller than a line (a fraction, a column vector,
+   an arrow over a vector, a root) cannot, so a paragraph holding one is written on plain
+   paper, like a formula stuck into an exercise book. */
+[data-theme="notebook"] .rich-text :is(p, li) code { line-height: 1; }
+[data-theme="notebook"] .rich-text :is(p, li):has(.mfrac, .mtable, .accent, .sqrt, .op-limits, .minner, .overlay, .stretchy, .svg-align) { background-image: none; }
+[data-theme="notebook"] .rich-text strong:not(.hero-gradient *) { color: var(--pen-black); background: var(--hl-blue); border-radius: 0.15em 0.4em 0.2em 0.35em; }
+[data-theme="notebook"] .rich-text a { color: var(--pen-blue); }
+[data-theme="notebook"] .rich-text blockquote { border-left-color: var(--pen-green); background: transparent; font-weight: 700; }
+/* The red margin line down the left of a lesson or a why page, where there is room for it. */
+@media (min-width: 768px) {
+  [data-theme="notebook"] article > .rich-text { border-left: 2px solid var(--margin-line); padding-left: 1rem; }
+}
+/* The marks in the four pens: red circle, green underline, the green highlighter. hand.ts
+   reads the colour from a probe span it puts inside the mark. */
+[data-theme="notebook"] .hand-circle > .accent-ink { color: var(--pen-red); }
+[data-theme="notebook"] .hand-underline > .accent-ink { color: var(--pen-green); }
+[data-theme="notebook"] .hand-circle strong { background: transparent; }
+[data-theme="notebook"] .chip { font-family: var(--font-plain); }
+@media print {
+  [data-theme="notebook"] { --font-sans: var(--font-plain); --font-display: 'Bricolage Grotesque', var(--font-plain); }
+  [data-theme="notebook"] :is(body, h1, h2, h3) { font-family: var(--font-plain); }
+  [data-theme="notebook"] .rich-text :is(p, li) { background-image: none; }
+  [data-theme="notebook"] article > .rich-text { border-left: 0; padding-left: 0; }
+}
