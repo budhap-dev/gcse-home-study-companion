@@ -1289,6 +1289,25 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   prompts naming points they never introduced. Every "specification's example" in the lessons
   is in the 8365 text word for word.
 - [ ] **3. Part A, the other seven subjects.** One PR each.
+  **Computer Science done 17 November 2026:** six reviewers read all 29 lessons (221 steps),
+  AQA 8525, and worked every trace, conversion, file size and answer key: none is wrong. 327
+  edits: 191 marks (each drawn, checked in a browser), 78 terms explained where first used
+  (malware, topology, packet, register, bus, concatenation, the ← arrow...), 66 real-life
+  examples in the steps, 8 jumps given their reason, 10 house-style fixes. What was wrong: the
+  ethics lesson's running example, an app "legally" collecting far more data than it needs
+  with consent buried in terms nobody reads, which UK GDPR's data minimisation and consent
+  rules do not allow; rebuilt in the steps, a tip, the why page, a check, a worked example and
+  two questions round adverts the user agreed to without reading. Huffman on *mississippi*
+  saves 73%, not 72%; `'2' + '2'` gives `'22'` only in Python (in C# single quotes are
+  characters), now "joining". From the reviewers' notes, by hand: bubble sort "one pass on
+  nearly sorted data" (only on sorted data); a free bus pass "at 65" (state pension age,
+  now 66 and rising) made a leisure centre's own rule; a phone-book why example now a
+  dictionary or higher-or-lower; the subroutine example's first failure is `15 + ' is '`,
+  before `INT_TO_STRING('Lee')`; the project file pattern labelled made-up pseudo-code; the
+  binary check given as ten seconds, thirty seconds and under a minute, now one figure;
+  `n ← USERINPUT` compared with a number, now `STRING_TO_INT`; "lossy" sound in a lesson
+  that never explains it; cache "near" the CPU (it is on the chip). Every board claim the
+  reviewers listed is in the 8525 text.
 - [ ] **4. Part B, the animation framework** (play on view, replay, motion off, tests) and the
   Physics figures.
 - [ ] **5. Part B, Chemistry, Biology, Maths and Computer Science figures.**

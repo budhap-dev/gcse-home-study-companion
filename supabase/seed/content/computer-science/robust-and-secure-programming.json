@@ -155,7 +155,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Robust means it does not fall over",
-        "body": "A **robust** program copes with anything the user does: wrong types, silly values, empty input. The main tool is **validation**: checking data before using it. AQA's specification names three by example, length, presence and range, and two more are worth knowing:\n\n- **Range**: between two limits, such as an age from 11 to 18.\n- **Length**: enough characters, such as a password of at least 8.\n- **Presence**: not empty.\n- **Type**: a number where a number is expected.\n- **Format**: matches a pattern, such as an email with an @.\n\nValidation checks that data is **sensible**, not that it is **true**. A wrong but sensible date of birth passes.",
+        "body": "A **robust** program copes with anything the user does: wrong types, silly values, empty input. The main tool is {{circle|validation}}: checking data before using it. AQA's specification names three by example, length, presence and range, and two more are worth knowing:\n\n- **Range**: between two limits, such as an age from 11 to 18.\n- **Length**: enough characters, such as a password of at least 8.\n- **Presence**: not empty.\n- **Type**: a number where a number is expected.\n- **Format**: matches a pattern, such as an email with an @.\n\n{{underline|Validation checks that data is sensible, not that it is true}}. A wrong but sensible date of birth passes: a sign-up form cannot tell that you typed 2010 when you were born in 2011.",
         "visuals": [
           {
             "type": "worked-example",
@@ -210,7 +210,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Validation in code: a loop, not an IF",
-        "body": "An IF can spot bad input once. A **WHILE loop** keeps asking until the input passes, so the code after it can trust the value.\n\n```\nage ← STRING_TO_INT(USERINPUT)\nWHILE age < 11 OR age > 18\n   OUTPUT 'Enter an age between 11 and 18'\n   age ← STRING_TO_INT(USERINPUT)\nENDWHILE\n```\n\nThe condition describes the **bad** input, joined with `OR`: too low **or** too high. The loop body prints a message and reads again.\n\nThe same loop shape checks **length** and **presence**, the other two checks the specification gives as examples:\n\n```\nname ← USERINPUT\nWHILE name = '' OR LEN(name) < 5\n   OUTPUT 'Enter a username of at least 5 characters'\n   name ← USERINPUT\nENDWHILE\n```\n\n`name = ''` is the presence check and `LEN(name) < 5` the length check. An empty name has length 0, so the length check alone would also catch it, but writing both makes each check visible.",
+        "body": "An IF can spot bad input once. A **WHILE loop** keeps asking until the input passes, so the code after it can trust the value.\n\n```\nage ← STRING_TO_INT(USERINPUT)\nWHILE age < 11 OR age > 18\n   OUTPUT 'Enter an age between 11 and 18'\n   age ← STRING_TO_INT(USERINPUT)\nENDWHILE\n```\n\n{{underline|The condition describes the bad input}}, joined with `OR`: too low **or** too high. The loop body prints a message and reads again.\n\nThe same loop shape checks **length** and **presence**, the other two checks the specification gives as examples:\n\n```\nname ← USERINPUT\nWHILE name = '' OR LEN(name) < 5\n   OUTPUT 'Enter a username of at least 5 characters'\n   name ← USERINPUT\nENDWHILE\n```\n\n`name = ''` is the presence check and `LEN(name) < 5` the length check. An empty name has length 0, so the length check alone would also catch it, but writing both makes each check visible.",
         "visuals": [
           {
             "type": "diagram",
@@ -299,7 +299,7 @@
         "id": "s3",
         "kind": "worked-example",
         "title": "Putting validation in a function",
-        "body": "Validation code is reused, so it belongs in a subroutine that returns the checked value.",
+        "body": "Validation code is reused, so it belongs in a subroutine: a named block of code that the program can call whenever it needs it. This one hands the checked value back with `RETURN`.",
         "visuals": [
           {
             "type": "worked-example",
@@ -348,7 +348,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Authentication: who are you?",
-        "body": "**Authentication** checks the **person**, usually with a username and password. Good practice, some of it beyond what the specification asks you to write:\n\n- Compare the entered password with the stored one and give the same message for a wrong username as for a wrong password, so an attacker learns nothing.\n- **Limit attempts**, then lock out, to stop guessing.\n- Real systems do not store passwords as plain text: they store a **hash** and compare hashes. The specification only asks you to write routines with plain-text usernames and passwords.\n\n```\nattempts ← 0\nOUTPUT 'Password?'\nentered ← USERINPUT\nWHILE entered ≠ stored AND attempts < 2\n   attempts ← attempts + 1\n   OUTPUT 'Wrong, try again'\n   entered ← USERINPUT\nENDWHILE\nIF entered = stored THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```\n\nThe user gets three tries: one before the loop and two inside it.",
+        "body": "{{circle|Authentication}} checks the **person**, usually with a username and password, as when you log in to your school account. Good practice, some of it beyond what the specification asks you to write:\n\n- Compare the entered password with the stored one and give the same message for a wrong username as for a wrong password, so an attacker learns nothing.\n- **Limit attempts**, then lock out, to stop guessing.\n- Real systems do not store passwords as plain text: they store a **hash**, a scrambled version of the password that cannot be turned back into it, and compare hashes. The specification only asks you to write routines with plain-text usernames and passwords.\n\n```\nattempts ← 0\nOUTPUT 'Password?'\nentered ← USERINPUT\nWHILE entered ≠ stored AND attempts < 2\n   attempts ← attempts + 1\n   OUTPUT 'Wrong, try again'\n   entered ← USERINPUT\nENDWHILE\nIF entered = stored THEN\n   OUTPUT 'Welcome'\nELSE\n   OUTPUT 'Locked out'\nENDIF\n```\n\nThe user gets three tries: one before the loop and two inside it.",
         "visuals": [
           {
             "type": "diagram",
@@ -443,7 +443,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Testing: normal, boundary, erroneous",
-        "body": "Before a program is used it is **tested** with three kinds of data, each with an **expected result** written down first:\n\n- **Normal**: typical values that should be accepted. For a mark from 0 to 100: 55.\n- **Boundary**: values on the edge. 0 and 100 should be accepted; 101 and −1, just outside, should be rejected.\n- **Erroneous**: values that must be rejected: 250, −40, the word \"ten\".\n\nA test table has columns for the data, the type, the expected result and the actual result.",
+        "body": "Before a program is used it is **tested** with three kinds of data, each with an **expected result** written down first:\n\n- **Normal**: typical values that should be accepted. For a mark from 0 to 100: 55.\n- **Boundary**: values on the edge. {{underline|0 and 100 should be accepted; 101 and −1, just outside, should be rejected}}.\n- **Erroneous**: values that must be rejected: 250, −40, the word \"ten\".\n\nA test table has columns for the data, the type, the expected result and the actual result.",
         "visuals": [
           {
             "type": "diagram",
@@ -532,7 +532,7 @@
         "id": "s6",
         "kind": "explain",
         "title": "Syntax errors and logic errors",
-        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. A compiler will not produce a program at all; an interpreter stops when it reaches the line. Either way the program cannot run past it.\n- A **logic error** lets the program run but gives the **wrong answer**: `<` instead of `≤`, adding in the wrong place. Only testing finds these, and a **trace table** shows where the values first go wrong.\n- Some faults make a running program crash: dividing by zero, reading past the end of an array. AQA sorts errors into only two types, **syntax** and **logic**, and a fault like this counts as a logic error because the code obeys the language's rules.",
+        "body": "- A **syntax error** breaks the rules of the language: a missing bracket, a misspelt keyword. A compiler, which translates the whole program before it runs, will not produce a program at all; an interpreter, which translates and runs one line at a time, stops when it reaches the line. Either way the program cannot run past it.\n- A **logic error** lets the program run but gives the **wrong answer**: `<` instead of `≤`, adding in the wrong place. Only testing finds these, and a **trace table**, which records each variable's value line by line, shows where the values first go wrong.\n- Some faults make a running program crash: dividing by zero, reading past the end of an array. {{underline|AQA sorts errors into only two types}}, **syntax** and **logic**, and a fault like this counts as a logic error because the code obeys the language's rules.",
         "visuals": [
           {
             "type": "worked-example",
@@ -626,7 +626,7 @@
         "id": "s8",
         "kind": "grade-9",
         "title": "Going deeper: writing the whole thing",
-        "body": "Longer programming questions often ask for input **with validation**, some processing, and output. Structure first: a subroutine that returns validated input, a loop or calculation, then output. Say what each test in your plan is **for**, and give the boundary values on **both** sides of the edge. When asked about security, name the practice and the attack it stops: attempt limits stop brute-force guessing; storing hashes means a stolen list does not reveal the passwords directly.",
+        "body": "Longer programming questions often ask for input **with validation**, some processing, and output. Structure first: a subroutine that returns validated input, a loop or calculation, then output. Say what each test in your plan is **for**, and give the boundary values on **both** sides of the edge. When asked about security, name the practice and the attack it stops: attempt limits stop brute-force guessing, where an attacker tries password after password until one works; storing hashes means a stolen list does not reveal the passwords directly.",
         "visuals": [
           {
             "type": "worked-example",
@@ -677,7 +677,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- Validation checks data is sensible: range, length, presence, type, format. Use a WHILE loop with the bad-input condition joined by OR.\n- Authentication checks identity: compare the username and password with the stored ones. Limiting attempts and storing hashes are good habits beyond what the specification asks you to code.\n- Test with normal, boundary and erroneous data, each with an expected result written first.\n- Syntax errors stop the program being translated, or running past that line; logic errors let it run and give the wrong answer, and are found by testing and trace tables. AQA examines these two types.\n- In a big programming question, structure first: validated input, processing, output.",
+        "body": "- {{underline|Validation checks data is sensible}}: range, length, presence, type, format. Use a WHILE loop with the bad-input condition joined by OR.\n- Authentication checks identity: compare the username and password with the stored ones. Limiting attempts and storing hashes are good habits beyond what the specification asks you to code.\n- Test with normal, boundary and erroneous data, each with an expected result written first.\n- Syntax errors stop the program being translated, or running past that line; logic errors let it run and give the wrong answer, and are found by testing and trace tables. AQA examines these two types.\n- In a big programming question, structure first: validated input, processing, output.",
         "visuals": [
           {
             "type": "diagram",

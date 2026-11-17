@@ -130,8 +130,8 @@
         }
       },
       {
-        "title": "Why a free bus pass at 65 is a one-character bug",
-        "body": "A council writes `IF age > 65 THEN pass ← True`. Everyone aged 66 and over gets one. Everyone who is exactly 65 — the people the rule was written for — does not.\n\nRelational operators come in pairs that disagree about exactly one value, and that value is always the number in the condition. `>` leaves it out, `≥` takes it in. AQA prints them as `≠`, `≤` and `≥`, not the two-character versions a programming language uses, and the edge is where a condition is worth checking. Saying it out loud — *more than* against *at least* — catches most of them.",
+        "title": "Why a free swim at 65 is a one-character bug",
+        "body": "A leisure centre offers free swimming to anyone aged 65 or over, and its booking system says `IF age > 65 THEN free ← True`. Everyone aged 66 and over gets in free. Everyone who is exactly 65 — the people the rule was written for — does not.\n\nRelational operators come in pairs that disagree about exactly one value, and that value is always the number in the condition. `>` leaves it out, `≥` takes it in. AQA prints them as `≠`, `≤` and `≥`, not the two-character versions a programming language uses, and the edge is where a condition is worth checking. Saying it out loud — *more than* against *at least* — catches most of them.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -171,7 +171,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Five data types",
-        "body": "Every value a program stores has a **data type**, which decides how much memory it takes and what you can do with it. AQA names five.\n\n- **Integer**: a whole number, `7`, `-3`, `0`.\n- **Real**: a number with a decimal part, `3.75`, `-0.5`.\n- **Boolean**: `True` or `False`, and nothing else.\n- **Character**: a single symbol, `'a'`, `'7'`, `'?'`.\n- **String**: a sequence of characters, `'hello'`, `'07700 900123'`.\n\nThe type is a design decision. A phone number is a **string**, because you never add phone numbers and a leading 0 must survive. A count is an **integer**. A yes/no is a **Boolean**, not the string `'yes'`, because a Boolean cannot be misspelt.",
+        "body": "Every value a program stores has a {{circle|data type}}, which decides how much memory it takes and what you can do with it. AQA names five.\n\n- **Integer**: a whole number, `7`, `-3`, `0`.\n- **Real**: a number with a decimal part, `3.75`, `-0.5`.\n- **Boolean**: `True` or `False`, and nothing else.\n- **Character**: a single symbol, `'a'`, `'7'`, `'?'`.\n- **String**: a sequence of characters, `'hello'`, `'07700 900123'`.\n\n{{underline|The type is a design decision.}} A phone number is a **string**, because you never add phone numbers and a leading 0 must survive. A count is an **integer**. A yes/no is a **Boolean**, not the string `'yes'`, because a Boolean cannot be misspelt.",
         "visuals": [
           {
             "type": "diagram",
@@ -248,7 +248,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Variables, constants and assignment",
-        "body": "A **variable** is a named space in memory whose value can change. In AQA pseudo-code a variable is created by assigning to it with the arrow:\n\n```\nscore ← 0\nname ← 'Amy'\n```\n\nThe arrow means *becomes*, and it works **right to left**: evaluate the right-hand side, then store it on the left. So `score ← score + 1` takes the current score, adds 1, and stores the result back. It is not an equation.\n\nA **constant** is a value that must not change while the program runs, declared with `CONSTANT` and named in capitals: `CONSTANT VAT ← 0.2`. Using a constant instead of typing 0.2 everywhere means one change updates the whole program, and the name says what the number is.\n\n**Why name values at all?** A **variable** gives a changing value a name, so the program can store it, update it and use it later; a named constant does the same for a fixed value.\n\n**Choose meaningful identifier names** for variables, constants and subroutines. `totalCost`, `attempts` and `VAT` explain themselves; `x`, `t` and `n2` do not. Meaningful names make code easier to read, check and change, and the specification expects them whenever you write a program in the exam.",
+        "body": "A {{circle|variable}} is a named space in memory whose value can change, like the score on a game screen that goes up as you play. In AQA pseudo-code a variable is created by assigning to it with the arrow:\n\n```\nscore ← 0\nname ← 'Amy'\n```\n\nThe arrow means *becomes*, and it works **right to left**: {{underline|evaluate the right-hand side, then store it on the left}}. So `score ← score + 1` takes the current score, adds 1, and stores the result back. It is not an equation.\n\nA **constant** is a value that must not change while the program runs, declared with `CONSTANT` and named in capitals: `CONSTANT VAT ← 0.2`. Using a constant instead of typing 0.2 everywhere means one change updates the whole program, and the name says what the number is.\n\n**Why name values at all?** A **variable** gives a changing value a name, so the program can store it, update it and use it later; a named constant does the same for a fixed value.\n\n**Choose meaningful identifier names** for variables, constants and subroutines. An identifier is the name you give something in a program; a subroutine is a named block of code you can run by its name. `totalCost`, `attempts` and `VAT` explain themselves; `x`, `t` and `n2` do not. Meaningful names make code easier to read, check and change, and the specification expects them whenever you write a program in the exam.",
         "visuals": [
           {
             "type": "diagram",
@@ -305,7 +305,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Arithmetic: /, DIV and MOD",
-        "body": "The usual `+`, `-`, `*` and `/`, plus two that do integer division:\n\n- `/` is real division: `9 / 2` is `4.5`.\n- `DIV` is **integer division**: how many whole times. `9 DIV 2` is `4`.\n- `MOD` is the **remainder**: `9 MOD 2` is `1`.\n\nTogether they take numbers apart. `23 DIV 10` is 2 (the tens digit) and `23 MOD 10` is 3 (the units digit). `n MOD 2 = 0` tests whether `n` is even. `minutes DIV 60` gives hours and `minutes MOD 60` the minutes left over.\n\n**Precedence**: `*` and `/` come before `+` and `-`, as in maths, and brackets come first of all. `2 * 3 + 4` is 10; `2 * (3 + 4)` is 14. AQA does not rank `DIV` and `MOD` against `*` and `/`, so bracket any line that mixes them: `(a MOD b) * 2`.",
+        "body": "The usual `+`, `-`, `*` and `/`, plus two that do integer division:\n\n- `/` is real division: `9 / 2` is `4.5`.\n- `DIV` is {{circle|integer division}}: how many whole times. `9 DIV 2` is `4`.\n- `MOD` is the {{circle|remainder}}: `9 MOD 2` is `1`.\n\nTogether they take numbers apart. `23 DIV 10` is 2 (the tens digit) and `23 MOD 10` is 3 (the units digit). `n MOD 2 = 0` tests whether `n` is even. `minutes DIV 60` gives hours and `minutes MOD 60` the minutes left over.\n\n**Precedence** is the order in which operators are worked out: `*` and `/` come before `+` and `-`, as in maths, and brackets come first of all. `2 * 3 + 4` is 10; `2 * (3 + 4)` is 14. AQA does not rank `DIV` and `MOD` against `*` and `/`, so bracket any line that mixes them: `(a MOD b) * 2`.",
         "visuals": [
           {
             "type": "diagram",
@@ -381,7 +381,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Comparing and combining: relational and Boolean operators",
-        "body": "**Relational operators** compare two values and give a Boolean: `=`, `≠`, `<`, `≤`, `>`, `≥`. Note that AQA pseudo-code uses a single `=` for *is equal to*; the assignment is the arrow, so there is no confusion.\n\n**Boolean operators** combine Booleans:\n\n- `AND` is True only if **both** sides are True.\n- `OR` is True if **either** side is True.\n- `NOT` flips a Boolean.\n\nThey are evaluated in the order **NOT, then AND, then OR**, so `NOT a OR b` means `(NOT a) OR b`. When in doubt, bracket.\n\nThese are what every IF and every loop condition is made of, so evaluating them quickly and correctly is the skill behind tracing.",
+        "body": "{{circle|Relational operators}} compare two values and give a Boolean: `=`, `≠`, `<`, `≤`, `>`, `≥`. Note that AQA pseudo-code uses a single `=` for *is equal to*; the assignment is the arrow, so there is no confusion.\n\n**Boolean operators** combine Booleans:\n\n- `AND` is True only if **both** sides are True.\n- `OR` is True if **either** side is True.\n- `NOT` flips a Boolean.\n\nA cinema lets you into a 15-rated film only if you have a ticket AND you are 15 or over: both must be True. A shop that takes card OR cash serves you if either one is True.\n\n{{underline|They are evaluated in the order NOT, then AND, then OR}}, so `NOT a OR b` means `(NOT a) OR b`. When in doubt, bracket.\n\nThese are what every IF and every loop condition is made of, so evaluating them quickly and correctly is the skill behind tracing.",
         "visuals": [
           {
             "type": "diagram",
@@ -554,7 +554,7 @@
         "id": "s6",
         "kind": "explain",
         "title": "Input, output and random numbers",
-        "body": "Three built-ins you will use in every program.\n\n**Output**: `OUTPUT 'Hello'`, `OUTPUT score`. To join text and a number, convert the number first: `OUTPUT 'Score: ' + INT_TO_STRING(score)`.\n\n**Input**: `name ← USERINPUT`. In Python, C# and VB.NET keyboard input arrives as **text**, so a number must be converted before arithmetic: `int(input())` in Python, or `age ← STRING_TO_INT(USERINPUT)` in pseudo-code. AQA's pseudo-code does not say what type `USERINPUT` returns, so writing the conversion is always safe and makes your intention clear. Leave it out in Python, C# or VB.NET and the program cannot do arithmetic on text.\n\n**Random numbers**: `dice ← RANDOM_INT(1, 6)` gives a whole number from 1 to 6 inclusive. Both limits are included, which matters when the question asks how many different values are possible.",
+        "body": "Three built-ins, commands that come ready-made with the language, that you will use in every program.\n\n**Output**: `OUTPUT 'Hello'`, `OUTPUT score`. To join text and a number, convert the number first: `OUTPUT 'Score: ' + INT_TO_STRING(score)`.\n\n**Input**: `name ← USERINPUT`. In Python, C# and VB.NET keyboard input arrives as **text**, so a number must be converted before arithmetic: `int(input())` in Python, or `age ← STRING_TO_INT(USERINPUT)` in pseudo-code. AQA's pseudo-code does not say what type `USERINPUT` returns, so writing the conversion is always safe and makes your intention clear. Leave it out in Python, C# or VB.NET and the program cannot do arithmetic on text.\n\n**Random numbers**: `dice ← RANDOM_INT(1, 6)` gives a whole number from 1 to 6 inclusive. {{underline|Both limits are included}}, which matters when the question asks how many different values are possible.",
         "visuals": [
           {
             "type": "diagram",
@@ -798,7 +798,7 @@
         "id": "s9",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Five types**: integer, real, Boolean, character, string. Choose by what the value is *for*: phone numbers are strings, flags are Booleans.\n- **Assignment** `x ← 5` works right to left; `CONSTANT NAME ← value` for values that never change.\n- **Arithmetic**: `/` real division; `DIV` whole times; `MOD` remainder. `n MOD 2 = 0` means even; `DIV 10` and `MOD 10` split off digits.\n- **Relational**: `= ≠ < ≤ > ≥` give Booleans. **Boolean**: `AND`, `OR`, `NOT`, evaluated NOT, AND, OR.\n- **Built-ins**: `OUTPUT`, `USERINPUT` (convert typed numbers before arithmetic), `STRING_TO_INT`, `INT_TO_STRING`, `RANDOM_INT(a, b)` inclusive.\n- **Trace** with a column per variable, one row per change.",
+        "body": "- **Five types**: integer, real, Boolean, character, string. Choose by what the value is *for*: phone numbers are strings, flags are Booleans.\n- **Assignment** `x ← 5` {{underline|works right to left}}; `CONSTANT NAME ← value` for values that never change.\n- **Arithmetic**: `/` real division; `DIV` whole times; `MOD` remainder. `n MOD 2 = 0` means even; `DIV 10` and `MOD 10` split off digits.\n- **Relational**: `= ≠ < ≤ > ≥` give Booleans. **Boolean**: `AND`, `OR`, `NOT`, evaluated NOT, AND, OR.\n- **Built-ins**: `OUTPUT`, `USERINPUT` (convert typed numbers before arithmetic), `STRING_TO_INT`, `INT_TO_STRING`, `RANDOM_INT(a, b)` inclusive.\n- **Trace** with a column per variable, one row per change.",
         "visuals": [
           {
             "type": "diagram",

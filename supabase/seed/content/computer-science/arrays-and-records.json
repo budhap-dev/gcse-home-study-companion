@@ -168,7 +168,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "An array is a numbered list",
-        "body": "An **array** holds many values of the **same type** under one name. Each value has an **index**, and indexes **start at 0**.\n\n```\nscores ← [12, 7, 9, 15]\nOUTPUT scores[0]\nOUTPUT scores[3]\nOUTPUT LEN(scores)\n```\n\nOutput: `12`, `15`, `4`. The first item is index 0, the last is index 3, and `LEN` gives the number of items, which is always one more than the last index.\n\nYou can change an item too: `scores[1] ← 20` replaces the 7, so the array becomes `[12, 20, 9, 15]`.",
+        "body": "An {{circle|array}} holds many values of the **same type** under one name, the way a playlist keeps many songs under one title. Each value has an **index**, its position number, and {{underline|indexes start at 0}}: the first song in the playlist is index 0 and the third is index 2.\n\n```\nscores ← [12, 7, 9, 15]\nOUTPUT scores[0]\nOUTPUT scores[3]\nOUTPUT LEN(scores)\n```\n\nOutput: `12`, `15`, `4`. The first item is index 0, the last is index 3, and `LEN` gives the number of items, which is always one more than the last index.\n\nYou can change an item too: `scores[1] ← 20` replaces the 7, so the array becomes `[12, 20, 9, 15]`.",
         "visuals": [
           {
             "type": "diagram",
@@ -223,7 +223,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Visiting every item",
-        "body": "To do something with every item, loop over the indexes from `0` to `LEN(array) - 1`. This is called **traversing** the array. Using `LEN` means the code works however long the array is.\n\n```\nscores ← [12, 7, 9, 15]\ntotal ← 0\nFOR i ← 0 TO LEN(scores) - 1\n   total ← total + scores[i]\nENDFOR\nOUTPUT total\n```\n\nOutput: `43`.\n\nAQA also has `FOR value IN scores … ENDFOR`, which visits every element without indexes. You cannot change the array's items that way, so use the indexed loop when you need to write to it.",
+        "body": "To do something with every item, loop over the indexes from `0` to `LEN(array) - 1`. This is called {{circle|traversing}} the array. Using `LEN` means the code works however long the array is.\n\n```\nscores ← [12, 7, 9, 15]\ntotal ← 0\nFOR i ← 0 TO LEN(scores) - 1\n   total ← total + scores[i]\nENDFOR\nOUTPUT total\n```\n\nOutput: `43`.\n\nAQA also has `FOR value IN scores … ENDFOR`, which visits every element without indexes. You cannot change the array's items that way, so use the indexed loop when you need to write to it.",
         "visuals": [
           {
             "type": "diagram",
@@ -407,7 +407,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Two-dimensional arrays",
-        "body": "A **2D array** is a grid: an array of arrays. `grid[row][column]`, both from 0.\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```\n\nOutput: `7` then `8`. `LEN(grid)` is the number of rows, 2, and `LEN(grid[0])` is the length of the first row, 3, which is the number of columns. A cell is updated the same way it is read: `grid[1][1] ← 9` changes the 2 to a 9 and leaves every other cell alone.\n\nTo visit every cell, use **nested loops**: the outer loop picks the row, the inner loop walks along it. For 2 rows and 3 columns the inner loop runs 3 times for each of 2 rows: 6 cells.",
+        "body": "A {{circle|2D array}} is a grid: an array of arrays. Think of cinema seats: you find a seat by its row, then by its number along that row. `grid[row][column]` works the same way, both counted from 0.\n\n```\ngrid ← [[3, 8, 1],\n        [5, 2, 7]]\nOUTPUT grid[1][2]\nOUTPUT grid[0][1]\n```\n\nOutput: `7` then `8`. `LEN(grid)` is the number of rows, 2, and `LEN(grid[0])` is the length of the first row, 3, which is the number of columns. A cell is updated the same way it is read: `grid[1][1] ← 9` changes the 2 to a 9 and leaves every other cell alone.\n\nTo visit every cell, use **nested loops**, one loop inside another: {{underline|the outer loop picks the row, the inner loop walks along it}}. For 2 rows and 3 columns the inner loop runs 3 times for each of 2 rows: 6 cells.",
         "visuals": [
           {
             "type": "diagram",
@@ -481,7 +481,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Records: different types together",
-        "body": "An array holds one type. A **record** groups **different types** under one name, each in a named **field**. A student has a name (string) and an age (integer); a record keeps them together.\n\n```\nRECORD Student\n   name : String\n   age : Integer\nENDRECORD\n\ns ← Student('Mia', 15)\nOUTPUT s.name + ' is ' + INT_TO_STRING(s.age)\n```\n\nOutput: `Mia is 15`. Fields are reached with a dot: `s.name`. You update a field the same way: `s.age ← 16` changes just that field and leaves `s.name` alone. An **array of records** is how a program stores a whole class: `pupils[4].age` is the age of the fifth pupil.\n\nAn array of records is built the same way as any other array:\n\n```\npupils ← [Student('Mia', 15), Student('Jon', 16), Student('Ada', 15)]\nOUTPUT pupils[1].name\n```\n\nOutput: `Jon`.",
+        "body": "An array holds one type. A {{circle|record}} groups **different types** under one name, each in a named **field**. A student has a name (string) and an age (integer); a record keeps them together, the way a contact on your phone keeps a name, a number and an email address as one entry.\n\n```\nRECORD Student\n   name : String\n   age : Integer\nENDRECORD\n\ns ← Student('Mia', 15)\nOUTPUT s.name + ' is ' + INT_TO_STRING(s.age)\n```\n\nOutput: `Mia is 15`. `INT_TO_STRING` turns the age into text, so that `+` can join it to the other strings. Fields are reached with a dot: `s.name`. You update a field the same way: `s.age ← 16` changes just that field and leaves `s.name` alone. An **array of records** is how a program stores a whole class: `pupils[4].age` is the age of the fifth pupil.\n\nAn array of records is built the same way as any other array:\n\n```\npupils ← [Student('Mia', 15), Student('Jon', 16), Student('Ada', 15)]\nOUTPUT pupils[1].name\n```\n\nOutput: `Jon`.",
         "visuals": [
           {
             "type": "worked-example",
@@ -573,7 +573,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: the traps examiners set",
-        "body": "Three things separate top answers on arrays:\n\n- **Off-by-one**: the last index is `LEN − 1`. A loop that goes to `LEN` reads past the end.\n- **Search loops**: a WHILE loop with a `found` flag stops early, but the counter is usually incremented **after** the match, so the final value of `i` is one more than the index found.\n- **2D order**: `grid[row][col]`, and nested loops output row by row. Count outputs as rows × columns.\n\n```\nnums ← [4, 9, 2, 7]\nfound ← False\ni ← 0\nWHILE i < LEN(nums) AND NOT found\n   IF nums[i] = 2 THEN\n      found ← True\n   ENDIF\n   i ← i + 1\nENDWHILE\nOUTPUT i\n```\n\nThe 2 is at index 2, but `i` is incremented to 3 before the loop condition is tested again, so the output is 3.",
+        "body": "Three things separate top answers on arrays:\n\n- **Off-by-one**: the last index is `LEN − 1`. A loop that goes to `LEN` reads past the end.\n- **Search loops**: a WHILE loop with a `found` flag (a Boolean that is set to True once the item turns up) stops early, but the counter is usually incremented **after** the match, so the final value of `i` is one more than the index found.\n- **2D order**: `grid[row][col]`, and nested loops output row by row. Count outputs as rows × columns.\n\n```\nnums ← [4, 9, 2, 7]\nfound ← False\ni ← 0\nWHILE i < LEN(nums) AND NOT found\n   IF nums[i] = 2 THEN\n      found ← True\n   ENDIF\n   i ← i + 1\nENDWHILE\nOUTPUT i\n```\n\nThe 2 is at index 2, but `i` is incremented to 3 before the loop condition is tested again, so the output is 3.",
         "visuals": [
           {
             "type": "diagram",
@@ -649,7 +649,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- An array holds values of one type, indexed from 0. LEN gives the count; the last index is LEN − 1.\n- Traverse with FOR i ← 0 TO LEN(a) − 1. Total, count and biggest all use this loop with a variable set up before it.\n- 2D arrays are grids: a[row][col]; nested loops visit row by row. LEN(a) counts the rows and LEN(a[0]) the columns.\n- Records group fields of different types; arrays of records store many of them. Reach a field with a dot: pupils[2].name.\n- Watch the off-by-one trap and the counter in search loops.",
+        "body": "- An array holds values of one type, indexed from 0. LEN gives the count; {{underline|the last index is LEN − 1}}.\n- Traverse with FOR i ← 0 TO LEN(a) − 1. Total, count and biggest all use this loop with a variable set up before it.\n- 2D arrays are grids: a[row][col]; nested loops visit row by row. LEN(a) counts the rows and LEN(a[0]) the columns.\n- Records group fields of different types; arrays of records store many of them. Reach a field with a dot: pupils[2].name.\n- Watch the off-by-one trap and the counter in search loops.",
         "visuals": [
           {
             "type": "diagram",

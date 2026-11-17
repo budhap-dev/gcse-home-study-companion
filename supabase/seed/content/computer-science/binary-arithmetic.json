@@ -17,7 +17,7 @@
     {
       "kind": "shortcut",
       "title": "Check by converting",
-      "body": "Convert both numbers to decimal, add them, and convert the answer back. If it does not match your binary working, you have made a carry mistake. It costs thirty seconds and catches nearly every error in this topic."
+      "body": "Convert both numbers to decimal, add them, and convert the answer back. If it does not match your binary working, you have made a carry mistake. It takes under a minute and catches nearly every error in this topic."
     },
     {
       "kind": "spot",
@@ -106,7 +106,7 @@
       },
       {
         "title": "Why you check by converting",
-        "body": "Binary addition has only four column sums to learn, and every one of them is easy. The slips happen in the **carries**, which is a bookkeeping problem rather than an understanding one.\n\nSo there is a check that costs ten seconds and needs no confidence: convert both numbers to decimal, add them there, convert your binary answer back, and see whether the two agree. It catches a dropped carry without your knowing where it was — which is the best kind of check, and the same trick as the mass check in a chemical equation.",
+        "body": "Binary addition has only four column sums to learn, and every one of them is easy. The slips happen in the **carries**, which is a bookkeeping problem rather than an understanding one.\n\nSo there is a check that takes under a minute and needs no confidence: convert both numbers to decimal, add them there, convert your binary answer back, and see whether the two agree. It catches a dropped carry without your knowing where it was — which is the best kind of check, and the same trick as the mass check in a chemical equation.",
         "visual": {
           "type": "diagram",
           "component": "trace-table",
@@ -150,7 +150,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Adding binary numbers",
-        "body": "**Binary addition works exactly like decimal addition — start at the right, carry when a column overflows.** The only difference is that a column overflows at 2 rather than at 10.\n\n**The four sums:**\n\n| Column | Write | Carry |\n| --- | --- | --- |\n| 0 + 0 | 0 | – |\n| 0 + 1 | 1 | – |\n| **1 + 1** | **0** | **1** |\n| **1 + 1 + 1** | **1** | **1** |\n\nThe third is the one that catches people: 1 + 1 is **10** in binary, so you write 0 and carry 1 — just as 5 + 5 makes you write 0 and carry 1 in decimal.\n\nThe fourth appears when a carry joins a column that already has two 1s, or when adding **three** numbers. 1 + 1 + 1 is **11** in binary, which is 3, so you write 1 and carry 1.\n\n**What the specification limits you to:**\n\n- adding up to **three** binary numbers\n- a maximum of **8 bits** per number\n- at most **three 1s in a single column**\n- answers of at most **8 bits**, with no carry past the eighth\n\nSo you will never be asked to add four numbers, and a correct answer will always fit in a byte.",
+        "body": "**Binary addition works exactly like decimal addition — start at the right, carry when a column gets too big.** The only difference is that you carry when a column reaches 2 rather than 10.\n\n**The four sums:**\n\n| Column | Write | Carry |\n| --- | --- | --- |\n| 0 + 0 | 0 | – |\n| 0 + 1 | 1 | – |\n| **1 + 1** | **0** | **1** |\n| **1 + 1 + 1** | **1** | **1** |\n\nThe third is the one that catches people: {{underline|1 + 1 is 10 in binary, so you write 0 and carry 1}}, in the same way that 5 + 5 makes you write 0 and carry 1 in decimal.\n\nThe fourth appears when a carry joins a column that already has two 1s, or when adding **three** numbers. 1 + 1 + 1 is **11** in binary, which is 3, so you write 1 and carry 1.\n\n**What the specification limits you to:**\n\n- adding up to **three** binary numbers\n- a maximum of **8 bits** per number\n- at most **three 1s in a single column**\n- answers of at most **8 bits**, with no carry past the eighth\n\nSo you will never be asked to add four numbers, and a correct answer will always fit in a byte.",
         "visuals": [
           {
             "type": "diagram",
@@ -257,7 +257,7 @@
               },
               {
                 "text": "Check: 58 + 22 = **80**, and `01010000` = 64 + 16 = 80 ✓",
-                "note": "convert and add — thirty seconds that catches nearly every carry error"
+                "note": "convert and add — under a minute, and it catches nearly every carry error"
               }
             ]
           },
@@ -344,7 +344,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Adding three numbers, and overflow",
-        "body": "**Adding three numbers brings in the fourth column sum.** When three 1s land in one column, 1 + 1 + 1 = **11** in binary, so you **write 1 and carry 1**.\n\nAdding `00001111`, `00000011`, `00000101`:\n\nThe units column has **three 1s** — write 1, carry 1. Working the rest through gives `00010111`, and the check confirms it: 15 + 3 + 5 = **23**, and `00010111` = 16 + 4 + 2 + 1 = 23.\n\nThe specification says you will never meet **more** than three 1s in a column, so those four sums are all you ever need.\n\n**Overflow.** Eight bits hold 0 to 255. If a carry comes out of the leftmost column there is **nowhere to put it**, because the byte has no ninth bit:\n\n`11111111` + `00000001` would need `100000000` — **9 bits**.\n\nThat is an **overflow error**: the result is too large for the space available. Name it, and say why: the result needs more bits than are available. In a real computer the ninth bit is simply lost, so the stored answer comes out as 0 — right arithmetic, wrong answer, which is why overflow matters.\n\nIn the exam, the specification promises answers will **not** carry beyond the eighth bit, so overflow is something you explain rather than something you have to work around.",
+        "body": "**Adding three numbers brings in the fourth column sum.** When three 1s land in one column, 1 + 1 + 1 = **11** in binary, so you **write 1 and carry 1**.\n\nAdding `00001111`, `00000011`, `00000101`:\n\nThe units column has **three 1s** — write 1, carry 1. Working the rest through gives `00010111`, and the check confirms it: 15 + 3 + 5 = **23**, and `00010111` = 16 + 4 + 2 + 1 = 23.\n\nThe specification says you will never meet **more** than three 1s in a column, so those four sums are all you ever need.\n\n**Overflow.** Eight bits hold 0 to 255. If a carry comes out of the leftmost column there is **nowhere to put it**, because the byte has no ninth bit:\n\n`11111111` + `00000001` would need `100000000` — **9 bits**.\n\nThat is an {{circle|overflow error}}: {{underline|the result is too large for the space available}}. Name it, and say why: the result needs more bits than are available. In a real computer the ninth bit is lost, so the stored answer comes out as 0 — right arithmetic, wrong answer, which is why overflow matters. A 24-hour clock does the same at midnight: after 23:59 there is no column for the next day, so it shows 00:00.\n\nIn the exam, the specification promises answers will **not** carry beyond the eighth bit, so overflow is something you explain rather than something you have to work around.",
         "visuals": [
           {
             "type": "diagram",
@@ -440,7 +440,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Binary shifts",
-        "body": "**A logical binary shift moves every bit the same number of places.** Zeros fill the empty end, and anything pushed off the other end is **lost**.\n\n**Shifting left multiplies by 2 for each place.** `00010110` (22) shifted **left 2** becomes `01011000` = 88, and 22 × 4 = 88. Two places is × 2², which is × 4.\n\n**Shifting right divides by 2 for each place.** `00010110` (22) shifted **right 1** becomes `00001011` = 11, and 22 ÷ 2 = 11.\n\n**Bits that fall off are gone.** This matters when the number is **odd**. `00010111` is 23; shift right once and the 1 in the units column drops off the end, giving `00001011` = **11**, not 11.5. A right shift is division by 2 that **throws away the remainder**. The specification is clear that you do not need fractional representations, so this is the expected behaviour, not a failure.\n\nThe same loss happens shifting **left** if a 1 is pushed off the top: the value is no longer what the multiplication should give.\n\n**Why computers do this.** A shift is a very cheap operation — far cheaper than a general multiply or divide — so multiplying or dividing by a power of 2 is done with a shift wherever possible.\n\n**Only logical shifts are examined**: bits move, zeros come in, what falls off is lost.",
+        "body": "**A logical binary shift moves every bit the same number of places.** Zeros fill the empty end, and anything pushed off the other end is **lost**.\n\n{{underline|Shifting left multiplies by 2 for each place.}} It is the same trick as multiplying by 10 in decimal by writing a 0 on the end, so 45 becomes 450; in binary each place is worth 2 times the one to its right, not 10. `00010110` (22) shifted **left 2** becomes `01011000` = 88, and 22 × 4 = 88. Two places is × 2², which is × 4.\n\n{{underline|Shifting right divides by 2 for each place.}} `00010110` (22) shifted **right 1** becomes `00001011` = 11, and 22 ÷ 2 = 11.\n\n**Bits that fall off are gone.** This matters when the number is **odd**. `00010111` is 23; shift right once and the 1 in the units column drops off the end, giving `00001011` = **11**, not 11.5. A right shift is division by 2 that **throws away the remainder**. The specification is clear that you do not need fractional representations, so this is the expected behaviour, not a failure.\n\nThe same loss happens shifting **left** if a 1 is pushed off the top: the value is no longer what the multiplication should give.\n\n**Why computers do this.** A shift is a very cheap operation — far cheaper than a general multiply or divide — so multiplying or dividing by a power of 2 is done with a shift wherever possible.\n\n**Only logical shifts are examined**: bits move, zeros come in, what falls off is lost.",
         "visuals": [
           {
             "type": "diagram",
@@ -637,7 +637,7 @@
         "id": "s7",
         "kind": "summary",
         "title": "Summary",
-        "body": "- Binary addition works like decimal, but a column overflows at **2**.\n- **0+0 = 0**, **0+1 = 1**, **1+1 = 10** (write 0, carry 1), **1+1+1 = 11** (write 1, carry 1).\n- Work **right to left** and write each carry down.\n- The specification allows up to **three** numbers, **8 bits** each, at most **three 1s** in a column.\n- Answers are at most **8 bits**, with no carry past the eighth.\n- **Check by converting** to decimal and adding.\n- A carry out of the leftmost column is an **overflow error**.\n- Overflow means the result is **too large for the bits available**; the extra bit is lost.\n- A **logical shift** moves every bit; **zeros** fill the empty end.\n- Whatever is pushed off the end is **lost**.\n- **Left** by $n$ places **multiplies** by $2^n$.\n- **Right** by $n$ places **divides** by $2^n$.\n- `00010110` left 2 = `01011000`, so 22 × 4 = 88.\n- A right shift of an **odd** number loses its units bit: 23 becomes 11, not 11.5.\n- Shifts are used because they are **cheaper** than multiply and divide.",
+        "body": "- Binary addition works like decimal, but you carry when a column reaches **2**.\n- **0+0 = 0**, **0+1 = 1**, **1+1 = 10** (write 0, carry 1), **1+1+1 = 11** (write 1, carry 1).\n- Work **right to left** and write each carry down.\n- The specification allows up to **three** numbers, **8 bits** each, at most **three 1s** in a column.\n- Answers are at most **8 bits**, with no carry past the eighth.\n- **Check by converting** to decimal and adding.\n- {{underline|A carry out of the leftmost column is an overflow error}}.\n- Overflow means the result is **too large for the bits available**; the extra bit is lost.\n- A **logical shift** moves every bit; **zeros** fill the empty end.\n- {{underline|Whatever is pushed off the end is lost}}.\n- **Left** by $n$ places **multiplies** by $2^n$.\n- **Right** by $n$ places **divides** by $2^n$.\n- `00010110` left 2 = `01011000`, so 22 × 4 = 88.\n- A right shift of an **odd** number loses its units bit: 23 becomes 11, not 11.5.\n- Shifts are used because they are **cheaper** than multiply and divide.",
         "visuals": [
           {
             "type": "diagram",
@@ -774,7 +774,7 @@
       "skill": "logical shifts",
       "calculator": "either",
       "tags": [],
-      "solution": "A logical shift brings in **zeros** at the vacated end. The bits pushed off the other end are simply lost.",
+      "solution": "A logical shift brings in **zeros** at the vacated end. The bits pushed off the other end are lost.",
       "markScheme": [
         {
           "code": "B1",

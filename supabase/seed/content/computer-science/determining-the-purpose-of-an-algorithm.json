@@ -149,7 +149,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Reading an algorithm you have never seen",
-        "body": "An exam will hand you a short algorithm with no name and ask **what it does**. You are not expected to recognise it. You are expected to **trace** it: run it by hand, a line at a time, writing down what every variable holds.\n\nThe way to describe what you find has three parts:\n\n- **Input** — what goes in. A list, a number, a string.\n- **Processing** — what is done to it. Added up, compared, counted, reversed.\n- **Output** — what comes out, and *what it means*.\n\nThe last part is the one that states the purpose. \"It outputs max\" repeats the code back. \"It outputs the largest value in the list\" says what the algorithm is **for**.",
+        "body": "An exam will hand you a short algorithm with no name and ask **what it does**. You are not expected to recognise it. You are expected to {{circle|trace}} it: run it by hand, a line at a time, writing down what every variable holds. It is like finding a recipe with the title torn off: you follow the steps and see what comes out of the oven.\n\nThe way to describe what you find has three parts:\n\n- **Input** — what goes in. A list, a number, a string.\n- **Processing** — what is done to it. Added up, compared, counted, reversed.\n- **Output** — what comes out, and *what it means*.\n\n{{underline|The last part is the one that states the purpose.}} \"It outputs max\" repeats the code back. \"It outputs the largest value in the list\" says what the algorithm is **for**.",
         "visuals": [
           {
             "type": "diagram",
@@ -224,7 +224,7 @@
         "id": "s2",
         "kind": "worked-example",
         "title": "Building a trace table",
-        "body": "A **trace table** has one column per variable and one row per time round the loop. Fill it in as you go and never keep a value in your head.\n\nHere is the algorithm, with the list **a = 4, 9, 2, 7, 5**.\n\n```\nmax ← a[0]\nFOR i ← 1 TO LEN(a) - 1\n   IF a[i] > max THEN\n      max ← a[i]\n   ENDIF\nENDFOR\nOUTPUT max\n```\n\nThe loop starts at **i = 1**, not 0, because `max` has already been given `a[0]` before the loop.",
+        "body": "A **trace table** has one column per variable and one row per time round the loop. Fill it in as you go and never keep a value in your head.\n\nHere is the algorithm, with the list **a = 4, 9, 2, 7, 5**. In the code, `a[i]` is the item at position `i`, counting from 0, so `a[0]` is the first item, 4. `LEN(a)` is the number of items, 5, so the last position is `LEN(a) - 1`, which is 4.\n\n```\nmax ← a[0]\nFOR i ← 1 TO LEN(a) - 1\n   IF a[i] > max THEN\n      max ← a[i]\n   ENDIF\nENDFOR\nOUTPUT max\n```\n\nThe loop starts at **i = 1**, not 0, because `max` has already been given `a[0]` before the loop.",
         "visuals": [
           {
             "type": "diagram",
@@ -331,7 +331,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "The patterns worth recognising",
-        "body": "Most exam algorithms are one of a handful of patterns. Spotting the pattern tells you the purpose almost immediately, and the trace then confirms it.\n\n- A variable starting at **0** with `total ← total + something` inside the loop is a **running total**.\n- A variable starting at **0** with `count ← count + 1` inside an `IF` is a **counter**: it counts how many items pass the test.\n- A variable set to the **first item** and replaced when something beats it is a **largest** or **smallest** finder.\n- A string built up with `out ← out + SUBSTRING(i, i, s)` is **constructing a new string**, and the direction of the loop tells you whether it is reversing it.\n\nThe giveaway is always the **starting value** and the **one line inside the loop**.",
+        "body": "Most exam algorithms are one of a handful of patterns. Spotting the pattern tells you the purpose almost immediately, and the trace then confirms it.\n\n- A variable starting at **0** with `total ← total + something` inside the loop is a {{circle|running total}}.\n- A variable starting at **0** with `count ← count + 1` inside an `IF` is a {{circle|counter}}: it counts how many items pass the test.\n- A variable set to the **first item** and replaced when something beats it is a **largest** or **smallest** finder.\n- A string built up with `out ← out + SUBSTRING(i, i, s)` is **constructing a new string**, and the direction of the loop tells you whether it is reversing it. `SUBSTRING(i, i, s)` picks out the one character at position `i` of `s`, counting from 0.\n\nThe giveaway is always the **starting value** and the **one line inside the loop**.",
         "visuals": [
           {
             "type": "diagram",
@@ -678,7 +678,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: saying why, not just what",
-        "body": "Top marks go to answers that say what the algorithm is **for** and can spot where it would go wrong.\n\nTake the largest-value algorithm again. Why does it start with `max ← a[0]` rather than `max ← 0`? Because if every value in the list were **negative**, nothing would ever beat 0 and the algorithm would wrongly output 0. Starting with the first item means the answer is always a value that is actually in the list.\n\nThat kind of observation, a specific input that breaks it, is what an *evaluate* question is asking for. A guess at the purpose is not enough; a trace on an awkward input proves it.",
+        "body": "Top marks go to answers that say what the algorithm is **for** and can spot where it would go wrong.\n\nTake the largest-value algorithm again. Why does it start with `max ← a[0]` rather than `max ← 0`? Because if every value in the list were **negative**, nothing would ever beat 0 and the algorithm would wrongly output 0. Starting with the first item means the answer is always a value that is actually in the list.\n\nThat kind of observation, {{underline|a specific input that breaks it}}, is what an *evaluate* question is asking for. A guess at the purpose is not enough; a trace on an awkward input proves it.",
         "visuals": [
           {
             "type": "diagram",
@@ -768,7 +768,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- To work out what an unfamiliar algorithm does, **trace it**: one column per variable, one row per pass of the loop.\n- Describe it as **input**, **processing** and **output**, and say what the output *means*.\n- Naming the variable is not a purpose. \"It outputs the largest value in the list\" is a purpose; \"it outputs max\" is not.\n- Look at the **starting value** and the **one line inside the loop**: 0 with `+ a[i]` is a total, 0 with `+ 1` is a counter, the first item is a largest or smallest finder.\n- Read the **line after the loop**. Dividing the total by the length turns a sum into a **mean average**.\n- Repeated subtraction with a counter is **whole-number division**: the counter is the quotient, what is left is the remainder.\n- Test an awkward input. A list of negatives breaks a largest-finder that starts at 0.",
+        "body": "- To work out what an unfamiliar algorithm does, **trace it**: one column per variable, one row per pass of the loop.\n- Describe it as **input**, **processing** and **output**, and say what the output *means*.\n- {{underline|Naming the variable is not a purpose.}} \"It outputs the largest value in the list\" is a purpose; \"it outputs max\" is not.\n- Look at the **starting value** and the **one line inside the loop**: 0 with `+ a[i]` is a total, 0 with `+ 1` is a counter, the first item is a largest or smallest finder.\n- Read the **line after the loop**. Dividing the total by the length turns a sum into a **mean average**.\n- Repeated subtraction with a counter is **whole-number division**: the counter is the quotient (how many times one number fits into the other), what is left is the remainder.\n- Test an awkward input. A list of negatives breaks a largest-finder that starts at 0.",
         "visuals": [
           {
             "type": "diagram",

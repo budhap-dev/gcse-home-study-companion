@@ -31,7 +31,7 @@
     }
   ],
   "why": {
-    "matters": "Every file that moves anywhere costs time to send and space to keep, and the two methods on this specification make files smaller **without losing anything** — the original can be rebuilt exactly.\n\nThat last part is the bit worth holding on to. Compression is not the same as making a picture blurrier. It is finding the waste in how the data was written down: a run of identical values written out one by one, or a common letter given the same number of bits as a rare one. Both methods are just those two kinds of waste, removed.",
+    "matters": "Every file that moves anywhere costs time to send and space to keep, and the two methods on this specification make files smaller **without losing anything** — the original can be rebuilt exactly.\n\nThat last part is the bit worth holding on to. Compression is not the same as making a picture blurrier. It is finding the waste in how the data was written down: a run of identical values written out one by one, or a common letter given the same number of bits as a rare one. Each method removes one of those two kinds of waste.",
     "examples": [
       {
         "title": "Why a row of sky compresses and a row of crowd does not",
@@ -146,7 +146,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Why files are compressed",
-        "body": "**Compression** means storing the same information in **fewer bits**. Nothing is thrown away by the two methods on this specification: the original can be rebuilt exactly.\n\nIt matters for three reasons:\n\n- **Storage.** A smaller file takes less room on a disk or a phone.\n- **Transmission.** Fewer bits take less time to send, and use less of a mobile data allowance.\n- **Cost.** Less bandwidth and less storage to pay for, which is why streaming services care.\n\nAQA asks for exactly two methods: **run length encoding** and **Huffman coding**. Both spot **repetition** and store it more cleverly.",
+        "body": "{{circle|Compression}} means {{underline|storing the same information in fewer bits}}. Nothing is thrown away by the two methods on this specification: the original can be rebuilt exactly. Zipping a folder of coursework to email it works this way: the zip file is smaller, and unzipping it gives back exactly the same files.\n\nIt matters for three reasons:\n\n- **Storage.** A smaller file takes less room on a disk or a phone.\n- **Transmission.** Fewer bits take less time to send, and use less of a mobile data allowance.\n- **Cost.** Less bandwidth (the amount of data a connection carries each second) and less storage to pay for, which is why streaming services care.\n\nAQA asks for exactly two methods: **run length encoding** and **Huffman coding**. Both spot **repetition** and store it more cleverly.",
         "visuals": [
           {
             "type": "diagram",
@@ -221,7 +221,7 @@
         "id": "s2",
         "kind": "worked-example",
         "title": "Run length encoding",
-        "body": "**Run length encoding** looks for **runs**: the same value repeated. It replaces each run with a **frequency/data pair**, which is how many times, followed by what.\n\nA row of black and white pixels like **1, 1, 1, 0, 0, 1, 1, 1, 1, 0** becomes **3 1, 2 0, 4 1, 1 0**: three 1s, two 0s, four 1s, one 0.\n\nCheck the frequencies add up to the length of the original. That single check catches most mistakes.",
+        "body": "**Run length encoding** looks for **runs**: the same value repeated. It replaces each run with a {{circle|frequency/data pair}}, which is how many times, followed by what.\n\nA row of black and white pixels like **1, 1, 1, 0, 0, 1, 1, 1, 1, 0** becomes **3 1, 2 0, 4 1, 1 0**: three 1s, two 0s, four 1s, one 0.\n\nCheck the frequencies add up to the length of the original. That single check catches most mistakes.",
         "visuals": [
           {
             "type": "diagram",
@@ -318,7 +318,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "When run length encoding fails",
-        "body": "RLE only helps when there are **long runs**. Give it something that keeps changing and it makes the file **bigger**.\n\nTake **abcabc**. Every run is one character long, so it encodes as **1a 1b 1c 1a 1b 1c**: 6 pairs to store 6 characters, and each pair needs a frequency **as well as** the character. The file has roughly doubled.\n\nThat is why RLE is used for **simple images** with blocks of one colour, such as icons, scans of black-and-white documents and fax images, and not for photographs or ordinary English text.",
+        "body": "{{underline|RLE only helps when there are long runs.}} Give it something that keeps changing and it makes the file **bigger**.\n\nTake **abcabc**. Every run is one character long, so it encodes as **1a 1b 1c 1a 1b 1c**: 6 pairs to store 6 characters, and each pair needs a frequency **as well as** the character. The file has roughly doubled.\n\nThat is why RLE is used for **simple images** with blocks of one colour, such as icons, logos and scans of black-and-white documents, and not for photographs or ordinary English text. A picture of the French flag is the ideal case: every row is three long runs, blue, white and red, so a row hundreds of pixels wide becomes three pairs.",
         "visuals": [
           {
             "type": "diagram",
@@ -385,7 +385,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Huffman coding: short codes for common characters",
-        "body": "Ordinary text stores every character in the same number of bits: **7 bits** each in ASCII, whether the character is an **e** or a **z**.\n\nHuffman coding gives the **most common** characters the **shortest** codes and the rare ones longer codes. Because the common ones appear so often, the total comes out much smaller.\n\nThe codes are read off a **Huffman tree**:\n\n- Start at the top, the **root**.\n- Every branch to the **left** is a **0**, every branch to the **right** is a **1**.\n- Write the bits down as you walk to the character's **leaf**. That string of bits is its code.\n\nNo code is ever the start of another code, which is what lets a decoder read a long string of bits back without any separators between the characters.",
+        "body": "Ordinary text stores every character in the same number of bits: **7 bits** each in ASCII, whether the character is an **e** or a **z**.\n\n{{underline|Huffman coding gives the most common characters the shortest codes}} and the rare ones longer codes. Because the common ones appear so often, the total comes out much smaller. Morse code used the same idea long before computers: E, the commonest letter in English, is a single dot, while the rare Q is dash dash dot dash.\n\nThe codes are read off a **Huffman tree**:\n\n- Start at the top, the **root**.\n- Every branch to the **left** is a **0**, every branch to the **right** is a **1**.\n- Write the bits down as you walk to the character's {{circle|leaf}}, the end of a branch where a character sits. That string of bits is its code.\n\nNo code is ever the start of another code, which is what lets a decoder read a long string of bits back without any separators between the characters.",
         "visuals": [
           {
             "type": "diagram",
@@ -448,7 +448,7 @@
         "id": "s5",
         "kind": "worked-example",
         "title": "Building the tree and counting the bits",
-        "body": "The tree is built from the **frequencies**. Repeatedly take the **two smallest** and join them under a new branch whose weight is their total, until one tree is left.\n\nHere is **mississippi**: i 4, s 4, p 2, m 1.",
+        "body": "The tree is built from the **frequencies**. Repeatedly take the **two smallest** and join them under a new branch whose weight is their total, until one tree is left. In this lesson the smaller weight goes on the left branch; putting it on the right gives different codes but the same code lengths, so the same total.\n\nHere is **mississippi**: i 4, s 4, p 2, m 1.",
         "visuals": [
           {
             "type": "diagram",
@@ -586,7 +586,7 @@
                 "note": "the number a question about saving wants"
               },
               {
-                "text": "That is about a 72% reduction",
+                "text": "That is about a 73% reduction",
                 "note": "worth saying if the marks allow"
               }
             ]
@@ -695,7 +695,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: choosing the method, and the hidden cost",
-        "body": "Two points separate a top answer.\n\n**The tree has to be stored too.** The decoder cannot read the bits without knowing the codes, so the tree or code table travels with the compressed data. On a short message that overhead can wipe out the saving, which is why Huffman pays off on **long** files where the same tree serves thousands of characters.\n\n**The methods suit different data.** RLE wants **long runs of identical values**, so it is at home on simple images with blocks of one colour. Huffman wants **uneven frequencies**, which is exactly what ordinary text has: e and t everywhere, q and z almost never. On text that keeps changing, RLE makes the file bigger while Huffman still makes a substantial saving. The 72% saved on *mississippi* is unusually high because that word uses only four different letters; ordinary English prose uses far more, so the saving there is smaller.",
+        "body": "Two points separate a top answer.\n\n**The tree has to be stored too.** The decoder cannot read the bits without knowing the codes, so the tree or code table travels with the compressed data. On a short message that overhead can wipe out the saving, which is why Huffman pays off on **long** files where the same tree serves thousands of characters.\n\n**The methods suit different data.** RLE wants **long runs of identical values**, so it is at home on simple images with blocks of one colour. Huffman wants **uneven frequencies**, which is exactly what ordinary text has: e and t everywhere, q and z almost never. On text that keeps changing, RLE makes the file bigger while Huffman still makes a substantial saving. The 73% saved on *mississippi* (56 of 77 bits) is unusually high because that word uses only four different letters; ordinary English prose uses far more, so the saving there is smaller.",
         "visuals": [
           {
             "type": "diagram",
@@ -799,7 +799,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Compression** stores the same information in fewer bits, saving storage, transmission time and cost.\n- **Run length encoding** replaces runs of the same value with **frequency/data pairs**, so 1, 1, 1, 0, 0, 1, 1, 1, 1, 0 becomes 3 1, 2 0, 4 1, 1 0.\n- Check that the RLE frequencies **add up** to the length of the original.\n- RLE makes data **larger** when there are no long runs, because each pair costs a frequency as well as a value.\n- **Huffman coding** gives common characters short codes. Read a code off the tree by walking from the root, **left is 0 and right is 1**.\n- Build the tree by repeatedly joining the **two smallest** frequencies under a new branch.\n- Compressed size is **frequency × code length**, added up. Uncompressed ASCII is **7 bits per character**.\n- mississippi: 21 bits compressed against 77 in ASCII, a saving of **56 bits**.\n- The **tree must be stored too**, so Huffman pays off most on long files.",
+        "body": "- **Compression** stores the same information in fewer bits, saving storage, transmission time and cost.\n- **Run length encoding** replaces runs of the same value with **frequency/data pairs**, so 1, 1, 1, 0, 0, 1, 1, 1, 1, 0 becomes 3 1, 2 0, 4 1, 1 0.\n- Check that the RLE frequencies **add up** to the length of the original.\n- RLE makes data **larger** when there are no long runs, because each pair costs a frequency as well as a value.\n- {{underline|Huffman coding gives common characters short codes}}. Read a code off the tree by walking from the root, **left is 0 and right is 1**.\n- Build the tree by repeatedly joining the **two smallest** frequencies under a new branch.\n- {{underline|Compressed size is frequency × code length, added up}}. Uncompressed ASCII is **7 bits per character**.\n- mississippi: 21 bits compressed against 77 in ASCII, a saving of **56 bits**.\n- The **tree must be stored too**, so Huffman pays off most on long files.",
         "visuals": [
           {
             "type": "diagram",
