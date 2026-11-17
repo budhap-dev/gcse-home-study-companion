@@ -1324,6 +1324,116 @@ marked too. The cheat sheet, built from the same lesson points, shows the marks 
   Ohm's law (Physics) and Pythagoras in 2D (Maths); `hand-marks.test.ts` holds at most two
   marks a step, only the three kinds, none round display maths.
 
+## 16. A handwritten notebook theme (17 November 2026)
+
+Asked 17 November 2026: "Create a requirement for a theme - which would looks like completely
+handwritten in ruled lines and white paper (wherever applicable). There should be
+highlighters, strikethroughs, carets to write something important but missed, apply the
+already circular rings. The text, marker and highlight colours should be Black, blue, red and
+green." **Approved 17 November 2026**, with the owner's answers to the three questions
+below (ink roles as proposed; strikethrough and caret in Notebook only; a pen choice for
+answers).
+
+**Where things stand.** There are eleven themes (Paper, Midnight, Ocean, Sunset, Forest, Candy,
+Space, Jungle, Sunshine, Aurora, Nebula) plus Match my device. Each is a set of colour tokens
+in `themes.ts`; all share the same two typefaces, Atkinson Hyperlegible for text and
+Bricolage Grotesque for headings. The hand-drawn marks of section 15 Part C (circle, underline,
+highlight) are drawn in the subject's accent colour in every theme. Nothing looks handwritten
+except those marks, and there is no strikethrough or caret.
+
+**What the student sees.** A new theme, **Notebook**, chosen in Settings like any other. The page
+looks like a page of a school exercise book that someone has written up neatly by hand:
+- **White paper with ruled lines.** Pale blue lines a line apart, and a red margin line down
+  the left of a card on a laptop or tablet. The text sits on the lines: the line spacing of
+  the writing and the ruling are the same, so each line of text has its own rule under it.
+- **Handwriting.** Headings, lesson text, card text, tips, summaries, flashcards and question
+  prompts are in a handwriting typeface. Candidate: **Kalam** (Google Fonts, three weights, so
+  **bold** still reads as bold), with **Caveat** for headings; the choice is made from a
+  contact sheet of real lessons on a phone, not from the font's sample page.
+- **Four pens and three highlighters.** Every colour on the page is one of four inks:
+  - **black**, the writing itself;
+  - **blue**, headings, step titles and the student's own answers;
+  - **red**, circles round keywords, strikethroughs and carets (the teacher's correction pen),
+    and a wrong answer;
+  - **green**, the underline under the sentence to remember, and a right answer.
+  Highlighters are pale blue, pale red and pale green. Black is a pen only: a black
+  highlighter would hide the words. Measured on white: black 17:1, blue 7.2:1, red 5.7:1, green
+  5.3:1. Under a highlighter only black and blue text stay above 4.5:1, so highlighted words
+  are always written in black or blue. The subject accent colours are not used in this theme.
+
+**"Wherever applicable."** Ruled lines and handwriting go where writing would go in an exercise
+book. These stay as they are, on a plain white panel "stuck in" to the page:
+- **Diagrams.** Their label placement, collision guard and the 298-unit phone width are
+  measured against the current font; a wider handwriting face would push labels into lines
+  and off the edge (sections 15 and the diagram fixes of #295–#307).
+- **Maths** (KaTeX) and **code**: exact symbols matter more than the look; code stays
+  monospace.
+- **Tables**: printed tables are glued-in sheets, not ruled lines.
+- **Answer fields** (the MathLive maths field and typed boxes), so what is typed is exactly
+  what is marked.
+- **Print and worksheets**: print stays as today (no ruling, normal type), so a printed sheet
+  costs no extra ink and reads the same as before.
+Buttons keep the button system (#440) and its sizes; their labels may take the handwriting
+if they still fit at 390 px.
+
+**The marks.** Section 15's three marks are drawn in the four inks, and two new marks join them,
+written into lesson text in the same way:
+- **Circle** (existing): red, round a keyword where it is first explained.
+- **Underline** (existing): green, under the one sentence to remember.
+- **Highlight** (existing, widened): a highlighter stroke with uneven ends behind a formula
+  **or a short phrase** worth learning by heart.
+- **Strikethrough** (new), `{{strike|wrong|right}}`: a red line through a common mistake, with
+  the right version written after it in red, the way a teacher corrects work, for instance
+  ~~5 + 3 × 2 = 16~~ 11. The page holds both as `<del>` and `<ins>`, so a screen reader says
+  "deleted" and "inserted" and print keeps both.
+- **Caret** (new), `{{caret|missed words}}`: a red ^ under the line where something important
+  was left out, with the missed words written small above it, for instance the units in
+  "the current is 2 ^amperes". It is the omission examiners most often punish, shown where it
+  happens. The words are an `<ins>`, so they are read out and printed in line.
+The two new marks are drawn **only in Notebook** (owner's answer). In every other theme the
+sentence reads as plain corrected text: a strikethrough shows only its right version, and a
+caret's words sit in the line as ordinary words. So each sentence must read correctly that way,
+and a lesson must never depend on the struck words to make its point. Rules, held by `hand-marks.test.ts`: still at
+most two marks in a step; a strikethrough's wrong version must be one the lesson says is wrong;
+neither new mark goes inside maths, code, a table or a heading; a caret's words are four words
+or fewer. They are placed where a mistake or an omission is the point: worked examples,
+examiner errors, common-trap steps. A writer chooses them; nothing is marked automatically.
+
+**Rules for the theme**, held by tests and the browser checks:
+- Text size is measured in the browser, never estimated: body writing renders at 18 px or more
+  on a phone, because handwriting faces are small for their size.
+- Every ink meets 4.5:1 on the paper and every highlighted word meets 4.5:1 on its highlighter;
+  the theme is added to `THEMES`, so `contrast.test.ts` measures it with the others.
+- The ruling lines up with the text on every card at 390, 820 and 1280 px; a card whose text
+  drifts off its lines over a long step is a failure.
+- The handwriting font loads only when Notebook is chosen, so nobody else downloads it
+  (performance pass, #355–#358).
+- Nothing new runs off the right edge of a phone (#351); the screens check runs with Notebook
+  added to its themes.
+- Motion off or reduced motion shows every mark already drawn.
+- Paper stays the default. Notebook is opt-in: handwriting is slower to read for some students,
+  including those with dyslexia, and Atkinson Hyperlegible was chosen for that reason.
+
+**The owner's answers (17 November 2026).**
+1. Ink roles as proposed: black writing, blue headings and answers, red corrections, green to
+   remember.
+2. Strikethrough and caret only in Notebook.
+3. Yes: in Notebook, Settings offers a pen for the student's own answers, **blue** (default) or
+   **black**, kept in browser storage like the other settings.
+
+- [ ] **1. The theme.** White ruled paper, red margin, handwriting typeface loaded on demand,
+  the four inks and three highlighters as tokens, existing marks redrawn in the inks; plain
+  white panels for diagrams, maths, code, tables and answer fields; print unchanged. Checked by
+  `contrast.test.ts`, the screens check at three widths, rendered text sizes, and a contact
+  sheet of ten lessons across subjects.
+- [ ] **2. Strikethrough and caret.** The two tags in `handMarks.ts`, drawing in `hand.ts`,
+  `<del>`/`<ins>` in RichText for Notebook and plain corrected text elsewhere, `stripHands`
+  reading them as the corrected words (search, flashcards, the teaching-step matcher), the
+  rules in `hand-marks.test.ts`, drawn once on view; the answer pen setting.
+- [ ] **3. Placing the new marks.** Folded into Part A of the subjects still to review
+  (Business, English, French, Music); for the six already reviewed, one pass over their worked
+  examples and examiner errors, one PR per subject.
+
 ## 3. Product features (not planned)
 
 Checked story by story against the code on 23 September 2026. Of the 46 stories, 10 are
