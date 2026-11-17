@@ -1457,6 +1457,14 @@ examiner errors, common-trap steps. A writer chooses them; nothing is marked aut
 - [ ] **3. Placing the new marks.** Folded into Part A of the subjects still to review
   (Business, English, French, Music); for the six already reviewed, one pass over their worked
   examples and examiner errors, one PR per subject.
+  **Computer Science done 17 November 2026 (10.149.1):** eight strikes and two carets, each on a
+  mistake or omission the lesson already names, in steps with room under the two-mark limit:
+  '7' has the code ~~7~~ 55; ~~100~~ 12.5 MB each second; colour depth ~~256~~ 8; the loop
+  starts at ~~i = 0~~ i = 1; low-level means ~~simple~~ close to the hardware; a CAPTCHA stops
+  ~~people~~ programs; decomposition and abstraction used ~~instead of each other~~ together;
+  main memory is the line of ~~speed, size or price~~ direct accessibility; fetched ^from main
+  memory; colour depth ^in bits. Checked in a browser: drawn in Notebook on whole ruled lines,
+  and read as the plain correction in Paper.
 
 ## 3. Product features (not planned)
 
