@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { signOut, useAuth } from '../../auth/useAuth.ts'
 import { FamilyPanel } from '../../auth/FamilyPanel.tsx'
 import { AUTO_THEME, THEMES, applyTheme, currentThemeId, resolveTheme } from '../../theme/themes.ts'
-import { setPref, usePref } from '../../theme/prefs.ts'
+import { PENS, setPen, setPref, usePen, usePref } from '../../theme/prefs.ts'
 import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
 import { clearProgress, isoDate, setDailyGoal, toggleDayOff, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
@@ -24,6 +24,7 @@ export function Settings() {
   const [theme, setTheme] = useState(currentThemeId)
   const motion = usePref('motion')
   const smileys = usePref('smileys')
+  const pen = usePen()
 
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
@@ -40,7 +41,7 @@ export function Settings() {
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
         <h2 className="font-bold">Theme</h2>
-        <p className="text-sm text-ink-2">Pick the look you like. Subject colours stay the same in every theme.</p>
+        <p className="text-sm text-ink-2">Pick the look you like. Subject colours stay the same in every theme except Notebook, which writes in four pens.</p>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3" role="radiogroup" aria-label="Theme">
           {[AUTO_THEME, ...THEMES].map((t) => {
             const on = t.id === theme
@@ -67,6 +68,19 @@ export function Settings() {
             )
           })}
         </div>
+        {resolveTheme(theme).id === 'notebook' && (
+          <div className="flex flex-col gap-2 border-t border-rule pt-3">
+            <span className="font-bold" id="pen-label">Your answers</span>
+            <span className="text-sm text-ink-2">The pen your own answers are written in.</span>
+            <div className="flex gap-2" role="radiogroup" aria-labelledby="pen-label">
+              {PENS.map((p) => (
+                <button key={p.id} type="button" role="radio" aria-checked={pen === p.id} onClick={() => setPen(p.id)} className={`btn btn-secondary ${pen === p.id ? 'border-[color:var(--subject)]' : ''}`} style={{ color: `var(--pen-${p.id})` }}>
+                  {p.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
