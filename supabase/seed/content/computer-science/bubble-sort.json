@@ -149,7 +149,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Two sorts, and why they are on the paper",
-        "body": "AQA names exactly **two** sorting algorithms, and you need both: **bubble sort** and **merge sort**. This topic is bubble sort; merge sort has its own.\n\nA sorting algorithm puts a list into order. That sounds trivial, but the exam is never really asking *can you sort a list*. It asks:\n\n- what does the list look like **after one pass**\n- **how many** comparisons or swaps happen\n- **why** is one algorithm slower than the other\n\nSo learn the mechanism, not the result. Writing only the sorted list at the end shows none of that.",
+        "body": "AQA names exactly **two** sorting algorithms, and you need both: **bubble sort** and **merge sort**. This topic is bubble sort; merge sort has its own.\n\nA sorting algorithm puts a list into order, the way a music app lists a playlist by song title or a game ranks a leaderboard by score. That sounds trivial, but the exam is never really asking *can you sort a list*. It asks:\n\n- what does the list look like **after one pass**\n- **how many** comparisons or swaps happen\n- **why** is one algorithm slower than the other\n\nSo {{underline|learn the mechanism, not the result.}} Writing only the sorted list at the end shows none of that.",
         "visuals": [
           {
             "type": "diagram",
@@ -210,7 +210,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "How bubble sort works",
-        "body": "Bubble sort walks along the list comparing **each pair of neighbours**. If they are the wrong way round it **swaps** them. One walk from start to finish is called a **pass**.\n\nAfter the first pass the largest value has been carried all the way to the end, which is where the name comes from: big values bubble to the top. Because the end of the list is now correct, the next pass can stop one place earlier.\n\n```\nSUBROUTINE bubbleSort(a)\n   FOR end ← LEN(a) - 1 TO 1 STEP -1\n      swapped ← False\n      FOR i ← 0 TO end - 1\n         IF a[i] > a[i + 1] THEN\n            temp ← a[i]\n            a[i] ← a[i + 1]\n            a[i + 1] ← temp\n            swapped ← True\n         ENDIF\n      ENDFOR\n      IF swapped = False THEN\n         RETURN a\n      ENDIF\n   ENDFOR\n   RETURN a\nENDSUBROUTINE\n```\n\nThe **swapped** flag is what lets the algorithm stop early: if a whole pass makes no swaps, the list is already in order and there is nothing left to do.",
+        "body": "Bubble sort walks along the list comparing **each pair of neighbours**. If they are the wrong way round it **swaps** them. One walk from start to finish is called a {{circle|pass}}.\n\nPicture a row of students lining up by height for a photo. Starting at the left, each pair of neighbours checks who is taller and swaps places if the taller one is on the left. The tallest student ends up at the right-hand end after one walk along the row.\n\nAfter the first pass the largest value has been carried all the way to the end, which is where the name comes from: big values bubble to the top. Because the end of the list is now correct, the next pass can stop one place earlier.\n\nIn the code below, `a[i]` is the item at position `i` of the list, counting from 0. The outer loop counts `end` down by one each time, so each pass stops one place earlier, and `temp` holds one value safely while the two are swapped.\n\n```\nSUBROUTINE bubbleSort(a)\n   FOR end ← LEN(a) - 1 TO 1 STEP -1\n      swapped ← False\n      FOR i ← 0 TO end - 1\n         IF a[i] > a[i + 1] THEN\n            temp ← a[i]\n            a[i] ← a[i + 1]\n            a[i + 1] ← temp\n            swapped ← True\n         ENDIF\n      ENDFOR\n      IF swapped = False THEN\n         RETURN a\n      ENDIF\n   ENDFOR\n   RETURN a\nENDSUBROUTINE\n```\n\nThe **swapped** flag is what lets the algorithm stop early: {{underline|if a whole pass makes no swaps, the list is already in order}} and there is nothing left to do.",
         "visuals": [
           {
             "type": "worked-example",
@@ -357,7 +357,7 @@
         "id": "s4",
         "kind": "explain",
         "title": "Comparisons are not swaps",
-        "body": "This is the easiest place to slip. A **comparison** happens every time two neighbours are checked. A **swap** only happens when they were the wrong way round.\n\nSo swaps are always fewer than or equal to comparisons, and for an already sorted list the swaps are zero while the comparisons are not.\n\nFor a list of $n$ items, the first pass makes $n - 1$ comparisons, the second $n - 2$, and so on:\n\n$$(n-1) + (n-2) + \\ldots + 1 = \\frac{n(n-1)}{2}$$\n\nFor 6 items that is $\\frac{6 \\times 5}{2} = 15$, which is exactly what the table above shows.",
+        "body": "This is the easiest place to slip. A {{circle|comparison}} happens every time two neighbours are checked. A **swap** only happens when they were the wrong way round.\n\nSo {{underline|swaps are always fewer than or equal to comparisons}}, and for an already sorted list the swaps are zero while the comparisons are not.\n\nFor a list of $n$ items, the first pass makes $n - 1$ comparisons, the second $n - 2$, and so on:\n\n$$(n-1) + (n-2) + \\ldots + 1 = \\frac{n(n-1)}{2}$$\n\nFor 6 items that is $\\frac{6 \\times 5}{2} = 15$, which is exactly what the table above shows.",
         "visuals": [
           {
             "type": "diagram",
@@ -444,7 +444,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "What one pass actually guarantees",
-        "body": "A pass does not sort the list. It guarantees exactly one thing: **the largest value not yet placed reaches its final position**.\n\nThat is why the exam so often asks for the list after *one* pass rather than the sorted list. It is testing whether you traced the mechanism or just sorted the numbers in your head.\n\nTwo traps to avoid:\n\n- **Do not go back to the start** after a swap. Compare positions 0 and 1, then 1 and 2, then 2 and 3, moving forward only.\n- **Do not stop early within a pass.** Even after a swap, keep walking to the end of the pass.",
+        "body": "A pass does not sort the list. It guarantees exactly one thing: {{underline|the largest value not yet placed reaches its final position}}.\n\nThat is why the exam so often asks for the list after *one* pass rather than the sorted list. It is testing whether you traced the mechanism or just sorted the numbers in your head.\n\nTwo traps to avoid:\n\n- **Do not go back to the start** after a swap. Compare positions 0 and 1, then 1 and 2, then 2 and 3, moving forward only.\n- **Do not stop early within a pass.** Even after a swap, keep walking to the end of the pass.",
         "visuals": [
           {
             "type": "worked-example",
@@ -563,7 +563,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: why bubble sort is slow",
-        "body": "Spec point 3.1.2 is **efficiency**, and this is where the top marks are.\n\nFor $n$ items bubble sort makes about $\\frac{n(n-1)}{2}$ comparisons, which grows with $n^2$. Double the list and the work roughly **quadruples**. For 10 items that is 45 comparisons; for 100 items it is 4950.\n\nThat is the answer to *why is bubble sort inefficient*: not \"it is slow\" but **the number of comparisons grows with the square of the list length**, so it becomes impractical on long lists.\n\nWhat bubble sort has going for it is worth a mark too: it is **simple to write**, it needs **no extra memory** beyond one temporary variable for the swap, and on a list that is already nearly sorted the **swapped flag** lets it finish in very few passes, and in a single pass when the list is already in order.",
+        "body": "Spec point 3.1.2 is **efficiency**: how much work an algorithm does to finish the job, here counted in comparisons. This is where the top marks are.\n\nFor $n$ items bubble sort makes about $\\frac{n(n-1)}{2}$ comparisons, which grows with $n^2$, that is $n \\times n$. Double the list and the work roughly **quadruples**. For 10 items that is 45 comparisons; for 100 items it is 4950.\n\nThat is the answer to *why is bubble sort inefficient*: not \"it is slow\" but {{underline|the number of comparisons grows with the square of the list length}}, so it becomes impractical on long lists.\n\nWhat bubble sort has going for it is worth a mark too: it is **simple to write**, it needs **no extra memory** beyond one temporary variable for the swap, and on a list that is already nearly sorted the **swapped flag** lets it finish in very few passes, and in a single pass when the list is already in order.",
         "visuals": [
           {
             "type": "diagram",
@@ -652,7 +652,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- AQA names two sorts: **bubble sort** and **merge sort**. Linear and binary are *searches*.\n- Bubble sort compares **neighbouring pairs** and swaps those in the wrong order. One walk through is a **pass**.\n- Each pass carries the largest remaining value to the end, so the next pass can stop one place earlier.\n- A **swapped flag** stops the algorithm when a pass makes no swaps.\n- **Comparisons are not swaps**: an already sorted list has comparisons but zero swaps.\n- For $n$ items: about $\\frac{n(n-1)}{2}$ comparisons, so the work grows with $n^2$.\n- On 5, 3, 8, 1, 9, 2: 5 passes, 15 comparisons, 8 swaps.",
+        "body": "- AQA names two sorts: **bubble sort** and **merge sort**. Linear and binary are *searches*.\n- Bubble sort compares **neighbouring pairs** and swaps those in the wrong order. One walk through is a **pass**.\n- {{underline|Each pass carries the largest remaining value to the end}}, so the next pass can stop one place earlier.\n- A **swapped flag** stops the algorithm when a pass makes no swaps.\n- **Comparisons are not swaps**: an already sorted list has comparisons but zero swaps.\n- For $n$ items: about $\\frac{n(n-1)}{2}$ comparisons, so the work grows with $n^2$.\n- On 5, 3, 8, 1, 9, 2: 5 passes, 15 comparisons, 8 swaps.",
         "visuals": [
           {
             "type": "diagram",
@@ -1368,7 +1368,7 @@
       "Explaining inefficiency as *it is slow* without the $n^2$ growth or a number to back it up.",
       "Writing the swap as two assignments with no temporary variable, which destroys the first value."
     ],
-    "grade9Looks": "A grade 9 answer traces a pass comparison by comparison and shows the list at each stage, separates comparisons from swaps without being asked, and knows that one pass guarantees only that the largest remaining value is in place. On efficiency it quotes $\\frac{n(n-1)}{2}$, explains growth with $n^2$, and puts a number to it. Asked to evaluate, it gives bubble sort its due — simple, no extra memory, one pass on nearly sorted data — before concluding that merge sort is the better general choice."
+    "grade9Looks": "A grade 9 answer traces a pass comparison by comparison and shows the list at each stage, separates comparisons from swaps without being asked, and knows that one pass guarantees only that the largest remaining value is in place. On efficiency it quotes $\\frac{n(n-1)}{2}$, explains growth with $n^2$, and puts a number to it. Asked to evaluate, it gives bubble sort its due — simple, no extra memory, very few passes on nearly sorted data — before concluding that merge sort is the better general choice."
   },
   "quiz": {
     "questionIds": [

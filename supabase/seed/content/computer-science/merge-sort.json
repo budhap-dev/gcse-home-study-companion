@@ -157,7 +157,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Divide and conquer",
-        "body": "Bubble sort walks the same list over and over. Merge sort does something completely different: it **splits the problem up**.\n\nThe idea has two halves:\n\n1. **Divide.** Split the list in half, then split each half in half, and keep going until every list holds a **single item**. A list of one item is already sorted, which is the point.\n2. **Conquer, by merging.** Take the small sorted lists in pairs and **merge** each pair into one sorted list. Repeat until only one list is left.\n\nNothing is compared until the merging starts. All the work of sorting happens on the way back up.",
+        "body": "Bubble sort walks the same list over and over. Merge sort does something completely different: it **splits the problem up**.\n\nThe idea has two halves:\n\n1. **Divide.** Split the list in half, then split each half in half, and keep going until every list holds a **single item**. {{underline|A list of one item is already sorted}}, which is the point.\n2. **Conquer, by merging.** Take the small sorted lists in pairs and **merge** each pair into one sorted list. Repeat until only one list is left.\n\nThis approach is called divide and conquer. Picture a teacher putting 30 test papers into alphabetical order with a colleague: each sorts half the pile, then they combine the two sorted piles by looking at the top sheet of each and taking whichever name comes first.\n\n{{underline|Nothing is compared until the merging starts.}} All the work of sorting happens on the way back up.",
         "visuals": [
           {
             "type": "diagram",
@@ -316,7 +316,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Merging two sorted lists",
-        "body": "Merging is the part that does the sorting, and it is the part the exam tests. The rule is short:\n\n> Look at the **front item of each list**. Take the smaller one and put it into the new list. Repeat. When one list runs out, copy the rest of the other straight across.\n\nThe crucial point is that you only ever look at the **front** of each list. You never scan through them. That is why merging is fast.",
+        "body": "Merging is the part that does the sorting, and it is the part the exam tests. The rule is short:\n\n> Look at the **front item of each list**. {{underline|Take the smaller one and put it into the new list.}} Repeat. When one list runs out, copy the rest of the other straight across.\n\nThe crucial point is that you only ever look at the **front** of each list. You never scan through them. That is why merging is fast.",
         "visuals": [
           {
             "type": "worked-example",
@@ -458,7 +458,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "How many rounds of merging",
-        "body": "Because each round **halves** the number of lists, the number of rounds grows very slowly with the length of the list.\n\nA list of 8 splits into 8 single items, which merge into 4 lists, then 2, then 1: **3 rounds**. A list of 16 needs 4 rounds. Doubling the list adds only **one** round. Each round still looks at every item, so the work a little more than doubles (about $n \\log_2 n$ comparisons), where bubble sort's roughly quadruples.\n\nThat is the whole reason merge sort beats bubble sort on long lists, and it is what an efficiency question is after.",
+        "body": "Because each round **halves** the number of lists, {{underline|the number of rounds grows very slowly with the length of the list}}.\n\nA list of 8 splits into 8 single items, which merge into 4 lists, then 2, then 1: **3 rounds**. A list of 16 needs 4 rounds. Doubling the list adds only **one** round. Each round still looks at every item, so the work a little more than doubles (about $n \\log_2 n$ comparisons: up to $n$ in each round, and $\\log_2 n$ rounds, where $\\log_2 n$ is the number of times $n$ can be halved down to 1), where bubble sort's roughly quadruples.\n\nThat is the whole reason merge sort beats bubble sort on long lists, and it is what an efficiency question is after.",
         "visuals": [
           {
             "type": "diagram",
@@ -636,7 +636,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: merge sort against bubble sort",
-        "body": "A comparison question is worth several marks, and the answer has a shape.\n\n**Speed.** Bubble sort's comparisons grow with $n^2$; merge sort's grow far more slowly, because each round halves the number of lists and there are only about $\\log_2 n$ rounds. For 1024 items bubble sort needs about half a million comparisons and merge sort about ten thousand.\n\n**Memory.** This is the trade-off. Merge sort **builds new lists as it merges**, so it needs extra memory roughly the size of the original list. Bubble sort swaps items where they are and needs almost none.\n\n**Consistency.** Merge sort takes the same number of rounds whatever order the list starts in. Bubble sort is much faster on an already sorted list, because the swapped flag stops it after one pass, and much slower on a reversed one.\n\nSo: merge sort is faster on long lists but uses more memory; bubble sort is simpler and can win on short or nearly sorted lists.",
+        "body": "A comparison question is worth several marks, and the answer has a shape.\n\n**Speed.** Bubble sort's comparisons grow with $n^2$; merge sort's grow far more slowly, because each round halves the number of lists and there are only about $\\log_2 n$ rounds. For 1024 items bubble sort needs about half a million comparisons and merge sort about ten thousand.\n\n**Memory.** This is the trade-off. Merge sort **builds new lists as it merges**, so it needs extra memory roughly the size of the original list. Bubble sort swaps items where they are and needs almost none.\n\n**Consistency.** Merge sort takes the same number of rounds whatever order the list starts in. Bubble sort is much faster on an already sorted list, because the swapped flag stops it after one pass, and much slower on a reversed one.\n\nSo: {{underline|merge sort is faster on long lists but uses more memory}}; bubble sort is simpler and can win on short or nearly sorted lists.",
         "visuals": [
           {
             "type": "diagram",
@@ -731,7 +731,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- Merge sort is **divide and conquer**: split until every list holds one item, then merge pairs back together.\n- A one-item list is **already sorted**, which is why splitting stops there.\n- **No comparisons happen while splitting.** All the work is in the merges.\n- To merge two sorted lists, compare only their **front items**, take the smaller, and copy the leftovers across when one runs out.\n- Each round **halves** the number of lists, so a list of 8 needs 3 rounds and 16 needs 4. Doubling the list adds one round.\n- Merge sort is much **faster** than bubble sort on long lists, but needs **extra memory** for the lists it builds.\n- On 6, 2, 9, 4, 1, 7, 3: 3 levels of splitting, then 3 rounds of merging to reach 1, 2, 3, 4, 6, 7, 9.",
+        "body": "- Merge sort is **divide and conquer**: split until every list holds one item, then merge pairs back together.\n- A one-item list is **already sorted**, which is why splitting stops there.\n- {{underline|No comparisons happen while splitting.}} All the work is in the merges.\n- To merge two sorted lists, compare only their **front items**, take the smaller, and copy the leftovers across when one runs out.\n- Each round **halves** the number of lists, so a list of 8 needs 3 rounds and 16 needs 4. Doubling the list adds one round.\n- Merge sort is much **faster** than bubble sort on long lists, but needs **extra memory** for the lists it builds.\n- On 6, 2, 9, 4, 1, 7, 3: 3 levels of splitting, then 3 rounds of merging to reach 1, 2, 3, 4, 6, 7, 9.",
         "visuals": [
           {
             "type": "diagram",

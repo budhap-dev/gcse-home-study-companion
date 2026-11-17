@@ -164,7 +164,7 @@
         "id": "s1",
         "kind": "explain",
         "title": "Strings are sequences of characters",
-        "body": "A **string** is text: a sequence of characters, each with an **index** starting at 0, just like an array. AQA gives you four built-in operations:\n\n- `LEN(s)`: the number of characters.\n- `SUBSTRING(start, end, s)`: the characters from index `start` to index `end`, **both included**.\n- `POSITION(s, c)`: the index of the first `c` in `s`. AQA does not say what it gives back when the character is not there, so in an exam say in words what you are checking, or use the value your language returns (Python's `find` and the `IndexOf` method in C# and VB.NET return −1; VB's older `InStr` returns 0 because it counts from 1).\n- `+`: **concatenation**, joining two strings.\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```\n\nOutput: `8`, `com`, `3`.",
+        "body": "A **string** is text: a sequence of characters, each with an **index** starting at 0, just like an array. AQA gives you four built-in operations:\n\n- `LEN(s)`: the number of characters.\n- `SUBSTRING(start, end, s)`: the characters from index `start` to index `end`, {{underline|both included}}.\n- `POSITION(s, c)`: the index of the first `c` in `s`. AQA does not say what it gives back when the character is not there, so in an exam say in words what you are checking, or use the value your language returns (Python's `find` and the `IndexOf` method in C# and VB.NET return −1; VB's older `InStr` returns 0 because it counts from 1).\n- `+`: {{circle|concatenation}}, joining two strings.\n\n```\nword ← 'computer'\nOUTPUT LEN(word)\nOUTPUT SUBSTRING(0, 2, word)\nOUTPUT POSITION(word, 'p')\n```\n\nOutput: `8`, `com`, `3`.",
         "visuals": [
           {
             "type": "diagram",
@@ -256,7 +256,7 @@
         "id": "s2",
         "kind": "explain",
         "title": "Joining and measuring",
-        "body": "`+` joins strings. It does not add a space, so put one in yourself.\n\n```\nfirst ← 'Ada'\nlast ← 'Lovelace'\nfull ← first + ' ' + last\nOUTPUT full\nOUTPUT LEN(full)\n```\n\nOutput: `Ada Lovelace` then `12`. The space counts as a character.",
+        "body": "`+` joins strings. {{underline|It does not add a space, so put one in yourself.}}\n\n```\nfirst ← 'Ada'\nlast ← 'Lovelace'\nfull ← first + ' ' + last\nOUTPUT full\nOUTPUT LEN(full)\n```\n\nOutput: `Ada Lovelace` then `12`. The space counts as a character. Measuring with `LEN` is how a sign-up page checks that a new password is long enough.",
         "visuals": [
           {
             "type": "worked-example",
@@ -302,7 +302,7 @@
         "id": "s3",
         "kind": "explain",
         "title": "Converting between types",
-        "body": "Numbers and text look alike but behave differently. `12 + 3` is 15; `'12' + '3'` is `'123'`. Four conversions:\n\n- `STRING_TO_INT('12')` gives the whole number 12, and `STRING_TO_REAL('12.5')` gives the decimal 12.5.\n- `INT_TO_STRING(12)` gives the text `'12'`, and `REAL_TO_STRING(12.5)` gives the text `'12.5'`.\n- `CHAR_TO_CODE('A')` gives the character code, 65.\n- `CODE_TO_CHAR(66)` gives `'B'`.\n\n```\nOUTPUT CHAR_TO_CODE('A')\nOUTPUT CODE_TO_CHAR(66)\nOUTPUT STRING_TO_INT('12') + 3\nOUTPUT INT_TO_STRING(12) + '3'\n```\n\nOutput: `65`, `B`, `15`, `123`. In Python, C# and VB.NET, keyboard input and anything read from a file arrive as text, so convert before doing maths. AQA pseudo-code does not say what `USERINPUT` returns, so writing `STRING_TO_INT(USERINPUT)` is always safe and makes the intention clear.",
+        "body": "Numbers and text look alike but behave differently. `12 + 3` is 15; `'12' + '3'` is `'123'`. Four conversions:\n\n- `STRING_TO_INT('12')` gives the whole number 12, and `STRING_TO_REAL('12.5')` gives the decimal 12.5.\n- `INT_TO_STRING(12)` gives the text `'12'`, and `REAL_TO_STRING(12.5)` gives the text `'12.5'`.\n- `CHAR_TO_CODE('A')` gives the character code, 65: the number the computer stores for that character.\n- `CODE_TO_CHAR(66)` gives `'B'`.\n\n```\nOUTPUT CHAR_TO_CODE('A')\nOUTPUT CODE_TO_CHAR(66)\nOUTPUT STRING_TO_INT('12') + 3\nOUTPUT INT_TO_STRING(12) + '3'\n```\n\nOutput: `65`, `B`, `15`, `123`. In Python, C# and VB.NET, keyboard input and anything read from a file arrive as text, so {{underline|convert before doing maths}}. AQA pseudo-code does not say what `USERINPUT` returns, so writing `STRING_TO_INT(USERINPUT)` is always safe and makes the intention clear.",
         "visuals": [
           {
             "type": "worked-example",
@@ -450,7 +450,7 @@
         "id": "s5",
         "kind": "explain",
         "title": "Files: saving data between runs",
-        "body": "Variables vanish when a program ends. To keep data, write it to a **file**. AQA does not examine file handling: it is not in the 8525 specification and there is no file syntax in AQA pseudo-code. Your Year 10 programming project uses files, though, so here is a typical pattern:\n\n1. **Open** the file for writing or reading.\n2. **Write** lines, or **read** lines until `endOfFile()`.\n3. **Close** the file, so the data is saved and the file is released.\n\n```\nmyFile ← openWrite('scores.txt')\nmyFile.writeLine('Sam,42')\nmyFile.writeLine('Ali,37')\nmyFile.close()\n\nmyFile ← openRead('scores.txt')\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   OUTPUT line\nENDWHILE\nmyFile.close()\n```\n\nOutput: `Sam,42` then `Ali,37`. Everything read back is a **string**; the 42 has to be converted before it is used as a number.",
+        "body": "Variables vanish when a program ends. To keep data, write it to a {{circle|file}}. This is how a game keeps your high score after you switch it off. {{underline|AQA does not examine file handling}}: it is not in the 8525 specification and there is no file syntax in AQA pseudo-code. Your Year 10 programming project uses files, though, so here is the usual pattern, in made-up pseudo-code (not AQA’s, and not for the exam). In your project you write the same steps in your own language, such as Python:\n\n1. **Open** the file for writing or reading.\n2. **Write** lines, or **read** lines until `endOfFile()`.\n3. **Close** the file, so the data is saved and the file is released.\n\n```\nmyFile ← openWrite('scores.txt')\nmyFile.writeLine('Sam,42')\nmyFile.writeLine('Ali,37')\nmyFile.close()\n\nmyFile ← openRead('scores.txt')\nWHILE NOT myFile.endOfFile()\n   line ← myFile.readLine()\n   OUTPUT line\nENDWHILE\nmyFile.close()\n```\n\nOutput: `Sam,42` then `Ali,37`. Everything read back is a **string**; the 42 has to be converted before it is used as a number.",
         "visuals": [
           {
             "type": "worked-example",
@@ -501,7 +501,7 @@
         "id": "s6",
         "kind": "your-turn",
         "title": "Your turn: reverse a string",
-        "body": "Write code that builds the reverse of `word`. Plan: an empty result string, a loop from the **last** index down to 0, adding one character each time. Then test whether the word is a palindrome by comparing the two.\n\nTry it on our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site with `word[i]` and a `for` loop counting down.",
+        "body": "Write code that builds the reverse of `word`. Plan: an empty result string, a loop from the **last** index down to 0, adding one character each time. Then test whether the word is a palindrome, a word that reads the same backwards, such as *level*, by comparing the two.\n\nTry it on our [Learn C#](https://red-dune-0f7372e10.7.azurestaticapps.net/) site with `word[i]` and a `for` loop counting down.",
         "visuals": [
           {
             "type": "worked-example",
@@ -552,7 +552,7 @@
         "id": "s7",
         "kind": "grade-9",
         "title": "Going deeper: files plus strings plus types",
-        "body": "The hardest questions chain the ideas: take a line of text (in the exam it comes from USERINPUT; in your project it comes from a file), split it into parts, convert a part to a number, then do something with it. Keep the sequence in your head: **read** (string), **find** the comma with `POSITION`, **cut** with `SUBSTRING`, **convert** with `STRING_TO_INT`, **use**.\n\nWhen writing this in your project, open before the loop and close after it, and initialise counters before the loop. Say what a function returns rather than outputting inside it.",
+        "body": "The hardest questions chain the ideas: take a line of text (in the exam it comes from USERINPUT; in your project it comes from a file), split it into parts, convert a part to a number, then do something with it. Keep the sequence in your head: **read** (string), **find** the comma with `POSITION`, **cut** with `SUBSTRING`, **convert** with `STRING_TO_INT`, **use**.\n\nWhen writing this in your project, open before the loop and close after it, and initialise counters (set them to their starting values) before the loop. Say what a function returns rather than outputting inside it.",
         "visuals": [
           {
             "type": "worked-example",
@@ -597,7 +597,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- Strings are indexed from 0. LEN, SUBSTRING(start, end, s) with both ends included, POSITION, and + for joining.\n- Convert between types: STRING_TO_INT, STRING_TO_REAL, INT_TO_STRING, REAL_TO_STRING, CHAR_TO_CODE, CODE_TO_CHAR. Keyboard input and file data usually arrive as text, so convert before arithmetic.\n- Loop over a string with SUBSTRING(i, i, s) to count, reverse or check characters.\n- Files: open, read with WHILE NOT endOfFile or write lines, then close.\n- Chain them: read, POSITION, SUBSTRING, STRING_TO_INT, use.",
+        "body": "- Strings are indexed from 0. LEN, SUBSTRING(start, end, s) {{underline|with both ends included}}, POSITION, and + for joining.\n- Convert between types: STRING_TO_INT, STRING_TO_REAL, INT_TO_STRING, REAL_TO_STRING, CHAR_TO_CODE, CODE_TO_CHAR. Keyboard input and file data usually arrive as text, so convert before arithmetic.\n- Loop over a string with SUBSTRING(i, i, s) to count, reverse or check characters.\n- Files: open, read with WHILE NOT endOfFile or write lines, then close.\n- Chain them: read, POSITION, SUBSTRING, STRING_TO_INT, use.",
         "visuals": [
           {
             "type": "diagram",
