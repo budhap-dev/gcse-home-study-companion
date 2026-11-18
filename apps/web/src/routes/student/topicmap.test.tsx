@@ -133,6 +133,28 @@ describe('the subject map in specification order', () => {
     }
   })
 
+  it('heads each run of a unit with the board’s sub-section, in order, where the board numbers one', () => {
+    stored.set('study-companion.order', 'spec')
+    try {
+      const html = render('chemistry')
+      const heads = ['4.4.1</span> Reactivity of metals', '4.4.2</span> Reactions of acids', '4.4.3</span> Electrolysis'].map((h) => html.indexOf(h))
+      expect(heads.every((i) => i > 0), String(heads)).toBe(true)
+      expect([...heads].sort((a, b) => a - b)).toEqual(heads)
+      // Every topic sits under exactly one heading: no sub-section is cut into two runs.
+      for (const id of ['chemistry', 'physics', 'business']) {
+        const h = render(id)
+        const codes = [...h.matchAll(/<h4[^>]*><span[^>]*>([\d.]+)<\/span>/g)].map((m) => m[1])
+        expect(new Set(codes).size, id).toBe(codes.length)
+        expect(codes.length, id).toBeGreaterThan(5)
+      }
+      expect(render('business')).toContain('1.4</span> Making the business effective')
+      expect(render('maths')).not.toContain('<h4')
+    } finally {
+      stored.delete('study-companion.order')
+    }
+    expect(render('chemistry')).not.toContain('<h4')
+  })
+
   it('keeps the school’s plan as the default', () => {
     const html = render('chemistry')
     expect(html).toContain('List by year')

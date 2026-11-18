@@ -1,4 +1,4 @@
-import { examPapers, getSubject, NO_PAPER_SPLIT, specPlace, specPoints, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
+import { examPapers, getSubject, NO_PAPER_SPLIT, specPlace, specPoints, subsection, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
 import type { Subject, SyllabusBlock } from '@study/shared'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -245,12 +245,21 @@ function MapView({ subject, progress, spec }: { subject: Subject; progress: Prog
                 <h3 className="font-sans text-base font-bold leading-snug">{g.name}</h3>
                 <span className="shrink-0 text-[13px] text-ink-2">{g.squares.filter(isSecure).length} of {g.squares.length} secure</span>
               </div>
-              <div className={SQUARES_GRID}>
-                {g.squares.map((s) => (
-                  <TopicSquare key={s.topic.id} square={s} picked={s.topic.id === picked} delay={`${(0.2 + Math.min(n++, 100) * 0.008).toFixed(3)}s`} number={spec ? specPlace(s.topic)?.label ?? '' : undefined}
-                    onPick={() => { setPicked(s.topic.id); setSheet(true) }} />
-                ))}
-              </div>
+              {subsectionRuns(subject.id, g.squares, spec).map((r, ri) => (
+                <div key={`${r.key}-${ri}`} className="flex flex-col gap-1.5">
+                  {r.sub && (
+                    <h4 className="text-[13px] font-bold leading-snug text-ink-2">
+                      <span className="accent-ink">{r.sub.code}</span> {r.sub.name}
+                    </h4>
+                  )}
+                  <div className={SQUARES_GRID}>
+                    {r.squares.map((s) => (
+                      <TopicSquare key={s.topic.id} square={s} picked={s.topic.id === picked} delay={`${(0.2 + Math.min(n++, 100) * 0.008).toFixed(3)}s`} number={spec ? specPlace(s.topic)?.label ?? '' : undefined}
+                        onPick={() => { setPicked(s.topic.id); setSheet(true) }} />
+                    ))}
+                  </div>
+                </div>
+              ))}
               {g.id !== 'other' && <UnitPractice subjectId={subject.id} unitId={g.id} year={year === 'all' ? undefined : year} count={g.squares.length} />}
             </section>
           ))}
@@ -260,6 +269,25 @@ function MapView({ subject, progress, spec }: { subject: Subject; progress: Prog
       {pickedSquare && <TopicPanel key={pickedSquare.id} square={square(pickedSquare, progress)} progress={progress} open={sheet} onClose={() => setSheet(false)} spec={spec} />}
     </div>
   )
+}
+
+/**
+ * A unit's squares cut into the board's sub-sections (specification order, step 4), each run
+ * under its number and name: Chemical changes reads 4.4.1 Reactivity of metals, 4.4.2
+ * Reactions of acids, 4.4.3 Electrolysis. A topic sits in the sub-section of the first point it
+ * cites, as it sits in the order. In the school's order, or a subject numbered straight from
+ * unit to point, the unit is one run with no heading.
+ */
+function subsectionRuns(subjectId: string, squares: MapSquare[], spec: boolean) {
+  const runs: { key: string; sub?: { code: string; name: string }; squares: MapSquare[] }[] = []
+  for (const s of squares) {
+    const home = spec ? specPlace(s.topic)?.home : undefined
+    const sub = home ? subsection(subjectId, home) : undefined
+    const last = runs.at(-1)
+    if (last && last.key === (sub?.code ?? 'none')) last.squares.push(s)
+    else runs.push({ key: sub?.code ?? 'none', sub, squares: [s] })
+  }
+  return runs
 }
 
 /** In the specification's order, the board's exam papers in place of the school years. */
