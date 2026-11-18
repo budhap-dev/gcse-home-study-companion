@@ -161,10 +161,12 @@ export const SQUARES_GRID = squaresGrid()
 
 /**
  * A square's accessible name: its topic, year and level. In the specification's order the
- * school year means nothing to the reader, so the topic's spec number stands in its place.
+ * school year means nothing to the reader, so the topic's spec number stands in its place;
+ * `number` is then a string, empty for a topic with no number (a bridging topic, or a subject
+ * whose specification is not numbered), which still names no year.
  */
-export const squareName = (s: MapSquare, number?: string) => number
-  ? `${number} ${s.topic.title}, ${MAP_LEVEL_LABEL[s.level]}`
+export const squareName = (s: MapSquare, number?: string) => number !== undefined
+  ? `${number ? `${number} ` : ''}${s.topic.title}, ${MAP_LEVEL_LABEL[s.level]}`
   : `${s.topic.title}, Year ${s.topic.year}, ${MAP_LEVEL_LABEL[s.level]}`
 
 /** A tile's shell: a bare square on a phone, or a bordered tile round the square and its name. */

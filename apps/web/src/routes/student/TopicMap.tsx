@@ -1,4 +1,4 @@
-import { getSubject, specPlace, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
+import { examPapers, getSubject, NO_PAPER_SPLIT, specPlace, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
 import type { Subject, SyllabusBlock } from '@study/shared'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -57,7 +57,7 @@ export function TopicMap() {
       <p className="text-sm text-ink-2">
         <Link to="/subjects" className="-my-1 inline-block py-1 underline">Subjects</Link> <span aria-hidden>/</span> {subject.name}
       </p>
-      <SubjectHeader subject={subject} squares={squares} />
+      <SubjectHeader subject={subject} squares={squares} spec={spec} />
       <GradePanel subjectId={subject.id} topics={written} progress={progress} />
 
       {spec ? (
@@ -94,12 +94,13 @@ export function TopicMap() {
 }
 
 /** The subject's banner: a ring of topics secure, its name and board, and a count at each level. */
-function SubjectHeader({ subject, squares }: { subject: Subject; squares: MapSquare[] }) {
+function SubjectHeader({ subject, squares, spec }: { subject: Subject; squares: MapSquare[]; spec: boolean }) {
   const secure = squares.filter(isSecure).length
   const counts = countLevels(squares)
   const r = 42
   const c = 2 * Math.PI * r
-  const years = yearsForSubject(subject.id)
+  // The school's years, which the specification's order does not show.
+  const years = spec ? [] : yearsForSubject(subject.id)
   return (
     <header
       className="anim-rise flex flex-col gap-5 rounded-3xl border p-5 sm:p-6 xl:flex-row xl:items-center xl:gap-7"
@@ -170,9 +171,16 @@ function MapView({ subject, progress, spec }: { subject: Subject; progress: Prog
   const years = spec ? [] : yearsForSubject(subject.id)
   const mine = progress.profile?.year
   const [year, setYear] = useState<number | 'all'>(mine && years.includes(mine) ? mine : 'all')
+  // ...and is read by exam paper instead, where the board sets units on different papers.
+  const papers = spec ? examPapers(subject.id) : []
+  const [paper, setPaper] = useState('all')
   const all = spec ? specOrdered(topicsForSubject(subject.id)) : topicsForSubject(subject.id)
-  const groupsFor = (y: number | 'all') => unitGroups(subject.id, y === 'all' ? all : all.filter((t) => t.year === y), progress)
+  const groupsFor = (y: number | 'all', p = paper) => {
+    const units = papers.find((x) => x.id === p)?.units
+    return unitGroups(subject.id, y === 'all' ? all : all.filter((t) => t.year === y), progress).filter((g) => !units || units.includes(g.id))
+  }
   const groups = groupsFor(year)
+  const shownPaper = papers.find((x) => x.id === paper)
   const bestPick = (squares: MapSquare[]) => {
     const underway = Object.values(progress.lessons)
       .filter((l) => !l.completedAt && squares.some((s) => s.topic.id === l.topicId))
@@ -185,6 +193,11 @@ function MapView({ subject, progress, spec }: { subject: Subject; progress: Prog
   const showYear = (y: number | 'all') => {
     setYear(y)
     const shown = groupsFor(y).flatMap((g) => g.squares)
+    if (!shown.some((s) => s.topic.id === picked)) setPicked(bestPick(shown))
+  }
+  const showPaper = (p: string) => {
+    setPaper(p)
+    const shown = groupsFor(year, p).flatMap((g) => g.squares)
     if (!shown.some((s) => s.topic.id === picked)) setPicked(bestPick(shown))
   }
   // On a phone the panel is a sheet, shut until a square is pressed; on a wide screen it is always open.
@@ -208,7 +221,17 @@ function MapView({ subject, progress, spec }: { subject: Subject; progress: Prog
               ))}
             </div>
           )}
+          {spec && <PaperTabs papers={papers} paper={paper} onPick={showPaper} />}
         </div>
+        {spec && (
+          <p aria-live="polite" className="text-sm text-ink-2">
+            {papers.length === 0
+              ? NO_PAPER_SPLIT[subject.id]
+              : shownPaper
+                ? shownPaper.note ?? `The units ${shownPaper.name}’s questions are set on.`
+                : `Each paper is set on its own units: pick one to see them.`}
+          </p>
+        )}
         {years.length > 1 && (
           <p aria-live="polite" className="text-sm text-ink-2">
             {shownYearNote(year, mine)} <Link to="/settings" className="-my-1 inline-block py-1 underline">{mine ? 'Change your year' : 'Set your year'}</Link>
@@ -223,7 +246,7 @@ function MapView({ subject, progress, spec }: { subject: Subject; progress: Prog
               </div>
               <div className={SQUARES_GRID}>
                 {g.squares.map((s) => (
-                  <TopicSquare key={s.topic.id} square={s} picked={s.topic.id === picked} delay={`${(0.2 + Math.min(n++, 100) * 0.008).toFixed(3)}s`} number={spec ? specPlace(s.topic)?.label : undefined}
+                  <TopicSquare key={s.topic.id} square={s} picked={s.topic.id === picked} delay={`${(0.2 + Math.min(n++, 100) * 0.008).toFixed(3)}s`} number={spec ? specPlace(s.topic)?.label ?? '' : undefined}
                     onPick={() => { setPicked(s.topic.id); setSheet(true) }} />
                 ))}
               </div>
@@ -234,6 +257,21 @@ function MapView({ subject, progress, spec }: { subject: Subject; progress: Prog
       </section>
 
       {pickedSquare && <TopicPanel key={pickedSquare.id} square={square(pickedSquare, progress)} progress={progress} open={sheet} onClose={() => setSheet(false)} spec={spec} />}
+    </div>
+  )
+}
+
+/** In the specification's order, the board's exam papers in place of the school years. */
+function PaperTabs({ papers, paper, onPick }: { papers: { id: string; name: string }[]; paper: string; onPick: (p: string) => void }) {
+  if (papers.length < 2) return null
+  return (
+    <div role="group" aria-label="Exam paper" className="flex w-fit flex-wrap gap-1 rounded-xl bg-panel p-1">
+      {[{ id: 'all', name: 'All papers' }, ...papers].map((p) => (
+        <button key={p.id} type="button" aria-pressed={paper === p.id} onClick={() => onPick(p.id)}
+          className={`min-h-9 rounded-lg px-3 text-sm font-bold transition-colors ${paper === p.id ? 'bg-surface text-ink shadow-[0_1px_2px_rgb(30_35_48/0.12)]' : 'text-ink-2 hover:text-ink'}`}>
+          {p.name}
+        </button>
+      ))}
     </div>
   )
 }
