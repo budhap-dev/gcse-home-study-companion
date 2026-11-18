@@ -31,11 +31,11 @@ describe('the specification checklist', () => {
     expect(r7).toContain('listed, not yet taught')
   })
 
-  it('names the one Physics point nothing teaches yet, and counts a section a topic cites', () => {
+  it('gives every Physics point a topic, and counts a section a topic cites', () => {
     const html = render('physics')
-    expect(html).toContain('90 of 91 points have a topic')
-    const gap = html.slice(html.indexOf('id="point-4.2.4.2"'), html.indexOf('id="point-4.2.4.3"'))
-    expect(gap).toContain('Not yet taught')
+    expect(html).toContain('91 of 91 points have a topic')
+    const transfers = html.slice(html.indexOf('id="point-4.2.4.2"'), html.indexOf('id="point-4.2.4.3"'))
+    expect(transfers).toContain('Mains electricity')
     // Electromagnetic devices cites 4.7.2, the motor effect, which holds 4.7.2.1 to 4.7.2.4.
     const motor = html.slice(html.indexOf('id="point-4.7.2.3"'), html.indexOf('id="point-4.7.2.4"'))
     expect(motor).toContain('Electromagnetic devices')

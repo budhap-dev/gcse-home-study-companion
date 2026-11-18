@@ -33,9 +33,6 @@ export const NO_TOPIC: Record<string, Record<string, string>> = {
   maths: {
     A8: 'Coordinates in all four quadrants are used throughout the pack, in every graph topic, and have no topic of their own.',
   },
-  physics: {
-    '4.2.4.2': 'Not yet taught: E = Pt is taught with power (4.1.1.4), but E = QV, which the specification says to recall and apply, and how appliances transfer energy from batteries or the mains, have no lesson yet.',
-  },
   'further-maths': {
     '1.1': 'The specification says this GCSE number work is expected, not taught: it is used throughout and has no topic of its own.',
   },
