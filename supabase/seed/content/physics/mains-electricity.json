@@ -6,7 +6,8 @@
   "specPoints": [
     "4.2.3.1",
     "4.2.3.2",
-    "4.2.4.1"
+    "4.2.4.1",
+    "4.2.4.2"
   ],
   "order": 6,
   "year": 11,
@@ -518,10 +519,172 @@
         "specPoint": "4.2.4.1"
       },
       {
+        "id": "s5b",
+        "kind": "explain",
+        "title": "Energy transferred by an appliance",
+        "body": "**Every electrical appliance is designed to bring about an energy transfer.** The supply, a battery or the ac mains, does work on the charge that flows, and the appliance passes that energy on to where it is wanted:\n\n- an **electric motor**, in a fan, a drill or a food mixer, transfers it to a **kinetic energy store**;\n- a **heating device**, such as a kettle, a toaster or an electric heater, transfers it to the **thermal energy store** of whatever it heats.\n\n**How much energy depends on two things: the power of the appliance and how long it is switched on.** Power is energy transferred per second, so a 2000 W kettle transfers 2000 J every second, and in one minute it transfers $2000 \\times 60 = 120\\,000$ J:\n\n$$E = P t$$\n\nwith $E$ in joules, $P$ in watts and $t$ in **seconds**. Convert minutes and hours to seconds before you substitute.\n\n**Work is done when charge flows.** Potential difference is the energy transferred per coulomb of charge: across the 230 V mains, every coulomb that passes through an appliance transfers 230 J. So a charge $Q$ transfers\n\n$$E = Q V$$\n\nwith $E$ in joules, $Q$ in coulombs and $V$ in volts. The specification asks you to **recall and apply both** equations; neither is on the equation sheet.\n\n**The two equations agree.** Charge is current multiplied by time, $Q = I t$, so $E = Q V = V I t$, and $V I$ is the power: $E = P t$ again. Use whichever matches what the question gives you, power and time or charge and potential difference.",
+        "visuals": [
+          {
+            "type": "diagram",
+            "component": "equation-card",
+            "props": {
+              "equations": [
+                {
+                  "name": "Energy from power and time",
+                  "equation": "E = P t",
+                  "units": "J, W, s"
+                },
+                {
+                  "name": "Energy from charge and pd",
+                  "equation": "E = Q V",
+                  "units": "J, C, V"
+                },
+                {
+                  "name": "Charge from current and time",
+                  "equation": "Q = I t",
+                  "units": "C, A, s"
+                }
+              ]
+            },
+            "alt": "An equation card giving E equals P t, E equals Q V and Q equals I t, with the units of every quantity"
+          }
+        ],
+        "check": {
+          "id": "c5b",
+          "type": "numeric",
+          "prompt": "A charge of 300 C flows through a heater connected to the 230 V mains. How much energy is transferred, in joules?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "applying E = QV",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$E = Q V = 300 \\times 230 = $ **69 000 J**. Each coulomb transfers 230 J.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "E = Q V"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "69 000"
+            }
+          ],
+          "discriminators": [],
+          "answer": 69000,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "J"
+        },
+        "specPoint": "4.2.4.2"
+      },
+      {
+        "id": "s5c",
+        "kind": "worked-example",
+        "title": "Energy from power and time, and from charge",
+        "body": "**Pick the equation from what the question gives you, and put time in seconds.**\n\n$$E = P t \\qquad E = Q V$$",
+        "visuals": [
+          {
+            "type": "worked-example",
+            "problem": "A 2000 W kettle is switched on for 3 minutes. Find the energy it transfers. Then find the energy transferred when 50 C of charge flows through a 12 V car headlamp, and the charge that flows when a 9 V battery transfers 270 J.",
+            "steps": [
+              {
+                "text": "The kettle question gives **power and time**, so use **E = P t**",
+                "note": "match the equation to the quantities you were given"
+              },
+              {
+                "text": "$t = 3 \\times 60 = 180$ s",
+                "note": "3 minutes is 180 seconds: convert before substituting"
+              },
+              {
+                "text": "$E = 2000 \\times 180 = $ **360 000 J**",
+                "note": "360 kJ in three minutes: heating water takes a lot of energy"
+              },
+              {
+                "text": "The headlamp question gives **charge and pd**, so use **E = Q V**",
+                "note": "no power or time this time"
+              },
+              {
+                "text": "$E = 50 \\times 12 = $ **600 J**",
+                "note": "each coulomb transfers 12 J"
+              },
+              {
+                "text": "For the battery you know **energy and pd**, so rearrange: **Q = E ÷ V**",
+                "note": "rearrange before substituting, as always"
+              },
+              {
+                "text": "$Q = 270 \\div 9 = $ **30 C**",
+                "note": "check it back: 30 × 9 = 270 J ✓"
+              }
+            ]
+          },
+          {
+            "type": "diagram",
+            "component": "trace-table",
+            "props": {
+              "columns": [
+                "If you know",
+                "Use",
+                "Example"
+              ],
+              "rows": [
+                [
+                  "power and time",
+                  "E = P t",
+                  "2000 × 180 = 360 000 J"
+                ],
+                [
+                  "charge and pd",
+                  "E = Q V",
+                  "50 × 12 = 600 J"
+                ],
+                [
+                  "energy and pd",
+                  "Q = E ÷ V",
+                  "270 ÷ 9 = 30 C"
+                ]
+              ],
+              "title": "Pick the equation that matches what the question gave you"
+            },
+            "alt": "A table matching the quantities given in a question to the energy equation to use, with a worked example of each"
+          }
+        ],
+        "check": {
+          "id": "c5c",
+          "type": "numeric",
+          "prompt": "An 1800 W hairdryer is switched on for 2 minutes. How much energy does it transfer, in joules?",
+          "marks": 2,
+          "gradeBand": "6-7",
+          "skill": "applying E = Pt",
+          "calculator": "either",
+          "tags": [],
+          "solution": "$t = 2 \\times 60 = 120$ s, so $E = P t = 1800 \\times 120 = $ **216 000 J**.",
+          "markScheme": [
+            {
+              "code": "M1",
+              "marks": 1,
+              "description": "1800 × 120"
+            },
+            {
+              "code": "A1",
+              "marks": 1,
+              "description": "216 000"
+            }
+          ],
+          "discriminators": [],
+          "answer": 216000,
+          "tolerance": 0,
+          "unitsRequired": false,
+          "units": "J"
+        },
+        "specPoint": "4.2.4.2"
+      },
+      {
         "id": "s6",
         "kind": "your-turn",
         "title": "Your turn",
-        "body": "**Part A.**\n\n1. State the potential difference and frequency of the UK mains supply.\n2. Give the colour of each of the three wires.\n3. State the potential of the earth wire.\n\n**Part B.**\n\n4. Explain the difference between direct and alternating potential difference.\n5. An appliance draws 5 A from the 230 V mains. Calculate its power.\n6. A 920 W appliance runs on 230 V mains. Calculate the current it draws.\n\n**Part C.**\n\n7. Explain the job of each of the three wires.\n8. Explain why a live wire can be dangerous even when a switch is open.\n9. Explain why any connection between the live wire and earth is dangerous.\n\nFor question 9, start from the potential difference and use $I = V \\div R$.",
+        "body": "**Part A.**\n\n1. State the potential difference and frequency of the UK mains supply.\n2. Give the colour of each of the three wires.\n3. State the potential of the earth wire.\n\n**Part B.**\n\n4. Explain the difference between direct and alternating potential difference.\n5. An appliance draws 5 A from the 230 V mains. Calculate its power.\n6. A 920 W appliance runs on 230 V mains. Calculate the current it draws.\n7. A 2000 W kettle is switched on for 2 minutes. Calculate the energy it transfers.\n8. A charge of 40 C flows through a 6 V lamp. Calculate the energy transferred.\n\n**Part C.**\n\n9. Explain the job of each of the three wires.\n10. Explain why a live wire can be dangerous even when a switch is open.\n11. Explain why any connection between the live wire and earth is dangerous.\n\nFor question 11, start from the potential difference and use $I = V \\div R$.",
         "visuals": [
           {
             "type": "diagram",
@@ -621,7 +784,7 @@
         "id": "s8",
         "kind": "summary",
         "title": "Summary",
-        "body": "- **Mains electricity is an ac supply.**\n- UK domestic supply: about **230 V**, frequency **50 Hz**.\n- **Direct (dc)**: current flows in **one direction only**; cells and batteries.\n- **Alternating (ac)**: the potential difference **repeatedly changes direction**.\n- Appliances connect with **three-core cable**, colour coded **for easy identification**.\n- **Live — brown** — carries the alternating pd from the supply.\n- **Neutral — blue** — completes the circuit; at or close to **0 V**.\n- **Earth — green and yellow stripes** — a safety wire to stop the appliance becoming live.\n- The earth wire is at **0 V** and **only carries current if there is a fault**.\n- pd between **live and earth** is about **230 V**.\n- A live wire is **dangerous even when a switch is open** — the supply side stays live.\n- A live-to-earth connection gives a **large current**: danger to people, and **fire**.\n- {{highlight|$P = VI$}} and {{highlight|$P = I^2R$}} — both must be **recalled**.\n- Square the current **before** multiplying in $P = I^2R$.\n- **Fuses and circuit breakers are not in this specification.**",
+        "body": "- **Mains electricity is an ac supply.**\n- UK domestic supply: about **230 V**, frequency **50 Hz**.\n- **Direct (dc)**: current flows in **one direction only**; cells and batteries.\n- **Alternating (ac)**: the potential difference **repeatedly changes direction**.\n- Appliances connect with **three-core cable**, colour coded **for easy identification**.\n- **Live — brown** — carries the alternating pd from the supply.\n- **Neutral — blue** — completes the circuit; at or close to **0 V**.\n- **Earth — green and yellow stripes** — a safety wire to stop the appliance becoming live.\n- The earth wire is at **0 V** and **only carries current if there is a fault**.\n- pd between **live and earth** is about **230 V**.\n- A live wire is **dangerous even when a switch is open** — the supply side stays live.\n- A live-to-earth connection gives a **large current**: danger to people, and **fire**.\n- {{highlight|$P = VI$}} and {{highlight|$P = I^2R$}} — both must be **recalled**.\n- Square the current **before** multiplying in $P = I^2R$.\n- Appliances transfer energy from batteries or the mains: a **motor** to a **kinetic** store, a **heater** to a **thermal** store.\n- $E = Pt$ and $E = QV$ — both must be **recalled** too; time in **seconds**.\n- **Fuses and circuit breakers are not in this specification.**",
         "visuals": [
           {
             "type": "diagram",
@@ -675,6 +838,14 @@
                 [
                   "P = I² R",
                   "when you know current and resistance"
+                ],
+                [
+                  "E = P t",
+                  "energy from power and time, in seconds"
+                ],
+                [
+                  "E = Q V",
+                  "energy from charge and pd"
                 ],
                 [
                   "Not examined",
@@ -1301,7 +1472,7 @@
       "marks": 2,
       "gradeBand": "6-7",
       "skill": "energy from power and time",
-      "step": "s5",
+      "step": "s5c",
       "calculator": "either",
       "tags": [],
       "solution": "$E = Pt = 2300 \\times 180 = 414\\,000$ J.",
@@ -1455,7 +1626,7 @@
       "marks": 3,
       "gradeBand": "8-9",
       "skill": "charge from power and time",
-      "step": "s5",
+      "step": "s5b",
       "calculator": "either",
       "tags": [],
       "solution": "Current $= 2300 \\div 230 = 10$ A. Charge $= It = 10 \\times 3600 = 36\\,000$ C.",
@@ -1491,7 +1662,7 @@
       "marks": 3,
       "gradeBand": "8-9",
       "skill": "energy from charge and p.d.",
-      "step": "s5",
+      "step": "s5b",
       "calculator": "either",
       "tags": [],
       "solution": "$E = QV = 60 \\times 230 = 13\\,800$ J. Each coulomb transfers 230 J.",
@@ -1520,6 +1691,151 @@
       "tolerance": 0,
       "unitsRequired": false,
       "units": "J"
+    },
+    {
+      "id": "q27",
+      "type": "numeric",
+      "prompt": "An 800 W microwave oven is switched on for 5 minutes. Calculate the energy it transfers, in joules.",
+      "marks": 2,
+      "gradeBand": "4-5",
+      "skill": "energy from power and time",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$t = 5 \\times 60 = 300$ s, so $E = P t = 800 \\times 300 = 240\\,000$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "800 × 300"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "240 000"
+        }
+      ],
+      "discriminators": [],
+      "answer": 240000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J",
+      "step": "s5c"
+    },
+    {
+      "id": "q28",
+      "type": "numeric",
+      "prompt": "A 12 V car battery drives a charge of 500 C through the starter motor. Calculate the energy transferred, in joules.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "energy from charge and p.d.",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$E = Q V = 500 \\times 12 = 6000$ J.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "E = Q V"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "6000"
+        }
+      ],
+      "discriminators": [],
+      "answer": 6000,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "J",
+      "step": "s5b"
+    },
+    {
+      "id": "q29",
+      "type": "numeric",
+      "prompt": "A 9 V battery transfers 180 J of energy to a torch bulb. Calculate the charge that flows, in coulombs.",
+      "marks": 2,
+      "gradeBand": "6-7",
+      "skill": "rearranging E = QV",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$Q = E \\div V = 180 \\div 9 = 20$ C.",
+      "markScheme": [
+        {
+          "code": "M1",
+          "marks": 1,
+          "description": "Q = E ÷ V"
+        },
+        {
+          "code": "A1",
+          "marks": 1,
+          "description": "20"
+        }
+      ],
+      "discriminators": [],
+      "answer": 20,
+      "tolerance": 0,
+      "unitsRequired": false,
+      "units": "C",
+      "step": "s5c"
+    },
+    {
+      "id": "q30",
+      "type": "multiple-choice",
+      "prompt": "An electric fan is plugged into the mains and switched on. Into which energy store does its motor usefully transfer energy?",
+      "options": [
+        "The gravitational store of the blades",
+        "The elastic store of the motor coils",
+        "The kinetic store of the turning blades",
+        "The chemical store of the mains plug"
+      ],
+      "correct": [
+        2
+      ],
+      "marks": 1,
+      "gradeBand": "4-5",
+      "skill": "appliance energy transfers",
+      "step": "s5b",
+      "calculator": "either",
+      "tags": [],
+      "solution": "A **motor** transfers energy to a **kinetic** store: the fan blades turn. Some is wasted heating the motor, but the useful transfer is to kinetic energy.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "kinetic store of the blades"
+        }
+      ],
+      "discriminators": []
+    },
+    {
+      "id": "q31",
+      "type": "multiple-choice",
+      "prompt": "A 2 kW heater and a 1 kW heater are each switched on for 10 minutes. How does the energy transferred by the 2 kW heater compare with the 1 kW heater?",
+      "options": [
+        "Half as much",
+        "Twice as much",
+        "The same amount",
+        "Four times as much"
+      ],
+      "correct": [
+        1
+      ],
+      "marks": 1,
+      "gradeBand": "6-7",
+      "skill": "energy from power and time",
+      "step": "s5b",
+      "calculator": "either",
+      "tags": [],
+      "solution": "$E = P t$: for the **same time**, energy is proportional to power, so the 2 kW heater transfers **twice as much**.",
+      "markScheme": [
+        {
+          "code": "B1",
+          "marks": 1,
+          "description": "twice as much"
+        }
+      ],
+      "discriminators": []
     }
   ],
   "examTechnique": {
@@ -1543,7 +1859,9 @@
         "q1",
         "q2",
         "q3",
-        "q4"
+        "q4",
+        "q27",
+        "q30"
       ],
       "suggestedMinutes": 8
     },
@@ -1555,7 +1873,10 @@
         "q7",
         "q8",
         "q9",
-        "q10"
+        "q10",
+        "q28",
+        "q29",
+        "q31"
       ],
       "suggestedMinutes": 18
     },
@@ -1601,7 +1922,12 @@
       "q15",
       "q16",
       "q25",
-      "q26"
+      "q26",
+      "q27",
+      "q28",
+      "q29",
+      "q30",
+      "q31"
     ],
     "sampleSize": 10
   },
