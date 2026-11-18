@@ -32,6 +32,40 @@ export function usePen(): Pen {
     () => 'blue',
   )
 }
+/**
+ * The order topics are shown in: the school's plan (school years, the school's order inside a
+ * unit), or the exam board's specification (numbered, no school years), for a teacher or a
+ * student at another school. A device setting, like the theme: the plan a page follows is a
+ * choice about the reader, not about the student's progress.
+ */
+export type TopicOrder = 'school' | 'spec'
+const ORDER_KEY = 'study-companion.order'
+
+export function readTopicOrder(): TopicOrder {
+  try {
+    return localStorage.getItem(ORDER_KEY) === 'spec' ? 'spec' : 'school'
+  } catch {
+    return 'school'
+  }
+}
+
+export function setTopicOrder(order: TopicOrder) {
+  try {
+    localStorage.setItem(ORDER_KEY, order)
+  } catch {
+    // no storage
+  }
+  listeners.forEach((fn) => fn())
+}
+
+export function useTopicOrder(): TopicOrder {
+  return useSyncExternalStore(
+    (fn) => { listeners.add(fn); return () => listeners.delete(fn) },
+    readTopicOrder,
+    readTopicOrder,
+  )
+}
+
 type Pref = keyof typeof KEYS
 const listeners = new Set<() => void>()
 

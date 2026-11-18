@@ -1,5 +1,6 @@
 import { DEFAULT_THRESHOLDS, getSubject, type WorksheetLevel } from '@study/shared'
-import { getGuide, type TopicSummary as Topic } from '../content/index.ts'
+import { getGuide, specOrdered, type TopicSummary as Topic } from '../content/index.ts'
+import { readTopicOrder, type TopicOrder } from '../theme/prefs.ts'
 import { minutesFor, minutesPerMark } from '../content/paper.ts'
 import { evidenceFor, lastActivity, type ProgressState } from './store.ts'
 
@@ -67,7 +68,7 @@ function alternativesFor(next: Task, rest: Task[]): Task[] {
  * alternatives from other subjects so the student always has a choice (MOT-5), and
  * the whole ranked list for anything that needs to look further down it.
  */
-export function recommend(topics: Topic[], state: ProgressState, now = new Date()): { next: Task | null; alternatives: Task[]; ranked: Task[] } {
+export function recommend(topics: Topic[], state: ProgressState, now = new Date(), order: TopicOrder = readTopicOrder()): { next: Task | null; alternatives: Task[]; ranked: Task[] } {
   const ranked: Task[] = []
   const ev = new Map(topics.map((t) => [t.id, evidenceFor(t.id, state, now)]))
 
@@ -107,10 +108,13 @@ export function recommend(topics: Topic[], state: ProgressState, now = new Date(
   // 5. not started, in content order; the student's own year first when they have said it
   // (UXI-10), then earlier years as recap, then later years. A Year 11 student was otherwise
   // steered to Year 9 topics first, because content order starts there.
-  const mine = state.profile?.year
+  // In the specification's order (Settings) school years mean nothing: the next new topic is
+  // the next one in the board's order.
+  const spec = order === 'spec'
+  const mine = spec ? undefined : state.profile?.year
   const yearRank = (t: Topic) => (!mine ? 0 : t.year === mine ? 0 : t.year < mine ? 1 : 2)
   const notStarted = topics.filter((t) => !state.lessons[t.id] && ev.get(t.id)!.quizPct === undefined)
-  for (const t of notStarted.map((t, i) => ({ t, i })).sort((a, b) => yearRank(a.t) - yearRank(b.t) || a.i - b.i).map((x) => x.t)) {
+  for (const t of (spec ? specOrdered(notStarted) : notStarted.map((t, i) => ({ t, i })).sort((a, b) => yearRank(a.t) - yearRank(b.t) || a.i - b.i).map((x) => x.t))) {
     ranked.push(buildTask(t, 'lesson', 'New idea. One step at a time.'))
   }
   // 6. lesson done but no quiz

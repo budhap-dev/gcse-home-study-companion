@@ -82,3 +82,32 @@ describe('the list view', () => {
     expect(html).not.toContain('aria-label="Topic"')
   })
 })
+
+/**
+ * The specification order (Settings): a teacher's view. Topics by the board's numbers, no
+ * school years and no list of the school's plan.
+ */
+describe('the subject map in specification order', () => {
+  it('sets out Chemical changes in the board’s order, numbered, without school years', () => {
+    stored.set('study-companion.order', 'spec')
+    try {
+      const html = render('chemistry')
+      const order = ['4.4.1.1–4.4.1.3', '4.4.1.4', '4.4.2.1, 4.4.2.2, 4.4.2.4', '4.4.2.3', '4.4.2.6', '4.4.3.1–4.4.3.3, 4.4.3.5', '4.4.3.4, 4.4.3.5']
+      const at = order.map((n) => html.indexOf(`aria-label="${n} `))
+      expect(at.every((i) => i > 0), String(at)).toBe(true)
+      expect([...at].sort((a, b) => a - b)).toEqual(at)
+      expect(html).not.toContain('aria-label="School year"')
+      expect(html).not.toContain('List by year')
+      expect(html).not.toMatch(/, Year \d+, /)
+      expect(html).toContain('Following the AQA 8462 specification')
+    } finally {
+      stored.delete('study-companion.order')
+    }
+  })
+
+  it('keeps the school’s plan as the default', () => {
+    const html = render('chemistry')
+    expect(html).toContain('List by year')
+    expect(html).not.toContain('Following the AQA 8462 specification')
+  })
+})

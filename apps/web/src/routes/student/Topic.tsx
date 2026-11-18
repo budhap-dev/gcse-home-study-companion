@@ -24,6 +24,7 @@ import { useWide } from '../../components/useWide.ts'
 import { Listen } from '../../components/Listen.tsx'
 import { TopicMissing } from '../../components/TopicMissing.tsx'
 import { weakestSkills } from '../../progress/spaced.ts'
+import { useTopicOrder } from '../../theme/prefs.ts'
 
 const InPastPapers = lazy(() => import('../../components/InPastPapers.tsx'))
 
@@ -97,6 +98,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
   const subject = subjectId ? getSubject(subjectId) : undefined
   const progress = useProgress()
   const wide = useWide()
+  const topicOrder = useTopicOrder()
   const [more, setMore] = useState(false)
   if (!subject || !topic) return <p>Unknown topic.</p>
   const evidence = evidenceFor(topic.id, progress)
@@ -128,7 +130,7 @@ function TopicBody({ topic }: { topic: TopicRecord }) {
       <section className="hero-gradient anim-rise relative flex items-center gap-8 overflow-hidden rounded-[26px] p-5 shadow-[0_16px_40px_rgb(47_95_184/0.28)] sm:p-8">
         <span className="hero-shine" aria-hidden />
         <div className="relative flex min-w-0 max-w-3xl flex-grow flex-col gap-3">
-          <p className="text-xs font-bold uppercase tracking-[0.12em]">{subject.name}{unit ? ` · ${unit}` : ''} · Year {topic.year}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.12em]">{subject.name}{unit ? ` · ${unit}` : ''}{topicOrder === 'spec' ? '' : ` · Year ${topic.year}`}</p>
           <h1 className="text-[32px] font-bold leading-[1.05] sm:text-[44px]">
             {number && <><SpecNumber code={number} tone="opacity-80" className="text-[0.6em]" />{' '}</>}
             {topic.title}

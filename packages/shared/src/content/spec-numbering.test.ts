@@ -2,7 +2,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Topic } from './topic.ts'
-import { compareSpecPoints, stepPoints, topicNumber } from './spec-number.ts'
+import { compareSpecPoints, parseSpecPoint, specPlace, stepPoints, topicNumber } from './spec-number.ts'
 import { INCIDENTAL_POINTS, UNTAUGHT_POINTS } from './spec-numbering.incidental.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
@@ -154,5 +154,37 @@ describe('specification numbering', () => {
       // rather than one point, so they are the steps left unnumbered.
       expect(t.lesson.steps.length - numbered, `${t.id}`).toBeLessThanOrEqual(4)
     }
+  })
+})
+
+/**
+ * The specification order (Settings) places a topic at the first point it lists, so that
+ * point must be the one the topic exists to teach, in its own unit's part of the
+ * specification. Pure substances and formulations listed 4.1.1.2 first, a C1 point it
+ * uses in passing, which put its number out of sequence in C8. A unit's part is the
+ * section most of its topics' points fall in: "4.8" for AQA C8, "6" for Edexcel Biology
+ * topic 6, the strand letter for Maths.
+ */
+describe('specification order', () => {
+  const section = (p: string) => /^[NARGPS]\d/.test(p) ? p[0]! : p.split('.').length >= 3 ? p.split('.').slice(0, 2).join('.') : p.split('.')[0]!
+  it('lists first a point from the topic\'s own unit', () => {
+    const units = new Map<string, typeof topics>()
+    for (const t of topics) if (!t.specCode) units.set(`${t.subjectId}/${t.unitId}`, [...(units.get(`${t.subjectId}/${t.unitId}`) ?? []), t])
+    const bad: string[] = []
+    let placed = 0
+    for (const [unit, ts] of units) {
+      const counts = new Map<string, number>()
+      for (const t of ts) for (const p of t.specPoints.filter((p) => parseSpecPoint(p))) counts.set(section(p), (counts.get(section(p)) ?? 0) + 1)
+      const main = [...counts].sort((a, b) => b[1] - a[1])[0]?.[0]
+      for (const t of ts) {
+        const place = specPlace(t)
+        if (!place) continue
+        placed++
+        if (section(place.home) !== main) bad.push(`${unit} ${t.id}: first point ${place.home} is outside ${main}`)
+      }
+    }
+    expect(bad).toEqual([])
+    // A checker that places nothing passes by matching nothing.
+    expect(placed).toBeGreaterThan(200)
   })
 })

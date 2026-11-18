@@ -1,11 +1,12 @@
-import { getSubject, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
+import { getSubject, specPlace, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
 import type { Subject, SyllabusBlock } from '@study/shared'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { StatusIcon } from '../../components/StatusChip.tsx'
 import { SpecNumber } from '../../components/SpecNumber.tsx'
-import { topicsForSubject, yearsForSubject } from '../../content/index.ts'
+import { specOrdered, topicsForSubject, yearsForSubject } from '../../content/index.ts'
+import { setTopicOrder, useTopicOrder } from '../../theme/prefs.ts'
 import { evidenceFor, type ProgressState } from '../../progress/store.ts'
 import { PART_LETTERS, partsDone, partsLabel, type PartsDone } from '../../progress/parts.ts'
 import { useProgress } from '../../progress/useProgress.ts'
@@ -44,7 +45,9 @@ export function TopicMap() {
   if (!subject) return <p>Unknown subject.</p>
   const written = topicsForSubject(subject.id)
   const squares = written.map((t) => square(t, progress))
-  const view = params.get('view') === 'list' ? 'list' : 'map'
+  // In the specification's order the list, which is the school's plan term by term, has no place.
+  const spec = useTopicOrder() === 'spec'
+  const view = !spec && params.get('view') === 'list' ? 'list' : 'map'
   /** Has the student done anything on any of these topics? Drives whether a reset is offered. */
   const studied = (ids: string[]) => ids.some((id) => progress.attempts.some((a) => a.topicId === id) || Boolean(progress.lessons[id]))
   const subjectTopicIds = written.map((t) => t.id)
@@ -57,6 +60,12 @@ export function TopicMap() {
       <SubjectHeader subject={subject} squares={squares} />
       <GradePanel subjectId={subject.id} topics={written} progress={progress} />
 
+      {spec ? (
+        <p className="text-sm text-ink-2">
+          Following the {subject.board} specification: topics by unit, in the board’s order, with its numbers.{' '}
+          <button type="button" onClick={() => setTopicOrder('school')} className="-my-1 inline-block py-1 underline">Use my school’s plan instead</button>
+        </p>
+      ) : (
       <div role="group" aria-label="View" className="flex w-fit gap-1 rounded-xl bg-panel p-1">
         {(['map', 'list'] as const).map((v) => (
           <button
@@ -70,8 +79,9 @@ export function TopicMap() {
           </button>
         ))}
       </div>
+      )}
 
-      {view === 'map' ? <MapView subject={subject} progress={progress} /> : <ListView subject={subject} progress={progress} studied={studied} />}
+      {view === 'map' ? <MapView key={String(spec)} subject={subject} progress={progress} spec={spec} /> : <ListView subject={subject} progress={progress} studied={studied} />}
 
       <ResetProgress
         label={`Reset all ${subject.name}`}
@@ -155,11 +165,12 @@ function shownYearNote(shown: number | 'all', mine?: number): string {
  * student is most likely to want among those shown: a lesson under way, then a topic begun
  * and not yet secure, then the first not started.
  */
-function MapView({ subject, progress }: { subject: Subject; progress: ProgressState }) {
-  const years = yearsForSubject(subject.id)
+function MapView({ subject, progress, spec }: { subject: Subject; progress: ProgressState; spec: boolean }) {
+  // The specification's order has no school years: every topic, no year tabs.
+  const years = spec ? [] : yearsForSubject(subject.id)
   const mine = progress.profile?.year
   const [year, setYear] = useState<number | 'all'>(mine && years.includes(mine) ? mine : 'all')
-  const all = topicsForSubject(subject.id)
+  const all = spec ? specOrdered(topicsForSubject(subject.id)) : topicsForSubject(subject.id)
   const groupsFor = (y: number | 'all') => unitGroups(subject.id, y === 'all' ? all : all.filter((t) => t.year === y), progress)
   const groups = groupsFor(year)
   const bestPick = (squares: MapSquare[]) => {
@@ -212,7 +223,7 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
               </div>
               <div className={SQUARES_GRID}>
                 {g.squares.map((s) => (
-                  <TopicSquare key={s.topic.id} square={s} picked={s.topic.id === picked} delay={`${(0.2 + Math.min(n++, 100) * 0.008).toFixed(3)}s`}
+                  <TopicSquare key={s.topic.id} square={s} picked={s.topic.id === picked} delay={`${(0.2 + Math.min(n++, 100) * 0.008).toFixed(3)}s`} number={spec ? specPlace(s.topic)?.label : undefined}
                     onPick={() => { setPicked(s.topic.id); setSheet(true) }} />
                 ))}
               </div>
@@ -222,7 +233,7 @@ function MapView({ subject, progress }: { subject: Subject; progress: ProgressSt
         </div>
       </section>
 
-      {pickedSquare && <TopicPanel key={pickedSquare.id} square={square(pickedSquare, progress)} progress={progress} open={sheet} onClose={() => setSheet(false)} />}
+      {pickedSquare && <TopicPanel key={pickedSquare.id} square={square(pickedSquare, progress)} progress={progress} open={sheet} onClose={() => setSheet(false)} spec={spec} />}
     </div>
   )
 }
@@ -268,8 +279,10 @@ function UnitPractice({ subjectId, unitId, year, count }: { subjectId: string; u
  * that slides up above the menu bar when a square is pressed, and slides away again when it is
  * swiped down or shut with its button or Escape.
  */
-function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare; progress: ProgressState; open: boolean; onClose: () => void }) {
+function TopicPanel({ square: s, progress, open, onClose, spec }: { square: MapSquare; progress: ProgressState; open: boolean; onClose: () => void; spec: boolean }) {
   const t = s.topic
+  const place = spec ? specPlace(t) : undefined
+  const number = spec ? place?.label : t.specCode
   const subject = getSubject(t.subjectId)!
   const lesson = progress.lessons[t.id]
   const steps = t.lesson.steps.length
@@ -321,7 +334,7 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
     >
       {!wide && <span aria-hidden className="-mb-2 -mt-2 h-1.5 w-10 shrink-0 self-center rounded-full bg-rule" />}
       <div className="flex items-start justify-between gap-3">
-        <span className="text-xs font-bold uppercase tracking-[0.1em] text-ink-2">{subject.units.find((u) => u.id === t.unitId)?.name} · Year {t.year}</span>
+        <span className="text-xs font-bold uppercase tracking-[0.1em] text-ink-2">{subject.units.find((u) => u.id === t.unitId)?.name}{spec ? '' : ` · Year ${t.year}`}</span>
         <button type="button" onClick={close} className="-m-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xl text-ink-2 hover:bg-panel lg:hidden" aria-label="Close">×</button>
       </div>
       <div key={t.id} className="anim-fade-up flex flex-col gap-3.5">
@@ -330,8 +343,9 @@ function TopicPanel({ square: s, progress, open, onClose }: { square: MapSquare;
           {status ? STATUS_LABEL[status] : 'Not started'}
         </span>
         <h2 ref={heading} tabIndex={-1} className="text-[26px] font-bold leading-[1.1] outline-none">
-          {t.specCode && <><SpecNumber code={t.specCode} className="text-[0.6em]" />{' '}</>}{t.title}
+          {number && <><SpecNumber code={number} className="text-[0.6em]" />{' '}</>}{t.title}
         </h2>
+        {place?.also && <p className="-mt-2 text-sm text-ink-2">Also teaches <SpecNumber code={place.also} tone="text-ink-2" />, which the specification places earlier.</p>}
         <p className="text-sm text-ink-2">
           Lesson of {steps} steps · Core, Higher and Advanced sheets of {t.worksheets.core.questionIds.length}, {t.worksheets.higher.questionIds.length} and {t.worksheets.advanced.questionIds.length} questions · a quiz of {t.quiz.sampleSize}
         </p>

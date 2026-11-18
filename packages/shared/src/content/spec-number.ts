@@ -90,6 +90,32 @@ export function compareSpecPoints(a: string, b: string): number {
   return pa && pb ? comparePoints(pa, pb) : a.localeCompare(b, 'en', { numeric: true })
 }
 
+/**
+ * Where a topic sits in its board's specification, for the specification order (a
+ * teacher's view, not the school's plan). `home` is the first numbered point the topic
+ * lists: authors list the point a topic exists to teach first, and the lowest point is
+ * often one used in passing (Electrolysis of molten compounds lists 4.4.3.1 first and
+ * 4.4.1.4, oxidation in terms of electrons, last). `label` is the topic's number from its
+ * home on; `also` holds the points that come before its home in the specification, which
+ * the label would otherwise lead with, putting the topic's number out of sequence.
+ *
+ * A topic with no numbered point (a Year 9 bridging topic, or English, French and Music,
+ * whose boards name papers and themes) has no place, and keeps the school's order.
+ */
+export function specPlace(topic: { specCode?: string; specPoints: string[] }): { home: string; label: string; also?: string } | undefined {
+  // A Business section ("1.4") names itself. A topic summary's specCode can instead be the
+  // whole label ("4.1.1.1, 4.1.1.4–4.1.1.7"), which is no one point: work from the points.
+  if (topic.specCode && parseSpecPoint(topic.specCode)) return { home: topic.specCode, label: topic.specCode }
+  const points = [...new Set(topic.specPoints)].filter((p) => parseSpecPoint(p))
+  const home = points[0]
+  if (!home) return undefined
+  const before = points.filter((p) => compareSpecPoints(p, home) < 0)
+  const from = points.filter((p) => compareSpecPoints(p, home) >= 0)
+  const label = topicNumber({ specPoints: from })!
+  const also = before.length ? topicNumber({ specPoints: before }) : undefined
+  return also ? { home, label, also } : { home, label }
+}
+
 /** A step's numbers as its heading shows them: "1.4.2", "7.15, 7.16" or "4.8.2.1–4.8.2.4". */
 export function stepNumber(step: { specPoint?: string | string[] }): string | undefined {
   const points = stepPoints(step)
