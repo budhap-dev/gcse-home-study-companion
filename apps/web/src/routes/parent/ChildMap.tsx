@@ -48,7 +48,7 @@ export function ChildMap({ state, subjectId, first }: { state: ProgressState; su
               <span className="shrink-0 text-[13px] text-ink-2">{g.squares.filter(isSecure).length} of {g.squares.length} secure</span>
             </div>
             <div className={squaresGrid(true)}>
-              {g.squares.map((s) => <TopicMark key={s.topic.id} square={s} number={spec ? specPlace(s.topic)?.label : undefined} />)}
+              {g.squares.map((s) => <TopicMark key={s.topic.id} square={s} number={spec ? specPlace(s.topic)?.label ?? '' : undefined} />)}
             </div>
           </section>
         ))}

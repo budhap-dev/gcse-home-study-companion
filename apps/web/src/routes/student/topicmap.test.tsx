@@ -105,9 +105,38 @@ describe('the subject map in specification order', () => {
     }
   })
 
+  /** A topic with no number, a bridging topic or an unnumbered specification, must not fall back to its year. */
+  it.each(SUBJECTS.map((s) => [s.id]))('names no school year on any tile: %s', (subjectId) => {
+    stored.set('study-companion.order', 'spec')
+    try {
+      const html = render(subjectId)
+      expect(html).not.toMatch(/, Year \d+, /)
+      expect(html, 'the header').not.toMatch(/Years? \d/)
+      for (const t of topicsForSubject(subjectId)) expect(html, t.id).toMatch(new RegExp(`aria-label="[^"]*${escape(t.title).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}, Not started"`))
+    } finally {
+      stored.delete('study-companion.order')
+    }
+  })
+
+  it('offers the board’s exam papers in place of the years, where units sit on different papers', () => {
+    stored.set('study-companion.order', 'spec')
+    try {
+      const chemistry = render('chemistry')
+      expect(chemistry).toContain('aria-label="Exam paper"')
+      expect(chemistry).toMatch(/aria-pressed="true"[^>]*>All papers<\/button>/)
+      for (const p of ['Paper 1', 'Paper 2']) expect(chemistry).toContain(`>${p}</button>`)
+      const maths = render('maths')
+      expect(maths).not.toContain('aria-label="Exam paper"')
+      expect(maths).toContain('Every paper can ask about any topic.')
+    } finally {
+      stored.delete('study-companion.order')
+    }
+  })
+
   it('keeps the school’s plan as the default', () => {
     const html = render('chemistry')
     expect(html).toContain('List by year')
     expect(html).not.toContain('Following the AQA 8462 specification')
+    expect(html).not.toContain('aria-label="Exam paper"')
   })
 })
