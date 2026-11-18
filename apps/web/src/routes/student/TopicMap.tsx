@@ -1,4 +1,4 @@
-import { examPapers, getSubject, NO_PAPER_SPLIT, specPlace, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
+import { examPapers, getSubject, NO_PAPER_SPLIT, specPlace, specPoints, STATUS_LABEL, SYLLABUS, TOPIC_STATUSES } from '@study/shared'
 import type { Subject, SyllabusBlock } from '@study/shared'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -63,6 +63,7 @@ export function TopicMap() {
       {spec ? (
         <p className="text-sm text-ink-2">
           Following the {subject.board} specification: topics by unit, in the board’s order, with its numbers.{' '}
+          {specPoints(subject.id).length > 0 && <><Link to={`/subjects/${subject.id}/specification`} className="-my-1 inline-block py-1 font-bold underline">Specification checklist</Link>{' · '}</>}
           <button type="button" onClick={() => setTopicOrder('school')} className="-my-1 inline-block py-1 underline">Use my school’s plan instead</button>
         </p>
       ) : (
