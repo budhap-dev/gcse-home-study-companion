@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { SectionLabel } from '../../components/KindChip.tsx'
 import { MapLegend, TopicMark, squaresGrid } from '../../components/map/MapParts.tsx'
-import { topicsForSubject, yearsForSubject } from '../../content/index.ts'
+import { specPlace } from '@study/shared'
+import { specOrdered, topicsForSubject, yearsForSubject } from '../../content/index.ts'
+import { useTopicOrder } from '../../theme/prefs.ts'
 import { isSecure, unitGroups } from '../../progress/map.ts'
 import type { ProgressState } from '../../progress/store.ts'
 
@@ -13,11 +15,14 @@ import type { ProgressState } from '../../progress/store.ts'
  * panel here to name a square.
  */
 export function ChildMap({ state, subjectId, first }: { state: ProgressState; subjectId: string; first: string }) {
-  const years = yearsForSubject(subjectId)
+  // In the specification's order (Settings) there are no school years: every topic, numbered.
+  const spec = useTopicOrder() === 'spec'
+  const years = spec ? [] : yearsForSubject(subjectId)
   const mine = state.profile?.year
   const [year, setYear] = useState<number | 'all'>(mine && years.includes(mine) ? mine : 'all')
-  const all = topicsForSubject(subjectId)
-  const groups = unitGroups(subjectId, year === 'all' ? all : all.filter((t) => t.year === year), state)
+  const all = spec ? specOrdered(topicsForSubject(subjectId)) : topicsForSubject(subjectId)
+  const effective = years.includes(year as number) ? year : 'all'
+  const groups = unitGroups(subjectId, effective === 'all' ? all : all.filter((t) => t.year === effective), state)
   return (
     <section className="flex flex-col gap-3">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -25,8 +30,8 @@ export function ChildMap({ state, subjectId, first }: { state: ProgressState; su
         {years.length > 1 && (
           <div role="group" aria-label="School year" className="flex w-fit flex-wrap gap-1 rounded-xl bg-panel p-1">
             {(['all', ...years] as const).map((y) => (
-              <button key={y} type="button" aria-pressed={year === y} onClick={() => setYear(y)}
-                className={`min-h-9 rounded-lg px-3 text-sm font-bold transition-colors ${year === y ? 'bg-surface text-ink shadow-[0_1px_2px_rgb(30_35_48/0.12)]' : 'text-ink-2 hover:text-ink'}`}>
+              <button key={y} type="button" aria-pressed={effective === y} onClick={() => setYear(y)}
+                className={`min-h-9 rounded-lg px-3 text-sm font-bold transition-colors ${effective === y ? 'bg-surface text-ink shadow-[0_1px_2px_rgb(30_35_48/0.12)]' : 'text-ink-2 hover:text-ink'}`}>
                 {y === 'all' ? 'All years' : `Year ${y}`}
               </button>
             ))}
@@ -43,7 +48,7 @@ export function ChildMap({ state, subjectId, first }: { state: ProgressState; su
               <span className="shrink-0 text-[13px] text-ink-2">{g.squares.filter(isSecure).length} of {g.squares.length} secure</span>
             </div>
             <div className={squaresGrid(true)}>
-              {g.squares.map((s) => <TopicMark key={s.topic.id} square={s} />)}
+              {g.squares.map((s) => <TopicMark key={s.topic.id} square={s} number={spec ? specPlace(s.topic)?.label : undefined} />)}
             </div>
           </section>
         ))}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compareSpecPoints, stepNumber, topicNumber } from './spec-number.ts'
+import { compareSpecPoints, specPlace, stepNumber, topicNumber } from './spec-number.ts'
 
 const of = (...specPoints: string[]) => topicNumber({ specPoints })
 
@@ -66,5 +66,29 @@ describe('compareSpecPoints', () => {
   it('sorts in specification order', () => {
     expect(['N13', 'G14', 'A4'].sort(compareSpecPoints)).toEqual(['N13', 'A4', 'G14'])
     expect(['4.1.1.10', '4.1.1.2', '3.6.2.2', '3.6.2'].sort(compareSpecPoints)).toEqual(['3.6.2', '3.6.2.2', '4.1.1.2', '4.1.1.10'])
+  })
+})
+
+describe('specPlace', () => {
+  /** Electrolysis of molten compounds lists oxidation (4.4.1.4) last: its home is 4.4.3.1. */
+  it('places a topic at its first listed point, and names the earlier points apart', () => {
+    expect(specPlace({ specPoints: ['4.4.3.1', '4.4.3.2', '4.4.3.3', '4.4.3.5', '4.4.1.4'] }))
+      .toEqual({ home: '4.4.3.1', label: '4.4.3.1–4.4.3.3, 4.4.3.5', also: '4.4.1.4' })
+  })
+
+  it('keeps later points in the label', () => {
+    expect(specPlace({ specPoints: ['4.3.2.5', '4.3.4', '4.4.2.5'] })).toEqual({ home: '4.3.2.5', label: '4.3.2.5, 4.3.4, 4.4.2.5' })
+    expect(specPlace({ specPoints: ['R3', 'R4', 'R5', 'R6', 'N11'] })).toEqual({ home: 'R3', label: 'R3–R6', also: 'N11' })
+  })
+
+  it('uses a Business section code, and reads past a summary label that is no one point', () => {
+    expect(specPlace({ specCode: '1.4', specPoints: ['1.4.1', '1.4.2'] })).toEqual({ home: '1.4', label: '1.4' })
+    expect(specPlace({ specCode: '4.1.1.1, 4.1.1.4–4.1.1.7', specPoints: ['4.1.1.1', '4.1.1.4', '4.1.1.5', '4.1.1.6', '4.1.1.7'] }))
+      .toEqual({ home: '4.1.1.1', label: '4.1.1.1, 4.1.1.4–4.1.1.7' })
+  })
+
+  it('has no place for a topic with no numbered point', () => {
+    expect(specPlace({ specPoints: ['Theme 1'] })).toBeUndefined()
+    expect(specPlace({ specPoints: [] })).toBeUndefined()
   })
 })

@@ -1,8 +1,9 @@
-import { generatorFor, getSubject, type WorksheetLevel } from '@study/shared'
+import { generatorFor, getSubject, specPlace, type WorksheetLevel } from '@study/shared'
 import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { ShareSheet } from '../../components/ShareSheet.tsx'
-import { getGuide, topicsForSubject } from '../../content/index.ts'
+import { getGuide, specOrdered, topicsForSubject } from '../../content/index.ts'
+import { useTopicOrder } from '../../theme/prefs.ts'
 import { minutesFor, minutesPerMark } from '../../content/paper.ts'
 import { LENGTH_LABEL, LENGTHS, MIXED_MIN_TOPICS, mixedPath, pickItems, type MixedSpec } from '../../content/mixedSheet.ts'
 import { newSheetCode } from '../../content/sheetCode.ts'
@@ -25,7 +26,9 @@ const on = (yes: boolean) => (yes ? 'border-[color:var(--subject)] bg-[color:var
 export function MakeWorksheet() {
   const { subjectId = '' } = useParams()
   const subject = getSubject(subjectId)
-  const topics = useMemo(() => topicsForSubject(subjectId), [subjectId])
+  // In the specification's order (Settings) topics are listed by the board's numbers, not school years.
+  const bySpec = useTopicOrder() === 'spec'
+  const topics = useMemo(() => bySpec ? specOrdered(topicsForSubject(subjectId)) : topicsForSubject(subjectId), [subjectId, bySpec])
   const units = (subject?.units ?? []).map((u) => ({ ...u, topics: topics.filter((t) => t.unitId === u.id) })).filter((u) => u.topics.length)
   // Opens on the first unit with enough topics to mix, all chosen, so the page starts ready to use.
   const [chosen, setChosen] = useState<Set<string>>(() => new Set((units.find((u) => u.topics.length >= MIXED_MIN_TOPICS) ?? units[0])?.topics.map((t) => t.id) ?? []))
@@ -84,7 +87,7 @@ export function MakeWorksheet() {
                   <label key={t.id} className="flex min-h-10 cursor-pointer items-center gap-3 text-[15px]">
                     <input type="checkbox" checked={chosen.has(t.id)} onChange={() => toggle(t.id)} className="h-5 w-5 shrink-0 accent-[color:var(--subject)]" />
                     <span className="min-w-0 flex-1">{t.title}</span>
-                    <span className="shrink-0 text-xs text-ink-3">Year {t.year}</span>
+                    <span className="shrink-0 text-xs text-ink-3 tabular-nums">{bySpec ? specPlace(t)?.label : `Year ${t.year}`}</span>
                   </label>
                 ))}
               </div>

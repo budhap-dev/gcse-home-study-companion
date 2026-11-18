@@ -1,4 +1,4 @@
-import { getSubject, SUBJECTS, SubjectGuide } from '@study/shared'
+import { compareSpecPoints, getSubject, specPlace, SUBJECTS, SubjectGuide } from '@study/shared'
 import type { GradeBand, Question, SubjectGuide as GuideRecord, WorksheetLevel } from '@study/shared'
 
 import catalogue from 'virtual:topic-catalogue'
@@ -51,6 +51,27 @@ export function topicsForSubject(subjectId: string): TopicSummary[] {
 
 export function topicsForUnit(subjectId: string, unitId: string): TopicSummary[] {
   return TOPICS.filter((t) => t.subjectId === subjectId && t.unitId === unitId)
+}
+
+/**
+ * Topics in the exam board's order rather than the school's: by subject and unit as ever
+ * (the units are the board's own), then by where each topic sits in the specification
+ * (specPlace). A topic with no numbered point, such as a bridging topic or any English,
+ * French or Music topic, goes first in its unit in the school's order, since a bridging
+ * topic leads into its unit. Two topics at the same point keep the order they are taught in.
+ */
+export function specOrdered<T extends TopicSummary>(topics: T[]): T[] {
+  const key = (t: T) => {
+    const [s, u] = order(t)
+    return { s, u, home: specPlace(t)?.home }
+  }
+  const keyed = topics.map((t, i) => ({ t, i, k: key(t) }))
+  keyed.sort((a, b) =>
+    a.k.s - b.k.s || a.k.u - b.k.u
+    || (a.k.home ? 1 : 0) - (b.k.home ? 1 : 0)
+    || (a.k.home && b.k.home ? compareSpecPoints(a.k.home, b.k.home) : 0)
+    || a.t.year - b.t.year || a.i - b.i)
+  return keyed.map((x) => x.t)
 }
 
 /** School years this subject has topics for, in order. */

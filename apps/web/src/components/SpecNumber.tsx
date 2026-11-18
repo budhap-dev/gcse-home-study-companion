@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 /**
  * A specification reference: "1.4" or "4.1.1.1, 4.1.1.4–4.1.1.7" against a topic, "1.4.2"
  * against a lesson step. The topic's label comes from topicNumber in @study/shared.
@@ -15,8 +17,10 @@ export function SpecNumber({ code, className = '', tone = 'text-ink-3' }: { code
   const parts = code.split(', ')
   return (
     <span className={`font-bold tabular-nums ${tone} ${className}`} aria-label={`Specification ${code}`}>
+      {/* The space after each comma sits outside the unbreakable run: inside it, a line had
+          nowhere to break, and a long number ran out of its tile on the map. */}
       {parts.map((part, i) => (
-        <span key={part} className="whitespace-nowrap">{part}{i < parts.length - 1 ? ', ' : ''}</span>
+        <Fragment key={part}><span className="whitespace-nowrap">{part}{i < parts.length - 1 ? ',' : ''}</span>{i < parts.length - 1 ? ' ' : ''}</Fragment>
       ))}
     </span>
   )

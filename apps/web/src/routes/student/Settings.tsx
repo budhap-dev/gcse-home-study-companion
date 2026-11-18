@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react'
 import { signOut, useAuth } from '../../auth/useAuth.ts'
 import { FamilyPanel } from '../../auth/FamilyPanel.tsx'
 import { AUTO_THEME, THEMES, applyTheme, currentThemeId, resolveTheme } from '../../theme/themes.ts'
-import { PENS, setPen, setPref, usePen, usePref } from '../../theme/prefs.ts'
+import { PENS, setPen, setPref, setTopicOrder, usePen, usePref, useTopicOrder, type TopicOrder } from '../../theme/prefs.ts'
 import { APP_BUILT, VERSION_LABEL } from '../../app/version.ts'
 import { clearProgress, isoDate, setDailyGoal, toggleDayOff, weekDays } from '../../progress/store.ts'
 import { useProgress } from '../../progress/useProgress.ts'
 import { ProfileForm } from '../../components/ProfileForm.tsx'
 import { OfflinePanel } from '../../components/OfflinePanel.tsx'
+
+const TOPIC_ORDERS: { id: TopicOrder; name: string; blurb: string }[] = [
+  { id: 'school', name: 'My school’s plan', blurb: 'Topics by school year and term, in the order they are taught at school.' },
+  { id: 'spec', name: 'Exam board specification', blurb: 'Topics in the board’s own order with its numbers, and no school years. For a teacher, or a student at another school.' },
+]
 
 export function Settings() {
   const progress = useProgress()
@@ -25,6 +30,7 @@ export function Settings() {
   const motion = usePref('motion')
   const smileys = usePref('smileys')
   const pen = usePen()
+  const topicOrder = useTopicOrder()
 
   return (
     <article className="mx-auto flex w-full max-w-4xl flex-col gap-6">
@@ -37,6 +43,20 @@ export function Settings() {
         <h2 className="font-bold">Your school year</h2>
         <p className="text-sm text-ink-2">The plan puts your year’s topics first, and each subject’s map opens on it.</p>
         <ProfileForm profile={progress.profile ?? {}} legend="hidden" />
+      </section>
+
+      <section id="order" className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
+        <h2 className="font-bold" id="order-label">Topic order</h2>
+        <p className="text-sm text-ink-2">How each subject’s topics are set out on this device. The lessons, questions and progress are the same either way.</p>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" role="radiogroup" aria-labelledby="order-label">
+          {TOPIC_ORDERS.map((o) => (
+            <button key={o.id} type="button" role="radio" aria-checked={topicOrder === o.id} onClick={() => setTopicOrder(o.id)}
+              className={`press flex flex-col gap-1 rounded-xl border-2 p-3 text-left ${topicOrder === o.id ? 'border-[color:var(--subject)]' : 'border-rule'}`}>
+              <span className="text-sm font-bold">{o.name}</span>
+              <span className="text-xs text-ink-2">{o.blurb}</span>
+            </button>
+          ))}
+        </div>
       </section>
 
       <section className="flex flex-col gap-3 rounded-2xl border border-rule bg-surface p-4">
