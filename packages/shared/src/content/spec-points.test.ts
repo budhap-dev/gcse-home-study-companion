@@ -2,8 +2,8 @@ import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Topic } from './topic.ts'
-import { covers, NO_TOPIC, SPEC_POINTS } from '../specPoints/index.ts'
-import { parseSpecPoint } from './spec-number.ts'
+import { covers, NO_TOPIC, SPEC_POINTS, subsection } from '../specPoints/index.ts'
+import { parseSpecPoint, specPlace } from './spec-number.ts'
 
 const ROOT = join(import.meta.dirname, '../../../../supabase/seed/content')
 function jsonFiles(dir: string): string[] {
@@ -40,5 +40,24 @@ describe.each(Object.keys(SPEC_POINTS))('specification points: %s', (subjectId) 
     expect(missing).toEqual([])
     const stale = Object.keys(NO_TOPIC[subjectId] ?? {}).filter((c) => covers(named, c) || !codes.includes(c))
     expect(stale, 'reasons for points that now have a topic, or are not points').toEqual([])
+  })
+})
+
+describe('sub-sections', () => {
+  it('puts every numbered topic of Physics, Chemistry and Business under a sub-section', () => {
+    const lost: string[] = []
+    for (const t of topics.filter((t) => ['physics', 'chemistry', 'business'].includes(t.subjectId))) {
+      const home = specPlace(t)?.home
+      if (home && !subsection(t.subjectId, home)) lost.push(`${t.id}: ${home}`)
+    }
+    expect(lost).toEqual([])
+  })
+
+  it('names a sub-section only for a real point’s parent, and none for subjects numbered straight to points', () => {
+    for (const id of ['physics', 'chemistry']) for (const s of SPEC_POINTS[id]!) for (const p of s.points) {
+      expect(subsection(id, p.code), `${id} ${p.code}`).toBeDefined()
+    }
+    expect(subsection('maths', 'N1')).toBeUndefined()
+    expect(subsection('biology', '1.1')).toBeUndefined()
   })
 })

@@ -5,6 +5,7 @@ import { COMPUTER_SCIENCE_POINTS } from './computer-science.ts'
 import { FURTHER_MATHS_POINTS } from './further-maths.ts'
 import { MATHS_POINTS } from './maths.ts'
 import { PHYSICS_POINTS } from './physics.ts'
+import { SUBSECTION_NAMES } from './subsections.ts'
 import type { SpecSection } from './types.ts'
 
 export type { SpecPoint, SpecSection } from './types.ts'
@@ -51,4 +52,18 @@ export function covers(topicPoints: readonly string[], code: string): boolean {
 
 export function specPoints(subjectId: string): SpecSection[] {
   return SPEC_POINTS[subjectId] ?? []
+}
+
+/**
+ * The numbered sub-section a point sits in, for the headings inside a unit's card in the
+ * specification's order: Physics and Chemistry's three-part numbers ("4.4.1 Reactivity of
+ * metals"), and Business's topics ("1.4 Making the business effective") inside its themes.
+ * Other subjects number straight from unit to point, so they have none.
+ */
+export function subsection(subjectId: string, code: string): { code: string; name: string } | undefined {
+  const names = SUBSECTION_NAMES[subjectId]
+    ?? (subjectId === 'business' ? Object.fromEntries(BUSINESS_POINTS.map((s) => [s.id, s.name.replace(/^\S+ /, '')])) : undefined)
+  if (!names) return undefined
+  const hit = Object.keys(names).filter((k) => covers([k], code)).sort((a, b) => b.length - a.length)[0]
+  return hit ? { code: hit, name: names[hit]! } : undefined
 }
